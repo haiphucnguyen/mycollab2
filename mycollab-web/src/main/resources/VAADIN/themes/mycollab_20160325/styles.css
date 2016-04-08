@@ -17222,18 +17222,44 @@ div.v-ratingstars-bar {
 	border: none;
 }
 
-.v-listbuilder-buttons .v-button.v-disabled, .v-listbuilder-buttons .v-button:active {
-	background: none;
-	border: none;
+.v-button.v-listbuilder-button-add::after, .v-button.v-listbuilder-button-add.v-disabled::after {
+	content: "\f0da";
+	font-family: FontAwesome;
+	font-size: 20px;
 }
 
-.v-listbuilder .v-listbuilder-buttons  > .v-button > .v-button-wrap, .v-listbuilder .v-listbuilder-buttons .v-disabled.v-button > .v-button-wrap {
-	padding: 0px 4px 0px 4px;
-	border: none;
-	background: none;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+.v-button.v-listbuilder-button-add .v-button-caption, .v-button.v-listbuilder-button-add.v-disabled .v-button-caption {
+	background-image: none !important;
+}
+
+.v-listbuilder-button-remove::after, .v-listbuilder-button-remove.v-disabled::after {
+	content: "\f0d9";
+	font-family: FontAwesome;
+	font-size: 20px;
+}
+
+.v-listbuilder-button-remove .v-button-caption, .v-listbuilder-button-remove.v-disabled .v-button-caption {
+	background-image: none !important;
+}
+
+.v-listbuilder-button-up::after, .v-listbuilder-button-up.v-disabled::after {
+	content: "\f0d8";
+	font-family: FontAwesome;
+	font-size: 20px;
+}
+
+.v-listbuilder-button-up .v-button-caption, .v-listbuilder-button-up.v-disabled .v-button-caption {
+	background-image: none !important;
+}
+
+.v-listbuilder-button-down::after, .v-listbuilder-button-down.v-disabled::after {
+	content: "\f0d7";
+	font-family: FontAwesome;
+	font-size: 20px;
+}
+
+.v-listbuilder-button-down .v-button-caption, .v-listbuilder-button-down.v-disabled .v-button-caption {
+	background-image: none !important;
 }
 
 .billing-setting {

@@ -995,20 +995,49 @@ $v-line-height--header:1.5em;
   .v-listbuilder-buttons .v-button {
     background: none;
     border: none;
-    &.v-disabled, &:active {
-      background: none;
-      border: none;
+  }
+
+  .v-button.v-listbuilder-button-add, .v-button.v-listbuilder-button-add.v-disabled {
+    &::after {
+      content:"\f0da";
+      font-family: FontAwesome;
+      font-size:20px;
+    }
+    .v-button-caption {
+      background-image: none !important;
     }
   }
 
-  .v-listbuilder .v-listbuilder-buttons {
-    > .v-button > .v-button-wrap, .v-disabled.v-button > .v-button-wrap {
-      padding: 0px 4px 0px 4px;
-      border: none;
-      background: none;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
+  .v-listbuilder-button-remove, .v-listbuilder-button-remove.v-disabled {
+    &::after {
+      content:"\f0d9";
+      font-family: FontAwesome;
+      font-size:20px;
+    }
+    .v-button-caption {
+      background-image: none !important;
+    }
+  }
+
+  .v-listbuilder-button-up, .v-listbuilder-button-up.v-disabled {
+    &::after {
+      content:"\f0d8";
+      font-family: FontAwesome;
+      font-size:20px;
+    }
+    .v-button-caption {
+      background-image: none !important;
+    }
+  }
+
+  .v-listbuilder-button-down, .v-listbuilder-button-down.v-disabled {
+    &::after {
+      content:"\f0d7";
+      font-family: FontAwesome;
+      font-size:20px;
+    }
+    .v-button-caption {
+      background-image: none !important;
     }
   }
 

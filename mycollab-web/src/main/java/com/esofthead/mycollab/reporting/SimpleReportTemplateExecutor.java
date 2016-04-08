@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.reporting;
 
+import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
@@ -67,7 +68,7 @@ public abstract class SimpleReportTemplateExecutor<T> extends ReportTemplateExec
         // Add field of report
         Field[] clsFields = ClassUtils.getAllFields(classType);
         for (Field objField : clsFields) {
-            if ("selected".equals(objField.getName()) || "extraData".equals(objField.getName())) {
+            if ("selected".equals(objField.getName()) || "extraData".equals(objField.getName()) || objField.getAnnotation(NotBindable.class) != null) {
                 continue;
             }
 

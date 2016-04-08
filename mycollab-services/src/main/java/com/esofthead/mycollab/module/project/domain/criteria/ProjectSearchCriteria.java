@@ -34,6 +34,7 @@ public class ProjectSearchCriteria extends SearchCriteria {
     public static final NumberParam p_account = new NumberParam("project-account", ProjectI18nEnum.FORM_ACCOUNT_NAME,
             "m_prj_project", "accountId");
 
+    private SetSearchField<Integer> projectKeys;
     private SetSearchField<String> projectStatuses;
     private StringSearchField involvedMember;
     private StringSearchField projectName;
@@ -60,5 +61,13 @@ public class ProjectSearchCriteria extends SearchCriteria {
 
     public void setProjectName(StringSearchField projectName) {
         this.projectName = projectName;
+    }
+
+    public SetSearchField<Integer> getProjectKeys() {
+        return projectKeys;
+    }
+
+    public void setProjectKeys(SetSearchField<Integer> projectKeys) {
+        this.projectKeys = projectKeys;
     }
 }

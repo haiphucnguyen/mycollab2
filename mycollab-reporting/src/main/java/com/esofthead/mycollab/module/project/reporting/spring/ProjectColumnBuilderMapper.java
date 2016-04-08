@@ -59,6 +59,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        ColumnBuilderClassMapper.put(SimpleProject.class, buildProjectMap());
         ColumnBuilderClassMapper.put(SimpleMilestone.class, buildMilestoneMap());
         ColumnBuilderClassMapper.put(SimpleTask.class, buildTaskMap());
         ColumnBuilderClassMapper.put(SimpleBug.class, buildBugMap());
@@ -68,6 +69,57 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         ColumnBuilderClassMapper.put(SimpleProjectRole.class, buildRoleMap());
         ColumnBuilderClassMapper.put(SimpleItemTimeLogging.class, buildTimeTrackingMap());
         ColumnBuilderClassMapper.put(FollowingTicket.class, buildTFollowingTicketMap());
+    }
+
+    private Map<String, ComponentBuilderGenerator> buildProjectMap() {
+        Map<String, ComponentBuilderGenerator> map = new HashMap<>();
+        DRIExpression<String> projectNameExpr = new PrimaryTypeFieldExpression<>(Project.Field.name.name());
+        DRIExpression<String> projectHrefExpr = new AbstractSimpleExpression<String>() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String evaluate(ReportParameters reportParameters) {
+                Integer projectId = reportParameters.getFieldValue(Project.Field.id.name());
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
+                return ProjectLinkGenerator.generateProjectFullLink(siteUrl, projectId);
+            }
+        };
+        map.put(Milestone.Field.name.name(), new HyperlinkBuilderGenerator(projectNameExpr, projectHrefExpr));
+
+        DRIExpression<String> leadNameExpr = new PrimaryTypeFieldExpression<>(SimpleProject.Field.leadFullName.name());
+        DRIExpression<String> leadHrefExpr = new AbstractSimpleExpression<String>() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String evaluate(ReportParameters reportParameters) {
+                Integer projectId = reportParameters.getFieldValue(Project.Field.id.name());
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
+                String memberName = reportParameters.getParameterValue(Project.Field.lead.name());
+                return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, memberName);
+            }
+        };
+        map.put(Project.Field.lead.name(), new HyperlinkBuilderGenerator(leadNameExpr, leadHrefExpr));
+
+        DRIExpression<String> accountNameExpr = new PrimaryTypeFieldExpression<>(SimpleProject.Field.clientName.name());
+        DRIExpression<String> clientHrefExpr = new AbstractSimpleExpression<String>() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String evaluate(ReportParameters reportParameters) {
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
+                Integer accountId = reportParameters.getParameterValue(Project.Field.accountid.name());
+                return ProjectLinkGenerator.generateClientPreviewFullLink(siteUrl, accountId);
+            }
+        };
+        map.put(Project.Field.accountid.name(), new HyperlinkBuilderGenerator(accountNameExpr, clientHrefExpr));
+
+        DRIExpression<String> homePageUrlExpr = new PrimaryTypeFieldExpression<>(Project.Field.homepage.name());
+        map.put(Project.Field.homepage.name(), new HyperlinkBuilderGenerator(homePageUrlExpr, homePageUrlExpr));
+
+        map.put(Project.Field.createdtime.name(), new SimpleExpressionBuilderGenerator(new DateExpression(Project.Field.createdtime.name())));
+        map.put(Project.Field.planstartdate.name(), new SimpleExpressionBuilderGenerator(new DateExpression(Project.Field.planstartdate.name())));
+        map.put(Project.Field.planenddate.name(), new SimpleExpressionBuilderGenerator(new DateExpression(Project.Field.planenddate.name())));
+        return map;
     }
 
     private Map<String, ComponentBuilderGenerator> buildMilestoneMap() {
