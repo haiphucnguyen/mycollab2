@@ -88,7 +88,6 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
                         tableItem.fireSelectItemEvent(item);
                     }
                 });
-
                 item.setExtraData(cb);
                 return cb;
             }
@@ -101,9 +100,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
             public com.vaadin.ui.Component generateCell(final Table source,
                                                         final Object itemId, final Object columnId) {
                 SimpleRisk risk = tableItem.getBeanByIndex(itemId);
-                LabelLink b = new LabelLink(risk.getRiskname(),
-                        ProjectLinkBuilder.generateRiskPreviewFullLink(
-                                risk.getProjectid(), risk.getId()));
+                LabelLink b = new LabelLink(risk.getRiskname(), ProjectLinkBuilder.generateRiskPreviewFullLink(risk.getProjectid(), risk.getId()));
 
                 if ("Closed".equals(risk.getStatus())) {
                     b.addStyleName(UIConstants.LINK_COMPLETED);
@@ -137,8 +134,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
             @Override
             public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
                 SimpleRisk risk = tableItem.getBeanByIndex(itemId);
-                return new ProjectUserLink(risk.getRaisedbyuser(), risk.getRaisedByUserAvatarId(),
-                        risk.getRaisedByUserFullName());
+                return new ProjectUserLink(risk.getRaisedbyuser(), risk.getRaisedByUserAvatarId(), risk.getRaisedByUserFullName());
 
             }
         });

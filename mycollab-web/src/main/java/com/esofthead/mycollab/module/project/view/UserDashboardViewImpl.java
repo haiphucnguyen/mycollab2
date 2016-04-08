@@ -56,6 +56,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
     private List<Integer> prjKeys;
 
     private UserProjectDashboardPresenter userProjectDashboardPresenter;
+    private ProjectListPresenter projectListPresenter;
     private FollowingTicketPresenter followingTicketPresenter;
     private TimeTrackingPresenter timeTrackingPresenter;
     private ICalendarDashboardPresenter calendarPresenter;
@@ -73,6 +74,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
 
         final TabSheet tabSheet = new TabSheet();
         tabSheet.addTab(buildDashboardComp(), "Dashboard", FontAwesome.DASHBOARD);
+        tabSheet.addTab(buildProjectListComp(), "Projects", FontAwesome.BUILDING_O);
         tabSheet.addTab(buildFollowingTicketComp(), "Following Items", FontAwesome.EYE);
         tabSheet.addTab(buildCalendarComp(), "Calendar", FontAwesome.CALENDAR);
         tabSheet.addTab(buildTimesheetComp(), "Time", FontAwesome.CLOCK_O);
@@ -92,6 +94,8 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
                     settingPresenter.onGo(UserDashboardViewImpl.this, null);
                 } else if (comp instanceof ICalendarDashboardView) {
                     calendarPresenter.go(UserDashboardViewImpl.this, null);
+                } else if (comp instanceof ProjectListView) {
+                    projectListPresenter.go(UserDashboardViewImpl.this, null);
                 }
             }
         });
@@ -115,6 +119,11 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
     private Component buildDashboardComp() {
         userProjectDashboardPresenter = PresenterResolver.getPresenter(UserProjectDashboardPresenter.class);
         return userProjectDashboardPresenter.getView();
+    }
+
+    private Component buildProjectListComp() {
+        projectListPresenter = PresenterResolver.getPresenter(ProjectListPresenter.class);
+        return projectListPresenter.getView();
     }
 
     private Component buildFollowingTicketComp() {
