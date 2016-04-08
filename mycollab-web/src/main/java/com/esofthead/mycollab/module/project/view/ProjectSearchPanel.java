@@ -26,7 +26,8 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  */
 public class ProjectSearchPanel extends DefaultGenericSearchPanel<ProjectSearchCriteria> {
     private static Param[] paramFields = new Param[]{
-            ProjectSearchCriteria.p_account
+            ProjectSearchCriteria.p_name, ProjectSearchCriteria.p_status, ProjectSearchCriteria.p_startdate,
+            ProjectSearchCriteria.p_enddate, ProjectSearchCriteria.p_createdtime
     };
 
     @Override

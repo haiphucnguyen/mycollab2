@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.pro.module.project.view.client;
 
 import com.esofthead.mycollab.configuration.StorageFactory;
-import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.NumberUtils;
@@ -166,7 +166,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
 
         void displayProjects(final Integer accountId) {
             ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
-            searchCriteria.addExtraField(ProjectSearchCriteria.p_account.buildParamIsEqual(SearchField.AND, accountId));
+            searchCriteria.setAccountId(NumberSearchField.and(accountId));
             ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
             int totalCount = projectService.getTotalCount(searchCriteria);
             ELabel headerLbl = new ELabel("Projects (" + totalCount + ")");
