@@ -67,6 +67,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         ColumnBuilderClassMapper.put(SimpleVersion.class, buildVersionMap());
         ColumnBuilderClassMapper.put(SimpleRisk.class, buildRiskMap());
         ColumnBuilderClassMapper.put(SimpleProjectRole.class, buildRoleMap());
+        ColumnBuilderClassMapper.put(SimpleProjectMember.class, buildProjectMemberMap());
         ColumnBuilderClassMapper.put(SimpleItemTimeLogging.class, buildTimeTrackingMap());
         ColumnBuilderClassMapper.put(FollowingTicket.class, buildTFollowingTicketMap());
     }
@@ -426,6 +427,38 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         });
         map.put(Risk.Field.datedue.name(), new SimpleExpressionBuilderGenerator(new DateExpression(Risk.Field.datedue.name())));
 
+        return map;
+    }
+
+    private Map<String, ComponentBuilderGenerator> buildProjectMemberMap() {
+        Map<String, ComponentBuilderGenerator> map = new HashMap<>();
+        DRIExpression<String> memberNameExpr = new PrimaryTypeFieldExpression<>(SimpleProjectMember.Field.memberFullName.name());
+        DRIExpression<String> memberHrefExpr = new AbstractSimpleExpression<String>() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String evaluate(ReportParameters reportParameters) {
+                Integer projectId = reportParameters.getFieldValue(ProjectMember.Field.projectid.name());
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
+                String username = reportParameters.getParameterValue(ProjectMember.Field.username.name());
+                return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, username);
+            }
+        };
+        map.put(ProjectMember.Field.username.name(), new HyperlinkBuilderGenerator(memberNameExpr, memberHrefExpr));
+
+        DRIExpression<String> roleNameExpr = new PrimaryTypeFieldExpression<>(SimpleProjectMember.Field.roleName.name());
+        DRIExpression<String> roleHrefExpr = new AbstractSimpleExpression<String>() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String evaluate(ReportParameters reportParameters) {
+                Integer projectId = reportParameters.getFieldValue(ProjectMember.Field.projectid.name());
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
+                Integer roleId = reportParameters.getParameterValue(ProjectMember.Field.projectroleid.name());
+                return ProjectLinkGenerator.generateRolePreviewFullLink(siteUrl, projectId, roleId);
+            }
+        };
+        map.put(ProjectMember.Field.projectroleid.name(), new HyperlinkBuilderGenerator(roleNameExpr, roleHrefExpr));
         return map;
     }
 

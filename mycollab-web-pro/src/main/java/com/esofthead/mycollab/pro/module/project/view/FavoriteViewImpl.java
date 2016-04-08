@@ -12,10 +12,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.ProjectGenericItem;
-import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
-import com.esofthead.mycollab.module.project.domain.SimpleRisk;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.*;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericItemSearchCriteria;
 import com.esofthead.mycollab.module.project.events.*;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
@@ -26,18 +23,24 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
 import com.esofthead.mycollab.module.project.view.IFavoriteView;
 import com.esofthead.mycollab.module.project.view.ProjectView;
+import com.esofthead.mycollab.module.project.view.bug.BugDefaultFormLayoutFactory;
 import com.esofthead.mycollab.module.project.view.bug.BugPreviewForm;
+import com.esofthead.mycollab.module.project.view.milestone.MilestoneDefaultFormLayoutFactory;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePreviewForm;
+import com.esofthead.mycollab.module.project.view.settings.ComponentDefaultFormLayoutFactory;
 import com.esofthead.mycollab.module.project.view.settings.ComponentPreviewForm;
+import com.esofthead.mycollab.module.project.view.settings.VersionDefaultFormLayoutFactory;
 import com.esofthead.mycollab.module.project.view.settings.VersionPreviewForm;
+import com.esofthead.mycollab.module.project.view.task.TaskDefaultFormLayoutFactory;
 import com.esofthead.mycollab.module.project.view.task.TaskPreviewForm;
-import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
-import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
-import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
+import com.esofthead.mycollab.module.tracker.domain.*;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
+import com.esofthead.mycollab.pro.module.project.view.risk.RiskDefaultFormLayoutFactory;
 import com.esofthead.mycollab.pro.module.project.view.risk.RiskPreviewForm;
+import com.esofthead.mycollab.reporting.FormReportLayout;
+import com.esofthead.mycollab.reporting.PrintButton;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -253,6 +256,23 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     final SimpleBug bug = bugService.findById(assignment.getExtraTypeId(), AppContext.getAccountId());
                     if (bug != null) {
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + bug.getSummary());
+
+                        final PrintButton printBtn = new PrintButton();
+                        printBtn.addClickListener(new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void buttonClick(final Button.ClickEvent event) {
+                                printBtn.doPrint(bug, new FormReportLayout(ProjectTypeConstants.BUG, BugWithBLOBs.Field.summary.name(),
+                                        BugDefaultFormLayoutFactory.getForm(), SimpleBug.Field.components.name(), SimpleBug.Field
+                                        .affectedVersions.name(), SimpleBug.Field.fixedVersions.name(), BugWithBLOBs.Field.id.name(),
+                                        SimpleBug.Field.selected.name()));
+                            }
+                        });
+                        printBtn.setStyleName(UIConstants.BUTTON_OPTION);
+                        printBtn.setDescription("Print");
+                        printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS));
+
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                             @Override
                             public void buttonClick(Button.ClickEvent clickEvent) {
@@ -263,8 +283,8 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
                         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
 
-                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
-                                Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn).withAlign(printBtn, Alignment.TOP_RIGHT)
+                                .withAlign(editBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
                         addComponent(headerLayout);
                         BugPreviewForm form = new BugPreviewForm();
                         form.setBean(bug);
@@ -281,9 +301,23 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
                     final SimpleTask task = taskService.findById(assignment.getExtraTypeId(), AppContext.getAccountId());
                     if (task != null) {
-                        ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
-                                + task.getTaskname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
-                                .LABEL_NO_MARGIN);
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + task.getTaskname());
+
+                        final PrintButton printBtn = new PrintButton();
+                        printBtn.addClickListener(new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void buttonClick(final Button.ClickEvent event) {
+                                printBtn.doPrint(task, new FormReportLayout(ProjectTypeConstants.TASK, Task.Field.taskname.name(),
+                                        TaskDefaultFormLayoutFactory.getForm(), Task.Field.taskname.name(), Task.Field.id.name(),
+                                        Task.Field.parenttaskid.name()));
+                            }
+                        });
+                        printBtn.setStyleName(UIConstants.BUTTON_OPTION);
+                        printBtn.setDescription("Print");
+                        printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
+
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                             @Override
                             public void buttonClick(Button.ClickEvent clickEvent) {
@@ -294,8 +328,8 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
                         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
-                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
-                                Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
+                                .withAlign(printBtn, Alignment.TOP_RIGHT).withAlign(editBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
                         addComponent(headerLayout);
                         TaskPreviewForm form = new TaskPreviewForm();
                         form.setBean(task);
@@ -316,6 +350,20 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
                                 + milestone.getName());
 
+                        final PrintButton printBtn = new PrintButton();
+                        printBtn.addClickListener(new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void buttonClick(final Button.ClickEvent event) {
+                                printBtn.doPrint(milestone, new FormReportLayout(ProjectTypeConstants.MILESTONE, Milestone.Field.name.name(),
+                                        MilestoneDefaultFormLayoutFactory.getForm(), Milestone.Field.id.name()));
+                            }
+                        });
+                        printBtn.setStyleName(UIConstants.BUTTON_OPTION);
+                        printBtn.setDescription("Print");
+                        printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES));
+
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                             @Override
                             public void buttonClick(Button.ClickEvent clickEvent) {
@@ -326,8 +374,8 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
                         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
 
-                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
-                                Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
+                                .withAlign(printBtn, Alignment.TOP_RIGHT).withAlign(editBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
                         addComponent(headerLayout);
                         MilestonePreviewForm form = new MilestonePreviewForm();
                         form.setBean(milestone);
@@ -344,8 +392,21 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
                     final SimpleRisk risk = riskService.findById(Integer.parseInt(assignment.getTypeId()), AppContext.getAccountId());
                     if (risk != null) {
-                        ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
-                                + risk.getRiskname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN);
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + risk.getRiskname());
+
+                        final PrintButton printBtn = new PrintButton();
+                        printBtn.addClickListener(new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void buttonClick(final Button.ClickEvent event) {
+                                printBtn.doPrint(risk, new FormReportLayout(ProjectTypeConstants.RISK, Risk.Field.riskname.name(),
+                                        RiskDefaultFormLayoutFactory.getForm()));
+                            }
+                        });
+                        printBtn.setStyleName(UIConstants.BUTTON_OPTION);
+                        printBtn.setDescription("Print");
+                        printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                             @Override
@@ -357,8 +418,8 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
                         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
 
-                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
-                                Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
+                                .withAlign(printBtn, Alignment.TOP_RIGHT).withAlign(editBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
                         addComponent(headerLayout);
                         RiskPreviewForm form = new RiskPreviewForm();
                         form.setBean(risk);
@@ -378,6 +439,21 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     if (component != null) {
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + component.getComponentname());
 
+                        final PrintButton printBtn = new PrintButton();
+                        printBtn.addClickListener(new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void buttonClick(final Button.ClickEvent event) {
+                                printBtn.doPrint(component, new FormReportLayout(ProjectTypeConstants.BUG_COMPONENT, com
+                                        .esofthead.mycollab.module.tracker.domain.Component.Field.componentname.name(),
+                                        ComponentDefaultFormLayoutFactory.getForm(), com.esofthead.mycollab.module.tracker.domain.Component.Field.id.name()));
+                            }
+                        });
+                        printBtn.setStyleName(UIConstants.BUTTON_OPTION);
+                        printBtn.setDescription("Print");
+                        printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS));
+
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                             @Override
                             public void buttonClick(Button.ClickEvent clickEvent) {
@@ -388,8 +464,9 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
                         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
 
-                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
-                                Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
+                                .withAlign(printBtn, Alignment.TOP_RIGHT)
+                                .withAlign(editBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
                         addComponent(headerLayout);
                         ComponentPreviewForm form = new ComponentPreviewForm();
                         form.setBean(component);
@@ -407,9 +484,21 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     final SimpleVersion version = versionService.findById(Integer.parseInt(assignment.getTypeId()), AppContext
                             .getAccountId());
                     if (version != null) {
-                        ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
-                                + version.getVersionname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
-                                .LABEL_NO_MARGIN);
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + version.getVersionname());
+                        final PrintButton printBtn = new PrintButton();
+                        printBtn.addClickListener(new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void buttonClick(final Button.ClickEvent event) {
+                                printBtn.doPrint(version, new FormReportLayout(ProjectTypeConstants.BUG_VERSION, Version
+                                        .Field.versionname.name(),
+                                        VersionDefaultFormLayoutFactory.getForm(), Version.Field.id.name()));
+                            }
+                        });
+                        printBtn.setStyleName(UIConstants.BUTTON_OPTION);
+                        printBtn.setDescription("Print");
+                        printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                             @Override
@@ -421,8 +510,9 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
                         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
 
-                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
-                                Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn).withAlign
+                                (editBtn, Alignment.TOP_RIGHT).withAlign(printBtn, Alignment.TOP_RIGHT).expand(headerLbl)
+                                .withFullWidth();
                         addComponent(headerLayout);
                         VersionPreviewForm form = new VersionPreviewForm();
                         form.setBean(version);
