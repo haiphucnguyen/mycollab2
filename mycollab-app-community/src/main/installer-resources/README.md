@@ -44,6 +44,8 @@ Version 5.2.12
 -----------------------------
 **Library Upgrades**
 
+* Other libraries
+
 **Improvements & New Features**
 
 * [Premium] Export timesheet into PDF and Excel

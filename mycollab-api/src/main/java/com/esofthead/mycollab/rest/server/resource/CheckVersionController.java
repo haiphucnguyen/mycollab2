@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.core.MyCollabVersion;
+import com.esofthead.mycollab.ondemand.module.support.service.PremiumUsersService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,11 +28,32 @@ public class CheckVersionController {
         String liveVersion = editionInfoResolver.getEditionInfo().getVersion();
         props.put("version", liveVersion);
         props.put("downloadLink", "https://www.mycollab.com/ce-registration/");
-        props.put("releaseNotes", "https://community.mycollab.com/releases/release-notes-for-mycollab-5-2-10/");
+        props.put("releaseNotes", String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
+                MyCollabVersion.getVersion().replace('.', '-')));
 
         if (version != null && MyCollabVersion.isEditionNewer(liveVersion, version) &&
                 MyCollabVersion.isEditionNewer(version, "5.2.9")) {
             props.put("autoDownload", editionInfoResolver.getEditionInfo().getCommunityUpgradeLink());
+        }
+
+        Gson gson = new Gson();
+        return gson.toJson(props);
+    }
+
+    private PremiumUsersService premiumUsersService;
+
+    @RequestMapping(value = "/checkpremiumupdate", method = RequestMethod.GET)
+    public String getLatestPremiumUpdate(@RequestParam("version") String version, @RequestParam("customerId") String customerId) {
+        Properties props = new Properties();
+
+        String liveVersion = editionInfoResolver.getEditionInfo().getVersion();
+        props.put("version", liveVersion);
+        props.put("downloadLink", "https://www.mycollab.com/ce-registration/");
+        props.put("releaseNotes", String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
+                MyCollabVersion.getVersion().replace('.', '-')));
+
+        if (version != null && MyCollabVersion.isEditionNewer(liveVersion, version)) {
+            props.put("autoDownload", editionInfoResolver.getEditionInfo().getPremiumUpgradeLink());
         }
 
         Gson gson = new Gson();

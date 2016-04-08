@@ -51,7 +51,10 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd
@@ -142,9 +145,11 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     }
 
     private StreamResource constructStreamResource(ReportExportType exportType) {
-        List fields = Collections.singletonList(TimeTableFieldDef.summary());
-        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Time Tracking", new
-                RpFieldsBuilder(fields), exportType, ItemTimeLoggingService.class, ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class));
+        List fields = Arrays.asList(TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(), TimeTableFieldDef.logValue(),
+                TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(), TimeTableFieldDef.logForDate());
+        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Time", new
+                RpFieldsBuilder(fields), exportType, SimpleItemTimeLogging.class, ApplicationContextUtil.getSpringBean
+                (ItemTimeLoggingService.class));
         ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
             @Override
             protected Map<String, Object> initReportParameters() {

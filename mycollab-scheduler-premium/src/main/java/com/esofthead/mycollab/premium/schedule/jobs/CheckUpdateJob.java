@@ -3,12 +3,15 @@ package com.esofthead.mycollab.premium.schedule.jobs;
 import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.core.NewUpdateAvailableNotification;
 import com.esofthead.mycollab.core.NotificationBroadcaster;
+import com.esofthead.mycollab.license.LicenseInfo;
+import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.schedule.jobs.GenericQuartzJobBean;
 import com.google.gson.Gson;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -35,11 +38,19 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
     private static boolean isDownloading = false;
     private static String latestFileDownloadedPath;
 
+    @Autowired
+    private LicenseResolver licenseResolver;
+
     @Override
     public void executeJob(JobExecutionContext context) throws JobExecutionException {
         RestTemplate restTemplate = new RestTemplate();
+        LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
+        if (licenseInfo == null || licenseInfo.isExpired()) {
+            return;
+        }
+        String customerId = licenseInfo.getCustomerId();
         String result = restTemplate.getForObject("https://api.mycollab.com/api/checkupdate?version=" +
-                MyCollabVersion.getVersion(), String.class);
+                MyCollabVersion.getVersion() + "&customerId=" + customerId, String.class);
         Gson gson = new Gson();
         final Properties props = gson.fromJson(result, Properties.class);
         String version = props.getProperty("version");

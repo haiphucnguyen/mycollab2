@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.premium.license.service;
 
+import com.esofthead.mycollab.common.service.AppPropertiesService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
@@ -10,8 +11,11 @@ import com.esofthead.mycollab.license.LicenseType;
 import com.verhas.licensor.License;
 import org.bouncycastle.openpgp.PGPException;
 import org.bouncycastle.util.encoders.DecoderException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.util.Date;
@@ -23,8 +27,10 @@ import java.util.Properties;
  */
 @Service
 public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
-
+    private static final Logger LOG = LoggerFactory.getLogger(LicenseResolverImpl.class);
     private LicenseInfo licenseInfo = null;
+
+    private AppPropertiesService appPropertiesService;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -50,6 +56,18 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
     }
 
     @Override
+    public void acquireALicense() {
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            String licenseRequest = restTemplate.postForObject("https://api.mycollab.com/api/register-trial",
+                    null, String.class);
+//            checkAndSaveLicenseInfo(licenseRequest);
+        } catch (Exception e) {
+            LOG.error("Can not retrieve a trial license", e);
+        }
+    }
+
+    @Override
     public void checkLicenseInfo(byte[] licenseBytes, boolean isSave) {
         try {
             License license = new License();
@@ -69,7 +87,7 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
             newLicenseInfo.setExpireDate(expireDate);
             newLicenseInfo.setIssueDate(DateTimeUtils.parseDateByW3C(prop.getProperty("issueDate")));
             newLicenseInfo.setLicenseOrg(prop.getProperty("licenseOrg"));
-            newLicenseInfo.setMaxUsers(Integer.parseInt(prop.getProperty("maxUsers", "9999")));
+            newLicenseInfo.setMaxUsers(Integer.parseInt(prop.getProperty("maxUsers", "10")));
             if (isSave) {
                 if (newLicenseInfo.isExpired()) {
                     throw new UserInvalidInputException("License is expired");

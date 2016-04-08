@@ -25,13 +25,15 @@ import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.pro.module.project.ui.components.*;
 import com.esofthead.mycollab.reporting.ReportExportType;
+import com.esofthead.mycollab.reporting.ReportStreamSource;
+import com.esofthead.mycollab.reporting.RpFieldsBuilder;
+import com.esofthead.mycollab.reporting.SimpleReportTemplateExecutor;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.AsyncInvoker;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.resources.LazyStreamSource;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
@@ -71,6 +73,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
     private UserInvolvedProjectsMemberListSelect userField;
     private PopupDateFieldExt fromDateField, toDateField;
     private ComboBox groupField, orderField;
+    private ItemTimeLoggingSearchCriteria searchCriteria;
 
     private Label totalHoursLoggingLabel;
 
@@ -91,16 +94,18 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
     }
 
     private StreamResource constructStreamResource(final ReportExportType exportType) {
-        LazyStreamSource streamSource = new LazyStreamSource() {
-            private static final long serialVersionUID = 1L;
-
+        List fields = Arrays.asList(TimeTableFieldDef.project(), TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(),
+                TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(), TimeTableFieldDef.logForDate());
+        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Time", new
+                RpFieldsBuilder(fields), exportType, SimpleItemTimeLogging.class, ApplicationContextUtil.getSpringBean
+                (ItemTimeLoggingService.class));
+        ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
             @Override
-            protected StreamResource.StreamSource buildStreamSource() {
-//                return new SimpleGridExportItemsStreamResource.AllItems<>(
-//                        "Time Report", new RpParameterBuilder(getVisibleFields()), exportType,
-//                        itemTimeLoggingService, searchCriteria,
-//                        SimpleItemTimeLogging.class);
-                throw new MyCollabException("Not support reporting yet");
+            protected Map<String, Object> initReportParameters() {
+                Map<String, Object> parameters = new HashMap<>();
+                parameters.put("siteUrl", AppContext.getSiteUrl());
+                parameters.put(SimpleReportTemplateExecutor.CRITERIA, searchCriteria);
+                return parameters;
             }
         };
         return new StreamResource(streamSource, exportType.getDefaultFileName());
@@ -148,7 +153,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
         if (CollectionUtils.isNotEmpty(projects)) {
             itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
-            Label titleLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() + " Time Tracking");
+            Label titleLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() + " " + "Timesheet");
 
             MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true,
                     false)).withWidth("100%");
@@ -286,7 +291,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
     }
 
     private void searchTimeReporting() {
-        final ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+        searchCriteria = new ItemTimeLoggingSearchCriteria();
 
         Order order = (Order) orderField.getValue();
         String sortDirection;

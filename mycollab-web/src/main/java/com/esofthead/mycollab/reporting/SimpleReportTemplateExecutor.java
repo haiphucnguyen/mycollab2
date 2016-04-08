@@ -19,6 +19,7 @@ package com.esofthead.mycollab.reporting;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
+import com.esofthead.mycollab.reporting.generator.ComponentBuilderGenerator;
 import com.esofthead.mycollab.vaadin.AppContext;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.jasper.builder.export.JasperCsvExporterBuilder;
@@ -63,7 +64,6 @@ public abstract class SimpleReportTemplateExecutor<T> extends ReportTemplateExec
     @Override
     protected void initReport() throws Exception {
         reportBuilder = createReport();
-        LOG.debug("Init report: " + classType);
         // Add field of report
         Field[] clsFields = ClassUtils.getAllFields(classType);
         for (Field objField : clsFields) {
@@ -79,11 +79,11 @@ public abstract class SimpleReportTemplateExecutor<T> extends ReportTemplateExec
         }
         List<TableViewFieldDecorator> fields = fieldBuilder.getFields();
 
-        Map<String, Object> lstFieldBuilder = ColumnBuilderClassMapper.getListFieldBuilder(classType);
+        Map<String, ComponentBuilderGenerator> lstFieldBuilder = ColumnBuilderClassMapper.getListFieldBuilder(classType);
         if (lstFieldBuilder != null) {
             // build columns of report
             for (TableViewFieldDecorator field : fields) {
-                Object columnFieldBuilder = lstFieldBuilder.get(field.getField());
+                ComponentBuilderGenerator columnFieldBuilder = lstFieldBuilder.get(field.getField());
                 if (columnFieldBuilder != null) {
                     field.setComponentBuilder(reportTemplate.buildCompBuilder(columnFieldBuilder));
                 }
@@ -95,7 +95,6 @@ public abstract class SimpleReportTemplateExecutor<T> extends ReportTemplateExec
                 reportBuilder.addColumn(columnBuilder);
             }
         }
-        LOG.debug("Accomplish init report");
     }
 
     @Override

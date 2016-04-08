@@ -5,7 +5,6 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
-import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.util.List;
@@ -27,8 +26,7 @@ public class TimeTrackingDateOrderComponent extends AbstractTimeTrackingDisplayC
     @Override
     protected void displayGroupItems(List<SimpleItemTimeLogging> timeLoggingEntries) {
         if (timeLoggingEntries.size() > 0) {
-            ELabel label = new ELabel(DATE_FORMAT.format(timeLoggingEntries.get(0).getLogforday())).withStyleName
-                    (ValoTheme.LABEL_H3, ValoTheme.LABEL_NO_MARGIN);
+            ELabel label = ELabel.h3(DATE_FORMAT.format(timeLoggingEntries.get(0).getLogforday()));
             addComponent(label);
             addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }
