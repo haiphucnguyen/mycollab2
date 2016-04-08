@@ -18,7 +18,8 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlerContainer;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.CheckBoxDecor;
 import com.esofthead.mycollab.vaadin.web.ui.LabelLink;
 import com.esofthead.mycollab.vaadin.web.ui.SelectionOptionButton;
@@ -32,8 +33,8 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Table.ColumnGenerator;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.teemu.ratingstars.RatingStars;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
 
@@ -61,7 +62,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         riskListLayout = new VerticalLayout();
         this.addComponent(riskListLayout);
 
-        this.generateDisplayTable();
+        generateDisplayTable();
     }
 
     private void generateDisplayTable() {

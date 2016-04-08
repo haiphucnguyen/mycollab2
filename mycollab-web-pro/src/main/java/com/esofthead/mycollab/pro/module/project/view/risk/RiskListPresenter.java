@@ -53,7 +53,6 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
                     MassUpdateRiskWindow massUpdateWindow = new MassUpdateRiskWindow("Mass Update Risk", RiskListPresenter.this);
                     UI.getCurrent().addWindow(massUpdateWindow);
                 }
-
             }
 
             @Override
@@ -118,7 +117,6 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
         } else {
             displayNoExistItems((ComponentContainer) view.getParent(), null);
         }
-
     }
 
     @Override

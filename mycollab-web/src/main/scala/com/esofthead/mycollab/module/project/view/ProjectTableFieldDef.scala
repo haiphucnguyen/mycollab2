@@ -10,6 +10,6 @@ import com.esofthead.mycollab.vaadin.web.ui.UIConstants
   * @since 5.2.12
   */
 object ProjectTableFieldDef {
-  val projectname = new TableViewField(ProjectI18nEnum.FORM_NAME, Project.Field.name.name(), UIConstants
-    .TABLE_X_LABEL_WIDTH)
+  val selected = new TableViewField(null, "selected", UIConstants.TABLE_CONTROL_WIDTH);
+  val projectname = new TableViewField(ProjectI18nEnum.FORM_NAME, Project.Field.name.name(), UIConstants.TABLE_X_LABEL_WIDTH)
 }
