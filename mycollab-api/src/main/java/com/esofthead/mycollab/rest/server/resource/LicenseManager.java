@@ -6,7 +6,6 @@ import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseType;
 import com.esofthead.mycollab.module.mail.service.IContentGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
-import com.esofthead.mycollab.module.support.dao.ProEditionInfoMapper;
 import com.verhas.licensor.License;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +27,6 @@ import java.util.Properties;
 @RestController
 public class LicenseManager {
 
-    @Autowired
-    private ProEditionInfoMapper premiumUserMapper;
 
     @Autowired
     private MailRelayService mailRelayService;
