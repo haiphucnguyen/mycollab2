@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.core.MyCollabVersion;
-import com.esofthead.mycollab.ondemand.module.support.service.PremiumUsersService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +39,6 @@ public class CheckVersionController {
         return gson.toJson(props);
     }
 
-    private PremiumUsersService premiumUsersService;
 
     @RequestMapping(value = "/checkpremiumupdate", method = RequestMethod.GET)
     public String getLatestPremiumUpdate(@RequestParam("version") String version, @RequestParam("customerId") String customerId) {

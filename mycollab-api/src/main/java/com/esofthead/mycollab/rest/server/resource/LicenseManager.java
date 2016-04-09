@@ -1,18 +1,14 @@
 package com.esofthead.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseType;
 import com.esofthead.mycollab.module.mail.service.IContentGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
-import com.esofthead.mycollab.ondemand.module.support.dao.PremiumUserMapper;
-import com.esofthead.mycollab.ondemand.module.support.domain.PremiumUser;
-import com.esofthead.mycollab.ondemand.module.support.domain.PremiumUserExample;
+import com.esofthead.mycollab.module.support.dao.ProEditionInfoMapper;
 import com.verhas.licensor.License;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +29,7 @@ import java.util.Properties;
 public class LicenseManager {
 
     @Autowired
-    private PremiumUserMapper premiumUserMapper;
+    private ProEditionInfoMapper premiumUserMapper;
 
     @Autowired
     private MailRelayService mailRelayService;
@@ -48,37 +44,37 @@ public class LicenseManager {
                              @RequestParam("company") String company, @RequestParam("phone") String phone,
                              @RequestParam("country") String country, @RequestParam("maxUsers") String maxUsers,
                              @RequestParam("website") String website, @RequestParam("isCallable") String isCallable) {
-        PremiumUserExample ex = new PremiumUserExample();
-        ex.createCriteria().andEmailEqualTo(email);
-        int num = premiumUserMapper.countByExample(ex);
-        if (num > 0) {
-            throw new UserInvalidInputException("There is already user has email " + email + " register the trial " +
-                    "product");
-        }
-        LocalDateTime now = new LocalDateTime();
-        PremiumUser premiumUser = new PremiumUser();
-        premiumUser.setCompany(company);
-        premiumUser.setCountry(country);
-        premiumUser.setEmail(email);
-        premiumUser.setFirstname(firstName);
-        premiumUser.setLastname(lastname);
-        premiumUser.setIsphonecall(Boolean.valueOf(isCallable));
-        premiumUser.setMaxusers(Integer.parseInt(maxUsers));
-        premiumUser.setPhone(phone);
-        premiumUser.setRole(role);
-        premiumUser.setWebsite(website);
-        premiumUser.setRegisterdate(now.toDate());
-        premiumUser.setExpiredate(now.plusDays(30).toDate());
-        int customerId = premiumUserMapper.insertAndReturnKey(premiumUser);
-
-        LicenseInfo licenseInfo = new LicenseInfo();
-        licenseInfo.setCustomerId("" + customerId);
-        licenseInfo.setLicenseType(LicenseType.PRO_TRIAL);
-        licenseInfo.setIssueDate(now.toDate());
-        licenseInfo.setExpireDate(now.plusDays(30).toDate());
-        licenseInfo.setLicenseOrg(company);
-        licenseInfo.setMaxUsers(premiumUser.getMaxusers());
-        String licenseContent = encode(licenseInfo);
+//        PremiumUserExample ex = new PremiumUserExample();
+//        ex.createCriteria().andEmailEqualTo(email);
+//        int num = premiumUserMapper.countByExample(ex);
+//        if (num > 0) {
+//            throw new UserInvalidInputException("There is already user has email " + email + " register the trial " +
+//                    "product");
+//        }
+//        LocalDateTime now = new LocalDateTime();
+//        PremiumUser premiumUser = new PremiumUser();
+//        premiumUser.setCompany(company);
+//        premiumUser.setCountry(country);
+//        premiumUser.setEmail(email);
+//        premiumUser.setFirstname(firstName);
+//        premiumUser.setLastname(lastname);
+//        premiumUser.setIsphonecall(Boolean.valueOf(isCallable));
+//        premiumUser.setMaxusers(Integer.parseInt(maxUsers));
+//        premiumUser.setPhone(phone);
+//        premiumUser.setRole(role);
+//        premiumUser.setWebsite(website);
+//        premiumUser.setRegisterdate(now.toDate());
+//        premiumUser.setExpiredate(now.plusDays(30).toDate());
+//        int customerId = premiumUserMapper.insertAndReturnKey(premiumUser);
+//
+//        LicenseInfo licenseInfo = new LicenseInfo();
+//        licenseInfo.setCustomerId("" + customerId);
+//        licenseInfo.setLicenseType(LicenseType.PRO_TRIAL);
+//        licenseInfo.setIssueDate(now.toDate());
+//        licenseInfo.setExpireDate(now.plusDays(30).toDate());
+//        licenseInfo.setLicenseOrg(company);
+//        licenseInfo.setMaxUsers(premiumUser.getMaxusers());
+//        String licenseContent = encode(licenseInfo);
 
         return "Ok";
     }
