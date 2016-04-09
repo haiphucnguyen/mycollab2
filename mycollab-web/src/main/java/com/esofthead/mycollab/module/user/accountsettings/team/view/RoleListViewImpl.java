@@ -16,14 +16,10 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.user.accountsettings.localization.RoleI18nEnum;
-import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.module.user.accountsettings.view.RoleTableFieldDef;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
-import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
@@ -36,8 +32,6 @@ import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlerContainer;
 import com.esofthead.mycollab.vaadin.web.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
-import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickEvent;
-import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -69,10 +63,8 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
     }
 
     private void generateDisplayTable() {
-        tableItem = new RoleTableDisplay(new TableViewField(null,
-                "selected", UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
-                new TableViewField(RoleI18nEnum.FORM_NAME, "rolename", UIConstants.TABLE_EX_LABEL_WIDTH),
-                new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", UIConstants.TABLE_EX_LABEL_WIDTH)));
+        tableItem = new RoleTableDisplay(RoleTableFieldDef.selected(), Arrays.asList(
+                RoleTableFieldDef.rolename(), RoleTableFieldDef.description()));
         listLayout.addComponent(this.constructTableActionControls());
         listLayout.addComponent(this.tableItem);
     }

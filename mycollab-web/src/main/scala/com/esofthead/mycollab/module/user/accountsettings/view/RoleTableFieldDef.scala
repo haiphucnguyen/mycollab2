@@ -14,16 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.module.user.accountsettings.view
 
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
-import com.esofthead.mycollab.vaadin.web.ui.IListView;
+import com.esofthead.mycollab.common.TableViewField
+import com.esofthead.mycollab.common.i18n.GenericI18Enum
+import com.esofthead.mycollab.module.user.accountsettings.localization.RoleI18nEnum
+import com.esofthead.mycollab.vaadin.web.ui.UIConstants
 
 /**
- * @author MyCollab Ltd
- * @since 5.2.12
- */
-public interface ProjectListView extends IListView<ProjectSearchCriteria, SimpleProject> {
-    String VIEW_DEF_ID = "project-list";
+  * @author MyCollab Ltd
+  * @since 5.2.12
+  */
+object RoleTableFieldDef {
+  val selected = new TableViewField(null, "selected", UIConstants.TABLE_CONTROL_WIDTH)
+  val rolename = new TableViewField(RoleI18nEnum.FORM_NAME, "rolename", UIConstants.TABLE_EX_LABEL_WIDTH)
+  val description = new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", UIConstants.TABLE_EX_LABEL_WIDTH)
 }

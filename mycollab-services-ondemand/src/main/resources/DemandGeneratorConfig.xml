@@ -27,7 +27,7 @@
 
         <table domainObjectName="Testimonial" schema="mycollab_base" tableName="s_testimonial" />
         <table domainObjectName="CommunityLead" schema="mycollab_base" tableName="s_customer_lead" />
-        <table domainObjectName="PremiumUser" schema="mycollab_base" tableName="s_premium_users" />
+        <table domainObjectName="ProEditionInfo" schema="mycollab_base" tableName="s_pro_edition_info" />
     </context>
 
 </generatorConfiguration>
