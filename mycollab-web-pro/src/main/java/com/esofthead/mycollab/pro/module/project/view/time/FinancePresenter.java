@@ -3,7 +3,7 @@ package com.esofthead.mycollab.pro.module.project.view.time;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.db.query.DateParam;
-import com.esofthead.mycollab.core.db.query.VariableInjecter;
+import com.esofthead.mycollab.core.db.query.VariableInjector;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -43,7 +43,7 @@ public class FinancePresenter extends AbstractPresenter<IFinanceContainer> imple
                 ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
                 searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                 searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
-                        VariableInjecter.THIS_WEEK));
+                        VariableInjector.THIS_WEEK));
                 presenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
                 presenter.go(view, new TimeTrackingScreenData.Search(searchCriteria));
                 return;

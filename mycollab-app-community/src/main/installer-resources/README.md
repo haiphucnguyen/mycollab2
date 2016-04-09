@@ -51,10 +51,14 @@ Version 5.2.12
 * [Premium] Export timesheet into PDF and Excel
 * [Premium] Manage companies
 * [Premium] Print invoice and send to client
+* [Premium] Allow to upload client logo
+* Allow to upload project logo
 * New Project list view
 * Other minor improvements
 
 **Bug Fixes**
+
+* None
 
 
 Version 5.2.11

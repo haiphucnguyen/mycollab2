@@ -2,7 +2,7 @@ package com.esofthead.mycollab.pro.module.project.view.time;
 
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.db.query.DateParam;
-import com.esofthead.mycollab.core.db.query.VariableInjecter;
+import com.esofthead.mycollab.core.db.query.VariableInjector;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -63,7 +63,7 @@ public class FinanceContainer extends AbstractPageView implements IFinanceContai
                     ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
                     searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                     searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
-                            VariableInjecter.THIS_WEEK));
+                            VariableInjector.THIS_WEEK));
                     timeTrackingListPresenter.onGo(FinanceContainer.this, new TimeTrackingScreenData.Search(searchCriteria));
                 } else {
                     invoicePresenter.onGo(FinanceContainer.this, null);
