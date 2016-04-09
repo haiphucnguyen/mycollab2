@@ -75,10 +75,9 @@ public class ProjectListPresenter extends ListSelectionPresenter<ProjectListView
         Collection<Integer> prjKeys = projectService.getProjectKeysUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
         if (CollectionUtils.isNotEmpty(prjKeys)) {
             searchCriteria.setProjectKeys(new SetSearchField<>(prjKeys));
-            searchCriteria = (ProjectSearchCriteria) data.getParams();
             doSearch(searchCriteria);
         } else {
-            
+
         }
 
     }
