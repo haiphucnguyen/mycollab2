@@ -55,7 +55,7 @@ public class CampaignController {
     public Map registerCE(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
                           @RequestParam("email") String email, @RequestParam("role") String role,
                           @RequestParam("company") String company, @RequestParam("phone") String phone,
-                          @RequestParam("country") String country) {
+                          @RequestParam("country") String country, @RequestParam("edition") String edition) {
         CommunityLead communityLead = new CommunityLead();
         communityLead.setFirstname(firstname);
         communityLead.setLastname(lastname);
@@ -66,7 +66,7 @@ public class CampaignController {
         communityLead.setCountry(country);
         communityLead.setRegisterdate(new LocalDate().toDate());
         communityLead.setVersion(MyCollabVersion.getVersion());
-        communityLead.setEdition("Community");
+        communityLead.setEdition(edition);
 
         CommunityLeadExample ex = new CommunityLeadExample();
         ex.createCriteria().andFirstnameEqualTo(firstname).andLastnameEqualTo(lastname).andEmailEqualTo(email)

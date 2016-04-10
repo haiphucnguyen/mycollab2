@@ -8,8 +8,10 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AbstractLicenseActivationWindow;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.data.Property;
+import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -74,7 +76,13 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
                 if (ACT_CODE.equals(val)) {
                     String licenseText = activationField.getValue();
                     licenseResolver.checkAndSaveLicenseInfo(licenseText);
-                    close();
+                    if (licenseResolver.getLicenseInfo().isInvalid()) {
+                        NotificationUtil.showErrorNotification("Invalid license");
+                    } else {
+                        close();
+                        Page.getCurrent().getJavaScript().execute("window.location.reload();");
+                    }
+
                 } else {
                     InputStream inputStream = licenseUploadField.getContentAsStream();
                     if (inputStream == null) {

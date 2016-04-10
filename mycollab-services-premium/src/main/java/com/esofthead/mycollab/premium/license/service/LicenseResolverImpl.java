@@ -9,16 +9,16 @@ import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.license.LicenseType;
 import com.verhas.licensor.License;
-import org.bouncycastle.openpgp.PGPException;
-import org.bouncycastle.util.encoders.DecoderException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Properties;
 
 /**
@@ -30,6 +30,7 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
     private static final Logger LOG = LoggerFactory.getLogger(LicenseResolverImpl.class);
     private LicenseInfo licenseInfo = null;
 
+    @Autowired
     private AppPropertiesService appPropertiesService;
 
     @Override
@@ -38,6 +39,8 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
         if (licenseFile.isFile() && licenseFile.exists()) {
             byte[] licenseBytes = org.apache.commons.io.FileUtils.readFileToByteArray(licenseFile);
             checkLicenseInfo(licenseBytes, false);
+        } else {
+            acquireALicense();
         }
     }
 
@@ -55,15 +58,16 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
         }
     }
 
-    @Override
-    public void acquireALicense() {
+    private void acquireALicense() {
+        LOG.info("Acquire the trial license");
         RestTemplate restTemplate = new RestTemplate();
         try {
             String licenseRequest = restTemplate.postForObject("https://api.mycollab.com/api/register-trial",
                     null, String.class);
-//            checkAndSaveLicenseInfo(licenseRequest);
+            checkAndSaveLicenseInfo(licenseRequest);
         } catch (Exception e) {
             LOG.error("Can not retrieve a trial license", e);
+            licenseInfo = createInvalidLicense();
         }
     }
 
@@ -101,9 +105,20 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
                 fileOutputStream.close();
             }
             licenseInfo = newLicenseInfo;
-        } catch (IOException | PGPException | DecoderException e) {
-            throw new UserInvalidInputException("Invalid license");
+        } catch (Exception e) {
+            licenseInfo = createInvalidLicense();
         }
+    }
+
+    private LicenseInfo createInvalidLicense() {
+        LicenseInfo tmpLicenseInfo = new LicenseInfo();
+        tmpLicenseInfo.setCustomerId("");
+        tmpLicenseInfo.setExpireDate(new GregorianCalendar().getTime());
+        tmpLicenseInfo.setIssueDate(new GregorianCalendar().getTime());
+        tmpLicenseInfo.setLicenseOrg("");
+        tmpLicenseInfo.setMaxUsers(1);
+        tmpLicenseInfo.setLicenseType(LicenseType.INVALID);
+        return tmpLicenseInfo;
     }
 
 
