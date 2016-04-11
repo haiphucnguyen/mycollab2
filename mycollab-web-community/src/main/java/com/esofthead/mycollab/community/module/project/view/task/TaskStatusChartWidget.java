@@ -19,7 +19,7 @@ package com.esofthead.mycollab.community.module.project.view.task;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.service.OptionValService;
-import com.esofthead.mycollab.community.ui.chart.PieChartWrapper;
+import com.esofthead.mycollab.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;

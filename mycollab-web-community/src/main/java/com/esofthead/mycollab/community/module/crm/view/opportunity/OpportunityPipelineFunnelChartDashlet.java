@@ -22,27 +22,26 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 2.0
  */
 @ViewComponent
 public class OpportunityPipelineFunnelChartDashlet extends CssLayout implements IOpportunityPipelineFunnelChartDashlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public void display() {
+    @Override
+    public void display() {
 
-	}
+    }
 
-	@Override
-	public ComponentContainer getWidget() {
-		return this;
-	}
+    @Override
+    public ComponentContainer getWidget() {
+        return this;
+    }
 
-	@Override
-	public void addViewListener(ViewListener listener) {
+    @Override
+    public void addViewListener(ViewListener listener) {
 
-	}
+    }
 
 }

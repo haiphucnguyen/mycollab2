@@ -18,8 +18,8 @@ package com.esofthead.mycollab.community.module.project.view.bug;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.community.ui.chart.Key;
-import com.esofthead.mycollab.community.ui.chart.PieChartWrapper;
+import com.esofthead.mycollab.ui.chart.Key;
+import com.esofthead.mycollab.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
