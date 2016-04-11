@@ -44,7 +44,7 @@ public class PremiumScheduleConfiguration {
         AutowiringSpringBeanJobFactory factory = new AutowiringSpringBeanJobFactory();
         factory.setApplicationContext(applicationContext);
         bean.setJobFactory(factory);
-        bean.setApplicationContextSchedulerContextKey("communityScheduler");
+        bean.setApplicationContextSchedulerContextKey("premiumScheduler");
 
         bean.setTriggers(checkUpdateJobTrigger().getObject());
         return bean;

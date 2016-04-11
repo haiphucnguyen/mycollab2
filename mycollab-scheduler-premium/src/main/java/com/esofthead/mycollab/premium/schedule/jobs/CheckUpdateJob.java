@@ -45,16 +45,18 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
     public void executeJob(JobExecutionContext context) throws JobExecutionException {
         RestTemplate restTemplate = new RestTemplate();
         LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
-        if (licenseInfo == null || licenseInfo.isExpired()) {
-            return;
-        }
         String customerId = licenseInfo.getCustomerId();
-        String result = restTemplate.getForObject("https://api.mycollab.com/api/checkupdate?version=" +
+        String result = restTemplate.getForObject("https://api.mycollab.com/api/checkpremiumupdate?version=" +
                 MyCollabVersion.getVersion() + "&customerId=" + customerId, String.class);
         Gson gson = new Gson();
         final Properties props = gson.fromJson(result, Properties.class);
         String version = props.getProperty("version");
         if (MyCollabVersion.isEditionNewer(version)) {
+            if (licenseInfo.isInvalid() || licenseInfo.isTrial() || licenseInfo.isExpired()) {
+                String manualDownloadLink = props.getProperty("downloadLink");
+                NotificationBroadcaster.removeGlobalNotification(NewUpdateAvailableNotification.class);
+                NotificationBroadcaster.broadcast(new NewUpdateAvailableNotification(version, null, manualDownloadLink, null));
+            }
             if (!isDownloading) {
                 if (latestFileDownloadedPath != null) {
                     File installerFile = new File(latestFileDownloadedPath);
