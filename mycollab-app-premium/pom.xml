@@ -194,6 +194,13 @@
                         <lib>${java.home}/lib/rt.jar</lib>
                         <lib>${java.home}/lib/jsse.jar</lib>
                     </libs>
+                    <inFilter>!com/esofthead/mycollab/optional/**</inFilter>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>com.esofthead.mycollab</groupId>
+                            <artifactId>*</artifactId>
+                        </exclusion>
+                    </exclusions>
                 </configuration>
             </plugin>
 
