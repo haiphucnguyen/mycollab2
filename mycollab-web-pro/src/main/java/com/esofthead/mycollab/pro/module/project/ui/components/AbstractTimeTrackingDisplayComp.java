@@ -22,7 +22,6 @@ import com.esofthead.mycollab.pro.module.project.view.time.TimeTrackingTableDisp
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
@@ -125,7 +124,7 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
             summaryLayout.with(hoursSummaryLayout).withAlign(hoursSummaryLayout, Alignment.TOP_LEFT);
 
             MVerticalLayout costSummaryLayout = new MVerticalLayout().withMargin(false).with(ELabel.h3("Cost")
-                    .withStyleName(ValoTheme.LABEL_COLORED).withWidthUndefined(),
+                            .withStyleName(ValoTheme.LABEL_COLORED).withWidthUndefined(),
                     ELabel.hr(), new ELabel(cost + "").withWidthUndefined()).alignAll(Alignment.TOP_RIGHT).withWidth("250px");
             summaryLayout.with(costSummaryLayout).withAlign(costSummaryLayout, Alignment.TOP_RIGHT);
         }
