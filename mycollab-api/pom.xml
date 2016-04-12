@@ -50,5 +50,12 @@
             <artifactId>gson</artifactId>
             <version>${gsonVersion}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.j2html</groupId>
+            <artifactId>j2html</artifactId>
+            <version>0.7</version>
+        </dependency>
+
     </dependencies>
 </project>

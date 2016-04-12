@@ -225,7 +225,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${installer.staging.dir}/lib</outputDirectory>
-                            <includeScope>provided</includeScope>
+                            <excludeScope>provided</excludeScope>
                             <excludeGroupIds>com.esofthead.mycollab</excludeGroupIds>
                         </configuration>
                     </execution>

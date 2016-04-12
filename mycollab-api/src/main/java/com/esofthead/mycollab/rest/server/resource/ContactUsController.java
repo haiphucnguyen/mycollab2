@@ -26,7 +26,6 @@ public class ContactUsController {
                           @RequestParam("company") String company, @RequestParam("role") String role,
                           @RequestParam("industry") String industry, @RequestParam("budget") String budget,
                           @RequestParam("subject") String subject, @RequestParam("message") String message) {
-
         Div bodyContent = new Div().appendChild(new Ul().appendChild(
                 new Li().appendText(String.format("Name: %s", name)),
                 new Li().appendText(String.format("Email: %s", email)),

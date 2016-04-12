@@ -30,7 +30,7 @@ import java.util.Properties;
  * @since 5.2.5
  */
 @RestController
-public class LicenseManager {
+public class LicenseManagerController {
 
     @Autowired
     private ProEditionInfoMapper premiumUserMapper;
@@ -93,7 +93,7 @@ public class LicenseManager {
         info.setIssueDate(new LocalDate().toDate());
         info.setLicenseOrg("MyCollab");
         info.setMaxUsers(10);
-        LicenseManager generator = new LicenseManager();
+        LicenseManagerController generator = new LicenseManagerController();
         return generator.encode(info);
     }
 
@@ -113,7 +113,7 @@ public class LicenseManager {
 
             License license = new License();
             license.setLicense(licenseStrInfo);
-            InputStream privateStream = LicenseManager.class.getClassLoader().getResourceAsStream("secring.gpg");
+            InputStream privateStream = LicenseManagerController.class.getClassLoader().getResourceAsStream("secring.gpg");
             license.loadKey(privateStream, "MyCollab Ltd (The private key for MyCollab license) <hainguyen@mycollab.com>");
             return license.encodeLicense("HanLong1979");
         } catch (Exception e) {
@@ -124,7 +124,7 @@ public class LicenseManager {
     private Properties decode(String encodeStr) {
         try {
             License license = new License();
-            InputStream publicStream = LicenseManager.class.getClassLoader().getResourceAsStream("pubring.gpg");
+            InputStream publicStream = LicenseManagerController.class.getClassLoader().getResourceAsStream("pubring.gpg");
             license.loadKeyRing(publicStream, null);
             license.setLicenseEncoded(encodeStr);
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -146,7 +146,7 @@ public class LicenseManager {
         info.setIssueDate(new LocalDate().minusDays(30).toDate());
         info.setLicenseOrg("eSoftHead");
         info.setMaxUsers(10);
-        LicenseManager generator = new LicenseManager();
+        LicenseManagerController generator = new LicenseManagerController();
         String str = generator.encode(info);
         System.out.println(str);
         generator.decode(str);
