@@ -22,13 +22,13 @@ div{
     #parse("templates/email/logo.mt")
     <tr>
       <td>
-        <div style="padding: 25px 25px;">
+        <div style="padding: 25px 25px 10px 25px">
           Dear ${lastname}, <br/>
           Congratulations! MyCollab is ready for download and use in your team. Get it in the link below
           <a style="text-decoration:none;" href="$!downloadLink"/>
-            <div style="background-color: rgb(32, 36, 35); text-align: center; padding: 3px 0px; width: 330px; margin: 0px auto;">
-              <div style="width: 100%; padding: 10px 0px; border-color: rgb(99, 102, 101);border-width: 1px 0px; border-style: solid; margin: 0px auto;">
-                <span style="width: 100%; font-size: 22px; color: rgb(255, 255, 255);text-align: center">Download</span>
+            <div style="background-color: #1a8955; text-align: center; padding: 3px 0px; width: 330px; margin: 0px auto;">
+              <div style="width: 100%; padding: 10px 0px; border-color: #fff;border-width: 1px 0px; border-style: solid; margin: 0px auto;">
+                <span style="width: 100%; font-size: 22px; color: #fff;text-align: center">Download</span>
               </div>
             </div>
           </a>

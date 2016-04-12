@@ -64,35 +64,43 @@ public class CampaignController {
     @RequestMapping(path = "/register-ce", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
     public Map registerCE(@RequestParam("firstname") final String firstname, @RequestParam("lastname") final String lastname,
-                          @RequestParam("email") final String email, @RequestParam("role") String role,
-                          @RequestParam("company") String company, @RequestParam("phone") String phone,
-                          @RequestParam("country") String country, @RequestParam("edition") String edition) {
-        CommunityLead communityLead = new CommunityLead();
-        communityLead.setFirstname(firstname);
-        communityLead.setLastname(lastname);
-        communityLead.setEmail(email);
-        communityLead.setCompany(company);
-        communityLead.setRole(role);
-        communityLead.setPhone(phone);
-        communityLead.setCountry(country);
-        communityLead.setRegisterdate(new LocalDate().toDate());
-        communityLead.setVersion(MyCollabVersion.getVersion());
-        communityLead.setEdition(edition);
+                          @RequestParam("email") final String email, @RequestParam("role") final String role,
+                          @RequestParam("company") final String company, @RequestParam("phone") final String phone,
+                          @RequestParam("country") final String country, @RequestParam("edition") final String
+                                      edition) {
+        final EditionInfo info = editionInfoResolver.getEditionInfo();
 
-        CommunityLeadExample ex = new CommunityLeadExample();
-        ex.createCriteria().andFirstnameEqualTo(firstname).andLastnameEqualTo(lastname).andEmailEqualTo(email)
-                .andVersionEqualTo(MyCollabVersion.getVersion());
-        if (communityLeadMapper.countByExample(ex) == 0) {
-            communityLeadMapper.insert(communityLead);
-        }
-
-        EditionInfo info = editionInfoResolver.getEditionInfo();
-        contentGenerator.putVariable("lastname", lastname);
-        contentGenerator.putVariable("version", info.getVersion());
-        contentGenerator.putVariable("downloadLink", info.getCommunityDownloadLink());
         new Thread() {
             @Override
             public void run() {
+                CommunityLead communityLead = new CommunityLead();
+                communityLead.setFirstname(firstname);
+                communityLead.setLastname(lastname);
+                communityLead.setEmail(email);
+                communityLead.setCompany(company);
+                communityLead.setRole(role);
+                communityLead.setPhone(phone);
+                communityLead.setCountry(country);
+                communityLead.setRegisterdate(new LocalDate().toDate());
+                communityLead.setVersion(MyCollabVersion.getVersion());
+                communityLead.setEdition(edition);
+
+                CommunityLeadExample ex = new CommunityLeadExample();
+                ex.createCriteria().andFirstnameEqualTo(firstname).andLastnameEqualTo(lastname).andEmailEqualTo(email)
+                        .andVersionEqualTo(MyCollabVersion.getVersion());
+                if (communityLeadMapper.countByExample(ex) == 0) {
+                    communityLeadMapper.insert(communityLead);
+                }
+
+
+                contentGenerator.putVariable("lastname", lastname);
+                contentGenerator.putVariable("version", info.getVersion());
+                if ("Ultimate".equals(edition)) {
+                    contentGenerator.putVariable("downloadLink", info.getPremiumDownloadLink());
+                } else {
+                    contentGenerator.putVariable("downloadLink", info.getCommunityDownloadLink());
+                }
+
                 extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail(), SiteConfiguration.getDefaultSiteName(),
                         Arrays.asList(new MailRecipientField(email, firstname + " " + lastname)), null, null, "MyCollab is " +
                                 "ready for download", contentGenerator.parseFile("templates/email/downloadInfo.mt",
@@ -101,7 +109,6 @@ public class CampaignController {
         }.start();
 
         Map<String, String> result = new HashMap<>();
-
         String name = String.format("MyCollab-All-%s.zip", info.getVersion());
         String link = info.getCommunityDownloadLink();
         String altLink = info.getAltCommunityDownloadLink();
