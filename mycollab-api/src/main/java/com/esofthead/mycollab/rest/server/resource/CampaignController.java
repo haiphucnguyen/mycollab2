@@ -1,7 +1,11 @@
 package com.esofthead.mycollab.rest.server.resource;
 
+import com.esofthead.mycollab.common.domain.MailRecipientField;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.core.utils.FileUtils;
+import com.esofthead.mycollab.module.mail.service.ExtMailService;
+import com.esofthead.mycollab.module.mail.service.IContentGenerator;
 import com.esofthead.mycollab.ondemand.module.support.dao.CommunityLeadMapper;
 import com.esofthead.mycollab.ondemand.module.support.domain.CommunityLead;
 import com.esofthead.mycollab.ondemand.module.support.domain.CommunityLeadExample;
@@ -17,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,10 +55,16 @@ public class CampaignController {
         return IOUtils.toString(pricingStream, "UTF-8");
     }
 
+    @Autowired
+    private IContentGenerator contentGenerator;
+
+    @Autowired
+    private ExtMailService extMailService;
+
     @RequestMapping(path = "/register-ce", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
-    public Map registerCE(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
-                          @RequestParam("email") String email, @RequestParam("role") String role,
+    public Map registerCE(@RequestParam("firstname") final String firstname, @RequestParam("lastname") final String lastname,
+                          @RequestParam("email") final String email, @RequestParam("role") String role,
                           @RequestParam("company") String company, @RequestParam("phone") String phone,
                           @RequestParam("country") String country, @RequestParam("edition") String edition) {
         CommunityLead communityLead = new CommunityLead();
@@ -74,8 +85,23 @@ public class CampaignController {
         if (communityLeadMapper.countByExample(ex) == 0) {
             communityLeadMapper.insert(communityLead);
         }
-        Map<String, String> result = new HashMap<>();
+
         EditionInfo info = editionInfoResolver.getEditionInfo();
+        contentGenerator.putVariable("lastname", lastname);
+        contentGenerator.putVariable("version", info.getVersion());
+        contentGenerator.putVariable("downloadLink", info.getCommunityDownloadLink());
+        new Thread() {
+            @Override
+            public void run() {
+                extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail(), SiteConfiguration.getDefaultSiteName(),
+                        Arrays.asList(new MailRecipientField(email, firstname + " " + lastname)), null, null, "MyCollab is " +
+                                "ready for download", contentGenerator.parseFile("templates/email/downloadInfo.mt",
+                                SiteConfiguration.getDefaultLocale()), null);
+            }
+        }.start();
+
+        Map<String, String> result = new HashMap<>();
+
         String name = String.format("MyCollab-All-%s.zip", info.getVersion());
         String link = info.getCommunityDownloadLink();
         String altLink = info.getAltCommunityDownloadLink();
