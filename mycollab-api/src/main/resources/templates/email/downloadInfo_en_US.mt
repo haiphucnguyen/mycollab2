@@ -25,13 +25,15 @@ div{
         <div style="padding: 25px 25px 10px 25px">
           Dear ${lastname}, <br/>
           Congratulations! MyCollab is ready for download and use in your team. Get it in the link below
-          <a style="text-decoration:none;" href="$!downloadLink"/>
-            <div style="background-color: #1a8955; text-align: center; padding: 3px 0px; width: 330px; margin: 0px auto;">
-              <div style="width: 100%; padding: 10px 0px; border-color: #fff;border-width: 1px 0px; border-style: solid; margin: 0px auto;">
-                <span style="width: 100%; font-size: 22px; color: #fff;text-align: center">Download</span>
+          <div style="padding-top: 10px">
+            <a style="text-decoration:none;" href="$!downloadLink"/>
+              <div style="background-color: #1a8955; text-align: center; padding: 3px 0px; width: 330px; margin: 0px auto;">
+                <div style="width: 100%; padding: 10px 0px; border-color: #fff;border-width: 1px 0px; border-style: solid; margin: 0px auto;">
+                  <span style="width: 100%; font-size: 22px; color: #fff;text-align: center">Download</span>
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
         <div style="padding: 0px 25px;">
         As you get started with MyCollab, we recommend that you:

@@ -66,8 +66,7 @@ public class CampaignController {
     public Map registerCE(@RequestParam("firstname") final String firstname, @RequestParam("lastname") final String lastname,
                           @RequestParam("email") final String email, @RequestParam("role") final String role,
                           @RequestParam("company") final String company, @RequestParam("phone") final String phone,
-                          @RequestParam("country") final String country, @RequestParam("edition") final String
-                                      edition) {
+                          @RequestParam("country") final String country, @RequestParam("edition") final String edition) {
         final EditionInfo info = editionInfoResolver.getEditionInfo();
 
         new Thread() {
