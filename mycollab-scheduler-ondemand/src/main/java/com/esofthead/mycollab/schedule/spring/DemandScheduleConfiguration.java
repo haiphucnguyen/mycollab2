@@ -73,7 +73,7 @@ public class DemandScheduleConfiguration {
     public CronTriggerFactoryBean deleteObsoleteAccountsTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(removeObsoleteAccountsJob().getObject());
-        bean.setCronExpression("0 * * * * ?");
+        bean.setCronExpression("0 0 0 * * ?");
         return bean;
     }
 
@@ -89,7 +89,7 @@ public class DemandScheduleConfiguration {
     public CronTriggerFactoryBean sendOneweekFollowupDownloadedUsersTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(sendOneweekFollowupDownloadedUsersJob().getObject());
-        bean.setCronExpression("0 0 9 * * ?");
+        bean.setCronExpression("0 0 0 * * ?");
         return bean;
     }
 
