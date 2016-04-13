@@ -1,0 +1,1 @@
+DELETE FROM `s_timeline_tracking_cache` WHERE id > 0

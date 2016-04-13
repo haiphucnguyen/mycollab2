@@ -92,13 +92,32 @@ public class TaskStatusTrendChartWidget extends Depot {
             dataset = new TimeSeriesCollection();
             if (groupItems != null) {
                 Set<Map.Entry<String, List<GroupItem>>> entries = groupItems.entrySet();
+                Map<Date, Integer> openMap = new HashMap<>(30);
                 for (Map.Entry<String, List<GroupItem>> entry : entries) {
-                    TimeSeries series = new TimeSeries(entry.getKey());
-                    for (GroupItem item : entry.getValue()) {
-                        series.add(new Day(formatter.parseDateTime(item.getGroupname()).toDate()), item.getValue());
+                    if (com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum.Closed.name().equals(entry.getKey())) {
+                        TimeSeries series = new TimeSeries(entry.getKey());
+                        for (GroupItem item : entry.getValue()) {
+                            series.add(new Day(formatter.parseDateTime(item.getGroupname()).toDate()), item.getValue());
+                        }
+                        dataset.addSeries(series);
+                    } else {
+                        for (GroupItem item : entry.getValue()) {
+                            Date date = formatter.parseDateTime(item.getGroupname()).toDate();
+                            Integer val = openMap.get(date);
+                            if (val == null) {
+                                openMap.put(date, item.getValue());
+                            } else {
+                                openMap.put(date, val + item.getValue());
+                            }
+                        }
                     }
-                    dataset.addSeries(series);
                 }
+
+                TimeSeries series = new TimeSeries("Unresolved");
+                for (Map.Entry<Date, Integer> entry : openMap.entrySet()) {
+                    series.add(new Day(entry.getKey()), entry.getValue());
+                }
+                dataset.addSeries(series);
 
                 JFreeChart chart = ChartFactory.createTimeSeriesChart("", "", "", dataset,
                         false, true, false);
