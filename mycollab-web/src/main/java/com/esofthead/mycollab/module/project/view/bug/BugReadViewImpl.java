@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -74,7 +75,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     private static final Logger LOG = LoggerFactory.getLogger(BugReadViewImpl.class);
 
-    private ApplicationEventListener<BugEvent.BugChanged> searchHandler = new
+    private ApplicationEventListener<BugEvent.BugChanged> bugChangedHandler = new
             ApplicationEventListener<BugEvent.BugChanged>() {
                 @Override
                 @Subscribe
@@ -95,6 +96,18 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     public BugReadViewImpl() {
         super(AppContext.getMessage(BugI18nEnum.VIEW_READ_TITLE),
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG), new BugPreviewFormLayout());
+    }
+
+    @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(bugChangedHandler);
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(bugChangedHandler);
+        super.detach();
     }
 
     private void displayWorkflowControl() {
