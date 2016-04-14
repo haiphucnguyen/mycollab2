@@ -35,10 +35,7 @@ import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -56,10 +53,10 @@ public class ToggleTaskSummaryField extends CssLayout {
     private MHorizontalLayout buttonControls;
 
     public ToggleTaskSummaryField(final SimpleTask task) {
-        this(task, Integer.MAX_VALUE, false);
+        this(task, Integer.MAX_VALUE);
     }
 
-    public ToggleTaskSummaryField(final SimpleTask task, int maxLength, boolean canRemoveParentLink) {
+    public ToggleTaskSummaryField(final SimpleTask task, int maxLength) {
         this.setWidth("100%");
         this.maxLength = maxLength;
         this.task = task;
@@ -105,26 +102,12 @@ public class ToggleTaskSummaryField extends CssLayout {
             instantEditBtn.addStyleName(ValoTheme.BUTTON_ICON_ALIGN_TOP);
             instantEditBtn.setIcon(FontAwesome.EDIT);
             buttonControls.with(instantEditBtn);
-
-            if (canRemoveParentLink) {
-                Button unlinkBtn = new Button(null, new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        task.setParenttaskid(null);
-                        ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                        taskService.updateWithSession(task, AppContext.getUsername());
-                        fireEvent(null);
-                    }
-                });
-                unlinkBtn.setIcon(FontAwesome.UNLINK);
-                unlinkBtn.setDescription("Remove parent-child relationship");
-                unlinkBtn.addStyleName(ValoTheme.BUTTON_ICON_ALIGN_TOP);
-                unlinkBtn.addStyleName(ValoTheme.BUTTON_ICON_ONLY);
-                buttonControls.with(unlinkBtn);
-            }
-
             this.addComponent(buttonControls);
         }
+    }
+
+    public void addControl(Component control) {
+        buttonControls.addComponent(control);
     }
 
     private void updateFieldValue(TextField editField) {

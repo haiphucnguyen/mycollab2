@@ -22,7 +22,6 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.HumanTime;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.eventmanager.EventBusFactory$;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -35,12 +34,13 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
-import com.esofthead.mycollab.module.project.view.task.components.ToggleTaskSummaryField;
+import com.esofthead.mycollab.module.project.view.task.components.ToggleTaskSummaryWithParentRelationshipField;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.VerticalRemoveInlineComponentMarker;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
@@ -59,7 +59,6 @@ import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
 
@@ -148,7 +147,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                     }
                 };
 
-        private VerticalLayout tasksLayout;
+        private VerticalRemoveInlineComponentMarker tasksLayout;
         private SimpleTask beanItem;
 
         SubTasksComp(SimpleTask task) {
@@ -170,7 +169,8 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
         @Override
         protected Component initContent() {
             MHorizontalLayout contentLayout = new MHorizontalLayout().withWidth("100%");
-            tasksLayout = new MVerticalLayout().withWidth("100%").withMargin(new MarginInfo(false, true, true, false));
+            tasksLayout = new VerticalRemoveInlineComponentMarker();
+            tasksLayout.withWidth("100%").withMargin(new MarginInfo(false, true, true, false));
             contentLayout.with(tasksLayout).expand(tasksLayout);
 
             Button addNewTaskBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
@@ -212,6 +212,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
 
         private HorizontalLayout generateSubTaskContent(final SimpleTask subTask) {
             MHorizontalLayout layout = new MHorizontalLayout().withStyleName(UIConstants.HOVER_EFFECT_NOT_BOX);
+            layout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
             final CheckBox checkBox = new CheckBox("", subTask.isCompleted());
             checkBox.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
@@ -225,8 +226,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             Img avatarImg = new Img(subTask.getAssignUserFullName(), avatarLink).setTitle(subTask.getAssignUserFullName());
             layout.with(new ELabel(avatarImg.write(), ContentMode.HTML).withWidthUndefined());
 
-            final ToggleTaskSummaryField toggleTaskSummaryField = new ToggleTaskSummaryField(subTask, Integer.MAX_VALUE, true);
-
+            final ToggleTaskSummaryWithParentRelationshipField toggleTaskSummaryField = new ToggleTaskSummaryWithParentRelationshipField(subTask);
             layout.with(toggleTaskSummaryField).expand(toggleTaskSummaryField);
 
             checkBox.addValueChangeListener(new ValueChangeListener() {
