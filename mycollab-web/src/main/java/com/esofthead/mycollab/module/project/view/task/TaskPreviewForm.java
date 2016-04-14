@@ -41,6 +41,7 @@ import com.esofthead.mycollab.module.project.view.task.components.TaskSearchPane
 import com.esofthead.mycollab.module.project.view.task.components.ToggleTaskSummaryWithParentRelationshipField;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
@@ -60,6 +61,8 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.vaadin.jouni.restrain.Restrain;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -194,7 +197,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             addNewTaskBtn.setIcon(FontAwesome.PLUS);
             addNewTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
-            SplitButton splitButton = new SplitButton(addNewTaskBtn);
+            final SplitButton splitButton = new SplitButton(addNewTaskBtn);
             splitButton.setWidthUndefined();
             splitButton.addStyleName(UIConstants.BUTTON_ACTION);
 
@@ -202,6 +205,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             Button selectBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
+                    splitButton.setPopupVisible(false);
                     UI.getCurrent().addWindow(new SelectChildTaskWindow(beanItem));
                 }
             });
@@ -273,23 +277,55 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
     }
 
     private static class SelectChildTaskWindow extends Window {
-        private TaskSearchCriteria baseSearchCriteria;
         private TaskSearchPanel taskSearchPanel;
+        private SimpleTask parentTask;
 
-        SelectChildTaskWindow(SimpleTask task) {
+        SelectChildTaskWindow(SimpleTask parentTask) {
             super("Select Task");
             this.setWidth("800px");
             this.setModal(true);
             this.setResizable(false);
+            this.parentTask = parentTask;
 
-            baseSearchCriteria = new TaskSearchCriteria();
+            TaskSearchCriteria baseSearchCriteria = new TaskSearchCriteria();
             baseSearchCriteria.setProjectId(NumberSearchField.and(CurrentProjectVariables.getProjectId()));
             baseSearchCriteria.setHasParentTask(new BooleanSearchField(false));
 
             taskSearchPanel = new TaskSearchPanel(false);
-
-            MVerticalLayout content = new MVerticalLayout(taskSearchPanel);
+            final DefaultBeanPagedList<ProjectTaskService, TaskSearchCriteria, SimpleTask> taskList = new DefaultBeanPagedList<>(
+                    ApplicationContextUtil.getSpringBean(ProjectTaskService.class), new TaskRowRenderer(), 10);
+            new Restrain(taskList).setMaxHeight("800px");
+            taskSearchPanel.addSearchHandler(new SearchHandler<TaskSearchCriteria>() {
+                @Override
+                public void onSearch(TaskSearchCriteria criteria) {
+                    criteria.setProjectId(NumberSearchField.and(CurrentProjectVariables.getProjectId()));
+                    criteria.setHasParentTask(new BooleanSearchField(false));
+                    taskList.setSearchCriteria(criteria);
+                }
+            });
+            MVerticalLayout content = new MVerticalLayout(taskSearchPanel, taskList).withSpacing(false);
+            taskList.setSearchCriteria(baseSearchCriteria);
             setContent(content);
+        }
+
+        private class TaskRowRenderer implements AbstractBeanPagedList.RowDisplayHandler<SimpleTask> {
+            @Override
+            public Component generateRow(AbstractBeanPagedList host, final SimpleTask item, int rowIndex) {
+                Button taskLink = new Button(item.getTaskname());
+                taskLink.addStyleName(UIConstants.BUTTON_LINK);
+                taskLink.addClickListener(new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent clickEvent) {
+                        item.setParenttaskid(parentTask.getId());
+                        ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                        projectTaskService.updateWithSession(item, AppContext.getUsername());
+                        EventBusFactory.getInstance().post(new TaskEvent.NewTaskAdded(this, item.getId()));
+                        close();
+                    }
+                });
+                MCssLayout layout = new MCssLayout(taskLink).withStyleName("list-row").withFullWidth();
+                return layout;
+            }
         }
     }
 }

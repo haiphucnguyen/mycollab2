@@ -68,19 +68,23 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
 
     @Override
     protected ComponentContainer buildSearchTitle() {
-        savedFilterComboBox = new TaskSavedFilterComboBox();
-        savedFilterComboBox.addQuerySelectListener(new SavedFilterComboBox.QuerySelectListener() {
-            @Override
-            public void querySelect(SavedFilterComboBox.QuerySelectEvent querySelectEvent) {
-                List<SearchFieldInfo> fieldInfos = querySelectEvent.getSearchFieldInfos();
-                TaskSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class,
-                        fieldInfos);
-                criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(TaskSearchPanel.this, criteria));
-            }
-        });
-        ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml()).withWidthUndefined();
-        return new MHorizontalLayout(taskIcon, savedFilterComboBox).expand(savedFilterComboBox).alignAll(Alignment.MIDDLE_LEFT);
+        if (canSwitchToAdvanceLayout) {
+            savedFilterComboBox = new TaskSavedFilterComboBox();
+            savedFilterComboBox.addQuerySelectListener(new SavedFilterComboBox.QuerySelectListener() {
+                @Override
+                public void querySelect(SavedFilterComboBox.QuerySelectEvent querySelectEvent) {
+                    List<SearchFieldInfo> fieldInfos = querySelectEvent.getSearchFieldInfos();
+                    TaskSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class,
+                            fieldInfos);
+                    criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                    EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(TaskSearchPanel.this, criteria));
+                }
+            });
+            ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml()).withWidthUndefined();
+            return new MHorizontalLayout(taskIcon, savedFilterComboBox).expand(savedFilterComboBox).alignAll(Alignment.MIDDLE_LEFT);
+        } else {
+            return null;
+        }
     }
 
     @Override
