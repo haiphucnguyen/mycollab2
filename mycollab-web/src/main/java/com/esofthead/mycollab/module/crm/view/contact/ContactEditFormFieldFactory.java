@@ -104,14 +104,14 @@ class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGr
                 }
             });
 
-            TextField firstnameTxtField = new TextField();
-            firstnameTxtField.setWidth("100%");
-            firstnameTxtField.setNullRepresentation("");
-            layout.with(firstnameTxtField).expand(firstnameTxtField);
+            TextField firstNameField = new TextField();
+            firstNameField.setWidth("100%");
+            firstNameField.setNullRepresentation("");
+            layout.with(firstNameField).expand(firstNameField);
 
             // binding field group
             fieldGroup.bind(prefixSelect, "prefix");
-            fieldGroup.bind(firstnameTxtField, "firstname");
+            fieldGroup.bind(firstNameField, "firstname");
 
             return layout;
         }

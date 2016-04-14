@@ -56,6 +56,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.peter.buttongroup.ButtonGroup;
@@ -298,7 +299,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
             BugRelationService bugRelationService = ApplicationContextUtil.getSpringBean(BugRelationService.class);
             List<SimpleRelatedBug> relatedBugs = bugRelationService.findRelatedBugs(bug.getId());
-            if (relatedBugs != null && relatedBugs.size() > 0) {
+            if (CollectionUtils.isNotEmpty(relatedBugs)) {
                 for (final SimpleRelatedBug relatedBug : relatedBugs) {
                     ELabel relatedLink = new ELabel(AppContext.getMessage(OptionI18nEnum.BugRelation.class,
                             relatedBug.getRelatedType())).withStyleName(UIConstants.FIELD_NOTE).withWidthUndefined();
@@ -333,7 +334,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     @Override
     protected ComponentContainer createButtonControls() {
         ProjectPreviewFormControlsGenerator<SimpleBug> bugPreviewFormControls = new ProjectPreviewFormControlsGenerator<>(previewForm);
-        MButton linkBtn = new MButton("Link", new Button.ClickListener() {
+        MButton linkBtn = new MButton("Dependencies", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
                 UI.getCurrent().addWindow(new LinkIssueWindow(beanItem));

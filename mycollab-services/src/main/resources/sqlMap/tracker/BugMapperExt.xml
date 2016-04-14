@@ -593,25 +593,25 @@
                     AND m_tracker_bug.id = m_tracker_bug_related_item.bugid
                     AND m_tracker_bug_related_item.type = 'Component' 
                     AND m_tracker_component.id = m_tracker_bug_related_item.typeId) AS numOpen,
-             (SELECT COUNT(*) 
+            (SELECT COUNT(*)
                 FROM m_tracker_bug, m_tracker_bug_related_item
                 WHERE m_tracker_bug.status="InProgress" 
                     AND m_tracker_bug.id = m_tracker_bug_related_item.bugid
                     AND m_tracker_bug_related_item.type = 'Component' 
                     AND m_tracker_component.id = m_tracker_bug_related_item.typeId) AS numInProgress,
-              (SELECT COUNT(*) 
+            (SELECT COUNT(*)
                 FROM m_tracker_bug, m_tracker_bug_related_item
                 WHERE m_tracker_bug.status="Verified" 
                     AND m_tracker_bug.id = m_tracker_bug_related_item.bugid
                     AND m_tracker_bug_related_item.type = 'Component' 
                     AND m_tracker_component.id = m_tracker_bug_related_item.typeId) AS numVerified,
-               (SELECT COUNT(*) 
+            (SELECT COUNT(*)
                 FROM m_tracker_bug, m_tracker_bug_related_item
                 WHERE m_tracker_bug.status="Resolved" 
                     AND m_tracker_bug.id = m_tracker_bug_related_item.bugid
                     AND m_tracker_bug_related_item.type = 'Component' 
                     AND m_tracker_component.id = m_tracker_bug_related_item.typeId) AS numResolved,
-                (SELECT COUNT(*) 
+            (SELECT COUNT(*)
                 FROM m_tracker_bug, m_tracker_bug_related_item
                 WHERE m_tracker_bug.status="Reopenned" 
                     AND m_tracker_bug.id = m_tracker_bug_related_item.bugid

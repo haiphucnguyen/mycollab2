@@ -23,11 +23,10 @@
               m_tracker_bug.ganttIndex AS related_ganttIndex, m_tracker_bug.percentagecomplete AS related_percentagecomplete,
               m_tracker_bug.detail AS related_detail, m_tracker_bug.environment AS related_environment,
               m_tracker_bug.description AS related_description,
-            m_tracker_related_bug.relatetype AS relatedType
+              m_tracker_related_bug.relatetype AS relatedType
             FROM m_tracker_bug, m_tracker_related_bug
             WHERE m_tracker_related_bug.bugid = @{bugId} AND m_tracker_related_bug.relatedid = m_tracker_bug.id
         ]]>
     </select>
-
 
 </mapper>

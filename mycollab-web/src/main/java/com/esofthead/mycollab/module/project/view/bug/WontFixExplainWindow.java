@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.view.bug.components.BugResolutionComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
@@ -39,6 +40,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.data.Property;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -148,7 +150,6 @@ public class WontFixExplainWindow extends Window {
                 controlsBtn.with(cancelBtn, wonFixBtn);
 
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
-
                 return layout;
             }
 
@@ -176,7 +177,7 @@ public class WontFixExplainWindow extends Window {
             @Override
             protected Field<?> onCreateField(final Object propertyId) {
                 if (propertyId.equals("resolution")) {
-                    return BugResolutionComboBox.getInstanceForWontFixWindow();
+                    return new ResolutionField();
                 } else if (propertyId.equals("assignuser")) {
                     return new ProjectMemberSelectionField();
                 } else if (propertyId.equals("fixedVersions")) {
@@ -189,6 +190,42 @@ public class WontFixExplainWindow extends Window {
                 }
 
                 return null;
+            }
+
+            private class ResolutionField extends CompoundCustomField<BugWithBLOBs> {
+                private MHorizontalLayout layout;
+                private BugResolutionComboBox resolutionComboBox;
+
+                ResolutionField() {
+                    resolutionComboBox = BugResolutionComboBox.getInstanceForWontFixWindow();
+                }
+
+                @Override
+                protected Component initContent() {
+                    layout = new MHorizontalLayout(resolutionComboBox);
+                    fieldGroup.bind(resolutionComboBox, BugWithBLOBs.Field.resolution.name());
+                    resolutionComboBox.addValueChangeListener(new ValueChangeListener() {
+                        @Override
+                        public void valueChange(Property.ValueChangeEvent event) {
+                            String value = (String) resolutionComboBox.getValue();
+                            if (OptionI18nEnum.BugResolution.Duplicate.name().equals(value)) {
+                                System.out.println("A");
+                            } else {
+
+                            }
+                        }
+                    });
+                    return layout;
+                }
+
+                @Override
+                public Class<? extends BugWithBLOBs> getType() {
+                    return BugWithBLOBs.class;
+                }
+            }
+
+            private class DuplicatedBugField {
+
             }
         }
     }
