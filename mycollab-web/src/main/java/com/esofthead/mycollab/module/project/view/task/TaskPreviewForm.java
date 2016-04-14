@@ -42,10 +42,7 @@ import com.esofthead.mycollab.module.project.view.task.components.ToggleTaskSumm
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
-import com.esofthead.mycollab.vaadin.ui.VerticalRemoveInlineComponentMarker;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.field.DateViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.DefaultViewField;
@@ -294,7 +291,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             taskSearchPanel = new TaskSearchPanel(false);
             final DefaultBeanPagedList<ProjectTaskService, TaskSearchCriteria, SimpleTask> taskList = new DefaultBeanPagedList<>(
                     ApplicationContextUtil.getSpringBean(ProjectTaskService.class), new TaskRowRenderer(), 10);
-            new Restrain(taskList).setMaxHeight("800px");
+            new Restrain(taskList).setMaxHeight((UIUtils.getBrowserHeight() - 120) + "px");
             taskSearchPanel.addSearchHandler(new SearchHandler<TaskSearchCriteria>() {
                 @Override
                 public void onSearch(TaskSearchCriteria criteria) {
@@ -316,15 +313,19 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                 taskLink.addClickListener(new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
-                        item.setParenttaskid(parentTask.getId());
-                        ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                        projectTaskService.updateWithSession(item, AppContext.getUsername());
-                        EventBusFactory.getInstance().post(new TaskEvent.NewTaskAdded(this, item.getId()));
+                        if (item.getId().equals(parentTask.getId())) {
+                            NotificationUtil.showErrorNotification("Can not assign the parent task to itself");
+                        } else {
+                            item.setParenttaskid(parentTask.getId());
+                            ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                            projectTaskService.updateWithSession(item, AppContext.getUsername());
+                            EventBusFactory.getInstance().post(new TaskEvent.NewTaskAdded(this, item.getId()));
+                        }
+
                         close();
                     }
                 });
-                MCssLayout layout = new MCssLayout(taskLink).withStyleName("list-row").withFullWidth();
-                return layout;
+                return new MCssLayout(taskLink).withStyleName("list-row").withFullWidth();
             }
         }
     }

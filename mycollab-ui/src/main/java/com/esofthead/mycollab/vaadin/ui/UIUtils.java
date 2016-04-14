@@ -54,6 +54,10 @@ public class UIUtils {
         return UI.getCurrent().getPage().getBrowserWindowWidth();
     }
 
+    public static Integer getBrowserHeight() {
+        return UI.getCurrent().getPage().getBrowserWindowHeight();
+    }
+
     public static void removeAllWindows() {
         Collection<Window> windows = UI.getCurrent().getWindows();
         for (Window window : windows) {

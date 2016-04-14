@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public interface PagableHandler extends Serializable {
+public interface PageableHandler extends Serializable {
     /**
      * Move current view to new page
      *
