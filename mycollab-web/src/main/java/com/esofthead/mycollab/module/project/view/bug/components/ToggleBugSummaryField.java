@@ -16,12 +16,14 @@
  */
 package com.esofthead.mycollab.module.project.view.bug.components;
 
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -50,14 +52,14 @@ import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
  */
 public class ToggleBugSummaryField extends AbstractToggleSummaryField {
     private boolean isRead = true;
-    private SimpleBug bug;
+    private BugWithBLOBs bug;
     private int maxLength;
 
-    public ToggleBugSummaryField(final SimpleBug bug) {
+    public ToggleBugSummaryField(final BugWithBLOBs bug) {
         this(bug, Integer.MAX_VALUE);
     }
 
-    public ToggleBugSummaryField(final SimpleBug bug, int trimCharacters) {
+    public ToggleBugSummaryField(final BugWithBLOBs bug, int trimCharacters) {
         this.bug = bug;
         this.maxLength = trimCharacters;
         titleLinkLbl = new Label(buildBugLink(), ContentMode.HTML);
@@ -114,7 +116,7 @@ public class ToggleBugSummaryField extends AbstractToggleSummaryField {
             bug.setSummary(newValue);
             titleLinkLbl.setValue(buildBugLink());
             BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-            bugService.updateWithSession(bug, AppContext.getUsername());
+            bugService.updateSelectiveWithSession(BeanUtility.deepClone(bug), AppContext.getUsername());
         }
 
         isRead = !isRead;
@@ -125,11 +127,11 @@ public class ToggleBugSummaryField extends AbstractToggleSummaryField {
         A bugLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateBugPreviewFullLink(bug.getBugkey(),
                 CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
         Div resultDiv = new DivLessFormatter().appendChild(bugLink);
-        if (bug.isOverdue()) {
+        if (SimpleBug.isOverdue(bug)) {
             bugLink.setCSSClass("overdue");
             resultDiv.appendChild(new Span().setCSSClass(UIConstants.LABEL_META_INFO).appendText(" - Due in " + AppContext
                     .formatDuration(bug.getDuedate())));
-        } else if (bug.isCompleted()) {
+        } else if (SimpleBug.isCompleted(bug)) {
             bugLink.setCSSClass("completed");
         }
 

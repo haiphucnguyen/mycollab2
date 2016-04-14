@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task.components;
 
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -37,7 +38,6 @@ import com.vaadin.event.FieldEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
@@ -108,10 +108,6 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
         }
     }
 
-    public void addControl(Component control) {
-        buttonControls.addComponent(control);
-    }
-
     private void updateFieldValue(TextField editField) {
         removeComponent(editField);
         addComponent(titleLinkLbl);
@@ -122,7 +118,7 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
             task.setTaskname(newValue);
             titleLinkLbl.setValue(buildTaskLink());
             ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-            taskService.updateWithSession(task, AppContext.getUsername());
+            taskService.updateSelectiveWithSession(BeanUtility.deepClone(task), AppContext.getUsername());
         }
 
         isRead = !isRead;

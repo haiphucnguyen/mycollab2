@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.vaadin.web.ui;
 
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -18,5 +19,9 @@ public class AbstractToggleSummaryField extends CssLayout {
 
     public void removeLabelStyleName(String styleName) {
         titleLinkLbl.removeStyleName(styleName);
+    }
+
+    public void addControl(Component control) {
+        buttonControls.addComponent(control);
     }
 }

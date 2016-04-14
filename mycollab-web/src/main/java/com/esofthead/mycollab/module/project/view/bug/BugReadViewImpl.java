@@ -21,7 +21,6 @@ import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -33,21 +32,21 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.view.bug.components.LinkIssueWindow;
 import com.esofthead.mycollab.module.project.view.bug.components.ToggleBugSummaryField;
-import com.esofthead.mycollab.module.tracker.dao.RelatedBugMapper;
-import com.esofthead.mycollab.module.tracker.domain.RelatedBugExample;
+import com.esofthead.mycollab.module.project.view.bug.components.ToggleBugSummaryWithDependentField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleRelatedBug;
 import com.esofthead.mycollab.module.tracker.service.BugRelationService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.esofthead.mycollab.vaadin.web.ui.*;
-import com.hp.gagawa.java.elements.A;
+import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.web.ui.ReadViewLayout;
+import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -57,15 +56,12 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
-
-import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
@@ -285,34 +281,11 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             List<SimpleRelatedBug> relatedBugs = bugRelationService.findRelatedBugs(bug.getId());
             if (relatedBugs != null && relatedBugs.size() > 0) {
                 for (final SimpleRelatedBug relatedBug : relatedBugs) {
-                    MHorizontalLayout bugContainer = new MHorizontalLayout().withWidth("100%");
-                    bugContainer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-                    String bugLinkValue = buildItemValue(relatedBug);
-                    Button relatedLink = new Button(AppContext.getMessage(OptionI18nEnum.BugRelation.class, relatedBug.getRelatedType()));
-                    relatedLink.setStyleName(UIConstants.BUTTON_BLOCK);
-                    ELabel bugLink = new ELabel(bugLinkValue, ContentMode.HTML).withWidthUndefined();
-                    Button removeBtn = new Button("Remove", new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(ClickEvent clickEvent) {
-                            ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                    AppContext.getSiteName()),
-                                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                                    AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                                    AppContext.getMessage(GenericI18Enum.BUTTON_NO), new ConfirmDialog.Listener() {
-                                        @Override
-                                        public void onClose(ConfirmDialog confirmDialog) {
-                                            RelatedBugExample ex = new RelatedBugExample();
-                                            ex.createCriteria().andBugidEqualTo(bug.getId()).andRelatedidEqualTo(relatedBug.getBugId());
-                                            RelatedBugMapper bugMapper = ApplicationContextUtil.getSpringBean(RelatedBugMapper.class);
-                                            bugMapper.deleteByExample(ex);
-                                            displayBugHeader(bug);
-                                        }
-                                    });
-                        }
-                    });
-                    removeBtn.setIcon(FontAwesome.TRASH_O);
-                    removeBtn.addStyleName(UIConstants.BUTTON_DANGER);
-                    bugContainer.with(relatedLink, removeBtn, bugLink).expand(bugLink).alignAll(Alignment.TOP_LEFT);
+                    ELabel relatedLink = new ELabel(AppContext.getMessage(OptionI18nEnum.BugRelation.class,
+                            relatedBug.getRelatedType())).withStyleName(UIConstants.FIELD_NOTE).withWidthUndefined();
+                    ToggleBugSummaryWithDependentField toggleRelatedBugField = new ToggleBugSummaryWithDependentField(bug, relatedBug.getRelatedBug());
+                    MHorizontalLayout bugContainer = new MHorizontalLayout(relatedLink, toggleRelatedBugField)
+                            .expand(toggleRelatedBugField).withWidth("100%");
                     header.with(bugContainer);
                 }
             }
@@ -331,16 +304,6 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         @Override
         public void setTitle(String title) {
         }
-    }
-
-    private static String buildItemValue(SimpleRelatedBug relatedBug) {
-        String linkName = String.format("[#%d] - %s", relatedBug.getBugKey(), relatedBug.getBugSummary());
-        A bugLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateBugPreviewFullLink(relatedBug.getBugKey(),
-                CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
-        bugLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.BUG,
-                relatedBug.getBugId() + ""));
-        bugLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-        return bugLink.write();
     }
 
     @Override

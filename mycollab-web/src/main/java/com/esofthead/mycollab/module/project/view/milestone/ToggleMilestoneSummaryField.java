@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
@@ -111,7 +112,7 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
             milestone.setName(newValue);
             titleLinkLbl.setValue(buildMilestoneLink());
             MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
-            milestoneService.updateWithSession(milestone, AppContext.getUsername());
+            milestoneService.updateSelectiveWithSession(BeanUtility.deepClone(milestone), AppContext.getUsername());
         }
 
         isRead = !isRead;
