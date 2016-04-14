@@ -46,6 +46,7 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
@@ -567,7 +568,14 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             addNewBtn.setIcon(FontAwesome.PLUS);
             addNewBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             addNewBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            this.with(headerLayout, dragLayoutContainer, addNewBtn);
+            MHorizontalLayout buttonControls = new MHorizontalLayout(addNewBtn).withAlign(addNewBtn, Alignment
+                    .MIDDLE_LEFT).withFullWidth();
+            if (Boolean.FALSE.equals(optionVal.getIsshow())) {
+                ELabel invisibleLbl = new ELabel("Inv").withWidthUndefined().withStyleName(UIConstants.FIELD_NOTE).withDescription
+                        ("This column is invisible by default. Change its value by clicking the button menu, and select 'Show column'");
+                buttonControls.with(invisibleLbl).withAlign(invisibleLbl, Alignment.MIDDLE_RIGHT);
+            }
+            this.with(headerLayout, dragLayoutContainer, buttonControls);
         }
 
         void toggleShowButton() {

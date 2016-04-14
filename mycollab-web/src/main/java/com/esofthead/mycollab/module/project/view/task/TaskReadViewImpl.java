@@ -161,13 +161,13 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                 if (beanItem.isCompleted()) {
                     beanItem.setStatus(StatusI18nEnum.Open.name());
                     beanItem.setPercentagecomplete(0d);
-                    TaskReadViewImpl.this.removeLayoutStyleName(UIConstants.LINK_COMPLETED);
+                    removeLayoutStyleName(UIConstants.LINK_COMPLETED);
                     quickActionStatusBtn.setCaption(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE));
                     quickActionStatusBtn.setIcon(FontAwesome.ARCHIVE);
                 } else {
                     beanItem.setStatus(StatusI18nEnum.Closed.name());
                     beanItem.setPercentagecomplete(100d);
-                    TaskReadViewImpl.this.addLayoutStyleName(UIConstants.LINK_COMPLETED);
+                    addLayoutStyleName(UIConstants.LINK_COMPLETED);
                     quickActionStatusBtn.setCaption(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN));
                     quickActionStatusBtn.setIcon(FontAwesome.CIRCLE_O_NOTCH);
                 }
