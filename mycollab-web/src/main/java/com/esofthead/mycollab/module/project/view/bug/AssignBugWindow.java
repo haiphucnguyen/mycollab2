@@ -20,8 +20,10 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.common.domain.CommentWithBLOBs;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -52,16 +54,14 @@ import java.util.GregorianCalendar;
 class AssignBugWindow extends Window {
     private static final long serialVersionUID = 1L;
     private final SimpleBug bug;
-    private final IBugCallbackStatusComp callbackForm;
 
-    AssignBugWindow(IBugCallbackStatusComp callbackForm, SimpleBug bug) {
+    AssignBugWindow(SimpleBug bug) {
         super("Assign bug '" + bug.getSummary() + "'");
         this.setWidth("750px");
         this.setResizable(false);
         this.setModal(true);
 
         this.bug = bug;
-        this.callbackForm = callbackForm;
 
         VerticalLayout contentLayout = new VerticalLayout();
 
@@ -126,7 +126,7 @@ class AssignBugWindow extends Window {
                             }
 
                             close();
-                            callbackForm.refreshBugItem();
+                            EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, bug));
                         }
                     }
                 });

@@ -21,9 +21,10 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
-import com.esofthead.mycollab.module.project.view.bug.IBugCallbackStatusComp;
 import com.esofthead.mycollab.module.tracker.domain.RelatedBug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -61,11 +62,9 @@ public class LinkIssueWindow extends Window {
     private SimpleBug selectedBug;
     private SimpleBug hostedBug;
     private RelatedBug relatedBug;
-    private IBugCallbackStatusComp callbackForm;
 
-    public LinkIssueWindow(IBugCallbackStatusComp callbackForm, SimpleBug bug) {
+    public LinkIssueWindow(SimpleBug bug) {
         super("Link");
-        this.callbackForm = callbackForm;
         this.setResizable(false);
         this.setModal(true);
 
@@ -124,8 +123,8 @@ public class LinkIssueWindow extends Window {
 
                             relatedBug.setRelatedid(selectedBug.getId());
                             relatedBugService.saveWithSession(relatedBug, AppContext.getUsername());
-                            LinkIssueWindow.this.close();
-                            callbackForm.refreshBugItem();
+                            close();
+                            EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, hostedBug));
                         }
                     }
                 });
@@ -224,7 +223,7 @@ public class LinkIssueWindow extends Window {
             }
 
             private List<Object> handleSearchQuery(String query) {
-                if ("" .equals(query) || query == null) {
+                if ("".equals(query) || query == null) {
                     return Collections.emptyList();
                 }
                 searchCriteria.setSummary(StringSearchField.and(query));

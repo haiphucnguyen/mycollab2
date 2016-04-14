@@ -203,7 +203,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         return view;
     }
 
-    private static class BugStatusPopupView extends LazyPopupView implements IBugCallbackStatusComp {
+    private static class BugStatusPopupView extends LazyPopupView {
         private SimpleBug beanItem;
 
         BugStatusPopupView(SimpleBug bug) {
@@ -225,7 +225,6 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                         beanItem.setStatus(OptionI18nEnum.BugStatus.InProgress.name());
                         BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
                         bugService.updateSelectiveWithSession(beanItem, AppContext.getUsername());
-                        refreshBugItem();
                     }
                 });
                 startProgressBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -235,7 +234,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         setPopupVisible(false);
-                        UI.getCurrent().addWindow(new ResolvedInputWindow(BugStatusPopupView.this, beanItem));
+                        UI.getCurrent().addWindow(new ResolvedInputWindow(beanItem));
                     }
                 });
                 resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -245,7 +244,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         setPopupVisible(false);
-                        UI.getCurrent().addWindow(new WontFixExplainWindow(BugStatusPopupView.this, beanItem));
+                        UI.getCurrent().addWindow(new WontFixExplainWindow(beanItem));
                     }
                 });
                 wontFixBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -259,7 +258,6 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                         beanItem.setStatus(OptionI18nEnum.BugStatus.Open.name());
                         BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
                         bugService.updateSelectiveWithSession(beanItem, AppContext.getUsername());
-                        refreshBugItem();
                     }
                 });
                 stopProgressBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -269,7 +267,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         setPopupVisible(false);
-                        UI.getCurrent().addWindow(new ResolvedInputWindow(BugStatusPopupView.this, beanItem));
+                        UI.getCurrent().addWindow(new ResolvedInputWindow(beanItem));
                     }
                 });
                 resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -280,7 +278,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         setPopupVisible(false);
-                        UI.getCurrent().addWindow(new ReOpenWindow(BugStatusPopupView.this, beanItem));
+                        UI.getCurrent().addWindow(new ReOpenWindow(beanItem));
                     }
                 });
                 reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -292,7 +290,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         setPopupVisible(false);
-                        UI.getCurrent().addWindow(new ReOpenWindow(BugStatusPopupView.this, beanItem));
+                        UI.getCurrent().addWindow(new ReOpenWindow(beanItem));
                     }
                 });
                 reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -302,7 +300,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         setPopupVisible(false);
-                        UI.getCurrent().addWindow(new ApproveInputWindow(BugStatusPopupView.this, beanItem));
+                        UI.getCurrent().addWindow(new ApproveInputWindow(beanItem));
                     }
                 });
                 approveNCloseBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -312,7 +310,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                 Button reopenBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-                        UI.getCurrent().addWindow(new ReOpenWindow(BugStatusPopupView.this, beanItem));
+                        UI.getCurrent().addWindow(new ReOpenWindow(beanItem));
                     }
                 });
                 reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -325,10 +323,9 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         }
 
         @Override
-        public void refreshBugItem() {
+        protected void doHide() {
             setMinimizedValueAsHTML(FontAwesome.INFO_CIRCLE.getHtml() + " " +
                     AppContext.getMessage(OptionI18nEnum.BugStatus.class, beanItem.getStatus()));
-            markAsDirty();
         }
     }
 

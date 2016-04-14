@@ -44,7 +44,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class BugTableDisplay extends DefaultPagedBeanTable<BugService, BugSearchCriteria, SimpleBug> implements IBugCallbackStatusComp {
+public class BugTableDisplay extends DefaultPagedBeanTable<BugService, BugSearchCriteria, SimpleBug> {
     private static final long serialVersionUID = 1L;
 
     public BugTableDisplay(List<TableViewField> displayColumns) {
@@ -155,10 +155,5 @@ public class BugTableDisplay extends DefaultPagedBeanTable<BugService, BugSearch
             }
         });
         this.setWidth("100%");
-    }
-
-    @Override
-    public void refreshBugItem() {
-        this.refresh();
     }
 }

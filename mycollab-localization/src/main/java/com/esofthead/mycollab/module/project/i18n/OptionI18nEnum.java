@@ -42,7 +42,7 @@ public class OptionI18nEnum {
 
     public static BugResolution[] bug_resolutions = {BugResolution.Fixed,
             BugResolution.Won_Fix, BugResolution.Duplicate,
-            BugResolution.Incomplete, BugResolution.CannotReproduce,
+            BugResolution.Invalid, BugResolution.CannotReproduce,
             BugResolution.WaitforVerification, BugResolution.Newissue,
             BugResolution.ReOpen};
 
@@ -91,7 +91,7 @@ public class OptionI18nEnum {
         Fixed,
         Won_Fix,
         Duplicate,
-        Incomplete,
+        Invalid,
         CannotReproduce,
         WaitforVerification,
         Newissue,

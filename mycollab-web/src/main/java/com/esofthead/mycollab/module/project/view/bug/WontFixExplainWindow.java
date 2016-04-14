@@ -21,13 +21,15 @@ import com.esofthead.mycollab.common.domain.CommentWithBLOBs;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.view.bug.components.BugResolutionComboBox;
-import com.esofthead.mycollab.module.project.view.settings.component.VersionMultiSelectField;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
+import com.esofthead.mycollab.module.project.view.settings.component.VersionMultiSelectField;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
@@ -52,12 +54,10 @@ import java.util.GregorianCalendar;
 public class WontFixExplainWindow extends Window {
     private final SimpleBug bug;
     private VersionMultiSelectField fixedVersionSelect;
-    private final IBugCallbackStatusComp callbackForm;
 
-    public WontFixExplainWindow(IBugCallbackStatusComp callbackForm, SimpleBug bug) {
-        super("Won't fix bug '" + bug.getSummary() + "'");
+    public WontFixExplainWindow(SimpleBug bug) {
+        super("Won't fix for '" + bug.getSummary() + "'");
         this.bug = bug;
-        this.callbackForm = callbackForm;
         this.setWidth("750px");
         this.setResizable(false);
         this.setModal(true);
@@ -97,7 +97,6 @@ public class WontFixExplainWindow extends Window {
                 layout.addComponent(controlsBtn);
 
                 final Button wonFixBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_WONT_FIX), new Button.ClickListener() {
-                    @SuppressWarnings("unchecked")
                     @Override
                     public void buttonClick(ClickEvent event) {
                         if (EditForm.this.validateForm()) {
@@ -125,8 +124,8 @@ public class WontFixExplainWindow extends Window {
 
                                 CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
                                 commentService.saveWithSession(comment, AppContext.getUsername());
-                                WontFixExplainWindow.this.close();
-                                callbackForm.refreshBugItem();
+                                close();
+                                EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, bug));
                             } else {
                                 NotificationUtil.showErrorNotification(AppContext.getMessage(BugI18nEnum.ERROR_WONT_FIX_EXPLAIN_REQUIRE_MSG));
                                 return;

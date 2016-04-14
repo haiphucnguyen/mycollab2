@@ -19,7 +19,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -47,6 +47,7 @@ import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.ReadViewLayout;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -68,10 +69,20 @@ import java.util.List;
  * @since 1.0
  */
 @ViewComponent
-public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implements BugReadView, IBugCallbackStatusComp {
+public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implements BugReadView {
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOG = LoggerFactory.getLogger(BugReadViewImpl.class);
+
+    private ApplicationEventListener<BugEvent.BugChanged> searchHandler = new
+            ApplicationEventListener<BugEvent.BugChanged>() {
+                @Override
+                @Subscribe
+                public void handle(BugEvent.BugChanged event) {
+                    SimpleBug bugChange = (SimpleBug) event.getData();
+                    previewItem(bugChange);
+                }
+            };
 
     private TagViewComponent tagViewComponent;
     private CssLayout bugWorkflowControl;
@@ -109,7 +120,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new ResolvedInputWindow(BugReadViewImpl.this, beanItem));
+                    UI.getCurrent().addWindow(new ResolvedInputWindow(beanItem));
                 }
             });
             resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -120,7 +131,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new WontFixExplainWindow(BugReadViewImpl.this, beanItem));
+                    UI.getCurrent().addWindow(new WontFixExplainWindow(beanItem));
                 }
             });
             wontFixBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -148,7 +159,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new ResolvedInputWindow(BugReadViewImpl.this, beanItem));
+                    UI.getCurrent().addWindow(new ResolvedInputWindow(beanItem));
                 }
             });
             resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -162,7 +173,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new ReOpenWindow(BugReadViewImpl.this, beanItem));
+                    UI.getCurrent().addWindow(new ReOpenWindow(beanItem));
                 }
             });
             reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -177,7 +188,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new ReOpenWindow(BugReadViewImpl.this, beanItem));
+                    UI.getCurrent().addWindow(new ReOpenWindow(beanItem));
                 }
             });
             reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -188,7 +199,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new ApproveInputWindow(BugReadViewImpl.this, beanItem));
+                    UI.getCurrent().addWindow(new ApproveInputWindow(beanItem));
                 }
             });
             approveNCloseBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -202,7 +213,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new ReOpenWindow(BugReadViewImpl.this, beanItem));
+                    UI.getCurrent().addWindow(new ReOpenWindow(beanItem));
                 }
             });
             reopenBtn.setStyleName(UIConstants.BUTTON_ACTION);
@@ -223,11 +234,6 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         super.previewItem(item);
         displayWorkflowControl();
         ((BugPreviewFormLayout) previewLayout).displayBugHeader(beanItem);
-    }
-
-    @Override
-    public void refreshBugItem() {
-        EventBusFactory.getInstance().post(new BugEvent.GotoRead(BugReadViewImpl.this, beanItem.getId()));
     }
 
     @Override
@@ -317,7 +323,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         MButton linkBtn = new MButton("Link", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new LinkIssueWindow(BugReadViewImpl.this, beanItem));
+                UI.getCurrent().addWindow(new LinkIssueWindow(beanItem));
             }
         });
         linkBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
@@ -337,7 +343,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
             @Override
             public void buttonClick(final ClickEvent event) {
-                UI.getCurrent().addWindow(new AssignBugWindow(BugReadViewImpl.this, beanItem));
+                UI.getCurrent().addWindow(new AssignBugWindow(beanItem));
             }
         });
         assignBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
