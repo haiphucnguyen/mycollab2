@@ -28,7 +28,10 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.event.ShortcutAction;
@@ -101,7 +104,6 @@ class AssignBugWindow extends Window {
 
                     @Override
                     public void buttonClick(final Button.ClickEvent event) {
-
                         if (EditForm.this.validateForm()) {
                             // Save bug status and assignee
                             final BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
@@ -123,8 +125,8 @@ class AssignBugWindow extends Window {
                                 commentService.saveWithSession(comment, AppContext.getUsername());
                             }
 
-                            AssignBugWindow.this.close();
-                            AssignBugWindow.this.callbackForm.refreshBugItem();
+                            close();
+                            callbackForm.refreshBugItem();
                         }
                     }
                 });
@@ -137,11 +139,11 @@ class AssignBugWindow extends Window {
 
                     @Override
                     public void buttonClick(final Button.ClickEvent event) {
-                        AssignBugWindow.this.close();
+                        close();
                     }
                 });
                 cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                controlsBtn.with(approveBtn, cancelBtn);
+                controlsBtn.with(cancelBtn, approveBtn);
 
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 

@@ -121,7 +121,7 @@ public class ApproveInputWindow extends Window {
                                 commentService.saveWithSession(comment, AppContext.getUsername());
                             }
 
-                            ApproveInputWindow.this.close();
+                            close();
                             callbackForm.refreshBugItem();
                         }
                     }
@@ -134,11 +134,11 @@ public class ApproveInputWindow extends Window {
 
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-                        ApproveInputWindow.this.close();
+                        close();
                     }
                 });
                 cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                controlsBtn.with(approveBtn, cancelBtn);
+                controlsBtn.with(cancelBtn, approveBtn);
 
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
                 return layout;

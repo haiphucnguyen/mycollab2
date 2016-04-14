@@ -65,15 +65,12 @@ public class ReOpenWindow extends Window {
         this.bug = bug;
         this.callbackForm = callbackForm;
 
-        MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false,
-                false, true, false));
-
+        MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, false, true, false));
         EditForm editForm = new EditForm();
         editForm.setBean(bug);
         contentLayout.addComponent(editForm);
 
         this.setContent(contentLayout);
-
         this.center();
     }
 
@@ -131,7 +128,7 @@ public class ReOpenWindow extends Window {
                                 commentService.saveWithSession(comment, AppContext.getUsername());
                             }
 
-                            ReOpenWindow.this.close();
+                            close();
                             callbackForm.refreshBugItem();
                         }
 
@@ -143,7 +140,7 @@ public class ReOpenWindow extends Window {
                 Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-                        ReOpenWindow.this.close();
+                        close();
                     }
                 });
                 cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);

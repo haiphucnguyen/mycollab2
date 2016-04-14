@@ -20,6 +20,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.common.domain.CommentWithBLOBs;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
@@ -59,7 +60,6 @@ public class ResolvedInputWindow extends Window {
         super("Resolve bug '" + bug.getSummary() + "'");
         this.bug = bug;
         this.callbackForm = callbackForm;
-
         this.setWidth("800px");
         this.setResizable(false);
         this.setModal(true);
@@ -114,7 +114,7 @@ public class ResolvedInputWindow extends Window {
 
                             // Save comment
                             String commentValue = commentArea.getValue();
-                            if (commentValue != null && !commentValue.trim().equals("")) {
+                            if (StringUtils.isNotBlank(commentValue)) {
                                 CommentWithBLOBs comment = new CommentWithBLOBs();
                                 comment.setComment(commentValue);
                                 comment.setCreatedtime(new GregorianCalendar().getTime());
@@ -146,7 +146,7 @@ public class ResolvedInputWindow extends Window {
                     }
                 });
                 cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                controlsBtn.with(resolveBtn, cancelBtn);
+                controlsBtn.with(cancelBtn, resolveBtn);
 
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 

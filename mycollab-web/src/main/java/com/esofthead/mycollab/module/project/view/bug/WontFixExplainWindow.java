@@ -20,6 +20,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.common.domain.CommentWithBLOBs;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
@@ -103,7 +104,7 @@ public class WontFixExplainWindow extends Window {
                             bug.setStatus(BugStatus.WontFix.name());
 
                             final String commentValue = commentArea.getValue();
-                            if (commentValue != null && !commentValue.trim().equals("")) {
+                            if (StringUtils.isNotBlank(commentValue)) {
                                 BugRelatedItemService bugRelatedItemService = ApplicationContextUtil.
                                         getSpringBean(BugRelatedItemService.class);
                                 bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), fixedVersionSelect.getSelectedItems());
@@ -131,7 +132,7 @@ public class WontFixExplainWindow extends Window {
                                 return;
                             }
 
-                            WontFixExplainWindow.this.close();
+                            close();
                         }
                     }
                 });
@@ -141,11 +142,11 @@ public class WontFixExplainWindow extends Window {
                 Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
                     @Override
                     public void buttonClick(final ClickEvent event) {
-                        WontFixExplainWindow.this.close();
+                        close();
                     }
                 });
                 cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                controlsBtn.with(wonFixBtn, cancelBtn);
+                controlsBtn.with(cancelBtn, wonFixBtn);
 
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
