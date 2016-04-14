@@ -41,7 +41,7 @@ public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGeneri
     }
 
     @Override
-    protected void buildExtraControls() {
+    protected Component buildExtraControls() {
         if (isCreateAssignment) {
             Button newAssignmentBtn = new Button("New assignment", new Button.ClickListener() {
                 @Override
@@ -51,8 +51,9 @@ public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGeneri
             });
             newAssignmentBtn.setIcon(FontAwesome.PLUS);
             newAssignmentBtn.setStyleName(UIConstants.BUTTON_ACTION);
-            this.addHeaderRight(newAssignmentBtn);
+            return newAssignmentBtn;
         }
+        return null;
     }
 
     private class TaskBasicSearchLayout extends BasicSearchLayout<ProjectGenericTaskSearchCriteria> {
@@ -62,10 +63,6 @@ public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGeneri
 
         public TaskBasicSearchLayout() {
             super(CalendarSearchPanel.this);
-        }
-
-        public void setNameField(String value) {
-            nameField.setValue(value);
         }
 
         @Override

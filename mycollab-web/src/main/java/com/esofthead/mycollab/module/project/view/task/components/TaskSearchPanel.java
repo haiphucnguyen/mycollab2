@@ -58,6 +58,14 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
             TaskSearchCriteria.p_status, TaskSearchCriteria.p_startdate, TaskSearchCriteria.p_enddate,
             TaskSearchCriteria.p_milestoneId, TaskSearchCriteria.p_taskkey};
 
+    public TaskSearchPanel(boolean canSwitchToAdvanceLayout) {
+        super(canSwitchToAdvanceLayout);
+    }
+
+    public TaskSearchPanel() {
+        super();
+    }
+
     @Override
     protected ComponentContainer buildSearchTitle() {
         savedFilterComboBox = new TaskSavedFilterComboBox();
@@ -153,17 +161,18 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
             });
             basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
-            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
+            if (canSwitchToAdvanceLayout) {
+                Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH), new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    moveToAdvancedSearchLayout();
-                }
-            });
-            advancedSearchBtn.setStyleName(UIConstants.BUTTON_LINK);
-
-            basicSearchBody.with(advancedSearchBtn).withAlign(advancedSearchBtn, Alignment.MIDDLE_CENTER);
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        moveToAdvancedSearchLayout();
+                    }
+                });
+                advancedSearchBtn.setStyleName(UIConstants.BUTTON_LINK);
+                basicSearchBody.with(advancedSearchBtn).withAlign(advancedSearchBtn, Alignment.MIDDLE_CENTER);
+            }
             return basicSearchBody;
         }
 

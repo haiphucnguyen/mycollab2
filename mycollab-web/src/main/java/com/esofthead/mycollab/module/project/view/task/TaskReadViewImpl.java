@@ -21,7 +21,6 @@ import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -32,17 +31,18 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.view.task.components.TaskTimeLogSheet;
 import com.esofthead.mycollab.module.project.view.task.components.ToggleTaskSummaryField;
+import com.esofthead.mycollab.module.project.view.task.components.ToggleTaskSummaryWithChildRelationshipField;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.VerticalRemoveInlineComponentMarker;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.ReadViewLayout;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
-import com.hp.gagawa.java.elements.A;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -54,8 +54,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
-
-import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
@@ -108,13 +106,6 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
     @Override
     protected void onPreviewItem() {
         ((TaskPreviewFormLayout) previewLayout).displayTaskHeader(beanItem);
-        if (beanItem.isCompleted()) {
-            addLayoutStyleName(UIConstants.LINK_COMPLETED);
-        } else if (beanItem.isPending()) {
-            addLayoutStyleName(UIConstants.LINK_PENDING);
-        } else if (beanItem.isOverdue()) {
-            addLayoutStyleName(UIConstants.LABEL_OVERDUE);
-        }
 
         if (!beanItem.isCompleted()) {
             quickActionStatusBtn.setCaption(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE));
@@ -217,9 +208,10 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                 header.with(toggleTaskSummaryField);
                 this.addHeader(header);
             } else {
-                MVerticalLayout header = new MVerticalLayout().withMargin(false);
-                Label parentLabel = new Label(buildParentTaskLink(task), ContentMode.HTML);
-                header.with(parentLabel, toggleTaskSummaryField);
+                VerticalRemoveInlineComponentMarker header = new VerticalRemoveInlineComponentMarker();
+                header.setMargin(false);
+                ParentTaskComp parentTaskComp = new ParentTaskComp(task.getParenttaskid(), task);
+                header.with(parentTaskComp, toggleTaskSummaryField);
                 this.addHeader(header);
             }
 
@@ -228,15 +220,6 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
             } else if (task.isOverdue()) {
                 toggleTaskSummaryField.overdueTask();
             }
-        }
-
-        private String buildParentTaskLink(SimpleTask task) {
-            String linkName = String.format("[#%d] - %s", task.getParentTaskKey(), task.getParentTaskName());
-            A taskLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getParentTaskKey(),
-                    CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
-            taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.TASK, task.getId() + ""));
-            taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-            return taskLink.write();
         }
 
         @Override
@@ -251,6 +234,18 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         @Override
         public void addTitleStyleName(String styleName) {
             toggleTaskSummaryField.addLabelStyleName(styleName);
+        }
+    }
+
+    private static class ParentTaskComp extends MHorizontalLayout {
+        ParentTaskComp(Integer parentTaskId, SimpleTask childTask) {
+            ELabel titleLbl = new ELabel("Parent").withStyleName(UIConstants.FIELD_NOTE).withWidthUndefined();
+            with(titleLbl);
+            ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+            SimpleTask parentTask = taskService.findById(parentTaskId, AppContext.getAccountId());
+            if (parentTask != null) {
+                with(new ToggleTaskSummaryWithChildRelationshipField(parentTask, childTask));
+            }
         }
     }
 

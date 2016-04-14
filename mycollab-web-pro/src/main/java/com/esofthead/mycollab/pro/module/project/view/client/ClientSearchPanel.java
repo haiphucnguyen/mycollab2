@@ -44,17 +44,17 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
     }
 
     @Override
-    protected void buildExtraControls() {
-        Button createAccountBtn = new Button("New Client", new Button.ClickListener() {
+    protected Component buildExtraControls() {
+        Button createBtn = new Button("New Client", new Button.ClickListener() {
             @Override
             public void buttonClick(final Button.ClickEvent event) {
                 EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null));
             }
         });
-        createAccountBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        createAccountBtn.setIcon(FontAwesome.PLUS);
-        createAccountBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
-        this.addHeaderRight(createAccountBtn);
+        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
+        createBtn.setIcon(FontAwesome.PLUS);
+        createBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+        return createBtn;
     }
 
     @Override

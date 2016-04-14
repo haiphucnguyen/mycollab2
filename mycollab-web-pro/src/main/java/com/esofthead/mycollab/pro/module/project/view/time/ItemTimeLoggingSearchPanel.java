@@ -16,7 +16,8 @@ import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.pro.module.project.ui.components.ItemOrderComboBox;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
+import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.ValueComboBox;
@@ -68,13 +69,13 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
     }
 
     @Override
-    protected void buildExtraControls() {
+    protected Component buildExtraControls() {
         createBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME));
         createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived() && CurrentProjectVariables.canWrite
                 (ProjectRolePermissionCollections.TIME));
-        addHeaderRight(createBtn);
+        return createBtn;
     }
 
     public void addClickListener(Button.ClickListener listener) {
@@ -95,7 +96,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         return (Order) layout.orderField.getValue();
     }
 
-    private class TimeLoggingBasicSearchLayout extends BasicSearchLayout {
+    private class TimeLoggingBasicSearchLayout extends BasicSearchLayout<ItemTimeLoggingSearchCriteria> {
         private DateFieldExt startDateField, endDateField;
 
         private ProjectMemberListSelect userField;
@@ -192,7 +193,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         }
 
         @Override
-        protected SearchCriteria fillUpSearchCriteria() {
+        protected ItemTimeLoggingSearchCriteria fillUpSearchCriteria() {
             ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
             Date fDate = startDateField.getValue();

@@ -2,7 +2,6 @@ package com.esofthead.mycollab.pro.module.project.view.risk;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -47,7 +46,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
     }
 
     @Override
-    protected void buildExtraControls() {
+    protected Component buildExtraControls() {
         Button createBtn = new Button(AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
@@ -59,7 +58,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
         createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
-        this.addHeaderRight(createBtn);
+        return createBtn;
     }
 
     @Override
@@ -72,7 +71,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
         return new RiskAdvancedSearchLayout();
     }
 
-    private class RiskBasicSearchLayout extends BasicSearchLayout {
+    private class RiskBasicSearchLayout extends BasicSearchLayout<RiskSearchCriteria> {
         private static final long serialVersionUID = 1L;
 
         private TextField nameField;
@@ -140,7 +139,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
         }
 
         @Override
-        protected SearchCriteria fillUpSearchCriteria() {
+        protected RiskSearchCriteria fillUpSearchCriteria() {
             RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
             searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
             searchCriteria.setRiskname(StringSearchField.and(this.nameField.getValue().trim()));

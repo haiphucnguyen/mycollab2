@@ -18,6 +18,8 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.StorageFactory;
+import com.esofthead.mycollab.core.arguments.BooleanSearchField;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.HumanTime;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
@@ -27,6 +29,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -34,6 +37,7 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
+import com.esofthead.mycollab.module.project.view.task.components.TaskSearchPanel;
 import com.esofthead.mycollab.module.project.view.task.components.ToggleTaskSummaryWithParentRelationshipField;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -41,9 +45,7 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.VerticalRemoveInlineComponentMarker;
-import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
-import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.web.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.field.DateViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.I18nFormViewField;
@@ -59,6 +61,7 @@ import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
 
@@ -185,14 +188,28 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                     task.setProjectid(beanItem.getProjectid());
                     task.setSaccountid(beanItem.getSaccountid());
                     UI.getCurrent().addWindow(new TaskAddWindow(task));
-
                 }
             });
             addNewTaskBtn.setStyleName(UIConstants.BUTTON_ACTION);
             addNewTaskBtn.setIcon(FontAwesome.PLUS);
             addNewTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
-            contentLayout.addComponent(addNewTaskBtn);
+            SplitButton splitButton = new SplitButton(addNewTaskBtn);
+            splitButton.setWidthUndefined();
+            splitButton.addStyleName(UIConstants.BUTTON_ACTION);
+
+            OptionPopupContent popupButtonsControl = new OptionPopupContent();
+            Button selectBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT), new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    UI.getCurrent().addWindow(new SelectChildTaskWindow(beanItem));
+                }
+            });
+            selectBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+            popupButtonsControl.addOption(selectBtn);
+            splitButton.setContent(popupButtonsControl);
+
+            contentLayout.addComponent(splitButton);
 
             ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
             List<SimpleTask> subTasks = taskService.findSubTasks(beanItem.getId(), AppContext.getAccountId(), new
@@ -252,6 +269,27 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                 }
             });
             return layout;
+        }
+    }
+
+    private static class SelectChildTaskWindow extends Window {
+        private TaskSearchCriteria baseSearchCriteria;
+        private TaskSearchPanel taskSearchPanel;
+
+        SelectChildTaskWindow(SimpleTask task) {
+            super("Select Task");
+            this.setWidth("800px");
+            this.setModal(true);
+            this.setResizable(false);
+
+            baseSearchCriteria = new TaskSearchCriteria();
+            baseSearchCriteria.setProjectId(NumberSearchField.and(CurrentProjectVariables.getProjectId()));
+            baseSearchCriteria.setHasParentTask(new BooleanSearchField(false));
+
+            taskSearchPanel = new TaskSearchPanel(false);
+
+            MVerticalLayout content = new MVerticalLayout(taskSearchPanel);
+            setContent(content);
         }
     }
 }
