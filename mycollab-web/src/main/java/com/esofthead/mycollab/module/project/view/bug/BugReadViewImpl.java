@@ -44,6 +44,7 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.VerticalRemoveInlineComponentMarker;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.ReadViewLayout;
@@ -284,7 +285,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         private ToggleBugSummaryField toggleBugSummaryField;
 
         void displayBugHeader(final SimpleBug bug) {
-            MVerticalLayout header = new MVerticalLayout().withWidth("100%").withMargin(false);
+            MVerticalLayout header = new VerticalRemoveInlineComponentMarker().withWidth("100%").withMargin(false);
             toggleBugSummaryField = new ToggleBugSummaryField(bug);
             toggleBugSummaryField.addLabelStyleName(ValoTheme.LABEL_H3);
             toggleBugSummaryField.addLabelStyleName(ValoTheme.LABEL_NO_MARGIN);

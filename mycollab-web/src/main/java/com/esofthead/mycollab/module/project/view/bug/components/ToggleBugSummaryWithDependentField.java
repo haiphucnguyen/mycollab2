@@ -7,6 +7,8 @@ import com.esofthead.mycollab.module.tracker.domain.RelatedBugExample;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.RemoveInlineComponentMarker;
+import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
@@ -40,6 +42,7 @@ public class ToggleBugSummaryWithDependentField extends CustomField<SimpleBug> {
                                 ex.createCriteria().andBugidEqualTo(hostBug.getId()).andRelatedidEqualTo(relatedBug.getId());
                                 RelatedBugMapper bugMapper = ApplicationContextUtil.getSpringBean(RelatedBugMapper.class);
                                 bugMapper.deleteByExample(ex);
+                                UIUtils.removeChildAssociate(toggleBugSummaryField, RemoveInlineComponentMarker.class);
                             }
                         });
             }

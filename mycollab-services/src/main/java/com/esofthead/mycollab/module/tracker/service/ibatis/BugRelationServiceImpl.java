@@ -32,6 +32,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author MyCollab Ltd.
+ * @since 1.0.0
+ */
 @Service
 public class BugRelationServiceImpl extends DefaultCrudService<Integer, RelatedBug> implements BugRelationService {
     @Autowired

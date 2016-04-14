@@ -58,6 +58,10 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
+/**
+ * @author MyCollab Ltd.
+ * @since 1.0.0
+ */
 @Service
 @Transactional
 @Traceable(nameField = "summary", extraFieldName = "projectid")

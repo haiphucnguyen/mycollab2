@@ -38,10 +38,10 @@ public class UIUtils {
     }
 
     public static boolean removeChildAssociate(Component container, Class type) {
-        ComponentContainer parent = (ComponentContainer) container.getParent();
+        HasComponents parent = container.getParent();
         while (parent != null) {
-            if (type.isAssignableFrom(parent.getClass())) {
-                parent.removeComponent(container);
+            if (type.isAssignableFrom(parent.getClass()) && (parent instanceof ComponentContainer)) {
+                ((ComponentContainer) parent).removeComponent(container);
                 return true;
             } else {
                 return removeChildAssociate(parent, type);

@@ -150,7 +150,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                     }
                 };
 
-        private VerticalRemoveInlineComponentMarker tasksLayout;
+        private MVerticalLayout tasksLayout;
         private SimpleTask beanItem;
 
         SubTasksComp(SimpleTask task) {
@@ -172,8 +172,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
         @Override
         protected Component initContent() {
             MHorizontalLayout contentLayout = new MHorizontalLayout().withWidth("100%");
-            tasksLayout = new VerticalRemoveInlineComponentMarker();
-            tasksLayout.withWidth("100%").withMargin(new MarginInfo(false, true, true, false));
+            tasksLayout = new VerticalRemoveInlineComponentMarker().withWidth("100%").withMargin(new MarginInfo(false, true, true, false));
             contentLayout.with(tasksLayout).expand(tasksLayout);
 
             Button addNewTaskBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
