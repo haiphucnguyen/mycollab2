@@ -31,13 +31,13 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.view.task.components.TaskTimeLogSheet;
+import com.esofthead.mycollab.module.project.view.task.components.ToggleTaskSummaryField;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.ReadViewLayout;
@@ -48,6 +48,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -205,32 +206,27 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
     }
 
     private static class TaskPreviewFormLayout extends ReadViewLayout {
-        private ELabel titleLbl;
+        private ToggleTaskSummaryField toggleTaskSummaryField;
 
         void displayTaskHeader(SimpleTask task) {
+            toggleTaskSummaryField = new ToggleTaskSummaryField(task);
+            toggleTaskSummaryField.addLabelStyleName(ValoTheme.LABEL_H3);
+            toggleTaskSummaryField.addLabelStyleName(ValoTheme.LABEL_NO_MARGIN);
             if (task.getParenttaskid() == null) {
                 MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
-                titleLbl = ELabel.h3(task.getTaskname());
-                header.with(titleLbl).expand(titleLbl);
+                header.with(toggleTaskSummaryField);
                 this.addHeader(header);
             } else {
                 MVerticalLayout header = new MVerticalLayout().withMargin(false);
                 Label parentLabel = new Label(buildParentTaskLink(task), ContentMode.HTML);
-
-                titleLbl = ELabel.h3("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + task.getTaskname());
-                header.with(parentLabel, titleLbl);
+                header.with(parentLabel, toggleTaskSummaryField);
                 this.addHeader(header);
             }
 
             if (task.isCompleted()) {
-                titleLbl.removeStyleName("pending overdue");
-                titleLbl.addStyleName("completed");
-            } else if (task.isPending()) {
-                titleLbl.removeStyleName("completed overdue");
-                titleLbl.addStyleName("pending");
+                toggleTaskSummaryField.closeTask();
             } else if (task.isOverdue()) {
-                titleLbl.removeStyleName("completed pending");
-                titleLbl.addStyleName("overdue");
+                toggleTaskSummaryField.overdueTask();
             }
         }
 
@@ -244,17 +240,17 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         }
 
         @Override
-        public void addTitleStyleName(String styleName) {
-            titleLbl.addStyleName(styleName);
+        public void setTitle(String title) {
         }
 
         @Override
         public void removeTitleStyleName(String styleName) {
-            titleLbl.removeStyleName(styleName);
+            toggleTaskSummaryField.removeLabelStyleName(styleName);
         }
 
         @Override
-        public void setTitle(String title) {
+        public void addTitleStyleName(String styleName) {
+            toggleTaskSummaryField.addLabelStyleName(styleName);
         }
     }
 

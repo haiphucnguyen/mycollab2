@@ -32,6 +32,7 @@ import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.view.bug.components.LinkIssueWindow;
+import com.esofthead.mycollab.module.project.view.bug.components.ToggleBugSummaryField;
 import com.esofthead.mycollab.module.tracker.dao.RelatedBugMapper;
 import com.esofthead.mycollab.module.tracker.domain.RelatedBugExample;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -52,6 +53,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -263,18 +265,20 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     }
 
     private static class BugPreviewFormLayout extends ReadViewLayout {
-        private ELabel titleLbl;
+        private ToggleBugSummaryField toggleBugSummaryField;
 
         void displayBugHeader(final SimpleBug bug) {
             MVerticalLayout header = new MVerticalLayout().withWidth("100%").withMargin(false);
-            titleLbl = ELabel.h3(bug.getSummary());
-            header.with(titleLbl).expand(titleLbl);
+            toggleBugSummaryField = new ToggleBugSummaryField(bug);
+            toggleBugSummaryField.addLabelStyleName(ValoTheme.LABEL_H3);
+            toggleBugSummaryField.addLabelStyleName(ValoTheme.LABEL_NO_MARGIN);
+            header.with(toggleBugSummaryField);
             this.addHeader(header);
 
             if (bug.isCompleted()) {
-                this.addTitleStyleName(UIConstants.LINK_COMPLETED);
+                toggleBugSummaryField.addLabelStyleName(UIConstants.LINK_COMPLETED);
             } else if (bug.isOverdue()) {
-                this.addTitleStyleName(UIConstants.LABEL_OVERDUE);
+                toggleBugSummaryField.addLabelStyleName(UIConstants.LABEL_OVERDUE);
             }
 
             BugRelationService bugRelationService = ApplicationContextUtil.getSpringBean(BugRelationService.class);
@@ -316,12 +320,12 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
         @Override
         public void addTitleStyleName(String styleName) {
-            titleLbl.addStyleName(styleName);
+            toggleBugSummaryField.addLabelStyleName(styleName);
         }
 
         @Override
         public void removeTitleStyleName(String styleName) {
-            titleLbl.removeStyleName(styleName);
+            toggleBugSummaryField.removeLabelStyleName(styleName);
         }
 
         @Override

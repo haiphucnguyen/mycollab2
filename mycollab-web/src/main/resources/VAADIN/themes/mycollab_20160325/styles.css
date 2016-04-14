@@ -15122,7 +15122,7 @@ div.v-window {
 	padding: 3px 5px;
 	margin-right: 5px;
 	color: #ffffff;
-	background-color: #1a8955;
+	background-color: #25c278;
 }
 
 .crm-module {
@@ -16999,14 +16999,6 @@ input.v-textfield-errorField {
 .mail-panel .v-gridlayout-margin {
 	max-height: 150px;
 	overflow-y: auto;
-}
-
-.clickable-label {
-	cursor: pointer;
-}
-
-.clickable-label  > img.plus-btn {
-	vertical-align: bottom;
 }
 
 .main-view {
