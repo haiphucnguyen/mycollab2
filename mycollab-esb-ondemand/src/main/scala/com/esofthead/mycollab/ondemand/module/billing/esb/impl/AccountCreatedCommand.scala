@@ -34,6 +34,14 @@ import org.springframework.stereotype.Component
     option.setFieldgroup("status")
     optionValService.saveWithSession(option, null)
 
+    option.setTypeval(StatusI18nEnum.InProgress.name())
+    option.setId(null);
+    optionValService.saveWithSession(option, null)
+
+    option.setTypeval(StatusI18nEnum.Archived.name())
+    option.setId(null);
+    optionValService.saveWithSession(option, null)
+
     option.setTypeval(StatusI18nEnum.Closed.name())
     option.setId(null)
     optionValService.saveWithSession(option, null)
