@@ -25,8 +25,17 @@ public class SimpleRelatedBug {
     public static final String FIXVERSION = "FixVersion";
     public static final String COMPONENT = "Component";
 
+    private Integer id;
     private BugWithBLOBs relatedBug;
     private String relatedType;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public BugWithBLOBs getRelatedBug() {
         return relatedBug;

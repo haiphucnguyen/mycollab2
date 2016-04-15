@@ -31,7 +31,7 @@ public class TimelineTrackingServiceTest extends IntergrationServiceTest {
         TimelineTrackingSearchCriteria criteria = new TimelineTrackingSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(1));
         Map<String, List<GroupItem>> timelineItems = timelineTrackingService.findTimelineItems("status",
-                Arrays.asList(OptionI18nEnum.BugStatus.ReOpened.name(), OptionI18nEnum.BugStatus.Resolved.name()),
+                Arrays.asList(OptionI18nEnum.BugStatus.ReOpen.name(), OptionI18nEnum.BugStatus.Resolved.name()),
                 new GregorianCalendar(2015, 9, 2).getTime(), new GregorianCalendar(2015, 9, 31).getTime(), criteria);
     }
 }

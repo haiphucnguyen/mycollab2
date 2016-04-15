@@ -125,7 +125,7 @@ public class ApproveInputWindow extends Window {
                             }
 
                             close();
-                            EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, bug));
+                            EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, bug.getId()));
                         }
                     }
                 });

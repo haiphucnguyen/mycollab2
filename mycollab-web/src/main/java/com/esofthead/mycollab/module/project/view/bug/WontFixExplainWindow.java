@@ -127,7 +127,7 @@ public class WontFixExplainWindow extends Window {
                                 CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
                                 commentService.saveWithSession(comment, AppContext.getUsername());
                                 close();
-                                EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, bug));
+                                EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, bug.getId()));
                             } else {
                                 NotificationUtil.showErrorNotification(AppContext.getMessage(BugI18nEnum.ERROR_WONT_FIX_EXPLAIN_REQUIRE_MSG));
                                 return;

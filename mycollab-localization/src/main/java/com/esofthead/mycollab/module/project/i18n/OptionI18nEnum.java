@@ -31,7 +31,7 @@ public class OptionI18nEnum {
 
     public static BugStatus[] bug_statuses = {BugStatus.Open,
             BugStatus.InProgress, BugStatus.Verified, BugStatus.Resolved,
-            BugStatus.ReOpened, BugStatus.WontFix};
+            BugStatus.ReOpen, BugStatus.WontFix};
 
     public static BugPriority[] bug_priorities = {BugPriority.Blocker,
             BugPriority.Critical, BugPriority.Major, BugPriority.Minor,
@@ -70,7 +70,7 @@ public class OptionI18nEnum {
     @BaseName("localization/project-bug-status")
     @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
     public enum BugStatus {
-        Open, InProgress, Verified, Resolved, ReOpened, WontFix
+        Open, InProgress, Verified, Resolved, ReOpen, WontFix
     }
 
     @BaseName("localization/project-bug-priority")

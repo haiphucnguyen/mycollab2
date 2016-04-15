@@ -33,6 +33,7 @@ import com.esofthead.mycollab.module.project.view.settings.component.VersionMult
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
+import com.esofthead.mycollab.module.tracker.service.BugRelationService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -106,7 +107,8 @@ public class ReOpenWindow extends Window {
                     @Override
                     public void buttonClick(final Button.ClickEvent event) {
                         if (EditForm.this.validateForm()) {
-                            bug.setStatus(BugStatus.ReOpened.name());
+                            bug.setStatus(BugStatus.ReOpen.name());
+                            bug.setResolution(OptionI18nEnum.BugResolution.ReOpen.name());
 
                             BugRelatedItemService bugRelatedItemService = ApplicationContextUtil.getSpringBean(BugRelatedItemService.class);
                             bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), fixedVersionSelect.getSelectedItems());
@@ -114,6 +116,10 @@ public class ReOpenWindow extends Window {
                             // Save bug status and assignee
                             BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
                             bugService.updateSelectiveWithSession(bug, AppContext.getUsername());
+
+                            BugRelationService bugRelationService = ApplicationContextUtil.getSpringBean
+                                    (BugRelationService.class);
+                            bugRelationService.removeDuplicatedBugs(bug.getId());
 
                             // Save comment
                             String commentValue = commentArea.getValue();
@@ -132,7 +138,7 @@ public class ReOpenWindow extends Window {
                             }
 
                             close();
-                            EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, bug));
+                            EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, bug.getId()));
                         }
 
                     }

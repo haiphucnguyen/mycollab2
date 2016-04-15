@@ -40,6 +40,6 @@ object BugEvent {
 
   class NewBugAdded(source: AnyRef, data: Integer) extends ApplicationEvent(source, data) {}
 
-  class BugChanged(source: AnyRef, data: SimpleBug) extends ApplicationEvent(source, data) {}
+  class BugChanged(source: AnyRef, data: Integer) extends ApplicationEvent(source, data) {}
 
 }

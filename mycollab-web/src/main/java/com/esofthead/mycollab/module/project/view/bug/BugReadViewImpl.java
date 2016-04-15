@@ -82,7 +82,9 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 @Override
                 @Subscribe
                 public void handle(BugEvent.BugChanged event) {
-                    SimpleBug bugChange = (SimpleBug) event.getData();
+                    Integer bugChangeId = (Integer) event.getData();
+                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+                    SimpleBug bugChange = bugService.findById(bugChangeId, AppContext.getAccountId());
                     previewItem(bugChange);
                 }
             };
@@ -113,7 +115,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     }
 
     private void displayWorkflowControl() {
-        if (BugStatus.Open.name().equals(beanItem.getStatus()) || BugStatus.ReOpened.name().equals(beanItem.getStatus())) {
+        if (BugStatus.Open.name().equals(beanItem.getStatus()) || BugStatus.ReOpen.name().equals(beanItem.getStatus())) {
             bugWorkflowControl.removeAllComponents();
             ButtonGroup navButton = new ButtonGroup();
             Button startProgressBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_START_PROGRESS), new Button.ClickListener() {

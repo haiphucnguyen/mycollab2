@@ -111,7 +111,7 @@ public class LinkIssueWindow extends Window {
                             relatedBug.setRelatedid(selectedBug.getId());
                             relatedBugService.saveWithSession(relatedBug, AppContext.getUsername());
                             close();
-                            EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, hostedBug));
+                            EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, hostedBug.getId()));
                         }
                     }
                 });

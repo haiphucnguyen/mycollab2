@@ -217,7 +217,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             content.removeAllComponents();
             boolean hasPermission = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
             if (OptionI18nEnum.BugStatus.Open.name().equals(beanItem.getStatus()) ||
-                    OptionI18nEnum.BugStatus.ReOpened.name().equals(beanItem.getStatus())) {
+                    OptionI18nEnum.BugStatus.ReOpen.name().equals(beanItem.getStatus())) {
                 Button startProgressBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_START_PROGRESS), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
