@@ -22,6 +22,8 @@ import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
+import com.esofthead.mycollab.module.user.ui.components.ImagePreviewCropWindow;
+import com.esofthead.mycollab.module.user.ui.components.UploadImageField;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -32,8 +34,13 @@ import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
+
+import java.awt.image.BufferedImage;
 
 /**
  * @author MyCollab Ltd.
@@ -64,7 +71,7 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
         editForm.setBean(project);
     }
 
-    class FormLayoutFactory implements IFormLayoutFactory {
+    class FormLayoutFactory implements IFormLayoutFactory, ImagePreviewCropWindow.ImageSelectionCommand {
         private static final long serialVersionUID = 1L;
 
         private ProjectInformationLayout projectInformationLayout;
@@ -100,12 +107,22 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
 
         private MHorizontalLayout buildHeaderTitle() {
             ELabel titleLbl = ELabel.h2(project.getName());
-            return new MHorizontalLayout(titleLbl).expand(titleLbl);
+            UploadImageField uploadImageField = new UploadImageField(this);
+            uploadImageField.setButtonCaption("Change logo");
+            MVerticalLayout logoLayout = new MVerticalLayout(ELabel.fontIcon(FontAwesome.QUESTION_CIRCLE)
+                    .withStyleName("icon-48px"), uploadImageField)
+                    .withMargin(false).withWidth("-1px").alignAll(Alignment.TOP_CENTER);
+            return new MHorizontalLayout(logoLayout, titleLbl).expand(titleLbl);
         }
 
         @Override
         public void attachField(Object propertyId, final Field<?> field) {
             projectInformationLayout.attachField(propertyId, field);
+        }
+
+        @Override
+        public void process(BufferedImage image) {
+            Page.getCurrent().getJavaScript().execute("window.location.reload();");
         }
     }
 
