@@ -390,7 +390,7 @@
     .kanban-block {
       cursor: move;
       background-color: #fdde86;
-      padding: 10px 5px;
+      padding: 10px;
       .header {
         font-weight: $my-font-weight-bold;
         color: black;
@@ -402,6 +402,8 @@
       .kanban-item {
         background-color: white;
         cursor: move;
+        padding: 5px;
+        margin: 0px 0px 2px 0px;
         &:hover {
           background-color: $my-hover-background-color;
         }

@@ -1995,7 +1995,7 @@ div.v-window {
 .kanban-layout .kanban-block {
 	cursor: move;
 	background-color: #fdde86;
-	padding: 10px 5px;
+	padding: 10px;
 }
 
 .kanban-layout .kanban-block .header {
@@ -2011,6 +2011,8 @@ div.v-window {
 .kanban-layout .kanban-block .kanban-item {
 	background-color: white;
 	cursor: move;
+	padding: 5px;
+	margin: 0px 0px 2px 0px;
 }
 
 .kanban-layout .kanban-block .kanban-item:hover {
@@ -14601,7 +14603,7 @@ div.v-window {
 .kanban-layout .kanban-block {
 	cursor: move;
 	background-color: #fdde86;
-	padding: 10px 5px;
+	padding: 10px;
 }
 
 .kanban-layout .kanban-block .header {
@@ -14617,6 +14619,8 @@ div.v-window {
 .kanban-layout .kanban-block .kanban-item {
 	background-color: white;
 	cursor: move;
+	padding: 5px;
+	margin: 0px 0px 2px 0px;
 }
 
 .kanban-layout .kanban-block .kanban-item:hover {

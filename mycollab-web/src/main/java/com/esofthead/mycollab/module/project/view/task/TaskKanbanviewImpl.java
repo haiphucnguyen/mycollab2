@@ -375,6 +375,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
     private class KanbanBlock extends MVerticalLayout {
         private OptionVal optionVal;
         private DDVerticalLayout dragLayoutContainer;
+        private MHorizontalLayout buttonControls;
         private Button hideColumnBtn;
         private Label header;
 
@@ -454,8 +455,8 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             headerLayout.with(controlsBtn);
 
             String typeVal = optionVal.getTypeval();
-            boolean canExecute = !typeVal.equals(StatusI18nEnum.Closed.name()) && !typeVal.equals(StatusI18nEnum.Open.name());
-            canExecute = canExecute && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS);
+            boolean canRename = !typeVal.equals(StatusI18nEnum.Closed.name()) && !typeVal.equals(StatusI18nEnum.Open.name());
+            boolean canExecute = CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS);
 
             OptionPopupContent popupContent = new OptionPopupContent();
             Button renameColumnBtn = new Button("Rename column", new Button.ClickListener() {
@@ -466,7 +467,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 }
             });
             renameColumnBtn.setIcon(FontAwesome.EDIT);
-            renameColumnBtn.setEnabled(canExecute);
+            renameColumnBtn.setEnabled(canExecute && canRename);
             popupContent.addOption(renameColumnBtn);
 
             hideColumnBtn = new Button("");
@@ -486,7 +487,6 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                     }
                 }
             });
-            toggleShowButton();
             hideColumnBtn.setEnabled(canExecute);
             popupContent.addOption(hideColumnBtn);
 
@@ -540,7 +540,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 }
             });
             deleteColumnBtn.setIcon(FontAwesome.TRASH_O);
-            deleteColumnBtn.setEnabled(canExecute);
+            deleteColumnBtn.setEnabled(canExecute && canRename);
             popupContent.addDangerOption(deleteColumnBtn);
 
             popupContent.addSeparator();
@@ -566,23 +566,24 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             addNewBtn.setIcon(FontAwesome.PLUS);
             addNewBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             addNewBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            MHorizontalLayout buttonControls = new MHorizontalLayout(addNewBtn).withAlign(addNewBtn, Alignment
-                    .MIDDLE_LEFT).withFullWidth();
-            if (Boolean.FALSE.equals(optionVal.getIsshow())) {
-                ELabel invisibleLbl = new ELabel("Inv").withWidthUndefined().withStyleName(UIConstants.FIELD_NOTE).withDescription
-                        ("This column is invisible by default. Change its value by clicking the button menu, and select 'Show column'");
-                buttonControls.with(invisibleLbl).withAlign(invisibleLbl, Alignment.MIDDLE_RIGHT);
-            }
+            buttonControls = new MHorizontalLayout(addNewBtn).withAlign(addNewBtn, Alignment.MIDDLE_LEFT).withFullWidth();
             this.with(headerLayout, dragLayoutContainer, buttonControls);
+            toggleShowButton();
         }
 
         void toggleShowButton() {
             if (Boolean.FALSE.equals(optionVal.getIsshow())) {
                 hideColumnBtn.setCaption("Show column");
                 hideColumnBtn.setIcon(FontAwesome.TOGGLE_ON);
+                ELabel invisibleLbl = new ELabel("Inv").withWidthUndefined().withStyleName(UIConstants.FIELD_NOTE).withDescription
+                        ("This column is invisible by default. Change its value by clicking the button menu, and select 'Show column'");
+                buttonControls.with(invisibleLbl).withAlign(invisibleLbl, Alignment.MIDDLE_RIGHT);
             } else {
                 hideColumnBtn.setCaption("Hide column");
                 hideColumnBtn.setIcon(FontAwesome.TOGGLE_OFF);
+                if (buttonControls.getComponentCount() > 1) {
+                    buttonControls.removeComponent(buttonControls.getComponent(1));
+                }
             }
         }
 
