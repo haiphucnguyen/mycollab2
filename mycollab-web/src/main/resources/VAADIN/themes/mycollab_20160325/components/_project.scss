@@ -72,20 +72,6 @@
     }
   }
 
-  .v-horizontal.project-info {
-    position: relative;
-    * :after {
-      display: none;
-    }
-    .header {
-      @include text-ellipsis;
-    }
-    .v-popupbutton {
-      border: 1px solid $my-separator-color;
-      border-radius: 3px;
-    }
-  }
-
   .instruction-box {
     background-color: $my-block-background-color;
     padding: 10px;

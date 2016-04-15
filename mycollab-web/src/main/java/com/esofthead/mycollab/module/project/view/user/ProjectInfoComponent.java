@@ -98,10 +98,12 @@ public class ProjectInfoComponent extends MHorizontalLayout {
 
     public ProjectInfoComponent(final SimpleProject project) {
         this.withMargin(true).withStyleName("project-info").withFullWidth();
-        ELabel headerLbl = ELabel.h2(FontAwesome.BUILDING_O.getHtml() + String.format(" [%s] %s", project.getShortname(), project.getName()));
+        ELabel projectIcon = ELabel.fontIcon(FontAwesome.BUILDING_O).withStyleName("icon-48px");
+        this.with(projectIcon).withAlign(projectIcon, Alignment.TOP_LEFT);
+        ELabel headerLbl = ELabel.h2(String.format(" [%s] %s", project.getShortname(), project.getName()));
         headerLbl.setDescription(ProjectTooltipGenerator.generateToolTipProject(AppContext.getUserLocale(), project,
                 AppContext.getSiteUrl(), AppContext.getUserTimezone()));
-        headerLbl.addStyleName("header");
+        headerLbl.addStyleName(UIConstants.TEXT_ELLIPSIS);
         MVerticalLayout headerLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
 
         MHorizontalLayout footer = new MHorizontalLayout();
@@ -231,9 +233,9 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         } else {
             SearchTextField searchField = new SearchTextField() {
                 public void doSearch(String value) {
-                    ProjectView prjview = UIUtils.getRoot(this, ProjectView.class);
-                    if (prjview != null) {
-                        prjview.displaySearchResult(value);
+                    ProjectView prjView = UIUtils.getRoot(this, ProjectView.class);
+                    if (prjView != null) {
+                        prjView.displaySearchResult(value);
                     }
                 }
 
@@ -244,6 +246,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             };
 
             final PopupButton controlsBtn = new PopupButton();
+            controlsBtn.addStyleName(UIConstants.BOX);
             controlsBtn.setIcon(FontAwesome.ELLIPSIS_H);
 
             OptionPopupContent popupButtonsControl = new OptionPopupContent();

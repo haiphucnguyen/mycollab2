@@ -44,6 +44,8 @@ Version 5.2.12
 -----------------------------
 **Library Upgrades**
 
+* Cglib 3.2.2
+* MySQL Connector to 6.0.2
 * Other libraries
 
 **Improvements & New Features**
@@ -58,7 +60,8 @@ Version 5.2.12
 
 **Bug Fixes**
 
-* None
+* Can not modify basic properties of kanban columns
+* Several cases of bug dependencies do not work as expected
 
 
 Version 5.2.11

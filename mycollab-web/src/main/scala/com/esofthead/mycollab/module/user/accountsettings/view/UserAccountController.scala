@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.premium.module.user.accountsettings.view
 
 import com.esofthead.mycollab.configuration.SiteConfiguration
@@ -28,7 +12,7 @@ import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissi
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule
 import com.esofthead.mycollab.module.user.accountsettings.view.events.{AccountBillingEvent, ProfileEvent, SettingEvent, SetupEvent}
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.SettingExtScreenData.{GeneralSetting, ThemeCustomize}
-import com.esofthead.mycollab.module.user.accountsettings.view.parameters.{BillingScreenData, ProfileScreenData, RoleScreenData, UserScreenData}
+import com.esofthead.mycollab.module.user.accountsettings.view.parameters.{BillingScreenData, RoleScreenData, UserScreenData}
 import com.esofthead.mycollab.module.user.domain.criteria.{RoleSearchCriteria, UserSearchCriteria}
 import com.esofthead.mycollab.module.user.domain.{Role, SimpleUser}
 import com.esofthead.mycollab.module.user.events.{RoleEvent, UserEvent}
@@ -67,12 +51,6 @@ class UserAccountController(container: AccountModule) extends AbstractController
   }
 
   private def bindProfileEvents(): Unit = {
-    this.register(new ApplicationEventListener[ProfileEvent.GotoUploadPhoto]() {
-      @Subscribe def handle(event: ProfileEvent.GotoUploadPhoto) {
-        val presenter = PresenterResolver.getPresenter(classOf[ProfilePresenter])
-        presenter.go(container, new ProfileScreenData.UploadPhoto(event.getData.asInstanceOf[Array[Byte]]))
-      }
-    })
     this.register(new ApplicationEventListener[ProfileEvent.GotoProfileView]() {
       @Subscribe def handle(event: ProfileEvent.GotoProfileView) {
         val presenter = PresenterResolver.getPresenter(classOf[ProfilePresenter])
