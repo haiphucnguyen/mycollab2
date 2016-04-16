@@ -16,18 +16,6 @@
  */
 package com.esofthead.mycollab.reporting;
 
-import net.sf.dynamicreports.report.builder.style.PaddingBuilder;
-import net.sf.dynamicreports.report.builder.style.StyleBuilder;
-import net.sf.dynamicreports.report.constant.HorizontalImageAlignment;
-import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
-import net.sf.dynamicreports.report.constant.VerticalTextAlignment;
-
-import java.awt.*;
-import java.util.Locale;
-
-import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
-import static net.sf.dynamicreports.report.builder.DynamicReports.template;
-
 /**
  * @author MyCollab Ltd.
  * @since 4.1.2

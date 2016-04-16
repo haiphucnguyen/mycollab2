@@ -8,6 +8,8 @@ import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.IGanttChartPresenter;
+import com.esofthead.mycollab.module.project.view.IGanttChartView;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardContainer;
 import com.esofthead.mycollab.pro.module.project.events.GanttEvent;
@@ -35,7 +37,7 @@ import java.util.Set;
  * @since 4.0
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-public class GanttChartViewPresenter extends AbstractPresenter<GanttChartView> {
+public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> implements IGanttChartPresenter {
     private static final long serialVersionUID = 1L;
 
     private static Logger LOG = LoggerFactory.getLogger(GanttChartViewPresenter.class);
@@ -99,12 +101,12 @@ public class GanttChartViewPresenter extends AbstractPresenter<GanttChartView> {
                     ganttItemWrapper.adjustTaskDatesByPredecessors(predecessors);
                     ganttAssignmentService.massUpdatePredecessors(ganttItemWrapper.getId(), predecessors, AppContext.getAccountId());
                     ganttItemWrapper.getTask().setPredecessors(predecessors);
-                    view.getTaskTable().refreshRowCache();
+                    ((GanttChartView) view).getTaskTable().refreshRowCache();
                 }
             };
 
     public GanttChartViewPresenter() {
-        super(GanttChartView.class);
+        super(IGanttChartView.class);
     }
 
     @Override
@@ -153,7 +155,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<GanttChartView> {
             ProjectDashboardContainer projectDashboardContainer = (ProjectDashboardContainer) container;
             projectDashboardContainer.removeAllComponents();
             projectDashboardContainer.addComponent(view.getWidget());
-            view.lazyLoadView();
+            ((GanttChartView) view).lazyLoadView();
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoGanttView();

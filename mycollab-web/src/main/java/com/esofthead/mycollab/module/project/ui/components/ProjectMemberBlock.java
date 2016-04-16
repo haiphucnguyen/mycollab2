@@ -38,7 +38,7 @@ import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 public class ProjectMemberBlock extends MVerticalLayout {
     public ProjectMemberBlock(String username, String userAvatarId, String displayName) {
         withMargin(false).withWidth("80px");
-        Image userAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(userAvatarId, 64, displayName);
+        Image userAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(userAvatarId, 48, displayName);
         userAvatar.addStyleName(UIConstants.CIRCLE_BOX);
         A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables.getProjectId(),
                 username)).appendText(StringUtils.trim(displayName, 30, true));

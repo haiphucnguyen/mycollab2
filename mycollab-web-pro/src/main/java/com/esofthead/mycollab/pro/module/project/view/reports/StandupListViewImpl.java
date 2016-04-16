@@ -223,7 +223,9 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
                     .HOVER_EFFECT_NOT_BOX);
             userInfo.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
-            userInfo.addComponent(UserAvatarControlFactory.createUserAvatarEmbeddedComponent(report.getLogByAvatarId(), 100));
+            Image userAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(report.getLogByAvatarId(), 100);
+            userAvatar.addStyleName(UIConstants.CIRCLE_BOX);
+            userInfo.addComponent(userAvatar);
             Label memberLink = new Label(buildMemberLink(report), ContentMode.HTML);
             userInfo.with(memberLink).expand(memberLink).withAlign(memberLink, Alignment.TOP_CENTER);
             rowLayout.addComponent(userInfo);

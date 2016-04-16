@@ -84,10 +84,6 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
 
         private ProjectInformationLayout projectInformationLayout;
 
-        public FormLayoutFactory() {
-//            super((project.getId() == null) ? AppContext.getMessage(ProjectI18nEnum.VIEW_NEW_TITLE) : project.getName());
-        }
-
         private Layout createButtonControls() {
             final HorizontalLayout controlPanel = new HorizontalLayout();
             final ComponentContainer controlButtons;
@@ -133,7 +129,7 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
             EntityUploaderService entityUploaderService = ApplicationContextUtil.getSpringBean(EntityUploaderService.class);
             String newLogoId = entityUploaderService.upload(image, PathUtils.getProjectLogoPath(AppContext.getAccountId(),
                     project.getId()), project.getAvatarid(), AppContext.getUsername(), AppContext.getAccountId(),
-                    new int[]{16, 32, 64, 100});
+                    new int[]{16, 32, 48, 64, 100});
             ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
             project.setAvatarid(newLogoId);
             projectService.updateSelectiveWithSession(project, AppContext.getUsername());
