@@ -68,6 +68,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
     private void displayUserAvatar() {
         avatarAndPass.removeAllComponents();
         Image cropField = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(AppContext.getUserAvatarId(), 100);
+        cropField.addStyleName(UIConstants.CIRCLE_BOX);
         CssLayout avatarWrapper = new CssLayout();
         avatarWrapper.addComponent(cropField);
         MVerticalLayout userAvatar = new MVerticalLayout().withMargin(false).with(avatarWrapper);

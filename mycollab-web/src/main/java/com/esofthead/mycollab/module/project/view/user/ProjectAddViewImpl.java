@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.file.service.EntityUploaderService;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.user.ui.components.ImagePreviewCropWindow;
 import com.esofthead.mycollab.module.user.ui.components.UploadImageField;
@@ -116,16 +117,9 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
             ELabel titleLbl = ELabel.h2(project.getName());
             UploadImageField uploadImageField = new UploadImageField(this);
             uploadImageField.setButtonCaption("Change logo");
-            Component logoComp;
-            if (StringUtils.isBlank(project.getAvatarid())) {
-                logoComp = ELabel.fontIcon(FontAwesome.QUESTION_CIRCLE).withStyleName("icon-48px");
-            } else {
-                logoComp = new Embedded(null, new ExternalResource(StorageFactory.getInstance().getResourcePath
-                        (PathUtils.getProjectLogoPath(AppContext.getAccountId(), project.getId()) + "/" + project
-                                .getAvatarid() + "_100.png")));
-            }
-            MVerticalLayout logoLayout = new MVerticalLayout(logoComp, uploadImageField)
-                    .withMargin(false).withWidth("-1px").alignAll(Alignment.TOP_CENTER);
+
+            MVerticalLayout logoLayout = new MVerticalLayout(ProjectAssetsUtil.buildProjectLogo(project, 100),
+                    uploadImageField).withMargin(false).withWidth("-1px").alignAll(Alignment.TOP_CENTER);
             return new MHorizontalLayout(logoLayout, titleLbl).expand(titleLbl);
         }
 
