@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view.risk;
 
 import com.esofthead.mycollab.common.TableViewField;
-import com.esofthead.mycollab.premium.module.project.view.risk.RiskTableFieldDef;
 import com.esofthead.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.web.ui.table.CustomizedTableWindow;
 

@@ -3,7 +3,7 @@ package com.esofthead.mycollab.pro.module.file.view;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.file.view.IFileModule;
-import com.esofthead.mycollab.premium.module.file.view.FileController;
+import com.esofthead.mycollab.pro.module.file.view.FileController;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;

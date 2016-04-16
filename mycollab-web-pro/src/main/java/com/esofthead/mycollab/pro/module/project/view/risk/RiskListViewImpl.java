@@ -9,7 +9,6 @@ import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
-import com.esofthead.mycollab.premium.module.project.view.risk.RiskTableFieldDef;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
