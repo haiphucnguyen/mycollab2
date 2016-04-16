@@ -1818,11 +1818,11 @@ a.pending {
 	font-size: 38px;
 }
 
-.v-label.icon-32px .v-icon {
-	font-size: 20px;
+.v-label.center {
+	text-align: center;
 }
 
-.circle, .circle img {
+.circle-box, .circle-box img {
 	border-radius: 50%;
 	background-color: #b9ecfb;
 	text-align: center;
@@ -14434,11 +14434,11 @@ a.pending {
 	font-size: 38px;
 }
 
-.v-label.icon-32px .v-icon {
-	font-size: 20px;
+.v-label.center {
+	text-align: center;
 }
 
-.circle, .circle img {
+.circle-box, .circle-box img {
 	border-radius: 50%;
 	background-color: #b9ecfb;
 	text-align: center;

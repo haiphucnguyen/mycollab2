@@ -84,9 +84,7 @@ public class CommonTooltipGenerator {
             div.appendChild(table);
             return div.write();
         } catch (Exception e) {
-            LOG.error(
-                    "Error while generate tooltip for servlet project-task tooltip",
-                    e);
+            LOG.error("Error while generate tooltip for servlet project-task tooltip", e);
             return null;
         }
     }

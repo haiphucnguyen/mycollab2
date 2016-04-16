@@ -53,14 +53,14 @@ public class ProjectAssetsUtil {
                     (String.format("%s/%s_%d.png", PathUtils.getProjectLogoPath(AppContext.getAccountId(), project
                             .getId()), project.getAvatarid(), size))));
         } else {
-            ELabel projectIcon = new ELabel(project.getShortname()).withStyleName(UIConstants.TEXT_ELLIPSIS);
+            ELabel projectIcon = new ELabel(project.getShortname()).withStyleName(UIConstants.TEXT_ELLIPSIS, "center");
             wrapper = new VerticalLayout();
             ((VerticalLayout) wrapper).addComponent(projectIcon);
             ((VerticalLayout) wrapper).setComponentAlignment(projectIcon, Alignment.MIDDLE_CENTER);
         }
         wrapper.setWidth(size, Sizeable.Unit.PIXELS);
         wrapper.setHeight(size, Sizeable.Unit.PIXELS);
-        wrapper.addStyleName("circle");
+        wrapper.addStyleName(UIConstants.CIRCLE_BOX);
         wrapper.setDescription("To change the project logo, go to project menu, select 'Edit Project' and upload the " +
                 "new project logo");
         return wrapper;
