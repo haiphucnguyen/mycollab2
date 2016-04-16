@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.file.service.impl;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.EntityUploaderService;
@@ -38,15 +39,17 @@ public class EntityUploaderServiceImpl implements EntityUploaderService {
             uploadLogoToStorage(uploadedUser, image, basePath, newLogoId, preferSizes[i]);
         }
 
-        // account old logo
-        for (int i = 0; i < preferSizes.length; i++) {
-            try {
-                resourceService.removeResource(String.format("%s/%s_%d.png", basePath, oldId, preferSizes[i]),
-                        uploadedUser, sAccountId);
-            } catch (Exception e) {
-                LOG.error("Error while delete old logo", e);
+        if (StringUtils.isNotBlank(oldId)) {
+            for (int i = 0; i < preferSizes.length; i++) {
+                try {
+                    resourceService.removeResource(String.format("%s/%s_%d.png", basePath, oldId, preferSizes[i]),
+                            uploadedUser, sAccountId);
+                } catch (Exception e) {
+                    LOG.error("Error while delete old logo", e);
+                }
             }
         }
+
         return newLogoId;
     }
 

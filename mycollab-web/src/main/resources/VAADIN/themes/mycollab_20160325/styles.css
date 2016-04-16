@@ -1818,6 +1818,16 @@ a.pending {
 	font-size: 38px;
 }
 
+.v-label.icon-32px .v-icon {
+	font-size: 20px;
+}
+
+.circle, .circle img {
+	border-radius: 50%;
+	background-color: #b9ecfb;
+	text-align: center;
+}
+
 .optionPopupContent {
 	background-color: #ffffff;
 	border: solid 1px #e9e9e9;
@@ -14424,6 +14434,16 @@ a.pending {
 	font-size: 38px;
 }
 
+.v-label.icon-32px .v-icon {
+	font-size: 20px;
+}
+
+.circle, .circle img {
+	border-radius: 50%;
+	background-color: #b9ecfb;
+	text-align: center;
+}
+
 .optionPopupContent {
 	background-color: #ffffff;
 	border: solid 1px #e9e9e9;
@@ -15279,15 +15299,15 @@ div .addview-layout-body {
 }
 
 .v-popupbutton-popup-myprojectlist .contentWrapper, .myprojectlist .contentWrapper {
-	border-style: solid;
-	border-width: 1px 0px 0px 0px;
-	border-color: #e9e9e9;
+	border-top: 1px solid #e9e9e9;
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock, .myprojectlist .projectblock {
-	padding: 0px;
+	padding: 10px;
 	background-color: #FFF;
 	border-bottom: 1px solid #e9e9e9;
+	border-right: 1px solid #e9e9e9;
+	border-left: 1px solid #e9e9e9;
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock:hover, .myprojectlist .projectblock:hover {
@@ -15297,28 +15317,8 @@ div .addview-layout-body {
 	background-color: #f5f5f5;
 }
 
-.v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper, .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived, .myprojectlist .projectblock .projectlink-wrapper, .myprojectlist .projectblock .projectlink-wrapper-archived {
-	border-right: 1px solid #e9e9e9;
-	border-left: 1px solid #e9e9e9;
-	padding: 10px 15px 8px;
-}
-
-.v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper:hover, .myprojectlist .projectblock .projectlink-wrapper:hover {
-	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
-	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
-	box-shadow: inset 5px 0px 0px 0px #0083ce;
-	background-color: #f5f5f5;
-}
-
-.v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived, .myprojectlist .projectblock .projectlink-wrapper-archived {
+.v-popupbutton-popup-myprojectlist .projectblock.projectlink-wrapper-archived, .myprojectlist .projectblock.projectlink-wrapper-archived {
 	background-color: lightgray;
-}
-
-.v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived:hover, .myprojectlist .projectblock .projectlink-wrapper-archived:hover {
-	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
-	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
-	box-shadow: inset 5px 0px 0px 0px #0083ce;
-	background-color: #f5f5f5;
 }
 
 .instruction-box {

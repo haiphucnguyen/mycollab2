@@ -26,6 +26,7 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
+import com.esofthead.mycollab.module.file.PathUtils;
 import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -34,6 +35,7 @@ import com.esofthead.mycollab.module.project.i18n.*;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -53,13 +55,11 @@ import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -98,9 +98,9 @@ public class ProjectInfoComponent extends MHorizontalLayout {
 
     public ProjectInfoComponent(final SimpleProject project) {
         this.withMargin(true).withStyleName("project-info").withFullWidth();
-        ELabel projectIcon = ELabel.fontIcon(FontAwesome.BUILDING_O).withStyleName("icon-48px");
+        Component projectIcon = ProjectAssetsUtil.buildProjectLogo(project, 64);
         this.with(projectIcon).withAlign(projectIcon, Alignment.TOP_LEFT);
-        ELabel headerLbl = ELabel.h2(String.format(" [%s] %s", project.getShortname(), project.getName()));
+        ELabel headerLbl = ELabel.h2(project.getName());
         headerLbl.setDescription(ProjectTooltipGenerator.generateToolTipProject(AppContext.getUserLocale(), project,
                 AppContext.getSiteUrl(), AppContext.getUserTimezone()));
         headerLbl.addStyleName(UIConstants.TEXT_ELLIPSIS);

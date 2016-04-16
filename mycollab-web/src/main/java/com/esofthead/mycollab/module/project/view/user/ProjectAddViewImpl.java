@@ -18,12 +18,18 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
+import com.esofthead.mycollab.configuration.StorageFactory;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
+import com.esofthead.mycollab.module.file.PathUtils;
+import com.esofthead.mycollab.module.file.service.EntityUploaderService;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
+import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.user.ui.components.ImagePreviewCropWindow;
 import com.esofthead.mycollab.module.user.ui.components.UploadImageField;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -34,6 +40,7 @@ import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.*;
@@ -109,8 +116,15 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
             ELabel titleLbl = ELabel.h2(project.getName());
             UploadImageField uploadImageField = new UploadImageField(this);
             uploadImageField.setButtonCaption("Change logo");
-            MVerticalLayout logoLayout = new MVerticalLayout(ELabel.fontIcon(FontAwesome.QUESTION_CIRCLE)
-                    .withStyleName("icon-48px"), uploadImageField)
+            Component logoComp;
+            if (StringUtils.isBlank(project.getAvatarid())) {
+                logoComp = ELabel.fontIcon(FontAwesome.QUESTION_CIRCLE).withStyleName("icon-48px");
+            } else {
+                logoComp = new Embedded(null, new ExternalResource(StorageFactory.getInstance().getResourcePath
+                        (PathUtils.getProjectLogoPath(AppContext.getAccountId(), project.getId()) + "/" + project
+                                .getAvatarid() + "_100.png")));
+            }
+            MVerticalLayout logoLayout = new MVerticalLayout(logoComp, uploadImageField)
                     .withMargin(false).withWidth("-1px").alignAll(Alignment.TOP_CENTER);
             return new MHorizontalLayout(logoLayout, titleLbl).expand(titleLbl);
         }
@@ -122,6 +136,13 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
 
         @Override
         public void process(BufferedImage image) {
+            EntityUploaderService entityUploaderService = ApplicationContextUtil.getSpringBean(EntityUploaderService.class);
+            String newLogoId = entityUploaderService.upload(image, PathUtils.getProjectLogoPath(AppContext.getAccountId(),
+                    project.getId()), project.getAvatarid(), AppContext.getUsername(), AppContext.getAccountId(),
+                    new int[]{16, 32, 64, 100});
+            ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+            project.setAvatarid(newLogoId);
+            projectService.updateSelectiveWithSession(project, AppContext.getUsername());
             Page.getCurrent().getJavaScript().execute("window.location.reload();");
         }
     }

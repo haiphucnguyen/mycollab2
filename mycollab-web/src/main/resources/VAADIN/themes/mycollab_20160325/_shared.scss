@@ -224,6 +224,17 @@
         font-size: 38px;
       }
     }
+    &.icon-32px {
+      .v-icon {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .circle, .circle img{
+    border-radius: 50%;
+    background-color: #b9ecfb;
+    text-align: center;
   }
 
   .optionPopupContent {

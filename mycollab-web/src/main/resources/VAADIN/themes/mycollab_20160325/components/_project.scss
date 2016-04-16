@@ -42,32 +42,19 @@
   .v-popupbutton-popup-myprojectlist, .myprojectlist {
     background-color: white;
     .contentWrapper {
-      border-style: solid;
-      border-width: 1px 0px 0px 0px;
-      border-color: $my-separator-color;
+      border-top: 1px solid $my-separator-color;
     }
     .projectblock {
-      padding: 0px;
+      padding: 10px;
       background-color: #FFF;
       border-bottom: 1px solid $my-separator-color;
+      border-right: 1px solid $my-separator-color;
+      border-left: 1px solid $my-separator-color;
       &:hover {
         @include hover-effect;
       }
-      .projectlink-wrapper, .projectlink-wrapper-archived {
-        border-right: 1px solid $my-separator-color;
-        border-left: 1px solid $my-separator-color;
-        padding: 10px 15px 8px;
-      }
-      .projectlink-wrapper {
-        &:hover {
-          @include hover-effect;
-        }
-      }
-      .projectlink-wrapper-archived {
+      &.projectlink-wrapper-archived {
         background-color: lightgray;
-        &:hover {
-          @include hover-effect;
-        }
       }
     }
   }
