@@ -120,7 +120,7 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
 
             searchCriteria = new ProjectSearchCriteria();
             searchCriteria.setInvolvedMember(StringSearchField.and(AppContext.getUsername()));
-            searchCriteria.setProjectStatuses(new SetSearchField<>(new String[]{OptionI18nEnum.StatusI18nEnum.Open.name()}));
+            searchCriteria.setProjectStatuses(new SetSearchField<>(OptionI18nEnum.StatusI18nEnum.Open.name()));
 
             titleLbl = ELabel.h2(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_ACTIVE_PROJECTS_TITLE, 0));
             OptionPopupContent contentLayout = new OptionPopupContent();

@@ -172,6 +172,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoFavoriteView(this, null));
             }
         });
+        favoriteBtn.setCaptionAsHtml(true);
         favoriteBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
         favoriteBtn.addStyleName(UIConstants.BUTTON_OPTION);
         favoriteBtn.setIcon(FontAwesome.STAR);

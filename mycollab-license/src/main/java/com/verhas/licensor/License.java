@@ -108,7 +108,7 @@ public class License {
 	public String getFeature(final String key) {
 		final String feature;
 		if (licenseProperties != null && licenseProperties.containsKey(key)) {
-			feature = (String) licenseProperties.getProperty(key);
+			feature = licenseProperties.getProperty(key);
 		} else {
 			feature = null;
 		}
@@ -301,7 +301,7 @@ public class License {
 	 * @throws FileNotFoundException
 	 */
 	public License loadKeyRing(final String fileName, final byte[] digest)
-			throws FileNotFoundException, IOException {
+			throws IOException {
 		loadKeyRing(new File(fileName), digest);
 		return this;
 	}
@@ -318,7 +318,7 @@ public class License {
 	 * @throws FileNotFoundException
 	 */
 	public License loadKeyRing(final File file, final byte[] digest)
-			throws FileNotFoundException, IOException {
+			throws IOException {
 		loadKeyRing(new FileInputStream(file), digest);
 		return this;
 	}
@@ -453,9 +453,9 @@ public class License {
 				decoderInputStream);
 
 		key = null;
-		for (final PGPSecretKeyRing kRing : in((Iterator<PGPSecretKeyRing>) pgpSec
+		for (final PGPSecretKeyRing kRing : in(pgpSec
 				.getKeyRings())) {
-			for (final PGPSecretKey k : in((Iterator<PGPSecretKey>) kRing
+			for (final PGPSecretKey k : in(kRing
 					.getSecretKeys())) {
 				for (final String keyUserId : in((Iterator<String>) k
 						.getUserIDs())) {
@@ -516,7 +516,7 @@ public class License {
 
 	private void encode(final String licensePlain,
 			final PGPSignatureGenerator signatureGenerator,
-			OutputStream outputStream) throws UnsupportedEncodingException,
+			OutputStream outputStream) throws
 			IOException {
 
 		final PGPLiteralDataGenerator literalDataGenerator = new PGPLiteralDataGenerator();
@@ -580,7 +580,7 @@ public class License {
 	 * @throws UnsupportedEncodingException
 	 */
 	public License setLicenseEncoded(final String licenseStringEncoded)
-			throws UnsupportedEncodingException, IOException, PGPException {
+			throws IOException, PGPException {
 		setLicenseEncoded(new ByteArrayInputStream(
 				licenseStringEncoded.getBytes("utf-8")));
 		return this;
@@ -615,7 +615,7 @@ public class License {
 	 */
 	@Deprecated
 	public License setLicenseEncodedFromFile(final String fileName)
-			throws FileNotFoundException, IOException, PGPException {
+			throws IOException, PGPException {
 		setLicenseEncodedFromFile(fileName, null);
 		return this;
 	}
@@ -633,7 +633,7 @@ public class License {
 	 * @throws FileNotFoundException
 	 */
 	public License setLicenseEncodedFromFile(final String fileName,
-			final String charset) throws FileNotFoundException, IOException,
+			final String charset) throws IOException,
 			PGPException {
 		setLicenseEncoded(new File(fileName), charset);
 		return this;
@@ -649,7 +649,7 @@ public class License {
 	 */
 	@Deprecated
 	public void setLicenseEncodedFromFile(final File file)
-			throws FileNotFoundException, IOException, PGPException {
+			throws IOException, PGPException {
 		setLicenseEncoded(file);
 	}
 
@@ -665,7 +665,7 @@ public class License {
 	 */
 	@Deprecated
 	public void setLicenseEncoded(final File file)
-			throws FileNotFoundException, IOException, PGPException {
+			throws IOException, PGPException {
 		setLicenseEncoded(file, null);
 	}
 
@@ -681,7 +681,7 @@ public class License {
 	 * @throws FileNotFoundException
 	 */
 	public void setLicenseEncoded(final File file, String charset)
-			throws FileNotFoundException, IOException, PGPException {
+			throws IOException, PGPException {
 		setLicenseEncoded(new FileInputStream(file), charset);
 	}
 

@@ -245,7 +245,7 @@ public class Testimonial extends ValuedBean {
         this.testimonial = testimonial;
     }
 
-    public static enum Field {
+    public enum Field {
         id,
         displayname,
         jobrole,

@@ -497,7 +497,7 @@ public class GanttTreeTable extends TreeTable {
                         ganttItemWrapper.updateParentRelationship(parent.getParent());
                         GanttTreeTable.this.setCollapsed(ganttItemWrapper, false);
                         // Set all below tasks of taskWrapper have parent is taskWrapper
-                        GanttItemWrapper nextItem = (GanttItemWrapper) beanContainer.nextItemId(ganttItemWrapper);
+                        GanttItemWrapper nextItem = beanContainer.nextItemId(ganttItemWrapper);
                         while (nextItem != null && nextItem.getParent() == parent) {
                             nextItem.updateParentRelationship(ganttItemWrapper);
                             beanContainer.setChildrenAllowed(ganttItemWrapper, true);

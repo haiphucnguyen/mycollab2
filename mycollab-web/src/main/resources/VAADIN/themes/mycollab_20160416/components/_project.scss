@@ -72,22 +72,6 @@
     @include margin-container(7px, 5px, 7px, 18px);
   }
 
-  .message-list {
-    .beanlist-content {
-      padding: 5px 15px;
-      background: none no-repeat left top #FFF;
-      border-width: 0px 1px 1px;
-      border-style: solid;
-      border-color: $my-separator-color;
-    }
-    .v-csslayout-beanlist-content > .v-csslayout-margin > .v-csslayout-container > div {
-      display: inline-block;
-      zoom: 1;
-      *display: inline;
-      position: relative;
-    }
-  }
-
   .message .message-container {
     .v-verticallayout {
       display: block;
@@ -142,15 +126,6 @@
         border-color: transparent $my-separator-color;
       }
     }
-  }
-
-  .message-body p {
-    margin: 4px 0px;
-    color: $my-meta-color;
-  }
-
-  .message .message-footer {
-    padding: 0px;
   }
 
   /* End Messages */
