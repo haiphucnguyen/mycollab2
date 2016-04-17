@@ -107,8 +107,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
                     }
 
                     String nodeName = pathStr[pathStr.length - 1];
-                    Node addNode = parentNode.addNode(nodeName,
-                            "{http://www.esofthead.com/mycollab}content");
+                    Node addNode = parentNode.addNode(nodeName, "{http://www.esofthead.com/mycollab}content");
                     addNode.addMixin(NodeType.MIX_LAST_MODIFIED);
                     addNode.addMixin(NodeType.MIX_TITLE);
 
@@ -147,11 +146,9 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
                             if (!isNodeFolder(childNode)) {
                                 // node must be the folder
                                 String errorString = "Invalid path. User want to create folder has path %s but there is a content has path %s";
-                                throw new ContentException(String.format(errorString, folder.getPath(),
-                                        childNode.getPath()));
+                                throw new ContentException(String.format(errorString, folder.getPath(), childNode.getPath()));
                             } else {
-                                LOG.debug("Found folder node {}",
-                                        childNode.getPath());
+                                LOG.debug("Found folder node {}", childNode.getPath());
                             }
                         } else { // add node
                             LOG.debug("Create new folder {} of sub node {}", pathStr[i], parentNode.getPath());
@@ -201,8 +198,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
     public Resource getResource(final String path) {
         return jcrTemplate.execute(new JcrCallback<Resource>() {
             @Override
-            public Resource doInJcr(Session session) throws IOException,
-                    RepositoryException {
+            public Resource doInJcr(Session session) throws IOException, RepositoryException {
                 Node rootNode = session.getRootNode();
                 Node node = getNode(rootNode, path);
 
@@ -286,8 +282,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
         return jcrTemplate.execute(new JcrCallback<List<Content>>() {
 
             @Override
-            public List<Content> doInJcr(Session session) throws IOException,
-                    RepositoryException {
+            public List<Content> doInJcr(Session session) throws IOException, RepositoryException {
                 Node rootNode = session.getRootNode();
                 Node node = getNode(rootNode, path);
                 if (node != null) {
@@ -318,8 +313,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
         return jcrTemplate.execute(new JcrCallback<List<Folder>>() {
 
             @Override
-            public List<Folder> doInJcr(Session session) throws IOException,
-                    RepositoryException {
+            public List<Folder> doInJcr(Session session) throws IOException, RepositoryException {
                 Node rootNode = session.getRootNode();
                 Node node = getNode(rootNode, path);
                 if (node != null) {
@@ -337,7 +331,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
                         return folders;
                     } else {
                         throw new ContentException("Do not support any node type except mycollab:folder. The current node has type "
-                                        + node.getPrimaryNodeType().getName());
+                                + node.getPrimaryNodeType().getName());
                     }
                 }
 
@@ -442,8 +436,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
         jcrTemplate.execute(new JcrCallback() {
 
             @Override
-            public Object doInJcr(Session session) throws IOException,
-                    RepositoryException {
+            public Object doInJcr(Session session) throws IOException, RepositoryException {
                 try {
                     int index = destinationPath.lastIndexOf("/");
                     if (index >= 0) {
