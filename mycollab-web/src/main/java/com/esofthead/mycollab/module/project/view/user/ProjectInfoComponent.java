@@ -26,7 +26,6 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
-import com.esofthead.mycollab.module.file.PathUtils;
 import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -55,7 +54,6 @@ import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
-import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -163,6 +161,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         });
         tagBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
         tagBtn.addStyleName(UIConstants.BUTTON_OPTION);
+        tagBtn.setDescription("Tag management");
         tagBtn.setIcon(FontAwesome.TAGS);
         footer.addComponents(tagBtn);
 
@@ -176,6 +175,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         favoriteBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
         favoriteBtn.addStyleName(UIConstants.BUTTON_OPTION);
         favoriteBtn.setIcon(FontAwesome.STAR);
+        favoriteBtn.setDescription("Your favorite list");
         footer.addComponents(favoriteBtn);
 
         Button eventBtn = new Button("Calendar", new Button.ClickListener() {
@@ -187,6 +187,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         eventBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
         eventBtn.addStyleName(UIConstants.BUTTON_OPTION);
         eventBtn.setIcon(FontAwesome.CALENDAR);
+        eventBtn.setDescription("Calendar");
         footer.addComponents(eventBtn);
 
         Button ganttChartBtn = new Button("Gantt", new Button.ClickListener() {
@@ -198,6 +199,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         ganttChartBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
         ganttChartBtn.addStyleName(UIConstants.BUTTON_OPTION);
         ganttChartBtn.setIcon(FontAwesome.BAR_CHART_O);
+        ganttChartBtn.setDescription("Gantt chart");
         footer.addComponents(ganttChartBtn);
 
         Button reportBtn = new Button("Report", new Button.ClickListener() {
@@ -209,6 +211,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         reportBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
         reportBtn.addStyleName(UIConstants.BUTTON_OPTION);
         reportBtn.setIcon(FontAwesome.INDUSTRY);
+        reportBtn.setDescription("Project reports");
         footer.addComponents(reportBtn);
 
         headerLayout.with(headerLbl, footer);

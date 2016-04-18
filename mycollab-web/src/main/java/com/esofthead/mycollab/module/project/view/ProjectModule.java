@@ -45,7 +45,6 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -76,6 +75,7 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
                     serviceMenu.selectService(0);
                 }
             });
+
             serviceMenu.addService("Clients", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
@@ -83,7 +83,6 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
                     serviceMenu.selectService(1);
                 }
             });
-
             serviceMenuContainer.with(serviceMenu);
 
             Button newPrjBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_NEW_PROJECT), new Button.ClickListener() {

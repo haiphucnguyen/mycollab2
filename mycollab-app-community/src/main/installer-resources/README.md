@@ -57,6 +57,7 @@ Version 5.2.12
 
 **Bug Fixes**
 
+* [Premium] Can not print client page
 * Can not modify basic properties of kanban columns
 * Several cases of bug dependencies do not work as expected
 * Can not upload/rename the file include the special unicode characters

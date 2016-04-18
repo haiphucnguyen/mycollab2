@@ -3,11 +3,15 @@ package com.esofthead.mycollab.pro.module.project.view.client;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.view.account.AccountDefaultDynaFormLayoutFactory;
 import com.esofthead.mycollab.module.project.events.ClientEvent;
+import com.esofthead.mycollab.reporting.FormReportLayout;
+import com.esofthead.mycollab.reporting.PrintButton;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -73,6 +77,13 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
                 Account cloneData = (Account) data.copy();
                 cloneData.setId(null);
                 EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, cloneData));
+            }
+
+            @Override
+            public void onPrint(Object source, SimpleAccount data) {
+                PrintButton btn = (PrintButton) source;
+                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.ACCOUNT, Account.Field.accountname.name(),
+                        AccountDefaultDynaFormLayoutFactory.getForm()));
             }
 
             @Override
