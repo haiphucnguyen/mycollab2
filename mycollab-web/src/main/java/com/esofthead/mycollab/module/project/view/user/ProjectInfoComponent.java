@@ -150,7 +150,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                 clientDiv.appendText(FontAwesome.INSTITUTION.getHtml() + " ");
             } else {
                 Img clientImg = new Img("", StorageFactory.getInstance().getEntityLogoPath(AppContext.getAccountId(), project.getClientAvatarId(), 16));
-                clientDiv.appendChild(clientImg);
+                clientDiv.appendChild(clientImg).appendChild(DivLessFormatter.EMPTY_SPACE());
             }
             clientDiv.appendChild(new A(ProjectLinkBuilder.generateClientPreviewFullLink(project.getAccountid()))
                     .appendText(project.getClientName()));

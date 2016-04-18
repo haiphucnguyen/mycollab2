@@ -93,7 +93,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             linkIconFix.addComponent(projectLbl);
 
             MHorizontalLayout metaInfo = new MHorizontalLayout().withFullWidth();
-            metaInfo.setDefaultComponentAlignment(Alignment.TOP_LEFT);
+            metaInfo.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
             Div activeMembersDiv = new Div().appendText(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers()).setTitle("Active members");
             Div createdTimeDiv = new Div().appendText(FontAwesome.CLOCK_O.getHtml() + " " + AppContext
@@ -120,7 +120,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
                     accountDiv.appendText(FontAwesome.INSTITUTION.getHtml() + " ");
                 } else {
                     Img clientImg = new Img("", StorageFactory.getInstance().getEntityLogoPath(AppContext.getAccountId(), project.getClientAvatarId(), 16));
-                    accountDiv.appendChild(clientImg);
+                    accountDiv.appendChild(clientImg).appendChild(DivLessFormatter.EMPTY_SPACE());
                 }
 
                 accountDiv.appendChild(new A(ProjectLinkBuilder.generateClientPreviewFullLink(project.getAccountid()))
