@@ -46,7 +46,7 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
     protected int totalPage = 1;
     protected int totalCount;
     protected List<T> currentListData;
-    protected CssLayout controlBarWrapper;
+    protected MHorizontalLayout controlBarWrapper;
     protected MHorizontalLayout pageManagement;
     protected SearchRequest<S> searchRequest;
 
@@ -72,14 +72,8 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
         this.listControlStyle = style;
     }
 
-    protected CssLayout createPageControls() {
-        controlBarWrapper = new CssLayout();
-        controlBarWrapper.setStyleName(listControlStyle);
-        controlBarWrapper.setWidth("100%");
-
-        HorizontalLayout controlBar = new HorizontalLayout();
-        controlBar.setWidth("100%");
-        controlBarWrapper.addComponent(controlBar);
+    protected ComponentContainer createPageControls() {
+        controlBarWrapper = new MHorizontalLayout().withFullWidth().withStyleName(listControlStyle);
 
         pageManagement = new MHorizontalLayout().withWidth(null);
 
@@ -182,9 +176,7 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
             pageManagement.addComponent(last);
         }
 
-        controlBar.addComponent(pageManagement);
-        controlBar.setComponentAlignment(pageManagement, Alignment.MIDDLE_RIGHT);
-
+        controlBarWrapper.with(pageManagement).withAlign(pageManagement, Alignment.MIDDLE_RIGHT);
         return controlBarWrapper;
     }
 
