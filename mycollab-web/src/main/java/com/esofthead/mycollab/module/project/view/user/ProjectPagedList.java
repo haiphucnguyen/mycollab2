@@ -19,11 +19,13 @@ package com.esofthead.mycollab.module.project.view.user;
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.utils.NumberUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -38,10 +40,9 @@ import com.hp.gagawa.java.elements.Img;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
-import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -53,6 +54,23 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
 
     public ProjectPagedList() {
         super(ApplicationContextUtil.getSpringBean(ProjectService.class), new ProjectRowDisplayHandler(), 4);
+    }
+
+    @Override
+    protected MHorizontalLayout createPageControls() {
+        MHorizontalLayout pageControls = super.createPageControls();
+        if (pageControls != null) {
+            Button browseProjectsBtn = new Button("Browse projects", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    EventBusFactory.getInstance().post(new ProjectEvent.GotoList(this, null));
+                }
+            });
+            browseProjectsBtn.addStyleName(UIConstants.BUTTON_LINK);
+            pageControls.addComponent(browseProjectsBtn, 0);
+            pageControls.setComponentAlignment(browseProjectsBtn, Alignment.MIDDLE_LEFT);
+        }
+        return pageControls;
     }
 
     public static class ProjectRowDisplayHandler implements AbstractBeanPagedList.RowDisplayHandler<SimpleProject> {

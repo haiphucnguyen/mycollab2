@@ -20,6 +20,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.PageableHandler;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -72,14 +73,15 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
         this.listControlStyle = style;
     }
 
-    protected ComponentContainer createPageControls() {
-        controlBarWrapper = new MHorizontalLayout().withFullWidth().withStyleName(listControlStyle);
+    protected MHorizontalLayout createPageControls() {
+        controlBarWrapper = new MHorizontalLayout().withFullWidth().withMargin(new MarginInfo(false, true, false, true))
+                .withStyleName(listControlStyle);
 
         pageManagement = new MHorizontalLayout().withWidth(null);
 
         // defined layout here ---------------------------
 
-        if (this.currentPage > 1) {
+        if (currentPage > 1) {
             Button firstLink = new Button("1", new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
 
@@ -91,13 +93,13 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
             firstLink.addStyleName("buttonPaging");
             pageManagement.addComponent(firstLink);
         }
-        if (this.currentPage >= 5) {
+        if (currentPage >= 5) {
             final Label ss1 = new Label("...");
             ss1.addStyleName("buttonPaging");
             pageManagement.addComponent(ss1);
         }
-        if (this.currentPage > 3) {
-            Button previous2 = new Button("" + (this.currentPage - 2), new ClickListener() {
+        if (currentPage > 3) {
+            Button previous2 = new Button("" + (currentPage - 2), new ClickListener() {
                 private static final long serialVersionUID = 1L;
 
                 @Override
@@ -108,8 +110,8 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
             previous2.addStyleName("buttonPaging");
             pageManagement.addComponent(previous2);
         }
-        if (this.currentPage > 2) {
-            final Button previous1 = new Button("" + (this.currentPage - 1), new ClickListener() {
+        if (currentPage > 2) {
+            final Button previous1 = new Button("" + (currentPage - 1), new ClickListener() {
                 private static final long serialVersionUID = 1L;
 
                 @Override
@@ -121,7 +123,7 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
             pageManagement.addComponent(previous1);
         }
         // Here add current ButtonLinkLegacy
-        final Button current = new Button("" + this.currentPage, new ClickListener() {
+        final Button current = new Button("" + currentPage, new ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -133,9 +135,9 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
         current.addStyleName("current");
 
         pageManagement.addComponent(current);
-        final int range = this.totalPage - this.currentPage;
+        final int range = this.totalPage - currentPage;
         if (range >= 1) {
-            final Button next1 = new Button("" + (this.currentPage + 1), new ClickListener() {
+            final Button next1 = new Button("" + (currentPage + 1), new ClickListener() {
                 private static final long serialVersionUID = 1L;
 
                 @Override
@@ -147,7 +149,7 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
             pageManagement.addComponent(next1);
         }
         if (range >= 2) {
-            Button next2 = new Button("" + (this.currentPage + 2), new ClickListener() {
+            Button next2 = new Button("" + (currentPage + 2), new ClickListener() {
                 private static final long serialVersionUID = 1L;
 
                 @Override

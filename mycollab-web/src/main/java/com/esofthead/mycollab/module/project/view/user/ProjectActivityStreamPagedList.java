@@ -227,7 +227,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Activi
     }
 
     @Override
-    protected ComponentContainer createPageControls() {
+    protected MHorizontalLayout createPageControls() {
         this.controlBarWrapper = new MHorizontalLayout().withFullHeight().withStyleName("page-controls");
         ButtonGroup controlBtns = new ButtonGroup();
         controlBtns.setStyleName(UIConstants.BUTTON_ACTION);
