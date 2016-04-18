@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.pro.module.project.view.client;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -54,9 +56,25 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
         clientContainer.removeAllComponents();
         clientContainer.addComponent(view);
         if (AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
-            SimpleAccount account = (SimpleAccount) data.getParams();
+            SimpleAccount account = null;
+            if (data.getParams() instanceof SimpleAccount) {
+                account = (SimpleAccount) data.getParams();
+            } else if (data.getParams() instanceof Integer) {
+                AccountService accountService = ApplicationContextUtil.getSpringBean(AccountService.class);
+                account = accountService.findById((Integer) data.getParams(), AppContext.getAccountId());
+            }
+
+            if (account == null) {
+                throw new ResourceNotFoundException();
+            }
+
             view.editItem(account);
-            AppContext.addFragment("project/client/add", AppContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE, "Client"));
+            if (account.getId() == null) {
+                AppContext.addFragment("project/client/add", AppContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE, "Client"));
+            } else {
+                AppContext.addFragment("project/client/edit/" + UrlEncodeDecoder.encode(account.getId()),
+                        AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE, "Client", account.getAccountname()));
+            }
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }
