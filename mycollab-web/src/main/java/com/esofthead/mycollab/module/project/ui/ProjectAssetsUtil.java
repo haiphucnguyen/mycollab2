@@ -69,11 +69,11 @@ public class ProjectAssetsUtil {
     public static final Component buildClientLogo(SimpleAccount account, int size) {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(account.getAvatarid())) {
-            wrapper = new Image(null, new ExternalResource(StorageFactory.getInstance().getResourcePath
-                    (String.format("%s/%s_%d.png", PathUtils.getEntityLogoPath(AppContext.getAccountId()), account.getAvatarid(), size))));
+            wrapper = new Image(null, new ExternalResource(StorageFactory.getInstance().getEntityLogoPath(AppContext
+                    .getAccountId(), account.getAvatarid(), 100)));
         } else {
             String accountName = account.getAccountname();
-            accountName = (accountName.length() > 3) ? accountName.substring(0, 2) : accountName;
+            accountName = (accountName.length() > 3) ? accountName.substring(0, 3) : accountName;
             ELabel projectIcon = new ELabel(accountName).withStyleName(UIConstants.TEXT_ELLIPSIS, "center");
             wrapper = new VerticalLayout();
             ((VerticalLayout) wrapper).addComponent(projectIcon);

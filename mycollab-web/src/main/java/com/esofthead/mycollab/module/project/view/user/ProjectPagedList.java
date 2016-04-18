@@ -115,9 +115,16 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             }
 
             if (project.getAccountid() != null) {
-                Div accountDiv = new Div().appendText(FontAwesome.INSTITUTION.getHtml() + " ")
-                        .appendChild(new A(ProjectLinkBuilder.generateClientPreviewFullLink(project.getAccountid()))
-                                .appendText(StringUtils.trim(project.getClientName(), 30, true))).setCSSClass(UIConstants.BUTTON_BLOCK)
+                Div accountDiv = new Div();
+                if (project.getClientAvatarId() == null) {
+                    accountDiv.appendText(FontAwesome.INSTITUTION.getHtml() + " ");
+                } else {
+                    Img clientImg = new Img("", StorageFactory.getInstance().getEntityLogoPath(AppContext.getAccountId(), project.getClientAvatarId(), 16));
+                    accountDiv.appendChild(clientImg);
+                }
+
+                accountDiv.appendChild(new A(ProjectLinkBuilder.generateClientPreviewFullLink(project.getAccountid()))
+                        .appendText(StringUtils.trim(project.getClientName(), 30, true))).setCSSClass(UIConstants.BUTTON_BLOCK)
                         .setTitle(project.getClientName());
                 metaDiv.appendChild(0, accountDiv);
                 metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE());
