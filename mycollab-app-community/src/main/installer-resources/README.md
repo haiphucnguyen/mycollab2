@@ -54,6 +54,7 @@ Version 5.2.13
 
 * Allow site owner create the admin user instead of system default user
 * Create sample project for the new MyCollab installation
+* Other minor improvements
 
 **Bug Fixes**
 
