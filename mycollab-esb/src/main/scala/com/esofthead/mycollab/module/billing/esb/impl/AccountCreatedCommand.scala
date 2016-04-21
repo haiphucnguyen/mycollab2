@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.ondemand.module.billing.esb.impl
+package com.esofthead.mycollab.module.billing.esb.impl
 
 import java.util.GregorianCalendar
 
