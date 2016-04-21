@@ -40,7 +40,7 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
-Version 5.3.0
+Version 5.2.13
 -----------------------------
 **Library Upgrades**
 
@@ -52,17 +52,12 @@ Version 5.3.0
 
 **Improvements & New Features**
 
-* [Premium] Various reporting forms
-* [Premium] Companies management
-* [Premium] Custom widgets on the project dashboard
-* [Premium] Allow custom fields in project
-* [Premium] Send invoice to client
-* [Premium] Improve the Gantt chart stability
-* Create several sample projects for the new MyCollab installation
+* Allow site owner create the admin user instead of system default user
+* Create sample project for the new MyCollab installation
 
 **Bug Fixes**
 
-
+* Get following items return the wrong list in several cases
 
 Version 5.2.12
 -----------------------------

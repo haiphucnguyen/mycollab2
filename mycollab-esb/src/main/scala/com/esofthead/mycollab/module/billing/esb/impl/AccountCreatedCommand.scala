@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.billing.esb.impl
 import java.util
 import java.util.GregorianCalendar
 
+import com.esofthead.mycollab.common.NotificationType
 import com.esofthead.mycollab.common.domain.OptionVal
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum
 import com.esofthead.mycollab.common.i18n.WikiI18nEnum
@@ -15,10 +16,10 @@ import com.esofthead.mycollab.module.file.PathUtils
 import com.esofthead.mycollab.module.page.domain.{Folder, Page}
 import com.esofthead.mycollab.module.page.service.PageService
 import com.esofthead.mycollab.module.project.ProjectTypeConstants
-import com.esofthead.mycollab.module.project.domain.{Message, Milestone, Project, Task}
+import com.esofthead.mycollab.module.project.domain._
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum._
-import com.esofthead.mycollab.module.project.service.{MessageService, MilestoneService, ProjectService, ProjectTaskService}
+import com.esofthead.mycollab.module.project.service._
 import com.esofthead.mycollab.module.tracker.domain.{BugWithBLOBs, Version}
 import com.esofthead.mycollab.module.tracker.service._
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
@@ -43,6 +44,7 @@ import org.springframework.stereotype.Component
   @Autowired private val versionService: VersionService = null
   @Autowired private val pageService: PageService = null
   @Autowired private val resourceService: ResourceService = null
+  @Autowired val projectNotificationSettingService: ProjectNotificationSettingService = null
 
   @AllowConcurrentEvents
   @Subscribe
@@ -106,12 +108,21 @@ import org.springframework.stereotype.Component
     project.setShortname("SP1")
     val projectId = projectService.saveWithSession(project, initialUser)
 
+    val projectNotificationSetting = new ProjectNotificationSetting()
+    projectNotificationSetting.setLevel(NotificationType.None.name())
+    projectNotificationSetting.setProjectid(projectId)
+    projectNotificationSetting.setSaccountid(accountId)
+    projectNotificationSetting.setUsername(initialUser)
+    projectNotificationSettingService.saveWithSession(projectNotificationSetting, initialUser)
+
     val message = new Message()
     message.setIsstick(true)
+    message.setPosteduser(initialUser)
     message.setMessage("Welcome to MyCollab workspace. I hope you enjoy it!")
     message.setSaccountid(accountId)
     message.setProjectid(projectId)
     message.setTitle("Thank you for using MyCollab!")
+    message.setPosteddate(now.toDate)
     messageService.saveWithSession(message, initialUser)
 
     val milestone: Milestone = new Milestone()
@@ -165,10 +176,11 @@ import org.springframework.stereotype.Component
     component.setComponentname("Component 1")
     component.setCreateduser(initialUser)
     component.setDescription("Sample Component 1")
+    component.setStatus(StatusI18nEnum.Open.name())
     component.setProjectid(projectId)
     component.setSaccountid(accountId)
     component.setUserlead(initialUser)
-    val componentId = componentService.saveWithSession(component, initialUser)
+    componentService.saveWithSession(component, initialUser)
 
     val version = new Version()
     version.setCreateduser(initialUser)
@@ -177,7 +189,8 @@ import org.springframework.stereotype.Component
     version.setDuedate(now.plusDays(21).toDate)
     version.setProjectid(projectId)
     version.setSaccountid(accountId)
-    val versionId = versionService.saveWithSession(version, initialUser)
+    version.setStatus(StatusI18nEnum.Open.name())
+    versionService.saveWithSession(version, initialUser)
 
     val bugA = new BugWithBLOBs()
     bugA.setDescription("Sample bug")
@@ -208,7 +221,7 @@ import org.springframework.stereotype.Component
     val page = new Page()
     page.setSubject("Welcome to sample workspace")
     page.setContent("I hope you enjoy MyCollab!")
-    page.setPath(PathUtils.getProjectDocumentPath(accountId, projectId)+ "/" + StringUtils.generateSoftUniqueId())
+    page.setPath(PathUtils.getProjectDocumentPath(accountId, projectId) + "/" + StringUtils.generateSoftUniqueId())
     page.setStatus(WikiI18nEnum.status_public.name())
     pageService.savePage(page, initialUser)
 
