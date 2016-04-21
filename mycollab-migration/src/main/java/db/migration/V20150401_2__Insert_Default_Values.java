@@ -16,19 +16,14 @@
  */
 package db.migration;
 
-import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.core.utils.TimezoneMapper;
-import com.esofthead.mycollab.security.PermissionMap;
 import org.flywaydb.core.api.migration.spring.SpringJdbcMigration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd.
@@ -42,8 +37,7 @@ public class V20150401_2__Insert_Default_Values implements SpringJdbcMigration {
 
         LOG.debug("Insert default billing plan");
         SimpleJdbcInsert billingJdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("s_billing_plan")
-                .usingColumns("billingType", "numUsers", "volume", "numProjects", "pricing", "hasBugEnable", "hasStandupMeetingEnable",
-                        "hasTimeTracking").usingGeneratedKeyColumns("id");
+                .usingColumns("billingType", "numUsers", "volume", "numProjects", "pricing").usingGeneratedKeyColumns("id");
 
         Map<String, Object> billingParameters = new HashMap<>();
         billingParameters.put("billingType", "Community");
@@ -51,9 +45,6 @@ public class V20150401_2__Insert_Default_Values implements SpringJdbcMigration {
         billingParameters.put("volume", 999999999999L);
         billingParameters.put("numProjects", 999999);
         billingParameters.put("pricing", 0);
-        billingParameters.put("hasBugEnable", Boolean.TRUE);
-        billingParameters.put("hasStandupMeetingEnable", Boolean.TRUE);
-        billingParameters.put("hasTimeTracking", Boolean.TRUE);
 
         Number billingPlanId = billingJdbcInsert.executeAndReturnKey(billingParameters);
 

@@ -47,6 +47,7 @@ public class SetupNewInstanceView extends MVerticalLayout {
 
                 if (!password.equals(retypePassword)) {
                     NotificationUtil.showErrorNotification("Password is not match");
+                    return;
                 }
                 BillingAccountService billingAccountService = ApplicationContextUtil.getSpringBean
                         (BillingAccountService.class);
