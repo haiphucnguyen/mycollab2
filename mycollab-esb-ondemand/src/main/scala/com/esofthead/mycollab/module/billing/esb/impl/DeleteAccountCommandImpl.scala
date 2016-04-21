@@ -7,10 +7,10 @@ import com.esofthead.mycollab.common.domain.{MailRecipientField, OptionValExampl
 import com.esofthead.mycollab.configuration.SiteConfiguration
 import com.esofthead.mycollab.core.utils.BeanUtility
 import com.esofthead.mycollab.module.GenericCommand
-import com.esofthead.mycollab.module.billing.esb.DeleteAccountEvent
 import com.esofthead.mycollab.module.ecm.service.ResourceService
 import com.esofthead.mycollab.module.mail.service.ExtMailService
 import com.esofthead.mycollab.module.page.service.PageService
+import com.esofthead.mycollab.ondemand.module.billing.esb.DeleteAccountEvent
 import com.google.common.eventbus.Subscribe
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component

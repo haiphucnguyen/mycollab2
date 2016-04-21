@@ -16,14 +16,9 @@
  */
 package com.esofthead.mycollab.ondemand.configuration;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.esofthead.mycollab.configuration.ApplicationProperties;
 import com.esofthead.mycollab.configuration.Storage;
-
-import java.util.Properties;
 
 /**
  * Amazon S3 Configuration
@@ -32,32 +27,11 @@ import java.util.Properties;
  * @since 1.0
  */
 public class S3Storage extends Storage {
-    private static final String AWS_KEY = "s3.key";
-    private static final String AWS_SECRET_KEY = "s3.secretKey";
-    private static final String BUCKET = "s3.bucket";
-
-    private String awsKey;
-    private String awsSecretKey;
-    private String bucket;
-
-    public S3Storage() {
-        Properties props = ApplicationProperties.getAppProperties();
-        awsKey = props.getProperty(AWS_KEY);
-        awsSecretKey = props.getProperty(AWS_SECRET_KEY);
-        bucket = props.getProperty(BUCKET);
-
-        if ("".equals(awsKey) || "".equals(awsSecretKey) || "".equals(bucket)) {
-            throw new IllegalArgumentException(
-                    "Invalid s3 configuration. All values awsKey, awsSecretKey, bucket must be set");
-        }
-    }
-
     public final AmazonS3 newS3Client() {
-        AWSCredentials myCredentials = new BasicAWSCredentials(awsKey, awsSecretKey);
-        return new AmazonS3Client(myCredentials);
+        return new AmazonS3Client(AmazonServiceConfiguration.amazonCredentials());
     }
 
     public String getBucket() {
-        return bucket;
+        return AmazonServiceConfiguration.getBucket();
     }
 }

@@ -6,9 +6,9 @@ import com.esofthead.mycollab.common.domain.OptionVal
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum
 import com.esofthead.mycollab.common.service.OptionValService
 import com.esofthead.mycollab.module.GenericCommand
+import com.esofthead.mycollab.module.billing.esb.AccountCreatedEvent
 import com.esofthead.mycollab.module.project.ProjectTypeConstants
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum
-import com.esofthead.mycollab.ondemand.module.billing.esb.AccountCreatedEvent
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -35,11 +35,11 @@ import org.springframework.stereotype.Component
     optionValService.saveWithSession(option, null)
 
     option.setTypeval(StatusI18nEnum.InProgress.name())
-    option.setId(null);
+    option.setId(null)
     optionValService.saveWithSession(option, null)
 
     option.setTypeval(StatusI18nEnum.Archived.name())
-    option.setId(null);
+    option.setId(null)
     optionValService.saveWithSession(option, null)
 
     option.setTypeval(StatusI18nEnum.Closed.name())
@@ -62,6 +62,5 @@ import org.springframework.stereotype.Component
     option.setTypeval(OptionI18nEnum.MilestoneStatus.Future.name())
     option.setId(null)
     optionValService.saveWithSession(option, null)
-
   }
 }

@@ -2,7 +2,7 @@ package com.esofthead.mycollab.schedule.jobs
 
 import com.esofthead.mycollab.core.arguments.{DateSearchField, SearchRequest, SetSearchField}
 import com.esofthead.mycollab.core.utils.BeanUtility
-import com.esofthead.mycollab.module.billing.esb.DeleteAccountEvent
+import com.esofthead.mycollab.ondemand.module.billing.esb.DeleteAccountEvent
 import com.esofthead.mycollab.ondemand.module.support.domain.criteria.BillingAccountSearchCriteria
 import com.esofthead.mycollab.ondemand.module.support.service.BillingAccountExtService
 import com.google.common.eventbus.AsyncEventBus

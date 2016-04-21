@@ -83,12 +83,6 @@
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-web-premium</artifactId>
             <version>5.2.12</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin</groupId>
-                    <artifactId>vaadin-client-compiler</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
