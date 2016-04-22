@@ -152,9 +152,13 @@ public class ProjectLinkBuilder {
                 + ProjectLinkGenerator.generatePageRead(projectId, pagePath);
     }
 
-    public static String generateStandupDashboardLink(Integer projectId) {
+    public static String generateStandupDashboardLink() {
+        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateStandupDashboardLink();
+    }
+
+    public static final String generateHoursWeeklyReportLink(Integer projectId) {
         return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator
-                .generateStandupDashboardLink(projectId);
+                .generateHoursWeeklyReportLink(projectId);
     }
 
     public static String generateProjectItemHtmlLinkAndTooltip(String prjShortName, Integer projectId, String summary, String type, String typeId) {
@@ -190,8 +194,6 @@ public class ProjectLinkBuilder {
                 result = ProjectLinkGenerator.generateBugComponentPreviewLink(projectId, Integer.parseInt(typeId));
             } else if (ProjectTypeConstants.BUG_VERSION.equals(type)) {
                 result = ProjectLinkGenerator.generateBugVersionPreviewLink(projectId, Integer.parseInt(typeId));
-            } else if (ProjectTypeConstants.STANDUP.equals(type)) {
-                result = ProjectLinkGenerator.generateStandUpPreviewLink(projectId, Integer.parseInt(typeId));
             } else if (ProjectTypeConstants.PAGE.equals(type)) {
                 result = ProjectLinkGenerator.generatePageRead(projectId, typeId);
             }

@@ -42,7 +42,6 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 
             @Override
             public void onCancel() {
-                ViewState viewState = HistoryViewManager.back();
                 EventBusFactory.getInstance().post(new StandUpEvent.GotoList(this, null));
             }
 
@@ -54,8 +53,7 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
     }
 
     public void saveStandupReport(StandupReportWithBLOBs standupReport) {
-        StandupReportService standupReportService = ApplicationContextUtil
-                .getSpringBean(StandupReportService.class);
+        StandupReportService standupReportService = ApplicationContextUtil.getSpringBean(StandupReportService.class);
         standupReport.setProjectid(CurrentProjectVariables.getProjectId());
         standupReport.setSaccountid(AppContext.getAccountId());
         standupReport.setForday(new GregorianCalendar().getTime());

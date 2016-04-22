@@ -2,7 +2,9 @@ package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.module.project.view.ProjectModule;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ReportScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.reports.IReportContainer;
 import com.esofthead.mycollab.module.project.view.reports.IReportPresenter;
@@ -24,7 +26,7 @@ public class ReportPresenter extends AbstractPresenter<IReportContainer> impleme
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ProjectDashboardContainer projectViewContainer = (ProjectDashboardContainer) container;
+        ProjectModule projectViewContainer = (ProjectModule) container;
 
         if (data instanceof StandupScreenData.Search) {
             StandupListPresenter presenter = PresenterResolver.getPresenter(StandupListPresenter.class);
@@ -37,8 +39,12 @@ public class ReportPresenter extends AbstractPresenter<IReportContainer> impleme
             projectViewContainer.addComponent(view.getWidget());
             ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadcrumb.gotoReportConsole();
+        } else if (data instanceof ReportScreenData.GotoHoursWeekly) {
+            MembersWeeklyHoursPresenter presenter = PresenterResolver.getPresenter(MembersWeeklyHoursPresenter.class);
+            presenter.go(projectViewContainer, data);
         } else {
-            throw new MyCollabException("Not support screen data " + data);
+            projectViewContainer.removeAllComponents();
+            projectViewContainer.addComponent(view);
         }
     }
 }

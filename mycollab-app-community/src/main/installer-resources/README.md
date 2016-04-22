@@ -65,6 +65,7 @@ Version 5.3.0
 * [Premium] Report url resolver redirect to the user dashboard when browser page reload
 * [Premium] Standup url resolver redirect to the user dashboard when browser page reload
 * [Premium] It is difficult to quick edit value of popup field
+* Clean resources properly when user signout MyCollab
 * Get following items return the wrong list in several cases
 
 Version 5.2.12

@@ -2,9 +2,9 @@ package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.VariableInjector;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -54,6 +54,7 @@ import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 public class StandupListViewImpl extends AbstractPageView implements StandupListView {
     private static final long serialVersionUID = 1L;
 
+    private StandupReportSearchCriteria baseCriteria;
     private PopupButton dateChooser;
     private StyleCalendarExp standupCalendar = new StyleCalendarExp();
 
@@ -68,8 +69,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         this.addCalendarEvent();
         this.getListReport();
 
-        reportInDay = new BeanList<>(ApplicationContextUtil.getSpringBean(StandupReportService.class),
-                StandupReportRowDisplay.class);
+        reportInDay = new BeanList<>(ApplicationContextUtil.getSpringBean(StandupReportService.class), StandupReportRowDisplay.class);
         reportInDay.addStyleName("standupreport-list-content");
         MHorizontalLayout contentWrap = new MHorizontalLayout().withWidth("100%");
         contentWrap.with(reportInDay).expand(reportInDay);
@@ -136,8 +136,8 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
     }
 
     private void getListReport() {
-        StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
-        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        StandupReportSearchCriteria criteria = BeanUtility.deepClone(baseCriteria);
+
         criteria.addExtraField(DateParam.inRangeDate(StandupReportSearchCriteria.p_fordays, new VariableInjector() {
             @Override
             public Object eval() {
@@ -158,14 +158,13 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
     }
 
     private void displayReport(Date date) {
-        StandupReportSearchCriteria searchCriteria = new StandupReportSearchCriteria();
-        searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        searchCriteria.setOnDate(new DateSearchField(date, DateSearchField.EQUAL));
-        this.setSearchCriteria(searchCriteria);
+        baseCriteria.setOnDate(new DateSearchField(date, DateSearchField.EQUAL));
+        this.setSearchCriteria(baseCriteria);
     }
 
     @Override
     public void setSearchCriteria(StandupReportSearchCriteria searchCriteria) {
+        baseCriteria = searchCriteria;
         reportInDay.setSearchCriteria(searchCriteria);
 
         if (searchCriteria.getOnDate() != null) {
