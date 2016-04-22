@@ -74,7 +74,7 @@ public class InvoiceAddWindow extends Window {
             }
         });
         cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-        buttonControls.with(saveBtn, cancelBtn);
+        buttonControls.with(cancelBtn, saveBtn);
         content.addComponent(buttonControls);
         content.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);
     }

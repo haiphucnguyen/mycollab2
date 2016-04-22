@@ -4,6 +4,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.LazyPopupView;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
@@ -91,6 +92,7 @@ public abstract class PopupBeanFieldBuilder<B> {
     private class BeanPopupView extends LazyPopupView {
         BeanPopupView(String valueAsHtml) {
             super(valueAsHtml);
+            setHideOnMouseOut(false);
         }
 
         @Override
@@ -114,8 +116,7 @@ public abstract class PopupBeanFieldBuilder<B> {
 
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
-            Label headerLbl = new Label(caption, ContentMode.HTML);
-            headerLbl.addStyleName(ValoTheme.LABEL_H3);
+            Label headerLbl = ELabel.h3(caption);
             layout.with(headerLbl);
             layout.with(field);
             if (field instanceof AbstractComponent) {

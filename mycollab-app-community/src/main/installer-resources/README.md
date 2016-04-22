@@ -52,12 +52,14 @@ Version 5.2.13
 
 **Improvements & New Features**
 
+* [Premium] Add views to manage projects/tasks and time of client
 * Allow site owner create the admin user instead of system default user
 * Create sample project for the new MyCollab installation
 * Other minor improvements
 
 **Bug Fixes**
 
+* [Premium] It is difficult to quick edit value of popup field
 * Get following items return the wrong list in several cases
 
 Version 5.2.12

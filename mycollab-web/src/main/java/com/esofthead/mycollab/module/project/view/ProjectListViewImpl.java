@@ -45,6 +45,7 @@ import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable;
 import com.hp.gagawa.java.elements.A;
 import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -112,7 +113,7 @@ public class ProjectListViewImpl extends AbstractPageView implements ProjectList
                 b.setDescription(ProjectTooltipGenerator.generateToolTipProject(AppContext.getUserLocale(), project,
                         AppContext.getSiteUrl(), AppContext.getUserTimezone()));
                 MHorizontalLayout layout = new MHorizontalLayout(ProjectAssetsUtil.buildProjectLogo(project, 32), b)
-                        .expand(b).alignAll(Alignment.MIDDLE_LEFT).withMargin(true);
+                        .expand(b).alignAll(Alignment.MIDDLE_LEFT).withMargin(false).withFullHeight();
                 return layout;
             }
         });
