@@ -41,7 +41,7 @@ class StandupUrlResolver extends ProjectUrlResolver {
   this.addSubResolver("list", new ListUrlResolver)
   this.addSubResolver("add", new PreviewUrlResolver)
 
-  private val simpleDateFormat = DateTimeFormat.forPattern("MM/dd/yyyy");
+  private val simpleDateFormat = DateTimeFormat.forPattern("MM-dd-yyyy");
 
   /**
     * @param dateVal
@@ -50,8 +50,7 @@ class StandupUrlResolver extends ProjectUrlResolver {
   private def parseDate(dateVal: String): Date = {
     try {
       return simpleDateFormat.parseDateTime(dateVal).toDate
-    }
-    catch {
+    } catch {
       case e: ParseException => new GregorianCalendar().getTime
     }
   }

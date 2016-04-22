@@ -594,7 +594,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
                     AppContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP));
         } else {
             AppContext.addFragment("project/reports/standup/list/" + UrlEncodeDecoder.encode(project.getId() + "/" +
-                    AppContext.formatDate(onDate)), AppContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP));
+                    AppContext.formatDate(onDate).replace('/', '-')), AppContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP));
         }
 
     }

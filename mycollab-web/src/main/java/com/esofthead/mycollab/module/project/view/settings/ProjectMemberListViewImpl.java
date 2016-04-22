@@ -82,8 +82,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
     public ProjectMemberListViewImpl() {
         super();
         this.setMargin(new MarginInfo(false, true, true, true));
-        MHorizontalLayout viewHeader = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
-                .withWidth("100%");
+        MHorizontalLayout viewHeader = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withWidth("100%");
         viewHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         headerText = ComponentUtils.headerH2(ProjectTypeConstants.MEMBER, AppContext.getMessage(ProjectMemberI18nEnum.VIEW_LIST_TITLE, 0));

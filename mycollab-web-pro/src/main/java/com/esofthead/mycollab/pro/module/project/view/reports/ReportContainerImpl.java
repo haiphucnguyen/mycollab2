@@ -10,6 +10,7 @@ import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.CssLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -19,18 +20,30 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 @ViewComponent
 public class ReportContainerImpl extends AbstractPageView implements IReportContainer {
     public ReportContainerImpl() {
-        this.withStyleName(UIConstants.FLEX_DISPLAY, "hdr-view");
+        this.addStyleName("hdr-view");
+        CssLayout content = new CssLayout();
+        content.setStyleName(UIConstants.FLEX_DISPLAY);
+        this.addComponent(content);
 
-        MVerticalLayout standupConsole = new MVerticalLayout().withWidth("300px").withStyleName(UIConstants.BOX,
-                UIConstants.HOVER_EFFECT_NOT_BOX);
+        MVerticalLayout standupConsole = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         standupConsole.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         standupConsole.addComponent(ELabel.fontIcon(FontAwesome.LEGAL).withStyleName("icon-38px"));
         A standupReportLink = new A(ProjectLinkBuilder.generateStandupDashboardLink(CurrentProjectVariables.getProjectId()))
-                .appendText("Standup " + "Report");
+                .appendText("Standup Report");
         standupConsole.addComponent(ELabel.h3(standupReportLink.write()).withWidthUndefined());
         standupConsole.addComponent(new ELabel("Your daily scrum which asks three questions What you did yesterday?, " +
                 "What you will do today? and Do you have roadblocks? in the StandUp meeting which should not " +
                 "exceed 15 minutes.").withWidth("100%"));
-        this.addComponent(standupConsole);
+        content.addComponent(standupConsole);
+
+        MVerticalLayout hoursWeeklyReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block").withMargin(true);
+        hoursWeeklyReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
+        hoursWeeklyReport.addComponent(ELabel.fontIcon(FontAwesome.CLOCK_O).withStyleName("icon-38px"));
+        A hoursWeeklyReportLink = new A(ProjectLinkBuilder.generateStandupDashboardLink(CurrentProjectVariables.getProjectId()))
+                .appendText("Hours Weekly Report");
+        hoursWeeklyReport.addComponent(ELabel.h3(hoursWeeklyReportLink.write()).withWidthUndefined());
+        hoursWeeklyReport.addComponent(new ELabel("Your members hours weekly report. Keep your project in time and budget")
+                .withWidth("100%"));
+        content.addComponent(hoursWeeklyReport);
     }
 }
