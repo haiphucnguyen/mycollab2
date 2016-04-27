@@ -46,6 +46,7 @@ Version 5.3.0
 
 * Mybatis 3.4.0
 * Mybatis spring 1.3.0
+* Quartz 2.2.3
 * Jsoup 1.9.1
 * Vaadin 7.6.5
 * Other libraries

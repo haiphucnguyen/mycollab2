@@ -39,6 +39,11 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
         this.addLink(homeBtn);
     }
 
+    public void gotoReportDashboard() {
+        this.select(0);
+        this.addLink(new Button("Reports"));
+    }
+
     public void gotoStandupList(Date onDate) {
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.REPORTS), new GotoReportsListener()));

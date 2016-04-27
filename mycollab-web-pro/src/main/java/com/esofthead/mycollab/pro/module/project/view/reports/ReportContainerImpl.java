@@ -3,8 +3,11 @@ package com.esofthead.mycollab.pro.module.project.view.reports;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.view.reports.IReportContainer;
+import com.esofthead.mycollab.pro.module.project.view.ReportBreadcrumb;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
@@ -19,8 +22,18 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  */
 @ViewComponent
 public class ReportContainerImpl extends AbstractPageView implements IReportContainer {
+    private CssLayout body;
+
     public ReportContainerImpl() {
         this.addStyleName("hdr-view");
+        ReportBreadcrumb breadcrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
+        body = new CssLayout();
+        with(breadcrumb, ELabel.hr(), body);
+    }
+
+    @Override
+    public void showDashboard() {
+        body.removeAllComponents();
         with(ELabel.h2(FontAwesome.PIE_CHART.getHtml() + " Reports"));
         CssLayout content = new CssLayout();
         content.setStyleName(UIConstants.FLEX_DISPLAY);
@@ -57,5 +70,12 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
                 " and your members are happy")
                 .withWidth("100%"));
         content.addComponent(userWorkloadReport);
+        body.addComponent(content);
+    }
+
+    @Override
+    public void addView(PageView view) {
+        body.removeAllComponents();
+        body.addComponent(view);
     }
 }

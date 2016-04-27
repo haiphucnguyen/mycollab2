@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.ProjectModule;
+import com.esofthead.mycollab.module.project.view.reports.IReportContainer;
 import com.esofthead.mycollab.pro.module.project.view.ReportBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -30,9 +30,8 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ProjectModule projectModule = (ProjectModule) container;
-        projectModule.removeAllComponents();
-        projectModule.addComponent(view.getWidget());
+        IReportContainer projectModule = (IReportContainer) container;
+        projectModule.addView(view);
         ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
         List<Integer> projectKeys = projectService.getProjectKeysUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
         if (CollectionUtils.isNotEmpty(projectKeys)) {
