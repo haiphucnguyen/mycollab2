@@ -61,6 +61,20 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
         this.addLink(new Button("Timesheet"));
     }
 
+    public void gotoWeeklyTimingReport() {
+        this.select(0);
+        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.REPORTS), new GotoReportsListener()));
+        this.setLinkEnabled(true, 1);
+        this.addLink(new Button("Hours Weekly Report"));
+    }
+
+    public void gotoUserWorkloadReport() {
+        this.select(0);
+        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.REPORTS), new GotoReportsListener()));
+        this.setLinkEnabled(true, 1);
+        this.addLink(new Button("Users Workload Report"));
+    }
+
     private static class GotoReportsListener implements Button.ClickListener {
         private static final long serialVersionUID = 1L;
 

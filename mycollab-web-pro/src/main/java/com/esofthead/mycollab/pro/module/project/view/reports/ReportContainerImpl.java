@@ -63,7 +63,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
         MVerticalLayout userWorkloadReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         userWorkloadReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         userWorkloadReport.addComponent(ELabel.fontIcon(FontAwesome.BAR_CHART).withStyleName("icon-38px"));
-        A userWorkloadReportLink = new A(ProjectLinkBuilder.generateHoursWeeklyReportLink())
+        A userWorkloadReportLink = new A(ProjectLinkBuilder.generateUsersWorkloadReportLink())
                 .appendText("User Workload Report");
         userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withWidthUndefined());
         userWorkloadReport.addComponent(new ELabel("Preview your user workloads and adjust to keep your project safe," +
