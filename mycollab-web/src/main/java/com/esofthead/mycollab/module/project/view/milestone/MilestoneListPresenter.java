@@ -62,7 +62,7 @@ public class MilestoneListPresenter extends ProjectGenericListPresenter<Mileston
             MilestoneContainer milestoneContainer = (MilestoneContainer) container;
             milestoneContainer.navigateToContainer(ProjectTypeConstants.MILESTONE);
             milestoneContainer.removeAllComponents();
-            milestoneContainer.addComponent(view.getWidget());
+            milestoneContainer.addComponent(view);
 
             MilestoneSearchCriteria searchCriteria;
 

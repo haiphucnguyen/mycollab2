@@ -18,7 +18,7 @@ public class MembersWeeklyHoursPresenter extends AbstractPresenter<MembersWeekly
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectDashboardContainer dashboardContainer = (ProjectDashboardContainer) container;
         dashboardContainer.removeAllComponents();
-        dashboardContainer.addComponent(view.getWidget());
+        dashboardContainer.addComponent(view);
         view.display();
     }
 }

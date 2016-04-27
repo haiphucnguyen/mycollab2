@@ -29,7 +29,7 @@ public class TagListPresenter extends AbstractPresenter<ITagListView> implements
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectDashboardContainer projectViewContainer = (ProjectDashboardContainer) container;
         projectViewContainer.removeAllComponents();
-        projectViewContainer.addComponent(view.getWidget());
+        projectViewContainer.addComponent(view);
         Object params = data.getParams();
         if (params instanceof Tag || params == null) {
             ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

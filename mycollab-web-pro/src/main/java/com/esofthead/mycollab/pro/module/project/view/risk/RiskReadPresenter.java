@@ -134,7 +134,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
                 if (risk != null) {
                     RiskContainer riskContainer = (RiskContainer) container;
                     riskContainer.removeAllComponents();
-                    riskContainer.addComponent(view.getWidget());
+                    riskContainer.addComponent(view);
                     view.previewItem(risk);
 
                     ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

@@ -72,7 +72,7 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS)) {
             RiskContainer riskContainer = (RiskContainer) container;
             riskContainer.removeAllComponents();
-            riskContainer.addComponent(view.getWidget());
+            riskContainer.addComponent(view);
 
             searchCriteria = (RiskSearchCriteria) data.getParams();
             int totalCount = riskService.getTotalCount(searchCriteria);

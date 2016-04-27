@@ -42,11 +42,9 @@ public class SettingPresenter extends AbstractPresenter<ISettingContainer> imple
         super(ISettingContainer.class);
     }
 
-
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         AccountModule accountContainer = (AccountModule) container;
-
         accountContainer.gotoSubView(SettingUIConstants.GENERAL_SETTING);
 
         AbstractPresenter<?> presenter;
@@ -58,7 +56,7 @@ public class SettingPresenter extends AbstractPresenter<ISettingContainer> imple
             throw new MyCollabException("Do not support screen data " + data);
         }
 
-        presenter.go(view.getWidget(), data);
+        presenter.go(view, data);
     }
 
 }

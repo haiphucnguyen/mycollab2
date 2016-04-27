@@ -60,7 +60,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
             RiskContainer riskContainer = (RiskContainer) container;
             riskContainer.removeAllComponents();
-            riskContainer.addComponent(view.getWidget());
+            riskContainer.addComponent(view);
             SimpleRisk risk = (SimpleRisk) data.getParams();
             view.editItem(risk);
 

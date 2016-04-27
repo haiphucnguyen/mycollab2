@@ -29,8 +29,6 @@ import java.util.EventListener;
  */
 public interface PageView extends ComponentContainer, CacheableComponent {
 
-    ComponentContainer getWidget();
-
     <E> void addViewListener(ViewListener<E> listener);
 
     interface ViewListener<E> extends EventListener, Serializable {

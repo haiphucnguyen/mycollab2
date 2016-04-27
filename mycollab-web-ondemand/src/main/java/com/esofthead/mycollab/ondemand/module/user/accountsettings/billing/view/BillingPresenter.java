@@ -42,7 +42,7 @@ public class BillingPresenter extends AbstractPresenter<IBillingContainer> imple
             throw new MyCollabException("Do not support screen data " + data);
         }
 
-        presenter.go(view.getWidget(), data);
+        presenter.go(view, data);
     }
 
 }

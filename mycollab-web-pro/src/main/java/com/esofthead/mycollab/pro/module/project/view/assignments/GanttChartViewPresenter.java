@@ -154,7 +154,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
         if (CurrentProjectVariables.canReadAssignments()) {
             ProjectDashboardContainer projectDashboardContainer = (ProjectDashboardContainer) container;
             projectDashboardContainer.removeAllComponents();
-            projectDashboardContainer.addComponent(view.getWidget());
+            projectDashboardContainer.addComponent(view);
             ((GanttChartView) view).lazyLoadView();
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

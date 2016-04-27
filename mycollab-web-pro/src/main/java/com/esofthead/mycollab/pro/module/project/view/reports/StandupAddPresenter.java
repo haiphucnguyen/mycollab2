@@ -73,7 +73,7 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectDashboardContainer standupContainer = (ProjectDashboardContainer) container;
         standupContainer.removeAllComponents();
-        standupContainer.addComponent(view.getWidget());
+        standupContainer.addComponent(view);
         StandupReportWithBLOBs standupReport = (StandupReportWithBLOBs) data.getParams();
         view.editItem(standupReport);
 

@@ -42,7 +42,7 @@ public class CancelAccountPresenter extends AbstractPresenter<CancelAccountView>
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         IBillingContainer accountContainer = (IBillingContainer) container;
         accountContainer.removeAllComponents();
-        accountContainer.addComponent(view.getWidget());
+        accountContainer.addComponent(view);
 
         AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
         breadcrumb.gotoCancelAccountPage();
