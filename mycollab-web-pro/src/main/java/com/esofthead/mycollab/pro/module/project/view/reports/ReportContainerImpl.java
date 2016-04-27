@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.pro.module.project.view.reports;
 
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.view.reports.IReportContainer;
 import com.esofthead.mycollab.pro.module.project.view.ReportBreadcrumb;
@@ -53,8 +52,8 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
 
         MVerticalLayout hoursWeeklyReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         hoursWeeklyReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-        hoursWeeklyReport.addComponent(ELabel.fontIcon(FontAwesome.CLOCK_O).withStyleName("icon-38px"));
-        A hoursWeeklyReportLink = new A(ProjectLinkBuilder.generateHoursWeeklyReportLink(CurrentProjectVariables.getProjectId()))
+        hoursWeeklyReport.addComponent(ELabel.fontIcon(FontAwesome.BALANCE_SCALE).withStyleName("icon-38px"));
+        A hoursWeeklyReportLink = new A(ProjectLinkBuilder.generateHoursWeeklyReportLink())
                 .appendText("Hours Weekly Report");
         hoursWeeklyReport.addComponent(ELabel.h3(hoursWeeklyReportLink.write()).withWidthUndefined());
         hoursWeeklyReport.addComponent(new ELabel("Your members hours weekly report. Keep your project in time and budget")
@@ -64,13 +63,23 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
         MVerticalLayout userWorkloadReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         userWorkloadReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         userWorkloadReport.addComponent(ELabel.fontIcon(FontAwesome.BAR_CHART).withStyleName("icon-38px"));
-        A userWorkloadReportLink = new A(ProjectLinkBuilder.generateHoursWeeklyReportLink(CurrentProjectVariables.getProjectId()))
+        A userWorkloadReportLink = new A(ProjectLinkBuilder.generateHoursWeeklyReportLink())
                 .appendText("User Workload Report");
         userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withWidthUndefined());
         userWorkloadReport.addComponent(new ELabel("Preview your user workloads and adjust to keep your project safe," +
-                " and your members are happy")
-                .withWidth("100%"));
+                " and your members are happy").withWidth("100%"));
         content.addComponent(userWorkloadReport);
+
+        MVerticalLayout timesheetReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
+        timesheetReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
+        timesheetReport.addComponent(ELabel.fontIcon(FontAwesome.CLOCK_O).withStyleName("icon-38px"));
+        A timesheetReportLink = new A(ProjectLinkBuilder.generateTimesheetReportLink())
+                .appendText("Timesheet Report");
+        timesheetReport.addComponent(ELabel.h3(timesheetReportLink.write()).withWidthUndefined());
+        timesheetReport.addComponent(new ELabel("Keep project's efforts and cost in various charts to give you an " +
+                "insight view of how do you spend money and efforts")
+                .withWidth("100%"));
+        content.addComponent(timesheetReport);
         body.addComponent(content);
     }
 

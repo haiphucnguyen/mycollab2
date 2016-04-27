@@ -15,6 +15,7 @@ class ReportUrlResolver extends ProjectUrlResolver {
   this.defaultUrlResolver = new DefaultUrlResolver
   this.addSubResolver("standup", new StandupUrlResolver)
   this.addSubResolver("timing", new TimingUrlResolver)
+  this.addSubResolver("timesheet", new TimesheetUrlResolver)
 
   class DefaultUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {

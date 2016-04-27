@@ -121,6 +121,7 @@
         #repeat(${_parameter.projectIds} $projectId "," "(" ")")
             @{projectId}
         #end
+        ORDER BY projectName
     </select>
 
     <select id="findReportById" parameterType="java.lang.Integer" resultMap="StandupResult" lang="velocity">

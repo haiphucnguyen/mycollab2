@@ -71,8 +71,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
     public StandupListViewImpl() {
         super();
-        this.setMargin(new MarginInfo(true, false, true, false));
-        standupCalendar.addStyleName("standup-calendar");
+        this.setMargin(new MarginInfo(false, false, true, false));
         standupCalendar.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {

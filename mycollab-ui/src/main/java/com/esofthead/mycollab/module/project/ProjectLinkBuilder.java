@@ -156,9 +156,14 @@ public class ProjectLinkBuilder {
         return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateStandupDashboardLink();
     }
 
-    public static final String generateHoursWeeklyReportLink(Integer projectId) {
+    public static final String generateHoursWeeklyReportLink() {
         return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator
-                .generateHoursWeeklyReportLink(projectId);
+                .generateHoursWeeklyReportLink();
+    }
+
+    public static final String generateTimesheetReportLink() {
+        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator
+                .generateTimesheetReportLink();
     }
 
     public static String generateProjectItemHtmlLinkAndTooltip(String prjShortName, Integer projectId, String summary, String type, String typeId) {

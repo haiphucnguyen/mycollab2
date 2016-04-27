@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.pro.module.project.view;
+package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
@@ -17,7 +17,6 @@ import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import com.esofthead.mycollab.module.project.view.ITimeTrackingView;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
@@ -60,7 +59,7 @@ import java.util.Calendar;
  * @since 5.1.2
  */
 @ViewComponent
-public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrackingView {
+public class TimeTrackingViewImpl extends AbstractPageView implements TimeTrackingView {
     private static final long serialVersionUID = 1L;
 
     private static final String GROUPBY_PROJECT = "Project";

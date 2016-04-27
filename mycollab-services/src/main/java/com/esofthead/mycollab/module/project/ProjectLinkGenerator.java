@@ -193,8 +193,12 @@ public class ProjectLinkGenerator {
         return "project/reports/standup/list/";
     }
 
-    public static String  generateHoursWeeklyReportLink(Integer projectId) {
-        return "project/reports/timing/" + UrlEncodeDecoder.encode(projectId);
+    public static String generateHoursWeeklyReportLink() {
+        return "project/reports/weeklytiming/";
+    }
+
+    public static String generateTimesheetReportLink() {
+        return "project/reports/timesheet/";
     }
 
     public static String generateProjectCalendarLink(Integer projectId) {
