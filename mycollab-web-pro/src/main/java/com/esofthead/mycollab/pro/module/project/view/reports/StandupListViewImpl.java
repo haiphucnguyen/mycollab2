@@ -26,13 +26,14 @@ import com.esofthead.mycollab.vaadin.web.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
+import com.vaadin.data.Property;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import org.vaadin.hene.popupbutton.PopupButton;
+import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -50,11 +51,11 @@ import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 public class StandupListViewImpl extends AbstractPageView implements StandupListView {
     private static final long serialVersionUID = 1L;
 
-    private PopupButton dateChooser;
     private DateField standupCalendar = new DateField();
 
     private ProjectListComp projectListComp;
     private StandupPerProjectView standupPerProjectView;
+    private List<Integer> projectIds;
     private StandupReportStatistic selectedProject = null;
     private Date onDate = new GregorianCalendar().getTime();
 
@@ -64,15 +65,21 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
                 @Subscribe
                 public void handle(StandUpEvent.DisplayStandupInProject event) {
                     Integer projectId = (Integer) event.getData();
-                    viewStandupReportsForProject(projectId);
+                    standupPerProjectView.displayReports(projectId, onDate);
                 }
             };
-
 
     public StandupListViewImpl() {
         super();
         this.setMargin(new MarginInfo(true, false, true, false));
         standupCalendar.addStyleName("standup-calendar");
+        standupCalendar.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                onDate = standupCalendar.getValue();
+                showReports();
+            }
+        });
     }
 
     @Override
@@ -89,42 +96,35 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
     @Override
     public void display(List<Integer> projectIds, Date date) {
-        removeAllComponents();
-        constructHeader();
-
-        ELabel listLnl = ELabel.h3("Projects (" + projectIds.size() + ")");
-        MHorizontalLayout favoriteListHeaderPanel = new MHorizontalLayout(listLnl).expand(listLnl).withMargin(new
-                MarginInfo(false, true, false, true)).withStyleName("panel-header").withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
-        projectListComp = new ProjectListComp();
-        MVerticalLayout projectListPanel = new MVerticalLayout(favoriteListHeaderPanel, projectListComp).withMargin(false).withSpacing(false).withWidth("300px");
-
-        standupPerProjectView = new StandupPerProjectView();
-        with(new MHorizontalLayout(projectListPanel, standupPerProjectView).expand(standupPerProjectView));
-
-        int totalCount = projectListComp.display(projectIds, onDate);
-        if (totalCount > 0) {
-            StandupReportStatistic firstProject = projectListComp.getItemAt(0);
-            if (firstProject != null) {
-                viewStandupReportsForProject(firstProject);
-            }
-            Component firstRow = projectListComp.getRowAt(0);
-            if (firstRow != null) {
-                projectListComp.setSelectedRow(firstRow);
-            }
-        }
+        this.projectIds = projectIds;
+        this.onDate = date;
+        standupCalendar.setValue(date);
     }
 
+    private void showReports() {
+        removeAllComponents();
+        if (CollectionUtils.isNotEmpty(projectIds)) {
+            constructHeader();
 
-    private void viewStandupReportsForProject(Integer projectId) {
-        int rowCount = projectListComp.getRowCount();
-        for (int i = 0; i < rowCount; i++) {
-            StandupReportStatistic standupReportStatistic = projectListComp.getItemAt(i);
-            if (projectId == standupReportStatistic.getProjectId()) {
-                Component row = projectListComp.getRowAt(i);
-                if (row != null) {
-                    projectListComp.setSelectedRow(row);
+            ELabel listLnl = ELabel.h3("Projects (" + projectIds.size() + ")");
+            MHorizontalLayout favoriteListHeaderPanel = new MHorizontalLayout(listLnl).expand(listLnl).withMargin(new
+                    MarginInfo(false, true, false, true)).withStyleName("panel-header").withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
+            projectListComp = new ProjectListComp();
+            MVerticalLayout projectListPanel = new MVerticalLayout(favoriteListHeaderPanel, projectListComp).withMargin(false).withSpacing(false).withWidth("300px");
+
+            standupPerProjectView = new StandupPerProjectView();
+            with(new MHorizontalLayout(projectListPanel, standupPerProjectView).expand(standupPerProjectView));
+
+            int totalCount = projectListComp.display(projectIds, onDate);
+            if (totalCount > 0) {
+                StandupReportStatistic firstProject = projectListComp.getItemAt(0);
+                if (firstProject != null) {
+                    viewStandupReportsForProject(firstProject);
                 }
-                return;
+                Component firstRow = projectListComp.getRowAt(0);
+                if (firstRow != null) {
+                    projectListComp.setSelectedRow(firstRow);
+                }
             }
         }
     }
@@ -199,11 +199,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         HeaderWithFontAwesome titleLbl = ComponentUtils.headerH2(ProjectTypeConstants.STANDUP,
                 AppContext.getMessage(StandupI18nEnum.VIEW_LIST_TITLE));
 
-        dateChooser = new PopupButton(AppContext.getMessage(StandupI18nEnum.CHOOSE_REPORT_DATE));
-        dateChooser.setContent(standupCalendar);
-        dateChooser.setStyleName(UIConstants.BUTTON_ACTION);
-
-        headerLeft.with(titleLbl, dateChooser);
+        headerLeft.with(titleLbl, standupCalendar);
         header.with(headerLeft).withAlign(headerLeft, Alignment.TOP_LEFT);
 
         Button newReportBtn = new Button(AppContext.getMessage(StandupI18nEnum.BUTTON_ADD_REPORT_LABEL), new Button.ClickListener() {

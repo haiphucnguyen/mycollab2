@@ -29,6 +29,7 @@ import java.util.GregorianCalendar;
 class StandupAddWindow extends Window implements IEditFormHandler<StandupReportWithBLOBs> {
     private StandupReportService standupReportService;
     private AdvancedEditBeanForm<StandupReportWithBLOBs> editForm;
+    private Date onDate;
 
     StandupAddWindow(StandupReportStatistic standupReportStatistic, Date onDate) {
         this.setModal(true);
@@ -38,6 +39,7 @@ class StandupAddWindow extends Window implements IEditFormHandler<StandupReportW
         this.setWidth(UIUtils.getBrowserWidth() + "px");
         this.setHeight(UIUtils.getBrowserHeight() + "px");
 
+        this.onDate = onDate;
         standupReportService = ApplicationContextUtil.getSpringBean(StandupReportService.class);
         SimpleStandupReport report = standupReportService.findStandupReportByDateUser(standupReportStatistic.getProjectId(),
                 AppContext.getUsername(), onDate, AppContext.getAccountId());
@@ -104,7 +106,7 @@ class StandupAddWindow extends Window implements IEditFormHandler<StandupReportW
         private static final long serialVersionUID = 1L;
 
         public FormLayoutFactory() {
-            super(AppContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE, AppContext.formatDate(new GregorianCalendar().getTime())));
+            super(AppContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE, AppContext.formatDate(onDate)));
         }
 
         private ComponentContainer createButtonControls() {
