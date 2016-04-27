@@ -52,7 +52,7 @@ public class StandupReportServiceTest extends IntergrationServiceTest {
         Date d = new GregorianCalendar(2013, 2, 13).getTime();
         criteria.setOnDate(new DateSearchField(d));
         criteria.setSaccountid(new NumberSearchField(1));
-        List<SimpleStandupReport> reports = reportService.findPagableListByCriteria(new SearchRequest<>(criteria, 0, Integer.MAX_VALUE));
+        List<SimpleStandupReport> reports = reportService.findPagableListByCriteria(new BasicSearchRequest<>(criteria, 0, Integer.MAX_VALUE));
         assertThat(reports.size()).isEqualTo(1);
         assertThat(reports).extracting("id", "logby", "whattoday").contains(tuple(1, "hainguyen", "a"));
     }

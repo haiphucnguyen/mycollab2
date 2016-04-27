@@ -364,7 +364,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
                 int pages = totalCount / 20;
                 for (int page = 0; page < pages + 1; page++) {
                     List<SimpleItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPagableListByCriteria(new
-                            SearchRequest<>(searchCriteria, page + 1, 20));
+                            BasicSearchRequest<>(searchCriteria, page + 1, 20));
                     for (SimpleItemTimeLogging item : itemTimeLoggings) {
                         timeDisplayComp.insertItem(item);
                     }

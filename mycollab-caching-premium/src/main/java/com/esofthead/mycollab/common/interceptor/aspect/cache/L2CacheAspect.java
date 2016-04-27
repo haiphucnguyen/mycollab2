@@ -3,7 +3,7 @@ package com.esofthead.mycollab.common.interceptor.aspect.cache;
 import com.esofthead.mycollab.cache.CacheUtils;
 import com.esofthead.mycollab.cache.service.CacheService;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.utils.ArrayUtils;
@@ -64,8 +64,8 @@ public class L2CacheAspect {
                                 groupId = (Integer) arg;
                             } else if (arg instanceof SearchCriteria && (((SearchCriteria) arg).getSaccountid() != null)) {
                                 groupId = (Integer) ((SearchCriteria) arg).getSaccountid().getValue();
-                            } else if (arg instanceof SearchRequest) {
-                                SearchCriteria criteria = ((SearchRequest) arg).getSearchCriteria();
+                            } else if (arg instanceof BasicSearchRequest) {
+                                SearchCriteria criteria = ((BasicSearchRequest) arg).getSearchCriteria();
                                 if (criteria instanceof SearchCriteria && (criteria.getSaccountid() != null)) {
                                     groupId = (Integer) criteria.getSaccountid().getValue();
                                 } else {

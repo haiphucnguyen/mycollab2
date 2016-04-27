@@ -3,7 +3,7 @@ package com.esofthead.mycollab.pro.module.project.view.time;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -219,7 +219,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
                 int pages = totalCount / 20;
                 for (int page = 0; page < pages + 1; page++) {
                     List<SimpleItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPagableListByCriteria(new
-                            SearchRequest<>(searchCriteria, page + 1, 20));
+                            BasicSearchRequest<>(searchCriteria, page + 1, 20));
                     for (SimpleItemTimeLogging item : itemTimeLoggings) {
                         timeDisplayComp.insertItem(item);
                     }

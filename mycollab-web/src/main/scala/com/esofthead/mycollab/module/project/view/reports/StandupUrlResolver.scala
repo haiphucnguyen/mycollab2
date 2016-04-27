@@ -61,8 +61,7 @@ class StandupUrlResolver extends ProjectUrlResolver {
       if (params.length == 0) {
         searchCriteria.setOnDate(new DateSearchField(new GregorianCalendar().getTime))
       } else {
-        val token = new UrlTokenizer(params(0))
-        val date = parseDate(token.getString)
+        val date = parseDate(params(0))
         searchCriteria.setOnDate(new DateSearchField(date))
       }
       EventBusFactory.getInstance().post(new StandUpEvent.GotoList(this, searchCriteria))

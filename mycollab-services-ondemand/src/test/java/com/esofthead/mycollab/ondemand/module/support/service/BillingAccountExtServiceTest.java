@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.ondemand.module.support.service;
 
 import com.esofthead.mycollab.core.arguments.DateSearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.ondemand.module.support.domain.SimpleBillingAccount2;
 import com.esofthead.mycollab.ondemand.module.support.domain.criteria.BillingAccountSearchCriteria;
@@ -36,7 +36,7 @@ public class BillingAccountExtServiceTest extends IntergrationServiceTest {
         criteria.setStatuses(new SetSearchField<>("Active"));
         criteria.setLastAccessTime(new DateSearchField(new LocalDate(2016, 1, 3).toDate()));
         List<SimpleBillingAccount2> billingAccounts = billingAccountExtService.findPagableListByCriteria(
-                new SearchRequest<>(criteria));
+                new BasicSearchRequest<>(criteria));
         assertThat(billingAccounts).hasSize(2);
         Collection<SimpleBillingAccount2> filter = Collections2.filter(billingAccounts, new Predicate<SimpleBillingAccount2>() {
             @Override

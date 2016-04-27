@@ -2,7 +2,7 @@ package com.esofthead.mycollab.pro.module.project.view.client;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.StorageFactory;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
@@ -65,7 +65,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
         this.searchCriteria = searchCriteria;
         content.removeAllComponents();
         AccountService accountService = ApplicationContextUtil.getSpringBean(AccountService.class);
-        List<SimpleAccount> clients = accountService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, 0,
+        List<SimpleAccount> clients = accountService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0,
                 Integer.MAX_VALUE));
         for (SimpleAccount client : clients) {
             content.addComponent(generateClientBlock(client));

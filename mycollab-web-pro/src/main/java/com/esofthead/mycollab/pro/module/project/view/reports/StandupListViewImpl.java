@@ -12,6 +12,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericItem;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
@@ -70,6 +71,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
     private ProjectListComp projectListComp;
     private StandupPerProjectView standupPerProjectView;
+    private Integer selectedProjectId = null;
     private Date onDate = new GregorianCalendar().getTime();
 
     private ApplicationEventListener<StandUpEvent.DisplayStandupInProject> displayStandupHandler = new
@@ -78,30 +80,15 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
                 @Subscribe
                 public void handle(StandUpEvent.DisplayStandupInProject event) {
                     Integer projectId = (Integer) event.getData();
-                    standupPerProjectView.showStandupReportsInProject(projectId, onDate);
+                    standupPerProjectView.displayReports(projectId, onDate);
                 }
             };
 
 
     public StandupListViewImpl() {
         super();
-        this.setMargin(new MarginInfo(false, true, true, true));
+        this.setMargin(new MarginInfo(true, false, true, false));
         standupCalendar.addStyleName("standup-calendar");
-//        this.constructHeader();
-//        this.addCalendarEvent();
-//        this.getListReport();
-//
-//        reportInDay = new BeanList<>(ApplicationContextUtil.getSpringBean(StandupReportService.class), StandupReportRowDisplay.class);
-//        MHorizontalLayout contentWrap = new MHorizontalLayout().withWidth("100%");
-//        contentWrap.with(reportInDay).expand(reportInDay);
-//
-
-//
-//        standupMissingComp = new StandupMissingComp();
-//        standupMissingComp.setWidth("300px");
-//        contentWrap.addComponent(standupMissingComp);
-//
-//        this.addComponent(contentWrap);
     }
 
     @Override
@@ -207,10 +194,24 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
         ProjectSearchCriteria projectSearchCriteria = new ProjectSearchCriteria();
         projectSearchCriteria.setProjectKeys(new SetSearchField<>(projectKeys));
-        projectListComp.setSearchCriteria(projectSearchCriteria);
-
         standupPerProjectView = new StandupPerProjectView();
-        with(projectListPanel, standupPerProjectView).expand(standupPerProjectView);
+        with(new MHorizontalLayout(projectListPanel, standupPerProjectView).expand(standupPerProjectView));
+
+        int totalCount = projectListComp.setSearchCriteria(projectSearchCriteria);
+        if (totalCount > 0) {
+            SimpleProject firstProject = projectListComp.getItemAt(0);
+            if (firstProject != null) {
+                viewStandupReportsForProject(firstProject);
+            }
+            Component firstRow = projectListComp.getRowAt(0);
+            if (firstRow != null) {
+                projectListComp.setSelectedRow(firstRow);
+            }
+        }
+    }
+
+    private void viewStandupReportsForProject(SimpleProject project) {
+        standupPerProjectView.displayReports(project.getId(), onDate);
     }
 
     private static class ProjectListComp extends DefaultBeanPagedList<ProjectService, ProjectSearchCriteria, SimpleProject> {
@@ -280,7 +281,6 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         addNewReport.setIcon(FontAwesome.PLUS);
 
         header.with(addNewReport).withAlign(addNewReport, Alignment.TOP_RIGHT);
-
         this.addComponent(header);
     }
 
@@ -288,13 +288,18 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         private BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> reportInDay;
         private StandupMissingComp standupMissingComp;
 
-        void showStandupReportsInProject(Integer projectId, Date onDate) {
+        void displayReports(Integer projectId, Date onDate) {
             removeAllComponents();
             reportInDay = new BeanList<>(ApplicationContextUtil.getSpringBean(StandupReportService.class), StandupReportRowDisplay.class);
             standupMissingComp = new StandupMissingComp();
             standupMissingComp.setWidth("300px");
             this.with(reportInDay, standupMissingComp).expand(reportInDay);
-            standupMissingComp.search(onDate);
+            standupMissingComp.search(projectId, onDate);
+
+            StandupReportSearchCriteria baseCriteria = new StandupReportSearchCriteria();
+            baseCriteria.setOnDate(new DateSearchField(onDate, DateSearchField.EQUAL));
+            baseCriteria.setProjectIds(new SetSearchField<>(projectId));
+            reportInDay.setSearchCriteria(baseCriteria);
         }
     }
 
@@ -346,8 +351,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         }
 
         private String buildMemberLink(SimpleStandupReport report) {
-            A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink
-                    (1, report.getLogby()))
+            A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(1, report.getLogby()))
                     .appendText(StringUtils.trim(report.getLogByFullName(), 30, true));
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(report.getLogby()));
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

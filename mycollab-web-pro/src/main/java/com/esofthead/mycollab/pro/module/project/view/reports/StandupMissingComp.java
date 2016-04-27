@@ -4,7 +4,6 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.html.DivLessFormatter;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
@@ -48,28 +47,27 @@ public class StandupMissingComp extends MVerticalLayout {
         this.with(header, bodyWrap).withWidth("100%");
     }
 
-    public void search(Date date) {
+    public void search(Integer projectId, Date date) {
         bodyWrap.removeAllComponents();
         StandupReportService searchService = ApplicationContextUtil.getSpringBean(StandupReportService.class);
-        List<SimpleUser> someGuys = searchService.findUsersNotDoReportYet(
-                CurrentProjectVariables.getProjectId(), date, AppContext.getAccountId());
+        List<SimpleUser> someGuys = searchService.findUsersNotDoReportYet(projectId, date, AppContext.getAccountId());
         if (someGuys.size() == 0) {
             bodyWrap.addComponent(new Label(AppContext.getMessage(GenericI18Enum.EXT_NO_ITEM)));
         } else {
             Iterator<SimpleUser> iterator = someGuys.iterator();
             while (iterator.hasNext()) {
                 SimpleUser user = iterator.next();
-                Label rowUser = new Label(buildMemberLink(user), ContentMode.HTML);
+                Label rowUser = new Label(buildMemberLink(projectId, user), ContentMode.HTML);
                 bodyWrap.addComponent(rowUser);
             }
         }
     }
 
-    private String buildMemberLink(SimpleUser user) {
+    private String buildMemberLink(Integer projectId, SimpleUser user) {
         DivLessFormatter div = new DivLessFormatter();
         Img userAvatar = new Img("", StorageFactory.getInstance().getAvatarPath(user.getAvatarid(), 16));
         A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
-                CurrentProjectVariables.getProjectId(), user.getUsername()));
+                projectId, user.getUsername()));
 
         userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(user.getUsername()));
         userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view.assignments;
 
-import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
@@ -24,7 +24,7 @@ public class GenericAssignmentProvider extends BasicEventProvider {
 
     public void loadEvents(ProjectGenericTaskSearchCriteria searchCriteria, boolean showProject) {
         ProjectGenericTaskService genericTaskService = ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class);
-        List<ProjectGenericTask> assignments = genericTaskService.findPagableListByCriteria(new SearchRequest<>
+        List<ProjectGenericTask> assignments = genericTaskService.findPagableListByCriteria(new BasicSearchRequest<>
                 (searchCriteria, 0, Integer.MAX_VALUE));
         for (ProjectGenericTask assignment : assignments) {
             totalBillableHours += MoreObjects.firstNonNull(assignment.getBillableHours(), 0d);

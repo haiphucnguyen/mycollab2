@@ -6,7 +6,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.quartz.JobExecutionException;
 
-import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.module.billing.UserStatusConstants;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -39,7 +38,7 @@ public class UserSignUpEmailNotificationJobTest extends GenericJobTest {
 	public void testSendConfirmEmail() throws JobExecutionException {
 		SimpleUser user = new SimpleUser();
 
-		when(userService.findPagableListByCriteria(any(SearchRequest.class)))
+		when(userService.findPagableListByCriteria(any(BasicSearchRequest.class)))
 				.thenReturn(Collections.singletonList(user));
 
 		confirmEmailJob.executeJob(context);

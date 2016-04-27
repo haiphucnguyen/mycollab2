@@ -6,7 +6,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
-import com.esofthead.mycollab.module.project.view.user.ProjectDashboardContainer;
+import com.esofthead.mycollab.module.project.view.reports.IReportContainer;
 import com.esofthead.mycollab.pro.module.project.view.ReportBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -71,9 +71,8 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ProjectDashboardContainer standupContainer = (ProjectDashboardContainer) container;
-        standupContainer.removeAllComponents();
-        standupContainer.addComponent(view);
+        IReportContainer reportContainer = (IReportContainer) container;
+        reportContainer.addView(view);
         StandupReportWithBLOBs standupReport = (StandupReportWithBLOBs) data.getParams();
         view.editItem(standupReport);
 

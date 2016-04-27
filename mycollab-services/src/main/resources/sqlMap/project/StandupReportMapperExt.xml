@@ -7,6 +7,14 @@
         <result column="logByAvatarId" property="logByAvatarId" jdbcType="VARCHAR" />
     </resultMap>
 
+    <resultMap id="StandupStatisticResult" type="com.esofthead.mycollab.module.project.domain.StandupReportStatistic">
+        <result column="projectId" property="projectId" jdbcType="INTEGER" />
+        <result column="projectKey" property="projectKey" jdbcType="VARCHAR" />
+        <result column="projectName" property="projectName" jdbcType="VARCHAR" />
+        <result column="totalWrittenReports" property="totalWrittenReports" jdbcType="INTEGER" />
+        <result column="totalReports" property="totalReports" jdbcType="INTEGER" />
+    </resultMap>
+
     <sql id="querySearchCriteria">
         <![CDATA[
         #set($searchCriteria = $_parameter.searchCriteria)
@@ -100,6 +108,14 @@
             #end
         #end    
         <include refid="orderStatement" />
+    </select>
+
+    <select id="getProjectReportsStatistic" resultMap="StandupStatisticResult" parameterType="map" lang="velocity">
+        SELECT m_prj_project.id AS projectId, m_prj_project.shortname AS projectKey, m_prj_project.name AS projectName,
+        (SELECT COUNT(*) FROM m_prj_standup WHERE m_prj_standup.projectId=project.id AND CAST(m_prj_standup.forday AS DATE) = @{_parameter.onDate}) AS totalWrittenReports,
+        (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.projectId = m_prj_project.id AND m_prj_member.status = 'Active') AS totalReports
+        FROM m_prj_project
+        WHERE m_prj_project.id = @{_parameter.projectId}
     </select>
 
     <select id="findReportById" parameterType="java.lang.Integer" resultMap="StandupResult" lang="velocity">

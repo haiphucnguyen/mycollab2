@@ -2,7 +2,7 @@ package com.esofthead.mycollab.pro.module.project.view.client;
 
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.NumberUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
@@ -189,7 +189,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                     .withWidth("100%").with(headerLbl, newProjectBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
                     .withAlign(newProjectBtn, Alignment.MIDDLE_RIGHT);
             this.addComponent(headerPanel);
-            List<SimpleProject> projects = projectService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
+            List<SimpleProject> projects = projectService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
             CssLayout content = new CssLayout();
             content.setStyleName(UIConstants.FLEX_DISPLAY);
             this.addComponent(content);

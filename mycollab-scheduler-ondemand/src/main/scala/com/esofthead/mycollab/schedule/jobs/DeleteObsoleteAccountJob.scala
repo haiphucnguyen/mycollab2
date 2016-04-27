@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.schedule.jobs
 
-import com.esofthead.mycollab.core.arguments.{DateSearchField, SearchRequest, SetSearchField}
+import com.esofthead.mycollab.core.arguments.{DateSearchField, BasicSearchRequest, SetSearchField}
 import com.esofthead.mycollab.core.utils.BeanUtility
 import com.esofthead.mycollab.ondemand.module.billing.esb.DeleteAccountEvent
 import com.esofthead.mycollab.ondemand.module.support.domain.criteria.BillingAccountSearchCriteria
@@ -30,7 +30,7 @@ class DeleteObsoleteAccountJob extends GenericQuartzJobBean {
     searchCriteria.setLastAccessTime(new DateSearchField(new LocalDate().minusDays(60).toDate))
     import scala.collection.JavaConverters._
     val obsoleteAccounts = billingAccountExtService.findPagableListByCriteria(new
-        SearchRequest[BillingAccountSearchCriteria](searchCriteria, 0, Integer.MAX_VALUE)).asScala.toList
+        BasicSearchRequest[BillingAccountSearchCriteria](searchCriteria, 0, Integer.MAX_VALUE)).asScala.toList
     for (obsoleteAccount <- obsoleteAccounts) {
       val deleteAccountEvent = new DeleteAccountEvent(obsoleteAccount.getId, null)
       asyncEventBus.post(deleteAccountEvent)

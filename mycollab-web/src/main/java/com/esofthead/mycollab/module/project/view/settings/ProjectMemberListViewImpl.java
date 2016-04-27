@@ -19,7 +19,7 @@ package com.esofthead.mycollab.module.project.view.settings;
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.NumberUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -171,7 +171,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
                     SearchCriteria.DESC)));
         }
         ProjectMemberService prjMemberService = ApplicationContextUtil.getSpringBean(ProjectMemberService.class);
-        List<SimpleProjectMember> memberLists = prjMemberService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, 0,
+        List<SimpleProjectMember> memberLists = prjMemberService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0,
                 Integer.MAX_VALUE));
 
         headerText.updateTitle(AppContext.getMessage(ProjectMemberI18nEnum.VIEW_LIST_TITLE, memberLists.size()));
