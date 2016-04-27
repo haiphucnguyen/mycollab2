@@ -2,7 +2,6 @@ package com.esofthead.mycollab.pro.module.project.view;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.events.ReportEvent;
-import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.i18n.BreadcrumbI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.CacheableComponent;
@@ -68,15 +67,6 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
         @Override
         public void buttonClick(Button.ClickEvent event) {
             EventBusFactory.getInstance().post(new ReportEvent.GotoConsole(this));
-        }
-    }
-
-    private static class GotoStandupListener implements Button.ClickListener {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void buttonClick(Button.ClickEvent event) {
-            EventBusFactory.getInstance().post(new StandUpEvent.GotoList(this, null));
         }
     }
 }

@@ -193,57 +193,53 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             fromLb.setWidthUndefined();
             selectionLayout.addComponent(fromLb, 0, 0);
 
-            this.fromDateField = new PopupDateFieldExt();
-            this.fromDateField.setResolution(Resolution.DAY);
-            this.fromDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
-            this.fromDateField.setWidth("100px");
-            selectionLayout.addComponent(this.fromDateField, 1, 0);
+            fromDateField = new PopupDateFieldExt();
+            fromDateField.setResolution(Resolution.DAY);
+            fromDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
+            selectionLayout.addComponent(fromDateField, 1, 0);
 
             Label toLb = new Label("To:");
             toLb.setWidthUndefined();
             selectionLayout.addComponent(toLb, 2, 0);
 
-            this.toDateField = new PopupDateFieldExt();
-            this.toDateField.setResolution(Resolution.DAY);
-            this.toDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
-            this.toDateField.setWidth("100px");
-            selectionLayout.addComponent(this.toDateField, 3, 0);
+            toDateField = new PopupDateFieldExt();
+            toDateField.setResolution(Resolution.DAY);
+            toDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
+            selectionLayout.addComponent(toDateField, 3, 0);
 
             Label groupLb = new Label("Group:");
             groupLb.setWidthUndefined();
             selectionLayout.addComponent(groupLb, 0, 1);
 
-            this.groupField = new ValueComboBox(false, GROUPBY_PROJECT, GROUPBY_DATE, GROUPBY_USER);
-            this.groupField.setWidth("100px");
+            groupField = new ValueComboBox(false, GROUPBY_PROJECT, GROUPBY_DATE, GROUPBY_USER);
             groupField.addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
                     searchTimeReporting();
                 }
             });
-            selectionLayout.addComponent(this.groupField, 1, 1);
+            selectionLayout.addComponent(groupField, 1, 1);
 
             Label sortLb = new Label("Sort:");
             sortLb.setWidthUndefined();
             selectionLayout.addComponent(sortLb, 2, 1);
 
-            this.orderField = new ItemOrderComboBox();
+            orderField = new ItemOrderComboBox();
             orderField.addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
                     searchTimeReporting();
                 }
             });
-            this.orderField.setWidth("100px");
-            selectionLayout.addComponent(this.orderField, 3, 1);
+            selectionLayout.addComponent(orderField, 3, 1);
 
             Label projectLb = new Label("Project:");
             projectLb.setWidthUndefined();
             selectionLayout.addComponent(projectLb, 4, 0);
 
-            this.projectField = new UserInvolvedProjectsListSelect();
-            initListSelectStyle(this.projectField);
-            selectionLayout.addComponent(this.projectField, 5, 0, 5, 1);
+            projectField = new UserInvolvedProjectsListSelect();
+            initListSelectStyle(projectField);
+            selectionLayout.addComponent(projectField, 5, 0, 5, 1);
 
             Label userLb = new Label("User:");
             userLb.setWidthUndefined();
@@ -322,7 +318,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             searchCriteria.setLogUsers(new SetSearchField(userField.getUsernames()));
         }
 
-        Collection<Integer> selectedProjects = (Collection<Integer>) this.projectField.getValue();
+        Collection<Integer> selectedProjects = (Collection<Integer>) projectField.getValue();
         if (CollectionUtils.isNotEmpty(selectedProjects)) {
             searchCriteria.setProjectIds(new SetSearchField<>(selectedProjects));
         } else {
