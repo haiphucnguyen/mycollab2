@@ -5,17 +5,12 @@ import java.util.GregorianCalendar
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria
-import com.esofthead.mycollab.module.project.CurrentProjectVariables
-import com.esofthead.mycollab.module.project.domain.SimpleStandupReport
 import com.esofthead.mycollab.module.project.events.ProjectEvent.GotoMyProject
 import com.esofthead.mycollab.module.project.events.{ClientEvent, ProjectEvent, ReportEvent, StandUpEvent}
-import com.esofthead.mycollab.module.project.service.StandupReportService
 import com.esofthead.mycollab.module.project.view.client.IClientPresenter
 import com.esofthead.mycollab.module.project.view.parameters.ClientScreenData.{Add, Read}
 import com.esofthead.mycollab.module.project.view.parameters.{ClientScreenData, ProjectScreenData, StandupScreenData}
 import com.esofthead.mycollab.module.project.view.reports.IReportPresenter
-import com.esofthead.mycollab.spring.ApplicationContextUtil
-import com.esofthead.mycollab.vaadin.AppContext
 import com.esofthead.mycollab.vaadin.mvp.{AbstractController, PageActionChain, PresenterResolver, ScreenData}
 import com.google.common.eventbus.Subscribe
 
@@ -76,19 +71,6 @@ class ProjectModuleController(val container: ProjectModule) extends AbstractCont
     }
   })
 
-  this.register(new ApplicationEventListener[StandUpEvent.GotoAdd] {
-    @Subscribe def handle(event: StandUpEvent.GotoAdd) {
-      val standupService = ApplicationContextUtil.getSpringBean(classOf[StandupReportService])
-      var standupReport = standupService.findStandupReportByDateUser(CurrentProjectVariables.getProjectId,
-        AppContext.getUsername, new GregorianCalendar().getTime, AppContext.getAccountId)
-      if (standupReport == null) {
-        standupReport = new SimpleStandupReport
-      }
-      val data = new StandupScreenData.Add(standupReport)
-      val presenter = PresenterResolver.getPresenter(classOf[IReportPresenter])
-      presenter.go(container, data)
-    }
-  })
   this.register(new ApplicationEventListener[StandUpEvent.GotoList] {
     @Subscribe def handle(event: StandUpEvent.GotoList) {
       val presenter = PresenterResolver.getPresenter(classOf[IReportPresenter])

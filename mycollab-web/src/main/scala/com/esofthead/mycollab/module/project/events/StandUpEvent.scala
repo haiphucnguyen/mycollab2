@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.project.events
 
-import java.util.Date
-
 import com.esofthead.mycollab.eventmanager.ApplicationEvent
 
 /**
@@ -10,10 +8,8 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent
   */
 object StandUpEvent {
 
-  class GotoAdd(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
-
   class GotoList(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class DisplayStandupInProject(source: AnyRef, data: Integer, onDate: Date) extends ApplicationEvent(source, data) {}
+  class DisplayStandupInProject(source: AnyRef, data: Integer) extends ApplicationEvent(source, data) {}
 
 }

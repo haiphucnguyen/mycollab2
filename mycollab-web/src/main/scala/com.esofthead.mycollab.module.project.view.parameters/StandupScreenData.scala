@@ -13,8 +13,4 @@ object StandupScreenData {
 
   class Search(param: Date) extends ScreenData[Date](param) {}
 
-  class Add(param: StandupReportWithBLOBs) extends ScreenData[StandupReportWithBLOBs](param) {}
-
-  class Edit(param: StandupReportWithBLOBs) extends ScreenData[StandupReportWithBLOBs](param) {}
-
 }

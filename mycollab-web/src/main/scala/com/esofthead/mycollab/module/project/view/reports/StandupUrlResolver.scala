@@ -1,36 +1,13 @@
-/**
-  * This file is part of mycollab-web.
-  *
-  * mycollab-web is free software: you can redistribute it and/or modify
-  * it under the terms of the GNU General Public License as published by
-  * the Free Software Foundation, either version 3 of the License, or
-  * (at your option) any later version.
-  *
-  * mycollab-web is distributed in the hope that it will be useful,
-  * but WITHOUT ANY WARRANTY; without even the implied warranty of
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  * GNU General Public License for more details.
-  *
-  * You should have received a copy of the GNU General Public License
-  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
-  */
 package com.esofthead.mycollab.module.project.view.reports
 
 import java.text.ParseException
 import java.util.{Date, GregorianCalendar}
 
-import com.esofthead.mycollab.common.UrlTokenizer
 import com.esofthead.mycollab.core.arguments.DateSearchField
 import com.esofthead.mycollab.eventmanager.EventBusFactory
-import com.esofthead.mycollab.module.project.domain.SimpleStandupReport
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria
-import com.esofthead.mycollab.module.project.events.{ProjectEvent, StandUpEvent}
-import com.esofthead.mycollab.module.project.service.StandupReportService
+import com.esofthead.mycollab.module.project.events.StandUpEvent
 import com.esofthead.mycollab.module.project.view.ProjectUrlResolver
-import com.esofthead.mycollab.module.project.view.parameters.{ProjectScreenData, StandupScreenData}
-import com.esofthead.mycollab.spring.ApplicationContextUtil
-import com.esofthead.mycollab.vaadin.AppContext
-import com.esofthead.mycollab.vaadin.mvp.PageActionChain
 import org.joda.time.format.DateTimeFormat
 
 /**
@@ -39,7 +16,6 @@ import org.joda.time.format.DateTimeFormat
   */
 class StandupUrlResolver extends ProjectUrlResolver {
   this.addSubResolver("list", new ListUrlResolver)
-  this.addSubResolver("add", new PreviewUrlResolver)
 
   private val simpleDateFormat = DateTimeFormat.forPattern("MM-dd-yyyy");
 
@@ -65,23 +41,6 @@ class StandupUrlResolver extends ProjectUrlResolver {
         searchCriteria.setOnDate(new DateSearchField(date))
       }
       EventBusFactory.getInstance().post(new StandUpEvent.GotoList(this, searchCriteria))
-    }
-  }
-
-  private class PreviewUrlResolver extends ProjectUrlResolver {
-    protected override def handlePage(params: String*) {
-      val token = new UrlTokenizer(params(0))
-      val projectId = token.getInt
-      val onDate = parseDate(token.getString)
-      val reportService = ApplicationContextUtil.getSpringBean(classOf[StandupReportService])
-      var report = reportService.findStandupReportByDateUser(projectId, AppContext.getUsername,
-        onDate, AppContext.getAccountId)
-      if (report == null) {
-        report = new SimpleStandupReport
-      }
-      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
-        new StandupScreenData.Add(report))
-      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
 

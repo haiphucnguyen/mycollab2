@@ -82,7 +82,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
     }
 
     @Override
-    public void doSearch() {
+    protected void doSearch() {
         totalCount = projectActivityStreamService.getTotalActivityStream(((BasicSearchRequest<ActivityStreamSearchCriteria>) searchRequest).getSearchCriteria());
         totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
         if (searchRequest.getCurrentPage() > totalPage) {

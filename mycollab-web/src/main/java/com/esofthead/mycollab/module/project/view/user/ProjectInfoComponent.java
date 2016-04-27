@@ -96,7 +96,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
 
     public ProjectInfoComponent(final SimpleProject project) {
         this.withMargin(true).withStyleName("project-info").withFullWidth();
-        Component projectIcon = ProjectAssetsUtil.buildProjectLogo(project, 64);
+        Component projectIcon = ProjectAssetsUtil.buildProjectLogo(project.getShortname(), project.getId(), project.getAvatarid(), 64);
         this.with(projectIcon).withAlign(projectIcon, Alignment.TOP_LEFT);
         ELabel headerLbl = ELabel.h2(project.getName());
         headerLbl.setDescription(ProjectTooltipGenerator.generateToolTipProject(AppContext.getUserLocale(), project,

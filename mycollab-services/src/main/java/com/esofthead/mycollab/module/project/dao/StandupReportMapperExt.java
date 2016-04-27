@@ -16,13 +16,13 @@
  */
 package com.esofthead.mycollab.module.project.dao;
 
-import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.StandupReportStatistic;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 import java.util.Date;
 import java.util.List;
@@ -35,9 +35,8 @@ public interface StandupReportMapperExt extends ISearchableDAO<StandupReportSear
 
     SimpleStandupReport findReportById(Integer standupId);
 
-    List<GroupItem> getReportsCount(@Param("searchCriteria") StandupReportSearchCriteria criteria);
-
-    List<StandupReportStatistic> getProjectReportsStatistic(@Param("projectId") Integer projectId, @Param("onDate") Date onDate);
+    List<StandupReportStatistic> getProjectReportsStatistic(@Param("projectIds") List<Integer> projectIds, @Param
+            ("onDate") Date onDate, RowBounds rowBounds);
 
     List<SimpleUser> findUsersNotDoReportYet(@Param("projectId") Integer projectId, @Param("onDate") Date onDate);
 }

@@ -30,9 +30,6 @@ public class ReportPresenter extends AbstractPresenter<IReportContainer> impleme
         if (data instanceof StandupScreenData.Search) {
             StandupListPresenter presenter = PresenterResolver.getPresenter(StandupListPresenter.class);
             presenter.go(view, data);
-        } else if (data instanceof StandupScreenData.Add) {
-            StandupAddPresenter presenter = PresenterResolver.getPresenter(StandupAddPresenter.class);
-            presenter.go(view, data);
         } else if (data instanceof ReportScreenData.GotoHoursWeekly) {
             MembersWeeklyHoursPresenter presenter = PresenterResolver.getPresenter(MembersWeeklyHoursPresenter.class);
             presenter.go(projectViewContainer, data);

@@ -10,6 +10,7 @@
     <resultMap id="StandupStatisticResult" type="com.esofthead.mycollab.module.project.domain.StandupReportStatistic">
         <result column="projectId" property="projectId" jdbcType="INTEGER" />
         <result column="projectKey" property="projectKey" jdbcType="VARCHAR" />
+        <result column="projectAvatarId" property="projectAvatarId" jdbcType="VARCHAR" />
         <result column="projectName" property="projectName" jdbcType="VARCHAR" />
         <result column="totalWrittenReports" property="totalWrittenReports" jdbcType="INTEGER" />
         <result column="totalReports" property="totalReports" jdbcType="INTEGER" />
@@ -112,30 +113,19 @@
 
     <select id="getProjectReportsStatistic" resultMap="StandupStatisticResult" parameterType="map" lang="velocity">
         SELECT m_prj_project.id AS projectId, m_prj_project.shortname AS projectKey, m_prj_project.name AS projectName,
-        (SELECT COUNT(*) FROM m_prj_standup WHERE m_prj_standup.projectId=project.id AND CAST(m_prj_standup.forday AS DATE) = @{_parameter.onDate}) AS totalWrittenReports,
+        m_prj_project.avatarId AS projectAvatarId,
+        (SELECT COUNT(*) FROM m_prj_standup WHERE m_prj_standup.projectId = m_prj_project.id AND CAST(m_prj_standup.forday AS DATE) = @{_parameter.onDate}) AS totalWrittenReports,
         (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.projectId = m_prj_project.id AND m_prj_member.status = 'Active') AS totalReports
         FROM m_prj_project
-        WHERE m_prj_project.id = @{_parameter.projectId}
+        WHERE m_prj_project.id IN
+        #repeat(${_parameter.projectIds} $projectId "," "(" ")")
+            @{projectId}
+        #end
     </select>
 
     <select id="findReportById" parameterType="java.lang.Integer" resultMap="StandupResult" lang="velocity">
         <include refid="selectStandupReport" />
         WHERE m_prj_standup.id=@{standupId, jdbcType=NUMERIC}
-    </select>
-
-    <select id="getReportsCount" parameterType="StandupReportSearchCriteria"
-        resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap"
-        lang="velocity">
-        <![CDATA[
-                SELECT m_prj_standup.projectId AS groupid, 
-                    COUNT(*)  AS value, concat(MONTH(m_prj_standup.forDay), "/", DAY(m_prj_standup.forDay), "/", YEAR(m_prj_standup.forDay))
-                     as groupname
-        FROM m_prj_standup]]>
-        #trimext("WHERE" "AND|OR")
-            <include refid="queryTotalCountSearchCriteria" />
-        #end
-        GROUP BY groupname
-        ORDER BY groupname
     </select>
     
     <select id="findUsersNotDoReportYet" parameterType="StandupReportSearchCriteria"

@@ -49,8 +49,8 @@ public class StandupMissingComp extends MVerticalLayout {
 
     public void search(Integer projectId, Date date) {
         bodyWrap.removeAllComponents();
-        StandupReportService searchService = ApplicationContextUtil.getSpringBean(StandupReportService.class);
-        List<SimpleUser> someGuys = searchService.findUsersNotDoReportYet(projectId, date, AppContext.getAccountId());
+        StandupReportService standupReportService = ApplicationContextUtil.getSpringBean(StandupReportService.class);
+        List<SimpleUser> someGuys = standupReportService.findUsersNotDoReportYet(projectId, date, AppContext.getAccountId());
         if (someGuys.size() == 0) {
             bodyWrap.addComponent(new Label(AppContext.getMessage(GenericI18Enum.EXT_NO_ITEM)));
         } else {

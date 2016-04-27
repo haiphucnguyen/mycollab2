@@ -13,6 +13,8 @@ public class StandupReportStatistic extends ValuedBean {
 
     private String projectName;
 
+    private String projectAvatarId;
+
     private Integer totalWrittenReports;
 
     private Integer totalReports;
@@ -55,5 +57,13 @@ public class StandupReportStatistic extends ValuedBean {
 
     public void setTotalReports(Integer totalReports) {
         this.totalReports = totalReports;
+    }
+
+    public String getProjectAvatarId() {
+        return projectAvatarId;
+    }
+
+    public void setProjectAvatarId(String projectAvatarId) {
+        this.projectAvatarId = projectAvatarId;
     }
 }

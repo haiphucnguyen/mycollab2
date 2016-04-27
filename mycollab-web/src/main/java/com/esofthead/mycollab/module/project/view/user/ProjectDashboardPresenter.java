@@ -78,7 +78,6 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
             ICalendarPresenter presenter = PresenterResolver.getPresenter(ICalendarPresenter.class);
             presenter.go(view, data);
         } else if (data instanceof ProjectScreenData.GotoReportConsole || data instanceof StandupScreenData.Search
-                || data instanceof StandupScreenData.Add || data instanceof StandupScreenData.Edit
                 || data instanceof ReportScreenData.GotoHoursWeekly) {
             IReportPresenter presenter = PresenterResolver.getPresenter(IReportPresenter.class);
             presenter.go(view, data);

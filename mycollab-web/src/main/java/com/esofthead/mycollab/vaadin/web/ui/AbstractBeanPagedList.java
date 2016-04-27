@@ -237,11 +237,18 @@ public abstract class AbstractBeanPagedList<T> extends VerticalLayout implements
         }
     }
 
+    public Integer getRowCount() {
+        return currentListData.size();
+    }
+
     public int getTotalCount() {
         return totalCount;
     }
 
     protected void doSearch() {
+        if (searchRequest == null) {
+            searchRequest = new SearchRequest(0, defaultNumberSearchItems);
+        }
         totalCount = queryHandler.queryTotalCount();
         totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
         if (searchRequest.getCurrentPage() > totalPage) {

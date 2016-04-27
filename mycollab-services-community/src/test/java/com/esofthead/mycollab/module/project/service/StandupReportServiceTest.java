@@ -16,10 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.service;
 
-import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.*;
-import com.esofthead.mycollab.core.db.query.DateParam;
-import com.esofthead.mycollab.core.db.query.DateRangeInjector;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -55,19 +52,6 @@ public class StandupReportServiceTest extends IntergrationServiceTest {
         List<SimpleStandupReport> reports = reportService.findPagableListByCriteria(new BasicSearchRequest<>(criteria, 0, Integer.MAX_VALUE));
         assertThat(reports.size()).isEqualTo(1);
         assertThat(reports).extracting("id", "logby", "whattoday").contains(tuple(1, "hainguyen", "a"));
-    }
-
-    @Test
-    @DataSet
-    public void testGetListCount() {
-        StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
-        criteria.setProjectIds(new SetSearchField<>(1));
-        criteria.setSaccountid(new NumberSearchField(1));
-        Date from = new GregorianCalendar(2013, 2, 1).getTime();
-        Date to = new GregorianCalendar(2013, 2, 31).getTime();
-        criteria.addExtraField(DateParam.inRangeDate(StandupReportSearchCriteria.p_fordays, new DateRangeInjector(from, to)));
-        List<GroupItem> reportsCount = reportService.getReportsCount(criteria);
-        assertThat(reportsCount.size()).isEqualTo(2);
     }
 
     @Test
