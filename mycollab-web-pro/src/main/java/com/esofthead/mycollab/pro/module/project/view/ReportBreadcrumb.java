@@ -42,6 +42,7 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
     public void gotoReportDashboard() {
         this.select(0);
         this.addLink(new Button("Reports"));
+        AppContext.addFragment("project/reports", "Reports");
     }
 
     public void gotoStandupList(Date onDate) {
@@ -76,7 +77,7 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
 
         @Override
         public void buttonClick(Button.ClickEvent event) {
-            EventBusFactory.getInstance().post(new ProjectEvent.GotoReportConsole(this));
+            EventBusFactory.getInstance().post(new ReportEvent.GotoConsole(this));
         }
     }
 

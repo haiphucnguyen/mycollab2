@@ -12,6 +12,7 @@ import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CssLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -22,19 +23,19 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  */
 @ViewComponent
 public class ReportContainerImpl extends AbstractPageView implements IReportContainer {
-    private CssLayout body;
+    private MVerticalLayout body;
 
     public ReportContainerImpl() {
         this.addStyleName("hdr-view");
         ReportBreadcrumb breadcrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
-        body = new CssLayout();
+        body = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
         with(breadcrumb, ELabel.hr(), body);
     }
 
     @Override
     public void showDashboard() {
         body.removeAllComponents();
-        with(ELabel.h2(FontAwesome.PIE_CHART.getHtml() + " Reports"));
+        body.with(ELabel.h2(FontAwesome.PIE_CHART.getHtml() + " Reports"));
         CssLayout content = new CssLayout();
         content.setStyleName(UIConstants.FLEX_DISPLAY);
         this.addComponent(content);

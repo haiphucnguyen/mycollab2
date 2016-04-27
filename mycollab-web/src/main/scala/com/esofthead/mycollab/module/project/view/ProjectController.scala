@@ -89,14 +89,6 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
       }
     })
 
-    this.register(new ApplicationEventListener[ProjectEvent.GotoReportConsole] {
-      @Subscribe def handle(event: ProjectEvent.GotoReportConsole) {
-        val data = new ProjectScreenData.GotoReportConsole
-        val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])
-        presenter.go(projectView, data)
-      }
-    })
-
     this.register(new ApplicationEventListener[ProjectEvent.GotoDashboard] {
       @Subscribe def handle(event: ProjectEvent.GotoDashboard) {
         val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])

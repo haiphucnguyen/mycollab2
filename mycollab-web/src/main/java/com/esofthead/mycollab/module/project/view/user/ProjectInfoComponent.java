@@ -207,18 +207,6 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         ganttChartBtn.setDescription("Gantt chart");
         footer.addComponents(ganttChartBtn);
 
-        Button reportBtn = new Button("Report", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(new ProjectEvent.GotoReportConsole(this));
-            }
-        });
-        reportBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
-        reportBtn.addStyleName(UIConstants.BUTTON_OPTION);
-        reportBtn.setIcon(FontAwesome.INDUSTRY);
-        reportBtn.setDescription("Project reports");
-        footer.addComponents(reportBtn);
-
         headerLayout.with(headerLbl, footer);
 
         MHorizontalLayout topPanel = new MHorizontalLayout().withMargin(false);
