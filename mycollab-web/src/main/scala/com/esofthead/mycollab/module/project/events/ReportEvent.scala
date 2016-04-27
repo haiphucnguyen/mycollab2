@@ -8,4 +8,6 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent
   */
 object ReportEvent {
   class GotoConsole(source: AnyRef) extends ApplicationEvent(source, null) {}
+
+  class GotoTimesheetReport(source: AnyRef) extends ApplicationEvent(source, null) {}
 }

@@ -23,19 +23,22 @@ public class ReportPresenter extends AbstractPresenter<IReportContainer> impleme
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ProjectModule projectViewContainer = (ProjectModule) container;
-        projectViewContainer.removeAllComponents();
-        projectViewContainer.addComponent(view);
+        ProjectModule projectModule = (ProjectModule) container;
+        projectModule.removeAllComponents();
+        projectModule.addComponent(view);
 
         if (data instanceof StandupScreenData.Search) {
             StandupListPresenter presenter = PresenterResolver.getPresenter(StandupListPresenter.class);
             presenter.go(view, data);
         } else if (data instanceof ReportScreenData.GotoHoursWeekly) {
             MembersWeeklyHoursPresenter presenter = PresenterResolver.getPresenter(MembersWeeklyHoursPresenter.class);
-            presenter.go(projectViewContainer, data);
+            presenter.go(projectModule, data);
+        } else if (data instanceof ReportScreenData.GotoTimesheet) {
+            TimeTrackingPresenter timeTrackingPresenter = PresenterResolver.getPresenter(TimeTrackingPresenter.class);
+            timeTrackingPresenter.go(view, data);
         } else {
-            projectViewContainer.removeAllComponents();
-            projectViewContainer.addComponent(view);
+            projectModule.removeAllComponents();
+            projectModule.addComponent(view);
             view.showDashboard();
 
             ReportBreadcrumb breadcrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);

@@ -81,7 +81,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
     private MVerticalLayout timeTrackingWrapper;
 
     public TimeTrackingViewImpl() {
-        this.setMargin(new MarginInfo(false, true, false, true));
+        this.setMargin(new MarginInfo(false, false, true, false));
     }
 
     private void initListSelectStyle(ListSelect listSelect) {
@@ -149,8 +149,8 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
     @Override
     public void display() {
         removeAllComponents();
-        projects = ApplicationContextUtil.getSpringBean(ProjectService.class)
-                .getProjectsUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
+        projects = ApplicationContextUtil.getSpringBean(ProjectService.class).getProjectsUserInvolved(AppContext.getUsername(),
+                AppContext.getAccountId());
         if (CollectionUtils.isNotEmpty(projects)) {
             itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
 

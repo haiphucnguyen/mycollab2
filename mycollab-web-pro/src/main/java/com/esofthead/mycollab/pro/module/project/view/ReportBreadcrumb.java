@@ -1,10 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.ReportEvent;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.i18n.BreadcrumbI18nEnum;
@@ -59,17 +55,11 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
         }
     }
 
-    public void gotoStandupAdd(Date date) {
+    public void gotoTimesheetReport() {
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.STANDUP), new GotoStandupListener()));
-        this.setLinkEnabled(true, 2);
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD)));
-
-        AppContext.addFragment("project/reports/standup/add/" + UrlEncodeDecoder.encode(CurrentProjectVariables.getProjectId()
-                + "/" + AppContext.formatDate(date)), AppContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP_FOR_DAY,
-                AppContext.formatDate(date)));
+        this.addLink(new Button("Timesheet"));
     }
 
     private static class GotoReportsListener implements Button.ClickListener {

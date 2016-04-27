@@ -11,6 +11,6 @@ import com.esofthead.mycollab.module.project.view.ProjectUrlResolver
 class TimesheetUrlResolver extends ProjectUrlResolver {
 
   override protected def handlePage(params: String*): Unit = {
-    EventBusFactory.getInstance().post(new ReportEvent.GotoConsole(this))
+    EventBusFactory.getInstance().post(new ReportEvent.GotoTimesheetReport(this))
   }
 }

@@ -10,4 +10,5 @@ object ReportScreenData {
 
   class GotoHoursWeekly() extends ScreenData(null) {}
 
+  class GotoTimesheet() extends ScreenData(null) {}
 }
