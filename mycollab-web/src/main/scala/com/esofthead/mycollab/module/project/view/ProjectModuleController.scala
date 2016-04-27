@@ -1,30 +1,21 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.module.project.view
+
+import java.util.GregorianCalendar
 
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria
+import com.esofthead.mycollab.module.project.CurrentProjectVariables
+import com.esofthead.mycollab.module.project.domain.SimpleStandupReport
 import com.esofthead.mycollab.module.project.events.ProjectEvent.GotoMyProject
-import com.esofthead.mycollab.module.project.events.{ClientEvent, ProjectEvent, ReportEvent}
+import com.esofthead.mycollab.module.project.events.{ClientEvent, ProjectEvent, ReportEvent, StandUpEvent}
+import com.esofthead.mycollab.module.project.service.StandupReportService
 import com.esofthead.mycollab.module.project.view.client.IClientPresenter
-import com.esofthead.mycollab.module.project.view.parameters.{ClientScreenData, ProjectScreenData}
 import com.esofthead.mycollab.module.project.view.parameters.ClientScreenData.{Add, Read}
+import com.esofthead.mycollab.module.project.view.parameters.{ClientScreenData, ProjectScreenData, StandupScreenData}
 import com.esofthead.mycollab.module.project.view.reports.IReportPresenter
+import com.esofthead.mycollab.spring.ApplicationContextUtil
+import com.esofthead.mycollab.vaadin.AppContext
 import com.esofthead.mycollab.vaadin.mvp.{AbstractController, PageActionChain, PresenterResolver, ScreenData}
 import com.google.common.eventbus.Subscribe
 
@@ -82,6 +73,26 @@ class ProjectModuleController(val container: ProjectModule) extends AbstractCont
     @Subscribe override def handle(event: ReportEvent.GotoConsole): Unit = {
       val presenter = PresenterResolver.getPresenter(classOf[IReportPresenter])
       presenter.go(container, null)
+    }
+  })
+
+  this.register(new ApplicationEventListener[StandUpEvent.GotoAdd] {
+    @Subscribe def handle(event: StandUpEvent.GotoAdd) {
+      val standupService = ApplicationContextUtil.getSpringBean(classOf[StandupReportService])
+      var standupReport = standupService.findStandupReportByDateUser(CurrentProjectVariables.getProjectId,
+        AppContext.getUsername, new GregorianCalendar().getTime, AppContext.getAccountId)
+      if (standupReport == null) {
+        standupReport = new SimpleStandupReport
+      }
+      val data = new StandupScreenData.Add(standupReport)
+      val presenter = PresenterResolver.getPresenter(classOf[IReportPresenter])
+      presenter.go(container, data)
+    }
+  })
+  this.register(new ApplicationEventListener[StandUpEvent.GotoList] {
+    @Subscribe def handle(event: StandUpEvent.GotoList) {
+      val presenter = PresenterResolver.getPresenter(classOf[IReportPresenter])
+      presenter.go(container, new StandupScreenData.Search(new GregorianCalendar().getTime))
     }
   })
 }

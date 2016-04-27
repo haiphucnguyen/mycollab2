@@ -1,21 +1,27 @@
 package com.esofthead.mycollab.pro.module.project.view.reports;
 
-import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
-import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
-import com.esofthead.mycollab.module.project.view.user.ProjectDashboardContainer;
-import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
-import com.esofthead.mycollab.vaadin.mvp.*;
+import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.view.ProjectModule;
+import com.esofthead.mycollab.pro.module.project.view.ReportBreadcrumb;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-public class StandupListPresenter extends AbstractPresenter<StandupListView> implements ListCommand<StandupReportSearchCriteria> {
+public class StandupListPresenter extends AbstractPresenter<StandupListView> {
     private static final long serialVersionUID = 1L;
 
     public StandupListPresenter() {
@@ -24,21 +30,16 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView> imp
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ProjectDashboardContainer standupContainer = (ProjectDashboardContainer) container;
-        standupContainer.removeAllComponents();
-        standupContainer.addComponent(view.getWidget());
-        StandupReportSearchCriteria searchCriteria = (StandupReportSearchCriteria) data.getParams();
-        doSearch(searchCriteria);
-
-        Date showDate = null;
-        if (searchCriteria.getOnDate() != null) {
-            showDate = searchCriteria.getOnDate().getValue();
+        ProjectModule projectModule = (ProjectModule) container;
+        projectModule.removeAllComponents();
+        projectModule.addComponent(view.getWidget());
+        ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+        List<Integer> projectKeys = projectService.getProjectKeysUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
+        if (CollectionUtils.isNotEmpty(projectKeys)) {
+            Date date = (Date) data.getParams();
+            view.display(projectKeys, date);
+            ReportBreadcrumb breadCrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
+            breadCrumb.gotoStandupList(date);
         }
-        ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
-        breadCrumb.gotoStandupList(showDate);
-    }
-
-    public void doSearch(StandupReportSearchCriteria searchCriteria) {
-        view.setSearchCriteria(searchCriteria);
     }
 }

@@ -1,3 +1,4 @@
+
 package com.esofthead.mycollab.pro.module.project.view;
 
 import com.esofthead.mycollab.common.domain.FavoriteItem;

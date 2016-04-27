@@ -2,22 +2,27 @@ package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.VariableInjector;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
+import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
-import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.pro.module.project.view.ReportBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -26,11 +31,15 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
+import com.esofthead.mycollab.vaadin.web.ui.AbstractBeanPagedList;
+import com.esofthead.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.web.ui.StyleCalendarExp;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -42,6 +51,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
@@ -58,29 +68,52 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
     private PopupButton dateChooser;
     private StyleCalendarExp standupCalendar = new StyleCalendarExp();
 
-    private BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> reportInDay;
-    private StandupMissingComp standupMissingComp;
+    private ProjectListComp projectListComp;
+    private StandupPerProjectView standupPerProjectView;
+    private Date onDate = new GregorianCalendar().getTime();
+
+    private ApplicationEventListener<StandUpEvent.DisplayStandupInProject> displayStandupHandler = new
+            ApplicationEventListener<StandUpEvent.DisplayStandupInProject>() {
+                @Override
+                @Subscribe
+                public void handle(StandUpEvent.DisplayStandupInProject event) {
+                    Integer projectId = (Integer) event.getData();
+                    standupPerProjectView.showStandupReportsInProject(projectId, onDate);
+                }
+            };
+
 
     public StandupListViewImpl() {
         super();
         this.setMargin(new MarginInfo(false, true, true, true));
-
-        this.constructHeader();
-        this.addCalendarEvent();
-        this.getListReport();
-
-        reportInDay = new BeanList<>(ApplicationContextUtil.getSpringBean(StandupReportService.class), StandupReportRowDisplay.class);
-        reportInDay.addStyleName("standupreport-list-content");
-        MHorizontalLayout contentWrap = new MHorizontalLayout().withWidth("100%");
-        contentWrap.with(reportInDay).expand(reportInDay);
-
         standupCalendar.addStyleName("standup-calendar");
+//        this.constructHeader();
+//        this.addCalendarEvent();
+//        this.getListReport();
+//
+//        reportInDay = new BeanList<>(ApplicationContextUtil.getSpringBean(StandupReportService.class), StandupReportRowDisplay.class);
+//        MHorizontalLayout contentWrap = new MHorizontalLayout().withWidth("100%");
+//        contentWrap.with(reportInDay).expand(reportInDay);
+//
 
-        standupMissingComp = new StandupMissingComp();
-        standupMissingComp.setWidth("300px");
-        contentWrap.addComponent(standupMissingComp);
+//
+//        standupMissingComp = new StandupMissingComp();
+//        standupMissingComp.setWidth("300px");
+//        contentWrap.addComponent(standupMissingComp);
+//
+//        this.addComponent(contentWrap);
+    }
 
-        this.addComponent(contentWrap);
+    @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(displayStandupHandler);
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(displayStandupHandler);
+        super.detach();
     }
 
     private void addCalendarEvent() {
@@ -93,7 +126,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
                 dateChooser.setCaption(AppContext.formatDate(selectedDate));
                 dateChooser.setPopupVisible(false);
 
-                ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+                ReportBreadcrumb breadCrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
                 breadCrumb.gotoStandupList(selectedDate);
             }
         });
@@ -163,15 +196,57 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
     }
 
     @Override
+    public void display(List<Integer> projectKeys, Date date) {
+        removeAllComponents();
+        constructHeader();
+        ELabel listLnl = ELabel.h3("Projects");
+        MHorizontalLayout favoriteListHeaderPanel = new MHorizontalLayout(listLnl).expand(listLnl).withMargin(new
+                MarginInfo(false, true, false, true)).withStyleName("panel-header").withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
+        projectListComp = new ProjectListComp();
+        MVerticalLayout projectListPanel = new MVerticalLayout(favoriteListHeaderPanel, projectListComp).withMargin(false).withSpacing(false).withWidth("300px");
+
+        ProjectSearchCriteria projectSearchCriteria = new ProjectSearchCriteria();
+        projectSearchCriteria.setProjectKeys(new SetSearchField<>(projectKeys));
+        projectListComp.setSearchCriteria(projectSearchCriteria);
+
+        standupPerProjectView = new StandupPerProjectView();
+        with(projectListPanel, standupPerProjectView).expand(standupPerProjectView);
+    }
+
+    private static class ProjectListComp extends DefaultBeanPagedList<ProjectService, ProjectSearchCriteria, SimpleProject> {
+        ProjectListComp() {
+            super(ApplicationContextUtil.getSpringBean(ProjectService.class), new ProjectRowHandler(), 10);
+            addStyleName(UIConstants.BORDER_LIST);
+            setControlStyle("borderlessControl");
+        }
+    }
+
+    private static class ProjectRowHandler implements AbstractBeanPagedList.RowDisplayHandler<SimpleProject> {
+        @Override
+        public Component generateRow(final AbstractBeanPagedList host, final SimpleProject project, int rowIndex) {
+            ELabel projectLbl = new ELabel(project.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS);
+            final MHorizontalLayout layout = new MHorizontalLayout(ProjectAssetsUtil.buildProjectLogo(project, 32),
+                    projectLbl).expand(projectLbl).withStyleName(UIConstants.BORDER_LIST_ROW)
+                    .withStyleName(UIConstants.CURSOR_POINTER).withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
+            layout.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
+                @Override
+                public void layoutClick(LayoutEvents.LayoutClickEvent layoutClickEvent) {
+                    EventBusFactory.getInstance().post(new StandUpEvent.DisplayStandupInProject(this, project.getId(), null));
+                    host.setSelectedRow(layout);
+                }
+            });
+            return layout;
+        }
+    }
+
     public void setSearchCriteria(StandupReportSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
-        reportInDay.setSearchCriteria(searchCriteria);
 
         if (searchCriteria.getOnDate() != null) {
             dateChooser.setCaption(AppContext.formatDate(searchCriteria.getOnDate().getValue()));
             standupCalendar.getStyleCalendar().setShowingDate(searchCriteria.getOnDate().getValue());
             standupCalendar.setLabelTime(AppContext.formatDate(searchCriteria.getOnDate().getValue()));
-            standupMissingComp.search(searchCriteria.getOnDate().getValue());
+//            standupMissingComp.search(searchCriteria.getOnDate().getValue());
         }
     }
 
@@ -203,14 +278,27 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         });
         addNewReport.setStyleName(UIConstants.BUTTON_ACTION);
         addNewReport.setIcon(FontAwesome.PLUS);
-        addNewReport.setEnabled(!CurrentProjectVariables.isProjectArchived());
 
         header.with(addNewReport).withAlign(addNewReport, Alignment.TOP_RIGHT);
 
         this.addComponent(header);
     }
 
-    public static class StandupReportRowDisplay extends RowDisplayHandler<SimpleStandupReport> {
+    private static class StandupPerProjectView extends MHorizontalLayout {
+        private BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> reportInDay;
+        private StandupMissingComp standupMissingComp;
+
+        void showStandupReportsInProject(Integer projectId, Date onDate) {
+            removeAllComponents();
+            reportInDay = new BeanList<>(ApplicationContextUtil.getSpringBean(StandupReportService.class), StandupReportRowDisplay.class);
+            standupMissingComp = new StandupMissingComp();
+            standupMissingComp.setWidth("300px");
+            this.with(reportInDay, standupMissingComp).expand(reportInDay);
+            standupMissingComp.search(onDate);
+        }
+    }
+
+    private static class StandupReportRowDisplay extends RowDisplayHandler<SimpleStandupReport> {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -259,7 +347,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
         private String buildMemberLink(SimpleStandupReport report) {
             A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink
-                    (CurrentProjectVariables.getProjectId(), report.getLogby()))
+                    (1, report.getLogby()))
                     .appendText(StringUtils.trim(report.getLogByFullName(), 30, true));
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(report.getLogby()));
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

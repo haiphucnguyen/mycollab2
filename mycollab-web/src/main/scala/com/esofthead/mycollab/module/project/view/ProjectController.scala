@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.project.view
 
-import java.util.GregorianCalendar
-
 import com.esofthead.mycollab.common.domain.Tag
 import com.esofthead.mycollab.core.MyCollabException
 import com.esofthead.mycollab.core.arguments._
@@ -13,7 +11,6 @@ import com.esofthead.mycollab.module.project.domain.criteria._
 import com.esofthead.mycollab.module.project.events.InvoiceEvent.GotoList
 import com.esofthead.mycollab.module.project.events._
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus
-import com.esofthead.mycollab.module.project.service.StandupReportService
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter
 import com.esofthead.mycollab.module.project.view.file.FilePresenter
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter
@@ -31,7 +28,6 @@ import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter
 import com.esofthead.mycollab.module.project.{CurrentProjectVariables, ProjectMemberStatusConstants}
 import com.esofthead.mycollab.module.tracker.domain.criteria.{BugSearchCriteria, ComponentSearchCriteria, VersionSearchCriteria}
 import com.esofthead.mycollab.module.tracker.domain.{Component, SimpleBug, Version}
-import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.esofthead.mycollab.vaadin.AppContext
 import com.esofthead.mycollab.vaadin.mvp.{AbstractController, PresenterResolver}
 import com.google.common.eventbus.Subscribe
@@ -47,7 +43,6 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
   bindBugEvents()
   bindMessageEvents()
   bindMilestoneEvents()
-  bindStandupEvents()
   bindUserGroupEvents()
   bindFileEvents()
   bindTimeandInvoiceEvents()
@@ -363,30 +358,6 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         val data = new MilestoneScreenData.Edit(event.getData.asInstanceOf[Milestone])
         val presenter = PresenterResolver.getPresenter(classOf[MilestonePresenter])
         presenter.go(projectView, data)
-      }
-    })
-  }
-
-  private def bindStandupEvents(): Unit = {
-    this.register(new ApplicationEventListener[StandUpEvent.GotoAdd] {
-      @Subscribe def handle(event: StandUpEvent.GotoAdd) {
-        val standupService = ApplicationContextUtil.getSpringBean(classOf[StandupReportService])
-        var standupReport = standupService.findStandupReportByDateUser(CurrentProjectVariables.getProjectId,
-          AppContext.getUsername, new GregorianCalendar().getTime, AppContext.getAccountId)
-        if (standupReport == null) {
-          standupReport = new SimpleStandupReport
-        }
-        val data = new StandupScreenData.Add(standupReport)
-        val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])
-        presenter.go(projectView, data)
-      }
-    })
-    this.register(new ApplicationEventListener[StandUpEvent.GotoList] {
-      @Subscribe def handle(event: StandUpEvent.GotoList) {
-        val criteria = new StandupReportSearchCriteria
-        criteria.setOnDate(new DateSearchField(new GregorianCalendar().getTime))
-        val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])
-        presenter.go(projectView, new StandupScreenData.Search(criteria))
       }
     })
   }
