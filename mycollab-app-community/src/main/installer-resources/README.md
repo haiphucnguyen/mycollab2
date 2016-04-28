@@ -59,6 +59,7 @@ Version 5.3.0
 * Allow site owner create the admin user instead of system default user
 * Create sample project for the new MyCollab installation
 * Add the context help for project forms
+* Change the issue workflow similar than Bugzilla
 * Other minor improvements
 
 **Bug Fixes**
@@ -68,6 +69,7 @@ Version 5.3.0
 * [Premium] It is difficult to quick edit value of popup field
 * Clean resources properly when user signout MyCollab
 * Get following items return the wrong list in several cases
+* Tooltip still show after mouse over event occurs
 
 Version 5.2.12
 -----------------------------

@@ -26,7 +26,10 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
-import com.esofthead.mycollab.module.project.view.bug.*;
+import com.esofthead.mycollab.module.project.view.bug.ApproveInputWindow;
+import com.esofthead.mycollab.module.project.view.bug.BugPopupFieldFactory;
+import com.esofthead.mycollab.module.project.view.bug.ReOpenWindow;
+import com.esofthead.mycollab.module.project.view.bug.ResolvedInputWindow;
 import com.esofthead.mycollab.module.project.view.bug.components.BugPriorityComboBox;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
@@ -240,17 +243,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                 });
                 resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 resolveBtn.setEnabled(hasPermission);
-
-                Button wontFixBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_WONTFIX), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        setPopupVisible(false);
-                        UI.getCurrent().addWindow(bindCloseWindow(new WontFixExplainWindow(beanItem)));
-                    }
-                });
-                wontFixBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                wontFixBtn.setEnabled(hasPermission);
-                content.with(startProgressBtn, resolveBtn, wontFixBtn);
+                content.with(startProgressBtn, resolveBtn);
             } else if (OptionI18nEnum.BugStatus.InProgress.name().equals(beanItem.getStatus())) {
                 Button stopProgressBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_STOP_PROGRESS), new Button.ClickListener() {
                     @Override

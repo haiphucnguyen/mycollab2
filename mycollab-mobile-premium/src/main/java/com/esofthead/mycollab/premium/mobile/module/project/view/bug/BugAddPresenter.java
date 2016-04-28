@@ -13,7 +13,6 @@ import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -73,7 +72,6 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
         ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
         if (bug.getId() == null) {
             bug.setStatus(BugStatus.Open.name());
-            bug.setResolution(BugResolution.Newissue.name());
             bug.setLogby(AppContext.getUsername());
             bug.setSaccountid(AppContext.getAccountId());
             int bugId = bugService.saveWithSession(bug, AppContext.getUsername());

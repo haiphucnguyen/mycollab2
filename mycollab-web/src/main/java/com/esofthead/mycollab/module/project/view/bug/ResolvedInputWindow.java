@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.view.bug.components.BugResolutionComboBox;
@@ -37,12 +38,10 @@ import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.data.Property;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -82,7 +81,7 @@ public class ResolvedInputWindow extends Window {
         @Override
         public void setBean(BugWithBLOBs newDataSource) {
             this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
+            this.setBeanFormFieldFactory(new EditFormFieldFactory(this));
             super.setBean(newDataSource);
         }
 
@@ -107,8 +106,7 @@ public class ResolvedInputWindow extends Window {
                         if (EditForm.this.validateForm()) {
                             bug.setStatus(BugStatus.Resolved.name());
 
-                            BugRelatedItemService bugRelatedItemService = ApplicationContextUtil.
-                                    getSpringBean(BugRelatedItemService.class);
+                            BugRelatedItemService bugRelatedItemService = ApplicationContextUtil.getSpringBean(BugRelatedItemService.class);
                             bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), fixedVersionSelect.getSelectedItems());
 
                             // Save bug status and assignee
@@ -180,8 +178,7 @@ public class ResolvedInputWindow extends Window {
             @Override
             protected Field<?> onCreateField(final Object propertyId) {
                 if (propertyId.equals("resolution")) {
-                    bug.setResolution(BugResolution.Fixed.name());
-                    return BugResolutionComboBox.getInstanceForResolvedBugWindow();
+                    return new ResolutionField();
                 } else if (propertyId.equals("assignuser")) {
                     bug.setAssignuser(bug.getLogby());
                     return new ProjectMemberSelectionField();
@@ -195,6 +192,38 @@ public class ResolvedInputWindow extends Window {
                 }
 
                 return null;
+            }
+
+            private class ResolutionField extends CompoundCustomField<BugWithBLOBs> {
+                private MHorizontalLayout layout;
+                private BugResolutionComboBox resolutionComboBox;
+
+                ResolutionField() {
+                    resolutionComboBox = BugResolutionComboBox.getInstanceForResolvedBugWindow();
+                }
+
+                @Override
+                protected Component initContent() {
+                    layout = new MHorizontalLayout(resolutionComboBox);
+                    fieldGroup.bind(resolutionComboBox, BugWithBLOBs.Field.resolution.name());
+                    resolutionComboBox.addValueChangeListener(new ValueChangeListener() {
+                        @Override
+                        public void valueChange(Property.ValueChangeEvent event) {
+                            String value = (String) resolutionComboBox.getValue();
+                            if (OptionI18nEnum.BugResolution.Duplicate.name().equals(value)) {
+
+                            } else {
+
+                            }
+                        }
+                    });
+                    return layout;
+                }
+
+                @Override
+                public Class<? extends BugWithBLOBs> getType() {
+                    return BugWithBLOBs.class;
+                }
             }
         }
     }

@@ -110,17 +110,6 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             });
             resolveBtn.setWidth("100%");
             bugWorkFlowControl.addComponent(resolveBtn);
-
-            final Button wontFixBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_WONTFIX), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    EventBusFactory.getInstance().post(new ShellEvent.PushView(this, new WontFixExplainView(BugReadViewImpl.this, beanItem)));
-                }
-            });
-            wontFixBtn.setWidth("100%");
-            bugWorkFlowControl.addComponent(wontFixBtn);
         } else if (BugStatus.InProgress.name().equals(beanItem.getStatus())) {
             final Button stopProgressBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_STOP_PROGRESS), new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;

@@ -42,9 +42,7 @@ public class OptionI18nEnum {
 
     public static BugResolution[] bug_resolutions = {BugResolution.Fixed,
             BugResolution.Won_Fix, BugResolution.Duplicate,
-            BugResolution.Invalid, BugResolution.CannotReproduce,
-            BugResolution.WaitforVerification, BugResolution.Newissue,
-            BugResolution.ReOpen};
+            BugResolution.Invalid, BugResolution.CannotReproduce, BugResolution.InComplete};
 
     public static InvoiceStatus[] invoiceStatuses = {InvoiceStatus.Paid,
             InvoiceStatus.Sent, InvoiceStatus.Scheduled};
@@ -93,9 +91,7 @@ public class OptionI18nEnum {
         Duplicate,
         Invalid,
         CannotReproduce,
-        WaitforVerification,
-        Newissue,
-        ReOpen
+        InComplete
     }
 
     @BaseName("localization/project-bug-related")

@@ -17,9 +17,9 @@
 package com.esofthead.mycollab.vaadin.web.ui;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.hp.gagawa.java.elements.Li;
 import com.hp.gagawa.java.elements.Ul;
+import com.vaadin.data.Property;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -149,11 +149,8 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
         chkItem.setImmediate(true);
 
         chkItem.addValueChangeListener(new ValueChangeListener() {
-            private static final long serialVersionUID = 1L;
-
             @Override
-            public void valueChange(
-                    final com.vaadin.data.Property.ValueChangeEvent event) {
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
                 final Boolean value = chkItem.getValue();
 
                 if (value && !selectedItems.contains(item)) {
@@ -185,18 +182,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
     }
 
     public void setSelectedItems(List<T> selectedValues) {
-        selectedItems.clear();
-
-        if (selectedValues != null) {
-            for (T item : selectedValues) {
-                for (T oriItem : items) {
-                    if (compareVal(item, oriItem)) {
-                        selectedItems.add(oriItem);
-                    }
-                }
-            }
-        }
-
+        this.selectedItems = selectedValues;
         displaySelectedItems();
     }
 

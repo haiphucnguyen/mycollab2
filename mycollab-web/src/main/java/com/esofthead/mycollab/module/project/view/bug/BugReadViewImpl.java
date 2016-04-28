@@ -142,17 +142,6 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             });
             resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(resolveBtn);
-
-            Button wontFixBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_WONTFIX), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new WontFixExplainWindow(beanItem));
-                }
-            });
-            wontFixBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            navButton.addButton(wontFixBtn);
             bugWorkflowControl.addComponent(navButton);
         } else if (BugStatus.InProgress.name().equals(beanItem.getStatus())) {
             bugWorkflowControl.removeAllComponents();

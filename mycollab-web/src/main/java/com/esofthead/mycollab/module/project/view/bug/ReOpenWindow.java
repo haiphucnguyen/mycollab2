@@ -108,7 +108,7 @@ public class ReOpenWindow extends Window {
                     public void buttonClick(final Button.ClickEvent event) {
                         if (EditForm.this.validateForm()) {
                             bug.setStatus(BugStatus.ReOpen.name());
-                            bug.setResolution(OptionI18nEnum.BugResolution.ReOpen.name());
+                            bug.setResolution(null);
 
                             BugRelatedItemService bugRelatedItemService = ApplicationContextUtil.getSpringBean(BugRelatedItemService.class);
                             bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), fixedVersionSelect.getSelectedItems());
@@ -184,7 +184,7 @@ public class ReOpenWindow extends Window {
             protected Field<?> onCreateField(final Object propertyId) {
                 if (propertyId.equals("resolution")) {
                     BugResolutionComboBox resolutionField = BugResolutionComboBox.getInstanceForValidBugWindow();
-                    bean.setResolution(OptionI18nEnum.BugResolution.ReOpen.name());
+                    bean.setResolution(null);
                     return resolutionField;
                 } else if (propertyId.equals("assignuser")) {
                     return new ProjectMemberSelectionField();

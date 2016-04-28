@@ -217,7 +217,6 @@ import org.springframework.stereotype.Component
     bugA.setMilestoneid(sampleMilestoneId)
     bugA.setSummary("Bug A")
     bugA.setStatus(BugStatus.Open.name())
-    bugA.setResolution(BugResolution.Newissue.name())
     bugA.setPriority(BugPriority.Major.name())
     bugA.setProjectid(projectId)
     bugA.setSaccountid(accountId)
