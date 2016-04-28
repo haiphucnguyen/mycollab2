@@ -3,7 +3,7 @@ package com.esofthead.mycollab.schedule.jobs
 import java.util.Arrays
 
 import com.esofthead.mycollab.common.dao.LiveInstanceMapper
-import com.esofthead.mycollab.common.domain.{LiveInstance, LiveInstanceExample, MailRecipientField}
+import com.esofthead.mycollab.common.domain.{LiveInstanceExample, MailRecipientField}
 import com.esofthead.mycollab.configuration.SiteConfiguration
 import com.esofthead.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
 import org.quartz.{JobExecutionContext, JobExecutionException}
@@ -26,6 +26,7 @@ class CountLiveInstancesJob extends GenericQuartzJobBean {
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext): Unit = {
     val ex = new LiveInstanceExample
+    ex.setOrderByClause("appVersion DESC")
     import scala.collection.JavaConverters._
     val liveInstances = liveInstanceMapper.selectByExample(ex).asScala.toList
     contentGenerator.putVariable("instances", liveInstances)

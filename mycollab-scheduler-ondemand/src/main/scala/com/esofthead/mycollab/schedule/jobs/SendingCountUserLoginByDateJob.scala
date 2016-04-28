@@ -4,7 +4,8 @@ import java.util.Arrays
 
 import com.esofthead.mycollab.common.domain.MailRecipientField
 import com.esofthead.mycollab.configuration.SiteConfiguration
-import com.esofthead.mycollab.core.arguments.BasicSearchRequest
+import com.esofthead.mycollab.core.arguments.{BasicSearchRequest, SearchCriteria}
+import com.esofthead.mycollab.core.arguments.SearchCriteria.OrderField
 import com.esofthead.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria
@@ -40,6 +41,7 @@ class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
     val from = to.minusDays(1)
     criteria.setSaccountid(null)
     criteria.setLastAccessTimeRange(from.toDate, to.toDate)
+    criteria.setOrderFields(Arrays.asList(new OrderField("subdomain", SearchCriteria.ASC)))
 
     import scala.collection.JavaConverters._
     val accessedUsers = userService.findPagableListByCriteria(new BasicSearchRequest[UserSearchCriteria](criteria, 0, Integer.MAX_VALUE)).asScala.toList.asInstanceOf[List[SimpleUser]]

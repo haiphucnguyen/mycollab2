@@ -39,7 +39,7 @@ import java.util.List;
 public abstract class MultiSelectComp<T> extends CustomField<T> {
     private static final long serialVersionUID = 1L;
 
-    private static final Logger log = LoggerFactory.getLogger(MultiSelectComp.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MultiSelectComp.class);
 
     private boolean canAddNew;
     protected TextField componentsText;
@@ -55,7 +55,6 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
     public MultiSelectComp(final String displayName, boolean canAddNew) {
         this.canAddNew = canAddNew;
         propertyDisplayField = displayName;
-        items = createData();
 
         componentsText = new TextField();
         componentsText.setNullRepresentation("");
@@ -69,7 +68,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
 
             @Override
             public void buttonClick(final ClickEvent event) {
-                MultiSelectComp.this.initContentPopup();
+                initContentPopup();
             }
         });
 
@@ -77,9 +76,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
         componentPopupSelection.setContent(popupContent);
     }
 
-    protected List<T> createData() {
-        return null;
-    }
+    abstract protected List<T> createData();
 
     @Override
     protected Component initContent() {
@@ -98,7 +95,6 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
                     requestAddNewComp();
-                    UIUtils.removeAllWindows();
                 }
             });
             newBtn.setStyleName(UIConstants.BUTTON_LINK);
@@ -117,16 +113,9 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
         widthVal = width;
     }
 
-    public void resetComp() {
-        selectedItems.clear();
-
-        componentsText.setReadOnly(false);
-        componentsText.setValue("");
-        componentsText.setReadOnly(true);
-    }
-
     private void initContentPopup() {
         popupContent.removeAllComponents();
+        items = createData();
         for (final T item : items) {
             final ItemSelectionComp<T> chkItem = buildItem(item);
 
@@ -190,7 +179,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
                 ul.appendChild(new Li().appendText(objDisplayName));
             }
         } catch (Exception e) {
-            log.error("Error when build tooltip", e);
+            LOG.error("Error when build tooltip", e);
         }
         componentsText.setDescription(ul.write());
     }
@@ -222,7 +211,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
                 Integer field2 = (Integer) PropertyUtils.getProperty(value2, "id");
                 return field1.equals(field2);
             } catch (final Exception e) {
-                log.error("Error when compare value", e);
+                LOG.error("Error when compare value", e);
                 return false;
             }
         }

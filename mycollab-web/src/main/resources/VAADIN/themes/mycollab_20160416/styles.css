@@ -1621,6 +1621,15 @@ a.pending {
 	font-size: 13px;
 }
 
+.inline-help {
+	color: orange !important;
+	cursor: pointer;
+}
+
+.inline-help:hover {
+	color: green !important;
+}
+
 .cursor_pointer {
 	cursor: pointer;
 }
@@ -14241,6 +14250,15 @@ a.pending {
 	font-size: 13px;
 }
 
+.inline-help {
+	color: orange !important;
+	cursor: pointer;
+}
+
+.inline-help:hover {
+	color: green !important;
+}
+
 .cursor_pointer {
 	cursor: pointer;
 }
@@ -16254,7 +16272,7 @@ html {
 	}
 	.member-block {
 		width: 290px;
-		margin-right: 11px;
+		margin-right: 10px;
 	}
 }
 
@@ -17016,7 +17034,7 @@ div.v-csslayout.main-body {
 	font-size: 14px;
 	vertical-align: top;
 	width: 350px;
-	margin-right: 11px;
+	margin-right: 10px;
 	border: 1px solid #e9e9e9;
 	border-radius: 3px;
 	padding: 5px 5px 10px 10px;

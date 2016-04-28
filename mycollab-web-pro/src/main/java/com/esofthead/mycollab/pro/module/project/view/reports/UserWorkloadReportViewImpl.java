@@ -12,6 +12,7 @@ import com.vaadin.ui.Label;
 public class UserWorkloadReportViewImpl extends AbstractPageView implements UserWorkloadReportView {
     @Override
     public void display() {
-        addComponent(new Label("Users Workload"));
+        removeAllComponents();
+
     }
 }

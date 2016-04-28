@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.pro.module.project.view;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.events.ReportEvent;
 import com.esofthead.mycollab.module.project.i18n.BreadcrumbI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -73,6 +74,7 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(new Button("Users Workload Report"));
+        AppContext.addFragment(ProjectLinkGenerator.generateUsersWorkloadReportLink(), "Users Workload Report");
     }
 
     private static class GotoReportsListener implements Button.ClickListener {

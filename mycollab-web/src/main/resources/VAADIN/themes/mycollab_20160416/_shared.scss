@@ -33,6 +33,14 @@
     font-size: $font-small;
   }
 
+  .inline-help {
+    color: orange !important;
+    cursor: pointer;
+    &:hover {
+      color: green !important;
+    }
+  }
+
   .cursor_pointer {
     cursor: pointer;
   }

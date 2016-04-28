@@ -16,7 +16,9 @@
  */
 package com.esofthead.mycollab.vaadin.web.ui.grid;
 
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
@@ -73,43 +75,51 @@ public class GridFormLayoutHelper implements Serializable {
         return layout.getRows();
     }
 
-    public <T extends Component> T addComponent(T field, String caption, int columns, int rows, int colspan, String width) {
-        return this.addComponent(field, caption, columns, rows, colspan, width, this.captionAlignment);
+    public <T extends Component> T addComponent(T field, String caption, int columns, int rows, int colSpan, String width) {
+        return this.addComponent(field, caption, null, columns, rows, colSpan, width, captionAlignment);
+    }
+
+    public <T extends Component> T addComponent(T field, String caption, String contextHelp, int columns, int rows, int
+            colSpan, String width) {
+        return this.addComponent(field, caption, contextHelp, columns, rows, colSpan, width, captionAlignment);
     }
 
     public <T extends Component> T addComponent(T field, String caption, int columns, int rows) {
-        return this.addComponent(field, caption, columns, rows, 1, this.fieldControlWidth, captionAlignment);
+        return this.addComponent(field, caption, null, columns, rows, 1, fieldControlWidth, captionAlignment);
     }
 
-    private <T extends Component> T addComponent(T field, String caption, int columns, int rows, int colspan, String width, Alignment alignment) {
-        GridCellWrapper cell = buildCell(caption, columns, rows, colspan, width, alignment);
+    public <T extends Component> T addComponent(T field, String caption, String contextHelp, int columns, int rows) {
+        return this.addComponent(field, caption, contextHelp, columns, rows, 1, fieldControlWidth, captionAlignment);
+    }
+
+    private <T extends Component> T addComponent(T field, String caption, String contextHelp, int columns, int rows, int colSpan, String width, Alignment alignment) {
+        GridCellWrapper cell = buildCell(caption, contextHelp, columns, rows, colSpan, width, alignment);
         cell.addComponent(field);
         return field;
     }
 
     public GridCellWrapper buildCell(String caption, int columns, int rows) {
-        return buildCell(caption, columns, rows, 1, fieldControlWidth, captionAlignment);
+        return buildCell(caption, null, columns, rows, 1, fieldControlWidth, captionAlignment);
     }
 
-    public GridCellWrapper buildCell(String caption, int columns, int rows, int colSpan, String width, Alignment alignment) {
+    public GridCellWrapper buildCell(String caption, String contextHelp, int columns, int rows) {
+        return buildCell(caption, contextHelp, columns, rows, 1, fieldControlWidth, captionAlignment);
+    }
+
+    public GridCellWrapper buildCell(String caption, String contextHelp, int columns, int rows, int colSpan, String width, Alignment alignment) {
         if (StringUtils.isNotBlank(caption)) {
             Label captionLbl = new Label(caption);
             MHorizontalLayout captionWrapper = new MHorizontalLayout().withSpacing(false).withMargin(true)
-                    .withWidth(defaultCaptionWidth).withHeight("100%").withStyleName("gridform-caption").with(captionLbl)
+                    .withWidth(defaultCaptionWidth).withHeight("100%").withStyleName("gridform-caption").with(captionLbl).expand(captionLbl)
                     .withAlign(captionLbl, alignment);
-            if (columns == 0) {
-                captionWrapper.addStyleName("first-col");
-            }
-            if (rows == 0) {
-                captionWrapper.addStyleName("first-row");
+            if (StringUtils.isNotBlank(contextHelp)) {
+                ELabel contextHelpLbl = new ELabel("&nbsp;(?)", ContentMode.HTML).withStyleName("inline-help").withDescription(contextHelp)
+                        .withWidthUndefined();
+                captionWrapper.with(contextHelpLbl);
             }
             layout.addComponent(captionWrapper, 2 * columns, rows);
         }
         GridCellWrapper fieldWrapper = new GridCellWrapper();
-
-        if (rows == 0) {
-            fieldWrapper.addStyleName("first-row");
-        }
         fieldWrapper.setWidth(width);
         layout.addComponent(fieldWrapper, 2 * columns + 1, rows, 2 * (columns + colSpan - 1) + 1, rows);
         layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
