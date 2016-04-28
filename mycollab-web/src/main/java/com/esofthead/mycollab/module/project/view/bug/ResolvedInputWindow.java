@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.common.domain.CommentWithBLOBs;
@@ -92,8 +91,8 @@ public class ResolvedInputWindow extends Window {
             @Override
             public ComponentContainer getLayout() {
                 final VerticalLayout layout = new VerticalLayout();
-                this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 6);
-                layout.addComponent(this.informationLayout.getLayout());
+                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 6);
+                layout.addComponent(informationLayout.getLayout());
 
                 final MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, true, false, false));
                 layout.addComponent(controlsBtn);
@@ -157,13 +156,13 @@ public class ResolvedInputWindow extends Window {
             @Override
             public void attachField(Object propertyId, Field<?> field) {
                 if (propertyId.equals("resolution")) {
-                    this.informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_RESOLUTION), 0, 0);
+                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_RESOLUTION), 0, 0);
                 } else if (propertyId.equals("assignuser")) {
-                    this.informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 1);
+                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 1);
                 } else if (propertyId.equals("fixedVersions")) {
-                    this.informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_FIXED_VERSIONS), 0, 2);
+                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_FIXED_VERSIONS), 0, 2);
                 } else if (propertyId.equals("comment")) {
-                    this.informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_COMMENT), 0, 3, 2, "100%");
+                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_COMMENT), 0, 3, 2, "100%");
                 }
             }
         }
@@ -214,7 +213,7 @@ public class ResolvedInputWindow extends Window {
                         public void valueChange(Property.ValueChangeEvent event) {
                             String value = (String) resolutionComboBox.getValue();
                             if (OptionI18nEnum.BugResolution.Duplicate.name().equals(value)) {
-
+                                layout.with(new Label(" with "));
                             } else {
 
                             }
