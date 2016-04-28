@@ -225,7 +225,7 @@ import org.springframework.stereotype.Component
     val bugB = BeanUtility.deepClone(bugA)
     bugB.setId(null)
     bugB.setSummary("Bug B")
-    bugB.setStatus(BugStatus.WontFix.name())
+    bugB.setStatus(BugStatus.Resolved.name())
     bugB.setResolution(BugResolution.CannotReproduce.name())
     bugB.setPriority(BugPriority.Minor.name())
     bugService.saveWithSession(bugB, initialUser)

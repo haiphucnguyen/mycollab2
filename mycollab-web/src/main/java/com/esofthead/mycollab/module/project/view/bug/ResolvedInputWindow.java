@@ -178,6 +178,9 @@ public class ResolvedInputWindow extends Window {
             @Override
             protected Field<?> onCreateField(final Object propertyId) {
                 if (propertyId.equals("resolution")) {
+                    if (StringUtils.isBlank(bean.getResolution()) || AppContext.getMessage(BugResolution.None).equals(bug.getResolution())) {
+                        bean.setResolution(BugResolution.Fixed.name());
+                    }
                     return new ResolutionField();
                 } else if (propertyId.equals("assignuser")) {
                     bug.setAssignuser(bug.getLogby());

@@ -30,15 +30,6 @@ public class BugResolutionComboBox extends I18nValueComboBox {
         super(nullIsAllowable, values);
     }
 
-    public static BugResolutionComboBox getInstanceForWontFixWindow() {
-        return new BugResolutionComboBox(false, BugResolution.CannotReproduce,
-                BugResolution.Duplicate, BugResolution.Invalid);
-    }
-
-    public static BugResolutionComboBox getInstanceForValidBugWindow() {
-        return new BugResolutionComboBox(false);
-    }
-
     public static BugResolutionComboBox getInstanceForResolvedBugWindow() {
         return new BugResolutionComboBox(false, BugResolution.Fixed, BugResolution.CannotReproduce,
                 BugResolution.Duplicate, BugResolution.Invalid, BugResolution.InComplete);

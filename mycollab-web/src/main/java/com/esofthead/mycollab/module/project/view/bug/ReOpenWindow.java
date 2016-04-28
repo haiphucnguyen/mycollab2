@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.common.domain.CommentWithBLOBs;
@@ -25,9 +24,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
-import com.esofthead.mycollab.module.project.view.bug.components.BugResolutionComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.project.view.settings.component.VersionMultiSelectField;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
@@ -60,13 +57,13 @@ import java.util.GregorianCalendar;
  */
 public class ReOpenWindow extends Window {
     private final SimpleBug bug;
-    private VersionMultiSelectField fixedVersionSelect;
+    private VersionMultiSelectField affectedVersionsSelect;
 
     public ReOpenWindow(final SimpleBug bug) {
         super("Reopen bug '" + bug.getSummary() + "'");
         this.setResizable(false);
         this.setModal(true);
-        this.setWidth("750px");
+        this.setWidth("800px");
         this.bug = bug;
 
         MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, false, true, false));
@@ -103,22 +100,21 @@ public class ReOpenWindow extends Window {
                 MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
                 layout.addComponent(controlsBtn);
 
-                Button wonFixBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
+                Button reOpenBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
                     @Override
                     public void buttonClick(final Button.ClickEvent event) {
                         if (EditForm.this.validateForm()) {
                             bug.setStatus(BugStatus.ReOpen.name());
                             bug.setResolution(null);
 
-                            BugRelatedItemService bugRelatedItemService = ApplicationContextUtil.getSpringBean(BugRelatedItemService.class);
-                            bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), fixedVersionSelect.getSelectedItems());
-
                             // Save bug status and assignee
                             BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
                             bugService.updateSelectiveWithSession(bug, AppContext.getUsername());
 
-                            BugRelationService bugRelationService = ApplicationContextUtil.getSpringBean
-                                    (BugRelationService.class);
+                            BugRelatedItemService bugRelatedItemService = ApplicationContextUtil.getSpringBean(BugRelatedItemService.class);
+                            bugRelatedItemService.updateAffectedVersionsOfBug(bug.getId(), affectedVersionsSelect.getSelectedItems());
+
+                            BugRelationService bugRelationService = ApplicationContextUtil.getSpringBean(BugRelationService.class);
                             bugRelationService.removeDuplicatedBugs(bug.getId());
 
                             // Save comment
@@ -143,8 +139,8 @@ public class ReOpenWindow extends Window {
 
                     }
                 });
-                wonFixBtn.setStyleName(UIConstants.BUTTON_ACTION);
-                wonFixBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+                reOpenBtn.setStyleName(UIConstants.BUTTON_ACTION);
+                reOpenBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
                 Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
                     @Override
@@ -153,7 +149,7 @@ public class ReOpenWindow extends Window {
                     }
                 });
                 cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                controlsBtn.with(cancelBtn, wonFixBtn);
+                controlsBtn.with(cancelBtn, reOpenBtn);
 
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
                 return layout;
@@ -161,14 +157,12 @@ public class ReOpenWindow extends Window {
 
             @Override
             public void attachField(Object propertyId, Field<?> field) {
-                if (propertyId.equals("resolution")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_RESOLUTION), 0, 0);
-                } else if (propertyId.equals("assignuser")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 1);
-                } else if (propertyId.equals("fixedVersions")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_FIXED_VERSIONS), 0, 2);
+                if (propertyId.equals("assignuser")) {
+                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 0);
+                } else if (SimpleBug.Field.affectedVersions.equalTo(propertyId)) {
+                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_AFFECTED_VERSIONS), 1, 0);
                 } else if (propertyId.equals("comment")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_COMMENT), 0, 3, 2, "100%");
+                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_COMMENT), 0, 1, 2, "100%");
                 }
             }
         }
@@ -182,15 +176,11 @@ public class ReOpenWindow extends Window {
 
             @Override
             protected Field<?> onCreateField(final Object propertyId) {
-                if (propertyId.equals("resolution")) {
-                    BugResolutionComboBox resolutionField = BugResolutionComboBox.getInstanceForValidBugWindow();
-                    bean.setResolution(null);
-                    return resolutionField;
-                } else if (propertyId.equals("assignuser")) {
+                if (propertyId.equals("assignuser")) {
                     return new ProjectMemberSelectionField();
-                } else if (propertyId.equals("fixedVersions")) {
-                    fixedVersionSelect = new VersionMultiSelectField();
-                    return fixedVersionSelect;
+                } else if (SimpleBug.Field.affectedVersions.equalTo(propertyId)) {
+                    affectedVersionsSelect = new VersionMultiSelectField();
+                    return affectedVersionsSelect;
                 } else if (propertyId.equals("comment")) {
                     commentArea = new RichTextArea();
                     return commentArea;

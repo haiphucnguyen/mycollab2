@@ -118,47 +118,6 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         if (BugStatus.Open.name().equals(beanItem.getStatus()) || BugStatus.ReOpen.name().equals(beanItem.getStatus())) {
             bugWorkflowControl.removeAllComponents();
             ButtonGroup navButton = new ButtonGroup();
-            Button startProgressBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_START_PROGRESS), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    beanItem.setStatus(BugStatus.InProgress.name());
-                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-                    bugService.updateSelectiveWithSession(beanItem, AppContext.getUsername());
-                    displayWorkflowControl();
-                }
-            });
-            startProgressBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            navButton.addButton(startProgressBtn);
-
-            Button resolveBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new ResolvedInputWindow(beanItem));
-                }
-            });
-            resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            navButton.addButton(resolveBtn);
-            bugWorkflowControl.addComponent(navButton);
-        } else if (BugStatus.InProgress.name().equals(beanItem.getStatus())) {
-            bugWorkflowControl.removeAllComponents();
-            ButtonGroup navButton = new ButtonGroup();
-            Button stopProgressBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_STOP_PROGRESS), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    beanItem.setStatus(BugStatus.Open.name());
-                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-                    bugService.updateSelectiveWithSession(beanItem, AppContext.getUsername());
-                    displayWorkflowControl();
-                }
-            });
-            stopProgressBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            navButton.addButton(stopProgressBtn);
 
             Button resolveBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
@@ -186,7 +145,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             navButton.addButton(reopenBtn);
 
             bugWorkflowControl.addComponent(navButton);
-        } else if (BugStatus.Resolved.name().equals(beanItem.getStatus()) || BugStatus.WontFix.name().equals(beanItem.getStatus())) {
+        } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
             bugWorkflowControl.removeAllComponents();
             ButtonGroup navButton = new ButtonGroup();
             Button reopenBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {

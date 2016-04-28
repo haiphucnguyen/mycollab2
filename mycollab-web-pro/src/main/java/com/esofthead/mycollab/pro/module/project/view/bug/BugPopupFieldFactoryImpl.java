@@ -68,7 +68,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
     @Override
     public PopupView createPriorityPopupField(final SimpleBug bug) {
-        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+        PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
                 return ProjectAssetsManager.getBugPriorityHtml(bug.getPriority());
@@ -88,7 +88,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
     @Override
     public PopupView createAssigneePopupField(final SimpleBug bug) {
-        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+        PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
                 String avatarLink = StorageFactory.getInstance().getAvatarPath(bug.getAssignUserAvatarId(), 16);
@@ -169,7 +169,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
     private static class BugCommentsPopupView extends LazyPopupView {
         private SimpleBug bug;
 
-        public BugCommentsPopupView(SimpleBug bug) {
+        BugCommentsPopupView(SimpleBug bug) {
             super("");
             this.bug = bug;
             if (bug.getNumComments() == null) {
@@ -221,19 +221,6 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             boolean hasPermission = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
             if (OptionI18nEnum.BugStatus.Open.name().equals(beanItem.getStatus()) ||
                     OptionI18nEnum.BugStatus.ReOpen.name().equals(beanItem.getStatus())) {
-                Button startProgressBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_START_PROGRESS), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        setPopupVisible(false);
-                        beanItem.setStatus(OptionI18nEnum.BugStatus.InProgress.name());
-                        BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-                        bugService.updateSelectiveWithSession(beanItem, AppContext.getUsername());
-                        refresh();
-                    }
-                });
-                startProgressBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                startProgressBtn.setEnabled(hasPermission);
-
                 Button resolveBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
@@ -243,31 +230,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                 });
                 resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 resolveBtn.setEnabled(hasPermission);
-                content.with(startProgressBtn, resolveBtn);
-            } else if (OptionI18nEnum.BugStatus.InProgress.name().equals(beanItem.getStatus())) {
-                Button stopProgressBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_STOP_PROGRESS), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        setPopupVisible(false);
-                        beanItem.setStatus(OptionI18nEnum.BugStatus.Open.name());
-                        BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-                        bugService.updateSelectiveWithSession(beanItem, AppContext.getUsername());
-                        refresh();
-                    }
-                });
-                stopProgressBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                stopProgressBtn.setEnabled(hasPermission);
-
-                Button resolveBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        setPopupVisible(false);
-                        UI.getCurrent().addWindow(bindCloseWindow(new ResolvedInputWindow(beanItem)));
-                    }
-                });
-                resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                resolveBtn.setEnabled(hasPermission);
-                content.with(stopProgressBtn, resolveBtn);
+                content.with(resolveBtn);
             } else if (OptionI18nEnum.BugStatus.Verified.name().equals(beanItem.getStatus())) {
                 Button reopenBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
                     @Override
@@ -279,8 +242,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                 reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 reopenBtn.setEnabled(hasPermission);
                 content.with(reopenBtn);
-            } else if (OptionI18nEnum.BugStatus.Resolved.name().equals(beanItem.getStatus()) ||
-                    OptionI18nEnum.BugStatus.WontFix.name().equals(beanItem.getStatus())) {
+            } else if (OptionI18nEnum.BugStatus.Resolved.name().equals(beanItem.getStatus())) {
                 Button reopenBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
@@ -342,7 +304,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
     @Override
     public PopupView createMilestonePopupField(final SimpleBug bug) {
-        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+        PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
                 if (bug.getMilestoneid() == null) {
@@ -367,7 +329,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
     @Override
     public PopupView createDeadlinePopupField(final SimpleBug bug) {
-        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+        PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
                 if (bug.getDueDateRoundPlusOne() == null) {
@@ -388,7 +350,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
     @Override
     public PopupView createStartDatePopupField(final SimpleBug bug) {
-        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+        PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
                 if (bug.getStartdate() == null) {
@@ -409,7 +371,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
     @Override
     public PopupView createEndDatePopupField(final SimpleBug bug) {
-        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+        PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
                 if (bug.getEnddate() == null) {
