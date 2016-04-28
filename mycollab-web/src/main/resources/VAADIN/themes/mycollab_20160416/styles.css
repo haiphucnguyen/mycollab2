@@ -1623,7 +1623,7 @@ a.pending {
 
 .inline-help {
 	color: #8B8B8B !important;
-	cursor: pointer;
+	cursor: help;
 }
 
 .inline-help:hover {
@@ -14252,7 +14252,7 @@ a.pending {
 
 .inline-help {
 	color: #8B8B8B !important;
-	cursor: pointer;
+	cursor: help;
 }
 
 .inline-help:hover {
