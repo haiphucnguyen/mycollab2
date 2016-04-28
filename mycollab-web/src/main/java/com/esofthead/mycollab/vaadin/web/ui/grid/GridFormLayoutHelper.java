@@ -18,6 +18,7 @@ package com.esofthead.mycollab.vaadin.web.ui.grid;
 
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
@@ -113,8 +114,8 @@ public class GridFormLayoutHelper implements Serializable {
                     .withWidth(defaultCaptionWidth).withHeight("100%").withStyleName("gridform-caption").with(captionLbl).expand(captionLbl)
                     .withAlign(captionLbl, alignment);
             if (StringUtils.isNotBlank(contextHelp)) {
-                ELabel contextHelpLbl = new ELabel("&nbsp;(?)", ContentMode.HTML).withStyleName("inline-help").withDescription(contextHelp)
-                        .withWidthUndefined();
+                ELabel contextHelpLbl = new ELabel("&nbsp;" + FontAwesome.QUESTION_CIRCLE.getHtml(), ContentMode.HTML)
+                        .withStyleName("inline-help").withDescription(contextHelp).withWidthUndefined();
                 captionWrapper.with(contextHelpLbl);
             }
             layout.addComponent(captionWrapper, 2 * columns, rows);

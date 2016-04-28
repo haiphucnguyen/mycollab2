@@ -1622,12 +1622,12 @@ a.pending {
 }
 
 .inline-help {
-	color: orange !important;
+	color: #8B8B8B !important;
 	cursor: pointer;
 }
 
 .inline-help:hover {
-	color: green !important;
+	color: #24a2e3 !important;
 }
 
 .cursor_pointer {
@@ -14251,12 +14251,12 @@ a.pending {
 }
 
 .inline-help {
-	color: orange !important;
+	color: #8B8B8B !important;
 	cursor: pointer;
 }
 
 .inline-help:hover {
-	color: green !important;
+	color: #24a2e3 !important;
 }
 
 .cursor_pointer {
