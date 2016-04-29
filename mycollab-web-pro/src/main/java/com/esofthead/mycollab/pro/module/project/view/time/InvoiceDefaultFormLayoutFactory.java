@@ -23,7 +23,8 @@ public class InvoiceDefaultFormLayoutFactory {
                 DynaSection.LayoutType.TWO_COLUMN).build();
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.noid).displayName(AppContext
-                .getMessage(InvoiceI18nEnum.FORM_NOID_FIELD)).fieldIndex(0).mandatory(true).required(true).build());
+                .getMessage(InvoiceI18nEnum.FORM_NOID_FIELD)).contextHelp(AppContext.getMessage(InvoiceI18nEnum.FORM_NOID_FIELD_HELP))
+                .fieldIndex(0).mandatory(true).required(true).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.issuedate).displayName(AppContext
                 .getMessage(InvoiceI18nEnum.FORM_ISSUE_DATE_FIELD)).fieldIndex(1).build());
@@ -34,14 +35,15 @@ public class InvoiceDefaultFormLayoutFactory {
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.assignuser).displayName(AppContext
                 .getMessage(GenericI18Enum.FORM_ASSIGNEE)).fieldIndex(3).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.status).displayName(AppContext
-                .getMessage(InvoiceI18nEnum.FORM_STATUS)).fieldIndex(4).build());
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.status).displayName(AppContext.getMessage(InvoiceI18nEnum.FORM_STATUS))
+                .contextHelp(AppContext.getMessage(InvoiceI18nEnum.FORM_STATUS_HELP)).fieldIndex(4).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.contactuserfullname).displayName(AppContext
                 .getMessage(InvoiceI18nEnum.FORM_CONTACT_PERSON)).fieldIndex(5).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.type).displayName(AppContext
-                .getMessage(InvoiceI18nEnum.FORM_TYPE)).fieldIndex(6).build());
+                .getMessage(InvoiceI18nEnum.FORM_TYPE)).contextHelp(AppContext.getMessage(InvoiceI18nEnum.FORM_TYPE_HELP))
+                .fieldIndex(6).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.amount).displayName(AppContext
                 .getMessage(InvoiceI18nEnum.FORM_AMOUNT)).fieldIndex(7).build());
