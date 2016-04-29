@@ -58,7 +58,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
         hoursWeeklyReport.addComponent(ELabel.h3(hoursWeeklyReportLink.write()).withWidthUndefined());
         hoursWeeklyReport.addComponent(new ELabel("Your members hours weekly report. Keep your project in time and budget")
                 .withWidth("100%"));
-        content.addComponent(hoursWeeklyReport);
+//        content.addComponent(hoursWeeklyReport);
 
         MVerticalLayout userWorkloadReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         userWorkloadReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
@@ -68,7 +68,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
         userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withWidthUndefined());
         userWorkloadReport.addComponent(new ELabel("Preview your user workloads and adjust to keep your project safe," +
                 " and your members are happy").withWidth("100%"));
-        content.addComponent(userWorkloadReport);
+//        content.addComponent(userWorkloadReport);
 
         MVerticalLayout timesheetReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         timesheetReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);

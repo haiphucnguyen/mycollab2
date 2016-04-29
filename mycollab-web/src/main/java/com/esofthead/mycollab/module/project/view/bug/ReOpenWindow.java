@@ -25,6 +25,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.project.view.settings.component.VersionMultiSelectField;
@@ -106,7 +107,7 @@ public class ReOpenWindow extends Window {
                     public void buttonClick(final Button.ClickEvent event) {
                         if (EditForm.this.validateForm()) {
                             bug.setStatus(BugStatus.ReOpen.name());
-                            bug.setResolution(null);
+                            bug.setResolution(OptionI18nEnum.BugResolution.None.name());
 
                             // Save bug status and assignee
                             BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
@@ -162,7 +163,8 @@ public class ReOpenWindow extends Window {
                 if (propertyId.equals("assignuser")) {
                     informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 0);
                 } else if (SimpleBug.Field.affectedVersions.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_AFFECTED_VERSIONS), 1, 0);
+                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_AFFECTED_VERSIONS),
+                            AppContext.getMessage(BugI18nEnum.FORM_AFFECTED_VERSIONS_HELP), 1, 0);
                 } else if (propertyId.equals("comment")) {
                     informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_COMMENT), 0, 1, 2, "100%");
                 }

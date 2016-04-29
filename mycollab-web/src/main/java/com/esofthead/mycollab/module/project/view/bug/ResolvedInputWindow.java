@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.common.domain.CommentWithBLOBs;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -34,8 +35,10 @@ import com.esofthead.mycollab.module.project.view.bug.components.BugSelectionFie
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.project.view.settings.component.VersionMultiSelectField;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
+import com.esofthead.mycollab.module.tracker.domain.RelatedBug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
+import com.esofthead.mycollab.module.tracker.service.BugRelationService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -59,12 +62,13 @@ public class ResolvedInputWindow extends Window {
     private static final long serialVersionUID = 1L;
 
     private final SimpleBug bug;
+    private BugSelectionField bugSelectionField;
     private VersionMultiSelectField fixedVersionSelect;
 
     public ResolvedInputWindow(SimpleBug bugValue) {
         super("Resolve bug '" + bugValue.getSummary() + "'");
         this.bug = BeanUtility.deepClone(bugValue);
-        this.setWidth("800px");
+        this.setWidth("900px");
         this.setResizable(false);
         this.setModal(true);
         EditForm editForm = new EditForm();
@@ -106,6 +110,33 @@ public class ResolvedInputWindow extends Window {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         if (EditForm.this.validateForm()) {
+                            String commentValue = commentArea.getValue();
+                            if (BugResolution.Duplicate.name().equals(bug.getResolution())) {
+                                if (bugSelectionField != null && bugSelectionField.getSelectedBug() != null) {
+                                    SimpleBug selectedBug = bugSelectionField.getSelectedBug();
+                                    if (selectedBug.getId().equals(bug.getId())) {
+                                        throw new UserInvalidInputException("The relation is invalid since the both entries are " + "the same");
+                                    }
+                                    BugRelationService relatedBugService = ApplicationContextUtil.getSpringBean(BugRelationService.class);
+                                    RelatedBug relatedBug = new RelatedBug();
+                                    relatedBug.setBugid(bug.getId());
+                                    relatedBug.setRelatetype(OptionI18nEnum.BugRelation.Duplicated.name());
+                                    relatedBug.setRelatedid(selectedBug.getId());
+                                    relatedBugService.saveWithSession(relatedBug, AppContext.getUsername());
+                                } else {
+                                    NotificationUtil.showErrorNotification("You must select the duplicated bug for " +
+                                            "the resolution 'Duplicate'");
+                                    return;
+                                }
+                            } else if (BugResolution.InComplete.name().equals(bug.getResolution()) ||
+                                    BugResolution.CannotReproduce.name().equals(bug.getResolution()) ||
+                                    BugResolution.Invalid.name().equals(bug.getResolution())) {
+                                if (StringUtils.isBlank(commentValue)) {
+                                    NotificationUtil.showErrorNotification("Comment must be not blank for the " +
+                                            "resolution " + bug.getResolution());
+                                    return;
+                                }
+                            }
                             bug.setStatus(BugStatus.Resolved.name());
 
                             BugRelatedItemService bugRelatedItemService = ApplicationContextUtil.getSpringBean(BugRelatedItemService.class);
@@ -116,7 +147,6 @@ public class ResolvedInputWindow extends Window {
                             bugService.updateSelectiveWithSession(bug, AppContext.getUsername());
 
                             // Save comment
-                            String commentValue = commentArea.getValue();
                             if (StringUtils.isNotBlank(commentValue)) {
                                 CommentWithBLOBs comment = new CommentWithBLOBs();
                                 comment.setComment(commentValue);
@@ -159,11 +189,13 @@ public class ResolvedInputWindow extends Window {
             @Override
             public void attachField(Object propertyId, Field<?> field) {
                 if (propertyId.equals("resolution")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_RESOLUTION), 0, 0);
+                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_RESOLUTION),
+                            AppContext.getMessage(BugI18nEnum.FORM_RESOLUTION_HELP), 0, 0);
                 } else if (propertyId.equals("assignuser")) {
                     informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 1);
                 } else if (propertyId.equals("fixedVersions")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_FIXED_VERSIONS), 0, 2);
+                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_FIXED_VERSIONS),
+                            AppContext.getMessage(BugI18nEnum.FORM_FIXED_VERSIONS_HELP), 0, 2);
                 } else if (propertyId.equals("comment")) {
                     informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_COMMENT), 0, 3, 2, "100%");
                 }
@@ -204,7 +236,6 @@ public class ResolvedInputWindow extends Window {
 
             private class ResolutionField extends CompoundCustomField<BugWithBLOBs> {
                 private MHorizontalLayout layout;
-                private BugSelectionField bugSelectionField;
                 private BugResolutionComboBox resolutionComboBox;
 
                 ResolutionField() {
