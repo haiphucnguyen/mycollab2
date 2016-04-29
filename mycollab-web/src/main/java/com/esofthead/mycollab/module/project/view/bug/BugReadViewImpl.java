@@ -252,12 +252,22 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             List<SimpleRelatedBug> relatedBugs = bugRelationService.findRelatedBugs(bug.getId());
             if (CollectionUtils.isNotEmpty(relatedBugs)) {
                 for (final SimpleRelatedBug relatedBug : relatedBugs) {
-                    ELabel relatedLink = new ELabel(AppContext.getMessage(OptionI18nEnum.BugRelation.class,
-                            relatedBug.getRelatedType())).withStyleName(UIConstants.FIELD_NOTE).withWidthUndefined();
-                    ToggleBugSummaryWithDependentField toggleRelatedBugField = new ToggleBugSummaryWithDependentField(bug, relatedBug.getRelatedBug());
-                    MHorizontalLayout bugContainer = new MHorizontalLayout(relatedLink, toggleRelatedBugField)
-                            .expand(toggleRelatedBugField).withWidth("100%");
-                    header.with(bugContainer);
+                    if (relatedBug.getRelated()) {
+                        ELabel relatedLink = new ELabel(AppContext.getMessage(OptionI18nEnum.BugRelation.class,
+                                relatedBug.getRelatedType())).withStyleName(UIConstants.ARROW_BTN).withWidthUndefined();
+                        ToggleBugSummaryWithDependentField toggleRelatedBugField = new ToggleBugSummaryWithDependentField(bug, relatedBug.getRelatedBug());
+                        MHorizontalLayout bugContainer = new MHorizontalLayout(relatedLink, toggleRelatedBugField)
+                                .expand(toggleRelatedBugField).withWidth("100%");
+                        header.with(bugContainer);
+                    } else {
+                        Enum relatedEnum = OptionI18nEnum.BugRelation.valueOf(relatedBug.getRelatedType()).getReverse();
+                        ELabel relatedLink = new ELabel(AppContext.getMessage(relatedEnum)).withStyleName(UIConstants.ARROW_BTN)
+                                .withWidthUndefined();
+                        ToggleBugSummaryWithDependentField toggleRelatedBugField = new ToggleBugSummaryWithDependentField(bug, relatedBug.getRelatedBug());
+                        MHorizontalLayout bugContainer = new MHorizontalLayout(relatedLink, toggleRelatedBugField)
+                                .expand(toggleRelatedBugField).withWidth("100%");
+                        header.with(bugContainer);
+                    }
                 }
             }
         }

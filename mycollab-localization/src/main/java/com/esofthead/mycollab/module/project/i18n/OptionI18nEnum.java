@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.i18n;
 import ch.qos.cal10n.BaseName;
 import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
+import com.esofthead.mycollab.core.MyCollabException;
 
 /**
  * @author MyCollab Ltd.
@@ -98,6 +99,17 @@ public class OptionI18nEnum {
     @BaseName("localization/project-bug-related")
     @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
     public enum BugRelation {
-        Related, Duplicated, Block
+        Related, Duplicated, Block, DependsOn, Duplicate, Relation;
+        public Enum getReverse() {
+            if (this == Duplicated) {
+                return Duplicate;
+            } else if (this == Related) {
+                return Relation;
+            } else if (this == Block) {
+                return DependsOn;
+            } else {
+                throw new MyCollabException("Not support");
+            }
+        }
     }
 }
