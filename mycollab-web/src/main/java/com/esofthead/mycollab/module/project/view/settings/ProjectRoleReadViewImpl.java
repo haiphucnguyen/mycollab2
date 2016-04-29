@@ -90,7 +90,7 @@ public class ProjectRoleReadViewImpl extends MVerticalLayout implements ProjectR
         FormContainer permissionsPanel = new FormContainer();
 
         projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, (ProjectRolePermissionCollections
-                .PROJECT_PERMISSIONS.length + 1) / 2);
+                .PROJECT_PERMISSIONS.length + 1) / 2, "180px");
         permissionsPanel.addSection(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS), projectFormHelper.getLayout());
 
         return permissionsPanel;
