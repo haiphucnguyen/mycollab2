@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.common.domain.CommentWithBLOBs;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -59,12 +60,12 @@ public class ReOpenWindow extends Window {
     private final SimpleBug bug;
     private VersionMultiSelectField affectedVersionsSelect;
 
-    public ReOpenWindow(final SimpleBug bug) {
-        super("Reopen bug '" + bug.getSummary() + "'");
+    public ReOpenWindow(final SimpleBug bugValue) {
+        super("Reopen bug '" + bugValue.getSummary() + "'");
+        this.bug = BeanUtility.deepClone(bugValue);
         this.setResizable(false);
         this.setModal(true);
         this.setWidth("800px");
-        this.bug = bug;
 
         MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, false, true, false));
         EditForm editForm = new EditForm();
@@ -75,15 +76,15 @@ public class ReOpenWindow extends Window {
         this.center();
     }
 
-    private class EditForm extends AdvancedEditBeanForm<BugWithBLOBs> {
+    private class EditForm extends AdvancedEditBeanForm<SimpleBug> {
         private static final long serialVersionUID = 1L;
         private RichTextArea commentArea;
 
         @Override
-        public void setBean(final BugWithBLOBs newDataSource) {
+        public void setBean(final SimpleBug newDataSource) {
             this.setFormLayoutFactory(new FormLayoutFactory());
             this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
-            super.setBean((BugWithBLOBs) newDataSource.copy());
+            super.setBean(newDataSource);
         }
 
         class FormLayoutFactory implements IFormLayoutFactory {
@@ -113,6 +114,7 @@ public class ReOpenWindow extends Window {
 
                             BugRelatedItemService bugRelatedItemService = ApplicationContextUtil.getSpringBean(BugRelatedItemService.class);
                             bugRelatedItemService.updateAffectedVersionsOfBug(bug.getId(), affectedVersionsSelect.getSelectedItems());
+                            bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), null);
 
                             BugRelationService bugRelationService = ApplicationContextUtil.getSpringBean(BugRelationService.class);
                             bugRelationService.removeDuplicatedBugs(bug.getId());
@@ -167,10 +169,10 @@ public class ReOpenWindow extends Window {
             }
         }
 
-        private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<BugWithBLOBs> {
+        private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleBug> {
             private static final long serialVersionUID = 1L;
 
-            public EditFormFieldFactory(GenericBeanForm<BugWithBLOBs> form) {
+            public EditFormFieldFactory(GenericBeanForm<SimpleBug> form) {
                 super(form);
             }
 

@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.common.domain.CommentWithBLOBs;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -45,6 +46,7 @@ import com.vaadin.data.Property;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.GregorianCalendar;
@@ -59,9 +61,9 @@ public class ResolvedInputWindow extends Window {
     private final SimpleBug bug;
     private VersionMultiSelectField fixedVersionSelect;
 
-    public ResolvedInputWindow(SimpleBug bug) {
-        super("Resolve bug '" + bug.getSummary() + "'");
-        this.bug = bug;
+    public ResolvedInputWindow(SimpleBug bugValue) {
+        super("Resolve bug '" + bugValue.getSummary() + "'");
+        this.bug = BeanUtility.deepClone(bugValue);
         this.setWidth("800px");
         this.setResizable(false);
         this.setModal(true);
@@ -143,7 +145,7 @@ public class ResolvedInputWindow extends Window {
 
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-                        ResolvedInputWindow.this.close();
+                        close();
                     }
                 });
                 cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
@@ -187,6 +189,9 @@ public class ResolvedInputWindow extends Window {
                     return new ProjectMemberSelectionField();
                 } else if (propertyId.equals("fixedVersions")) {
                     fixedVersionSelect = new VersionMultiSelectField();
+                    if (CollectionUtils.isEmpty(bug.getFixedVersions()) && CollectionUtils.isNotEmpty(bug.getAffectedVersions())) {
+                        bug.setFixedVersions(bug.getAffectedVersions());
+                    }
                     return fixedVersionSelect;
                 } else if (propertyId.equals("comment")) {
                     commentArea = new RichTextArea();
