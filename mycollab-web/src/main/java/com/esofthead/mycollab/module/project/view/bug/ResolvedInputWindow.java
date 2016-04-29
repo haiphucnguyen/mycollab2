@@ -29,6 +29,7 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.view.bug.components.BugResolutionComboBox;
+import com.esofthead.mycollab.module.project.view.bug.components.BugSelectionField;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.project.view.settings.component.VersionMultiSelectField;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
@@ -198,6 +199,7 @@ public class ResolvedInputWindow extends Window {
 
             private class ResolutionField extends CompoundCustomField<BugWithBLOBs> {
                 private MHorizontalLayout layout;
+                private BugSelectionField bugSelectionField;
                 private BugResolutionComboBox resolutionComboBox;
 
                 ResolutionField() {
@@ -213,9 +215,13 @@ public class ResolvedInputWindow extends Window {
                         public void valueChange(Property.ValueChangeEvent event) {
                             String value = (String) resolutionComboBox.getValue();
                             if (OptionI18nEnum.BugResolution.Duplicate.name().equals(value)) {
-                                layout.with(new Label(" with "));
+                                bugSelectionField = new BugSelectionField();
+                                layout.with(new Label(" with "), bugSelectionField);
                             } else {
-
+                                if (layout.getComponentCount() > 1) {
+                                    layout.removeComponent(layout.getComponent(1));
+                                    layout.removeComponent(layout.getComponent(1));
+                                }
                             }
                         }
                     });

@@ -76,7 +76,7 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
         m.addParameter(new Parameter(new FullyQualifiedJavaType("Object"), "obj"));
         m.addBodyLine("if (obj == null) { return false;}");
         m.addBodyLine("if (obj == this) { return true;}");
-        m.addBodyLine("if (obj.getClass() != getClass()) { return false;}");
+        m.addBodyLine("if (!obj.getClass().isAssignableFrom(getClass())) { return false;}");
         m.addBodyLine(String.format("%s item = (%s)obj;", topLevelClass.getType().getShortName(), topLevelClass.getType().getShortName()));
         m.addBodyLine(String.format("return new EqualsBuilder().append(%s, %s).build();", field.getName(), "item" +
                 "." + field.getName()));
