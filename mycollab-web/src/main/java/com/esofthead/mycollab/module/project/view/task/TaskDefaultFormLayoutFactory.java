@@ -32,10 +32,8 @@ import com.esofthead.mycollab.vaadin.AppContext;
  */
 public class TaskDefaultFormLayoutFactory {
 
-    private static final DynaForm defaultForm;
-
-    static {
-        defaultForm = new DynaForm();
+    public static DynaForm getForm() {
+        DynaForm defaultForm = new DynaForm();
 
         DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).build();
 
@@ -99,9 +97,6 @@ public class TaskDefaultFormLayoutFactory {
                 .colSpan(true).fieldIndex(13).build());
 
         defaultForm.addSection(mainSection);
-    }
-
-    public static DynaForm getForm() {
         return defaultForm;
     }
 }

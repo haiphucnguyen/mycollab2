@@ -1,7 +1,6 @@
 package ch.qos.cal10n;
 
 import ch.qos.cal10n.util.AnnotationExtractorViaEnumClass;
-import ch.qos.cal10n.util.CAL10NBundle;
 import ch.qos.cal10n.util.CAL10NBundleExt;
 import ch.qos.cal10n.util.CAL10NBundleFinderByClassloaderExt;
 
@@ -15,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 4.5.2
  */
 public class MessageConveyorExt implements IMessageConveyor {
+    static final ResourceLoader resourceLoader = new ResourceLoader();
     final Locale locale;
     final Map<String, CAL10NBundleExt> cache = new ConcurrentHashMap<>();
 
@@ -48,10 +48,7 @@ public class MessageConveyorExt implements IMessageConveyor {
         if (rb == null || rb.hasChanged()) {
             rb = lookupResourceBundleByEnumClassAndLocale(declaringClass);
             cache.put(declaringClassName, rb);
-        }
-
-        if (rb.getHostFile() != null) {
-
+            resourceLoader.registerBundleAndFile(rb);
         }
 
         String keyAsStr = key.toString();
