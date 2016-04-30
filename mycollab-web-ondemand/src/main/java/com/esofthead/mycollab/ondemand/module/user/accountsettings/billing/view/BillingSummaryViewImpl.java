@@ -103,10 +103,9 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
         topLayout.with(faqLayout).withAlign(faqLayout, Alignment.TOP_RIGHT);
         layout.addComponent(topLayout);
 
-        MHorizontalLayout plansList = new MHorizontalLayout().withSpacing(false).withWidth("100%").withStyleName
-                ("billing-plan-list");
+        MHorizontalLayout plansList = new MHorizontalLayout().withSpacing(false).withWidth("100%").withStyleName("billing-plan-list");
 
-        List<BillingPlan> availablePlans = this.billingService.getAvailablePlans();
+        List<BillingPlan> availablePlans = billingService.getAvailablePlans();
         int listSize = availablePlans.size();
 
         for (int i = 0; i < listSize; i++) {

@@ -297,9 +297,9 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                     if (daysLeft > 30) {
                         BillingService billingService = ApplicationContextUtil.getSpringBean(BillingService.class);
                         BillingPlan freeBillingPlan = billingService.getFreeBillingPlan();
-//                        billingAccount.setBillingPlan(freeBillingPlan);
-//                        informLbl.setValue("<div class='informBlock'>TRIAL ENDING<br>"
-//                                + " 0 DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>");
+                        billingAccount.setBillingPlan(freeBillingPlan);
+                        informLbl.setValue("<div class='informBlock'>TRIAL ENDING<br>"
+                                + " 0 DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>");
                     } else {
 //                        informLbl.setValue(String.format("<div class='informBlock'>TRIAL ENDING<br>%d DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>", 30 - daysLeft));
                     }
