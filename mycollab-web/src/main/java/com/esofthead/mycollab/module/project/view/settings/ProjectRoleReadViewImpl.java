@@ -106,7 +106,7 @@ public class ProjectRoleReadViewImpl extends MVerticalLayout implements ProjectR
             Integer perVal = permissionMap.get(permissionKey.name());
             SecurityI18nEnum permissionVal = PermissionFlag.toVal(perVal);
             projectFormHelper.addComponent(new Label(AppContext.getMessage(permissionVal)),
-                    AppContext.getMessage(permissionKey), permissionVal.desc(), i % 2, i / 2);
+                    AppContext.getMessage(permissionKey), AppContext.getMessage(permissionVal.desc()), i % 2, i / 2);
         }
 
     }
