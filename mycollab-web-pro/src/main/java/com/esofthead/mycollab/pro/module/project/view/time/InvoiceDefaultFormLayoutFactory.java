@@ -14,11 +14,9 @@ import com.esofthead.mycollab.vaadin.AppContext;
  * @since 5.2.10
  */
 public class InvoiceDefaultFormLayoutFactory {
-    private static final DynaForm defaultForm;
 
-    static {
-        defaultForm = new DynaForm();
-
+    public static DynaForm getForm() {
+        DynaForm defaultForm = new DynaForm();
         DynaSection mainSection = new DynaSectionBuilder().layoutType(
                 DynaSection.LayoutType.TWO_COLUMN).build();
 
@@ -54,10 +52,10 @@ public class InvoiceDefaultFormLayoutFactory {
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.description).displayName(AppContext
                 .getMessage(GenericI18Enum.FORM_DESCRIPTION)).fieldIndex(9).colSpan(true).build());
 
-        defaultForm.addSection(mainSection);
-    }
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.id).displayName(AppContext.getMessage
+                (GenericI18Enum.FORM_ATTACHMENTS)).fieldIndex(10).colSpan(true).build());
 
-    public static DynaForm getForm() {
+        defaultForm.addSection(mainSection);
         return defaultForm;
     }
 }

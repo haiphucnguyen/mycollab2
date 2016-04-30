@@ -2,6 +2,7 @@ package com.esofthead.mycollab.pro.module.project.view.time;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleInvoice;
 import com.esofthead.mycollab.module.project.events.InvoiceEvent;
@@ -11,6 +12,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -40,7 +42,8 @@ public class InvoiceAddWindow extends Window {
         content.addComponent(editBeanForm);
         editBeanForm.setFormLayoutFactory(new DynaFormLayout(ProjectTypeConstants.INVOICE,
                 InvoiceDefaultFormLayoutFactory.getForm()));
-        editBeanForm.setBeanFormFieldFactory(new InvoiceEditFormFieldFactory(editBeanForm));
+        final InvoiceEditFormFieldFactory invoiceEditFormFieldFactory = new InvoiceEditFormFieldFactory(editBeanForm);
+        editBeanForm.setBeanFormFieldFactory(invoiceEditFormFieldFactory);
         editBeanForm.setBean(invoice);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
@@ -59,6 +62,10 @@ public class InvoiceAddWindow extends Window {
                         invoiceService.updateWithSession(invoice, AppContext.getUsername());
                         EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceUpdateAdded(this, invoice));
                     }
+                    AttachmentUploadField uploadField = invoiceEditFormFieldFactory.getAttachmentUploadField();
+                    String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), invoice.getProjectid(),
+                            ProjectTypeConstants.INVOICE, "" + invoice.getId());
+                    uploadField.saveContentsToRepo(attachPath);
                     close();
                 }
             }

@@ -1,13 +1,19 @@
 package com.esofthead.mycollab.pro.module.project.view.time;
 
+import com.esofthead.mycollab.module.file.AttachmentUtils;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Invoice;
 import com.esofthead.mycollab.module.project.domain.SimpleInvoice;
+import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
+import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
@@ -18,6 +24,9 @@ import com.vaadin.ui.TextField;
  * @since 5.2.10
  */
 public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleInvoice> {
+
+    private AttachmentUploadField attachmentUploadField;
+
     InvoiceEditFormFieldFactory(GenericBeanForm<SimpleInvoice> form) {
         super(form);
     }
@@ -52,7 +61,20 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
             field.setRequired(true);
             field.setRequiredError("Amount can not be null");
             return field;
+        } else if (Invoice.Field.id.equalTo(propertyId)) {
+            attachmentUploadField = new AttachmentUploadField();
+            Invoice beanItem = attachForm.getBean();
+            if (beanItem.getId() != null) {
+                String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(),
+                        CurrentProjectVariables.getProjectId(), ProjectTypeConstants.INVOICE, "" + beanItem.getId());
+                attachmentUploadField.getAttachments(attachmentPath);
+            }
+            return attachmentUploadField;
         }
         return null;
+    }
+
+    public AttachmentUploadField getAttachmentUploadField() {
+        return attachmentUploadField;
     }
 }

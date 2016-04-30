@@ -54,6 +54,7 @@ Version 5.3.0
 
 * [Premium] Add views to manage projects/tasks and time of client
 * [Premium] Print invoice page
+* [Premium] Allow attachment in the invoice form
 * [Premium] Associate client information to invoice
 * [Premium] Member weekly hours report
 * Allow site owner create the admin user instead of system default user
@@ -70,6 +71,7 @@ Version 5.3.0
 * Clean resources properly when user signout MyCollab
 * Get following items return the wrong list in several cases
 * Tooltip still show after mouse over event occurs
+* Can not preview image file which has special characters
 
 Version 5.2.12
 -----------------------------

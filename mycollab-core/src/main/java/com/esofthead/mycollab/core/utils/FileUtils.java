@@ -19,6 +19,7 @@ package com.esofthead.mycollab.core.utils;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.google.common.base.MoreObjects;
+import org.apache.jackrabbit.util.Text;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -132,5 +133,9 @@ public class FileUtils {
             throw new UserInvalidInputException("Please enter valid folder name except any " +
                     "follow characters : " + ILLEGAL_FOLDER_PATTERN.pattern());
         }
+    }
+
+    public static String escape(String fileName) {
+        return Text.escape(fileName);
     }
 }

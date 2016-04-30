@@ -79,7 +79,6 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -291,7 +290,6 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                     });
                     accountLayout.with(informBox).withAlign(informBox, Alignment.MIDDLE_LEFT);
 
-                    Date createdTime = billingAccount.getCreatedtime();
                     Duration dur = new Duration(new DateTime(), new DateTime(billingAccount.getCreatedtime()));
                     int daysLeft = dur.toStandardDays().getDays();
                     if (daysLeft > 30) {
