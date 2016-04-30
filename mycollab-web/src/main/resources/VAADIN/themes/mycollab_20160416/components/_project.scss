@@ -708,4 +708,19 @@
       background-color: $my-hover-background-color;
     }
   }
+
+  .invoice {
+    border-radius: 6px;
+    padding: 0px 5px;
+    color: #fff;
+    &.paid {
+      background-color: #25c278;
+    }
+    &.scheduled {
+      background-color: #feb195;
+    }
+    &.sent {
+      background-color: #75b5f7;
+    }
+  }
 }

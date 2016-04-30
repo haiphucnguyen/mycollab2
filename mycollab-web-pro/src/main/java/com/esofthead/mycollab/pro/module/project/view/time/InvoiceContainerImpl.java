@@ -209,10 +209,17 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
         public Component generateRow(final AbstractBeanPagedList host, final SimpleInvoice invoice, int rowIndex) {
             final MVerticalLayout layout = new MVerticalLayout().withStyleName(UIConstants.BORDER_LIST_ROW)
                     .withStyleName(UIConstants.CURSOR_POINTER);
-            ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml() + " "
-                    + invoice.getNoid() + " (" + AppContext.getMessage(OptionI18nEnum.InvoiceStatus.class, invoice
-                    .getStatus()) + ")", ContentMode.HTML);
-            layout.addComponent(headerLbl);
+            OptionI18nEnum.InvoiceStatus invoiceStatus = OptionI18nEnum.InvoiceStatus.valueOf(invoice.getStatus());
+            ELabel statusLbl = new ELabel(AppContext.getMessage(invoiceStatus)).withWidthUndefined();
+            if (invoiceStatus == OptionI18nEnum.InvoiceStatus.Paid) {
+                statusLbl.withStyleName("invoice", "paid");
+            } else if (invoiceStatus == OptionI18nEnum.InvoiceStatus.Scheduled) {
+                statusLbl.withStyleName("invoice", "scheduled");
+            } else if (invoiceStatus == OptionI18nEnum.InvoiceStatus.Sent) {
+                statusLbl.withStyleName("invoice", "sent");
+            }
+            ELabel headerLbl = new ELabel(invoice.getNoid());
+            layout.addComponent(new MHorizontalLayout(statusLbl, headerLbl).expand(headerLbl));
             if (StringUtils.isNotBlank(invoice.getNote())) {
                 Label noteLbl = new Label(invoice.getNote());
                 layout.with(noteLbl);
@@ -279,6 +286,11 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
 
             headerLbl = ELabel.h2("");
 
+            Button printBtn = new Button();
+            printBtn.setIcon(FontAwesome.PRINT);
+            printBtn.addStyleName(UIConstants.BUTTON_OPTION);
+            printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE));
+
             Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
@@ -315,7 +327,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
             deleteBtn.setIcon(FontAwesome.TRASH_O);
             deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INVOICE));
 
-            MHorizontalLayout buttonControls = new MHorizontalLayout(editBtn, deleteBtn);
+            MHorizontalLayout buttonControls = new MHorizontalLayout(printBtn, editBtn, deleteBtn);
             header.with(headerLbl, buttonControls).expand(headerLbl);
             previewForm = new AdvancedPreviewBeanForm<>();
             addComponent(previewForm);
