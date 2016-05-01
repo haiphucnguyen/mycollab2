@@ -61,6 +61,7 @@ Version 5.3.0
 * Create sample project for the new MyCollab installation
 * Add the context help for project forms
 * Change the issue workflow similar than Bugzilla
+* Allow to edit description in file management
 * Other minor improvements
 
 **Bug Fixes**

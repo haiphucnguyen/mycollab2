@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.pro.module.project.view.time;
 
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Invoice;
 import com.esofthead.mycollab.module.project.domain.SimpleInvoice;
 import com.esofthead.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
@@ -41,6 +43,8 @@ public class InvoiceReadFormFieldFactory extends AbstractBeanFieldGroupViewField
             return new ProjectUserFormLinkField(invoice.getAssignuser(), invoice.getAssignUserAvatarId(), invoice.getAssignUserFullName());
         } else if (Invoice.Field.amount.equalTo(propertyId)) {
             return new DefaultViewField(invoice.getAmount() + "").withStyleName(UIConstants.FIELD_NOTE);
+        } else if (Invoice.Field.id.equalTo(propertyId)) {
+            return new ProjectFormAttachmentDisplayField(invoice.getProjectid(), ProjectTypeConstants.INVOICE, invoice.getId());
         }
         return null;
     }

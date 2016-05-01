@@ -132,6 +132,10 @@ $v-line-height--header:1.5em;
       word-wrap: break-word;
       white-space: normal;
     }
+    &.link {
+      color: $my-link-color;
+      cursor: pointer;
+    }
     &.link img {
       vertical-align: top;
       margin-right: 3px;

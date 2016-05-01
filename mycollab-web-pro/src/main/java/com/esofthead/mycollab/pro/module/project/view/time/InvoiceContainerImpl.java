@@ -9,6 +9,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.Invoice;
 import com.esofthead.mycollab.module.project.domain.SimpleInvoice;
 import com.esofthead.mycollab.module.project.domain.criteria.InvoiceSearchCriteria;
 import com.esofthead.mycollab.module.project.events.InvoiceEvent;
@@ -17,8 +18,9 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.service.InvoiceService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
-import com.esofthead.mycollab.module.project.ui.format.InvoiceFieldFormatter;
 import com.esofthead.mycollab.module.project.view.time.IInvoiceContainer;
+import com.esofthead.mycollab.reporting.FormReportLayout;
+import com.esofthead.mycollab.reporting.PrintButton;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -31,7 +33,6 @@ import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.jouni.restrain.Restrain;
@@ -286,10 +287,11 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
 
             headerLbl = ELabel.h2("");
 
-            Button printBtn = new Button();
-            printBtn.setIcon(FontAwesome.PRINT);
-            printBtn.addStyleName(UIConstants.BUTTON_OPTION);
+            PrintButton printBtn = new PrintButton();
+            printBtn.setStyleName(UIConstants.BUTTON_OPTION);
             printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE));
+            printBtn.doPrint(invoice, new FormReportLayout(ProjectTypeConstants.INVOICE, Invoice.Field.noid.name(),
+                    InvoiceDefaultFormLayoutFactory.getForm(), Invoice.Field.id.name()));
 
             Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                 @Override

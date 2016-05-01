@@ -265,10 +265,9 @@
         font-size: 38px;
       }
     }
-  }
-
-  .v-label.center {
-    text-align: center;
+    &.center {
+      text-align: center;
+    }
   }
 
   .circle-box, img .circle-box{

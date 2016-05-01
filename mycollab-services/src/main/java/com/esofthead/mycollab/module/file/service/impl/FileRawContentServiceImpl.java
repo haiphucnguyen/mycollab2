@@ -71,15 +71,7 @@ public class FileRawContentServiceImpl implements RawContentService {
     @Override
     public InputStream getContentStream(String objectPath) {
         try {
-            String filePath;
-            int lastIndex = objectPath.lastIndexOf('/');
-            if (lastIndex > -1) {
-                String fileName = com.esofthead.mycollab.core.utils.FileUtils.escape(objectPath.substring(lastIndex + 1));
-                filePath = objectPath.substring(0, lastIndex + 1) + fileName;
-            } else {
-                filePath = objectPath;
-            }
-            File file = new File(baseFolder, filePath);
+            File file = new File(baseFolder, objectPath);
             return new FileInputStream(file);
         } catch (Exception e) {
             throw new MyCollabException(e);

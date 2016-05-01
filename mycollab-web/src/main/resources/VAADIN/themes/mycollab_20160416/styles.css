@@ -16380,6 +16380,11 @@ input.noBorderRight {
 	white-space: normal;
 }
 
+.v-label.link {
+	color: #0083ce;
+	cursor: pointer;
+}
+
 .v-label.link img {
 	vertical-align: top;
 	margin-right: 3px;

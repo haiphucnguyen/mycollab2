@@ -136,6 +136,12 @@ public class FileUtils {
     }
 
     public static String escape(String fileName) {
-        return Text.escape(fileName);
+//        return Text.escape(fileName);
+        return fileName;
+    }
+
+    public static String escapePath(String path) {
+//        return Text.escapePath(path);
+        return path;
     }
 }
