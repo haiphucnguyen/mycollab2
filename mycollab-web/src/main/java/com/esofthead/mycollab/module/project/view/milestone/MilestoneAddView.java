@@ -14,15 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
+import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
 public interface MilestoneAddView extends IFormAddView<SimpleMilestone> {
+    AttachmentUploadField getAttachUploadField();
 }

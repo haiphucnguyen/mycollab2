@@ -61,6 +61,9 @@ public class MilestoneDefaultFormLayoutFactory {
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Milestone.Field.id).displayName(AppContext
                 .getMessage(MilestoneI18nEnum.FORM_ASSIGNMENTS)).fieldIndex(6).colSpan(true).build());
 
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Milestone.Field.saccountid).displayName(AppContext
+                .getMessage(GenericI18Enum.FORM_ATTACHMENTS)).fieldIndex(7).colSpan(true).build());
+
         defaultForm.addSection(mainSection);
     }
 

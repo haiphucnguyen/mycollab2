@@ -2,6 +2,7 @@ package com.esofthead.mycollab.pro.module.project.view.risk;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
@@ -14,6 +15,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -84,6 +86,11 @@ public class RiskAddWindow extends Window {
                                 riskService.updateWithSession(bean, AppContext.getUsername());
                                 riskId = bean.getId();
                             }
+                            AttachmentUploadField uploadField = ((RiskEditFormFieldFactory) getFieldFactory()).getAttachmentUploadField();
+                            String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), bean.getProjectid(),
+                                    ProjectTypeConstants.RISK, "" + riskId);
+                            uploadField.saveContentsToRepo(attachPath);
+
                             close();
                             EventBusFactory.getInstance().post(new AssignmentEvent.NewAssignmentAdd(this,
                                     ProjectTypeConstants.RISK, riskId));

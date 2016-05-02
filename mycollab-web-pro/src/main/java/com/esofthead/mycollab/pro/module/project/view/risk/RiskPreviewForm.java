@@ -4,6 +4,7 @@ import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
+import com.esofthead.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
@@ -68,6 +69,8 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
             } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
                 return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, risk.getMilestoneid() + "",
                         risk.getMilestoneName());
+            } else if (Risk.Field.id.equalTo(propertyId)) {
+                return new ProjectFormAttachmentDisplayField(risk.getProjectid(), ProjectTypeConstants.RISK, risk.getId());
             }
 
             return null;

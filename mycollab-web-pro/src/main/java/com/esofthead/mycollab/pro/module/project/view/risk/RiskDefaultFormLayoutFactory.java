@@ -78,6 +78,10 @@ public class RiskDefaultFormLayoutFactory {
                 .displayName(AppContext.getMessage(RiskI18nEnum.FORM_RESPONSE))
                 .fieldIndex(14).colSpan(true).build());
 
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.id)
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_ATTACHMENTS))
+                .colSpan(true).fieldIndex(15).build());
+
         defaultForm.addSection(mainSection);
     }
 

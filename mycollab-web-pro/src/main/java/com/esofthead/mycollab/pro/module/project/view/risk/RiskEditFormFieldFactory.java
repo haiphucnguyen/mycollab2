@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.pro.module.project.view.risk;
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
+import com.esofthead.mycollab.module.file.AttachmentUtils;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
@@ -10,6 +12,7 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.esofthead.mycollab.vaadin.web.ui.ValueComboBox;
+import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.RichTextArea;
@@ -22,6 +25,8 @@ import org.vaadin.teemu.ratingstars.RatingStars;
  */
 class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleRisk> {
     private static final long serialVersionUID = 1L;
+
+    private AttachmentUploadField attachmentUploadField;
 
     RiskEditFormFieldFactory(GenericBeanForm<SimpleRisk> form) {
         super(form);
@@ -98,8 +103,21 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             return tf;
         } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
             return new MilestoneComboBox();
+        } else if (Risk.Field.id.equalTo(propertyId)) {
+            attachmentUploadField = new AttachmentUploadField();
+            Risk beanItem = attachForm.getBean();
+            if (beanItem.getId() != null) {
+                String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(),
+                        beanItem.getProjectid(), ProjectTypeConstants.RISK, "" + beanItem.getId());
+                attachmentUploadField.getAttachments(attachmentPath);
+            }
+            return attachmentUploadField;
         }
 
         return null;
+    }
+
+    public AttachmentUploadField getAttachmentUploadField() {
+        return attachmentUploadField;
     }
 }

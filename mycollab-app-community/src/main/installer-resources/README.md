@@ -56,6 +56,7 @@ Version 5.3.0
 * [Premium] Add views to manage projects/tasks and time of client
 * [Premium] Print invoice page
 * [Premium] Allow attachment in the invoice form
+* [Premium] Allow attachment in the risk form
 * [Premium] Associate client information to invoice
 * [Premium] Member weekly hours report
 * Allow site owner create the admin user instead of system default user
@@ -63,6 +64,7 @@ Version 5.3.0
 * Add the context help for project forms
 * Change the issue workflow similar than Bugzilla
 * Allow to edit description in file management
+* Allow user add attachments in phase form
 * Other minor improvements
 
 **Bug Fixes**

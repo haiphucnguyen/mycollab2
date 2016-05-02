@@ -12,6 +12,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.web.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
 
@@ -59,6 +60,11 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
     @Override
     protected ComponentContainer createButtonControls() {
         return (new EditFormControlsGenerator<>(editForm)).createButtonControls();
+    }
+
+    @Override
+    public AttachmentUploadField getAttachUploadField() {
+        return ((RiskEditFormFieldFactory) editForm.getFieldFactory()).getAttachmentUploadField();
     }
 
     @Override
