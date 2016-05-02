@@ -45,6 +45,7 @@ Version 5.3.0
 **Library Upgrades**
 
 * Mybatis 3.4.0, Mybatis spring 1.3.0
+* Jetty 9.2.16.v20160414
 * Quartz 2.2.3
 * Vaadin 7.6.5
 * Hiraki CP 2.4.6
