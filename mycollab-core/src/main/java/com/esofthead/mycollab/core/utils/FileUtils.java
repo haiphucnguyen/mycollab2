@@ -19,7 +19,6 @@ package com.esofthead.mycollab.core.utils;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.google.common.base.MoreObjects;
-import org.apache.jackrabbit.util.Text;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -125,7 +124,7 @@ public class FileUtils {
         return Arrays.binarySearch(INVALID_RESOURCE_FULLNAMES, name.toLowerCase()) < 0;
     }
 
-    private static final Pattern ILLEGAL_FOLDER_PATTERN = Pattern.compile("[.<>:&/\\|?*&%()+-]");
+    private static final Pattern ILLEGAL_FOLDER_PATTERN = Pattern.compile("[.<>:&/\\|?*&%()\\+\\-\\[\\]]");
 
     public static void assertValidFolderName(String name) {
         Matcher matcher = ILLEGAL_FOLDER_PATTERN.matcher(name);
@@ -136,12 +135,6 @@ public class FileUtils {
     }
 
     public static String escape(String fileName) {
-//        return Text.escape(fileName);
-        return fileName;
-    }
-
-    public static String escapePath(String path) {
-//        return Text.escapePath(path);
-        return path;
+        return fileName.replaceAll("[<>:&/\\|?*&%()\\+\\-\\[\\]]", "");
     }
 }

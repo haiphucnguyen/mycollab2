@@ -46,7 +46,7 @@ public class ResourceGetHandler extends GenericHttpServlet {
 
     @Override
     protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = FileUtils.escapePath(request.getPathInfo());
+        String path = request.getPathInfo();
         InputStream inputStream = resourceService.getContentStream(path);
 
         if (inputStream != null) {
