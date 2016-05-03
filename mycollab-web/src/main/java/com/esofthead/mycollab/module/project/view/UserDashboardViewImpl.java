@@ -76,6 +76,7 @@ public class UserDashboardViewImpl extends AbstractPageView implements UserDashb
             @Override
             public void selectedTabChange(TabSheet.SelectedTabChangeEvent event) {
                 CssLayout comp = (CssLayout) tabSheet.getSelectedTab();
+                comp.removeAllComponents();
                 int tabIndex = tabSheet.getTabPosition(tabSheet.getTab(comp));
                 if (tabIndex == 0) {
                     UserProjectDashboardPresenter userProjectDashboardPresenter = PresenterResolver.getPresenterAndInitView
