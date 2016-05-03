@@ -65,6 +65,8 @@ Version 5.3.0
 * Change the issue workflow similar than Bugzilla
 * Allow to edit description in file management
 * Allow user add attachments in phase form
+* Revise the bug workflow in  the kanban view
+* General performance improvement in project module
 * Other minor improvements
 
 **Bug Fixes**

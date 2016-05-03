@@ -98,6 +98,10 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
 
     public CalendarDashboardViewImpl() {
         this.withMargin(true);
+    }
+
+    @Override
+    public void initContent() {
         baseDate = new LocalDate();
         searchPanel = new CalendarSearchPanel(false);
     }

@@ -47,7 +47,7 @@ public abstract class ListSelectionPresenter<V extends IListView<S, B>, S extend
     }
 
     @Override
-    protected void postInitView() {
+    protected void viewAttached() {
         view.getSearchHandlers().addSearchHandler(new SearchHandler<S>() {
             @Override
             public void onSearch(S criteria) {

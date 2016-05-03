@@ -19,7 +19,7 @@ public class CalendarDashboardPresenter extends AbstractPresenter<ICalendarDashb
     }
 
     @Override
-    protected void postInitView() {
+    protected void viewAttached() {
         HasSearchHandlers<ProjectGenericTaskSearchCriteria> searchHandlers = view.getSearchHandlers();
         if (searchHandlers != null) {
             searchHandlers.addSearchHandler(new SearchHandler<ProjectGenericTaskSearchCriteria>() {
@@ -33,6 +33,7 @@ public class CalendarDashboardPresenter extends AbstractPresenter<ICalendarDashb
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        container.addComponent(view);
         view.display();
     }
 }
