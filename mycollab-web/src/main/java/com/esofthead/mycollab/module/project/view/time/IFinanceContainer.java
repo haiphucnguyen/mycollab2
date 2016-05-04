@@ -28,4 +28,8 @@ public interface IFinanceContainer extends InitializingView {
     void initContent();
 
     Component gotoSubView(String name);
+
+    void showTimeView();
+
+    void showInvoiceView();
 }

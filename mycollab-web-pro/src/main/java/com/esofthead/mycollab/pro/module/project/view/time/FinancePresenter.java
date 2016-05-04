@@ -36,26 +36,18 @@ public class FinancePresenter extends AbstractPresenter<IFinanceContainer> imple
 
         if (data instanceof TimeTrackingScreenData.Search) {
             presenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
+            presenter.go(view, data);
         } else if (data instanceof InvoiceScreenData.GotoInvoiceList) {
             presenter = PresenterResolver.getPresenter(InvoicePresenter.class);
+            presenter.go(view, data);
         } else {
             if (CurrentProjectVariables.hasTimeFeature()) {
-                ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
-                searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
-                        VariableInjector.THIS_WEEK));
-                presenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
-                presenter.go(view, new TimeTrackingScreenData.Search(searchCriteria));
-                return;
+                view.showTimeView();
             } else if (CurrentProjectVariables.hasInvoiceFeature()) {
-                presenter = PresenterResolver.getPresenter(InvoicePresenter.class);
-                presenter.go(view, null);
-                return;
+                view.showInvoiceView();
             } else {
                 throw new MyCollabException("Not support screen data type null");
             }
         }
-
-        presenter.go(view, data);
     }
 }

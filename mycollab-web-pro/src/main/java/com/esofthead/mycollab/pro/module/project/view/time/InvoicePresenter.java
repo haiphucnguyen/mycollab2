@@ -8,7 +8,9 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.web.ui.TabSheetDecorator;
 import com.vaadin.ui.ComponentContainer;
+import org.vaadin.viritin.layouts.MCssLayout;
 
 /**
  * @author MyCollab Ltd
@@ -22,8 +24,9 @@ public class InvoicePresenter extends AbstractPresenter<IInvoiceContainer> imple
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         FinanceContainer timeContainer = (FinanceContainer) container;
-        timeContainer.gotoSubView(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_INVOICE));
-
+        TabSheetDecorator.WrappedTab contentLayout = (TabSheetDecorator.WrappedTab) timeContainer.gotoSubView(
+                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_INVOICE));
+        contentLayout.addView(view);
         view.display();
 
         ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

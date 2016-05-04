@@ -17,6 +17,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.web.ui.TabSheetDecorator;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet;
+import org.vaadin.viritin.layouts.MCssLayout;
 
 /**
  * @author MyCollab Ltd
@@ -25,9 +26,6 @@ import com.vaadin.ui.TabSheet;
 @ViewComponent
 public class FinanceContainer extends AbstractPageView implements IFinanceContainer {
     private static final long serialVersionUID = 1L;
-
-    private TimeTrackingListPresenter timeTrackingListPresenter;
-    private InvoicePresenter invoicePresenter;
 
     private TabSheetDecorator myProjectTab;
 
@@ -45,15 +43,13 @@ public class FinanceContainer extends AbstractPageView implements IFinanceContai
 
     private void buildComponents() {
         if (CurrentProjectVariables.hasTimeFeature()) {
-            timeTrackingListPresenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
-            myProjectTab.addTab(timeTrackingListPresenter.getView(), AppContext.getMessage(ProjectCommonI18nEnum
-                    .VIEW_TIME), ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME));
+            myProjectTab.addWrappedTab(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME));
         }
 
         if (CurrentProjectVariables.hasInvoiceFeature()) {
-            invoicePresenter = PresenterResolver.getPresenter(InvoicePresenter.class);
-            myProjectTab.addTab(invoicePresenter.getView(), AppContext.getMessage(ProjectCommonI18nEnum
-                    .VIEW_INVOICE), ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE));
+            myProjectTab.addWrappedTab(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_INVOICE),
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE));
         }
 
         myProjectTab.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
@@ -64,13 +60,9 @@ public class FinanceContainer extends AbstractPageView implements IFinanceContai
                 TabSheet.Tab tab = ((TabSheetDecorator) event.getTabSheet()).getSelectedTabInfo();
                 String caption = tab.getCaption();
                 if (AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME).equals(caption)) {
-                    ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
-                    searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                    searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
-                            VariableInjector.THIS_WEEK));
-                    timeTrackingListPresenter.onGo(FinanceContainer.this, new TimeTrackingScreenData.Search(searchCriteria));
+                    showTimeView();
                 } else {
-                    invoicePresenter.onGo(FinanceContainer.this, null);
+                    showInvoiceView();
                 }
             }
         });
@@ -79,5 +71,21 @@ public class FinanceContainer extends AbstractPageView implements IFinanceContai
     @Override
     public Component gotoSubView(String name) {
         return myProjectTab.selectTab(name).getComponent();
+    }
+
+    @Override
+    public void showTimeView() {
+        TimeTrackingListPresenter timeTrackingListPresenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
+        ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+        searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+        searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
+                VariableInjector.THIS_WEEK));
+        timeTrackingListPresenter.go(FinanceContainer.this, new TimeTrackingScreenData.Search(searchCriteria));
+    }
+
+    @Override
+    public void showInvoiceView() {
+        InvoicePresenter invoicePresenter = PresenterResolver.getPresenter(InvoicePresenter.class);
+        invoicePresenter.go(FinanceContainer.this, null);
     }
 }
