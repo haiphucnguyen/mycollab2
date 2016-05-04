@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.module.project.view.time;
 
-import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.web.ui.InitializingView;
 import com.vaadin.ui.Component;
 
