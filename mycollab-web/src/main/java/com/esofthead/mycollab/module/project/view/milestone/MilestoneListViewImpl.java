@@ -418,7 +418,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
 
     @Override
     public HasSelectableItemHandlers<SimpleMilestone> getSelectableItemHandlers() {
-        throw new UnsupportedOperationException("This view doesn't support this operation");
+        return null;
     }
 
     @Override
