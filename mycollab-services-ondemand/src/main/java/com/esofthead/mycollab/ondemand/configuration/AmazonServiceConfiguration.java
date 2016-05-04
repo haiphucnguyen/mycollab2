@@ -22,15 +22,15 @@ public class AmazonServiceConfiguration {
     private String bucket;
 
     private AmazonServiceConfiguration() {
-//        Properties props = ApplicationProperties.getAppProperties();
-//        awsKey = props.getProperty(AWS_KEY);
-//        awsSecretKey = props.getProperty(AWS_SECRET_KEY);
-//        bucket = props.getProperty(BUCKET);
-//
-//        if ("".equals(awsKey) || "".equals(awsSecretKey) || "".equals(bucket)) {
-//            throw new IllegalArgumentException(
-//                    "Invalid s3 configuration. All values awsKey, awsSecretKey, bucket must be set");
-//        }
+        Properties props = ApplicationProperties.getAppProperties();
+        awsKey = props.getProperty(AWS_KEY);
+        awsSecretKey = props.getProperty(AWS_SECRET_KEY);
+        bucket = props.getProperty(BUCKET);
+
+        if ("".equals(awsKey) || "".equals(awsSecretKey) || "".equals(bucket)) {
+            throw new IllegalArgumentException(
+                    "Invalid s3 configuration. All values awsKey, awsSecretKey, bucket must be set");
+        }
     }
 
     public static final String getBucket() {
@@ -38,7 +38,6 @@ public class AmazonServiceConfiguration {
     }
 
     public static final AWSCredentials amazonCredentials() {
-//        return new BasicAWSCredentials(instance.awsKey, instance.awsSecretKey);
-        return new BasicAWSCredentials("AKIAJ5BHX5QOTJQ4QUAQ", "PU9HdTqMrwkypWo0eyU2myxLxcMTp55KHhCLNOYU");
+        return new BasicAWSCredentials(instance.awsKey, instance.awsSecretKey);
     }
 }

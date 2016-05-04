@@ -22,6 +22,7 @@ import com.esofthead.mycollab.common.ui.components.notification.SmtpSetupNotific
 import com.esofthead.mycollab.common.ui.components.notification.TimezoneNotification;
 import com.esofthead.mycollab.configuration.IDeploymentMode;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
