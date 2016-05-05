@@ -174,7 +174,7 @@
     <select id="getUsersNotBelongToAnyAccount" resultMap="com.esofthead.mycollab.module.user.dao.UserMapper.BaseResultMap"
             lang="velocity">
         SELECT username, avatarId FROM s_user
-        WHERE
+        WHERE (SELECT COUNT(*) FROM s_user_account WHERE s_user.username = s_user_account.username) = 0
     </select>
 
     <delete id="removeKeysWithSession" parameterType="java.util.List">

@@ -20,7 +20,6 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.*;
 import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.NumberParam;
-import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.db.query.PropertyListParam;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 
@@ -48,12 +47,11 @@ public class TaskSearchCriteria extends SearchCriteria {
     public static final PropertyListParam p_status = new PropertyListParam("task-status",
             TaskI18nEnum.FORM_STATUS, "m_prj_task", "status");
 
-    public static final DateParam p_startdate = new DateParam("task-startdate",
-            TaskI18nEnum.FORM_START_DATE, "m_prj_task", "startdate");
+    public static final DateParam p_startdate = new DateParam("task-startdate", TaskI18nEnum.FORM_START_DATE, "m_prj_task", "startdate");
 
-    public static final Param p_enddate = new DateParam("task-enddate", TaskI18nEnum.FORM_END_DATE, "m_prj_task", "enddate");
+    public static final DateParam p_enddate = new DateParam("task-enddate", TaskI18nEnum.FORM_END_DATE, "m_prj_task", "enddate");
 
-    public static final Param p_taskkey = new NumberParam("task-key", TaskI18nEnum.FORM_TASK_KEY, "m_prj_task", "taskkey");
+    public static final NumberParam p_taskkey = new NumberParam("task-key", TaskI18nEnum.FORM_TASK_KEY, "m_prj_task", "taskkey");
 
     public static final PropertyListParam p_projectIds = new PropertyListParam("task-projectid", null, "m_prj_task", "projectid");
 
@@ -62,7 +60,6 @@ public class TaskSearchCriteria extends SearchCriteria {
     private StringSearchField taskName;
     private DateSearchField dueDate;
     private NumberSearchField milestoneId;
-    private NumberSearchField id;
     private StringSearchField assignUser;
     private SetSearchField<String> statuses;
     private SetSearchField<String> priorities;
@@ -98,14 +95,6 @@ public class TaskSearchCriteria extends SearchCriteria {
 
     public void setProjectId(NumberSearchField projectId) {
         this.projectId = projectId;
-    }
-
-    public void setId(NumberSearchField id) {
-        this.id = id;
-    }
-
-    public NumberSearchField getId() {
-        return id;
     }
 
     public StringSearchField getAssignUser() {
