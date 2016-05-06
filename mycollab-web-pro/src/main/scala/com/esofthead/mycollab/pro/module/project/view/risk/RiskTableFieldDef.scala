@@ -12,7 +12,7 @@ import com.esofthead.mycollab.vaadin.web.ui.UIConstants
 object RiskTableFieldDef {
   val selected = new TableViewField(null, "selected", UIConstants.TABLE_CONTROL_WIDTH);
   val action = new TableViewField(null, "id", -1)
-  val name = new TableViewField(RiskI18nEnum.FORM_NAME, "riskname", UIConstants.TABLE_EX_LABEL_WIDTH)
+  val name = new TableViewField(GenericI18Enum.FORM_NAME, "riskname", UIConstants.TABLE_EX_LABEL_WIDTH)
   val description = new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", UIConstants.TABLE_EX_LABEL_WIDTH)
   val raisedBy = new TableViewField(RiskI18nEnum.FORM_RAISED_BY, "raisedByUserFullName", UIConstants.TABLE_X_LABEL_WIDTH)
   val assignUser = new TableViewField(GenericI18Enum.FORM_ASSIGNEE, "assignedToUserFullName", UIConstants.TABLE_X_LABEL_WIDTH)

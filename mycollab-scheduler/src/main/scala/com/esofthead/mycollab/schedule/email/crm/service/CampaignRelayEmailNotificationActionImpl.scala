@@ -82,10 +82,10 @@ class CampaignRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEma
   override protected def getUpdateSubjectKey: Enum[_] = CampaignI18nEnum.MAIL_UPDATE_ITEM_SUBJECT
 
   class CampaignFieldNameMapper extends ItemFieldMapper {
-    put(CampaignWithBLOBs.Field.campaignname, CampaignI18nEnum.FORM_CAMPAIGN_NAME, isColSpan = true)
+    put(CampaignWithBLOBs.Field.campaignname, GenericI18Enum.FORM_NAME, isColSpan = true)
     put(CampaignWithBLOBs.Field.status, GenericI18Enum.FORM_STATUS)
-    put(CampaignWithBLOBs.Field.`type`, CampaignI18nEnum.FORM_TYPE)
-    put(CampaignWithBLOBs.Field.currencyid, new CurrencyFieldFormat(CampaignWithBLOBs.Field.currencyid.name, CampaignI18nEnum.FORM_CURRENCY))
+    put(CampaignWithBLOBs.Field.`type`, GenericI18Enum.FORM_TYPE)
+    put(CampaignWithBLOBs.Field.currencyid, new CurrencyFieldFormat(CampaignWithBLOBs.Field.currencyid.name, GenericI18Enum.FORM_CURRENCY))
     put(CampaignWithBLOBs.Field.budget, CampaignI18nEnum.FORM_BUDGET)
     put(CampaignWithBLOBs.Field.expectedcost, CampaignI18nEnum.FORM_EXPECTED_COST)
     put(CampaignWithBLOBs.Field.expectedrevenue, CampaignI18nEnum.FORM_EXPECTED_REVENUE)

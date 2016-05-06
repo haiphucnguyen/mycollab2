@@ -93,7 +93,7 @@ class ProjectRiskRelayEmailNotificationActionImpl extends SendMailToAllMembersAc
     }
 
     class ProjectFieldNameMapper extends ItemFieldMapper {
-        put(Risk.Field.riskname, RiskI18nEnum.FORM_NAME, isColSpan = true)
+        put(Risk.Field.riskname, GenericI18Enum.FORM_NAME, isColSpan = true)
         put(Risk.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
         put(Risk.Field.probalitity, RiskI18nEnum.FORM_PROBABILITY)
         put(Risk.Field.consequence, RiskI18nEnum.FORM_CONSEQUENCE)

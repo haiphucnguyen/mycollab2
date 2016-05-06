@@ -30,7 +30,7 @@ public final class MilestoneFieldFormatter extends FieldGroupFormatter {
     private static MilestoneFieldFormatter _instance = new MilestoneFieldFormatter();
 
     private MilestoneFieldFormatter() {
-        generateFieldDisplayHandler("name", MilestoneI18nEnum.FORM_NAME_FIELD);
+        generateFieldDisplayHandler("name", GenericI18Enum.FORM_NAME);
         generateFieldDisplayHandler("status", GenericI18Enum.FORM_STATUS,
                 new I18nHistoryFieldFormat(OptionI18nEnum.MilestoneStatus.class));
         generateFieldDisplayHandler("owner", GenericI18Enum.FORM_ASSIGNEE,

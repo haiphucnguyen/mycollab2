@@ -32,7 +32,7 @@ public final class RiskFieldFormatter extends FieldGroupFormatter {
     public RiskFieldFormatter() {
         super();
 
-        this.generateFieldDisplayHandler("riskname", RiskI18nEnum.FORM_NAME);
+        this.generateFieldDisplayHandler("riskname", GenericI18Enum.FORM_NAME);
         this.generateFieldDisplayHandler("description", GenericI18Enum.FORM_DESCRIPTION, TRIM_HTMLS);
         this.generateFieldDisplayHandler("raisedbyuser", RiskI18nEnum.FORM_RAISED_BY, new ProjectMemberHistoryFieldFormat());
         this.generateFieldDisplayHandler("assigntouser", GenericI18Enum.FORM_ASSIGNEE, new ProjectMemberHistoryFieldFormat());

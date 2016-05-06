@@ -53,7 +53,7 @@ public class CaseSearchCriteria extends SearchCriteria {
 			Arrays.asList(CrmDataTypeFactory.getCasesStatusList()));
 
 	public static final Param p_type = new StringListParam("case-type",
-			CaseI18nEnum.FORM_TYPE, "m_crm_case", "type",
+			GenericI18Enum.FORM_TYPE, "m_crm_case", "type",
 			Arrays.asList(CrmDataTypeFactory.getCasesType()));
 
 	public static final Param p_reason = new StringListParam("case-reason",

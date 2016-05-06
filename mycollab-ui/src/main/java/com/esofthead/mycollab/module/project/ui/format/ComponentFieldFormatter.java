@@ -29,7 +29,7 @@ public final class ComponentFieldFormatter extends FieldGroupFormatter {
     private static ComponentFieldFormatter _instance = new ComponentFieldFormatter();
 
     private ComponentFieldFormatter() {
-        generateFieldDisplayHandler("componentname", ComponentI18nEnum.FORM_NAME);
+        generateFieldDisplayHandler("componentname", GenericI18Enum.FORM_NAME);
         generateFieldDisplayHandler("description", GenericI18Enum.FORM_DESCRIPTION);
         generateFieldDisplayHandler("userlead", ComponentI18nEnum.FORM_LEAD, new ProjectMemberHistoryFieldFormat());
         generateFieldDisplayHandler("status", GenericI18Enum.FORM_STATUS,

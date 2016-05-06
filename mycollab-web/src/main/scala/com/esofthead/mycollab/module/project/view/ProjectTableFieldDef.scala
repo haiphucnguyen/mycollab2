@@ -28,7 +28,7 @@ import com.esofthead.mycollab.vaadin.web.ui.UIConstants
   */
 object ProjectTableFieldDef {
   val selected = new TableViewField(null, "selected", UIConstants.TABLE_CONTROL_WIDTH);
-  val projectname = new TableViewField(ProjectI18nEnum.FORM_NAME, Project.Field.name.name(), UIConstants.TABLE_X_LABEL_WIDTH)
+  val projectname = new TableViewField(GenericI18Enum.FORM_NAME, Project.Field.name.name(), UIConstants.TABLE_X_LABEL_WIDTH)
   val lead = new TableViewField(ProjectI18nEnum.FORM_LEADER, Project.Field.lead.name(), UIConstants.TABLE_EX_LABEL_WIDTH)
   val client = new TableViewField(ProjectI18nEnum.FORM_ACCOUNT_NAME, Project.Field.accountid.name(), UIConstants.TABLE_EX_LABEL_WIDTH)
   val createdDate = new TableViewField(GenericI18Enum.FORM_CREATED_TIME, Project.Field.createdtime.name(), UIConstants.TABLE_DATE_WIDTH)

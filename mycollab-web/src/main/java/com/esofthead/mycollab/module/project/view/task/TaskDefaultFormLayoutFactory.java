@@ -38,7 +38,7 @@ public class TaskDefaultFormLayoutFactory {
         DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).build();
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.taskname)
-                .displayName(AppContext.getMessage(TaskI18nEnum.FORM_TASK_NAME))
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_NAME))
                 .fieldIndex(0).mandatory(true).required(true)
                 .colSpan(true).build());
 
@@ -51,7 +51,7 @@ public class TaskDefaultFormLayoutFactory {
                 .fieldIndex(2).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.deadline)
-                .displayName(AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE))
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
                 .fieldIndex(3).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.priority)

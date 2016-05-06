@@ -110,6 +110,9 @@ public enum GenericI18Enum {
     FORM_END_DATE,
     FORM_DUE_DATE,
     FORM_STATUS,
+    FORM_NAME,
+    FORM_TYPE,
+    FORM_CURRENCY,
 
     MODULE_CRM,
     MODULE_PROJECT,

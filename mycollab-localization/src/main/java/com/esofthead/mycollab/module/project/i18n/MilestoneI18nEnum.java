@@ -35,7 +35,6 @@ public enum MilestoneI18nEnum {
 
     FORM_NEW_TITLE,
     FORM_EDIT_TITLE,
-    FORM_NAME_FIELD,
     FORM_STATUS_FIELD_HELP,
     FORM_TASK_FIELD,
     FORM_BUG_FIELD,

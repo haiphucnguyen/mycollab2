@@ -39,7 +39,7 @@ public class MilestoneDefaultFormLayoutFactory {
                 DynaSection.LayoutType.TWO_COLUMN).build();
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Milestone.Field.name).displayName(AppContext
-                .getMessage(MilestoneI18nEnum.FORM_NAME_FIELD)).fieldIndex(0).mandatory(true).required(true).colSpan(true).build());
+                .getMessage(GenericI18Enum.FORM_NAME)).fieldIndex(0).mandatory(true).required(true).colSpan(true).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Milestone.Field.startdate).displayName(AppContext
                 .getMessage(GenericI18Enum.FORM_START_DATE)).fieldIndex(1).build());

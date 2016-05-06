@@ -42,7 +42,7 @@ public class LeadSearchCriteria extends SearchCriteria {
 	private static final long serialVersionUID = 1L;
 
 	public static final Param p_leadContactName = new ConcatStringParam(
-			"lead-contactname", LeadI18nEnum.FORM_NAME, "m_crm_lead",
+			"lead-contactname", GenericI18Enum.FORM_NAME, "m_crm_lead",
 			new String[] { "firstname", "lastname" });
 
 	public static final Param p_accountName = new StringParam("lead-accountname",

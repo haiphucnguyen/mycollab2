@@ -35,8 +35,7 @@ public class CampaignSearchCriteria extends SearchCriteria {
     private static final long serialVersionUID = 1L;
 
     public static final Param p_campaignName = new StringParam("campaign-name",
-            CampaignI18nEnum.FORM_CAMPAIGN_NAME, "m_crm_campaign",
-            "campaignName");
+            GenericI18Enum.FORM_NAME, "m_crm_campaign", "campaignName");
 
     public static final Param p_startDate = new DateParam("campaign-startdate",
             GenericI18Enum.FORM_START_DATE, "m_crm_campaign", "startDate");
@@ -52,7 +51,7 @@ public class CampaignSearchCriteria extends SearchCriteria {
             "m_crm_campaign", "lastUpdatedTime");
 
     public static final Param p_types = new StringListParam("campaign-type",
-            CampaignI18nEnum.FORM_TYPE, "m_crm_campaign", "type",
+            GenericI18Enum.FORM_TYPE, "m_crm_campaign", "type",
             Arrays.asList(CrmDataTypeFactory.getCampaignTypeList()));
 
     public static final Param p_statuses = new StringListParam("campaign-status",

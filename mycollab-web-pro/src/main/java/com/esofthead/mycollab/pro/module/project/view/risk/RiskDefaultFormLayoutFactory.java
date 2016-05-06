@@ -25,7 +25,7 @@ public class RiskDefaultFormLayoutFactory {
         DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).build();
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.riskname)
-                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_NAME))
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_NAME))
                 .fieldIndex(0).mandatory(true).required(true).colSpan(true)
                 .build());
 

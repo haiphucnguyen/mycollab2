@@ -28,7 +28,6 @@ public enum ComponentI18nEnum {
 
     FORM_NEW_TITLE,
     FORM_EDIT_TITLE,
-    FORM_NAME,
     FORM_LEAD,
     FORM_BUGS,
 

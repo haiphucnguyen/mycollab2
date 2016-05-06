@@ -76,7 +76,7 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements Project
     private void generateDisplayTable() {
         tableItem = new DefaultPagedBeanTable<>(ApplicationContextUtil.getSpringBean(ProjectRoleService.class),
                 SimpleProjectRole.class, new TableViewField(null, "selected", UIConstants.TABLE_CONTROL_WIDTH),
-                Arrays.asList(new TableViewField(ProjectRoleI18nEnum.FORM_NAME, "rolename", UIConstants.TABLE_EX_LABEL_WIDTH),
+                Arrays.asList(new TableViewField(GenericI18Enum.FORM_NAME, "rolename", UIConstants.TABLE_EX_LABEL_WIDTH),
                         new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", UIConstants.TABLE_EX_LABEL_WIDTH)));
 
         tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {

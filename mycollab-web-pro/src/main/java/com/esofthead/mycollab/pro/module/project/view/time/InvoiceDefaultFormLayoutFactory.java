@@ -28,7 +28,7 @@ public class InvoiceDefaultFormLayoutFactory {
                 .getMessage(InvoiceI18nEnum.FORM_ISSUE_DATE_FIELD)).fieldIndex(1).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.currentid).displayName(AppContext
-                .getMessage(InvoiceI18nEnum.FORM_CURRENCY_FIELD)).fieldIndex(2).build());
+                .getMessage(GenericI18Enum.FORM_CURRENCY)).fieldIndex(2).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.assignuser).displayName(AppContext
                 .getMessage(GenericI18Enum.FORM_ASSIGNEE)).fieldIndex(3).build());

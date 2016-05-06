@@ -37,10 +37,10 @@ import java.util.Arrays;
 public class ProjectSearchCriteria extends SearchCriteria {
     private static final long serialVersionUID = 1L;
 
-    public static final NumberParam p_template = new NumberParam("project-template", ProjectI18nEnum.FORM_NAME,
+    public static final NumberParam p_template = new NumberParam("project-template", GenericI18Enum.FORM_NAME,
             "m_prj_project", "istemplate");
 
-    public static final StringParam p_name = new StringParam("project-name", ProjectI18nEnum.FORM_NAME, "m_prj_project", "name");
+    public static final StringParam p_name = new StringParam("project-name", GenericI18Enum.FORM_NAME, "m_prj_project", "name");
     public static final DateParam p_startdate = new DateParam("project-startdate", GenericI18Enum.FORM_START_DATE, "m_prj_project", "planStartDate");
     public static final DateParam p_enddate = new DateParam("project-enddate", GenericI18Enum.FORM_END_DATE, "m_prj_project", "planEndDate");
     public static final DateParam p_createdtime = new DateParam("project-createdtime", GenericI18Enum.FORM_CREATED_TIME, "m_prj_project", "createdTime");

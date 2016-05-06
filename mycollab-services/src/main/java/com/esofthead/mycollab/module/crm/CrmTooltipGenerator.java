@@ -232,13 +232,13 @@ public class CrmTooltipGenerator {
             Td cell21 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_END_DATE));
             String endDate = DateTimeUtils.convertToStringWithUserTimeZone(campaign.getEnddate(), dateFormat, userTimeZone);
             Td cell22 = buildCellValue(endDate);
-            Td cell23 = buildCellName(LocalizationHelper.getMessage(locale, CampaignI18nEnum.FORM_TYPE));
+            Td cell23 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_TYPE));
             Td cell24 = buildCellValue(campaign.getType());
             trRow2.appendChild(cell21, cell22, cell23, cell24);
             tooltipBuilder.appendRow(trRow2);
 
             Tr trRow3 = new Tr();
-            Td cell31 = buildCellName(LocalizationHelper.getMessage(locale, CampaignI18nEnum.FORM_CURRENCY));
+            Td cell31 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_CURRENCY));
             String currency = (campaign.getCurrency() != null) ? campaign
                     .getCurrency().getSymbol() : "";
             Td cell32 = buildCellValue(currency);
@@ -383,7 +383,7 @@ public class CrmTooltipGenerator {
             String dateFormat = LocaleHelper.getDateFormatInstance(locale).getDateFormat();
 
             Tr trRow1 = new Tr();
-            Td cell11 = buildCellName(LocalizationHelper.getMessage(locale, OpportunityI18nEnum.FORM_CURRENCY));
+            Td cell11 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_CURRENCY));
             String currency = (opportunity.getCurrency() != null) ? opportunity.getCurrency().getSymbol() : "";
             Td cell12 = buildCellValue(currency);
             Td cell13 = buildCellName(LocalizationHelper.getMessage(locale, OpportunityI18nEnum.FORM_ACCOUNT_NAME));
@@ -458,7 +458,7 @@ public class CrmTooltipGenerator {
             Tr trRow1 = new Tr();
             Td cell11 = buildCellName(LocalizationHelper.getMessage(locale, CaseI18nEnum.FORM_PRIORITY));
             Td cell12 = buildCellValue(cases.getPriority());
-            Td cell13 = buildCellName(LocalizationHelper.getMessage(locale, CaseI18nEnum.FORM_TYPE));
+            Td cell13 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_TYPE));
             Td cell14 = buildCellValue(cases.getType());
             trRow1.appendChild(cell11, cell12, cell13, cell14);
             tooltipManager.appendRow(trRow1);

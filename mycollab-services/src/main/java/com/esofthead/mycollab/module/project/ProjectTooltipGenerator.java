@@ -41,6 +41,7 @@ import com.hp.gagawa.java.elements.*;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.net.www.content.text.Generic;
 
 import java.util.Locale;
 import java.util.TimeZone;
@@ -117,7 +118,7 @@ public class ProjectTooltipGenerator {
             tooltipManager.appendRow(trRow1);
 
             Tr trRow3 = new Tr();
-            Td cell31 = buildCellName(LocalizationHelper.getMessage(locale, TaskI18nEnum.FORM_DEADLINE));
+            Td cell31 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_DUE_DATE));
             String deadline = DateTimeUtils.convertToStringWithUserTimeZone(task.getDeadline(), dateFormat, timeZone);
             Td cell32 = buildCellValue(deadline);
             Td cell33 = buildCellName(LocalizationHelper.getMessage(locale, TaskI18nEnum.FORM_PRIORITY));
@@ -404,7 +405,7 @@ public class ProjectTooltipGenerator {
             Td cell21 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_START_DATE));
             String planStartDate = DateTimeUtils.convertToStringWithUserTimeZone(project.getPlanstartdate(), dateFormat, timeZone);
             Td cell22 = buildCellValue(planStartDate);
-            Td cell23 = buildCellName(LocalizationHelper.getMessage(locale, ProjectI18nEnum.FORM_CURRENCY));
+            Td cell23 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_CURRENCY));
             String currency = (project.getCurrency() != null) ? StringUtils.trimHtmlTags(project.getCurrency().getSymbol()) : "";
             Td cell24 = buildCellValue(currency);
             trRow2.appendChild(cell21, cell22, cell23, cell24);

@@ -92,7 +92,7 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
         @Override
         public void attachField(Object propertyId, Field<?> field) {
             if (Project.Field.name.equalTo(propertyId)) {
-                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_NAME), 0, 0);
+                informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
             } else if (Project.Field.shortname.equalTo(propertyId)) {
                 informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME), 0, 1);
             } else if (Project.Field.homepage.equalTo(propertyId)) {

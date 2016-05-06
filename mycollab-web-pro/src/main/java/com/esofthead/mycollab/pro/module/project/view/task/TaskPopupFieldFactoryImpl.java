@@ -202,7 +202,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
 
             }
         };
-        builder.withBean(task).withBindProperty("deadline").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE))
+        builder.withBean(task).withBindProperty("deadline").withCaption(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
                 .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getDeadline())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();

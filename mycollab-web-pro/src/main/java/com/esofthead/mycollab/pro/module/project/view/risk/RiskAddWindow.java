@@ -117,7 +117,7 @@ public class RiskAddWindow extends Window {
             @Override
             public void attachField(Object propertyId, Field<?> field) {
                 if (Risk.Field.riskname.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_NAME), 0, 0, 2, "100%");
+                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0, 2, "100%");
                 } else if (Risk.Field.assigntouser.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 1);
                 } else if (Risk.Field.milestoneid.equalTo(propertyId)) {

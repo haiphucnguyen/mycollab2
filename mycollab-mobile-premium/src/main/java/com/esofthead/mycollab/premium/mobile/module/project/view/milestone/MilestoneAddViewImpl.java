@@ -59,7 +59,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
         @Override
         public void attachField(Object propertyId, Field<?> field) {
             if (propertyId.equals("name")) {
-                informationLayout.addComponent(field, AppContext.getMessage(MilestoneI18nEnum.FORM_NAME_FIELD), 0, 0);
+                informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
             } else if (propertyId.equals("status")) {
                 informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_STATUS), 0, 1);
             } else if (propertyId.equals("owner")) {

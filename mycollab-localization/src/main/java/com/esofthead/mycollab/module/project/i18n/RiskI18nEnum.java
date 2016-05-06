@@ -29,7 +29,6 @@ public enum RiskI18nEnum {
     BUTTON_NEW_RISK,
 
     FORM_READ_TITLE,
-    FORM_NAME,
     FORM_RAISED_BY,
     FORM_RELATED,
     FORM_PHASE,

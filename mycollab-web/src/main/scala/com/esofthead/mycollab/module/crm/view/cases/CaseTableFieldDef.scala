@@ -33,7 +33,7 @@ object CaseTableFieldDef {
   val account = new TableViewField(CaseI18nEnum.FORM_ACCOUNT, "accountName", UIConstants.TABLE_X_LABEL_WIDTH)
   val origin = new TableViewField(CaseI18nEnum.FORM_ORIGIN, "origin", UIConstants.TABLE_M_LABEL_WIDTH)
   val phone = new TableViewField(CaseI18nEnum.FORM_PHONE, "phonenumber", UIConstants.TABLE_M_LABEL_WIDTH)
-  val `type` = new TableViewField(CaseI18nEnum.FORM_TYPE, "type", UIConstants.TABLE_M_LABEL_WIDTH)
+  val `type` = new TableViewField(GenericI18Enum.FORM_TYPE, "type", UIConstants.TABLE_M_LABEL_WIDTH)
   val reason = new TableViewField(CaseI18nEnum.FORM_REASON, "reason", UIConstants.TABLE_EX_LABEL_WIDTH)
   val subject = new TableViewField(CaseI18nEnum.FORM_SUBJECT, "subject", UIConstants.TABLE_EX_LABEL_WIDTH)
   val email = new TableViewField(CaseI18nEnum.FORM_EMAIL, "email", UIConstants.TABLE_EMAIL_WIDTH)

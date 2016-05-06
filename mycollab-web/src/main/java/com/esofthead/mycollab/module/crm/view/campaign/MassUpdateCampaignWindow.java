@@ -81,9 +81,9 @@ public class MassUpdateCampaignWindow extends MassUpdateWindow<CampaignWithBLOBs
             if (propertyId.equals("status")) {
                 informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_STATUS), 1, 0);
             } else if (propertyId.equals("type")) {
-                informationLayout.addComponent(field, AppContext.getMessage(CampaignI18nEnum.FORM_TYPE), 0, 1);
+                informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_TYPE), 0, 1);
             } else if (propertyId.equals("currencyid")) {
-                campaignGoal.addComponent(field, AppContext.getMessage(CampaignI18nEnum.FORM_CURRENCY), 0, 0);
+                campaignGoal.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_CURRENCY), 0, 0);
             }
         }
     }

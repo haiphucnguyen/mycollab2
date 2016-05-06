@@ -165,7 +165,7 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
         @Override
         public void attachField(Object propertyId, final Field<?> field) {
             if (propertyId.equals("name")) {
-                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_NAME), 0, 0);
+                informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
             } else if (propertyId.equals("homepage")) {
                 informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE), 1, 0);
             } else if (propertyId.equals("shortname")) {
@@ -183,7 +183,7 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
             } else if (propertyId.equals("planenddate")) {
                 financialLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 0, 1);
             } else if (Project.Field.currencyid.equalTo(propertyId)) {
-                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_CURRENCY),
+                financialLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_CURRENCY),
                         AppContext.getMessage(ProjectI18nEnum.FORM_CURRENCY_HELP), 1, 1);
             } else if (propertyId.equals("defaultbillingrate")) {
                 financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE),

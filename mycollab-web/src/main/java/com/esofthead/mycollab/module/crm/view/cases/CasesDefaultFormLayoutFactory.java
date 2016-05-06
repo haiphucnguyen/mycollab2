@@ -43,7 +43,7 @@ public class CasesDefaultFormLayoutFactory {
                 .fieldIndex(0).build());
 
         infoSection.addField(new TextDynaFieldBuilder().fieldName("type")
-                .displayName(AppContext.getMessage(CaseI18nEnum.FORM_TYPE))
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_TYPE))
                 .fieldIndex(1).build());
 
         infoSection.addField(new TextDynaFieldBuilder().fieldName("status")

@@ -78,7 +78,7 @@ public class VersionListViewImpl extends AbstractPageView implements VersionList
         tableItem = new DefaultPagedBeanTable<>(ApplicationContextUtil.getSpringBean(VersionService.class),
                 SimpleVersion.class,
                 new TableViewField(null, "selected", UIConstants.TABLE_CONTROL_WIDTH),
-                Arrays.asList(new TableViewField(VersionI18nEnum.FORM_NAME, "versionname", UIConstants.TABLE_EX_LABEL_WIDTH),
+                Arrays.asList(new TableViewField(GenericI18Enum.FORM_NAME, "versionname", UIConstants.TABLE_EX_LABEL_WIDTH),
                         new TableViewField(GenericI18Enum.FORM_STATUS, "status", UIConstants.TABLE_M_LABEL_WIDTH),
                         new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", 2 * UIConstants.TABLE_EX_LABEL_WIDTH),
                         new TableViewField(GenericI18Enum.FORM_DUE_DATE, "duedate", UIConstants.TABLE_DATE_TIME_WIDTH),

@@ -70,7 +70,7 @@ class ProjectMilestoneRelayEmailNotificationActionImpl extends SendMailToAllMemb
         findById(context.getTypeid.toInt, context.getSaccountid)
 
     class MilestoneFieldNameMapper extends ItemFieldMapper {
-        put(Milestone.Field.name, MilestoneI18nEnum.FORM_NAME_FIELD, isColSpan = true)
+        put(Milestone.Field.name, GenericI18Enum.FORM_NAME, isColSpan = true)
         put(Milestone.Field.status, new I18nFieldFormat(Milestone.Field.status.name, GenericI18Enum.FORM_STATUS,
             classOf[OptionI18nEnum.MilestoneStatus]))
         put(Milestone.Field.owner, new AssigneeFieldFormat(Milestone.Field.owner.name, GenericI18Enum.FORM_ASSIGNEE))
