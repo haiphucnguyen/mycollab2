@@ -1,8 +1,10 @@
 package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.view.reports.IReportContainer;
 import com.esofthead.mycollab.pro.module.project.view.ReportBreadcrumb;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -34,7 +36,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
     @Override
     public void showDashboard() {
         body.removeAllComponents();
-        body.with(ELabel.h2(FontAwesome.PIE_CHART.getHtml() + " Reports"));
+        body.with(ELabel.h2(FontAwesome.PIE_CHART.getHtml() + " " + AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS)));
         CssLayout content = new CssLayout();
         content.setStyleName(UIConstants.FLEX_DISPLAY);
         this.addComponent(content);
@@ -58,7 +60,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
         hoursWeeklyReport.addComponent(ELabel.h3(hoursWeeklyReportLink.write()).withWidthUndefined());
         hoursWeeklyReport.addComponent(new ELabel("Your members hours weekly report. Keep your project in time and budget")
                 .withWidth("100%"));
-        content.addComponent(hoursWeeklyReport);
+//        content.addComponent(hoursWeeklyReport);
 
         MVerticalLayout userWorkloadReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         userWorkloadReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
@@ -68,7 +70,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
         userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withWidthUndefined());
         userWorkloadReport.addComponent(new ELabel("Preview your user workloads and adjust to keep your project safe," +
                 " and your members are happy").withWidth("100%"));
-        content.addComponent(userWorkloadReport);
+//        content.addComponent(userWorkloadReport);
 
         MVerticalLayout timesheetReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         timesheetReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);

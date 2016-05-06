@@ -24,8 +24,8 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.ProjectRoleI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
@@ -57,7 +57,7 @@ public class ProjectRoleSearchPanel extends DefaultGenericSearchPanel<ProjectRol
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return HeaderWithFontAwesome.h2(FontAwesome.GROUP, AppContext.getMessage(ProjectRoleI18nEnum.VIEW_LIST_TITLE));
+        return HeaderWithFontAwesome.h2(FontAwesome.GROUP, AppContext.getMessage(ProjectCommonI18nEnum.VIEW_VERSION));
     }
 
     @Override
