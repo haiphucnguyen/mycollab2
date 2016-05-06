@@ -82,7 +82,7 @@ public class ProjectDashboardViewImpl extends ProjectMobileMenuPageView implemen
             }
         }));
 
-        content.with(new Button(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_BUG), new Button.ClickListener() {
+        content.with(new Button(AppContext.getMessage(BugI18nEnum.NEW), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new BugEvent.GotoAdd(this, null));

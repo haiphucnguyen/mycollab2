@@ -16,11 +16,13 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectListNoItemView;
@@ -45,12 +47,12 @@ public class TaskNoItemView extends ProjectListNoItemView {
 
     @Override
     protected String viewTitle() {
-        return AppContext.getMessage(TaskI18nEnum.NO_ITEM_VIEW_TITLE);
+        return AppContext.getMessage(GenericI18Enum.VIEW_NO_ITEM_TITLE);
     }
 
     @Override
     protected String viewHint() {
-        return AppContext.getMessage(TaskI18nEnum.NO_ITEM_VIEW_HINT);
+        return AppContext.getMessage(GenericI18Enum.VIEW_NO_ITEM_HINT);
     }
 
     @Override

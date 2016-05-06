@@ -143,10 +143,6 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
         }
 
         @Override
-        public void setTitle(String title) {
-        }
-
-        @Override
         public void removeTitleStyleName(String styleName) {
             toggleMilestoneSummaryField.removeLabelStyleName(styleName);
         }

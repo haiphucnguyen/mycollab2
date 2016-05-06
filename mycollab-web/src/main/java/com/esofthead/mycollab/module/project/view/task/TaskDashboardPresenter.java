@@ -73,6 +73,6 @@ public class TaskDashboardPresenter extends ProjectGenericListPresenter<TaskDash
 
     @Override
     protected void deleteSelectedItems() {
-        throw new UnsupportedOperationException("This presenter doesn't support this operation");
+
     }
 }

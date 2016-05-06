@@ -56,7 +56,7 @@ public class BugListNoItemView extends ProjectListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(BugI18nEnum.BUTTON_NEW_BUG);
+        return AppContext.getMessage(BugI18nEnum.NEW);
     }
 
     @Override

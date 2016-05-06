@@ -57,7 +57,7 @@ public class ProjectRoleSearchPanel extends DefaultGenericSearchPanel<ProjectRol
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return HeaderWithFontAwesome.h2(FontAwesome.GROUP, AppContext.getMessage(ProjectCommonI18nEnum.VIEW_VERSION));
+        return HeaderWithFontAwesome.h2(FontAwesome.GROUP, AppContext.getMessage(ProjectCommonI18nEnum.VIEW_ROLES));
     }
 
     @Override

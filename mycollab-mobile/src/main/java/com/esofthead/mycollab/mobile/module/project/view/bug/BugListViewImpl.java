@@ -65,7 +65,7 @@ public class BugListViewImpl extends AbstractListPageView<BugSearchCriteria, Sim
     private static final long serialVersionUID = -7877935907665712184L;
 
     public BugListViewImpl() {
-        this.setCaption(AppContext.getMessage(BugI18nEnum.VIEW_LIST_TITLE));
+        this.setCaption(AppContext.getMessage(BugI18nEnum.LIST));
     }
 
     @Override
@@ -92,7 +92,7 @@ public class BugListViewImpl extends AbstractListPageView<BugSearchCriteria, Sim
         NavigationBarQuickMenu menu = new NavigationBarQuickMenu();
         menu.setButtonCaption("...");
         MVerticalLayout content = new MVerticalLayout();
-        content.with(new Button(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_BUG), new Button.ClickListener() {
+        content.with(new Button(AppContext.getMessage(BugI18nEnum.NEW), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new BugEvent.GotoAdd(this, null));

@@ -225,10 +225,6 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
             header.addComponent(new Label(footer.write(), ContentMode.HTML));
             this.addHeader(header);
         }
-
-        @Override
-        public void setTitle(String title) {
-        }
     }
 
     private class PageVersionSelectionBox extends CustomComponent {
@@ -259,7 +255,6 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
                             Page page = pageService.getPageByVersion(beanItem.getPath(), selectedVersion.getName());
                             page.setPath(beanItem.getPath());
                             previewForm.setBean(page);
-                            previewLayout.setTitle(page.getSubject());
                             ((PagePreviewFormLayout) previewLayout).displayPageInfo(page);
                         }
                     }

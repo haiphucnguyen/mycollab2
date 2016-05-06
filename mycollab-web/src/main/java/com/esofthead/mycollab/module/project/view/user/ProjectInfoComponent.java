@@ -270,7 +270,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             createTaskBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
             popupButtonsControl.addOption(createTaskBtn);
 
-            Button createBugBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_BUG), new Button.ClickListener() {
+            Button createBugBtn = new Button(AppContext.getMessage(BugI18nEnum.NEW), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     controlsBtn.setPopupVisible(false);

@@ -55,10 +55,10 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
 
             if (bug.getId() == null) {
                 AppContext.addFragment("project/bug/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
-                        AppContext.getMessage(BugI18nEnum.FORM_NEW_BUG_TITLE));
+                        AppContext.getMessage(BugI18nEnum.NEW));
             } else {
                 AppContext.addFragment(ProjectLinkGenerator.generateBugEditLink(bug.getBugkey(), bug.getProjectShortName()),
-                        AppContext.getMessage(BugI18nEnum.FORM_EDIT_BUG_TITLE));
+                        AppContext.getMessage(BugI18nEnum.DETAIL));
             }
         } else {
             throw new SecureAccessException();

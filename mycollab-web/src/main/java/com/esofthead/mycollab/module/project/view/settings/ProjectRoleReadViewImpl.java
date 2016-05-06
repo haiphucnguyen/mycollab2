@@ -33,7 +33,6 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.DefaultReadViewLayout;
 import com.esofthead.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.web.ui.ReadViewLayout;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -51,7 +50,7 @@ public class ProjectRoleReadViewImpl extends MVerticalLayout implements ProjectR
 
     private SimpleProjectRole beanItem;
     private AdvancedPreviewBeanForm<SimpleProjectRole> previewForm;
-    private ReadViewLayout previewLayout;
+    private DefaultReadViewLayout previewLayout;
     private HeaderWithFontAwesome headerText;
     private MHorizontalLayout header;
 

@@ -219,10 +219,6 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         }
 
         @Override
-        public void setTitle(String title) {
-        }
-
-        @Override
         public void removeTitleStyleName(String styleName) {
             toggleTaskSummaryField.removeLabelStyleName(styleName);
         }
