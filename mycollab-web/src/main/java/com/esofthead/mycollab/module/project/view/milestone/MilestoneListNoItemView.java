@@ -56,7 +56,7 @@ public class MilestoneListNoItemView extends ProjectListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(MilestoneI18nEnum.BUTTON_NEW_PHASE);
+        return AppContext.getMessage(MilestoneI18nEnum.NEW);
     }
 
     @Override

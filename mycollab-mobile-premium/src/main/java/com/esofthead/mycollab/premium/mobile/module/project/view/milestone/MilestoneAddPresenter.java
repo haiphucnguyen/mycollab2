@@ -58,7 +58,7 @@ public class MilestoneAddPresenter extends AbstractProjectPresenter<MilestoneAdd
 
             if (milestone.getId() == null) {
                 AppContext.addFragment("project/milestone/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
-                        AppContext.getMessage(MilestoneI18nEnum.FORM_NEW_TITLE));
+                        AppContext.getMessage(MilestoneI18nEnum.NEW));
             } else {
                 AppContext.addFragment("project/milestone/edit/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(),
                         milestone.getId()), milestone.getName());

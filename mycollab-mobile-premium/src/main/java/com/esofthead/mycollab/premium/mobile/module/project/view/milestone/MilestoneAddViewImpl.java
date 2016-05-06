@@ -26,7 +26,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
 
     @Override
     protected String initFormTitle() {
-        return (beanItem.getId() == null) ? AppContext.getMessage(MilestoneI18nEnum.FORM_NEW_TITLE) : beanItem.getName();
+        return (beanItem.getId() == null) ? AppContext.getMessage(MilestoneI18nEnum.NEW) : beanItem.getName();
     }
 
     @Override

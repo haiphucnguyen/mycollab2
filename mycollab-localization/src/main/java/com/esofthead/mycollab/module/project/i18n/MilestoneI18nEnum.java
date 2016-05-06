@@ -23,18 +23,14 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/project-milestone")
 @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
 public enum MilestoneI18nEnum {
-    VIEW_LIST_TITLE,
-    VIEW_NEW_TITLE,
-    VIEW_DETAIL_TITLE,
-
-    BUTTON_NEW_PHASE,
+    LIST,
+    NEW,
+    DETAIL,
 
     WIDGET_CLOSED_PHASE_TITLE,
     WIDGET_INPROGRESS_PHASE_TITLE,
     WIDGET_FUTURE_PHASE_TITLE,
 
-    FORM_NEW_TITLE,
-    FORM_EDIT_TITLE,
     FORM_STATUS_FIELD_HELP,
     FORM_TASK_FIELD,
     FORM_BUG_FIELD,

@@ -184,7 +184,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MILESTONE)));
         AppContext.addFragment(ProjectLinkGenerator.generateMilestonesLink(project.getId()),
-                AppContext.getMessage(MilestoneI18nEnum.VIEW_LIST_TITLE));
+                AppContext.getMessage(MilestoneI18nEnum.LIST));
     }
 
     public void gotoRoadmap() {
@@ -223,7 +223,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MILESTONE), new GotoMilestoneListListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(MilestoneI18nEnum.VIEW_NEW_TITLE)));
+        this.addLink(new Button(AppContext.getMessage(MilestoneI18nEnum.NEW)));
         AppContext.addFragment("project/milestone/add/" + UrlEncodeDecoder.encode(project.getId()),
                 AppContext.getMessage(BreadcrumbI18nEnum.FRA_PHASE_NEW));
     }

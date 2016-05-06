@@ -68,14 +68,14 @@ public class ProjectDashboardViewImpl extends ProjectMobileMenuPageView implemen
                 EventBusFactory.getInstance().post(new MessageEvent.GotoAdd(this, null));
             }
         }));
-        content.with(new Button(AppContext.getMessage(MilestoneI18nEnum.BUTTON_NEW_PHASE), new Button.ClickListener() {
+        content.with(new Button(AppContext.getMessage(MilestoneI18nEnum.NEW), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new MilestoneEvent.GotoAdd(this, null));
             }
         }));
 
-        content.with(new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK), new Button.ClickListener() {
+        content.with(new Button(AppContext.getMessage(TaskI18nEnum.NEW), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(this, null));

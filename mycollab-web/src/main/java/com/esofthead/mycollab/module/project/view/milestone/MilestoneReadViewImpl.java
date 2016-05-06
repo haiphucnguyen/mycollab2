@@ -62,7 +62,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
     private MilestoneTimeLogComp milestoneTimeLogComp;
 
     public MilestoneReadViewImpl() {
-        super(AppContext.getMessage(MilestoneI18nEnum.VIEW_DETAIL_TITLE), ProjectAssetsManager.getAsset
+        super(AppContext.getMessage(MilestoneI18nEnum.DETAIL), ProjectAssetsManager.getAsset
                 (ProjectTypeConstants.MILESTONE), new MilestonePreviewFormLayout());
     }
 

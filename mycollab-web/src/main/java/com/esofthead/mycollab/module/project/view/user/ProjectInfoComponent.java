@@ -248,7 +248,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
 
             OptionPopupContent popupButtonsControl = new OptionPopupContent();
 
-            Button createPhaseBtn = new Button(AppContext.getMessage(MilestoneI18nEnum.BUTTON_NEW_PHASE), new Button.ClickListener() {
+            Button createPhaseBtn = new Button(AppContext.getMessage(MilestoneI18nEnum.NEW), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     controlsBtn.setPopupVisible(false);
@@ -259,7 +259,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             createPhaseBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
             popupButtonsControl.addOption(createPhaseBtn);
 
-            Button createTaskBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK), new Button.ClickListener() {
+            Button createTaskBtn = new Button(AppContext.getMessage(TaskI18nEnum.NEW), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     controlsBtn.setPopupVisible(false);

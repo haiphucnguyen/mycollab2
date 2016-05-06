@@ -73,7 +73,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
     private Button quickActionStatusBtn;
 
     public TaskReadViewImpl() {
-        super(AppContext.getMessage(TaskI18nEnum.VIEW_DETAIL_TITLE),
+        super(AppContext.getMessage(TaskI18nEnum.DETAIL),
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK), new TaskPreviewFormLayout());
     }
 

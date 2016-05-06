@@ -271,7 +271,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         headerLbl.setStyleName(ValoTheme.LABEL_H2);
         titleWrapper.addComponent(headerLbl);
 
-        Button newTaskBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK), new Button.ClickListener() {
+        Button newTaskBtn = new Button(AppContext.getMessage(TaskI18nEnum.NEW), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(new SimpleTask()));

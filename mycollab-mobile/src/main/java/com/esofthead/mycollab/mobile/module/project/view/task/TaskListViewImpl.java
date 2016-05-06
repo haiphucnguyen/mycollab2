@@ -90,7 +90,7 @@ public class TaskListViewImpl extends AbstractListPageView<TaskSearchCriteria, S
         NavigationBarQuickMenu menu = new NavigationBarQuickMenu();
         menu.setButtonCaption("...");
         MVerticalLayout content = new MVerticalLayout();
-        content.with(new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK), new Button.ClickListener() {
+        content.with(new Button(AppContext.getMessage(TaskI18nEnum.NEW), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(this, null));

@@ -22,7 +22,6 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectListNoItemView;
@@ -57,7 +56,7 @@ public class TaskNoItemView extends ProjectListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK);
+        return AppContext.getMessage(TaskI18nEnum.NEW);
     }
 
     @Override
