@@ -26,8 +26,6 @@ public enum MilestoneI18nEnum {
     VIEW_LIST_TITLE,
     VIEW_NEW_TITLE,
     VIEW_DETAIL_TITLE,
-    VIEW_NO_ITEM_TITLE,
-    VIEW_NO_ITEM_HINT,
 
     BUTTON_NEW_PHASE,
 

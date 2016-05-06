@@ -83,18 +83,26 @@ public class TaskDefaultFormLayoutFactory {
                 .displayName(AppContext.getMessage(TaskI18nEnum.FORM_STATUS))
                 .contextHelp(AppContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP)).fieldIndex(10).build());
 
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.originalestimate)
+                .displayName(AppContext.getMessage(TaskI18nEnum.FORM_ORIGINAL_ESTIMATE))
+                .contextHelp(AppContext.getMessage(TaskI18nEnum.FORM_ORIGINAL_ESTIMATE_HELP)).fieldIndex(11).build());
+
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.remainestimate)
+                .displayName(AppContext.getMessage(TaskI18nEnum.FORM_REMAIN_ESTIMATE))
+                .contextHelp(AppContext.getMessage(TaskI18nEnum.FORM_REMAIN_ESTIMATE_HELP)).fieldIndex(12).build());
+
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.notes)
                 .displayName(AppContext.getMessage(TaskI18nEnum.FORM_NOTES))
-                .colSpan(true).fieldIndex(11).build());
+                .colSpan(true).fieldIndex(13).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.id)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_ATTACHMENTS))
-                .colSpan(true).fieldIndex(12).build());
+                .colSpan(true).fieldIndex(14).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.parenttaskid)
                 .displayName(AppContext.getMessage(TaskI18nEnum.FORM_SUB_TASKS))
                 .contextHelp(AppContext.getMessage(TaskI18nEnum.FORM_SUB_TASKS_HELP))
-                .colSpan(true).fieldIndex(13).build());
+                .colSpan(true).fieldIndex(15).build());
 
         defaultForm.addSection(mainSection);
         return defaultForm;

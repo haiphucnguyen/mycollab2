@@ -23,9 +23,6 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/project-risk")
 @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
 public enum RiskI18nEnum {
-    VIEW_LIST_TITLE,
-    VIEW_NO_ITEM_TITLE,
-    VIEW_NO_ITEM_HINT,
     VIEW_NEW_TITLE,
     VIEW_EDIT_TITLE,
 

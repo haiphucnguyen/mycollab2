@@ -4,6 +4,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.events.ReportEvent;
 import com.esofthead.mycollab.module.project.i18n.BreadcrumbI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.CacheableComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -43,9 +44,9 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
 
     public void gotoStandupList(Date onDate) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.REPORTS), new GotoReportsListener()));
+        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.STANDUP)));
+        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP)));
         if (onDate == null) {
             AppContext.addFragment("project/reports/standup/list/",
                     AppContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP));
@@ -57,21 +58,21 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
 
     public void gotoTimesheetReport() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.REPORTS), new GotoReportsListener()));
+        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(new Button("Timesheet"));
     }
 
     public void gotoWeeklyTimingReport() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.REPORTS), new GotoReportsListener()));
+        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(new Button("Hours Weekly Report"));
     }
 
     public void gotoUserWorkloadReport() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.REPORTS), new GotoReportsListener()));
+        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(new Button("Users Workload Report"));
         AppContext.addFragment(ProjectLinkGenerator.generateUsersWorkloadReportLink(), "Users Workload Report");

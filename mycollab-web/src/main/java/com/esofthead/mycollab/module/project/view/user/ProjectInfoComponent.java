@@ -158,7 +158,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             footer.addComponents(accountBtn);
         }
 
-        Button tagBtn = new Button("Tag", new Button.ClickListener() {
+        Button tagBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoTagListView(this, null));
@@ -170,7 +170,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         tagBtn.setIcon(FontAwesome.TAGS);
         footer.addComponents(tagBtn);
 
-        Button favoriteBtn = new Button("Favorite", new Button.ClickListener() {
+        Button favoriteBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoFavoriteView(this, null));
@@ -183,7 +183,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         favoriteBtn.setDescription("Your favorite list");
         footer.addComponents(favoriteBtn);
 
-        Button eventBtn = new Button("Calendar", new Button.ClickListener() {
+        Button eventBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_CALENDAR), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoCalendarView(this));
@@ -195,7 +195,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         eventBtn.setDescription("Calendar");
         footer.addComponents(eventBtn);
 
-        Button ganttChartBtn = new Button("Gantt", new Button.ClickListener() {
+        Button ganttChartBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_GANTT_CHART), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoGanttChart(this, null));

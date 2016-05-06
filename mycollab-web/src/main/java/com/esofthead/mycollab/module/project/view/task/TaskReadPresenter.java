@@ -170,7 +170,6 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
                 if (task != null) {
                     view.previewItem(task);
-
                     ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
                     breadCrumb.gotoTaskRead(task);
                 } else {

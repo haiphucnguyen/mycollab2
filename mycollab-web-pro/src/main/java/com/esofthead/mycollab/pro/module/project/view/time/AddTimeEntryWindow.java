@@ -206,8 +206,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
 
             @Override
             public void buttonClick(ClickEvent event) {
-                ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
-                        AddTimeEntryWindow.this);
+                ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(AddTimeEntryWindow.this);
                 getUI().addWindow(selectionTaskWindow);
             }
         });

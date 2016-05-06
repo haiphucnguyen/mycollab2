@@ -70,7 +70,7 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
         if (serviceMenuContainer == null) {
             serviceMenuContainer = new MHorizontalLayout();
             final ServiceMenu serviceMenu = new ServiceMenu();
-            serviceMenu.addService("Projects", new Button.ClickListener() {
+            serviceMenu.addService(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PROJECTS), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     EventBusFactory.getInstance().post(new ProjectEvent.GotoUserDashboard(this, null));
@@ -78,7 +78,7 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
                 }
             });
 
-            serviceMenu.addService("Clients", new Button.ClickListener() {
+            serviceMenu.addService(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_CLIENTS), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
@@ -86,7 +86,7 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
                 }
             });
 
-            serviceMenu.addService("Reports", new Button.ClickListener() {
+            serviceMenu.addService(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     EventBusFactory.getInstance().post(new ReportEvent.GotoConsole(this));
@@ -121,7 +121,7 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
         private ProjectPagedList projectList;
 
         SwitchProjectPopupButton() {
-            super("Switch Project");
+            super(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_SWITCH_PROJECT));
             setStyleName("myprojectlist");
             addStyleName("add-btn-popup");
             setIcon(VaadinIcons.ARROW_CIRCLE_RIGHT_O);

@@ -108,8 +108,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                                                        Object itemId, Object columnId) {
+            public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
                 SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
                 return new Label(AppContext.formatDate(monitorItem.getLogforday()));
             }

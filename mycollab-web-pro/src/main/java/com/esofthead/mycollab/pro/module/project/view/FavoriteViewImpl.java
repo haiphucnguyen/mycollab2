@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.*;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericItemSearchCriteria;
 import com.esofthead.mycollab.module.project.events.*;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectGenericItemService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -113,8 +114,8 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
         setProjectNavigatorVisibility(false);
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
                 .withWidth("100%");
-        headerLbl = new ELabel(FontAwesome.STAR.getHtml() + " Favorites", ContentMode.HTML).withWidthUndefined()
-                .withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN);
+        headerLbl = ELabel.h2(String.format("%s %s", FontAwesome.STAR.getHtml(),
+                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES))).withWidthUndefined();
         header.with(headerLbl);
 
         isSortAsc = true;
@@ -176,7 +177,8 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
             searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("summary", SearchCriteria.DESC)));
         }
         int totalCount = favoriteListComp.setSearchCriteria(searchCriteria);
-        headerLbl.setValue(FontAwesome.STAR.getHtml() + " Favorites (" + totalCount + ")");
+        headerLbl.setValue(String.format("%s %s (%d)", FontAwesome.STAR.getHtml(),
+                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES), totalCount));
         if (totalCount > 0) {
             ProjectGenericItem assignment = favoriteListComp.getItemAt(0);
             if (assignment != null) {

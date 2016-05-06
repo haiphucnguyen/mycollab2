@@ -7,6 +7,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericItem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericItemSearchCriteria;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectGenericItemService;
 import com.esofthead.mycollab.module.project.ui.components.GenericItemRowDisplayHandler;
 import com.esofthead.mycollab.module.project.view.ITagListView;
@@ -38,8 +39,7 @@ import java.util.List;
 public class TagListViewImpl extends AbstractPageView implements ITagListView {
     private TagService tagService;
 
-    private DefaultBeanPagedList<ProjectGenericItemService, ProjectGenericItemSearchCriteria, ProjectGenericItem>
-            assignmentList;
+    private DefaultBeanPagedList<ProjectGenericItemService, ProjectGenericItemSearchCriteria, ProjectGenericItem> assignmentList;
     private List<String> selectedTags;
 
     public TagListViewImpl() {
@@ -58,7 +58,8 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         }
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
                 .withWidth("100%");
-        header.with(ELabel.h2(FontAwesome.TAGS.getHtml() + " Tags").withWidthUndefined());
+        header.with(ELabel.h2(FontAwesome.TAGS.getHtml() + " " + AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG))
+                .withWidthUndefined());
 
         MHorizontalLayout contentWrapper = new MHorizontalLayout();
         assignmentList = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericItemService.class),

@@ -58,8 +58,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         assignmentTableDisplay.setSearchCriteria(searchCriteria);
 
-        content.addComponent(constructTopPanel());
-        content.addComponent(assignmentTableDisplay);
+        content.with(constructTopPanel(), assignmentTableDisplay);
 
         this.setContent(content);
     }

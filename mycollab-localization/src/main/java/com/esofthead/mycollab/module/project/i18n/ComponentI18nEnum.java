@@ -24,8 +24,6 @@ import ch.qos.cal10n.LocaleData;
 @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
 public enum ComponentI18nEnum {
     VIEW_LIST_TITLE,
-    VIEW_NO_ITEM_TITLE,
-    VIEW_NO_ITEM_HINT,
     VIEW_READ_TITLE,
 
     FORM_NEW_TITLE,

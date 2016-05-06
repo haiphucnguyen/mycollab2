@@ -437,12 +437,12 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
 
         @Override
         protected String viewTitle() {
-            return AppContext.getMessage(MessageI18nEnum.VIEW_NO_ITEM_TITLE);
+            return AppContext.getMessage(GenericI18Enum.VIEW_NO_ITEM_TITLE);
         }
 
         @Override
         protected String viewHint() {
-            return AppContext.getMessage(MessageI18nEnum.VIEW_NO_ITEM_HINT);
+            return AppContext.getMessage(GenericI18Enum.VIEW_NO_ITEM_HINT);
         }
 
         @Override

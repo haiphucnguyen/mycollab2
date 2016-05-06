@@ -20,7 +20,6 @@ package com.esofthead.mycollab.module.project.view.settings;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.*;
@@ -66,11 +65,11 @@ public class UserSettingPresenter extends AbstractPresenter<UserSettingView> {
             presenter = PresenterResolver.getPresenter(ProjectSettingPresenter.class);
         } else if (ClassUtils.instanceOf(data, ComponentScreenData.Add.class, ComponentScreenData.Edit.class,
                 ComponentScreenData.Read.class, ComponentScreenData.Search.class)) {
-            view.gotoSubView(AppContext.getMessage(BugI18nEnum.TAB_COMPONENT));
+            view.gotoSubView(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_COMPONENT));
             presenter = PresenterResolver.getPresenter(ComponentPresenter.class);
         } else if (ClassUtils.instanceOf(data, VersionScreenData.Add.class, VersionScreenData.Edit.class,
                 VersionScreenData.Read.class, VersionScreenData.Search.class)) {
-            view.gotoSubView(AppContext.getMessage(BugI18nEnum.TAB_VERSION));
+            view.gotoSubView(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_VERSION));
             presenter = PresenterResolver.getPresenter(VersionPresenter.class);
         } else {
             throw new MyCollabException("No support screen data: " + data);

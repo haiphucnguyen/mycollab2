@@ -24,12 +24,14 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
-import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.*;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.web.ui.TabSheetDecorator;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Component;
@@ -66,15 +68,14 @@ public class UserSettingViewImpl extends AbstractPageView implements UserSetting
                 .VIEW_USERS), FontAwesome.USERS);
 
         rolePresenter = PresenterResolver.getPresenter(ProjectRolePresenter.class);
-        myProjectTab.addTab(rolePresenter.getView(), AppContext.getMessage(ProjectCommonI18nEnum
-                .VIEW_ROLES), FontAwesome.USER_MD);
+        myProjectTab.addTab(rolePresenter.getView(), AppContext.getMessage(ProjectCommonI18nEnum.VIEW_ROLES), FontAwesome.USER_MD);
 
         componentPresenter = PresenterResolver.getPresenter(ComponentPresenter.class);
-        myProjectTab.addTab(componentPresenter.getView(), AppContext.getMessage(BugI18nEnum.TAB_COMPONENT),
+        myProjectTab.addTab(componentPresenter.getView(), AppContext.getMessage(ProjectCommonI18nEnum.VIEW_COMPONENT),
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_COMPONENT));
 
         versionPresenter = PresenterResolver.getPresenter(VersionPresenter.class);
-        myProjectTab.addTab(versionPresenter.getView(), AppContext.getMessage(BugI18nEnum.TAB_VERSION),
+        myProjectTab.addTab(versionPresenter.getView(), AppContext.getMessage(ProjectCommonI18nEnum.VIEW_VERSION),
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION));
 
         settingPresenter = PresenterResolver.getPresenter(ProjectSettingPresenter.class);
@@ -101,9 +102,9 @@ public class UserSettingViewImpl extends AbstractPageView implements UserSetting
                     rolePresenter.go(UserSettingViewImpl.this, new ProjectRoleScreenData.Search(criteria));
                 } else if (AppContext.getMessage(ProjectCommonI18nEnum.VIEW_SETTINGS).equals(caption)) {
                     settingPresenter.go(UserSettingViewImpl.this, null);
-                } else if (AppContext.getMessage(BugI18nEnum.TAB_COMPONENT).equals(caption)) {
+                } else if (AppContext.getMessage(ProjectCommonI18nEnum.VIEW_COMPONENT).equals(caption)) {
                     componentPresenter.go(UserSettingViewImpl.this, null);
-                } else if (AppContext.getMessage(BugI18nEnum.TAB_VERSION).equals(caption)) {
+                } else if (AppContext.getMessage(ProjectCommonI18nEnum.VIEW_VERSION).equals(caption)) {
                     versionPresenter.go(UserSettingViewImpl.this, null);
                 }
             }
