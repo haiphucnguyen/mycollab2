@@ -45,11 +45,11 @@ public class TaskSearchCriteria extends SearchCriteria {
             GenericI18Enum.FORM_CREATED_TIME, "m_prj_task", "createdTime");
 
     public static final PropertyListParam p_status = new PropertyListParam("task-status",
-            TaskI18nEnum.FORM_STATUS, "m_prj_task", "status");
+            GenericI18Enum.FORM_STATUS, "m_prj_task", "status");
 
-    public static final DateParam p_startdate = new DateParam("task-startdate", TaskI18nEnum.FORM_START_DATE, "m_prj_task", "startdate");
+    public static final DateParam p_startdate = new DateParam("task-startdate", GenericI18Enum.FORM_START_DATE, "m_prj_task", "startdate");
 
-    public static final DateParam p_enddate = new DateParam("task-enddate", TaskI18nEnum.FORM_END_DATE, "m_prj_task", "enddate");
+    public static final DateParam p_enddate = new DateParam("task-enddate", GenericI18Enum.FORM_END_DATE, "m_prj_task", "enddate");
 
     public static final NumberParam p_taskkey = new NumberParam("task-key", TaskI18nEnum.FORM_TASK_KEY, "m_prj_task", "taskkey");
 

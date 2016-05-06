@@ -132,7 +132,7 @@ public class TaskListViewImpl extends AbstractListPageView<TaskSearchCriteria, S
                     .withWidthUndefined();
             metaInfoLayout.addComponent(assigneeLbl);
 
-            ELabel statusLbl = new ELabel(AppContext.getMessage(TaskI18nEnum.FORM_STATUS) + ": " + AppContext.getMessage
+            ELabel statusLbl = new ELabel(AppContext.getMessage(GenericI18Enum.FORM_STATUS) + ": " + AppContext.getMessage
                     (OptionI18nEnum.BugStatus.class, task.getStatus()), ContentMode.HTML).withStyleName(UIConstants.META_INFO);
             metaInfoLayout.addComponent(statusLbl);
 

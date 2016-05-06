@@ -218,13 +218,13 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
                     .FORM_SHORT_NAME_HELP)).fieldIndex(2).mandatory(true).required(true).build());
 
             mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.planstartdate).displayName
-                    (AppContext.getMessage(ProjectI18nEnum.FORM_START_DATE)).fieldIndex(3).build());
+                    (AppContext.getMessage(GenericI18Enum.FORM_START_DATE)).fieldIndex(3).build());
 
             mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.projectstatus).displayName
-                    (AppContext.getMessage(ProjectI18nEnum.FORM_STATUS)).fieldIndex(4).build());
+                    (AppContext.getMessage(GenericI18Enum.FORM_STATUS)).fieldIndex(4).build());
 
             mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.planenddate).displayName
-                    (AppContext.getMessage(ProjectI18nEnum.FORM_END_DATE)).fieldIndex(5).build());
+                    (AppContext.getMessage(GenericI18Enum.FORM_END_DATE)).fieldIndex(5).build());
 
             mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.lead).displayName
                     (AppContext.getMessage(ProjectI18nEnum.FORM_LEADER)).fieldIndex(6).build());

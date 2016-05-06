@@ -29,7 +29,7 @@ object CaseTableFieldDef {
   val selected = new TableViewField(null, "selected", UIConstants.TABLE_CONTROL_WIDTH)
   val action = new TableViewField(null, "id", -1)
   val priority = new TableViewField(CaseI18nEnum.FORM_PRIORITY, "priority", UIConstants.TABLE_S_LABEL_WIDTH)
-  val status = new TableViewField(CaseI18nEnum.FORM_STATUS, "status", UIConstants.TABLE_M_LABEL_WIDTH)
+  val status = new TableViewField(GenericI18Enum.FORM_STATUS, "status", UIConstants.TABLE_M_LABEL_WIDTH)
   val account = new TableViewField(CaseI18nEnum.FORM_ACCOUNT, "accountName", UIConstants.TABLE_X_LABEL_WIDTH)
   val origin = new TableViewField(CaseI18nEnum.FORM_ORIGIN, "origin", UIConstants.TABLE_M_LABEL_WIDTH)
   val phone = new TableViewField(CaseI18nEnum.FORM_PHONE, "phonenumber", UIConstants.TABLE_M_LABEL_WIDTH)

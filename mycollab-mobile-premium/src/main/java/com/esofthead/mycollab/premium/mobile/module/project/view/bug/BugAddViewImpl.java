@@ -150,11 +150,11 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
             } else if (propertyId.equals("severity")) {
                 informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_SEVERITY), 0, 4);
             } else if (propertyId.equals("startdate")) {
-                informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_START_DATE), 0, 5);
+                informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 5);
             } else if (propertyId.equals("enddate")) {
-                informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_END_DATE), 0, 6);
+                informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 0, 6);
             } else if (propertyId.equals("duedate")) {
-                informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_DUE_DATE), 0, 7);
+                informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 7);
             } else if (propertyId.equals("estimatetime")) {
                 informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_ORIGINAL_ESTIMATE), 0, 8);
             } else if (propertyId.equals("estimateremaintime")) {

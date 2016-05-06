@@ -28,7 +28,6 @@ public enum MeetingI18nEnum {
 
     FORM_SUBJECT,
     FORM_START_DATE_TIME,
-    FORM_STATUS,
     FORM_END_DATE_TIME,
     FORM_LOCATION,
 

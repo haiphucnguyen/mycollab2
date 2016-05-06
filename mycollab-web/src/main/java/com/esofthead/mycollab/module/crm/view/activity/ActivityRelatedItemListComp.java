@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.common.TableViewField;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.i18n.ActivityI18nEnum;
@@ -94,9 +95,9 @@ public class ActivityRelatedItemListComp extends RelatedListComp<SimpleActivity,
 
         tableItem = new ActivityTableDisplay(Arrays.asList(
                 new TableViewField(ActivityI18nEnum.FORM_SUBJECT, "subject", UIConstants.TABLE_EX_LABEL_WIDTH),
-                new TableViewField(ActivityI18nEnum.FORM_STATUS, "status", UIConstants.TABLE_S_LABEL_WIDTH),
-                new TableViewField(TaskI18nEnum.FORM_START_DATE, "startDate", UIConstants.TABLE_DATE_TIME_WIDTH),
-                new TableViewField(TaskI18nEnum.TABLE_END_DATE_HEADER, "endDate", UIConstants.TABLE_DATE_TIME_WIDTH)));
+                new TableViewField(GenericI18Enum.FORM_STATUS, "status", UIConstants.TABLE_S_LABEL_WIDTH),
+                new TableViewField(GenericI18Enum.FORM_START_DATE, "startDate", UIConstants.TABLE_DATE_TIME_WIDTH),
+                new TableViewField(GenericI18Enum.FORM_END_DATE, "endDate", UIConstants.TABLE_DATE_TIME_WIDTH)));
 
         this.addComponent(tableItem);
     }

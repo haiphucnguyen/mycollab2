@@ -30,7 +30,7 @@ public class RiskDefaultFormLayoutFactory {
                 .build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.description)
-                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_DESCRIPTION))
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION))
                 .fieldIndex(2).colSpan(true).required(true).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.raisedbyuser)
@@ -46,11 +46,11 @@ public class RiskDefaultFormLayoutFactory {
                 .fieldIndex(6).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.status)
-                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_STATUS))
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_STATUS))
                 .fieldIndex(7).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.startdate)
-                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_START_DATE))
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
                 .fieldIndex(8).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.consequence)
@@ -58,7 +58,7 @@ public class RiskDefaultFormLayoutFactory {
                 .fieldIndex(9).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.enddate)
-                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_END_DATE))
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
                 .fieldIndex(10).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.probalitity)
@@ -66,7 +66,7 @@ public class RiskDefaultFormLayoutFactory {
                 .fieldIndex(11).build());
 
         mainSection.addField(new DateDynaFieldBuilder().fieldName(Risk.Field.datedue)
-                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_DATE_DUE))
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
                 .fieldIndex(12).build());
 
         mainSection.addField(new TextDynaFieldBuilder()

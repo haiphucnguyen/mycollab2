@@ -38,7 +38,7 @@ object LeadTableFieldDef {
   val phoneoffice = new TableViewField(LeadI18nEnum.FORM_OFFICE_PHONE, "officephone", UIConstants.TABLE_M_LABEL_WIDTH)
   val mobile = new TableViewField(LeadI18nEnum.FORM_MOBILE, "mobile", UIConstants.TABLE_M_LABEL_WIDTH)
   val fax = new TableViewField(LeadI18nEnum.FORM_FAX, "fax", UIConstants.TABLE_M_LABEL_WIDTH)
-  val status = new TableViewField(LeadI18nEnum.FORM_STATUS, "status", UIConstants.TABLE_M_LABEL_WIDTH)
+  val status = new TableViewField(GenericI18Enum.FORM_STATUS, "status", UIConstants.TABLE_M_LABEL_WIDTH)
   val website = new TableViewField(LeadI18nEnum.FORM_WEBSITE, "website", UIConstants.TABLE_X_LABEL_WIDTH)
   val assignedUser = new TableViewField(GenericI18Enum.FORM_ASSIGNEE, "assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH)
 }

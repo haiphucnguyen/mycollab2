@@ -51,10 +51,10 @@ public class BugSearchCriteria extends SearchCriteria {
             BugI18nEnum.FORM_RESOLVED_DATE, "m_tracker_bug", "resolveddate");
 
     public static final DateParam p_createddate = new DateParam("bug-createddate",
-            BugI18nEnum.FORM_CREATED_TIME, "m_tracker_bug", "createdTime");
+            GenericI18Enum.FORM_CREATED_TIME, "m_tracker_bug", "createdTime");
 
     public static final DateParam p_duedate = new DateParam("bug-duedate",
-            BugI18nEnum.FORM_DUE_DATE, "m_tracker_bug", "duedate");
+            GenericI18Enum.FORM_DUE_DATE, "m_tracker_bug", "duedate");
 
     public static final NumberParam p_bugkey = new NumberParam("bug-key", BugI18nEnum.FORM_BUG_KEY, "m_tracker_bug",
             "bugkey");
@@ -74,7 +74,7 @@ public class BugSearchCriteria extends SearchCriteria {
                     BugSeverity.Minor.name(), BugSeverity.Trivial.name()));
 
     public static final StringListParam p_status = new StringListParam("bug-status",
-            BugI18nEnum.FORM_STATUS, "m_tracker_bug", "status", Arrays.asList(BugStatus.Verified.name(),
+            GenericI18Enum.FORM_STATUS, "m_tracker_bug", "status", Arrays.asList(BugStatus.Verified.name(),
             BugStatus.Open.name(), BugStatus.ReOpen.name(), BugStatus.Resolved.name()));
 
     public static final BugTypeCustomSqlParam p_affectedVersions = new BugTypeCustomSqlParam(

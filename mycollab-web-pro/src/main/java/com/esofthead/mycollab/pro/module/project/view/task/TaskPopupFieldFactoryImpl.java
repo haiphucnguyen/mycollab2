@@ -132,7 +132,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 }
             }
         };
-        builder.withBean(task).withBindProperty("status").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_STATUS))
+        builder.withBean(task).withBindProperty("status").withCaption(AppContext.getMessage(GenericI18Enum.FORM_STATUS))
                 .withField(new TaskStatusComboBox()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStatus())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -224,7 +224,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
 
             }
         };
-        builder.withBean(task).withBindProperty("startdate").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_START_DATE))
+        builder.withBean(task).withBindProperty("startdate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
                 .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -246,7 +246,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
 
             }
         };
-        builder.withBean(task).withBindProperty("enddate").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_END_DATE))
+        builder.withBean(task).withBindProperty("enddate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
                 .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();

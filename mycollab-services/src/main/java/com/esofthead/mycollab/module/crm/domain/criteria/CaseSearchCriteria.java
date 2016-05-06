@@ -49,7 +49,7 @@ public class CaseSearchCriteria extends SearchCriteria {
 			CaseI18nEnum.FORM_ACCOUNT, "m_crm_case", "accountId");
 
 	public static final Param p_status = new StringListParam("case-status",
-			CaseI18nEnum.FORM_STATUS, "m_crm_case", "status",
+			GenericI18Enum.FORM_STATUS, "m_crm_case", "status",
 			Arrays.asList(CrmDataTypeFactory.getCasesStatusList()));
 
 	public static final Param p_type = new StringListParam("case-type",

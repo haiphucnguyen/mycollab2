@@ -30,9 +30,9 @@ public class CampaignFieldFormatter extends FieldGroupFormatter {
 
     private CampaignFieldFormatter() {
         generateFieldDisplayHandler("campaignname", CampaignI18nEnum.FORM_CAMPAIGN_NAME);
-        generateFieldDisplayHandler("startdate", CampaignI18nEnum.FORM_START_DATE, DATE_FIELD);
-        generateFieldDisplayHandler("enddate", CampaignI18nEnum.FORM_END_DATE, DATE_FIELD);
-        generateFieldDisplayHandler("status", CampaignI18nEnum.FORM_STATUS);
+        generateFieldDisplayHandler("startdate", GenericI18Enum.FORM_START_DATE, DATE_FIELD);
+        generateFieldDisplayHandler("enddate", GenericI18Enum.FORM_END_DATE, DATE_FIELD);
+        generateFieldDisplayHandler("status", GenericI18Enum.FORM_STATUS);
         generateFieldDisplayHandler("type", CampaignI18nEnum.FORM_TYPE);
         generateFieldDisplayHandler("currencyid", CampaignI18nEnum.FORM_CURRENCY, CURRENCY_FIELD);
         generateFieldDisplayHandler("budget", CampaignI18nEnum.FORM_BUDGET);

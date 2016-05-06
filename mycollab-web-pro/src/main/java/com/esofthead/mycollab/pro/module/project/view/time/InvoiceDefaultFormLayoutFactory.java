@@ -33,7 +33,8 @@ public class InvoiceDefaultFormLayoutFactory {
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.assignuser).displayName(AppContext
                 .getMessage(GenericI18Enum.FORM_ASSIGNEE)).fieldIndex(3).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.status).displayName(AppContext.getMessage(InvoiceI18nEnum.FORM_STATUS))
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.status)
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_STATUS))
                 .contextHelp(AppContext.getMessage(InvoiceI18nEnum.FORM_STATUS_HELP)).fieldIndex(4).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.contactuserfullname).displayName(AppContext

@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.pro.module.project.view.assignments.gantt;
 
 import com.esofthead.mycollab.common.TooltipBuilder;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.BusinessDayTimeUtils;
@@ -320,10 +321,10 @@ public class GanttItemWrapper {
         TooltipBuilder tooltipBuilder = new TooltipBuilder();
         tooltipBuilder.appendTitle(task.getName());
         Tr trRow2 = new Tr();
-        Td cell21 = buildCellName(AppContext.getMessage(TaskI18nEnum.FORM_START_DATE));
+        Td cell21 = buildCellName(AppContext.getMessage(GenericI18Enum.FORM_START_DATE));
         String startDate = AppContext.formatDate(task.getStartDate());
         Td cell22 = buildCellValue(startDate);
-        Td cell23 = buildCellName(AppContext.getMessage(TaskI18nEnum.FORM_END_DATE));
+        Td cell23 = buildCellName(AppContext.getMessage(GenericI18Enum.FORM_END_DATE));
         String endDate = AppContext.formatDate(task.getEndDate());
         Td cell24 = buildCellValue(endDate);
         trRow2.appendChild(cell21, cell22, cell23, cell24);

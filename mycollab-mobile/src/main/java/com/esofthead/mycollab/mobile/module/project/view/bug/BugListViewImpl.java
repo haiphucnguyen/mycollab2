@@ -134,7 +134,7 @@ public class BugListViewImpl extends AbstractListPageView<BugSearchCriteria, Sim
                     .withWidthUndefined();
             metaInfoLayout.addComponent(assigneeLbl);
 
-            ELabel statusLbl = new ELabel(AppContext.getMessage(BugI18nEnum.FORM_STATUS) + ": " + AppContext.getMessage
+            ELabel statusLbl = new ELabel(AppContext.getMessage(GenericI18Enum.FORM_STATUS) + ": " + AppContext.getMessage
                     (OptionI18nEnum.BugStatus.class, bug.getStatus()), ContentMode.HTML).withStyleName(UIConstants.META_INFO);
             metaInfoLayout.addComponent(statusLbl);
 

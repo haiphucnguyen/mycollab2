@@ -43,11 +43,11 @@ public class TaskDefaultFormLayoutFactory {
                 .colSpan(true).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.startdate)
-                .displayName(AppContext.getMessage(TaskI18nEnum.FORM_START_DATE)).fieldIndex(1).build());
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_START_DATE)).fieldIndex(1).build());
 
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.enddate)
-                .displayName(AppContext.getMessage(TaskI18nEnum.FORM_END_DATE))
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
                 .fieldIndex(2).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.deadline)
@@ -80,7 +80,7 @@ public class TaskDefaultFormLayoutFactory {
                 .fieldIndex(9).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.status)
-                .displayName(AppContext.getMessage(TaskI18nEnum.FORM_STATUS))
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_STATUS))
                 .contextHelp(AppContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP)).fieldIndex(10).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.originalestimate)

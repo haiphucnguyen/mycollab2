@@ -123,7 +123,7 @@ public class RiskAddWindow extends Window {
                 } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_PHASE), 1, 1);
                 } else if (Risk.Field.datedue.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_DATE_DUE), 0, 2);
+                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 2);
                 } else if (Risk.Field.consequence.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE), 1, 2);
                 } else if (Risk.Field.probalitity.equalTo(propertyId)) {

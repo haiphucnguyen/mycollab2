@@ -51,9 +51,9 @@ public class TaskFormLayoutFactory implements IFormLayoutFactory {
         if (propertyId.equals("taskname")) {
             this.informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_TASK_NAME), 0, 0);
         } else if (propertyId.equals("startdate")) {
-            this.informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_START_DATE), 0, 1);
+            this.informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 1);
         } else if (propertyId.equals("enddate")) {
-            this.informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_END_DATE), 0, 2);
+            this.informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 0, 2);
         } else if (propertyId.equals("deadline")) {
             this.informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE), 0, 3);
         } else if (propertyId.equals("priority")) {

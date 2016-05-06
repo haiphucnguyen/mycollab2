@@ -122,9 +122,9 @@ public class QuickEditGanttItemWindow extends Window {
                 if ("name".equals(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_TASK_NAME), 0, 0, 2, "100%");
                 } else if ("startDate".equals(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_START_DATE), 0, 1);
+                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 1);
                 } else if ("endDate".equals(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_END_DATE), 1, 1);
+                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 1, 1);
                 } else if ("deadline".equals(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE), 0, 2);
                 } else if ("assignUser".equals(propertyId)) {

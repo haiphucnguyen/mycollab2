@@ -21,7 +21,7 @@ public class RiskListCustomizeWindow extends CustomizedTableWindow {
     @Override
     protected Collection<TableViewField> getAvailableColumns() {
         return Arrays.asList(RiskTableFieldDef.assignUser(),
-                RiskTableFieldDef.consequence(), RiskTableFieldDef.datedue(),
+                RiskTableFieldDef.consequence(), RiskTableFieldDef.duedate(),
                 RiskTableFieldDef.description(), RiskTableFieldDef.name(),
                 RiskTableFieldDef.probability(), RiskTableFieldDef.raisedBy(),
                 RiskTableFieldDef.rating(), RiskTableFieldDef.response(),

@@ -342,7 +342,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                 }
             }
         };
-        builder.withBean(bug).withBindProperty("duedate").withCaption(AppContext.getMessage(BugI18nEnum.FORM_DUE_DATE))
+        builder.withBean(bug).withBindProperty("duedate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
                 .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
@@ -363,7 +363,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                 }
             }
         };
-        builder.withBean(bug).withBindProperty("startdate").withCaption(AppContext.getMessage(BugI18nEnum.FORM_START_DATE))
+        builder.withBean(bug).withBindProperty("startdate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
                 .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
@@ -384,7 +384,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                 }
             }
         };
-        builder.withBean(bug).withBindProperty("enddate").withCaption(AppContext.getMessage(BugI18nEnum.FORM_END_DATE))
+        builder.withBean(bug).withBindProperty("enddate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
                 .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();

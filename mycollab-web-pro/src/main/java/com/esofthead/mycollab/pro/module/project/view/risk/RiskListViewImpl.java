@@ -70,7 +70,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
                 SimpleRisk.class, VIEW_DEF_ID,
                 RiskTableFieldDef.selected(), Arrays.asList(
                 RiskTableFieldDef.name(), RiskTableFieldDef.assignUser(),
-                RiskTableFieldDef.datedue(), RiskTableFieldDef.rating()));
+                RiskTableFieldDef.duedate(), RiskTableFieldDef.rating()));
 
         tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
             private static final long serialVersionUID = 1L;

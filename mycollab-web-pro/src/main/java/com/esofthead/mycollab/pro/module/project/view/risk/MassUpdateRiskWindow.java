@@ -63,11 +63,11 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<SimpleRisk> {
             } else if (propertyId.equals("consequence")) {
                 informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE), 0, 1);
             } else if (propertyId.equals("datedue")) {
-                informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_DATE_DUE), 1, 1);
+                informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 1, 1);
             } else if (propertyId.equals("probalitity")) {
                 informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_PROBABILITY), 0, 2);
             } else if (propertyId.equals("status")) {
-                informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_STATUS), 1, 2);
+                informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_STATUS), 1, 2);
             }
         }
     }

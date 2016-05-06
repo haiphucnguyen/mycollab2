@@ -29,8 +29,6 @@ public enum VersionI18nEnum {
     VIEW_READ_TITLE,
 
     FORM_NAME,
-    FORM_STATUS,
-    FORM_DUE_DATE,
     FORM_BUGS,
     FORM_VERSION_ERROR_MSG,
 

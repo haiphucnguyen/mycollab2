@@ -47,7 +47,7 @@ public class VersionDefaultFormLayoutFactory {
                 .fieldIndex(1).colSpan(true).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Version.Field.duedate)
-                .displayName(AppContext.getMessage(VersionI18nEnum.FORM_DUE_DATE))
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
                 .fieldIndex(2).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Version.Field.id).displayName(AppContext
