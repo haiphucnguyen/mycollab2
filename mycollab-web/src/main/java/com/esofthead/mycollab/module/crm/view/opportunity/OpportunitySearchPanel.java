@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.Param;
@@ -67,7 +66,7 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.OPPORTUNITY, AppContext.getMessage(OpportunityI18nEnum.VIEW_LIST_TITLE));
+        return ComponentUtils.header(CrmTypeConstants.OPPORTUNITY, AppContext.getMessage(OpportunityI18nEnum.LIST));
     }
 
     @Override

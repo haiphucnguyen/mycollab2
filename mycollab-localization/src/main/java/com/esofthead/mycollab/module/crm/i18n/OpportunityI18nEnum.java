@@ -23,8 +23,8 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/crm-opportunity")
 @LocaleData(value = { @Locale("en-US"), @Locale("ja-JP") }, defaultCharset = "UTF-8")
 public enum OpportunityI18nEnum {
-	VIEW_LIST_TITLE,
-	VIEW_NEW_TITLE,
+	LIST,
+	NEW,
 
 	SECTION_OPPORTUNITY_INFORMATION,
 	SECTION_DESCRIPTION,

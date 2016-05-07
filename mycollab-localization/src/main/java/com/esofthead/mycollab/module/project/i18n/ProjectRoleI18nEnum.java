@@ -24,9 +24,9 @@ import ch.qos.cal10n.LocaleData;
 @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
 public enum ProjectRoleI18nEnum {
     LIST,
-    DETAIL, NEW,
+    DETAIL,
+    NEW,
 
     SECTION_PERMISSIONS,
-
     OPT_ADMIN_ROLE_DISPLAY
 }

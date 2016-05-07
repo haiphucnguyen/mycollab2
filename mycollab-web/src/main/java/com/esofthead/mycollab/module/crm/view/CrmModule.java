@@ -165,17 +165,17 @@ public class CrmModule extends AbstractPageView implements IDesktopModule {
             newCaseBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CASE));
             popupButtonsControl.addOption(newCaseBtn);
 
-            Button newTaskBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK), listener);
+            Button newTaskBtn = new Button(AppContext.getMessage(TaskI18nEnum.NEW), listener);
             newTaskBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_TASK));
             newTaskBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.TASK));
             popupButtonsControl.addOption(newTaskBtn);
 
-            Button newCallBtn = new Button(AppContext.getMessage(CallI18nEnum.BUTTON_NEW_CALL), listener);
+            Button newCallBtn = new Button(AppContext.getMessage(CallI18nEnum.NEW), listener);
             newCallBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CALL));
             newCallBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CALL));
             popupButtonsControl.addOption(newCallBtn);
 
-            Button newMeetingBtn = new Button(AppContext.getMessage(MeetingI18nEnum.BUTTON_NEW_MEETING), listener);
+            Button newMeetingBtn = new Button(AppContext.getMessage(MeetingI18nEnum.NEW), listener);
             newMeetingBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_MEETING));
             newMeetingBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.MEETING));
             popupButtonsControl.addOption(newMeetingBtn);
@@ -222,11 +222,11 @@ public class CrmModule extends AbstractPageView implements IDesktopModule {
             } else if (AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_ACTIVITIES_HEADER).equals(caption)) {
                 EventBusFactory.getInstance().post(new ActivityEvent.GotoCalendar(this, null));
                 selectedBtnCaption = caption;
-            } else if (AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK).equals(caption)) {
+            } else if (AppContext.getMessage(TaskI18nEnum.NEW).equals(caption)) {
                 EventBusFactory.getInstance().post(new ActivityEvent.TaskAdd(this, null));
-            } else if (AppContext.getMessage(CallI18nEnum.BUTTON_NEW_CALL).equals(caption)) {
+            } else if (AppContext.getMessage(CallI18nEnum.NEW).equals(caption)) {
                 EventBusFactory.getInstance().post(new ActivityEvent.CallAdd(this, null));
-            } else if (AppContext.getMessage(MeetingI18nEnum.BUTTON_NEW_MEETING).equals(caption)) {
+            } else if (AppContext.getMessage(MeetingI18nEnum.NEW).equals(caption)) {
                 EventBusFactory.getInstance().post(new ActivityEvent.MeetingAdd(this, null));
             } else if (AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER).equals(caption)) {
                 EventBusFactory.getInstance().post(new DocumentEvent.GotoDashboard(this, null));

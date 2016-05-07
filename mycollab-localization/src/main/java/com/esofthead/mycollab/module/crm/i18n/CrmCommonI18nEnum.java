@@ -49,10 +49,6 @@ public enum CrmCommonI18nEnum {
     ITEM_CREATED_PEOPLE,
     ITEM_ASSIGN_PEOPLE,
 
-    BUTTON_CREATE,
-    BUTTON_NEW_NOTE,
-    BUTTON_REPLY,
-
     ACCOUNT,
     CONTACT,
     CAMPAIGN,

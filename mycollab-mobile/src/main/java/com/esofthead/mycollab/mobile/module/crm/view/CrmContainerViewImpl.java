@@ -132,7 +132,7 @@ public class CrmContainerViewImpl extends AbstractMobileTabPageView implements C
                     OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
                     criteria.setSaccountid(new NumberSearchField(SearchField.AND, AppContext.getAccountId()));
                     opportunityPresenter.getView().getPagedBeanTable().search(criteria);
-                    AppContext.addFragment("crm/opportunity/list", AppContext.getMessage(OpportunityI18nEnum.VIEW_LIST_TITLE));
+                    AppContext.addFragment("crm/opportunity/list", AppContext.getMessage(OpportunityI18nEnum.LIST));
                 } else if (currentComponent == getCaseTab()) {
                     CaseSearchCriteria criteria = new CaseSearchCriteria();
                     criteria.setSaccountid(new NumberSearchField(SearchField.AND, AppContext.getAccountId()));
