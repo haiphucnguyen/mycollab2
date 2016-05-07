@@ -71,7 +71,7 @@ public class ComponentListPresenter extends ProjectGenericListPresenter<Componen
 
             @Override
             protected String getReportTitle() {
-                return AppContext.getMessage(ComponentI18nEnum.VIEW_LIST_TITLE);
+                return AppContext.getMessage(ComponentI18nEnum.LIST);
             }
 
             @Override

@@ -43,8 +43,8 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
 
     @Override
     protected String initFormHeader() {
-        return (beanItem.getId() == null) ? AppContext.getMessage(RiskI18nEnum.VIEW_NEW_TITLE) :
-                AppContext.getMessage(RiskI18nEnum.VIEW_EDIT_TITLE);
+        return (beanItem.getId() == null) ? AppContext.getMessage(RiskI18nEnum.NEW) :
+                AppContext.getMessage(RiskI18nEnum.DETAIL);
     }
 
     @Override

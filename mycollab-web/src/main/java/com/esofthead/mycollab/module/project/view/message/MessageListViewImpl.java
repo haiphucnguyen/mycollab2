@@ -397,7 +397,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
             messagePanelBody.addComponent(messageSearchPanel);
 
             if (!isEmpty) {
-                Button createMessageBtn = new Button(AppContext.getMessage(MessageI18nEnum.BUTTON_NEW_MESSAGE), new Button.ClickListener() {
+                Button createMessageBtn = new Button(AppContext.getMessage(MessageI18nEnum.NEW), new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -447,7 +447,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
 
         @Override
         protected String actionMessage() {
-            return AppContext.getMessage(MessageI18nEnum.BUTTON_NEW_MESSAGE);
+            return AppContext.getMessage(MessageI18nEnum.NEW);
         }
 
         @Override

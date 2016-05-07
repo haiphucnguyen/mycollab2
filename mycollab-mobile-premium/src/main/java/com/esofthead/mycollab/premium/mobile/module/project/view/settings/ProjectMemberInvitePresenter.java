@@ -59,7 +59,7 @@ public class ProjectMemberInvitePresenter extends AbstractProjectPresenter<Proje
             super.onGo(container, data);
             view.display();
             AppContext.addFragment("project/user/invite/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
-                    AppContext.getMessage(ProjectMemberI18nEnum.FORM_NEW_TITLE));
+                    AppContext.getMessage(ProjectMemberI18nEnum.NEW));
 
         } else {
             NotificationUtil.showMessagePermissionAlert();

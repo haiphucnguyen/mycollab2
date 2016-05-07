@@ -58,7 +58,7 @@ public class PageListNoItemView extends ProjectListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(Page18InEnum.BUTTON_NEW_PAGE);
+        return AppContext.getMessage(Page18InEnum.NEW);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class PageListNoItemView extends ProjectListNoItemView {
         createPageBtn.setEnabled(hasPermission());
         createPageBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
-        Button createPageGroupBtn = new Button(AppContext.getMessage(Page18InEnum.BUTTON_NEW_GROUP), new Button.ClickListener() {
+        Button createPageGroupBtn = new Button(AppContext.getMessage(Page18InEnum.NEW_GROUP), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 UI.getCurrent().addWindow(new GroupPageAddWindow());

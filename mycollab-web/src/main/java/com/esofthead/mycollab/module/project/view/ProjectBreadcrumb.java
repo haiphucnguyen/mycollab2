@@ -109,7 +109,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MESSAGE)));
         AppContext.addFragment(ProjectLinkGenerator.generateMessagesLink(project.getId()),
-                AppContext.getMessage(MessageI18nEnum.VIEW_LIST_TITLE));
+                AppContext.getMessage(MessageI18nEnum.LIST));
     }
 
     public void gotoMessage(Message message) {
@@ -272,16 +272,16 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.select(0);
         buildPageBreadcrumbChain();
         AppContext.addFragment(ProjectLinkGenerator.generatePagesLink(project.getId(),
-                CurrentProjectVariables.getCurrentPagePath()), AppContext.getMessage(Page18InEnum.VIEW_LIST_TITLE));
+                CurrentProjectVariables.getCurrentPagePath()), AppContext.getMessage(Page18InEnum.LIST));
     }
 
     public void gotoPageAdd() {
         this.select(0);
         buildPageBreadcrumbChain();
-        this.addLink(new Button(AppContext.getMessage(Page18InEnum.VIEW_NEW_TITLE)));
+        this.addLink(new Button(AppContext.getMessage(Page18InEnum.NEW)));
         AppContext.addFragment(ProjectLinkGenerator.generatePageAdd(
                 project.getId(), CurrentProjectVariables.getCurrentPagePath()),
-                AppContext.getMessage(Page18InEnum.VIEW_NEW_TITLE));
+                AppContext.getMessage(Page18InEnum.NEW));
     }
 
     public void gotoPageRead(Page page) {
@@ -289,7 +289,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         buildPageBreadcrumbChain();
         this.addLink(new Button(StringUtils.trim(page.getSubject(), 50)));
         AppContext.addFragment(ProjectLinkGenerator.generatePageRead(project.getId(), page.getPath()),
-                AppContext.getMessage(Page18InEnum.VIEW_READ_TITLE));
+                AppContext.getMessage(Page18InEnum.DETAIL));
     }
 
     public void gotoPageEdit(Page page) {
@@ -297,7 +297,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         buildPageBreadcrumbChain();
 
         AppContext.addFragment(ProjectLinkGenerator.generatePageEdit(project.getId(), page.getPath()),
-                AppContext.getMessage(Page18InEnum.VIEW_EDIT_TITLE));
+                AppContext.getMessage(Page18InEnum.DETAIL));
     }
 
     private static class GotoPageListListener implements Button.ClickListener {
@@ -450,7 +450,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_VERSION)));
         AppContext.addFragment("project/version/list/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(VersionI18nEnum.VIEW_LIST_TITLE));
+                AppContext.getMessage(VersionI18nEnum.LIST));
     }
 
     public void gotoVersionAdd() {
@@ -516,7 +516,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_COMPONENT)));
         AppContext.addFragment("project/component/list/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(ComponentI18nEnum.VIEW_LIST_TITLE));
+                AppContext.getMessage(ComponentI18nEnum.LIST));
     }
 
     public void gotoComponentAdd() {

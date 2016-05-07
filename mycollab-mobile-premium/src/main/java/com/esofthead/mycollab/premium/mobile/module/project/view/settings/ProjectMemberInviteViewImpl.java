@@ -27,7 +27,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -46,7 +45,7 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
 
     public ProjectMemberInviteViewImpl() {
         super();
-        this.setCaption(AppContext.getMessage(ProjectMemberI18nEnum.FORM_NEW_TITLE));
+        this.setCaption(AppContext.getMessage(ProjectMemberI18nEnum.NEW));
         constructUI();
     }
 

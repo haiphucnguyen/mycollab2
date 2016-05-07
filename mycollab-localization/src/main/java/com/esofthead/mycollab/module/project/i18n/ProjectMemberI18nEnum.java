@@ -23,12 +23,11 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/project-people")
 @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
 public enum ProjectMemberI18nEnum {
-    VIEW_LIST_TITLE,
-    VIEW_READ_TITLE,
-
+    LIST,
+    DETAIL,
+    NEW,
     FORM_INVITE_MEMBERS,
-    FORM_NEW_TITLE,
-    FORM_EDIT_TITLE,
+
     FORM_USER,
     FORM_ROLE,
     FORM_MESSAGE,

@@ -59,12 +59,12 @@ class GroupPageAddWindow extends Window {
 
         if (editFolder == null) {
             folder = new Folder();
-            this.setCaption(AppContext.getMessage(Page18InEnum.DIALOG_NEW_GROUP_TITLE));
+            this.setCaption(AppContext.getMessage(Page18InEnum.NEW_GROUP));
             String pagePath = CurrentProjectVariables.getCurrentPagePath();
             folder.setPath(pagePath + "/" + StringUtils.generateSoftUniqueId());
         } else {
             folder = editFolder;
-            this.setCaption(AppContext.getMessage(Page18InEnum.DIALOG_EDIT_GROUP_TITLE));
+            this.setCaption(AppContext.getMessage(Page18InEnum.DETAIL_GROUP));
         }
 
         editForm.setBean(folder);

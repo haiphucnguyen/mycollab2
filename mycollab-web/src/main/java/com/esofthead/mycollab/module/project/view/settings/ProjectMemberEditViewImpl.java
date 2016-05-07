@@ -58,8 +58,8 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
 
     @Override
     protected String initFormHeader() {
-        return (beanItem.getId() == null) ? AppContext.getMessage(ProjectMemberI18nEnum.FORM_NEW_TITLE) :
-                AppContext.getMessage(ProjectMemberI18nEnum.FORM_EDIT_TITLE);
+        return (beanItem.getId() == null) ? AppContext.getMessage(ProjectMemberI18nEnum.NEW) :
+                AppContext.getMessage(ProjectMemberI18nEnum.DETAIL);
     }
 
     @Override

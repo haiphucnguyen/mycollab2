@@ -99,7 +99,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
         pageVersionsSelection = new PageVersionSelectionBox();
 
         HeaderWithFontAwesome headerLbl = ComponentUtils.headerH2(ProjectTypeConstants.PAGE, AppContext.getMessage
-                (Page18InEnum.VIEW_READ_TITLE));
+                (Page18InEnum.DETAIL));
         headerLbl.setWidthUndefined();
 
         header.addComponent(headerLbl, 0);

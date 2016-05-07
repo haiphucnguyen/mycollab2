@@ -303,7 +303,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             createVersionBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION));
             popupButtonsControl.addOption(createVersionBtn);
 
-            Button createRiskBtn = new Button(AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK), new Button.ClickListener() {
+            Button createRiskBtn = new Button(AppContext.getMessage(RiskI18nEnum.NEW), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     controlsBtn.setPopupVisible(false);

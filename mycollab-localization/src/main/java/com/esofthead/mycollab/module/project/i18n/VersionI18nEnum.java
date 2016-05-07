@@ -23,10 +23,9 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/project-version")
 @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
 public enum VersionI18nEnum {
-    VIEW_LIST_TITLE,
-    VIEW_NEW_TITLE,
-    VIEW_EDIT_TITLE,
-    VIEW_READ_TITLE,
+    LIST,
+    NEW,
+    DETAIL,
 
     FORM_BUGS,
     FORM_VERSION_ERROR_MSG,

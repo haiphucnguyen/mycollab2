@@ -71,7 +71,7 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
     }
 
     public ProjectAddWindow(Project valuePrj) {
-        setCaption(AppContext.getMessage(ProjectI18nEnum.VIEW_NEW_TITLE));
+        setCaption(AppContext.getMessage(ProjectI18nEnum.NEW));
         this.setWidth("900px");
         this.center();
         this.setResizable(false);

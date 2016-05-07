@@ -56,7 +56,7 @@ public class RiskListNoItemView extends ProjectListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK);
+        return AppContext.getMessage(RiskI18nEnum.NEW);
     }
 
     @Override

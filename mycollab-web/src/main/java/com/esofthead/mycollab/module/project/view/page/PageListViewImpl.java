@@ -123,7 +123,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
     private void initHeader() {
         HeaderWithFontAwesome headerText = ComponentUtils.headerH2(ProjectTypeConstants.PAGE,
-                AppContext.getMessage(Page18InEnum.VIEW_LIST_TITLE));
+                AppContext.getMessage(Page18InEnum.LIST));
 
         headerLayout.with(headerText).alignAll(Alignment.MIDDLE_LEFT).expand(headerText);
 
@@ -186,7 +186,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
         sortGroup.addButton(sortKindBtn);
         sortGroup.withDefaultButton(sortDateBtn);
 
-        Button newGroupBtn = new Button(AppContext.getMessage(Page18InEnum.BUTTON_NEW_GROUP), new Button.ClickListener() {
+        Button newGroupBtn = new Button(AppContext.getMessage(Page18InEnum.NEW_GROUP), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -199,7 +199,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
         newGroupBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
         headerLayout.with(newGroupBtn).withAlign(newGroupBtn, Alignment.MIDDLE_RIGHT);
 
-        Button newPageBtn = new Button(AppContext.getMessage(Page18InEnum.BUTTON_NEW_PAGE), new Button.ClickListener() {
+        Button newPageBtn = new Button(AppContext.getMessage(Page18InEnum.NEW), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override

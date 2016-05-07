@@ -23,7 +23,7 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/project")
 @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
 public enum ProjectI18nEnum {
-    VIEW_NEW_TITLE,
+    NEW,
 
     FORM_HOME_PAGE,
     FORM_ACCOUNT_NAME,

@@ -23,16 +23,12 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/project-page")
 @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
 public enum Page18InEnum {
-    VIEW_LIST_TITLE,
-    VIEW_NEW_TITLE,
-    VIEW_READ_TITLE,
-    VIEW_EDIT_TITLE,
+    LIST,
+    NEW,
+    DETAIL,
 
-    DIALOG_NEW_GROUP_TITLE,
-    DIALOG_EDIT_GROUP_TITLE,
-
-    BUTTON_NEW_GROUP,
-    BUTTON_NEW_PAGE,
+    NEW_GROUP,
+    DETAIL_GROUP,
 
     FORM_GROUP,
 

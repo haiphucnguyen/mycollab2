@@ -72,7 +72,7 @@ public class VersionListPresenter extends ProjectGenericListPresenter<VersionLis
 
             @Override
             protected String getReportTitle() {
-                return AppContext.getMessage(VersionI18nEnum.VIEW_LIST_TITLE);
+                return AppContext.getMessage(VersionI18nEnum.LIST);
             }
 
             @Override

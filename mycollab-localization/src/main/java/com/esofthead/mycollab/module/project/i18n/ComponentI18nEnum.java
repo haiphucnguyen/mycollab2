@@ -23,11 +23,11 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/project-component")
 @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
 public enum ComponentI18nEnum {
-    VIEW_LIST_TITLE,
-    VIEW_READ_TITLE,
+    LIST,
+    DETAIL,
 
-    FORM_NEW_TITLE,
-    FORM_EDIT_TITLE,
+    NEW,
+
     FORM_LEAD,
     FORM_BUGS,
 
