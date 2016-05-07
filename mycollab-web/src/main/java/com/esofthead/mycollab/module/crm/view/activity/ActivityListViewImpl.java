@@ -44,6 +44,10 @@ public class ActivityListViewImpl extends AbstractListItemComp<ActivitySearchCri
     @Override
     protected void buildExtraControls() {
         // do nothing
+    }
+
+    @Override
+    public void showNoItemView() {
 
     }
 

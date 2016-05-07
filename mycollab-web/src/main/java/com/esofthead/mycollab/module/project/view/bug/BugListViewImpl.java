@@ -228,6 +228,11 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         this.with(searchPanel, mainLayout);
     }
 
+    @Override
+    public void showNoItemView() {
+
+    }
+
     private StreamResource buildStreamSource(ReportExportType exportType) {
         return StreamResourceUtils.buildBugStreamResource(exportType, new VariableInjector<BugSearchCriteria>() {
             @Override

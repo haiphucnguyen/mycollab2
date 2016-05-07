@@ -186,6 +186,12 @@ public class ComponentListViewImpl extends AbstractPageView implements Component
     }
 
     @Override
+    public void showNoItemView() {
+        removeAllComponents();
+        this.addComponent(new ComponentListNoItemView());
+    }
+
+    @Override
     public void enableActionControls(final int numOfSelectedItems) {
         tableActionControls.setVisible(true);
         this.selectedItemsNumberLabel.setValue(AppContext.getMessage(

@@ -264,6 +264,11 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         taskSearchPanel.selectQueryInfo(TaskSavedFilterComboBox.OPEN_TASKS);
     }
 
+    @Override
+    public void showNoItemView() {
+
+    }
+
     private void displayTaskStatistic() {
         rightColumn.removeAllComponents();
         final TaskStatusTrendChartWidget taskStatusTrendChartWidget = new TaskStatusTrendChartWidget();

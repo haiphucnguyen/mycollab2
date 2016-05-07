@@ -26,7 +26,6 @@ import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectListNoItemView;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -35,7 +34,6 @@ import com.vaadin.ui.Button.ClickEvent;
  * @author MyCollab Ltd.
  * @since 4.1.2
  */
-@ViewComponent
 public class ComponentListNoItemView extends ProjectListNoItemView {
     private static final long serialVersionUID = -77373259977614467L;
 

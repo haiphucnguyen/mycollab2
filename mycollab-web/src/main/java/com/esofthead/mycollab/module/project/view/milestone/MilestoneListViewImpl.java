@@ -220,6 +220,12 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         return layout;
     }
 
+    @Override
+    public void showNoItemView() {
+        removeAllComponents();
+        this.addComponent(new MilestoneListNoItemView());
+    }
+
     private void constructBody() {
         CustomLayout bodyContent = CustomLayoutExt.createLayout("milestoneView");
         bodyContent.setWidth("100%");

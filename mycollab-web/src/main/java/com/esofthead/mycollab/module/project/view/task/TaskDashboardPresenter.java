@@ -44,7 +44,7 @@ public class TaskDashboardPresenter extends ProjectGenericListPresenter<TaskDash
     private ProjectTaskService taskService;
 
     public TaskDashboardPresenter() {
-        super(TaskDashboardView.class, TaskNoItemView.class);
+        super(TaskDashboardView.class);
         taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
     }
 
@@ -59,7 +59,8 @@ public class TaskDashboardPresenter extends ProjectGenericListPresenter<TaskDash
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoTaskDashboard();
 
-            displayListView(container, data);
+            container.removeAllComponents();
+            container.addComponent(view);
             view.displayView();
         } else {
             throw new SecureAccessException();

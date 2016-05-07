@@ -39,7 +39,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 5.0.2
  */
-@ViewComponent
 public class PageListNoItemView extends ProjectListNoItemView {
     @Override
     protected FontAwesome viewIcon() {

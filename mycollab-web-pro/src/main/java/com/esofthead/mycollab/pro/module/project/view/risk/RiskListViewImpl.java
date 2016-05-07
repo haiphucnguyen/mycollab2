@@ -48,23 +48,17 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
     private RiskSearchPanel riskSearchPanel;
     private SelectionOptionButton selectOptionButton;
     private DefaultPagedBeanTable<RiskService, RiskSearchCriteria, SimpleRisk> tableItem;
-    private VerticalLayout riskListLayout;
     private DefaultMassItemActionHandlerContainer tableActionControls;
     private Label selectedItemsNumberLabel = new Label();
 
     public RiskListViewImpl() {
         setMargin(new MarginInfo(false, true, false, true));
-
-        riskSearchPanel = new RiskSearchPanel();
-        addComponent(riskSearchPanel);
-
-        riskListLayout = new VerticalLayout();
-        this.addComponent(riskListLayout);
-
-        generateDisplayTable();
     }
 
-    private void generateDisplayTable() {
+    @Override
+    public void initContent() {
+        riskSearchPanel = new RiskSearchPanel();
+        addComponent(riskSearchPanel);
         tableItem = new DefaultPagedBeanTable<>(
                 ApplicationContextUtil.getSpringBean(RiskService.class),
                 SimpleRisk.class, VIEW_DEF_ID,
@@ -165,8 +159,8 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 
         tableItem.setWidth("100%");
 
-        riskListLayout.addComponent(constructTableActionControls());
-        riskListLayout.addComponent(tableItem);
+        this.addComponent(constructTableActionControls());
+        this.addComponent(tableItem);
     }
 
     @Override
@@ -222,6 +216,12 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         layout.with(customizeViewBtn).withAlign(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
         return layout;
+    }
+
+    @Override
+    public void showNoItemView() {
+        removeAllComponents();
+        addComponent(new RiskListNoItemComponent());
     }
 
     @Override

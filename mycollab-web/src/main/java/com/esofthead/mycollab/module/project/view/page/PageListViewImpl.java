@@ -227,6 +227,12 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
     }
 
     @Override
+    public void showNoItemView() {
+        removeAllComponents();
+        this.addComponent(new PageListNoItemView());
+    }
+
+    @Override
     public void displayDefaultPages(List<PageResource> resources) {
         Collections.sort(resources, Ordering.from(dateSort));
         displayPages(resources);

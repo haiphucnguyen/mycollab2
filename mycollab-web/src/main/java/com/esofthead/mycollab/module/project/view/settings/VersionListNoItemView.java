@@ -36,7 +36,6 @@ import com.vaadin.ui.Button.ClickEvent;
  * @author MyCollab Ltd.
  * @since 4.1.2
  */
-@ViewComponent
 public class VersionListNoItemView extends ProjectListNoItemView {
     private static final long serialVersionUID = -232678105178329204L;
 

@@ -118,6 +118,11 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements Project
     }
 
     @Override
+    public void showNoItemView() {
+
+    }
+
+    @Override
     public HasSearchHandlers<ProjectRoleSearchCriteria> getSearchHandlers() {
         return this.searchPanel;
     }

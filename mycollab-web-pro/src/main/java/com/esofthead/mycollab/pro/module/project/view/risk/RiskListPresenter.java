@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
+import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.ProjectGenericListPresenter;
@@ -35,13 +36,13 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
     private RiskService riskService;
 
     public RiskListPresenter() {
-        super(RiskListView.class, RiskListNoItemView.class);
+        super(RiskListView.class);
         riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
     }
 
     @Override
-    protected void postInitView() {
-        super.postInitView();
+    protected void viewAttached() {
+        super.viewAttached();
 
         view.getPopupActionHandlers().setMassActionHandler(new DefaultMassEditActionHandler(this) {
             @Override
@@ -57,7 +58,7 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
 
             @Override
             protected String getReportTitle() {
-                return "Risks";
+                return AppContext.getMessage(RiskI18nEnum.LIST);
             }
 
             @Override
@@ -79,9 +80,8 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
 
             if (totalCount > 0) {
                 doSearch(searchCriteria);
-                displayListView(container, data);
             } else {
-                displayNoExistItems(container, data);
+                view.showNoItemView();
             }
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
@@ -113,9 +113,8 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
 
         if (totalCount > 0) {
             doSearch(searchCriteria);
-            displayListView((ComponentContainer) view.getParent(), null);
         } else {
-            displayNoExistItems((ComponentContainer) view.getParent(), null);
+            view.showNoItemView();
         }
     }
 

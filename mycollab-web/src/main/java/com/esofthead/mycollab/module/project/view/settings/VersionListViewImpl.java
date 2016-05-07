@@ -200,6 +200,12 @@ public class VersionListViewImpl extends AbstractPageView implements VersionList
     }
 
     @Override
+    public void showNoItemView() {
+        removeAllComponents();
+        this.addComponent(new VersionListNoItemView());
+    }
+
+    @Override
     public HasSelectionOptionHandlers getOptionSelectionHandlers() {
         return this.selectOptionButton;
     }
