@@ -22,7 +22,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
-import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectListNoItemView;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -35,7 +35,6 @@ import com.vaadin.ui.Button.ClickEvent;
  * @author MyCollab Ltd.
  * @since 4.1.2
  */
-
 @ViewComponent
 public class ComponentListNoItemView extends ProjectListNoItemView {
     private static final long serialVersionUID = -77373259977614467L;
@@ -57,7 +56,7 @@ public class ComponentListNoItemView extends ProjectListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(BugI18nEnum.BUTTON_NEW_COMPONENT);
+        return AppContext.getMessage(ComponentI18nEnum.NEW);
     }
 
     @Override

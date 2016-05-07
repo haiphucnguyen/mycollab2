@@ -24,6 +24,8 @@ import ch.qos.cal10n.LocaleData;
 @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
 public enum ProjectI18nEnum {
     NEW,
+    EDIT,
+    LIST,
 
     FORM_HOME_PAGE,
     FORM_ACCOUNT_NAME,

@@ -45,7 +45,7 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
 
     public MessageListViewImpl() {
         super();
-        setCaption(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MESSAGE));
+        setCaption(AppContext.getMessage(MessageI18nEnum.LIST));
         setStyleName("message-list-view");
     }
 

@@ -6,8 +6,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectCustomizeView;
 import com.esofthead.mycollab.module.project.events.CustomizeUIEvent;
-import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.ProjectSettingI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.*;
 import com.esofthead.mycollab.module.project.service.ProjectCustomizeViewService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -48,31 +47,31 @@ public class CustomizeFeatureComponent extends BlockWidget {
         leftColLayout.setWidth("100%");
 
         final SelectionBox displayMsgSelection = new SelectionBox(ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MESSAGE),
+                AppContext.getMessage(MessageI18nEnum.LIST),
                 customizeView.getDisplaymessage());
         leftColLayout.addComponent(displayMsgSelection);
 
         final SelectionBox displayPhaseSelection = new SelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MILESTONE),
+                AppContext.getMessage(MilestoneI18nEnum.LIST),
                 customizeView.getDisplaymilestone());
         leftColLayout.addComponent(displayPhaseSelection);
 
         final SelectionBox displayTaskSelection = new SelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TASK),
+                AppContext.getMessage(TaskI18nEnum.LIST),
                 customizeView.getDisplaytask());
         leftColLayout.addComponent(displayTaskSelection);
 
         final SelectionBox displayBugSelection = new SelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_BUG),
+                AppContext.getMessage(BugI18nEnum.LIST),
                 customizeView.getDisplaybug());
         leftColLayout.addComponent(displayBugSelection);
 
         final SelectionBox displayPageSelection = new SelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PAGE),
+                AppContext.getMessage(PageI18nEnum.LIST),
                 customizeView.getDisplaypage());
         leftColLayout.addComponent(displayPageSelection);
 
@@ -90,7 +89,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
         final SelectionBox displayRiskSelection = new SelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_RISK),
+                AppContext.getMessage(RiskI18nEnum.LIST),
                 customizeView.getDisplayrisk());
         rightColLayout.addComponent(displayRiskSelection);
 

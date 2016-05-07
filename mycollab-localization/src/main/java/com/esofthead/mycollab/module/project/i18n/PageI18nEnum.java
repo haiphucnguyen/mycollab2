@@ -22,7 +22,7 @@ import ch.qos.cal10n.LocaleData;
 
 @BaseName("localization/project-page")
 @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
-public enum Page18InEnum {
+public enum PageI18nEnum {
     LIST,
     NEW,
     DETAIL,

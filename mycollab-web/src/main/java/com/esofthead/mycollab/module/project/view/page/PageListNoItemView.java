@@ -22,7 +22,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.PageEvent;
-import com.esofthead.mycollab.module.project.i18n.Page18InEnum;
+import com.esofthead.mycollab.module.project.i18n.PageI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectListNoItemView;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -58,7 +58,7 @@ public class PageListNoItemView extends ProjectListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(Page18InEnum.NEW);
+        return AppContext.getMessage(PageI18nEnum.NEW);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class PageListNoItemView extends ProjectListNoItemView {
         createPageBtn.setEnabled(hasPermission());
         createPageBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
-        Button createPageGroupBtn = new Button(AppContext.getMessage(Page18InEnum.NEW_GROUP), new Button.ClickListener() {
+        Button createPageGroupBtn = new Button(AppContext.getMessage(PageI18nEnum.NEW_GROUP), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 UI.getCurrent().addWindow(new GroupPageAddWindow());

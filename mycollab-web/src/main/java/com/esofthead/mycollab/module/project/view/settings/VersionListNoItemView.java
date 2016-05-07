@@ -57,7 +57,7 @@ public class VersionListNoItemView extends ProjectListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(BugI18nEnum.BUTTON_NEW_VERSION);
+        return AppContext.getMessage(VersionI18nEnum.NEW);
     }
 
     @Override

@@ -25,6 +25,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.ProjectRoleI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -71,7 +72,7 @@ public class ProjectRoleListPresenter extends ListSelectionPresenter<ProjectRole
 
             @Override
             protected String getReportTitle() {
-                return AppContext.getMessage(ProjectCommonI18nEnum.VIEW_ROLES);
+                return AppContext.getMessage(ProjectRoleI18nEnum.LIST);
             }
 
             @SuppressWarnings({"unchecked", "rawtypes"})

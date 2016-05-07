@@ -25,7 +25,6 @@ import ch.qos.cal10n.LocaleData;
 public enum ComponentI18nEnum {
     LIST,
     DETAIL,
-
     NEW,
 
     FORM_LEAD,

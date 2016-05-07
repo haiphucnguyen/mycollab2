@@ -25,6 +25,7 @@ import ch.qos.cal10n.LocaleData;
 public enum TaskI18nEnum {
     NEW,
     DETAIL,
+    LIST,
 
     FORM_PHASE,
     FORM_COMMENT,

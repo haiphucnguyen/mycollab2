@@ -43,7 +43,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.headerH2(ProjectTypeConstants.RISK, AppContext.getMessage(ProjectCommonI18nEnum.VIEW_RISK));
+        return ComponentUtils.headerH2(ProjectTypeConstants.RISK, AppContext.getMessage(RiskI18nEnum.LIST));
     }
 
     @Override

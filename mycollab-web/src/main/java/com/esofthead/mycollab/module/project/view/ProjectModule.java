@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.project.events.ClientEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.ReportEvent;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.esofthead.mycollab.module.project.view.user.ProjectPagedList;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -70,7 +71,7 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
         if (serviceMenuContainer == null) {
             serviceMenuContainer = new MHorizontalLayout();
             final ServiceMenu serviceMenu = new ServiceMenu();
-            serviceMenu.addService(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PROJECTS), new Button.ClickListener() {
+            serviceMenu.addService(AppContext.getMessage(ProjectI18nEnum.LIST), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     EventBusFactory.getInstance().post(new ProjectEvent.GotoUserDashboard(this, null));
@@ -95,7 +96,8 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
             });
             serviceMenuContainer.with(serviceMenu);
 
-            Button newPrjBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_NEW_PROJECT), new Button.ClickListener() {
+            Button newPrjBtn = new Button(AppContext.getMessage(ProjectI18nEnum.NEW), new Button.ClickListener
+                    () {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     UI.getCurrent().addWindow(new ProjectAddWindow());
