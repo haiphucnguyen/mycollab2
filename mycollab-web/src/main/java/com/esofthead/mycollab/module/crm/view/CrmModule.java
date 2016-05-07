@@ -135,17 +135,17 @@ public class CrmModule extends AbstractPageView implements IDesktopModule {
             addPopupMenu.setDirection(Alignment.BOTTOM_LEFT);
             OptionPopupContent popupButtonsControl = new OptionPopupContent();
 
-            Button newAccountBtn = new Button(AppContext.getMessage(AccountI18nEnum.BUTTON_NEW_ACCOUNT), listener);
+            Button newAccountBtn = new Button(AppContext.getMessage(AccountI18nEnum.NEW), listener);
             newAccountBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
             newAccountBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
             popupButtonsControl.addOption(newAccountBtn);
 
-            Button newContactBtn = new Button(AppContext.getMessage(ContactI18nEnum.BUTTON_NEW_CONTACT), listener);
+            Button newContactBtn = new Button(AppContext.getMessage(ContactI18nEnum.NEW), listener);
             newContactBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CONTACT));
             newContactBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
             popupButtonsControl.addOption(newContactBtn);
 
-            Button newCampaignBtn = new Button(AppContext.getMessage(CampaignI18nEnum.BUTTON_NEW_CAMPAIGN), listener);
+            Button newCampaignBtn = new Button(AppContext.getMessage(CampaignI18nEnum.NEW), listener);
             newCampaignBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
             newCampaignBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
             popupButtonsControl.addOption(newCampaignBtn);
@@ -160,7 +160,7 @@ public class CrmModule extends AbstractPageView implements IDesktopModule {
             newLeadBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
             popupButtonsControl.addOption(newLeadBtn);
 
-            Button newCaseBtn = new Button(AppContext.getMessage(CaseI18nEnum.BUTTON_NEW_CASE), listener);
+            Button newCaseBtn = new Button(AppContext.getMessage(CaseI18nEnum.NEW), listener);
             newCaseBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CASE));
             newCaseBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CASE));
             popupButtonsControl.addOption(newCaseBtn);
@@ -192,19 +192,19 @@ public class CrmModule extends AbstractPageView implements IDesktopModule {
             String selectedBtnCaption = "";
             String caption = event.getButton().getCaption();
 
-            if (AppContext.getMessage(AccountI18nEnum.BUTTON_NEW_ACCOUNT).equals(caption)) {
+            if (AppContext.getMessage(AccountI18nEnum.NEW).equals(caption)) {
                 EventBusFactory.getInstance().post(new AccountEvent.GotoAdd(this, null));
                 selectedBtnCaption = AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER);
-            } else if (AppContext.getMessage(CampaignI18nEnum.BUTTON_NEW_CAMPAIGN).equals(caption)) {
+            } else if (AppContext.getMessage(CampaignI18nEnum.NEW).equals(caption)) {
                 EventBusFactory.getInstance().post(new CampaignEvent.GotoAdd(this, null));
                 selectedBtnCaption = AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER);
-            } else if (AppContext.getMessage(CaseI18nEnum.BUTTON_NEW_CASE).equals(caption)) {
+            } else if (AppContext.getMessage(CaseI18nEnum.NEW).equals(caption)) {
                 EventBusFactory.getInstance().post(new CaseEvent.GotoAdd(this, null));
                 selectedBtnCaption = AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER);
             } else if (AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER).equals(caption)) {
                 EventBusFactory.getInstance().post(new ContactEvent.GotoList(this, null));
                 selectedBtnCaption = caption;
-            } else if (AppContext.getMessage(ContactI18nEnum.BUTTON_NEW_CONTACT).equals(caption)) {
+            } else if (AppContext.getMessage(ContactI18nEnum.NEW).equals(caption)) {
                 EventBusFactory.getInstance().post(new ContactEvent.GotoAdd(this, null));
                 selectedBtnCaption = AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER);
             } else if (AppContext.getMessage(LeadI18nEnum.BUTTON_NEW_LEAD).equals(caption)) {

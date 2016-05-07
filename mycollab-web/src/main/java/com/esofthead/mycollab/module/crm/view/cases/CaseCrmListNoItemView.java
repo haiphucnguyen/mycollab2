@@ -55,7 +55,7 @@ public class CaseCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(CaseI18nEnum.BUTTON_NEW_CASE);
+        return AppContext.getMessage(CaseI18nEnum.NEW);
     }
 
     @Override

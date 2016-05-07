@@ -23,14 +23,12 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/crm-contact")
 @LocaleData(value = { @Locale("en-US"), @Locale("ja-JP") }, defaultCharset = "UTF-8")
 public enum ContactI18nEnum {
-	VIEW_LIST_TITLE,
-	VIEW_NEW_TITLE,
+	LIST,
+	NEW,
 
 	SECTION_INFORMATION,
 	SECTION_ADDRESS,
 	SECTION_DESCRIPTION,
-
-	BUTTON_NEW_CONTACT,
 
 	FORM_DECISION_ROLE,
 	FORM_FIRSTNAME,

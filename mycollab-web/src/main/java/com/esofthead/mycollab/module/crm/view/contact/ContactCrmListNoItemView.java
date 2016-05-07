@@ -55,7 +55,7 @@ public class ContactCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(ContactI18nEnum.BUTTON_NEW_CONTACT);
+        return AppContext.getMessage(ContactI18nEnum.NEW);
     }
 
     @Override

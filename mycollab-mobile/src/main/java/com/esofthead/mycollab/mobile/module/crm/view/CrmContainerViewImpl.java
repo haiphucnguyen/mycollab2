@@ -112,17 +112,17 @@ public class CrmContainerViewImpl extends AbstractMobileTabPageView implements C
                     AccountSearchCriteria criteria = new AccountSearchCriteria();
                     criteria.setSaccountid(new NumberSearchField(SearchField.AND, AppContext.getAccountId()));
                     accountPresenter.getView().getPagedBeanTable().search(criteria);
-                    AppContext.addFragment("crm/account/list", AppContext.getMessage(AccountI18nEnum.VIEW_LIST_TITLE));
+                    AppContext.addFragment("crm/account/list", AppContext.getMessage(AccountI18nEnum.LIST));
                 } else if (currentComponent == getContactTab()) {
                     ContactSearchCriteria criteria = new ContactSearchCriteria();
                     criteria.setSaccountid(new NumberSearchField(SearchField.AND, AppContext.getAccountId()));
                     contactPresenter.getView().getPagedBeanTable().search(criteria);
-                    AppContext.addFragment("crm/contact/list", AppContext.getMessage(ContactI18nEnum.VIEW_LIST_TITLE));
+                    AppContext.addFragment("crm/contact/list", AppContext.getMessage(ContactI18nEnum.LIST));
                 } else if (currentComponent == getCampaignTab()) {
                     CampaignSearchCriteria criteria = new CampaignSearchCriteria();
                     criteria.setSaccountid(new NumberSearchField(SearchField.AND, AppContext.getAccountId()));
                     campaignPresenter.getView().getPagedBeanTable().search(criteria);
-                    AppContext.addFragment("crm/campaign/list", AppContext.getMessage(CampaignI18nEnum.VIEW_LIST_TITLE));
+                    AppContext.addFragment("crm/campaign/list", AppContext.getMessage(CampaignI18nEnum.LIST));
                 } else if (currentComponent == getLeadTab()) {
                     LeadSearchCriteria criteria = new LeadSearchCriteria();
                     criteria.setSaccountid(new NumberSearchField(SearchField.AND, AppContext.getAccountId()));
@@ -137,7 +137,7 @@ public class CrmContainerViewImpl extends AbstractMobileTabPageView implements C
                     CaseSearchCriteria criteria = new CaseSearchCriteria();
                     criteria.setSaccountid(new NumberSearchField(SearchField.AND, AppContext.getAccountId()));
                     casePresenter.getView().getPagedBeanTable().search(criteria);
-                    AppContext.addFragment("crm/cases/list", AppContext.getMessage(CaseI18nEnum.VIEW_LIST_TITLE));
+                    AppContext.addFragment("crm/cases/list", AppContext.getMessage(CaseI18nEnum.LIST));
                 } else if (currentComponent == getActivityTab()) {
                     ActivitySearchCriteria criteria = new ActivitySearchCriteria();
                     criteria.setSaccountid(new NumberSearchField(SearchField.AND, AppContext.getAccountId()));

@@ -23,14 +23,12 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/crm-campaign")
 @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
 public enum CampaignI18nEnum {
-    VIEW_LIST_TITLE,
-    VIEW_NEW_TITLE,
+    LIST,
+    NEW,
 
     SECTION_CAMPAIGN_INFORMATION,
     SECTION_GOAL,
     SECTION_DESCRIPTION,
-
-    BUTTON_NEW_CAMPAIGN,
 
     FORM_EXPECTED_REVENUE,
     FORM_EXPECTED_COST,

@@ -55,7 +55,7 @@ public class CampaignCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(CampaignI18nEnum.BUTTON_NEW_CAMPAIGN);
+        return AppContext.getMessage(CampaignI18nEnum.NEW);
     }
 
     @Override

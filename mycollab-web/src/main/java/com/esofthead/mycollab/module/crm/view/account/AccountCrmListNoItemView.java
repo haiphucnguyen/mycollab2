@@ -31,14 +31,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.0
- * 
  */
 @ViewComponent
 public class AccountCrmListNoItemView extends CrmListNoItemView {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Override
     protected FontAwesome titleIcon() {
@@ -57,7 +55,7 @@ public class AccountCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(AccountI18nEnum.BUTTON_NEW_ACCOUNT);
+        return AppContext.getMessage(AccountI18nEnum.NEW);
     }
 
     @Override
@@ -65,8 +63,7 @@ public class AccountCrmListNoItemView extends CrmListNoItemView {
         return new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(
-                        new AccountEvent.GotoAdd(this, null));
+                EventBusFactory.getInstance().post(new AccountEvent.GotoAdd(this, null));
             }
         };
     }

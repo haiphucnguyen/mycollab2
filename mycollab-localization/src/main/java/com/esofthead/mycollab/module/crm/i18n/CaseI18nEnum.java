@@ -23,13 +23,11 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/crm-case")
 @LocaleData(value = { @Locale("en-US"), @Locale("ja-JP") }, defaultCharset = "UTF-8")
 public enum CaseI18nEnum {
-	VIEW_LIST_TITLE,
-	VIEW_NEW_TITLE,
+	LIST,
+	NEW,
 
 	SECTION_CASE_INFORMATION,
 	SECTION_DESCRIPTION,
-
-	BUTTON_NEW_CASE,
 
 	FORM_PRIORITY,
 	FORM_ACCOUNT,

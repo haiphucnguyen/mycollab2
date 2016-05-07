@@ -479,14 +479,6 @@ public class ProjectTooltipGenerator {
             trRow3.appendChild(cell31, cell32, cell33, cell34);
             tooltipManager.appendRow(trRow3);
 
-            Tr trRow4 = new Tr();
-            Td cell41 = buildCellName(LocalizationHelper.getMessage(locale, MilestoneI18nEnum.FORM_TASK_FIELD));
-            Td cell42 = buildCellValue(milestone.getNumTasks());
-            Td cell43 = buildCellName(LocalizationHelper.getMessage(locale, MilestoneI18nEnum.FORM_BUG_FIELD));
-            Td cell44 = buildCellValue(milestone.getNumBugs());
-            trRow4.appendChild(cell41, cell42, cell43, cell44);
-            tooltipManager.appendRow(trRow4);
-
             Tr trRow6 = new Tr();
             Td cell61 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_DESCRIPTION));
             Td cell62 = buildCellValue(trimHtmlTags(milestone.getDescription()));
