@@ -39,7 +39,7 @@ public abstract class AbstractBeanPagedList<T> extends VerticalLayout implements
 
     protected int defaultNumberSearchItems = 10;
     private Set<PageableHandler> pageableHandlers;
-    private String listControlStyle = "listControl";
+    private String[] listControlStyle = {"listControl"};
 
     protected CssLayout listContainer;
     protected RowDisplayHandler<T> rowDisplayHandler;
@@ -71,7 +71,7 @@ public abstract class AbstractBeanPagedList<T> extends VerticalLayout implements
         pageableHandlers.add(handler);
     }
 
-    public void setControlStyle(String style) {
+    public void setControlStyle(String... style) {
         this.listControlStyle = style;
     }
 

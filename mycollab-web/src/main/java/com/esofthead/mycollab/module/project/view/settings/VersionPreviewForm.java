@@ -105,6 +105,7 @@ public class VersionPreviewForm extends AdvancedPreviewBeanForm<Version> {
 
             bugList = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(BugService.class), new BugRowRenderer());
             bugList.setMargin(new MarginInfo(true, true, true, false));
+            bugList.setControlStyle("");
 
             searchCriteria = new BugSearchCriteria();
             searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
