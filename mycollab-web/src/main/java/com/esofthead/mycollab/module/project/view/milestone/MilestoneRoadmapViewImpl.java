@@ -373,8 +373,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                 }
             };
             viewIssuesBtn.addClickListener(viewIssuesListener);
-            viewIssuesBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            viewIssuesBtn.addStyleName(ValoTheme.BUTTON_SMALL);
+            viewIssuesBtn.addStyleName(UIConstants.BUTTON_LINK);
             progressLayout.with(progressInfoLbl, viewIssuesBtn);
             this.with(progressLayout, issueLayout);
         }

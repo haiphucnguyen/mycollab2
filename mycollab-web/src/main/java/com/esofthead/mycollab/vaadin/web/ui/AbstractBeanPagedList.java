@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.vaadin.web.ui;
 
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.PageableHandler;
 import com.vaadin.shared.ui.MarginInfo;
@@ -209,6 +210,10 @@ public abstract class AbstractBeanPagedList<T> extends VerticalLayout implements
     }
 
     private Component msgWhenEmptyList() {
+        String value = stringWhenEmptyList();
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
         return new MHorizontalLayout().withMargin(true).withWidth("100%").withStyleName("panel-body").with(new Label(stringWhenEmptyList()));
     }
 
@@ -277,7 +282,10 @@ public abstract class AbstractBeanPagedList<T> extends VerticalLayout implements
                 i++;
             }
         } else {
-            listContainer.addComponent(msgWhenEmptyList());
+            Component component = msgWhenEmptyList();
+            if (component != null) {
+                listContainer.addComponent(component);
+            }
         }
     }
 
