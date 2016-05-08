@@ -172,7 +172,8 @@ public class BugAddWindow extends Window {
                 if (BugWithBLOBs.Field.summary.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_SUMMARY), 0, 0, 2, "100%");
                 } else if (BugWithBLOBs.Field.priority.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_PRIORITY), 0, 1);
+                    informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_PRIORITY),
+                            AppContext.getMessage(BugI18nEnum.FORM_PRIORITY_HELP), 0, 1);
                 } else if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 1);
                 } else if (BugWithBLOBs.Field.severity.equalTo(propertyId)) {

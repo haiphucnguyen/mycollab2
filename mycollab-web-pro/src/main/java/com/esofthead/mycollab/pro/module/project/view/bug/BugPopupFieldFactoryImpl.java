@@ -3,6 +3,7 @@ package com.esofthead.mycollab.pro.module.project.view.bug;
 import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
+import com.esofthead.mycollab.common.i18n.FollowerI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.common.service.MonitorItemService;
@@ -80,6 +81,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             }
         };
         builder.withBean(bug).withBindProperty(BugWithBLOBs.Field.priority.name()).withDescription(bug.getPriority())
+                .withDescription(AppContext.getMessage(BugI18nEnum.FORM_PRIORITY_HELP))
                 .withCaption(AppContext.getMessage(BugI18nEnum.FORM_PRIORITY)).withField(new BugPriorityComboBox())
                 .withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getPriority())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
@@ -120,7 +122,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
     @Override
     public PopupView createCommentsPopupField(SimpleBug bug) {
         BugCommentsPopupView view = new BugCommentsPopupView(bug);
-        view.setDescription("Click to edit");
+        view.setDescription("Add the new comment");
         return view;
     }
 
@@ -136,6 +138,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         BugFollowersPopupView(SimpleBug bug) {
             super("");
             this.bug = bug;
+            this.setDescription(AppContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP));
             if (bug.getNumFollowers() == null || bug.getNumFollowers() == 0) {
                 this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " 0");
             } else {
@@ -212,6 +215,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         BugStatusPopupView(SimpleBug bug) {
             super(FontAwesome.INFO_CIRCLE.getHtml() + " " + AppContext.getMessage(OptionI18nEnum.BugStatus.class, bug.getStatus()));
             this.beanItem = bug;
+            this.setDescription(AppContext.getMessage(BugI18nEnum.FORM_STATUS_HELP));
         }
 
         @Override

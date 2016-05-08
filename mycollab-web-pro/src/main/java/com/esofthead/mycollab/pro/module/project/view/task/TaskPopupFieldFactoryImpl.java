@@ -3,6 +3,7 @@ package com.esofthead.mycollab.pro.module.project.view.task;
 import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
+import com.esofthead.mycollab.common.i18n.FollowerI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.common.service.MonitorItemService;
@@ -111,7 +112,9 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("priority").withDescription(task.getPriority())
-                .withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY)).withField(new TaskPriorityComboBox())
+                .withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY))
+                .withDescription(AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY_HELP))
+                .withField(new TaskPriorityComboBox())
                 .withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPriority())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -133,6 +136,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("status").withCaption(AppContext.getMessage(GenericI18Enum.FORM_STATUS))
+                .withDescription(AppContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP))
                 .withField(new TaskStatusComboBox()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStatus())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -255,7 +259,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
     @Override
     public PopupView createCommentsPopupField(SimpleTask task) {
         TaskCommentsPopupView view = new TaskCommentsPopupView(task);
-        view.setDescription("Click to edit");
+        view.setDescription("Add the new comment");
         return view;
     }
 
@@ -285,6 +289,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         TaskFollowersPopupView(SimpleTask task) {
             super("");
             this.task = task;
+            this.setDescription(AppContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP));
             this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + NumberUtils.zeroIfNull(task.getNumFollowers()));
         }
 
