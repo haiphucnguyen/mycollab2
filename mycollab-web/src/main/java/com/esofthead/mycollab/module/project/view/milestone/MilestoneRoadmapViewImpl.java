@@ -335,46 +335,51 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             final MVerticalLayout issueLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
             issueLayout.setVisible(false);
 
-            final Button viewIssuesBtn = new Button("View issues");
-            Button.ClickListener viewIssuesListener = new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    showIssues = !showIssues;
-                    if (showIssues) {
-                        issueLayout.setVisible(true);
-                        viewIssuesBtn.setCaption("Hide issues");
-                        ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
-                        searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                        searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK));
-                        searchCriteria.setMilestoneId(new NumberSearchField(milestone.getId()));
-                        ProjectGenericTaskService genericTaskService = ApplicationContextUtil.getSpringBean
-                                (ProjectGenericTaskService.class);
-                        List<ProjectGenericTask> genericTasks = genericTaskService.findPagableListByCriteria(new
-                                BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
-                        for (ProjectGenericTask genericTask : genericTasks) {
-                            ToggleGenericTaskSummaryField toggleGenericTaskSummaryField = new ToggleGenericTaskSummaryField(genericTask);
-                            MHorizontalLayout rowComp = new MHorizontalLayout();
-                            rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-                            rowComp.with(new ELabel(ProjectAssetsManager.getAsset(genericTask.getType()).getHtml(), ContentMode.HTML).withWidthUndefined());
-                            String avatarLink = StorageFactory.getInstance().getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
-                            Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setTitle(genericTask
-                                    .getAssignUserFullName());
-                            rowComp.with(new ELabel(img.write(), ContentMode.HTML).withWidthUndefined());
+            progressLayout.with(progressInfoLbl);
 
-                            rowComp.with(toggleGenericTaskSummaryField).expand(toggleGenericTaskSummaryField);
-                            issueLayout.addComponent(rowComp);
+            if (totalAssignments > 0) {
+                final Button viewIssuesBtn = new Button("View issues");
+                Button.ClickListener viewIssuesListener = new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent clickEvent) {
+                        showIssues = !showIssues;
+                        if (showIssues) {
+                            issueLayout.setVisible(true);
+                            viewIssuesBtn.setCaption("Hide issues");
+                            ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
+                            searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+                            searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK));
+                            searchCriteria.setMilestoneId(new NumberSearchField(milestone.getId()));
+                            ProjectGenericTaskService genericTaskService = ApplicationContextUtil.getSpringBean
+                                    (ProjectGenericTaskService.class);
+                            List<ProjectGenericTask> genericTasks = genericTaskService.findPagableListByCriteria(new
+                                    BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
+                            for (ProjectGenericTask genericTask : genericTasks) {
+                                ToggleGenericTaskSummaryField toggleGenericTaskSummaryField = new ToggleGenericTaskSummaryField(genericTask);
+                                MHorizontalLayout rowComp = new MHorizontalLayout();
+                                rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
+                                rowComp.with(new ELabel(ProjectAssetsManager.getAsset(genericTask.getType()).getHtml(), ContentMode.HTML).withWidthUndefined());
+                                String avatarLink = StorageFactory.getInstance().getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
+                                Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setTitle(genericTask
+                                        .getAssignUserFullName());
+                                rowComp.with(new ELabel(img.write(), ContentMode.HTML).withWidthUndefined());
 
+                                rowComp.with(toggleGenericTaskSummaryField).expand(toggleGenericTaskSummaryField);
+                                issueLayout.addComponent(rowComp);
+
+                            }
+                        } else {
+                            viewIssuesBtn.setCaption("View issues");
+                            issueLayout.removeAllComponents();
+                            issueLayout.setVisible(false);
                         }
-                    } else {
-                        viewIssuesBtn.setCaption("View issues");
-                        issueLayout.removeAllComponents();
-                        issueLayout.setVisible(false);
                     }
-                }
-            };
-            viewIssuesBtn.addClickListener(viewIssuesListener);
-            viewIssuesBtn.addStyleName(UIConstants.BUTTON_LINK);
-            progressLayout.with(progressInfoLbl, viewIssuesBtn);
+                };
+                viewIssuesBtn.addClickListener(viewIssuesListener);
+                viewIssuesBtn.addStyleName(UIConstants.BUTTON_LINK);
+                progressLayout.with(viewIssuesBtn);
+            }
+
             this.with(progressLayout, issueLayout);
         }
     }
