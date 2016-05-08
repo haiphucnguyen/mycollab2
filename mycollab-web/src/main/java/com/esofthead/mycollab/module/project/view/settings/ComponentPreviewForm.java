@@ -110,7 +110,6 @@ public class ComponentPreviewForm extends AdvancedPreviewBeanForm<SimpleComponen
             searchCriteria.setComponentids(new SetSearchField<>(beanItem.getId()));
             searchCriteria.setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpen.name(),
                     OptionI18nEnum.BugStatus.Verified.name(), OptionI18nEnum.BugStatus.Resolved.name()));
-            searchCriteria.addOrderField(new SearchCriteria.OrderField("m_tracker_bug.createdTime", SearchCriteria.DESC));
             updateSearchStatus();
 
             this.with(header, bugList);
