@@ -55,7 +55,7 @@ public class LeadCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(LeadI18nEnum.BUTTON_NEW_LEAD);
+        return AppContext.getMessage(LeadI18nEnum.NEW);
     }
 
     @Override
@@ -63,8 +63,7 @@ public class LeadCrmListNoItemView extends CrmListNoItemView {
         return new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(
-                        new LeadEvent.GotoAdd(this, null));
+                EventBusFactory.getInstance().post(new LeadEvent.GotoAdd(this, null));
             }
         };
     }

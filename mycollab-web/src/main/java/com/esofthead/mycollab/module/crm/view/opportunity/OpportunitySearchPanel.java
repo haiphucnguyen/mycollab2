@@ -71,7 +71,7 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
 
     @Override
     protected Component buildExtraControls() {
-        Button newBtn = new Button(AppContext.getMessage(OpportunityI18nEnum.BUTTON_NEW_OPPORTUNITY), new Button.ClickListener() {
+        Button newBtn = new Button(AppContext.getMessage(OpportunityI18nEnum.NEW), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override

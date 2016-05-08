@@ -55,7 +55,7 @@ public class OpportunityCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(OpportunityI18nEnum.BUTTON_NEW_OPPORTUNITY);
+        return AppContext.getMessage(OpportunityI18nEnum.NEW);
     }
 
     @Override

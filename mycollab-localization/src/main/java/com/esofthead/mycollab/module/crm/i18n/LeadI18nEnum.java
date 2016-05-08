@@ -23,8 +23,8 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("localization/crm-lead")
 @LocaleData(value = { @Locale("en-US"), @Locale("ja-JP") }, defaultCharset = "UTF-8")
 public enum LeadI18nEnum {
-	VIEW_NEW_TITLE,
-	VIEW_LIST_TITLE,
+	NEW,
+	LIST,
 	VIEW_CONVERTED_LEAD_TITLE,
 
 	WINDOW_CONVERT_LEAD_TITLE,
@@ -33,7 +33,6 @@ public enum LeadI18nEnum {
 	SECTION_ADDRESS,
 	SECTION_DESCRIPTION,
 
-	BUTTON_NEW_LEAD,
 	BUTTON_CONVERT_LEAD,
 
 	FORM_PREFIX,
