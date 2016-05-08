@@ -359,6 +359,18 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                                 MHorizontalLayout rowComp = new MHorizontalLayout();
                                 rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
                                 rowComp.with(new ELabel(ProjectAssetsManager.getAsset(genericTask.getType()).getHtml(), ContentMode.HTML).withWidthUndefined());
+                                String status = "";
+                                if (genericTask.isBug()) {
+                                    status = AppContext.getMessage(OptionI18nEnum.BugStatus.class, genericTask.getStatus());
+                                } else if (genericTask.isMilestone()) {
+                                    status = AppContext.getMessage(OptionI18nEnum.MilestoneStatus.class, genericTask.getStatus());
+                                } else if (genericTask.isRisk()) {
+                                    status = AppContext.getMessage(com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum.class,
+                                            genericTask.getStatus());
+                                } else if (genericTask.isTask()) {
+                                    status = AppContext.getMessage(com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum.class, genericTask.getStatus());
+                                }
+                                rowComp.with(new ELabel(status).withStyleName(UIConstants.FIELD_NOTE).withWidthUndefined());
                                 String avatarLink = StorageFactory.getInstance().getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
                                 Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setTitle(genericTask
                                         .getAssignUserFullName());
