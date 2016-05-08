@@ -470,10 +470,10 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    background-color: #cae9f8;
+    background-color: #7ec8ef;
     padding: 0px 5px;
     margin: 3px 3px 0px 0px;
-    color: $my-meta-color;
+    color: darken($my-white-color, 5%);
     font-size: $font-small;
     .v-icon {
       padding: 0px;

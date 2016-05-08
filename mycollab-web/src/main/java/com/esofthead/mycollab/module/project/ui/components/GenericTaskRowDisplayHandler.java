@@ -79,7 +79,7 @@ public class GenericTaskRowDisplayHandler implements DefaultBeanPagedList.RowDis
         taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(genericTask.getType(), genericTask.getTypeId() + ""));
         taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
         if (ProjectTypeConstants.BUG.equals(genericTask.getType()) || ProjectTypeConstants.TASK.equals(genericTask.getType())) {
-            taskLink.appendText(String.format("[#%d] - %s", genericTask.getExtraTypeId(), genericTask.getName()));
+            taskLink.appendText(genericTask.getName());
             taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
                     genericTask.getProjectId(), genericTask.getType(), genericTask.getExtraTypeId() + ""));
         } else {
