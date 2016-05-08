@@ -101,7 +101,7 @@ public class ComponentPreviewForm extends AdvancedPreviewBeanForm<SimpleComponen
                     resolvedSelection, spacingLbl1).alignAll(Alignment.MIDDLE_LEFT).expand(spacingLbl1);
 
             bugList = new DefaultBeanPagedList(ApplicationContextUtil.getSpringBean(BugService.class), new
-                    BugRowRenderer(), 2);
+                    BugRowRenderer());
             bugList.setControlStyle("");
             bugList.setMargin(new MarginInfo(true, true, true, false));
 
