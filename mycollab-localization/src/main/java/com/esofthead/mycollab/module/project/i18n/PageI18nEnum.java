@@ -31,7 +31,6 @@ public enum PageI18nEnum {
     DETAIL_GROUP,
 
     FORM_GROUP,
-
     FORM_SUBJECT,
     FORM_VISIBILITY,
     FORM_CATEGORY,

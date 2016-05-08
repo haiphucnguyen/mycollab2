@@ -29,7 +29,6 @@ public enum ComponentI18nEnum {
 
     FORM_LEAD,
     FORM_BUGS,
-
     FORM_COMPONENT_ERROR,
 
     MAIL_CREATE_ITEM_SUBJECT,
