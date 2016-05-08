@@ -88,9 +88,9 @@ public abstract class TimeLogComp<B extends ValuedBean> extends MVerticalLayout 
         Double billableHours = getTotalBillableHours(beanItem);
         Double nonBillableHours = getTotalNonBillableHours(beanItem);
         Double remainHours = getRemainedHours(beanItem);
-        billableHoursLbl.setValue(String.format(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS), billableHours));
-        nonBillableHoursLbl.setValue(String.format(AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS), nonBillableHours));
-        remainHoursLbl.setValue(String.format(AppContext.getMessage(TimeTrackingI18nEnum.OPT_REMAIN_HOURS), remainHours));
+        billableHoursLbl.setValue(String.format("%s: %s", AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS), billableHours));
+        nonBillableHoursLbl.setValue(String.format("%s: %s", AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS), nonBillableHours));
+        remainHoursLbl.setValue(String.format("%s: %s", AppContext.getMessage(TimeTrackingI18nEnum.OPT_REMAIN_HOURS), remainHours));
     }
 
     protected abstract Double getTotalBillableHours(B bean);
