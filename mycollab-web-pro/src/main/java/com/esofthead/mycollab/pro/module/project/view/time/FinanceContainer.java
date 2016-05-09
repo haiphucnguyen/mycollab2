@@ -6,6 +6,7 @@ import com.esofthead.mycollab.core.db.query.VariableInjector;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.esofthead.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.parameters.TimeTrackingScreenData;
@@ -48,7 +49,7 @@ public class FinanceContainer extends AbstractPageView implements IFinanceContai
         }
 
         if (CurrentProjectVariables.hasInvoiceFeature()) {
-            myProjectTab.addWrappedTab(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_INVOICE),
+            myProjectTab.addWrappedTab(AppContext.getMessage(InvoiceI18nEnum.LIST),
                     ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE));
         }
 

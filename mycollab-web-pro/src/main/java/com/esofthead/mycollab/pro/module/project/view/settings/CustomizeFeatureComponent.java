@@ -107,7 +107,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
         final SelectionBox displayInvoiceSelection = new SelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_INVOICE),
+                AppContext.getMessage(InvoiceI18nEnum.LIST),
                 customizeView.getDisplayinvoice());
         rightColLayout.addComponent(displayInvoiceSelection);
 

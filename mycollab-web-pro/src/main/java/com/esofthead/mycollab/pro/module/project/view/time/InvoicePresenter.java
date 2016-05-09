@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view.time;
 
+import com.esofthead.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.time.IInvoiceContainer;
@@ -25,7 +26,7 @@ public class InvoicePresenter extends AbstractPresenter<IInvoiceContainer> imple
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         FinanceContainer timeContainer = (FinanceContainer) container;
         TabSheetDecorator.WrappedTab contentLayout = (TabSheetDecorator.WrappedTab) timeContainer.gotoSubView(
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_INVOICE));
+                AppContext.getMessage(InvoiceI18nEnum.LIST));
         contentLayout.addView(view);
         view.display();
 

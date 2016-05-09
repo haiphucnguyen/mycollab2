@@ -573,9 +573,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoInvoiceView() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_INVOICE)));
+        this.addLink(new Button(AppContext.getMessage(InvoiceI18nEnum.LIST)));
         AppContext.addFragment(ProjectLinkGenerator.generateInvoiceListLink(project.getId()),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_INVOICE));
+                AppContext.getMessage(InvoiceI18nEnum.LIST));
     }
 
     public void gotoFileList() {
