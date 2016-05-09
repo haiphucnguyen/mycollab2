@@ -26,6 +26,7 @@ public enum MilestoneI18nEnum {
     LIST,
     NEW,
     DETAIL,
+    SINGLE,
 
     WIDGET_CLOSED_PHASE_TITLE,
     WIDGET_INPROGRESS_PHASE_TITLE,

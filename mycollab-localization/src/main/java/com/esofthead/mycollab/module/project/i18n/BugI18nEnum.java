@@ -39,6 +39,7 @@ public enum BugI18nEnum {
     NEW,
     DETAIL,
     LIST,
+    SINGLE,
 
     FORM_SUMMARY,
     FORM_SEVERITY,

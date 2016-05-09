@@ -2,6 +2,8 @@ package com.esofthead.mycollab.pro.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.localization.SettingCommonI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
@@ -239,8 +241,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setVtabsheetbgselected(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
+                accountTheme.setVtabsheetbgselected(event.getColor().getCSS().substring(1).toUpperCase());
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
@@ -253,8 +254,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setVtabsheettextselected(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
+                accountTheme.setVtabsheettextselected(event.getColor().getCSS().substring(1).toUpperCase());
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
@@ -278,14 +278,12 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         tabsheetDemo.getNavigatorWrapper().addStyleName("sidebar-menu");
         tabsheetDemo.getNavigatorWrapper().setWidth("250px");
 
-        tabsheetDemo.addTab(new VerticalLayout(), "dashboard", "Dashboard");
-        tabsheetDemo.addTab(new VerticalLayout(), "bugs", "Bugs");
-        tabsheetDemo.addTab(new VerticalLayout(), "components", "Components");
+        tabsheetDemo.addTab(new VerticalLayout(), "dashboard", AppContext.getMessage(GenericI18Enum.VIEW_DASHBOARD));
+        tabsheetDemo.addTab(new VerticalLayout(), "bugs", AppContext.getMessage(BugI18nEnum.LIST));
+        tabsheetDemo.addTab(new VerticalLayout(), "components", AppContext.getMessage(ComponentI18nEnum.LIST));
 
         tabsheetDemo.selectTab("dashboard");
-
         previewLayout.addComponent(tabsheetDemo);
-
         return blockLayout;
     }
 
@@ -313,8 +311,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         actionBtnPanel.addComponent(exampleActionBtn);
 
         HorizontalLayout actionBtnColorPane = new HorizontalLayout();
-        actionBtnColorPane
-                .setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        actionBtnColorPane.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         actionBtnColorPane.setSpacing(true);
         actionBtnPanel.addComponent(actionBtnColorPane);
 
@@ -324,8 +321,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
+                String colorHexString = event.getColor().getCSS().substring(1).toUpperCase();
                 accountTheme.setActionbtn(colorHexString);
                 ThemeManager.loadDemoTheme(accountTheme);
             }
@@ -338,8 +334,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
+                String colorHexString = event.getColor().getCSS().substring(1).toUpperCase();
                 accountTheme.setActionbtntext(colorHexString);
                 ThemeManager.loadDemoTheme(accountTheme);
             }
