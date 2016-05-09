@@ -18,7 +18,7 @@ package com.esofthead.mycollab.schedule.email.format
 
 import java.util.Currency
 
-import com.esofthead.mycollab.core.utils.StringUtils
+import com.esofthead.mycollab.core.utils.{CurrencyUtils, StringUtils}
 import com.esofthead.mycollab.schedule.email.MailContext
 import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.hp.gagawa.java.elements.Span
@@ -55,6 +55,6 @@ class CurrencyFieldFormat(fieldName: String, displayName: Enum[_]) extends Field
             return new Span().write
         }
 
-        Currency.getInstance(value).getDisplayName
+        CurrencyUtils.getInstance(value).getDisplayName
     }
 }

@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.vaadin.web.ui.field;
 
+import com.esofthead.mycollab.core.utils.CurrencyUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
@@ -14,14 +15,12 @@ import java.util.Currency;
  */
 public class CurrencyViewField extends CustomField<String> {
     private ELabel label;
-    private String value;
 
     public CurrencyViewField(String value) {
-        this.value = value;
         if (StringUtils.isBlank(value)) {
             label = new ELabel();
         } else {
-            Currency currency = Currency.getInstance(value);
+            Currency currency = CurrencyUtils.getInstance(value);
             label = new ELabel(value).withWidth("100%").withStyleName("wordWrap").withWidthUndefined()
                     .withDescription(currency.getDisplayName(AppContext.getUserLocale()));
         }

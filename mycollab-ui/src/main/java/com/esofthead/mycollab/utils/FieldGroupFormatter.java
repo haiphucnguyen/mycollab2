@@ -18,6 +18,7 @@ package com.esofthead.mycollab.utils;
 
 import com.esofthead.mycollab.common.domain.AuditChangeItem;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.CurrencyUtils;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -271,8 +272,12 @@ public class FieldGroupFormatter {
         @Override
         public String toString(String value, Boolean displayAsHtml, String msgIfBlank) {
             if (StringUtils.isNotBlank(value)) {
-                Currency currency = Currency.getInstance(value);
-                return new Span().appendText(value).setTitle(currency.getDisplayName(AppContext.getUserLocale())).write();
+                Currency currency = CurrencyUtils.getInstance(value);
+                if (displayAsHtml) {
+                    return new Span().appendText(value).setTitle(currency.getDisplayName(AppContext.getUserLocale())).write();
+                } else {
+                    return value;
+                }
             } else {
                 return msgIfBlank;
             }
