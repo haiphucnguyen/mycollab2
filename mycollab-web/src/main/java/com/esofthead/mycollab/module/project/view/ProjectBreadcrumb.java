@@ -125,9 +125,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         }));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(message.getTitle()));
-        AppContext.addFragment(ProjectLinkGenerator.generateMessagePreviewLink(
-                project.getId(), message.getId()), AppContext.getMessage(
-                BreadcrumbI18nEnum.FRA_MESSAGE_READ, message.getTitle()));
+        AppContext.addFragment(ProjectLinkGenerator.generateMessagePreviewLink(project.getId(), message.getId()),
+                AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                        AppContext.getMessage(MessageI18nEnum.SINGLE), message.getTitle()));
     }
 
     public void gotoRiskList() {

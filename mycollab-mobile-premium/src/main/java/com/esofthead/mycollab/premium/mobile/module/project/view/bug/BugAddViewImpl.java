@@ -128,7 +128,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
         public ComponentContainer getLayout() {
             final VerticalLayout layout = new VerticalLayout();
             layout.setMargin(false);
-            layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(BugI18nEnum.M_FORM_READ_TITLE)));
+            layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(BugI18nEnum.SINGLE)));
 
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 12);
             layout.addComponent(informationLayout.getLayout());

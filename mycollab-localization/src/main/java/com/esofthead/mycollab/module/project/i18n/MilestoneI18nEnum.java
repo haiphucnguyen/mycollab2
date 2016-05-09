@@ -43,5 +43,4 @@ public enum MilestoneI18nEnum {
     MAIL_COMMENT_ITEM_HEADING,
 
     M_LIST_DATE_INFO,
-    M_FORM_READ_TITLE
 }

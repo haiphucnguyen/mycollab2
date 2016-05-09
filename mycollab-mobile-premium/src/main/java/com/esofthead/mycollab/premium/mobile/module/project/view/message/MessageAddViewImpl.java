@@ -40,7 +40,7 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
 
     public MessageAddViewImpl() {
         this.addStyleName("message-add-view");
-        this.setCaption(AppContext.getMessage(MessageI18nEnum.M_VIEW_ADD_TITLE));
+        this.setCaption(AppContext.getMessage(MessageI18nEnum.NEW));
 
         CssLayout content = new CssLayout();
         content.setStyleName("content-layout");

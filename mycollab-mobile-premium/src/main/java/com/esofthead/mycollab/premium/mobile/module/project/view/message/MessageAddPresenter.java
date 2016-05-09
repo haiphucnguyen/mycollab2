@@ -53,7 +53,7 @@ public class MessageAddPresenter extends AbstractProjectPresenter<MessageAddView
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES)) {
             super.onGo(navigator, data);
             AppContext.addFragment(ProjectLinkGenerator.generateMessageAddLink(CurrentProjectVariables.getProjectId()),
-                    AppContext.getMessage(MessageI18nEnum.M_VIEW_ADD_TITLE));
+                    AppContext.getMessage(MessageI18nEnum.NEW));
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }

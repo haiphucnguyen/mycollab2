@@ -48,7 +48,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
         public ComponentContainer getLayout() {
             final VerticalLayout layout = new VerticalLayout();
             layout.setMargin(false);
-            layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(MilestoneI18nEnum.M_FORM_READ_TITLE)));
+            layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(MilestoneI18nEnum.SINGLE)));
 
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 6);
             layout.addComponent(informationLayout.getLayout());

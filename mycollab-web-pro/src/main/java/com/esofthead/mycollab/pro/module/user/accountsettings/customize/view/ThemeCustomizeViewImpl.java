@@ -190,10 +190,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         serviceMenu.selectService(0);
 
         previewLayout.addComponent(serviceMenu, "serviceMenu");
-        blockBody.addComponent(previewLayout);
-        blockBody.setComponentAlignment(previewLayout, Alignment.MIDDLE_CENTER);
-        blockBody.setExpandRatio(previewLayout, 1.0f);
-
+        blockBody.with(previewLayout).withAlign(previewLayout, Alignment.MIDDLE_CENTER).expand(previewLayout);
         return blockLayout;
     }
 
