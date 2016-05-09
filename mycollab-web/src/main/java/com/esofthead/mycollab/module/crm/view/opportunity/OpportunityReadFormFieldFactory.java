@@ -50,13 +50,12 @@ public class OpportunityReadFormFieldFactory extends AbstractBeanFieldGroupViewF
                     CrmLinkBuilder.generateCampaignPreviewLinkFull(opportunity.getCampaignid()),
                     CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
         } else if (propertyId.equals("assignuser")) {
-            field = new UserLinkViewField(opportunity.getAssignuser(),
-                    opportunity.getAssignUserAvatarId(),
+            field = new UserLinkViewField(opportunity.getAssignuser(), opportunity.getAssignUserAvatarId(),
                     opportunity.getAssignUserFullName());
         } else if (propertyId.equals("expectedcloseddate")) {
             return new DateViewField(opportunity.getExpectedcloseddate());
         } else if (propertyId.equals("currencyid")) {
-            String currency = (opportunity.getCurrency() != null) ? opportunity.getCurrency().getShortname() : "";
+            String currency = (opportunity.getCurrencyid() != null) ? opportunity.getCurrencyid() : "";
             return new DefaultViewField(currency);
         } else if (propertyId.equals("description")) {
             return new RichTextViewField(opportunity.getDescription());

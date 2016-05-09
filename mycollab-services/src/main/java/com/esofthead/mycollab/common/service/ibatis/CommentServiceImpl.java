@@ -41,6 +41,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Currency;
+import java.util.Locale;
+import java.util.Set;
+
 /**
  * @author MyCollab Ltd.
  * @since 1.0
@@ -116,5 +120,15 @@ public class CommentServiceImpl extends DefaultService<Integer, CommentWithBLOBs
         relayEmailNotification.setTypeid(record.getTypeid());
         relayEmailNotification.setExtratypeid(record.getExtratypeid());
         return relayEmailNotification;
+    }
+
+    public static void main(String[] args) {
+        Set<Currency> availableCurrencies = Currency.getAvailableCurrencies();
+        System.out.println(Currency.getInstance("VND").getDisplayName());
+//        for (Currency currency: availableCurrencies) {
+//            System.out.println("Currency: " + currency.getCurrencyCode() + "---" + currency.getDisplayName() +
+//                    "---"
+//                    + currency.getSymbol());
+//        }
     }
 }

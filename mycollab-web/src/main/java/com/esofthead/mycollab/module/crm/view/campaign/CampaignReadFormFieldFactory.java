@@ -48,8 +48,8 @@ class CampaignReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactor
         } else if (propertyId.equals("enddate")) {
             return new DateViewField(campaign.getEnddate());
         } else if (propertyId.equals("currencyid")) {
-            if (campaign.getCurrency() != null) {
-                return new DefaultViewField(campaign.getCurrency().getShortname());
+            if (campaign.getCurrencyid() != null) {
+                return new DefaultViewField(campaign.getCurrencyid());
             } else {
                 return new DefaultViewField("");
             }
