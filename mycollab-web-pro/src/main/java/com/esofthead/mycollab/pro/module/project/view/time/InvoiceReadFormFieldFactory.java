@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectUser
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.web.ui.field.CurrencyViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.DateViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.I18nFormViewField;
@@ -28,11 +29,7 @@ public class InvoiceReadFormFieldFactory extends AbstractBeanFieldGroupViewField
     protected Field<?> onCreateField(Object propertyId) {
         SimpleInvoice invoice = attachForm.getBean();
         if (Invoice.Field.currentid.equalTo(propertyId)) {
-            if (invoice.getCurrentid() != null) {
-                return new DefaultViewField(invoice.getCurrentid());
-            } else {
-                return new DefaultViewField("");
-            }
+            return new CurrencyViewField(invoice.getCurrentid());
         } else if (Invoice.Field.issuedate.equalTo(propertyId)) {
             return new DateViewField(invoice.getIssuedate());
         } else if (Invoice.Field.status.equalTo(propertyId)) {

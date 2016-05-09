@@ -26,6 +26,7 @@ import com.hp.gagawa.java.elements.Span;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -269,7 +270,12 @@ public class FieldGroupFormatter {
 
         @Override
         public String toString(String value, Boolean displayAsHtml, String msgIfBlank) {
-            return (StringUtils.isNotBlank(value)) ? value : msgIfBlank;
+            if (StringUtils.isNotBlank(value)) {
+                Currency currency = Currency.getInstance(value);
+                return new Span().appendText(value).setTitle(currency.getDisplayName(AppContext.getUserLocale())).write();
+            } else {
+                return msgIfBlank;
+            }
         }
     }
 

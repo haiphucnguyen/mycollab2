@@ -55,8 +55,7 @@ public class OpportunityReadFormFieldFactory extends AbstractBeanFieldGroupViewF
         } else if (propertyId.equals("expectedcloseddate")) {
             return new DateViewField(opportunity.getExpectedcloseddate());
         } else if (propertyId.equals("currencyid")) {
-            String currency = (opportunity.getCurrencyid() != null) ? opportunity.getCurrencyid() : "";
-            return new DefaultViewField(currency);
+            return new CurrencyViewField(opportunity.getCurrencyid());
         } else if (propertyId.equals("description")) {
             return new RichTextViewField(opportunity.getDescription());
         }
