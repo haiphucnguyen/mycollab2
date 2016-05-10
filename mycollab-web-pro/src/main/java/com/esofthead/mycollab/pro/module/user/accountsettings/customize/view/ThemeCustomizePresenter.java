@@ -21,7 +21,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.IThemeCustomizePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.IThemeCustomizeView;
-import com.esofthead.mycollab.module.user.accountsettings.customize.view.SettingContainer;
+import com.esofthead.mycollab.module.user.accountsettings.customize.view.AccountSettingContainer;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent.ResetTheme;
@@ -99,7 +99,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        SettingContainer customizeContainer = (SettingContainer) container;
+        AccountSettingContainer customizeContainer = (AccountSettingContainer) container;
         customizeContainer.gotoSubView("Theme");
 
         AccountTheme accountTheme;

@@ -12,7 +12,7 @@ import com.vaadin.ui.TabSheet;
  * @since 4.1
  */
 @ViewComponent
-public class SettingContainer extends AbstractPageView {
+public class AccountSettingContainer extends AbstractPageView {
     private static final long serialVersionUID = -1923841035522809056L;
 
     private GeneralSettingPresenter generalSettingPresenter;
@@ -22,7 +22,7 @@ public class SettingContainer extends AbstractPageView {
 
     private String selectedTabId = "";
 
-    public SettingContainer() {
+    public AccountSettingContainer() {
         settingTab = new TabSheetDecorator();
         this.addComponent(settingTab);
         this.setWidth("100%");
@@ -44,9 +44,9 @@ public class SettingContainer extends AbstractPageView {
                 TabSheet.Tab tab = ((TabSheetDecorator) event.getTabSheet()).getSelectedTabInfo();
                 String caption = tab.getCaption();
                 if ("General Settings".equals(caption) && !"General Settings".equals(selectedTabId)) {
-                    generalSettingPresenter.go(SettingContainer.this, null);
+                    generalSettingPresenter.go(AccountSettingContainer.this, null);
                 } else if ("Theme".equals(caption) && !"Theme".equals(selectedTabId)) {
-                    themeCustomizePresenter.go(SettingContainer.this, null);
+                    themeCustomizePresenter.go(AccountSettingContainer.this, null);
                 }
                 selectedTabId = "";
             }

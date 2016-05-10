@@ -21,7 +21,7 @@ public class GeneralSettingPresenter extends AbstractPresenter<GeneralSettingVie
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        SettingContainer customizeContainer = (SettingContainer) container;
+        AccountSettingContainer customizeContainer = (AccountSettingContainer) container;
         customizeContainer.gotoSubView("General Settings");
         view.displayView();
         AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);

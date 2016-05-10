@@ -20,7 +20,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingPresenter;
-import com.esofthead.mycollab.module.user.accountsettings.customize.view.SettingPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.customize.view.AccountSettingPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.setup.view.SetupPresenter;
@@ -61,7 +61,7 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
     private ProfilePresenter profilePresenter;
     private UserPermissionManagementPresenter userPermissionPresenter;
     private IBillingPresenter billingPresenter;
-    private SettingPresenter customizePresenter;
+    private AccountSettingPresenter customizePresenter;
     private SetupPresenter setupPresenter;
 
     public AccountModuleImpl() {
@@ -151,7 +151,7 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
     }
 
     private ComponentContainer constructThemeComponent() {
-        customizePresenter = PresenterResolver.getPresenter(SettingPresenter.class);
+        customizePresenter = PresenterResolver.getPresenter(AccountSettingPresenter.class);
         return customizePresenter.getView();
     }
 

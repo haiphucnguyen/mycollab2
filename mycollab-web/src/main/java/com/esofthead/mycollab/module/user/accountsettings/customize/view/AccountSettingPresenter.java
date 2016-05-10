@@ -18,11 +18,11 @@ import com.vaadin.ui.ComponentContainer;
  * @since 4.1
  */
 @ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_THEME, impliedPermissionVal = BooleanPermissionFlag.TRUE)
-public class SettingPresenter extends AbstractPresenter<SettingContainer> {
+public class AccountSettingPresenter extends AbstractPresenter<AccountSettingContainer> {
     private static final long serialVersionUID = 1L;
 
-    public SettingPresenter() {
-        super(SettingContainer.class);
+    public AccountSettingPresenter() {
+        super(AccountSettingContainer.class);
     }
 
     @Override
