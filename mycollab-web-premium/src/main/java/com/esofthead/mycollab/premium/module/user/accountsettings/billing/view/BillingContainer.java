@@ -55,10 +55,11 @@ public class BillingContainer extends AbstractPageView implements IBillingContai
                 } else {
                     with(ELabel.h2("Your license is valid until " + AppContext.formatDate(licenseInfo.getExpireDate())).withWidthUndefined());
                 }
-                GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
+                GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
                 layoutHelper.addComponent(new Label(licenseInfo.getLicenseOrg()), "Organization", 0, 0);
                 layoutHelper.addComponent(new Label(AppContext.formatDate(licenseInfo.getIssueDate())), "Issue Date", 0, 1);
-                layoutHelper.addComponent(new Label(licenseInfo.getMaxUsers() + ""), "Max Users", 0, 2);
+                layoutHelper.addComponent(new Label(AppContext.formatDate(licenseInfo.getExpireDate())), "Expire Date", 0, 2);
+                layoutHelper.addComponent(new Label(licenseInfo.getMaxUsers() + ""), "Max Users", 0, 3);
                 layoutHelper.getLayout().setWidth("600px");
                 with(layoutHelper.getLayout()).withAlign(layoutHelper.getLayout(), Alignment.TOP_CENTER);
             } catch (Exception e) {
