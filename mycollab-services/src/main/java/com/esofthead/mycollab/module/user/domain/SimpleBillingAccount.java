@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.user.domain;
 
 import com.esofthead.mycollab.core.arguments.NotBindable;
+import com.esofthead.mycollab.i18n.LocalizationHelper;
 import com.google.common.base.MoreObjects;
 
 import java.text.SimpleDateFormat;
@@ -91,6 +92,9 @@ public class SimpleBillingAccount extends BillingAccount {
     }
 
     public Locale getLocaleInstance() {
+        if (localeInstance == null) {
+            localeInstance = LocalizationHelper.getLocaleInstance(getDefaultlanguagetag());
+        }
         return localeInstance;
     }
 }

@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.schedule.email.user.impl
 
 import java.text.{DateFormat, SimpleDateFormat}
-import java.util.{Arrays, Calendar, TimeZone}
+import java.util.{Arrays, Calendar, Locale, TimeZone}
 
 import com.esofthead.mycollab.common.GenericLinkUtils
 import com.esofthead.mycollab.common.domain.MailRecipientField
@@ -94,7 +94,10 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("userName", user.getUsername)
       val link: String = GenericLinkUtils.generateSiteUrlByAccountId(account.getId) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
       contentGenerator.putVariable("link", link)
-      extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName, Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)), null, null, contentGenerator.parseString("Your trial has been ended"), contentGenerator.parseFile(INFORM_EXPIRE_ACCOUNT_TEMPLATE, SiteConfiguration.getDefaultLocale), null)
+      extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName,
+        Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)),
+        null, null, contentGenerator.parseString("Your trial has been ended"),
+        contentGenerator.parseFile(INFORM_EXPIRE_ACCOUNT_TEMPLATE, Locale.US), null)
     }
   }
 
@@ -115,7 +118,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName,
         Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)), null, null,
         contentGenerator.parseString("Your trial is about to end"),
-        contentGenerator.parseFile(INFORM_FILLING_BILLING_INFORMATION_TEMPLATE, SiteConfiguration.getDefaultLocale), null)
+        contentGenerator.parseFile(INFORM_FILLING_BILLING_INFORMATION_TEMPLATE, Locale.US), null)
     }
   }
 }

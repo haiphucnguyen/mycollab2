@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -103,7 +104,7 @@ public class CampaignController {
                 extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail(), SiteConfiguration.getDefaultSiteName(),
                         Arrays.asList(new MailRecipientField(email, firstname + " " + lastname)), null, null, "MyCollab is " +
                                 "ready for download", contentGenerator.parseFile("templates/email/downloadInfo.mt",
-                                SiteConfiguration.getDefaultLocale()), null);
+                                Locale.US), null);
             }
         }.start();
 

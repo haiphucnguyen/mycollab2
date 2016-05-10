@@ -148,7 +148,7 @@ public class AppContext implements Serializable {
         billingAccount = billingAc;
 
         String language = session.getLanguage();
-        userLocale = LocaleHelper.toLocale(language);
+        userLocale = language != null ? LocalizationHelper.getLocaleInstance(language) : billingAccount.getLocaleInstance();
         VaadinSession.getCurrent().setLocale(userLocale);
         messageHelper = LocalizationHelper.getMessageConveyor(userLocale);
 
