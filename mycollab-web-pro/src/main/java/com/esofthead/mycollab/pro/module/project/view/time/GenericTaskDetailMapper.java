@@ -29,7 +29,7 @@ public class GenericTaskDetailMapper {
 
     public GenericTaskDetailMapper(String type, int typeId) {
         int sAccountId = AppContext.getAccountId();
-        TimeZone timeZone = AppContext.getUserTimezone();
+        TimeZone timeZone = AppContext.getUserTimeZone();
 
         if (ProjectTypeConstants.BUG.equals(type)) {
             BugService service = ApplicationContextUtil.getSpringBean(BugService.class);
@@ -67,7 +67,7 @@ public class GenericTaskDetailMapper {
             SimpleStandupReport standup = service.findById(typeId, sAccountId);
             if (standup != null) {
                 name = Jsoup.parse(DateTimeUtils.convertToStringWithUserTimeZone(
-                        standup.getCreatedtime(), AppContext.getUserDateFormat().getDateTimeFormat(), timeZone)).html();
+                        standup.getCreatedtime(), AppContext.getDateFormat().toPattern(), timeZone)).html();
             }
         }
     }

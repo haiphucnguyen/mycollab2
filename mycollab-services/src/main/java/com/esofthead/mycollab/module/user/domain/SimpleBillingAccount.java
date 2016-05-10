@@ -17,6 +17,11 @@
 package com.esofthead.mycollab.module.user.domain;
 
 import com.esofthead.mycollab.core.arguments.NotBindable;
+import com.esofthead.mycollab.core.utils.StringUtils;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /**
  * @author MyCollab Ltd.
@@ -28,11 +33,82 @@ public class SimpleBillingAccount extends BillingAccount {
     @NotBindable
     private BillingPlan billingPlan;
 
+    @NotBindable
+    private SimpleDateFormat dateTimeFormat;
+
+    @NotBindable
+    private SimpleDateFormat dateFormatInstance;
+
+    @NotBindable
+    private SimpleDateFormat shortDateFormatInstance;
+
+    @NotBindable
+    private SimpleDateFormat humanDateFormatInstance;
+
+    @NotBindable
+    private Locale localeInstance;
+
     public BillingPlan getBillingPlan() {
         return billingPlan;
     }
 
     public void setBillingPlan(BillingPlan billingPlan) {
         this.billingPlan = billingPlan;
+    }
+
+    @Override
+    public void setDefaultyymmddformat(String defaultyymmddformat) {
+        if (StringUtils.isBlank(defaultyymmddformat)) {
+            super.setDefaultyymmddformat("MM/dd/yyyy");
+        } else {
+            super.setDefaultyymmddformat(defaultyymmddformat);
+        }
+        dateFormatInstance = new SimpleDateFormat(getDefaultyymmddformat());
+        dateTimeFormat = new SimpleDateFormat(getDefaultyymmddformat() + "HH:mm:ss z");
+    }
+
+    @Override
+    public void setDefaultmmddformat(String defaultmmddformat) {
+        if (StringUtils.isBlank(defaultmmddformat)) {
+            super.setDefaultmmddformat("MM/dd");
+        } else {
+            super.setDefaultmmddformat(defaultmmddformat);
+        }
+        shortDateFormatInstance = new SimpleDateFormat(getDefaultmmddformat());
+    }
+
+    @Override
+    public void setDefaulthumandateformat(String defaulthumandateformat) {
+        if (StringUtils.isBlank(defaulthumandateformat)) {
+            super.setDefaulthumandateformat("E, dd MMM yyyy");
+        } else {
+            super.setDefaulthumandateformat(defaulthumandateformat);
+        }
+        humanDateFormatInstance = new SimpleDateFormat(getDefaulthumandateformat());
+    }
+
+    @Override
+    public void setDefaultlanguagetag(String defaultlanguagetag) {
+        super.setDefaultlanguagetag(defaultlanguagetag);
+    }
+
+    public SimpleDateFormat getDateFormatInstance() {
+        return dateFormatInstance;
+    }
+
+    public SimpleDateFormat getShortDateFormatInstance() {
+        return shortDateFormatInstance;
+    }
+
+    public SimpleDateFormat getHumanDateFormatInstance() {
+        return humanDateFormatInstance;
+    }
+
+    public SimpleDateFormat getDateTimeFormatInstance() {
+        return dateTimeFormat;
+    }
+
+    public Locale getLocaleInstance() {
+        return localeInstance;
     }
 }

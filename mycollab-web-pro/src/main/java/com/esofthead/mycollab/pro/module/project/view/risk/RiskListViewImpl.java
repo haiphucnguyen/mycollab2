@@ -104,7 +104,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
                     }
                 }
                 b.setDescription(ProjectTooltipGenerator.generateToolTipRisk(AppContext.getUserLocale(), risk,
-                        AppContext.getSiteUrl(), AppContext.getUserTimezone(), false));
+                        AppContext.getSiteUrl(), AppContext.getUserTimeZone(), false));
                 return b;
 
             }

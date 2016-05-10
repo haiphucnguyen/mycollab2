@@ -157,4 +157,17 @@ public class LocalizationHelper {
         }
         return reader;
     }
+
+    public static final Locale[] getAvailableLocales() {
+        Locale[] locales = Locale.getAvailableLocales();
+        return locales;
+    }
+
+    public final static Locale getLocaleInstance(String languageTag) {
+        try {
+            return Locale.forLanguageTag(languageTag);
+        } catch (Exception e) {
+            return Locale.US;
+        }
+    }
 }

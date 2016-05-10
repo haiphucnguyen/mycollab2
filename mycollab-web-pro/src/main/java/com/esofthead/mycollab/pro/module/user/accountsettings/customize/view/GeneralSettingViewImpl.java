@@ -4,9 +4,13 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.utils.CurrencyUtils;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
+import com.esofthead.mycollab.i18n.LocalizationHelper;
 import com.esofthead.mycollab.module.file.service.AccountFavIconService;
+import com.esofthead.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -15,11 +19,13 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AccountAssetsResolver;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.FormContainer;
 import com.esofthead.mycollab.vaadin.web.ui.ServiceMenu;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.web.CustomLayoutExt;
+import com.google.common.base.MoreObjects;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
@@ -33,6 +39,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Currency;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 /**
@@ -68,13 +77,38 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
 
         generalSettingHeader.with(headerLbl, editBtn).alignAll(Alignment.MIDDLE_LEFT);
 
-
-        GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
-        gridFormLayoutHelper.addComponent(new Label(billingAccount.getSitename()), "Site Name", 0, 0);
+        GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, 4, "190px");
+        gridFormLayoutHelper.addComponent(new Label(billingAccount.getSitename()),
+                AppContext.getMessage(AdminI18nEnum.FORM_SITE_NAME), 0, 0);
         gridFormLayoutHelper.addComponent(new Label(String.format("https://%s.mycollab.com", billingAccount
-                .getSubdomain())), "Site Address", 0, 1);
-        gridFormLayoutHelper.addComponent(new Label(TimezoneMapper.getTimezoneExt(
-                billingAccount.getDefaulttimezone()).getDisplayName()), "Default Time Zone", 0, 2);
+                .getSubdomain())), AppContext.getMessage(AdminI18nEnum.FORM_SITE_ADDRESS), 0, 1);
+        gridFormLayoutHelper.addComponent(new Label(TimezoneMapper.getTimezoneExt(billingAccount.getDefaulttimezone()).getDisplayName()),
+                AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_TIMEZONE), 0, 2);
+        Currency defaultCurrency = CurrencyUtils.getInstance(billingAccount.getDefaultcurrencyid());
+        gridFormLayoutHelper.addComponent(new ELabel(defaultCurrency.getDisplayName(AppContext.getUserLocale())),
+                AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_CURRENCY), 0, 3);
+
+        Date now = new GregorianCalendar().getTime();
+        String defaultFullDateFormat = MoreObjects.firstNonNull(billingAccount.getDefaultyymmddformat(), "yyyy/MM/dd");
+        gridFormLayoutHelper.addComponent(new Label(String.format("%s (%s)",
+                DateTimeUtils.getFullDateFormat(defaultFullDateFormat).format(now), defaultFullDateFormat)),
+                AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_YYMMDD_FORMAT), 1, 0);
+
+        String defaultShortDateFormat = MoreObjects.firstNonNull(billingAccount.getDefaultyymmddformat(), "MM/dd");
+        gridFormLayoutHelper.addComponent(new Label(String.format("%s (%s)",
+                DateTimeUtils.getFullDateFormat(defaultShortDateFormat).format(now), defaultShortDateFormat)),
+                AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_MMDD_FORMAT), 1, 1);
+
+        String defaultLongDateFormat = MoreObjects.firstNonNull(billingAccount.getDefaulthumandateformat(), "E, dd MMM yyyy");
+        gridFormLayoutHelper.addComponent(new Label(String.format("%s (%s)",
+                DateTimeUtils.getFullDateFormat(defaultLongDateFormat).format(now), defaultLongDateFormat)),
+                AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_HUMAN_DATE_FORMAT), 1, 2);
+
+        gridFormLayoutHelper.addComponent(new Label(LocalizationHelper.getLocaleInstance(billingAccount
+                        .getDefaultlanguagetag()).getDisplayLanguage(AppContext.getUserLocale())),
+                AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_LANGUAGE), 1, 3);
+
+
         formContainer.addSection(new CssLayout(generalSettingHeader), gridFormLayoutHelper.getLayout());
 
         buildLogoPanel();
@@ -134,8 +168,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
                 if (mimeType.equals("image/jpeg")) {
                     imageData = ImageUtil.convertJpgToPngFormat(imageData);
                     if (imageData == null) {
-                        throw new UserInvalidInputException(
-                                "Do not support image format for logo");
+                        throw new UserInvalidInputException("Do not support image format");
                     } else {
                         mimeType = "image/png";
                     }
@@ -144,18 +177,17 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
                 if (mimeType.equals("image/png")) {
                     UI.getCurrent().addWindow(new LogoEditWindow(imageData));
                 } else {
-                    throw new UserInvalidInputException(
-                            "Upload file does not have valid image format. The supported formats are jpg/png");
+                    throw new UserInvalidInputException("Upload file does not have valid image format. The supported formats are jpg/png");
                 }
             }
         };
-        logoUploadField.setButtonCaption("Change");
+        logoUploadField.setButtonCaption(AppContext.getMessage(GenericI18Enum.BUTTON_CHANGE));
         logoUploadField.addStyleName("upload-field");
         logoUploadField.setSizeUndefined();
         logoUploadField.setFieldType(UploadField.FieldType.BYTE_ARRAY);
         logoUploadField.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
-        Button resetButton = new Button("Reset", new Button.ClickListener() {
+        Button resetButton = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_RESET), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 BillingAccountService billingAccountService = ApplicationContextUtil.getSpringBean
@@ -197,7 +229,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
                 if (mimeType.equals("image/jpeg")) {
                     imageData = ImageUtil.convertJpgToPngFormat(imageData);
                     if (imageData == null) {
-                        throw new UserInvalidInputException("Do not support image format for logo");
+                        throw new UserInvalidInputException("Do not support image format");
                     } else {
                         mimeType = "image/png";
                     }
@@ -220,13 +252,13 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
                 }
             }
         };
-        favIconUploadField.setButtonCaption("Change");
+        favIconUploadField.setButtonCaption(AppContext.getMessage(GenericI18Enum.BUTTON_CHANGE));
         favIconUploadField.addStyleName("upload-field");
         favIconUploadField.setSizeUndefined();
         favIconUploadField.setFieldType(UploadField.FieldType.BYTE_ARRAY);
         favIconUploadField.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
-        Button resetButton = new Button("Reset", new Button.ClickListener() {
+        Button resetButton = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_RESET), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 BillingAccountService billingAccountService = ApplicationContextUtil.getSpringBean(BillingAccountService.class);

@@ -53,6 +53,7 @@ Version 5.3.1
 * [Premium] Manage invoices per client
 * Add the new task navigation buttons
 * Add the new issue navigation buttons
+* Site administrator can define the default timezone, language, date formats
 * Other minor improvements
 
 **Bug Fixes**

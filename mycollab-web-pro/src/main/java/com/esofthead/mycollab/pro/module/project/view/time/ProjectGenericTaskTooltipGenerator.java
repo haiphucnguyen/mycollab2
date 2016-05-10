@@ -29,7 +29,7 @@ class ProjectGenericTaskTooltipGenerator {
     public ProjectGenericTaskTooltipGenerator(String type, int typeId) {
         html = "";
         int sAccountId = AppContext.getAccountId();
-        TimeZone timeZone = AppContext.getUserTimezone();
+        TimeZone timeZone = AppContext.getUserTimeZone();
         String siteURL = AppContext.getSiteUrl();
 
         if (ProjectTypeConstants.BUG.equals(type)) {

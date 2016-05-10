@@ -215,7 +215,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         taskLayout.addComponent(attachTaskBtn);
     }
 
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(AppContext.getUserDateFormat().getDayMonthFormat());
+    private SimpleDateFormat simpleDateFormat = AppContext.getShortDateFormat();
 
     private void updateTimeTableHeader() {
         Date monday = DateTimeUtils.getBounceDateofWeek(selectedDate)[0];

@@ -195,7 +195,6 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
 
             fromDateField = new PopupDateFieldExt();
             fromDateField.setResolution(Resolution.DAY);
-            fromDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
             selectionLayout.addComponent(fromDateField, 1, 0);
 
             Label toLb = new Label("To:");
@@ -204,7 +203,6 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
 
             toDateField = new PopupDateFieldExt();
             toDateField.setResolution(Resolution.DAY);
-            toDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
             selectionLayout.addComponent(toDateField, 3, 0);
 
             Label groupLb = new Label("Group:");

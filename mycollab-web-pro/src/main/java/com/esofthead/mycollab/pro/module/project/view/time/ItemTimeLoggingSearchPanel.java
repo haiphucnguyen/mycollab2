@@ -122,11 +122,9 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
             Date[] boundWeekDays = DateTimeUtils.getBounceDateofWeek(new Date());
             startDateField = new DateFieldExt();
-            startDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
             startDateField.setResolution(Resolution.DAY);
             startDateField.setValue(boundWeekDays[0]);
             endDateField = new DateFieldExt();
-            endDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
             endDateField.setResolution(Resolution.DAY);
             endDateField.setValue(boundWeekDays[1]);
 
