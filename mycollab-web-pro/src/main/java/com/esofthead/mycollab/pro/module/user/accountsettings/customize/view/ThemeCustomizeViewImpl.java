@@ -4,6 +4,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
+import com.esofthead.mycollab.module.user.accountsettings.customize.view.IThemeCustomizeView;
 import com.esofthead.mycollab.module.user.accountsettings.localization.SettingCommonI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
@@ -38,7 +39,7 @@ import java.util.Iterator;
  */
 
 @ViewComponent
-public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCustomizeView {
+public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCustomizeView {
     private static final long serialVersionUID = 1181278209875228643L;
 
     private AccountTheme accountTheme;

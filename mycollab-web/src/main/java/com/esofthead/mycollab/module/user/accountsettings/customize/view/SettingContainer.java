@@ -1,22 +1,5 @@
-/**
- * This file is part of mycollab-web-premium.
- *
- * mycollab-web-premium is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web-premium is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web-premium.  If not, see <http://www.gnu.org/licenses/>.
- */
-package com.esofthead.mycollab.pro.module.user.accountsettings.customize.view;
+package com.esofthead.mycollab.module.user.accountsettings.customize.view;
 
-import com.esofthead.mycollab.module.user.accountsettings.customize.view.ISettingContainer;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -29,11 +12,11 @@ import com.vaadin.ui.TabSheet;
  * @since 4.1
  */
 @ViewComponent
-public class SettingContainer extends AbstractPageView implements ISettingContainer {
+public class SettingContainer extends AbstractPageView {
     private static final long serialVersionUID = -1923841035522809056L;
 
     private GeneralSettingPresenter generalSettingPresenter;
-    private ThemeCustomizePresenter themeCustomizePresenter;
+    private IThemeCustomizePresenter themeCustomizePresenter;
 
     private final TabSheetDecorator settingTab;
 
@@ -48,10 +31,9 @@ public class SettingContainer extends AbstractPageView implements ISettingContai
 
     private void buildComponents() {
         generalSettingPresenter = PresenterResolver.getPresenter(GeneralSettingPresenter.class);
-
         settingTab.addTab(this.generalSettingPresenter.getView(), "General Settings");
 
-        themeCustomizePresenter = PresenterResolver.getPresenter(ThemeCustomizePresenter.class);
+        themeCustomizePresenter = PresenterResolver.getPresenter(IThemeCustomizePresenter.class);
         settingTab.addTab(this.themeCustomizePresenter.getView(), "Theme");
 
         settingTab.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {

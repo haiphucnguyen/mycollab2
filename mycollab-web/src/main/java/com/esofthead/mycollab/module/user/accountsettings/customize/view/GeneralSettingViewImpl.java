@@ -1,10 +1,9 @@
-package com.esofthead.mycollab.pro.module.user.accountsettings.customize.view;
+package com.esofthead.mycollab.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
-import com.esofthead.mycollab.core.utils.CurrencyUtils;
 import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.i18n.LocalizationHelper;

@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.common.TableViewField;
-import com.esofthead.mycollab.common.XStreamJsonDeSerializer;
-import com.esofthead.mycollab.module.crm.view.contact.ContactTableFieldDef;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
@@ -35,12 +32,5 @@ public class SettingPresenter extends AbstractPresenter<SettingView> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         view.display();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(XStreamJsonDeSerializer.toJson(ContactTableFieldDef.account()));
-        TableViewField o = (TableViewField)XStreamJsonDeSerializer.fromJson("{\"com.esofthead.mycollab.common" +
-                ".TableViewField\":{\"descKey\":{\"@class\":\"com.esofthead.mycollab.module.crm.i18n.ContactI18nEnum\",\"$\":\"com.esofthead.mycollab.module.crm.i18n.ContactI18nEnum:FORM_ACCOUNTS\"},\"field\":\"accountName\",\"defaultWidth\":200}}");
-        System.out.println("O: " + o.getDescKey());
     }
 }

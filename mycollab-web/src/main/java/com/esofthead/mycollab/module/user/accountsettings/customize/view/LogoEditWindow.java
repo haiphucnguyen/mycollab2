@@ -1,20 +1,4 @@
-/**
- * This file is part of mycollab-web-premium.
- *
- * mycollab-web-premium is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web-premium is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web-premium.  If not, see <http://www.gnu.org/licenses/>.
- */
-package com.esofthead.mycollab.pro.module.user.accountsettings.customize.view;
+package com.esofthead.mycollab.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -25,7 +9,6 @@ import com.esofthead.mycollab.module.file.service.AccountLogoService;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.ByteArrayImageResource;
@@ -54,7 +37,6 @@ import java.io.IOException;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-@ViewComponent
 public class LogoEditWindow extends Window {
     private static final long serialVersionUID = -5294741083557671011L;
 
@@ -77,7 +59,6 @@ public class LogoEditWindow extends Window {
         editPhoto(imageData);
     }
 
-    @SuppressWarnings("serial")
     private void editPhoto(byte[] imageData) {
         try {
             originalImage = ImageIO.read(new ByteArrayInputStream(imageData));
@@ -184,8 +165,7 @@ public class LogoEditWindow extends Window {
 
     private void displayPreviewImage() {
         if (scaleImageData != null && scaleImageData.length > 0) {
-            ByteArrayImageResource previewResource = new ByteArrayImageResource(
-                    scaleImageData, "image/png");
+            ByteArrayImageResource previewResource = new ByteArrayImageResource(scaleImageData, "image/png");
             previewImage.setSource(previewResource);
         }
     }
