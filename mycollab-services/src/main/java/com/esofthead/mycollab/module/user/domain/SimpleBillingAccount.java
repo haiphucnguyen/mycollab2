@@ -17,10 +17,12 @@
 package com.esofthead.mycollab.module.user.domain;
 
 import com.esofthead.mycollab.core.arguments.NotBindable;
+import com.esofthead.mycollab.core.utils.CurrencyUtils;
 import com.esofthead.mycollab.i18n.LocalizationHelper;
 import com.google.common.base.MoreObjects;
 
 import java.text.SimpleDateFormat;
+import java.util.Currency;
 import java.util.Locale;
 
 /**
@@ -34,7 +36,7 @@ public class SimpleBillingAccount extends BillingAccount {
     private BillingPlan billingPlan;
 
     @NotBindable
-    private SimpleDateFormat dateTimeFormat;
+    private SimpleDateFormat dateTimeFormatInstance;
 
     @NotBindable
     private SimpleDateFormat dateFormatInstance;
@@ -44,6 +46,9 @@ public class SimpleBillingAccount extends BillingAccount {
 
     @NotBindable
     private SimpleDateFormat humanDateFormatInstance;
+
+    @NotBindable
+    private Currency currencyInstance;
 
     @NotBindable
     private Locale localeInstance;
@@ -84,11 +89,11 @@ public class SimpleBillingAccount extends BillingAccount {
     }
 
     public SimpleDateFormat getDateTimeFormatInstance() {
-        if (dateTimeFormat == null) {
-            dateTimeFormat = new SimpleDateFormat(MoreObjects.firstNonNull(getDefaultyymmddformat() + " HH:mm:ss Z",
+        if (dateTimeFormatInstance == null) {
+            dateTimeFormatInstance = new SimpleDateFormat(MoreObjects.firstNonNull(getDefaultyymmddformat() + " HH:mm:ss Z",
                     "MM/dd/yyyy HH:mm:ss Z"));
         }
-        return dateTimeFormat;
+        return dateTimeFormatInstance;
     }
 
     public Locale getLocaleInstance() {
@@ -96,5 +101,12 @@ public class SimpleBillingAccount extends BillingAccount {
             localeInstance = LocalizationHelper.getLocaleInstance(getDefaultlanguagetag());
         }
         return localeInstance;
+    }
+
+    public Currency getCurrencyInstance() {
+        if (currencyInstance == null) {
+            currencyInstance = CurrencyUtils.getInstance(getDefaultcurrencyid());
+        }
+        return currencyInstance;
     }
 }

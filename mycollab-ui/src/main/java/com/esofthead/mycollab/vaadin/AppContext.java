@@ -48,6 +48,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -334,6 +335,10 @@ public class AppContext implements Serializable {
 
     public static final SimpleDateFormat getLongDateFormat() {
         return getInstance().billingAccount.getHumanDateFormatInstance();
+    }
+
+    public static final Currency getDefaultCurrency() {
+        return getInstance().billingAccount.getCurrencyInstance();
     }
 
     /**

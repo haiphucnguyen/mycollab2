@@ -82,7 +82,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
                 .getSubdomain())), AppContext.getMessage(AdminI18nEnum.FORM_SITE_ADDRESS), 0, 1);
         gridFormLayoutHelper.addComponent(new Label(TimezoneMapper.getTimezoneExt(billingAccount.getDefaulttimezone()).getDisplayName()),
                 AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_TIMEZONE), 0, 2);
-        Currency defaultCurrency = CurrencyUtils.getInstance(billingAccount.getDefaultcurrencyid());
+        Currency defaultCurrency = billingAccount.getCurrencyInstance();
         gridFormLayoutHelper.addComponent(new ELabel(defaultCurrency.getDisplayName(AppContext.getUserLocale())),
                 AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_CURRENCY), 0, 3);
 
