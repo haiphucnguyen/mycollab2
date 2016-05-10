@@ -6,7 +6,6 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
-import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePopupFieldFactory;
@@ -15,6 +14,7 @@ import com.esofthead.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
@@ -22,7 +22,6 @@ import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.PopupView;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -87,7 +86,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
             }
         };
         builder.withBean(milestone).withBindProperty("startdate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(MilestoneService.class))
+                .withField(new DateFieldExt()).withService(ApplicationContextUtil.getSpringBean(MilestoneService.class))
                 .withValue(milestone.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
@@ -110,7 +109,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
             }
         };
         builder.withBean(milestone).withBindProperty("enddate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(MilestoneService.class))
+                .withField(new DateFieldExt()).withService(ApplicationContextUtil.getSpringBean(MilestoneService.class))
                 .withValue(milestone.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();

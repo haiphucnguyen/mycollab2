@@ -17,10 +17,8 @@
 package com.esofthead.mycollab.module.user.domain;
 
 import com.esofthead.mycollab.core.arguments.NotBindable;
-import com.esofthead.mycollab.core.utils.StringUtils;
 import com.google.common.base.MoreObjects;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -86,8 +84,8 @@ public class SimpleBillingAccount extends BillingAccount {
 
     public SimpleDateFormat getDateTimeFormatInstance() {
         if (dateTimeFormat == null) {
-            dateTimeFormat = new SimpleDateFormat(MoreObjects.firstNonNull(getDefaultyymmddformat(), "MM/dd/yyyy " +
-                    "HH:mm:ss z"));
+            dateTimeFormat = new SimpleDateFormat(MoreObjects.firstNonNull(getDefaultyymmddformat() + " HH:mm:ss Z",
+                    "MM/dd/yyyy HH:mm:ss Z"));
         }
         return dateTimeFormat;
     }

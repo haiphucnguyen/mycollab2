@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.view.task.TaskAddWindow;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.pro.module.project.view.risk.RiskAddWindow;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -27,7 +28,7 @@ public class AssignmentAddWindow extends Window {
 
     public AssignmentAddWindow(Date date, final Integer prjId) {
         super("New assignment");
-        final DateField dateSelection = new DateField(null, date);
+        final DateFieldExt dateSelection = new DateFieldExt(null, date);
         final ComboBox typeSelection = new ComboBox();
         typeSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
         typeSelection.addItems("Task", "Bug", "Milestone", "Risk");

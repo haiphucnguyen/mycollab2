@@ -47,7 +47,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -429,7 +428,7 @@ public class AppContext implements Serializable {
      * @return
      */
     public static String formatDateTime(Date date) {
-        return getDateTimeFormat().format(date);
+        return date == null ? "" : getDateTimeFormat().format(date);
     }
 
     /**
@@ -437,7 +436,7 @@ public class AppContext implements Serializable {
      * @return
      */
     public static String formatDate(Date date) {
-        return getDateFormat().format(date);
+        return date == null ? "" : getDateFormat().format(date);
     }
 
     /**
@@ -446,11 +445,7 @@ public class AppContext implements Serializable {
      * @return
      */
     public static String formatDate(Date date, String textIfDateIsNull) {
-        if (date == null) {
-            return textIfDateIsNull;
-        } else {
-            return formatDate(date);
-        }
+        return date == null ? textIfDateIsNull : formatDate(date);
     }
 
     public static String formatPrettyTime(Date date) {
@@ -458,7 +453,7 @@ public class AppContext implements Serializable {
     }
 
     public static String formatShortDate(Date date) {
-        return getShortDateFormat().format(date);
+        return date == null ? "" : getShortDateFormat().format(date);
     }
 
     public static String formatDuration(Date date) {

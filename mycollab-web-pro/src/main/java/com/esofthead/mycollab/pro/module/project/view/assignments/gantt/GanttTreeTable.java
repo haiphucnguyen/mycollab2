@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.ui.components.HumanTimeConverter;
 import com.esofthead.mycollab.pro.module.project.events.GanttEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
@@ -122,13 +123,13 @@ public class GanttTreeTable extends TreeTable {
                                 "beneath this row to change its value");
                     }
                 } else if ("startDate".equals(propertyId) || "endDate".equals(propertyId)) {
-                    field = new DateField();
+                    field = new DateFieldExt();
                     field.addStyleName(ValoTheme.DATEFIELD_SMALL);
-                    ((DateField) field).setConverter(new LocalDateConverter());
-                    ((DateField) field).setImmediate(true);
+                    ((DateFieldExt) field).setConverter(new LocalDateConverter());
+                    ((DateFieldExt) field).setImmediate(true);
                     if (ganttItem.hasSubTasks()) {
                         field.setEnabled(false);
-                        ((DateField) field).setDescription("Because this row has sub-tasks, this cell " +
+                        ((DateFieldExt) field).setDescription("Because this row has sub-tasks, this cell " +
                                 "is a summary value and can not be edited directly. You can edit cells " +
                                 "beneath this row to change its value");
                     }

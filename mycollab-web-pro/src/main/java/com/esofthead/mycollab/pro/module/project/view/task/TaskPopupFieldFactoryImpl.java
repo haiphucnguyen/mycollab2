@@ -39,6 +39,7 @@ import com.esofthead.mycollab.pro.module.project.ui.components.WatchersMultiSele
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.LazyPopupView;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -48,7 +49,6 @@ import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
 import com.vaadin.ui.TextField;
@@ -207,7 +207,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("deadline").withCaption(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getDeadline())
+                .withField(new DateFieldExt()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getDeadline())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -229,7 +229,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("startdate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStartdate())
+                .withField(new DateFieldExt()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -251,7 +251,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("enddate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getEnddate())
+                .withField(new DateFieldExt()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -347,7 +347,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
 
     private static class TaskBillableHoursPopupField extends LazyPopupView {
         private TextField timeInput = new TextField();
-        private DateField dateField;
+        private DateFieldExt dateField;
         private SimpleTask task;
         private boolean isBillable;
 
@@ -372,7 +372,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 String title = (isBillable) ? "Add billable hours" : "Add non billable hours";
                 Label headerLbl = new Label(title, ContentMode.HTML);
                 headerLbl.addStyleName(ValoTheme.LABEL_H3);
-                dateField = new DateField();
+                dateField = new DateFieldExt();
                 dateField.setValue(new GregorianCalendar().getTime());
                 layout.with(headerLbl, timeInput);
                 Label dateCaption = new Label("For date");

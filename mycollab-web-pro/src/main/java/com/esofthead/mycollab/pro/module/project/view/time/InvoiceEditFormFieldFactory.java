@@ -11,10 +11,10 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemb
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
+import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -45,7 +45,7 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
             field.setRequiredError("Invoice No/ID must not be null");
             return field;
         } else if (Invoice.Field.issuedate.equalTo(propertyId)) {
-            DateField field = new DateField();
+            DateFieldExt field = new DateFieldExt();
             field.setRequired(true);
             field.setRequiredError("Issue date must not be null");
             return field;
