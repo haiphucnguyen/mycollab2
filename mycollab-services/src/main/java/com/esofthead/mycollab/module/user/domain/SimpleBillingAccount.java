@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.user.domain;
 
 import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.google.common.base.MoreObjects;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -57,54 +58,37 @@ public class SimpleBillingAccount extends BillingAccount {
     }
 
     @Override
-    public void setDefaultyymmddformat(String defaultyymmddformat) {
-        if (StringUtils.isBlank(defaultyymmddformat)) {
-            super.setDefaultyymmddformat("MM/dd/yyyy");
-        } else {
-            super.setDefaultyymmddformat(defaultyymmddformat);
-        }
-        dateFormatInstance = new SimpleDateFormat(getDefaultyymmddformat());
-        dateTimeFormat = new SimpleDateFormat(getDefaultyymmddformat() + "HH:mm:ss z");
-    }
-
-    @Override
-    public void setDefaultmmddformat(String defaultmmddformat) {
-        if (StringUtils.isBlank(defaultmmddformat)) {
-            super.setDefaultmmddformat("MM/dd");
-        } else {
-            super.setDefaultmmddformat(defaultmmddformat);
-        }
-        shortDateFormatInstance = new SimpleDateFormat(getDefaultmmddformat());
-    }
-
-    @Override
-    public void setDefaulthumandateformat(String defaulthumandateformat) {
-        if (StringUtils.isBlank(defaulthumandateformat)) {
-            super.setDefaulthumandateformat("E, dd MMM yyyy");
-        } else {
-            super.setDefaulthumandateformat(defaulthumandateformat);
-        }
-        humanDateFormatInstance = new SimpleDateFormat(getDefaulthumandateformat());
-    }
-
-    @Override
     public void setDefaultlanguagetag(String defaultlanguagetag) {
         super.setDefaultlanguagetag(defaultlanguagetag);
     }
 
     public SimpleDateFormat getDateFormatInstance() {
+        if (dateFormatInstance == null) {
+            dateFormatInstance = new SimpleDateFormat(MoreObjects.firstNonNull(getDefaultyymmddformat(), "MM/dd/yyyy"));
+        }
         return dateFormatInstance;
     }
 
     public SimpleDateFormat getShortDateFormatInstance() {
+        if (shortDateFormatInstance == null) {
+            shortDateFormatInstance = new SimpleDateFormat(MoreObjects.firstNonNull(getDefaultmmddformat(), "MM/dd"));
+        }
         return shortDateFormatInstance;
     }
 
     public SimpleDateFormat getHumanDateFormatInstance() {
+        if (humanDateFormatInstance == null) {
+            humanDateFormatInstance = new SimpleDateFormat(MoreObjects.firstNonNull(getDefaulthumandateformat(), "E, " +
+                    "dd MMM yyyy"));
+        }
         return humanDateFormatInstance;
     }
 
     public SimpleDateFormat getDateTimeFormatInstance() {
+        if (dateTimeFormat == null) {
+            dateTimeFormat = new SimpleDateFormat(MoreObjects.firstNonNull(getDefaultyymmddformat(), "MM/dd/yyyy " +
+                    "HH:mm:ss z"));
+        }
         return dateTimeFormat;
     }
 

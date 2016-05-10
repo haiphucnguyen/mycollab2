@@ -12,23 +12,20 @@ import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.ui.components.LanguageComboBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.TimeZoneSelectionField;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
-import com.google.common.base.MoreObjects;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator;
+import com.vaadin.event.FieldEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -99,11 +96,11 @@ class AccountInfoChangeWindow extends Window {
                 } else if (BillingAccount.Field.defaultcurrencyid.equalTo(propertyId)) {
                     return new CurrencyComboBoxField();
                 } else if (BillingAccount.Field.defaultyymmddformat.equalTo(propertyId)) {
-                    return new DateFormatField(MoreObjects.firstNonNull(billingAccount.getDefaultyymmddformat(), "MM/dd/yyyy"));
+                    return new DateFormatField(billingAccount.getDateFormatInstance().toPattern());
                 } else if (BillingAccount.Field.defaultmmddformat.equalTo(propertyId)) {
-                    return new DateFormatField(MoreObjects.firstNonNull(billingAccount.getDefaultmmddformat(), "MM/dd"));
+                    return new DateFormatField(billingAccount.getShortDateFormatInstance().toPattern());
                 } else if (BillingAccount.Field.defaulthumandateformat.equalTo(propertyId)) {
-                    return new DateFormatField(MoreObjects.firstNonNull(billingAccount.getDefaulthumandateformat(), "E, dd MMM yyyy"));
+                    return new DateFormatField(billingAccount.getHumanDateFormatInstance().toPattern());
                 } else if (BillingAccount.Field.defaultlanguagetag.equalTo(propertyId)) {
                     return new LanguageComboBox();
                 }
@@ -121,7 +118,7 @@ class AccountInfoChangeWindow extends Window {
                 if (editForm.validateForm()) {
                     BillingAccountService billingAccountService = ApplicationContextUtil.getSpringBean(BillingAccountService.class);
                     billingAccountService.updateSelectiveWithSession(billingAccount, AppContext.getUsername());
-                    AccountInfoChangeWindow.this.close();
+                    close();
                     String siteUrl = SiteConfiguration.getSiteUrl(billingAccount.getSubdomain());
                     String assignExec = String.format("window.location.assign(\'%s\');", siteUrl);
                     Page.getCurrent().getJavaScript().execute(assignExec);
@@ -182,16 +179,38 @@ class AccountInfoChangeWindow extends Window {
         TextField dateInput;
         Label dateExample;
         Date now;
-        DateFormat dateFormatInstance;
+        SimpleDateFormat dateFormatInstance;
 
-        DateFormatField(String initialFormat) {
+        DateFormatField(final String initialFormat) {
             this.dateFormat = initialFormat;
             dateInput = new TextField(null, initialFormat);
+            dateInput.setImmediate(true);
+            dateInput.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.LAZY);
             now = new GregorianCalendar().getTime();
             dateExample = new Label();
             dateFormatInstance = DateTimeUtils.getDateFormat(dateFormat);
             dateExample.setValue("(" + dateFormatInstance.format(now) + ")");
             dateExample.setWidthUndefined();
+            dateInput.addTextChangeListener(new FieldEvents.TextChangeListener() {
+                @Override
+                public void textChange(FieldEvents.TextChangeEvent event) {
+                    try {
+                        dateFormatInstance.applyPattern(event.getText());
+                        dateExample.setValue("(" + dateFormatInstance.format(now) + ")");
+                    } catch (Exception e) {
+                        NotificationUtil.showErrorNotification("Invalid format");
+                        dateInput.setValue(initialFormat);
+                        dateFormatInstance.applyPattern(initialFormat);
+                        dateExample.setValue("(" + dateFormatInstance.format(now) + ")");
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void commit() throws SourceException, Validator.InvalidValueException {
+            setInternalValue(dateInput.getValue());
+            super.commit();
         }
 
         @Override

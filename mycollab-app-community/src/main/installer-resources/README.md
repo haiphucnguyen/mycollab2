@@ -51,6 +51,7 @@ Version 5.3.1
 * [Premium] Revise client views
 * [Premium] Manage assignments per client
 * [Premium] Manage invoices per client
+* [Community] Allow site administrator can change the site basic information
 * Add the new task navigation buttons
 * Add the new issue navigation buttons
 * Site administrator can define the default timezone, language, date formats

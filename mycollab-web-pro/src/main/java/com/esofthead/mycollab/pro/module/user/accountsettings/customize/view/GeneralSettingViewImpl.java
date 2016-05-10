@@ -5,7 +5,6 @@ import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.CurrencyUtils;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.i18n.LocalizationHelper;
@@ -25,7 +24,6 @@ import com.esofthead.mycollab.vaadin.web.ui.ServiceMenu;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.web.CustomLayoutExt;
-import com.google.common.base.MoreObjects;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
@@ -89,19 +87,19 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
                 AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_CURRENCY), 0, 3);
 
         Date now = new GregorianCalendar().getTime();
-        String defaultFullDateFormat = MoreObjects.firstNonNull(billingAccount.getDefaultyymmddformat(), "yyyy/MM/dd");
+        String defaultFullDateFormat = billingAccount.getDateFormatInstance().toPattern();
         gridFormLayoutHelper.addComponent(new Label(String.format("%s (%s)",
-                DateTimeUtils.getFullDateFormat(defaultFullDateFormat).format(now), defaultFullDateFormat)),
+                billingAccount.getDateFormatInstance().format(now), defaultFullDateFormat)),
                 AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_YYMMDD_FORMAT), 1, 0);
 
-        String defaultShortDateFormat = MoreObjects.firstNonNull(billingAccount.getDefaultyymmddformat(), "MM/dd");
+        String defaultShortDateFormat = billingAccount.getShortDateFormatInstance().toPattern();
         gridFormLayoutHelper.addComponent(new Label(String.format("%s (%s)",
-                DateTimeUtils.getFullDateFormat(defaultShortDateFormat).format(now), defaultShortDateFormat)),
+                billingAccount.getShortDateFormatInstance().format(now), defaultShortDateFormat)),
                 AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_MMDD_FORMAT), 1, 1);
 
-        String defaultLongDateFormat = MoreObjects.firstNonNull(billingAccount.getDefaulthumandateformat(), "E, dd MMM yyyy");
+        String defaultLongDateFormat = billingAccount.getHumanDateFormatInstance().toPattern();
         gridFormLayoutHelper.addComponent(new Label(String.format("%s (%s)",
-                DateTimeUtils.getFullDateFormat(defaultLongDateFormat).format(now), defaultLongDateFormat)),
+                billingAccount.getHumanDateFormatInstance().format(now), defaultLongDateFormat)),
                 AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_HUMAN_DATE_FORMAT), 1, 2);
 
         gridFormLayoutHelper.addComponent(new Label(LocalizationHelper.getLocaleInstance(billingAccount
