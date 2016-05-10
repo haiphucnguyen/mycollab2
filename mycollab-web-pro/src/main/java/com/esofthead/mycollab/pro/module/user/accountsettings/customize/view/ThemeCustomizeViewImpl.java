@@ -45,7 +45,6 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
     private AccountTheme accountTheme;
 
     public ThemeCustomizeViewImpl() {
-        super();
         this.setMargin(true);
     }
 

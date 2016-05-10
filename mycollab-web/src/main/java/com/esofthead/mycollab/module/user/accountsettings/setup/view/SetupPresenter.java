@@ -42,8 +42,7 @@ public class SetupPresenter extends AbstractPresenter<SetupView> {
             accountContainer.gotoSubView(SettingUIConstants.SETUP);
             view.displaySetup();
 
-            AccountSettingBreadcrumb breadcrumb = ViewManager
-                    .getCacheComponent(AccountSettingBreadcrumb.class);
+            AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
             breadcrumb.gotoSetup();
         } else {
             NotificationUtil.showMessagePermissionAlert();

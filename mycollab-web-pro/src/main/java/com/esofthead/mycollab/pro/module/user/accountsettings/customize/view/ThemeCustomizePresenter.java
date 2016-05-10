@@ -19,8 +19,9 @@ package com.esofthead.mycollab.pro.module.user.accountsettings.customize.view;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.user.accountsettings.customize.view.SettingContainer;
+import com.esofthead.mycollab.module.user.accountsettings.customize.view.IThemeCustomizePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.IThemeCustomizeView;
+import com.esofthead.mycollab.module.user.accountsettings.customize.view.SettingContainer;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent.ResetTheme;
@@ -47,7 +48,7 @@ import org.vaadin.dialogs.ConfirmDialog;
  * @since 4.1
  */
 @ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_THEME, impliedPermissionVal = BooleanPermissionFlag.TRUE)
-public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeView> {
+public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeView> implements IThemeCustomizePresenter {
     private static final long serialVersionUID = 5330315328389778202L;
 
     private AccountThemeService themeService;
