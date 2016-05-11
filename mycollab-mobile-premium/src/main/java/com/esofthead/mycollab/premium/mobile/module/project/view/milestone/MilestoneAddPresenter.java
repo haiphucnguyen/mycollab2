@@ -15,10 +15,7 @@ import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultEditFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
-import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 
@@ -41,10 +38,7 @@ public class MilestoneAddPresenter extends AbstractProjectPresenter<MilestoneAdd
             @Override
             public void onSave(final SimpleMilestone milestone) {
                 saveMilestone(milestone);
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
-                }
+                EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
             }
         });
     }

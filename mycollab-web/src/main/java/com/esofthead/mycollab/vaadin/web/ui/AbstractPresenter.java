@@ -99,17 +99,7 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
 
     @Override
     public boolean go(ComponentContainer container, ScreenData<?> data) {
-        return go(container, data, true);
-    }
-
-    @Override
-    public boolean go(ComponentContainer container, ScreenData<?> data, boolean isHistoryTrack) {
         initView();
-
-        if (isHistoryTrack) {
-            ViewState state = new ViewState(container, this, data);
-            HistoryViewManager.addHistory(state);
-        }
 
         if (view == null) {
             LOG.error("Can not find view " + viewClass);

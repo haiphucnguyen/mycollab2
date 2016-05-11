@@ -23,11 +23,6 @@ public class BillingPresenter extends AbstractPresenter<IBillingContainer> imple
     }
 
     @Override
-    public boolean go(ComponentContainer container, ScreenData<?> data) {
-        return super.go(container, data, false);
-    }
-
-    @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         AccountModule accountContainer = (AccountModule) container;
         accountContainer.gotoSubView(SettingUIConstants.BILLING);
