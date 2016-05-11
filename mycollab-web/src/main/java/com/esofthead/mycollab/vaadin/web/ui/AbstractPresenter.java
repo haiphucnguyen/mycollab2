@@ -112,6 +112,7 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
         }
 
         if (view == null) {
+            LOG.error("Can not find view " + viewClass);
             return false;
         }
 
