@@ -195,8 +195,9 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             Iterator<Component> iterator = searchContainer.iterator();
             while (iterator.hasNext()) {
                 CriteriaSelectionLayout criteriaSelectionLayout = (CriteriaSelectionLayout) iterator.next();
-                SearchField searchField = criteriaSelectionLayout.buildSearchField();
-                if (searchField != null) {
+                SearchFieldInfo searchFieldInfo = criteriaSelectionLayout.buildSearchFieldInfo();
+                if (searchFieldInfo != null) {
+                    SearchField searchField = searchFieldInfo.buildSearchField();
                     searchCriteria.addExtraField(searchField);
                 }
             }
@@ -495,158 +496,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             return new SearchFieldInfo(prefixOper, param, compareOper, value);
         }
 
-        private SearchField buildSearchField() {
-            Param param = (Param) fieldSelectionBox.getValue();
-            String prefixOperation = (operatorSelectionBox != null) ? (String) operatorSelectionBox.getValue() : "AND";
-            if (param != null) {
-                String compareOper = (String) compareSelectionBox.getValue();
 
-                if (param instanceof StringParam) {
-                    if (valueBox.getComponentCount() != 1) {
-                        return null;
-                    }
-                    TextField field = (TextField) valueBox.getComponent(0);
-                    String value = field.getValue();
-                    StringParam wrapParam = (StringParam) param;
-                    return wrapParam.buildSearchField(prefixOperation, compareOper, value);
-                } else if (param instanceof StringListParam) {
-                    if (valueBox.getComponentCount() != 1) {
-                        return null;
-                    }
-                    ValueListSelect field = (ValueListSelect) valueBox.getComponent(0);
-                    Collection<?> value = (Collection<?>) field.getValue();
-                    if (CollectionUtils.isEmpty(value)) {
-                        return null;
-                    }
-
-                    StringListParam wrapParam = (StringListParam) param;
-
-                    switch (compareOper) {
-                        case StringListParam.IN:
-                            return wrapParam.buildStringParamInList(prefixOperation, value);
-                        case StringListParam.NOT_IN:
-                            return wrapParam.buildStringParamNotInList(prefixOperation, value);
-                        default:
-                            throw new MyCollabException("Not support yet");
-                    }
-                } else if (param instanceof I18nStringListParam) {
-                    if (valueBox.getComponentCount() != 1) {
-                        return null;
-                    }
-                    I18nValueListSelect field = (I18nValueListSelect) valueBox.getComponent(0);
-                    Collection<?> value = (Collection<?>) field.getValue();
-                    if (CollectionUtils.isEmpty(value)) {
-                        return null;
-                    }
-
-                    I18nStringListParam wrapParam = (I18nStringListParam) param;
-
-                    switch (compareOper) {
-                        case StringListParam.IN:
-                            return wrapParam.buildStringParamInList(prefixOperation, value);
-                        case StringListParam.NOT_IN:
-                            return wrapParam.buildStringParamNotInList(prefixOperation, value);
-                        default:
-                            throw new MyCollabException("Not support yet");
-                    }
-                } else if (param instanceof NumberParam) {
-                    if (valueBox.getComponentCount() != 1) {
-                        return null;
-                    }
-                    TextField field = (TextField) valueBox.getComponent(0);
-                    Number value = 0;
-                    try {
-                        value = Double.parseDouble(field.getValue());
-                    } catch (Exception e) {
-
-                    }
-
-                    NumberParam wrapParam = (NumberParam) param;
-                    return wrapParam.buildSearchField(prefixOperation, compareOper, value);
-                } else if (param instanceof PropertyListParam) {
-                    if (valueBox.getComponentCount() != 1) {
-                        return null;
-                    }
-
-                    ListSelect field = (ListSelect) valueBox.getComponent(0);
-                    Collection<?> value = (Collection<?>) field.getValue();
-                    if (CollectionUtils.isEmpty(value)) {
-                        return null;
-                    }
-                    PropertyListParam wrapParam = (PropertyListParam) param;
-                    switch (compareOper) {
-                        case PropertyListParam.BELONG_TO:
-                            return wrapParam.buildPropertyParamInList(prefixOperation, value);
-                        case PropertyListParam.NOT_BELONG_TO:
-                            return wrapParam.buildPropertyParamNotInList(prefixOperation, value);
-                        default:
-                            throw new MyCollabException("Not support yet");
-                    }
-                } else if (param instanceof CustomSqlParam) {
-                    if (valueBox.getComponentCount() != 1) {
-                        return null;
-                    }
-
-                    ListSelect field = (ListSelect) valueBox.getComponent(0);
-                    Collection<?> value = (Collection<?>) field.getValue();
-                    if (CollectionUtils.isEmpty(value)) {
-                        return null;
-                    }
-                    CustomSqlParam wrapParam = (CustomSqlParam) param;
-                    switch (compareOper) {
-                        case PropertyListParam.BELONG_TO:
-                            return wrapParam.buildPropertyParamInList(prefixOperation, value);
-                        case PropertyListParam.NOT_BELONG_TO:
-                            return wrapParam.buildPropertyParamNotInList(prefixOperation, value);
-                        default:
-                            throw new MyCollabException("Not support yet");
-                    }
-                } else if (param instanceof PropertyParam) {
-                    if (valueBox.getComponentCount() != 1) {
-                        return null;
-                    }
-                    Field field = (Field) valueBox.getComponent(0);
-                    Object value = field.getValue();
-                    PropertyParam wrapParam = (PropertyParam) param;
-                    return wrapParam.buildSearchField(prefixOperation, compareOper, value);
-                } else if (param instanceof CompositionStringParam) {
-                    if (valueBox.getComponentCount() != 1) {
-                        return null;
-                    }
-                    TextField field = (TextField) valueBox.getComponent(0);
-                    String value = field.getValue();
-                    CompositionStringParam wrapParam = (CompositionStringParam) param;
-                    return wrapParam.buildSearchField(prefixOperation, compareOper, value);
-                } else if (param instanceof ConcatStringParam) {
-                    if (valueBox.getComponentCount() != 1) {
-                        return null;
-                    }
-                    TextField field = (TextField) valueBox.getComponent(0);
-                    String value = field.getValue();
-                    ConcatStringParam wrapParam = (ConcatStringParam) param;
-                    return wrapParam.buildSearchField(prefixOperation, compareOper, value);
-                } else if (param instanceof DateParam) {
-                    DateParam wrapParam = (DateParam) param;
-                    if (DateParam.BETWEEN.equals(compareOper) || DateParam.NOT_BETWEEN.equals(compareOper)) {
-                        if (valueBox.getComponentCount() != 2) {
-                            return null;
-                        }
-                        Date dateValue1 = ((DateFieldExt) valueBox.getComponent(0)).getValue();
-                        Date dateValue2 = ((DateFieldExt) valueBox.getComponent(1)).getValue();
-                        return wrapParam.buildSearchField(prefixOperation, compareOper, dateValue1, dateValue2);
-                    } else {
-                        if (valueBox.getComponentCount() != 1) {
-                            return null;
-                        }
-                        Date dateValue = ((DateFieldExt) valueBox.getComponent(0)).getValue();
-                        return wrapParam.buildSearchField(prefixOperation, compareOper, dateValue);
-                    }
-                } else {
-                    throw new MyCollabException("Not support yet");
-                }
-            }
-            return null;
-        }
     }
 
     private class SavedSearchResultComboBox extends ComboBox {
@@ -720,7 +570,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
                             filterBox.addComponent(deleteBtn, 1);
                             filterBox.addComponent(updateBtn, 1);
-
                         }
 
                     } else {
