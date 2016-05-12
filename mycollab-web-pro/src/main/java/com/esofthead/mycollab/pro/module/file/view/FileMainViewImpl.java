@@ -8,7 +8,7 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.view.FileMainView;
 import com.esofthead.mycollab.module.file.view.components.ResourcesDisplayComponent;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -25,7 +25,6 @@ import com.vaadin.ui.Button.ClickListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -50,8 +49,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
     private ExternalResourceService externalResourceService;
 
     public FileMainViewImpl() {
-        resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
-        externalResourceService = ApplicationContextUtil.getSpringBean(ExternalResourceService.class);
+        resourceService = AppContextUtil.getSpringBean(ResourceService.class);
+        externalResourceService = AppContextUtil.getSpringBean(ExternalResourceService.class);
 
         String rootPath = String.format("%d/Documents", AppContext.getAccountId());
         rootFolder = new Folder(rootPath);
@@ -115,7 +114,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         navButton.with(linkBtn);
 
         BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
-        DriveInfoService driveInfoService = ApplicationContextUtil.getSpringBean(DriveInfoService.class);
+        DriveInfoService driveInfoService = AppContextUtil.getSpringBean(DriveInfoService.class);
         String usedStorageTxt = FileUtils.getVolumeDisplay(driveInfoService.getUsedStorageVolume(AppContext.getAccountId()))
                 + " of " + FileUtils.getVolumeDisplay(currentBillingPlan.getVolume());
         Label usedVolumeInfo = new Label("<div>" + usedStorageTxt + "</div>", ContentMode.HTML);

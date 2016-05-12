@@ -2,7 +2,7 @@ package com.esofthead.mycollab.ondemand.module.file.view;
 
 import com.esofthead.mycollab.cache.service.CacheService;
 import com.esofthead.mycollab.oauth.service.MyCollabOauthServiceFactory;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.ui.UI;
 import org.scribe.oauth.OAuthService;
@@ -31,7 +31,7 @@ public class OauthBrowserWindowOpenerUtil {
             public void attach() {
                 super.attach();
                 UI ui = UI.getCurrent();
-                CacheService cacheService = ApplicationContextUtil.getSpringBean(CacheService.class);
+                CacheService cacheService = AppContextUtil.getSpringBean(CacheService.class);
                 cacheService.putValue("tempCache", state, ui);
             }
 

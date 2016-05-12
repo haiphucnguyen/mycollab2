@@ -183,9 +183,9 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
 
         @Override
         protected Component buildSelectionComp(String fieldId) {
-            if ("risk-assignuser".equals(fieldId)) {
+            if ("assignuser".equals(fieldId)) {
                 return new ProjectMemberListSelect();
-            } else if ("risk-raiseduser".equals(fieldId)) {
+            } else if ("raiseduser".equals(fieldId)) {
                 return new ProjectMemberListSelect();
             }
             return null;

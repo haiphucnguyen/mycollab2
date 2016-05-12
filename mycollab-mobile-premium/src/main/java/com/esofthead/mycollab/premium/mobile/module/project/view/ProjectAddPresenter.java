@@ -9,7 +9,7 @@ import com.esofthead.mycollab.mobile.module.project.view.parameters.ProjectScree
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
@@ -58,7 +58,7 @@ public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView
     }
 
     private Integer saveProject(SimpleProject project) {
-        ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+        ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         project.setSaccountid(AppContext.getAccountId());
         return projectService.saveWithSession(project, AppContext.getUsername());
     }

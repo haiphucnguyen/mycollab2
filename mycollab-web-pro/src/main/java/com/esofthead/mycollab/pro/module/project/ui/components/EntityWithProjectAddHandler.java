@@ -5,7 +5,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.task.TaskAddWindow;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -85,7 +85,7 @@ public class EntityWithProjectAddHandler {
     private static class UserInvolvedProjectsSelection extends ComboBox {
         UserInvolvedProjectsSelection() {
             this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-            ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+            ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
             List<SimpleProject> projects = projectService.getProjectsUserInvolved(AppContext.getUsername(), AppContext
                     .getAccountId());
             for (SimpleProject project : projects) {

@@ -4,7 +4,7 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AbstractLicenseActivationWindow;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
@@ -72,7 +72,7 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 String val = (String) optionGroup.getValue();
-                LicenseResolver licenseResolver = ApplicationContextUtil.getSpringBean(LicenseResolver.class);
+                LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
                 if (ACT_CODE.equals(val)) {
                     String licenseText = activationField.getValue();
                     licenseResolver.checkAndSaveLicenseInfo(licenseText);
@@ -133,7 +133,7 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
         content.with(changeLicenseBtn).withAlign(changeLicenseBtn, Alignment.BOTTOM_RIGHT);
         setContent(content);
 
-        LicenseResolver licenseResolver = ApplicationContextUtil.getSpringBean(LicenseResolver.class);
+        LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
         LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
         if (licenseInfo != null) {
             this.setClosable(!licenseInfo.isExpired());

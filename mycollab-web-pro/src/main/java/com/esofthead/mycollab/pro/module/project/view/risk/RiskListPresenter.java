@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.ProjectGenericListPresenter;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.ViewItemAction;
 import com.esofthead.mycollab.vaadin.mvp.*;
@@ -37,7 +37,7 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
 
     public RiskListPresenter() {
         super(RiskListView.class);
-        riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+        riskService = AppContextUtil.getSpringBean(RiskService.class);
     }
 
     @Override
@@ -141,6 +141,6 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
 
     @Override
     public ISearchableService<RiskSearchCriteria> getSearchService() {
-        return ApplicationContextUtil.getSpringBean(RiskService.class);
+        return AppContextUtil.getSpringBean(RiskService.class);
     }
 }

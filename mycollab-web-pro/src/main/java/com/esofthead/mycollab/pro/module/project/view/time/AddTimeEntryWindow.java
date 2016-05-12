@@ -16,7 +16,7 @@ import com.esofthead.mycollab.module.project.events.TimeTrackingEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.StyleCalendarFieldExp;
@@ -61,7 +61,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
     private ItemTimeLoggingService itemTimeLoggingService;
 
     public AddTimeEntryWindow(TimeTrackingListView view) {
-        itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+        itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
         this.setModal(true);
         this.setResizable(false);
         this.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));

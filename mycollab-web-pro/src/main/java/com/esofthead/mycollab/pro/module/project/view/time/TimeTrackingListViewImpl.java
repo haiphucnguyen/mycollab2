@@ -25,7 +25,7 @@ import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.ReportStreamSource;
 import com.esofthead.mycollab.reporting.RpFieldsBuilder;
 import com.esofthead.mycollab.reporting.SimpleReportTemplateExecutor;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.AsyncInvoker;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -83,7 +83,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     public TimeTrackingListViewImpl() {
         this.withMargin(false).withStyleName("hdr-view");
         final MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withWidth("100%");
-        itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+        itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
         searchPanel = new ItemTimeLoggingSearchPanel();
         searchPanel.addSearchHandler(new SearchHandler<ItemTimeLoggingSearchCriteria>() {
@@ -148,7 +148,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
                 TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(), TimeTableFieldDef.logForDate());
         SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Timesheet",
                 new RpFieldsBuilder(fields), exportType, SimpleItemTimeLogging.class,
-                ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class));
+                AppContextUtil.getSpringBean(ItemTimeLoggingService.class));
         ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
             @Override
             protected Map<String, Object> initReportParameters() {
@@ -213,7 +213,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         AsyncInvoker.access(new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-                ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                ItemTimeLoggingService itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
                 int totalCount = itemTimeLoggingService.getTotalCount(searchCriteria);
                 int pages = totalCount / 20;
                 for (int page = 0; page < pages + 1; page++) {
@@ -272,7 +272,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
                             @Override
                             public void onClose(ConfirmDialog dialog) {
                                 if (dialog.isConfirmed()) {
-                                    ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil
+                                    ItemTimeLoggingService itemTimeLoggingService = AppContextUtil
                                             .getSpringBean(ItemTimeLoggingService.class);
                                     itemTimeLoggingService.removeWithSession(itemLogging,
                                             AppContext.getUsername(), AppContext.getAccountId());

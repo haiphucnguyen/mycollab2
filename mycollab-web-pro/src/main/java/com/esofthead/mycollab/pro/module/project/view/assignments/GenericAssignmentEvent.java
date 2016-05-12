@@ -14,7 +14,7 @@ import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.components.calendar.event.BasicEvent;
@@ -97,28 +97,28 @@ public class GenericAssignmentEvent extends BasicEvent {
     public void updateAssociateEntity() {
         if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-            ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+            ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
             SimpleTask task = taskService.findById(assignment.getTypeId(), AppContext.getAccountId());
             task.setStartdate(getStart());
             task.setEnddate(getEnd());
             taskService.updateWithSession(task, AppContext.getUsername());
         } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
-            BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+            BugService bugService = AppContextUtil.getSpringBean(BugService.class);
             SimpleBug bug = bugService.findById(assignment.getTypeId(), AppContext.getAccountId());
             bug.setStartdate(getStart());
             bug.setEnddate(getEnd());
             bugService.updateWithSession(bug, AppContext.getUsername());
         } else if(ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
-            MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+            MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
             SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppContext.getAccountId());
             milestone.setStartdate(getStart());
             milestone.setEnddate(getEnd());
             milestoneService.updateWithSession(milestone, AppContext.getUsername());
         } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
-            RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+            RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
             SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppContext.getAccountId());
             risk.setStartdate(getStart());
             risk.setEnddate(getEnd());

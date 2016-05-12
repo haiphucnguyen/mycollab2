@@ -14,7 +14,7 @@ import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardContainer;
 import com.esofthead.mycollab.pro.module.project.events.GanttEvent;
 import com.esofthead.mycollab.pro.module.project.view.assignments.gantt.GanttItemWrapper;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -42,7 +42,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
 
     private static Logger LOG = LoggerFactory.getLogger(GanttChartViewPresenter.class);
 
-    private GanttAssignmentService ganttAssignmentService = ApplicationContextUtil.getSpringBean(GanttAssignmentService.class);
+    private GanttAssignmentService ganttAssignmentService = AppContextUtil.getSpringBean(GanttAssignmentService.class);
 
     private Set<AssignWithPredecessors> queueSetTasksUpdate;
     private Set<AssignWithPredecessors> queueSetTasksDelete;
@@ -64,7 +64,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
                     if (item.getId() == null) {
                         if (item.isTask()) {
                             Task newTask = item.buildNewTask();
-                            ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                            ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                             taskService.saveWithSession(newTask, AppContext.getUsername());
                             item.setId(newTask.getId());
                         } else {

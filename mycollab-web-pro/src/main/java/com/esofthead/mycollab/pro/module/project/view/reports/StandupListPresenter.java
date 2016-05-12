@@ -3,7 +3,7 @@ package com.esofthead.mycollab.pro.module.project.view.reports;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.reports.IReportContainer;
 import com.esofthead.mycollab.pro.module.project.view.ReportBreadcrumb;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -32,7 +32,7 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView> {
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         IReportContainer projectModule = (IReportContainer) container;
         projectModule.addView(view);
-        ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+        ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         List<Integer> projectKeys = projectService.getProjectKeysUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
         if (CollectionUtils.isNotEmpty(projectKeys)) {
             Date date = (Date) data.getParams();

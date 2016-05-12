@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.project.events.AssignmentEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.service.RiskService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -78,7 +78,7 @@ public class RiskAddWindow extends Window {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
                         if (EditForm.this.validateForm()) {
-                            RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+                            RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                             Integer riskId;
                             if (bean.getId() == null) {
                                 riskId = riskService.saveWithSession(bean, AppContext.getUsername());

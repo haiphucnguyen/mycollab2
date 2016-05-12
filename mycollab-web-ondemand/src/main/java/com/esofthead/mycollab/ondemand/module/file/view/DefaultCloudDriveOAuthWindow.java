@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.ecm.esb.CloudDriveOAuthCallbackEvent;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.module.file.events.FileEvent;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.AsyncInvoker;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -149,7 +149,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends Window {
                     externalDrive.setOwner(AppContext.getUsername());
                     externalDrive.setStoragename(getStorageName());
 
-                    ExternalDriveService service = ApplicationContextUtil.getSpringBean(ExternalDriveService.class);
+                    ExternalDriveService service = AppContextUtil.getSpringBean(ExternalDriveService.class);
                     service.saveWithSession(externalDrive, AppContext.getUsername());
                     EventBusFactory.getInstance().post(new FileEvent.ExternalDriveConnectedEvent
                             (DefaultCloudDriveOAuthWindow.this, externalDrive));

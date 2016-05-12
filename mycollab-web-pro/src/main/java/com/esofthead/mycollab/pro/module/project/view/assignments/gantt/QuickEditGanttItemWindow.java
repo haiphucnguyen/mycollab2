@@ -6,12 +6,11 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.domain.*;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.pro.module.project.events.GanttEvent;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -73,11 +72,11 @@ public class QuickEditGanttItemWindow extends Window {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
                         if (bean instanceof TaskGanttItem) {
-                            ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                            ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                             SimpleTask task = taskService.findById(bean.getId(), AppContext.getAccountId());
                             EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(QuickEditGanttItemWindow.this, task));
                         } else if (bean instanceof MilestoneGanttItem) {
-                            MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+                            MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                             SimpleMilestone milestone = milestoneService.findById(bean.getId(), AppContext.getAccountId());
                             EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(QuickEditGanttItemWindow.this, milestone));
                         } else {

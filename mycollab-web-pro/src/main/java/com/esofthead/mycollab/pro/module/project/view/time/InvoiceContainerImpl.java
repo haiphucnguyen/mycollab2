@@ -21,7 +21,7 @@ import com.esofthead.mycollab.module.project.ui.components.ProjectActivityCompon
 import com.esofthead.mycollab.module.project.view.time.IInvoiceContainer;
 import com.esofthead.mycollab.reporting.FormReportLayout;
 import com.esofthead.mycollab.reporting.PrintButton;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -192,7 +192,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
 
     private static class InvoiceListComp extends DefaultBeanPagedList<InvoiceService, InvoiceSearchCriteria, SimpleInvoice> {
         InvoiceListComp() {
-            super(ApplicationContextUtil.getSpringBean(InvoiceService.class), new InvoiceRowDisplayHandler(), Integer.MAX_VALUE);
+            super(AppContextUtil.getSpringBean(InvoiceService.class), new InvoiceRowDisplayHandler(), Integer.MAX_VALUE);
             setWidth("300px");
             new Restrain(this).setMinHeight("50px").setMaxHeight((Page.getCurrent()
                     .getBrowserWindowHeight() - 320) + "px");
@@ -317,7 +317,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
                                 @Override
                                 public void onClose(ConfirmDialog dialog) {
                                     if (dialog.isConfirmed()) {
-                                        InvoiceService invoiceService = ApplicationContextUtil.getSpringBean(InvoiceService.class);
+                                        InvoiceService invoiceService = AppContextUtil.getSpringBean(InvoiceService.class);
                                         invoiceService.removeWithSession(invoice, AppContext.getUsername(), AppContext.getAccountId());
                                         EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceDelete(this, invoice));
                                     }

@@ -35,7 +35,7 @@ import com.esofthead.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.esofthead.mycollab.pro.module.crm.view.setting.customlayout.CreateCustomFieldWindow;
 import com.esofthead.mycollab.pro.module.crm.view.setting.customlayout.CreateSectionWindow;
 import com.esofthead.mycollab.pro.module.crm.view.setting.customlayout.CustomLayoutDDComp;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -144,7 +144,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
             @Override
             public void buttonClick(ClickEvent event) {
                 DynaForm rebuildForm = layoutComp.rebuildForm();
-                MasterFormService formService = ApplicationContextUtil.getSpringBean(MasterFormService.class);
+                MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
                 formService.saveCustomForm(AppContext.getAccountId(), moduleName, rebuildForm);
             }
         });
@@ -177,7 +177,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
     }
 
     private static DynaForm getDynaForm(String moduleName) {
-        MasterFormService formService = ApplicationContextUtil.getSpringBean(MasterFormService.class);
+        MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
         DynaForm form = formService.findCustomForm(AppContext.getAccountId(), moduleName);
 
         if (form == null) {

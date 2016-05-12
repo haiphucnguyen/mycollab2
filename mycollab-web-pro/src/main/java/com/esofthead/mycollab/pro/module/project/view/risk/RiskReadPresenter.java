@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.reporting.FormReportLayout;
 import com.esofthead.mycollab.reporting.PrintButton;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
@@ -67,7 +67,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
                             @Override
                             public void onClose(ConfirmDialog dialog) {
                                 if (dialog.isConfirmed()) {
-                                    RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+                                    RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                                     riskService.removeWithSession(data, AppContext.getUsername(), AppContext.getAccountId());
                                     EventBusFactory.getInstance().post(new RiskEvent.GotoList(this, null));
                                 }
@@ -96,7 +96,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 
             @Override
             public void gotoNext(SimpleRisk data) {
-                RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+                RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 RiskSearchCriteria criteria = new RiskSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
@@ -111,7 +111,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 
             @Override
             public void gotoPrevious(SimpleRisk data) {
-                RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+                RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 RiskSearchCriteria criteria = new RiskSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESSTHAN));
@@ -129,7 +129,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS)) {
             if (data.getParams() instanceof Integer) {
-                RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+                RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 SimpleRisk risk = riskService.findById((Integer) data.getParams(), AppContext.getAccountId());
                 if (risk != null) {
                     RiskContainer riskContainer = (RiskContainer) container;

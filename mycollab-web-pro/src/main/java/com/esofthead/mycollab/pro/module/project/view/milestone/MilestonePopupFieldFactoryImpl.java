@@ -11,7 +11,7 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePopupFieldFactory;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
@@ -47,7 +47,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
 
             @Override
             protected String generateSmallAsHtmlAfterUpdate() {
-                MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+                MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 SimpleMilestone newMilestone = milestoneService.findById(milestone.getId(), AppContext.getAccountId());
                 String avatarLink = StorageFactory.getInstance().getAvatarPath(newMilestone.getOwnerAvatarId(), 16);
                 Img img = new Img(newMilestone.getOwnerFullName(), avatarLink);
@@ -64,7 +64,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
         };
         builder.withBean(milestone).withBindProperty("owner").withDescription(milestone.getOwnerFullName())
                 .withCaption(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
-                .withService(ApplicationContextUtil.getSpringBean(MilestoneService.class)).withValue(milestone.getOwner())
+                .withService(AppContextUtil.getSpringBean(MilestoneService.class)).withValue(milestone.getOwner())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
     }
@@ -86,7 +86,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
             }
         };
         builder.withBean(milestone).withBindProperty("startdate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new DateFieldExt()).withService(ApplicationContextUtil.getSpringBean(MilestoneService.class))
+                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
                 .withValue(milestone.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
@@ -109,7 +109,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
             }
         };
         builder.withBean(milestone).withBindProperty("enddate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new DateFieldExt()).withService(ApplicationContextUtil.getSpringBean(MilestoneService.class))
+                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
                 .withValue(milestone.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();

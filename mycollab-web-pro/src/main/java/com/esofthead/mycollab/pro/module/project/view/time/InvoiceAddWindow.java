@@ -7,7 +7,7 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleInvoice;
 import com.esofthead.mycollab.module.project.events.InvoiceEvent;
 import com.esofthead.mycollab.module.project.service.InvoiceService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
@@ -53,7 +53,7 @@ public class InvoiceAddWindow extends Window {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 if (editBeanForm.validateForm()) {
-                    InvoiceService invoiceService = ApplicationContextUtil.getSpringBean(InvoiceService.class);
+                    InvoiceService invoiceService = AppContextUtil.getSpringBean(InvoiceService.class);
 
                     if (invoice.getId() == null) {
                         invoiceService.saveWithSession(invoice, AppContext.getUsername());

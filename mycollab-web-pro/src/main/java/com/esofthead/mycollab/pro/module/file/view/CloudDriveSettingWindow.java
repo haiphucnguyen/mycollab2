@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.file.events.FileEvent;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
@@ -45,8 +45,8 @@ public class CloudDriveSettingWindow extends Window {
         this.setModal(true);
         this.setResizable(false);
         MVerticalLayout mainLayout = new MVerticalLayout().withWidth("100%");
-        externalDriveService = ApplicationContextUtil.getSpringBean(ExternalDriveService.class);
-        externalResourceService = ApplicationContextUtil.getSpringBean(ExternalResourceService.class);
+        externalDriveService = AppContextUtil.getSpringBean(ExternalDriveService.class);
+        externalResourceService = AppContextUtil.getSpringBean(ExternalResourceService.class);
 
         Button connectAccountBtn = new Button("Connect account", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;

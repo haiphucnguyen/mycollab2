@@ -21,7 +21,7 @@ import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemCo
 import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
 import com.esofthead.mycollab.module.project.view.ProjectAddWindow;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -173,7 +173,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
         void displayProjects(final Integer accountId) {
             ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
             searchCriteria.setAccountId(NumberSearchField.and(accountId));
-            ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+            ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
             int totalCount = projectService.getTotalCount(searchCriteria);
             ELabel headerLbl = new ELabel("Projects (" + totalCount + ")");
             Button newProjectBtn = new Button("New Project", new Button.ClickListener() {

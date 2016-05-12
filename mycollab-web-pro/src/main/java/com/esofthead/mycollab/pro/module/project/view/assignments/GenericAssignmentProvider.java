@@ -4,7 +4,7 @@ import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.google.common.base.MoreObjects;
 import com.vaadin.ui.components.calendar.event.BasicEventProvider;
@@ -23,7 +23,7 @@ public class GenericAssignmentProvider extends BasicEventProvider {
     private int notAssignNum = 0;
 
     public void loadEvents(ProjectGenericTaskSearchCriteria searchCriteria, boolean showProject) {
-        ProjectGenericTaskService genericTaskService = ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class);
+        ProjectGenericTaskService genericTaskService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
         List<ProjectGenericTask> assignments = genericTaskService.findPagableListByCriteria(new BasicSearchRequest<>
                 (searchCriteria, 0, Integer.MAX_VALUE));
         for (ProjectGenericTask assignment : assignments) {

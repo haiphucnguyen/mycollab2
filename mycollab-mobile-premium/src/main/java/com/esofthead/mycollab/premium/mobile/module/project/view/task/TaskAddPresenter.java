@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -60,7 +60,7 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
     }
 
     private void saveTask(SimpleTask task) {
-        ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+        ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
 
         task.setSaccountid(AppContext.getAccountId());
         task.setProjectid(CurrentProjectVariables.getProjectId());

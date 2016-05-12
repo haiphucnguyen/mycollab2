@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.project.view.task.TaskAddWindow;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.pro.module.project.view.risk.RiskAddWindow;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -72,7 +72,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
             ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
             searchCriteria.setTypeIds(new SetSearchField<>(typeId));
             searchCriteria.setTypes(new SetSearchField<>(type));
-            ProjectGenericTaskService assignmentService = ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class);
+            ProjectGenericTaskService assignmentService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
             List<ProjectGenericTask> assignments = assignmentService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria));
             GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
             for (ProjectGenericTask assignment : assignments) {
@@ -130,22 +130,22 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
                 ProjectGenericTask assignment = calendarEvent.getAssignment();
                 if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                    ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                     SimpleTask task = taskService.findById(assignment.getTypeId(), AppContext.getAccountId());
                     UI.getCurrent().addWindow(new TaskAddWindow(task));
                 } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
-                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+                    MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                     SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppContext.getAccountId());
                     UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
                 } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
-                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+                    BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                     SimpleBug bug = bugService.findById(assignment.getTypeId(), AppContext.getAccountId());
                     UI.getCurrent().addWindow(new BugAddWindow(bug));
                 } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
-                    RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+                    RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                     SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppContext.getAccountId());
                     UI.getCurrent().addWindow(new RiskAddWindow(risk));
                 }

@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -58,7 +58,7 @@ public class ProjectMemberEditPresenter extends AbstractProjectPresenter<Project
     }
 
     public void saveProjectMember(SimpleProjectMember projectMember) {
-        ProjectMemberService projectMemberService = ApplicationContextUtil.getSpringBean(ProjectMemberService.class);
+        ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
         projectMemberService.updateWithSession(projectMember, AppContext.getUsername());
 
     }

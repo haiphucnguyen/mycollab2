@@ -27,7 +27,7 @@ import com.esofthead.mycollab.pro.module.project.view.assignments.CalendarSearch
 import com.esofthead.mycollab.pro.module.project.view.assignments.GenericAssignmentEvent;
 import com.esofthead.mycollab.pro.module.project.view.assignments.GenericAssignmentProvider;
 import com.esofthead.mycollab.pro.module.project.view.risk.RiskAddWindow;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -81,7 +81,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
             searchCriteria.setTypeIds(new SetSearchField<>(typeId));
             searchCriteria.setTypes(new SetSearchField<>(type));
-            ProjectGenericTaskService assignmentService = ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class);
+            ProjectGenericTaskService assignmentService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
             List<ProjectGenericTask> assignments = assignmentService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria));
             GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
             for (ProjectGenericTask assignment : assignments) {
@@ -121,7 +121,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     @Override
     public void display() {
         this.removeAllComponents();
-        ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+        ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         projectKeys = projectService.getProjectKeysUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
         searchCriteria = new ProjectGenericTaskSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(projectKeys));
@@ -155,22 +155,22 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
                 ProjectGenericTask assignment = calendarEvent.getAssignment();
                 if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
                         ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.TASKS)) {
-                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                    ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                     SimpleTask task = taskService.findById(assignment.getTypeId(), AppContext.getAccountId());
                     UI.getCurrent().addWindow(new TaskAddWindow(task));
                 } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
                         ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.MILESTONES)) {
-                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+                    MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                     SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppContext.getAccountId());
                     UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
                 } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
                         ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.BUGS)) {
-                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+                    BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                     SimpleBug bug = bugService.findById(assignment.getTypeId(), AppContext.getAccountId());
                     UI.getCurrent().addWindow(new BugAddWindow(bug));
                 } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
                         ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.RISKS)) {
-                    RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+                    RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                     SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppContext.getAccountId());
                     UI.getCurrent().addWindow(new RiskAddWindow(risk));
                 }

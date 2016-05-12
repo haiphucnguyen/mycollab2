@@ -9,7 +9,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -60,7 +60,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         riskSearchPanel = new RiskSearchPanel();
         addComponent(riskSearchPanel);
         tableItem = new DefaultPagedBeanTable<>(
-                ApplicationContextUtil.getSpringBean(RiskService.class),
+                AppContextUtil.getSpringBean(RiskService.class),
                 SimpleRisk.class, VIEW_DEF_ID,
                 RiskTableFieldDef.selected(), Arrays.asList(
                 RiskTableFieldDef.name(), RiskTableFieldDef.assignUser(),

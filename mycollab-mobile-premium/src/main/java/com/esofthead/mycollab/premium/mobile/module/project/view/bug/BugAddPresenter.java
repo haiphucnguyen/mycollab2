@@ -16,7 +16,7 @@ import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -66,7 +66,7 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
     }
 
     private void saveBug(SimpleBug bug) {
-        BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+        BugService bugService = AppContextUtil.getSpringBean(BugService.class);
         bug.setProjectid(CurrentProjectVariables.getProjectId());
         bug.setSaccountid(AppContext.getAccountId());
         ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();

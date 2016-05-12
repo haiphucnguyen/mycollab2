@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
@@ -47,7 +47,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
     private static final Logger LOG = LoggerFactory.getLogger(TimeTrackingTableDisplay.class);
 
     public TimeTrackingTableDisplay(List<TableViewField> displayColumns) {
-        super(ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class),
+        super(AppContextUtil.getSpringBean(ItemTimeLoggingService.class),
                 SimpleItemTimeLogging.class, displayColumns);
 
         this.addGeneratedColumn("logUserFullName", new Table.ColumnGenerator() {

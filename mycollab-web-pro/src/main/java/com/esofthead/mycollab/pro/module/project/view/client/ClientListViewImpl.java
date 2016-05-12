@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.project.events.ClientEvent;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -64,7 +64,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
     public void display(AccountSearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
         content.removeAllComponents();
-        AccountService accountService = ApplicationContextUtil.getSpringBean(AccountService.class);
+        AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
         List<SimpleAccount> clients = accountService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0,
                 Integer.MAX_VALUE));
         for (SimpleAccount client : clients) {
@@ -106,7 +106,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
                             @Override
                             public void onClose(ConfirmDialog dialog) {
                                 if (dialog.isConfirmed()) {
-                                    AccountService accountService = ApplicationContextUtil.getSpringBean(AccountService.class);
+                                    AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                                     accountService.removeWithSession(client, AppContext.getUsername(), AppContext.getAccountId());
                                     EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
                                 }

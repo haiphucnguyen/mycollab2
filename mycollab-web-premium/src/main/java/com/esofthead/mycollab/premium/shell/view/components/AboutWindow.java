@@ -4,7 +4,7 @@ import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.shell.view.components.AbstractAboutWindow;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AbstractLicenseActivationWindow;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -54,7 +54,7 @@ public class AboutWindow extends AbstractAboutWindow {
         Label licenseLbl = new Label(licenseDiv.write(), ContentMode.HTML);
         rightPanel.with(versionLbl, javaNameLbl, osLbl, licenseLbl);
 
-        LicenseResolver licenseResolver = ApplicationContextUtil.getSpringBean(LicenseResolver.class);
+        LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
         LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
         if (licenseInfo == null) {
             Label licenseInfoLbl = new Label("Invalid license");

@@ -14,7 +14,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import org.jsoup.Jsoup;
 
@@ -32,38 +32,38 @@ public class GenericTaskDetailMapper {
         TimeZone timeZone = AppContext.getUserTimeZone();
 
         if (ProjectTypeConstants.BUG.equals(type)) {
-            BugService service = ApplicationContextUtil.getSpringBean(BugService.class);
+            BugService service = AppContextUtil.getSpringBean(BugService.class);
             SimpleBug bug = service.findById(typeId, sAccountId);
             if (bug != null) {
                 name = bug.getSummary();
             }
         } else if (ProjectTypeConstants.TASK.equals(type)) {
-            ProjectTaskService service = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+            ProjectTaskService service = AppContextUtil.getSpringBean(ProjectTaskService.class);
             SimpleTask task = service.findById(typeId, sAccountId);
             if (task != null) {
                 name = task.getTaskname();
             }
         } else if (ProjectTypeConstants.RISK.equals(type)) {
-            RiskService service = ApplicationContextUtil.getSpringBean(RiskService.class);
+            RiskService service = AppContextUtil.getSpringBean(RiskService.class);
             SimpleRisk risk = service.findById(typeId, sAccountId);
             if (risk != null) {
                 name = risk.getRiskname();
             }
         } else if (ProjectTypeConstants.BUG_VERSION.equals(type)) {
-            VersionService service = ApplicationContextUtil
+            VersionService service = AppContextUtil
                     .getSpringBean(VersionService.class);
             SimpleVersion version = service.findById(typeId, sAccountId);
             if (version != null) {
                 name = version.getVersionname();
             }
         } else if (ProjectTypeConstants.BUG_COMPONENT.equals(type)) {
-            ComponentService service = ApplicationContextUtil.getSpringBean(ComponentService.class);
+            ComponentService service = AppContextUtil.getSpringBean(ComponentService.class);
             SimpleComponent component = service.findById(typeId, sAccountId);
             if (component != null) {
                 name = component.getComponentname();
             }
         } else if (ProjectTypeConstants.STANDUP.equals(type)) {
-            StandupReportService service = ApplicationContextUtil.getSpringBean(StandupReportService.class);
+            StandupReportService service = AppContextUtil.getSpringBean(StandupReportService.class);
             SimpleStandupReport standup = service.findById(typeId, sAccountId);
             if (standup != null) {
                 name = Jsoup.parse(DateTimeUtils.convertToStringWithUserTimeZone(

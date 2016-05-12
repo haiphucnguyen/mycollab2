@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.file.service.EntityUploaderService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.esofthead.mycollab.module.user.ui.components.ImagePreviewCropWindow;
 import com.esofthead.mycollab.module.user.ui.components.UploadImageField;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -63,11 +63,11 @@ public class ClientAddViewImpl extends AbstractPageView implements ClientAddView
 
         @Override
         public void process(BufferedImage image) {
-            EntityUploaderService entityUploaderService = ApplicationContextUtil.getSpringBean(EntityUploaderService.class);
+            EntityUploaderService entityUploaderService = AppContextUtil.getSpringBean(EntityUploaderService.class);
             String newLogoId = entityUploaderService.upload(image, PathUtils.getEntityLogoPath(AppContext
                             .getAccountId()), account.getAvatarid(), AppContext.getUsername(), AppContext.getAccountId(),
                     new int[]{16, 32, 48, 64, 100});
-            AccountService accountService = ApplicationContextUtil.getSpringBean(AccountService.class);
+            AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
             account.setAvatarid(newLogoId);
             accountService.updateSelectiveWithSession(account, AppContext.getUsername());
         }

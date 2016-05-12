@@ -12,7 +12,7 @@ import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
@@ -64,7 +64,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         content = new MVerticalLayout();
         this.setContent(content);
 
-        this.itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+        this.itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
         this.initUI();
         this.loadTimeValue();
@@ -86,7 +86,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         constructSpentTimeEntryPanel();
         constructRemainTimeEntryPanel();
 
-        tableItem = new DefaultPagedBeanTable<>(ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class), SimpleItemTimeLogging.class,
+        tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(ItemTimeLoggingService.class), SimpleItemTimeLogging.class,
                 Arrays.asList(TimeTableFieldDef.logUser(), TimeTableFieldDef.logForDate(), TimeTableFieldDef.logValue(),
                         TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(), new TableViewField(null, "id",
                                 UIConstants.TABLE_CONTROL_WIDTH)));

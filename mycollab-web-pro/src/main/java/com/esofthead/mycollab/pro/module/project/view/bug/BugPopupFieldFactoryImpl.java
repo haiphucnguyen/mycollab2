@@ -39,7 +39,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
 import com.esofthead.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
@@ -84,7 +84,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         builder.withBean(bug).withBindProperty(BugWithBLOBs.Field.priority.name()).withDescription(bug.getPriority())
                 .withDescription(AppContext.getMessage(BugI18nEnum.FORM_PRIORITY_HELP))
                 .withCaption(AppContext.getMessage(BugI18nEnum.FORM_PRIORITY)).withField(new BugPriorityComboBox())
-                .withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getPriority())
+                .withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getPriority())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -101,7 +101,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
             @Override
             protected String generateSmallAsHtmlAfterUpdate() {
-                BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+                BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 SimpleBug newBug = bugService.findById(bug.getId(), AppContext.getAccountId());
                 String avatarLink = StorageFactory.getInstance().getAvatarPath(newBug.getAssignUserAvatarId(), 16);
                 Img img = new Img(newBug.getAssignuserFullName(), avatarLink).setTitle(newBug.getAssignuserFullName());
@@ -115,7 +115,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         };
         builder.withBean(bug).withBindProperty(BugWithBLOBs.Field.assignuser.name()).withDescription(bug.getAssignuserFullName())
                 .withCaption(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
-                .withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getAssignuser())
+                .withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getAssignuser())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -157,7 +157,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
         @Override
         protected void doHide() {
-            MonitorItemService monitorItemService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);
+            MonitorItemService monitorItemService = AppContextUtil.getSpringBean(MonitorItemService.class);
 
             List<MonitorItem> items = watchersMultiSelection.getUnsavedItems();
             monitorItemService.saveMonitorItems(items);
@@ -197,7 +197,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
             searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
             searchCriteria.setTypeId(StringSearchField.and(bug.getId() + ""));
-            CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
+            CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentCount = commentService.getTotalCount(searchCriteria);
             this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);
         }
@@ -327,7 +327,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         MilestoneComboBox milestoneComboBox = new MilestoneComboBox();
         milestoneComboBox.setWidth("300px");
         builder.withBean(bug).withBindProperty("milestoneid").withCaption(AppContext.getMessage(BugI18nEnum.FORM_PHASE))
-                .withField(milestoneComboBox).withService(ApplicationContextUtil.getSpringBean(BugService.class))
+                .withField(milestoneComboBox).withService(AppContextUtil.getSpringBean(BugService.class))
                 .withValue(bug.getMilestoneid()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -348,7 +348,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             }
         };
         builder.withBean(bug).withBindProperty("duedate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new DateFieldExt()).withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate())
+                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -369,7 +369,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             }
         };
         builder.withBean(bug).withBindProperty("startdate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new DateFieldExt()).withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getStartdate())
+                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -390,7 +390,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             }
         };
         builder.withBean(bug).withBindProperty("enddate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new DateFieldExt()).withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getEnddate())
+                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -450,7 +450,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                 Long delta = HumanTime.eval(timeVal).getDelta();
                 Date date = DateTimeUtils.trimHMSOfDate(dateField.getValue());
                 if (delta > 0) {
-                    ItemTimeLoggingService timeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                    ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
                     Double hours = delta.doubleValue() / (1000 * 60 * 60);
                     ItemTimeLogging timeLogging = new ItemTimeLogging();
                     timeLogging.setCreateduser(AppContext.getUsername());

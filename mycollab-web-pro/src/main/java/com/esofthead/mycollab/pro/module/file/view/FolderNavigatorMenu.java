@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.events.FileEvent;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Container;
@@ -35,9 +35,9 @@ public class FolderNavigatorMenu extends Tree {
     private Folder rootFolder;
 
     public FolderNavigatorMenu(final String rootPath) {
-        final ExternalDriveService externalDriveService = ApplicationContextUtil.getSpringBean(ExternalDriveService.class);
-        final ResourceService resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
-        final ExternalResourceService externalResourceService = ApplicationContextUtil.getSpringBean
+        final ExternalDriveService externalDriveService = AppContextUtil.getSpringBean(ExternalDriveService.class);
+        final ResourceService resourceService = AppContextUtil.getSpringBean(ResourceService.class);
+        final ExternalResourceService externalResourceService = AppContextUtil.getSpringBean
                 (ExternalResourceService.class);
 
         this.setMultiSelect(false);

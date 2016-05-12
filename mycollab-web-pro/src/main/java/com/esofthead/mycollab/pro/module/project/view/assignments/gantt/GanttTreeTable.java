@@ -16,7 +16,7 @@ import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.HumanTimeConverter;
 import com.esofthead.mycollab.pro.module.project.events.GanttEvent;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
@@ -251,7 +251,7 @@ public class GanttTreeTable extends TreeTable {
 
     public void loadAssignments() {
         try {
-            GanttAssignmentService ganttAssignmentService = ApplicationContextUtil.getSpringBean(GanttAssignmentService.class);
+            GanttAssignmentService ganttAssignmentService = AppContextUtil.getSpringBean(GanttAssignmentService.class);
             final List<AssignWithPredecessors> assignments = ganttAssignmentService.getTaskWithPredecessors(Collections.singletonList(CurrentProjectVariables.getProjectId()), AppContext.getAccountId());
             if (assignments.size() == 1) {
                 ProjectGanttItem projectGanttItem = (ProjectGanttItem) assignments.get(0);
@@ -440,7 +440,7 @@ public class GanttTreeTable extends TreeTable {
                         if (ganttItemWrapper.getId() == null) {
                             //New task, save then go to the task detail view
                             Task newTask = ganttItemWrapper.buildNewTask();
-                            ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                            ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                             taskService.saveWithSession(newTask, AppContext.getUsername());
                             ganttItemWrapper.setId(newTask.getId());
                             EventBusFactory.getInstance().post(new TaskEvent.GotoRead(GanttTreeTable.this, newTask.getId()));

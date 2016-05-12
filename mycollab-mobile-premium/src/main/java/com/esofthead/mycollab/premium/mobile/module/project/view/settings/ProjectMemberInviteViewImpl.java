@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.project.i18n.ProjectRoleI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.RolePermissionI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.security.PermissionMap;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewEvent;
@@ -107,7 +107,7 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
     private void displayRolePermission(Integer roleId) {
         permissionsPanel.removeAllComponents();
         if (roleId != null && roleId > 0) {
-            ProjectRoleService roleService = ApplicationContextUtil.getSpringBean(ProjectRoleService.class);
+            ProjectRoleService roleService = AppContextUtil.getSpringBean(ProjectRoleService.class);
             SimpleProjectRole role = roleService.findById(roleId,
                     AppContext.getAccountId());
             if (role != null) {

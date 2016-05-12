@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.user.domain.AccountTheme;
 import com.esofthead.mycollab.module.user.service.AccountThemeService;
 import com.esofthead.mycollab.security.BooleanPermissionFlag;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -55,7 +55,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
 
     public ThemeCustomizePresenter() {
         super(IThemeCustomizeView.class);
-        themeService = ApplicationContextUtil.getSpringBean(AccountThemeService.class);
+        themeService = AppContextUtil.getSpringBean(AccountThemeService.class);
     }
 
     @Override

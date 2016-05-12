@@ -9,7 +9,7 @@ import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsUtil;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
 import com.esofthead.mycollab.vaadin.ui.*;
@@ -20,7 +20,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * @author MyCollab Ltd
@@ -40,7 +39,7 @@ class StandupAddWindow extends Window implements IEditFormHandler<StandupReportW
         this.setHeight(UIUtils.getBrowserHeight() + "px");
 
         this.onDate = onDate;
-        standupReportService = ApplicationContextUtil.getSpringBean(StandupReportService.class);
+        standupReportService = AppContextUtil.getSpringBean(StandupReportService.class);
         SimpleStandupReport report = standupReportService.findStandupReportByDateUser(standupReportStatistic.getProjectId(),
                 AppContext.getUsername(), onDate, AppContext.getAccountId());
         if (report == null) {

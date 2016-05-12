@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.i18n.MessageI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -39,7 +39,7 @@ public class MessageAddPresenter extends AbstractProjectPresenter<MessageAddView
 
             @Override
             public void onSave(SimpleMessage bean) {
-                MessageService messageService = ApplicationContextUtil.getSpringBean(MessageService.class);
+                MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
                 messageService.saveWithSession(bean, AppContext.getUsername());
                 ProjectFormAttachmentUploadField uploadField = view.getUploadField();
                 uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.MESSAGE, bean.getId());

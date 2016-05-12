@@ -21,7 +21,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -118,7 +118,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
                     feedback.setReasontoleave(whyLeavingMsg);
                 }
 
-                BillingService billingService = ApplicationContextUtil.getSpringBean(BillingService.class);
+                BillingService billingService = AppContextUtil.getSpringBean(BillingService.class);
                 billingService.cancelAccount(AppContext.getAccountId(), feedback);
                 UI.getCurrent().getPage().setLocation("https://www.mycollab.com");
             }

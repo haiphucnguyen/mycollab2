@@ -27,7 +27,7 @@ import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.ReportStreamSource;
 import com.esofthead.mycollab.reporting.RpFieldsBuilder;
 import com.esofthead.mycollab.reporting.SimpleReportTemplateExecutor;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.AsyncInvoker;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -96,7 +96,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
         List fields = Arrays.asList(TimeTableFieldDef.project(), TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(),
                 TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(), TimeTableFieldDef.logForDate());
         SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Timesheet",
-                new RpFieldsBuilder(fields), exportType, SimpleItemTimeLogging.class, ApplicationContextUtil.getSpringBean
+                new RpFieldsBuilder(fields), exportType, SimpleItemTimeLogging.class, AppContextUtil.getSpringBean
                 (ItemTimeLoggingService.class));
         ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
             @Override
@@ -149,10 +149,10 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
     @Override
     public void display() {
         removeAllComponents();
-        projects = ApplicationContextUtil.getSpringBean(ProjectService.class).getProjectsUserInvolved(AppContext.getUsername(),
+        projects = AppContextUtil.getSpringBean(ProjectService.class).getProjectsUserInvolved(AppContext.getUsername(),
                 AppContext.getAccountId());
         if (CollectionUtils.isNotEmpty(projects)) {
-            itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+            itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
             Label titleLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() + " " + "Timesheet");
 
@@ -352,7 +352,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
         AsyncInvoker.access(new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-                ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                ItemTimeLoggingService itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
                 int totalCount = itemTimeLoggingService.getTotalCount(searchCriteria);
                 int pages = totalCount / 20;
                 for (int page = 0; page < pages + 1; page++) {
@@ -419,7 +419,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
         private List<SimpleUser> users;
 
         UserInvolvedProjectsMemberListSelect(List<Integer> projectIds) {
-            users = ApplicationContextUtil.getSpringBean(ProjectMemberService.class).getActiveUsersInProjects(projectIds, AppContext.getAccountId());
+            users = AppContextUtil.getSpringBean(ProjectMemberService.class).getActiveUsersInProjects(projectIds, AppContext.getAccountId());
 
             for (SimpleUser user : users) {
                 this.addItem(user.getUsername());

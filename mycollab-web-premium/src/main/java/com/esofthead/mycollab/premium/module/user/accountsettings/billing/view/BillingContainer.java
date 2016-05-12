@@ -19,7 +19,7 @@ package com.esofthead.mycollab.premium.module.user.accountsettings.billing.view;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingContainer;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -44,7 +44,7 @@ public class BillingContainer extends AbstractPageView implements IBillingContai
     public void display() {
         removeAllComponents();
 
-        LicenseResolver licenseResolver = ApplicationContextUtil.getSpringBean(LicenseResolver.class);
+        LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
         if (licenseResolver != null) {
             try {
                 LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();

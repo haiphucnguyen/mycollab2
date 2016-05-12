@@ -33,7 +33,7 @@ import com.esofthead.mycollab.pro.module.project.ui.components.TimeLogEditWindow
 import com.esofthead.mycollab.module.project.view.bug.BugTimeLogSheet;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.google.common.eventbus.AllowConcurrentEvents;
@@ -155,7 +155,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
 
         @Override
         protected void updateTimeRemain() {
-            BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+            BugService bugService = AppContextUtil.getSpringBean(BugService.class);
             bean.setEstimateremaintime(getUpdateRemainTime());
             bugService.updateWithSession(bean, AppContext.getUsername());
         }

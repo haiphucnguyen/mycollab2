@@ -43,7 +43,7 @@ import com.esofthead.mycollab.pro.module.project.view.risk.RiskDefaultFormLayout
 import com.esofthead.mycollab.pro.module.project.view.risk.RiskPreviewForm;
 import com.esofthead.mycollab.reporting.FormReportLayout;
 import com.esofthead.mycollab.reporting.PrintButton;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -205,7 +205,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
     private static class FavoriteListComp extends DefaultBeanPagedList<ProjectGenericItemService, ProjectGenericItemSearchCriteria,
             ProjectGenericItem> {
         FavoriteListComp() {
-            super(ApplicationContextUtil.getSpringBean(ProjectGenericItemService.class), new AssignmentRowHandler(), 10);
+            super(AppContextUtil.getSpringBean(ProjectGenericItemService.class), new AssignmentRowHandler(), 10);
             addStyleName(UIConstants.BORDER_LIST);
             setControlStyle("borderlessControl");
         }
@@ -226,7 +226,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     favoriteItem.setTypeid(item.getTypeId() + "");
                     favoriteItem.setSaccountid(AppContext.getAccountId());
                     favoriteItem.setCreateduser(AppContext.getUsername());
-                    FavoriteItemService favoriteItemService = ApplicationContextUtil.getSpringBean(FavoriteItemService.class);
+                    FavoriteItemService favoriteItemService = AppContextUtil.getSpringBean(FavoriteItemService.class);
                     favoriteItemService.saveOrDelete(favoriteItem);
                     host.removeRow(layout);
                 }
@@ -255,7 +255,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
             ProjectActivityComponent activityComponent;
             if (ProjectTypeConstants.BUG.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
-                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+                    BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                     final SimpleBug bug = bugService.findById(assignment.getExtraTypeId(), AppContext.getAccountId());
                     if (bug != null) {
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + bug.getSummary());
@@ -301,7 +301,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                 }
             } else if (ProjectTypeConstants.TASK.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
-                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                    ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                     final SimpleTask task = taskService.findById(assignment.getExtraTypeId(), AppContext.getAccountId());
                     if (task != null) {
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + task.getTaskname());
@@ -346,7 +346,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                 }
             } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
-                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+                    MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                     final SimpleMilestone milestone = milestoneService.findById(Integer.parseInt(assignment.getTypeId()), AppContext
                             .getAccountId());
                     if (milestone != null) {
@@ -392,7 +392,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                 }
             } else if (ProjectTypeConstants.RISK.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS)) {
-                    RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+                    RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                     final SimpleRisk risk = riskService.findById(Integer.parseInt(assignment.getTypeId()), AppContext.getAccountId());
                     if (risk != null) {
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + risk.getRiskname());
@@ -436,7 +436,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                 }
             } else if (ProjectTypeConstants.BUG_COMPONENT.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
-                    ComponentService componentService = ApplicationContextUtil.getSpringBean(ComponentService.class);
+                    ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
                     final SimpleComponent component = componentService.findById(Integer.parseInt(assignment.getTypeId()),
                             AppContext.getAccountId());
                     if (component != null) {
@@ -483,7 +483,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                 }
             } else if (ProjectTypeConstants.BUG_VERSION.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS)) {
-                    VersionService versionService = ApplicationContextUtil.getSpringBean(VersionService.class);
+                    VersionService versionService = AppContextUtil.getSpringBean(VersionService.class);
                     final SimpleVersion version = versionService.findById(Integer.parseInt(assignment.getTypeId()), AppContext
                             .getAccountId());
                     if (version != null) {

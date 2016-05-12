@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -142,7 +142,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
             super(new ProjectRowHandler(), 10);
             addStyleName(UIConstants.BORDER_LIST);
             setControlStyle("borderlessControl");
-            standupReportService = ApplicationContextUtil.getSpringBean(StandupReportService.class);
+            standupReportService = AppContextUtil.getSpringBean(StandupReportService.class);
         }
 
         @Override
@@ -226,7 +226,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
         void displayReports(Integer projectId, Date onDate) {
             removeAllComponents();
-            reportInDay = new BeanList<>(ApplicationContextUtil.getSpringBean(StandupReportService.class), StandupReportRowDisplay.class);
+            reportInDay = new BeanList<>(AppContextUtil.getSpringBean(StandupReportService.class), StandupReportRowDisplay.class);
             standupMissingComp = new StandupMissingComp();
             standupMissingComp.setWidth("300px");
             this.with(reportInDay, standupMissingComp).expand(reportInDay);

@@ -8,7 +8,7 @@ import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.hp.gagawa.java.elements.A;
@@ -49,7 +49,7 @@ public class StandupMissingComp extends MVerticalLayout {
 
     public void search(Integer projectId, Date date) {
         bodyWrap.removeAllComponents();
-        StandupReportService standupReportService = ApplicationContextUtil.getSpringBean(StandupReportService.class);
+        StandupReportService standupReportService = AppContextUtil.getSpringBean(StandupReportService.class);
         List<SimpleUser> someGuys = standupReportService.findUsersNotDoReportYet(projectId, date, AppContext.getAccountId());
         if (someGuys.size() == 0) {
             bodyWrap.addComponent(new Label(AppContext.getMessage(GenericI18Enum.EXT_NO_ITEM)));

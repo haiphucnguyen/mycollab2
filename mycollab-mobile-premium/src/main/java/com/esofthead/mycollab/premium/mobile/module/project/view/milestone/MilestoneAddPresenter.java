@@ -12,7 +12,7 @@ import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -63,7 +63,7 @@ public class MilestoneAddPresenter extends AbstractProjectPresenter<MilestoneAdd
     }
 
     private void saveMilestone(Milestone milestone) {
-        MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+        MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
         milestone.setProjectid(CurrentProjectVariables.getProjectId());
         milestone.setSaccountid(AppContext.getAccountId());
 

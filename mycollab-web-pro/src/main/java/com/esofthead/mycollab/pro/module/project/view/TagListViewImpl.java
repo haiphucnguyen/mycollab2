@@ -11,7 +11,7 @@ import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectGenericItemService;
 import com.esofthead.mycollab.module.project.ui.components.GenericItemRowDisplayHandler;
 import com.esofthead.mycollab.module.project.view.ITagListView;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -44,7 +44,7 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
 
     public TagListViewImpl() {
         withMargin(new MarginInfo(true, false, true, true));
-        tagService = ApplicationContextUtil.getSpringBean(TagService.class);
+        tagService = AppContextUtil.getSpringBean(TagService.class);
         selectedTags = new ArrayList<>();
     }
 
@@ -62,7 +62,7 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
                 .withWidthUndefined());
 
         MHorizontalLayout contentWrapper = new MHorizontalLayout();
-        assignmentList = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericItemService.class),
+        assignmentList = new DefaultBeanPagedList<>(AppContextUtil.getSpringBean(ProjectGenericItemService.class),
                 new GenericItemRowDisplayHandler());
         assignmentList.addStyleName("border-top");
 

@@ -9,7 +9,7 @@ import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ContentJcrDao;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.flywaydb.core.api.migration.spring.SpringJdbcMigration;
 import org.slf4j.Logger;
@@ -41,13 +41,13 @@ public class V20141027_9__Generate_Image_Thumbnails_Fix implements
     }
 
     private void generateImageThumbnail(Integer accountId, String path) {
-        ResourceService resourceService = ApplicationContextUtil
+        ResourceService resourceService = AppContextUtil
                 .getSpringBean(ResourceService.class);
 
-        RawContentService rawContentService = ApplicationContextUtil
+        RawContentService rawContentService = AppContextUtil
                 .getSpringBean(RawContentService.class);
 
-        ContentJcrDao contentJcrDao = ApplicationContextUtil
+        ContentJcrDao contentJcrDao = AppContextUtil
                 .getSpringBean(ContentJcrDao.class);
 
         List<Resource> resources = resourceService.getResources(path);

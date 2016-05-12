@@ -3,7 +3,7 @@ package com.esofthead.mycollab.pro.module.project.view.assignments.gantt;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
@@ -79,7 +79,7 @@ public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> impl
             }
 
             if (CollectionUtils.isNotEmpty(removedPredecessors)) {
-                GanttAssignmentService ganttAssignmentService = ApplicationContextUtil.getSpringBean
+                GanttAssignmentService ganttAssignmentService = AppContextUtil.getSpringBean
                         (GanttAssignmentService.class);
                 ganttAssignmentService.massDeletePredecessors(removedPredecessors, AppContext.getAccountId());
             }

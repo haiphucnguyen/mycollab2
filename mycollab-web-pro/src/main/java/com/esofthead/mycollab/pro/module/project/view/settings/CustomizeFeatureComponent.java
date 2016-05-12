@@ -9,7 +9,7 @@ import com.esofthead.mycollab.module.project.events.CustomizeUIEvent;
 import com.esofthead.mycollab.module.project.i18n.*;
 import com.esofthead.mycollab.module.project.service.ProjectCustomizeViewService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.web.ui.BlockWidget;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
@@ -131,7 +131,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
                 customizeView.setDisplaystandup(displayStandupSelection.getSelected());
                 customizeView.setDisplayinvoice(displayInvoiceSelection.getSelected());
 
-                ProjectCustomizeViewService projectCustomizeService = ApplicationContextUtil
+                ProjectCustomizeViewService projectCustomizeService = AppContextUtil
                         .getSpringBean(ProjectCustomizeViewService.class);
                 if (customizeView.getId() == null) {
                     projectCustomizeService.saveWithSession(customizeView, AppContext.getUsername());

@@ -36,7 +36,7 @@ import com.esofthead.mycollab.module.project.view.task.TaskPopupFieldFactory;
 import com.esofthead.mycollab.module.project.view.task.components.TaskPriorityComboBox;
 import com.esofthead.mycollab.module.project.view.task.components.TaskStatusComboBox;
 import com.esofthead.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
@@ -79,7 +79,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
 
             @Override
             protected String generateSmallAsHtmlAfterUpdate() {
-                ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                 SimpleTask newTask = taskService.findById(task.getId(), AppContext.getAccountId());
                 String avatarLink = StorageFactory.getInstance().getAvatarPath(newTask.getAssignUserAvatarId(), 16);
                 Img img = new Img(newTask.getAssignUserFullName(), avatarLink).setTitle(newTask.getAssignUserFullName());
@@ -93,7 +93,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         };
         builder.withBean(task).withBindProperty("assignuser").withDescription(task.getAssignUserFullName())
                 .withCaption(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
-                .withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getAssignuser())
+                .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getAssignuser())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -115,7 +115,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 .withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY))
                 .withDescription(AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY_HELP))
                 .withField(new TaskPriorityComboBox())
-                .withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPriority())
+                .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPriority())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -137,7 +137,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         };
         builder.withBean(task).withBindProperty("status").withCaption(AppContext.getMessage(GenericI18Enum.FORM_STATUS))
                 .withDescription(AppContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP))
-                .withField(new TaskStatusComboBox()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStatus())
+                .withField(new TaskStatusComboBox()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStatus())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -162,7 +162,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         MilestoneComboBox milestoneComboBox = new MilestoneComboBox();
         milestoneComboBox.setWidth("300px");
         builder.withBean(task).withBindProperty("milestoneid").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PHASE))
-                .withField(milestoneComboBox).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class))
+                .withField(milestoneComboBox).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
                 .withValue(task.getMilestoneid()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -185,7 +185,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         builder.withBean(task).withBindProperty("percentagecomplete")
                 .withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE)).withField(new TaskCompleteStatusSelection())
                 .withDescription(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE))
-                .withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPercentagecomplete())
+                .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPercentagecomplete())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -207,7 +207,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("deadline").withCaption(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new DateFieldExt()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getDeadline())
+                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getDeadline())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -229,7 +229,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("startdate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new DateFieldExt()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStartdate())
+                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -251,7 +251,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("enddate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new DateFieldExt()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getEnddate())
+                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -303,7 +303,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
 
         @Override
         protected void doHide() {
-            MonitorItemService monitorItemService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);
+            MonitorItemService monitorItemService = AppContextUtil.getSpringBean(MonitorItemService.class);
 
             List<MonitorItem> items = watchersMultiSelection.getUnsavedItems();
             monitorItemService.saveMonitorItems(items);
@@ -339,7 +339,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
             searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
             searchCriteria.setTypeId(StringSearchField.and(task.getId() + ""));
-            CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
+            CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentCount = commentService.getTotalCount(searchCriteria);
             this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);
         }
@@ -390,7 +390,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 Long delta = HumanTime.eval(timeVal).getDelta();
                 Date date = DateTimeUtils.trimHMSOfDate(dateField.getValue());
                 if (delta > 0) {
-                    ItemTimeLoggingService timeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                    ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
                     Double hours = delta.doubleValue() / (1000 * 60 * 60);
                     ItemTimeLogging timeLogging = new ItemTimeLogging();
                     timeLogging.setCreateduser(AppContext.getUsername());

@@ -33,7 +33,7 @@ import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.pro.module.project.ui.components.TimeLogEditWindow;
 import com.esofthead.mycollab.module.project.view.task.components.TaskTimeLogSheet;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.google.common.eventbus.AllowConcurrentEvents;
@@ -155,7 +155,7 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
 
         @Override
         protected void updateTimeRemain() {
-            ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+            ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
             bean.setRemainestimate(getUpdateRemainTime());
             taskService.updateWithSession(bean, AppContext.getUsername());
 

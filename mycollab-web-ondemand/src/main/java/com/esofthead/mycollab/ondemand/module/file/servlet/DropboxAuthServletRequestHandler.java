@@ -6,7 +6,7 @@ import com.esofthead.mycollab.module.ecm.esb.CloudDriveOAuthCallbackEvent;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.oauth.service.MyCollabOauthServiceFactory;
 import com.esofthead.mycollab.servlet.GenericHttpServlet;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.MyCollabUI;
 import com.esofthead.mycollab.vaadin.ui.MyCollabSession;
 import com.google.common.eventbus.EventBus;
@@ -32,7 +32,7 @@ public class DropboxAuthServletRequestHandler extends GenericHttpServlet {
     protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String oauthVerifier = request.getParameter("code");
         String state = request.getParameter("state");
-        CacheService cacheService = ApplicationContextUtil.getSpringBean(CacheService.class);
+        CacheService cacheService = AppContextUtil.getSpringBean(CacheService.class);
 
         try {
             // getting access token

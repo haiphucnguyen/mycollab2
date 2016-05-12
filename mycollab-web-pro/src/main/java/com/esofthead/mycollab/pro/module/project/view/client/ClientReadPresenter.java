@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.project.events.ClientEvent;
 import com.esofthead.mycollab.reporting.FormReportLayout;
 import com.esofthead.mycollab.reporting.PrintButton;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -58,7 +58,7 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
                             @Override
                             public void onClose(ConfirmDialog dialog) {
                                 if (dialog.isConfirmed()) {
-                                    AccountService accountService = ApplicationContextUtil.getSpringBean(AccountService.class);
+                                    AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                                     accountService.removeWithSession(data, AppContext.getUsername(), AppContext.getAccountId());
                                     EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
                                 }
@@ -93,7 +93,7 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
 
             @Override
             public void gotoNext(SimpleAccount data) {
-                AccountService accountService = ApplicationContextUtil.getSpringBean(AccountService.class);
+                AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
@@ -107,7 +107,7 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
 
             @Override
             public void gotoPrevious(SimpleAccount data) {
-                AccountService accountService = ApplicationContextUtil.getSpringBean(AccountService.class);
+                AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESSTHAN));
@@ -124,7 +124,7 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
-            AccountService accountService = ApplicationContextUtil.getSpringBean(AccountService.class);
+            AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
             SimpleAccount account = accountService.findById((Integer) data.getParams(), AppContext.getAccountId());
             if (account != null) {
                 ClientContainer clientContainer = (ClientContainer) container;
