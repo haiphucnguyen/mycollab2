@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.common;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
 
 import java.util.List;
@@ -30,7 +31,10 @@ public class QueryAnalyzer {
     public static String toQueryParams(List<SearchFieldInfo> searchFieldInfos) {
         StringBuilder result = new StringBuilder();
         for (SearchFieldInfo searchFieldInfo : searchFieldInfos) {
-
+            if (searchFieldInfo.getPrefixOper().equals(SearchField.OR)) {
+                result.append("&or&");
+            }
+            result.append("XX");
         }
         return result.toString();
     }
