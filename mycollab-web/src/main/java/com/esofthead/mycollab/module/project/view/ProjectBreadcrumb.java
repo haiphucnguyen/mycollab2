@@ -319,11 +319,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         }
     }
 
-    public void gotoTaskDashboard() {
+    public void gotoTaskDashboard(String query) {
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(TaskI18nEnum.LIST)));
-        AppContext.addFragment(ProjectLinkGenerator.generateTaskDashboardLink(project.getId()),
-                AppContext.getMessage(BreadcrumbI18nEnum.FRA_TASK_DASHBOARD));
+        String fragment = (StringUtils.isNotBlank(query))? ProjectLinkGenerator.generateTaskDashboardLink(project.getId()) + "?" + query : ProjectLinkGenerator.generateTaskDashboardLink(project.getId());
+        AppContext.addFragment(fragment, AppContext.getMessage(BreadcrumbI18nEnum.FRA_TASK_DASHBOARD));
     }
 
     public void gotoTaskAdd() {

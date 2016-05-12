@@ -19,6 +19,7 @@ package com.esofthead.mycollab.core.db.query;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.utils.StringUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -124,7 +125,15 @@ public class SearchFieldInfo implements Serializable {
             }
         } else if (param instanceof NumberParam) {
             NumberParam wrapParam = (NumberParam) param;
-            return wrapParam.buildSearchField(prefixOper, compareOper, (Number) this.eval());
+            String value = (String) this.eval();
+            if (StringUtils.isNotBlank(value)) {
+                try {
+                    return wrapParam.buildSearchField(prefixOper, compareOper, Double.valueOf(value));
+                } catch (Exception e) {
+                    return null;
+                }
+            }
+            return null;
         } else if (param instanceof PropertyListParam) {
             PropertyListParam wrapParam = (PropertyListParam) param;
             switch (compareOper) {
@@ -174,7 +183,9 @@ public class SearchFieldInfo implements Serializable {
             S obj = cls.newInstance();
             for (SearchFieldInfo info : fieldInfos) {
                 SearchField searchField = info.buildSearchField();
-                obj.addExtraField(searchField);
+                if (searchField != null) {
+                    obj.addExtraField(searchField);
+                }
             }
             return obj;
         } catch (Exception e) {

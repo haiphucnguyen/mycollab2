@@ -19,12 +19,17 @@ package com.esofthead.mycollab.vaadin.web.ui;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.db.query.Param;
+import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+
+import java.util.List;
 
 /**
  * @param <S>
@@ -109,7 +114,9 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
 
     @Override
     protected S fillUpSearchCriteria() {
-        return buildCriterionComp.fillUpSearchCriteria();
+        List<SearchFieldInfo> searchFieldInfos = buildCriterionComp.buildSearchFieldInfos();
+        EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, searchFieldInfos));
+        return SearchFieldInfo.buildSearchCriteria(getType(), searchFieldInfos);
     }
 
     protected abstract Class<S> getType();

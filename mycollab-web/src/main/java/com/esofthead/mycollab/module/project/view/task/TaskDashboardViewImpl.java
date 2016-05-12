@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.common.QueryAnalyzer;
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
 import com.esofthead.mycollab.common.service.OptionValService;
@@ -247,9 +248,10 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         super.detach();
     }
 
-    public void displayView() {
+    public void displayView(String query) {
         baseCriteria = new TaskSearchCriteria();
         baseCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        baseCriteria = QueryAnalyzer.fromQueryParams(query, ProjectTypeConstants.TASK, baseCriteria);
         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
         List<OptionVal> options = optionValService.findOptionValsExcludeClosed(ProjectTypeConstants.TASK,
                 CurrentProjectVariables.getProjectId(), AppContext.getAccountId());

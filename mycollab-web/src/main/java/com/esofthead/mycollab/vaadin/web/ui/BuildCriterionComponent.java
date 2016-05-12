@@ -172,7 +172,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         buildFilterBox(queryText);
     }
 
-    private List<SearchFieldInfo> buildSearchFieldInfos() {
+    List<SearchFieldInfo> buildSearchFieldInfos() {
         Iterator<Component> iterator = searchContainer.iterator();
         List<SearchFieldInfo> fieldInfos = new ArrayList<>();
         while (iterator.hasNext()) {
@@ -187,24 +187,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
     protected Component buildPropertySearchComp(String fieldId) {
         return null;
-    }
-
-    public S fillUpSearchCriteria() {
-        try {
-            S searchCriteria = type.newInstance();
-            Iterator<Component> iterator = searchContainer.iterator();
-            while (iterator.hasNext()) {
-                CriteriaSelectionLayout criteriaSelectionLayout = (CriteriaSelectionLayout) iterator.next();
-                SearchFieldInfo searchFieldInfo = criteriaSelectionLayout.buildSearchFieldInfo();
-                if (searchFieldInfo != null) {
-                    SearchField searchField = searchFieldInfo.buildSearchField();
-                    searchCriteria.addExtraField(searchField);
-                }
-            }
-            return searchCriteria;
-        } catch (Exception e) {
-            throw new MyCollabException(e);
-        }
     }
 
     private void fillSearchFieldInfoAndInvokeSearchRequest(List<SearchFieldInfo> searchFieldInfos) {
@@ -283,7 +265,10 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             index--;
             indexLbl.setValue(index + "");
             if (index == 1) {
-                operatorSelectionBox.setVisible(false);
+                removeComponent(operatorSelectionBox);
+                Label placeHolder = new Label("&nbsp;", ContentMode.HTML);
+                placeHolder.setWidth("90px");
+                this.addComponent(placeHolder, 1, 0);
             }
         }
 

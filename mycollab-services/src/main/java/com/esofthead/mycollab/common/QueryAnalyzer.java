@@ -18,8 +18,13 @@ package com.esofthead.mycollab.common;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
+import com.esofthead.mycollab.core.db.query.*;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import org.apache.commons.collections.CollectionUtils;
 
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,14 +37,51 @@ public class QueryAnalyzer {
         StringBuilder result = new StringBuilder();
         for (SearchFieldInfo searchFieldInfo : searchFieldInfos) {
             if (searchFieldInfo.getPrefixOper().equals(SearchField.OR)) {
-                result.append("&or&");
+                result.append("&or");
             }
-            result.append("XX");
+            Param param = searchFieldInfo.getParam();
+            if (param instanceof StringParam || param instanceof CompositionStringParam || param instanceof NumberParam) {
+                result.append(String.format("&%s*%s*%s", param.getId(), searchFieldInfo.getCompareOper(),
+                        searchFieldInfo.eval()));
+            } else if (param instanceof StringListParam) {
+                StringListParam stringListParam = (StringListParam) param;
+                List<String> values = stringListParam.getValues();
+                if (CollectionUtils.isNotEmpty(values)) {
+                    for (String value : values) {
+                        result.append(String.format("&%s*%s*%s", param.getId(), searchFieldInfo.getCompareOper(), value));
+                    }
+                }
+            } else if (param instanceof PropertyListParam) {
+                Collection values = (Collection) searchFieldInfo.eval();
+                if (CollectionUtils.isNotEmpty(values)) {
+                    for (Object value : values) {
+                        result.append(String.format("&%s*%s*%s", param.getId(), searchFieldInfo.getCompareOper(), value));
+                    }
+                }
+            } else if (param instanceof DateParam) {
+                DateParam dateParam = (DateParam) param;
+                Object value = searchFieldInfo.eval();
+                if (value.getClass().isArray()) {
+                    Date val1 = (Date) Array.get(value, 0);
+                    Date val2 = (Date) Array.get(value, 1);
+                    if (val1 != null && val2 != null) {
+                        result.append(String.format("&%s*%s*(%s,%s)", param.getId(), searchFieldInfo.getCompareOper(),
+                                DateTimeUtils.formatDate((Date) val1, "yyyy-MM-dd"),
+                                DateTimeUtils.formatDate((Date) val2, "yyyy-MM-dd")));
+                    }
+                } else {
+                    result.append(String.format("&%s*%s*%s", param.getId(), searchFieldInfo.getCompareOper(),
+                            DateTimeUtils.formatDate((Date) value, "yyyy-MM-dd")));
+                }
+            }
+        }
+        if (result.length() > 0 && result.charAt(0) == '&') {
+            result.deleteCharAt(0);
         }
         return result.toString();
     }
 
-    public static SearchCriteria fromQueryParams(String query, Class<? extends SearchCriteria> cls) {
-        return null;
+    public static <S extends SearchCriteria> S fromQueryParams(String query, String type, S searchCriteria) {
+        return searchCriteria;
     }
 }
