@@ -478,10 +478,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 return null;
             }
 
-            return new SearchFieldInfo(prefixOper, param, compareOper, value);
+            return new SearchFieldInfo(prefixOper, param, compareOper, ConstantValueInjector.valueOf(value));
         }
-
-
     }
 
     private class SavedSearchResultComboBox extends ComboBox {

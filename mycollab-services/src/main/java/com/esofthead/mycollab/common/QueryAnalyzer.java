@@ -16,15 +16,22 @@
  */
 package com.esofthead.mycollab.common;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.db.query.*;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import org.apache.commons.collections.CollectionUtils;
+import com.esofthead.mycollab.core.db.query.CacheParamMapper;
+import com.esofthead.mycollab.core.db.query.Param;
+import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Date;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -32,56 +39,73 @@ import java.util.List;
  * @since 5.3.1
  */
 public class QueryAnalyzer {
+    private static final Logger LOG = LoggerFactory.getLogger(QueryAnalyzer.class);
 
     public static String toQueryParams(List<SearchFieldInfo> searchFieldInfos) {
-        StringBuilder result = new StringBuilder();
-        for (SearchFieldInfo searchFieldInfo : searchFieldInfos) {
-            if (searchFieldInfo.getPrefixOper().equals(SearchField.OR)) {
-                result.append("&or");
-            }
-            Param param = searchFieldInfo.getParam();
-            if (param instanceof StringParam || param instanceof CompositionStringParam || param instanceof NumberParam) {
-                result.append(String.format("&%s*%s*%s", param.getId(), searchFieldInfo.getCompareOper(),
-                        searchFieldInfo.eval()));
-            } else if (param instanceof StringListParam) {
-                StringListParam stringListParam = (StringListParam) param;
-                List<String> values = stringListParam.getValues();
-                if (CollectionUtils.isNotEmpty(values)) {
-                    for (String value : values) {
-                        result.append(String.format("&%s*%s*%s", param.getId(), searchFieldInfo.getCompareOper(), value));
-                    }
-                }
-            } else if (param instanceof PropertyListParam) {
-                Collection values = (Collection) searchFieldInfo.eval();
-                if (CollectionUtils.isNotEmpty(values)) {
-                    for (Object value : values) {
-                        result.append(String.format("&%s*%s*%s", param.getId(), searchFieldInfo.getCompareOper(), value));
-                    }
-                }
-            } else if (param instanceof DateParam) {
-                DateParam dateParam = (DateParam) param;
-                Object value = searchFieldInfo.eval();
-                if (value.getClass().isArray()) {
-                    Date val1 = (Date) Array.get(value, 0);
-                    Date val2 = (Date) Array.get(value, 1);
-                    if (val1 != null && val2 != null) {
-                        result.append(String.format("&%s*%s*(%s,%s)", param.getId(), searchFieldInfo.getCompareOper(),
-                                DateTimeUtils.formatDate((Date) val1, "yyyy-MM-dd"),
-                                DateTimeUtils.formatDate((Date) val2, "yyyy-MM-dd")));
-                    }
-                } else {
-                    result.append(String.format("&%s*%s*%s", param.getId(), searchFieldInfo.getCompareOper(),
-                            DateTimeUtils.formatDate((Date) value, "yyyy-MM-dd")));
-                }
-            }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            SimpleModule module = new SimpleModule();
+            module.addSerializer(Param.class, new ParamSerializer());
+            mapper.registerModule(module);
+            String value = mapper.writeValueAsString(searchFieldInfos);
+            return UrlEncodeDecoder.encode(value);
+        } catch (IOException e) {
+            throw new MyCollabException(e);
         }
-        if (result.length() > 0 && result.charAt(0) == '&') {
-            result.deleteCharAt(0);
-        }
-        return result.toString();
     }
 
     public static <S extends SearchCriteria> S fromQueryParams(String query, String type, S searchCriteria) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            SimpleModule module = new SimpleModule();
+            module.addDeserializer(Param.class, new ParamDeserializer(type));
+            mapper.registerModule(module);
+            List<SearchFieldInfo> list = mapper.readValue(UrlEncodeDecoder.decode(query), new TypeReference<List<SearchFieldInfo>>() {
+            });
+            for (SearchFieldInfo searchFieldInfo : list) {
+                searchCriteria.addExtraField(searchFieldInfo.buildSearchField());
+            }
+        } catch (Exception e) {
+            LOG.error("Error", e);
+        }
         return searchCriteria;
+    }
+
+    public static class ParamSerializer extends JsonSerializer<Param> {
+        @Override
+        public void serialize(Param param, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+            jsonGenerator.writeStartObject();
+            jsonGenerator.writeStringField("id", param.getId());
+            jsonGenerator.writeEndObject();
+        }
+    }
+
+    public static class ParamDeserializer extends JsonDeserializer<Param> {
+        private String type;
+
+        ParamDeserializer(String type) {
+            this.type = type;
+        }
+
+        @Override
+        public Param deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+            JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+            String id = node.get("id").asText();
+            CacheParamMapper.ValueParam valueParam = CacheParamMapper.getValueParam(type, id);
+            if (valueParam != null) {
+                return valueParam.getParam();
+            } else {
+                throw new MyCollabException("Invalid query");
+            }
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        String query =
+                "W3sicHJlZml4T3BlciI6IkFORCIsInBhcmFtIjp7ImlkIjoiYXNzaWdudXNlciJ9LCJjb21wYXJlT3BlciI6ImJlbG9uZyB0byIsInZhcmlhYmxlSW5qZWN0b3IiOnsidmFsdWUiOlsiaGFpbmd1eWVuQG15Y29sbGFiLmNvbSIsImhhaW5ndXllbkBlc29mdGhlYWQuY29tIl19fSx7InByZWZpeE9wZXIiOiJBTkQiLCJwYXJhbSI6eyJpZCI6InN0YXR1cyJ9LCJjb21wYXJlT3BlciI6ImJlbG9uZyB0byIsInZhcmlhYmxlSW5qZWN0b3IiOnsidmFsdWUiOlsiSW5Qcm9ncmVzcyIsIkNvbG9yIDIiXX19XQ";
+        query = UrlEncodeDecoder.decode(query);
+        System.out.println("Query: " + query);
+        fromQueryParams(query, ProjectTypeConstants.TASK, new TaskSearchCriteria());
+
     }
 }

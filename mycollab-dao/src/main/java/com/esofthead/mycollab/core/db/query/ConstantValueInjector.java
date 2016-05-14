@@ -23,8 +23,12 @@ package com.esofthead.mycollab.core.db.query;
 public class ConstantValueInjector implements VariableInjector {
     private Object value;
 
-    public ConstantValueInjector(Object value) {
+    private ConstantValueInjector(Object value) {
         this.value = value;
+    }
+
+    public static ConstantValueInjector valueOf(Object value) {
+        return new ConstantValueInjector(value);
     }
 
     @Override

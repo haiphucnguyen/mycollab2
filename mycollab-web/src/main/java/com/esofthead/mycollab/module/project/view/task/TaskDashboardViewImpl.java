@@ -27,6 +27,7 @@ import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.db.query.VariableInjector;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -251,7 +252,10 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
     public void displayView(String query) {
         baseCriteria = new TaskSearchCriteria();
         baseCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        baseCriteria = QueryAnalyzer.fromQueryParams(query, ProjectTypeConstants.TASK, baseCriteria);
+        if (StringUtils.isNotBlank(query)) {
+            baseCriteria = QueryAnalyzer.fromQueryParams(query, ProjectTypeConstants.TASK, baseCriteria);
+        }
+
         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
         List<OptionVal> options = optionValService.findOptionValsExcludeClosed(ProjectTypeConstants.TASK,
                 CurrentProjectVariables.getProjectId(), AppContext.getAccountId());

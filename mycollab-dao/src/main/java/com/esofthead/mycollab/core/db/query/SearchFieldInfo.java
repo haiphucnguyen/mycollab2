@@ -20,6 +20,8 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -35,30 +37,32 @@ public class SearchFieldInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String prefixOper;
+
     private Param param;
+
     private String compareOper;
+
     private VariableInjector variableInjector;
 
-    public SearchFieldInfo(String prefixOper, Param param, String compareOper, Object value) {
+    @JsonCreator
+    public SearchFieldInfo(@JsonProperty("prefixOper") String prefixOper, @JsonProperty("param") Param param,
+                           @JsonProperty("compareOper") String compareOper,
+                           @JsonProperty("variableInjector") VariableInjector value) {
         this.prefixOper = prefixOper;
         this.param = param;
         this.compareOper = compareOper;
-        if (value instanceof VariableInjector) {
-            this.variableInjector = (VariableInjector) value;
-        } else {
-            variableInjector = new ConstantValueInjector(value);
-        }
+        this.variableInjector = value;
     }
 
-    public static SearchFieldInfo inCollection(PropertyListParam param, Object value) {
+    public static SearchFieldInfo inCollection(PropertyListParam param, VariableInjector value) {
         return new SearchFieldInfo(SearchField.AND, param, PropertyListParam.BELONG_TO, value);
     }
 
-    public static SearchFieldInfo inCollection(StringListParam param, Object value) {
+    public static SearchFieldInfo inCollection(StringListParam param, VariableInjector value) {
         return new SearchFieldInfo(SearchField.AND, param, StringListParam.IN, value);
     }
 
-    public static SearchFieldInfo inDateRange(DateParam param, Object value) {
+    public static SearchFieldInfo inDateRange(DateParam param, VariableInjector value) {
         return new SearchFieldInfo(SearchField.AND, param, DateParam.BETWEEN, value);
     }
 
