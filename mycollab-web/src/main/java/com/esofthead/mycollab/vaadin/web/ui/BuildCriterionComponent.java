@@ -57,6 +57,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
     private static final Logger LOG = LoggerFactory.getLogger(BuildCriterionComponent.class);
 
+    private GenericSearchPanel.SearchLayout<S> hostSearchLayout;
     private Param[] paramFields;
     private String searchCategory;
     private Class<S> type;
@@ -64,7 +65,9 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
     private MHorizontalLayout filterBox;
     private MVerticalLayout searchContainer;
 
-    public BuildCriterionComponent(Param[] paramFields, Class<S> type, String searchCategory) {
+    public BuildCriterionComponent(GenericSearchPanel.SearchLayout<S> searchLayout, Param[]paramFields, Class<S> type,
+                                   String searchCategory) {
+        this.hostSearchLayout = searchLayout;
         this.paramFields = paramFields;
         this.type = type;
         this.searchCategory = searchCategory;
@@ -182,6 +185,10 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             }
         }
         return fieldInfos;
+    }
+
+    public void clearAllFields() {
+        searchContainer.removeAllComponents();
     }
 
     protected Component buildPropertySearchComp(String fieldId) {
@@ -509,6 +516,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                             }
                             fieldInfos = (List<SearchFieldInfo>) fieldInfos.get(0);
                             fillSearchFieldInfoAndInvokeSearchRequest(fieldInfos);
+                            hostSearchLayout.callSearchAction();
                         } catch (Exception e) {
                             LOG.error("Error of invalid query", e);
                             NotificationUtil.showErrorNotification("This query is invalid");

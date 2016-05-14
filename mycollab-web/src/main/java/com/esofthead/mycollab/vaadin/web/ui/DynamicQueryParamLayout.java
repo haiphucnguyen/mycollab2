@@ -52,11 +52,18 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
 
     protected void initLayout() {
         header = constructHeader();
-        ComponentContainer body = constructBody();
-        ComponentContainer footer = constructFooter();
+        buildCriterionComp = new BuildCriterionComponent<S>(this, getParamFields(), getType(), type) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected Component buildPropertySearchComp(String fieldId) {
+                return buildSelectionComp(fieldId);
+            }
+        };
+
         this.addComponent(header, "advSearchHeader");
-        this.addComponent(body, "advSearchBody");
-        this.addComponent(footer, "advSearchFooter");
+        this.addComponent(buildCriterionComp, "advSearchBody");
+        this.addComponent(createButtonControls(), "advSearchFooter");
     }
 
     @Override
@@ -109,7 +116,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
     }
 
     protected void clearFields() {
-
+        buildCriterionComp.clearAllFields();
     }
 
     @Override
@@ -124,22 +131,6 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
     public abstract ComponentContainer constructHeader();
 
     public abstract Param[] getParamFields();
-
-    public ComponentContainer constructBody() {
-        buildCriterionComp = new BuildCriterionComponent<S>(getParamFields(), getType(), type) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected Component buildPropertySearchComp(String fieldId) {
-                return buildSelectionComp(fieldId);
-            }
-        };
-        return buildCriterionComp;
-    }
-
-    public ComponentContainer constructFooter() {
-        return createButtonControls();
-    }
 
     protected Component buildSelectionComp(String fieldId) {
         return null;
