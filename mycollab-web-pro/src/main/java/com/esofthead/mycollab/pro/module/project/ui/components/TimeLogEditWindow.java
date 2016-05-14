@@ -231,7 +231,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
     }
 
     private void constructRemainTimeEntryPanel() {
-        MVerticalLayout remainTimePanel = new MVerticalLayout().withMargin(false).withSpacing(true);
+        MVerticalLayout remainTimePanel = new MVerticalLayout().withMargin(false);
         headerPanel.addComponent(remainTimePanel);
 
         final MVerticalLayout updateLayout = new MVerticalLayout().withStyleName(UIConstants.BOX);

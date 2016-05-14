@@ -16,15 +16,15 @@
  */
 package com.esofthead.mycollab.vaadin.web.ui;
 
-import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
+import com.esofthead.mycollab.common.XStreamJsonDeSerializer;
+import com.esofthead.mycollab.common.domain.SaveSearchResult;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.service.SaveSearchResultService;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
 import com.esofthead.mycollab.core.db.query.SearchQueryInfo;
-import com.esofthead.mycollab.common.XStreamJsonDeSerializer;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.AppContextUtil;
@@ -68,10 +68,10 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
         searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 
         SaveSearchResultService saveSearchResultService = AppContextUtil.getSpringBean(SaveSearchResultService.class);
-        List<SaveSearchResultWithBLOBs> savedSearchResults = saveSearchResultService.findPagableListByCriteria(new
+        List<SaveSearchResult> savedSearchResults = saveSearchResultService.findPagableListByCriteria(new
                 BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
         savedQueries = new ArrayList<>();
-        for (SaveSearchResultWithBLOBs searchResultWithBLOBs : savedSearchResults) {
+        for (SaveSearchResult searchResultWithBLOBs : savedSearchResults) {
             try {
                 List fieldInfos = (List) XStreamJsonDeSerializer.fromJson(searchResultWithBLOBs.getQuerytext());
                 // @HACK: === the library serialize with extra list

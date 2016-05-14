@@ -17,11 +17,10 @@
 package com.esofthead.mycollab.vaadin.web.ui;
 
 import com.esofthead.mycollab.common.XStreamJsonDeSerializer;
-import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
+import com.esofthead.mycollab.common.domain.SaveSearchResult;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.SaveSearchResultService;
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.*;
 import com.esofthead.mycollab.core.db.query.*;
@@ -162,7 +161,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         }
 
         SaveSearchResultService saveSearchResultService = AppContextUtil.getSpringBean(SaveSearchResultService.class);
-        SaveSearchResultWithBLOBs searchResult = new SaveSearchResultWithBLOBs();
+        SaveSearchResult searchResult = new SaveSearchResult();
         searchResult.setSaveuser(AppContext.getUsername());
         searchResult.setSaccountid(AppContext.getAccountId());
         searchResult.setQuerytext(XStreamJsonDeSerializer.toJson(fieldInfos));
@@ -484,7 +483,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
     private class SavedSearchResultComboBox extends ComboBox {
         private static final long serialVersionUID = 1L;
-        private BeanContainer<String, SaveSearchResultWithBLOBs> beanItem;
+        private BeanContainer<String, SaveSearchResult> beanItem;
 
         SavedSearchResultComboBox() {
             this.setImmediate(true);
@@ -498,7 +497,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
                     Object itemId = SavedSearchResultComboBox.this.getValue();
                     if (itemId != null) {
-                        final SaveSearchResultWithBLOBs data = beanItem.getItem(itemId).getBean();
+                        final SaveSearchResult data = beanItem.getItem(itemId).getBean();
 
                         String queryText = data.getQuerytext();
                         try {
@@ -572,12 +571,12 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 
             SaveSearchResultService saveSearchResultService = AppContextUtil.getSpringBean(SaveSearchResultService.class);
-            List<SaveSearchResultWithBLOBs> result = saveSearchResultService.findPagableListByCriteria(new BasicSearchRequest<>(
+            List<SaveSearchResult> result = saveSearchResultService.findPagableListByCriteria(new BasicSearchRequest<>(
                     searchCriteria, 0, Integer.MAX_VALUE));
-            beanItem = new BeanContainer<>(SaveSearchResultWithBLOBs.class);
+            beanItem = new BeanContainer<>(SaveSearchResult.class);
             beanItem.setBeanIdProperty("id");
 
-            for (SaveSearchResultWithBLOBs searchResult : result) {
+            for (SaveSearchResult searchResult : result) {
                 beanItem.addBean(searchResult);
             }
             this.setContainerDataSource(beanItem);

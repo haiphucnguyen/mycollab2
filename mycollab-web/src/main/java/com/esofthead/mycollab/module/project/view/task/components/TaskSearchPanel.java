@@ -196,7 +196,6 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
         public ComponentContainer constructHeader() {
             return TaskSearchPanel.this.constructHeader();
         }
-
     }
 
     private class TaskAdvancedSearchLayout extends DynamicQueryParamLayout<TaskSearchCriteria> {
