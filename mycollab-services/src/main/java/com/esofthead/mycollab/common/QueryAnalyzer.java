@@ -21,6 +21,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.db.query.CacheParamMapper;
 import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -55,6 +56,7 @@ public class QueryAnalyzer {
     }
 
     public static <S extends SearchCriteria> S fromQueryParams(String query, String type, S searchCriteria) {
+        S newCriteria = BeanUtility.deepClone(searchCriteria);
         try {
             ObjectMapper mapper = new ObjectMapper();
             SimpleModule module = new SimpleModule();
@@ -63,12 +65,12 @@ public class QueryAnalyzer {
             List<SearchFieldInfo> list = mapper.readValue(UrlEncodeDecoder.decode(query), new TypeReference<List<SearchFieldInfo>>() {
             });
             for (SearchFieldInfo searchFieldInfo : list) {
-                searchCriteria.addExtraField(searchFieldInfo.buildSearchField());
+                newCriteria.addExtraField(searchFieldInfo.buildSearchField());
             }
         } catch (Exception e) {
             LOG.error("Error", e);
         }
-        return searchCriteria;
+        return newCriteria;
     }
 
     public static class ParamSerializer extends JsonSerializer<Param> {

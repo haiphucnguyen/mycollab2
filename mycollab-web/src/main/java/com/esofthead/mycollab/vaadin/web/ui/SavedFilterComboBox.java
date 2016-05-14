@@ -25,6 +25,8 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
 import com.esofthead.mycollab.core.db.query.SearchQueryInfo;
 import com.esofthead.mycollab.common.XStreamJsonDeSerializer;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.ui.*;
@@ -47,7 +49,7 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
     private static Logger LOG = LoggerFactory.getLogger(SavedFilterComboBox.class);
 
     protected TextField componentsText;
-    protected String selectedQueryName = "";
+    protected String selectedQueryName = "Custom";
     private PopupButton componentPopupSelection;
     private OptionPopupContent popupContent;
     private List<SearchQueryInfo> sharedQueries;
@@ -81,6 +83,7 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
                 List<SearchFieldInfo> searchFieldInfos = (List<SearchFieldInfo>) fieldInfos.get(0);
                 savedQueries.add(new SearchQueryInfo(searchResultWithBLOBs.getQueryname(), searchFieldInfos));
             } catch (Exception e) {
+                LOG.error("Invalid query", e);
             }
         }
     }
@@ -97,8 +100,8 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
             if (queryId.equals(queryInfo.getQueryId())) {
                 selectedQueryName = queryInfo.getQueryName();
                 updateQueryNameField(selectedQueryName);
-                SavedFilterComboBox.this.fireEvent(new QuerySelectEvent(SavedFilterComboBox.this, queryInfo
-                        .getSearchFieldInfos()));
+                fireEvent(new QuerySelectEvent(this, queryInfo.getSearchFieldInfos()));
+                EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, queryInfo.getSearchFieldInfos()));
                 componentPopupSelection.setPopupVisible(false);
             }
         }

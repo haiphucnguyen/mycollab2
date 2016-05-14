@@ -252,9 +252,6 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
     public void displayView(String query) {
         baseCriteria = new TaskSearchCriteria();
         baseCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        if (StringUtils.isNotBlank(query)) {
-            baseCriteria = QueryAnalyzer.fromQueryParams(query, ProjectTypeConstants.TASK, baseCriteria);
-        }
 
         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
         List<OptionVal> options = optionValService.findOptionValsExcludeClosed(ProjectTypeConstants.TASK,
@@ -267,7 +264,13 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         baseCriteria.setStatuses(statuses);
         statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
 
-        taskSearchPanel.selectQueryInfo(TaskSavedFilterComboBox.OPEN_TASKS);
+        if (StringUtils.isNotBlank(query)) {
+            TaskSearchCriteria searchCriteria = QueryAnalyzer.fromQueryParams(query, ProjectTypeConstants.TASK, baseCriteria);
+            searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+            queryTask(searchCriteria);
+        } else {
+            taskSearchPanel.selectQueryInfo(TaskSavedFilterComboBox.OPEN_TASKS);
+        }
     }
 
     @Override

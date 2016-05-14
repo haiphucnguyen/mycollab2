@@ -74,8 +74,7 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
                 @Override
                 public void querySelect(SavedFilterComboBox.QuerySelectEvent querySelectEvent) {
                     List<SearchFieldInfo> fieldInfos = querySelectEvent.getSearchFieldInfos();
-                    TaskSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class,
-                            fieldInfos);
+                    TaskSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class, fieldInfos);
                     criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                     EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(TaskSearchPanel.this, criteria));
                 }
