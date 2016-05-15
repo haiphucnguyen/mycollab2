@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.project.view.bug.components;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -94,11 +95,13 @@ public class BugRowComponent extends MVerticalLayout {
         Component endDateField = popupFieldFactory.createEndDatePopupField(bug);
         footer.addComponent(endDateField);
 
-        Component billableHoursView = popupFieldFactory.createBillableHoursPopupField(bug);
-        footer.addComponent(billableHoursView);
+        if (!SiteConfiguration.isCommunityEdition()) {
+            Component billableHoursView = popupFieldFactory.createBillableHoursPopupField(bug);
+            footer.addComponent(billableHoursView);
 
-        Component nonBillableHoursView = popupFieldFactory.createNonbillableHoursPopupField(bug);
-        footer.addComponent(nonBillableHoursView);
+            Component nonBillableHoursView = popupFieldFactory.createNonbillableHoursPopupField(bug);
+            footer.addComponent(nonBillableHoursView);
+        }
 
         this.with(headerLayout, footer);
     }

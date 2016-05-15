@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view.task.components;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -99,11 +100,13 @@ public class TaskRowRenderer extends MVerticalLayout {
         AbstractComponent endDateField = popupFieldFactory.createEndDatePopupField(task);
         footer.addComponent(endDateField);
 
-        AbstractComponent billableHoursField = popupFieldFactory.createBillableHoursPopupField(task);
-        footer.addComponent(billableHoursField);
+        if (!SiteConfiguration.isCommunityEdition()) {
+            AbstractComponent billableHoursField = popupFieldFactory.createBillableHoursPopupField(task);
+            footer.addComponent(billableHoursField);
 
-        AbstractComponent nonBillableHours = popupFieldFactory.createNonBillableHoursPopupField(task);
-        footer.addComponent(nonBillableHours);
+            AbstractComponent nonBillableHours = popupFieldFactory.createNonBillableHoursPopupField(task);
+            footer.addComponent(nonBillableHours);
+        }
 
         this.with(headerLayout, footer);
     }
