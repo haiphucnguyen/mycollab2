@@ -2075,7 +2075,7 @@ div.v-window {
 	background-color: #f5f5f5;
 }
 
-.v-popupview.block-popupedit {
+.block-popupedit {
 	text-decoration: none;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -2087,20 +2087,20 @@ div.v-window {
 	font-size: 13px;
 }
 
-.v-popupview.block-popupedit .v-icon {
+.block-popupedit .v-icon {
 	padding: 0px;
 }
 
-.v-popupview.block-popupedit:hover {
+.block-popupedit:hover {
 	background-color: #33aae5;
 	color: #ffffff;
 }
 
-.v-popupview.block-popupedit .nonValue .hide {
+.block-popupedit .nonValue .hide {
 	display: none;
 }
 
-.v-popupview.block-popupedit .nonValue:hover .hide {
+.block-popupedit .nonValue:hover .hide {
 	display: inline;
 }
 
@@ -14739,7 +14739,7 @@ div.v-window {
 	background-color: #f5f5f5;
 }
 
-.v-popupview.block-popupedit {
+.block-popupedit {
 	text-decoration: none;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -14751,20 +14751,20 @@ div.v-window {
 	font-size: 13px;
 }
 
-.v-popupview.block-popupedit .v-icon {
+.block-popupedit .v-icon {
 	padding: 0px;
 }
 
-.v-popupview.block-popupedit:hover {
+.block-popupedit:hover {
 	background-color: #33aae5;
 	color: #ffffff;
 }
 
-.v-popupview.block-popupedit .nonValue .hide {
+.block-popupedit .nonValue .hide {
 	display: none;
 }
 
-.v-popupview.block-popupedit .nonValue:hover .hide {
+.block-popupedit .nonValue:hover .hide {
 	display: inline;
 }
 

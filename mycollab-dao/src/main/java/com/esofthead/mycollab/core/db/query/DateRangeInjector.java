@@ -22,6 +22,7 @@ import java.util.Date;
  * @author MyCollab Ltd
  * @since 5.2.1
  */
+@Deprecated
 public class DateRangeInjector implements VariableInjector {
     private Date from, to;
 

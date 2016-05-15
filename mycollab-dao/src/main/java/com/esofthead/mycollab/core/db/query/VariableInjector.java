@@ -27,7 +27,6 @@ import org.joda.time.LocalDate;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -87,12 +86,12 @@ public interface VariableInjector<T> {
             JsonNode node = jsonParser.getCodec().readTree(jsonParser);
             JsonNode valueNode = node.get("value");
             if (valueNode.isArray()) {
-                ArrayNode arrNode = (ArrayNode) valueNode;
+                ArrayNode arrNode = (ArrayNode)valueNode;
                 String[] values = new String[arrNode.size()];
-                for (int i = 0; i < arrNode.size(); i++) {
+                for (int i=0; i<arrNode.size(); i++) {
                     Array.set(values, i, arrNode.get(i).asText());
                 }
-                return ConstantValueInjector.valueOf(Arrays.asList(values));
+                return ConstantValueInjector.valueOf(values);
             }
             return null;
         }

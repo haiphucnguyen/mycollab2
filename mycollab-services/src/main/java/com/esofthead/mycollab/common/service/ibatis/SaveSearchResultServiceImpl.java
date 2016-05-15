@@ -61,7 +61,6 @@ public class SaveSearchResultServiceImpl extends DefaultService<Integer, SaveSea
 
     @Override
     public Integer updateWithSession(SaveSearchResult record, String username) {
-        checkDuplicateEntryName(record);
         return super.updateWithSession(record, username);
     }
 

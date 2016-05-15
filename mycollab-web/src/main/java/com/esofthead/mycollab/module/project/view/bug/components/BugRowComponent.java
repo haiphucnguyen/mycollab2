@@ -64,40 +64,40 @@ public class BugRowComponent extends MVerticalLayout {
         BugPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(BugPopupFieldFactory.class);
         MHorizontalLayout headerLayout = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(false,
                 true, false, false));
-        PopupView priorityField = popupFieldFactory.createPriorityPopupField(bug);
-        PopupView assigneeField = popupFieldFactory.createAssigneePopupField(bug);
+        Component priorityField = popupFieldFactory.createPriorityPopupField(bug);
+        Component assigneeField = popupFieldFactory.createAssigneePopupField(bug);
         headerLayout.with(bugSettingPopupBtn, priorityField, assigneeField, bugWrapper).expand(bugWrapper);
 
         CssLayout footer = new CssLayout();
 
-        PopupView commentsField = popupFieldFactory.createCommentsPopupField(bug);
+        Component commentsField = popupFieldFactory.createCommentsPopupField(bug);
         footer.addComponent(commentsField);
 
-        PopupView followerField = popupFieldFactory.createFollowersPopupField(bug);
+        Component followerField = popupFieldFactory.createFollowersPopupField(bug);
         footer.addComponent(followerField);
 
-        PopupView statusField = popupFieldFactory.createStatusPopupField(bug);
+        Component statusField = popupFieldFactory.createStatusPopupField(bug);
         footer.addComponent(statusField);
 
-        PopupView milestoneField = popupFieldFactory.createMilestonePopupField(bug);
+        Component milestoneField = popupFieldFactory.createMilestonePopupField(bug);
         footer.addComponent(milestoneField);
 
         String deadlineTooltip = String.format("%s: %s", AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE),
                 AppContext.formatDate(bug.getDuedate()));
-        PopupView deadlineField = popupFieldFactory.createDeadlinePopupField(bug);
+        AbstractComponent deadlineField = popupFieldFactory.createDeadlinePopupField(bug);
         deadlineField.setDescription(deadlineTooltip);
         footer.addComponent(deadlineField);
 
-        PopupView startDateField = popupFieldFactory.createStartDatePopupField(bug);
+        Component startDateField = popupFieldFactory.createStartDatePopupField(bug);
         footer.addComponent(startDateField);
 
-        PopupView endDateField = popupFieldFactory.createEndDatePopupField(bug);
+        Component endDateField = popupFieldFactory.createEndDatePopupField(bug);
         footer.addComponent(endDateField);
 
-        PopupView billableHoursView = popupFieldFactory.createBillableHoursPopupField(bug);
+        Component billableHoursView = popupFieldFactory.createBillableHoursPopupField(bug);
         footer.addComponent(billableHoursView);
 
-        PopupView nonBillableHoursView = popupFieldFactory.createNonbillableHoursPopupField(bug);
+        Component nonBillableHoursView = popupFieldFactory.createNonbillableHoursPopupField(bug);
         footer.addComponent(nonBillableHoursView);
 
         this.with(headerLayout, footer);
