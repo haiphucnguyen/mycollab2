@@ -56,7 +56,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
         if (milestone.getStartdate() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
             divHint.appendText(VaadinIcons.TIME_FORWARD.getHtml());
-            divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
+            divHint.appendChild(new Span().appendText(" Start date is not set").setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write()).withDescription("Start date").build();
         } else {
             return new MetaFieldBuilder().withCaption(String.format(" %s %s", VaadinIcons.TIME_FORWARD.getHtml(),
@@ -69,7 +69,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
         if (milestone.getEnddate() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
             divHint.appendText(VaadinIcons.TIME_BACKWARD.getHtml());
-            divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
+            divHint.appendChild(new Span().appendText(" End date is not set").setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write()).withDescription("End date").build();
         } else {
             return new MetaFieldBuilder().withCaption(String.format(" %s %s", VaadinIcons.TIME_BACKWARD.getHtml(),

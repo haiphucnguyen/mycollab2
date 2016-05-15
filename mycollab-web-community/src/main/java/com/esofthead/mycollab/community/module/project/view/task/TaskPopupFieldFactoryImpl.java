@@ -76,7 +76,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         } else {
             Div divHint = new Div().setCSSClass("nonValue");
             divHint.appendText(VaadinIcons.CALENDAR_CLOCK.getHtml());
-            divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
+            divHint.appendChild(new Span().appendText(" Percentage complete is not set").setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write()).withDescription("Percentage complete").build();
         }
     }
@@ -86,7 +86,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         if (task.getMilestoneid() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
             divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
-            divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
+            divHint.appendChild(new Span().appendText(" Milestone is not set").setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write()).withDescription("Milestone").build();
         } else {
             return new MetaFieldBuilder().withCaptionAndIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE), task
@@ -99,7 +99,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         if (task.getDeadlineRoundPlusOne() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
             divHint.appendText(FontAwesome.CLOCK_O.getHtml());
-            divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
+            divHint.appendChild(new Span().appendText(" Deadline is not set").setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write()).withDescription("Deadline").build();
         } else {
             return new MetaFieldBuilder().withCaption(String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(),
@@ -112,7 +112,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         if (task.getStartdate() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
             divHint.appendText(VaadinIcons.TIME_FORWARD.getHtml());
-            divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
+            divHint.appendChild(new Span().appendText(" Start date is not set").setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write()).withDescription("Start date").build();
         } else {
             return new MetaFieldBuilder().withCaption(String.format(" %s %s", VaadinIcons.TIME_FORWARD.getHtml(),
@@ -125,7 +125,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         if (task.getEnddate() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
             divHint.appendText(VaadinIcons.TIME_BACKWARD.getHtml());
-            divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
+            divHint.appendChild(new Span().appendText(" End date is not set").setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write()).withDescription("End date").build();
         } else {
             return new MetaFieldBuilder().withCaption(String.format(" %s %s", VaadinIcons.TIME_BACKWARD.getHtml(),

@@ -72,7 +72,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         if (bug.getMilestoneid() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
             divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
-            divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
+            divHint.appendChild(new Span().appendText(" Milestone is not set").setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write()).withDescription(AppContext.getMessage
                     (BugI18nEnum.FORM_PHASE)).build();
         } else {
@@ -92,7 +92,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         if (bug.getDueDateRoundPlusOne() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
             divHint.appendText(FontAwesome.CLOCK_O.getHtml());
-            divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
+            divHint.appendChild(new Span().appendText(" Deadline is not set").setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write()).withDescription(AppContext.getMessage
                     (GenericI18Enum.FORM_DUE_DATE)).build();
         } else {
@@ -107,7 +107,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         if (bug.getStartdate() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
             divHint.appendText(VaadinIcons.TIME_FORWARD.getHtml());
-            divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
+            divHint.appendChild(new Span().appendText(" Start date is not set").setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write()).withDescription(AppContext.getMessage
                     (GenericI18Enum.FORM_START_DATE)).build();
         } else {
@@ -122,7 +122,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         if (bug.getEnddate() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
             divHint.appendText(VaadinIcons.TIME_BACKWARD.getHtml());
-            divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
+            divHint.appendChild(new Span().appendText(" End date is not set").setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write()).withDescription(AppContext.getMessage
                     (GenericI18Enum.FORM_END_DATE)).build();
         } else {
