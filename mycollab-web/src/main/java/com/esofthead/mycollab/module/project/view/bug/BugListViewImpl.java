@@ -16,19 +16,22 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
+import com.esofthead.mycollab.common.json.QueryAnalyzer;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.core.db.query.ConstantValueInjector;
 import com.esofthead.mycollab.core.db.query.LazyValueInjector;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
@@ -339,12 +342,19 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     }
 
     @Override
-    public void displayView() {
+    public void displayView(String query) {
         baseCriteria = new BugSearchCriteria();
         baseCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        baseCriteria.setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpen.name()));
         statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
-        searchPanel.selectQueryInfo(BugSavedFilterComboBox.OPEN_BUGS);
+        statisticSearchCriteria.setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpen.name()));
+        if (StringUtils.isNotBlank(query)) {
+            String jsonQuery = UrlEncodeDecoder.decode(query);
+            BugSearchCriteria searchCriteria = QueryAnalyzer.fromQueryParams(jsonQuery, ProjectTypeConstants.BUG, baseCriteria);
+            searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+            queryBug(searchCriteria);
+        } else {
+            searchPanel.selectQueryInfo(BugSavedFilterComboBox.OPEN_BUGS);
+        }
     }
 
     @Override
