@@ -36,6 +36,14 @@ import java.util.Date;
 @JsonSerialize(using = VariableInjector.Serializer.class)
 @JsonDeserialize(using = VariableInjector.Deserializer.class)
 public interface VariableInjector<T> {
+    Object eval();
+
+    Class<T> getType();
+
+    boolean isArray();
+
+    boolean isCollection();
+
     VariableInjector LAST_WEEK = new VariableInjector() {
         @Override
         public Object eval() {
@@ -44,6 +52,21 @@ public interface VariableInjector<T> {
             LocalDate minDate = date.dayOfWeek().withMinimumValue();
             LocalDate maxDate = date.dayOfWeek().withMaximumValue();
             return new Date[]{minDate.toDate(), maxDate.toDate()};
+        }
+
+        @Override
+        public Class getType() {
+            return Date[].class;
+        }
+
+        @Override
+        public boolean isArray() {
+            return true;
+        }
+
+        @Override
+        public boolean isCollection() {
+            return false;
         }
     };
 
@@ -55,20 +78,22 @@ public interface VariableInjector<T> {
             LocalDate maxDate = date.dayOfWeek().withMaximumValue();
             return new Date[]{minDate.toDate(), maxDate.toDate()};
         }
-    };
 
-    VariableInjector THIS_MONTH = new VariableInjector() {
         @Override
-        public Object eval() {
-            LocalDate date = new LocalDate();
-            LocalDate minDate = date.dayOfMonth().withMinimumValue();
-            LocalDate maxDate = date.dayOfMonth().withMaximumValue();
-            return new Date[]{minDate.toDate(), maxDate.toDate()};
+        public Class getType() {
+            return Date[].class;
+        }
+
+        @Override
+        public boolean isArray() {
+            return true;
+        }
+
+        @Override
+        public boolean isCollection() {
+            return false;
         }
     };
-
-
-    T eval();
 
     class Serializer extends JsonSerializer<VariableInjector> {
         @Override

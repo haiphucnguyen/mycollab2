@@ -22,7 +22,7 @@ import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.core.db.query.VariableInjector;
+import com.esofthead.mycollab.core.db.query.ConstantValueInjector;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -234,12 +234,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     }
 
     private StreamResource buildStreamSource(ReportExportType exportType) {
-        return StreamResourceUtils.buildBugStreamResource(exportType, new VariableInjector<BugSearchCriteria>() {
-            @Override
-            public BugSearchCriteria eval() {
-                return baseCriteria;
-            }
-        });
+        return StreamResourceUtils.buildBugStreamResource(exportType, ConstantValueInjector.valueOf(baseCriteria));
     }
 
     @Override
