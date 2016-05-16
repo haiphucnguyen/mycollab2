@@ -39,11 +39,16 @@ public class ConstantValueInjector implements VariableInjector {
             this.type = type;
         } else {
            if (value instanceof Collection) {
-               Object item = ((Collection)value).iterator().next();
-               this.type = item.getClass();
+               Collection collection = (Collection)value;
+               if (collection.size() > 0) {
+                   Object item = collection.iterator().next();
+                   this.type = item.getClass();
+               }
            } else if (value.getClass().isArray()) {
-               Object item = Array.get(value, 0);
-               this.type = item.getClass();
+               if (Array.getLength(value) > 0) {
+                   Object item = Array.get(value, 0);
+                   this.type = item.getClass();
+               }
            } else {
                this.type = value.getClass();
            }

@@ -108,7 +108,7 @@ public interface VariableInjector<T> {
                 jsonGenerator.writeStringField("collection", "true");
             }
 
-            if (Date.class.isAssignableFrom(variableInjector.getType())) {
+            if (variableInjector.getType() != null && Date.class.isAssignableFrom(variableInjector.getType())) {
                 jsonGenerator.writeStringField("type", "date");
             }
             jsonGenerator.writeEndObject();
