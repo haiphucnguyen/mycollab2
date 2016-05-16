@@ -48,10 +48,23 @@ public class QueryAnalyzer {
             SimpleModule module = new SimpleModule();
             module.addSerializer(Param.class, new ParamSerializer());
             mapper.registerModule(module);
-            String value = mapper.writeValueAsString(searchFieldInfos);
-            return UrlEncodeDecoder.encode(value);
+            return mapper.writeValueAsString(searchFieldInfos);
         } catch (IOException e) {
             throw new MyCollabException(e);
+        }
+    }
+
+    public static List<SearchFieldInfo> toSearchFieldInfos(String query, String type) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            SimpleModule module = new SimpleModule();
+            module.addDeserializer(Param.class, new ParamDeserializer(type));
+            mapper.registerModule(module);
+            return mapper.readValue(query, new TypeReference<List<SearchFieldInfo>>() {
+            });
+        } catch (Exception e) {
+            LOG.error("Error", e);
+            return null;
         }
     }
 
@@ -62,7 +75,7 @@ public class QueryAnalyzer {
             SimpleModule module = new SimpleModule();
             module.addDeserializer(Param.class, new ParamDeserializer(type));
             mapper.registerModule(module);
-            List<SearchFieldInfo> list = mapper.readValue(UrlEncodeDecoder.decode(query), new TypeReference<List<SearchFieldInfo>>() {
+            List<SearchFieldInfo> list = mapper.readValue(query, new TypeReference<List<SearchFieldInfo>>() {
             });
             for (SearchFieldInfo searchFieldInfo : list) {
                 newCriteria.addExtraField(searchFieldInfo.buildSearchField());
@@ -104,9 +117,8 @@ public class QueryAnalyzer {
 
     public static void main(String[] args) throws IOException {
         String query =
-                "W3sicHJlZml4T3BlciI6IkFORCIsInBhcmFtIjp7ImlkIjoiYXNzaWdudXNlciJ9LCJjb21wYXJlT3BlciI6ImJlbG9uZyB0byIsInZhcmlhYmxlSW5qZWN0b3IiOnsidmFsdWUiOlsiaGFpbmd1eWVuQG15Y29sbGFiLmNvbSIsImhhaW5ndXllbkBlc29mdGhlYWQuY29tIl19fSx7InByZWZpeE9wZXIiOiJBTkQiLCJwYXJhbSI6eyJpZCI6InN0YXR1cyJ9LCJjb21wYXJlT3BlciI6ImJlbG9uZyB0byIsInZhcmlhYmxlSW5qZWN0b3IiOnsidmFsdWUiOlsiSW5Qcm9ncmVzcyIsIkNvbG9yIDIiXX19XQ";
-        query = UrlEncodeDecoder.decode(query);
-        System.out.println("Query: " + query);
+                "W3sicHJlZml4T3BlciI6IkFORCIsInBhcmFtIjp7ImlkIjoiYXNzaWdudXNlciJ9LCJjb21wYXJlT3BlciI6ImJlbG9uZyB0byIsInZhcmlhYmxlSW5qZWN0b3IiOnsidmFsdWUiOlsibGluaGR1b25nQGVzb2Z0aGVhZC5jb20iLCJoYWluZ3V5ZW5AZXNvZnRoZWFkLmNvbSJdLCJjb2xsZWN0aW9uIjoidHJ1ZSJ9fSx7InByZWZpeE9wZXIiOiJBTkQiLCJwYXJhbSI6eyJpZCI6ImR1ZWRhdGUifSwiY29tcGFyZU9wZXIiOiJpcyBiZWZvcmUiLCJ2YXJpYWJsZUluamVjdG9yIjp7InZhbHVlIjoxNDYzNDE4MDAwMDAwLCJ0eXBlIjoiZGF0ZSJ9fV0";
+        System.out.println("Query: " + UrlEncodeDecoder.decode(query));
         fromQueryParams(query, ProjectTypeConstants.TASK, new TaskSearchCriteria());
 
     }

@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.web;
 
 import com.esofthead.mycollab.common.QueryAnalyzer;
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -102,7 +103,7 @@ public class DesktopApplication extends MyCollabUI {
             }
 
             if (StringUtils.isNotBlank(query)) {
-                fragment += "?" + query;
+                fragment += "?" + UrlEncodeDecoder.encode(query);
                 Page.getCurrent().setUriFragment(fragment, false);
             }
         }

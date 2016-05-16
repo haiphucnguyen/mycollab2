@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.web.ui;
 
-import com.esofthead.mycollab.common.XStreamJsonDeSerializer;
+import com.esofthead.mycollab.common.QueryAnalyzer;
 import com.esofthead.mycollab.common.domain.SaveSearchResult;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
@@ -65,7 +65,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
     private MHorizontalLayout filterBox;
     private MVerticalLayout searchContainer;
 
-    public BuildCriterionComponent(GenericSearchPanel.SearchLayout<S> searchLayout, Param[]paramFields, Class<S> type,
+    public BuildCriterionComponent(GenericSearchPanel.SearchLayout<S> searchLayout, Param[] paramFields, Class<S> type,
                                    String searchCategory) {
         this.hostSearchLayout = searchLayout;
         this.paramFields = paramFields;
@@ -167,7 +167,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         SaveSearchResult searchResult = new SaveSearchResult();
         searchResult.setSaveuser(AppContext.getUsername());
         searchResult.setSaccountid(AppContext.getAccountId());
-        searchResult.setQuerytext(XStreamJsonDeSerializer.toJson(fieldInfos));
+        searchResult.setQuerytext(QueryAnalyzer.toQueryParams(fieldInfos));
         searchResult.setType(searchCategory);
         searchResult.setQueryname(queryText);
         saveSearchResultService.saveWithSession(searchResult, AppContext.getUsername());
@@ -508,13 +508,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
                         String queryText = data.getQuerytext();
                         try {
-                            List<SearchFieldInfo> fieldInfos = (List<SearchFieldInfo>) XStreamJsonDeSerializer.fromJson(queryText);
-                            // @HACK: === the library serialize with extra list
-                            // wrapper
-                            if (CollectionUtils.isEmpty(fieldInfos)) {
-                                throw new UserInvalidInputException("There is no field in search criterion");
-                            }
-                            fieldInfos = (List<SearchFieldInfo>) fieldInfos.get(0);
+                            List<SearchFieldInfo> fieldInfos = QueryAnalyzer.toSearchFieldInfos(queryText, searchCategory);
                             fillSearchFieldInfoAndInvokeSearchRequest(fieldInfos);
                             hostSearchLayout.callSearchAction();
                         } catch (Exception e) {
@@ -535,7 +529,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                                     SaveSearchResultService saveSearchResultService = AppContextUtil.getSpringBean(SaveSearchResultService.class);
                                     data.setSaveuser(AppContext.getUsername());
                                     data.setSaccountid(AppContext.getAccountId());
-                                    data.setQuerytext(XStreamJsonDeSerializer.toJson(fieldInfos));
+                                    data.setQuerytext(QueryAnalyzer.toQueryParams(fieldInfos));
                                     saveSearchResultService.updateWithSession(data, AppContext.getUsername());
 
                                 }

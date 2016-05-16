@@ -32,7 +32,6 @@ import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -86,25 +85,10 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
                 }));
 
         SearchQueryInfo overdueTaskQuery = new SearchQueryInfo(OVERDUE_TASKS, "Overdue Tasks", new SearchFieldInfo
-                (SearchField.AND, TaskSearchCriteria.p_duedate, DateParam.BEFORE, new VariableInjector() {
+                (SearchField.AND, TaskSearchCriteria.p_duedate, DateParam.BEFORE, new LazyValueInjector() {
                     @Override
-                    public Object eval() {
+                    protected Object doEval() {
                         return new LocalDate().toDate();
-                    }
-
-                    @Override
-                    public Class getType() {
-                        return Date.class;
-                    }
-
-                    @Override
-                    public boolean isArray() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean isCollection() {
-                        return false;
                     }
                 }), new SearchFieldInfo(SearchField.AND, new StringParam("id-status", "m_prj_task", "status"), StringParam.IS_NOT,
                 ConstantValueInjector.valueOf(OptionI18nEnum.StatusI18nEnum.Closed.name())));

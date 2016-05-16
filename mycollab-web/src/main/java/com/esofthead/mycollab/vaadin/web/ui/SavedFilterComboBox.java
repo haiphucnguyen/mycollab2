@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.web.ui;
 
-import com.esofthead.mycollab.common.XStreamJsonDeSerializer;
+import com.esofthead.mycollab.common.QueryAnalyzer;
 import com.esofthead.mycollab.common.domain.SaveSearchResult;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.service.SaveSearchResultService;
@@ -73,15 +73,8 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
         savedQueries = new ArrayList<>();
         for (SaveSearchResult searchResultWithBLOBs : savedSearchResults) {
             try {
-                List fieldInfos = (List) XStreamJsonDeSerializer.fromJson(searchResultWithBLOBs.getQuerytext());
-                // @HACK: === the library serialize with extra list
-                // wrapper
-                if (CollectionUtils.isEmpty(fieldInfos)) {
-                    LOG.error("Can not parse query " + searchResultWithBLOBs.getQuerytext() + " of type " + type);
-                    continue;
-                }
-                List<SearchFieldInfo> searchFieldInfos = (List<SearchFieldInfo>) fieldInfos.get(0);
-                savedQueries.add(new SearchQueryInfo(searchResultWithBLOBs.getQueryname(), searchFieldInfos));
+                List fieldInfos = QueryAnalyzer.toSearchFieldInfos(searchResultWithBLOBs.getQuerytext(), type);
+                savedQueries.add(new SearchQueryInfo(searchResultWithBLOBs.getQueryname(), fieldInfos));
             } catch (Exception e) {
                 LOG.error("Invalid query", e);
             }

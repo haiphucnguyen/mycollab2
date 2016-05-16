@@ -995,7 +995,7 @@
  */
 
 .v-vaadin-version:after {
-	content: "7.6.5";
+	content: "7.6.6";
 }
 
 .v-widget {
@@ -2083,7 +2083,7 @@ div.v-window {
 	background-color: #7ec8ef;
 	padding: 0px 5px;
 	margin: 3px 3px 0px 0px;
-	color: #f2f2f2;
+	color: #f2f2f2 !important;
 	font-size: 13px;
 }
 
@@ -2102,14 +2102,6 @@ div.v-window {
 
 .block-popupedit .nonValue:hover .hide {
 	display: inline;
-}
-
-.v-popupview-popup.v-popupview-popup-block-popupedit .popupContent {
-	overflow-y: auto;
-}
-
-.v-popupview-popup.v-popupview-popup-block-popupedit .popupContent  > .v-verticallayout {
-	background-color: white;
 }
 
 .v-overlay-container .v-popupview-popup {
@@ -5375,6 +5367,8 @@ a.v-disabled {
 
 .v-grid-sidebar.v-contextmenu .v-grid-sidebar-content {
 	padding: 4px 0;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .v-grid-sidebar.v-contextmenu .v-grid-sidebar-content .gwt-MenuBar .gwt-MenuItem .column-hiding-toggle {
@@ -5932,6 +5926,8 @@ a.v-disabled {
 .v-grid-sidebar.v-contextmenu.open .v-grid-sidebar-content {
 	margin: 0 0 2px;
 	padding: 4px 4px 2px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .v-grid-sidebar.v-contextmenu.closed {
@@ -14747,7 +14743,7 @@ div.v-window {
 	background-color: #7ec8ef;
 	padding: 0px 5px;
 	margin: 3px 3px 0px 0px;
-	color: #f2f2f2;
+	color: #f2f2f2 !important;
 	font-size: 13px;
 }
 
@@ -14766,14 +14762,6 @@ div.v-window {
 
 .block-popupedit .nonValue:hover .hide {
 	display: inline;
-}
-
-.v-popupview-popup.v-popupview-popup-block-popupedit .popupContent {
-	overflow-y: auto;
-}
-
-.v-popupview-popup.v-popupview-popup-block-popupedit .popupContent  > .v-verticallayout {
-	background-color: white;
 }
 
 .v-overlay-container .v-popupview-popup {

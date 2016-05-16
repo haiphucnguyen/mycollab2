@@ -24,10 +24,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.util.Date;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd
@@ -101,6 +102,15 @@ public interface VariableInjector<T> {
             jsonGenerator.writeStartObject();
             Object value = variableInjector.eval();
             jsonGenerator.writeObjectField("value", value);
+            if (variableInjector.isArray()) {
+                jsonGenerator.writeStringField("array", "true");
+            } else if (variableInjector.isCollection()) {
+                jsonGenerator.writeStringField("collection", "true");
+            }
+
+            if (Date.class.isAssignableFrom(variableInjector.getType())) {
+                jsonGenerator.writeStringField("type", "date");
+            }
             jsonGenerator.writeEndObject();
         }
     }
@@ -111,14 +121,32 @@ public interface VariableInjector<T> {
             JsonNode node = jsonParser.getCodec().readTree(jsonParser);
             JsonNode valueNode = node.get("value");
             if (valueNode.isArray()) {
-                ArrayNode arrNode = (ArrayNode)valueNode;
-                String[] values = new String[arrNode.size()];
-                for (int i=0; i<arrNode.size(); i++) {
-                    Array.set(values, i, arrNode.get(i).asText());
+                ArrayNode arrNode = (ArrayNode) valueNode;
+                JsonNode typeNode = node.get("type");
+                String type = typeNode == null ? "" : typeNode.asText();
+                Collection values = new ArrayList(arrNode.size());
+                for (int i = 0; i < arrNode.size(); i++) {
+                    values.add(convertType(type, arrNode.get(i).asText()));
+                }
+                JsonNode arrayType = node.get("array");
+                if (arrayType != null && "true".equals(arrayType.asText())) {
+                    return ConstantValueInjector.valueOf(values.toArray());
                 }
                 return ConstantValueInjector.valueOf(values);
+            } else {
+                JsonNode typeNode = node.get("type");
+                String type = typeNode == null ? "" : typeNode.asText();
+                return ConstantValueInjector.valueOf(convertType(type, valueNode.asText()));
             }
-            return null;
+        }
+
+        private Object convertType(String type, String value) {
+            if ("date".equals(type)) {
+                long timeInMillis = Long.parseLong(value);
+                return new LocalDateTime(timeInMillis).toDate();
+            } else {
+                return value;
+            }
         }
     }
 }

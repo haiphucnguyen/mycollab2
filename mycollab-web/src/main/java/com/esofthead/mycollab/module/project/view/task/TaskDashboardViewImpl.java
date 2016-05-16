@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.QueryAnalyzer;
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
 import com.esofthead.mycollab.common.service.OptionValService;
@@ -25,7 +26,7 @@ import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.core.db.query.ConstantValueInjector;
+import com.esofthead.mycollab.core.db.query.LazyValueInjector;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
@@ -261,11 +262,12 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         for (OptionVal option : options) {
             statuses.addValue(option.getTypeval());
         }
-        baseCriteria.setStatuses(statuses);
         statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
+        statisticSearchCriteria.setStatuses(statuses);
 
         if (StringUtils.isNotBlank(query)) {
-            TaskSearchCriteria searchCriteria = QueryAnalyzer.fromQueryParams(query, ProjectTypeConstants.TASK, baseCriteria);
+            String jsonQuery = UrlEncodeDecoder.decode(query);
+            TaskSearchCriteria searchCriteria = QueryAnalyzer.fromQueryParams(jsonQuery, ProjectTypeConstants.TASK, baseCriteria);
             searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
             queryTask(searchCriteria);
         } else {
@@ -364,7 +366,12 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
     }
 
     private StreamResource buildStreamSource(ReportExportType exportType) {
-        return StreamResourceUtils.buildTaskStreamResource(exportType, ConstantValueInjector.valueOf(baseCriteria));
+        return StreamResourceUtils.buildTaskStreamResource(exportType, new LazyValueInjector() {
+            @Override
+            protected Object doEval() {
+                return baseCriteria;
+            }
+        });
     }
 
     @Override

@@ -197,7 +197,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             Date fDate = startDateField.getValue();
             Date tDate = endDateField.getValue();
             searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
-                    ConstantValueInjector.valueOf(new Date[]{fDate, tDate})));
+                    ConstantValueInjector.valueOf(Date.class, new Date[]{fDate, tDate})));
             Collection<String> selectedUsers = (Collection<String>) userField.getValue();
             if (CollectionUtils.isNotEmpty(selectedUsers)) {
                 searchCriteria.setLogUsers(new SetSearchField(selectedUsers));

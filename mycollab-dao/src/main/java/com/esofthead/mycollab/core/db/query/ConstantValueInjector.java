@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.core.db.query;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 
 /**
@@ -24,7 +25,6 @@ import java.util.Collection;
  */
 public class ConstantValueInjector implements VariableInjector {
     private Object value;
-
     private boolean isArray = false;
     private boolean isCollection = false;
     private Class type;
@@ -35,11 +35,23 @@ public class ConstantValueInjector implements VariableInjector {
 
     private ConstantValueInjector(Class type, Object value) {
         this.value = value;
-        this.type = (type == null)? value.getClass(): type;
+        if (type != null) {
+            this.type = type;
+        } else {
+           if (value instanceof Collection) {
+               Object item = ((Collection)value).iterator().next();
+               this.type = item.getClass();
+           } else if (value.getClass().isArray()) {
+               Object item = Array.get(value, 0);
+               this.type = item.getClass();
+           } else {
+               this.type = value.getClass();
+           }
+        }
 
-        if (type.isArray()) {
+        if (value.getClass().isArray()) {
             isArray = true;
-        } else if (Collection.class.isAssignableFrom(type)) {
+        } else if (Collection.class.isAssignableFrom(value.getClass())) {
             isCollection = true;
         }
     }
@@ -49,7 +61,7 @@ public class ConstantValueInjector implements VariableInjector {
     }
 
     public static ConstantValueInjector valueOf(Class type, Object value) {
-        return new ConstantValueInjector(value);
+        return new ConstantValueInjector(type, value);
     }
 
     @Override

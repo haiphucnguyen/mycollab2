@@ -473,7 +473,7 @@
     background-color: #7ec8ef;
     padding: 0px 5px;
     margin: 3px 3px 0px 0px;
-    color: darken($my-white-color, 5%);
+    color: darken($my-white-color, 5%) !important;
     font-size: $font-small;
     .v-icon {
       padding: 0px;
@@ -489,15 +489,6 @@
 
     .nonValue:hover .hide {
       display: inline;
-    }
-  }
-
-  .v-popupview-popup.v-popupview-popup-block-popupedit {
-    .popupContent {
-      overflow-y: auto;
-      > .v-verticallayout {
-        background-color: white;
-      }
     }
   }
 

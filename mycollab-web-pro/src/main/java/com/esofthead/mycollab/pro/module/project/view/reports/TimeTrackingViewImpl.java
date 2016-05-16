@@ -307,7 +307,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
         final Date fromDate = fromDateField.getValue();
         final Date toDate = toDateField.getValue();
         searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
-                ConstantValueInjector.valueOf(new Date[]{fromDate, toDate})));
+                ConstantValueInjector.valueOf(Date.class, new Date[]{fromDate, toDate})));
 
         Collection<String> selectedUsers = (Collection<String>) this.userField.getValue();
         if (CollectionUtils.isNotEmpty(selectedUsers)) {
