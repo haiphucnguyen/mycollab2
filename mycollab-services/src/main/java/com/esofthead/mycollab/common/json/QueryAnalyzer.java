@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.common;
+package com.esofthead.mycollab.common.json;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.db.query.CacheParamMapper;

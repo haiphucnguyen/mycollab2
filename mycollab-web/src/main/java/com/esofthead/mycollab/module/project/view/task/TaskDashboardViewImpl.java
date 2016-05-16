@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.common.QueryAnalyzer;
+import com.esofthead.mycollab.common.json.QueryAnalyzer;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;

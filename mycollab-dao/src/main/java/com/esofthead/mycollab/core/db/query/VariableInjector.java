@@ -98,7 +98,7 @@ public interface VariableInjector<T> {
 
     class Serializer extends JsonSerializer<VariableInjector> {
         @Override
-        public void serialize(VariableInjector variableInjector, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
+        public void serialize(VariableInjector variableInjector, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
             jsonGenerator.writeStartObject();
             Object value = variableInjector.eval();
             jsonGenerator.writeObjectField("value", value);

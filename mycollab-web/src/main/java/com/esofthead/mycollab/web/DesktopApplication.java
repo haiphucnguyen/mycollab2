@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.web;
 
-import com.esofthead.mycollab.common.QueryAnalyzer;
+import com.esofthead.mycollab.common.json.QueryAnalyzer;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;

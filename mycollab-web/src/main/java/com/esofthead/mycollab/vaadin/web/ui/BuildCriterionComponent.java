@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.web.ui;
 
-import com.esofthead.mycollab.common.QueryAnalyzer;
+import com.esofthead.mycollab.common.json.QueryAnalyzer;
 import com.esofthead.mycollab.common.domain.SaveSearchResult;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
