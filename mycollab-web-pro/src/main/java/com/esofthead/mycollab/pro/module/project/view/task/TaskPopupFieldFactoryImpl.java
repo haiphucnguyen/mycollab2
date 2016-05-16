@@ -331,6 +331,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
             layout.with(commentDisplay);
+            commentDisplay.setSizeFull();
             commentDisplay.loadComments(task.getId() + "");
         }
 

@@ -325,13 +325,13 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             } else if (param instanceof PropertyParam || param instanceof PropertyListParam || param instanceof CustomSqlParam) {
                 Component comp = buildPropertySearchComp(param.getId());
                 if (comp != null) {
+                    comp.setWidth(width);
+                    valueBox.addComponent(comp);
                     if (comp instanceof CustomField<?> && (((CustomField) comp).getType() == Integer.class)) {
                         ((Field) comp).setValue(Integer.parseInt(searchFieldInfo.eval() + ""));
                     } else {
                         ((Field) comp).setValue(searchFieldInfo.eval());
                     }
-                    comp.setWidth(width);
-                    valueBox.addComponent(comp);
                 }
             } else if (param instanceof StringListParam) {
                 ValueListSelect listSelect = new ValueListSelect();
