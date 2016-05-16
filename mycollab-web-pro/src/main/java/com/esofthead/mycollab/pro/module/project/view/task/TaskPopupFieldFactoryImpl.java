@@ -53,6 +53,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
+import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -328,10 +329,10 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         @Override
         protected void doShow() {
             CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.TASK, CurrentProjectVariables.getProjectId());
+            commentDisplay.setHeight("100%");
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
             layout.with(commentDisplay);
-            commentDisplay.setSizeFull();
             commentDisplay.loadComments(task.getId() + "");
         }
 

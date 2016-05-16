@@ -109,7 +109,7 @@ public class BugSearchCriteria extends SearchCriteria {
             StringBuffer sqlResult = new StringBuffer();
             Object[] array = values.toArray();
             for (int i = 0; i < array.length; i++) {
-                final Object affectedVersion = array[i];
+                final Integer affectedVersion = Integer.parseInt(array[i].toString());
                 String result = new SQL() {
                     {
                         SELECT("COUNT(*)");

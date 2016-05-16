@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.spring.AppContextUtil;
+import com.esofthead.mycollab.vaadin.web.ui.IntegerKeyListSelect;
 import com.vaadin.ui.ListSelect;
 
 import java.lang.reflect.Array;
@@ -35,7 +36,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class MilestoneListSelect extends ListSelect {
+public class MilestoneListSelect extends IntegerKeyListSelect {
 
     public MilestoneListSelect() {
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
@@ -50,42 +51,6 @@ public class MilestoneListSelect extends ListSelect {
         for (SimpleMilestone milestone : milestones) {
             this.addItem(milestone.getId());
             this.setItemCaption(milestone.getId(), milestone.getName());
-        }
-    }
-
-    @Override
-    public void setValue(Object newValue) throws ReadOnlyException {
-        if (newValue != null) {
-            Class valueCls = newValue.getClass();
-            ArrayList<Integer> wrappedList = new ArrayList<>();
-            if (Collection.class.isAssignableFrom(valueCls)) {
-                Iterator iter = ((Collection) newValue).iterator();
-                while (iter.hasNext()) {
-                    try {
-                        Integer value = Integer.parseInt(iter.next().toString());
-                        wrappedList.add(value);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                super.setValue(wrappedList);
-            } else if (valueCls.isArray()) {
-                int length = Array.getLength(newValue);
-                for (int i = 0; i < length; i++) {
-                    try {
-                        Integer value = Integer.parseInt(Array.get(newValue, i).toString());
-                        wrappedList.add(value);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                super.setValue(wrappedList);
-            } else {
-                super.setValue(newValue);
-                return;
-            }
-        } else {
-            super.setValue(null);
         }
     }
 }
