@@ -19,6 +19,7 @@ package com.esofthead.mycollab.core.db.query;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -185,6 +186,21 @@ public class SearchFieldInfo implements Serializable {
     public static <S extends SearchCriteria> S buildSearchCriteria(Class<S> cls, List<SearchFieldInfo> fieldInfos) {
         try {
             S obj = cls.newInstance();
+            for (SearchFieldInfo info : fieldInfos) {
+                SearchField searchField = info.buildSearchField();
+                if (searchField != null) {
+                    obj.addExtraField(searchField);
+                }
+            }
+            return obj;
+        } catch (Exception e) {
+            throw new MyCollabException(e);
+        }
+    }
+
+    public static <S extends SearchCriteria> S buildSearchCriteria(S searchCriteria, List<SearchFieldInfo> fieldInfos) {
+        try {
+            S obj = BeanUtility.deepClone(searchCriteria);
             for (SearchFieldInfo info : fieldInfos) {
                 SearchField searchField = info.buildSearchField();
                 if (searchField != null) {

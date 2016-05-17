@@ -25,6 +25,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.db.query.LazyValueInjector;
+import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
@@ -62,6 +63,8 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -77,6 +80,7 @@ import java.util.List;
 @ViewComponent
 public class BugListViewImpl extends AbstractPageView implements BugListView {
     private static final long serialVersionUID = 1L;
+    private static final Logger LOG = LoggerFactory.getLogger(BugListViewImpl.class);
 
     static final String DESCENDING = "Descending";
     static final String ASCENDING = "Ascending";
@@ -325,8 +329,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                     int totalTasks = bugService.getTotalCount(baseCriteria);
                     int pages = totalTasks / 20;
                     currentPage++;
-                    List<SimpleBug> otherBugs = bugService.findPagableListByCriteria(new BasicSearchRequest<>
-                            (baseCriteria, currentPage + 1, 20));
+                    List<SimpleBug> otherBugs = bugService.findPagableListByCriteria(new BasicSearchRequest<>(baseCriteria, currentPage + 1, 20));
                     bugGroupOrderComponent.insertBugs(otherBugs);
                     if (currentPage == pages) {
                         wrapBody.removeComponent(wrapBody.getComponent(1));
@@ -348,10 +351,17 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
         statisticSearchCriteria.setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpen.name()));
         if (StringUtils.isNotBlank(query)) {
-            String jsonQuery = UrlEncodeDecoder.decode(query);
-            BugSearchCriteria searchCriteria = QueryAnalyzer.fromQueryParams(jsonQuery, ProjectTypeConstants.BUG, baseCriteria);
-            searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-            queryBug(searchCriteria);
+            try {
+                String jsonQuery = UrlEncodeDecoder.decode(query);
+                List<SearchFieldInfo> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.BUG);
+                searchPanel.displaySearchFieldInfos(searchFieldInfos);
+                BugSearchCriteria searchCriteria = SearchFieldInfo.buildSearchCriteria(baseCriteria, searchFieldInfos);
+                searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                queryBug(searchCriteria);
+            }catch (Exception e) {
+                LOG.error("Error", e);
+                searchPanel.selectQueryInfo(BugSavedFilterComboBox.OPEN_BUGS);
+            }
         } else {
             searchPanel.selectQueryInfo(BugSavedFilterComboBox.OPEN_BUGS);
         }

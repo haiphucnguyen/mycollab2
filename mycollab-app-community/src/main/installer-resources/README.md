@@ -49,8 +49,6 @@ Version 5.3.1
 
 **Improvements & New Features**
 
-* [Premium] Associate client information to invoice
-* [Premium] Member weekly hours report
 * [Community] Allow site administrator can change the site basic information
 * Add the new task navigation buttons
 * Add the new issue navigation buttons
@@ -61,6 +59,8 @@ Version 5.3.1
 * Other minor improvements
 
 **Bug Fixes**
+
+* [Premium] Not edit hours in time edit window can cause the system error
 
 Version 5.3.0
 -----------------------------

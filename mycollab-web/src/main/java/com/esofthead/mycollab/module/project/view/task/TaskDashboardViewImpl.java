@@ -16,10 +16,10 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.common.json.QueryAnalyzer;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
+import com.esofthead.mycollab.common.json.QueryAnalyzer;
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
@@ -27,6 +27,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.db.query.LazyValueInjector;
+import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
@@ -63,6 +64,8 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -78,6 +81,8 @@ import java.util.List;
 @ViewComponent
 public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashboardView {
     private static final long serialVersionUID = 1L;
+
+    private static final Logger LOG = LoggerFactory.getLogger(TaskDashboardViewImpl.class);
 
     static final String DESCENDING = "Descending";
     static final String ASCENDING = "Ascending";
@@ -266,10 +271,17 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         statisticSearchCriteria.setStatuses(statuses);
 
         if (StringUtils.isNotBlank(query)) {
-            String jsonQuery = UrlEncodeDecoder.decode(query);
-            TaskSearchCriteria searchCriteria = QueryAnalyzer.fromQueryParams(jsonQuery, ProjectTypeConstants.TASK, baseCriteria);
-            searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-            queryTask(searchCriteria);
+            try {
+                String jsonQuery = UrlEncodeDecoder.decode(query);
+                List<SearchFieldInfo> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.TASK);
+                taskSearchPanel.displaySearchFieldInfos(searchFieldInfos);
+                TaskSearchCriteria searchCriteria = SearchFieldInfo.buildSearchCriteria(baseCriteria, searchFieldInfos);
+                searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                queryTask(searchCriteria);
+            } catch (Exception e) {
+                LOG.error("Error", e);
+                taskSearchPanel.selectQueryInfo(TaskSavedFilterComboBox.OPEN_TASKS);
+            }
         } else {
             taskSearchPanel.selectQueryInfo(TaskSavedFilterComboBox.OPEN_TASKS);
         }

@@ -68,10 +68,10 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
 
     @Override
     protected void addHeaderRight(Component c) {
-        if (this.header == null)
+        if (header == null)
             return;
 
-        this.header.addComponent(c);
+        header.addComponent(c);
     }
 
     private HorizontalLayout createButtonControls() {
@@ -117,6 +117,10 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
 
     protected void clearFields() {
         buildCriterionComp.clearAllFields();
+    }
+
+    public void displaySearchFieldInfos(List<SearchFieldInfo> searchFieldInfos) {
+        buildCriterionComp.fillSearchFieldInfoAndInvokeSearchRequest(searchFieldInfos);
     }
 
     @Override

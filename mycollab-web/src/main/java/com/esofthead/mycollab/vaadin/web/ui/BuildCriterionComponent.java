@@ -65,8 +65,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
     private MHorizontalLayout filterBox;
     private MVerticalLayout searchContainer;
 
-    public BuildCriterionComponent(GenericSearchPanel.SearchLayout<S> searchLayout, Param[] paramFields, Class<S> type,
-                                   String searchCategory) {
+    public BuildCriterionComponent(GenericSearchPanel.SearchLayout<S> searchLayout, Param[] paramFields, Class<S> type, String searchCategory) {
         this.hostSearchLayout = searchLayout;
         this.paramFields = paramFields;
         this.type = type;
@@ -195,7 +194,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         return null;
     }
 
-    private void fillSearchFieldInfoAndInvokeSearchRequest(List<SearchFieldInfo> searchFieldInfos) {
+    public void fillSearchFieldInfoAndInvokeSearchRequest(List<SearchFieldInfo> searchFieldInfos) {
         searchContainer.removeAllComponents();
 
         try {
