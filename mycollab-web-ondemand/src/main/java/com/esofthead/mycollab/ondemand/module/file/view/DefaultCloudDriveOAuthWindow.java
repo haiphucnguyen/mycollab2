@@ -24,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.GregorianCalendar;
 
@@ -53,7 +54,6 @@ public abstract class DefaultCloudDriveOAuthWindow extends Window {
     }
 
     private void registerListeners() {
-        final UI ui = UI.getCurrent();
         listener = new ApplicationEventListener<CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo>() {
             private static final long serialVersionUID = 1L;
 
@@ -84,30 +84,24 @@ public abstract class DefaultCloudDriveOAuthWindow extends Window {
     }
 
     private void constructBody() {
-        VerticalLayout mainLayout = new VerticalLayout();
-        mainLayout.setWidth("100%");
-        mainLayout.setSpacing(true);
-        mainLayout.setMargin(new MarginInfo(true, true, false, true));
+        MVerticalLayout mainLayout = new MVerticalLayout().withMargin(new MarginInfo(true, true, false, true)).withFullWidth();
 
         messageBox = new VerticalLayout();
         messageBox.setSpacing(true);
         mainLayout.addComponent(messageBox);
 
-        Label messageInfoLbl = new Label(
-                "You can connect Cloud Drives (Google Drive, Dropbox) to the MyCollab. They will be showed in 'My Documents' folder and you can do everything like in one place.");
+        Label messageInfoLbl = new Label("You can connect Cloud Drives (Google Drive, Dropbox) to the MyCollab. They will be showed in 'My Documents' folder and you can do everything like in one place.");
         messageBox.addComponent(messageInfoLbl);
 
         Button btnLogin = new Button("Login (" + getStorageName() + ")");
-        BrowserWindowOpener windowOpenner = oauthWindowOpener();
-        windowOpenner.extend(btnLogin);
+        BrowserWindowOpener windowOpener = oauthWindowOpener();
+        windowOpener.extend(btnLogin);
 
         btnLogin.addStyleName(UIConstants.BUTTON_ACTION);
         messageBox.addComponent(btnLogin);
         messageBox.setComponentAlignment(btnLogin, Alignment.MIDDLE_CENTER);
 
-        Label title = new Label("Folder Title");
-
-        mainLayout.addComponent(title);
+        mainLayout.addComponent(new Label("Folder Title"));
 
         HorizontalLayout folderNameLayout = new HorizontalLayout();
         folderNameLayout.setSpacing(false);
@@ -128,8 +122,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends Window {
         dropboxVerticalLayout.addComponent(iconEmbedded);
         dropboxVerticalLayout.setComponentAlignment(iconEmbedded, Alignment.MIDDLE_CENTER);
 
-        MHorizontalLayout controllGroupBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false,
-                false)).withHeight("50px");
+        MHorizontalLayout controllGroupBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false)).withHeight("50px");
 
         Button doneBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_OK), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;

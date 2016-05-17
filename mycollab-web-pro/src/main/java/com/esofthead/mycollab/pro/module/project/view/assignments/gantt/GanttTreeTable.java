@@ -226,8 +226,6 @@ public class GanttTreeTable extends TreeTable {
             }
         });
 
-        final GanttContextMenu contextMenu = new GanttContextMenu();
-
         gantt.setVerticalScrollDelegateTarget(this);
         int currentPageLength = 50;
         this.setPageLength(currentPageLength);
