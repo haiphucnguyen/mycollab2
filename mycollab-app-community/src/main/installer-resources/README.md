@@ -40,6 +40,22 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.3.2
+-----------------------------
+
+**Important notes**
+MyCollab only runs on Java 8.
+
+**Library Upgrades**
+ 
+**Improvements & New Features**
+
+* Hours weekly report
+
+**Bug Fixes**
+
+* Gantt chart related issues
+
 Version 5.3.1
 -----------------------------
 **Library Upgrades**
@@ -61,7 +77,6 @@ Version 5.3.1
 **Bug Fixes**
 
 * [Premium] Not edit hours in time edit window can cause the system error
-* [Premium] Gantt chart is more stable
 
 Version 5.3.0
 -----------------------------
