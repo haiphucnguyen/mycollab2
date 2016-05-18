@@ -2080,7 +2080,6 @@ div.v-window {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	background-color: #7ec8ef;
 	padding: 0px 5px;
 	margin: 3px 3px 0px 0px;
 	color: #f2f2f2 !important;
@@ -2092,7 +2091,6 @@ div.v-window {
 }
 
 .block-popupedit:hover {
-	background-color: #33aae5;
 	color: #ffffff;
 }
 
@@ -14740,7 +14738,6 @@ div.v-window {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	background-color: #7ec8ef;
 	padding: 0px 5px;
 	margin: 3px 3px 0px 0px;
 	color: #f2f2f2 !important;
@@ -14752,7 +14749,6 @@ div.v-window {
 }
 
 .block-popupedit:hover {
-	background-color: #33aae5;
 	color: #ffffff;
 }
 

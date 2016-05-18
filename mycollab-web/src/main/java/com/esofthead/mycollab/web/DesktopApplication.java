@@ -16,14 +16,13 @@
  */
 package com.esofthead.mycollab.web;
 
-import com.esofthead.mycollab.common.json.QueryAnalyzer;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.json.QueryAnalyzer;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.*;
 import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -306,7 +305,6 @@ public class DesktopApplication extends MyCollabUI {
             return;
         }
 
-
         LOG.error("Error ", e);
         ConfirmDialog dialog = ConfirmDialogExt.show(DesktopApplication.this,
                 AppContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppContext.getSiteName()),
@@ -355,8 +353,8 @@ public class DesktopApplication extends MyCollabUI {
         BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
 
         SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(AppContext.getAccountId());
-        LOG.info(String.format("Get billing account successfully: %s", BeanUtility.printBeanObj(billingAccount)) +
-                "-- and user " + BeanUtility.printBeanObj(user));
+        LOG.info(String.format("Get billing account successfully - Pricing: %s, User: %s - %s", "" + billingAccount.getBillingPlan().getPricing(),
+                user.getUsername(), user.getDisplayName()));
         AppContext.getInstance().setSessionVariables(user, billingAccount);
 
         UserAccountMapper userAccountMapper = AppContextUtil.getSpringBean(UserAccountMapper.class);

@@ -44,7 +44,9 @@ Version 5.3.2
 -----------------------------
 
 **Important notes**
-MyCollab only runs on Java 8.
+
+* Spring framework 4.2.6.RELEASE
+* MySQL Connector 5.1.39
 
 **Library Upgrades**
  
