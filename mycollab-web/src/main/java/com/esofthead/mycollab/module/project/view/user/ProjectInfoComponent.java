@@ -155,7 +155,8 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             }
             clientDiv.appendChild(new A(ProjectLinkBuilder.generateClientPreviewFullLink(project.getAccountid()))
                     .appendText(project.getClientName()));
-            ELabel accountBtn = new ELabel(clientDiv.write(), ContentMode.HTML).withStyleName(UIConstants.BUTTON_ACTION).withWidthUndefined();
+            ELabel accountBtn = new ELabel(clientDiv.write(), ContentMode.HTML).withStyleName(UIConstants.BUTTON_BLOCK)
+                    .withWidthUndefined();
             footer.addComponents(accountBtn);
         }
 
