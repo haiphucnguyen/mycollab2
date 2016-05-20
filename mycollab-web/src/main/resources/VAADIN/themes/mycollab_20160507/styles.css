@@ -17311,8 +17311,6 @@ div.v-ratingstars-bar {
 
 .billing-setting {
 	border: 1px solid #e9e9e9;
-	border-radius: 3px;
-	background-color: #F5F5F5;
 }
 
 .billing-setting .faq-layout {
@@ -17325,22 +17323,6 @@ div.v-ratingstars-bar {
 
 .current-plan-information .v-label {
 	text-align: center;
-}
-
-.current-plan-information .intro-text {
-	color: black;
-	font-weight: 600;
-}
-
-.current-plan-information .current-price-lbl {
-	color: #a2a1a1;
-	font-size: 18px;
-}
-
-.current-plan-information .current-price {
-	color: #ed0407;
-	font-size: 24px;
-	font-weight: 600;
 }
 
 .current-plan-information #currentPlanInfo {
@@ -17368,7 +17350,6 @@ div.v-ratingstars-bar {
 .prig-bottom {
 	width: 100%;
 	margin-top: 20px;
-	border: solid 1px $my-separator;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -17426,7 +17407,6 @@ div.v-ratingstars-bar {
 	border-color: #e9e9e9;
 	border-style: solid;
 	border-width: 1px 0px 0px 1px;
-	background-color: #F5F5F5;
 }
 
 .billing-plan-list > div > div:first-child > .billing-plan {
@@ -17438,12 +17418,11 @@ div.v-ratingstars-bar {
 }
 
 .billing-plan .billing-type {
-	font-size: 16px;
 	padding: 5px;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	color: #19739a;
+	color: #0083ce;
 	text-transform: uppercase;
 	border-bottom: 1px solid #e9e9e9;
 	background-color: white;
@@ -17468,17 +17447,6 @@ div.v-ratingstars-bar {
 .billing-plan .greenbtn, .billing-plan .graybtn {
 	margin-bottom: 15px;
 	margin-top: 15px;
-}
-
-.updateplan-window {
-	text-align: center;
-}
-
-.updateplan-window .billing-type {
-	color: #19739a;
-	text-transform: uppercase;
-	font-size: 13px;
-	font-weight: 600;
 }
 
 .v-verticallayout .driveEditting {

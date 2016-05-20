@@ -34,7 +34,6 @@ import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -79,7 +78,6 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
         currentPlan = new MVerticalLayout().withMargin(false).withWidth("100%");
         currentPlan.addStyleName("current-plan-information");
         currentPlan.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-
         topLayout.with(currentPlan).withAlign(currentPlan, Alignment.MIDDLE_CENTER).expand(currentPlan);
 
         MVerticalLayout faqLayout = new MVerticalLayout().withWidth("285px").withStyleName("faq-layout");
@@ -95,11 +93,10 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
             faqLayout.addComponent(cancelBtn);
         }
 
-        ELabel header =  ELabel.h3(AppContext.getMessage(BillingI18nEnum.HELP_QUESTION));
+        ELabel header = ELabel.h3(AppContext.getMessage(BillingI18nEnum.HELP_QUESTION));
         faqLayout.addComponent(header);
 
         faqLayout.addComponent(new Label(AppContext.getMessage(BillingI18nEnum.HELP_INFO), ContentMode.HTML));
-
         topLayout.with(faqLayout).withAlign(faqLayout, Alignment.TOP_RIGHT);
         layout.addComponent(topLayout);
 
@@ -109,7 +106,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
         int listSize = availablePlans.size();
 
         for (int i = 0; i < listSize; i++) {
-            VerticalLayout singlePlan = new VerticalLayout();
+            MVerticalLayout singlePlan = new MVerticalLayout().withMargin(false);
             singlePlan.addStyleName("billing-plan");
             singlePlan.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
@@ -119,8 +116,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
 
             final BillingPlan plan = availablePlans.get(i);
 
-            Label billingType = new Label(plan.getBillingtype());
-            billingType.addStyleName("billing-type");
+            ELabel billingType = ELabel.h3(plan.getBillingtype()).withStyleName("billing-type");
             singlePlan.addComponent(billingType);
 
             Label billingPrice = new Label("<span class='billing-price'>$" + plan.getPricing() + "</span>/month", ContentMode.HTML);
@@ -169,45 +165,33 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
     @Override
     public void loadCurrentPlan() {
         currentPlan.removeAllComponents();
-
         BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
 
-        Label introText = new Label("Your current plan: " + currentBillingPlan.getBillingtype());
-        introText.addStyleName("intro-text");
+        ELabel introText = ELabel.h2("Your current plan: " + currentBillingPlan.getBillingtype());
         currentPlan.addComponent(introText);
 
-        Label currentBillingPrice = new Label("<span class='current-price'>$" + currentBillingPlan.getPricing() + "</span>/Month",
-                ContentMode.HTML);
-        currentBillingPrice.setStyleName("current-price-lbl");
-        currentBillingPrice.setWidthUndefined();
-        currentBillingPrice.setImmediate(true);
+        ELabel currentBillingPrice = ELabel.h3("$" + currentBillingPlan.getPricing() + "/ Month");
         currentPlan.addComponent(currentBillingPrice);
 
-        String planInfo = "<div id='currentPlanInfo'><div class='infoBlock'><span class='infoTitle'>Projects:</span> %d of %d</div><div class='blockSeparator'>&nbsp;</div><div class='infoBlock'><span class='infoTitle'>Storage:</span> %s of %s</div><div class='blockSeparator'>&nbsp;</div><div class='infoBlock'><span class='infoTitle'>Users:</span> %d of %d</div></div>";
-        LOG.debug("Get number of active users in account {}",
-                AppContext.getAccountId());
-        UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        numOfActiveUsers = userService.getTotalActiveUsersInAccount(AppContext.getAccountId());
-
-        LOG.debug("Get number of active projects in account {}", AppContext.getAccountId());
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         numOfActiveProjects = projectService.getTotalActiveProjectsInAccount(AppContext.getAccountId());
 
-        LOG.debug("Get used storage volume");
+        ELabel projectInfo = new ELabel(String.format("<span class='infoTitle'>Projects:</span> %d of %d</div>",
+                numOfActiveProjects, currentBillingPlan.getNumprojects()), ContentMode.HTML).withStyleName(UIConstants.FIELD_NOTE);
+
         DriveInfoService driveInfoService = AppContextUtil.getSpringBean(DriveInfoService.class);
         usedStorageVolume = driveInfoService.getUsedStorageVolume(AppContext.getAccountId());
-
         String usedStorageTxt = FileUtils.getVolumeDisplay(usedStorageVolume);
+        ELabel storageInfo = new ELabel(String.format("<span class='infoTitle'>Storage:</span> %s of %s</div>",
+                usedStorageTxt, FileUtils.getVolumeDisplay(currentBillingPlan.getVolume())), ContentMode.HTML)
+                .withStyleName(UIConstants.FIELD_NOTE);
 
-        planInfo = String.format(planInfo, numOfActiveProjects,
-                currentBillingPlan.getNumprojects(), usedStorageTxt,
-                FileUtils.getVolumeDisplay(currentBillingPlan.getVolume()),
-                numOfActiveUsers, currentBillingPlan.getNumusers());
+        UserService userService = AppContextUtil.getSpringBean(UserService.class);
+        numOfActiveUsers = userService.getTotalActiveUsersInAccount(AppContext.getAccountId());
+        ELabel userInfo = new ELabel(String.format("<span class='infoTitle'>Users:</span> %d of %d</div>",
+                numOfActiveUsers, currentBillingPlan.getNumusers()), ContentMode.HTML).withStyleName(UIConstants.FIELD_NOTE);
 
-        Label currentUsage = new Label(planInfo, ContentMode.HTML);
-        currentUsage.addStyleName("current-usage");
-        currentUsage.setWidthUndefined();
-        currentPlan.addComponent(currentUsage);
+        currentPlan.addComponent(new MHorizontalLayout(projectInfo, storageInfo, userInfo));
     }
 
     private class UpdateBillingPlanWindow extends Window {
@@ -217,12 +201,11 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
 
         public UpdateBillingPlanWindow(BillingPlan billingPlan) {
             this.chosenPlan = billingPlan;
-            this.addStyleName("updateplan-window");
             this.setWidth("400px");
             this.setResizable(false);
             this.setModal(true);
 
-            contentLayout = new MVerticalLayout().withMargin(new MarginInfo(false, false, true, false));
+            contentLayout = new MVerticalLayout();
             this.setContent(contentLayout);
             initUI();
             this.center();
@@ -231,25 +214,15 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
 
         private void initUI() {
             Label header = new Label(AppContext.getMessage(BillingI18nEnum.QUESTION_CHANGE_PLAN));
-            header.addStyleName("updateplan-hdr");
-            header.setWidth("300px");
-
             contentLayout.with(header).withAlign(header, Alignment.MIDDLE_CENTER);
-
-            VerticalLayout chosenPlanInfo = new VerticalLayout();
-            chosenPlanInfo.setWidth("300px");
 
             Label chosenPlanType = new Label(chosenPlan.getBillingtype());
             chosenPlanType.addStyleName("billing-type");
-            chosenPlanInfo.addComponent(chosenPlanType);
+            contentLayout.addComponent(chosenPlanType);
 
-            Label chosenPlanPrice = new Label(AppContext.getMessage(BillingI18nEnum.FORM_BILLING_PRICE,
-                    chosenPlan.getPricing()), ContentMode.HTML);
+            Label chosenPlanPrice = new Label(AppContext.getMessage(BillingI18nEnum.FORM_BILLING_PRICE, chosenPlan.getPricing()), ContentMode.HTML);
             chosenPlanPrice.addStyleName("billing-price-lbl");
-            chosenPlanInfo.addComponent(chosenPlanPrice);
-
-            contentLayout.addComponent(chosenPlanInfo);
-            contentLayout.setComponentAlignment(chosenPlanInfo, Alignment.MIDDLE_CENTER);
+            contentLayout.addComponent(chosenPlanPrice);
 
             MHorizontalLayout controlBtns = new MHorizontalLayout().withMargin(true);
             final Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
@@ -257,7 +230,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    UpdateBillingPlanWindow.this.close();
+                    close();
                 }
             });
 
@@ -274,7 +247,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
                             || chosenPlan.getVolume() * 1000 < usedStorageVolume
                             || chosenPlan.getVolume() * 1000 < usedStorageVolume) {
                         NotificationUtil.showErrorNotification(AppContext.getMessage(BillingI18nEnum.OPT_CANNOT_CHANGE_PLAN));
-                        UpdateBillingPlanWindow.this.close();
+                        close();
                         return;
                     }
 
@@ -283,13 +256,10 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
                         return;
                     }
 
-                    LOG.debug("It is possible to update plan");
                     billingService.updateBillingPlan(AppContext.getAccountId(), chosenPlan.getId());
 
-                    LOG.debug("Update the billing service");
-
-                    UpdateBillingPlanWindow.this.updateBillingPlan();
-                    UpdateBillingPlanWindow.this.close();
+                    updateBillingPlan();
+                    close();
                 }
             });
             saveBtn.setStyleName(UIConstants.BUTTON_ACTION);

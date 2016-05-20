@@ -107,7 +107,6 @@ public class BillingServiceImpl implements BillingService {
     @Override
     public List<BillingPlan> getAvailablePlans() {
         BillingPlanExample ex = new BillingPlanExample();
-        ex.createCriteria().andIdGreaterThan(2);
         return billingPlanMapper.selectByExample(ex);
     }
 

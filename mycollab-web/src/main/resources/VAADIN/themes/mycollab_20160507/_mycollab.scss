@@ -1044,8 +1044,6 @@ $v-line-height--header:1.5em;
 
   .billing-setting {
     border: 1px solid $my-separator-color;
-    border-radius: 3px;
-    background-color: #F5F5F5;
     .faq-layout {
       border-left: 2px dotted $my-separator-color;
     }
@@ -1056,31 +1054,12 @@ $v-line-height--header:1.5em;
     .v-label {
       text-align: center;
     }
-    .intro-text {
-      color: black;
-      font-weight: $my-font-weight-bold;
-    }
-    .current-price-lbl {
-      color: rgb(162, 161, 161);
-      font-size: 18px;
-    }
-    .current-price {
-      color: rgb(237, 4, 7);
-      font-size: 24px;
-      font-weight: $my-font-weight-bold;
-    }
     #currentPlanInfo {
       background-color: rgb(212, 224, 240);
       padding: 0px 10px;
       .infoBlock {
         padding: 10px 10px;
         display: table-cell;
-      }
-      .blockSeparator {
-        display: table-cell;
-        width: 5px;
-        height: 100%;
-        background-color: $my-separator-color;
       }
       .infoTitle {
         font-weight: $my-font-weight-bold;
@@ -1094,7 +1073,6 @@ $v-line-height--header:1.5em;
   .prig-bottom {
     width: 100%;
     margin-top: 20px;
-    border: solid 1px $my-separator;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -1155,7 +1133,6 @@ $v-line-height--header:1.5em;
     border-color: $my-separator-color;
     border-style: solid;
     border-width: 1px 0px 0px 1px;
-    background-color: #F5F5F5;
   }
 
   .billing-plan-list > div > div:first-child > .billing-plan {
@@ -1167,12 +1144,11 @@ $v-line-height--header:1.5em;
       background-color: rgb(212, 224, 240);
     }
     .billing-type {
-      font-size: $font-larger;
       padding: 5px;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
-      color: rgb(25, 115, 154);
+      color: $my-link-color;
       text-transform: uppercase;
       border-bottom: 1px solid $my-separator-color;
       background-color: white;
@@ -1198,16 +1174,6 @@ $v-line-height--header:1.5em;
     .greenbtn, .graybtn {
       margin-bottom: 15px;
       margin-top: 15px;
-    }
-  }
-
-  .updateplan-window {
-    text-align: center;
-    .billing-type {
-      color: rgb(25, 115, 154);
-      text-transform: uppercase;
-      font-size: $font-small;
-      font-weight: $my-font-weight-bold;
     }
   }
 
