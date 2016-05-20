@@ -9,6 +9,9 @@ import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.license.LicenseType;
 import com.verhas.licensor.License;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -60,14 +63,21 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
 
     private void acquireALicense() {
         LOG.info("Acquire the trial license");
-        RestTemplate restTemplate = new RestTemplate();
-        try {
-            String licenseRequest = restTemplate.postForObject("https://api.mycollab.com/api/register-trial",
-                    null, String.class);
-            checkAndSaveLicenseInfo(licenseRequest);
-        } catch (Exception e) {
-            LOG.error("Can not retrieve a trial license", e);
-            licenseInfo = createInvalidLicense();
+        DateTime startDate = new DateTime(appPropertiesService.getStartDate());
+        DateTime now = new DateTime();
+        int days = (int) new Duration(startDate, now).getStandardDays();
+        if (days > 30) {
+            licenseInfo = createTempValidLicense(30);
+        } else {
+            RestTemplate restTemplate = new RestTemplate();
+            try {
+                String licenseRequest = restTemplate.postForObject("https://api.mycollab.com/api/register-trial",
+                        null, String.class);
+                checkAndSaveLicenseInfo(licenseRequest);
+            } catch (Exception e) {
+                LOG.error("Can not retrieve a trial license", e);
+                licenseInfo = createTempValidLicense(30 - days);
+            }
         }
     }
 
@@ -118,6 +128,18 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
         tmpLicenseInfo.setLicenseOrg("");
         tmpLicenseInfo.setMaxUsers(1);
         tmpLicenseInfo.setLicenseType(LicenseType.INVALID);
+        return tmpLicenseInfo;
+    }
+
+    private LicenseInfo createTempValidLicense(int days) {
+        LocalDate now = new LocalDate();
+        LicenseInfo tmpLicenseInfo = new LicenseInfo();
+        tmpLicenseInfo.setCustomerId("");
+        tmpLicenseInfo.setExpireDate(now.plusDays(days).toDate());
+        tmpLicenseInfo.setIssueDate(now.toDate());
+        tmpLicenseInfo.setLicenseOrg("");
+        tmpLicenseInfo.setMaxUsers(10);
+        tmpLicenseInfo.setLicenseType(LicenseType.PRO_TRIAL);
         return tmpLicenseInfo;
     }
 

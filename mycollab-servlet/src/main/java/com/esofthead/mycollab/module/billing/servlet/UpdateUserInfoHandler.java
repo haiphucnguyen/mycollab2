@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.billing.servlet;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
+import com.esofthead.mycollab.configuration.EnDecryptHelper;
 import com.esofthead.mycollab.core.InvalidPasswordException;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
@@ -69,7 +69,7 @@ public class UpdateUserInfoHandler extends GenericHttpServlet {
         }
 
         User user = new User();
-        user.setPassword(PasswordEncryptHelper.encryptSaltPassword(password));
+        user.setPassword(EnDecryptHelper.encryptSaltPassword(password));
         user.setUsername(username);
 
         try {

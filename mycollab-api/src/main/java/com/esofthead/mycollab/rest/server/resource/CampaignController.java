@@ -39,21 +39,13 @@ public class CampaignController {
     private EditionInfoResolver editionInfoResolver;
 
     @RequestMapping(method = RequestMethod.GET, path = "/linktobuy")
-    public String getLinkToBuy() {
-        return "https://www.mycollab.com/contact";
+    public String getLinkToBuy() throws IOException {
+        return FileUtils.readFileAsPlainString("buying.html");
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/storeweb")
     public String getStoreWeb() throws IOException {
-        File pricingFile = FileUtils.getDesireFile(FileUtils.getUserFolder(), "pricing.html", "src/main/conf/pricing.html");
-        InputStream pricingStream;
-        if (pricingFile != null) {
-            pricingStream = new FileInputStream(pricingFile);
-        } else {
-            pricingStream = CampaignController.this.getClass().getClassLoader().getResourceAsStream("pricing.html");
-        }
-
-        return IOUtils.toString(pricingStream, "UTF-8");
+        return FileUtils.readFileAsPlainString("pricing.html");
     }
 
     @Autowired

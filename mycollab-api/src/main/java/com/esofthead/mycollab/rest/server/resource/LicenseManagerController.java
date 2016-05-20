@@ -9,20 +9,21 @@ import com.esofthead.mycollab.module.mail.service.IContentGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.module.support.dao.ProEditionInfoMapper;
 import com.esofthead.mycollab.module.support.domain.ProEditionInfo;
-import com.esofthead.mycollab.module.support.domain.ProEditionInfoExample;
 import com.verhas.licensor.License;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
+import java.io.*;
+import java.net.URLDecoder;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.Properties;
 
 /**
@@ -32,8 +33,11 @@ import java.util.Properties;
 @RestController
 public class LicenseManagerController {
 
+    private static Logger LOG = LoggerFactory.getLogger(LicenseManagerController.class);
+    private static final String PRIVATE_KEY = "1fc98e7f9ddff531d66de12e7c2c31d1";
+
     @Autowired
-    private ProEditionInfoMapper premiumUserMapper;
+    private ProEditionInfoMapper proEditionMapper;
 
     @Autowired
     private MailRelayService mailRelayService;
@@ -43,44 +47,45 @@ public class LicenseManagerController {
 
     @RequestMapping(path = "/register-ee", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
-    public String registerEE(@RequestParam("firstname") String firstName, @RequestParam("lastname") String lastname,
-                             @RequestParam("email") String email, @RequestParam("role") String role,
-                             @RequestParam("company") String company, @RequestParam("phone") String phone,
-                             @RequestParam("country") String country, @RequestParam("maxUsers") String maxUsers,
-                             @RequestParam("website") String website, @RequestParam("isCallable") String isCallable) {
-        ProEditionInfoExample ex = new ProEditionInfoExample();
-        ex.createCriteria().andEmailEqualTo(email);
-        int num = premiumUserMapper.countByExample(ex);
-        if (num > 0) {
-            throw new UserInvalidInputException("There is already user has email " + email + " register the trial " +
-                    "product");
+    public String registerEE(@RequestParam("company") String company, @RequestParam("email") String email,
+                             @RequestParam("internalProductName") String internalProductName,
+                             @RequestParam("name") String name, @RequestParam("quantity") int quantity,
+                             @RequestParam("reference") String reference,
+                             @RequestParam("subscriptionReference") String subscriptionReference,
+                             @RequestParam("test") String test, @RequestParam("security_request_hash") String security_request_hash) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        StringBuilder stringBuilder = new StringBuilder().append(URLDecoder.decode(company, "UTF-8")).append
+                (URLDecoder.decode(email, "UTF-8")).append(URLDecoder.decode(internalProductName, "UTF-8"))
+                .append(URLDecoder.decode(name, "UTF-8")).append(quantity).append(URLDecoder.decode(reference, "UTF-8"))
+                .append(URLDecoder.decode(subscriptionReference, "UTF-8")).append(test).append(PRIVATE_KEY);
+        String msg = DigestUtils.md5Hex(stringBuilder.toString());
+
+        if (!msg.equals(security_request_hash)) {
+            LOG.error(String.format("Invalid request - Company: %s, Email: %s, Product: %s", company, email, internalProductName));
+            throw new UserInvalidInputException("Invalid request");
         }
-        LocalDateTime now = new LocalDateTime();
-        ProEditionInfo premiumUser = new ProEditionInfo();
-        premiumUser.setCompany(company);
-        premiumUser.setCountry(country);
-        premiumUser.setEmail(email);
-        premiumUser.setFirstname(firstName);
-        premiumUser.setLastname(lastname);
-        premiumUser.setIsphonecall(Boolean.valueOf(isCallable));
-        premiumUser.setMaxusers(Integer.parseInt(maxUsers));
-        premiumUser.setPhone(phone);
-        premiumUser.setRole(role);
-        premiumUser.setWebsite(website);
-        premiumUser.setRegisterdate(now.toDate());
-        premiumUser.setExpiredate(now.plusDays(30).toDate());
-        int customerId = premiumUserMapper.insertAndReturnKey(premiumUser);
-
+        Integer customerId = 0;
+        if (!"true".equals(test)) {
+            ProEditionInfo proEditionInfo = new ProEditionInfo();
+            proEditionInfo.setCompany(company);
+            proEditionInfo.setEmail(email);
+            proEditionInfo.setInternalproductname(internalProductName);
+            proEditionInfo.setName(name);
+            proEditionInfo.setQuantity(quantity);
+            proEditionInfo.setReference(reference);
+            proEditionInfo.setIssuedate(new Date());
+            proEditionInfo.setType("New");
+            customerId = proEditionMapper.insertAndReturnKey(proEditionInfo);
+        }
         LicenseInfo licenseInfo = new LicenseInfo();
-        licenseInfo.setCustomerId("" + customerId);
-        licenseInfo.setLicenseType(LicenseType.PRO_TRIAL);
+//        licenseInfo.setCustomerId(EnDecryptHelper.encryptText("" + customerId));
+        licenseInfo.setCustomerId("1");
+        licenseInfo.setLicenseType(LicenseType.PRO);
+        licenseInfo.setMaxUsers(10);
+        LocalDate now = new LocalDate();
         licenseInfo.setIssueDate(now.toDate());
-        licenseInfo.setExpireDate(now.plusDays(30).toDate());
         licenseInfo.setLicenseOrg(company);
-        licenseInfo.setMaxUsers(premiumUser.getMaxusers());
-        String licenseContent = encode(licenseInfo);
-
-        return "Ok";
+        licenseInfo.setExpireDate(now.plusYears(1).toDate());
+        return encode(licenseInfo);
     }
 
     @RequestMapping(path = "/register-trial", method = RequestMethod.POST, headers =
@@ -96,7 +101,6 @@ public class LicenseManagerController {
         LicenseManagerController generator = new LicenseManagerController();
         return generator.encode(info);
     }
-
 
     private String encode(LicenseInfo licenseInfo) {
         try {
@@ -138,17 +142,21 @@ public class LicenseManagerController {
         }
     }
 
-    public static void main(String[] args) {
-        LicenseInfo info = new LicenseInfo();
-        info.setCustomerId("1");
-        info.setLicenseType(LicenseType.PRO);
-        info.setExpireDate(new LocalDate().plusDays(10).toDate());
-        info.setIssueDate(new LocalDate().minusDays(30).toDate());
-        info.setLicenseOrg("eSoftHead");
-        info.setMaxUsers(10);
+    public static void main(String[] args) throws Exception {
+//        LicenseInfo info = new LicenseInfo();
+//        info.setCustomerId("1");
+//        info.setLicenseType(LicenseType.PRO_TRIAL);
+//        info.setExpireDate(new LocalDate().plusDays(10).toDate());
+//        info.setIssueDate(new LocalDate().minusDays(30).toDate());
+//        info.setLicenseOrg("eSoftHead");
+//        info.setMaxUsers(10);
+//        LicenseManagerController generator = new LicenseManagerController();
+//        String str = generator.encode(info);
+//        System.out.println(str);
+//        generator.decode(str);
         LicenseManagerController generator = new LicenseManagerController();
-        String str = generator.encode(info);
-        System.out.println(str);
-        generator.decode(str);
+        String s = generator.registerEE("FooBar+Inc.", "vagif.samadoghlu%40example.com", "Growing+%28For+less+than+10+users%29",
+                "%D0%92%D0%B0%D0%B3%D0%B8%D1%84+%D0%A1%D3%99%D0%BC%D3%99%D0%B4%D0%BE%D2%93%D0%BB%D1%83", 1, "TEST_REF", "TEST_SUB_REF", "true", "124b228b547d5ac9388bcfefef2f4d4e");
+        System.out.println("A: " + s);
     }
 }

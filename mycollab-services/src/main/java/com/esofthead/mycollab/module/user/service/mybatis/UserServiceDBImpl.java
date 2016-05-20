@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.user.service.mybatis;
 
 import com.esofthead.mycollab.configuration.IDeploymentMode;
-import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
+import com.esofthead.mycollab.configuration.EnDecryptHelper;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -118,7 +118,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
         }
 
         if (record.getPassword() != null) {
-            record.setPassword(PasswordEncryptHelper.encryptSaltPassword(record.getPassword()));
+            record.setPassword(EnDecryptHelper.encryptSaltPassword(record.getPassword()));
         }
 
         if (record.getUsername() == null) {
@@ -284,7 +284,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
             throw new UserInvalidInputException(String.format("User %s is not existed in this domain %s", username, subDomain));
         } else {
             SimpleUser user = users.get(0);
-            if (user.getPassword() == null || !PasswordEncryptHelper.checkPassword(password, user.getPassword(), isPasswordEncrypt)) {
+            if (user.getPassword() == null || !EnDecryptHelper.checkPassword(password, user.getPassword(), isPasswordEncrypt)) {
                 LOG.debug(String.format("PASS: %s   %s", password, user.getPassword()));
                 throw new UserInvalidInputException("Invalid username or password");
             }

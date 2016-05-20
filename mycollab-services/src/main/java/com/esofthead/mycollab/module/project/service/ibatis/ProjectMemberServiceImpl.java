@@ -17,7 +17,7 @@
 
 package com.esofthead.mycollab.module.project.service.ibatis;
 
-import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
+import com.esofthead.mycollab.configuration.EnDecryptHelper;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -187,7 +187,7 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
             simpleUser.setLastname(StringUtils.extractNameFromEmail(email));
             simpleUser.setRegisteredtime(now);
             simpleUser.setRegisterstatus(RegisterStatusConstants.ACTIVE);
-            simpleUser.setPassword(PasswordEncryptHelper.encryptSaltPassword(password));
+            simpleUser.setPassword(EnDecryptHelper.encryptSaltPassword(password));
             simpleUser.setUsername(email);
             simpleUser.setEmail(email);
             userMapper.insert(simpleUser);

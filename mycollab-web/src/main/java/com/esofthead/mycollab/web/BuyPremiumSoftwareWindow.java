@@ -22,19 +22,17 @@ import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AbstractLicenseActivationWindow;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
- * @author MyCollab Ltd
- * @since 5.2.2
+ * @author myCollab Ltd
+ * @since 5.3.2
  */
-public class AdWindow extends Window {
-    public AdWindow() {
+public class BuyPremiumSoftwareWindow extends Window {
+    public BuyPremiumSoftwareWindow() {
         super("Buy MyCollab Pro edition");
         this.setWidth("700px");
         this.setModal(true);
@@ -42,14 +40,13 @@ public class AdWindow extends Window {
         RestTemplate restTemplate = new RestTemplate();
         MVerticalLayout content = new MVerticalLayout();
         try {
-            String result = restTemplate.getForObject("https://api.mycollab.com/api/storeweb", String.class);
+            String result = restTemplate.getForObject("https://api.mycollab.com/api/linktobuy", String.class);
             Label webPage = new Label(result, ContentMode.HTML);
             webPage.setHeight("600px");
             this.setContent(content.with(webPage).withAlign(webPage, Alignment.TOP_CENTER));
         } catch (Exception e) {
-            Div informDiv = new Div().appendText("Can not load the store page. You can check the online edition at ")
-                    .appendChild(new A("https://www.mycollab.com/pricing/download/", "_blank").appendText("here"));
-            Label webPage = new Label(informDiv.write(), ContentMode.HTML);
+            String result = FileUtils.readFileAsPlainString("buying.html");
+            Label webPage = new Label(result, ContentMode.HTML);
             this.setContent(content.with(webPage).withAlign(webPage, Alignment.TOP_CENTER));
         }
         LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);

@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.rest.server.resource;
 
+import com.esofthead.mycollab.configuration.EnDecryptHelper;
 import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.module.support.dao.ProEditionInfoMapper;
 import com.esofthead.mycollab.module.support.domain.ProEditionInfoExample;
@@ -53,7 +54,7 @@ public class CheckVersionController {
         props.put("releaseNotes", String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
                 MyCollabVersion.getVersion().replace('.', '-')));
         ProEditionInfoExample ex = new ProEditionInfoExample();
-        ex.createCriteria().andCustomeridEqualTo(customerId);
+        ex.createCriteria().andIdEqualTo(Integer.parseInt(EnDecryptHelper.decryptText(customerId)));
         boolean isExistCustomer = proEditionInfoMapper.countByExample(ex) > 0;
         if (isExistCustomer && version != null && MyCollabVersion.isEditionNewer(liveVersion, version)) {
             props.put("autoDownload", editionInfoResolver.getEditionInfo().getPremiumUpgradeLink());

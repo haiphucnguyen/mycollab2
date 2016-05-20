@@ -13,7 +13,7 @@ import com.esofthead.mycollab.vaadin.ui.AssetResource;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.WebResourceIds;
-import com.esofthead.mycollab.web.AdWindow;
+import com.esofthead.mycollab.web.BuyPremiumSoftwareWindow;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
@@ -83,7 +83,7 @@ public class AboutWindow extends AbstractAboutWindow {
             Button buyBtn = new Button("Buy a license", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
-                    UI.getCurrent().addWindow(new AdWindow());
+                    UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow());
                     close();
                 }
             });

@@ -19,7 +19,7 @@ package com.esofthead.mycollab.web;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.json.QueryAnalyzer;
-import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
+import com.esofthead.mycollab.configuration.EnDecryptHelper;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.*;
 import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
@@ -388,12 +388,12 @@ public class DesktopApplication extends MyCollabUI {
     }
 
     private void rememberAccount(String username, String password) {
-        String storeVal = username + "$" + PasswordEncryptHelper.encryptText(password);
+        String storeVal = username + "$" + EnDecryptHelper.encryptText(password);
         BrowserCookie.setCookie(ACCOUNT_COOKIE, storeVal);
     }
 
     private void rememberTempAccount(String username, String password) {
-        String storeVal = username + "$" + PasswordEncryptHelper.encryptText(password);
+        String storeVal = username + "$" + EnDecryptHelper.encryptText(password);
         String setCookieVal = String.format("var now = new Date(); now.setTime(now.getTime() + 1 * 1800 * 1000); " +
                 "document.cookie = \"%s=%s; expires=\" + now.toUTCString() + \"; path=/\";", TEMP_ACCOUNT_COOKIE, storeVal);
         JavaScript.getCurrent().execute(setCookieVal);

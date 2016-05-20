@@ -128,12 +128,13 @@
 
         <div class="price_body">
             <div class="price">
-                <span class="price_figure">$1400</span>
+                <span class="price_figure">$390</span>
                 <span class="price_term">one-time payment</span>
             </div>
         </div>
         <div class="features">
             <ul>
+                <li>Less than 10 users</li>
                 <li>Forum, Email</li>
                 <li>Unlimited projects</li>
                 <li>All features</li>
@@ -141,7 +142,9 @@
             </ul>
         </div>
         <div class="footer">
-            <a href="https://www.mycollab.com/contact" class="action_button" target="_blank">Select</a>
+            <form method="POST" action="http://sites.fastspring.com/mycollab/product/growing?action=order" target="_blank">
+                <a class="action_button" onclick="document.forms[0].submit();return false;">Buy</a>
+            </form>
         </div>
     </li>
     <li>
@@ -149,12 +152,13 @@
 
         <div class="price_body">
             <div class="price">
-                <span class="price_figure">$2000</span>
+                <span class="price_figure">$1290</span>
                 <span class="price_term">one-time payment</span>
             </div>
         </div>
         <div class="features">
             <ul>
+                <li>More than 10 users</li>
                 <li>Forum, Email or Phone support</li>
                 <li>Unlimited projects</li>
                 <li>All features</li>
@@ -163,14 +167,17 @@
             </ul>
         </div>
         <div class="footer">
-            <a href="https://www.mycollab.com/contact" class="action_button" target="_blank">Select</a>
+            <form method="POST" action="http://sites.fastspring.com/mycollab/product/enterprise?action=order"
+                  target="_blank">
+                <a class="action_button" onclick="document.forms[1].submit();return false;">Buy</a>
+            </form>
         </div>
     </li>
     <!-- To prevent .pricing_table height collapse(as its children are floated) -->
     <div class="clr"></div>
 </ul>
 <div class="note">
-    Renew MyCollab for 800 USD/year to keep it up-to-date.
+    Renew MyCollab for 70% of the first year to keep it up-to-date.
 </div>
 
 </body>
