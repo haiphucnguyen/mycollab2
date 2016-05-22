@@ -56,8 +56,7 @@ public class MeetingAddViewImpl extends AbstractEditItemComp<MeetingWithBLOBs>
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new EditFormControlsGenerator<>(editForm)
-                .createButtonControls();
+        return new EditFormControlsGenerator<>(editForm).createButtonControls();
     }
 
     @Override
@@ -67,8 +66,7 @@ public class MeetingAddViewImpl extends AbstractEditItemComp<MeetingWithBLOBs>
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.MEETING,
-                MeetingDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.MEETING, MeetingDefaultFormLayoutFactory.getForm());
     }
 
     @Override

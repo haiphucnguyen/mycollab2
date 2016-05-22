@@ -155,7 +155,7 @@ public class DynaFormLayout implements IDynaFormLayout {
     }
 
     @Override
-    public void attachField(Object propertyId, Field<?> field) {
+    public Component attachField(Object propertyId, Field<?> field) {
         AbstractDynaField dynaField = fieldMappings.get(propertyId);
         if (dynaField != null) {
             DynaSection section = dynaField.getOwnSection();
@@ -164,7 +164,9 @@ public class DynaFormLayout implements IDynaFormLayout {
             if (componentWrapper != null) {
                 componentWrapper.addComponent(field);
             }
+            return field;
         }
+        return null;
     }
 
     @Override

@@ -21,13 +21,12 @@ import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
 import com.esofthead.mycollab.module.crm.ui.components.*;
-import com.esofthead.mycollab.module.crm.ui.format.AssignmentFieldFormatter;
-import com.esofthead.mycollab.schedule.email.crm.TaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
 import com.vaadin.ui.ComponentContainer;
@@ -97,8 +96,7 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleTask> 
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.TASK,
-                AssignmentDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.TASK, AssignmentDefaultFormLayoutFactory.getForm());
     }
 
     @Override

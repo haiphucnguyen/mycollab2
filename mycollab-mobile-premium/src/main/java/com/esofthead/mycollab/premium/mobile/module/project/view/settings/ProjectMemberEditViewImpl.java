@@ -22,6 +22,7 @@ import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.field.DefaultViewField;
@@ -85,7 +86,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         }
     }
 
-    private class ProjectMemberEditFormLayoutFactory implements IFormLayoutFactory {
+    private class ProjectMemberEditFormLayoutFactory extends AbstractFormLayoutFactory {
         private static final long serialVersionUID = -6204799792781581979L;
         private GridFormLayoutHelper informationLayout;
 
@@ -105,12 +106,13 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         }
 
         @Override
-        public void attachField(Object propertyId, Field<?> field) {
+        protected Component onAttachField(Object propertyId, Field<?> field) {
             if (ProjectMember.Field.username.equalTo(propertyId)) {
-                informationLayout.addComponent(field, AppContext.getMessage(ProjectMemberI18nEnum.FORM_USER), 0, 0);
+                return informationLayout.addComponent(field, AppContext.getMessage(ProjectMemberI18nEnum.FORM_USER), 0, 0);
             } else if (ProjectMember.Field.projectroleid.equalTo(propertyId)) {
-                informationLayout.addComponent(field, AppContext.getMessage(ProjectMemberI18nEnum.FORM_ROLE), 0, 1);
+                return informationLayout.addComponent(field, AppContext.getMessage(ProjectMemberI18nEnum.FORM_ROLE), 0, 1);
             }
+            return null;
         }
     }
 

@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.user.service.mybatis;
 
-import com.esofthead.mycollab.configuration.IDeploymentMode;
 import com.esofthead.mycollab.configuration.EnDecryptHelper;
+import com.esofthead.mycollab.configuration.IDeploymentMode;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -38,7 +38,6 @@ import com.esofthead.mycollab.module.user.domain.*;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.esb.DeleteUserEvent;
 import com.esofthead.mycollab.module.user.esb.RequestToResetPasswordEvent;
-import com.esofthead.mycollab.module.user.esb.SendUserInvitationEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.google.common.eventbus.AsyncEventBus;
@@ -181,10 +180,6 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
         } else {
             userAccountMapper.insert(userAccount);
         }
-
-        SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(record.getUsername(), inviteUser,
-                record.getSubdomain(), sAccountId);
-        asyncEventBus.post(invitationEvent);
     }
 
     @Override

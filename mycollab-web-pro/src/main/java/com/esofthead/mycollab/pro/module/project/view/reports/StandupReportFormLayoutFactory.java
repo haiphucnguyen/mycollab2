@@ -5,7 +5,7 @@ import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.shared.ui.MarginInfo;
@@ -17,7 +17,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public abstract class StandupReportFormLayoutFactory implements IFormLayoutFactory {
+public abstract class StandupReportFormLayoutFactory extends AbstractFormLayoutFactory {
     private static final long serialVersionUID = 1L;
 
     private StandupCustomField whatTodayField;
@@ -79,7 +79,7 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
     }
 
     @Override
-    public void attachField(Object propertyId, final Field<?> field) {
+    protected Component onAttachField(Object propertyId, final Field<?> field) {
         if (propertyId.equals("whatlastday")) {
             whatYesterdayField.setContentComp(field);
         } else if (propertyId.equals("whattoday")) {
@@ -87,6 +87,7 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
         } else if (propertyId.equals("whatproblem")) {
             whatProblemField.setContentComp(field);
         }
+        return field;
     }
 
     protected abstract ComponentContainer createTopPanel();

@@ -50,6 +50,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.viritin.fields.MPasswordField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -123,10 +124,9 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
             }
         }
 
-        private class BasicFormLayoutFactory implements IWrappedFormLayoutFactory {
+        private class BasicFormLayoutFactory extends WrappedFormLayoutFactory {
             private static final long serialVersionUID = 1L;
 
-            private IFormLayoutFactory formLayoutFactory;
             private RolePermissionContainer rolePermissionLayout;
 
             @Override
@@ -134,9 +134,9 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                 String title = (user.getUsername() == null) ? AppContext.getMessage(UserI18nEnum.VIEW_NEW_USER) : user.getDisplayName();
                 AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
 
-                formLayoutFactory = buildFormLayout();
+                wrappedLayoutFactory = buildFormLayout();
                 formAddLayout.addHeaderRight(createButtonControls());
-                formAddLayout.addBody(formLayoutFactory.getLayout());
+                formAddLayout.addBody(wrappedLayoutFactory.getLayout());
                 formAddLayout.addBottom(createBottomPanel());
                 return formAddLayout;
             }
@@ -188,16 +188,6 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                 defaultForm.addSection(mainSection);
                 return new DynaFormLayout(defaultForm);
             }
-
-            @Override
-            public void attachField(Object propertyId, Field<?> field) {
-                formLayoutFactory.attachField(propertyId, field);
-            }
-
-            @Override
-            public IFormLayoutFactory getWrappedFactory() {
-                return formLayoutFactory;
-            }
         }
 
         private class BasicEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleUser> {
@@ -219,14 +209,14 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                     tf.setRequiredError("This field must be not null");
                     return tf;
                 } else if (User.Field.password.equalTo(propertyId)) {
-                    return new PasswordField();
+                    return new MPasswordField().withRequired(true).withRequiredError("Password must be not null");
                 }
 
                 return null;
             }
         }
 
-        private class AdvancedFormLayoutFactory implements IFormLayoutFactory {
+        private class AdvancedFormLayoutFactory extends AbstractFormLayoutFactory {
             private static final long serialVersionUID = 1L;
             private GridFormLayoutHelper basicInformationLayout;
             private GridFormLayoutHelper advancedInformationLayout;
@@ -265,42 +255,43 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
             }
 
             @Override
-            public void attachField(Object propertyId, Field<?> field) {
+            protected Component onAttachField(Object propertyId, Field<?> field) {
                 if (propertyId.equals("firstname")) {
-                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_FIRST_NAME), 0, 0);
+                    return basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_FIRST_NAME), 0, 0);
                 } else if (propertyId.equals("lastname")) {
-                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_LAST_NAME), 0, 1);
+                    return basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_LAST_NAME), 0, 1);
                 } else if (propertyId.equals("nickname")) {
-                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_NICK_NAME), 1, 0);
+                    return basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_NICK_NAME), 1, 0);
                 } else if (propertyId.equals("dateofbirth")) {
-                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 1, 1);
+                    return basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 1, 1);
                 } else if (propertyId.equals("email")) {
-                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_EMAIL), 0, 2);
+                    return basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_EMAIL), 0, 2);
                 } else if (propertyId.equals("roleid")) {
-                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_ROLE), 1, 2);
+                    return basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_ROLE), 1, 2);
                 } else if (propertyId.equals("timezone")) {
-                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_TIMEZONE), 0, 3);
+                    return basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_TIMEZONE), 0, 3);
                 } else if (User.Field.password.equalTo(propertyId) && (user.getUsername() == null)) {
-                    basicInformationLayout.addComponent(field, AppContext.getMessage(ShellI18nEnum.FORM_PASSWORD),
+                    return basicInformationLayout.addComponent(field, AppContext.getMessage(ShellI18nEnum.FORM_PASSWORD),
                             AppContext.getMessage(ShellI18nEnum.FORM_PASSWORD_HELP), 1, 3);
                 } else if (propertyId.equals("company")) {
-                    advancedInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_COMPANY), 0, 0);
+                    return advancedInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_COMPANY), 0, 0);
                 } else if (propertyId.equals("country")) {
-                    advancedInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_COUNTRY),
+                    return advancedInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_COUNTRY),
                             0, 1, 2, "100%");
                 } else if (propertyId.equals("website")) {
-                    advancedInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_WEBSITE), 1, 0);
+                    return advancedInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_WEBSITE), 1, 0);
                 } else if (propertyId.equals("workphone")) {
-                    contactInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_WORK_PHONE), 0, 0);
+                    return contactInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_WORK_PHONE), 0, 0);
                 } else if (propertyId.equals("homephone")) {
-                    contactInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_HOME_PHONE), 0, 1);
+                    return contactInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_HOME_PHONE), 0, 1);
                 } else if (propertyId.equals("facebookaccount")) {
-                    contactInformationLayout.addComponent(field, "Facebook", 1, 0);
+                    return contactInformationLayout.addComponent(field, "Facebook", 1, 0);
                 } else if (propertyId.equals("twitteraccount")) {
-                    contactInformationLayout.addComponent(field, "Twitter", 1, 1);
+                    return contactInformationLayout.addComponent(field, "Twitter", 1, 1);
                 } else if (propertyId.equals("skypecontact")) {
-                    contactInformationLayout.addComponent(field, "Skype", 0, 2, 2, "262px");
+                    return contactInformationLayout.addComponent(field, "Skype", 0, 2, 2, "262px");
                 }
+                return null;
             }
         }
 
@@ -315,7 +306,9 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
             protected Field<?> onCreateField(Object propertyId) {
                 if (SimpleUser.Field.roleid.equalTo(propertyId)) {
                     return new AdminRoleSelectionField();
-                } else if (User.Field.email.equalTo(propertyId) || User.Field.firstname.equalTo(propertyId) || User.Field.lastname.equalTo(propertyId)) {
+                } else if (User.Field.email.equalTo(propertyId) ||
+                        User.Field.firstname.equalTo(propertyId) ||
+                        User.Field.lastname.equalTo(propertyId)) {
                     TextField tf = new TextField();
                     tf.setNullRepresentation("");
                     tf.setRequired(true);
@@ -344,6 +337,8 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                         }
                     });
                     return cboCountry;
+                } else if (User.Field.password.equalTo(propertyId)) {
+                    return new MPasswordField().withRequired(true).withRequiredError("Password must be not null");
                 }
                 return null;
             }

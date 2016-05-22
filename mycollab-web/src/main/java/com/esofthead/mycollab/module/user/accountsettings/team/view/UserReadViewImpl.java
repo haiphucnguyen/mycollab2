@@ -106,7 +106,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         formLayoutHelper.addComponent(new Label(TimezoneMapper.getTimezoneExt(user.getTimezone()).getDisplayName()),
                 AppContext.getMessage(UserI18nEnum.FORM_TIMEZONE), 0, 3);
         formLayoutHelper.addComponent(new Label(LocalizationHelper.getLocaleInstance(user.getLanguage())
-                .getDisplayLanguage(AppContext.getUserLocale())),
+                        .getDisplayLanguage(AppContext.getUserLocale())),
                 AppContext.getMessage(UserI18nEnum.FORM_LANGUAGE), 0, 4);
 
         avatarAndPass.with(basicLayout).withAlign(basicLayout, Alignment.TOP_LEFT).expand(basicLayout);
@@ -192,7 +192,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
             super.setBean(newDataSource);
         }
 
-        private class FormLayoutFactory implements IFormLayoutFactory {
+        private class FormLayoutFactory extends AbstractFormLayoutFactory {
             private static final long serialVersionUID = 1L;
 
             private GridFormLayoutHelper contactLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 5);
@@ -207,24 +207,25 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
             }
 
             @Override
-            public void attachField(Object propertyId, Field<?> field) {
+            protected Component onAttachField(Object propertyId, Field<?> field) {
                 if (propertyId.equals("website")) {
-                    advancedInfoLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_WEBSITE), 0, 0);
+                    return advancedInfoLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_WEBSITE), 0, 0);
                 } else if (propertyId.equals("company")) {
-                    advancedInfoLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_COMPANY), 0, 1);
+                    return advancedInfoLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_COMPANY), 0, 1);
                 } else if (propertyId.equals("country")) {
-                    advancedInfoLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_COUNTRY), 0, 2);
+                    return advancedInfoLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_COUNTRY), 0, 2);
                 } else if (propertyId.equals("workphone")) {
-                    contactLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_WORK_PHONE), 0, 0);
+                    return contactLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_WORK_PHONE), 0, 0);
                 } else if (propertyId.equals("homephone")) {
-                    contactLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_HOME_PHONE), 0, 1);
+                    return contactLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_HOME_PHONE), 0, 1);
                 } else if (propertyId.equals("facebookaccount")) {
-                    contactLayout.addComponent(field, "Facebook", 0, 2);
+                    return contactLayout.addComponent(field, "Facebook", 0, 2);
                 } else if (propertyId.equals("twitteraccount")) {
-                    contactLayout.addComponent(field, "Twitter", 0, 3);
+                    return contactLayout.addComponent(field, "Twitter", 0, 3);
                 } else if (propertyId.equals("skypecontact")) {
-                    contactLayout.addComponent(field, "Skype", 0, 4);
+                    return contactLayout.addComponent(field, "Skype", 0, 4);
                 }
+                return null;
             }
         }
     }

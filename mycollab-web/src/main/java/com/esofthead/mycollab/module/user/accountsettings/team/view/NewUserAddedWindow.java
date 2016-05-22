@@ -4,11 +4,14 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.ShellI18nEnum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.esb.SendUserInvitationEvent;
 import com.esofthead.mycollab.module.user.events.UserEvent;
+import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.google.common.eventbus.AsyncEventBus;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -23,7 +26,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 5.3.1
  */
 public class NewUserAddedWindow extends Window {
-    public NewUserAddedWindow(SimpleUser user) {
+    public NewUserAddedWindow(final SimpleUser user) {
         super("Create a new user");
         this.setModal(true);
         this.setResizable(false);
@@ -46,6 +49,10 @@ public class NewUserAddedWindow extends Window {
         Button sendEmailBtn = new Button("Send Email", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+                AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
+                SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(user.getUsername(), user.getInviteUser(),
+                        user.getSubdomain(), AppContext.getAccountId());
+                asyncEventBus.post(invitationEvent);
                 NotificationUtil.showNotification(AppContext.getMessage(GenericI18Enum.HELP_SPAM_FILTER_PREVENT_TITLE),
                         AppContext.getMessage(GenericI18Enum.HELP_SPAM_FILTER_PREVENT_MESSAGE));
             }

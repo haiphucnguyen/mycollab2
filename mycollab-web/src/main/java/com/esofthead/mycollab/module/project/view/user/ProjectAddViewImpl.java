@@ -76,7 +76,7 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
         editForm.setBean(project);
     }
 
-    class FormLayoutFactory implements IFormLayoutFactory, ImagePreviewCropWindow.ImageSelectionCommand {
+    class FormLayoutFactory extends AbstractFormLayoutFactory implements ImagePreviewCropWindow.ImageSelectionCommand {
         private static final long serialVersionUID = 1L;
 
         private ProjectInformationLayout projectInformationLayout;
@@ -120,8 +120,8 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
         }
 
         @Override
-        public void attachField(Object propertyId, final Field<?> field) {
-            projectInformationLayout.attachField(propertyId, field);
+        public Component onAttachField(Object propertyId, final Field<?> field) {
+            return projectInformationLayout.onAttachField(propertyId, field);
         }
 
         @Override
@@ -137,7 +137,7 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
         }
     }
 
-    private static class ProjectInformationLayout implements IFormLayoutFactory {
+    private static class ProjectInformationLayout extends AbstractFormLayoutFactory {
         private static final long serialVersionUID = 1L;
         private GridFormLayoutHelper informationLayout;
         private GridFormLayoutHelper financialLayout;
@@ -159,43 +159,44 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
         }
 
         @Override
-        public void attachField(Object propertyId, final Field<?> field) {
+        public Component onAttachField(Object propertyId, final Field<?> field) {
             if (propertyId.equals("name")) {
-                informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
+                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
             } else if (propertyId.equals("homepage")) {
-                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE), 1, 0);
+                return informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE), 1, 0);
             } else if (propertyId.equals("shortname")) {
-                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME),
+                return informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME),
                         AppContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME_HELP), 0, 1);
             } else if (propertyId.equals("projectstatus")) {
-                informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_STATUS), 1, 1);
+                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_STATUS), 1, 1);
             } else if (Project.Field.lead.equalTo(propertyId)) {
-                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_LEADER), 0, 2);
+                return informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_LEADER), 0, 2);
             } else if (propertyId.equals("planstartdate")) {
-                financialLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 0);
+                return financialLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 0);
             } else if (Project.Field.accountid.equalTo(propertyId)) {
-                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_ACCOUNT_NAME),
+                return financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_ACCOUNT_NAME),
                         AppContext.getMessage(ProjectI18nEnum.FORM_ACCOUNT_NAME_HELP), 1, 0);
             } else if (propertyId.equals("planenddate")) {
-                financialLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 0, 1);
+                return financialLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 0, 1);
             } else if (Project.Field.currencyid.equalTo(propertyId)) {
-                financialLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_CURRENCY),
+                return financialLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_CURRENCY),
                         AppContext.getMessage(ProjectI18nEnum.FORM_CURRENCY_HELP), 1, 1);
             } else if (propertyId.equals("defaultbillingrate")) {
-                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE),
+                return financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE),
                         AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE_HELP), 0, 2);
             } else if (Project.Field.defaultovertimebillingrate.equalTo(propertyId)) {
-                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE),
+                return financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE),
                         AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE_HELP), 1, 2);
             } else if (Project.Field.targetbudget.equalTo(propertyId)) {
-                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET),
+                return financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET),
                         AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET_HELP), 0, 3);
             } else if (Project.Field.actualbudget.equalTo(propertyId)) {
-                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_ACTUAL_BUDGET),
+                return financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_ACTUAL_BUDGET),
                         AppContext.getMessage(ProjectI18nEnum.FORM_ACTUAL_BUDGET_HELP), 1, 3);
             } else if (propertyId.equals("description")) {
-                descriptionLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 0, 2, "100%");
+                return descriptionLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 0, 2, "100%");
             }
+            return null;
         }
     }
 

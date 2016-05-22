@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -64,7 +64,7 @@ public class TaskAddWindow extends Window {
             super.setBean(item);
         }
 
-        class FormLayoutFactory implements IFormLayoutFactory {
+        class FormLayoutFactory extends AbstractFormLayoutFactory {
             private static final long serialVersionUID = 1L;
             private GridFormLayoutHelper informationLayout;
 
@@ -132,27 +132,28 @@ public class TaskAddWindow extends Window {
             }
 
             @Override
-            public void attachField(Object propertyId, Field<?> field) {
+            protected Component onAttachField(Object propertyId, Field<?> field) {
                 if (Task.Field.taskname.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0, 2, "100%");
+                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0, 2, "100%");
                 } else if (Task.Field.startdate.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 1);
+                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 1);
                 } else if (Task.Field.enddate.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 1, 1);
+                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 1, 1);
                 } else if (Task.Field.deadline.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 2);
+                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 2);
                 } else if (Task.Field.assignuser.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 2);
+                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 2);
                 } else if (Task.Field.priority.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY),
+                    return informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY),
                             AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY_HELP), 0, 3);
                 } else if (Task.Field.milestoneid.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_PHASE), 1, 3);
+                    return informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_PHASE), 1, 3);
                 } else if (Task.Field.notes.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 4, 2, "100%");
+                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 4, 2, "100%");
                 } else if (Task.Field.id.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ATTACHMENTS), 0, 5, 2, "100%");
+                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ATTACHMENTS), 0, 5, 2, "100%");
                 }
+                return null;
             }
         }
     }

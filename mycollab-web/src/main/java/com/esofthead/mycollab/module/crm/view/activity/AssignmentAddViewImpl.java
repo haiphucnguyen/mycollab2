@@ -40,8 +40,7 @@ import com.vaadin.ui.TextField;
  * @since 2.0
  */
 @ViewComponent
-public class AssignmentAddViewImpl extends AbstractEditItemComp<Task> implements
-        AssignmentAddView {
+public class AssignmentAddViewImpl extends AbstractEditItemComp<Task> implements AssignmentAddView {
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -74,8 +73,7 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<Task> implements
         return new AssignmentEditFormFieldFactory(editForm);
     }
 
-    private static class AssignmentEditFormFieldFactory extends
-            AbstractBeanFieldGroupEditFieldFactory<Task> {
+    private static class AssignmentEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Task> {
         private static final long serialVersionUID = 1L;
 
         public AssignmentEditFormFieldFactory(GenericBeanForm<Task> form) {

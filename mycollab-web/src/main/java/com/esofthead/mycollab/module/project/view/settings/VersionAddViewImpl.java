@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.esofthead.mycollab.module.project.view.settings;
 
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -74,8 +73,7 @@ public class VersionAddViewImpl extends AbstractEditItemComp<Version> implements
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.BUG_VERSION,
-                VersionDefaultFormLayoutFactory.getForm(), "id");
+        return new DynaFormLayout(ProjectTypeConstants.BUG_VERSION, VersionDefaultFormLayoutFactory.getForm(), "id");
     }
 
     @Override

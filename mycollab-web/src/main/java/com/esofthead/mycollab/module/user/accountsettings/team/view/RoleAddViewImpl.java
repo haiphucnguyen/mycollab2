@@ -103,8 +103,8 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
                 }
                 formAddLayout.setTitle(initFormTitle());
 
-                userInformationLayout = new RoleInformationLayout();
-                formAddLayout.addBody(userInformationLayout.getLayout());
+                wrappedLayoutFactory = new RoleInformationLayout();
+                formAddLayout.addBody(wrappedLayoutFactory.getLayout());
 
                 ComponentContainer bottomPanel = createBottomPanel();
                 if (bottomPanel != null) {

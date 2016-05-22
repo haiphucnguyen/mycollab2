@@ -116,18 +116,17 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         }
     }
 
-    private class DecorFormLayourFactory implements IWrappedFormLayoutFactory {
+    private class DecorFormLayourFactory extends WrappedFormLayoutFactory {
         private static final long serialVersionUID = 1L;
-        private IFormLayoutFactory formLayoutFactory;
 
-        DecorFormLayourFactory(IFormLayoutFactory formLayoutFactory) {
-            this.formLayoutFactory = formLayoutFactory;
+        DecorFormLayourFactory(AbstractFormLayoutFactory formLayoutFactory) {
+            this.wrappedLayoutFactory = formLayoutFactory;
         }
 
         @Override
         public ComponentContainer getLayout() {
             VerticalLayout layout = new VerticalLayout();
-            layout.addComponent(formLayoutFactory.getLayout());
+            layout.addComponent(wrappedLayoutFactory.getLayout());
 
             FormContainer permissionsPanel = new FormContainer();
             projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, (ProjectRolePermissionCollections
@@ -137,16 +136,6 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
             layout.addComponent(permissionsPanel);
 
             return layout;
-        }
-
-        @Override
-        public void attachField(Object propertyId, Field<?> field) {
-            formLayoutFactory.attachField(propertyId, field);
-        }
-
-        @Override
-        public IFormLayoutFactory getWrappedFactory() {
-            return formLayoutFactory;
         }
     }
 
@@ -164,7 +153,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
                     SecurityI18nEnum permissionVal = PermissionFlag.toVal(perVal);
                     projectFormHelper.addComponent(new Label(AppContext.getPermissionCaptionValue(
                             permissionMap, permissionPath)), AppContext.getMessage(permissionKey),
-                            AppContext.getMessage(permissionVal.desc()),i % 2, i / 2);
+                            AppContext.getMessage(permissionVal.desc()), i % 2, i / 2);
                 }
             }
         } else {

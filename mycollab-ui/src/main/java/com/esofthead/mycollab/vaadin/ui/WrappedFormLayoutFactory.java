@@ -16,10 +16,29 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Field;
+
+import java.util.Set;
+
 /**
  * @author MyCollab Ltd
  * @since 5.2.1
  */
-public interface IWrappedFormLayoutFactory extends IFormLayoutFactory {
-    IFormLayoutFactory getWrappedFactory();
+public abstract class WrappedFormLayoutFactory implements IFormLayoutFactory {
+    protected IFormLayoutFactory wrappedLayoutFactory;
+
+    public final IFormLayoutFactory getWrappedFactory() {
+        return wrappedLayoutFactory;
+    }
+
+    @Override
+    public final Component attachField(Object propertyId, Field<?> field) {
+        return wrappedLayoutFactory.attachField(propertyId, field);
+    }
+
+    @Override
+    public final Set<String> bindFields() {
+        return wrappedLayoutFactory.bindFields();
+    }
 }

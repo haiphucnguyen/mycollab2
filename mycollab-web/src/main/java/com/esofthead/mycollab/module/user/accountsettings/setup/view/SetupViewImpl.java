@@ -82,7 +82,7 @@ public class SetupViewImpl extends AbstractPageView implements SetupView {
         }
     }
 
-    private class BasicFormLayoutFactory implements IFormLayoutFactory {
+    private class BasicFormLayoutFactory extends AbstractFormLayoutFactory {
         private GridFormLayoutHelper informationLayout;
 
         @Override
@@ -172,20 +172,21 @@ public class SetupViewImpl extends AbstractPageView implements SetupView {
         }
 
         @Override
-        public void attachField(Object propertyId, Field<?> field) {
+        protected Component onAttachField(Object propertyId, Field<?> field) {
             if (propertyId.equals("host")) {
-                this.informationLayout.addComponent(field, "Host", 0, 0);
+                return informationLayout.addComponent(field, "Host", 0, 0);
             } else if (propertyId.equals("user")) {
-                this.informationLayout.addComponent(field, "User Name", 0, 1);
+                return informationLayout.addComponent(field, "User Name", 0, 1);
             } else if (propertyId.equals("password")) {
-                this.informationLayout.addComponent(field, "Password", 0, 2);
+                return informationLayout.addComponent(field, "Password", 0, 2);
             } else if (propertyId.equals("port")) {
-                this.informationLayout.addComponent(field, "Port", 0, 3);
+                return informationLayout.addComponent(field, "Port", 0, 3);
             } else if (propertyId.equals("isStartTls")) {
-                this.informationLayout.addComponent(field, "StartTls", 0, 4);
+                return informationLayout.addComponent(field, "StartTls", 0, 4);
             } else if (propertyId.equals("isSsl")) {
-                this.informationLayout.addComponent(field, "Tls/Ssl", 0, 5);
+                return informationLayout.addComponent(field, "Tls/Ssl", 0, 5);
             }
+            return null;
         }
     }
 

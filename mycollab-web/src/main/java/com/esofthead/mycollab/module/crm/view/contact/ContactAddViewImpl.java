@@ -21,13 +21,13 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
 import com.esofthead.mycollab.module.crm.ui.components.AbstractEditItemComp;
-import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.web.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
+import com.esofthead.mycollab.vaadin.web.ui.EditFormControlsGenerator;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
 
@@ -41,8 +41,7 @@ public class ContactAddViewImpl extends AbstractEditItemComp<SimpleContact> impl
 
     @Override
     protected String initFormTitle() {
-        return (beanItem.getId() == null) ? AppContext.getMessage(ContactI18nEnum.NEW) :
-                beanItem.getContactName();
+        return (beanItem.getId() == null) ? AppContext.getMessage(ContactI18nEnum.NEW) : beanItem.getContactName();
     }
 
     @Override

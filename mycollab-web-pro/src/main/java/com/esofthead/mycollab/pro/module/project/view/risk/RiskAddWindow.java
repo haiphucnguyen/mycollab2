@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -50,7 +50,7 @@ public class RiskAddWindow extends Window {
             super.setBean(item);
         }
 
-        class FormLayoutFactory implements IFormLayoutFactory {
+        class FormLayoutFactory extends AbstractFormLayoutFactory {
             private static final long serialVersionUID = 1L;
             private GridFormLayoutHelper informationLayout;
 
@@ -115,24 +115,25 @@ public class RiskAddWindow extends Window {
             }
 
             @Override
-            public void attachField(Object propertyId, Field<?> field) {
+            protected Component onAttachField(Object propertyId, Field<?> field) {
                 if (Risk.Field.riskname.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0, 2, "100%");
+                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0, 2, "100%");
                 } else if (Risk.Field.assigntouser.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 1);
+                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 1);
                 } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_PHASE), 1, 1);
+                    return informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_PHASE), 1, 1);
                 } else if (Risk.Field.datedue.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 2);
+                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 2);
                 } else if (Risk.Field.consequence.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE), 1, 2);
+                    return informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE), 1, 2);
                 } else if (Risk.Field.probalitity.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_PROBABILITY), 0, 3);
+                    return informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_PROBABILITY), 0, 3);
                 } else if (Risk.Field.level.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_RATING), 1, 3);
+                    return informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_RATING), 1, 3);
                 } else if (Risk.Field.description.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 4, 2, "100%");
+                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 4, 2, "100%");
                 }
+                return null;
             }
         }
     }
