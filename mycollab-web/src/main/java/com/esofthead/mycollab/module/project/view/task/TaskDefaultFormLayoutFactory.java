@@ -37,75 +37,75 @@ public class TaskDefaultFormLayoutFactory {
 
         DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).build();
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.taskname)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.taskname)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_NAME))
                 .fieldIndex(0).mandatory(true).required(true)
                 .colSpan(true).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.startdate)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.startdate)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_START_DATE)).fieldIndex(1).build());
 
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.enddate)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.enddate)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
                 .fieldIndex(2).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.deadline)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.deadline)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
                 .fieldIndex(3).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.priority)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.priority)
                 .displayName(AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY))
                 .contextHelp(AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY_HELP))
                 .fieldIndex(4).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.duration)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.duration)
                 .displayName(AppContext.getMessage(TaskI18nEnum.FORM_DURATION))
                 .fieldIndex(5).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.isestimated)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.isestimated)
                 .displayName(AppContext.getMessage(TaskI18nEnum.FORM_IS_ESTIMATED))
                 .contextHelp(AppContext.getMessage(TaskI18nEnum.FORM_IS_ESTIMATED_HELP))
                 .fieldIndex(6).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.assignuser)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.assignuser)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
                 .fieldIndex(7).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.milestoneid).required(true)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.milestoneid).required(true)
                 .displayName(AppContext.getMessage(TaskI18nEnum.FORM_PHASE))
                 .fieldIndex(8).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.percentagecomplete)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.percentagecomplete)
                 .displayName(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE))
                 .fieldIndex(9).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.status)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.status)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_STATUS))
                 .contextHelp(AppContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP)).fieldIndex(10).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.originalestimate)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.originalestimate)
                 .displayName(AppContext.getMessage(TaskI18nEnum.FORM_ORIGINAL_ESTIMATE))
                 .contextHelp(AppContext.getMessage(TaskI18nEnum.FORM_ORIGINAL_ESTIMATE_HELP)).fieldIndex(11).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.remainestimate)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.remainestimate)
                 .displayName(AppContext.getMessage(TaskI18nEnum.FORM_REMAIN_ESTIMATE))
                 .contextHelp(AppContext.getMessage(TaskI18nEnum.FORM_REMAIN_ESTIMATE_HELP)).fieldIndex(12).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.notes)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.notes)
                 .displayName(AppContext.getMessage(TaskI18nEnum.FORM_NOTES))
                 .colSpan(true).fieldIndex(13).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.id)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.id)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_ATTACHMENTS))
                 .colSpan(true).fieldIndex(14).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Task.Field.parenttaskid)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Task.Field.parenttaskid)
                 .displayName(AppContext.getMessage(TaskI18nEnum.FORM_SUB_TASKS))
                 .contextHelp(AppContext.getMessage(TaskI18nEnum.FORM_SUB_TASKS_HELP))
                 .colSpan(true).fieldIndex(15).build());
 
-        defaultForm.addSection(mainSection);
+        defaultForm.addSections(mainSection);
         return defaultForm;
     }
 }

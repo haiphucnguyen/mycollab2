@@ -24,65 +24,65 @@ public class RiskDefaultFormLayoutFactory {
 
         DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).build();
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.riskname)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Risk.Field.riskname)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_NAME))
                 .fieldIndex(0).mandatory(true).required(true).colSpan(true)
                 .build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.description)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Risk.Field.description)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION))
                 .fieldIndex(2).colSpan(true).required(true).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.raisedbyuser)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Risk.Field.raisedbyuser)
                 .displayName(AppContext.getMessage(RiskI18nEnum.FORM_RAISED_BY))
                 .fieldIndex(4).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.milestoneid)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Risk.Field.milestoneid)
                 .displayName(AppContext.getMessage(RiskI18nEnum.FORM_PHASE))
                 .fieldIndex(5).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.assigntouser)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Risk.Field.assigntouser)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
                 .fieldIndex(6).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.status)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Risk.Field.status)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_STATUS))
                 .fieldIndex(7).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.startdate)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Risk.Field.startdate)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
                 .fieldIndex(8).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.consequence)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Risk.Field.consequence)
                 .displayName(AppContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE))
                 .fieldIndex(9).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.enddate)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Risk.Field.enddate)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
                 .fieldIndex(10).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.probalitity)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Risk.Field.probalitity)
                 .displayName(AppContext.getMessage(RiskI18nEnum.FORM_PROBABILITY))
                 .fieldIndex(11).build());
 
-        mainSection.addField(new DateDynaFieldBuilder().fieldName(Risk.Field.datedue)
+        mainSection.addFields(new DateDynaFieldBuilder().fieldName(Risk.Field.datedue)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
                 .fieldIndex(12).build());
 
-        mainSection.addField(new TextDynaFieldBuilder()
+        mainSection.addFields(new TextDynaFieldBuilder()
                 .fieldName(Risk.Field.level)
                 .displayName(AppContext.getMessage(RiskI18nEnum.FORM_RATING))
                 .fieldIndex(13).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.response)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Risk.Field.response)
                 .displayName(AppContext.getMessage(RiskI18nEnum.FORM_RESPONSE))
                 .fieldIndex(14).colSpan(true).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.id)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Risk.Field.id)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_ATTACHMENTS))
                 .colSpan(true).fieldIndex(15).build());
 
-        defaultForm.addSection(mainSection);
+        defaultForm.addSections(mainSection);
     }
 
     public static DynaForm getForm() {

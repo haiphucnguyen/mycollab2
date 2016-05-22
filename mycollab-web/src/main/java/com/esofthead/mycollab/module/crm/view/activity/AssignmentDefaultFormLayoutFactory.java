@@ -40,44 +40,44 @@ public class AssignmentDefaultFormLayoutFactory {
                 .layoutType(LayoutType.TWO_COLUMN).header("Task Information")
                 .build();
 
-        taskSection.addField(new TextDynaFieldBuilder().fieldName("subject")
+        taskSection.addFields(new TextDynaFieldBuilder().fieldName("subject")
                 .displayName("Subject").fieldIndex(0).mandatory(true).build());
 
-        taskSection.addField(new TextDynaFieldBuilder().fieldName("status")
+        taskSection.addFields(new TextDynaFieldBuilder().fieldName("status")
                 .displayName("Status").fieldIndex(1).build());
 
-        taskSection.addField(new DateDynaFieldBuilder().fieldName("startdate")
+        taskSection.addFields(new DateDynaFieldBuilder().fieldName("startdate")
                 .displayName("Start Date").fieldIndex(2).build());
 
-        taskSection.addField(new TextDynaFieldBuilder().fieldName("type")
+        taskSection.addFields(new TextDynaFieldBuilder().fieldName("type")
                 .displayName("Related To").fieldIndex(3).build());
 
-        taskSection.addField(new DateDynaFieldBuilder().fieldName("duedate")
+        taskSection.addFields(new DateDynaFieldBuilder().fieldName("duedate")
                 .displayName("Due Date").fieldIndex(4).build());
 
-        taskSection.addField(new TextDynaFieldBuilder()
+        taskSection.addFields(new TextDynaFieldBuilder()
                 .fieldName("contactid").displayName("Contact").fieldIndex(5)
                 .build());
 
-        taskSection.addField(new TextDynaFieldBuilder().fieldName("priority")
+        taskSection.addFields(new TextDynaFieldBuilder().fieldName("priority")
                 .displayName("Priority").fieldIndex(6).build());
 
-        taskSection.addField(new TextDynaFieldBuilder()
+        taskSection.addFields(new TextDynaFieldBuilder()
                 .fieldName("assignuser")
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
                 .fieldIndex(7).build());
 
-        defaultForm.addSection(taskSection);
+        defaultForm.addSections(taskSection);
 
         DynaSection descSection = new DynaSectionBuilder()
                 .layoutType(LayoutType.ONE_COLUMN).orderIndex(1)
                 .header("Description").build();
 
-        descSection.addField(new TextAreaDynaFieldBuilder()
+        descSection.addFields(new TextAreaDynaFieldBuilder()
                 .fieldName("description").displayName("Description")
                 .fieldIndex(0).build());
 
-        defaultForm.addSection(descSection);
+        defaultForm.addSections(descSection);
     }
 
     public static DynaForm getForm() {

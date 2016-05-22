@@ -41,40 +41,40 @@ public class MeetingDefaultFormLayoutFactory {
 				.layoutType(LayoutType.TWO_COLUMN).orderIndex(0)
 				.header("Meeting Information").build();
 
-		meetingSection.addField(new TextDynaFieldBuilder().fieldName("subject")
+		meetingSection.addFields(new TextDynaFieldBuilder().fieldName("subject")
 				.displayName("Subject").mandatory(true).fieldIndex(0).build());
 
-		meetingSection.addField(new TextDynaFieldBuilder().fieldName("status")
+		meetingSection.addFields(new TextDynaFieldBuilder().fieldName("status")
 				.displayName("Status").fieldIndex(1).build());
 
-		meetingSection.addField(new DateTimeDynaFieldBuilder()
+		meetingSection.addFields(new DateTimeDynaFieldBuilder()
 				.fieldName("startdate").displayName("Start Date & Time")
 				.fieldIndex(2).build());
 
-		meetingSection.addField(new TextDynaFieldBuilder().fieldName("typeid")
+		meetingSection.addFields(new TextDynaFieldBuilder().fieldName("typeid")
 				.displayName("Related To").fieldIndex(3).build());
 
-		meetingSection.addField(new DateTimeDynaFieldBuilder()
+		meetingSection.addFields(new DateTimeDynaFieldBuilder()
 				.fieldName("enddate").displayName("End Date & Time")
 				.fieldIndex(4).build());
 
-		meetingSection.addField(new TextDynaFieldBuilder()
+		meetingSection.addFields(new TextDynaFieldBuilder()
 				.fieldName("location").displayName("Location").fieldIndex(5)
 				.build());
 		// meetingSection.addField(new CheckBoxDynaFieldBuilder()
 		// .fieldName("isrecurrence").displayName("Recurring Activity")
 		// .fieldIndex(6).build());
 
-		defaultForm.addSection(meetingSection);
+		defaultForm.addSections(meetingSection);
 
 		DynaSection descSection = new DynaSectionBuilder()
 				.layoutType(LayoutType.ONE_COLUMN).orderIndex(1)
 				.header("Description").build();
-		descSection.addField(new TextAreaDynaFieldBuilder()
+		descSection.addFields(new TextAreaDynaFieldBuilder()
 				.fieldName("description").displayName("Description")
 				.fieldIndex(0).build());
 
-		defaultForm.addSection(descSection);
+		defaultForm.addSections(descSection);
 	}
 
 	public static DynaForm getForm() {

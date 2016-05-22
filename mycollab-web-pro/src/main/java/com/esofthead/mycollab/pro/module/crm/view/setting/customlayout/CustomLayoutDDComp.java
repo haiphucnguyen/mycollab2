@@ -80,16 +80,16 @@ public class CustomLayoutDDComp extends MHorizontalLayout {
 		activeFormArea.addComponent(sectionLayout);
 	}
 
-	public List<DynaSection> getActiveSections() {
+	public DynaSection[] getActiveSections() {
 		return activeFormArea.rebuildSections();
 	}
 
 	public DynaForm rebuildForm() {
 		DynaForm form = new DynaForm();
-		List<DynaSection> sections = activeFormArea.rebuildSections();
+		DynaSection[] sections = activeFormArea.rebuildSections();
 		form.addSections(sections);
 
-		form.addSection(deleteFormArea.rebuildSection());
+		form.addSections(deleteFormArea.rebuildSection());
 		return form;
 	}
 

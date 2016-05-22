@@ -107,6 +107,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                 attachForm.attachField(bindField, formField);
             }
         } else {
+            Set<String> bindFields = layoutFactory.bindFields();
             Class<?> beanClass = bean.getClass();
             java.lang.reflect.Field[] fields = ClassUtils.getAllFields(beanClass);
             for (java.lang.reflect.Field field : fields) {

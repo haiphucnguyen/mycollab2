@@ -90,11 +90,11 @@ public class MasterFormServiceImpl implements MasterFormService {
                         dynaField.setRequired(field.getIsrequired());
                         dynaField.setCustom(field.getIscustom());
 
-                        dySection.addField(dynaField);
+                        dySection.addFields(dynaField);
                     }
                 }
 
-                form.addSection(dySection);
+                form.addSections(dySection);
             }
 
             return form;

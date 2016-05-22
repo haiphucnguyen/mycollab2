@@ -191,7 +191,7 @@ class DeleteSectionComp extends GenericSectionComp {
 				AbstractDynaField field = ((CustomFieldComponent) component)
 						.getField();
 				field.setFieldIndex(row);
-				section.addField(field);
+				section.addFields(field);
 			}
 		}
 

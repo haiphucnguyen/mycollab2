@@ -172,20 +172,20 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                 DynaForm defaultForm = new DynaForm();
                 DynaSection mainSection = new DynaSectionBuilder().header(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION))
                         .layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
-                mainSection.addField(new TextDynaFieldBuilder().fieldName(User.Field.firstname).displayName(AppContext
+                mainSection.addFields(new TextDynaFieldBuilder().fieldName(User.Field.firstname).displayName(AppContext
                         .getMessage(UserI18nEnum.FORM_FIRST_NAME)).fieldIndex(0).build());
-                mainSection.addField(new TextDynaFieldBuilder().fieldName(User.Field.email).displayName(AppContext
+                mainSection.addFields(new TextDynaFieldBuilder().fieldName(User.Field.email).displayName(AppContext
                         .getMessage(UserI18nEnum.FORM_EMAIL)).fieldIndex(1).build());
-                mainSection.addField(new TextDynaFieldBuilder().fieldName(User.Field.lastname).displayName(AppContext
+                mainSection.addFields(new TextDynaFieldBuilder().fieldName(User.Field.lastname).displayName(AppContext
                         .getMessage(UserI18nEnum.FORM_LAST_NAME)).fieldIndex(2).build());
-                mainSection.addField(new TextDynaFieldBuilder().fieldName(SimpleUser.Field.roleid).displayName(AppContext
+                mainSection.addFields(new TextDynaFieldBuilder().fieldName(SimpleUser.Field.roleid).displayName(AppContext
                         .getMessage(UserI18nEnum.FORM_ROLE)).fieldIndex(3).build());
                 if (user.getUsername() == null) {
-                    mainSection.addField(new TextDynaFieldBuilder().fieldName(User.Field.password).displayName
+                    mainSection.addFields(new TextDynaFieldBuilder().fieldName(User.Field.password).displayName
                             (AppContext.getMessage(ShellI18nEnum.FORM_PASSWORD)).contextHelp(AppContext.getMessage
                             (ShellI18nEnum.FORM_PASSWORD_HELP)).fieldIndex(4).build());
                 }
-                defaultForm.addSection(mainSection);
+                defaultForm.addSections(mainSection);
                 return new DynaFormLayout(defaultForm);
             }
         }

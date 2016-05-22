@@ -82,7 +82,7 @@ class ActiveFormSectionArea extends DDVerticalLayout {
 		});
 	}
 
-	public List<DynaSection> rebuildSections() {
+	public DynaSection[] rebuildSections() {
 		List<DynaSection> sections = new ArrayList<>();
 
 		int componentCount = this.getComponentCount();
@@ -95,7 +95,7 @@ class ActiveFormSectionArea extends DDVerticalLayout {
 				sections.add(section);
 			}
 		}
-		return sections;
+		return sections.toArray(new DynaSection[0]);
 	}
 
 	@Override

@@ -214,7 +214,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
     }
 
     @Override
-    public List<DynaSection> getActiveSections() {
+    public DynaSection[] getActiveSections() {
         return layoutComp.getActiveSections();
     }
 

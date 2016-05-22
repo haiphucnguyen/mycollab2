@@ -32,7 +32,7 @@ public class DynaFormBuilder {
 
     public DynaFormBuilder sections(DynaSectionBuilder... sections) {
         for (DynaSectionBuilder section : sections) {
-            form.addSection(section.build());
+            form.addSections(section.build());
         }
         return this;
     }

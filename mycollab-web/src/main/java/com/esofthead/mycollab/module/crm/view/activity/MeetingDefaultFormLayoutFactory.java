@@ -40,42 +40,42 @@ public class MeetingDefaultFormLayoutFactory {
         DynaSection meetingSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).orderIndex(0)
                 .header("Meeting Information").build();
 
-        meetingSection.addField(new TextDynaFieldBuilder().fieldName("subject")
+        meetingSection.addFields(new TextDynaFieldBuilder().fieldName("subject")
                 .displayName(AppContext.getMessage(MeetingI18nEnum.FORM_SUBJECT))
                 .mandatory(true).fieldIndex(0).build());
 
-        meetingSection.addField(new TextDynaFieldBuilder().fieldName("status")
+        meetingSection.addFields(new TextDynaFieldBuilder().fieldName("status")
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_STATUS))
                 .fieldIndex(1).build());
 
-        meetingSection.addField(new DateTimeDynaFieldBuilder().fieldName("startdate")
+        meetingSection.addFields(new DateTimeDynaFieldBuilder().fieldName("startdate")
                 .displayName(AppContext.getMessage(MeetingI18nEnum.FORM_START_DATE_TIME))
                 .fieldIndex(2).build());
 
-        meetingSection.addField(new TextDynaFieldBuilder().fieldName("type")
+        meetingSection.addFields(new TextDynaFieldBuilder().fieldName("type")
                 .displayName("Related To").fieldIndex(3).build());
 
-        meetingSection.addField(new DateTimeDynaFieldBuilder().fieldName("enddate")
+        meetingSection.addFields(new DateTimeDynaFieldBuilder().fieldName("enddate")
                 .displayName(AppContext.getMessage(MeetingI18nEnum.FORM_END_DATE_TIME))
                 .fieldIndex(4).build());
 
-        meetingSection.addField(new TextDynaFieldBuilder().fieldName("location")
+        meetingSection.addFields(new TextDynaFieldBuilder().fieldName("location")
                 .displayName(AppContext.getMessage(MeetingI18nEnum.FORM_LOCATION))
                 .fieldIndex(5).build());
         // meetingSection.addField(new CheckBoxDynaFieldBuilder()
         // .fieldName("isrecurrence").displayName("Recurring Activity")
         // .fieldIndex(6).build());
 
-        defaultForm.addSection(meetingSection);
+        defaultForm.addSections(meetingSection);
 
         DynaSection descSection = new DynaSectionBuilder()
                 .layoutType(LayoutType.ONE_COLUMN).orderIndex(1)
                 .header("Description").build();
-        descSection.addField(new TextAreaDynaFieldBuilder()
+        descSection.addFields(new TextAreaDynaFieldBuilder()
                 .fieldName("description").displayName("Description")
                 .fieldIndex(0).build());
 
-        defaultForm.addSection(descSection);
+        defaultForm.addSections(descSection);
     }
 
     public static DynaForm getForm() {

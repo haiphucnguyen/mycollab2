@@ -16,29 +16,23 @@
  */
 package com.esofthead.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo;
 
-import java.util.List;
-
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.IntDynaField;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 2.0
- * 
  */
-public class IntegerDetailFieldInfoPanel extends
-		DetailFieldInfoPanel<IntDynaField> {
-	private static final long serialVersionUID = 1L;
+public class IntegerDetailFieldInfoPanel extends DetailFieldInfoPanel<IntDynaField> {
+    private static final long serialVersionUID = 1L;
 
-	public IntegerDetailFieldInfoPanel(String candidateFieldName,
-			List<DynaSection> activeSections) {
-		super(candidateFieldName, activeSections);
-	}
+    public IntegerDetailFieldInfoPanel(String candidateFieldName, DynaSection[] activeSections) {
+        super(candidateFieldName, activeSections);
+    }
 
-	@Override
-	public DynaSection updateCustomField() {
-		return null;
-	}
+    @Override
+    public DynaSection updateCustomField() {
+        return null;
+    }
 
 }

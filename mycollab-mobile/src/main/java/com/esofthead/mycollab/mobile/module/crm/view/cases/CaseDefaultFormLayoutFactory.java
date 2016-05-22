@@ -38,60 +38,60 @@ public class CaseDefaultFormLayoutFactory {
                 .header(AppContext.getMessage(CaseI18nEnum.SECTION_CASE_INFORMATION))
                 .build();
 
-        infoSection.addField(new TextDynaFieldBuilder().fieldName("priority")
+        infoSection.addFields(new TextDynaFieldBuilder().fieldName("priority")
                 .displayName(AppContext.getMessage(CaseI18nEnum.FORM_PRIORITY))
                 .fieldIndex(0).build());
 
-        infoSection.addField(new TextDynaFieldBuilder().fieldName("type")
+        infoSection.addFields(new TextDynaFieldBuilder().fieldName("type")
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_TYPE))
                 .fieldIndex(1).build());
 
-        infoSection.addField(new TextDynaFieldBuilder().fieldName("status")
+        infoSection.addFields(new TextDynaFieldBuilder().fieldName("status")
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_STATUS))
                 .fieldIndex(2).build());
 
-        infoSection.addField(new TextDynaFieldBuilder().fieldName("reason")
+        infoSection.addFields(new TextDynaFieldBuilder().fieldName("reason")
                 .displayName(AppContext.getMessage(CaseI18nEnum.FORM_REASON))
                 .fieldIndex(3).build());
 
-        infoSection.addField(new TextDynaFieldBuilder().fieldName("accountid")
+        infoSection.addFields(new TextDynaFieldBuilder().fieldName("accountid")
                 .displayName(AppContext.getMessage(CaseI18nEnum.FORM_ACCOUNT))
                 .fieldIndex(4).mandatory(true).build());
 
-        infoSection.addField(new TextDynaFieldBuilder().fieldName("subject")
+        infoSection.addFields(new TextDynaFieldBuilder().fieldName("subject")
                 .displayName(AppContext.getMessage(CaseI18nEnum.FORM_SUBJECT))
                 .fieldIndex(5).mandatory(true).build());
 
-        infoSection.addField(new PhoneDynaFieldBuilder().fieldName("phonenumber")
+        infoSection.addFields(new PhoneDynaFieldBuilder().fieldName("phonenumber")
                 .displayName(AppContext.getMessage(CaseI18nEnum.FORM_PHONE))
                 .fieldIndex(6).build());
 
-        infoSection.addField(new EmailDynaFieldBuilder().fieldName("email")
+        infoSection.addFields(new EmailDynaFieldBuilder().fieldName("email")
                 .displayName(AppContext.getMessage(CaseI18nEnum.FORM_EMAIL))
                 .fieldIndex(7).build());
 
-        infoSection.addField(new TextDynaFieldBuilder().fieldName("origin")
+        infoSection.addFields(new TextDynaFieldBuilder().fieldName("origin")
                 .displayName(AppContext.getMessage(CaseI18nEnum.FORM_ORIGIN))
                 .fieldIndex(8).build());
 
-        infoSection.addField(new TextDynaFieldBuilder().fieldName("assignuser")
+        infoSection.addFields(new TextDynaFieldBuilder().fieldName("assignuser")
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
                 .fieldIndex(9).build());
 
-        defaultForm.addSection(infoSection);
+        defaultForm.addSections(infoSection);
 
         DynaSection descSection = new DynaSectionBuilder().layoutType(LayoutType.ONE_COLUMN).orderIndex(1)
                 .header(AppContext.getMessage(CaseI18nEnum.SECTION_DESCRIPTION))
                 .build();
 
-        descSection.addField(new TextAreaDynaFieldBuilder().fieldName("description")
+        descSection.addFields(new TextAreaDynaFieldBuilder().fieldName("description")
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION))
                 .fieldIndex(0).build());
-        descSection.addField(new TextAreaDynaFieldBuilder().fieldName("resolution")
+        descSection.addFields(new TextAreaDynaFieldBuilder().fieldName("resolution")
                 .displayName(AppContext.getMessage(CaseI18nEnum.FORM_RESOLUTION))
                 .fieldIndex(1).build());
 
-        defaultForm.addSection(descSection);
+        defaultForm.addSections(descSection);
     }
 
     public static DynaForm getForm() {

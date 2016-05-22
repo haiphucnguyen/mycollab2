@@ -207,31 +207,31 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
             DynaForm defaultForm = new DynaForm();
             DynaSection mainSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
 
-            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.name).displayName(AppContext
+            mainSection.addFields(new TextDynaFieldBuilder().fieldName(Project.Field.name).displayName(AppContext
                     .getMessage(GenericI18Enum.FORM_NAME)).fieldIndex(0).mandatory(true).required(true).build());
 
-            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.homepage).displayName(AppContext
+            mainSection.addFields(new TextDynaFieldBuilder().fieldName(Project.Field.homepage).displayName(AppContext
                     .getMessage(ProjectI18nEnum.FORM_HOME_PAGE)).fieldIndex(1).build());
 
-            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.shortname).displayName(AppContext
+            mainSection.addFields(new TextDynaFieldBuilder().fieldName(Project.Field.shortname).displayName(AppContext
                     .getMessage(ProjectI18nEnum.FORM_SHORT_NAME)).contextHelp(AppContext.getMessage(ProjectI18nEnum
                     .FORM_SHORT_NAME_HELP)).fieldIndex(2).mandatory(true).required(true).build());
 
-            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.planstartdate).displayName
+            mainSection.addFields(new TextDynaFieldBuilder().fieldName(Project.Field.planstartdate).displayName
                     (AppContext.getMessage(GenericI18Enum.FORM_START_DATE)).fieldIndex(3).build());
 
-            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.projectstatus).displayName
+            mainSection.addFields(new TextDynaFieldBuilder().fieldName(Project.Field.projectstatus).displayName
                     (AppContext.getMessage(GenericI18Enum.FORM_STATUS)).fieldIndex(4).build());
 
-            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.planenddate).displayName
+            mainSection.addFields(new TextDynaFieldBuilder().fieldName(Project.Field.planenddate).displayName
                     (AppContext.getMessage(GenericI18Enum.FORM_END_DATE)).fieldIndex(5).build());
 
-            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.lead).displayName
+            mainSection.addFields(new TextDynaFieldBuilder().fieldName(Project.Field.lead).displayName
                     (AppContext.getMessage(ProjectI18nEnum.FORM_LEADER)).fieldIndex(6).build());
 
-            mainSection.addField(new TextAreaDynaFieldBuilder().fieldName(Project.Field.description).displayName
+            mainSection.addFields(new TextAreaDynaFieldBuilder().fieldName(Project.Field.description).displayName
                     (AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)).fieldIndex(7).colSpan(true).build());
-            defaultForm.addSection(mainSection);
+            defaultForm.addSections(mainSection);
 
             return new DynaFormLayout(defaultForm);
         }
@@ -317,28 +317,28 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
             DynaForm defaultForm = new DynaForm();
             DynaSection mainSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
 
-            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.accountid)
+            mainSection.addFields(new TextDynaFieldBuilder().fieldName(Project.Field.accountid)
                     .displayName(AppContext.getMessage(ProjectI18nEnum.FORM_ACCOUNT_NAME))
                     .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_ACCOUNT_NAME_HELP))
                     .fieldIndex(0).colSpan(true).build());
 
-            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.currencyid)
+            mainSection.addFields(new TextDynaFieldBuilder().fieldName(Project.Field.currencyid)
                     .displayName(AppContext.getMessage(GenericI18Enum.FORM_CURRENCY))
                     .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_CURRENCY_HELP)).fieldIndex(1).build());
 
-            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.targetbudget).displayName
+            mainSection.addFields(new TextDynaFieldBuilder().fieldName(Project.Field.targetbudget).displayName
                     (AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET))
                     .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET_HELP)).fieldIndex(2).build());
 
-            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.defaultbillingrate).displayName
+            mainSection.addFields(new TextDynaFieldBuilder().fieldName(Project.Field.defaultbillingrate).displayName
                     (AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE))
                     .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE_HELP)).fieldIndex(3).build());
 
-            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.defaultovertimebillingrate)
+            mainSection.addFields(new TextDynaFieldBuilder().fieldName(Project.Field.defaultovertimebillingrate)
                     .displayName(AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE))
                     .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE_HELP)).fieldIndex(4).build());
 
-            defaultForm.addSection(mainSection);
+            defaultForm.addSections(mainSection);
             return new DynaFormLayout(defaultForm);
         }
 

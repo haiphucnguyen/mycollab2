@@ -20,43 +20,43 @@ public class InvoiceDefaultFormLayoutFactory {
         DynaSection mainSection = new DynaSectionBuilder().layoutType(
                 DynaSection.LayoutType.TWO_COLUMN).build();
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.noid).displayName(AppContext
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Invoice.Field.noid).displayName(AppContext
                 .getMessage(InvoiceI18nEnum.FORM_NOID_FIELD)).contextHelp(AppContext.getMessage(InvoiceI18nEnum.FORM_NOID_FIELD_HELP))
                 .fieldIndex(0).mandatory(true).required(true).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.issuedate).displayName(AppContext
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Invoice.Field.issuedate).displayName(AppContext
                 .getMessage(InvoiceI18nEnum.FORM_ISSUE_DATE_FIELD)).fieldIndex(1).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.currentid).displayName(AppContext
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Invoice.Field.currentid).displayName(AppContext
                 .getMessage(GenericI18Enum.FORM_CURRENCY)).fieldIndex(2).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.assignuser).displayName(AppContext
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Invoice.Field.assignuser).displayName(AppContext
                 .getMessage(GenericI18Enum.FORM_ASSIGNEE)).fieldIndex(3).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.status)
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Invoice.Field.status)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_STATUS))
                 .contextHelp(AppContext.getMessage(InvoiceI18nEnum.FORM_STATUS_HELP)).fieldIndex(4).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.contactuserfullname).displayName(AppContext
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Invoice.Field.contactuserfullname).displayName(AppContext
                 .getMessage(InvoiceI18nEnum.FORM_CONTACT_PERSON)).fieldIndex(5).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.type).displayName(AppContext
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Invoice.Field.type).displayName(AppContext
                 .getMessage(InvoiceI18nEnum.FORM_TYPE)).contextHelp(AppContext.getMessage(InvoiceI18nEnum.FORM_TYPE_HELP))
                 .fieldIndex(6).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.amount).displayName(AppContext
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Invoice.Field.amount).displayName(AppContext
                 .getMessage(InvoiceI18nEnum.FORM_AMOUNT)).fieldIndex(7).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.note).displayName(AppContext
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Invoice.Field.note).displayName(AppContext
                 .getMessage(InvoiceI18nEnum.FORM_NOTE)).fieldIndex(8).colSpan(true).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.description).displayName(AppContext
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Invoice.Field.description).displayName(AppContext
                 .getMessage(GenericI18Enum.FORM_DESCRIPTION)).fieldIndex(9).colSpan(true).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.id).displayName(AppContext.getMessage
+        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Invoice.Field.id).displayName(AppContext.getMessage
                 (GenericI18Enum.FORM_ATTACHMENTS)).fieldIndex(10).colSpan(true).build());
 
-        defaultForm.addSection(mainSection);
+        defaultForm.addSections(mainSection);
         return defaultForm;
     }
 }

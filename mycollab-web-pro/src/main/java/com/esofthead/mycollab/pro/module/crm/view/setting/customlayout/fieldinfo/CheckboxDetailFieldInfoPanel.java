@@ -16,29 +16,23 @@
  */
 package com.esofthead.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo;
 
-import java.util.List;
-
 import com.esofthead.mycollab.form.view.builder.type.BooleanDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 2.0
- * 
  */
-public class CheckboxDetailFieldInfoPanel extends
-		DetailFieldInfoPanel<BooleanDynaField> {
-	private static final long serialVersionUID = 1L;
+public class CheckboxDetailFieldInfoPanel extends DetailFieldInfoPanel<BooleanDynaField> {
+    private static final long serialVersionUID = 1L;
 
-	public CheckboxDetailFieldInfoPanel(String candidateFieldName,
-			List<DynaSection> activeSections) {
-		super(candidateFieldName, activeSections);
-	}
+    public CheckboxDetailFieldInfoPanel(String candidateFieldName, DynaSection[] activeSections) {
+        super(candidateFieldName, activeSections);
+    }
 
-	@Override
-	public DynaSection updateCustomField() {
-		return null;
-	}
+    @Override
+    public DynaSection updateCustomField() {
+        return null;
+    }
 
 }

@@ -53,7 +53,7 @@ public class DynaSectionBuilder {
 
     public DynaSectionBuilder fields(AbstractDynaFieldBuilder<?>... fields) {
         for (AbstractDynaFieldBuilder<?> field : fields) {
-            section.addField(field.build());
+            section.addFields(field.build());
         }
         return this;
     }

@@ -16,31 +16,27 @@
  */
 package com.esofthead.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo;
 
-import java.util.List;
-
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.vaadin.ui.ComboBox;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 2.0
- * 
  */
 public class SectionSelectList extends ComboBox {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public SectionSelectList(List<DynaSection> sections) {
-		super();
-		this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+    public SectionSelectList(DynaSection[] sections) {
+        super();
+        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
-		for (DynaSection section : sections) {
-			this.addItem(section);
-			this.setItemCaption(section, section.getHeader());
-		}
+        for (DynaSection section : sections) {
+            this.addItem(section);
+            this.setItemCaption(section, section.getHeader());
+        }
 
-		if (sections.size() > 0) {
-			this.select(sections.get(0));
-		}
-	}
+        if (sections.length > 0) {
+            this.select(sections[0]);
+        }
+    }
 }
