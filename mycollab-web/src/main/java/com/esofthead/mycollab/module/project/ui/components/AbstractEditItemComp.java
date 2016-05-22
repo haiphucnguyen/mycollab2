@@ -75,7 +75,7 @@ public abstract class AbstractEditItemComp<B> extends AbstractPageView implement
 
             final ComponentContainer bottomPanel = createBottomPanel();
             if (bottomPanel != null) {
-                formAddLayout.addBottomControls(bottomPanel);
+                formAddLayout.addBottom(bottomPanel);
             }
 
             return formAddLayout;

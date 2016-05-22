@@ -108,7 +108,7 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
 
                 ComponentContainer bottomPanel = createBottomPanel();
                 if (bottomPanel != null) {
-                    formAddLayout.addBottomControls(bottomPanel);
+                    formAddLayout.addBottom(bottomPanel);
                 }
 
                 return formAddLayout;

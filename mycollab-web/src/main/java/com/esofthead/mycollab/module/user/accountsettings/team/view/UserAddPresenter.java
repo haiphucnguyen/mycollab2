@@ -93,8 +93,7 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 
         if (user.getUsername() == null) {
             userService.saveUserAccount(user, AppContext.getAccountId(), AppContext.getUsername());
-            NotificationUtil.showNotification(AppContext.getMessage(GenericI18Enum.HELP_SPAM_FILTER_PREVENT_TITLE),
-                    AppContext.getMessage(GenericI18Enum.HELP_SPAM_FILTER_PREVENT_MESSAGE));
+            UI.getCurrent().addWindow(new NewUserAddedWindow(user));
         } else {
             userService.updateUserAccount(user, AppContext.getAccountId());
         }
