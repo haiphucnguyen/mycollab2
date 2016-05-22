@@ -51,6 +51,7 @@ import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -75,7 +76,7 @@ public class ProjectMemberInvitePresenter extends AbstractPresenter<ProjectMembe
             public void receiveEvent(ViewEvent<InviteProjectMembers> event) {
                 InviteProjectMembers inviteMembers = (InviteProjectMembers) event.getData();
                 ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-                List<String> inviteEmails = inviteMembers.getEmails();
+                Collection<String> inviteEmails = inviteMembers.getEmails();
                 if (CollectionUtils.isNotEmpty(inviteEmails)) {
                     projectMemberService.inviteProjectMembers(inviteEmails.toArray(new String[inviteEmails.size()]),
                             CurrentProjectVariables.getProjectId(), inviteMembers.getRoleId(),
@@ -142,7 +143,7 @@ public class ProjectMemberInvitePresenter extends AbstractPresenter<ProjectMembe
             linksContainer.addStyleName(UIConstants.SCROLLABLE_CONTAINER);
             contentLayout.with(linksContainer);
 
-            List<String> inviteEmails = invitation.getEmails();
+            Collection<String> inviteEmails = invitation.getEmails();
             Date nowTime = new GregorianCalendar().getTime();
             for (String inviteEmail : inviteEmails) {
                 Div userEmailDiv = new Div().appendText("&nbsp;&nbsp;&nbsp;&nbsp;" + FontAwesome.MAIL_FORWARD.getHtml() +
