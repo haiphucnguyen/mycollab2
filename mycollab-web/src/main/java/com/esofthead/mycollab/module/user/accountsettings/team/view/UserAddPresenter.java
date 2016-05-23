@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import com.esofthead.mycollab.core.utils.RandomPasswordGenerator;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.billing.UserStatusConstants;
@@ -80,10 +81,10 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
         }
 
         if (user.getUsername() == null) {
-            String uncryptPassword = user.getPassword();
+            String userPassword = user.getPassword() != null ? user.getPassword() : RandomPasswordGenerator.generateRandomPassword();
             userService.saveUserAccount(user, user.getRoleid(), AppContext.getSubDomain(), AppContext.getAccountId(),
                     AppContext.getUsername());
-            UI.getCurrent().addWindow(new NewUserAddedWindow(user, uncryptPassword));
+            UI.getCurrent().addWindow(new NewUserAddedWindow(user, userPassword));
         } else {
             user.setRegisterstatus(RegisterStatusConstants.ACTIVE);
             userService.updateUserAccount(user, AppContext.getAccountId());

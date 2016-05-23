@@ -12,6 +12,10 @@ public class RandomPasswordGenerator {
     private static final String NUM     = "0123456789";
     private static final String SPL_CHARS   = "!@#$%^&*_=+-/";
 
+    public static String generateRandomPassword() {
+        return String.valueOf(generatePswd(6, 12, 3, 2, 1));
+    }
+
     public static char[] generatePswd(int minLen, int maxLen, int noOfCAPSAlpha,
                                       int noOfDigits, int noOfSplChars) {
         if(minLen > maxLen)
