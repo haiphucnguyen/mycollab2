@@ -31,7 +31,7 @@ public class DynaForm {
         return sections.size();
     }
 
-    public DynaForm addSections(DynaSection... sectionArr) {
+    public DynaForm sections(DynaSection... sectionArr) {
         for (DynaSection section : sectionArr) {
             sections.add(section);
             section.setParentForm(this);

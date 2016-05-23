@@ -1,50 +1,25 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
-package com.esofthead.mycollab.vaadin.web.ui;
+package com.esofthead.mycollab.vaadin.web.ui.utils;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.io.Serializable;
-
 /**
- * @author MyCollab Ltd.
- * @since 1.0
+ * @author MyCollab Ltd
+ * @since 5.3.2
  */
-public class EditFormControlsGenerator<T> implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    private final AdvancedEditBeanForm<T> editForm;
-
-    public EditFormControlsGenerator(final AdvancedEditBeanForm<T> editForm) {
-        this.editForm = editForm;
+public class FormControlsGenerator {
+    public static final <T> ComponentContainer generateEditFormControls(final AdvancedEditBeanForm<T> editForm) {
+        return generateEditFormControls(editForm, true, true, true);
     }
 
-    public ComponentContainer createButtonControls() {
-        return this.createButtonControls(true, true, true);
-    }
-
-    public ComponentContainer createButtonControls(boolean isSaveBtnVisible, boolean isSaveAndNewBtnVisible, boolean isCancelBtnVisible) {
+    public static final <T> ComponentContainer generateEditFormControls(final AdvancedEditBeanForm<T> editForm, boolean
+            isSaveBtnVisible, boolean isSaveAndNewBtnVisible, boolean isCancelBtnVisible) {
         MHorizontalLayout layout = new MHorizontalLayout();
 
         if (isCancelBtnVisible) {
@@ -52,7 +27,7 @@ public class EditFormControlsGenerator<T> implements Serializable {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public void buttonClick(final ClickEvent event) {
+                public void buttonClick(final Button.ClickEvent event) {
                     editForm.fireCancelForm();
                 }
             });
@@ -66,7 +41,7 @@ public class EditFormControlsGenerator<T> implements Serializable {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public void buttonClick(final ClickEvent event) {
+                public void buttonClick(final Button.ClickEvent event) {
                     if (editForm.validateForm()) {
                         editForm.fireSaveAndNewForm();
                     }
@@ -82,7 +57,7 @@ public class EditFormControlsGenerator<T> implements Serializable {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public void buttonClick(final ClickEvent event) {
+                public void buttonClick(final Button.ClickEvent event) {
                     if (editForm.validateForm()) {
                         editForm.fireSaveForm();
                     }

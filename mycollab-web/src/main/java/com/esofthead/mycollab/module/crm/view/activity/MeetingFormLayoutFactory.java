@@ -20,7 +20,7 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
 import com.esofthead.mycollab.vaadin.ui.WrappedFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.AddViewLayout2;
-import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
+import com.esofthead.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Layout;
@@ -46,7 +46,7 @@ public abstract class MeetingFormLayoutFactory extends WrappedFormLayoutFactory 
         if (topPanel != null) {
             meetingLayout.addControlButtons(topPanel);
         }
-        wrappedLayoutFactory = new DynaFormLayout(CrmTypeConstants.MEETING, MeetingDefaultFormLayoutFactory.getForm());
+        wrappedLayoutFactory = new DefaultDynaFormLayout(CrmTypeConstants.MEETING, MeetingDefaultFormLayoutFactory.getForm());
         VerticalLayout body = new VerticalLayout();
         body.setStyleName(UIConstants.BOX);
         body.addComponent(wrappedLayoutFactory.getLayout());

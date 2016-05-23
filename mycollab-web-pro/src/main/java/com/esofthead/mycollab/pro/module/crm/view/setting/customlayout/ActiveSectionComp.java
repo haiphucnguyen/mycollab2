@@ -215,7 +215,7 @@ class ActiveSectionComp extends GenericSectionComp {
                     AbstractDynaField field = ((CustomFieldComponent) component)
                             .getField();
                     field.setFieldIndex(row * dragLayout.getColumns() + col);
-                    section.addFields(field);
+                    section.fields(field);
                 }
             }
         }

@@ -21,8 +21,6 @@ import com.esofthead.mycollab.form.view.builder.type.TextDynaField;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.ui.TextField;
 
-import java.util.List;
-
 /**
  * @author MyCollab Ltd.
  * @since 2.0
@@ -64,7 +62,7 @@ public class TextDetailFieldInfoPanel extends DetailFieldInfoPanel<TextDynaField
             customField.setFieldIndex(0);
         }
 
-        ownSection.addFields(customField);
+        ownSection.fields(customField);
         return ownSection;
     }
 }

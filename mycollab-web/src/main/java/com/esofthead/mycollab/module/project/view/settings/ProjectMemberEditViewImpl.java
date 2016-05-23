@@ -38,13 +38,14 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
-import com.esofthead.mycollab.vaadin.web.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
+
+import static com.esofthead.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEditFormControls;
 
 /**
  * @author MyCollab Ltd.
@@ -74,7 +75,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return (new EditFormControlsGenerator<>(editForm)).createButtonControls(true, false, true);
+        return generateEditFormControls(editForm, true, false, true);
     }
 
     @Override

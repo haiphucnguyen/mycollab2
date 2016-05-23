@@ -87,9 +87,9 @@ public class CustomLayoutDDComp extends MHorizontalLayout {
 	public DynaForm rebuildForm() {
 		DynaForm form = new DynaForm();
 		DynaSection[] sections = activeFormArea.rebuildSections();
-		form.addSections(sections);
+		form.sections(sections);
 
-		form.addSections(deleteFormArea.rebuildSection());
+		form.sections(deleteFormArea.rebuildSection());
 		return form;
 	}
 

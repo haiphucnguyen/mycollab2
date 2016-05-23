@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.project.service.InvoiceService;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
+import com.esofthead.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.event.ShortcutAction;
@@ -40,7 +40,7 @@ public class InvoiceAddWindow extends Window {
         this.setContent(content);
         final AdvancedEditBeanForm<SimpleInvoice> editBeanForm = new AdvancedEditBeanForm<>();
         content.addComponent(editBeanForm);
-        editBeanForm.setFormLayoutFactory(new DynaFormLayout(ProjectTypeConstants.INVOICE,
+        editBeanForm.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.INVOICE,
                 InvoiceDefaultFormLayoutFactory.getForm()));
         final InvoiceEditFormFieldFactory invoiceEditFormFieldFactory = new InvoiceEditFormFieldFactory(editBeanForm);
         editBeanForm.setBeanFormFieldFactory(invoiceEditFormFieldFactory);

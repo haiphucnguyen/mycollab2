@@ -56,6 +56,8 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
 
+import static com.esofthead.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEditFormControls;
+
 /**
  * @author MyCollab Ltd.
  * @since 1.0
@@ -135,14 +137,10 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                 AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
 
                 wrappedLayoutFactory = buildFormLayout();
-                formAddLayout.addHeaderRight(createButtonControls());
+                formAddLayout.addHeaderRight(generateEditFormControls(editUserForm, true, false, true));
                 formAddLayout.addBody(wrappedLayoutFactory.getLayout());
                 formAddLayout.addBottom(createBottomPanel());
                 return formAddLayout;
-            }
-
-            private ComponentContainer createButtonControls() {
-                return new EditFormControlsGenerator<>(editUserForm).createButtonControls();
             }
 
             private Layout createBottomPanel() {
@@ -168,25 +166,25 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                 rolePermissionLayout.displayRolePermission(roleId);
             }
 
-            private DynaFormLayout buildFormLayout() {
+            private DefaultDynaFormLayout buildFormLayout() {
                 DynaForm defaultForm = new DynaForm();
                 DynaSection mainSection = new DynaSectionBuilder().header(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION))
                         .layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
-                mainSection.addFields(new TextDynaFieldBuilder().fieldName(User.Field.firstname).displayName(AppContext
+                mainSection.fields(new TextDynaFieldBuilder().fieldName(User.Field.firstname).displayName(AppContext
                         .getMessage(UserI18nEnum.FORM_FIRST_NAME)).fieldIndex(0).build());
-                mainSection.addFields(new TextDynaFieldBuilder().fieldName(User.Field.email).displayName(AppContext
+                mainSection.fields(new TextDynaFieldBuilder().fieldName(User.Field.email).displayName(AppContext
                         .getMessage(UserI18nEnum.FORM_EMAIL)).fieldIndex(1).build());
-                mainSection.addFields(new TextDynaFieldBuilder().fieldName(User.Field.lastname).displayName(AppContext
+                mainSection.fields(new TextDynaFieldBuilder().fieldName(User.Field.lastname).displayName(AppContext
                         .getMessage(UserI18nEnum.FORM_LAST_NAME)).fieldIndex(2).build());
-                mainSection.addFields(new TextDynaFieldBuilder().fieldName(SimpleUser.Field.roleid).displayName(AppContext
+                mainSection.fields(new TextDynaFieldBuilder().fieldName(SimpleUser.Field.roleid).displayName(AppContext
                         .getMessage(UserI18nEnum.FORM_ROLE)).fieldIndex(3).build());
                 if (user.getUsername() == null) {
-                    mainSection.addFields(new TextDynaFieldBuilder().fieldName(User.Field.password).displayName
+                    mainSection.fields(new TextDynaFieldBuilder().fieldName(User.Field.password).displayName
                             (AppContext.getMessage(ShellI18nEnum.FORM_PASSWORD)).contextHelp(AppContext.getMessage
                             (ShellI18nEnum.FORM_PASSWORD_HELP)).fieldIndex(4).build());
                 }
-                defaultForm.addSections(mainSection);
-                return new DynaFormLayout(defaultForm);
+                defaultForm.sections(mainSection);
+                return new DefaultDynaFormLayout(defaultForm);
             }
         }
 
@@ -209,7 +207,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                     tf.setRequiredError("This field must be not null");
                     return tf;
                 } else if (User.Field.password.equalTo(propertyId)) {
-                    return new MPasswordField().withRequired(true).withRequiredError("Password must be not null");
+                    return new MPasswordField();
                 }
 
                 return null;
@@ -227,7 +225,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
             public ComponentContainer getLayout() {
                 String title = (user.getUsername() == null) ? AppContext.getMessage(UserI18nEnum.VIEW_NEW_USER) : user.getDisplayName();
                 AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
-                formAddLayout.addHeaderRight(createButtonControls());
+                formAddLayout.addHeaderRight(generateEditFormControls(editUserForm, true, false, true));
                 FormContainer formContainer = new FormContainer();
                 basicInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 7);
                 formContainer.addSection(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION),
@@ -248,10 +246,6 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
             void displayRolePermission(Integer roleId) {
                 rolePermissionLayout.displayRolePermission(roleId);
-            }
-
-            private ComponentContainer createButtonControls() {
-                return new EditFormControlsGenerator<>(editUserForm).createButtonControls();
             }
 
             @Override
@@ -338,7 +332,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                     });
                     return cboCountry;
                 } else if (User.Field.password.equalTo(propertyId)) {
-                    return new MPasswordField().withRequired(true).withRequiredError("Password must be not null");
+                    return new MPasswordField();
                 }
                 return null;
             }

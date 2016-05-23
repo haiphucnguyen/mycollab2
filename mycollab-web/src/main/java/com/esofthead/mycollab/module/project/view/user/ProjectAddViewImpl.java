@@ -36,7 +36,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
-import com.esofthead.mycollab.vaadin.web.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.Page;
@@ -46,6 +45,8 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.awt.image.BufferedImage;
+
+import static com.esofthead.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEditFormControls;
 
 /**
  * @author MyCollab Ltd.
@@ -86,9 +87,9 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
             final ComponentContainer controlButtons;
 
             if (project.getId() == null) {
-                controlButtons = (new EditFormControlsGenerator<>(editForm)).createButtonControls();
+                controlButtons = generateEditFormControls(editForm);
             } else {
-                controlButtons = (new EditFormControlsGenerator<>(editForm)).createButtonControls(true, false, true);
+                controlButtons = generateEditFormControls(editForm, true, false, true);
             }
             controlPanel.addComponent(controlButtons);
             controlPanel.setComponentAlignment(controlButtons, Alignment.TOP_RIGHT);

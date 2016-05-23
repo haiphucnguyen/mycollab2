@@ -13,13 +13,14 @@ import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
 import com.esofthead.mycollab.vaadin.ui.*;
-import com.esofthead.mycollab.vaadin.web.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Date;
+
+import static com.esofthead.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEditFormControls;
 
 /**
  * @author MyCollab Ltd
@@ -109,7 +110,7 @@ class StandupAddWindow extends Window implements IEditFormHandler<StandupReportW
         }
 
         private ComponentContainer createButtonControls() {
-            return (new EditFormControlsGenerator<>(editForm)).createButtonControls(true, false, true);
+            return generateEditFormControls(editForm, true, false, true);
         }
 
         @Override

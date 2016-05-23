@@ -38,22 +38,22 @@ public class VersionDefaultFormLayoutFactory {
         defaultForm = new DynaForm();
         DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).build();
 
-        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Version.Field.versionname)
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Version.Field.versionname)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_NAME))
                 .required(true).mandatory(true).fieldIndex(0).colSpan(true).build());
 
-        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Version.Field.description)
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Version.Field.description)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION))
                 .fieldIndex(1).colSpan(true).build());
 
-        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Version.Field.duedate)
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Version.Field.duedate)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
                 .fieldIndex(2).build());
 
-        mainSection.addFields(new TextDynaFieldBuilder().fieldName(Version.Field.id).displayName(AppContext
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Version.Field.id).displayName(AppContext
                 .getMessage(BugI18nEnum.LIST)).colSpan(true).fieldIndex(3).build());
 
-        defaultForm.addSections(mainSection);
+        defaultForm.sections(mainSection);
     }
 
     public static DynaForm getForm() {

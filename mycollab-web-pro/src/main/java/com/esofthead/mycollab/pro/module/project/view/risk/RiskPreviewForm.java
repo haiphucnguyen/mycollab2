@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectUser
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
+import com.esofthead.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.field.DateViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.I18nFormViewField;
@@ -26,7 +26,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
 
     @Override
     public void setBean(SimpleRisk bean) {
-        setFormLayoutFactory(new DynaFormLayout(ProjectTypeConstants.RISK,
+        setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.RISK,
                 RiskDefaultFormLayoutFactory.getForm(), Risk.Field.riskname.name()));
         setBeanFormFieldFactory(new RiskReadFormFieldFactory(this));
         super.setBean(bean);

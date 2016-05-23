@@ -10,14 +10,15 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
-import com.esofthead.mycollab.vaadin.web.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.esofthead.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEditFormControls;
 
 /**
  * @author MyCollab Ltd.
@@ -59,7 +60,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return (new EditFormControlsGenerator<>(editForm)).createButtonControls();
+        return generateEditFormControls(editForm);
     }
 
     @Override
@@ -74,7 +75,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm());
     }
 
     @Override

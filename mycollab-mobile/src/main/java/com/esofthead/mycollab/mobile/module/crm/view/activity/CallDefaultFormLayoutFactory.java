@@ -40,44 +40,44 @@ public class CallDefaultFormLayoutFactory {
 				.layoutType(LayoutType.TWO_COLUMN).orderIndex(0)
 				.header("Call Information").build();
 
-		callSection.addFields(new TextDynaFieldBuilder().fieldName("subject")
+		callSection.fields(new TextDynaFieldBuilder().fieldName("subject")
 				.displayName("Subject").fieldIndex(0).mandatory(true).build());
 
-		callSection.addFields(new TextDynaFieldBuilder().fieldName("status")
+		callSection.fields(new TextDynaFieldBuilder().fieldName("status")
 				.displayName("Status").fieldIndex(1).build());
 
-		callSection.addFields(new DateTimeDynaFieldBuilder()
+		callSection.fields(new DateTimeDynaFieldBuilder()
 				.fieldName("startdate").displayName("Start Date & Time")
 				.fieldIndex(2).build());
 
-		callSection.addFields(new TextDynaFieldBuilder().fieldName("typeid")
+		callSection.fields(new TextDynaFieldBuilder().fieldName("typeid")
 				.displayName("Related To").fieldIndex(3).build());
 
-		callSection.addFields(new TextDynaFieldBuilder()
+		callSection.fields(new TextDynaFieldBuilder()
 				.fieldName("durationinseconds").displayName("Duration")
 				.fieldIndex(4).build());
 
-		callSection.addFields(new TextDynaFieldBuilder().fieldName("purpose")
+		callSection.fields(new TextDynaFieldBuilder().fieldName("purpose")
 				.displayName("Purpose").fieldIndex(5).build());
 
-		defaultForm.addSections(callSection);
+		defaultForm.sections(callSection);
 
 		DynaSection descSection = new DynaSectionBuilder()
 				.layoutType(LayoutType.ONE_COLUMN).orderIndex(1)
 				.header("Description").build();
-		descSection.addFields(new TextAreaDynaFieldBuilder()
+		descSection.fields(new TextAreaDynaFieldBuilder()
 				.fieldName("description").displayName("Description")
 				.fieldIndex(0).build());
-		defaultForm.addSections(descSection);
+		defaultForm.sections(descSection);
 
 		DynaSection resultSection = new DynaSectionBuilder()
 				.layoutType(LayoutType.ONE_COLUMN).orderIndex(2)
 				.header("Result").build();
-		resultSection.addFields(new TextAreaDynaFieldBuilder()
+		resultSection.fields(new TextAreaDynaFieldBuilder()
 				.fieldName("result").displayName("Result").fieldIndex(0)
 				.build());
 
-		defaultForm.addSections(resultSection);
+		defaultForm.sections(resultSection);
 	}
 
 	public static DynaForm getForm() {

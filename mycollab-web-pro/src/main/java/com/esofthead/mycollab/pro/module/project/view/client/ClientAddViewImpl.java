@@ -19,8 +19,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.WrappedFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.AddViewLayout;
-import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
-import com.esofthead.mycollab.vaadin.web.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -31,6 +30,8 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.awt.image.BufferedImage;
+
+import static com.esofthead.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEditFormControls;
 
 /**
  * @author MyCollab Ltd
@@ -78,9 +79,9 @@ public class ClientAddViewImpl extends AbstractPageView implements ClientAddView
             final ComponentContainer controlButtons;
 
             if (account.getId() == null) {
-                controlButtons = (new EditFormControlsGenerator<>(editForm)).createButtonControls(true, false, true);
+                controlButtons = generateEditFormControls(editForm, true, false, true);
             } else {
-                controlButtons = (new EditFormControlsGenerator<>(editForm)).createButtonControls();
+                controlButtons = generateEditFormControls(editForm);
             }
             controlPanel.addComponent(controlButtons);
             controlPanel.setComponentAlignment(controlButtons, Alignment.TOP_RIGHT);
@@ -105,7 +106,7 @@ public class ClientAddViewImpl extends AbstractPageView implements ClientAddView
 
         @Override
         public ComponentContainer getLayout() {
-            wrappedLayoutFactory = new DynaFormLayout(CrmTypeConstants.ACCOUNT, AccountDefaultDynaFormLayoutFactory.getForm());
+            wrappedLayoutFactory = new DefaultDynaFormLayout(CrmTypeConstants.ACCOUNT, AccountDefaultDynaFormLayoutFactory.getForm());
             MHorizontalLayout header = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(true, false, true, false));
             header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
             final AddViewLayout clientAddLayout = new AddViewLayout(header);

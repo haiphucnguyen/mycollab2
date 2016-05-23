@@ -344,7 +344,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
                         invoice.getNoid() + " - " + invoice.getNote());
             }
 
-            previewForm.setFormLayoutFactory(new DynaFormLayout(ProjectTypeConstants.INVOICE,
+            previewForm.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.INVOICE,
                     InvoiceDefaultFormLayoutFactory.getForm()));
             previewForm.setBeanFormFieldFactory(new InvoiceReadFormFieldFactory(previewForm));
             previewForm.setBean(invoice);
