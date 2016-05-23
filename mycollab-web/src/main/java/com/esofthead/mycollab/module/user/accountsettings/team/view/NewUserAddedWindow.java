@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.ShellI18nEnum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.esb.SendUserInvitationEvent;
 import com.esofthead.mycollab.module.user.events.UserEvent;
@@ -14,10 +15,7 @@ import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.google.common.eventbus.AsyncEventBus;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -49,12 +47,17 @@ public class NewUserAddedWindow extends Window {
         Button sendEmailBtn = new Button("Send Email", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
-                SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(user.getUsername(), user.getInviteUser(),
-                        user.getSubdomain(), AppContext.getAccountId());
-                asyncEventBus.post(invitationEvent);
-                NotificationUtil.showNotification(AppContext.getMessage(GenericI18Enum.HELP_SPAM_FILTER_PREVENT_TITLE),
-                        AppContext.getMessage(GenericI18Enum.HELP_SPAM_FILTER_PREVENT_MESSAGE));
+                ExtMailService mailService = AppContextUtil.getSpringBean(ExtMailService.class);
+                if (!mailService.isMailSetupValid()) {
+                    UI.getCurrent().addWindow(new GetStartedInstructionWindow(user));
+                } else {
+                    AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
+                    SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(user.getUsername(), user.getInviteUser(),
+                            user.getSubdomain(), AppContext.getAccountId());
+                    asyncEventBus.post(invitationEvent);
+                    NotificationUtil.showNotification(AppContext.getMessage(GenericI18Enum.HELP_SPAM_FILTER_PREVENT_TITLE),
+                            AppContext.getMessage(GenericI18Enum.HELP_SPAM_FILTER_PREVENT_MESSAGE));
+                }
             }
         });
         sendEmailBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -72,6 +75,7 @@ public class NewUserAddedWindow extends Window {
         Button doneBtn = new Button("Done", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new UserEvent.GotoList(this, null));
                 close();
             }
         });
