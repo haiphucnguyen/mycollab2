@@ -17,12 +17,10 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
-import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.AccountLinkBuilder;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
@@ -43,7 +41,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.vaadin.web.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.web.ui.SearchTextField;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
@@ -268,46 +265,10 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
                         .LABEL_META_INFO).withWidth("100%");
         memberInfo.addComponent(memberSinceLabel);
 
-        if (RegisterStatusConstants.SENT_VERIFICATION_EMAIL.equals(member.getRegisterstatus())) {
-            final VerticalLayout waitingNotLayout = new VerticalLayout();
-            Label infoStatus = new Label("Waiting for accept invitation");
-            infoStatus.addStyleName(UIConstants.LABEL_META_INFO);
-            waitingNotLayout.addComponent(infoStatus);
-
-            ButtonLink resendInvitationLink = new ButtonLink("Resend Invitation", new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    ExtMailService mailService = AppContextUtil.getSpringBean(ExtMailService.class);
-                    if (!mailService.isMailSetupValid()) {
-                        UI.getCurrent().addWindow(new GetStartedInstructionWindow(member));
-                    } else {
-                        UserService userService = AppContextUtil.getSpringBean(UserService.class);
-                        userService.updateUserAccountStatus(member.getUsername(), member.getAccountId(),
-                                RegisterStatusConstants.VERIFICATING);
-                        waitingNotLayout.removeAllComponents();
-                        Label statusEmail = new Label("Sending invitation email");
-                        statusEmail.addStyleName(UIConstants.LABEL_META_INFO);
-                        waitingNotLayout.addComponent(statusEmail);
-                    }
-                }
-            });
-            resendInvitationLink.addStyleName(UIConstants.BUTTON_LINK);
-            waitingNotLayout.addComponent(resendInvitationLink);
-            memberInfo.addComponent(waitingNotLayout);
-        } else if (RegisterStatusConstants.ACTIVE.equals(member.getRegisterstatus())) {
-            ELabel lastAccessTimeLbl = new ELabel("Logged in "
-                    + AppContext.formatPrettyTime(member.getLastaccessedtime())).withDescription(AppContext
-                    .formatDateTime(member.getLastaccessedtime()));
-            lastAccessTimeLbl.addStyleName(UIConstants.LABEL_META_INFO);
-            memberInfo.addComponent(lastAccessTimeLbl);
-        } else if (RegisterStatusConstants.VERIFICATING.equals(member.getRegisterstatus())) {
-            Label infoStatus = new Label("Sending invitation email");
-            infoStatus.addStyleName(UIConstants.LABEL_META_INFO);
-            memberInfo.addComponent(infoStatus);
-        }
-
+        ELabel lastAccessTimeLbl = new ELabel("Logged in " + AppContext.formatPrettyTime(member.getLastaccessedtime()))
+                .withDescription(AppContext.formatDateTime(member.getLastaccessedtime()));
+        lastAccessTimeLbl.addStyleName(UIConstants.LABEL_META_INFO);
+        memberInfo.addComponent(lastAccessTimeLbl);
         blockTop.with(memberInfo).expand(memberInfo);
         blockContent.addComponent(blockTop);
         return blockContent;

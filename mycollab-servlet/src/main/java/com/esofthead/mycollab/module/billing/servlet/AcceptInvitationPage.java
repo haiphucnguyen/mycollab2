@@ -99,8 +99,7 @@ public class AcceptInvitationPage extends VelocityWebServletRequestHandler {
                     if (userInAccount == null) {
                         PageGeneratorUtil.responeUserNotExistPage(response, username, request.getContextPath() + "/");
                     } else {
-                        if (userInAccount.getRegisterstatus().equals(RegisterStatusConstants.ACTIVE)) {
-                            LOG.debug("Forward user {} to page {}", user.getUsername(), request.getContextPath());
+                        if (RegisterStatusConstants.ACTIVE.equals(userInAccount.getRegisterstatus())) {
                             response.sendRedirect(request.getContextPath() + "/");
                         } else {
                             UserAccount userAccount = new UserAccount();
@@ -111,9 +110,6 @@ public class AcceptInvitationPage extends VelocityWebServletRequestHandler {
                             userAccountMapper.updateByExampleSelective(userAccount, userAccountExample);
 
                             if (isBlank(user.getPassword())) {
-                                LOG.debug(
-                                        "User {} has null password. It seems he is the new user join to mycollab. Redirect him to page let him update his password {}",
-                                        user.getUsername(), BeanUtility.printBeanObj(user));
                                 // forward to page create password for new user
                                 String redirectURL = String.format("%suser/confirm_invite/update_info/", SiteConfiguration.getSiteUrl(subDomain));
 

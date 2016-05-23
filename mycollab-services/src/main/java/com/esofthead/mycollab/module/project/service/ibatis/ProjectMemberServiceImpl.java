@@ -173,8 +173,7 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
     }
 
     @Override
-    public void acceptProjectInvitationByNewUser(String email, String password, Integer projectId, Integer projectRoleId,
-                                                 Integer sAccountId) {
+    public void acceptProjectInvitationByNewUser(String email, String password, Integer projectId, Integer projectRoleId, Integer sAccountId) {
         SimpleProject project = projectService.findById(projectId, sAccountId);
         if (project == null) {
             throw new UserInvalidInputException("Project not found");

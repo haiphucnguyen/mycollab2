@@ -18,14 +18,10 @@ package com.esofthead.mycollab.module.billing.servlet;
 
 import com.esofthead.mycollab.common.UrlTokenizer;
 import com.esofthead.mycollab.configuration.IDeploymentMode;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.servlet.VelocityWebServletRequestHandler;
 import com.esofthead.mycollab.spring.AppContextUtil;
@@ -83,28 +79,6 @@ public class DenyInvitationPage extends VelocityWebServletRequestHandler {
                         context.put("loginURL", request.getContextPath() + "/");
                         String html = generatePageByTemplate(response.getLocale(),
                                 "templates/page/project/RefuseUserDenyActionPage.mt", context);
-                        PrintWriter out = response.getWriter();
-                        out.println(html);
-                    } else if (checkUser.getRegisterstatus().equals(RegisterStatusConstants.VERIFICATING)) {
-                        UserSearchCriteria criteria = new UserSearchCriteria();
-                        criteria.setUsername(StringSearchField.and(username));
-                        criteria.setSaccountid(new NumberSearchField(accountId));
-                        userService.pendingUserAccount(username, accountId);
-
-                        String redirectURL = SiteConfiguration.getSiteUrl(subdomain) + "project/member/feedback/";
-
-                        Map<String, Object> context = new HashMap<>();
-                        context.put("inviterEmail", inviterEmail);
-                        context.put("redirectURL", redirectURL);
-                        context.put("toEmail", checkUser.getEmail());
-                        context.put("toName", checkUser.getUsername());
-                        context.put("inviterName", inviterName);
-                        context.put("projectName", "");
-                        context.put("sAccountId", 0);
-                        context.put("projectId", 0);
-                        context.put("projectRoleId", 0);
-                        String USER_DENY_FEEDBACK_TEMPLATE = "templates/page/user/UserDenyInvitationPage.mt";
-                        String html = generatePageByTemplate(response.getLocale(), USER_DENY_FEEDBACK_TEMPLATE, context);
                         PrintWriter out = response.getWriter();
                         out.println(html);
                     } else if (checkUser.getRegisterstatus().equals(RegisterStatusConstants.DELETE)) {

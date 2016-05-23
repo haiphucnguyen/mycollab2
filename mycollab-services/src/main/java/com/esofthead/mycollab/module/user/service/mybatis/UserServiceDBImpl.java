@@ -27,7 +27,6 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
-import com.esofthead.mycollab.module.billing.UserStatusConstants;
 import com.esofthead.mycollab.module.billing.service.BillingPlanCheckerService;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.dao.RolePermissionMapper;
@@ -38,6 +37,7 @@ import com.esofthead.mycollab.module.user.domain.*;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.esb.DeleteUserEvent;
 import com.esofthead.mycollab.module.user.esb.RequestToResetPasswordEvent;
+import com.esofthead.mycollab.module.user.esb.SendUserInvitationEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.google.common.eventbus.AsyncEventBus;
@@ -49,7 +49,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -96,7 +99,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
     }
 
     @Override
-    public void saveUserAccount(SimpleUser record, Integer sAccountId, String inviteUser) {
+    public void saveUserAccount(User record, Integer roleId, String subDomain, Integer sAccountId, String inviteUser) {
         billingPlanCheckerService.validateAccountCanCreateNewUser(sAccountId);
 
         // check if user email has already in this account yet
@@ -104,20 +107,18 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
 
         if (deploymentMode.isDemandEdition()) {
             userAccountEx.createCriteria().andUsernameEqualTo(record.getEmail()).andAccountidEqualTo(sAccountId)
-                    .andRegisterstatusIn(Arrays.asList(RegisterStatusConstants.ACTIVE,
-                            RegisterStatusConstants.SENT_VERIFICATION_EMAIL, RegisterStatusConstants.VERIFICATING));
+                    .andRegisterstatusEqualTo(RegisterStatusConstants.ACTIVE);
         } else {
-            userAccountEx.createCriteria().andUsernameEqualTo(record.getEmail())
-                    .andRegisterstatusIn(Arrays.asList(RegisterStatusConstants.ACTIVE,
-                            RegisterStatusConstants.SENT_VERIFICATION_EMAIL, RegisterStatusConstants.VERIFICATING));
+            userAccountEx.createCriteria().andUsernameEqualTo(record.getEmail()).andRegisterstatusEqualTo(RegisterStatusConstants.ACTIVE);
         }
 
         if (userAccountMapper.countByExample(userAccountEx) > 0) {
             throw new UserInvalidInputException(String.format("There is already user has email %s in your account", record.getEmail()));
         }
 
-        if (record.getPassword() != null) {
-            record.setPassword(EnDecryptHelper.encryptSaltPassword(record.getPassword()));
+        String password = record.getPassword();
+        if (password != null) {
+            record.setPassword(EnDecryptHelper.encryptSaltPassword(password));
         }
 
         if (record.getUsername() == null) {
@@ -142,7 +143,6 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
         UserExample userEx = new UserExample();
         userEx.createCriteria().andUsernameEqualTo(record.getUsername());
         if (userMapper.countByExample(userEx) == 0) {
-            record.setRegisterstatus(UserStatusConstants.EMAIL_NOT_VERIFIED);
             userMapper.insert(record);
             userAvatarService.uploadDefaultAvatar(record.getUsername());
         } else {
@@ -151,21 +151,20 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
 
         // save record in s_user_account table
         UserAccount userAccount = new UserAccount();
-        userAccount.setAccountid(record.getAccountId());
-        userAccount.setIsaccountowner((record.getIsAccountOwner() == null) ? Boolean.FALSE : record.getIsAccountOwner());
+        userAccount.setAccountid(sAccountId);
 
-        if (record.getRoleid() == null || record.getRoleid() <= 0) {
-            record.setRoleid(null);
-            record.setIsAccountOwner(true);
-        } else {
-            userAccount.setRoleid(record.getRoleid());
+        if (roleId != null && roleId > 0) {
+            userAccount.setRoleid(roleId);
             userAccount.setIsaccountowner(false);
+        } else {
+            userAccount.setRoleid(null);
+            userAccount.setIsaccountowner(true);
         }
 
         userAccount.setUsername(record.getUsername());
         userAccount.setRegisteredtime(new GregorianCalendar().getTime());
         userAccount.setLastaccessedtime(new GregorianCalendar().getTime());
-        userAccount.setRegisterstatus(RegisterStatusConstants.SENT_VERIFICATION_EMAIL);
+        userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
         userAccount.setInviteuser(inviteUser);
 
         userAccountEx = new UserAccountExample();
@@ -180,6 +179,10 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
         } else {
             userAccountMapper.insert(userAccount);
         }
+
+        SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(record.getUsername(), password,
+                inviteUser, subDomain, sAccountId);
+        asyncEventBus.post(invitationEvent);
     }
 
     @Override
