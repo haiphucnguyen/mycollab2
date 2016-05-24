@@ -353,7 +353,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
         @Override
         public void setPropertyDataSource(Property newDataSource) {
             Object value = newDataSource.getValue();
-            if (value == null || AppContext.isAdmin()) {
+            if (value == null) {
                 Object itemId = roleBox.getItemIds().iterator().next();
                 roleBox.setValue(itemId);
             } else if (value instanceof Integer) {
