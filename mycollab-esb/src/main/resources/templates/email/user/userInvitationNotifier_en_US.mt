@@ -36,7 +36,7 @@ a {
             <td style="padding: 10px 30px;">
                 <div>Hello $invitee.displayName, <br>
                 You have a new account at <a href="$siteUrl">$siteName</a> <br>
-                Account details: <br/>
+                Account details: <br>
                 Email: <a href="mail:$invitee.email">$invitee.email</a><br>
                 Password: $password
                 </div>

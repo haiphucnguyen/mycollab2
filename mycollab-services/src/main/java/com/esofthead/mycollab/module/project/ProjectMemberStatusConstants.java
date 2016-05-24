@@ -21,7 +21,6 @@ package com.esofthead.mycollab.module.project;
  * @since 1.0.0
  */
 public class ProjectMemberStatusConstants {
-    public static final String VERIFICATING = "Verificating";
     public static final String ACTIVE = "Active";
     public static final String INACTIVE = "InActive";
 }

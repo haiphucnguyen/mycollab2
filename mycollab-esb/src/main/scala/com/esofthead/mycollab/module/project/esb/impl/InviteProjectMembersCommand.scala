@@ -47,6 +47,7 @@ import org.springframework.stereotype.Component
     val subDomain = projectService.getSubdomainOfProject(event.projectId)
     for (inviteeEmail <- event.emails) {
       val invitee = userService.findUserByUserNameInAccount(inviteeEmail, event.sAccountId)
+      contentGenerator.putVariable("inviteeEmail", inviteeEmail)
       if (invitee != null) {
         if (RegisterStatusConstants.ACTIVE != invitee.getRegisterstatus) {
           userService.updateUserAccountStatus(inviteeEmail, event.sAccountId, RegisterStatusConstants.ACTIVE)
