@@ -40,7 +40,7 @@ a {
                 Email: <a href="mail:$invitee.email">$invitee.email</a><br>
                 Password: $password
                 </div>
-                #linkBlock( $!urlAccept "Go")
+                #linkBlock( $!siteUrl "Go")
             </td>
          </tr>
          #parse("templates/email/footer_en_US.mt")

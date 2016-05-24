@@ -17,11 +17,9 @@
 package com.esofthead.mycollab.module.project.view.settings;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent.InviteProjectMembers;
@@ -41,7 +39,6 @@ import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.B;
 import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.Text;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -54,7 +51,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -148,26 +144,7 @@ public class ProjectMemberInvitePresenter extends AbstractPresenter<ProjectMembe
             for (String inviteEmail : inviteEmails) {
                 Div userEmailDiv = new Div().appendText("&nbsp;&nbsp;&nbsp;&nbsp;" + FontAwesome.MAIL_FORWARD.getHtml() +
                         " Email: ").appendChild(new A().setHref("mailto:" + inviteEmail).appendText(inviteEmail));
-
-                String acceptLinkVal = SiteConfiguration.getSiteUrl(AppContext.getSubDomain())
-                        + "project/member/invitation/confirm_invite/"
-                        + ProjectLinkGenerator
-                        .generateAcceptInvitationParams(
-                                inviteEmail, AppContext.getAccountId(),
-                                CurrentProjectVariables.getProjectId(), invitation.getRoleId(),
-                                AppContext.getUsername(), AppContext.getUsername(),
-                                nowTime);
-                Div acceptLinkDiv = new Div().appendChild(new Text("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Accept: "), new A().setHref(acceptLinkVal).appendText(acceptLinkVal));
-
-                String denyLinkVal = SiteConfiguration.getSiteUrl(AppContext.getSubDomain())
-                        + "project/member/invitation/deny_invite/"
-                        + ProjectLinkGenerator
-                        .generateDenyInvitationParams(inviteEmail,
-                                AppContext.getAccountId(), CurrentProjectVariables.getProjectId(),
-                                AppContext.getUsername(), AppContext.getUsername());
-                Div denyLink = new Div().appendChild(new Text("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Deny: "), new A().setHref(denyLinkVal).appendText(denyLinkVal));
-                linksContainer.with(new Label(userEmailDiv.write(), ContentMode.HTML), new Label(acceptLinkDiv.write(), ContentMode.HTML),
-                        new Label(denyLink.write(), ContentMode.HTML));
+                linksContainer.with(new Label(userEmailDiv.write(), ContentMode.HTML));
                 linksContainer.add(ELabel.hr());
             }
 

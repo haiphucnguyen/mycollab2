@@ -50,8 +50,8 @@ import org.springframework.stereotype.Component
 
   private def removeProjectInvolvement(event: DeleteUserEvent): Unit = {
     val ex = new ProjectMemberExample
-    ex.createCriteria.andStatusIn(Arrays.asList(RegisterStatusConstants.ACTIVE, RegisterStatusConstants.SENT_VERIFICATION_EMAIL,
-      RegisterStatusConstants.VERIFICATING)).andSaccountidEqualTo(event.accountid).andUsernameEqualTo(event.username)
+    ex.createCriteria.andStatusIn(Arrays.asList(RegisterStatusConstants.ACTIVE, ProjectMemberStatusConstants.VERIFICATING)).
+      andSaccountidEqualTo(event.accountid).andUsernameEqualTo(event.username)
     val projectMember = new ProjectMember
     projectMember.setStatus(ProjectMemberStatusConstants.INACTIVE)
     projectMemberMapper.updateByExampleSelective(projectMember, ex)

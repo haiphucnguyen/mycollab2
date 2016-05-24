@@ -4,7 +4,6 @@ import java.util.{Arrays, Locale}
 
 import com.esofthead.mycollab.common.domain.MailRecipientField
 import com.esofthead.mycollab.configuration.SiteConfiguration
-import com.esofthead.mycollab.html.LinkUtils
 import com.esofthead.mycollab.i18n.LocalizationHelper
 import com.esofthead.mycollab.module.GenericCommand
 import com.esofthead.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
@@ -28,8 +27,6 @@ import org.springframework.stereotype.Component
   @Subscribe
   def execute(event: SendUserInvitationEvent): Unit = {
     val inviteeUser = userService.findUserByUserNameInAccount(event.invitee, event.sAccountId)
-    contentGenerator.putVariable("urlAccept", LinkUtils.generateUserAcceptLink(event.subdomain,
-      event.sAccountId, event.invitee))
     contentGenerator.putVariable("siteUrl", SiteConfiguration.getSiteUrl(inviteeUser.getSubdomain))
     contentGenerator.putVariable("invitee", inviteeUser)
     contentGenerator.putVariable("password", event.password)

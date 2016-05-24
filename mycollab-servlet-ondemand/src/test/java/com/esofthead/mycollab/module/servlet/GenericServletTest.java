@@ -16,34 +16,35 @@
  */
 package com.esofthead.mycollab.module.servlet;
 
-import static org.mockito.Mockito.when;
-
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.esofthead.mycollab.template.velocity.service.TemplateEngine;
 import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.esofthead.mycollab.template.velocity.service.TemplateEngine;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
 
+import static org.mockito.Mockito.when;
+
+/**
+ * @author MyCollab Ltd
+ * @since 1.0.0
+ */
 public class GenericServletTest {
 
-	@Mock
-	protected TemplateEngine templateEngine;
+    @Mock
+    protected TemplateEngine templateEngine;
 
-	@Mock
-	protected HttpServletRequest request;
+    @Mock
+    protected HttpServletRequest request;
 
-	@Mock
-	protected HttpServletResponse response;
+    @Mock
+    protected HttpServletResponse response;
 
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
-		when(response.getLocale()).thenReturn(Locale.US);
-	}
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        when(response.getLocale()).thenReturn(Locale.US);
+    }
 }
