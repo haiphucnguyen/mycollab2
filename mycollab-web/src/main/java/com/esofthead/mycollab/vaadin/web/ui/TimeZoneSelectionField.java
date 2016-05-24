@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.web.ui;
 
+import com.esofthead.mycollab.core.utils.TimezoneVal;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator;
 import com.vaadin.data.util.converter.Converter;
@@ -37,7 +38,7 @@ public class TimeZoneSelectionField extends CustomField<String> {
 
     public TimeZoneSelectionField(boolean isVerticalDisplay) {
         this.isVerticalDisplay = isVerticalDisplay;
-        areaSelection = new ValueComboBox(false, TimezoneMapper.AREAS);
+        areaSelection = new ValueComboBox(false, TimezoneVal.getAreas());
         areaSelection.addValueChangeListener(new Property.ValueChangeListener() {
 
             @Override
