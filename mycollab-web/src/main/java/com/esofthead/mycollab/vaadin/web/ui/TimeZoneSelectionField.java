@@ -18,6 +18,7 @@ package com.esofthead.mycollab.vaadin.web.ui;
 
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator;
 import com.vaadin.ui.Component;
@@ -54,7 +55,7 @@ public class TimeZoneSelectionField extends CustomField<String> {
 
         for (TimezoneExt timezone : TimezoneMapper.timeMap.values()) {
             if (timezone.getArea().equals(areaSelection.getValue())) {
-                timezoneAreas.add(timezone.getDisplayName());
+                timezoneAreas.add(timezone.getDisplayName(AppContext.getUserLocale()));
             }
         }
 
@@ -78,7 +79,7 @@ public class TimeZoneSelectionField extends CustomField<String> {
     private void setCboTimeZone(String area) {
         for (Map.Entry<String, TimezoneExt> timezone : TimezoneMapper.timeMap.entrySet()) {
             if (timezone.getValue().getArea().trim().equals(area)) {
-                timezoneAreas.add(timezone.getValue().getDisplayName());
+                timezoneAreas.add(timezone.getValue().getDisplayName(AppContext.getUserLocale()));
             }
         }
 
@@ -91,14 +92,13 @@ public class TimeZoneSelectionField extends CustomField<String> {
         if (timeZone != null && !timeZone.getArea().equals("")) {
             areaSelection.select(timeZone.getArea());
             setCboTimeZone(timeZone.getArea());
-            timezoneSelection.select(timeZone.getDisplayName());
+            timezoneSelection.select(timeZone.getDisplayName(AppContext.getUserLocale()));
         }
     }
 
     public TimezoneExt getTimeZone() {
         for (TimezoneExt timezone : TimezoneMapper.timeMap.values()) {
-            if (timezone.getDisplayName().trim()
-                    .equals(timezoneSelection.getValue())) {
+            if (timezone.getDisplayName(AppContext.getUserLocale()).trim().equals(timezoneSelection.getValue())) {
                 return timezone;
             }
         }

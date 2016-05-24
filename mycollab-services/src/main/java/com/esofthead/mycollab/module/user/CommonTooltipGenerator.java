@@ -65,7 +65,7 @@ public class CommonTooltipGenerator {
             Tr trRow2 = new Tr().appendChild(new Td().setStyle("width: 110px; vertical-align: top; text-align: right;")
                     .appendText(LocalizationHelper.getMessage(locale, UserI18nEnum.FORM_TIMEZONE)))
                     .appendChild(new Td().setStyle("vertical-align: top;").appendText(
-                            TimezoneMapper.getTimezoneExt(user.getTimezone()).getDisplayName()));
+                            TimezoneMapper.getTimezoneExt(user.getTimezone()).getDisplayName(locale)));
             Tr trRow3 = new Tr().appendChild(new Td().setStyle("width: 110px; vertical-align: top; text-align: right;")
                     .appendText(LocalizationHelper.getMessage(locale, UserI18nEnum.FORM_COUNTRY)))
                     .appendChild(new Td().setStyle("vertical-align: top;").appendText(
