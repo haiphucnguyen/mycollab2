@@ -21,6 +21,7 @@ import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.AccountLinkBuilder;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
@@ -186,7 +187,19 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         MVerticalLayout memberInfo = new MVerticalLayout().withMargin(false);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout();
+        buttonControls.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
         buttonControls.setVisible(AppContext.canWrite(RolePermissionCollections.ACCOUNT_USER));
+
+        if (RegisterStatusConstants.NOT_LOG_IN_YET.equals(member.getRegisterstatus())) {
+            Button resendBtn = new Button("Resend the invitation", new ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent clickEvent) {
+                    
+                }
+            });
+            resendBtn.addStyleName(UIConstants.BUTTON_LINK);
+            buttonControls.with(resendBtn);
+        }
 
         Button editBtn = new Button("", FontAwesome.EDIT);
         editBtn.addClickListener(new ClickListener() {
@@ -195,7 +208,8 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
                 EventBusFactory.getInstance().post(new UserEvent.GotoEdit(UserListViewImpl.this, member));
             }
         });
-        editBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+        editBtn.addStyleName(UIConstants.BUTTON_LINK);
+        buttonControls.with(editBtn);
 
         Button deleteBtn = new Button();
         deleteBtn.addClickListener(new Button.ClickListener() {
@@ -224,11 +238,11 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
             }
         });
         deleteBtn.setIcon(FontAwesome.TRASH_O);
-        deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
-        buttonControls.with(editBtn, deleteBtn);
+        deleteBtn.addStyleName(UIConstants.BUTTON_LINK);
+        buttonControls.with(deleteBtn);
 
         memberInfo.addComponent(buttonControls);
-        memberInfo.setComponentAlignment(buttonControls, Alignment.TOP_RIGHT);
+        memberInfo.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);
 
         A memberLink = new A(AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(),
                 member.getUsername())).appendText(member.getDisplayName());

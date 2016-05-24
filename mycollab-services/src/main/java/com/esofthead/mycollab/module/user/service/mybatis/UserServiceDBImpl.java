@@ -164,7 +164,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
         userAccount.setUsername(record.getUsername());
         userAccount.setRegisteredtime(new GregorianCalendar().getTime());
         userAccount.setLastaccessedtime(new GregorianCalendar().getTime());
-        userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+        userAccount.setRegisterstatus(RegisterStatusConstants.NOT_LOG_IN_YET);
         userAccount.setInviteuser(inviteUser);
 
         userAccountEx = new UserAccountExample();
