@@ -9,7 +9,6 @@ import com.esofthead.mycollab.module.mail.service.IContentGenerator;
 import com.esofthead.mycollab.ondemand.module.support.dao.CommunityLeadMapper;
 import com.esofthead.mycollab.ondemand.module.support.domain.CommunityLead;
 import com.esofthead.mycollab.ondemand.module.support.domain.CommunityLeadExample;
-import org.apache.commons.io.IOUtils;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
@@ -93,7 +89,7 @@ public class CampaignController {
                     contentGenerator.putVariable("downloadLink", info.getCommunityDownloadLink());
                 }
 
-                extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail(), SiteConfiguration.getDefaultSiteName(),
+                extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
                         Arrays.asList(new MailRecipientField(email, firstname + " " + lastname)), null, null, "MyCollab is " +
                                 "ready for download", contentGenerator.parseFile("templates/email/downloadInfo.mt",
                                 Locale.US), null);

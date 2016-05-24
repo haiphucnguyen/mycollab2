@@ -103,7 +103,7 @@ import org.springframework.stereotype.Component
       val content = contentGenerator.parseFile("templates/email/project/memberInvitationNotifier.mt",
         Locale.US)
       val toUser = util.Arrays.asList(new MailRecipientField(inviteeEmail, inviteeEmail))
-      extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName,
+      extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         toUser, null, null, subject, content, null)
     }
   }

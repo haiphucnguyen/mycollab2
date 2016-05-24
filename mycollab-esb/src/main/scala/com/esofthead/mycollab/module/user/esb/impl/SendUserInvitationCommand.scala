@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component
     contentGenerator.putVariable("siteUrl", SiteConfiguration.getSiteUrl(inviteeUser.getSubdomain))
     contentGenerator.putVariable("invitee", inviteeUser)
     contentGenerator.putVariable("password", event.password)
-    extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName,
+    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
       Arrays.asList(new MailRecipientField(event.invitee, event.invitee)), null, null,
       contentGenerator.parseString(LocalizationHelper.getMessage(Locale.US,
         UserI18nEnum.MAIL_INVITE_USER_SUBJECT, SiteConfiguration.getDefaultSiteName)),

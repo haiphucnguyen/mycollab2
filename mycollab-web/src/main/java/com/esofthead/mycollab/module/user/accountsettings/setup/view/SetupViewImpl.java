@@ -25,7 +25,6 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.servlet.InstallUtils;
-import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -161,6 +160,7 @@ public class SetupViewImpl extends AbstractPageView implements SetupView {
                     p.setProperty(ApplicationProperties.MAIL_PORT, emailConf.getPort());
                     p.setProperty(ApplicationProperties.MAIL_IS_TLS, emailConf.getIsStartTls());
                     p.setProperty(ApplicationProperties.MAIL_IS_SSL, emailConf.getIsSsl());
+                    p.setProperty(ApplicationProperties.MAIL_NOTIFY, emailConf.getUser());
                     p.save();
                     NotificationUtil.showNotification("Congrats", "Set up SMTP account successfully");
                 } catch (Exception e) {

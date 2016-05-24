@@ -94,7 +94,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("userName", user.getUsername)
       val link: String = GenericLinkUtils.generateSiteUrlByAccountId(account.getId) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
       contentGenerator.putVariable("link", link)
-      extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName,
+      extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)),
         null, null, contentGenerator.parseString("Your trial has been ended"),
         contentGenerator.parseFile(INFORM_EXPIRE_ACCOUNT_TEMPLATE, Locale.US), null)
@@ -115,7 +115,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("expireDay", df.format(cal.getTime))
       contentGenerator.putVariable("userName", user.getUsername)
       contentGenerator.putVariable("link", link)
-      extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName,
+      extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)), null, null,
         contentGenerator.parseString("Your trial is about to end"),
         contentGenerator.parseFile(INFORM_FILLING_BILLING_INFORMATION_TEMPLATE, Locale.US), null)

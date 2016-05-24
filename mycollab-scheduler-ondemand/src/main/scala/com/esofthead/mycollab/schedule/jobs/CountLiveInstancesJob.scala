@@ -31,7 +31,7 @@ class CountLiveInstancesJob extends GenericQuartzJobBean {
     val liveInstances = liveInstanceMapper.selectByExample(ex).asScala.toList
     contentGenerator.putVariable("instances", liveInstances)
     contentGenerator.putVariable("count", liveInstances.size)
-    extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getNoReplyEmail,
+    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getNotifyEmail,
       Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")), null, null,
       contentGenerator.parseString("Today live instances count"),
       contentGenerator.parseFile("templates/email/user/countLiveInstances.mt"), null)

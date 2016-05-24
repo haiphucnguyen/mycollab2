@@ -49,7 +49,7 @@ class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("lstUser", accessedUsers)
       contentGenerator.putVariable("count", accessedUsers.size)
       try {
-        extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getNoReplyEmail,
+        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getNotifyEmail,
           Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")), null, null,
           contentGenerator.parseString("Today system-logins count"),
           contentGenerator.parseFile(COUNT_USER_LOGIN_TEMPLATE), null)

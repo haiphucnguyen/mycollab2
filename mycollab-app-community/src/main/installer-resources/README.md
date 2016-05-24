@@ -59,6 +59,8 @@ Version 5.3.2
 
 **Bug Fixes**
 
+* Several email providers can not send email (Yahoo and several company email providers)
+
 Version 5.3.1
 -----------------------------
 **Library Upgrades**

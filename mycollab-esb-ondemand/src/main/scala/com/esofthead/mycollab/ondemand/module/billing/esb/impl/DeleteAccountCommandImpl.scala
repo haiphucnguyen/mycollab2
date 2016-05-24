@@ -38,7 +38,7 @@ import org.springframework.stereotype.Component
 
     val feedback = event.feedback
     if (feedback != null) {
-      mailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName,
+      mailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")), null, null,
         "User cancelled account", BeanUtility.printBeanObj(feedback), null)
     }
