@@ -226,11 +226,7 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
         }
 
         member.setStatus(RegisterStatusConstants.ACTIVE);
-
-        LOG.debug("Start save project member {}", BeanUtility.printBeanObj(member));
-
         saveWithSession(member, "");
-
         asyncEventBus.post(new NewProjectMemberJoinEvent(email, projectId, sAccountId, true));
         asyncEventBus.post(new NewUserJoinEvent(email, sAccountId));
     }

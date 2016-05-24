@@ -85,8 +85,7 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
                 user.setPassword(RandomPasswordGenerator.generateRandomPassword());
             }
             String userPassword = user.getPassword();
-            userService.saveUserAccount(user, user.getRoleid(), AppContext.getSubDomain(), AppContext.getAccountId(),
-                    AppContext.getUsername());
+            userService.saveUserAccount(user, user.getRoleid(), AppContext.getSubDomain(), AppContext.getAccountId(), AppContext.getUsername(), true);
             UI.getCurrent().addWindow(new NewUserAddedWindow(user, userPassword));
         } else {
             user.setRegisterstatus(RegisterStatusConstants.ACTIVE);

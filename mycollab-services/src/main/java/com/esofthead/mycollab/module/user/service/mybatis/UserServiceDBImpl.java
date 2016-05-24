@@ -99,7 +99,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
     }
 
     @Override
-    public void saveUserAccount(User record, Integer roleId, String subDomain, Integer sAccountId, String inviteUser) {
+    public void saveUserAccount(User record, Integer roleId, String subDomain, Integer sAccountId, String inviteUser, boolean isSendInvitationEmail                           ) {
         billingPlanCheckerService.validateAccountCanCreateNewUser(sAccountId);
 
         // check if user email has already in this account yet
@@ -180,9 +180,11 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
             userAccountMapper.insert(userAccount);
         }
 
-        SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(record.getUsername(), password,
-                inviteUser, subDomain, sAccountId);
-        asyncEventBus.post(invitationEvent);
+        if (isSendInvitationEmail) {
+            SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(record.getUsername(), password,
+                    inviteUser, subDomain, sAccountId);
+            asyncEventBus.post(invitationEvent);
+        }
     }
 
     @Override
@@ -318,7 +320,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
         criteria.setUsername(StringSearchField.and(username));
         criteria.setSaccountid(new NumberSearchField(accountId));
 
-        List<SimpleUser> users = userMapperExt.findPagableListByCriteria(criteria, new RowBounds(0, Integer.MAX_VALUE));
+        List<SimpleUser> users = userMapperExt.findPagableListByCriteria(criteria, new RowBounds(0, 1));
         if (CollectionUtils.isEmpty(users)) {
             return null;
         } else {
