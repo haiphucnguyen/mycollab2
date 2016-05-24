@@ -52,7 +52,7 @@ Version 5.3.2
  
 **Improvements & New Features**
 
-* Add missing timezones
+* Support DLS in timezone setting
 * Revise the invitation process simpler
 * Remove redundant libraries to reduce the download size
 * Other minor improvements

@@ -20,8 +20,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -32,7 +30,6 @@ import java.util.*;
  * @since 1.0
  */
 public class TimezoneMapper {
-    private static Logger LOG = LoggerFactory.getLogger(TimezoneMapper.class);
     public static Map<String, TimezoneExt> timeMap;
 
     public static final String AREAS[] = new String[]{"UTC", "Africa", "America",
@@ -362,9 +359,6 @@ public class TimezoneMapper {
         timeMap.put("430", new TimezoneExt("430", "Indian", "Indian/Antananarivo"));
         timeMap.put("431", new TimezoneExt("431", "Indian", "Indian/Comoro"));
         timeMap.put("432", new TimezoneExt("432", "Indian", "Indian/Mayotte"));
-        timeMap.put("433", new TimezoneExt("433", "Asia", "Asia/Riyadh87"));
-        timeMap.put("434", new TimezoneExt("434", "Asia", "Asia/Riyadh88"));
-        timeMap.put("435", new TimezoneExt("435", "Asia", "Asia/Riyadh89"));
         timeMap.put("439", new TimezoneExt("439", "Asia", "Asia/Tehran"));
         timeMap.put("441", new TimezoneExt("441", "Asia", "Asia/Baku"));
         timeMap.put("442", new TimezoneExt("442", "Asia", "Asia/Dubai"));
@@ -537,18 +531,23 @@ public class TimezoneMapper {
     }
 
     public static class TimezoneExt {
-        private final String id;
-        private final DateTimeZone timezone;
-        private final String area;
+        private String id;
+        private DateTimeZone timezone;
+        private String area;
 
         TimezoneExt(String id, String area, String javaTimeZoneId) {
             this.id = id;
             this.area = area;
-            this.timezone = DateTimeZone.forID(javaTimeZoneId);
+            try {
+                this.timezone = DateTimeZone.forTimeZone(TimeZone.getTimeZone(javaTimeZoneId));
+            } catch (Exception e) {
+                System.out.println("Timezone failed " + javaTimeZoneId);
+                timezone = DateTimeZone.UTC;
+            }
         }
 
         public String getDisplayName(Locale locale) {
-            return getOffsetString(timezone) + " " + TimezoneMapper.getArea(timezone.getID());
+            return getOffsetString(timezone) + " " + timezone.toTimeZone().getDisplayName(locale);
         }
 
         public DateTimeZone getTimezone() {
@@ -564,45 +563,30 @@ public class TimezoneMapper {
         }
     }
 
-    private static String getArea(String timeZoneDisplay) {
-        String areas[] = new String[]{"Africa", "America", "Antarctica",
-                "Asia", "Atlantic", "Australia", "Europe", "Etc", "Indian", "Pacific"};
-        if (timeZoneDisplay.indexOf("/") > -1) {
-            String area = timeZoneDisplay.substring(0, timeZoneDisplay.indexOf("/"));
-            for (String item : areas) {
-                if (item.equalsIgnoreCase(area.trim())) {
-                    return (area.equalsIgnoreCase("etc")) ? "GMT Offset" : item;
-                }
-            }
-        }
-        return "";
-    }
-
     private static String getOffsetString(DateTimeZone timeZone) {
         int offsetInMillis = timeZone.getOffset(new DateTime().getMillis());
         String offset = String.format("%02d:%02d", Math.abs(offsetInMillis / 3600000),
                 Math.abs((offsetInMillis / 60000) % 60));
-        offset = (offsetInMillis >= 0 ? "+" : "-") + offset;
+        offset = "(GMT" + (offsetInMillis >= 0 ? "+" : "-") + offset + ")";
         return offset;
     }
 
 
     public static void main(String[] args) {
-//        System.out.println(TimeZone.getDefault().getDisplayName());
-//        String[] availableIDs = TimeZone.getAvailableIDs();
+        System.out.println(TimeZone.getDefault().getDisplayName());
+        String[] availableIDs = TimeZone.getAvailableIDs();
 //        for (int i = 0; i < availableIDs.length; i++) {
 //            String timezoneId = availableIDs[i];
 //            TimeZone timeZone = TimeZone.getTimeZone(timezoneId);
 //
-//            if (!getArea(timeZone.getID()).equals("")) {
+//
 //                System.out
 //                        .println("timeMap.put(\"" + (i + 1)
 //                                + "\", new TimezoneExt(\"" + (i + 1) + "\", \""
-//                                + getOffsetString(timeZone) + "\",\""
-//                                + getArea(timeZone.getID()) + "\"," + "\""
+//                                +  "\",\""
+//                                 + "\"," + "\""
 //                                + timeZone.getID() + "\")); "
 //                                + timeZone.getRawOffset());
-//            }
 //        }
 
         Set<String> zoneIds = DateTimeZone.getAvailableIDs();
