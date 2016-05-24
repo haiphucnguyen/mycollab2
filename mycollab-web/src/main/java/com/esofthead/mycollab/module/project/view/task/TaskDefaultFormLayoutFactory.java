@@ -22,6 +22,7 @@ import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -104,6 +105,9 @@ public class TaskDefaultFormLayoutFactory {
                 .displayName(AppContext.getMessage(TaskI18nEnum.FORM_SUB_TASKS))
                 .contextHelp(AppContext.getMessage(TaskI18nEnum.FORM_SUB_TASKS_HELP))
                 .colSpan(true).fieldIndex(15).build());
+
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(SimpleTask.Field.selected)
+                .displayName("Notifiers").fieldIndex(16).colSpan(true).build());
 
         defaultForm.sections(mainSection);
         return defaultForm;

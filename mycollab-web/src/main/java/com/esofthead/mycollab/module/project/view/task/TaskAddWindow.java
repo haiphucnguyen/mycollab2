@@ -28,8 +28,8 @@ import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -60,7 +60,7 @@ public class TaskAddWindow extends Window {
         @Override
         public void setBean(final SimpleTask item) {
             this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setBeanFormFieldFactory(new TaskEditFormFieldFactory(this));
+            this.setBeanFormFieldFactory(new TaskEditFormFieldFactory(this, item.getProjectid()));
             super.setBean(item);
         }
 
@@ -71,7 +71,7 @@ public class TaskAddWindow extends Window {
             @Override
             public ComponentContainer getLayout() {
                 VerticalLayout layout = new VerticalLayout();
-                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 6);
+                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 7);
                 informationLayout.getLayout().setMargin(false);
                 informationLayout.getLayout().setSpacing(false);
                 layout.addComponent(informationLayout.getLayout());
@@ -152,6 +152,8 @@ public class TaskAddWindow extends Window {
                     return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 4, 2, "100%");
                 } else if (Task.Field.id.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ATTACHMENTS), 0, 5, 2, "100%");
+                } else if (propertyId.equals("selected")) {
+                    return informationLayout.addComponent(field, "Notifiers", 0, 6, 2, "100%");
                 }
                 return null;
             }
