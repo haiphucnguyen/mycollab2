@@ -33,6 +33,8 @@ import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
 
+import java.util.List;
+
 import static com.esofthead.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEditFormControls;
 
 /**
@@ -42,6 +44,8 @@ import static com.esofthead.mycollab.vaadin.web.ui.utils.FormControlsGenerator.g
 @ViewComponent
 public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements TaskAddView {
     private static final long serialVersionUID = 1L;
+
+    private TaskEditFormFieldFactory editFormFieldFactory;
 
     @Override
     public AttachmentUploadField getAttachUploadField() {
@@ -86,6 +90,12 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
 
     @Override
     protected AbstractBeanFieldGroupEditFieldFactory<SimpleTask> initBeanFormFieldFactory() {
-        return new TaskEditFormFieldFactory(editForm, beanItem.getProjectid());
+        editFormFieldFactory = new TaskEditFormFieldFactory(editForm, beanItem.getProjectid());
+        return editFormFieldFactory;
+    }
+
+    @Override
+    public List<String> getFollowers() {
+        return editFormFieldFactory.getSubscribersComp().getFollowers();
     }
 }

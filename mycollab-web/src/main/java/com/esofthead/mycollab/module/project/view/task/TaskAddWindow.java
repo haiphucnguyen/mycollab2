@@ -16,7 +16,9 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -26,6 +28,7 @@ import com.esofthead.mycollab.module.project.events.AssignmentEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.ui.components.ProjectSubscribersComp;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -38,6 +41,10 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd
@@ -101,10 +108,31 @@ public class TaskAddWindow extends Window {
                                 taskId = bean.getId();
                             }
 
-                            AttachmentUploadField uploadField = ((TaskEditFormFieldFactory) getFieldFactory()).getAttachmentUploadField();
+                            TaskEditFormFieldFactory taskEditFormFieldFactory = (TaskEditFormFieldFactory) fieldFactory;
+
+                            AttachmentUploadField uploadField = taskEditFormFieldFactory.getAttachmentUploadField();
                             String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), bean.getProjectid(),
                                     ProjectTypeConstants.TASK, "" + taskId);
                             uploadField.saveContentsToRepo(attachPath);
+
+                            ProjectSubscribersComp subcribersComp = taskEditFormFieldFactory.getSubscribersComp();
+                            List<String> followers = subcribersComp.getFollowers();
+                            if (followers.size() > 0) {
+                                List<MonitorItem> monitorItems = new ArrayList<>();
+                                for (String follower : followers) {
+                                    MonitorItem monitorItem = new MonitorItem();
+                                    monitorItem.setMonitorDate(new GregorianCalendar().getTime());
+                                    monitorItem.setSaccountid(AppContext.getAccountId());
+                                    monitorItem.setType(ProjectTypeConstants.TASK);
+                                    monitorItem.setTypeid(taskId);
+                                    monitorItem.setUser(follower);
+                                    monitorItem.setExtratypeid(bean.getProjectid());
+                                    monitorItems.add(monitorItem);
+                                }
+                                MonitorItemService monitorItemService = AppContextUtil.getSpringBean(MonitorItemService.class);
+                                monitorItemService.saveMonitorItems(monitorItems);
+                            }
+
                             close();
                             EventBusFactory.getInstance().post(new TaskEvent.NewTaskAdded(TaskAddWindow.this, taskId));
                             EventBusFactory.getInstance().post(new AssignmentEvent.NewAssignmentAdd(TaskAddWindow.this,

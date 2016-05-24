@@ -184,4 +184,8 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
     public AttachmentUploadField getAttachmentUploadField() {
         return attachmentUploadField;
     }
+
+    public ProjectSubscribersComp getSubscribersComp() {
+        return subscribersComp;
+    }
 }
