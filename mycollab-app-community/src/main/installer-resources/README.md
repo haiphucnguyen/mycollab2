@@ -52,15 +52,12 @@ Version 5.3.2
  
 **Improvements & New Features**
 
-* [Premium] Hours weekly report
-* [Premium] Resource allocation report
-* Allow project manager customize project views when create the new project
+* Add missing timezones
+* Revise the invitation process simpler
 * Remove redundant libraries to reduce the download size
 * Other minor improvements
 
 **Bug Fixes**
-
-* [Premium] Gantt chart related issues
 
 Version 5.3.1
 -----------------------------

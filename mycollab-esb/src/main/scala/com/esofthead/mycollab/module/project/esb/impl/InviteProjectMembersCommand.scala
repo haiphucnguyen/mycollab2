@@ -60,7 +60,7 @@ import org.springframework.stereotype.Component
 
         val newUser = new User
         newUser.setEmail(inviteeEmail)
-        val password = RandomPasswordGenerator.generateRandomPassword();
+        val password = RandomPasswordGenerator.generateRandomPassword()
         contentGenerator.putVariable("password", password)
         newUser.setPassword(password)
         userService.saveUserAccount(user, systemGuestRoleId, subDomain, event.sAccountId, event.inviteUser, false)
@@ -69,8 +69,15 @@ import org.springframework.stereotype.Component
       if (projectMember != null) {
         if (ProjectMemberStatusConstants.ACTIVE != projectMember.getStatus) {
           projectMember.setStatus(ProjectMemberStatusConstants.ACTIVE)
-          projectMemberService.updateWithSession(projectMember, "")
         }
+        if (event.projectRoleId == null || event.projectRoleId < 0) {
+          projectMember.setIsadmin(true)
+          projectMember.setProjectroleid(null)
+        } else {
+          projectMember.setIsadmin(false)
+          projectMember.setProjectroleid(event.projectRoleId)
+        }
+        projectMemberService.updateWithSession(projectMember, "")
       } else {
         val member = new ProjectMember
         member.setProjectid(event.projectId)

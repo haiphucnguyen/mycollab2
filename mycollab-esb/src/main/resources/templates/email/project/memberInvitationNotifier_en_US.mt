@@ -55,6 +55,7 @@ a {
         Email: <a href="mail:$inviteeEmail">$inviteeEmail</a><br>
         Password: $password
         }
+        #end
         #linkBlock( $!urlAccept "Go")
         </td>
         </tr>
