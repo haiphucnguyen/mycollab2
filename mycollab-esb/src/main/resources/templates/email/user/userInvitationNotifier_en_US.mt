@@ -38,7 +38,11 @@ a {
                 You have a new account at <a href="$siteUrl">$siteName</a> <br>
                 Account details: <br>
                 Email: <a href="mail:$invitee.email">$invitee.email</a><br>
-                Password: $password
+                #if ($password)
+                    Password: $password
+                #else
+                    Password: &lt;&lt;Sent in the previous message&gt;&gt;
+                #end
                 </div>
                 #linkBlock( $!siteUrl "Go")
             </td>

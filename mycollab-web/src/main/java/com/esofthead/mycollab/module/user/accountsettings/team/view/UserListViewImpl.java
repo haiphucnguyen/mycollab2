@@ -42,6 +42,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.web.ui.SearchTextField;
@@ -196,10 +197,12 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
             Button resendBtn = new Button("Resend the invitation", new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
-                    SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(member.getUsername(), "",
+                    SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(member.getUsername(), null,
                             member.getInviteUser(), AppContext.getSubDomain(), AppContext.getAccountId());
                     AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
                     asyncEventBus.post(invitationEvent);
+                    NotificationUtil.showNotification("Success!", "The invitation is sent to " + member
+                            .getDisplayName() + " successfully");
                 }
             });
             resendBtn.addStyleName(UIConstants.BUTTON_LINK);

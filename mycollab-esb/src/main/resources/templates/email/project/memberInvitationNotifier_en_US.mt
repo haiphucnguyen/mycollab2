@@ -50,11 +50,10 @@ a {
         <td style="padding: 0px 25px;">
         #messageBlock( $inviteMessage )
 
-        #if ($password) {
-        Account details: <br>
-        Email: <a href="mail:$inviteeEmail">$inviteeEmail</a><br>
-        Password: $password
-        }
+        #if ($password)
+            Account details: <br>
+            Email: <a href="mail:$inviteeEmail">$inviteeEmail</a><br>
+            Password: $password
         #end
         #linkBlock( $!urlAccept "Go")
         </td>
