@@ -3,10 +3,7 @@ package com.esofthead.mycollab.pro.module.project.ui.components;
 import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.service.MonitorItemService;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.arguments.*;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
@@ -51,7 +48,7 @@ public class WatchersMultiSelection extends MVerticalLayout {
 
         ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        criteria.setStatus(StringSearchField.and(ProjectMemberStatusConstants.ACTIVE));
+        criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE));
         criteria.addOrderField(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC));
 
         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);

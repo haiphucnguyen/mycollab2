@@ -16,15 +16,10 @@
  */
 package com.esofthead.mycollab.web;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.common.json.QueryAnalyzer;
 import com.esofthead.mycollab.configuration.EnDecryptHelper;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.*;
-import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
-import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
 import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
@@ -88,25 +83,6 @@ public class DesktopApplication extends MyCollabUI {
 
     private MainWindowContainer mainWindowContainer;
     private static List<String> ipLists = new ArrayList<>();
-
-    private ApplicationEventListener<ShellEvent.AddQueryParam> addQueryHandler = new ApplicationEventListener<ShellEvent.AddQueryParam>() {
-        @Subscribe
-        @Override
-        public void handle(ShellEvent.AddQueryParam event) {
-            List<SearchFieldInfo> searchFieldInfos = (List<SearchFieldInfo>) event.getData();
-            String query = QueryAnalyzer.toQueryParams(searchFieldInfos);
-            String fragment = Page.getCurrent().getUriFragment();
-            int index = fragment.indexOf("?");
-            if (index > 0) {
-                fragment = fragment.substring(0, index);
-            }
-
-            if (StringUtils.isNotBlank(query)) {
-                fragment += "?" + UrlEncodeDecoder.encode(query);
-                Page.getCurrent().setUriFragment(fragment, false);
-            }
-        }
-    };
 
     @Override
     protected void doInit(final VaadinRequest request) {
@@ -332,7 +308,6 @@ public class DesktopApplication extends MyCollabUI {
         if (currentContext != null) {
             currentContext.clearSessionVariables();
             setCurrentFragmentUrl("");
-            EventBusFactory.getInstance().unregister(addQueryHandler);
         }
     }
 
@@ -363,7 +338,6 @@ public class DesktopApplication extends MyCollabUI {
         UserAccountExample ex = new UserAccountExample();
         ex.createCriteria().andAccountidEqualTo(billingAccount.getId()).andUsernameEqualTo(user.getUsername());
         userAccountMapper.updateByExampleSelective(userAccount, ex);
-        EventBusFactory.getInstance().register(addQueryHandler);
         EventBusFactory.getInstance().post(new ShellEvent.GotoMainPage(this, null));
     }
 

@@ -28,6 +28,7 @@ import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nE
 import com.esofthead.mycollab.module.user.accountsettings.view.UserTableFieldDef;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
+import com.esofthead.mycollab.module.user.esb.SendUserInvitationEvent;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.reporting.ReportExportType;
@@ -45,6 +46,7 @@ import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.web.ui.SearchTextField;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.google.common.eventbus.AsyncEventBus;
 import com.hp.gagawa.java.elements.A;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
@@ -194,7 +196,10 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
             Button resendBtn = new Button("Resend the invitation", new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
-                    
+                    SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(member.getUsername(), "",
+                            member.getInviteUser(), AppContext.getSubDomain(), AppContext.getAccountId());
+                    AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
+                    asyncEventBus.post(invitationEvent);
                 }
             });
             resendBtn.addStyleName(UIConstants.BUTTON_LINK);

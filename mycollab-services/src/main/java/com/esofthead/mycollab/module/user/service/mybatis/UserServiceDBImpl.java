@@ -272,7 +272,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
     public SimpleUser authentication(String username, String password, String subDomain, boolean isPasswordEncrypt) {
         UserSearchCriteria criteria = new UserSearchCriteria();
         criteria.setUsername(StringSearchField.and(username));
-        criteria.setRegisterStatuses(new SetSearchField<>(RegisterStatusConstants.ACTIVE));
+        criteria.setRegisterStatuses(new SetSearchField<>(RegisterStatusConstants.ACTIVE, RegisterStatusConstants.NOT_LOG_IN_YET));
         criteria.setSaccountid(null);
 
         if (deploymentMode.isDemandEdition()) {
@@ -289,11 +289,13 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
                 throw new UserInvalidInputException("Invalid username or password");
             }
 
+            if (RegisterStatusConstants.NOT_LOG_IN_YET.equals(user.getRegisterstatus())) {
+
+            }
             LOG.debug(String.format("User %s login to system successfully!", username));
 
             if (user.getIsAccountOwner() == null || (user.getIsAccountOwner() != null && !user.getIsAccountOwner())) {
                 if (user.getRoleid() != null) {
-                    LOG.debug(String.format("User %s is not admin. Getting his role", username));
                     RolePermissionExample ex = new RolePermissionExample();
                     ex.createCriteria().andRoleidEqualTo(user.getRoleid());
                     List roles = rolePermissionMapper.selectByExampleWithBLOBs(ex);
