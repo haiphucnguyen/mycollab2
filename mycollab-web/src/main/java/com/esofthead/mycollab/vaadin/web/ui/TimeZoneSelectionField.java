@@ -27,6 +27,8 @@ import com.vaadin.ui.CustomField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.util.Collection;
+
 /**
  * @author MyCollab Ltd.
  * @since 1.0
@@ -48,6 +50,9 @@ public class TimeZoneSelectionField extends CustomField<String> {
         });
         timezoneSelection = new ComboBox();
         timezoneSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
+        String area = (String) areaSelection.getItemIds().iterator().next();
+        areaSelection.setValue(area);
+        setCboTimeZone(area);
     }
 
     @Override
@@ -65,40 +70,45 @@ public class TimeZoneSelectionField extends CustomField<String> {
 
     private void setCboTimeZone(String area) {
         timezoneSelection.removeAllItems();
+        Collection<TimezoneVal> timeZones = TimezoneVal.getTimezoneInAreas(area);
+        for (TimezoneVal timezoneVal : timeZones) {
+            timezoneSelection.addItem(timezoneVal.getId());
+            timezoneSelection.setItemCaption(timezoneVal.getId(), timezoneVal.getDisplayName());
+        }
 
+        if (timeZones.size() > 0) {
+            timezoneSelection.setValue(timeZones.iterator().next());
+        }
     }
 
     @Override
     public void setPropertyDataSource(Property newDataSource) {
         String value = (String) newDataSource.getValue();
         if (value != null) {
-
+            TimezoneVal timezoneVal = new TimezoneVal(value);
+            areaSelection.setValue(timezoneVal.getArea());
+            timezoneSelection.setValue(value);
         }
         super.setPropertyDataSource(newDataSource);
     }
 
     @Override
     public String getValue() {
-//        TimezoneExt timezoneExt = getTimeZone();
-//        if (timezoneExt != null) {
-//            return timezoneExt.getId();
-//        } else {
-//            return null;
-//        }
-        return null;
+        return (timezoneSelection != null) ? (String) timezoneSelection.getValue() : null;
     }
 
     @Override
     public void setValue(String newFieldValue) throws ReadOnlyException, Converter.ConversionException {
+        TimezoneVal timezoneVal = new TimezoneVal(newFieldValue);
+        areaSelection.setValue(timezoneVal.getArea());
+        timezoneSelection.setValue(newFieldValue);
         super.setValue(newFieldValue);
     }
 
     @Override
     public void commit() throws SourceException, Validator.InvalidValueException {
-//        TimezoneExt timezoneExt = getTimeZone();
-//        if (timezoneExt != null) {
-//            setInternalValue(timezoneExt.getId());
-//        }
+        String timeZoneId = (String) timezoneSelection.getValue();
+        setInternalValue(timeZoneId);
         super.commit();
     }
 

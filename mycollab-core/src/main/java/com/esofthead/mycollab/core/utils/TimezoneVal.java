@@ -10,46 +10,75 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author MyCollab Ltd
  * @since 5.3.2
  */
-public class TimezoneVal {
-    private static Map<String, Collection<TimezoneVal>> cacheTimezones = new ConcurrentHashMap<>();
+public class TimezoneVal implements Comparable<TimezoneVal> {
+    private static Map<String, List<TimezoneVal>> cacheTimezones = new ConcurrentHashMap<>();
 
     static {
         String[] zoneIds = TimeZone.getAvailableIDs();
         for (int i = 0; i < zoneIds.length; i++) {
             TimeZone timeZone = TimeZone.getTimeZone(zoneIds[i]);
             String timeZoneId = timeZone.getID();
-            int index = timeZoneId.indexOf('/');
-            String area = (index > -1) ? timeZoneId.substring(0, index) : "Others";
-            Collection<TimezoneVal> timeZones = cacheTimezones.get(area);
-            if (timeZones == null) {
-                timeZones = new ArrayList<>();
-                cacheTimezones.put(area, timeZones);
+            try {
+                DateTimeZone.forTimeZone(timeZone); //check compatible between joda timezone and java timezone
+                TimezoneVal timezoneVal = new TimezoneVal(zoneIds[i]);
+                List<TimezoneVal> timeZones = cacheTimezones.get(timezoneVal.getArea());
+                if (timeZones == null) {
+                    timeZones = new ArrayList<>();
+                    cacheTimezones.put(timezoneVal.getArea(), timeZones);
+                }
+                timeZones.add(timezoneVal);
+            } catch (Exception e) {
+                // ignore exception
             }
-            TimezoneVal timezoneVal = new TimezoneVal(zoneIds[i], timeZone);
-            timeZones.add(timezoneVal);
+        }
+
+        Set<String> keys = cacheTimezones.keySet();
+        for (String key : keys) {
+            List<TimezoneVal> timezones = cacheTimezones.get(key);
+            Collections.sort(timezones);
         }
     }
 
     private String id;
     private TimeZone timezone;
+    private String area;
+    private String location;
 
-    public TimezoneVal(String id, TimeZone timeZone) {
+    public TimezoneVal(String id) {
         this.id = id;
-        this.timezone = timeZone;
+        this.timezone = TimeZone.getTimeZone(id);
+        String timeZoneId = timezone.getID();
+        int index = timeZoneId.indexOf('/');
+        location = (index > -1) ? timeZoneId.substring(index + 1, timeZoneId.length()) : timeZoneId;
+        area = (index > -1) ? timeZoneId.substring(0, index) : "Others";
     }
 
-    public String getDisplayName(Locale locale) {
-        return getOffsetString(timezone) + " " + timezone.getDisplayName(locale);
+    public String getDisplayName() {
+        return getOffsetString(timezone) + " " + location;
     }
 
     public DateTimeZone getTimezone() {
         return DateTimeZone.forTimeZone(timezone);
     }
 
+    @Override
+    public int compareTo(TimezoneVal val) {
+        int offsetInMillis1 = this.getTimezone().getOffset(new DateTime().getMillis());
+        int offsetInMillis2 = val.getTimezone().getOffset(new DateTime().getMillis());
+        return offsetInMillis1 - offsetInMillis2;
+    }
+
     public String getId() {
         return id;
     }
 
+    public String getArea() {
+        return area;
+    }
+
+    public String getLocation() {
+        return location;
+    }
 
     private static String getOffsetString(TimeZone timeZone) {
         int offsetInMillis = DateTimeZone.forTimeZone(timeZone).getOffset(new DateTime().getMillis());
@@ -66,12 +95,21 @@ public class TimezoneVal {
         return TimeZone.getTimeZone(timeZoneId);
     }
 
+    public static String getDisplayName(String timeZoneId) {
+        TimeZone timeZone = valueOf(timeZoneId);
+        String str = timeZone.getID();
+        int index = str.indexOf('/');
+        String location = (index > -1) ? str.substring(index + 1, str.length()) : str;
+        return getOffsetString(timeZone) + " " + location;
+    }
+
     public static String[] getAreas() {
-        Set<String> keys = cacheTimezones.keySet();
+        List<String> keys = new ArrayList<>(cacheTimezones.keySet());
+        Collections.sort(keys);
         return keys.toArray(new String[keys.size()]);
     }
 
-    public static synchronized Collection<TimezoneVal> getTimezoneInAreas(String area) {
+    public static Collection<TimezoneVal> getTimezoneInAreas(String area) {
         return cacheTimezones.get(area);
     }
 }
