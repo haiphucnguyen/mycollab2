@@ -16,19 +16,15 @@
  */
 package com.esofthead.mycollab.vaadin.web.ui;
 
-import com.esofthead.mycollab.core.utils.TimezoneMapper;
-import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator;
+import com.vaadin.data.util.converter.Converter;
+import com.vaadin.ui.AbstractSelect;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author MyCollab Ltd.
@@ -37,8 +33,7 @@ import java.util.Map;
 public class TimeZoneSelectionField extends CustomField<String> {
     private boolean isVerticalDisplay = true;
     private ValueComboBox areaSelection;
-    private ValueComboBox timezoneSelection;
-    private List<String> timezoneAreas = new ArrayList<>();
+    private ComboBox timezoneSelection;
 
     public TimeZoneSelectionField(boolean isVerticalDisplay) {
         this.isVerticalDisplay = isVerticalDisplay;
@@ -46,21 +41,12 @@ public class TimeZoneSelectionField extends CustomField<String> {
         areaSelection.addValueChangeListener(new Property.ValueChangeListener() {
 
             @Override
-            public void valueChange(
-                    com.vaadin.data.Property.ValueChangeEvent event) {
-                timezoneAreas.clear();
-                setCboTimeZone(event.getProperty().getValue().toString().trim());
+            public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
+                setCboTimeZone((String) areaSelection.getValue());
             }
         });
-
-        for (TimezoneExt timezone : TimezoneMapper.timeMap.values()) {
-            if (timezone.getArea().equals(areaSelection.getValue())) {
-                timezoneAreas.add(timezone.getDisplayName(AppContext.getUserLocale()));
-            }
-        }
-
-        String[] arrayTimezone = timezoneAreas.toArray(new String[timezoneAreas.size()]);
-        timezoneSelection = new ValueComboBox(false, arrayTimezone);
+        timezoneSelection = new ComboBox();
+        timezoneSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
     }
 
     @Override
@@ -77,32 +63,8 @@ public class TimeZoneSelectionField extends CustomField<String> {
     }
 
     private void setCboTimeZone(String area) {
-        for (Map.Entry<String, TimezoneExt> timezone : TimezoneMapper.timeMap.entrySet()) {
-            if (timezone.getValue().getArea().trim().equals(area)) {
-                timezoneAreas.add(timezone.getValue().getDisplayName(AppContext.getUserLocale()));
-            }
-        }
-
         timezoneSelection.removeAllItems();
-        String[] arrayTimezone = timezoneAreas.toArray(new String[timezoneAreas.size()]);
-        timezoneSelection.loadData(arrayTimezone);
-    }
 
-    public void setTimeZone(TimezoneExt timeZone) {
-        if (timeZone != null && !timeZone.getArea().equals("")) {
-            areaSelection.select(timeZone.getArea());
-            setCboTimeZone(timeZone.getArea());
-            timezoneSelection.select(timeZone.getDisplayName(AppContext.getUserLocale()));
-        }
-    }
-
-    public TimezoneExt getTimeZone() {
-        for (TimezoneExt timezone : TimezoneMapper.timeMap.values()) {
-            if (timezone.getDisplayName(AppContext.getUserLocale()).trim().equals(timezoneSelection.getValue())) {
-                return timezone;
-            }
-        }
-        return null;
     }
 
     @Override
@@ -116,20 +78,26 @@ public class TimeZoneSelectionField extends CustomField<String> {
 
     @Override
     public String getValue() {
-        TimezoneExt timezoneExt = getTimeZone();
-        if (timezoneExt != null) {
-            return timezoneExt.getId();
-        } else {
-            return null;
-        }
+//        TimezoneExt timezoneExt = getTimeZone();
+//        if (timezoneExt != null) {
+//            return timezoneExt.getId();
+//        } else {
+//            return null;
+//        }
+        return null;
+    }
+
+    @Override
+    public void setValue(String newFieldValue) throws ReadOnlyException, Converter.ConversionException {
+        super.setValue(newFieldValue);
     }
 
     @Override
     public void commit() throws SourceException, Validator.InvalidValueException {
-        TimezoneExt timezoneExt = getTimeZone();
-        if (timezoneExt != null) {
-            setInternalValue(timezoneExt.getId());
-        }
+//        TimezoneExt timezoneExt = getTimeZone();
+//        if (timezoneExt != null) {
+//            setInternalValue(timezoneExt.getId());
+//        }
         super.commit();
     }
 

@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.core.utils.TimezoneMapper;
+import com.esofthead.mycollab.core.utils.TimezoneVal;
 import com.esofthead.mycollab.i18n.LocalizationHelper;
 import com.esofthead.mycollab.module.user.AccountLinkBuilder;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
@@ -100,7 +100,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         formLayoutHelper.addComponent(new Label(AppContext.formatDate(user.getDateofbirth())), AppContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 0, 1);
         formLayoutHelper.addComponent(new Label(new A("mailto:" + user.getEmail()).appendText(user.getEmail()).write(),
                 ContentMode.HTML), AppContext.getMessage(UserI18nEnum.FORM_EMAIL), 0, 2);
-        formLayoutHelper.addComponent(new Label(TimezoneMapper.getTimezoneExt(user.getTimezone()).getDisplayName(AppContext.getUserLocale())),
+        formLayoutHelper.addComponent(new Label(TimezoneVal.valueOf(user.getTimezone()).getDisplayName(AppContext.getUserLocale())),
                 AppContext.getMessage(UserI18nEnum.FORM_TIMEZONE), 0, 3);
         formLayoutHelper.addComponent(new Label(LocalizationHelper.getLocaleInstance(user.getLanguage())
                         .getDisplayLanguage(AppContext.getUserLocale())),
@@ -158,8 +158,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
                     } else if (propertyId.equals("dateofbirth")) {
                         return new DateViewField(user.getDateofbirth());
                     } else if (propertyId.equals("timezone")) {
-                        return new DefaultViewField(TimezoneMapper.getTimezoneExt(user.getTimezone()).getDisplayName
-                                (AppContext.getUserLocale()));
+                        return new DefaultViewField(TimezoneVal.valueOf(user.getTimezone()).getDisplayName(AppContext.getUserLocale()));
                     } else if (propertyId.equals("facebookaccount")) {
                         return new UrlSocialNetworkLinkViewField(user.getFacebookaccount(), "https://www.facebook.com/" +
                                 user.getFacebookaccount());

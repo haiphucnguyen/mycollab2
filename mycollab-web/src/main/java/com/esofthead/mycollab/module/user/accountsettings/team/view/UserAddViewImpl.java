@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import com.esofthead.mycollab.common.i18n.SecurityI18nEnum;
 import com.esofthead.mycollab.common.i18n.ShellI18nEnum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
-import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
@@ -311,15 +310,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                 } else if (propertyId.equals("dateofbirth")) {
                     return new DateSelectionField();
                 } else if (propertyId.equals("timezone")) {
-                    TimeZoneSelectionField cboTimezone = new TimeZoneSelectionField(false);
-                    if (user.getTimezone() != null) {
-                        cboTimezone.setTimeZone(TimezoneMapper.getTimezoneExt(user.getTimezone()));
-                    } else {
-                        if (AppContext.getUser().getTimezone() != null) {
-                            cboTimezone.setTimeZone(TimezoneMapper.getTimezoneExt(AppContext.getUser().getTimezone()));
-                        }
-                    }
-                    return cboTimezone;
+                    return new TimeZoneSelectionField(false);
                 } else if (propertyId.equals("country")) {
                     final CountryComboBox cboCountry = new CountryComboBox();
                     cboCountry.addValueChangeListener(new Property.ValueChangeListener() {

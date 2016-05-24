@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.user.accountsettings.customize.view;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
@@ -28,9 +27,9 @@ import com.esofthead.mycollab.module.user.ui.components.LanguageComboBox;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
-import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.TimeZoneSelectionField;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.field.DateFormatField;
@@ -102,19 +101,11 @@ class AccountInfoChangeWindow extends Window {
                 if (BillingAccount.Field.subdomain.equalTo(propertyId)) {
                     return new SubDomainField();
                 } else if (BillingAccount.Field.defaulttimezone.equalTo(propertyId)) {
-                    TimeZoneSelectionField cboTimezone = new TimeZoneSelectionField(false);
-                    if (billingAccount.getDefaulttimezone() != null) {
-                        cboTimezone.setTimeZone(TimezoneMapper.getTimezoneExt(billingAccount.getDefaulttimezone()));
-                    } else {
-                        if (AppContext.getUser().getTimezone() != null) {
-                            cboTimezone.setTimeZone(TimezoneMapper.getTimezoneExt(AppContext.getUser().getTimezone()));
-                        }
-                    }
-                    return cboTimezone;
+                    return new TimeZoneSelectionField(false);
                 } else if (BillingAccount.Field.defaultcurrencyid.equalTo(propertyId)) {
                     return new CurrencyComboBoxField();
                 } else if (BillingAccount.Field.defaultyymmddformat.equalTo(propertyId)) {
-                    return new DateFormatField("");
+                    return new DateFormatField(billingAccount.getDateFormatInstance().toPattern());
                 } else if (BillingAccount.Field.defaultmmddformat.equalTo(propertyId)) {
                     return new DateFormatField(billingAccount.getShortDateFormatInstance().toPattern());
                 } else if (BillingAccount.Field.defaulthumandateformat.equalTo(propertyId)) {
