@@ -23,6 +23,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
+import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.servlet.InstallUtils;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -105,10 +106,8 @@ public class SetupViewImpl extends AbstractPageView implements SetupView {
 
                 @Override
                 public void buttonClick(final Button.ClickEvent event) {
-                    EventBusFactory.getInstance().post(
-                            new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
+                    EventBusFactory.getInstance().post(new ProfileEvent.GotoProfileView(this));
                 }
-
             });
             closeBtn.setStyleName(UIConstants.BUTTON_OPTION);
 

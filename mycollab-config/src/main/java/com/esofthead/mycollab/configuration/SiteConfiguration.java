@@ -164,6 +164,7 @@ public class SiteConfiguration {
     }
 
     public static String getNoReplyEmail() {
+
         return getInstance().noreplyEmail;
     }
 

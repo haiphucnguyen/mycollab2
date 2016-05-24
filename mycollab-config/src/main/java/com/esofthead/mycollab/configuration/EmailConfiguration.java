@@ -40,7 +40,6 @@ public class EmailConfiguration extends ValuedBean implements Cloneable {
     private Integer port = 25;
 
     private boolean isStartTls = false;
-
     private boolean isSsl = false;
 
     EmailConfiguration(String host, String username, String password, int port, boolean isStartTls, boolean isSsl) {

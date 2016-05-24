@@ -132,7 +132,7 @@ public class PasswordChangeWindow extends Window {
         final UserService userService = AppContextUtil.getSpringBean(UserService.class);
         userService.updateWithSession(user, AppContext.getUsername());
 
-        EventBusFactory.getInstance().post(new ProfileEvent.GotoProfileView(PasswordChangeWindow.this, null));
+        EventBusFactory.getInstance().post(new ProfileEvent.GotoProfileView(PasswordChangeWindow.this));
         PasswordChangeWindow.this.close();
     }
 }
