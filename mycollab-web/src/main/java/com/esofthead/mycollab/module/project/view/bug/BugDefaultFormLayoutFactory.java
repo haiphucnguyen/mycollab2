@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.common.i18n.FollowerI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
@@ -113,7 +114,8 @@ public class BugDefaultFormLayoutFactory {
                 .fieldIndex(15).colSpan(true).build());
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(SimpleBug.Field.selected)
-                .displayName("Notifiers").fieldIndex(16).colSpan(true).build());
+                .displayName(AppContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS))
+                .contextHelp(AppContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP)).fieldIndex(16).colSpan(true).build());
 
         defaultForm.sections(mainSection);
         return defaultForm;

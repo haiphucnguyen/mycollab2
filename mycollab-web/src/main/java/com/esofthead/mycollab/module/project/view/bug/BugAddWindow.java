@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.cache.CleanCacheEvent;
 import com.esofthead.mycollab.common.domain.MonitorItem;
+import com.esofthead.mycollab.common.i18n.FollowerI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -197,7 +198,8 @@ public class BugAddWindow extends Window {
                 } else if (BugWithBLOBs.Field.id.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ATTACHMENTS), 0, 7, 2, "100%");
                 } else if (SimpleBug.Field.selected.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, "Notifiers", 0, 8, 2, "100%");
+                    return informationLayout.addComponent(field, AppContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS),
+                            AppContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP), 0, 8, 2, "100%");
                 }
                 return null;
             }

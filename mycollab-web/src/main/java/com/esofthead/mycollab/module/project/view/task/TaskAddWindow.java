@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.domain.MonitorItem;
+import com.esofthead.mycollab.common.i18n.FollowerI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -180,8 +181,9 @@ public class TaskAddWindow extends Window {
                     return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 4, 2, "100%");
                 } else if (Task.Field.id.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ATTACHMENTS), 0, 5, 2, "100%");
-                } else if (propertyId.equals("selected")) {
-                    return informationLayout.addComponent(field, "Notifiers", 0, 6, 2, "100%");
+                } else if (SimpleTask.Field.selected.equalTo(propertyId)) {
+                    return informationLayout.addComponent(field, AppContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS),
+                            AppContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP), 0, 6, 2, "100%");
                 }
                 return null;
             }
