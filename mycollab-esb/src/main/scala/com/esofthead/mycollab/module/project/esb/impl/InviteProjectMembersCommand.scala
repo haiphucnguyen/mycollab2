@@ -68,7 +68,7 @@ import org.springframework.stereotype.Component
       val projectMember = projectMemberService.findMemberByUsername(inviteeEmail, event.projectId, event.sAccountId)
       if (projectMember != null) {
         if (ProjectMemberStatusConstants.ACTIVE != projectMember.getStatus) {
-          projectMember.setStatus(ProjectMemberStatusConstants.ACTIVE)
+          projectMember.setStatus(ProjectMemberStatusConstants.NOT_ACCESS_YET)
         }
         if (event.projectRoleId == null || event.projectRoleId < 0) {
           projectMember.setIsadmin(true)

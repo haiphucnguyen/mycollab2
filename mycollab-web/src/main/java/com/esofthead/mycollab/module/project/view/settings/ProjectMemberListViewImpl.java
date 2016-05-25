@@ -23,7 +23,6 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.NumberUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
@@ -179,11 +178,22 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
     }
 
     private Component generateMemberBlock(final SimpleProjectMember member) {
-        VerticalLayout blockContent = new VerticalLayout();
+        HorizontalLayout blockContent = new HorizontalLayout();
         blockContent.setStyleName("member-block");
+        if (ProjectMemberStatusConstants.NOT_ACCESS_YET.equals(member.getStatus())) {
+            blockContent.addStyleName("inactive");
+        }
         blockContent.setWidth("350px");
 
+        Image memberAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(member.getMemberAvatarId(), 100);
+        memberAvatar.addStyleName(UIConstants.CIRCLE_BOX);
+        memberAvatar.setWidthUndefined();
+        blockContent.addComponent(memberAvatar);
+
+        MVerticalLayout blockTop = new MVerticalLayout().withMargin(new MarginInfo(false, false, false, true)).withWidth("100%");
+
         MHorizontalLayout buttonControls = new MHorizontalLayout();
+
         Button editBtn = new Button("", FontAwesome.EDIT);
         editBtn.addClickListener(new Button.ClickListener() {
             @Override
@@ -193,9 +203,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         });
         editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
         editBtn.setDescription("Edit user '" + member.getDisplayName() + "' information");
-        editBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
-        blockContent.addComponent(editBtn);
-        blockContent.setComponentAlignment(editBtn, Alignment.TOP_RIGHT);
+        editBtn.addStyleName(UIConstants.BUTTON_LINK);
 
         Button deleteBtn = new Button("", FontAwesome.TRASH_O);
         deleteBtn.addClickListener(new Button.ClickListener() {
@@ -222,23 +230,18 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
             }
         });
         deleteBtn.setDescription("Remove user '" + member.getDisplayName() + "' out of this project");
-        deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+        deleteBtn.addStyleName(UIConstants.BUTTON_LINK);
         deleteBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
 
         buttonControls.with(editBtn, deleteBtn);
-        blockContent.addComponent(buttonControls);
-        blockContent.setComponentAlignment(buttonControls, Alignment.TOP_RIGHT);
-
-        MHorizontalLayout blockTop = new MHorizontalLayout().withWidth("100%");
-        Image memberAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(member.getMemberAvatarId(), 100);
-        memberAvatar.addStyleName(UIConstants.CIRCLE_BOX);
-        blockTop.addComponent(memberAvatar);
+        blockTop.addComponent(buttonControls);
+        blockTop.setComponentAlignment(buttonControls, Alignment.TOP_RIGHT);
 
         A memberLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(member.getProjectid(), member
                 .getUsername())).appendText(member.getMemberFullName()).setTitle(member.getMemberFullName());
         ELabel memberNameLbl = ELabel.h3(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withWidth("100%");
 
-        MVerticalLayout memberInfo = new MVerticalLayout().withMargin(false).with(memberNameLbl, ELabel.hr());
+        blockTop.with(memberNameLbl, ELabel.hr());
 
         String roleLink = String.format("<a href=\"%s%s%s\"", AppContext.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
                 ProjectLinkGenerator.generateRolePreviewLink(member.getProjectid(), member.getProjectroleid()));
@@ -248,25 +251,25 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         } else {
             memberRole.setValue(roleLink + "style=\"color:gray;font-size:12px;\">" + member.getRoleName() + "</a>");
         }
-        memberInfo.addComponent(memberRole);
+        blockTop.addComponent(memberRole);
 
         Label memberEmailLabel = new Label(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(),
                 member.getUsername()), ContentMode.HTML);
         memberEmailLabel.addStyleName(UIConstants.LABEL_META_INFO);
         memberEmailLabel.setWidth("100%");
-        memberInfo.addComponent(memberEmailLabel);
+        blockTop.addComponent(memberEmailLabel);
 
         ELabel memberSinceLabel = new ELabel(String.format("Member since: %s", AppContext.formatPrettyTime(member.getJoindate())))
                 .withDescription(AppContext.formatDateTime(member.getJoindate()));
         memberSinceLabel.addStyleName(UIConstants.LABEL_META_INFO);
         memberSinceLabel.setWidth("100%");
-        memberInfo.addComponent(memberSinceLabel);
+        blockTop.addComponent(memberSinceLabel);
 
         if (ProjectMemberStatusConstants.ACTIVE.equals(member.getStatus())) {
             ELabel lastAccessTimeLbl = new ELabel(String.format("Logged in %s", AppContext.formatPrettyTime(member.getLastAccessTime())))
                     .withDescription(AppContext.formatDateTime(member.getLastAccessTime()));
             lastAccessTimeLbl.addStyleName(UIConstants.LABEL_META_INFO);
-            memberInfo.addComponent(lastAccessTimeLbl);
+            blockTop.addComponent(lastAccessTimeLbl);
         }
 
         String memberWorksInfo = ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + " " + new Span
@@ -279,12 +282,10 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
 
         Label memberWorkStatus = new Label(memberWorksInfo, ContentMode.HTML);
         memberWorkStatus.addStyleName(UIConstants.LABEL_META_INFO);
-        memberInfo.addComponent(memberWorkStatus);
-        memberInfo.setWidth("100%");
+        blockTop.addComponent(memberWorkStatus);
 
-        blockTop.with(memberInfo).expand(memberInfo);
         blockContent.addComponent(blockTop);
-
+        blockContent.setExpandRatio(blockTop, 1.0f);
         return blockContent;
     }
 
