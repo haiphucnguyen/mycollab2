@@ -108,7 +108,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
             Component headerRightLayout = createHeaderRight();
             statusComboBox = new InvoiceStatusComboBox();
             MHorizontalLayout header = new MHorizontalLayout(new MHorizontalLayout(invoiceIcon, statusComboBox), headerRightLayout).withSpacing(false)
-                    .withStyleName("hdr-view").withWidth("100%").withMargin(true)
+                    .withStyleName("hdr-view").withFullWidth().withMargin(true)
                     .withAlign(headerRightLayout, Alignment.MIDDLE_RIGHT);
 
             MHorizontalLayout bodyLayout = new MHorizontalLayout().withStyleName("hdr-view");
@@ -281,7 +281,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
 
         void showInvoice(final SimpleInvoice invoice) {
             removeAllComponents();
-            MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
+            MHorizontalLayout header = new MHorizontalLayout().withFullWidth();
             header.setDefaultComponentAlignment(Alignment.TOP_LEFT);
             addComponent(header);
 

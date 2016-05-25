@@ -107,7 +107,7 @@ public class ClientAddViewImpl extends AbstractPageView implements ClientAddView
         @Override
         public ComponentContainer getLayout() {
             wrappedLayoutFactory = new DefaultDynaFormLayout(CrmTypeConstants.ACCOUNT, AccountDefaultDynaFormLayoutFactory.getForm());
-            MHorizontalLayout header = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(true, false, true, false));
+            MHorizontalLayout header = new MHorizontalLayout().withFullWidth().withMargin(new MarginInfo(true, false, true, false));
             header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
             final AddViewLayout clientAddLayout = new AddViewLayout(header);
             clientAddLayout.addHeaderTitle(buildHeaderTitle());

@@ -180,7 +180,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
             }
         });
         MHorizontalLayout noteContainer = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
-                .withWidth("100%");
+                .withFullWidth();
         MVerticalLayout helpBlock = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false))
                 .withWidth("80px");
         assignMeLbl = new ELabel("").withStyleName("owner");
@@ -204,7 +204,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
     }
 
     private MHorizontalLayout buildHeader() {
-        MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
+        MHorizontalLayout header = new MHorizontalLayout().withFullWidth();
 
         MHorizontalLayout headerLeftContainer = new MHorizontalLayout();
         Button todayBtn = new Button("Today", new Button.ClickListener() {

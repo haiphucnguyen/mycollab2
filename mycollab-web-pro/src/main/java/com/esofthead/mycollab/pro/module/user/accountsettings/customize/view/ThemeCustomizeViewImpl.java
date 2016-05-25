@@ -59,7 +59,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         // Add customizable blocks
         mainBody.with(constructTopMenuCustomizeBlock(), constructVTabsheetCustomizeBlock(), constructButtonCustomizeBlock());
 
-        MHorizontalLayout controlButtons = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(true,
+        MHorizontalLayout controlButtons = new MHorizontalLayout().withFullWidth().withMargin(new MarginInfo(true,
                 true, false, true));
 
         ELabel viewTitle = ELabel.h2(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING).getHtml() + " " +
@@ -95,7 +95,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
     private Component constructTopMenuCustomizeBlock() {
         FormContainer blockLayout = new FormContainer();
 
-        MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(true).withWidth("100%");
+        MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(true).withFullWidth();
         blockLayout.addSection(AppContext.getMessage(SettingCommonI18nEnum.FORM_TOP_MENU), blockBody);
 
         GridLayout propertyLayout = new GridLayout(2, 4);
@@ -196,7 +196,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
 
     private Component constructVTabsheetCustomizeBlock() {
         FormContainer blockLayout = new FormContainer();
-        MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(true).withWidth("100%");
+        MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(true).withFullWidth();
 
         blockLayout.addSection("Vertical Menu", blockBody);
 

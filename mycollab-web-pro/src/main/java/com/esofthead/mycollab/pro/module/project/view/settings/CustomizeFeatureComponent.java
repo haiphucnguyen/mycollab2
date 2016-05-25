@@ -38,9 +38,9 @@ public class CustomizeFeatureComponent extends BlockWidget {
     public void constructBody() {
         final ProjectCustomizeView customizeView = CurrentProjectVariables.getFeatures();
 
-        MVerticalLayout body = new MVerticalLayout().withWidth("100%");
+        MVerticalLayout body = new MVerticalLayout().withFullWidth();
 
-        MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withWidth("100%");
+        MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withFullWidth();
 
         VerticalLayout leftColLayout = new VerticalLayout();
         leftColLayout.setSpacing(true);
@@ -156,7 +156,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
         private CheckBox checkbox;
 
         SelectionBox(FontAwesome iconResource, String caption, Boolean selected) {
-            this.withMargin(true).withWidth("100%").withStyleName("feature-select-box");
+            this.withMargin(true).withFullWidth().withStyleName("feature-select-box");
             Label captionLbl = new Label(iconResource.getHtml() + " " + caption, ContentMode.HTML);
             this.addComponent(captionLbl);
             this.setExpandRatio(captionLbl, 1.0f);

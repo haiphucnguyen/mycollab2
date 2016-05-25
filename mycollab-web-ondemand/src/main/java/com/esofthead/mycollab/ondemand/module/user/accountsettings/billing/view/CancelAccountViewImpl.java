@@ -45,7 +45,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
     private static final long serialVersionUID = 1L;
 
     public CancelAccountViewImpl() {
-        this.withSpacing(true).withMargin(true).withWidth("100%");
+        this.withSpacing(true).withMargin(true).withFullWidth();
         ComponentContainer header = createHeader();
         this.with(header, createBody()).withAlign(header, Alignment.TOP_CENTER);
     }
@@ -73,7 +73,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
         MVerticalLayout innerLayout = new MVerticalLayout();
         innerLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
-        ELabel helpNoteLbl = ELabel.h3("Your feedbacks are valuable to make us better").withWidthUndefined();
+        ELabel helpNoteLbl = ELabel.h3("Your feedback is valuable to make us better").withWidthUndefined();
         innerLayout.with(helpNoteLbl);
 
         GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
@@ -137,8 +137,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
 
         innerLayout.with(new MHorizontalLayout(submitBtn, cancelBtn).withMargin(true));
 
-        ELabel confirmNote = new ELabel(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_CONFIRM_NOTE), ContentMode
-                .HTML).withWidth("600px");
+        ELabel confirmNote = new ELabel(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_CONFIRM_NOTE), ContentMode.HTML).withWidth("600px");
         innerLayout.with(confirmNote);
         layout.addComponent(innerLayout);
         return layout;

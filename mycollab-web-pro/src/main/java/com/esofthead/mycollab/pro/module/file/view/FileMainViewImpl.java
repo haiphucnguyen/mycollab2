@@ -67,7 +67,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
         MVerticalLayout topControlMenuWrapper = new MVerticalLayout().withSpacing(false).withWidth("250px");
 
-        MHorizontalLayout topControlMenu = new MHorizontalLayout().withWidth("100%");
+        MHorizontalLayout topControlMenu = new MHorizontalLayout().withFullWidth();
         topControlMenu.addStyleName("panel-header");
 
         topControlMenuWrapper.addComponent(topControlMenu);
@@ -150,7 +150,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
     private void initComponents() {
         this.removeAllComponents();
-        MHorizontalLayout mainView = new MHorizontalLayout().withWidth("100%");
+        MHorizontalLayout mainView = new MHorizontalLayout().withFullWidth();
 
         HorizontalLayout leftColumn = buildLeftColumn();
         mainView.with(leftColumn).withAlign(leftColumn, Alignment.TOP_LEFT);

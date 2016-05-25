@@ -57,7 +57,7 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
             selectedTags.add(tag.getName());
         }
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
-                .withWidth("100%");
+                .withFullWidth();
         header.with(ELabel.h2(FontAwesome.TAGS.getHtml() + " " + AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG))
                 .withWidthUndefined());
 
@@ -69,7 +69,7 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         MVerticalLayout rightSideBar = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false,
                 true, true, true)).withWidth("450px");
         MHorizontalLayout panelHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
-                false, true)).withWidth("100%");
+                false, true)).withFullWidth();
         panelHeader.addStyleName("panel-header");
 
         panelHeader.with(ELabel.h3("Tag Cloud")).alignAll(Alignment.MIDDLE_LEFT);

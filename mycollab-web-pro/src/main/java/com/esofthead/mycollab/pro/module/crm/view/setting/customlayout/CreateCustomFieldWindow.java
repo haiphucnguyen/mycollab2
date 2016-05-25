@@ -184,7 +184,7 @@ public class CreateCustomFieldWindow extends Window {
     private VerticalLayout constructRightBodyPanel() {
         MVerticalLayout panel = new MVerticalLayout().withMargin(false).withWidth("300px");
         Label title = new Label("Provide Field Detail");
-        MHorizontalLayout header = new MHorizontalLayout().withWidth("100%").withSpacing(false).with(title).expand(title)
+        MHorizontalLayout header = new MHorizontalLayout().withFullWidth().withSpacing(false).with(title).expand(title)
                 .withStyleName("panel-header");
 
         fieldLayoutWrapper = new CssLayout();

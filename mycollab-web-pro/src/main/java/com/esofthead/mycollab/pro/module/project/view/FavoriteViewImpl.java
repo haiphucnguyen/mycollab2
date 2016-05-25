@@ -113,7 +113,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
         removeAllComponents();
         setProjectNavigatorVisibility(false);
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
-                .withWidth("100%");
+                .withFullWidth();
         headerLbl = ELabel.h2(String.format("%s %s", FontAwesome.STAR.getHtml(),
                 AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES))).withWidthUndefined();
         header.with(headerLbl);
@@ -235,7 +235,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
             favoriteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 
             ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(item.getType()).getHtml() + " " + item
-                    .getSummary(), ContentMode.HTML).withWidth("100%").withStyleName(UIConstants.TEXT_ELLIPSIS);
+                    .getSummary(), ContentMode.HTML).withFullWidth().withStyleName(UIConstants.TEXT_ELLIPSIS);
             layout.with(favoriteBtn, headerLbl).expand(headerLbl);
             layout.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
                 @Override

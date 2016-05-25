@@ -71,12 +71,12 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 
     public CrmCustomViewImpl() {
         this.withMargin(true);
-        MVerticalLayout headerBox = new MVerticalLayout().withWidth("100%");
+        MVerticalLayout headerBox = new MVerticalLayout().withFullWidth();
 
         headerLbl = new Label("", ContentMode.HTML);
 
         MHorizontalLayout headerTitle = new MHorizontalLayout()
-                .withWidth("100%").withSpacing(false)
+                .withFullWidth().withSpacing(false)
                 .withMargin(new MarginInfo(true, false, true, false));
         headerTitle.addStyleName(UIConstants.HEADER_VIEW);
         headerTitle.with(headerLbl).withAlign(headerLbl, Alignment.MIDDLE_LEFT).expand(headerLbl);
@@ -125,7 +125,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
         headerTitle.addComponent(controlLayout);
 
         MVerticalLayout headerContent = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false,
-                true, true, false)).withWidth("100%");
+                true, true, false)).withFullWidth();
         Label descLbl = new Label(
                 "Customize the page layout by changing the order of the columns and fields, marking fields as mandatory, adding or removing the fields and sections. You can drag and drop the originSection header to reorder the sections. You need to drag and drop the fields to move them to the List of Removed Fields");
         descLbl.setStyleName("instructionLbl");

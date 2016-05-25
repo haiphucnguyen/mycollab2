@@ -41,7 +41,7 @@ public class CustomFieldComponent extends CssLayout {
             fieldNameLbl.setContentMode(ContentMode.HTML);
             this.addComponent(fieldNameLbl);
         } else {
-            MHorizontalLayout fieldWrapper = new MHorizontalLayout().withSpacing(false).withWidth("100%");
+            MHorizontalLayout fieldWrapper = new MHorizontalLayout().withSpacing(false).withFullWidth();
             fieldWrapper.with(fieldNameLbl).expand(fieldNameLbl);
 
             editFieldBtn = new PopupButton();
@@ -51,7 +51,7 @@ public class CustomFieldComponent extends CssLayout {
             editFieldBtn.setIcon(FontAwesome.EDIT);
 
             fieldEditPanel = new Panel();
-            panelContentLayout = new MVerticalLayout().withWidth("100%");
+            panelContentLayout = new MVerticalLayout().withFullWidth();
             fieldEditPanel.setContent(panelContentLayout);
             fieldEditPanel.setStyleName(Reindeer.PANEL_LIGHT);
             fieldEditPanel.setWidth("300px");

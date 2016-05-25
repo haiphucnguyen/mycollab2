@@ -31,7 +31,7 @@ public class AboutWindow extends AbstractAboutWindow {
     public AboutWindow() {
         super();
 
-        MHorizontalLayout content = new MHorizontalLayout().withMargin(true).withWidth("100%");
+        MHorizontalLayout content = new MHorizontalLayout().withMargin(true).withFullWidth();
         this.setContent(content);
 
         Image about = new Image("", new AssetResource(WebResourceIds._about));

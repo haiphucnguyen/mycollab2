@@ -40,11 +40,11 @@ public class StandupMissingComp extends MVerticalLayout {
         this.withSpacing(false).withMargin(false);
         Label headerLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_MEMBER_NOT_REPORT));
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true)).
-                withHeight("34px").withWidth("100%").with(headerLbl).
+                withHeight("34px").withFullWidth().with(headerLbl).
                 withAlign(headerLbl, Alignment.MIDDLE_LEFT).withStyleName("panel-header");
 
         bodyWrap = new MVerticalLayout().withStyleName("panel-body");
-        this.with(header, bodyWrap).withWidth("100%");
+        this.with(header, bodyWrap).withFullWidth();
     }
 
     public void search(Integer projectId, Date date) {

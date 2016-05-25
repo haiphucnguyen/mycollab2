@@ -169,7 +169,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
     }
 
     private ComponentContainer constructTableActionControls() {
-        MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%");
+        MHorizontalLayout layout = new MHorizontalLayout().withFullWidth();
         layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 
         selectOptionButton = new SelectionOptionButton(tableItem);

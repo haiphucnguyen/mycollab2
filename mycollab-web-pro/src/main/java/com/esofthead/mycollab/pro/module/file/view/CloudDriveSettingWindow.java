@@ -44,7 +44,7 @@ public class CloudDriveSettingWindow extends Window {
         this.setWidth("800px");
         this.setModal(true);
         this.setResizable(false);
-        MVerticalLayout mainLayout = new MVerticalLayout().withWidth("100%");
+        MVerticalLayout mainLayout = new MVerticalLayout().withFullWidth();
         externalDriveService = AppContextUtil.getSpringBean(ExternalDriveService.class);
         externalResourceService = AppContextUtil.getSpringBean(ExternalResourceService.class);
 
@@ -61,7 +61,7 @@ public class CloudDriveSettingWindow extends Window {
         connectAccountBtn.addStyleName(UIConstants.BUTTON_ACTION);
         mainLayout.addComponent(connectAccountBtn);
 
-        bodyLayout = new MVerticalLayout().withSpacing(false).withMargin(false).withWidth("100%");
+        bodyLayout = new MVerticalLayout().withSpacing(false).withMargin(false).withFullWidth();
 
         List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(AppContext.getUsername());
 
@@ -92,7 +92,7 @@ public class CloudDriveSettingWindow extends Window {
         public OneDriveConnectionBodyLayout(final ExternalDrive drive) {
             final MVerticalLayout externalDriveEditLayout = new MVerticalLayout();
 
-            final MHorizontalLayout titleLayout = new MHorizontalLayout().withWidth("100%");
+            final MHorizontalLayout titleLayout = new MHorizontalLayout().withFullWidth();
             titleLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
             externalDriveEditLayout.addComponent(titleLayout);
 

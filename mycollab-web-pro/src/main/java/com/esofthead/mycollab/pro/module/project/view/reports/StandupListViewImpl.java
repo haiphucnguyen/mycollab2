@@ -190,7 +190,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
     }
 
     private void constructHeader() {
-        MHorizontalLayout header = new MHorizontalLayout().withMargin((new MarginInfo(true, false, true, false))).withWidth("100%");
+        MHorizontalLayout header = new MHorizontalLayout().withMargin((new MarginInfo(true, false, true, false))).withFullWidth();
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         MHorizontalLayout headerLeft = new MHorizontalLayout();

@@ -73,9 +73,9 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
         layout.addStyleName("billing-setting");
         layout.setWidth("100%");
 
-        MHorizontalLayout topLayout = new MHorizontalLayout().withWidth("100%");
+        MHorizontalLayout topLayout = new MHorizontalLayout().withFullWidth();
 
-        currentPlan = new MVerticalLayout().withMargin(false).withWidth("100%");
+        currentPlan = new MVerticalLayout().withMargin(false).withFullWidth();
         currentPlan.addStyleName("current-plan-information");
         currentPlan.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         topLayout.with(currentPlan).withAlign(currentPlan, Alignment.MIDDLE_CENTER).expand(currentPlan);
@@ -100,7 +100,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
         topLayout.with(faqLayout).withAlign(faqLayout, Alignment.TOP_RIGHT);
         layout.addComponent(topLayout);
 
-        MHorizontalLayout plansList = new MHorizontalLayout().withSpacing(false).withWidth("100%").withStyleName("billing-plan-list");
+        MHorizontalLayout plansList = new MHorizontalLayout().withSpacing(false).withFullWidth().withStyleName("billing-plan-list");
 
         List<BillingPlan> availablePlans = billingService.getAvailablePlans();
         int listSize = availablePlans.size();

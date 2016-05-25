@@ -157,7 +157,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             Label titleLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() + " " + "Timesheet");
 
             MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true,
-                    false)).withWidth("100%");
+                    false)).withFullWidth();
 
             MButton exportPdfBtn = new MButton("").withIcon(FontAwesome.FILE_PDF_O).withStyleName(UIConstants
                     .BUTTON_OPTION).withDescription("Export to PDF");
@@ -180,7 +180,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             CssLayout contentWrapper = new CssLayout();
             contentWrapper.setWidth("100%");
 
-            MHorizontalLayout controlsPanel = new MHorizontalLayout().withWidth("100%").withStyleName(UIConstants.BOX);
+            MHorizontalLayout controlsPanel = new MHorizontalLayout().withFullWidth().withStyleName(UIConstants.BOX);
             contentWrapper.addComponent(controlsPanel);
 
             GridLayout selectionLayout = new GridLayout(9, 2);
@@ -260,11 +260,11 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             selectionLayout.addComponent(queryBtn, 8, 0);
 
             totalHoursLoggingLabel = ELabel.h2("Total Hours Logging: 0 Hrs");
-            MHorizontalLayout loggingPanel = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withWidth("100%");
+            MHorizontalLayout loggingPanel = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withFullWidth();
             loggingPanel.with(totalHoursLoggingLabel).expand(totalHoursLoggingLabel);
             contentWrapper.addComponent(loggingPanel);
 
-            timeTrackingWrapper = new MVerticalLayout().withWidth("100%").withMargin(new MarginInfo(true, false, true, false));
+            timeTrackingWrapper = new MVerticalLayout().withFullWidth().withMargin(new MarginInfo(true, false, true, false));
             contentWrapper.addComponent(this.timeTrackingWrapper);
 
             Calendar date = new GregorianCalendar();

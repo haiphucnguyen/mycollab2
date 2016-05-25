@@ -81,7 +81,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
     private void initUI() {
         this.setWidth("980px");
 
-        headerPanel = new MHorizontalLayout().withWidth("100%");
+        headerPanel = new MHorizontalLayout().withFullWidth();
         content.addComponent(headerPanel);
         constructSpentTimeEntryPanel();
         constructRemainTimeEntryPanel();

@@ -82,7 +82,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
 
     public TimeTrackingListViewImpl() {
         this.withMargin(false).withStyleName("hdr-view");
-        final MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withWidth("100%");
+        final MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withFullWidth();
         itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
         searchPanel = new ItemTimeLoggingSearchPanel();
@@ -104,7 +104,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
             }
         });
 
-        final MHorizontalLayout headerLayout = new MHorizontalLayout().withWidth("100%");
+        final MHorizontalLayout headerLayout = new MHorizontalLayout().withFullWidth();
         headerWrapper.addComponent(headerLayout);
 
         lbTimeRange = ELabel.h3("");

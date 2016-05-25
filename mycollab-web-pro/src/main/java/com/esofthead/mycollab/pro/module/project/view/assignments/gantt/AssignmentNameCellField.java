@@ -73,7 +73,7 @@ public class AssignmentNameCellField extends CustomField<String> implements Fiel
 
     @Override
     protected Component initContent() {
-        MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%");
+        MHorizontalLayout layout = new MHorizontalLayout().withFullWidth();
         layout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         field.setBuffered(true);
         field.setWidth("100%");

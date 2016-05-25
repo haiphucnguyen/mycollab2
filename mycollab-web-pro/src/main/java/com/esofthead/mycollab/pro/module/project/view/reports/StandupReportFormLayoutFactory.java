@@ -35,9 +35,9 @@ public abstract class StandupReportFormLayoutFactory extends AbstractFormLayoutF
         AddViewLayout reportAddLayout = new AddViewLayout(title, ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP));
         reportAddLayout.addHeaderRight(this.createTopPanel());
 
-        MHorizontalLayout mainLayout = new MHorizontalLayout().withWidth("100%");
+        MHorizontalLayout mainLayout = new MHorizontalLayout().withFullWidth();
         final MVerticalLayout layoutField = new MVerticalLayout().withMargin(new MarginInfo(false, false, true,
-                false)).withWidth("100%");
+                false)).withFullWidth();
 
         final ELabel whatYesterdayLbl = ELabel.h3(AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
         layoutField.addComponent(whatYesterdayLbl);

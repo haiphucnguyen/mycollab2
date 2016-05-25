@@ -186,7 +186,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             });
             newProjectBtn.addStyleName(UIConstants.BUTTON_ACTION);
             MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(UIConstants.FORM_SECTION)
-                    .withWidth("100%").with(headerLbl, newProjectBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
+                    .withFullWidth().with(headerLbl, newProjectBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
                     .withAlign(newProjectBtn, Alignment.MIDDLE_RIGHT);
             this.addComponent(headerPanel);
             List<SimpleProject> projects = projectService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));

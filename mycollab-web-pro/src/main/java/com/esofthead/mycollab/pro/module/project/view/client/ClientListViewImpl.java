@@ -122,13 +122,13 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
         blockContent.addComponent(buttonControls);
         blockContent.setComponentAlignment(buttonControls, Alignment.TOP_RIGHT);
 
-        MHorizontalLayout blockTop = new MHorizontalLayout().withWidth("100%");
+        MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
         Component clientAvatar = ProjectAssetsUtil.buildClientLogo(client, 100);
         blockTop.addComponent(clientAvatar);
 
         A clientLink = new A(ProjectLinkBuilder.generateClientPreviewFullLink(client.getId())).appendText(client
                 .getAccountname()).setTitle(client.getAccountname());
-        ELabel clientLinkLbl = ELabel.h3(clientLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withWidth("100%");
+        ELabel clientLinkLbl = ELabel.h3(clientLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
 
         MVerticalLayout clientInfo = new MVerticalLayout().withMargin(false).with(clientLinkLbl, ELabel.hr());
         Div websiteDiv = new Div().appendText(AppContext.getMessage(AccountI18nEnum.FORM_WEBSITE) + ": " +

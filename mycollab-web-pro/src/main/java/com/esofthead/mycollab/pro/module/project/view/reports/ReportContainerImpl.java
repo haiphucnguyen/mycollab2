@@ -49,7 +49,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
         standupConsole.addComponent(ELabel.h3(standupReportLink.write()).withWidthUndefined());
         standupConsole.addComponent(new ELabel("Your daily scrum which asks three questions What you did yesterday?, " +
                 "What you will do today? and Do you have roadblocks? in the StandUp meeting which should not " +
-                "exceed 15 minutes.").withWidth("100%"));
+                "exceed 15 minutes.").withFullWidth());
         content.addComponent(standupConsole);
 
         MVerticalLayout hoursWeeklyReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
@@ -59,7 +59,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
                 .appendText("Hours Weekly Report");
         hoursWeeklyReport.addComponent(ELabel.h3(hoursWeeklyReportLink.write()).withWidthUndefined());
         hoursWeeklyReport.addComponent(new ELabel("Your members hours weekly report. Keep your project in time and budget")
-                .withWidth("100%"));
+                .withFullWidth());
 //        content.addComponent(hoursWeeklyReport);
 
         MVerticalLayout userWorkloadReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
@@ -69,7 +69,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
                 .appendText("User Workload Report");
         userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withWidthUndefined());
         userWorkloadReport.addComponent(new ELabel("Preview your user workloads and adjust to keep your project safe," +
-                " and your members are happy").withWidth("100%"));
+                " and your members are happy").withFullWidth());
 //        content.addComponent(userWorkloadReport);
 
         MVerticalLayout timesheetReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
@@ -80,7 +80,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
         timesheetReport.addComponent(ELabel.h3(timesheetReportLink.write()).withWidthUndefined());
         timesheetReport.addComponent(new ELabel("Keep project's efforts and cost in various charts to give you an " +
                 "insight view of how do you spend money and efforts")
-                .withWidth("100%"));
+                .withFullWidth());
         content.addComponent(timesheetReport);
         body.addComponent(content);
     }
