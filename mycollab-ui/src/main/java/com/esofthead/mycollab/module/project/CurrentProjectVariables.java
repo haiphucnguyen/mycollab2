@@ -57,11 +57,11 @@ public class CurrentProjectVariables {
         SimpleProjectMember prjMember = prjMemberService.findMemberByUsername(AppContext.getUsername(), project.getId(), AppContext.getAccountId());
         if (prjMember != null) {
             if (ProjectMemberStatusConstants.INACTIVE.equals(prjMember.getStatus())) {
-                throw new SecureAccessException("You are not belong to this project");
+                throw new UserNotBelongProjectException("You are not belong to this project");
             }
             if (!prjMember.isProjectOwner()) {
                 if (prjMember.getProjectroleid() == null) {
-                    throw new SecureAccessException("You are not belong to this project");
+                    throw new UserNotBelongProjectException("You are not belong to this project");
                 }
                 ProjectRolePermissionExample ex = new ProjectRolePermissionExample();
                 ex.createCriteria().andRoleidEqualTo(prjMember.getProjectroleid()).andProjectidEqualTo(CurrentProjectVariables.getProjectId());

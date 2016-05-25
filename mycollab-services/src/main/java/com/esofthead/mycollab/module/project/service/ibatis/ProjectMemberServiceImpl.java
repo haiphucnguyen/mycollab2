@@ -20,6 +20,7 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -169,6 +170,8 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
         criteria.setProjectId(new NumberSearchField(projectId));
         criteria.setSaccountid(new NumberSearchField(sAccountId));
         criteria.setInvolvedMember(StringSearchField.and(username));
+        criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE,
+                ProjectMemberStatusConstants.NOT_ACCESS_YET));
         return (getTotalCount(criteria) > 0);
     }
 
