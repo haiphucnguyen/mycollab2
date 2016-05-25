@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.core.utils.RandomPasswordGenerator;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.billing.UserStatusConstants;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -88,7 +87,6 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
             userService.saveUserAccount(user, user.getRoleid(), AppContext.getSubDomain(), AppContext.getAccountId(), AppContext.getUsername(), true);
             UI.getCurrent().addWindow(new NewUserAddedWindow(user, userPassword));
         } else {
-            user.setRegisterstatus(RegisterStatusConstants.ACTIVE);
             userService.updateUserAccount(user, AppContext.getAccountId());
             EventBusFactory.getInstance().post(new UserEvent.GotoList(this, null));
         }

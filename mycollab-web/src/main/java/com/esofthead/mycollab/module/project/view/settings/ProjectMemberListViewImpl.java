@@ -262,7 +262,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         memberSinceLabel.setWidth("100%");
         memberInfo.addComponent(memberSinceLabel);
 
-        if (RegisterStatusConstants.ACTIVE.equals(member.getStatus())) {
+        if (ProjectMemberStatusConstants.ACTIVE.equals(member.getStatus())) {
             ELabel lastAccessTimeLbl = new ELabel(String.format("Logged in %s", AppContext.formatPrettyTime(member.getLastAccessTime())))
                     .withDescription(AppContext.formatDateTime(member.getLastAccessTime()));
             lastAccessTimeLbl.addStyleName(UIConstants.LABEL_META_INFO);

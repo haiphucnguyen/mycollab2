@@ -821,6 +821,9 @@ $v-line-height--header:1.5em;
     &:hover {
       background-color: $my-block-background-color;
     }
+    &.inactive {
+      background-color: #f7c6c3;
+    }
   }
 
   .v-label {

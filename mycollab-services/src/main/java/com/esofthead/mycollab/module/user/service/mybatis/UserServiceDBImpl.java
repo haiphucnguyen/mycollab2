@@ -36,6 +36,7 @@ import com.esofthead.mycollab.module.user.dao.UserMapperExt;
 import com.esofthead.mycollab.module.user.domain.*;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.esb.DeleteUserEvent;
+import com.esofthead.mycollab.module.user.esb.NewUserJoinEvent;
 import com.esofthead.mycollab.module.user.esb.RequestToResetPasswordEvent;
 import com.esofthead.mycollab.module.user.esb.SendUserInvitationEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -99,7 +100,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
     }
 
     @Override
-    public void saveUserAccount(User record, Integer roleId, String subDomain, Integer sAccountId, String inviteUser, boolean isSendInvitationEmail                           ) {
+    public void saveUserAccount(User record, Integer roleId, String subDomain, Integer sAccountId, String inviteUser, boolean isSendInvitationEmail) {
         billingPlanCheckerService.validateAccountCanCreateNewUser(sAccountId);
 
         // check if user email has already in this account yet
@@ -290,7 +291,8 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
             }
 
             if (RegisterStatusConstants.NOT_LOG_IN_YET.equals(user.getRegisterstatus())) {
-
+                updateUserAccountStatus(user.getUsername(), user.getAccountId(), RegisterStatusConstants.ACTIVE);
+                asyncEventBus.post(new NewUserJoinEvent(user.getUsername(), user.getAccountId()));
             }
             LOG.debug(String.format("User %s login to system successfully!", username));
 

@@ -164,8 +164,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         if (sortAsc) {
             searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("displayName", SearchCriteria.ASC)));
         } else {
-            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("displayName",
-                    SearchCriteria.DESC)));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("displayName", SearchCriteria.DESC)));
         }
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
@@ -182,6 +181,9 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         VerticalLayout blockContent = new VerticalLayout();
         blockContent.setWidth("350px");
         blockContent.setStyleName("member-block");
+        if (RegisterStatusConstants.NOT_LOG_IN_YET.equals(member.getRegisterstatus())) {
+            blockContent.addStyleName("inactive");
+        }
         MHorizontalLayout blockTop = new MHorizontalLayout().withWidth("100%");
         Image memberAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(member.getAvatarid(), 100);
         memberAvatar.addStyleName(UIConstants.CIRCLE_BOX);

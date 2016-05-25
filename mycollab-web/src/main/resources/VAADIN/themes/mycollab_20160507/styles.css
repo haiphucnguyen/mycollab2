@@ -17112,6 +17112,10 @@ div.v-csslayout.main-body {
 	background-color: #f9f9f9;
 }
 
+.member-block.inactive {
+	background-color: #f7c6c3;
+}
+
 .v-label.is-admin {
 	color: #b00000;
 }
@@ -17333,13 +17337,6 @@ div.v-ratingstars-bar {
 .current-plan-information #currentPlanInfo .infoBlock {
 	padding: 10px 10px;
 	display: table-cell;
-}
-
-.current-plan-information #currentPlanInfo .blockSeparator {
-	display: table-cell;
-	width: 5px;
-	height: 100%;
-	background-color: #e9e9e9;
 }
 
 .current-plan-information #currentPlanInfo .infoTitle {

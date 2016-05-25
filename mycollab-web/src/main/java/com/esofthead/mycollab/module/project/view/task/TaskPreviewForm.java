@@ -73,7 +73,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
     @Override
     public void setBean(SimpleTask bean) {
         this.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getForm(),
-                Task.Field.taskname.name()));
+                Task.Field.taskname.name(), SimpleTask.Field.selected.name()));
         this.setBeanFormFieldFactory(new PreviewFormFieldFactory(this));
         super.setBean(bean);
     }

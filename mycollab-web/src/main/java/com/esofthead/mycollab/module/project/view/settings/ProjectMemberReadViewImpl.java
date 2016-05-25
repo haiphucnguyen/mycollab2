@@ -23,7 +23,6 @@ import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.arguments.*;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.NumberUtils;
-import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -185,7 +184,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                             .LABEL_META_INFO).withWidth("100%");
             memberInfo.addComponent(memberSinceLabel);
 
-            if (RegisterStatusConstants.ACTIVE.equals(beanItem.getStatus())) {
+            if (ProjectMemberStatusConstants.ACTIVE.equals(beanItem.getStatus())) {
                 Label lastAccessTimeLbl = new ELabel(String.format("Logged in %s", AppContext.formatPrettyTime(beanItem.getLastAccessTime())))
                         .withDescription(AppContext.formatDateTime(beanItem.getLastAccessTime()));
                 lastAccessTimeLbl.addStyleName(UIConstants.LABEL_META_INFO);
