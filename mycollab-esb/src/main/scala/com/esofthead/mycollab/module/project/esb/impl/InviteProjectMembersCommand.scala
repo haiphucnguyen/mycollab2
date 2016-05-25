@@ -10,11 +10,11 @@ import com.esofthead.mycollab.i18n.LocalizationHelper
 import com.esofthead.mycollab.module.GenericCommand
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants
 import com.esofthead.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
-import com.esofthead.mycollab.module.project.{ProjectLinkGenerator, ProjectMemberStatusConstants}
-import com.esofthead.mycollab.module.project.domain.{ProjectMember, SimpleProjectMember}
+import com.esofthead.mycollab.module.project.domain.ProjectMember
 import com.esofthead.mycollab.module.project.esb.InviteProjectMembersEvent
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum
 import com.esofthead.mycollab.module.project.service.{ProjectMemberService, ProjectService}
+import com.esofthead.mycollab.module.project.{ProjectLinkGenerator, ProjectMemberStatusConstants}
 import com.esofthead.mycollab.module.user.domain.{SimpleRole, User}
 import com.esofthead.mycollab.module.user.service.{RoleService, UserService}
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
@@ -63,7 +63,7 @@ import org.springframework.stereotype.Component
         val password = RandomPasswordGenerator.generateRandomPassword()
         contentGenerator.putVariable("password", password)
         newUser.setPassword(password)
-        userService.saveUserAccount(user, systemGuestRoleId, subDomain, event.sAccountId, event.inviteUser, false)
+        userService.saveUserAccount(newUser, systemGuestRoleId, subDomain, event.sAccountId, event.inviteUser, false)
       }
       val projectMember = projectMemberService.findMemberByUsername(inviteeEmail, event.projectId, event.sAccountId)
       if (projectMember != null) {
@@ -86,7 +86,7 @@ import org.springframework.stereotype.Component
         member.setSaccountid(event.sAccountId)
         member.setBillingrate(project.getDefaultbillingrate)
         member.setOvertimebillingrate(project.getDefaultovertimebillingrate)
-        member.setStatus(RegisterStatusConstants.ACTIVE)
+        member.setStatus(ProjectMemberStatusConstants.NOT_ACCESS_YET)
         if (event.projectRoleId == null || event.projectRoleId < 0) {
           member.setIsadmin(true)
           member.setProjectroleid(null)
