@@ -5,3 +5,4 @@ mycollab-test/src/main/resources/mycollab-test.properties
 **/velocity.log
 target/
 bin/
+mycollab.out
