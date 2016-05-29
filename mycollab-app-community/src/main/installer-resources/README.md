@@ -40,6 +40,21 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.3.3
+-----------------------------
+
+**Library Upgrades**
+
+* Joda Time 2.9.4
+* Other libraries
+
+**Improvements & New Features**
+
+**Bug Fixes**
+
+* Can not search projects in the project list view
+
+
 Version 5.3.2
 -----------------------------
 

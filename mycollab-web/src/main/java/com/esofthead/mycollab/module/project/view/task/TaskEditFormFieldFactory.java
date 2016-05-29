@@ -146,7 +146,10 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
                 }
             });
             return endDateField;
-        } else if (Task.Field.id.equalTo(propertyId)) {
+        } else if (Task.Field.deadline.equalTo(propertyId)) {
+            return new DateFieldExt();
+        }
+        else if (Task.Field.id.equalTo(propertyId)) {
             attachmentUploadField = new AttachmentUploadField();
             Task beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {

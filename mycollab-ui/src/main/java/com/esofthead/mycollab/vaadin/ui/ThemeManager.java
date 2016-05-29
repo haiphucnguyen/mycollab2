@@ -232,10 +232,15 @@ public class ThemeManager {
             extraStyles.append(".v-button.v-button-greenbtn, .v-button-greenbtn:focus { background-color: #" + accountTheme.getActionbtn()
                     + "; }");
 
+            extraStyles.append(".splitbutton:hover .v-button.v-button-greenbtn, .v-button-greenbtn:hover { " +
+                    "background-color: " + ColorUtils.darkerColor("#" + accountTheme.getActionbtn()) + "; }");
+
             extraStyles.append(".upload-field .v-upload-immediate .v-button {background-color: #" + accountTheme.getActionbtn() + ";}");
 
-            extraStyles.append(".optionPopupContent .action-wrap:hover {" +
-                    "background-color: #" + accountTheme.getActionbtn() + "};");
+            extraStyles.append(".upload-field .v-upload-immediate .v-button:hover {background-color: " +
+                    ColorUtils.darkerColor("#" + accountTheme.getActionbtn()) + ";}");
+
+            extraStyles.append(".optionPopupContent .action-wrap:hover {" + "background-color: #" + accountTheme.getActionbtn() + "};");
 
             extraStyles.append(".v-buttongroup.toggle-btn-group .v-button.active { background-color: #" + accountTheme.getActionbtn()
                     + "; }");
@@ -259,12 +264,12 @@ public class ThemeManager {
             extraStyles.append(".v-buttongroup.toggle-btn-group .v-button.btn-group-default {background-color:#" + accountTheme
                     .getActionbtn() + ";}");
 
-            extraStyles.append(".v-button.v-button-block {background-color: " + ColorUtils.brighterColor("#" + accountTheme.getActionbtn()) + ";}");
+            extraStyles.append(".v-button.v-button-block {background-color: #" + accountTheme.getActionbtn() + ";}");
 
-            extraStyles.append("div.v-button.token-field { background-color: " + ColorUtils.brighterColor("#" +
-                    accountTheme.getActionbtn()) + "; }");
+            extraStyles.append("div.v-button.token-field { background-color: " + ColorUtils.brighterColor("#" + accountTheme.getActionbtn()) + "; }");
 
-            extraStyles.append(".block {background-color: " + ColorUtils.brighterColor("#" + accountTheme.getActionbtn()) + ";}");
+            extraStyles.append(".block {background-color: #" + accountTheme.getActionbtn() + ";}");
+            extraStyles.append(".block:hover {background-color: " + ColorUtils.darkerColor("#" + accountTheme.getActionbtn()) + ";}");
 
             extraStyles.append(".v-context-menu-container .v-context-menu .v-context-submenu:hover " +
                     "{background-color:#" + accountTheme.getActionbtn() + ";}");
@@ -307,6 +312,9 @@ public class ThemeManager {
             extraStyles.append(".v-button.v-button-graybtn, .v-button-graybtn:focus { background-color: #"
                     + accountTheme.getOptionbtn() + ";}");
 
+            extraStyles.append(".splitbutton:hover .v-button-graybtn, .v-button-graybtn:hover { background-color: "
+                    + ColorUtils.darkerColor("#" + accountTheme.getOptionbtn()) + ";}");
+
             //Set toogle button group background
             extraStyles.append(".v-buttongroup.toggle-btn-group .v-button { background-color: #" +
                     accountTheme.getOptionbtn() + ";}");
@@ -327,6 +335,9 @@ public class ThemeManager {
         if (accountTheme.getDangerbtn() != null) {
             extraStyles.append(".v-button.v-button-redbtn, .v-button-redbtn:focus { background-color: #"
                     + accountTheme.getDangerbtn() + "; }");
+
+            extraStyles.append(".v-button-redbtn:hover { background-color: "
+                    + ColorUtils.darkerColor("#" + accountTheme.getDangerbtn(), 0.1) + "; }");
 
             //Set style of popup content action
             extraStyles.append(".optionPopupContent .action-wrap.danger .v-button-action { color: #" + accountTheme

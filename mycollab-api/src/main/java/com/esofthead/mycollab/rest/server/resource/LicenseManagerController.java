@@ -143,20 +143,20 @@ public class LicenseManagerController {
     }
 
     public static void main(String[] args) throws Exception {
-//        LicenseInfo info = new LicenseInfo();
-//        info.setCustomerId("1");
-//        info.setLicenseType(LicenseType.PRO_TRIAL);
-//        info.setExpireDate(new LocalDate().plusDays(10).toDate());
-//        info.setIssueDate(new LocalDate().minusDays(30).toDate());
-//        info.setLicenseOrg("eSoftHead");
-//        info.setMaxUsers(10);
-//        LicenseManagerController generator = new LicenseManagerController();
-//        String str = generator.encode(info);
-//        System.out.println(str);
-//        generator.decode(str);
+        LicenseInfo info = new LicenseInfo();
+        info.setCustomerId("1");
+        info.setLicenseType(LicenseType.PRO);
+        info.setExpireDate(new LocalDate().plusDays(10).toDate());
+        info.setIssueDate(new LocalDate().minusDays(30).toDate());
+        info.setLicenseOrg("eSoftHead");
+        info.setMaxUsers(10);
         LicenseManagerController generator = new LicenseManagerController();
-        String s = generator.registerEE("FooBar+Inc.", "vagif.samadoghlu%40example.com", "Growing+%28For+less+than+10+users%29",
-                "%D0%92%D0%B0%D0%B3%D0%B8%D1%84+%D0%A1%D3%99%D0%BC%D3%99%D0%B4%D0%BE%D2%93%D0%BB%D1%83", 1, "TEST_REF", "TEST_SUB_REF", "true", "124b228b547d5ac9388bcfefef2f4d4e");
-        System.out.println("A: " + s);
+        String str = generator.encode(info);
+        System.out.println(str);
+        generator.decode(str);
+//        LicenseManagerController generator = new LicenseManagerController();
+//        String s = generator.registerEE("FooBar+Inc.", "vagif.samadoghlu%40example.com", "Growing+%28For+less+than+10+users%29",
+//                "%D0%92%D0%B0%D0%B3%D0%B8%D1%84+%D0%A1%D3%99%D0%BC%D3%99%D0%B4%D0%BE%D2%93%D0%BB%D1%83", 1, "TEST_REF", "TEST_SUB_REF", "true", "124b228b547d5ac9388bcfefef2f4d4e");
+//        System.out.println("A: " + s);
     }
 }
