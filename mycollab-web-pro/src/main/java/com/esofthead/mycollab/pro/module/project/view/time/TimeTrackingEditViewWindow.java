@@ -12,7 +12,7 @@ import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
+import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
@@ -34,7 +34,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
     private RichTextArea descArea;
     private ProjectGenericTask selectionTask;
     private MHorizontalLayout taskLayout;
-    private DateFieldExt dateField;
+    private PopupDateFieldExt dateField;
     private DoubleField timeField;
     private SimpleItemTimeLogging timeLogging;
 
@@ -46,7 +46,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
         this.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
 
-        dateField = new DateFieldExt("Select date", timeLogging.getLogforday());
+        dateField = new PopupDateFieldExt("Select date", timeLogging.getLogforday());
 
         timeField = new DoubleField();
         timeField.setCaption("Hours");

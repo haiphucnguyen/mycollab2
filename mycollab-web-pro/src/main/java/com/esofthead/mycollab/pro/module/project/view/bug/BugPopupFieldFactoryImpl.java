@@ -42,9 +42,9 @@ import com.esofthead.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.LazyPopupView;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.hp.gagawa.java.elements.Div;
@@ -348,7 +348,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             }
         };
         builder.withBean(bug).withBindProperty("duedate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate())
+                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -369,7 +369,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             }
         };
         builder.withBean(bug).withBindProperty("startdate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getStartdate())
+                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -390,7 +390,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             }
         };
         builder.withBean(bug).withBindProperty("enddate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getEnddate())
+                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -407,7 +407,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
     private static class BugBillableHoursPopupField extends LazyPopupView {
         private TextField timeInput = new TextField();
-        private DateFieldExt dateField;
+        private PopupDateFieldExt dateField;
         private SimpleBug bug;
         private boolean isBillable;
 
@@ -432,7 +432,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                 String title = (isBillable) ? "Add billable hours" : "Add non billable hours";
                 Label headerLbl = new Label(title, ContentMode.HTML);
                 headerLbl.addStyleName(ValoTheme.LABEL_H3);
-                dateField = new DateFieldExt();
+                dateField = new PopupDateFieldExt();
                 dateField.setValue(new GregorianCalendar().getTime());
                 layout.with(headerLbl, timeInput);
                 Label dateCaption = new Label("For date");

@@ -264,8 +264,6 @@ public class ThemeManager {
             extraStyles.append(".v-buttongroup.toggle-btn-group .v-button.btn-group-default {background-color:#" + accountTheme
                     .getActionbtn() + ";}");
 
-            extraStyles.append(".v-button.v-button-block {background-color: #" + accountTheme.getActionbtn() + ";}");
-
             extraStyles.append("div.v-button.token-field { background-color: " + ColorUtils.brighterColor("#" + accountTheme.getActionbtn()) + "; }");
 
             extraStyles.append(".block {background-color: #" + accountTheme.getActionbtn() + ";}");

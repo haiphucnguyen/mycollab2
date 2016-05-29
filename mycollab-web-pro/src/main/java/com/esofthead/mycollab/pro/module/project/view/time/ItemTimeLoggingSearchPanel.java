@@ -16,8 +16,8 @@ import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.pro.module.project.ui.components.ItemOrderComboBox;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
+import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.ValueComboBox;
@@ -97,7 +97,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
     }
 
     private class TimeLoggingBasicSearchLayout extends BasicSearchLayout<ItemTimeLoggingSearchCriteria> {
-        private DateFieldExt startDateField, endDateField;
+        private PopupDateFieldExt startDateField, endDateField;
 
         private ProjectMemberListSelect userField;
         private ComboBox groupField, orderField;
@@ -121,10 +121,10 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             gridLayout.setMargin(true);
 
             Date[] boundWeekDays = DateTimeUtils.getBounceDateofWeek(new Date());
-            startDateField = new DateFieldExt();
+            startDateField = new PopupDateFieldExt();
             startDateField.setResolution(Resolution.DAY);
             startDateField.setValue(boundWeekDays[0]);
-            endDateField = new DateFieldExt();
+            endDateField = new PopupDateFieldExt();
             endDateField.setResolution(Resolution.DAY);
             endDateField.setValue(boundWeekDays[1]);
 

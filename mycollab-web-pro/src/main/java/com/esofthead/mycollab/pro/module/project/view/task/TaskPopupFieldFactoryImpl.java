@@ -36,14 +36,14 @@ import com.esofthead.mycollab.module.project.view.task.TaskPopupFieldFactory;
 import com.esofthead.mycollab.module.project.view.task.components.TaskPriorityComboBox;
 import com.esofthead.mycollab.module.project.view.task.components.TaskStatusComboBox;
 import com.esofthead.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
+import com.esofthead.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.esofthead.mycollab.vaadin.web.ui.LazyPopupView;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
+import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
+import com.esofthead.mycollab.vaadin.web.ui.LazyPopupView;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
@@ -53,7 +53,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
-import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -208,7 +207,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("deadline").withCaption(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getDeadline())
+                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
+                .withValue(task.getDeadline())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -230,7 +230,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("startdate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStartdate())
+                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -252,7 +252,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("enddate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new DateFieldExt()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getEnddate())
+                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -349,7 +349,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
 
     private static class TaskBillableHoursPopupField extends LazyPopupView {
         private TextField timeInput = new TextField();
-        private DateFieldExt dateField;
+        private PopupDateFieldExt dateField;
         private SimpleTask task;
         private boolean isBillable;
 
@@ -374,7 +374,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 String title = (isBillable) ? "Add billable hours" : "Add non billable hours";
                 Label headerLbl = new Label(title, ContentMode.HTML);
                 headerLbl.addStyleName(ValoTheme.LABEL_H3);
-                dateField = new DateFieldExt();
+                dateField = new PopupDateFieldExt();
                 dateField.setValue(new GregorianCalendar().getTime());
                 layout.with(headerLbl, timeInput);
                 Label dateCaption = new Label("For date");

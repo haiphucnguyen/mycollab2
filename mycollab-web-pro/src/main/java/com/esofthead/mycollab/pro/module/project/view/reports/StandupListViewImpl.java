@@ -51,7 +51,7 @@ import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 public class StandupListViewImpl extends AbstractPageView implements StandupListView {
     private static final long serialVersionUID = 1L;
 
-    private DateFieldExt standupCalendar = new DateFieldExt();
+    private PopupDateFieldExt standupCalendar = new PopupDateFieldExt();
 
     private ProjectListComp projectListComp;
     private StandupPerProjectView standupPerProjectView;

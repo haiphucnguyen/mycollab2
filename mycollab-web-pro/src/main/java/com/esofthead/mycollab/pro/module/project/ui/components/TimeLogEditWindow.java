@@ -14,8 +14,8 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectUser
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
@@ -51,7 +51,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
     private Label totalSpentTimeLbl;
     private DoubleField newTimeInputField;
     private CheckBox isBillableField, isOvertimeField;
-    private DateFieldExt forDateField;
+    private PopupDateFieldExt forDateField;
 
     private DoubleField remainTimeInputField;
     private Label remainTimeLbl;
@@ -202,7 +202,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         newTimeInputField = new DoubleField();
         newTimeInputField.setWidth("80px");
 
-        forDateField = new DateFieldExt();
+        forDateField = new PopupDateFieldExt();
         forDateField.setValue(new GregorianCalendar().getTime());
 
         isBillableField = new CheckBox(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE), true);

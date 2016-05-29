@@ -5,14 +5,13 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Invoice;
 import com.esofthead.mycollab.module.project.domain.SimpleInvoice;
-import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
-import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.ui.Field;
@@ -45,7 +44,7 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
             field.setRequiredError("Invoice No/ID must not be null");
             return field;
         } else if (Invoice.Field.issuedate.equalTo(propertyId)) {
-            DateFieldExt field = new DateFieldExt();
+            PopupDateFieldExt field = new PopupDateFieldExt();
             field.setRequired(true);
             field.setRequiredError("Issue date must not be null");
             return field;
