@@ -115,7 +115,7 @@ public class LocalizationHelper {
                 throw new MyCollabException("File type is not supported " + fileTemplatePath);
             }
             filePath = fileTemplatePath.substring(0, index - 1);
-            filePath = String.format("%s_%s.mt", filePath, locale);
+            filePath = String.format("%s_%s.html", filePath, locale);
             cacheFile.put(key, filePath);
             return filePath;
         }

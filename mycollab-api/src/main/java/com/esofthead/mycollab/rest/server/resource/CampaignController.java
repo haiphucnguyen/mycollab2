@@ -91,7 +91,7 @@ public class CampaignController {
 
                 extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
                         Arrays.asList(new MailRecipientField(email, firstname + " " + lastname)), null, null, "MyCollab is " +
-                                "ready for download", contentGenerator.parseFile("templates/email/downloadInfo.mt", Locale.US), null);
+                                "ready for download", contentGenerator.parseFile("templates/email/downloadInfo.html", Locale.US), null);
             }
         }.start();
 

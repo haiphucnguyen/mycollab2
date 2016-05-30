@@ -59,8 +59,7 @@ import org.springframework.stereotype.Component
       extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, lst, null, null,
         contentGenerator.parseString(LocalizationHelper.getMessage(locale, UserI18nEnum.MAIL_RECOVERY_PASSWORD_SUBJECT,
           SiteConfiguration.getDefaultSiteName)),
-        contentGenerator.parseFile("templates/email/user/userRecoveryPasswordNotifier.mt", locale,
-          Locale.US), null)
+        contentGenerator.parseFile("templates/email/user/userRecoveryPasswordNotifier.html", locale, Locale.US), null)
     }
   }
 }

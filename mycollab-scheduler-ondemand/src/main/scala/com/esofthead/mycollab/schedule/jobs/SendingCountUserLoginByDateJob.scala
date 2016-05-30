@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[SendingCountUserLoginByDateJob])
-  private val COUNT_USER_LOGIN_TEMPLATE: String = "templates/email/user/countUserLoginByDate.mt"
+  private val COUNT_USER_LOGIN_TEMPLATE: String = "templates/email/user/countUserLoginByDate.html"
 
   @Autowired var userService: UserService = _
   @Autowired var extMailService: ExtMailService = _
