@@ -104,9 +104,8 @@ public class LocalizationHelper {
 
     private static Map<String, String> cacheFile = new HashMap<>();
 
-    public static String templatePath(String fileTemplatePath, Locale locale) {
-        String key = (locale != null) ? (fileTemplatePath + locale.toString())
-                : (fileTemplatePath + Locale.US.toString());
+    private static String templatePath(String fileTemplatePath, Locale locale) {
+        String key = (locale != null) ? (fileTemplatePath + locale.toString()) : (fileTemplatePath + Locale.US.toString());
         String filePath = cacheFile.get(key);
         if (filePath != null) {
             return filePath;
@@ -143,12 +142,12 @@ public class LocalizationHelper {
     }
 
     public static Reader templateReader(String fileTemplatePath, Locale currentLocale, Locale defaultLocale) {
-        Reader reader = LocalizationHelper.templateReader(fileTemplatePath, currentLocale);
+        Reader reader = templateReader(fileTemplatePath, currentLocale);
         if (reader == null) {
             if (defaultLocale == null) {
                 throw new MyCollabException("Can not find file " + fileTemplatePath + " in locale " + currentLocale);
             }
-            reader = LocalizationHelper.templateReader(fileTemplatePath, defaultLocale);
+            reader = templateReader(fileTemplatePath, defaultLocale);
             if (reader == null) {
                 throw new MyCollabException("Can not find file " + fileTemplatePath + " in locale " +
                         currentLocale + " and default locale " + defaultLocale);
@@ -158,14 +157,14 @@ public class LocalizationHelper {
     }
 
     public static final Locale[] getAvailableLocales() {
-        Locale[] locales = Locale.getAvailableLocales();
-        return locales;
+        return Locale.getAvailableLocales();
     }
 
     public final static Locale getLocaleInstance(String languageTag) {
         try {
             return Locale.forLanguageTag(languageTag);
         } catch (Exception e) {
+            LOG.error("Invalid language", languageTag);
             return Locale.US;
         }
     }
