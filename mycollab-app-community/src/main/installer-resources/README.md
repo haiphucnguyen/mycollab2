@@ -50,6 +50,7 @@ Version 5.3.3
 
 **Improvements & New Features**
 
+* Apply the date formats in report
 * Other improvements
 
 **Bug Fixes**

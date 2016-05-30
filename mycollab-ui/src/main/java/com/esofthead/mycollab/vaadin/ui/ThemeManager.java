@@ -260,6 +260,12 @@ public class ThemeManager {
 
             extraStyles.append(".feed-block-wrap .date-lbl::after{ border-left-color:#" + accountTheme.getActionbtn() + ";}");
 
+            extraStyles.append(".feed-block-wrap:hover .date-lbl { background-color:" + ColorUtils.darkerColor("#" +
+                    accountTheme.getActionbtn()) + ";}");
+
+            extraStyles.append(".feed-block-wrap:hover .date-lbl::after{ border-left-color:" + ColorUtils.darkerColor
+                    ("#" + accountTheme.getActionbtn()) + ";}");
+
             // Button group default button
             extraStyles.append(".v-buttongroup.toggle-btn-group .v-button.btn-group-default {background-color:#" + accountTheme
                     .getActionbtn() + ";}");

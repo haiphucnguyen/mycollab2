@@ -1591,6 +1591,10 @@ a:visited, a:link {
 	color: #0083ce;
 }
 
+a:hover {
+	text-decoration: underline;
+}
+
 a.completed {
 	color: black;
 	text-decoration: line-through;
@@ -1610,6 +1614,10 @@ a.pending {
 
 .v-button.v-button-link, .v-button.v-button-link:hover {
 	color: #0083ce;
+}
+
+.v-button.v-button-link:hover {
+	text-decoration: underline;
 }
 
 .v-table-cell-wrapper {
@@ -1706,6 +1714,10 @@ a.pending {
 	margin-right: 5px;
 	color: #ffffff;
 	background-color: #25c278;
+}
+
+.field-note:hover {
+	background-color: #21ad6b;
 }
 
 .arrow-btn {
@@ -2379,6 +2391,7 @@ div.v-window {
 
 .v-popupview:hover {
 	color: #006DAC;
+	text-decoration: underline;
 }
 
 .flex {
@@ -14249,6 +14262,10 @@ a:visited, a:link {
 	color: #0083ce;
 }
 
+a:hover {
+	text-decoration: underline;
+}
+
 a.completed {
 	color: black;
 	text-decoration: line-through;
@@ -14268,6 +14285,10 @@ a.pending {
 
 .v-button.v-button-link, .v-button.v-button-link:hover {
 	color: #0083ce;
+}
+
+.v-button.v-button-link:hover {
+	text-decoration: underline;
 }
 
 .v-table-cell-wrapper {
@@ -14364,6 +14385,10 @@ a.pending {
 	margin-right: 5px;
 	color: #ffffff;
 	background-color: #25c278;
+}
+
+.field-note:hover {
+	background-color: #21ad6b;
 }
 
 .arrow-btn {
@@ -15037,6 +15062,7 @@ div.v-window {
 
 .v-popupview:hover {
 	color: #006DAC;
+	text-decoration: underline;
 }
 
 .flex {

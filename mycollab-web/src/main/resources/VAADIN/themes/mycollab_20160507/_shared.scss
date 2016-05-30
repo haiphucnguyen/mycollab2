@@ -4,6 +4,9 @@
     &:visited, &:link {
         color: $my-link-color;
     }
+    &:hover {
+      text-decoration: underline;
+    }
     &.completed {
       color: black;
       text-decoration: line-through;
@@ -22,6 +25,10 @@
 
   .v-button.v-button-link, .v-button.v-button-link:hover {
     color: $my-link-color;
+  }
+
+  .v-button.v-button-link:hover {
+    text-decoration: underline;
   }
 
   .v-table-cell-wrapper {
@@ -110,6 +117,9 @@
     margin-right: 5px;
     color: $my-white-color;
     background-color: #25c278;
+    &:hover {
+      background-color: darken(#25c278, 5%);
+    }
   }
 
   .arrow-btn {
@@ -743,6 +753,7 @@
     color: #006DAC;
     &:hover {
       color: #006DAC;
+      text-decoration: underline;
     }
   }
 
