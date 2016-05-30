@@ -50,9 +50,12 @@ Version 5.3.3
 
 **Improvements & New Features**
 
+* Other improvements
+
 **Bug Fixes**
 
 * Can not search projects in the project list view
+* Timezone on several date fields are not correct
 
 
 Version 5.3.2

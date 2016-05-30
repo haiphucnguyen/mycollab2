@@ -29,9 +29,7 @@ public class PopupDateFieldExt extends PopupDateField {
     private static final long serialVersionUID = 1L;
 
     public PopupDateFieldExt() {
-        super();
-        this.setTimeZone(AppContext.getUserTimeZone());
-        this.setDateFormat(AppContext.getDateFormat().toPattern());
+        this(null);
     }
 
     public PopupDateFieldExt(Date value) {
