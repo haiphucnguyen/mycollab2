@@ -93,8 +93,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 5.1.1
  */
 @ViewComponent
-public class TaskKanbanViewImpl extends AbstractPageView implements TaskKanbanView {
-    private static Logger LOG = LoggerFactory.getLogger(TaskKanbanViewImpl.class);
+public class TaskKanban1ViewImpl extends AbstractPageView implements TaskKanban1View {
+    private static Logger LOG = LoggerFactory.getLogger(TaskKanban1ViewImpl.class);
 
     private ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
     private OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
@@ -121,7 +121,7 @@ public class TaskKanbanViewImpl extends AbstractPageView implements TaskKanbanVi
                 }
             };
 
-    public TaskKanbanViewImpl() {
+    public TaskKanban1ViewImpl() {
         this.setSizeFull();
         this.withSpacing(true).withMargin(new MarginInfo(false, true, true, true));
         searchPanel = new TaskSearchPanel();
@@ -145,7 +145,7 @@ public class TaskKanbanViewImpl extends AbstractPageView implements TaskKanbanVi
         Button addNewColumnBtn = new Button(AppContext.getMessage(TaskI18nEnum.ACTION_NEW_COLUMN), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new AddNewColumnWindow(TaskKanbanViewImpl.this, ProjectTypeConstants.TASK, "status"));
+                UI.getCurrent().addWindow(new AddNewColumnWindow(TaskKanban1ViewImpl.this, ProjectTypeConstants.TASK, "status"));
             }
         });
         addNewColumnBtn.setIcon(FontAwesome.PLUS);
@@ -156,7 +156,7 @@ public class TaskKanbanViewImpl extends AbstractPageView implements TaskKanbanVi
         Button deleteColumBtn = new Button("Delete columns", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().addWindow(new DeleteColumnWindow(TaskKanbanViewImpl.this, ProjectTypeConstants.TASK));
+                UI.getCurrent().addWindow(new DeleteColumnWindow(TaskKanban1ViewImpl.this, ProjectTypeConstants.TASK));
             }
         });
         deleteColumBtn.setIcon(FontAwesome.TRASH_O);
@@ -166,7 +166,7 @@ public class TaskKanbanViewImpl extends AbstractPageView implements TaskKanbanVi
         Button advanceDisplayBtn = new Button("List", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(TaskKanbanViewImpl.this, null));
+                EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(TaskKanban1ViewImpl.this, null));
             }
         });
         advanceDisplayBtn.setWidth("100px");
