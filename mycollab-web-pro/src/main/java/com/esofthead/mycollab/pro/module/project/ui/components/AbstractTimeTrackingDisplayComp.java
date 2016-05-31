@@ -98,14 +98,10 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
                     if (Boolean.TRUE.equals(item.getIsovertime())) {
                         if (item.getLogUserOvertimeRate() != null) {
                             cost += item.getLogvalue() * item.getLogUserOvertimeRate();
-                        } else {
-
                         }
                     } else {
                         if (item.getLogUserRate() != null) {
                             cost += item.getLogvalue() * item.getLogUserRate();
-                        } else {
-
                         }
                     }
                 }

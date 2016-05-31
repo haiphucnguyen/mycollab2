@@ -145,7 +145,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
             public Object generateCell(Table source, Object itemId,
                                        Object columnId) {
                 SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
-                ELabel icon = (monitorItem.getIsovertime()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+                ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
                 icon.setStyleName(UIConstants.BUTTON_ICON_ONLY);
                 return icon;
             }
