@@ -50,7 +50,8 @@ Version 5.3.3
 
 **Improvements & New Features**
 
-* Apply the date formats in report
+* Apply the date formats in report and tooltip
+* Support localization for languages easier
 * Other improvements
 
 **Bug Fixes**

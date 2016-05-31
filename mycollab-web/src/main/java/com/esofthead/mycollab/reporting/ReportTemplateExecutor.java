@@ -38,7 +38,7 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.hyperLink;
  */
 public abstract class ReportTemplateExecutor {
     protected Map<String, Object> parameters;
-    protected AbstractReportTemplate reportTemplate;
+    protected ReportTemplate reportTemplate;
     protected String reportTitle;
     protected ReportExportType outputForm;
     protected Locale locale;
@@ -47,7 +47,7 @@ public abstract class ReportTemplateExecutor {
     public ReportTemplateExecutor(TimeZone timezone, Locale languageSupport, String reportTitle, ReportExportType outputForm) {
         this.locale = languageSupport;
         this.timeZone = timezone;
-        this.reportTemplate = ReportTemplateFactory.getTemplate(languageSupport);
+        this.reportTemplate = ReportTemplate.instance();
         this.reportTitle = reportTitle;
         this.outputForm = outputForm;
     }
@@ -69,7 +69,7 @@ public abstract class ReportTemplateExecutor {
     protected ComponentBuilder<?, ?> defaultTitleComponent() {
         HyperLinkBuilder link = hyperLink("https://www.mycollab.com");
         ComponentBuilder<?, ?> dynamicReportsComponent = cmp.horizontalList(
-                cmp.image(ReportTemplateFactory.class.getClassLoader().getResourceAsStream("images/logo.png"))
+                cmp.image(ReportTemplateExecutor.class.getClassLoader().getResourceAsStream("images/logo.png"))
                         .setFixedDimension(150, 28), cmp.horizontalGap(20),
                 cmp.verticalList(
                         cmp.text("https://www.mycollab.com").setStyle(reportTemplate.getItalicStyle())
