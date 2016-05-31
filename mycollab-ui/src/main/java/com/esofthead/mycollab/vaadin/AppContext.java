@@ -289,7 +289,7 @@ public class AppContext implements Serializable {
         try {
             return getInstance().session.getUsername();
         } catch (Exception e) {
-            return "";
+            throw new SessionExpireException("Can not get username of the current session");
         }
     }
 

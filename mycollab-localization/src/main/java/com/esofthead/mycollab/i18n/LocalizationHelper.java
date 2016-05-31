@@ -18,7 +18,6 @@ package com.esofthead.mycollab.i18n;
 
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyorExt;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import org.slf4j.Logger;
@@ -110,7 +109,7 @@ public class LocalizationHelper {
         if (filePath != null) {
             return filePath;
         } else {
-            int index = fileTemplatePath.indexOf("mt");
+            int index = fileTemplatePath.indexOf("html");
             if (index == -1) {
                 throw new MyCollabException("File type is not supported " + fileTemplatePath);
             }
@@ -137,7 +136,7 @@ public class LocalizationHelper {
         try {
             return new InputStreamReader(resourceStream, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            return new InputStreamReader(resourceStream);
+            throw new MyCollabException("Not support UTF-8 encoding");
         }
     }
 
@@ -162,9 +161,9 @@ public class LocalizationHelper {
 
     public final static Locale getLocaleInstance(String languageTag) {
         try {
-            return Locale.forLanguageTag(languageTag);
+            return (languageTag == null) ? Locale.US : Locale.forLanguageTag(languageTag);
         } catch (Exception e) {
-            LOG.error("Invalid language", languageTag);
+            LOG.error("Invalid language {}", languageTag);
             return Locale.US;
         }
     }
