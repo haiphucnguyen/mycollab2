@@ -91,11 +91,11 @@ public class LocalizationHelper {
                 try {
                     return defaultMessage.getMessage(key, objects);
                 } catch (Exception e1) {
-                    LOG.error("Can not find resource key " + cls + "---" + option, e);
+                    LOG.debug("Can not find resource key " + cls + "---" + option, e);
                     return "Undefined";
                 }
             } else {
-                LOG.error("Error", e);
+                LOG.debug("Error", e);
                 return "Undefined";
             }
         }

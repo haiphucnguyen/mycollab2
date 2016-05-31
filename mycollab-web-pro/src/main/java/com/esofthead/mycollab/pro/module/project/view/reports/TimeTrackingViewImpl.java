@@ -100,13 +100,10 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
                 (ItemTimeLoggingService.class));
         ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
             @Override
-            protected Map<String, Object> initReportParameters() {
-                Map<String, Object> parameters = new HashMap<>();
-                parameters.put("siteUrl", AppContext.getSiteUrl());
+            protected void initReportParameters(Map<String, Object> parameters) {
                 searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("projectName",
                         SearchCriteria.ASC), new SearchCriteria.OrderField("logForDay", SearchCriteria.ASC)));
                 parameters.put(SimpleReportTemplateExecutor.CRITERIA, searchCriteria);
-                return parameters;
             }
         };
         return new StreamResource(streamSource, exportType.getDefaultFileName());

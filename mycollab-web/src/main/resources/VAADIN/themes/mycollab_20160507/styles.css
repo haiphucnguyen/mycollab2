@@ -2104,6 +2104,7 @@ div.v-window {
 
 .block-popupedit:hover {
 	color: #ffffff;
+	text-decoration: none;
 }
 
 .block-popupedit .nonValue .hide {
@@ -2390,8 +2391,7 @@ div.v-window {
 }
 
 .v-popupview:hover {
-	color: #006DAC;
-	text-decoration: underline;
+	color: #005d93;
 }
 
 .flex {
@@ -14775,6 +14775,7 @@ div.v-window {
 
 .block-popupedit:hover {
 	color: #ffffff;
+	text-decoration: none;
 }
 
 .block-popupedit .nonValue .hide {
@@ -15061,8 +15062,7 @@ div.v-window {
 }
 
 .v-popupview:hover {
-	color: #006DAC;
-	text-decoration: underline;
+	color: #005d93;
 }
 
 .flex {

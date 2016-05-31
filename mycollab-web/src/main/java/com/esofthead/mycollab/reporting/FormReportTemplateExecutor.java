@@ -26,8 +26,8 @@ import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.SimpleLogging;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
@@ -54,7 +54,8 @@ import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-import static net.sf.dynamicreports.report.builder.DynamicReports.*;
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import static net.sf.dynamicreports.report.builder.DynamicReports.report;
 
 /**
  * @author MyCollab Ltd
@@ -79,7 +80,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     private MultiPageListBuilder titleContent;
 
     public FormReportTemplateExecutor(String reportTitle) {
-        super(AppContext.getUserTimeZone(), AppContext.getUserLocale(), reportTitle, ReportExportType.PDF);
+        super(AppContext.getUser(), AppContext.getUserTimeZone(), AppContext.getUserLocale(), reportTitle, ReportExportType.PDF);
     }
 
     @Override

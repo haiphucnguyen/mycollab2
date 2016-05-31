@@ -489,6 +489,7 @@
     }
     &:hover {
       color: $my-white-color;
+      text-decoration: none;
     }
 
     .nonValue .hide {
@@ -752,8 +753,7 @@
     text-decoration: none;
     color: #006DAC;
     &:hover {
-      color: #006DAC;
-      text-decoration: underline;
+      color: darken(#006DAC, 5%);
     }
   }
 

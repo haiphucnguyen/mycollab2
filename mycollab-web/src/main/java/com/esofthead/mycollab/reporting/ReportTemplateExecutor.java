@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.reporting;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import net.sf.dynamicreports.report.builder.HyperLinkBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
@@ -38,13 +39,16 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.hyperLink;
  */
 public abstract class ReportTemplateExecutor {
     protected Map<String, Object> parameters;
+    protected SimpleUser user;
     protected ReportTemplate reportTemplate;
     protected String reportTitle;
     protected ReportExportType outputForm;
     protected Locale locale;
     protected TimeZone timeZone;
 
-    public ReportTemplateExecutor(TimeZone timezone, Locale languageSupport, String reportTitle, ReportExportType outputForm) {
+    public ReportTemplateExecutor(SimpleUser user, TimeZone timezone, Locale languageSupport, String reportTitle,
+                                  ReportExportType outputForm) {
+        this.user = user;
         this.locale = languageSupport;
         this.timeZone = timezone;
         this.reportTemplate = ReportTemplate.instance();
@@ -72,13 +76,12 @@ public abstract class ReportTemplateExecutor {
                 cmp.image(ReportTemplateExecutor.class.getClassLoader().getResourceAsStream("images/logo.png"))
                         .setFixedDimension(150, 28), cmp.horizontalGap(20),
                 cmp.verticalList(
-                        cmp.text("https://www.mycollab.com").setStyle(reportTemplate.getItalicStyle())
-                                .setHyperLink(link).setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT), cmp.text(String.format("Generated at: %s",
-                                DateTimeUtils.formatDate(new GregorianCalendar().getTime(), "yyyy-MM-dd'T'HH:mm:ss",
-                                        timeZone))).setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT))
+                        cmp.text("https://www.mycollab.com").setStyle(reportTemplate.getItalicStyle()).setHyperLink(link)
+                                .setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT), cmp.text(String.format("Generated at: %s",
+                                DateTimeUtils.formatDate(new GregorianCalendar().getTime(), "yyyy-MM-dd'T'HH:mm:ss", timeZone)))
+                                .setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT))
         );
 
-        return cmp.horizontalList().add(dynamicReportsComponent).newRow().add(reportTemplate.line()).newRow().add(cmp
-                .verticalGap(10));
+        return cmp.horizontalList().add(dynamicReportsComponent).newRow().add(reportTemplate.line()).newRow().add(cmp.verticalGap(10));
     }
 }

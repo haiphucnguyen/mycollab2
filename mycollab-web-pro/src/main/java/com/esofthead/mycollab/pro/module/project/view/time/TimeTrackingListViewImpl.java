@@ -2,8 +2,8 @@ package com.esofthead.mycollab.pro.module.project.view.time;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
+import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -52,7 +52,6 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -151,11 +150,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
                 AppContextUtil.getSpringBean(ItemTimeLoggingService.class));
         ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
             @Override
-            protected Map<String, Object> initReportParameters() {
-                Map<String, Object> parameters = new HashMap<>();
-                parameters.put("siteUrl", AppContext.getSiteUrl());
+            protected void initReportParameters(Map<String, Object> parameters) {
                 parameters.put(SimpleReportTemplateExecutor.CRITERIA, searchCriteria);
-                return parameters;
             }
         };
         return new StreamResource(streamSource, exportType.getDefaultFileName());
