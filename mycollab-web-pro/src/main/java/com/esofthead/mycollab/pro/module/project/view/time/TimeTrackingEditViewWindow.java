@@ -46,7 +46,8 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
         this.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
 
-        dateField = new PopupDateFieldExt("Select date", timeLogging.getLogforday());
+        dateField = new PopupDateFieldExt(timeLogging.getLogforday());
+        dateField.setCaption("Select date");
 
         timeField = new DoubleField();
         timeField.setCaption("Hours");

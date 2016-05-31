@@ -38,6 +38,7 @@ import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
+import com.esofthead.mycollab.vaadin.web.ui.field.DateTimeOptionField;
 import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.ui.Field;
@@ -129,7 +130,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
         } else if (Task.Field.originalestimate.equalTo(propertyId) || Task.Field.remainestimate.equalTo(propertyId)) {
             return new DoubleField();
         } else if (Task.Field.startdate.equalTo(propertyId)) {
-            final PopupDateFieldExt startDateField = new PopupDateFieldExt();
+            final DateTimeOptionField startDateField = new DateTimeOptionField(true);
             startDateField.addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
@@ -138,7 +139,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             });
             return startDateField;
         } else if (Task.Field.enddate.equalTo(propertyId)) {
-            PopupDateFieldExt endDateField = new PopupDateFieldExt();
+            DateTimeOptionField endDateField = new DateTimeOptionField(true);
             endDateField.addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
@@ -155,6 +156,8 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
                 attachmentUploadField.getAttachments(attachmentPath);
             }
             return attachmentUploadField;
+        } else if (Task.Field.deadline.equalTo(propertyId)) {
+            return new DateTimeOptionField(true);
         } else if (propertyId.equals("selected")) {
             return subscribersComp;
         }
@@ -162,8 +165,8 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
     }
 
     private void calculateDurationBaseOnStartAndEndDates() {
-        PopupDateFieldExt startDateField = (PopupDateFieldExt) fieldGroup.getField(Task.Field.startdate.name());
-        PopupDateFieldExt endDateField = (PopupDateFieldExt) fieldGroup.getField(Task.Field.enddate.name());
+        DateTimeOptionField startDateField = (DateTimeOptionField) fieldGroup.getField(Task.Field.startdate.name());
+        DateTimeOptionField endDateField = (DateTimeOptionField) fieldGroup.getField(Task.Field.enddate.name());
         TextField durationField = (TextField) fieldGroup.getField(Task.Field.duration.name());
         Date startDate = null;
         Date endDate = null;

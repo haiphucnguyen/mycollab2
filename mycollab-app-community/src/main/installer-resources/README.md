@@ -50,6 +50,7 @@ Version 5.3.3
 
 **Improvements & New Features**
 
+* Allow project member can set time for task
 * Apply the date formats in report and tooltip
 * Support localization for languages easier
 * Other improvements

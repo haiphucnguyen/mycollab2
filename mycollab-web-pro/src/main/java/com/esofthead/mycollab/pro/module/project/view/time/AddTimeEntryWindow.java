@@ -28,18 +28,12 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Window;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -215,44 +209,37 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         taskLayout.addComponent(attachTaskBtn);
     }
 
-    private SimpleDateFormat simpleDateFormat = AppContext.getShortDateFormat();
-
     private void updateTimeTableHeader() {
         Date monday = DateTimeUtils.getBounceDateofWeek(selectedDate)[0];
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(monday);
 
         timeInputTable.setColumnHeader("Monday", AppContext.getMessage(TimeTrackingI18nEnum.MONDAY_FIELD,
-                simpleDateFormat.format(calendar.getTime())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader("Tuesday", AppContext.getMessage(TimeTrackingI18nEnum.TUESDAY_FIELD,
-                simpleDateFormat.format(calendar.getTime())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader("Wednesday", AppContext.getMessage(
-                TimeTrackingI18nEnum.WEDNESDAY_FIELD,
-                simpleDateFormat.format(calendar.getTime())));
+        timeInputTable.setColumnHeader("Wednesday", AppContext.getMessage(TimeTrackingI18nEnum.WEDNESDAY_FIELD,
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader("Thursday", AppContext.getMessage(
-                TimeTrackingI18nEnum.THURSDAY_FIELD,
-                simpleDateFormat.format(calendar.getTime())));
+        timeInputTable.setColumnHeader("Thursday", AppContext.getMessage(TimeTrackingI18nEnum.THURSDAY_FIELD,
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader("Friday", AppContext.getMessage(
-                TimeTrackingI18nEnum.FRIDAY_FIELD,
-                simpleDateFormat.format(calendar.getTime())));
+        timeInputTable.setColumnHeader("Friday", AppContext.getMessage(TimeTrackingI18nEnum.FRIDAY_FIELD,
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader("Saturday", AppContext.getMessage(
-                TimeTrackingI18nEnum.SATURDAY_FIELD,
-                simpleDateFormat.format(calendar.getTime())));
+        timeInputTable.setColumnHeader("Saturday", AppContext.getMessage(TimeTrackingI18nEnum.SATURDAY_FIELD,
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader("Sunday", AppContext.getMessage(
-                TimeTrackingI18nEnum.SUNDAY_FIELD,
-                simpleDateFormat.format(calendar.getTime())));
+        timeInputTable.setColumnHeader("Sunday", AppContext.getMessage(TimeTrackingI18nEnum.SUNDAY_FIELD,
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
     }
 

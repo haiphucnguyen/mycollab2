@@ -103,7 +103,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
                         b.addStyleName(UIConstants.LINK_OVERDUE);
                     }
                 }
-                b.setDescription(ProjectTooltipGenerator.generateToolTipRisk(AppContext.getUserLocale(), AppContext.getDateFormat().toPattern(),
+                b.setDescription(ProjectTooltipGenerator.generateToolTipRisk(AppContext.getUserLocale(), AppContext.getDateFormat(),
                         risk, AppContext.getSiteUrl(), AppContext.getUserTimeZone(), false));
                 return b;
 
