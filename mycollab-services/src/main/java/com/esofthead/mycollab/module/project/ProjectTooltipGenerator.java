@@ -35,7 +35,6 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
-import com.esofthead.mycollab.module.user.domain.DateFormat;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.hp.gagawa.java.elements.*;
@@ -70,26 +69,25 @@ public class ProjectTooltipGenerator {
         return div.write();
     }
 
-    public static String generateTooltipEntity(Locale locale, String type, Integer typeId, Integer sAccountId,
-                                               String siteUrl, TimeZone timeZone, boolean showProject) {
+    public static String generateTooltipEntity(Locale locale, String dateFormat, String type, Integer typeId, Integer
+            sAccountId, String siteUrl, TimeZone timeZone, boolean showProject) {
         BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
-        DateFormat dateFormatInstance = billingAccountService.getAccountDateFormat(sAccountId);
         if (ProjectTypeConstants.BUG.equals(type)) {
             BugService bugService = AppContextUtil.getSpringBean(BugService.class);
             SimpleBug bug = bugService.findById(typeId, sAccountId);
-            return generateToolTipBug(locale, dateFormatInstance.getDateFormat(), bug, siteUrl, timeZone, showProject);
+            return generateToolTipBug(locale, dateFormat, bug, siteUrl, timeZone, showProject);
         } else if (ProjectTypeConstants.TASK.equals(type)) {
             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
             SimpleTask task = taskService.findById(typeId, sAccountId);
-            return generateToolTipTask(locale, dateFormatInstance.getDateFormat(), task, siteUrl, timeZone, showProject);
+            return generateToolTipTask(locale, dateFormat, task, siteUrl, timeZone, showProject);
         } else if (ProjectTypeConstants.MILESTONE.equals(type)) {
             MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
             SimpleMilestone milestone = milestoneService.findById(typeId, sAccountId);
-            return generateToolTipMilestone(locale, dateFormatInstance.getDateFormat(), milestone, siteUrl, timeZone, showProject);
+            return generateToolTipMilestone(locale, dateFormat, milestone, siteUrl, timeZone, showProject);
         } else if (ProjectTypeConstants.RISK.equals(type)) {
             RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
             SimpleRisk risk = riskService.findById(typeId, sAccountId);
-            return generateToolTipRisk(locale, dateFormatInstance.getDateFormat(), risk, siteUrl, timeZone, showProject);
+            return generateToolTipRisk(locale, dateFormat, risk, siteUrl, timeZone, showProject);
         } else {
             return "";
         }

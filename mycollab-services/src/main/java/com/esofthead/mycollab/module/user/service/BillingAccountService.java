@@ -21,7 +21,6 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
-import com.esofthead.mycollab.module.user.domain.DateFormat;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 
 /**
@@ -37,9 +36,6 @@ public interface BillingAccountService extends ICrudService<Integer, BillingAcco
 
     @Cacheable
     BillingAccount getAccountById(@CacheKey Integer accountId);
-
-    @Cacheable
-    DateFormat getAccountDateFormat(@CacheKey Integer accountId);
 
     void createDefaultAccountData(String username, String password, String timezoneId, Boolean isEmailVerified, Boolean isCreatedDefaultData,
                                   Integer sAccountId);

@@ -16,9 +16,7 @@
  */
 package com.esofthead.mycollab.module.user.dao;
 
-import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners;
-import com.esofthead.mycollab.module.user.domain.DateFormat;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,8 +26,6 @@ public interface BillingAccountMapperExt {
     SimpleBillingAccount getBillingAccountById(Integer accountId);
 
     List<String> getSubdomainsOfUser(@Param("username") String username);
-
-    DateFormat getAccountDateFormat(@Param("accountId") Integer accountId);
 
     List<BillingAccountWithOwners> getTrialAccountsWithOwners();
 }

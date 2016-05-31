@@ -107,11 +107,6 @@ public class BillingAccountServiceImpl extends DefaultCrudService<Integer, Billi
     }
 
     @Override
-    public DateFormat getAccountDateFormat(Integer accountId) {
-        return billingAccountMapperExt.getAccountDateFormat(accountId);
-    }
-
-    @Override
     public BillingAccount getAccountById(Integer accountId) {
         BillingAccountExample ex = new BillingAccountExample();
 
