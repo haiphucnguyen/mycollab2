@@ -28,6 +28,11 @@
     }
   }
 
+  .v-button.v-button-link.xbreadcrumbbutton:hover {
+    text-decoration: none;
+    font-weight: bold;
+  }
+
   .v-button-xbreadcrumbbutton-home span.v-button-caption {
     padding-left: 18px;
   }

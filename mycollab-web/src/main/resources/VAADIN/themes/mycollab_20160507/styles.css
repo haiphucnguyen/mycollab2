@@ -13950,6 +13950,11 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 	color: #333333 !important;
 }
 
+.v-button.v-button-link.xbreadcrumbbutton:hover {
+	text-decoration: none;
+	font-weight: bold;
+}
+
 .v-button-xbreadcrumbbutton-home span.v-button-caption {
 	padding-left: 18px;
 }

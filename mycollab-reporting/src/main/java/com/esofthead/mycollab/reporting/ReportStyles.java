@@ -32,8 +32,8 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
  * @author MyCollab Ltd.
  * @since 4.1.2
  */
-public class ReportTemplate {
-    private static final ReportTemplate _instance = new ReportTemplate();
+public class ReportStyles {
+    private static final ReportStyles _instance = new ReportStyles();
 
     private Color borderColor = new Color(233, 233, 233);
     private Color metaColor = new Color(153, 153, 153);
@@ -50,7 +50,7 @@ public class ReportTemplate {
     private StyleBuilder borderStyle;
     private StyleBuilder metaInfoStyle;
 
-    private ReportTemplate() {
+    private ReportStyles() {
         rootStyle = stl.style().setPadding(4);
         boldStyle = stl.style(rootStyle).bold();
         italicStyle = stl.style(rootStyle).italic();
@@ -68,7 +68,7 @@ public class ReportTemplate {
                 .setBackgroundColor(Color.LIGHT_GRAY);
     }
 
-    public static ReportTemplate instance() {
+    public static ReportStyles instance() {
         return _instance;
     }
 

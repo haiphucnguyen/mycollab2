@@ -40,7 +40,7 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.hyperLink;
 public abstract class ReportTemplateExecutor {
     protected Map<String, Object> parameters;
     protected SimpleUser user;
-    protected ReportTemplate reportTemplate;
+    protected ReportStyles reportStyles;
     protected String reportTitle;
     protected ReportExportType outputForm;
     protected Locale locale;
@@ -51,7 +51,7 @@ public abstract class ReportTemplateExecutor {
         this.user = user;
         this.locale = languageSupport;
         this.timeZone = timezone;
-        this.reportTemplate = ReportTemplate.instance();
+        this.reportStyles = ReportStyles.instance();
         this.reportTitle = reportTitle;
         this.outputForm = outputForm;
     }
@@ -76,12 +76,12 @@ public abstract class ReportTemplateExecutor {
                 cmp.image(ReportTemplateExecutor.class.getClassLoader().getResourceAsStream("images/logo.png"))
                         .setFixedDimension(150, 28), cmp.horizontalGap(20),
                 cmp.verticalList(
-                        cmp.text("https://www.mycollab.com").setStyle(reportTemplate.getItalicStyle()).setHyperLink(link)
+                        cmp.text("https://www.mycollab.com").setStyle(reportStyles.getItalicStyle()).setHyperLink(link)
                                 .setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT), cmp.text(String.format("Generated at: %s",
                                 DateTimeUtils.formatDate(new GregorianCalendar().getTime(), "yyyy-MM-dd'T'HH:mm:ss", timeZone)))
                                 .setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT))
         );
 
-        return cmp.horizontalList().add(dynamicReportsComponent).newRow().add(reportTemplate.line()).newRow().add(cmp.verticalGap(10));
+        return cmp.horizontalList().add(dynamicReportsComponent).newRow().add(reportStyles.line()).newRow().add(cmp.verticalGap(10));
     }
 }
