@@ -192,7 +192,11 @@
     @include flex-compatible;
     margin: 0px 3px 3px 0px;
     background-color: #fef0c9;
+    border-radius: 6px;
     height: 30px;
+    &:hover, &:hover .v-button.remove-btn-sup {
+      background-color: darken(#fef0c9, 5%);
+    }
     .v-button.link:focus .v-button-wrap, .v-button-wrap,  .v-pressed .v-button-wrap {
       padding: 2px 5px;
     }
