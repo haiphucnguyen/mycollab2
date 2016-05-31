@@ -65,9 +65,7 @@ public class WebResourceGenerator {
         emitFieldResources(jw, imagesFolder);
         jw.endType();
 
-        FileWriter fileWriter = new FileWriter(
-                new File(
-                        "src/main/java/com/esofthead/mycollab/vaadin/ui/WebResourceIds.java"));
+        FileWriter fileWriter = new FileWriter(new File("src/main/java/com/esofthead/mycollab/vaadin/ui/WebResourceIds.java"));
         fileWriter.write(w.toString());
         fileWriter.flush();
         fileWriter.close();
