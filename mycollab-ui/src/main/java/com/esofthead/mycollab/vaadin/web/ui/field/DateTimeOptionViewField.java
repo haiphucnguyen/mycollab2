@@ -6,6 +6,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Label;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.util.Date;
 
@@ -28,7 +29,7 @@ public class DateTimeOptionViewField extends CustomField<String> {
             l.setValue("&nbsp;");
             l.setContentMode(ContentMode.HTML);
         } else {
-            DateTime jodaTime = new DateTime(date);
+            DateTime jodaTime = new DateTime(date).toDateTime(DateTimeZone.forTimeZone(AppContext.getUserTimeZone()));
             if (jodaTime.getMinuteOfHour() > 0 || jodaTime.getHourOfDay() > 0) {
                 l.setValue(AppContext.formatDateTime(date));
             } else {

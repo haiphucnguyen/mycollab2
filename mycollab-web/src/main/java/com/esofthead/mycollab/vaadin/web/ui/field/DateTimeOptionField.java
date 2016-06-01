@@ -29,6 +29,8 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.Duration;
+import org.joda.time.LocalDateTime;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Calendar;
@@ -174,9 +176,8 @@ public class DateTimeOptionField extends CustomField<Date> {
             Integer minus = (minutePickerComboBox.getValue() != null) ? Integer.parseInt((String) minutePickerComboBox.getValue()) : 0;
             String timeFormat = (timeFormatComboBox.getValue() != null) ? (String) timeFormatComboBox.getValue() : "AM";
             long milliseconds = calculateMilliSeconds(hour, minus, timeFormat);
-            java.util.Calendar cal = java.util.Calendar.getInstance();
-            cal.setTimeInMillis(baseDate.getTime() + milliseconds);
-            return cal.getTime();
+            DateTime jodaTime = new DateTime(baseDate).plus(new Duration(milliseconds));
+            return new LocalDateTime(jodaTime.getMillis()).toDateTime(DateTimeZone.forTimeZone(AppContext.getUserTimeZone())).toDate();
         }
     }
 

@@ -52,10 +52,7 @@ public class DateTimeUtils {
      * @return
      */
     public static Date trimHMSOfDate(Date value) {
-        DateTime jodaTime = new DateTime(value);
-        jodaTime.hourOfDay().roundFloorCopy().minuteOfHour().roundFloorCopy().secondOfMinute().roundFloorCopy()
-                .millisOfSecond().roundFloorCopy();
-        return jodaTime.toDate();
+        return new LocalDate(value).toDate();
     }
 
     public static Date getCurrentDateWithoutMS() {

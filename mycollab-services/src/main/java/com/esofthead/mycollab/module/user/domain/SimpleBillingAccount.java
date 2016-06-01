@@ -66,7 +66,7 @@ public class SimpleBillingAccount extends BillingAccount {
     }
 
     public String getDateTimeFormatInstance() {
-        return MoreObjects.firstNonNull(getDefaultyymmddformat(), "MM/dd/yyyy") + " HH:mm:ss";
+        return MoreObjects.firstNonNull(getDefaultyymmddformat(), "MM/dd/yyyy") + " KK:mm a";
     }
 
     public Locale getLocaleInstance() {
