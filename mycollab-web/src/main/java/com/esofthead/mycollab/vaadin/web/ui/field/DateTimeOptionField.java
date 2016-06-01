@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.vaadin.web.ui.field;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.ValueComboBox;
@@ -26,6 +27,8 @@ import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Calendar;
@@ -55,7 +58,6 @@ public class DateTimeOptionField extends CustomField<Date> {
     public DateTimeOptionField(boolean hideTimeOptionVal) {
         this.hideTimeOption = hideTimeOptionVal;
         popupDateField = new PopupDateFieldExt();
-
         popupDateField.setResolution(Resolution.DAY);
         hourPickerComboBox = new HourPickerComboBox();
         hourPickerComboBox.setWidth("60px");
@@ -114,21 +116,21 @@ public class DateTimeOptionField extends CustomField<Date> {
     public void setPropertyDataSource(Property newDataSource) {
         Object value = newDataSource.getValue();
         if (value instanceof Date) {
-            long min, hrs;
-            String timeFormat;
-
-            Date dateVal = (Date) value;
-            Calendar cal = java.util.Calendar.getInstance();
-            cal.setTime(dateVal);
-            min = cal.get(java.util.Calendar.MINUTE);
-            hrs = cal.get(java.util.Calendar.HOUR);
-            timeFormat = (cal.get(java.util.Calendar.AM_PM) == Calendar.AM) ? "AM" : "PM";
+            DateTime jodaTime = new DateTime(value);
+            jodaTime = jodaTime.toDateTime(DateTimeZone.forTimeZone(AppContext.getUserTimeZone()));
+            int hrs = jodaTime.getHourOfDay();
+            int min = jodaTime.getMinuteOfHour();
+            String timeFormat = "AM";
+            if (hrs > 12) {
+                hrs -= 12;
+                timeFormat = "PM";
+            }
 
             if ((hrs > 0 || min > 0) && hideTimeOption) {
                 toggleHideTimeOption(false);
             }
 
-            popupDateField.setValue(dateVal);
+            popupDateField.setValue(jodaTime.toDate());
             if (!hideTimeOption) {
                 hourPickerComboBox.setValue((hrs < 10) ? "0" + hrs : "" + hrs);
                 minutePickerComboBox.setValue((min < 10) ? "0" + min : "" + min);

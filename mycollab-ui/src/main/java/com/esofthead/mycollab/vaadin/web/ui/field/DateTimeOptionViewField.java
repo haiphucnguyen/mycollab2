@@ -16,8 +16,8 @@ import java.util.Date;
 public class DateTimeOptionViewField extends CustomField<String> {
     private Date date;
 
-    public DateTimeOptionViewField(Date date) {
-        this.date = date;
+    public DateTimeOptionViewField(Date dateVal) {
+        this.date = dateVal;
     }
 
     @Override
