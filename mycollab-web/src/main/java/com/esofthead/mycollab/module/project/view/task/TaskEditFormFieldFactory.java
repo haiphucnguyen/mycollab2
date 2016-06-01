@@ -112,7 +112,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
                 @Override
                 public void blur(FieldEvents.BlurEvent event) {
                     HumanTime humanTime = HumanTime.eval(field.getValue());
-                    Integer duration = new Integer(humanTime.getDelta() + "");
+                    Integer duration =  Integer.valueOf(humanTime.getDelta() + "");
                     PopupDateFieldExt startDateField = (PopupDateFieldExt) fieldGroup.getField(Task.Field.startdate.name());
                     Date startDateVal = startDateField.getValue();
                     if (duration > 0 && startDateVal != null) {

@@ -50,7 +50,8 @@ Version 5.3.3
 
 **Improvements & New Features**
 
-* Allow project member can set time for task
+* Allow to customize the report fields in the project module
+* Allow project member can set time for task and issue
 * Apply the date formats in report and tooltip
 * Support localization for languages easier
 * Other improvements

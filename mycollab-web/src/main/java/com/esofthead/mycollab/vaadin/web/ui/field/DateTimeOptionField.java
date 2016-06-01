@@ -40,18 +40,20 @@ public class DateTimeOptionField extends CustomField<Date> {
 
     private static final long ONE_MINUTE_IN_MILLIS = 60000;
 
+    private MHorizontalLayout container;
     private PopupDateFieldExt popupDateField;
     private HourPickerComboBox hourPickerComboBox;
     private MinutePickerComboBox minutePickerComboBox;
     private ValueComboBox timeFormatComboBox;
+    private Button toggleTimeBtn;
     private boolean hideTimeOption = true;
 
     public DateTimeOptionField() {
         this(false);
     }
 
-    public DateTimeOptionField(boolean hideTimeOption) {
-        this.hideTimeOption = hideTimeOption;
+    public DateTimeOptionField(boolean hideTimeOptionVal) {
+        this.hideTimeOption = hideTimeOptionVal;
         popupDateField = new PopupDateFieldExt();
 
         popupDateField.setResolution(Resolution.DAY);
@@ -66,39 +68,46 @@ public class DateTimeOptionField extends CustomField<Date> {
         timeFormatComboBox.setCaption(null);
         timeFormatComboBox.loadData("AM", "PM");
         timeFormatComboBox.setNullSelectionAllowed(false);
-    }
 
-    @Override
-    protected Component initContent() {
-        final MHorizontalLayout container = new MHorizontalLayout();
-        container.addStyleName(UIConstants.FLEX_DISPLAY);
-        final Button toggleTimeBtn = new Button("");
+        toggleTimeBtn = new Button("");
         toggleTimeBtn.addStyleName(UIConstants.BUTTON_LINK);
+
+        container = new MHorizontalLayout();
+        container.addStyleName(UIConstants.FLEX_DISPLAY);
+
         toggleTimeBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                hideTimeOption = !hideTimeOption;
-                if (hideTimeOption) {
-                    toggleTimeBtn.setCaption("Set time");
-                    container.removeComponent(container.getComponent(1));
-                } else {
-                    toggleTimeBtn.setCaption("Hide time");
-                    container.addComponent(new MHorizontalLayout(hourPickerComboBox, minutePickerComboBox, timeFormatComboBox), 1);
-                }
+                toggleHideTimeOption(!hideTimeOption);
             }
         });
 
         if (hideTimeOption) {
             toggleTimeBtn.setCaption("Set time");
-            container.addComponent(popupDateField);
-            container.addComponent(toggleTimeBtn);
+            container.with(popupDateField, toggleTimeBtn);
         } else {
             toggleTimeBtn.setCaption("Hide time");
-            container.addComponent(popupDateField);
-            container.addComponent(new MHorizontalLayout(hourPickerComboBox, minutePickerComboBox, timeFormatComboBox));
-            container.addComponent(toggleTimeBtn);
+            container.with(popupDateField, new MHorizontalLayout(hourPickerComboBox, minutePickerComboBox,
+                    timeFormatComboBox), toggleTimeBtn);
         }
+    }
+
+    @Override
+    protected Component initContent() {
         return container;
+    }
+
+    private void toggleHideTimeOption(boolean isHideOption) {
+        this.hideTimeOption = isHideOption;
+        container.removeAllComponents();
+        if (hideTimeOption) {
+            toggleTimeBtn.setCaption("Set time");
+            container.with(popupDateField, toggleTimeBtn);
+        } else {
+            toggleTimeBtn.setCaption("Hide time");
+            container.with(popupDateField, new MHorizontalLayout(hourPickerComboBox, minutePickerComboBox,
+                    timeFormatComboBox), toggleTimeBtn);
+        }
     }
 
     @Override
@@ -113,7 +122,11 @@ public class DateTimeOptionField extends CustomField<Date> {
             cal.setTime(dateVal);
             min = cal.get(java.util.Calendar.MINUTE);
             hrs = cal.get(java.util.Calendar.HOUR);
-            timeFormat = (cal.get(java.util.Calendar.AM_PM) == Calendar.MONDAY) ? "AM" : "PM";
+            timeFormat = (cal.get(java.util.Calendar.AM_PM) == Calendar.AM) ? "AM" : "PM";
+
+            if ((hrs > 0 || min > 0) && hideTimeOption) {
+                toggleHideTimeOption(false);
+            }
 
             popupDateField.setValue(dateVal);
             if (!hideTimeOption) {
