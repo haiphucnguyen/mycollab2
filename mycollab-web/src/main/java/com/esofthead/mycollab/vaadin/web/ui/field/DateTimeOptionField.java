@@ -27,10 +27,7 @@ import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.Duration;
-import org.joda.time.LocalDateTime;
+import org.joda.time.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Calendar;
@@ -165,10 +162,13 @@ public class DateTimeOptionField extends CustomField<Date> {
     }
 
     private Date getDateValue() {
-        if (popupDateField.getValue() == null) {
+        Date selectDate = popupDateField.getValue();
+        if (selectDate == null) {
             return null;
         }
-        Date baseDate = DateTimeUtils.trimHMSOfDate(popupDateField.getValue());
+
+        DateTime jodaSelectDate = new DateTime(selectDate).toDateTime(DateTimeZone.forTimeZone(AppContext.getUserTimeZone()));
+        Date baseDate = new LocalDate(jodaSelectDate).toDate();
         if (hideTimeOption) {
             return baseDate;
         } else {
