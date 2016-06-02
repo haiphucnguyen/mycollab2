@@ -131,7 +131,7 @@ public class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
         protected Field<?> onCreateField(final Object propertyId) {
             SimpleBug beanItem = attachForm.getBean();
             if (BugWithBLOBs.Field.duedate.equalTo(propertyId)) {
-                return new DateTimeOptionViewField(beanItem.getDueDateRoundPlusOne());
+                return new DateTimeOptionViewField(beanItem.getDuedate());
             } else if (BugWithBLOBs.Field.startdate.equalTo(propertyId)) {
                 return new DateTimeOptionViewField(beanItem.getStartdate());
             } else if (BugWithBLOBs.Field.enddate.equalTo(propertyId)) {

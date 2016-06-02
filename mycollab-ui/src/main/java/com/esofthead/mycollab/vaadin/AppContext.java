@@ -42,6 +42,10 @@ import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -423,15 +427,27 @@ public class AppContext implements Serializable {
     }
 
     /**
-     * @param date
+     * @param date is the UTC date value
      * @return
      */
     public static String formatDateTime(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, AppContext.getDateTimeFormat(), AppContext.getUserTimeZone());
+//        return date == null ? "" : DateTimeUtils.formatDate(date, AppContext.getDateTimeFormat(), AppContext.getUserTimeZone());
+        if (date == null) {
+            return "";
+        } else {
+            DateTime jodaDate = new DateTime(date).toDateTime(DateTimeZone.forTimeZone(AppContext.getUserTimeZone()));
+            if (jodaDate.getHourOfDay() > 0 || jodaDate.getMinuteOfHour() > 0) {
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppContext.getDateTimeFormat());
+                return formatter.print(jodaDate);
+            } else {
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppContext.getDateFormat());
+                return formatter.print(jodaDate);
+            }
+        }
     }
 
     /**
-     * @param date
+     * @param date is the UTC date value
      * @return
      */
     public static String formatDate(Date date) {

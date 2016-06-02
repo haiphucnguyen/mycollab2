@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.vaadin.web.ui.field;
 
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
@@ -30,7 +29,6 @@ import com.vaadin.ui.CustomField;
 import org.joda.time.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -56,16 +54,26 @@ public class DateTimeOptionField extends CustomField<Date> {
 
     public DateTimeOptionField(boolean hideTimeOptionVal) {
         this.hideTimeOption = hideTimeOptionVal;
+        ValueChangeListener valueChangeListener = new ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                System.out.println("A: " + valueChangeEvent.getProperty().getValue());
+            }
+        };
         popupDateField = new PopupDateFieldExt();
         popupDateField.setResolution(Resolution.DAY);
+        popupDateField.addValueChangeListener(valueChangeListener);
         hourPickerComboBox = new HourPickerComboBox();
         hourPickerComboBox.setWidth("60px");
+        hourPickerComboBox.addValueChangeListener(valueChangeListener);
 
         minutePickerComboBox = new MinutePickerComboBox();
+        minutePickerComboBox.addValueChangeListener(valueChangeListener);
         minutePickerComboBox.setWidth("60px");
 
         timeFormatComboBox = new ValueComboBox();
-        timeFormatComboBox.setWidth("60px");
+        timeFormatComboBox.addValueChangeListener(valueChangeListener);
+        timeFormatComboBox.setWidth("65px");
         timeFormatComboBox.setCaption(null);
         timeFormatComboBox.loadData("AM", "PM");
         timeFormatComboBox.setNullSelectionAllowed(false);
@@ -113,8 +121,8 @@ public class DateTimeOptionField extends CustomField<Date> {
 
     @Override
     public void setPropertyDataSource(Property newDataSource) {
-        Object value = newDataSource.getValue();
-        if (value instanceof Date) {
+        Date value = (Date) newDataSource.getValue();
+        if (value != null) {
             DateTime jodaTime = new DateTime(value);
             jodaTime = jodaTime.toDateTime(DateTimeZone.forTimeZone(AppContext.getUserTimeZone()));
             int hrs = jodaTime.getHourOfDay();
@@ -136,6 +144,7 @@ public class DateTimeOptionField extends CustomField<Date> {
                 timeFormatComboBox.setValue(timeFormat);
             }
         }
+
         super.setPropertyDataSource(newDataSource);
     }
 
@@ -170,7 +179,7 @@ public class DateTimeOptionField extends CustomField<Date> {
         DateTime jodaSelectDate = new DateTime(selectDate).toDateTime(DateTimeZone.forTimeZone(AppContext.getUserTimeZone()));
         Date baseDate = new LocalDate(jodaSelectDate).toDate();
         if (hideTimeOption) {
-            return baseDate;
+            return new LocalDateTime(baseDate).toDateTime(DateTimeZone.forTimeZone(AppContext.getUserTimeZone())).toDate();
         } else {
             Integer hour = (hourPickerComboBox.getValue() != null) ? Integer.parseInt((String) hourPickerComboBox.getValue()) : 0;
             Integer minus = (minutePickerComboBox.getValue() != null) ? Integer.parseInt((String) minutePickerComboBox.getValue()) : 0;
