@@ -61,6 +61,7 @@ Version 5.3.3
 * [Premium] Timelog window causes error in several special cases
 * Can not search projects in the project list view
 * Timezone on several date fields are not correct
+* Not check validate dates in the issue entry
 
 Version 5.3.2
 -----------------------------

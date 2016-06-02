@@ -76,15 +76,15 @@ public class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
             } else if (BugWithBLOBs.Field.priority.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_PRIORITY),
                         AppContext.getMessage(BugI18nEnum.FORM_PRIORITY_HELP), 1, 2);
+            } else if (BugWithBLOBs.Field.startdate.equalTo(propertyId)) {
+                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 3);
             } else if (BugWithBLOBs.Field.severity.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_SEVERITY), 0, 3);
+                return informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_SEVERITY), 1, 3);
+            } else if (BugWithBLOBs.Field.enddate.equalTo(propertyId)) {
+                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 0, 4);
             } else if (BugWithBLOBs.Field.resolution.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_RESOLUTION),
-                        AppContext.getMessage(BugI18nEnum.FORM_RESOLUTION_HELP), 1, 3);
-            } else if (BugWithBLOBs.Field.startdate.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 4);
-            } else if (BugWithBLOBs.Field.enddate.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 1, 4);
+                        AppContext.getMessage(BugI18nEnum.FORM_RESOLUTION_HELP), 1, 4);
             } else if (BugWithBLOBs.Field.duedate.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 5);
             } else if (SimpleBug.Field.milestoneName.equalTo(propertyId)) {
