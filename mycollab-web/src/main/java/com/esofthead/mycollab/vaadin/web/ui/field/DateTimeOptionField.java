@@ -22,6 +22,7 @@ import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.ValueComboBox;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -47,6 +48,7 @@ public class DateTimeOptionField extends CustomField<Date> {
     private ValueComboBox timeFormatComboBox;
     private Button toggleTimeBtn;
     private boolean hideTimeOption = true;
+    private boolean trickModified = false;
 
     public DateTimeOptionField() {
         this(false);
@@ -54,26 +56,31 @@ public class DateTimeOptionField extends CustomField<Date> {
 
     public DateTimeOptionField(boolean hideTimeOptionVal) {
         this.hideTimeOption = hideTimeOptionVal;
-        ValueChangeListener valueChangeListener = new ValueChangeListener() {
+        popupDateField = new PopupDateFieldExt();
+        popupDateField.addValueChangeListener(new ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                System.out.println("A: " + valueChangeEvent.getProperty().getValue());
+                Date date = (Date) valueChangeEvent.getProperty().getValue();
+                if (date != null) {
+                    if (popupDateField.getPropertyDataSource() == null) {
+                        trickModified = true;
+                    }
+                    popupDateField.setPropertyDataSource(new ObjectProperty(date));
+                }
             }
-        };
-        popupDateField = new PopupDateFieldExt();
+        });
+        popupDateField.setImmediate(true);
         popupDateField.setResolution(Resolution.DAY);
-        popupDateField.addValueChangeListener(valueChangeListener);
         hourPickerComboBox = new HourPickerComboBox();
         hourPickerComboBox.setWidth("60px");
-        hourPickerComboBox.addValueChangeListener(valueChangeListener);
 
         minutePickerComboBox = new MinutePickerComboBox();
-        minutePickerComboBox.addValueChangeListener(valueChangeListener);
+        minutePickerComboBox.setImmediate(true);
         minutePickerComboBox.setWidth("60px");
 
         timeFormatComboBox = new ValueComboBox();
-        timeFormatComboBox.addValueChangeListener(valueChangeListener);
         timeFormatComboBox.setWidth("65px");
+        timeFormatComboBox.setImmediate(true);
         timeFormatComboBox.setCaption(null);
         timeFormatComboBox.loadData("AM", "PM");
         timeFormatComboBox.setNullSelectionAllowed(false);
@@ -99,6 +106,21 @@ public class DateTimeOptionField extends CustomField<Date> {
             container.with(popupDateField, new MHorizontalLayout(hourPickerComboBox, minutePickerComboBox,
                     timeFormatComboBox), toggleTimeBtn);
         }
+    }
+
+    @Override
+    public boolean isModified() {
+        return popupDateField.isModified() || hourPickerComboBox.isModified() || minutePickerComboBox.isModified() ||
+                timeFormatComboBox.isModified() || trickModified;
+    }
+
+    @Override
+    public void setBuffered(boolean buffered) {
+        popupDateField.setBuffered(buffered);
+        hourPickerComboBox.setBuffered(buffered);
+        minutePickerComboBox.setBuffered(buffered);
+        timeFormatComboBox.setBuffered(buffered);
+        super.setBuffered(buffered);
     }
 
     @Override
@@ -137,11 +159,11 @@ public class DateTimeOptionField extends CustomField<Date> {
                 toggleHideTimeOption(false);
             }
 
-            popupDateField.setValue(jodaTime.toDate());
+            popupDateField.setPropertyDataSource(new ObjectProperty(jodaTime.toDate()));
             if (!hideTimeOption) {
-                hourPickerComboBox.setValue((hrs < 10) ? "0" + hrs : "" + hrs);
-                minutePickerComboBox.setValue((min < 10) ? "0" + min : "" + min);
-                timeFormatComboBox.setValue(timeFormat);
+                hourPickerComboBox.setPropertyDataSource(new ObjectProperty((hrs < 10) ? "0" + hrs : "" + hrs));
+                minutePickerComboBox.setPropertyDataSource(new ObjectProperty((min < 10) ? "0" + min : "" + min));
+                timeFormatComboBox.setPropertyDataSource(new ObjectProperty(timeFormat));
             }
         }
         super.setPropertyDataSource(newDataSource);
