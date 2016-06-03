@@ -21,7 +21,6 @@ import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
 
 @BaseName("localization/project-task")
-@LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
 public enum TaskI18nEnum {
     NEW,
     DETAIL,
@@ -84,6 +83,8 @@ public enum TaskI18nEnum {
     VAL_UPDATE_THIS_WEEK,
     VAL_NEW_LAST_WEEK,
     VAL_UPDATE_LAST_WEEK,
+
+    DELETED_TASK,
 
     ERROR_CAN_NOT_ASSIGN_PARENT_TASK_TO_ITSELF
 }

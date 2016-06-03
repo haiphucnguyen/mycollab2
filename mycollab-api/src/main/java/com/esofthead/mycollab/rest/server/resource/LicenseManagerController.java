@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.rest.server.resource;
 
+import com.esofthead.mycollab.configuration.EnDecryptHelper;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
@@ -144,11 +145,11 @@ public class LicenseManagerController {
 
     public static void main(String[] args) throws Exception {
         LicenseInfo info = new LicenseInfo();
-        info.setCustomerId("1");
+        info.setCustomerId(EnDecryptHelper.encryptText("1"));
         info.setLicenseType(LicenseType.PRO);
-        info.setExpireDate(new LocalDate().plusDays(10).toDate());
-        info.setIssueDate(new LocalDate().minusDays(30).toDate());
-        info.setLicenseOrg("eSoftHead");
+        info.setExpireDate(new LocalDate().plusDays(356).toDate());
+        info.setIssueDate(new LocalDate().toDate());
+        info.setLicenseOrg("HERBAMED AG");
         info.setMaxUsers(10);
         LicenseManagerController generator = new LicenseManagerController();
         String str = generator.encode(info);

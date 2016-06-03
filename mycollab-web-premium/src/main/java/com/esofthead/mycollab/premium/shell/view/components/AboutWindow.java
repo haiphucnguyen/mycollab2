@@ -62,15 +62,14 @@ public class AboutWindow extends AbstractAboutWindow {
         } else {
             Label licenseInfoLbl;
             if (licenseInfo.isExpired()) {
-                licenseInfoLbl = new Label("License to <b>" + licenseInfo.getCustomerId() + "/" + licenseInfo
-                        .getLicenseOrg() + "</b>. The license is expired", ContentMode.HTML);
+                licenseInfoLbl = new Label("License to <b>" + licenseInfo.getLicenseOrg() + "</b>. The license is expired", ContentMode.HTML);
             } else {
                 if (licenseInfo.isTrial()) {
-                    licenseInfoLbl = new Label("License to <b>" + licenseInfo.getCustomerId() + "/" + licenseInfo
+                    licenseInfoLbl = new Label("License to <b>" + licenseInfo
                             .getLicenseOrg() + "</b>. Trial, Expire at <b>" + AppContext.formatPrettyTime(licenseInfo
                             .getExpireDate()) + "</b>", ContentMode.HTML);
                 } else {
-                    licenseInfoLbl = new Label("License to <b>" + licenseInfo.getCustomerId() + "/" + licenseInfo
+                    licenseInfoLbl = new Label("License to <b>" + licenseInfo
                             .getLicenseOrg() + "</b>. Expire at <b>" + AppContext.formatPrettyTime(licenseInfo
                             .getExpireDate()) + "</b>. Max users is <b>" + licenseInfo.getMaxUsers() + "</b>",
                             ContentMode.HTML);

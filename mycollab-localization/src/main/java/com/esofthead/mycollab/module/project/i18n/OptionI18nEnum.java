@@ -17,8 +17,6 @@
 package com.esofthead.mycollab.module.project.i18n;
 
 import ch.qos.cal10n.BaseName;
-import ch.qos.cal10n.Locale;
-import ch.qos.cal10n.LocaleData;
 import com.esofthead.mycollab.core.MyCollabException;
 
 /**
@@ -49,43 +47,36 @@ public class OptionI18nEnum {
             InvoiceStatus.Sent, InvoiceStatus.Scheduled};
 
     @BaseName("localization/project-milestone-status")
-    @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
     public enum MilestoneStatus {
         Future, Closed, InProgress
     }
 
     @BaseName("localization/project-invoice-status")
-    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
     public enum InvoiceStatus {
         Paid, Sent, Scheduled, All
     }
 
     @BaseName("localization/project-task-priority")
-    @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
     public enum TaskPriority {
         Urgent, High, Medium, Low, None
     }
 
     @BaseName("localization/project-bug-status")
-    @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
     public enum BugStatus {
         Open, Verified, Resolved, ReOpen
     }
 
     @BaseName("localization/project-bug-priority")
-    @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
     public enum BugPriority {
         Blocker, Critical, Major, Minor, Trivial
     }
 
     @BaseName("localization/project-bug-severity")
-    @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
     public enum BugSeverity {
         Critical, Major, Minor, Trivial
     }
 
     @BaseName("localization/project-bug-resolution")
-    @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
     public enum BugResolution {
         Fixed,
         Won_Fix,
@@ -97,9 +88,9 @@ public class OptionI18nEnum {
     }
 
     @BaseName("localization/project-bug-related")
-    @LocaleData(value = {@Locale("en-US"), @Locale("ja-JP")}, defaultCharset = "UTF-8")
     public enum BugRelation {
         Related, Duplicated, Block, DependsOn, Duplicate, Relation;
+
         public Enum getReverse() {
             if (this == Duplicated) {
                 return Duplicate;
