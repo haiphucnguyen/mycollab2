@@ -144,7 +144,6 @@ public class DateTimeOptionField extends CustomField<Date> {
                 timeFormatComboBox.setValue(timeFormat);
             }
         }
-
         super.setPropertyDataSource(newDataSource);
     }
 

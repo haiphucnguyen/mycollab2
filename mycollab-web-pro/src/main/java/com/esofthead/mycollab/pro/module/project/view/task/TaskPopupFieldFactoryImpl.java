@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
-import com.esofthead.mycollab.module.project.ui.components.TaskCompleteStatusSelection;
+import com.esofthead.mycollab.module.project.ui.components.TaskSliderField;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.project.view.task.TaskPopupFieldFactory;
@@ -44,6 +44,7 @@ import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.LazyPopupView;
+import com.esofthead.mycollab.vaadin.web.ui.field.DateTimeOptionField;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
@@ -183,7 +184,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("percentagecomplete")
-                .withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE)).withField(new TaskCompleteStatusSelection())
+                .withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE)).withField(new TaskSliderField())
                 .withDescription(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE))
                 .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPercentagecomplete())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
@@ -207,7 +208,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("deadline").withCaption(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
+                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService
+                .class))
                 .withValue(task.getDeadline())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -230,7 +232,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("startdate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStartdate())
+                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService
+                .class)).withValue(task.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -252,7 +255,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("enddate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getEnddate())
+                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService
+                .class)).withValue(task.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }

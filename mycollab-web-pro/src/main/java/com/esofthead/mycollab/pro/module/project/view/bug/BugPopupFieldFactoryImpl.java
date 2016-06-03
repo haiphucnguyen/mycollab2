@@ -349,7 +349,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             }
         };
         builder.withBean(bug).withBindProperty("duedate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new DateTimeOptionField()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate())
+                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -370,7 +370,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             }
         };
         builder.withBean(bug).withBindProperty("startdate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new DateTimeOptionField()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getStartdate())
+                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -391,7 +391,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             }
         };
         builder.withBean(bug).withBindProperty("enddate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new DateTimeOptionField()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getEnddate())
+                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }

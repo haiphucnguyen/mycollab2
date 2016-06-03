@@ -92,7 +92,6 @@ public abstract class PopupBeanFieldBuilder<B> {
     private class BeanPopupView extends LazyPopupView {
         BeanPopupView(String valueAsHtml) {
             super(valueAsHtml);
-            setHideOnMouseOut(false);
         }
 
         @Override

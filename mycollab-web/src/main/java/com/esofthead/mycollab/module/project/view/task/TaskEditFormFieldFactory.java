@@ -27,7 +27,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.ui.components.HumanTimeConverter;
 import com.esofthead.mycollab.module.project.ui.components.ProjectSubscribersComp;
-import com.esofthead.mycollab.module.project.ui.components.TaskCompleteStatusSelection;
+import com.esofthead.mycollab.module.project.ui.components.TaskSliderField;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.project.view.task.components.TaskPriorityComboBox;
@@ -35,7 +35,6 @@ import com.esofthead.mycollab.module.project.view.task.components.TaskStatusComb
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
-import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.esofthead.mycollab.vaadin.web.ui.field.DateTimeOptionField;
@@ -93,7 +92,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
         } else if (Task.Field.status.equalTo(propertyId)) {
             return new TaskStatusComboBox();
         } else if (Task.Field.percentagecomplete.equalTo(propertyId)) {
-            return new TaskCompleteStatusSelection();
+            return new TaskSliderField();
         } else if (Task.Field.priority.equalTo(propertyId)) {
             return new TaskPriorityComboBox();
         } else if (Task.Field.duration.equalTo(propertyId)) {
@@ -112,15 +111,15 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
                 @Override
                 public void blur(FieldEvents.BlurEvent event) {
                     HumanTime humanTime = HumanTime.eval(field.getValue());
-                    Integer duration =  Integer.valueOf(humanTime.getDelta() + "");
-                    PopupDateFieldExt startDateField = (PopupDateFieldExt) fieldGroup.getField(Task.Field.startdate.name());
+                    Integer duration = Integer.valueOf(humanTime.getDelta() + "");
+                    DateTimeOptionField startDateField = (DateTimeOptionField) fieldGroup.getField(Task.Field.startdate.name());
                     Date startDateVal = startDateField.getValue();
                     if (duration > 0 && startDateVal != null) {
                         int durationIndays = duration / (int) DateTimeUtils.MILLISECONDS_IN_A_DAY;
                         if (durationIndays > 0) {
                             LocalDate startDateJoda = new LocalDate(startDateVal);
                             LocalDate endDateJoda = BusinessDayTimeUtils.plusDays(startDateJoda, durationIndays);
-                            PopupDateFieldExt endDateField = (PopupDateFieldExt) fieldGroup.getField(Task.Field.enddate.name());
+                            DateTimeOptionField endDateField = (DateTimeOptionField) fieldGroup.getField(Task.Field.enddate.name());
                             endDateField.setValue(endDateJoda.toDate());
                         }
                     }
