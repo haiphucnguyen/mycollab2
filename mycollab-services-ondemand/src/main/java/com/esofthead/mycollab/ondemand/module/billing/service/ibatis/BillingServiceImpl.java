@@ -95,7 +95,8 @@ public class BillingServiceImpl implements BillingService {
                     ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }
         int accountId = billingAccount.getId();
-        billingAccountService.createDefaultAccountData(username, password, timezoneId, isEmailVerified, true, accountId);
+        billingAccountService.createDefaultAccountData(username, password, timezoneId, LocalizationHelper
+                .defaultLocale.getLanguage(), isEmailVerified, true, accountId);
     }
 
     @Override

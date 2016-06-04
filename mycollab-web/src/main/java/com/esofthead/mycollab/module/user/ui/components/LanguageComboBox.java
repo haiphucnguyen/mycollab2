@@ -31,6 +31,7 @@ public class LanguageComboBox extends ComboBox {
 
     public LanguageComboBox() {
         super();
+        this.setNullSelectionAllowed(false);
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
         Locale[] supportedLanguage = LocalizationHelper.getAvailableLocales();
