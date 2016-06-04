@@ -20,13 +20,15 @@ import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingContainer;
 import com.esofthead.mycollab.spring.AppContextUtil;
+import com.esofthead.mycollab.vaadin.AbstractLicenseActivationWindow;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.*;
 
 /**
  * @author MyCollab Ltd.
@@ -37,7 +39,7 @@ public class BillingContainer extends AbstractPageView implements IBillingContai
     private static final long serialVersionUID = 1L;
 
     public BillingContainer() {
-        withMargin(true);
+        withMargin(true).withSpacing(true);
         setDefaultComponentAlignment(Alignment.TOP_CENTER);
     }
 
@@ -62,6 +64,18 @@ public class BillingContainer extends AbstractPageView implements IBillingContai
                 layoutHelper.addComponent(new Label(licenseInfo.getMaxUsers() + ""), "Max Users", 0, 3);
                 layoutHelper.getLayout().setWidth("600px");
                 with(layoutHelper.getLayout()).withAlign(layoutHelper.getLayout(), Alignment.TOP_CENTER);
+
+                if (licenseInfo.isTrial() || licenseInfo.isExpired() || licenseInfo.isInvalid()) {
+                    Button licenseBtn = new Button("Enter license code", new Button.ClickListener() {
+                        @Override
+                        public void buttonClick(Button.ClickEvent clickEvent) {
+                            Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
+                            UI.getCurrent().addWindow(activateWindow);
+                        }
+                    });
+                    licenseBtn.addStyleName(UIConstants.BUTTON_ACTION);
+                    with(licenseBtn).withAlign(licenseBtn, Alignment.TOP_CENTER);
+                }
             } catch (Exception e) {
                 buildInvalidLicenseComp();
             }

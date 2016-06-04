@@ -149,7 +149,7 @@ public class LicenseManagerController {
         info.setLicenseType(LicenseType.PRO);
         info.setExpireDate(new LocalDate().plusDays(356).toDate());
         info.setIssueDate(new LocalDate().toDate());
-        info.setLicenseOrg("HERBAMED AG");
+        info.setLicenseOrg("MyCollab");
         info.setMaxUsers(10);
         LicenseManagerController generator = new LicenseManagerController();
         String str = generator.encode(info);

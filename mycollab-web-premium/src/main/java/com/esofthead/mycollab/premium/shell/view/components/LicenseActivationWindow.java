@@ -43,7 +43,7 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
         super();
         this.setModal(true);
         this.setResizable(false);
-        this.setWidth("600px");
+        this.setWidth("700px");
         MVerticalLayout content = new MVerticalLayout();
         ELabel titleLbl = ELabel.h2("MyCollab activated");
 
