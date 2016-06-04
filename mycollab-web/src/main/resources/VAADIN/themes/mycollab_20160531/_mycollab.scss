@@ -781,9 +781,11 @@ $v-line-height--header:1.5em;
   /* Footer */
   .footer {
     border-top: 1px solid $my-separator-color;
-    .v-link, div {
-      text-decoration: none;
-      font-size:$font-small;
+    background-color: #3b3b3b;
+    color: #fff;
+    font-size: $font-small;
+    a {
+      color: #fff;
     }
   }
   /* End Footer */
