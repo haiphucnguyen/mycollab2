@@ -34,6 +34,6 @@ class CountLiveInstancesJob extends GenericQuartzJobBean {
     extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getNotifyEmail,
       Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")), null, null,
       contentGenerator.parseString("Today live instances count"),
-      contentGenerator.parseFile("templates/email/user/countLiveInstances.html"), null)
+      contentGenerator.parseFile("mailCountLiveInstances.html"), null)
   }
 }
