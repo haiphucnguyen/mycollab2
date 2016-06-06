@@ -165,10 +165,18 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>com.esofthead.mycollab</groupId>
+                                    <artifactId>mycollab-esb</artifactId>
+                                    <version>5.3.2</version>
+                                    <type>jar</type>
+                                    <includes>*.html</includes>
+                                    <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>com.esofthead.mycollab</groupId>
                                     <artifactId>mycollab-localization</artifactId>
                                     <version>5.3.2</version>
                                     <type>jar</type>
-                                    <includes>localization/*.properties</includes>
+                                    <includes>*.properties</includes>
                                     <excludes>**/pom.properties</excludes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
                                 </artifactItem>
@@ -177,7 +185,7 @@
                                     <artifactId>mycollab-scheduler</artifactId>
                                     <version>5.3.2</version>
                                     <type>jar</type>
-                                    <includes>templates/email/*.html</includes>
+                                    <includes>*.html</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>
@@ -185,7 +193,7 @@
                                     <artifactId>mycollab-servlet</artifactId>
                                     <version>5.3.2</version>
                                     <type>jar</type>
-                                    <includes>templates/page/*.html</includes>
+                                    <includes>*.html</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
