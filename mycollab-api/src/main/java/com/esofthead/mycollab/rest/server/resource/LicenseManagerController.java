@@ -98,7 +98,7 @@ public class LicenseManagerController {
         info.setExpireDate(new LocalDate().plusDays(30).toDate());
         info.setIssueDate(new LocalDate().toDate());
         info.setLicenseOrg("MyCollab");
-        info.setMaxUsers(10);
+        info.setMaxUsers(30);
         LicenseManagerController generator = new LicenseManagerController();
         return generator.encode(info);
     }

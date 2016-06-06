@@ -25,14 +25,12 @@ public class CAL10NBundleFinderByClassloaderExt extends AbstractCAL10NBundleFind
         File i18nFile = FileUtils.getDesireFile(i18nFolder, resourceCandidate);
         if (i18nFile != null) {
             try {
-                LOG.info("Try to get resource file " + resourceCandidate);
                 return i18nFile.toURI().toURL();
             } catch (MalformedURLException e) {
                 LOG.error("Except to get resource file", e);
                 return classLoader.getResource(resourceCandidate);
             }
         } else {
-            LOG.info("Can not get resource " + resourceCandidate + " in path " + i18nFolder.getPath());
             return classLoader.getResource(resourceCandidate);
         }
     }
