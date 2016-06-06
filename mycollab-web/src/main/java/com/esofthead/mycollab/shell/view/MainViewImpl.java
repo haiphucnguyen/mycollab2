@@ -78,6 +78,7 @@ import org.vaadin.sliderpanel.SliderPanel;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import sun.net.www.content.text.Generic;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -446,6 +447,13 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         BrowserWindowOpener supportOpener = new BrowserWindowOpener(supportRes);
         supportOpener.extend(supportBtn);
         accountPopupContent.addOption(supportBtn);
+
+        Button translateBtn = new Button(AppContext.getMessage(GenericI18Enum.ACTION_TRANSLATE));
+        translateBtn.setIcon(FontAwesome.PENCIL);
+        ExternalResource translateRes = new ExternalResource("https://community.mycollab.com/docs/developing-mycollab/internalization-and-localization/");
+        BrowserWindowOpener translateOpener = new BrowserWindowOpener(translateRes);
+        translateOpener.extend(translateBtn);
+        accountPopupContent.addOption(translateBtn);
 
         if (!SiteConfiguration.isCommunityEdition()) {
             Button myAccountBtn = new Button(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING), new Button.ClickListener() {
