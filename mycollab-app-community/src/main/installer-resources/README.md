@@ -55,6 +55,7 @@ Version 5.3.3
 * Allow project member can set time for task and issue
 * Apply the date formats in report and tooltip
 * Support localization for languages easier
+* Support running as startup scripts in Linux OS
 * Other improvements
 
 **Bug Fixes**
