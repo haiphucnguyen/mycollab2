@@ -64,6 +64,7 @@ Version 5.3.3
 * Can not search projects in the project list view
 * Timezone on several date fields are not correct
 * Not check validate dates in the issue entry
+* Upload project favicon does not work with Java 7
 
 Version 5.3.2
 -----------------------------

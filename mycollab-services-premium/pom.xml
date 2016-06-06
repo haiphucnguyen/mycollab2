@@ -12,6 +12,11 @@
     </parent>
     <packaging>jar</packaging>
     <dependencies>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-caching</artifactId>
+            <version>5.3.3</version>
+        </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
