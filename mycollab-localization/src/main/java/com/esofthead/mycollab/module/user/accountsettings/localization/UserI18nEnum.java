@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.user.accountsettings.localization;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/account-user")
+@BaseName("account-user")
 public enum UserI18nEnum {
     MAIL_RECOVERY_PASSWORD_SUBJECT,
     MAIL_INVITE_USER_SUBJECT,

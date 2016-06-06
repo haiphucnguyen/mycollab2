@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/project-setting")
+@BaseName("project-setting")
 public enum ProjectSettingI18nEnum {
     VIEW_TITLE,
     WIDGET_CUSTOMIZE_FEATURES,

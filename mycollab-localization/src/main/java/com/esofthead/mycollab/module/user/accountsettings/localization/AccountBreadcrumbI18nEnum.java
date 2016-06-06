@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.user.accountsettings.localization;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/account-breadcrumb")
+@BaseName("account-breadcrumb")
 public enum AccountBreadcrumbI18nEnum {
     VIEW_PROFILE,
     VIEW_BILLING,

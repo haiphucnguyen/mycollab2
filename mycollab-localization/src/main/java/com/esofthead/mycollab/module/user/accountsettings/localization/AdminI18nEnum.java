@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.user.accountsettings.localization;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/account-admin")
+@BaseName("account-admin")
 public enum AdminI18nEnum {
     VIEW_PROFILE,
     VIEW_BILLING,

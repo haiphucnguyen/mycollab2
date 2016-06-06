@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.user.accountsettings.localization;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/account-billing")
+@BaseName("account-billing")
 public enum BillingI18nEnum {
     VIEW_CHANGE_BILLING_PLAN_TITLE,
     BUTTON_CANCEL_ACCOUNT,

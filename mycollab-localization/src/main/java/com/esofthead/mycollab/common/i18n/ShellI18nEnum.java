@@ -18,7 +18,7 @@ package com.esofthead.mycollab.common.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/common-shell")
+@BaseName("common-shell")
 public enum ShellI18nEnum {
     BUTTON_IGNORE_RESET_PASSWORD,
     BUTTON_RESET_PASSWORD,

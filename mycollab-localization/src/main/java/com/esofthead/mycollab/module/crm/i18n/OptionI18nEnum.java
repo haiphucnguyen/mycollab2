@@ -24,7 +24,7 @@ import ch.qos.cal10n.BaseName;
  */
 public class OptionI18nEnum {
 
-    @BaseName("localization/crm-accounttype")
+    @BaseName("crm-accounttype")
     public enum AccountType {
         Analyst,
         Competitor,

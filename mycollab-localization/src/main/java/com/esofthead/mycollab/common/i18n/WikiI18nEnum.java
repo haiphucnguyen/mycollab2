@@ -18,7 +18,7 @@ package com.esofthead.mycollab.common.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/common-wiki")
+@BaseName("common-wiki")
 public enum WikiI18nEnum {
     status_public, status_private, status_archieved
 }

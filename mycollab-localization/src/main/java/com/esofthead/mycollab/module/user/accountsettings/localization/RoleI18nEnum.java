@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.user.accountsettings.localization;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/account-role")
+@BaseName("account-role")
 public enum RoleI18nEnum {
     LIST,
     NEW,

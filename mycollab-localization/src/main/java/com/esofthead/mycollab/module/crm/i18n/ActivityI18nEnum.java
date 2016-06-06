@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.crm.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/crm-activity")
+@BaseName("crm-activity")
 public enum ActivityI18nEnum {
     TAB_CALENDAR_TITLE,
     TAB_ACTIVITY_TITLE,

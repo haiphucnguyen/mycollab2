@@ -46,37 +46,37 @@ public class OptionI18nEnum {
     public static InvoiceStatus[] invoiceStatuses = {InvoiceStatus.Paid,
             InvoiceStatus.Sent, InvoiceStatus.Scheduled};
 
-    @BaseName("localization/project-milestone-status")
+    @BaseName("project-milestone-status")
     public enum MilestoneStatus {
         Future, Closed, InProgress
     }
 
-    @BaseName("localization/project-invoice-status")
+    @BaseName("project-invoice-status")
     public enum InvoiceStatus {
         Paid, Sent, Scheduled, All
     }
 
-    @BaseName("localization/project-task-priority")
+    @BaseName("project-task-priority")
     public enum TaskPriority {
         Urgent, High, Medium, Low, None
     }
 
-    @BaseName("localization/project-bug-status")
+    @BaseName("project-bug-status")
     public enum BugStatus {
         Open, Verified, Resolved, ReOpen
     }
 
-    @BaseName("localization/project-bug-priority")
+    @BaseName("project-bug-priority")
     public enum BugPriority {
         Blocker, Critical, Major, Minor, Trivial
     }
 
-    @BaseName("localization/project-bug-severity")
+    @BaseName("project-bug-severity")
     public enum BugSeverity {
         Critical, Major, Minor, Trivial
     }
 
-    @BaseName("localization/project-bug-resolution")
+    @BaseName("project-bug-resolution")
     public enum BugResolution {
         Fixed,
         Won_Fix,
@@ -87,7 +87,7 @@ public class OptionI18nEnum {
         None
     }
 
-    @BaseName("localization/project-bug-related")
+    @BaseName("project-bug-related")
     public enum BugRelation {
         Related, Duplicated, Block, DependsOn, Duplicate, Relation;
 

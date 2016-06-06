@@ -22,7 +22,7 @@ import ch.qos.cal10n.BaseName;
  * @author MyCollab Ltd
  * @since 5.2.10
  */
-@BaseName("localization/project-invoice")
+@BaseName("project-invoice")
 public enum InvoiceI18nEnum {
     SINGLE,
     LIST,

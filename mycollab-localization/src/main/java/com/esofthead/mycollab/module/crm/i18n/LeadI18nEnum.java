@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.crm.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/crm-lead")
+@BaseName("crm-lead")
 public enum LeadI18nEnum {
     NEW,
     LIST,

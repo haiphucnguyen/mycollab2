@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/project-standup")
+@BaseName("project-standup")
 public enum StandupI18nEnum {
     SINGLE,
     VIEW_LIST_TITLE,

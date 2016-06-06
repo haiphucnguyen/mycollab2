@@ -24,7 +24,7 @@ import ch.qos.cal10n.BaseName;
  */
 public class OptionI18nEnum {
 
-    @BaseName("localization/common-generic-status")
+    @BaseName("common-generic-status")
     public enum StatusI18nEnum {
         Open, Closed, Archived, Pending, InProgress
     }

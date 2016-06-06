@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.user.accountsettings.localization;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/account-setting")
+@BaseName("account-setting")
 public enum SettingCommonI18nEnum {
     BUTTON_CHANGE_LOGO,
     BUTTON_RESET_DEFAULT,

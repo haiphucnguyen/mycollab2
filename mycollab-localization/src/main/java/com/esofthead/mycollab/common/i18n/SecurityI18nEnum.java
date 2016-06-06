@@ -18,7 +18,7 @@ package com.esofthead.mycollab.common.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/common-security")
+@BaseName("common-security")
 public enum SecurityI18nEnum {
     NO_ACCESS, READONLY, READ_WRITE, ACCESS, YES, NO, UNDEFINE, ACCESS_PERMISSION_HELP, BOOLEAN_PERMISSION_HELP;
 

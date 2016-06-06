@@ -22,7 +22,7 @@ import ch.qos.cal10n.BaseName;
  * @author MyCollab Ltd.
  * @since 4.1.1
  */
-@BaseName("localization/common-day")
+@BaseName("common-day")
 public enum DayI18nEnum {
     LAST_UPDATED_ON,
     TIME_FORMAT,

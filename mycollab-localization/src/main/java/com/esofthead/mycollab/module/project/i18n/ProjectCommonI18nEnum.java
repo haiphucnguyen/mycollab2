@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/project-common")
+@BaseName("project-common")
 public enum ProjectCommonI18nEnum {
     WIDGET_ACTIVE_PROJECTS_TITLE,
     WIDGET_ARCHIVE_PROJECTS_TITLE,

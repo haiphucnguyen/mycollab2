@@ -18,7 +18,7 @@ package com.esofthead.mycollab.common.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/common-webexception")
+@BaseName("common-webexception")
 public enum ErrorI18nEnum {
     SUB_DOMAIN_IS_NOT_EXISTED,
     NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS,

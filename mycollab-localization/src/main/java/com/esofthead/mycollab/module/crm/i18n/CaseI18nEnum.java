@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.crm.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/crm-case")
+@BaseName("crm-case")
 public enum CaseI18nEnum {
     LIST,
     NEW,

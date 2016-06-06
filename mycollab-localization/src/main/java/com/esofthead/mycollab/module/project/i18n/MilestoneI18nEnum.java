@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/project-milestone")
+@BaseName("project-milestone")
 public enum MilestoneI18nEnum {
     LIST,
     NEW,

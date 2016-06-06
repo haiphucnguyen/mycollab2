@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/project-risk")
+@BaseName("project-risk")
 public enum RiskI18nEnum {
     LIST,
     NEW,

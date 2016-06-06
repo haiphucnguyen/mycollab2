@@ -22,7 +22,7 @@ import ch.qos.cal10n.BaseName;
  * @author MyCollab Ltd
  * @since 5.2.5
  */
-@BaseName("localization/project-ticket")
+@BaseName("project-ticket")
 public enum TicketI18nEnum {
     M_TICKET_NUM
 }

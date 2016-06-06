@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/project-role")
+@BaseName("project-role")
 public enum ProjectRoleI18nEnum {
     LIST,
     DETAIL,

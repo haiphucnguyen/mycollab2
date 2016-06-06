@@ -18,7 +18,7 @@ package com.esofthead.mycollab.common.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/common-generic")
+@BaseName("common-generic")
 public enum GenericI18Enum {
     NOTIFICATION_GOTO_FIRST_RECORD,
     NOTIFICATION_GOTO_LAST_RECORD,

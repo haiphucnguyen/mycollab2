@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/project-timetracking")
+@BaseName("project-timetracking")
 public enum TimeTrackingI18nEnum {
     BUTTON_LOG_TIME,
     BUTTON_LINK_TASK,

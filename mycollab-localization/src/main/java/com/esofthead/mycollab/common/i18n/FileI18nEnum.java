@@ -22,7 +22,7 @@ import ch.qos.cal10n.BaseName;
  * @author MyCollab Ltd.
  * @since 4.1.1
  */
-@BaseName("localization/common-file")
+@BaseName("common-file")
 public enum FileI18nEnum {
     EXCEL,
     PDF,

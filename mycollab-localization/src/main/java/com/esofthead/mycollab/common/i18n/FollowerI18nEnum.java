@@ -18,7 +18,7 @@ package com.esofthead.mycollab.common.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/common-follower")
+@BaseName("common-follower")
 public enum FollowerI18nEnum {
     FORM_PROJECT_NAME,
     FORM_SUMMARY,

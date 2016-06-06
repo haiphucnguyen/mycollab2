@@ -20,7 +20,7 @@ import ch.qos.cal10n.BaseName;
 import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
 
-@BaseName("localization/project-task")
+@BaseName("project-task")
 public enum TaskI18nEnum {
     NEW,
     DETAIL,

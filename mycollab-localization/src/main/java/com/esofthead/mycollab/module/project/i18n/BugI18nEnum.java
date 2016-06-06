@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/project-bug")
+@BaseName("project-bug")
 public enum BugI18nEnum {
     BUTTON_RESOLVED,
     BUTTON_WONT_FIX,

@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.crm.i18n;
 
 import ch.qos.cal10n.BaseName;
 
-@BaseName("localization/crm-common")
+@BaseName("crm-common")
 public enum CrmCommonI18nEnum {
     WIDGET_ACTIVITY_CREATE_ACTION,
     WIDGET_ACTIVITY_UPDATE_ACTION,
