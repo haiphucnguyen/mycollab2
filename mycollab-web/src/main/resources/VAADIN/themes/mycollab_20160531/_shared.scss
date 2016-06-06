@@ -36,6 +36,10 @@
     white-space: initial;
   }
 
+  .meta-color {
+    color: $my-meta-color;
+  }
+
   .meta-info {
     color: $my-meta-color;
     font-size: $font-small;

@@ -86,6 +86,7 @@ public class BillingServiceImpl implements BillingService {
         billingAccount.setPricingeffectto(new GregorianCalendar(2099, 11, 31).getTime());
         billingAccount.setStatus(AccountStatusConstants.TRIAL);
         billingAccount.setSubdomain(subDomain);
+        billingAccount.setDisplayemailpublicly(true);
         billingAccount.setDefaulttimezone(timezoneId);
 
         try {

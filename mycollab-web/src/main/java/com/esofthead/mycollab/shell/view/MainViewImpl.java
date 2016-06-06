@@ -78,7 +78,6 @@ import org.vaadin.sliderpanel.SliderPanel;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
-import sun.net.www.content.text.Generic;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
