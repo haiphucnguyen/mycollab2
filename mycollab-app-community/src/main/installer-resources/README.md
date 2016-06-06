@@ -65,6 +65,7 @@ Version 5.3.3
 * Timezone on several date fields are not correct
 * Not check validate dates in the issue entry
 * Upload project favicon does not work with Java 7
+* Can not change the timezone in the user profile view in several cases
 
 Version 5.3.2
 -----------------------------
