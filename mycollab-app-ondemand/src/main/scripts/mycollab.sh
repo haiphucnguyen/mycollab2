@@ -24,10 +24,6 @@
 #                   of the catalina startup java process, when start (fork) is
 #                   used
 # -----------------------------------------------------------------------------
-
-export MYCOLLAB_OPTS="-server -Xms3000m -Xmx6000m -XX:NewSize=1024m -XX:MaxPermSize=512m -XX:+DisableExplicitGC -XX:-UseConcMarkSweepGC -javaagent:dripstat/dripstat.jar"
-export MYCOLLAB_PORT=8080
-
 # OS specific support.  $var _must_ be set to either true or false.
 cygwin=false
 darwin=false
@@ -55,12 +51,13 @@ done
 PRGDIR=`dirname "$PRG"`
 
 # Only set MYCOLLAB_HOME if not already set
-[ -z "$MYCOLLAB_HOME" ] && MYCOLLAB_HOME=`cd "$PRGDIR" >/dev/null; pwd`
+[ -z "$MYCOLLAB_HOME" ] && MYCOLLAB_HOME=`cd "$PRGDIR/.." >/dev/null; pwd`
 
 if [ -z "$MYCOLLAB_OUT" ] ; then
   MYCOLLAB_OUT="$MYCOLLAB_HOME"/logs/mycollab.out
 fi
 
+echo $MYCOLLAB_HOME
 echo Log $MYCOLLAB_OUT
 
 # For Cygwin, ensure paths are in UNIX format before anything is touched
@@ -98,7 +95,7 @@ if [ -z "$JAVA_HOME" ] ; then
   _RUNJAVA=java
 else
   _RUNJAVA="$JAVA_HOME"/bin/java
-fi  
+fi
 
 # ----- Execute The Requested Command -----------------------------------------
 
@@ -108,15 +105,15 @@ if [ $have_tty -eq 1 ]; then
   if [ "$1" = "debug" ] ; then
     echo "Using JAVA_HOME:       $JAVA_HOME"
   fi
-  
+
   if [ ! -z "$MYCOLLAB_PID" ]; then
     echo "Using MYCOLLAB_PID:    $MYCOLLAB_PID"
   fi
 fi
 
+echo Param "$1"
 
-
-if [ "$1" = "start" ] ; then
+if [ "$1" = "--start" ] ; then
 
   if [ ! -z "$MYCOLLAB_PID" ]; then
     if [ -f "$MYCOLLAB_PID" ]; then
@@ -158,15 +155,14 @@ if [ "$1" = "start" ] ; then
 
   shift
   touch "$MYCOLLAB_OUT"
-  eval \"$_RUNJAVA\" $MYCOLLAB_OPTS \
-      -jar runner.jar --port $MYCOLLAB_PORT --stop-port 8079 --stop-key esoftheadsecretkey  
- ####>> "$MYCOLLAB_OUT" 2>&1 "&"
+  cd ..
+  eval \"$_RUNJAVA\" -jar $MYCOLLAB_HOME/executor.jar &
 
   if [ ! -z "$MYCOLLAB_PID" ]; then
     echo $! > "$MYCOLLAB_PID"
   fi
 
-elif [ "$1" = "stop" ] ; then
+elif [ "$1" = "--stop" ] ; then
 
   shift
 
@@ -202,7 +198,8 @@ elif [ "$1" = "stop" ] ; then
     fi
   fi
 
-  eval \"$_RUNJAVA\" -jar runner.jar  --stop-port 8079 --stop-key esoftheadsecretkey --stop 
+  cd ..
+  eval \"$_RUNJAVA\" -jar $MYCOLLAB_HOME/executor.jar --stop
 
   if [ ! -z "$MYCOLLAB_PID" ]; then
     if [ -f "$MYCOLLAB_PID" ]; then

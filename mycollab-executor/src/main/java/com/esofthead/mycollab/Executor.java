@@ -26,8 +26,10 @@ public class Executor {
         if (isValidZipFile(upgradeFile)) {
             File libFolder = new File(getUserDir(), "lib");
             File webappFolder = new File(getUserDir(), "webapp");
+            File i18nFolder = new File(getUserDir(), "i18n");
             assertFolderWritePermission(libFolder);
             assertFolderWritePermission(webappFolder);
+            assertFolderWritePermission(i18nFolder);
 
             //Hack for windows since the jar files still be keep by process, we will wait until
             // the process is ended actually
@@ -36,6 +38,7 @@ public class Executor {
                 try {
                     FileUtils.deleteDirectory(libFolder);
                     FileUtils.deleteDirectory(webappFolder);
+                    FileUtils.deleteDirectory(i18nFolder);
                     break;
                 } catch (Exception e) {
                     tryTimes++;
@@ -52,7 +55,8 @@ public class Executor {
             try (ZipInputStream inputStream = new ZipInputStream(new FileInputStream(upgradeFile))) {
                 ZipEntry entry;
                 while ((entry = inputStream.getNextEntry()) != null) {
-                    if (!entry.isDirectory() && (entry.getName().startsWith("lib/") || entry.getName().startsWith("webapp"))) {
+                    if (!entry.isDirectory() && (entry.getName().startsWith("lib/") || entry.getName().startsWith
+                            ("webapp") || entry.getName().startsWith("i18n"))) {
                         File candidateFile = new File(getUserDir(), entry.getName());
                         candidateFile.getParentFile().mkdirs();
                         LOG.info("Copy file: " + entry.getName());
