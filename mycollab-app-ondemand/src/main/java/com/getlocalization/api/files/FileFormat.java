@@ -25,6 +25,7 @@ public enum FileFormat {
   windowsmobile("Windows Phone"),
   plain("Plain text"),
   phparray("PHP array"),
+  html("HTML File"),
   mac("Mac OS X");
 
   private String displayName;
