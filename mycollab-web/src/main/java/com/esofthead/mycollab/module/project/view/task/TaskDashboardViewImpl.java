@@ -180,25 +180,16 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
 
         taskSearchPanel.addHeaderRight(groupWrapLayout);
 
-        MButton exportPdfBtn = new MButton("").withIcon(FontAwesome.FILE_PDF_O).withStyleName(UIConstants.BUTTON_OPTION)
-                .withDescription("Export to PDF");
-        FileDownloader pdfFileDownloader = new FileDownloader(buildStreamSource(ReportExportType.PDF));
-        pdfFileDownloader.extend(exportPdfBtn);
+        Button printBtn = new Button("", new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent clickEvent) {
 
-        MButton exportExcelBtn = new MButton("").withIcon(FontAwesome.FILE_EXCEL_O).withStyleName(UIConstants.BUTTON_OPTION).withDescription("Export to Excel");
-        FileDownloader excelFileDownloader = new FileDownloader(buildStreamSource(ReportExportType.EXCEL));
-        excelFileDownloader.extend(exportExcelBtn);
-
-        MButton exportCsvBtn = new MButton("").withIcon(FontAwesome.FILE_TEXT_O).withStyleName(UIConstants.BUTTON_OPTION).withDescription("Export to CSV");
-        FileDownloader csvFileDownloader = new FileDownloader(buildStreamSource(ReportExportType.CSV));
-        csvFileDownloader.extend(exportCsvBtn);
-
-        ButtonGroup exportButtonGroup = new ButtonGroup();
-        exportButtonGroup.addButton(exportPdfBtn);
-        exportButtonGroup.addButton(exportExcelBtn);
-        exportButtonGroup.addButton(exportCsvBtn);
-
-        groupWrapLayout.with(exportButtonGroup);
+            }
+        });
+        printBtn.setIcon(FontAwesome.PRINT);
+        printBtn.addStyleName(UIConstants.BUTTON_OPTION);
+        printBtn.setDescription("Export");
+        groupWrapLayout.addComponent(printBtn);
 
         Button newTaskBtn = new Button(AppContext.getMessage(TaskI18nEnum.NEW), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;

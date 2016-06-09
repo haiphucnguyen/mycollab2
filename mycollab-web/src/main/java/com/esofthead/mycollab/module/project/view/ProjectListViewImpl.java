@@ -227,7 +227,7 @@ public class ProjectListViewImpl extends AbstractPageView implements ProjectList
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().addWindow(new ProjectListCustomizeWindow(VIEW_DEF_ID, tableItem));
+                UI.getCurrent().addWindow(new ProjectListCustomizeWindow(tableItem));
 
             }
         });

@@ -52,7 +52,7 @@ public abstract class CustomizedTableWindow extends Window {
     protected String viewId;
 
     public CustomizedTableWindow(final String viewId, final AbstractPagedBeanTable<?, ?> table) {
-        super("Customize View");
+        super(AppContext.getMessage(GenericI18Enum.OPT_CUSTOMIZE_VIEW));
         this.viewId = viewId;
         this.setWidth("400px");
         this.setResizable(false);
@@ -68,8 +68,8 @@ public abstract class CustomizedTableWindow extends Window {
         listBuilder = new ListBuilder();
         listBuilder.setImmediate(true);
         listBuilder.setColumns(0);
-        listBuilder.setLeftColumnCaption("Available Columns");
-        listBuilder.setRightColumnCaption("View Columns");
+        listBuilder.setLeftColumnCaption(AppContext.getMessage(GenericI18Enum.OPT_AVAILABLE_COLUMNS));
+        listBuilder.setRightColumnCaption(AppContext.getMessage(GenericI18Enum.OPT_VIEW_COLUMNS));
         listBuilder.setWidth(100, Sizeable.Unit.PERCENTAGE);
         listBuilder.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
         final BeanItemContainer<TableViewField> container = new BeanItemContainer<>(TableViewField.class, this.getAvailableColumns());
@@ -90,8 +90,7 @@ public abstract class CustomizedTableWindow extends Window {
                 List<TableViewField> defaultSelectedColumns = tableItem.getDefaultSelectedColumns();
                 if (defaultSelectedColumns != null) {
                     final List<TableViewField> selectedColumns = new ArrayList<>();
-                    final BeanItemContainer<TableViewField> container = (BeanItemContainer<TableViewField>) listBuilder
-                            .getContainerDataSource();
+                    final BeanItemContainer<TableViewField> container = (BeanItemContainer<TableViewField>) listBuilder.getContainerDataSource();
                     final Collection<TableViewField> itemIds = container.getItemIds();
 
                     for (TableViewField column : defaultSelectedColumns) {
