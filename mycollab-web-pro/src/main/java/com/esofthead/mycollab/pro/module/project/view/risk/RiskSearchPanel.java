@@ -10,7 +10,6 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
-import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
@@ -97,7 +96,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
             nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
             basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_CENTER);
 
-            this.myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
+            this.myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
             basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
