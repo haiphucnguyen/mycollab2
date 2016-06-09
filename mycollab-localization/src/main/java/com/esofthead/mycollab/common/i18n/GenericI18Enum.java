@@ -88,6 +88,7 @@ public enum GenericI18Enum {
     ACTION_HELP,
     ACTION_MODIFY,
     ACTION_SKIP,
+    ACTION_PRINT,
 
     TABLE_SELECTED_ITEM_TITLE,
 

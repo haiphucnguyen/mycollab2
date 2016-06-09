@@ -148,7 +148,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        groupWrapLayout.addComponent(new Label("Sort:"));
+        groupWrapLayout.addComponent(new Label("Sort"));
         final ComboBox sortCombo = new ValueComboBox(false, DESCENDING, ASCENDING);
         sortCombo.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
@@ -165,7 +165,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         sortDirection = SearchCriteria.DESC;
         groupWrapLayout.addComponent(sortCombo);
 
-        groupWrapLayout.addComponent(new Label("Group by:"));
+        groupWrapLayout.addComponent(new Label("Group by"));
         final ComboBox groupCombo = new ValueComboBox(false, GROUP_DUE_DATE, GROUP_START_DATE, GROUP_CREATED_DATE,
                 PLAIN_LIST, GROUP_USER);
         groupCombo.addValueChangeListener(new Property.ValueChangeListener() {
