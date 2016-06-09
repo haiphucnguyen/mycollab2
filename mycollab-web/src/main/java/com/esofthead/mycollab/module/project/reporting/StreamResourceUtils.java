@@ -19,6 +19,8 @@ package com.esofthead.mycollab.module.project.reporting;
 import com.esofthead.mycollab.core.db.query.VariableInjector;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.bug.BugTableFieldDef;
 import com.esofthead.mycollab.module.project.view.task.TaskTableFieldDef;
@@ -30,6 +32,7 @@ import com.esofthead.mycollab.reporting.ReportStreamSource;
 import com.esofthead.mycollab.reporting.RpFieldsBuilder;
 import com.esofthead.mycollab.reporting.SimpleReportTemplateExecutor;
 import com.esofthead.mycollab.spring.AppContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.server.StreamResource;
 
 import java.util.Arrays;
@@ -46,7 +49,7 @@ public class StreamResourceUtils {
         List fields = Arrays.asList(TaskTableFieldDef.taskname(), TaskTableFieldDef.status(), TaskTableFieldDef.priority(),
                 TaskTableFieldDef.duedate(), TaskTableFieldDef.percentagecomplete(), TaskTableFieldDef.startdate(),
                 TaskTableFieldDef.assignee(), TaskTableFieldDef.billableHours(), TaskTableFieldDef.nonBillableHours());
-        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Tasks",
+        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>(AppContext.getMessage(TaskI18nEnum.LIST),
                 new RpFieldsBuilder(fields), exportType, SimpleTask.class, AppContextUtil.getSpringBean(ProjectTaskService.class));
         ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
             @Override
@@ -57,14 +60,14 @@ public class StreamResourceUtils {
         return new StreamResource(streamSource, exportType.getDefaultFileName());
     }
 
-    public static final StreamResource buildBugStreamResource(ReportExportType exportType, final
-    VariableInjector<BugSearchCriteria> variableInjector) {
+    public static final StreamResource buildBugStreamResource(ReportExportType exportType,
+                                                              final VariableInjector<BugSearchCriteria> variableInjector) {
         List fields = Arrays.asList(BugTableFieldDef.summary(), BugTableFieldDef.environment(), BugTableFieldDef.priority(),
                 BugTableFieldDef.severity(), BugTableFieldDef.status(), BugTableFieldDef.resolution(),
                 BugTableFieldDef.logBy(), BugTableFieldDef.duedate(), BugTableFieldDef.assignUser(),
                 BugTableFieldDef.billableHours(), BugTableFieldDef.nonBillableHours());
-        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Bugs", new
-                RpFieldsBuilder(fields), exportType, SimpleBug.class, AppContextUtil.getSpringBean(BugService.class));
+        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>(AppContext.getMessage(BugI18nEnum.LIST),
+                new RpFieldsBuilder(fields), exportType, SimpleBug.class, AppContextUtil.getSpringBean(BugService.class));
         ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
             @Override
             protected void initReportParameters(Map<String, Object> parameters) {

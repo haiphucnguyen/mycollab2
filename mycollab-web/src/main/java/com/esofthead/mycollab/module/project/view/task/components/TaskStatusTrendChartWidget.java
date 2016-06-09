@@ -26,6 +26,7 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.ui.chart.GenericChartWrapper;
@@ -66,7 +67,7 @@ public class TaskStatusTrendChartWidget extends Depot {
     private static final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd").withZone(DateTimeZone.UTC);
 
     public TaskStatusTrendChartWidget() {
-        super(AppContext.getMessage(TaskI18nEnum.OPT_RESOLVING_TREND_IN_DURATION, 30), new MVerticalLayout().withFullWidth());
+        super(AppContext.getMessage(ProjectCommonI18nEnum.OPT_RESOLVING_TREND_IN_DURATION, 30), new MVerticalLayout().withFullWidth());
         setContentBorder(true);
     }
 

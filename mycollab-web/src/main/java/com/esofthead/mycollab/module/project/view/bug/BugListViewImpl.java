@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.json.QueryAnalyzer;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
@@ -137,7 +138,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        groupWrapLayout.addComponent(new Label("Sort:"));
+        groupWrapLayout.addComponent(new Label("Sort"));
         final ComboBox sortCombo = new ValueComboBox(false, DESCENDING, ASCENDING);
         sortCombo.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
@@ -154,7 +155,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         sortDirection = SearchCriteria.DESC;
         groupWrapLayout.addComponent(sortCombo);
 
-        groupWrapLayout.addComponent(new Label("Group by:"));
+        groupWrapLayout.addComponent(new Label("Group by"));
         final ComboBox groupCombo = new ValueComboBox(false, GROUP_DUE_DATE, GROUP_START_DATE, GROUP_CREATED_DATE,
                 PLAIN_LIST, GROUP_USER);
         groupCombo.addValueChangeListener(new Property.ValueChangeListener() {
@@ -329,7 +330,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         currentPage = 0;
         int pages = totalBugs / 20;
         if (currentPage < pages) {
-            Button moreBtn = new Button("More", new Button.ClickListener() {
+            Button moreBtn = new Button(AppContext.getMessage(GenericI18Enum.ACTION_MORE), new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
                     int totalTasks = bugService.getTotalCount(baseCriteria);
