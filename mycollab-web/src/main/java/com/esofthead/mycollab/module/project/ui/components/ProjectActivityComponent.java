@@ -90,7 +90,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
         withMargin(false).withStyleName("activity-comp");
         this.type = type;
         this.groupFormatter = AuditLogRegistry.getFieldGroupFormatter(type);
-        headerLbl = new ELabel("Change history");
+        headerLbl = new ELabel(AppContext.getMessage(GenericI18Enum.OPT_CHANGE_HISTORY, 0));
 
         final OptionGroup sortDirection = new OptionGroup();
         sortDirection.addStyleName("sortDirection");
@@ -290,7 +290,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
     }
 
     private void setTotalNums(int nums) {
-        headerLbl.setValue("Change history (" + nums + ")");
+        headerLbl.setValue(AppContext.getMessage(GenericI18Enum.OPT_CHANGE_HISTORY, nums));
     }
 
     @Override

@@ -44,7 +44,6 @@ public enum GenericI18Enum {
     BUTTON_SAVE,
     BUTTON_SAVE_NEW,
     BUTTON_SUBMIT,
-    BUTTON_CHANGE,
     BUTTON_CREATE,
     BUTTON_CANCEL,
     BUTTON_DELETE,
@@ -86,6 +85,7 @@ public enum GenericI18Enum {
     ACTION_CHANGE,
     ACTION_TRANSLATE,
     ACTION_HELP,
+    ACTION_MODIFY,
 
     TABLE_SELECTED_ITEM_TITLE,
 
@@ -143,6 +143,7 @@ public enum GenericI18Enum {
     EXT_NO_ITEM,
 
     OPT_SAVED_FILTER,
+    OPT_CHANGE_HISTORY,
     OPT_UNDEFINED,
 
     M_BUTTON_BACK,

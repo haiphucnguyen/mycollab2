@@ -21,7 +21,7 @@ class DeleteObsoleteLiveInstancesJob extends GenericQuartzJobBean {
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext): Unit = {
     val ex = new LiveInstanceExample
-    ex.createCriteria().andLastupdateddateLessThan(new LocalDate().minusDays(3).toDate)
+    ex.createCriteria().andLastupdateddateLessThan(new LocalDate().minusDays(1).toDate)
     liveInstanceMapper.deleteByExample(ex)
   }
 }

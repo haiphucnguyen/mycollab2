@@ -109,6 +109,7 @@ public class GLMasterFile extends File {
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			throw new GLException("Unable to create master file to Get Localization: " + e.getMessage());
 		}
 	}
