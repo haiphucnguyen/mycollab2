@@ -43,6 +43,15 @@ Last changelog
 Version 5.3.4
 -----------------------------
 
+**Library Upgrades**
+
+**Improvements & New Features**
+
+* Support German language (Contributor: Marco Gantenbein)
+* Other minor improvements
+
+**Bug Fixes**
+
 
 Version 5.3.3
 -----------------------------

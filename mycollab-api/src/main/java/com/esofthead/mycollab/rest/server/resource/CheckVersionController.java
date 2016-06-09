@@ -34,7 +34,7 @@ public class CheckVersionController {
                 MyCollabVersion.getVersion().replace('.', '-')));
 
         if (version != null && MyCollabVersion.isEditionNewer(liveVersion, version) &&
-                MyCollabVersion.isEditionNewer(version, "5.2.9")) {
+                MyCollabVersion.isEditionNewer(version, "5.3.3")) {
             props.put("autoDownload", editionInfoResolver.getEditionInfo().getCommunityUpgradeLink());
         }
 

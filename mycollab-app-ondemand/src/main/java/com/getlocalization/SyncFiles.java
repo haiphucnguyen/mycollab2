@@ -18,7 +18,7 @@ public class SyncFiles {
         File[] files = parentFolder.listFiles();
         for (File file : files) {
             System.out.println("File: " + file.getName());
-            if (file.getName().endsWith("properties")) {
+            if (file.getName().endsWith("en-US.properties")) {
                 GLMasterFile masterFile = new GLMasterFile(project, file.getAbsolutePath(), FileFormat
                         .javaproperties);
                 masterFile.push();
@@ -26,7 +26,7 @@ public class SyncFiles {
 //                GLMasterFile masterFile = new GLMasterFile(project, file.getAbsolutePath(), FileFormat.html);
 //                masterFile.push();
             } else {
-                throw new Exception("Not valid file " + file.getName());
+//                throw new Exception("Not valid file " + file.getName());
             }
         }
     }

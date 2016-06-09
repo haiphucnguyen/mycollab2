@@ -149,6 +149,8 @@ public enum GenericI18Enum {
     OPT_UNDEFINED,
     OPT_QUESTION,
     OPT_COMMENT,
+    OPT_OLDEST_FIRST,
+    OPT_NEWEST_FIRST,
 
     M_BUTTON_BACK,
     M_BUTTON_SEND,

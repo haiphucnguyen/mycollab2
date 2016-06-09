@@ -240,7 +240,7 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
         if (displayHiddenColumns) {
             toggleShowColumsBtn.setCaption(AppContext.getMessage(TaskI18nEnum.ACTION_HIDE_COLUMNS));
         } else {
-            toggleShowColumsBtn.setCaption(AppContext.getMessage(TaskI18nEnum.ACTION_HIDE_COLUMNS));
+            toggleShowColumsBtn.setCaption(AppContext.getMessage(TaskI18nEnum.ACTION_SHOW_COLUMNS));
         }
     }
 
