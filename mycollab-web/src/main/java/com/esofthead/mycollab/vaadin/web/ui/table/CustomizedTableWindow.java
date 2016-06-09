@@ -117,8 +117,6 @@ public abstract class CustomizedTableWindow extends Window {
             public void buttonClick(final ClickEvent event) {
                 List<TableViewField> selectedColumns = (List<TableViewField>) listBuilder.getValue();
                 table.setDisplayColumns(selectedColumns);
-                CustomizedTableWindow.this.close();
-
                 // Save custom table view def
                 CustomViewStore viewDef = new CustomViewStore();
                 viewDef.setSaccountid(AppContext.getAccountId());
@@ -126,6 +124,7 @@ public abstract class CustomizedTableWindow extends Window {
                 viewDef.setViewid(viewId);
                 viewDef.setViewinfo(FieldDefAnalyzer.toJson(new ArrayList<>(selectedColumns)));
                 customViewStoreService.saveOrUpdateViewLayoutDef(viewDef);
+                close();
             }
         });
         saveBtn.setStyleName(UIConstants.BUTTON_ACTION);

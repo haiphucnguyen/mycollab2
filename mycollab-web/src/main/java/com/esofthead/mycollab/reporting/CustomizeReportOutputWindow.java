@@ -2,25 +2,35 @@ package com.esofthead.mycollab.reporting;
 
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.domain.CustomViewStore;
+import com.esofthead.mycollab.common.domain.NullCustomViewStore;
+import com.esofthead.mycollab.common.i18n.FileI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.json.FieldDefAnalyzer;
 import com.esofthead.mycollab.common.service.CustomViewStoreService;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.db.query.VariableInjector;
+import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.resources.LazyStreamSource;
+import com.esofthead.mycollab.vaadin.resources.OnDemandFileDownloader;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.Sizeable;
-import com.vaadin.ui.AbstractSelect;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Window;
+import com.vaadin.server.StreamResource;
+import com.vaadin.ui.*;
 import org.vaadin.tepi.listbuilder.ListBuilder;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd
@@ -30,17 +40,30 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
     private VariableInjector<S> variableInjector;
     private ListBuilder listBuilder;
     private String viewId;
+    private Table sampleTableDisplay;
+    private ReportExportType exportType;
 
-    public CustomizeReportOutputWindow(VariableInjector<S> variableInjector) {
+    public CustomizeReportOutputWindow(String viewId, final String reportTitle, final Class<B> beanCls, final ISearchableService<S> searchableService,
+                                       final VariableInjector<S> variableInjector) {
         super("Export");
         this.setModal(true);
+        this.setWidth("1000px");
         this.setResizable(false);
         this.center();
+        this.viewId = viewId;
         this.variableInjector = variableInjector;
 
         MVerticalLayout contentLayout = new MVerticalLayout();
         setContent(contentLayout);
 
+        final OptionGroup optionGroup = new OptionGroup();
+        optionGroup.addStyleName("sortDirection");
+        optionGroup.addItems(AppContext.getMessage(FileI18nEnum.CSV), AppContext.getMessage(FileI18nEnum.PDF),
+                AppContext.getMessage(FileI18nEnum.EXCEL));
+        optionGroup.setValue(AppContext.getMessage(FileI18nEnum.CSV));
+        contentLayout.with(new MHorizontalLayout(ELabel.h3("Export"), optionGroup).alignAll(Alignment.MIDDLE_LEFT));
+
+        listBuilder = new ListBuilder();
         listBuilder.setImmediate(true);
         listBuilder.setColumns(0);
         listBuilder.setLeftColumnCaption(AppContext.getMessage(GenericI18Enum.OPT_AVAILABLE_COLUMNS));
@@ -54,36 +77,104 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
             TableViewField field = iterator.next();
             listBuilder.setItemCaption(field, AppContext.getMessage(field.getDescKey()));
         }
-        this.setSelectedViewColumns();
+        final Collection<TableViewField> viewColumnIds = this.getViewColumns();
+        listBuilder.setValue(viewColumnIds);
         contentLayout.with(listBuilder).withAlign(listBuilder, Alignment.TOP_CENTER);
-    }
 
-    private void setSelectedViewColumns() {
-        final Collection<String> viewColumnIds = this.getViewColumns();
-
-        final BeanItemContainer<TableViewField> container = (BeanItemContainer<TableViewField>) listBuilder.getContainerDataSource();
-        final Collection<TableViewField> itemIds = container.getItemIds();
-        final List<TableViewField> selectedColumns = new ArrayList<>();
-
-        for (String viewColumnId : viewColumnIds) {
-            for (final TableViewField viewField : itemIds) {
-                if (viewColumnId.equals(viewField.getField())) {
-                    selectedColumns.add(viewField);
-                }
-            }
+        sampleTableDisplay = new Table();
+        for (TableViewField field : getAvailableColumns()) {
+            sampleTableDisplay.addContainerProperty(field.getField(), String.class, "", AppContext.getMessage(field.getDescKey()), null, Table.Align.LEFT);
+            sampleTableDisplay.setColumnWidth(field.getField(), field.getDefaultWidth());
         }
+        sampleTableDisplay.setWidth("100%");
+        sampleTableDisplay.addItem(buildSampleData(), 1);
+        sampleTableDisplay.setPageLength(1);
+        contentLayout.with(sampleTableDisplay);
 
-        listBuilder.setValue(selectedColumns);
+        listBuilder.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                filterColumns();
+            }
+        });
+
+        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                close();
+            }
+        });
+        cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
+
+
+        final Button exportBtn = new Button(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
+        exportBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        OnDemandFileDownloader pdfFileDownloder = new OnDemandFileDownloader(new LazyStreamSource() {
+            @Override
+            protected StreamResource.StreamSource buildStreamSource() {
+                return new StreamResource.StreamSource() {
+                    @Override
+                    public InputStream getStream() {
+                        Collection<TableViewField> columns = (Collection<TableViewField>) listBuilder.getValue();
+                        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>(reportTitle,
+                                new RpFieldsBuilder(columns), exportType, beanCls, searchableService);
+                        ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
+                            @Override
+                            protected void initReportParameters(Map<String, Object> parameters) {
+                                parameters.put(SimpleReportTemplateExecutor.CRITERIA, variableInjector.eval());
+                            }
+                        };
+                        return streamSource.getStream();
+                    }
+                };
+            }
+
+            @Override
+            public String getFilename() {
+                String exportTypeVal = (String) optionGroup.getValue();
+                if (AppContext.getMessage(FileI18nEnum.CSV).equals(exportTypeVal)) {
+                    exportType = ReportExportType.CSV;
+                } else if (AppContext.getMessage(FileI18nEnum.EXCEL).equals(exportTypeVal)) {
+                    exportType = ReportExportType.EXCEL;
+                } else {
+                    exportType = ReportExportType.PDF;
+                }
+                return exportType.getDefaultFileName();
+            }
+        });
+        pdfFileDownloder.extend(exportBtn);
+
+        MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, exportBtn);
+        contentLayout.with(buttonControls).withAlign(buttonControls, Alignment.TOP_RIGHT);
     }
 
-    protected Collection<String> getViewColumns() {
+    private void filterColumns() {
+        Collection<TableViewField> columns = (Collection<TableViewField>) listBuilder.getValue();
+        Collection<String> visibleColumns = new ArrayList<>();
+        for (TableViewField column : columns) {
+            visibleColumns.add(column.getField());
+        }
+        sampleTableDisplay.setVisibleColumns(visibleColumns.toArray(new String[visibleColumns.size()]));
+    }
+
+    protected Collection<TableViewField> getViewColumns() {
         CustomViewStoreService customViewStoreService = AppContextUtil.getSpringBean(CustomViewStoreService.class);
         CustomViewStore viewLayoutDef = customViewStoreService.getViewLayoutDef(AppContext.getAccountId(),
                 AppContext.getUsername(), viewId);
-        return null;
+        if (!(viewLayoutDef instanceof NullCustomViewStore)) {
+            try {
+                return FieldDefAnalyzer.toTableFields(viewLayoutDef.getViewinfo());
+            } catch (Exception e) {
+                return getDefaultColumns();
+            }
+        } else {
+            return getDefaultColumns();
+        }
     }
+
+    abstract protected Collection<TableViewField> getDefaultColumns();
 
     abstract protected Collection<TableViewField> getAvailableColumns();
 
-    abstract protected B buildSampleData();
+    abstract protected Object[] buildSampleData();
 }

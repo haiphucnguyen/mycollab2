@@ -61,7 +61,6 @@ import com.esofthead.mycollab.vaadin.web.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
-import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -70,8 +69,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.peter.buttongroup.ButtonGroup;
-import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -183,7 +180,12 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         Button printBtn = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
-
+                UI.getCurrent().addWindow(new TaskCustomizeReportOutputWindow(new LazyValueInjector() {
+                    @Override
+                    protected Object doEval() {
+                        return baseCriteria;
+                    }
+                }));
             }
         });
         printBtn.setIcon(FontAwesome.PRINT);

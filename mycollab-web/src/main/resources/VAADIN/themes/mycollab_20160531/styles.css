@@ -15246,11 +15246,11 @@ div.v-window {
 	font-size: 1.2em;
 }
 
-.activity-comp .section .v-select-optiongroup-sortDirection .v-select-option {
+.v-select-optiongroup-sortDirection .v-select-option {
 	display: inline-block;
 }
 
-.activity-comp .section .v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
+.v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
 	padding-right: 10px;
 	font-size: 14px;
 	color: black;

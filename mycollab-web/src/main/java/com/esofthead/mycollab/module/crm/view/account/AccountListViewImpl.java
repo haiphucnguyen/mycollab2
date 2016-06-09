@@ -44,8 +44,7 @@ public class AccountListViewImpl extends AbstractListItemComp<AccountSearchCrite
 
     @Override
     protected AbstractPagedBeanTable<AccountSearchCriteria, SimpleAccount> createBeanTable() {
-        return new AccountTableDisplay(
-                CrmTypeConstants.ACCOUNT, AccountTableFieldDef.selected(),
+        return new AccountTableDisplay(CrmTypeConstants.ACCOUNT, AccountTableFieldDef.selected(),
                 Arrays.asList(AccountTableFieldDef.accountname(), AccountTableFieldDef.city(),
                         AccountTableFieldDef.phoneoffice(), AccountTableFieldDef.email(),
                         AccountTableFieldDef.assignUser()));
