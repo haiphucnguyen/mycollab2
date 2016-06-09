@@ -30,7 +30,6 @@ import java.util.Collection;
 public class BugListCustomizeWindow extends CustomizedTableWindow {
     private static final long serialVersionUID = 1L;
 
-    @SuppressWarnings("rawtypes")
     public BugListCustomizeWindow(String viewId, AbstractPagedBeanTable table) {
         super(viewId, table);
     }

@@ -148,6 +148,7 @@ public enum GenericI18Enum {
     OPT_MY_ITEMS,
     OPT_UNDEFINED,
     OPT_QUESTION,
+    OPT_COMMENT,
 
     M_BUTTON_BACK,
     M_BUTTON_SEND,
