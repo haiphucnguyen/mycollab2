@@ -10,6 +10,4 @@ import com.esofthead.mycollab.vaadin.web.ui.InitializingView;
  * @since 1.0
  */
 public interface RiskListView extends IListView<RiskSearchCriteria, SimpleRisk>, InitializingView {
-
-    String VIEW_DEF_ID = "project-risk-list";
 }

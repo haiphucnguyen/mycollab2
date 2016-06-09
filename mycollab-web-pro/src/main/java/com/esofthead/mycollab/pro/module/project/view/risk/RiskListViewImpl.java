@@ -1,10 +1,7 @@
 package com.esofthead.mycollab.pro.module.project.view.risk;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
+import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RiskService;
@@ -59,9 +56,8 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
     public void initContent() {
         riskSearchPanel = new RiskSearchPanel();
         addComponent(riskSearchPanel);
-        tableItem = new DefaultPagedBeanTable<>(
-                AppContextUtil.getSpringBean(RiskService.class),
-                SimpleRisk.class, VIEW_DEF_ID,
+        tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(RiskService.class),
+                SimpleRisk.class, ProjectTypeConstants.RISK,
                 RiskTableFieldDef.selected(), Arrays.asList(
                 RiskTableFieldDef.name(), RiskTableFieldDef.assignUser(),
                 RiskTableFieldDef.duedate(), RiskTableFieldDef.rating()));
@@ -206,8 +202,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 
             @Override
             public void buttonClick(ClickEvent event) {
-                UI.getCurrent().addWindow(new RiskListCustomizeWindow(VIEW_DEF_ID, tableItem));
-
+                UI.getCurrent().addWindow(new RiskListCustomizeWindow(tableItem));
             }
         });
         customizeViewBtn.setIcon(FontAwesome.ADJUST);
