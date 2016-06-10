@@ -57,8 +57,7 @@ class StandupAddWindow extends Window implements IEditFormHandler<StandupReportW
         editForm.setBean(report);
         Component projectLogo = ProjectAssetsUtil.buildProjectLogo(standupReportStatistic.getProjectKey(), standupReportStatistic.getProjectId(),
                 standupReportStatistic.getProjectAvatarId(), 32);
-        ELabel projectLbl = ELabel.h2(standupReportStatistic.getProjectName()).withStyleName(UIConstants
-                .TEXT_ELLIPSIS);
+        ELabel projectLbl = ELabel.h2(standupReportStatistic.getProjectName()).withStyleName(UIConstants.TEXT_ELLIPSIS);
         setContent(new MVerticalLayout(new MHorizontalLayout(projectLogo, projectLbl).expand(projectLbl), editForm));
         editForm.addFormHandler(this);
     }

@@ -22,6 +22,7 @@ import ch.qos.cal10n.BaseName;
 public enum RiskI18nEnum {
     LIST,
     NEW,
+    EDIT,
     DETAIL,
     SINGLE,
 

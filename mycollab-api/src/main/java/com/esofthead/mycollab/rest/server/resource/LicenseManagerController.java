@@ -145,12 +145,12 @@ public class LicenseManagerController {
 
     public static void main(String[] args) throws Exception {
         LicenseInfo info = new LicenseInfo();
-        info.setCustomerId(EnDecryptHelper.encryptText("1"));
+        info.setCustomerId(EnDecryptHelper.encryptText("3"));
         info.setLicenseType(LicenseType.PRO);
         info.setExpireDate(new LocalDate().plusDays(356).toDate());
         info.setIssueDate(new LocalDate().toDate());
-        info.setLicenseOrg("MyCollab");
-        info.setMaxUsers(10);
+        info.setLicenseOrg("Exide Technologies SAS");
+        info.setMaxUsers(20);
         LicenseManagerController generator = new LicenseManagerController();
         String str = generator.encode(info);
         System.out.println(str);

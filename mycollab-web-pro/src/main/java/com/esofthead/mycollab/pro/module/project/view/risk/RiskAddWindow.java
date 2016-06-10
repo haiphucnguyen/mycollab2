@@ -12,8 +12,8 @@ import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -29,9 +29,9 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public class RiskAddWindow extends Window {
     public RiskAddWindow(SimpleRisk risk) {
         if (risk.getId() == null) {
-            setCaption("New risk");
+            setCaption(AppContext.getMessage(RiskI18nEnum.NEW));
         } else {
-            setCaption("Edit risk");
+            setCaption(AppContext.getMessage(RiskI18nEnum.EDIT));
         }
         this.setWidth("800px");
         this.setModal(true);

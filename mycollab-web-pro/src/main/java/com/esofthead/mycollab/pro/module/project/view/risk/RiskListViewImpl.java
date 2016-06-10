@@ -181,7 +181,6 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
             tableActionControls.addDeleteActionItem();
         }
 
-        tableActionControls.addMailActionItem();
         tableActionControls.addDownloadPdfActionItem();
         tableActionControls.addDownloadExcelActionItem();
         tableActionControls.addDownloadCsvActionItem();

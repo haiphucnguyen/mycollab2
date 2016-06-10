@@ -2,6 +2,7 @@ package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.ProjectReportI18nEnum;
 import com.esofthead.mycollab.module.project.view.reports.IReportContainer;
 import com.esofthead.mycollab.pro.module.project.view.ReportBreadcrumb;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -45,20 +46,18 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
         standupConsole.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         standupConsole.addComponent(ELabel.fontIcon(FontAwesome.LEGAL).withStyleName("icon-38px"));
         A standupReportLink = new A(ProjectLinkBuilder.generateStandupDashboardLink())
-                .appendText("Standup Report");
+                .appendText(AppContext.getMessage(ProjectReportI18nEnum.REPORT_STANDUP));
         standupConsole.addComponent(ELabel.h3(standupReportLink.write()).withWidthUndefined());
-        standupConsole.addComponent(new ELabel("Your daily scrum which asks three questions What you did yesterday?, " +
-                "What you will do today? and Do you have roadblocks? in the StandUp meeting which should not " +
-                "exceed 15 minutes.").withFullWidth());
+        standupConsole.addComponent(new ELabel(AppContext.getMessage(ProjectReportI18nEnum.REPORT_STANDUP_HELP)).withFullWidth());
         content.addComponent(standupConsole);
 
         MVerticalLayout hoursWeeklyReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         hoursWeeklyReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         hoursWeeklyReport.addComponent(ELabel.fontIcon(FontAwesome.BALANCE_SCALE).withStyleName("icon-38px"));
         A hoursWeeklyReportLink = new A(ProjectLinkBuilder.generateHoursWeeklyReportLink())
-                .appendText("Hours Weekly Report");
+                .appendText(AppContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY));
         hoursWeeklyReport.addComponent(ELabel.h3(hoursWeeklyReportLink.write()).withWidthUndefined());
-        hoursWeeklyReport.addComponent(new ELabel("Your members hours weekly report. Keep your project in time and budget")
+        hoursWeeklyReport.addComponent(new ELabel(AppContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY_HELP))
                 .withFullWidth());
 //        content.addComponent(hoursWeeklyReport);
 
@@ -66,20 +65,18 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
         userWorkloadReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         userWorkloadReport.addComponent(ELabel.fontIcon(FontAwesome.BAR_CHART).withStyleName("icon-38px"));
         A userWorkloadReportLink = new A(ProjectLinkBuilder.generateUsersWorkloadReportLink())
-                .appendText("User Workload Report");
+                .appendText(AppContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
         userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withWidthUndefined());
-        userWorkloadReport.addComponent(new ELabel("Preview your user workloads and adjust to keep your project safe," +
-                " and your members are happy").withFullWidth());
+        userWorkloadReport.addComponent(new ELabel(AppContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD_HELP)).withFullWidth());
 //        content.addComponent(userWorkloadReport);
 
         MVerticalLayout timesheetReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         timesheetReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         timesheetReport.addComponent(ELabel.fontIcon(FontAwesome.CLOCK_O).withStyleName("icon-38px"));
         A timesheetReportLink = new A(ProjectLinkBuilder.generateTimesheetReportLink())
-                .appendText("Timesheet Report");
+                .appendText(AppContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET));
         timesheetReport.addComponent(ELabel.h3(timesheetReportLink.write()).withWidthUndefined());
-        timesheetReport.addComponent(new ELabel("Keep project's efforts and cost in various charts to give you an " +
-                "insight view of how do you spend money and efforts")
+        timesheetReport.addComponent(new ELabel(AppContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET_HELP))
                 .withFullWidth());
         content.addComponent(timesheetReport);
         body.addComponent(content);
