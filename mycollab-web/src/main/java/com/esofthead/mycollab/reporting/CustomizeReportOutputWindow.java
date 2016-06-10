@@ -77,9 +77,10 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         optionGroup.addItems(AppContext.getMessage(FileI18nEnum.CSV), AppContext.getMessage(FileI18nEnum.PDF),
                 AppContext.getMessage(FileI18nEnum.EXCEL));
         optionGroup.setValue(AppContext.getMessage(FileI18nEnum.CSV));
-        contentLayout.with(new MHorizontalLayout(ELabel.h3("Export"), optionGroup).alignAll(Alignment.MIDDLE_LEFT));
+        contentLayout.with(new MHorizontalLayout(ELabel.h3(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT)), optionGroup)
+                .alignAll(Alignment.MIDDLE_LEFT));
 
-        contentLayout.with(ELabel.h3("Select columns"));
+        contentLayout.with(ELabel.h3(AppContext.getMessage(GenericI18Enum.ACTION_SELECT_COLUMNS)));
         listBuilder = new ListBuilder();
         listBuilder.setImmediate(true);
         listBuilder.setColumns(0);
@@ -98,7 +99,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         listBuilder.setValue(viewColumnIds);
         contentLayout.with(listBuilder).withAlign(listBuilder, Alignment.TOP_CENTER);
 
-        contentLayout.with(ELabel.h3("Preview"));
+        contentLayout.with(ELabel.h3(AppContext.getMessage(GenericI18Enum.ACTION_PREVIEW)));
         sampleTableDisplay = new Table();
         for (TableViewField field : getAvailableColumns()) {
             sampleTableDisplay.addContainerProperty(field.getField(), String.class, "", AppContext.getMessage(field.getDescKey()), null, Table.Align.LEFT);
