@@ -44,8 +44,10 @@ public class TaskCustomizeReportOutputWindow extends CustomizeReportOutputWindow
 
     @Override
     protected Object[] buildSampleData() {
-        return new Object[]{"Task A", AppContext.formatDate(new LocalDate().minusDays(2).toDate()), AppContext.formatDate(new LocalDate().plusDays(1).toDate()),
-                OptionI18nEnum.TaskPriority.High.name(), "50", "Jonh Adam", "3", "2"};
+        return new Object[]{"Task A", "Note 1", AppContext.formatDate(new LocalDate().minusDays(2).toDate()),
+                AppContext.formatDate(new LocalDate().plusDays(1).toDate()), AppContext.formatDate(new LocalDate().plusDays(1).toDate()),
+                OptionI18nEnum.TaskPriority.High.name(), "50", "Will Smith", "Jonh Adam", "3", "1", "true",
+                "Project Closing", "3", "2"};
     }
 
     @Override
@@ -57,8 +59,11 @@ public class TaskCustomizeReportOutputWindow extends CustomizeReportOutputWindow
 
     @Override
     protected Collection<TableViewField> getAvailableColumns() {
-        return Arrays.asList(TaskTableFieldDef.taskname(), TaskTableFieldDef.startdate(), TaskTableFieldDef.duedate(),
-                TaskTableFieldDef.priority(), TaskTableFieldDef.percentagecomplete(), TaskTableFieldDef.assignee(),
+        return Arrays.asList(TaskTableFieldDef.taskname(), TaskTableFieldDef.note(), TaskTableFieldDef.startdate(),
+                TaskTableFieldDef.enddate(), TaskTableFieldDef.duedate(),
+                TaskTableFieldDef.priority(), TaskTableFieldDef.percentagecomplete(), TaskTableFieldDef.logUser(),
+                TaskTableFieldDef.assignee(), TaskTableFieldDef.originalEstimate(), TaskTableFieldDef.remainEstimate(),
+                TaskTableFieldDef.isEstimate(), TaskTableFieldDef.milestoneName(),
                 TaskTableFieldDef.billableHours(), TaskTableFieldDef.nonBillableHours());
     }
 }
