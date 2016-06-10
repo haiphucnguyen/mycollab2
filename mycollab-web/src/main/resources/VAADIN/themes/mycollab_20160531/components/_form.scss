@@ -45,11 +45,10 @@
 
   .v-select-optiongroup-sortDirection .v-select-option {
     display: inline-block;
-    &.v-radiobutton{
+    &.v-radiobutton {
       padding-right: 10px;
-        font-size: $font-normal;
-        color: black;
-      }
+      font-size: $font-normal;
+      color: black;
     }
   }
 }

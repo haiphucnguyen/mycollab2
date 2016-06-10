@@ -1729,7 +1729,7 @@ a.pending {
 	text-align: center;
 	padding: 0 10px;
 	color: #ffffff;
-	background-color: #25c278;
+	background-color: #39d98e;
 	position: relative;
 	display: inline-block;
 	margin-right: 10px;
@@ -1743,7 +1743,7 @@ a.pending {
 	height: 0px;
 	border-style: solid;
 	border-width: 10px 0 10px 10px;
-	border-color: transparent transparent transparent #25c278;
+	border-color: transparent transparent transparent #39d98e;
 }
 
 .v-multifileupload-ext .v-verticallayout {
@@ -14409,7 +14409,7 @@ a.pending {
 	text-align: center;
 	padding: 0 10px;
 	color: #ffffff;
-	background-color: #25c278;
+	background-color: #39d98e;
 	position: relative;
 	display: inline-block;
 	margin-right: 10px;
@@ -14423,7 +14423,7 @@ a.pending {
 	height: 0px;
 	border-style: solid;
 	border-width: 10px 0 10px 10px;
-	border-color: transparent transparent transparent #25c278;
+	border-color: transparent transparent transparent #39d98e;
 }
 
 .v-multifileupload-ext .v-verticallayout {
