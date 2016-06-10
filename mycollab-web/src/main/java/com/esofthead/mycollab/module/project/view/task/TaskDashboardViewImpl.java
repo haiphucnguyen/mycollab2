@@ -40,10 +40,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
-import com.esofthead.mycollab.module.project.reporting.StreamResourceUtils;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.task.components.*;
-import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -62,7 +60,6 @@ import com.esofthead.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -190,7 +187,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         });
         printBtn.setIcon(FontAwesome.PRINT);
         printBtn.addStyleName(UIConstants.BUTTON_OPTION);
-        printBtn.setDescription("Export");
+        printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
         groupWrapLayout.addComponent(printBtn);
 
         Button newTaskBtn = new Button(AppContext.getMessage(TaskI18nEnum.NEW), new Button.ClickListener() {
@@ -379,15 +376,6 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
 
     private void displayKanbanView() {
         EventBusFactory.getInstance().post(new TaskEvent.GotoKanbanView(this, null));
-    }
-
-    private StreamResource buildStreamSource(ReportExportType exportType) {
-        return StreamResourceUtils.buildTaskStreamResource(exportType, new LazyValueInjector() {
-            @Override
-            protected Object doEval() {
-                return baseCriteria;
-            }
-        });
     }
 
     @Override

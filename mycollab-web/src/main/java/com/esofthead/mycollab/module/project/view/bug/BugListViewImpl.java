@@ -37,12 +37,10 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
-import com.esofthead.mycollab.module.project.reporting.StreamResourceUtils;
 import com.esofthead.mycollab.module.project.view.bug.components.*;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -60,16 +58,12 @@ import com.esofthead.mycollab.vaadin.web.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
-import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.peter.buttongroup.ButtonGroup;
-import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -170,28 +164,21 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
         searchPanel.addHeaderRight(groupWrapLayout);
 
-        MButton exportPdfBtn = new MButton("").withIcon(FontAwesome.FILE_PDF_O).withStyleName(UIConstants
-                .BUTTON_OPTION).withDescription("Export to PDF");
-        FileDownloader pdfFileDownloder = new FileDownloader(buildStreamSource(ReportExportType.PDF));
-        pdfFileDownloder.extend(exportPdfBtn);
-
-        MButton exportExcelBtn = new MButton("").withIcon(FontAwesome.FILE_EXCEL_O).withStyleName(UIConstants
-                .BUTTON_OPTION).withDescription("Export to Excel");
-        FileDownloader excelFileDownloader = new FileDownloader(buildStreamSource(ReportExportType.EXCEL));
-        excelFileDownloader.extend(exportExcelBtn);
-
-        MButton exportCsvBtn = new MButton("").withIcon(FontAwesome.FILE_TEXT_O).withStyleName(UIConstants
-                .BUTTON_OPTION).withDescription("Export to Csv");
-        FileDownloader csvFileDownloader = new FileDownloader(buildStreamSource(ReportExportType.CSV));
-        csvFileDownloader.extend(exportCsvBtn);
-
-
-        ButtonGroup exportGroup = new ButtonGroup();
-        exportGroup.addButton(exportPdfBtn);
-        exportGroup.addButton(exportExcelBtn);
-        exportGroup.addButton(exportCsvBtn);
-
-        groupWrapLayout.with(exportGroup);
+        Button printBtn = new Button("", new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent clickEvent) {
+                UI.getCurrent().addWindow(new BugCustomizeReportOutputWindow(new LazyValueInjector() {
+                    @Override
+                    protected Object doEval() {
+                        return baseCriteria;
+                    }
+                }));
+            }
+        });
+        printBtn.setIcon(FontAwesome.PRINT);
+        printBtn.addStyleName(UIConstants.BUTTON_OPTION);
+        printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
+        groupWrapLayout.addComponent(printBtn);
 
         Button newBugBtn = new Button(AppContext.getMessage(BugI18nEnum.NEW), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -244,15 +231,6 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     @Override
     public void showNoItemView() {
 
-    }
-
-    private StreamResource buildStreamSource(ReportExportType exportType) {
-        return StreamResourceUtils.buildBugStreamResource(exportType, new LazyValueInjector() {
-            @Override
-            protected Object doEval() {
-                return baseCriteria;
-            }
-        });
     }
 
     @Override

@@ -27,10 +27,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd
@@ -43,8 +40,8 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
     private Table sampleTableDisplay;
     private ReportExportType exportType;
 
-    public CustomizeReportOutputWindow(String viewId, final String reportTitle, final Class<B> beanCls, final ISearchableService<S> searchableService,
-                                       final VariableInjector<S> variableInjector) {
+    public CustomizeReportOutputWindow(final String viewId, final String reportTitle, final Class<B> beanCls,
+                                       final ISearchableService<S> searchableService, final VariableInjector<S> variableInjector) {
         super("Export");
         this.setModal(true);
         this.setWidth("1000px");
@@ -63,6 +60,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         optionGroup.setValue(AppContext.getMessage(FileI18nEnum.CSV));
         contentLayout.with(new MHorizontalLayout(ELabel.h3("Export"), optionGroup).alignAll(Alignment.MIDDLE_LEFT));
 
+        contentLayout.with(ELabel.h3("Select columns"));
         listBuilder = new ListBuilder();
         listBuilder.setImmediate(true);
         listBuilder.setColumns(0);
@@ -81,6 +79,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         listBuilder.setValue(viewColumnIds);
         contentLayout.with(listBuilder).withAlign(listBuilder, Alignment.TOP_CENTER);
 
+        contentLayout.with(ELabel.h3("Preview"));
         sampleTableDisplay = new Table();
         for (TableViewField field : getAvailableColumns()) {
             sampleTableDisplay.addContainerProperty(field.getField(), String.class, "", AppContext.getMessage(field.getDescKey()), null, Table.Align.LEFT);
@@ -90,6 +89,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         sampleTableDisplay.addItem(buildSampleData(), 1);
         sampleTableDisplay.setPageLength(1);
         contentLayout.with(sampleTableDisplay);
+        filterColumns();
 
         listBuilder.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
@@ -109,13 +109,22 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
 
         final Button exportBtn = new Button(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
         exportBtn.addStyleName(UIConstants.BUTTON_ACTION);
-        OnDemandFileDownloader pdfFileDownloder = new OnDemandFileDownloader(new LazyStreamSource() {
+        OnDemandFileDownloader pdfFileDownloader = new OnDemandFileDownloader(new LazyStreamSource() {
             @Override
             protected StreamResource.StreamSource buildStreamSource() {
                 return new StreamResource.StreamSource() {
                     @Override
                     public InputStream getStream() {
                         Collection<TableViewField> columns = (Collection<TableViewField>) listBuilder.getValue();
+                        // Save custom table view def
+                        CustomViewStoreService customViewStoreService = AppContextUtil.getSpringBean(CustomViewStoreService.class);
+                        CustomViewStore viewDef = new CustomViewStore();
+                        viewDef.setSaccountid(AppContext.getAccountId());
+                        viewDef.setCreateduser(AppContext.getUsername());
+                        viewDef.setViewid(viewId);
+                        viewDef.setViewinfo(FieldDefAnalyzer.toJson(new ArrayList<>(columns)));
+                        customViewStoreService.saveOrUpdateViewLayoutDef(viewDef);
+
                         SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>(reportTitle,
                                 new RpFieldsBuilder(columns), exportType, beanCls, searchableService);
                         ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
@@ -142,7 +151,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
                 return exportType.getDefaultFileName();
             }
         });
-        pdfFileDownloder.extend(exportBtn);
+        pdfFileDownloader.extend(exportBtn);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, exportBtn);
         contentLayout.with(buttonControls).withAlign(buttonControls, Alignment.TOP_RIGHT);
