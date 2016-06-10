@@ -46,7 +46,7 @@ public class BugCustomizeReportOutputWindow extends CustomizeReportOutputWindow<
     protected Collection<TableViewField> getDefaultColumns() {
         return Arrays.asList(BugTableFieldDef.summary(), BugTableFieldDef.environment(), BugTableFieldDef.priority(),
                 BugTableFieldDef.severity(), BugTableFieldDef.status(), BugTableFieldDef.resolution(),
-                BugTableFieldDef.logBy(), BugTableFieldDef.duedate(), BugTableFieldDef.assignUser(),
+                BugTableFieldDef.logBy(), BugTableFieldDef.dueDate(), BugTableFieldDef.assignUser(),
                 BugTableFieldDef.billableHours(), BugTableFieldDef.nonBillableHours());
     }
 
@@ -54,14 +54,17 @@ public class BugCustomizeReportOutputWindow extends CustomizeReportOutputWindow<
     protected Collection<TableViewField> getAvailableColumns() {
         return Arrays.asList(BugTableFieldDef.summary(), BugTableFieldDef.environment(), BugTableFieldDef.priority(),
                 BugTableFieldDef.severity(), BugTableFieldDef.status(), BugTableFieldDef.resolution(),
-                BugTableFieldDef.logBy(), BugTableFieldDef.duedate(), BugTableFieldDef.assignUser(),
-                BugTableFieldDef.billableHours(), BugTableFieldDef.nonBillableHours());
+                BugTableFieldDef.logBy(), BugTableFieldDef.startDate(), BugTableFieldDef.endDate(), BugTableFieldDef.dueDate(),
+                BugTableFieldDef.assignUser(), BugTableFieldDef.milestoneName(), BugTableFieldDef.billableHours(),
+                BugTableFieldDef.nonBillableHours());
     }
 
     @Override
     protected Object[] buildSampleData() {
         return new Object[]{"Bug A", "Virtual Environment", OptionI18nEnum.BugPriority.Critical.name(),
                 OptionI18nEnum.BugSeverity.Major.name(), OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugResolution.None.name(),
-                "John Adam", AppContext.formatDate(new LocalDate().plusDays(2).toDate()), "Will Smith", "10", "2"};
+                "John Adam", AppContext.formatDate(new LocalDate().minusDays(2).toDate()), AppContext.formatDate(new
+                LocalDate().plusDays(1).toDate()), AppContext.formatDate(new LocalDate().plusDays(2).toDate()),
+                "Will Smith", "Project Execution", "10", "2"};
     }
 }

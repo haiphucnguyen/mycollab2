@@ -114,6 +114,15 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
             }
         });
 
+        Button resetBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_RESET), new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                listBuilder.setValue(getDefaultColumns());
+                filterColumns();
+            }
+        });
+        resetBtn.addStyleName(UIConstants.BUTTON_LINK);
+
         Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
@@ -169,7 +178,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         });
         pdfFileDownloader.extend(exportBtn);
 
-        MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, exportBtn);
+        MHorizontalLayout buttonControls = new MHorizontalLayout(resetBtn, cancelBtn, exportBtn);
         contentLayout.with(buttonControls).withAlign(buttonControls, Alignment.TOP_RIGHT);
     }
 

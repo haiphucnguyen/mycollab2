@@ -47,6 +47,7 @@ Version 5.3.4
 
 **Improvements & New Features**
 
+* Allow to customize the report fields
 * Support German language (Contributor: Marco Gantenbein)
 * Other minor improvements
 
