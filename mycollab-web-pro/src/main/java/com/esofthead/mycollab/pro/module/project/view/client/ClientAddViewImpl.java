@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view.client;
 
+import com.esofthead.mycollab.common.i18n.FileI18nEnum;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
@@ -7,6 +8,7 @@ import com.esofthead.mycollab.module.crm.view.account.AccountDefaultDynaFormLayo
 import com.esofthead.mycollab.module.crm.view.account.AccountEditFormFieldFactory;
 import com.esofthead.mycollab.module.file.PathUtils;
 import com.esofthead.mycollab.module.file.service.EntityUploaderService;
+import com.esofthead.mycollab.module.project.i18n.ClientI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.esofthead.mycollab.module.user.ui.components.ImagePreviewCropWindow;
 import com.esofthead.mycollab.module.user.ui.components.UploadImageField;
@@ -91,12 +93,12 @@ public class ClientAddViewImpl extends AbstractPageView implements ClientAddView
         private MHorizontalLayout buildHeaderTitle() {
             ELabel titleLbl;
             if (account.getId() == null) {
-                titleLbl = ELabel.h2(FontAwesome.INSTITUTION.getHtml() + " New client");
+                titleLbl = ELabel.h2(FontAwesome.INSTITUTION.getHtml() + " " + AppContext.getMessage(ClientI18nEnum.NEW));
                 return new MHorizontalLayout(titleLbl).expand(titleLbl);
             } else {
                 titleLbl = ELabel.h2(account.getAccountname());
                 UploadImageField uploadImageField = new UploadImageField(this);
-                uploadImageField.setButtonCaption("Change logo");
+                uploadImageField.setButtonCaption(AppContext.getMessage(FileI18nEnum.ACTION_CHANGE_LOGO));
 
                 MVerticalLayout logoLayout = new MVerticalLayout(ProjectAssetsUtil.buildClientLogo(account, 100),
                         uploadImageField).withMargin(false).withWidth("-1px").alignAll(Alignment.TOP_CENTER);

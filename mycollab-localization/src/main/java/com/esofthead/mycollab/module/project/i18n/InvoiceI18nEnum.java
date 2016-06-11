@@ -24,6 +24,8 @@ import ch.qos.cal10n.BaseName;
  */
 @BaseName("project-invoice")
 public enum InvoiceI18nEnum {
+    NEW,
+    EDIT,
     SINGLE,
     LIST,
 
@@ -39,5 +41,6 @@ public enum InvoiceI18nEnum {
     FORM_AMOUNT,
     FORM_NOTE,
     FIX_PRICE,
-    TIME_MATERIAL
+    TIME_MATERIAL,
+    OPT_NO_INVOICE
 }

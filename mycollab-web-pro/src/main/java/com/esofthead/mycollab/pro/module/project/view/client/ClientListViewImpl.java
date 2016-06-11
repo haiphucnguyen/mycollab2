@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.events.ClientEvent;
+import com.esofthead.mycollab.module.project.i18n.ClientI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -65,8 +66,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
         this.searchCriteria = searchCriteria;
         content.removeAllComponents();
         AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-        List<SimpleAccount> clients = accountService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0,
-                Integer.MAX_VALUE));
+        List<SimpleAccount> clients = accountService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
         for (SimpleAccount client : clients) {
             content.addComponent(generateClientBlock(client));
         }
@@ -114,7 +114,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
                         });
             }
         });
-        deleteBtn.setDescription("Remove client '" + client.getAccountname() + "'");
+        deleteBtn.setDescription(AppContext.getMessage(ClientI18nEnum.OPT_REMOVE_CLIENT, client.getAccountname()));
         deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
         deleteBtn.setVisible(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
 
@@ -146,7 +146,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
                                 appendText(client.getAssignUserFullName()));
         clientInfo.addComponent(new ELabel(assignUserDiv.write(), ContentMode.HTML).withStyleName(UIConstants
                 .LABEL_META_INFO, UIConstants.TEXT_ELLIPSIS));
-        Div numProjectsDiv = new Div().appendText("Num projects: " + client.getNumProjects());
+        Div numProjectsDiv = new Div().appendText(AppContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, client.getNumProjects()));
         clientInfo.addComponent(new ELabel(numProjectsDiv.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_META_INFO));
 
         blockTop.with(clientInfo).expand(clientInfo);

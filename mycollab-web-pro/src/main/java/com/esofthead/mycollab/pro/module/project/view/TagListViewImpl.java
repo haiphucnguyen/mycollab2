@@ -2,6 +2,7 @@ package com.esofthead.mycollab.pro.module.project.view;
 
 import com.esofthead.mycollab.common.domain.AggregateTag;
 import com.esofthead.mycollab.common.domain.Tag;
+import com.esofthead.mycollab.common.i18n.TagI18nEnum;
 import com.esofthead.mycollab.common.service.TagService;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -72,7 +73,7 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
                 false, true)).withFullWidth();
         panelHeader.addStyleName("panel-header");
 
-        panelHeader.with(ELabel.h3("Tag Cloud")).alignAll(Alignment.MIDDLE_LEFT);
+        panelHeader.with(ELabel.h3(AppContext.getMessage(TagI18nEnum.OPT_TAG_CLOUD))).alignAll(Alignment.MIDDLE_LEFT);
 
         TagCloudComp cloudComp = new TagCloudComp();
         cloudComp.displayTagItems();
@@ -98,10 +99,9 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         }
 
         void displayTagItems() {
-            List<AggregateTag> tags = tagService.findTagsInProject(CurrentProjectVariables.getProjectId(), AppContext
-                    .getAccountId());
+            List<AggregateTag> tags = tagService.findTagsInProject(CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
             if (CollectionUtils.isEmpty(tags)) {
-                this.addComponent(new Label("No tag is existed"));
+                this.addComponent(new Label(AppContext.getMessage(TagI18nEnum.OPT_NO_TAG_EXISTED)));
             } else {
                 for (AggregateTag tag : tags) {
                     TagButton btn = new TagButton(tag);

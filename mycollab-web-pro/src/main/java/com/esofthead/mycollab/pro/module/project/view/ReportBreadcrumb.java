@@ -5,6 +5,7 @@ import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.events.ReportEvent;
 import com.esofthead.mycollab.module.project.i18n.BreadcrumbI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.ProjectReportI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.CacheableComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -60,22 +61,22 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button("Timesheet"));
+        this.addLink(new Button(AppContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET)));
     }
 
     public void gotoWeeklyTimingReport() {
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button("Hours Weekly Report"));
+        this.addLink(new Button(AppContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY)));
     }
 
     public void gotoUserWorkloadReport() {
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button("Users Workload Report"));
-        AppContext.addFragment(ProjectLinkGenerator.generateUsersWorkloadReportLink(), "Users Workload Report");
+        this.addLink(new Button(AppContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD)));
+        AppContext.addFragment(ProjectLinkGenerator.generateUsersWorkloadReportLink(), AppContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
     }
 
     private static class GotoReportsListener implements Button.ClickListener {

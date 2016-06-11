@@ -196,7 +196,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
 
     private void displayNoPermissionMessage() {
         timeTrackingWrapper.removeAllComponents();
-        timeTrackingWrapper.addComponent(ELabel.h3("You can not access the specific resource"));
+        timeTrackingWrapper.addComponent(ELabel.h3(AppContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
     }
 
     private void displayTimeEntries() {

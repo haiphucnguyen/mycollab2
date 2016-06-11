@@ -1,8 +1,8 @@
 package com.esofthead.mycollab.pro.module.project.view.client;
 
 import com.esofthead.mycollab.configuration.StorageFactory;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.NumberUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
@@ -15,7 +15,10 @@ import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
+import com.esofthead.mycollab.module.project.i18n.ClientI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
@@ -58,7 +61,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
     private ProjectListComp projectListComp;
 
     public ClientReadViewImpl() {
-        super("Client", FontAwesome.INSTITUTION);
+        super(AppContext.getMessage(ClientI18nEnum.SINGLE), FontAwesome.INSTITUTION);
     }
 
     @Override
@@ -175,8 +178,8 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             searchCriteria.setAccountId(NumberSearchField.and(accountId));
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
             int totalCount = projectService.getTotalCount(searchCriteria);
-            ELabel headerLbl = new ELabel("Projects (" + totalCount + ")");
-            Button newProjectBtn = new Button("New Project", new Button.ClickListener() {
+            ELabel headerLbl = new ELabel(AppContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, totalCount));
+            Button newProjectBtn = new Button(AppContext.getMessage(ProjectI18nEnum.NEW), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     Project project = new Project();
@@ -217,7 +220,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             Div billableHoursDiv = new Div().appendText(FontAwesome.MONEY.getHtml() + " " + NumberUtils.roundDouble(2, project.getTotalBillableHours())).
                     setTitle("Billable hours");
             Div nonBillableHoursDiv = new Div().appendText(FontAwesome.GIFT.getHtml() + " " + NumberUtils.roundDouble(2,
-                    project.getTotalNonBillableHours())).setTitle("Non billable hours");
+                    project.getTotalNonBillableHours())).setTitle(AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
             Div metaDiv = new Div().appendChild(activeMembersDiv, DivLessFormatter.EMPTY_SPACE(), createdTimeDiv,
                     DivLessFormatter.EMPTY_SPACE(), billableHoursDiv, DivLessFormatter.EMPTY_SPACE(),
                     nonBillableHoursDiv, DivLessFormatter.EMPTY_SPACE());
@@ -230,19 +233,19 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                 metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE());
             }
             metaDiv.setCSSClass(UIConstants.FLEX_DISPLAY);
-            ELabel prjInfo = new ELabel(metaDiv.write(), ContentMode.HTML).withStyleName(UIConstants
-                    .LABEL_META_INFO).withWidthUndefined();
+            ELabel prjInfo = new ELabel(metaDiv.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_META_INFO).withWidthUndefined();
             this.addComponent(prjInfo);
 
             int openAssignments = project.getNumOpenBugs() + project.getNumOpenTasks() + project.getNumOpenRisks();
             int totalAssignments = project.getNumBugs() + project.getNumTasks() + project.getNumRisks();
             ELabel progressInfoLbl;
             if (totalAssignments > 0) {
-                progressInfoLbl = new ELabel(String.format("%d of %d issue(s) resolved. Progress (%d%%)",
+                progressInfoLbl = new ELabel(AppContext.getMessage(ProjectI18nEnum.OPT_PROJECT_ASSIGNMENT,
                         (totalAssignments - openAssignments), totalAssignments, (totalAssignments - openAssignments)
                                 * 100 / totalAssignments)).withStyleName(UIConstants.LABEL_META_INFO);
             } else {
-                progressInfoLbl = new ELabel("No issue").withStyleName(UIConstants.LABEL_META_INFO);
+                progressInfoLbl = new ELabel(AppContext.getMessage(ProjectI18nEnum.OPT_NO_ASSIGNMENT))
+                        .withStyleName(UIConstants.LABEL_META_INFO);
             }
             this.addComponent(progressInfoLbl);
         }

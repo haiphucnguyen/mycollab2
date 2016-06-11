@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.pro.module.project.view.client;
 
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.module.project.i18n.ClientI18nEnum;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -39,7 +40,7 @@ public class ClientListPresenter extends AbstractPresenter<ClientListView> {
         if (AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
             AccountSearchCriteria searchCriteria = (AccountSearchCriteria) data.getParams();
             view.display(searchCriteria);
-            AppContext.addFragment("project/client/list", "Clients");
+            AppContext.addFragment("project/client/list", AppContext.getMessage(ClientI18nEnum.LIST));
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }

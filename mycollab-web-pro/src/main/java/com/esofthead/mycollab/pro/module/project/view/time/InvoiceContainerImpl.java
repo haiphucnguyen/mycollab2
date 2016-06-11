@@ -201,7 +201,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
 
         @Override
         protected String stringWhenEmptyList() {
-            return "No invoice";
+            return AppContext.getMessage(InvoiceI18nEnum.OPT_NO_INVOICE);
         }
     }
 

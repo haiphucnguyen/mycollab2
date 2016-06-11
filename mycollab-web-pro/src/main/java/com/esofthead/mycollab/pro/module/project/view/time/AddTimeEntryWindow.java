@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view.time;
 
+import com.esofthead.mycollab.common.i18n.DayI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
@@ -100,13 +101,13 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
 
         timeInputTable = new Table();
         timeInputTable.setImmediate(true);
-        timeInputTable.addContainerProperty("Monday", DoubleField.class, 0);
-        timeInputTable.addContainerProperty("Tuesday", DoubleField.class, 0);
-        timeInputTable.addContainerProperty("Wednesday", DoubleField.class, 0);
-        timeInputTable.addContainerProperty("Thursday", DoubleField.class, 0);
-        timeInputTable.addContainerProperty("Friday", DoubleField.class, 0);
-        timeInputTable.addContainerProperty("Saturday", DoubleField.class, 0);
-        timeInputTable.addContainerProperty("Sunday", DoubleField.class, 0);
+        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_MONDAY), DoubleField.class, 0);
+        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_TUESDAY), DoubleField.class, 0);
+        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), DoubleField.class, 0);
+        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_THURSDAY), DoubleField.class, 0);
+        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_FRIDAY), DoubleField.class, 0);
+        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_SATURDAY), DoubleField.class, 0);
+        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_SUNDAY), DoubleField.class, 0);
 
         timeInputTable.addItem(new DoubleField[]{new DoubleField(), new DoubleField(), new DoubleField(),
                 new DoubleField(), new DoubleField(), new DoubleField(), new DoubleField()}, "timeEntry");
@@ -214,31 +215,31 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(monday);
 
-        timeInputTable.setColumnHeader("Monday", AppContext.getMessage(TimeTrackingI18nEnum.MONDAY_FIELD,
+        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_MONDAY), AppContext.getMessage(TimeTrackingI18nEnum.MONDAY_FIELD,
                 DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader("Tuesday", AppContext.getMessage(TimeTrackingI18nEnum.TUESDAY_FIELD,
+        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_TUESDAY), AppContext.getMessage(TimeTrackingI18nEnum.TUESDAY_FIELD,
                 DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader("Wednesday", AppContext.getMessage(TimeTrackingI18nEnum.WEDNESDAY_FIELD,
+        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), AppContext.getMessage(TimeTrackingI18nEnum.WEDNESDAY_FIELD,
                 DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader("Thursday", AppContext.getMessage(TimeTrackingI18nEnum.THURSDAY_FIELD,
+        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_THURSDAY), AppContext.getMessage(TimeTrackingI18nEnum.THURSDAY_FIELD,
                 DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader("Friday", AppContext.getMessage(TimeTrackingI18nEnum.FRIDAY_FIELD,
+        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_FRIDAY), AppContext.getMessage(TimeTrackingI18nEnum.FRIDAY_FIELD,
                 DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader("Saturday", AppContext.getMessage(TimeTrackingI18nEnum.SATURDAY_FIELD,
+        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_SATURDAY), AppContext.getMessage(TimeTrackingI18nEnum.SATURDAY_FIELD,
                 DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader("Sunday", AppContext.getMessage(TimeTrackingI18nEnum.SUNDAY_FIELD,
+        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_SUNDAY), AppContext.getMessage(TimeTrackingI18nEnum.SUNDAY_FIELD,
                 DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
 
     }
@@ -255,43 +256,43 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
 
         List<ItemTimeLogging> timeLoggings = new ArrayList<>();
 
-        ItemTimeLogging timeLogging = buildItemTimeLogging("Monday", calendar, user);
+        ItemTimeLogging timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_MONDAY), calendar, user);
         if (timeLogging != null) {
-            timeLoggings.add(buildItemTimeLogging("Monday", calendar, user));
+            timeLoggings.add(buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_MONDAY), calendar, user));
         }
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging("Tuesday", calendar, user);
-        if (timeLogging != null) {
-            timeLoggings.add(timeLogging);
-        }
-
-        calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging("Wednesday", calendar, user);
+        timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_TUESDAY), calendar, user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging("Thursday", calendar, user);
+        timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), calendar, user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging("Friday", calendar, user);
+        timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_THURSDAY), calendar, user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging("Saturday", calendar, user);
+        timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_FRIDAY), calendar, user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging("Sunday", calendar, user);
+        timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_SATURDAY), calendar, user);
+        if (timeLogging != null) {
+            timeLoggings.add(timeLogging);
+        }
+
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_SUNDAY), calendar, user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }

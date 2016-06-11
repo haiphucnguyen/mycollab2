@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.project.events.ClientEvent;
+import com.esofthead.mycollab.module.project.i18n.ClientI18nEnum;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -40,12 +41,12 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.ACCOUNT, "Clients");
+        return ComponentUtils.header(CrmTypeConstants.ACCOUNT, AppContext.getMessage(ClientI18nEnum.LIST));
     }
 
     @Override
     protected Component buildExtraControls() {
-        Button createBtn = new Button("New Client", new Button.ClickListener() {
+        Button createBtn = new Button(AppContext.getMessage(ClientI18nEnum.NEW), new Button.ClickListener() {
             @Override
             public void buttonClick(final Button.ClickEvent event) {
                 EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null));
@@ -116,7 +117,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
                             callSearchAction();
                         }
                     });
-            nameField.setInputPrompt("Query by client name");
+            nameField.setInputPrompt(AppContext.getMessage(ClientI18nEnum.OPT_QUERY_BY_CLIENT_NAME));
             nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 
             basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_CENTER);

@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.project.events.ClientEvent;
+import com.esofthead.mycollab.module.project.i18n.ClientI18nEnum;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -70,10 +71,12 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
 
             view.editItem(account);
             if (account.getId() == null) {
-                AppContext.addFragment("project/client/add", AppContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE, "Client"));
+                AppContext.addFragment("project/client/add", AppContext.getMessage(GenericI18Enum
+                        .BROWSER_ADD_ITEM_TITLE, AppContext.getMessage(ClientI18nEnum.SINGLE)));
             } else {
                 AppContext.addFragment("project/client/edit/" + UrlEncodeDecoder.encode(account.getId()),
-                        AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE, "Client", account.getAccountname()));
+                        AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE, AppContext.getMessage(ClientI18nEnum.SINGLE),
+                                account.getAccountname()));
             }
         } else {
             NotificationUtil.showMessagePermissionAlert();

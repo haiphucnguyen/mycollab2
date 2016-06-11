@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleInvoice;
 import com.esofthead.mycollab.module.project.events.InvoiceEvent;
+import com.esofthead.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.esofthead.mycollab.module.project.service.InvoiceService;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -29,9 +30,9 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public class InvoiceAddWindow extends Window {
     InvoiceAddWindow(final SimpleInvoice invoice) {
         if (invoice.getId() == null) {
-            setCaption("New invoice");
+            setCaption(AppContext.getMessage(InvoiceI18nEnum.NEW));
         } else {
-            setCaption("Edit invoice");
+            setCaption(AppContext.getMessage(InvoiceI18nEnum.EDIT));
         }
         this.setWidth("800px");
         this.setModal(true);
