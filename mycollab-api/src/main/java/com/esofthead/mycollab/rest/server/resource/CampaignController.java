@@ -80,7 +80,6 @@ public class CampaignController {
                     communityLeadMapper.insert(communityLead);
                 }
 
-
                 contentGenerator.putVariable("lastname", lastname);
                 contentGenerator.putVariable("version", info.getVersion());
                 if ("Ultimate".equals(edition)) {

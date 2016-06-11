@@ -47,6 +47,7 @@ Version 5.3.4
 
 **Improvements & New Features**
 
+* [Premium] The new user workload report
 * Allow to customize the report fields
 * Support German language (Contributor: Marco Gantenbein)
 * Other minor improvements

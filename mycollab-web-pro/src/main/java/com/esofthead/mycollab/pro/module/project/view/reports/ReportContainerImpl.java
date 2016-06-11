@@ -68,7 +68,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
                 .appendText(AppContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
         userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withWidthUndefined());
         userWorkloadReport.addComponent(new ELabel(AppContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD_HELP)).withFullWidth());
-//        content.addComponent(userWorkloadReport);
+        content.addComponent(userWorkloadReport);
 
         MVerticalLayout timesheetReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         timesheetReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
