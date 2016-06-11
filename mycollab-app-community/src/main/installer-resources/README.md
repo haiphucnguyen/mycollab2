@@ -48,11 +48,17 @@ Version 5.3.4
 **Improvements & New Features**
 
 * [Premium] The new user workload report
+* [Premium] Add invoice activity to the activity stream
+* [Premium] Add time entry to the activity stream
+* Allow customizing project features when create the new project
 * Allow to customize the report fields
+* Externalize more strings for localization
 * Support German language (Contributor: Marco Gantenbein)
 * Other minor improvements
 
 **Bug Fixes**
+
+* [Premium] Can not quickly edit value in the popup field
 
 
 Version 5.3.3
