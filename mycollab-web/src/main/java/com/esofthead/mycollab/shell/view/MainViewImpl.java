@@ -458,7 +458,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
 
         Button translateBtn = new Button(AppContext.getMessage(GenericI18Enum.ACTION_TRANSLATE));
         translateBtn.setIcon(FontAwesome.PENCIL);
-        ExternalResource translateRes = new ExternalResource("https://community.mycollab.com/docs/developing-mycollab/internalization-and-localization/");
+        ExternalResource translateRes = new ExternalResource("https://community.mycollab.com/docs/developing-mycollab/translating/");
         BrowserWindowOpener translateOpener = new BrowserWindowOpener(translateRes);
         translateOpener.extend(translateBtn);
         accountPopupContent.addOption(translateBtn);

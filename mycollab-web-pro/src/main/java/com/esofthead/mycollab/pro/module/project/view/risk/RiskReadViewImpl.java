@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.pro.module.project.view.risk;
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -82,7 +83,10 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             previewLayout.addTitleStyleName(UIConstants.LABEL_OVERDUE);
         }
 
-        tagViewComponent.display(ProjectTypeConstants.RISK, beanItem.getId());
+        if (!SiteConfiguration.isCommunityEdition()) {
+            tagViewComponent.display(ProjectTypeConstants.RISK, beanItem.getId());
+        }
+
         activityComponent.loadActivities("" + beanItem.getId());
         dateInfoComp.displayEntryDateTime(beanItem);
         peopleInfoComp.displayEntryPeople(beanItem);
@@ -91,8 +95,12 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected ComponentContainer createExtraControls() {
-        tagViewComponent = new TagViewComponent();
-        return tagViewComponent;
+        if (SiteConfiguration.isCommunityEdition()) {
+            return null;
+        } else {
+            tagViewComponent = new TagViewComponent();
+            return tagViewComponent;
+        }
     }
 
     @Override
