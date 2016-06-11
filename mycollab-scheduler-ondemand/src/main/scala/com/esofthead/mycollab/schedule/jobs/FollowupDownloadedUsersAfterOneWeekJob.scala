@@ -28,7 +28,7 @@ class FollowupDownloadedUsersAfterOneWeekJob extends GenericQuartzJobBean {
   def executeJob(context: JobExecutionContext): Unit = {
     val sevenDaysAgo = new LocalDate().minusDays(5)
     val ex = new CommunityLeadExample()
-    ex.createCriteria().andRegisterdateEqualTo(sevenDaysAgo.toDate)
+    ex.createCriteria().andRegisterdateEqualTo(sevenDaysAgo.toDate).andValidEqualTo(true)
     import scala.collection.JavaConverters._
     val leads = communityLeadMapper.selectByExample(ex).asScala.toList
     for (customerLead <- leads) {
