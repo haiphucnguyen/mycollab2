@@ -85,9 +85,9 @@ public class CampaignController {
                 contentGenerator.putVariable("lastname", lastname);
                 contentGenerator.putVariable("version", info.getVersion());
                 if ("Ultimate".equals(edition)) {
-                    contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab.com/api/download/verify?username=%s&&edition=Ultimate", email));
+                    contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab.com/download/verify?username=%s&&edition=Ultimate", email));
                 } else {
-                    contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab.com/api/download/verify?username=%s", email));
+                    contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab.com/download/verify?username=%s", email));
                 }
 
                 extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
