@@ -2,8 +2,9 @@ package com.esofthead.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.configuration.EnDecryptHelper;
 import com.esofthead.mycollab.core.MyCollabVersion;
-import com.esofthead.mycollab.module.support.dao.ProEditionInfoMapper;
-import com.esofthead.mycollab.module.support.domain.ProEditionInfoExample;
+import com.esofthead.mycollab.ondemand.module.support.dao.ProEditionInfoMapper;
+import com.esofthead.mycollab.ondemand.module.support.domain.ProEditionInfoExample;
+import com.esofthead.mycollab.ondemand.module.support.service.EditionInfoResolver;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

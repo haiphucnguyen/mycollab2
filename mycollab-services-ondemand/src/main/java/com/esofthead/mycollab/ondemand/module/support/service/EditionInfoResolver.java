@@ -1,7 +1,8 @@
-package com.esofthead.mycollab.rest.server.resource;
+package com.esofthead.mycollab.ondemand.module.support.service;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.FileUtils;
+import com.esofthead.mycollab.ondemand.module.support.domain.EditionInfo;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 

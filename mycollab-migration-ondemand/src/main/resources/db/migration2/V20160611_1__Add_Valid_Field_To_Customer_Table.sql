@@ -1,0 +1,1 @@
+ALTER TABLE `s_customer_lead` ADD COLUMN `valid` TINYINT(1) NULL;

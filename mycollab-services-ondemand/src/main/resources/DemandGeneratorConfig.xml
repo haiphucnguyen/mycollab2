@@ -11,7 +11,7 @@
                         userId="root" />
 
         <javaModelGenerator
-                targetPackage="com.esofthead.mycollab.module.support.domain"
+                targetPackage="com.esofthead.mycollab.ondemand.module.support.domain"
                 targetProject="src/main/java">
             <property name="rootClass" value="com.esofthead.mycollab.core.arguments.ValuedBean" />
         </javaModelGenerator>
@@ -19,7 +19,7 @@
         <sqlMapGenerator targetPackage="."
                          targetProject="src/main/resources/sqlMap/support" />
 
-        <javaClientGenerator targetPackage="com.esofthead.mycollab.module.support.dao"
+        <javaClientGenerator targetPackage="com.esofthead.mycollab.ondemand.module.support.dao"
                              targetProject="src/main/java" type="XMLMAPPER">
             <property name="exampleMethodVisibility" value="public" />
             <property name="rootInterface" value="com.esofthead.mycollab.core.persistence.ICrudGenericDAO" />

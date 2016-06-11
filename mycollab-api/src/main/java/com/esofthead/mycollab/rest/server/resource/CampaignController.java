@@ -9,6 +9,8 @@ import com.esofthead.mycollab.module.mail.service.IContentGenerator;
 import com.esofthead.mycollab.ondemand.module.support.dao.CommunityLeadMapper;
 import com.esofthead.mycollab.ondemand.module.support.domain.CommunityLead;
 import com.esofthead.mycollab.ondemand.module.support.domain.CommunityLeadExample;
+import com.esofthead.mycollab.ondemand.module.support.domain.EditionInfo;
+import com.esofthead.mycollab.ondemand.module.support.service.EditionInfoResolver;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,9 +85,11 @@ public class CampaignController {
                 contentGenerator.putVariable("lastname", lastname);
                 contentGenerator.putVariable("version", info.getVersion());
                 if ("Ultimate".equals(edition)) {
-                    contentGenerator.putVariable("downloadLink", info.getPremiumDownloadLink());
+                    contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab" +
+                            ".con/api/download/verify?username=%s&&edition=Ultimate", email));
                 } else {
-                    contentGenerator.putVariable("downloadLink", info.getCommunityDownloadLink());
+                    contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab" +
+                            ".con/api/download/verify?username=%s", email));
                 }
 
                 extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
