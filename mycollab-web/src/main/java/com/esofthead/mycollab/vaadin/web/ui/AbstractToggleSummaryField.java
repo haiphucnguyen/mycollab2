@@ -25,7 +25,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd
  * @since 5.2.12
  */
-public class AbstractToggleSummaryField extends CssLayout {
+public class AbstractToggleSummaryField extends MHorizontalLayout {
     protected Label titleLinkLbl;
     protected MHorizontalLayout buttonControls;
 
