@@ -11,3 +11,4 @@ CREATE TABLE `s_pro_edition_info` (
   `originReference` VARCHAR(400) NULL,
   `type` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
+ALTER TABLE `s_pro_edition_info` CHANGE COLUMN `id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ;
