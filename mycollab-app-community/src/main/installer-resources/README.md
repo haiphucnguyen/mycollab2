@@ -45,6 +45,8 @@ Version 5.3.4
 
 **Library Upgrades**
 
+* Spring 4.3.0.RELEASE 
+
 **Improvements & New Features**
 
 * [Premium] The new user workload report

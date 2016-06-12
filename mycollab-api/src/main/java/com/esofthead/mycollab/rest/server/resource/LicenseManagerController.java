@@ -1,17 +1,21 @@
 package com.esofthead.mycollab.rest.server.resource;
 
+import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.configuration.EnDecryptHelper;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseType;
+import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
+import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.mail.service.IContentGenerator;
-import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.ondemand.module.support.dao.ProEditionInfoMapper;
 import com.esofthead.mycollab.ondemand.module.support.domain.ProEditionInfo;
 import com.verhas.licensor.License;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.*;
 import java.net.URLDecoder;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Properties;
 
 /**
@@ -33,7 +39,6 @@ import java.util.Properties;
  */
 @RestController
 public class LicenseManagerController {
-
     private static Logger LOG = LoggerFactory.getLogger(LicenseManagerController.class);
     private static final String PRIVATE_KEY = "1fc98e7f9ddff531d66de12e7c2c31d1";
 
@@ -41,7 +46,7 @@ public class LicenseManagerController {
     private ProEditionInfoMapper proEditionMapper;
 
     @Autowired
-    private MailRelayService mailRelayService;
+    private ExtMailService extMailService;
 
     @Autowired
     private IContentGenerator contentGenerator;
@@ -52,12 +57,11 @@ public class LicenseManagerController {
                              @RequestParam("internalProductName") String internalProductName,
                              @RequestParam("name") String name, @RequestParam("quantity") int quantity,
                              @RequestParam("reference") String reference,
-                             @RequestParam("subscriptionReference") String subscriptionReference,
                              @RequestParam("test") String test, @RequestParam("security_request_hash") String security_request_hash) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         StringBuilder stringBuilder = new StringBuilder().append(URLDecoder.decode(company, "UTF-8")).append
                 (URLDecoder.decode(email, "UTF-8")).append(URLDecoder.decode(internalProductName, "UTF-8"))
                 .append(URLDecoder.decode(name, "UTF-8")).append(quantity).append(URLDecoder.decode(reference, "UTF-8"))
-                .append(URLDecoder.decode(subscriptionReference, "UTF-8")).append(test).append(PRIVATE_KEY);
+                .append(test).append(PRIVATE_KEY);
         String msg = DigestUtils.md5Hex(stringBuilder.toString());
 
         if (!msg.equals(security_request_hash)) {
@@ -65,28 +69,45 @@ public class LicenseManagerController {
             throw new UserInvalidInputException("Invalid request");
         }
         Integer customerId = 0;
-        if (!"true".equals(test)) {
-            ProEditionInfo proEditionInfo = new ProEditionInfo();
-            proEditionInfo.setCompany(company);
-            proEditionInfo.setEmail(email);
-            proEditionInfo.setInternalproductname(internalProductName);
-            proEditionInfo.setName(name);
-            proEditionInfo.setQuantity(quantity);
-            proEditionInfo.setReference(reference);
-            proEditionInfo.setIssuedate(new Date());
-            proEditionInfo.setType("New");
-            customerId = proEditionMapper.insertAndReturnKey(proEditionInfo);
-        }
+
+        ProEditionInfo proEditionInfo = new ProEditionInfo();
+        proEditionInfo.setCompany(company);
+        proEditionInfo.setEmail(email);
+        proEditionInfo.setInternalproductname(internalProductName);
+        proEditionInfo.setName(name);
+        proEditionInfo.setQuantity(quantity);
+        proEditionInfo.setReference(reference);
+        proEditionInfo.setIssuedate(new Date());
+        proEditionInfo.setType("New");
+        customerId = proEditionMapper.insertAndReturnKey(proEditionInfo);
+
         LicenseInfo licenseInfo = new LicenseInfo();
-//        licenseInfo.setCustomerId(EnDecryptHelper.encryptText("" + customerId));
-        licenseInfo.setCustomerId("1");
-        licenseInfo.setLicenseType(LicenseType.PRO);
-        licenseInfo.setMaxUsers(10);
+        licenseInfo.setCustomerId(EnDecryptHelper.encryptText("" + customerId));
+        licenseInfo.setLicenseType(LicenseType.PRO_AD);
+        if ("Growing (For less than 10 users)".equals(internalProductName)) {
+            licenseInfo.setMaxUsers(10);
+        } else {
+            licenseInfo.setMaxUsers(9999);
+        }
+
         LocalDate now = new LocalDate();
         licenseInfo.setIssueDate(now.toDate());
         licenseInfo.setLicenseOrg(company);
         licenseInfo.setExpireDate(now.plusYears(1).toDate());
-        return encode(licenseInfo);
+        String license = encode(licenseInfo);
+        try {
+            File tempFile = File.createTempFile("mycollab", "lic");
+            FileUtils.write(tempFile, license, "UTF-8");
+            contentGenerator.putVariable("name", name);
+            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
+                    Arrays.asList(new MailRecipientField(email, name)), null, null, "MyCollab license is ready for use",
+                    contentGenerator.parseFile("mailLicenseInfo.html", Locale.US), Arrays.asList(new
+                            FileEmailAttachmentSource(tempFile, "mycollab.lic")));
+        } catch (Exception e) {
+            LOG.error("Error to generate the license", e);
+        }
+        return "Ok";
+
     }
 
     @RequestMapping(path = "/register-trial", method = RequestMethod.POST, headers =
@@ -99,8 +120,7 @@ public class LicenseManagerController {
         info.setIssueDate(new LocalDate().toDate());
         info.setLicenseOrg("MyCollab");
         info.setMaxUsers(30);
-        LicenseManagerController generator = new LicenseManagerController();
-        return generator.encode(info);
+        return encode(info);
     }
 
     private String encode(LicenseInfo licenseInfo) {
