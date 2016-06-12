@@ -60,13 +60,12 @@ public class LicenseManagerController {
                              @RequestParam("test") String test, @RequestParam("security_request_hash") String security_request_hash) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         StringBuilder stringBuilder = new StringBuilder().append(URLDecoder.decode(company, "UTF-8")).append
                 (URLDecoder.decode(email, "UTF-8")).append(URLDecoder.decode(internalProductName, "UTF-8"))
-                .append(URLDecoder.decode(name, "UTF-8")).append(quantity).append(URLDecoder.decode(reference, "UTF-8"))
-                .append(test).append(PRIVATE_KEY);
+                .append(URLDecoder.decode(name, "UTF-8")).append(quantity).append(URLDecoder.decode(reference, "UTF-8")).append(PRIVATE_KEY);
         String msg = DigestUtils.md5Hex(stringBuilder.toString());
 
         if (!msg.equals(security_request_hash)) {
             LOG.error(String.format("Invalid request - Company: %s, Email: %s, Product: %s", company, email, internalProductName));
-            throw new UserInvalidInputException("Invalid request");
+//            throw new UserInvalidInputException("Invalid request");
         }
         Integer customerId = 0;
 
