@@ -17,6 +17,7 @@ import com.verhas.licensor.License;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,7 @@ public class LicenseManagerController {
 //            throw new UserInvalidInputException("Invalid request");
         }
         Integer customerId = 0;
+        LocalDateTime now = new LocalDateTime();
 
         ProEditionInfo proEditionInfo = new ProEditionInfo();
         proEditionInfo.setCompany(company);
@@ -76,7 +78,7 @@ public class LicenseManagerController {
         proEditionInfo.setName(name);
         proEditionInfo.setQuantity(quantity);
         proEditionInfo.setReference(reference);
-        proEditionInfo.setIssuedate(new Date());
+        proEditionInfo.setIssuedate(now.toDate());
         proEditionInfo.setType("New");
         customerId = proEditionMapper.insertAndReturnKey(proEditionInfo);
 
@@ -89,7 +91,6 @@ public class LicenseManagerController {
             licenseInfo.setMaxUsers(9999);
         }
 
-        LocalDate now = new LocalDate();
         licenseInfo.setIssueDate(now.toDate());
         licenseInfo.setLicenseOrg(company);
         licenseInfo.setExpireDate(now.plusYears(1).toDate());
@@ -98,8 +99,12 @@ public class LicenseManagerController {
             File tempFile = File.createTempFile("mycollab", "lic");
             FileUtils.write(tempFile, license, "UTF-8");
             contentGenerator.putVariable("name", name);
+            contentGenerator.putVariable("productName", internalProductName);
+            contentGenerator.putVariable("issueDate", now.toDate());
+            contentGenerator.putVariable("receipt", reference);
             extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
-                    Arrays.asList(new MailRecipientField(email, name)), null, null, "MyCollab license is ready for use",
+                    Arrays.asList(new MailRecipientField(email, name)), null, null, contentGenerator.parseString
+                            ("MyCollab Order Receipt $receipt"),
                     contentGenerator.parseFile("mailLicenseInfo.html", Locale.US), Arrays.asList(new
                             FileEmailAttachmentSource(tempFile, "mycollab.lic")));
             tempFile.delete();
