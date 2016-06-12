@@ -103,6 +103,7 @@ public class LicenseManagerController {
                     Arrays.asList(new MailRecipientField(email, name)), null, null, "MyCollab license is ready for use",
                     contentGenerator.parseFile("mailLicenseInfo.html", Locale.US), Arrays.asList(new
                             FileEmailAttachmentSource(tempFile, "mycollab.lic")));
+            tempFile.delete();
         } catch (Exception e) {
             LOG.error("Error to generate the license", e);
         }
