@@ -54,7 +54,7 @@ public class ExtMailServiceImpl implements ExtMailService {
     public void sendHTMLMail(String fromEmail, String fromName,
                              List<MailRecipientField> toEmail, List<MailRecipientField> ccEmail,
                              List<MailRecipientField> bccEmail, String subject, String html,
-                             List<EmailAttachmentSource> attachments) {
+                             List<? extends EmailAttachmentSource> attachments) {
         getMailer().sendHTMLMail(fromEmail, fromName, toEmail, ccEmail, bccEmail, subject, html, attachments);
     }
 }
