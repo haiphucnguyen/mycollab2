@@ -113,7 +113,7 @@ public class DefaultMailer implements IMailer {
     @Override
     public void sendHTMLMail(String fromEmail, String fromName, List<MailRecipientField> toEmail,
                              List<MailRecipientField> ccEmail, List<MailRecipientField> bccEmail,
-                             String subject, String html, List<EmailAttachmentSource> attachments) {
+                             String subject, String html, List<? extends EmailAttachmentSource> attachments) {
         try {
             if (CollectionUtils.isEmpty(attachments)) {
                 sendHTMLMail(fromEmail, fromName, toEmail, ccEmail, bccEmail, subject, html);
@@ -133,7 +133,7 @@ public class DefaultMailer implements IMailer {
 
     @Override
     public void sendHTMLMail(String fromEmail, String fromName, List<SimpleUser> users, String subject, String html,
-                             List<EmailAttachmentSource> attachment) {
+                             List<? extends EmailAttachmentSource> attachment) {
         List<MailRecipientField> lstRecipient = new ArrayList<>();
         for (int i = 0; i < users.size(); i++) {
             String mail = users.get(i).getEmail();
