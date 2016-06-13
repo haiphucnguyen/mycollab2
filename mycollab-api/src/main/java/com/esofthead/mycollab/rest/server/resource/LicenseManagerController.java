@@ -17,7 +17,9 @@ import com.verhas.licensor.License;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
+import net.sf.dynamicreports.report.builder.component.VerticalListBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
+import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
 import net.sf.dynamicreports.report.constant.Markup;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.awt.*;
 import java.io.*;
 import java.net.URLDecoder;
 import java.security.NoSuchAlgorithmException;
@@ -92,10 +95,13 @@ public class LicenseManagerController {
         LicenseInfo licenseInfo = new LicenseInfo();
         licenseInfo.setCustomerId(EnDecryptHelper.encryptText("" + customerId));
         licenseInfo.setLicenseType(LicenseType.PRO_AD);
+        Double cost;
         if ("Growing (For less than 10 users)".equals(internalProductName)) {
             licenseInfo.setMaxUsers(10);
+            cost = 390d;
         } else {
             licenseInfo.setMaxUsers(9999);
+            cost=1290d;
         }
 
         licenseInfo.setIssueDate(now.toDate());
@@ -110,7 +116,7 @@ public class LicenseManagerController {
             contentGenerator.putVariable("issueDate", now.toDate());
             contentGenerator.putVariable("receipt", reference);
 
-            File receiptReport = receiptReport(reference, company, licenseInfo.getCustomerId());
+            File receiptReport = receiptReport(reference, company, licenseInfo.getCustomerId(), cost);
             extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
                     Arrays.asList(new MailRecipientField(email, name)), null, null, contentGenerator.parseString
                             ("MyCollab Order Receipt $receipt"),
@@ -177,7 +183,7 @@ public class LicenseManagerController {
         }
     }
 
-    private File receiptReport(String reference, String company, String customerId) throws Exception {
+    private File receiptReport(String reference, String company, String customerId, Double cost) throws Exception {
         File referenceFile = File.createTempFile("mycollab", "pdf");
         ReportStyles reportStyles = ReportStyles.instance();
         JasperReportBuilder report = report();
@@ -185,6 +191,7 @@ public class LicenseManagerController {
         ComponentBuilder<?, ?> dynamicReportsComponent = cmp.verticalList(
                 cmp.image(getClass().getClassLoader().getResourceAsStream("images/logo.png")).setFixedDimension(150, 28),
                 cmp.text("MyCollab LLC").setStyle(reportStyles.getH2Style()),
+                cmp.horizontalList().newRow(15).add(reportStyles.line()).newRow(15),
                 cmp.horizontalList().add(cmp.verticalList(cmp.text("79/11 Tran Huy Lieu, 12th Ward,"),
                         cmp.text("Phu Nhuan District, HCM city, Viet Nam"),
                         cmp.text("Web: <a href=\"https://www.mycollab.com\"><u>https://www.mycollab.com</u></a>").setStyle(style),
@@ -196,13 +203,25 @@ public class LicenseManagerController {
         );
 
 
-        HorizontalListBuilder add = cmp.horizontalList().add(dynamicReportsComponent).newRow().add(reportStyles.line()).newRow().add(cmp.verticalGap(10));
+        HorizontalListBuilder add = cmp.horizontalList().add(dynamicReportsComponent).newRow().add(cmp.verticalGap(15));
         report.title(add);
 
-        report.summary(cmp.verticalList(cmp.text("All prices are in USD. If you have any questions concerning this " +
-                "receipt, contact us at"), cmp.centerHorizontal(cmp.text("Billing Support").setStyle(reportStyles
-                .getUnderlineStyle())
-                .setHyperLink(hyperLink("mailto:support@mycollab.com")))));
+        VerticalListBuilder summaryComp = cmp.verticalList()
+                .add(cmp.horizontalList().add(cmp.text("MyCollab Ultimate Edition for 1 year").setStyle(reportStyles.getH3Style()),
+                        cmp.text(cost + " USD").setStyle(reportStyles.getH3Style()))
+                        .setStyle(stl.style().setBackgroundColor(new Color(235,184,132))))
+                .add(cmp.horizontalList().add(cmp.text("Number of servers").setStyle(reportStyles.getH3Style()),
+                        cmp.text("1").setStyle(reportStyles.getH3Style()))
+                        .setStyle(stl.style().setBackgroundColor(new Color(235,184,132))))
+                .add(cmp.horizontalList().newRow(15))
+                .add(cmp.text("All prices are in USD. If you have any questions concerning this receipt, contact us at"),
+                cmp.text("Billing Support").setStyle(reportStyles.getUnderlineStyle())
+                        .setHyperLink(hyperLink("mailto:support@mycollab.com")).setHorizontalTextAlignment(HorizontalTextAlignment.CENTER),
+                        cmp.text("We thank you for your business").setStyle(stl.style().setFontSize(14)
+                                .setForegroundColor(new Color(221,133,44)).setHorizontalTextAlignment(HorizontalTextAlignment.CENTER)));
+
+        report.summary(summaryComp);
+
 
         report.toPdf(new FileOutputStream(referenceFile));
         return referenceFile;
