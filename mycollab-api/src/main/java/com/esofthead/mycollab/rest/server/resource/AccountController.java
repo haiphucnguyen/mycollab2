@@ -22,8 +22,7 @@ public class AccountController {
     @Autowired
     private BillingService billingService;
 
-    @RequestMapping(value = "signup", method = RequestMethod.POST, headers =
-            "Content-Type=application/x-www-form-urlencoded")
+    @RequestMapping(value = "signup", method = RequestMethod.POST, headers = "Content-Type=application/x-www-form-urlencoded")
     public String signup(@RequestParam("subdomain") String subdomain, @RequestParam("planId") Integer planId,
                          @RequestParam("password") String password, @RequestParam("email") String email,
                          @RequestParam("timezone") String timezoneId, @RequestParam("isEmailVerified") Boolean isEmailVerified) {
@@ -32,7 +31,6 @@ public class AccountController {
             isEmailVerified = Boolean.FALSE;
         }
         billingService.registerAccount(subdomain, planId, email, password, email, timezoneId, isEmailVerified);
-
         return SiteConfiguration.getSiteUrl(subdomain);
     }
 }

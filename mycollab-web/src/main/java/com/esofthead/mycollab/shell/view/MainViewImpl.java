@@ -295,7 +295,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                     if (daysLeft > 30) {
                         informLbl.setValue("<div class='informBlock'>TRIAL ENDING<br>"
                                 + " 0 DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>");
-                        AppContext.getInstance().setIsValidAccount(false);
+//                        AppContext.getInstance().setIsValidAccount(false);
                     } else {
                         informLbl.setValue(String.format("<div class='informBlock'>TRIAL ENDING<br>%d DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>", 30 - daysLeft));
                     }
