@@ -27,6 +27,10 @@
                 @{status}
             #end
         #end
+
+        #ifnotnull($searchCriteria.registerTimeDuration)
+            ${searchCriteria.registerTimeDuration.operation} s_account.createdTime > @{searchCriteria.registerTimeDuration.from} AND s_account.createdTime <= @{searchCriteria.registerTimeDuration.to}
+        #end
         ]]>
     </sql>
 

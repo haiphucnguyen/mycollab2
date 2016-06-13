@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.ondemand.module.support.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.DateSearchField;
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 
@@ -12,6 +13,8 @@ public class BillingAccountSearchCriteria extends SearchCriteria {
     private DateSearchField lastAccessTime;
 
     private SetSearchField<String> statuses;
+
+    private RangeDateSearchField registerTimeDuration;
 
     public DateSearchField getLastAccessTime() {
         return lastAccessTime;
@@ -27,5 +30,13 @@ public class BillingAccountSearchCriteria extends SearchCriteria {
 
     public void setStatuses(SetSearchField<String> statuses) {
         this.statuses = statuses;
+    }
+
+    public RangeDateSearchField getRegisterTimeDuration() {
+        return registerTimeDuration;
+    }
+
+    public void setRegisterTimeDuration(RangeDateSearchField registerTimeDuration) {
+        this.registerTimeDuration = registerTimeDuration;
     }
 }
