@@ -6,7 +6,6 @@ import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.risk.IRiskContainer;
 import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter;
-import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
@@ -43,11 +42,4 @@ public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements 
 
         presenter.go(view, data);
     }
-
-    @Override
-    public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
-        ScreenData pageAction = pageActionChain.pop();
-        onGo(container, pageAction);
-    }
-
 }

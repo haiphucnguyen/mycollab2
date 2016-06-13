@@ -202,7 +202,6 @@ public class LicenseManagerController {
                                 cmp.text("Customer ID: " + customerId)))
         );
 
-
         HorizontalListBuilder add = cmp.horizontalList().add(dynamicReportsComponent).newRow().add(cmp.verticalGap(15));
         report.title(add);
 

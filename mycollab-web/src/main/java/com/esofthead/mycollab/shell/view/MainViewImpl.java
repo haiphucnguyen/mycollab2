@@ -28,10 +28,8 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
-import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
-import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.ui.SettingAssetsManager;
@@ -251,7 +249,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
     private MHorizontalLayout buildAccountMenuLayout() {
         accountLayout.removeAllComponents();
 
-        if (SiteConfiguration.isDemandEdition()) {
+        if (!SiteConfiguration.isDemandEdition()) {
             // display trial box if user in trial mode
             SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
             if (AccountStatusConstants.TRIAL.equals(billingAccount.getStatus())) {
@@ -292,14 +290,12 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                     });
                     accountLayout.with(informBox).withAlign(informBox, Alignment.MIDDLE_LEFT);
 
-                    Duration dur = new Duration(new DateTime(), new DateTime(billingAccount.getCreatedtime()));
+                    Duration dur = new Duration(new DateTime(billingAccount.getCreatedtime()), new DateTime());
                     int daysLeft = dur.toStandardDays().getDays();
                     if (daysLeft > 30) {
-                        BillingService billingService = AppContextUtil.getSpringBean(BillingService.class);
-                        BillingPlan freeBillingPlan = billingService.getFreeBillingPlan();
-                        billingAccount.setBillingPlan(freeBillingPlan);
                         informLbl.setValue("<div class='informBlock'>TRIAL ENDING<br>"
                                 + " 0 DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>");
+                        AppContext.getInstance().setIsValidAccount(false);
                     } else {
                         informLbl.setValue(String.format("<div class='informBlock'>TRIAL ENDING<br>%d DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>", 30 - daysLeft));
                     }
