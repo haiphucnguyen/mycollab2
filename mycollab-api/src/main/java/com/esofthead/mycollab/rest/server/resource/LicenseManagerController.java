@@ -4,7 +4,6 @@ import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.configuration.EnDecryptHelper;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseType;
@@ -13,11 +12,18 @@ import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.mail.service.IContentGenerator;
 import com.esofthead.mycollab.ondemand.module.support.dao.ProEditionInfoMapper;
 import com.esofthead.mycollab.ondemand.module.support.domain.ProEditionInfo;
+import com.esofthead.mycollab.reporting.ReportStyles;
 import com.verhas.licensor.License;
+import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
+import net.sf.dynamicreports.report.builder.style.StyleBuilder;
+import net.sf.dynamicreports.report.constant.Markup;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +36,10 @@ import java.io.*;
 import java.net.URLDecoder;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
+
+import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
 /**
  * @author MyCollab Ltd
@@ -102,17 +109,19 @@ public class LicenseManagerController {
             contentGenerator.putVariable("productName", internalProductName);
             contentGenerator.putVariable("issueDate", now.toDate());
             contentGenerator.putVariable("receipt", reference);
+
+            File receiptReport = receiptReport(reference, company, licenseInfo.getCustomerId());
             extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
                     Arrays.asList(new MailRecipientField(email, name)), null, null, contentGenerator.parseString
                             ("MyCollab Order Receipt $receipt"),
                     contentGenerator.parseFile("mailLicenseInfo.html", Locale.US), Arrays.asList(new
-                            FileEmailAttachmentSource(tempFile, "mycollab.lic")));
+                            FileEmailAttachmentSource(tempFile, "mycollab.lic"), new FileEmailAttachmentSource
+                            (receiptReport, "receipt-" + reference + ".pdf")));
             tempFile.delete();
         } catch (Exception e) {
             LOG.error("Error to generate the license", e);
         }
         return "Ok";
-
     }
 
     @RequestMapping(path = "/register-trial", method = RequestMethod.POST, headers =
@@ -166,6 +175,37 @@ public class LicenseManagerController {
         } catch (Exception e) {
             throw new MyCollabException("Failed to check MyCollab license", e);
         }
+    }
+
+    private File receiptReport(String reference, String company, String customerId) throws Exception {
+        File referenceFile = File.createTempFile("mycollab", "pdf");
+        ReportStyles reportStyles = ReportStyles.instance();
+        JasperReportBuilder report = report();
+        StyleBuilder style = stl.style().setMarkup(Markup.STYLED);
+        ComponentBuilder<?, ?> dynamicReportsComponent = cmp.verticalList(
+                cmp.image(getClass().getClassLoader().getResourceAsStream("images/logo.png")).setFixedDimension(150, 28),
+                cmp.text("MyCollab LLC").setStyle(reportStyles.getH2Style()),
+                cmp.horizontalList().add(cmp.verticalList(cmp.text("79/11 Tran Huy Lieu, 12th Ward,"),
+                        cmp.text("Phu Nhuan District, HCM city, Viet Nam"),
+                        cmp.text("Web: <a href=\"https://www.mycollab.com\"><u>https://www.mycollab.com</u></a>").setStyle(style),
+                        cmp.text("Email: <a href=\"mailto:support@mycollab.com\"><u>support@mycollab.com</u></a>").setStyle(style)))
+                        .add(cmp.verticalList(cmp.text("Receipt no: " + reference),
+                                cmp.text("Receipt date: " + DateTimeFormat.forPattern("E, dd MMM yyyy").print(new LocalDate())),
+                                cmp.text("Company: " + company),
+                                cmp.text("Customer ID: " + customerId)))
+        );
+
+
+        HorizontalListBuilder add = cmp.horizontalList().add(dynamicReportsComponent).newRow().add(reportStyles.line()).newRow().add(cmp.verticalGap(10));
+        report.title(add);
+
+        report.summary(cmp.verticalList(cmp.text("All prices are in USD. If you have any questions concerning this " +
+                "receipt, contact us at"), cmp.centerHorizontal(cmp.text("Billing Support").setStyle(reportStyles
+                .getUnderlineStyle())
+                .setHyperLink(hyperLink("mailto:support@mycollab.com")))));
+
+        report.toPdf(new FileOutputStream(referenceFile));
+        return referenceFile;
     }
 
     public static void main(String[] args) throws Exception {
