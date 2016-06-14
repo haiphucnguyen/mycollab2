@@ -99,7 +99,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
 
-        headerText = HeaderWithFontAwesome.h2(FontAwesome.USERS, AppContext.getMessage(UserI18nEnum.VIEW_LIST_TITLE, 0));
+        headerText = HeaderWithFontAwesome.h2(FontAwesome.USERS, AppContext.getMessage(UserI18nEnum.LIST_VALUE, 0));
 
         final Button sortBtn = new Button();
         sortBtn.addClickListener(new Button.ClickListener() {
@@ -173,7 +173,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
         List<SimpleUser> userAccountList = userService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0,
                 Integer.MAX_VALUE));
-        headerText.updateTitle(AppContext.getMessage(UserI18nEnum.VIEW_LIST_TITLE, userAccountList.size()));
+        headerText.updateTitle(AppContext.getMessage(UserI18nEnum.LIST_VALUE, userAccountList.size()));
 
         for (SimpleUser userAccount : userAccountList) {
             contentLayout.addComponent(generateMemberBlock(userAccount));

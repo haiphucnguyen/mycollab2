@@ -101,7 +101,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         AccountSettingContainer customizeContainer = (AccountSettingContainer) container;
-        customizeContainer.gotoSubView(AppContext.getMessage(AdminI18nEnum.VIEW_THEME));
+        customizeContainer.gotoSubView(AppContext.getMessage(AdminI18nEnum.OPT_THEME));
 
         AccountTheme accountTheme;
         if (data == null || data.getParams() == null) {
