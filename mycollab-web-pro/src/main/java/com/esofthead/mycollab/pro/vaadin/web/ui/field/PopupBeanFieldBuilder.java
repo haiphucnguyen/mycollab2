@@ -25,7 +25,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public abstract class PopupBeanFieldBuilder<B> {
     protected Object value;
     protected String caption;
-    protected String description = "Click to edit";
+    protected String description = AppContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT);
     protected Field field;
     protected boolean hasPermission = true;
     protected B bean;

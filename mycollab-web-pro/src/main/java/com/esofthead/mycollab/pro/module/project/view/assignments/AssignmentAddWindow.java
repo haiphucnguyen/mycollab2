@@ -5,6 +5,7 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.bug.BugAddWindow;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneAddWindow;
@@ -27,7 +28,7 @@ import java.util.Date;
 public class AssignmentAddWindow extends Window {
 
     public AssignmentAddWindow(Date date, final Integer prjId) {
-        super("New assignment");
+        super(AppContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT));
         final PopupDateFieldExt dateSelection = new PopupDateFieldExt(date);
         final ComboBox typeSelection = new ComboBox();
         typeSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);

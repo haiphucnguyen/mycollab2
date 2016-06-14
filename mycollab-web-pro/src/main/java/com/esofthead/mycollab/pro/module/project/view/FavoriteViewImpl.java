@@ -273,7 +273,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                             }
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                        printBtn.setDescription("Print");
+                        printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
                         printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
@@ -318,7 +318,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                             }
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                        printBtn.setDescription("Print");
+                        printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
                         printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
@@ -364,7 +364,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                             }
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                        printBtn.setDescription("Print");
+                        printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
                         printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
@@ -408,7 +408,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                             }
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                        printBtn.setDescription("Print");
+                        printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
                         printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
@@ -454,7 +454,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                             }
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                        printBtn.setDescription("Print");
+                        printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
                         printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
@@ -500,7 +500,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                             }
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                        printBtn.setDescription("Print");
+                        printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
                         printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {

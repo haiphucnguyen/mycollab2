@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.domain.*;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.HumanTimeConverter;
@@ -118,9 +119,7 @@ public class GanttTreeTable extends TreeTable {
                     field.addStyleName(ValoTheme.TEXTFIELD_SMALL);
                     if (ganttItem.hasSubTasks() || ganttItem.isMilestone()) {
                         field.setEnabled(false);
-                        ((TextField) field).setDescription("Because this row has sub-tasks, this cell " +
-                                "is a summary value and can not be edited directly. You can edit cells " +
-                                "beneath this row to change its value");
+                        ((TextField) field).setDescription(AppContext.getMessage(ProjectCommonI18nEnum.ERROR_NOT_EDIT_CELL_IN_GANTT_HELP));
                     }
                 } else if ("startDate".equals(propertyId) || "endDate".equals(propertyId)) {
                     field = new PopupDateFieldExt();
@@ -129,9 +128,7 @@ public class GanttTreeTable extends TreeTable {
                     ((PopupDateFieldExt) field).setImmediate(true);
                     if (ganttItem.hasSubTasks()) {
                         field.setEnabled(false);
-                        ((PopupDateFieldExt) field).setDescription("Because this row has sub-tasks, this cell " +
-                                "is a summary value and can not be edited directly. You can edit cells " +
-                                "beneath this row to change its value");
+                        ((PopupDateFieldExt) field).setDescription(AppContext.getMessage(ProjectCommonI18nEnum.ERROR_NOT_EDIT_CELL_IN_GANTT_HELP));
                     }
                 } else if ("assignUser".equals(propertyId)) {
                     field = new ProjectMemberSelectionField();
@@ -145,9 +142,7 @@ public class GanttTreeTable extends TreeTable {
                     field.addStyleName(ValoTheme.TEXTFIELD_SMALL);
                     if (ganttItem.hasSubTasks()) {
                         field.setEnabled(false);
-                        ((TextField) field).setDescription("Because this row has sub-tasks, this cell " +
-                                "is a summary value and can not be edited directly. You can edit cells " +
-                                "beneath this row to change its value");
+                        ((TextField) field).setDescription(AppContext.getMessage(ProjectCommonI18nEnum.ERROR_NOT_EDIT_CELL_IN_GANTT_HELP));
                     }
                 }
 

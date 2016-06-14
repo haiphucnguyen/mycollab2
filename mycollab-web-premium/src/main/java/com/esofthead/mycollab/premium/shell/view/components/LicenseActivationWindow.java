@@ -1,11 +1,14 @@
 package com.esofthead.mycollab.premium.shell.view.components;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.LicenseI18nEnum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AbstractLicenseActivationWindow;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -45,7 +48,7 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
         this.setResizable(false);
         this.setWidth("700px");
         MVerticalLayout content = new MVerticalLayout();
-        ELabel titleLbl = ELabel.h2("MyCollab activated");
+        ELabel titleLbl = ELabel.h2(AppContext.getMessage(LicenseI18nEnum.OPT_LICENSE_ACTIVATED));
 
         content.with(titleLbl);
         final FlexibleOptionGroup optionGroup = new FlexibleOptionGroup();
@@ -56,7 +59,8 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
         activationField.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.EAGER);
         activationField.setTextChangeTimeout(2000);
         activationField.setWidth("100%");
-        content.with(new MHorizontalLayout(optionGroup.getItemComponent(ACT_CODE), new Label("Activation code")), activationField);
+        content.with(new MHorizontalLayout(optionGroup.getItemComponent(ACT_CODE), new Label(AppContext.getMessage
+                (LicenseI18nEnum.OPT_ACTIVATION_CODE))), activationField);
 
         uploadFilenameField = new TextField();
         uploadFilenameField.setReadOnly(true);
@@ -65,10 +69,10 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
         MHorizontalLayout licenseFileUploadLayout = new MHorizontalLayout().with(uploadFilenameField, licenseUploadField).expand
                 (uploadFilenameField);
 
-        content.with(new MHorizontalLayout(optionGroup.getItemComponent(LICENSE_FILE), new Label("License file from the hard drive (mycollab.lic)")),
-                licenseFileUploadLayout);
+        content.with(new MHorizontalLayout(optionGroup.getItemComponent(LICENSE_FILE), new Label(AppContext
+                .getMessage(LicenseI18nEnum.OPT_BROWSE_LICENSE_HELP))), licenseFileUploadLayout);
 
-        changeLicenseBtn = new Button("Change license", new Button.ClickListener() {
+        changeLicenseBtn = new Button(AppContext.getMessage(LicenseI18nEnum.ACTION_CHANGE_LICENSE), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 String val = (String) optionGroup.getValue();
@@ -77,7 +81,7 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
                     String licenseText = activationField.getValue();
                     licenseResolver.checkAndSaveLicenseInfo(licenseText);
                     if (licenseResolver.getLicenseInfo().isInvalid()) {
-                        NotificationUtil.showErrorNotification("Invalid license");
+                        NotificationUtil.showErrorNotification(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID));
                     } else {
                         close();
                         Page.getCurrent().getJavaScript().execute("window.location.reload();");
@@ -86,7 +90,7 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
                 } else {
                     InputStream inputStream = licenseUploadField.getContentAsStream();
                     if (inputStream == null) {
-                        throw new UserInvalidInputException("No valid license file");
+                        throw new UserInvalidInputException(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_FILE_INVALID));
                     } else {
                         try {
                             byte[] licenseByes = IOUtils.toByteArray(inputStream);
@@ -94,7 +98,7 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
                             close();
                         } catch (Exception e) {
                             LOG.error("Error", e);
-                            throw new UserInvalidInputException("No valid license file");
+                            throw new UserInvalidInputException(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_FILE_INVALID));
                         }
                     }
                 }
@@ -144,7 +148,7 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
 
     private class LicenseUploadField extends UploadField {
         LicenseUploadField() {
-            this.setButtonCaption("Browse");
+            this.setButtonCaption(AppContext.getMessage(GenericI18Enum.ACTION_BROWSE));
             this.setAcceptFilter("*.lic");
             this.setDisplayUpload(false);
         }

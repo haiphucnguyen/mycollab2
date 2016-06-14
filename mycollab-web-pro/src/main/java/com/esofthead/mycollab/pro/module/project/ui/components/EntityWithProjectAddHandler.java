@@ -3,6 +3,8 @@ package com.esofthead.mycollab.pro.module.project.ui.components;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.task.TaskAddWindow;
 import com.esofthead.mycollab.spring.AppContextUtil;
@@ -31,7 +33,7 @@ public class EntityWithProjectAddHandler {
             prjSelectionWindow.setResizable(false);
             prjSelectionWindow.setModal(true);
             prjSelectionWindow.setWidth("500px");
-            prjSelectionWindow.setCaption("New Assignment");
+            prjSelectionWindow.setCaption(AppContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT));
             prjSelectionWindow.setContent(new ProjectSelectionLayout());
             return prjSelectionWindow;
         } else {
@@ -56,7 +58,7 @@ public class EntityWithProjectAddHandler {
             this.withMargin(false);
             GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);
             projectCombo = new UserInvolvedProjectsSelection();
-            layoutHelper.addComponent(projectCombo, "Project", 0, 0);
+            layoutHelper.addComponent(projectCombo, AppContext.getMessage(ProjectI18nEnum.SINGLE), 0, 0);
             MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(false, true, true, false));
             Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
                 @Override
@@ -66,7 +68,7 @@ public class EntityWithProjectAddHandler {
             });
             cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
 
-            Button nextBtn = new Button("Next", new Button.ClickListener() {
+            Button nextBtn = new Button(AppContext.getMessage(GenericI18Enum.ACTION_NEXT), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     SimpleProject selectedProject = (SimpleProject) projectCombo.getValue();
@@ -92,7 +94,6 @@ public class EntityWithProjectAddHandler {
                 this.addItem(project);
                 this.setItemCaption(project, project.getName());
             }
-
         }
     }
 }

@@ -15,7 +15,7 @@ class FileController(container: FileModule) extends AbstractController {
   private def bindFileEvents() {
     this.register(new ApplicationEventListener[FileEvent.GotoList]() {
       @Subscribe def handle(event: FileEvent.GotoList) {
-        val presenter: FileMainPresenter = PresenterResolver.getPresenter(classOf[FileMainPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[FileMainPresenter])
         presenter.go(container, null)
       }
     })

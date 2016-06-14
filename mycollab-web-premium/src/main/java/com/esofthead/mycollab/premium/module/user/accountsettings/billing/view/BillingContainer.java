@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.premium.module.user.accountsettings.billing.view;
 
+import com.esofthead.mycollab.common.i18n.LicenseI18nEnum;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingContainer;
@@ -51,22 +52,29 @@ public class BillingContainer extends AbstractPageView implements IBillingContai
             try {
                 LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
                 if (licenseInfo.isExpired()) {
-                    with(ELabel.h2("Your license is expired at " + AppContext.formatDate(licenseInfo.getExpireDate())).withWidthUndefined());
+                    with(ELabel.h2(AppContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_DATE, AppContext.formatDate(licenseInfo.getExpireDate())))
+                            .withWidthUndefined());
                 } else if (licenseInfo.isTrial()) {
-                    with(ELabel.h2("Your license is expired soon at " + AppContext.formatDate(licenseInfo.getExpireDate())).withWidthUndefined());
+                    with(ELabel.h2(AppContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_SOON_DATE, AppContext.formatDate(licenseInfo.getExpireDate())))
+                            .withWidthUndefined());
                 } else {
-                    with(ELabel.h2("Your license is valid until " + AppContext.formatDate(licenseInfo.getExpireDate())).withWidthUndefined());
+                    with(ELabel.h2(AppContext.getMessage(LicenseI18nEnum.OPT_LICENSE_VALID_TO_DATE, AppContext.formatDate(licenseInfo.getExpireDate())))
+                            .withWidthUndefined());
                 }
                 GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
-                layoutHelper.addComponent(new Label(licenseInfo.getLicenseOrg()), "Organization", 0, 0);
-                layoutHelper.addComponent(new Label(AppContext.formatDate(licenseInfo.getIssueDate())), "Issue Date", 0, 1);
-                layoutHelper.addComponent(new Label(AppContext.formatDate(licenseInfo.getExpireDate())), "Expire Date", 0, 2);
-                layoutHelper.addComponent(new Label(licenseInfo.getMaxUsers() + ""), "Max Users", 0, 3);
+                layoutHelper.addComponent(new Label(licenseInfo.getLicenseOrg()), AppContext.getMessage
+                        (LicenseI18nEnum.FORM_ORGANIZATION), 0, 0);
+                layoutHelper.addComponent(new Label(AppContext.formatDate(licenseInfo.getIssueDate())), AppContext
+                        .getMessage(LicenseI18nEnum.FORM_ISSUE_DATE), 0, 1);
+                layoutHelper.addComponent(new Label(AppContext.formatDate(licenseInfo.getExpireDate())), AppContext
+                        .getMessage(LicenseI18nEnum.FORM_EXPIRE_DATE), 0, 2);
+                layoutHelper.addComponent(new Label(licenseInfo.getMaxUsers() + ""), AppContext.getMessage
+                        (LicenseI18nEnum.FORM_MAX_USERS), 0, 3);
                 layoutHelper.getLayout().setWidth("600px");
                 with(layoutHelper.getLayout()).withAlign(layoutHelper.getLayout(), Alignment.TOP_CENTER);
 
                 if (licenseInfo.isTrial() || licenseInfo.isExpired() || licenseInfo.isInvalid()) {
-                    Button licenseBtn = new Button("Enter license code", new Button.ClickListener() {
+                    Button licenseBtn = new Button(AppContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE), new Button.ClickListener() {
                         @Override
                         public void buttonClick(Button.ClickEvent clickEvent) {
                             Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
@@ -85,6 +93,6 @@ public class BillingContainer extends AbstractPageView implements IBillingContai
     }
 
     private void buildInvalidLicenseComp() {
-        with(ELabel.h2("Your license is invalid").withWidthUndefined());
+        with(ELabel.h2(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID)).withWidthUndefined());
     }
 }

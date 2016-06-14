@@ -249,7 +249,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
     private MHorizontalLayout buildAccountMenuLayout() {
         accountLayout.removeAllComponents();
 
-        if (!SiteConfiguration.isDemandEdition()) {
+        if (SiteConfiguration.isDemandEdition()) {
             // display trial box if user in trial mode
             SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
             if (AccountStatusConstants.TRIAL.equals(billingAccount.getStatus())) {

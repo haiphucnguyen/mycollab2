@@ -5,6 +5,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
@@ -37,13 +38,14 @@ public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGeneri
 
     @Override
     protected ComponentContainer buildSearchTitle() {
-        return new MHorizontalLayout(ELabel.h2(FontAwesome.HASHTAG.getHtml() + " Assignments").withWidthUndefined());
+        return new MHorizontalLayout(ELabel.h2(FontAwesome.HASHTAG.getHtml() + " " + AppContext.getMessage
+                (ProjectCommonI18nEnum.OPT_ASSIGNMENT_LIST)).withWidthUndefined());
     }
 
     @Override
     protected Component buildExtraControls() {
         if (isCreateAssignment) {
-            Button newAssignmentBtn = new Button("New assignment", new Button.ClickListener() {
+            Button newAssignmentBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(), CurrentProjectVariables.getProjectId()));

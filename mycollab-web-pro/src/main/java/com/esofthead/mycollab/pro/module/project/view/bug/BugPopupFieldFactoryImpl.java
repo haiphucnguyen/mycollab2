@@ -153,7 +153,8 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
             watchersMultiSelection = new WatchersMultiSelection(ProjectTypeConstants.BUG, bug.getId());
-            layout.with(new ELabel("Modify watchers").withStyleName(ValoTheme.LABEL_H3), watchersMultiSelection);
+            layout.with(new ELabel(AppContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS)).withStyleName(ValoTheme.LABEL_H3),
+                    watchersMultiSelection);
         }
 
         @Override
@@ -207,7 +208,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
     @Override
     public PopupView createStatusPopupField(final SimpleBug bug) {
         final PopupView view = new BugStatusPopupView(bug);
-        view.setDescription("Click to edit");
+        view.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT));
         return view;
     }
 

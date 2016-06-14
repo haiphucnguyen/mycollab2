@@ -22,6 +22,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.IThemeCustomizePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.IThemeCustomizeView;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.AccountSettingContainer;
+import com.esofthead.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent.ResetTheme;
@@ -78,8 +79,8 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
             @Subscribe
             @Override
             public void handle(ResetTheme event) {
-                ConfirmDialogExt.show(UI.getCurrent(), "Reset to the default theme",
-                        "This action will reset all your customizations to default. Are you really want to do this?",
+                ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(AdminI18nEnum.ACTION_RESET_DEFAULT_THEME),
+                        AppContext.getMessage(AdminI18nEnum.OPT_CONFIRM_RESET_DEFAULT_THEME),
                         AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                         AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
                         new ConfirmDialog.Listener() {
@@ -100,7 +101,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         AccountSettingContainer customizeContainer = (AccountSettingContainer) container;
-        customizeContainer.gotoSubView("Theme");
+        customizeContainer.gotoSubView(AppContext.getMessage(AdminI18nEnum.VIEW_THEME));
 
         AccountTheme accountTheme;
         if (data == null || data.getParams() == null) {

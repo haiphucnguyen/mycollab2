@@ -18,7 +18,9 @@ package com.esofthead.mycollab.pro.module.project.ui.components;
 
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
+import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.pro.module.project.view.time.TimeTrackingTableDisplay;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
@@ -109,17 +111,17 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
 
             MHorizontalLayout summaryLayout = new MHorizontalLayout().withFullWidth();
             with(summaryLayout);
-            ELabel totalHoursLbl = new ELabel(("Total Hours: " + (billableHours + nonBillableHours))).withStyleName(UIConstants
-                    .LABEL_META_INFO).withWidthUndefined();
-            ELabel totalBillableHoursLbl = new ELabel(("Billable Hours: " + billableHours)).withStyleName(UIConstants
-                    .LABEL_META_INFO).withWidthUndefined();
-            ELabel totalNonBillableHoursLbl = new ELabel(("Non Billable Hours: " + nonBillableHours)).withStyleName
-                    (UIConstants.LABEL_META_INFO).withWidthUndefined();
+            ELabel totalHoursLbl = new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_HOURS_VALUE, (billableHours + nonBillableHours)))
+                    .withStyleName(UIConstants.LABEL_META_INFO).withWidthUndefined();
+            ELabel totalBillableHoursLbl = new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS_VALUE, billableHours))
+                    .withStyleName(UIConstants.LABEL_META_INFO).withWidthUndefined();
+            ELabel totalNonBillableHoursLbl = new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS_VALUE,
+                    nonBillableHours)).withStyleName(UIConstants.LABEL_META_INFO).withWidthUndefined();
             MVerticalLayout hoursSummaryLayout = new MVerticalLayout(totalHoursLbl, totalBillableHoursLbl,
                     totalNonBillableHoursLbl).withMargin(false);
             summaryLayout.with(hoursSummaryLayout).withAlign(hoursSummaryLayout, Alignment.TOP_LEFT);
 
-            MVerticalLayout costSummaryLayout = new MVerticalLayout().withMargin(false).with(ELabel.h3("Cost")
+            MVerticalLayout costSummaryLayout = new MVerticalLayout().withMargin(false).with(ELabel.h3(AppContext.getMessage(TimeTrackingI18nEnum.OPT_COST))
                             .withStyleName(ValoTheme.LABEL_COLORED).withWidthUndefined(),
                     ELabel.hr(), new ELabel(cost + "").withWidthUndefined()).alignAll(Alignment.TOP_RIGHT).withWidth("250px");
             summaryLayout.with(costSummaryLayout).withAlign(costSummaryLayout, Alignment.TOP_RIGHT);

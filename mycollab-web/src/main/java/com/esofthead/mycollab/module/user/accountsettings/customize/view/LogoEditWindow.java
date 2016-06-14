@@ -98,7 +98,7 @@ public class LogoEditWindow extends Window {
 
         Label lbPreview = new Label("<p style='margin: 0px;'><strong>To the below is what your logo will look like.</strong></p><p " +
                 "style='margin-top: 0px;'>To make adjustment, you can drag around and resize the selection square below. " +
-                "When you are happy with your photo, click the &ldquo;Accept&ldquo; button.</p>", ContentMode.HTML);
+                "When you are happy with your photo, click the <strong>Accept</strong> button.</p>", ContentMode.HTML);
         previewBoxRight.addComponent(lbPreview);
 
         MHorizontalLayout controlBtns = new MHorizontalLayout();

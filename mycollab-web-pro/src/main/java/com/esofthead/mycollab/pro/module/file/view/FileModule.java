@@ -33,7 +33,7 @@ public class FileModule extends AbstractPageView implements IFileModule {
         if (serviceMenuContainer == null) {
             serviceMenuContainer = new MHorizontalLayout();
             serviceMenu = new ServiceMenu();
-            serviceMenu.addService("Projects", new Button.ClickListener() {
+            serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, new String[]{"dashboard"}));
@@ -60,7 +60,7 @@ public class FileModule extends AbstractPageView implements IFileModule {
             });
 
 
-            serviceMenu.addService("People", new Button.ClickListener() {
+            serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PEOPLE), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     EventBusFactory.getInstance().post(
