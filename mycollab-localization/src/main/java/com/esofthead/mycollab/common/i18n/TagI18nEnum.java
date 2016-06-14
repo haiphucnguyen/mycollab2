@@ -17,8 +17,11 @@
 package com.esofthead.mycollab.common.i18n;
 
 import ch.qos.cal10n.BaseName;
+import ch.qos.cal10n.Locale;
+import ch.qos.cal10n.LocaleData;
 
 @BaseName("common-tag")
+@LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
 public enum TagI18nEnum {
     ACTION_ADD,
     ACTION_DELETE,

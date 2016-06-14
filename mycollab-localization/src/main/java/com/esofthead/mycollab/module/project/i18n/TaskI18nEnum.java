@@ -21,6 +21,7 @@ import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
 
 @BaseName("project-task")
+@LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
 public enum TaskI18nEnum {
     NEW,
     DETAIL,
