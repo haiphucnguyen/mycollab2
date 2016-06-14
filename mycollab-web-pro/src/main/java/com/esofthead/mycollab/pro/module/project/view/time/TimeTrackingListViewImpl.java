@@ -257,8 +257,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
                 }
             } else if ("delete".equals(event.getFieldName())) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                AppContext.getSiteName()),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
                         AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                         AppContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -268,10 +267,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
                             @Override
                             public void onClose(ConfirmDialog dialog) {
                                 if (dialog.isConfirmed()) {
-                                    ItemTimeLoggingService itemTimeLoggingService = AppContextUtil
-                                            .getSpringBean(ItemTimeLoggingService.class);
-                                    itemTimeLoggingService.removeWithSession(itemLogging,
-                                            AppContext.getUsername(), AppContext.getAccountId());
+                                    ItemTimeLoggingService itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                                    itemTimeLoggingService.removeWithSession(itemLogging, AppContext.getUsername(), AppContext.getAccountId());
                                     displayTimeEntries();
                                 }
                             }

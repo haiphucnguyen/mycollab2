@@ -211,7 +211,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
     }
 
     private void updateTimeTableHeader() {
-        Date monday = DateTimeUtils.getBounceDateofWeek(selectedDate)[0];
+        Date monday = DateTimeUtils.getBounceDatesOfWeek(selectedDate)[0];
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(monday);
 
@@ -250,7 +250,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
             throw new UserInvalidInputException("You must select a member");
         }
 
-        Date monday = DateTimeUtils.getBounceDateofWeek(selectedDate)[0];
+        Date monday = DateTimeUtils.getBounceDatesOfWeek(selectedDate)[0];
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(monday);
 
@@ -328,7 +328,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
             timeLogging.setIsovertime(isOvertimeCheckBox.getValue());
             timeLogging.setLoguser(logForMember.getUsername());
             timeLogging.setCreateduser(AppContext.getUsername());
-            timeLogging.setLogforday(DateTimeUtils.trimHMSOfDate(calendar.getTime()));
+            timeLogging.setLogforday(calendar.getTime());
             timeLogging.setLogvalue(timeVal);
             timeLogging.setNote(descArea.getValue());
             timeLogging.setProjectid(CurrentProjectVariables.getProjectId());

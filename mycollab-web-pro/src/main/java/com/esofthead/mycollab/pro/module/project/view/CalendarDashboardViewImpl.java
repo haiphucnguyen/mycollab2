@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view;
 
+import com.esofthead.mycollab.common.i18n.DayI18nEnum;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -15,6 +16,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.AssignmentEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.*;
 import com.esofthead.mycollab.module.project.view.ICalendarDashboardView;
 import com.esofthead.mycollab.module.project.view.bug.BugAddWindow;
@@ -224,7 +226,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         MHorizontalLayout header = new MHorizontalLayout().withFullWidth();
 
         MHorizontalLayout headerLeftContainer = new MHorizontalLayout();
-        Button todayBtn = new Button("Today", new Button.ClickListener() {
+        Button todayBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_TODAY), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 baseDate = new LocalDate();
@@ -279,7 +281,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         });
         newTaskBtn.setStyleName(UIConstants.BUTTON_ACTION);
         final ToggleButtonGroup viewButtons = new ToggleButtonGroup();
-        final Button weekViewBtn = new Button("Week");
+        final Button weekViewBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_WEEK));
         weekViewBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
@@ -287,7 +289,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
                 viewButtons.withDefaultButton(weekViewBtn);
             }
         });
-        final Button monthViewBtn = new Button("Month");
+        final Button monthViewBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_MONTH));
         monthViewBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
@@ -365,10 +367,10 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         assignMeLbl.setValue("Assign to me (" + provider.getAssignMeNum() + ")");
         assignOtherLbl.setValue("Assign to others (" + provider.getAssignOthersNum() + ")");
         nonAssigneeLbl.setValue("Not assign (" + provider.getNotAssignNum() + ")");
-        billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " Billable hours: " + provider
-                .getTotalBillableHours());
-        nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " Non billable hours: " + provider
-                .getTotalNonBillableHours());
+        billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " " + AppContext.getMessage(TimeTrackingI18nEnum
+                .OPT_BILLABLE_HOURS_VALUE, provider.getTotalBillableHours()));
+        nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " " + AppContext.getMessage(TimeTrackingI18nEnum
+                .OPT_NON_BILLABLE_HOURS_VALUE, provider.getTotalNonBillableHours()));
     }
 
     @Override

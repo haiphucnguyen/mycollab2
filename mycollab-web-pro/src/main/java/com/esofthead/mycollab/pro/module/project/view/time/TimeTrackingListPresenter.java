@@ -25,8 +25,7 @@ public class TimeTrackingListPresenter extends AbstractPresenter<TimeTrackingLis
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         FinanceContainer timeContainer = (FinanceContainer) container;
-        TabSheetDecorator.WrappedTab wrappedTab = (TabSheetDecorator.WrappedTab)timeContainer.gotoSubView(AppContext
-                .getMessage(ProjectCommonI18nEnum.VIEW_TIME));
+        TabSheetDecorator.WrappedTab wrappedTab = (TabSheetDecorator.WrappedTab)timeContainer.gotoSubView(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME));
         wrappedTab.addView(view);
         view.setSearchCriteria((ItemTimeLoggingSearchCriteria) data.getParams());
 

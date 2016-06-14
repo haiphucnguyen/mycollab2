@@ -112,11 +112,11 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
             MHorizontalLayout summaryLayout = new MHorizontalLayout().withFullWidth();
             with(summaryLayout);
             ELabel totalHoursLbl = new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_HOURS_VALUE, (billableHours + nonBillableHours)))
-                    .withStyleName(UIConstants.LABEL_META_INFO).withWidthUndefined();
+                    .withStyleName(UIConstants.META_INFO).withWidthUndefined();
             ELabel totalBillableHoursLbl = new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS_VALUE, billableHours))
-                    .withStyleName(UIConstants.LABEL_META_INFO).withWidthUndefined();
+                    .withStyleName(UIConstants.META_INFO).withWidthUndefined();
             ELabel totalNonBillableHoursLbl = new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS_VALUE,
-                    nonBillableHours)).withStyleName(UIConstants.LABEL_META_INFO).withWidthUndefined();
+                    nonBillableHours)).withStyleName(UIConstants.META_INFO).withWidthUndefined();
             MVerticalLayout hoursSummaryLayout = new MVerticalLayout(totalHoursLbl, totalBillableHoursLbl,
                     totalNonBillableHoursLbl).withMargin(false);
             summaryLayout.with(hoursSummaryLayout).withAlign(hoursSummaryLayout, Alignment.TOP_LEFT);

@@ -284,18 +284,18 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         if (Boolean.TRUE.equals(AppContext.showEmailPublicly())) {
             Label memberEmailLabel = new ELabel(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(),
                     member.getUsername()), ContentMode.HTML).withStyleName(UIConstants.TEXT_ELLIPSIS, UIConstants
-                    .LABEL_META_INFO).withFullWidth();
+                    .META_INFO).withFullWidth();
             memberInfo.addComponent(memberEmailLabel);
         }
 
         ELabel memberSinceLabel = new ELabel("Member since: " + AppContext.formatPrettyTime(member.getRegisteredtime()))
                 .withDescription(AppContext.formatDateTime(member.getRegisteredtime())).withStyleName(UIConstants
-                        .LABEL_META_INFO).withFullWidth();
+                        .META_INFO).withFullWidth();
         memberInfo.addComponent(memberSinceLabel);
 
         ELabel lastAccessTimeLbl = new ELabel("Logged in " + AppContext.formatPrettyTime(member.getLastaccessedtime()))
                 .withDescription(AppContext.formatDateTime(member.getLastaccessedtime()));
-        lastAccessTimeLbl.addStyleName(UIConstants.LABEL_META_INFO);
+        lastAccessTimeLbl.addStyleName(UIConstants.META_INFO);
         memberInfo.addComponent(lastAccessTimeLbl);
         blockTop.with(memberInfo).expand(memberInfo);
         blockContent.addComponent(blockTop);

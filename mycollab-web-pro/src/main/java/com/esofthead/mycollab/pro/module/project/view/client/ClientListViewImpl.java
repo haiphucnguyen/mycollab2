@@ -133,21 +133,21 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
         MVerticalLayout clientInfo = new MVerticalLayout().withMargin(false).with(clientLinkLbl, ELabel.hr());
         Div websiteDiv = new Div().appendText(AppContext.getMessage(AccountI18nEnum.FORM_WEBSITE) + ": " +
                 MoreObjects.firstNonNull(client.getWebsite(), "None"));
-        clientInfo.addComponent(new ELabel(websiteDiv.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_META_INFO));
+        clientInfo.addComponent(new ELabel(websiteDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO));
 
         Div addressDiv = new Div().appendText(AppContext.getMessage(AccountI18nEnum.FORM_BILLING_ADDRESS) + ": "
                 + MoreObjects.firstNonNull(client.getBillingaddress(), "None") +
                 ", " + MoreObjects.firstNonNull(client.getCity(), "None") +
                 ", " + MoreObjects.firstNonNull(client.getBillingcountry(), "None"));
-        clientInfo.addComponent(new ELabel(addressDiv.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_META_INFO));
+        clientInfo.addComponent(new ELabel(addressDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO));
         Div assignUserDiv = new Div().appendText(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + " : ").
                 appendChild(new Img("", StorageFactory.getInstance().getAvatarPath(client.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
                         new A(AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(), client.getAssignuser())).
                                 appendText(client.getAssignUserFullName()));
         clientInfo.addComponent(new ELabel(assignUserDiv.write(), ContentMode.HTML).withStyleName(UIConstants
-                .LABEL_META_INFO, UIConstants.TEXT_ELLIPSIS));
+                .META_INFO, UIConstants.TEXT_ELLIPSIS));
         Div numProjectsDiv = new Div().appendText(AppContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, client.getNumProjects()));
-        clientInfo.addComponent(new ELabel(numProjectsDiv.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_META_INFO));
+        clientInfo.addComponent(new ELabel(numProjectsDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO));
 
         blockTop.with(clientInfo).expand(clientInfo);
         blockContent.addComponent(blockTop);

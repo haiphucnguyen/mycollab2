@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.pro.module.project.ui.components.ItemOrderComboBox;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
@@ -120,7 +121,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             gridLayout.setSpacing(true);
             gridLayout.setMargin(true);
 
-            Date[] boundWeekDays = DateTimeUtils.getBounceDateofWeek(new Date());
+            Date[] boundWeekDays = DateTimeUtils.getBounceDatesOfWeek(new Date());
             startDateField = new PopupDateFieldExt();
             startDateField.setResolution(Resolution.DAY);
             startDateField.setValue(boundWeekDays[0]);
@@ -144,17 +145,17 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
                 }
             });
 
-            Label dateStartLb = new Label("From:");
-            Label dateEndLb = new Label("To:");
+            Label dateStartLb = new ELabel("From").withStyleName(UIConstants.META_COLOR);
+            Label dateEndLb = new ELabel("To").withStyleName(UIConstants.META_COLOR);
 
-            Label groupLb = new Label("Group:");
-            Label sortLb = new Label("Sort:");
+            Label groupLb = new ELabel("Group").withStyleName(UIConstants.META_COLOR);
+            Label sortLb = new ELabel("Sort").withStyleName(UIConstants.META_COLOR);
 
             gridLayout.addComponent(dateStartLb, 0, 0);
             gridLayout.addComponent(startDateField, 1, 0);
             gridLayout.addComponent(dateEndLb, 2, 0);
             gridLayout.addComponent(endDateField, 3, 0);
-            gridLayout.addComponent(new Label("User:"), 4, 0);
+            gridLayout.addComponent(new ELabel("User").withStyleName(UIConstants.META_COLOR), 4, 0);
 
             gridLayout.addComponent(groupLb, 0, 1);
             gridLayout.addComponent(groupField, 1, 1);

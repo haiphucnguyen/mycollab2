@@ -450,7 +450,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             String timeVal = timeInput.getValue();
             if (StringUtils.isNotBlank(timeVal)) {
                 Long delta = HumanTime.eval(timeVal).getDelta();
-                Date date = DateTimeUtils.trimHMSOfDate(dateField.getValue());
+                Date date = dateField.getValue();
                 if (delta > 0) {
                     ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
                     Double hours = delta.doubleValue() / (1000 * 60 * 60);

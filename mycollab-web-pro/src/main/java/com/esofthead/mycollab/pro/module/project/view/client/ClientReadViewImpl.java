@@ -233,7 +233,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                 metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE());
             }
             metaDiv.setCSSClass(UIConstants.FLEX_DISPLAY);
-            ELabel prjInfo = new ELabel(metaDiv.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_META_INFO).withWidthUndefined();
+            ELabel prjInfo = new ELabel(metaDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO).withWidthUndefined();
             this.addComponent(prjInfo);
 
             int openAssignments = project.getNumOpenBugs() + project.getNumOpenTasks() + project.getNumOpenRisks();
@@ -242,10 +242,10 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             if (totalAssignments > 0) {
                 progressInfoLbl = new ELabel(AppContext.getMessage(ProjectI18nEnum.OPT_PROJECT_ASSIGNMENT,
                         (totalAssignments - openAssignments), totalAssignments, (totalAssignments - openAssignments)
-                                * 100 / totalAssignments)).withStyleName(UIConstants.LABEL_META_INFO);
+                                * 100 / totalAssignments)).withStyleName(UIConstants.META_INFO);
             } else {
                 progressInfoLbl = new ELabel(AppContext.getMessage(ProjectI18nEnum.OPT_NO_ASSIGNMENT))
-                        .withStyleName(UIConstants.LABEL_META_INFO);
+                        .withStyleName(UIConstants.META_INFO);
             }
             this.addComponent(progressInfoLbl);
         }

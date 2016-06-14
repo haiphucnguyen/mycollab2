@@ -88,8 +88,7 @@ public class EntityWithProjectAddHandler {
         UserInvolvedProjectsSelection() {
             this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-            List<SimpleProject> projects = projectService.getProjectsUserInvolved(AppContext.getUsername(), AppContext
-                    .getAccountId());
+            List<SimpleProject> projects = projectService.getProjectsUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
             for (SimpleProject project : projects) {
                 this.addItem(project);
                 this.setItemCaption(project, project.getName());

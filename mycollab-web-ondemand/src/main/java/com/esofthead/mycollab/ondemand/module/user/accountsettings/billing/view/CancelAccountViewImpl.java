@@ -59,7 +59,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
         Label headerMsg = new Label(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_MESSAGE), ContentMode.HTML);
 
         ELabel headerNote = new ELabel(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE))
-                .withStyleName(UIConstants.LABEL_META_INFO).withWidthUndefined();
+                .withStyleName(UIConstants.META_INFO).withWidthUndefined();
 
         header.with(new Image(null, new AssetResource(WebResourceIds._sad_face)), headerTopLine, headerMsg, headerNote);
         return header;
