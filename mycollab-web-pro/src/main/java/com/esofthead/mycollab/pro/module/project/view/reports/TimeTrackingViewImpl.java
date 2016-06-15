@@ -7,6 +7,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.*;
 import com.esofthead.mycollab.core.db.query.ConstantValueInjector;
 import com.esofthead.mycollab.core.db.query.DateParam;
+import com.esofthead.mycollab.core.db.query.LazyValueInjector;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
@@ -26,10 +27,6 @@ import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.pro.module.project.ui.components.*;
-import com.esofthead.mycollab.reporting.ReportExportType;
-import com.esofthead.mycollab.reporting.ReportStreamSource;
-import com.esofthead.mycollab.reporting.RpFieldsBuilder;
-import com.esofthead.mycollab.reporting.SimpleReportTemplateExecutor;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.AsyncInvoker;
@@ -42,15 +39,11 @@ import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable;
 import com.vaadin.data.Property;
-import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
-import org.vaadin.peter.buttongroup.ButtonGroup;
-import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -89,23 +82,6 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
         listSelect.setNullSelectionAllowed(false);
         listSelect.setMultiSelect(true);
         listSelect.setRows(4);
-    }
-
-    private StreamResource constructStreamResource(final ReportExportType exportType) {
-        List fields = Arrays.asList(TimeTableFieldDef.project(), TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(),
-                TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(), TimeTableFieldDef.logForDate());
-        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Timesheet",
-                new RpFieldsBuilder(fields), exportType, SimpleItemTimeLogging.class, AppContextUtil.getSpringBean
-                (ItemTimeLoggingService.class));
-        ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
-            @Override
-            protected void initReportParameters(Map<String, Object> parameters) {
-                searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("projectName",
-                        SearchCriteria.ASC), new SearchCriteria.OrderField("logForDay", SearchCriteria.ASC)));
-                parameters.put(SimpleReportTemplateExecutor.CRITERIA, searchCriteria);
-            }
-        };
-        return new StreamResource(streamSource, exportType.getDefaultFileName());
     }
 
     private AbstractTimeTrackingDisplayComp buildTimeTrackingComp() {
@@ -155,21 +131,22 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true,
                     false)).withFullWidth();
 
-            MButton exportPdfBtn = new MButton("").withIcon(FontAwesome.FILE_PDF_O).withStyleName(UIConstants
-                    .BUTTON_OPTION).withDescription("Export to PDF");
-            FileDownloader pdfDownloader = new FileDownloader(constructStreamResource(ReportExportType.PDF));
-            pdfDownloader.extend(exportPdfBtn);
+            Button printBtn = new Button("", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    UI.getCurrent().addWindow(new TimesheetCustomizeReportOutputWindow(new LazyValueInjector() {
+                        @Override
+                        protected Object doEval() {
+                            return searchCriteria;
+                        }
+                    }));
+                }
+            });
+            printBtn.setIcon(FontAwesome.PRINT);
+            printBtn.addStyleName(UIConstants.BUTTON_OPTION);
+            printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
-            MButton exportExcelBtn = new MButton("").withIcon(FontAwesome.FILE_EXCEL_O).withStyleName(UIConstants
-                    .BUTTON_OPTION).withDescription("Export to Excel");
-            FileDownloader excelDownloader = new FileDownloader(constructStreamResource(ReportExportType.EXCEL));
-            excelDownloader.extend(exportExcelBtn);
-
-            ButtonGroup exportButtonControl = new ButtonGroup();
-            exportButtonControl.addButton(exportPdfBtn);
-            exportButtonControl.addButton(exportExcelBtn);
-
-            headerWrapper.with(titleLbl, exportButtonControl).expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);
+            headerWrapper.with(titleLbl, printBtn).expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);
 
             this.addComponent(headerWrapper);
 

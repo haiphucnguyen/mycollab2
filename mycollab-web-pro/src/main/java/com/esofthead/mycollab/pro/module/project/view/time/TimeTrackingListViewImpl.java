@@ -4,6 +4,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
+import com.esofthead.mycollab.core.db.query.LazyValueInjector;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -21,10 +22,7 @@ import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.pro.module.project.ui.components.AbstractTimeTrackingDisplayComp;
 import com.esofthead.mycollab.pro.module.project.ui.components.TimeTrackingDateOrderComponent;
 import com.esofthead.mycollab.pro.module.project.ui.components.TimeTrackingUserOrderComponent;
-import com.esofthead.mycollab.reporting.ReportExportType;
-import com.esofthead.mycollab.reporting.ReportStreamSource;
-import com.esofthead.mycollab.reporting.RpFieldsBuilder;
-import com.esofthead.mycollab.reporting.SimpleReportTemplateExecutor;
+import com.esofthead.mycollab.pro.module.project.view.reports.TimesheetCustomizeReportOutputWindow;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.AsyncInvoker;
@@ -37,23 +35,17 @@ import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
 import com.google.common.eventbus.Subscribe;
-import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.peter.buttongroup.ButtonGroup;
-import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author MyCollab Ltd
@@ -108,21 +100,22 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
 
         lbTimeRange = ELabel.h3("");
 
-        MButton exportPdfBtn = new MButton("").withIcon(FontAwesome.FILE_PDF_O).withStyleName(UIConstants
-                .BUTTON_OPTION).withDescription("Export to PDF");
-        FileDownloader exportPdfDownloader = new FileDownloader(constructStreamResource(ReportExportType.PDF));
-        exportPdfDownloader.extend(exportPdfBtn);
+        Button printBtn = new Button("", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                UI.getCurrent().addWindow(new TimesheetCustomizeReportOutputWindow(new LazyValueInjector() {
+                    @Override
+                    protected Object doEval() {
+                        return searchCriteria;
+                    }
+                }));
+            }
+        });
+        printBtn.setIcon(FontAwesome.PRINT);
+        printBtn.addStyleName(UIConstants.BUTTON_OPTION);
+        printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
-        MButton exportExcelBtn = new MButton("").withIcon(FontAwesome.FILE_EXCEL_O).withStyleName(UIConstants
-                .BUTTON_OPTION).withDescription("Export to Excel");
-        FileDownloader excelDownloader = new FileDownloader(constructStreamResource(ReportExportType.EXCEL));
-        excelDownloader.extend(exportExcelBtn);
-
-        ButtonGroup exportButtonControl = new ButtonGroup();
-        exportButtonControl.addButton(exportPdfBtn);
-        exportButtonControl.addButton(exportExcelBtn);
-
-        headerLayout.with(lbTimeRange, exportButtonControl).expand(lbTimeRange).withAlign(exportButtonControl, Alignment.MIDDLE_RIGHT);
+        headerLayout.with(lbTimeRange, printBtn).expand(lbTimeRange);
         this.addComponent(headerWrapper);
 
         timeTrackingWrapper = new VerticalLayout();
@@ -140,21 +133,6 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     public void detach() {
         EventBusFactory.getInstance().unregister(timeEntryChangeHandler);
         super.detach();
-    }
-
-    private StreamResource constructStreamResource(ReportExportType exportType) {
-        List fields = Arrays.asList(TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(), TimeTableFieldDef.logValue(),
-                TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(), TimeTableFieldDef.logForDate());
-        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Timesheet",
-                new RpFieldsBuilder(fields), exportType, SimpleItemTimeLogging.class,
-                AppContextUtil.getSpringBean(ItemTimeLoggingService.class));
-        ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
-            @Override
-            protected void initReportParameters(Map<String, Object> parameters) {
-                parameters.put(SimpleReportTemplateExecutor.CRITERIA, searchCriteria);
-            }
-        };
-        return new StreamResource(streamSource, exportType.getDefaultFileName());
     }
 
     private void setTimeRange() {
