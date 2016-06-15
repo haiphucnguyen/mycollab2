@@ -163,20 +163,14 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
 
         searchCriteria.setIsBillable(new BooleanSearchField(true));
         Double billableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
-        if (billableHour == null || billableHour < 0) {
-            billableHour = 0d;
-        }
 
         searchCriteria.setIsBillable(new BooleanSearchField(false));
         Double nonBillableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
-        if (nonBillableHour == null || nonBillableHour < 0) {
-            nonBillableHour = 0d;
-        }
 
         searchCriteria.setIsBillable(null);
         final Double totalHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
-        if (totalHour != null && totalHour > 0) {
+        if (totalHour > 0) {
             lbTimeRange.setValue(AppContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
                     fromDate, toDate, totalHour, billableHour, nonBillableHour));
         } else {

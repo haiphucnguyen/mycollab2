@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view.time;
 
+import com.esofthead.mycollab.common.i18n.DayI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.Order;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -14,6 +15,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSear
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
+import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.pro.module.project.ui.components.ItemOrderComboBox;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
@@ -90,7 +92,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
     public String getGroupBy() {
         String groupBy = (String) layout.groupField.getValue();
-        return groupBy == null ? "Date" : groupBy;
+        return groupBy == null ? AppContext.getMessage(DayI18nEnum.OPT_DATE) : groupBy;
     }
 
     public Order getOrderBy() {
@@ -129,7 +131,8 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             endDateField.setResolution(Resolution.DAY);
             endDateField.setValue(boundWeekDays[1]);
 
-            groupField = new ValueComboBox(false, "Date", "User");
+            groupField = new ValueComboBox(false, AppContext.getMessage(DayI18nEnum.OPT_DATE),
+                    AppContext.getMessage(UserI18nEnum.SINGLE));
             groupField.addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
@@ -145,17 +148,22 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
                 }
             });
 
-            Label dateStartLb = new ELabel("From").withStyleName(UIConstants.META_COLOR);
-            Label dateEndLb = new ELabel("To").withStyleName(UIConstants.META_COLOR);
+            Label dateStartLb = new ELabel(AppContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(UIConstants
+                    .META_COLOR, UIConstants.TEXT_ALIGN_RIGHT);
+            Label dateEndLb = new ELabel(AppContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(UIConstants.META_COLOR,
+                    UIConstants.TEXT_ALIGN_RIGHT);
 
-            Label groupLb = new ELabel("Group").withStyleName(UIConstants.META_COLOR);
-            Label sortLb = new ELabel("Sort").withStyleName(UIConstants.META_COLOR);
+            Label groupLb = new ELabel(AppContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName(UIConstants.META_COLOR,
+                    UIConstants.TEXT_ALIGN_RIGHT);
+            Label sortLb = new ELabel(AppContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(UIConstants.META_COLOR,
+                    UIConstants.TEXT_ALIGN_RIGHT);
 
             gridLayout.addComponent(dateStartLb, 0, 0);
             gridLayout.addComponent(startDateField, 1, 0);
             gridLayout.addComponent(dateEndLb, 2, 0);
             gridLayout.addComponent(endDateField, 3, 0);
-            gridLayout.addComponent(new ELabel("User").withStyleName(UIConstants.META_COLOR), 4, 0);
+            gridLayout.addComponent(new ELabel(AppContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(UIConstants.META_COLOR,
+                    UIConstants.TEXT_ALIGN_RIGHT), 4, 0);
 
             gridLayout.addComponent(groupLb, 0, 1);
             gridLayout.addComponent(groupField, 1, 1);
@@ -211,9 +219,9 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
                 sortDirection = SearchCriteria.DESC;
             }
 
-            if ("Date".equals(groupField.getValue())) {
+            if (AppContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupField.getValue())) {
                 searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("logForDay", sortDirection)));
-            } else if ("User".equals(groupField.getValue())) {
+            } else if (AppContext.getMessage(UserI18nEnum.SINGLE).equals(groupField.getValue())) {
                 searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("loguser", sortDirection)));
             }
             return searchCriteria;

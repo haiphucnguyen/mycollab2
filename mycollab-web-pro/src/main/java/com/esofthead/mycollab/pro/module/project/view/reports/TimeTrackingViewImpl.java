@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.common.TableViewField;
+import com.esofthead.mycollab.common.i18n.DayI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.*;
@@ -64,10 +65,6 @@ import java.util.Calendar;
 public class TimeTrackingViewImpl extends AbstractPageView implements TimeTrackingView {
     private static final long serialVersionUID = 1L;
 
-    private static final String GROUPBY_PROJECT = "Project";
-    private static final String GROUPBY_USER = "User";
-    private static final String GROUPBY_DATE = "Date";
-
     private List<SimpleProject> projects;
 
     private UserInvolvedProjectsListSelect projectField;
@@ -114,11 +111,11 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
     private AbstractTimeTrackingDisplayComp buildTimeTrackingComp() {
         String groupBy = (String) groupField.getValue();
 
-        if (groupBy.equals(GROUPBY_PROJECT)) {
+        if (groupBy.equals(AppContext.getMessage(ProjectI18nEnum.SINGLE))) {
             return new TimeTrackingProjectOrderComponent(getVisibleFields(), tableClickListener);
-        } else if (groupBy.equals(GROUPBY_DATE)) {
+        } else if (groupBy.equals(AppContext.getMessage(DayI18nEnum.OPT_DATE))) {
             return new TimeTrackingDateOrderComponent(getVisibleFields(), tableClickListener);
-        } else if (groupBy.equals(GROUPBY_USER)) {
+        } else if (groupBy.equals(AppContext.getMessage(UserI18nEnum.SINGLE))) {
             return new TimeTrackingUserOrderComponent(getVisibleFields(), tableClickListener);
         } else {
             throw new MyCollabException("Do not support view type: " + groupBy);
@@ -128,15 +125,15 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
     private List<TableViewField> getVisibleFields() {
         String groupBy = (String) groupField.getValue();
 
-        if (groupBy.equals(GROUPBY_PROJECT)) {
+        if (groupBy.equals(AppContext.getMessage(ProjectI18nEnum.SINGLE))) {
             return Arrays.asList(TimeTableFieldDef.summary(),
                     TimeTableFieldDef.logForDate(), TimeTableFieldDef.logUser(),
                     TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime());
-        } else if (groupBy.equals(GROUPBY_DATE)) {
+        } else if (groupBy.equals(AppContext.getMessage(DayI18nEnum.OPT_DATE))) {
             return Arrays.asList(TimeTableFieldDef.summary(),
                     TimeTableFieldDef.logUser(), TimeTableFieldDef.project(),
                     TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime());
-        } else if (groupBy.equals(GROUPBY_USER)) {
+        } else if (groupBy.equals(AppContext.getMessage(UserI18nEnum.SINGLE))) {
             return Arrays.asList(TimeTableFieldDef.summary(),
                     TimeTableFieldDef.logForDate(), TimeTableFieldDef.project(),
                     TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime());
@@ -188,21 +185,25 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             selectionLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
             controlsPanel.addComponent(selectionLayout);
 
-            selectionLayout.addComponent(new ELabel("From").withStyleName(UIConstants.META_COLOR), 0, 0);
+            selectionLayout.addComponent(new ELabel(AppContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(UIConstants
+                    .META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 0);
 
             fromDateField = new PopupDateFieldExt();
             fromDateField.setResolution(Resolution.DAY);
             selectionLayout.addComponent(fromDateField, 1, 0);
 
-            selectionLayout.addComponent(new ELabel("To").withStyleName(UIConstants.META_COLOR), 2, 0);
+            selectionLayout.addComponent(new ELabel(AppContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(UIConstants
+                    .META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 0);
 
             toDateField = new PopupDateFieldExt();
             toDateField.setResolution(Resolution.DAY);
             selectionLayout.addComponent(toDateField, 3, 0);
 
-            selectionLayout.addComponent(new ELabel("Group").withStyleName(UIConstants.META_COLOR), 0, 1);
+            selectionLayout.addComponent(new ELabel(AppContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName
+                    (UIConstants.META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 1);
 
-            groupField = new ValueComboBox(false, GROUPBY_PROJECT, GROUPBY_DATE, GROUPBY_USER);
+            groupField = new ValueComboBox(false, AppContext.getMessage(ProjectI18nEnum.SINGLE), AppContext
+                    .getMessage(DayI18nEnum.OPT_DATE), AppContext.getMessage(UserI18nEnum.SINGLE));
             groupField.addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
@@ -211,7 +212,8 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             });
             selectionLayout.addComponent(groupField, 1, 1);
 
-            selectionLayout.addComponent(new ELabel("Sort").withStyleName(UIConstants.META_COLOR), 2, 1);
+            selectionLayout.addComponent(new ELabel(AppContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(UIConstants
+                    .META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 1);
 
             orderField = new ItemOrderComboBox();
             orderField.addValueChangeListener(new Property.ValueChangeListener() {
@@ -222,17 +224,19 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             });
             selectionLayout.addComponent(orderField, 3, 1);
 
-            selectionLayout.addComponent(new ELabel(AppContext.getMessage(ProjectI18nEnum.SINGLE)).withStyleName(UIConstants.META_COLOR), 4, 0);
+            selectionLayout.addComponent(new ELabel(AppContext.getMessage(ProjectI18nEnum.SINGLE))
+                    .withStyleName(UIConstants.META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 4, 0);
 
             projectField = new UserInvolvedProjectsListSelect();
             initListSelectStyle(projectField);
             selectionLayout.addComponent(projectField, 5, 0, 5, 1);
 
-            selectionLayout.addComponent(new ELabel(AppContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(UIConstants.META_COLOR), 6, 0);
+            selectionLayout.addComponent(new ELabel(AppContext.getMessage(UserI18nEnum.SINGLE))
+                    .withStyleName(UIConstants.META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 6, 0);
 
-            this.userField = new UserInvolvedProjectsMemberListSelect(getProjectIds());
-            initListSelectStyle(this.userField);
-            selectionLayout.addComponent(this.userField, 7, 0, 7, 1);
+            userField = new UserInvolvedProjectsMemberListSelect(getProjectIds());
+            initListSelectStyle(userField);
+            selectionLayout.addComponent(userField, 7, 0, 7, 1);
 
             Button queryBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SUBMIT), new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
@@ -283,11 +287,11 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             sortDirection = SearchCriteria.DESC;
         }
 
-        if (GROUPBY_DATE.equals(groupField.getValue())) {
+        if (AppContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupField.getValue())) {
             searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("logForDay", sortDirection)));
-        } else if (GROUPBY_USER.equals(groupField.getValue())) {
+        } else if (AppContext.getMessage(UserI18nEnum.SINGLE).equals(groupField.getValue())) {
             searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("loguser", sortDirection)));
-        } else if (GROUPBY_PROJECT.equals(groupField.getValue())) {
+        } else if (AppContext.getMessage(ProjectI18nEnum.SINGLE).equals(groupField.getValue())) {
             searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("projectName", sortDirection)));
         }
 
@@ -296,7 +300,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
         searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
                 ConstantValueInjector.valueOf(Date.class, new Date[]{fromDate, toDate})));
 
-        Collection<String> selectedUsers = (Collection<String>) this.userField.getValue();
+        Collection<String> selectedUsers = (Collection<String>) userField.getValue();
         if (CollectionUtils.isNotEmpty(selectedUsers)) {
             searchCriteria.setLogUsers(new SetSearchField(selectedUsers));
         } else {
@@ -311,25 +315,19 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
         }
 
         searchCriteria.setIsBillable(new BooleanSearchField(true));
-        Double billableHour = this.itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
-        if (billableHour == null || billableHour < 0) {
-            billableHour = 0d;
-        }
+        Double billableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
         searchCriteria.setIsBillable(new BooleanSearchField(false));
-        Double nonBillableHours = this.itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
-        if (nonBillableHours == null || nonBillableHours < 0) {
-            nonBillableHours = 0d;
-        }
+        Double nonBillableHours = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
         searchCriteria.setIsBillable(null);
-        Double totalHour = this.itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
+        Double totalHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
-        if (totalHour == null || totalHour < 0) {
-            totalHoursLoggingLabel.setValue("Total hours logging: 0 Hrs");
-        } else {
+        if (totalHour > 0) {
             totalHoursLoggingLabel.setValue(AppContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
                     fromDate, toDate, totalHour, billableHour, nonBillableHours));
+        } else {
+            totalHoursLoggingLabel.setValue(AppContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
         }
 
         timeTrackingWrapper.removeAllComponents();
