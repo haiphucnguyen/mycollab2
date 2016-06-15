@@ -296,7 +296,8 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                         informLbl.setValue("<div class='informBlock'>Trial<br></div><div class='informBlock'>&gt;&gt;</div>");
 //                        AppContext.getInstance().setIsValidAccount(false);
                     } else {
-                        informLbl.setValue(String.format("<div class='informBlock'>TRIAL ENDING<br>%d DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>", 30 - daysLeft));
+                        informLbl.setValue(String.format("<div class='informBlock'>Trial ending<br>%d days " +
+                                "left</div><div class='informBlock'>&gt;&gt;</div>", 30 - daysLeft));
                     }
                 }
             }
