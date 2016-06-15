@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view.time;
 
+import com.esofthead.mycollab.common.i18n.DayI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
@@ -19,6 +20,7 @@ import com.esofthead.mycollab.module.project.events.TimeTrackingEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
+import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.pro.module.project.ui.components.AbstractTimeTrackingDisplayComp;
 import com.esofthead.mycollab.pro.module.project.ui.components.TimeTrackingDateOrderComponent;
 import com.esofthead.mycollab.pro.module.project.ui.components.TimeTrackingUserOrderComponent;
@@ -197,13 +199,13 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     }
 
     private AbstractTimeTrackingDisplayComp buildTimeTrackingComp(String groupBy) {
-        if ("Date".equals(groupBy)) {
+        if (AppContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupBy)) {
             return new TimeTrackingDateOrderComponent(Arrays.asList(
                     TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(),
                     TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(),
                     TimeTableFieldDef.id()), this.tableClickListener);
 
-        } else if ("User".equals(groupBy)) {
+        } else if (AppContext.getMessage(UserI18nEnum.SINGLE).equals(groupBy)) {
             return new TimeTrackingUserOrderComponent(Arrays.asList(
                     TimeTableFieldDef.summary(), TimeTableFieldDef.logForDate(),
                     TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(),
