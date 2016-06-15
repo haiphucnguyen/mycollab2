@@ -284,9 +284,22 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
         if (CollectionUtils.isEmpty(users)) {
             throw new UserInvalidInputException(String.format("User %s is not existed in this domain %s", username, subDomain));
         } else {
-            SimpleUser user = users.get(0);
+            SimpleUser user = null;
+            if (deploymentMode.isDemandEdition()) {
+                for (SimpleUser testUser : users) {
+                    if (subDomain.equals(testUser.getSubdomain())) {
+                        user = testUser;
+                        break;
+                    }
+                }
+                if (user == null) {
+                    throw new UserInvalidInputException("Invalid username or password");
+                }
+            } else {
+                user = users.get(0);
+            }
+
             if (user.getPassword() == null || !EnDecryptHelper.checkPassword(password, user.getPassword(), isPasswordEncrypt)) {
-                LOG.debug(String.format("PASS: %s   %s", password, user.getPassword()));
                 throw new UserInvalidInputException("Invalid username or password");
             }
 
