@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -21,6 +22,7 @@ import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
+import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.pro.module.project.ui.components.*;
 import com.esofthead.mycollab.reporting.ReportExportType;
@@ -186,25 +188,19 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             selectionLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
             controlsPanel.addComponent(selectionLayout);
 
-            Label fromLb = new Label("From:");
-            fromLb.setWidthUndefined();
-            selectionLayout.addComponent(fromLb, 0, 0);
+            selectionLayout.addComponent(new ELabel("From").withStyleName(UIConstants.META_COLOR), 0, 0);
 
             fromDateField = new PopupDateFieldExt();
             fromDateField.setResolution(Resolution.DAY);
             selectionLayout.addComponent(fromDateField, 1, 0);
 
-            Label toLb = new Label("To:");
-            toLb.setWidthUndefined();
-            selectionLayout.addComponent(toLb, 2, 0);
+            selectionLayout.addComponent(new ELabel("To").withStyleName(UIConstants.META_COLOR), 2, 0);
 
             toDateField = new PopupDateFieldExt();
             toDateField.setResolution(Resolution.DAY);
             selectionLayout.addComponent(toDateField, 3, 0);
 
-            Label groupLb = new Label("Group:");
-            groupLb.setWidthUndefined();
-            selectionLayout.addComponent(groupLb, 0, 1);
+            selectionLayout.addComponent(new ELabel("Group").withStyleName(UIConstants.META_COLOR), 0, 1);
 
             groupField = new ValueComboBox(false, GROUPBY_PROJECT, GROUPBY_DATE, GROUPBY_USER);
             groupField.addValueChangeListener(new Property.ValueChangeListener() {
@@ -215,9 +211,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             });
             selectionLayout.addComponent(groupField, 1, 1);
 
-            Label sortLb = new Label("Sort:");
-            sortLb.setWidthUndefined();
-            selectionLayout.addComponent(sortLb, 2, 1);
+            selectionLayout.addComponent(new ELabel("Sort").withStyleName(UIConstants.META_COLOR), 2, 1);
 
             orderField = new ItemOrderComboBox();
             orderField.addValueChangeListener(new Property.ValueChangeListener() {
@@ -228,17 +222,13 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             });
             selectionLayout.addComponent(orderField, 3, 1);
 
-            Label projectLb = new Label("Project:");
-            projectLb.setWidthUndefined();
-            selectionLayout.addComponent(projectLb, 4, 0);
+            selectionLayout.addComponent(new ELabel(AppContext.getMessage(ProjectI18nEnum.SINGLE)).withStyleName(UIConstants.META_COLOR), 4, 0);
 
             projectField = new UserInvolvedProjectsListSelect();
             initListSelectStyle(projectField);
             selectionLayout.addComponent(projectField, 5, 0, 5, 1);
 
-            Label userLb = new Label("User:");
-            userLb.setWidthUndefined();
-            selectionLayout.addComponent(userLb, 6, 0);
+            selectionLayout.addComponent(new ELabel(AppContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(UIConstants.META_COLOR), 6, 0);
 
             this.userField = new UserInvolvedProjectsMemberListSelect(getProjectIds());
             initListSelectStyle(this.userField);

@@ -225,7 +225,7 @@ public class CloudDriveSettingWindow extends Window {
 
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
-                    CloudDriveSettingWindow.this.close();
+                    close();
                 }
             });
             cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);

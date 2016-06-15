@@ -52,6 +52,7 @@ Version 5.3.4
 * [Premium] The new user workload report
 * [Premium] Add invoice activity to the activity stream
 * [Premium] Add time entry to the activity stream
+* [Premium] Allow to add the new assignment in calendar view
 * Allow customizing project features when create the new project
 * Allow to customize the report fields
 * Externalize more strings for localization
