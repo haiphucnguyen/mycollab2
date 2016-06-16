@@ -88,7 +88,6 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
     @Autowired
     private IDeploymentMode deploymentMode;
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public ICrudGenericDAO getCrudMapper() {
         return userMapper;
@@ -268,7 +267,6 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
         userMapperExt.removeKeysWithSession(keys);
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     public SimpleUser authentication(String username, String password, String subDomain, boolean isPasswordEncrypt) {
         UserSearchCriteria criteria = new UserSearchCriteria();

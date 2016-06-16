@@ -1,7 +1,8 @@
 package com.esofthead.mycollab.pro.module.project.view.assignments;
 
-import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
+import com.esofthead.mycollab.common.i18n.DayI18nEnum;
 import com.esofthead.mycollab.core.arguments.BasicSearchRequest;
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -14,6 +15,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.AssignmentEvent;
+import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -207,7 +209,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         MHorizontalLayout header = new MHorizontalLayout().withFullWidth();
 
         MHorizontalLayout headerLeftContainer = new MHorizontalLayout();
-        Button todayBtn = new Button("Today", new Button.ClickListener() {
+        Button todayBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_TODAY), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 baseDate = new LocalDate();
@@ -257,7 +259,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         headerLbl = ELabel.h2("");
         titleWrapper.addComponent(headerLbl);
 
-        Button dailyBtn = new Button("Daily", new Button.ClickListener() {
+        Button dailyBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_DAILY), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 baseDate = new LocalDate();
@@ -266,7 +268,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         });
         dailyBtn.setWidth("80px");
 
-        Button weeklyBtn = new Button("Weekly", new Button.ClickListener() {
+        Button weeklyBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_WEEKLY), new Button.ClickListener() {
             private static final long serialVersionUID = -5707546605789537298L;
 
             @Override
@@ -277,7 +279,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         });
         weeklyBtn.setWidth("80px");
 
-        Button monthlyBtn = new Button("Monthly", new Button.ClickListener() {
+        Button monthlyBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_MONTHLY), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 baseDate = new LocalDate();
@@ -334,10 +336,10 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
                 assignMeLbl.setValue("Assign to me (" + provider.getAssignMeNum() + ")");
                 assignOtherLbl.setValue("Assign to others (" + provider.getAssignOthersNum() + ")");
                 nonAssigneeLbl.setValue("Not assign (" + provider.getNotAssignNum() + ")");
-                billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " Billable hours: " + provider
-                        .getTotalBillableHours());
-                nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " Non billable hours: " + provider
-                        .getTotalNonBillableHours());
+                billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " " + AppContext.getMessage
+                        (TimeTrackingI18nEnum.OPT_BILLABLE_HOURS_VALUE, provider.getTotalBillableHours()));
+                nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " " + AppContext.getMessage
+                        (TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS_VALUE, provider.getTotalNonBillableHours()));
             }
         });
         provider.loadEvents(searchCriteria, false);

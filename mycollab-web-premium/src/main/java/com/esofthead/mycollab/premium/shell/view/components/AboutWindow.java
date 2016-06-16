@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.premium.shell.view.components;
 
+import com.esofthead.mycollab.common.i18n.LicenseI18nEnum;
 import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
@@ -57,7 +58,7 @@ public class AboutWindow extends AbstractAboutWindow {
         LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
         LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
         if (licenseInfo == null) {
-            Label licenseInfoLbl = new Label("Invalid license");
+            Label licenseInfoLbl = new Label(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID));
             rightPanel.add(licenseInfoLbl);
         } else {
             Label licenseInfoLbl;
@@ -79,7 +80,7 @@ public class AboutWindow extends AbstractAboutWindow {
         }
 
         if (licenseInfo != null && licenseInfo.isTrial()) {
-            Button buyBtn = new Button("Buy a license", new Button.ClickListener() {
+            Button buyBtn = new Button(AppContext.getMessage(LicenseI18nEnum.ACTION_BUY_LICENSE), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow());
@@ -87,7 +88,7 @@ public class AboutWindow extends AbstractAboutWindow {
                 }
             });
             buyBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            Button editLicenseBtn = new Button("Enter license code", new Button.ClickListener() {
+            Button editLicenseBtn = new Button(AppContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);

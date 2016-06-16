@@ -163,8 +163,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         }
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        List<SimpleUser> userAccountList = userService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0,
-                Integer.MAX_VALUE));
+        List<SimpleUser> userAccountList = userService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
         headerText.updateTitle(AppContext.getMessage(UserI18nEnum.LIST_VALUE, userAccountList.size()));
 
         for (SimpleUser userAccount : userAccountList) {
@@ -198,8 +197,8 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
                             member.getInviteUser(), AppContext.getSubDomain(), AppContext.getAccountId());
                     AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
                     asyncEventBus.post(invitationEvent);
-                    NotificationUtil.showNotification(AppContext.getMessage(GenericI18Enum.OPT_SUCCESS), "The invitation is" +
-                            " sent to " + member.getDisplayName() + " successfully");
+                    NotificationUtil.showNotification(AppContext.getMessage(GenericI18Enum.OPT_SUCCESS), AppContext
+                            .getMessage(UserI18nEnum.OPT_SEND_INVITATION_SUCCESSFULLY, member.getDisplayName()));
                 }
             });
             resendBtn.addStyleName(UIConstants.BUTTON_LINK);
@@ -234,8 +233,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
                             public void onClose(ConfirmDialog dialog) {
                                 if (dialog.isConfirmed()) {
                                     UserService userService = AppContextUtil.getSpringBean(UserService.class);
-                                    userService.pendingUserAccounts(Collections.singletonList(member.getUsername()),
-                                            AppContext.getAccountId());
+                                    userService.pendingUserAccounts(Collections.singletonList(member.getUsername()), AppContext.getAccountId());
                                     EventBusFactory.getInstance().post(new UserEvent.GotoList(UserListViewImpl.this, null));
                                 }
                             }
@@ -282,13 +280,14 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
             memberInfo.addComponent(memberEmailLabel);
         }
 
-        ELabel memberSinceLabel = new ELabel("Member since: " + AppContext.formatPrettyTime(member.getRegisteredtime()))
+        ELabel memberSinceLabel = new ELabel(AppContext.getMessage(UserI18nEnum.OPT_MEMBER_SINCE, AppContext
+                .formatPrettyTime(member.getRegisteredtime())))
                 .withDescription(AppContext.formatDateTime(member.getRegisteredtime())).withStyleName(UIConstants
                         .META_INFO).withFullWidth();
         memberInfo.addComponent(memberSinceLabel);
 
-        ELabel lastAccessTimeLbl = new ELabel("Logged in " + AppContext.formatPrettyTime(member.getLastaccessedtime()))
-                .withDescription(AppContext.formatDateTime(member.getLastaccessedtime()));
+        ELabel lastAccessTimeLbl = new ELabel(AppContext.getMessage(UserI18nEnum.OPT_MEMBER_LOGGED_IN, AppContext.formatPrettyTime
+                (member.getLastaccessedtime()))).withDescription(AppContext.formatDateTime(member.getLastaccessedtime()));
         lastAccessTimeLbl.addStyleName(UIConstants.META_INFO);
         memberInfo.addComponent(lastAccessTimeLbl);
         blockTop.with(memberInfo).expand(memberInfo);
