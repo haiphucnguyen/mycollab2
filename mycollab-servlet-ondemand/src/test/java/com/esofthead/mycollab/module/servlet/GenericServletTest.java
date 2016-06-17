@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.module.servlet;
 
-import com.esofthead.mycollab.template.velocity.service.TemplateEngine;
 import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -32,9 +31,6 @@ import static org.mockito.Mockito.when;
  * @since 1.0.0
  */
 public class GenericServletTest {
-
-    @Mock
-    protected TemplateEngine templateEngine;
 
     @Mock
     protected HttpServletRequest request;

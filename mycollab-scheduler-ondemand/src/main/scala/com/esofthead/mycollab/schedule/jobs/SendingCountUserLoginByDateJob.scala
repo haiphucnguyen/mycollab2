@@ -4,8 +4,8 @@ import java.util.Arrays
 
 import com.esofthead.mycollab.common.domain.MailRecipientField
 import com.esofthead.mycollab.configuration.SiteConfiguration
-import com.esofthead.mycollab.core.arguments.{BasicSearchRequest, SearchCriteria}
 import com.esofthead.mycollab.core.arguments.SearchCriteria.OrderField
+import com.esofthead.mycollab.core.arguments.{BasicSearchRequest, SearchCriteria}
 import com.esofthead.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[SendingCountUserLoginByDateJob])
-  private val COUNT_USER_LOGIN_TEMPLATE: String = "mailCountUserLoginByDate.html"
+  private val COUNT_USER_LOGIN_TEMPLATE: String = "mailCountUserLoginByDate.ftl"
 
   @Autowired var userService: UserService = _
   @Autowired var extMailService: ExtMailService = _
@@ -51,7 +51,7 @@ class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
       try {
         extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getNotifyEmail,
           Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")), null, null,
-          contentGenerator.parseString("Today system-logins count"),
+          "Today system-logins count",
           contentGenerator.parseFile(COUNT_USER_LOGIN_TEMPLATE), null)
       }
       catch {

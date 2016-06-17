@@ -11,7 +11,7 @@ a {
 </head>
 <body style="background-color: ${styles.background}; font: ${styles.font}; color: #4e4e4e; padding: 0px 0px;">
 <table width="600" cellpadding="0" cellspacing="0" border="0" style="margin: 20px 0px;">
-  #parse("mailLogo.html")
+  <#include "mailLogo.ftl">
   <tr>
     <td style="padding: 10px 25px;">
       <div><img src="${defaultUrls.cdn_url}icons/default_user_avatar_16.png" width="16" height="16"
@@ -21,6 +21,6 @@ a {
       </div>
     </td>
   </tr>
-  #parse("mailFooter_en-US.html")
+  <#include "mailFooter.ftl">
 </table>
 </body>

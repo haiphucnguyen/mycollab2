@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-services.
- *
- * mycollab-services is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-services is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.module.mail.service
 
 import java.util.Locale
@@ -32,13 +16,6 @@ trait IContentGenerator {
 
   /**
     *
-    * @param subject
-    * @return
-    */
-  def parseString(subject: String): String
-
-  /**
-    *
     * @param templateFilePath
     * @return
     */
@@ -51,13 +28,4 @@ trait IContentGenerator {
     * @return
     */
   def parseFile(templateFilePath: String, currentLocale: Locale): String
-
-  /**
-    *
-    * @param templateFilePath
-    * @param currentLocale
-    * @param defaultLocale
-    * @return
-    */
-  def parseFile(templateFilePath: String, currentLocale: Locale, defaultLocale: Locale): String
 }

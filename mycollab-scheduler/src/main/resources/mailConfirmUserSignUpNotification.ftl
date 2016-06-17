@@ -24,7 +24,7 @@ a {
 #end
 
 <table width="760" cellpadding="0" cellspacing="0" border="0" style="margin: 20px 0px;">
-    #parse("mailLogo.html")
+    <#include "mailLogo.ftl">
     <tr>
         <td style="padding: 0px 25px; text-align: center;">
             <p style="font-size: 22px;"><b><i>Thank you for choosing MyCollab!</i></b>
@@ -65,7 +65,7 @@ a {
             </div>
         </td>
     </tr>
-    #parse("mailFooter_en-US.html")
+    <#include "mailFooter.ftl">
 </table>
 </body>
 </html>    

@@ -37,6 +37,6 @@ public class TestimonialController {
                 new Li().appendText(String.format("Website: %s", website)),
                 new Li().appendText(String.format("Testimonial: %s", testimonial))));
         mailRelayService.saveRelayEmail(new String[]{"Sir"}, new String[]{"hainguyen@mycollab.com"},
-                contentGenerator.parseString("New testimonial for you"), bodyContent.write());
+                "New testimonial for you", bodyContent.write());
     }
 }

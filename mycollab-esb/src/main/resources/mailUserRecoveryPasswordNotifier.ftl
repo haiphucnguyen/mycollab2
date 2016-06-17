@@ -32,7 +32,7 @@ a {
 #end
 
 <table width="600" cellpadding="0" cellspacing="0" border="0" style="margin: 20px 0px;">
-    #parse("mailLogo.html")
+    <#include "mailLogo.ftl">
     <tr>
         <td style="padding: 10px 30px;">
             <br>
@@ -49,7 +49,7 @@ a {
             <br>
         </td>
     </tr>
-    #parse("mailFooter_en-US.html")
+    <#include "mailFooter.ftl">
 </table>
 </body>
 </html>

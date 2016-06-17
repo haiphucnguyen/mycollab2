@@ -36,8 +36,8 @@ class FollowupDownloadedUsersAfterOneWeekJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("lead", leadName)
       extMailService.sendHTMLMail("john.adam@mycollab.com", "John Adams",
         Arrays.asList(new MailRecipientField(customerLead.getEmail, leadName)),
-        null, null, contentGenerator.parseString("How are things going with MyCollab?"),
-        contentGenerator.parseFile("mailFollowupDownloadedUserAfter1Week.html"), null)
+        null, null, "How are things going with MyCollab?",
+        contentGenerator.parseFile("mailFollowupDownloadedUserAfter1Week.ftl"), null)
     }
   }
 }

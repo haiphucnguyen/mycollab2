@@ -18,10 +18,12 @@ package com.esofthead.mycollab.servlet;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.i18n.LocalizationHelper;
-import com.esofthead.mycollab.template.velocity.TemplateContext;
-import com.esofthead.mycollab.template.velocity.service.TemplateEngine;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.util.HashMap;
@@ -32,16 +34,14 @@ import java.util.Map;
  * @author MyCollab Ltd.
  * @since 4.0
  */
-public abstract class VelocityWebServletRequestHandler extends GenericHttpServlet {
+public abstract class TemplateWebServletRequestHandler extends GenericHttpServlet {
 
     @Autowired
-    private TemplateEngine templateEngine;
+    private Configuration templateEngine;
 
-    protected TemplateContext pageContext = new TemplateContext();
-
-    public String generatePageByTemplate(Locale locale, String templatePath, Map<String, Object> params) {
+    public String generatePageByTemplate(Locale locale, String templatePath, Map<String, Object> params) throws IOException, TemplateException {
         Reader reader = LocalizationHelper.templateReader(templatePath, locale);
-
+        Map<String, Object> pageContext = new HashMap<>();
         if (params != null) {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
                 pageContext.put(entry.getKey(), entry.getValue());
@@ -60,7 +60,9 @@ public abstract class VelocityWebServletRequestHandler extends GenericHttpServle
         pageContext.put("defaultUrls", defaultUrls);
 
         StringWriter writer = new StringWriter();
-        templateEngine.evaluate(pageContext, writer, "log task", reader);
+        //Load template from source folder
+        Template template = templateEngine.getTemplate("templatePath");
+        template.process(pageContext, writer);
         return writer.toString();
     }
 }

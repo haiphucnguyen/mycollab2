@@ -22,7 +22,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.ResourceNotFoundException;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.servlet.VelocityWebServletRequestHandler;
+import com.esofthead.mycollab.servlet.TemplateWebServletRequestHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +37,7 @@ import java.util.Map;
  * @since 1.0
  */
 @WebServlet(name = "recoverUserPasswordServlet", urlPatterns = "/user/recoverypassword/*")
-public class ResetPasswordUpdatePage extends VelocityWebServletRequestHandler {
+public class ResetPasswordUpdatePage extends TemplateWebServletRequestHandler {
 
     @Autowired
     private UserService userService;

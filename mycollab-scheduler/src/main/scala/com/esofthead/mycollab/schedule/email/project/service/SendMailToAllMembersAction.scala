@@ -1,22 +1,4 @@
-/**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.schedule.email.project.service
-
-import java.util.Locale
 
 import com.esofthead.mycollab.common.NotificationType
 import com.esofthead.mycollab.common.domain.{MailRecipientField, SimpleRelayEmailNotification}
@@ -78,8 +60,8 @@ abstract class SendMailToAllMembersAction[B] extends SendingRelayEmailNotificati
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List[MailRecipientField](userMail)
           extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
-            null, null, contentGenerator.parseString(getCreateSubject(context)),
-            contentGenerator.parseFile("mailProjectItemCreatedNotifier.html", context.getLocale, Locale.US), null)
+            null, null, getCreateSubject(context),
+            contentGenerator.parseFile("mailProjectItemCreatedNotifier.ftl", context.getLocale), null)
         }
       }
     }
@@ -105,8 +87,8 @@ abstract class SendMailToAllMembersAction[B] extends SendingRelayEmailNotificati
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List[MailRecipientField](userMail)
           extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
-            null, null, contentGenerator.parseString(getUpdateSubject(context)),
-            contentGenerator.parseFile("mailProjectItemUpdatedNotifier.html", context.getLocale, Locale.US), null)
+            null, null, getUpdateSubject(context),
+            contentGenerator.parseFile("mailProjectItemUpdatedNotifier.ftl", context.getLocale), null)
         }
       }
     }
@@ -126,8 +108,8 @@ abstract class SendMailToAllMembersAction[B] extends SendingRelayEmailNotificati
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List[MailRecipientField](userMail)
           extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
-            null, null, contentGenerator.parseString(getCommentSubject(context)),
-            contentGenerator.parseFile("mailProjectItemCommentNotifier.html", context.getLocale, Locale.US), null)
+            null, null, getCommentSubject(context),
+            contentGenerator.parseFile("mailProjectItemCommentNotifier.ftl", context.getLocale), null)
         }
       }
     }

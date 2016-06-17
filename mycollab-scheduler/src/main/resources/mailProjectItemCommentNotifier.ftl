@@ -24,10 +24,10 @@ a {
     #end
     
     <table width="600" cellpadding="0" cellspacing="0" border="0" style="font-size: 12px; margin: 20px 0px;">
-        #parse("mailLogo.html")
+        <#include "mailLogo.ftl">
         <tr>
             <td style="color: #4e4e4e; padding: 10px 30px;">
-                <p>$actionHeading</p>
+                <p>${actionHeading}</p>
                 <p>
                 #foreach( $title in $titles )
                     #if( $foreach.count > 1 )
@@ -36,13 +36,11 @@ a {
                     #hyperLink( $title.displayName $title.webLink )
                 #end
                 </p>
-                <p><b>
-                #hyperLink( $summary $summaryLink )
-                </b></p>
+                <p><b>#hyperLink( $summary $summaryLink )</b></p>
                 #messageBlock( $!comment.changecomment )
             </td>
         </tr>
-        #parse("mailFooter_en-US.html")
+        <#include "mailFooter.ftl">
     </table>
 </body>
 </html>

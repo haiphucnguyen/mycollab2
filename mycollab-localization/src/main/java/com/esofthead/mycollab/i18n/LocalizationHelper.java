@@ -29,7 +29,6 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.MissingResourceException;
 
 /**
  * Wrapper class to get localization string.
@@ -80,7 +79,7 @@ public class LocalizationHelper {
             key = Enum.valueOf(cls, option);
             IMessageConveyor messageConveyor = getMessageConveyor(locale);
             return messageConveyor.getMessage(key, objects);
-        } catch (MissingResourceException e) {
+        } catch (Exception e) {
             if (key != null) {
                 try {
                     return defaultMessage.getMessage(key, objects);

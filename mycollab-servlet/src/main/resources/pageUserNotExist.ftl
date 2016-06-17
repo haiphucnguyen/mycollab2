@@ -4,18 +4,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="icon" href="${defaultUrls.cdn_url}favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="${defaultUrls.cdn_url}favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="${defaultUrls.cdn_url}css/cssVelocityPage.css">
+<link rel="stylesheet" type="text/css" href="${defaultUrls.cdn_url}css/main.css">
 <style media="screen" type="text/css">
 #container {
     background-image: url('${defaultUrls.cdn_url}icons/footer_clouds.png');  background-repeat: no-repeat;
     background-position: bottom right;
 }
 </style>
-<title>User not exist page</title>
+<title>User is not existed</title>
 </head>
 <body style="height: 100%; margin: 0; padding: 0; width: 100%;">
     <div id="container" style="height:100%;">
-        #parse("pageHeader.html")
+        #parse("pageHeader.ftl")
         <div id="body" >
             <div id="spacing"></div>
             <div id="mainBody">
@@ -24,12 +24,12 @@
                 </div>
                 <hr size="1">
                 <div>
-                        The user ${username} is not existed in our database system. 
+                        The user ${username} is not existed in our database.
                 </div>
                 <div style="text-align:right;">
                     <button class="v-button v-button-orangebtn" type="button" onclick="return login();">Login</button>
                 </div>
-                #parse("pageFooter_en-US.html")
+                #parse("pageFooter.ftl")
             </div>
 
         </div>
