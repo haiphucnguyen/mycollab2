@@ -17,6 +17,9 @@
 package com.esofthead.mycollab.configuration;
 
 import com.esofthead.mycollab.spring.AppContextUtil;
+import freemarker.cache.ClassTemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.Version;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +57,7 @@ public class SiteConfiguration {
     private String googleUrl;
     private String linkedinUrl;
     private PullMethod pullMethod;
+    private Configuration freemarkerConfiguration;
 
     public static void loadConfiguration() {
         TimeZone.setDefault(DateTimeZone.UTC.toTimeZone());
@@ -113,6 +117,11 @@ public class SiteConfiguration {
         instance.twitterUrl = ApplicationProperties.getString(TWITTER_URL, "https://twitter.com/mycollabdotcom");
         instance.googleUrl = ApplicationProperties.getString(GOOGLE_URL, "https://plus.google.com/u/0/b/112053350736358775306/+Mycollab/about/p/pub");
         instance.linkedinUrl = ApplicationProperties.getString(LINKEDIN_URL, "http://www.linkedin.com/company/mycollab");
+
+        Configuration configuration = new Configuration(Configuration.VERSION_2_3_24);
+        configuration.setDefaultEncoding("UTF-8");
+        configuration.setTemplateLoader(new ClassTemplateLoader(SiteConfiguration.class.getClassLoader(), ""));
+        instance.freemarkerConfiguration = configuration;
     }
 
     private static SiteConfiguration getInstance() {
@@ -218,6 +227,10 @@ public class SiteConfiguration {
 
     public static int getServerPort() {
         return getInstance().serverPort;
+    }
+
+    public static Configuration freemarkerConfiguration() {
+        return getInstance().freemarkerConfiguration;
     }
 
     public enum PullMethod {
