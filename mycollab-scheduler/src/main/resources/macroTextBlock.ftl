@@ -9,3 +9,7 @@
 <#macro hyperLink displayName webLink>
     <a href="${webLink}" style="white-space: normal;">${displayName}</a>
 </#macro>
+
+<#macro actionLink displayName webLink>
+    <a href="${webLink}" class="actionBtn">${displayName}</a>
+</#macro>

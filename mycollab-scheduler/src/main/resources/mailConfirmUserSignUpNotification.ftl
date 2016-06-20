@@ -1,14 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <style>
-a {
-  color: ${styles.link_color};
-}
-
-    </style>
-</head>
+<#import "macroTextBlock.ftl" as lib>
+<#include "mailHeader.ftl">
 <body style="background-color: ${styles.background}; font: ${styles.font}; color: #4e4e4e; padding: 0px;">
 #macro( confirmLink $webLink $displayText )
 <a href="$webLink">$displayText</a>

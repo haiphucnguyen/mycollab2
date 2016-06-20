@@ -1,54 +1,27 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>MyCollab Invitation</title>
-    <style>
-a {
-  color: $styles.link_color;
-}
-
-    </style>
-</head>
-<body style="background-color: ${styles.background}; font: ${styles.font}; color: #4e4e4e; padding: 0px 0px;">
-#macro( linkBlock $webLink $displayName)
-<table style="width: auto; border-collapse: collapse; margin: 20px 0px">
-    <tbody>
-    <tr>
-        <td>
-            <div style="border: 1px solid ${styles.border_color}; border-radius: 3px">
-                <table style="width: auto; border-collapse: collapse">
-                    <tr>
-                        <td style="font: 14px/1.4285714 Arial, sans-serif; padding: 4px 10px; background-color: ${styles.action_color}">
-                            <a href="$webLink" style="color: white; text-decoration: none; font-weight: bold">$displayName</a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </td>
-    </tr>
-    </tbody>
-</table>
-#end
-
-<table width="600" cellpadding="0" cellspacing="0" border="0" style="margin: 20px 0px;">
-    <#include "mailLogo.ftl">
-    <tr>
-        <td style="padding: 10px 30px;">
-            <div>Hello $invitee.displayName, <br>
-                You have a new account at <a href="$siteUrl">$siteName</a> <br>
-                Account details: <br>
-                Email: <a href="mail:$invitee.email">$invitee.email</a><br>
-                #if ($password)
-                Password: $password
-                #else
-                Password: &lt;&lt;Sent in the previous message&gt;&gt;
-                #end
-            </div>
-            #linkBlock( $!siteUrl "Go")
-        </td>
-    </tr>
+<#import "macroTextBlock.ftl" as lib>
+<#include "mailHeader.ftl">
+<body>
+    <table width="600" cellpadding="0" cellspacing="0" border="0" style="margin: 20px 0px;">
+        <#include "mailLogo.ftl">
+        <tr>
+            <td style="padding: 10px 30px;">
+                <div>Hello ${invitee.displayName}, <br>
+                    You have a new account at <@lib.hyperLink displayName=siteName webLink=siteUrl/><br>
+                    Account details: <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Email: <a href="mailto:${invitee.email}">${invitee.email}</a><br>
+                    <#if password?has_content>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Password: ${password}
+                    <#else>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Password: &lt;&lt;Sent in the previous message&gt;&gt;
+                    </#if>
+                </div>
+                <br>
+                <@lib.actionLink displayName="Go" webLink=siteUrl/><br>
+            </td>
+        </tr>
     <#include "mailFooter.ftl">
-</table>
+    </table>
 </body>
 </html>

@@ -6,7 +6,7 @@
     <table width="600" cellpadding="0" cellspacing="0" border="0" style="margin: 20px 0px;">
         <#include "mailLogo.ftl">
         <tr>
-            <td style="padding: 10px 30px 0px;">
+            <td style="padding: 10px 30px;">
                 <p>${actionHeading}</p>
                 <p><b><@lib.hyperLink displayName=summary webLink=summaryLink/></b></p>
                 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:12px; margin: 0px 0px 25px;">
