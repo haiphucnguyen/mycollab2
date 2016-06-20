@@ -29,10 +29,11 @@ import java.io.IOException;
  * @since 5.3.4
  */
 @Service
-public class FreeMarkerTemplateConfiguration extends FreeMarkerConfigurationFactoryBean {
+public class FreeMarkerConfiguration extends FreeMarkerConfigurationFactoryBean {
 
     @Override
     protected Configuration newConfiguration() throws IOException, TemplateException {
+        setPreTemplateLoaders();
         return SiteConfiguration.freemarkerConfiguration();
     }
 }

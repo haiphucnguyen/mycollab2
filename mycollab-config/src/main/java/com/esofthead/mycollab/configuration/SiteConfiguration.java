@@ -16,14 +16,21 @@
  */
 package com.esofthead.mycollab.configuration;
 
+import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import freemarker.cache.ClassTemplateLoader;
+import freemarker.cache.FileTemplateLoader;
+import freemarker.cache.MultiTemplateLoader;
+import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
-import freemarker.template.Version;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TimeZone;
 
 import static com.esofthead.mycollab.configuration.ApplicationProperties.*;
@@ -120,8 +127,27 @@ public class SiteConfiguration {
 
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_24);
         configuration.setDefaultEncoding("UTF-8");
-        configuration.setTemplateLoader(new ClassTemplateLoader(SiteConfiguration.class.getClassLoader(), ""));
-        instance.freemarkerConfiguration = configuration;
+        try {
+            List<TemplateLoader> loaders = new ArrayList<>();
+            File i18nFolder = new File(FileUtils.getUserFolder(), "i18n");
+            File confFolder1 = new File(FileUtils.getUserFolder(), "conf");
+            File confFolder2 = new File(FileUtils.getUserFolder(), "src/main/conf");
+            if (i18nFolder.exists()) {
+                loaders.add(new FileTemplateLoader(i18nFolder));
+            }
+            if (confFolder1.exists()) {
+                loaders.add(new FileTemplateLoader(confFolder1));
+            }
+            if (confFolder2.exists()) {
+                loaders.add(new FileTemplateLoader(confFolder2));
+            }
+            loaders.add(new ClassTemplateLoader(SiteConfiguration.class.getClassLoader(), ""));
+            configuration.setTemplateLoader(new MultiTemplateLoader(loaders.toArray(new TemplateLoader[loaders.size()])));
+            instance.freemarkerConfiguration = configuration;
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
     }
 
     private static SiteConfiguration getInstance() {
