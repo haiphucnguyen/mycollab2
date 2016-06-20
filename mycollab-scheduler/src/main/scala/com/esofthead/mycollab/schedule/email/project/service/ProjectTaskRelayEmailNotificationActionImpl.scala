@@ -21,13 +21,13 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 
 /**
   * @author MyCollab Ltd.
   * @since 4.6.0
   */
-@Service
+@Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAction[SimpleTask] with ProjectTaskRelayEmailNotificationAction {
   private val LOG = LoggerFactory.getLogger(classOf[ProjectTaskRelayEmailNotificationActionImpl])

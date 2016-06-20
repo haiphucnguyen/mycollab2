@@ -63,6 +63,7 @@ Version 5.3.4
 **Bug Fixes**
 
 * [Premium] Can not quickly edit value in the popup field
+* Send emails to project assignments are not successfully in a few special cases
 
 
 Version 5.3.3
