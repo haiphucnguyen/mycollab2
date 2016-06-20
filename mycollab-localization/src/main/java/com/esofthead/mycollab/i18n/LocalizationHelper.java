@@ -107,7 +107,7 @@ public class LocalizationHelper {
                 throw new MyCollabException("File type is not supported " + fileTemplatePath);
             }
             filePath = fileTemplatePath.substring(0, index - 1);
-            filePath = String.format("%s_%s.html", filePath, locale.toLanguageTag());
+            filePath = String.format("%s_%s.ftl", filePath, locale.toLanguageTag());
             cacheFile.put(key, filePath);
             return filePath;
         }

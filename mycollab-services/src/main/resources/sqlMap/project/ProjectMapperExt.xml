@@ -70,7 +70,7 @@
         #ifnotnull($searchCriteria.involvedMember)
             ${searchCriteria.involvedMember.operation} 
             EXISTS (SELECT 1 FROM m_prj_member
-                WHERE m_prj_member.status<>'Delete'
+                WHERE m_prj_member.status<>'InActive'
                     AND m_prj_member.projectId=m_prj_project.id
                     AND m_prj_member.username=@{searchCriteria.involvedMember.value}
                     LIMIT 1)

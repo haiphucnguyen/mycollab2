@@ -30,8 +30,8 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
   private val DATE_REMIND_FOR_FREEPLAN_2ND: Integer = 59
   private val DATE_NOTIFY_EXPIRE: Integer = 62
   private val NUM_DAY_FREE_TRIAL: Integer = 60
-  private val INFORM_EXPIRE_ACCOUNT_TEMPLATE: String = "mailInformAccountIsExpiredNotification.html"
-  private val INFORM_FILLING_BILLING_INFORMATION_TEMPLATE: String = "mailRemindAccountIsAboutExpiredNotification.html"
+  private val INFORM_EXPIRE_ACCOUNT_TEMPLATE: String = "mailInformAccountIsExpiredNotification.ftl"
+  private val INFORM_FILLING_BILLING_INFORMATION_TEMPLATE: String = "mailRemindAccountIsAboutExpiredNotification.ftl"
 
   @Autowired var billingService: BillingService = _
   @Autowired var billingAccountService: BillingAccountService = _

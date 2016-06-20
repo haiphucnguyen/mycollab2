@@ -65,7 +65,7 @@ public class ResetPasswordUpdatePage extends TemplateWebServletRequestHandler {
                     context.put("loginURL", loginURL);
                     context.put("redirectURL", redirectURL);
 
-                    String html = generatePageByTemplate(response.getLocale(), "pageUserRecoveryPassword.html", context);
+                    String html = generatePageByTemplate(response.getLocale(), "pageUserRecoveryPassword.ftl", context);
                     PrintWriter out = response.getWriter();
                     out.print(html);
                 }
