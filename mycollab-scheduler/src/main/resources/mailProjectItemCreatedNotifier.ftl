@@ -12,22 +12,28 @@
                 <p><b><@lib.hyperLink displayName=summary webLink=summaryLink/></b></p>
                 <#if mapper?has_content>
                 <table width="100%" cellpadding="0" cellspacing="0" style="font-size: 12px; margin: 20px 0px; border-collapse: collapse;">
+                    <#assign lineBreak=true>
                     <#list mapper.keySet() as key>
-                        <#assign fieldFormat=mapper.getFieldLabel(key)>
-                        <#if (key?index %2 = 0)>
+                        <#assign fieldFormat=mapper.getField(key)>
+                        <#if lineBreak>
                             <tr style="border-bottom: 1px solid ${styles.border_color}">
-                                <td style="${styles.cell('125px')}; color: ${styles.meta_color}">${context.getMessage(fieldFormat.displayName)}</td>
-                            <#if fieldFormat.IsColSpan>
-                                <td style="${styles.cell('615px')}" colspan="3">${fieldFormat.formatField(context)}</td>
-                            <#elseif key?has_next>
-                                <td style="${styles.cell('615px')}" colspan="3">${fieldFormat.formatField(context)}</td>
-                            <#else>
-                                <td style="${styles.cell('245px')}">${fieldFormat.formatField(context)}</td>
-                            </#if>
+                                <td style="${styles.cell('125px')}; color: ${styles.meta_color}">${context.getFieldName(mapper, key)}</td>
+                                <#if fieldFormat.colSpan>
+                                    <td style="${styles.cell('615px')}" colspan="3">${fieldFormat.formatField(context)}</td>
+                                    </tr>
+                                    <#assign lineBreak=true>
+                                <#elseif !key?has_next>
+                                    <td style="${styles.cell('615px')}" colspan="3">${fieldFormat.formatField(context)}</td>
+                                </tr>
+                                <#else>
+                                    <td style="${styles.cell('245px')}">${fieldFormat.formatField(context)}</td>
+                                    <#assign lineBreak=false>
+                                </#if>
                         <#else>
-                            <td style="${styles.cell('125px')}; color: {$styles.meta_color}">${context.getMessage(fieldFormat.displayName)}</td>
+                            <td style="${styles.cell('125px')}; color: ${styles.meta_color}">${context.getFieldName(mapper, key)}</td>
                             <td style="${styles.cell('245px')}">${fieldFormat.formatField(context)}</td>
                             </tr>
+                            <#assign lineBreak=true>
                         </#if>
                     </#list>
                 </table>

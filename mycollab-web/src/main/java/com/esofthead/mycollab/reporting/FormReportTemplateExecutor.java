@@ -36,6 +36,7 @@ import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.spring.AppContextUtil;
+import com.esofthead.mycollab.vaadin.ui.formatter.DefaultFieldDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.formatter.FieldGroupFormatter;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.registry.AuditLogRegistry;
@@ -290,7 +291,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                 AuditChangeItem item = changeItems.get(i);
                 String fieldName = item.getField();
 
-                FieldGroupFormatter.FieldDisplayHandler fieldDisplayHandler = fieldGroupFormatter.getFieldDisplayHandler(fieldName);
+                DefaultFieldDisplayHandler fieldDisplayHandler = fieldGroupFormatter.getFieldDisplayHandler(fieldName);
                 if (fieldDisplayHandler != null) {
                     HorizontalListBuilder changeBlock = cmp.horizontalFlowList();
                     TextFieldBuilder<String> fieldLbl = cmp.text(AppContext.getMessage(fieldDisplayHandler

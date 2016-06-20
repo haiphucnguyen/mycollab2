@@ -8,9 +8,7 @@
         <tr>
             <td style="color: #4e4e4e; padding: 10px 30px;">
                 <p>${actionHeading}</p>
-                <p>
-                <@lib.hyperLink displayName=projectHyperLink.displayName() webLink=projectHyperLink.webLink()/>
-                </p>
+                <p><@lib.hyperLink displayName=projectHyperLink.displayName() webLink=projectHyperLink.webLink()/></p>
                 <p><b><@lib.hyperLink displayName=summary webLink=summaryLink/></b></p>
                 <@lib.block content=comment.changecomment!/>
             </td>

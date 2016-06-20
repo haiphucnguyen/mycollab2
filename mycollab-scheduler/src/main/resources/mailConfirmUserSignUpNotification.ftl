@@ -2,8 +2,6 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="icon" href="${defaultUrls.cdn_url}favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="${defaultUrls.cdn_url}favicon.ico" type="image/x-icon">
     <style>
 a {
   color: ${styles.link_color};

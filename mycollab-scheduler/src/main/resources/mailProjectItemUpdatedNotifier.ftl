@@ -15,16 +15,16 @@
                         <td style="padding: 3px 0px;">
                             <p><u><i>Changes:</i></u></p>
                             <table border="0" cellspacing="0" style="font-size: 12px; margin: 20px 0px; border-collapse: collapse;">
-                                <tr style="border-bottom: 1px solid $styles.border_color">
-                                    <td style="font-weight: bold; $styles.cell('240px')">Field</td>
-                                    <td style="font-weight: bold; $styles.cell('250px')">Old Value</td>
-                                    <td style="font-weight: bold; $styles.cell('250px')">New Value</td>
+                                <tr style="border-bottom: 1px solid ${styles.border_color}">
+                                    <td style="font-weight: bold; ${styles.cell('240px')}">Field</td>
+                                    <td style="font-weight: bold; ${styles.cell('250px')}">Old Value</td>
+                                    <td style="font-weight: bold; ${styles.cell('250px')}">New Value</td>
                                 </tr>
                                 <#list historyLog.changeItems as item>
                                     <#if mapper.hasField(item.field)>
-                                        <#assign fieldFormat=mapper.getFieldLabel(item.field)>
-                                        <tr style="border-bottom: 1px solid $styles.border_color">
-                                            <td style="${styles.cell('240px')}; color: ${styles.meta_color}">${context.getMessage(fieldFormat.displayName)}</td>
+                                        <#assign fieldFormat=mapper.getField(item.field)>
+                                        <tr style="border-bottom: 1px solid ${styles.border_color}">
+                                            <td style="${styles.cell('240px')}; color: ${styles.meta_color}">${context.getFieldName(mapper, item.field)}</td>
                                             <td style="${styles.cell('250px')};">${fieldFormat.formatField(context, item.oldvalue)}</td>
                                             <td style="${styles.cell('250px')};">${fieldFormat.formatField(context, item.newvalue)}</td>
                                         </tr>

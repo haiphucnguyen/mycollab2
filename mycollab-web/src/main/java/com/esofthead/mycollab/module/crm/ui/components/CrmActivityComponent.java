@@ -32,6 +32,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.project.ui.components.ProjectMemberBlock;
 import com.esofthead.mycollab.spring.AppContextUtil;
+import com.esofthead.mycollab.vaadin.ui.formatter.DefaultFieldDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.formatter.FieldGroupFormatter;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
@@ -275,7 +276,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
                 AuditChangeItem item = changeItems.get(i);
                 String fieldName = item.getField();
 
-                FieldGroupFormatter.FieldDisplayHandler fieldDisplayHandler = groupFormatter.getFieldDisplayHandler(fieldName);
+                DefaultFieldDisplayHandler fieldDisplayHandler = groupFormatter.getFieldDisplayHandler(fieldName);
                 if (fieldDisplayHandler != null) {
                     Span fieldBlock = new Span().appendText(AppContext.getMessage(fieldDisplayHandler.getDisplayName
                             ())).setCSSClass(UIConstants.BUTTON_BLOCK);
