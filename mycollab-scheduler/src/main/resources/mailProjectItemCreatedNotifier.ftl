@@ -37,7 +37,7 @@
                         </#if>
                     </#list>
                 </table>
-                <#elseif message>
+                <#elseif message?has_content>
                     <@lib.block content=message!/>
                 </#if>
             </td>

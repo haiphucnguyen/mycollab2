@@ -58,6 +58,8 @@ class ProjectSendingRelayEmailNotificationJob extends GenericQuartzJobBean {
               case MonitorTypeConstants.UPDATE_ACTION => emailNotificationAction.sendNotificationForUpdateAction(notification)
               case MonitorTypeConstants.ADD_COMMENT_ACTION => emailNotificationAction.sendNotificationForCommentAction(notification)
             }
+          } else {
+            LOG.error("Can not find the spring class " + mailServiceCls)
           }
         }
       }
