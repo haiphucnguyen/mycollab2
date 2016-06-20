@@ -16,7 +16,7 @@
 </head>
 <body style="height: 100%; margin: 0; padding: 0; width: 100%;">
     <div id="container" style="height:100%;">
-        #parse("pageHeader.ftl")
+        <#include "pageHeader.ftl">
         <div id="body" >
             <div id="spacing"></div>
             <div id="mainBody">
@@ -44,7 +44,7 @@
                     </div>
                     <div class="clear"></div>
                 </div>
-                #parse("pageFooter.ftl")
+                <#include "pageFooter.ftl">
                 </div>
         </div>
     </div>

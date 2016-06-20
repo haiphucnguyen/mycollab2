@@ -2,7 +2,6 @@
 <div id="bottom">
     <p>
         <a javascrip="void(0);" href="https://www.mycollab.com" style="text-decoration: none; float:left"><span>Copyright 2016 MyCollab. All rights reserved.</span></a>
-        
         <div style="text-align:right;">
         <a javascrip="void(0);" href="https://www.mycollab.com/terms" style="text-decoration : none;"><span>Terms of Service</span></a> &nbsp;&nbsp;&nbsp;
         <span>|</span>

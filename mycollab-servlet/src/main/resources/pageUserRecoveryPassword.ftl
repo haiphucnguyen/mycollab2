@@ -11,14 +11,12 @@
     background-image: url('${defaultUrls.cdn_url}icons/footer_clouds.png');  background-repeat: no-repeat;
     background-position: bottom right;
 }
-
-
     </style>
     <title>Reset your password</title>
 </head>
 <body style="height: 100%; margin: 0; padding: 0; width: 100%;">
 <div id="container" style="height:100%;">
-    #parse("pageHeader.ftl")
+    <#include "pageHeader.ftl">
     <div id="body">
         <div id="spacing"></div>
         <div id="mainBody">
@@ -68,14 +66,14 @@
                     </tr>
                 </table>
             </div>
-            #parse("pageFooter.ftl")
+            <#include "pageFooter.ftl">
         </div>
 
     </div>
 </div>
-<input type="hidden" id="username" value="$!username">
-<input type="hidden" id="loginURL" value="$!loginURL">
-<input type="hidden" id="redirectURL" value="$!redirectURL">
+<input type="hidden" id="username" value="${username}">
+<input type="hidden" id="loginURL" value="${loginURL}">
+<input type="hidden" id="redirectURL" value="${redirectURL}">
 </body>
 <script src="${defaultUrls.cdn_url}js/jquery-2.1.4.min.js"></script>
 <script>
@@ -102,13 +100,13 @@
                         username : $('#username').val().trim(), 
                         password : $('#password').val().trim()
                     },
-              success: function(data){
-                 if(data!=null){
-                    if(data.length > 0){
+              success: function(data) {
+                 if (data!=null) {
+                    if (data.length > 0) {
                         alert(data);
-                    }else{
+                    } else {
                         alert("Your password has been changed successfully");
-                        window.location.assign("$!loginURL");
+                        window.location.assign("${loginURL}");
                     }
                  }
               }

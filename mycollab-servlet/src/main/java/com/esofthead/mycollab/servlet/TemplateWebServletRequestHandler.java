@@ -17,14 +17,12 @@
 package com.esofthead.mycollab.servlet;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.i18n.LocalizationHelper;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Locale;
@@ -40,7 +38,6 @@ public abstract class TemplateWebServletRequestHandler extends GenericHttpServle
     private Configuration templateEngine;
 
     public String generatePageByTemplate(Locale locale, String templatePath, Map<String, Object> params) throws IOException, TemplateException {
-        Reader reader = LocalizationHelper.templateReader(templatePath, locale);
         Map<String, Object> pageContext = new HashMap<>();
         if (params != null) {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
@@ -61,7 +58,7 @@ public abstract class TemplateWebServletRequestHandler extends GenericHttpServle
 
         StringWriter writer = new StringWriter();
         //Load template from source folder
-        Template template = templateEngine.getTemplate("templatePath");
+        Template template = templateEngine.getTemplate(templatePath, locale);
         template.process(pageContext, writer);
         return writer.toString();
     }

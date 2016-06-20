@@ -21,6 +21,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;Email: <a href="mail:${inviteeEmail}">${inviteeEmail}</a><br>
             &nbsp;&nbsp;&nbsp;&nbsp;Password: ${password}
             </#if>
+            <br>
             <@lib.actionLink displayName="Go" webLink=urlAccept/><br>
         </td>
     </tr>

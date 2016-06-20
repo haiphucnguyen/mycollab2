@@ -38,12 +38,11 @@ img {
 }
 
 .header-mid .a {
-	color: #FFFFFF;
+	color: #FFF;
 	text-decoration: none;
 }
 
 h1 {
-	color: #05ecfa;
 	font: 27px sans-serif;
 }
 
@@ -79,7 +78,7 @@ a {
 }
 
 #mainBody {
-	background-color: #22374b;
+	background-color: #034785;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -123,14 +122,13 @@ a {
 }
 
 #bottom {
-	color: blue;
 	text-align: center;
 	padding-top: 6px;
 }
 
 #bottom span {
 	font: 12px;
-	color: #858F94;
+	color: #999;
 }
 
 #footer {
