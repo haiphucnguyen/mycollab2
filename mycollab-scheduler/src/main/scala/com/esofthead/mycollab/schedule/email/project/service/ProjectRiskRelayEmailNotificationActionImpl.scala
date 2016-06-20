@@ -52,7 +52,7 @@ class ProjectRiskRelayEmailNotificationActionImpl extends SendMailToAllMembersAc
   override protected def buildExtraTemplateVariables(context: MailContext[SimpleRisk]) {
     val emailNotification = context.getEmailNotification
     val relatedProject = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
-    val currentProject = new WebItem(relatedProject.getName, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
+    val projectHyperLink = new WebItem(relatedProject.getName, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
 
     val summary = bean.getRiskname
     val summaryLink = ProjectLinkGenerator.generateRiskPreviewFullLink(siteUrl, bean.getProjectid, bean.getId)
@@ -70,7 +70,7 @@ class ProjectRiskRelayEmailNotificationActionImpl extends SendMailToAllMembersAc
     }
 
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("titles", List(currentProject))
+    contentGenerator.putVariable("projectHyperLink", projectHyperLink)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }

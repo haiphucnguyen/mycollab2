@@ -42,7 +42,7 @@ class MessageRelayEmailNotificationActionImpl extends SendMailToAllMembersAction
     context.getSaccountid)
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleMessage]) {
-    val currentProject = new WebItem(bean.getProjectName, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
+    val projectHyperLink = new WebItem(bean.getProjectName, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
     val emailNotification = context.getEmailNotification
 
     val summary = bean.getTitle
@@ -61,7 +61,7 @@ class MessageRelayEmailNotificationActionImpl extends SendMailToAllMembersAction
     }
 
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("titles", List(currentProject))
+    contentGenerator.putVariable("projectHyperLink", projectHyperLink)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
     contentGenerator.putVariable("message", bean.getMessage)

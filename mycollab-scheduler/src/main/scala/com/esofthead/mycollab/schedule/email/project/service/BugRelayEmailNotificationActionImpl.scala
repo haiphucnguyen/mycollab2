@@ -44,7 +44,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
   private val mapper = new BugFieldNameMapper
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleBug]) {
-    val currentProject = new WebItem(bean.getProjectname, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
+    val projectHyperLink = new WebItem(bean.getProjectname, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
     val emailNotification = context.getEmailNotification
 
     val summary = "#" + bean.getBugkey + " - " + bean.getSummary
@@ -63,7 +63,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
     }
 
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("titles", List(currentProject))
+    contentGenerator.putVariable("projectHyperLink", projectHyperLink)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }

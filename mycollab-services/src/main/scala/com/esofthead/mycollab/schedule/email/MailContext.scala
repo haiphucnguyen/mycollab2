@@ -45,4 +45,5 @@ class MailContext[B](@BeanProperty val emailNotification: SimpleRelayEmailNotifi
   def getType: String = emailNotification.getType
 
   @varargs def getMessage(key: Enum[_], params: AnyRef*): String = LocalizationHelper.getMessage(locale, key, params: _*)
+  def getFieldName(fieldFormat: FieldGroupFormatter.FieldDisplayHandler): String =
 }

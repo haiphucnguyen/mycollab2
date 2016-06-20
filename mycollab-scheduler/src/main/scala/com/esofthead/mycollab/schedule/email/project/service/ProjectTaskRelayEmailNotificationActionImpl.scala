@@ -43,7 +43,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
   private val mapper = new TaskFieldNameMapper
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleTask]) {
-    val currentProject = new WebItem(bean.getProjectName, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
+    val projectHyperLink = new WebItem(bean.getProjectName, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
 
     val emailNotification = context.getEmailNotification
 
@@ -63,7 +63,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
     }
 
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("titles", List(currentProject))
+    contentGenerator.putVariable("projectHyperLink", projectHyperLink)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }
@@ -178,9 +178,9 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
       val task = context.getWrappedBean.asInstanceOf[SimpleTask]
       if (task.getParenttaskid != null) {
         val img = new Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.TASK))
-        val tasklistlink = ProjectLinkGenerator.generateTaskPreviewFullLink(context.siteUrl, task.getParentTaskKey,
+        val parentTaskLink = ProjectLinkGenerator.generateTaskPreviewFullLink(context.siteUrl, task.getParentTaskKey,
           task.getProjectShortname)
-        val link = FormatUtils.newA(tasklistlink, task.getTaskname)
+        val link = FormatUtils.newA(parentTaskLink, task.getTaskname)
         FormatUtils.newLink(img, link).write
       }
       else {
@@ -216,9 +216,9 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
       val task = context.getWrappedBean.asInstanceOf[SimpleTask]
       if (task.getMilestoneid != null) {
         val img = new Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.MILESTONE))
-        val tasklistlink = ProjectLinkGenerator.generateMilestonePreviewFullLink(context.siteUrl, task.getProjectid,
+        val milestoneLink = ProjectLinkGenerator.generateMilestonePreviewFullLink(context.siteUrl, task.getProjectid,
           task.getMilestoneid)
-        val link = FormatUtils.newA(tasklistlink, task.getMilestoneName)
+        val link = FormatUtils.newA(milestoneLink, task.getMilestoneName)
         FormatUtils.newLink(img, link).write
       }
       else {

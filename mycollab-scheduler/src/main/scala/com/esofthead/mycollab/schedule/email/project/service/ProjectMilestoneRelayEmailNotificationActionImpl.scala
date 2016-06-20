@@ -100,7 +100,7 @@ class ProjectMilestoneRelayEmailNotificationActionImpl extends SendMailToAllMemb
     val emailNotification = context.getEmailNotification
     val relatedProject = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
 
-    val currentProject = new WebItem(relatedProject.getName, ProjectLinkGenerator.generateProjectFullLink(siteUrl,
+    val projectHyperLink = new WebItem(relatedProject.getName, ProjectLinkGenerator.generateProjectFullLink(siteUrl,
       bean.getProjectid))
 
     val summary = bean.getName
@@ -119,7 +119,7 @@ class ProjectMilestoneRelayEmailNotificationActionImpl extends SendMailToAllMemb
     }
 
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("titles", List(currentProject))
+    contentGenerator.putVariable("projectHyperLink", projectHyperLink)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }

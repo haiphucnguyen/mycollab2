@@ -32,7 +32,7 @@ class VersionRelayEmailNotificationActionImpl extends SendMailToAllMembersAction
     val emailNotification = context.getEmailNotification
 
     val project = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
-    val currentProject = new WebItem(project.getName, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
+    val projectHyperLink = new WebItem(project.getName, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
 
     val summary = bean.getVersionname
     val summaryLink = ProjectLinkGenerator.generateBugComponentPreviewFullLink(siteUrl, bean.getProjectid, bean.getId)
@@ -50,7 +50,7 @@ class VersionRelayEmailNotificationActionImpl extends SendMailToAllMembersAction
     }
 
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("titles", List(currentProject))
+    contentGenerator.putVariable("projectHyperLink", projectHyperLink)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }
