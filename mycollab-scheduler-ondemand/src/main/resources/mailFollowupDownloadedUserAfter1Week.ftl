@@ -1,22 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Download information</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<style>
-a {
-  color: $styles.link_color;
-}
-
-div{
-  line-height: 20px;
-}
-</style>
-</head>
-<body style="background-color: ${styles.background}; font: ${styles.font}; padding: 0px;">
+<#import "macroTextBlock.ftl" as lib>
+<#include "mailHeader.ftl">
+<body>
 <table width="600" cellpadding="0" cellspacing="0" border="0" style="margin: 20px 0px;">
-  #parse("mailLogo.html")
+  <#include "mailLogo.ftl">
   <tr>
     <td>
       <div style="padding: 25px 25px 10px 25px">
@@ -36,6 +24,6 @@ div{
       </div>
     </td>
   </tr>
-  #parse("mailFooter_en-US.html")
+  </#include "mailFooter.ftl">
 </table>
 </body>

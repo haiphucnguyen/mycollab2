@@ -21,17 +21,17 @@
       <th>Num of Users</th>
       <th>Num of Projects</th>
     </tr>
-    #foreach( $instance in $instances )
+    <#list instances as instance)
     <tr>
-      <th>$!instance.appversion</th>
-      <th>$!instance.javaversion</th>
-      <th>$!instance.installeddate</th>
-      <th>$!instance.lastupdateddate</th>
-      <th>$!instance.sysproperties</th>
-      <th>$!instance.numusers</th>
-      <th>$!instance.numprojects</th>
+      <th>${instance.appversion!}</th>
+      <th>${instance.javaversion!}</th>
+      <th>${instance.installeddate!}</th>
+      <th>${instance.lastupdateddate!}</th>
+      <th>${instance.sysproperties!}</th>
+      <th>${instance.numusers!}</th>
+      <th>${instance.numprojects!}</th>
     </tr>
-    #end
+    </#list>
   </table>
 </body>
 </html>

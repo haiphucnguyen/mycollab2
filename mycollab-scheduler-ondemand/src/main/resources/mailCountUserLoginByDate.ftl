@@ -7,7 +7,7 @@
 <body>
   <table border="1">
     <tr>
-      <th>Count: $!count</th>
+      <th>Count: ${count}</th>
     </tr>
   </table>
   <br/>
@@ -19,15 +19,15 @@
       <th>Last accessed time</th>
       <th>Subdomain</th>
     </tr>
-    #foreach( $user in $lstUser )
+    <#list lstUser as user>
     <tr>
-      <th>$!user.username</th>
-      <th>$!user.email</th>
-      <th>$!user.registeredtime</th>
-      <th>$!user.lastaccessedtime</th>
-      <th>$!user.subdomain</th>
+      <th>${user.username!}</th>
+      <th>${user.email!}</th>
+      <th>${user.registeredtime!}</th>
+      <th>${user.lastaccessedtime!}</th>
+      <th>${user.subdomain!}</th>
     </tr>
-    #end
+    </#list>
   </table>
 </body>
 </html>
