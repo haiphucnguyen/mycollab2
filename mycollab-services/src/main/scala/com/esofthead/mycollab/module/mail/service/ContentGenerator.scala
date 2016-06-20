@@ -69,7 +69,6 @@ class ContentGenerator extends IContentGenerator with InitializingBean {
     val writer = new StringWriter
     val template = templateEngine.getTemplate(templateFilePath, locale)
     template.process(templateContext, writer)
-    System.out.println(writer.toString)
     writer.toString
   }
 }
