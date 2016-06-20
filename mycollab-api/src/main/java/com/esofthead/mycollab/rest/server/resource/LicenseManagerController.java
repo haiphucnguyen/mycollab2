@@ -119,7 +119,7 @@ public class LicenseManagerController {
             File receiptReport = receiptReport(reference, company, licenseInfo.getCustomerId(), cost);
             extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
                     Arrays.asList(new MailRecipientField(email, name)), null, null, String.format("MyCollab Order Receipt %s", reference),
-                    contentGenerator.parseFile("mailLicenseInfo.html", Locale.US), Arrays.asList(new
+                    contentGenerator.parseFile("mailLicenseInfo.ftl"), Arrays.asList(new
                             FileEmailAttachmentSource(tempFile, "mycollab.lic"), new FileEmailAttachmentSource
                             (receiptReport, "receipt-" + reference + ".pdf")));
             tempFile.delete();

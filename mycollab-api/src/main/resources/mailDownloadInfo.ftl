@@ -1,32 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Download information</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<style>
-a {
-  color: $styles.link_color;
-}
-
-div{
-  line-height: 20px;
-}
-</style>
-</head>
-<body style="background-color: ${styles.background}; font: ${styles.font}; padding: 0px;">
-  #macro( hyperLink $displayName $webLink )
-        <a href="$webLink" style="color: ${styles.link_color}; white-space: normal;">$displayName</a>
-  #end
+<#import "macroTextBlock.ftl" as lib>
+<#include "mailHeader.ftl">
+<body>
   <table width="600" cellpadding="0" cellspacing="0" border="0" style="margin: 20px auto;">
-    #parse("mailLogo.ftl")
+    <#include "mailLogo.ftl">
     <tr>
       <td>
         <div style="padding: 25px 25px 10px 25px">
           Dear ${lastname}, <br/>
           Congratulations! MyCollab is ready for download and use in your team. Get it in the link below
           <div style="padding-top: 10px">
-            <a style="text-decoration:none;" href="$!downloadLink"/>
+            <a style="text-decoration:none;" href="${downloadLink}"/>
               <div style="background-color: #1a8955; text-align: center; padding: 3px 0px; width: 330px; margin: 0px auto;">
                 <div style="width: 100%; padding: 10px 0px; border-color: #fff;border-width: 1px 0px; border-style: solid; margin: 0px auto;">
                   <span style="width: 100%; font-size: 22px; color: #fff;text-align: center">Download</span>
@@ -54,6 +39,6 @@ div{
         </div>
       </td>
     </tr>
-    #parse("mailFooter_en-US.ftl")
+    <#include "mailFooter.ftl">
   </table>
 </body>
