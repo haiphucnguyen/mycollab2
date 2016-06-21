@@ -19,6 +19,7 @@ import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.StyleCalendarFieldExp;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
@@ -70,14 +71,15 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         grid.setSpacing(true);
         content.addComponent(grid);
 
-        grid.addComponent(new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)), 0, 0);
-        grid.addComponent(new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)), 1, 0);
+        grid.addComponent(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)).withStyleName(UIConstants.META_COLOR), 0, 0);
+        grid.addComponent(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)).withStyleName(UIConstants.META_COLOR), 1, 0);
 
         projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
         grid.addComponent(projectMemberSelectionBox, 0, 1);
 
         weekSelectionCalendar = new StyleCalendarFieldExp();
-        weekSelectionCalendar.setWidth("150px");
+        weekSelectionCalendar.setWidth("200px");
+
         weekSelectionCalendar.setValue(selectedDate);
         weekSelectionCalendar.addValueChangeListener(new ValueChangeListener() {
             private static final long serialVersionUID = 1L;
@@ -94,9 +96,11 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         MHorizontalLayout attrContainer = new MHorizontalLayout();
         isBillableCheckBox = new CheckBox();
         isOvertimeCheckBox = new CheckBox();
-        attrContainer.with(new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE)),
-                isBillableCheckBox, new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME)),
-                isOvertimeCheckBox);
+        attrContainer.with(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE)).withStyleName
+                (UIConstants.META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("100px"),
+                isBillableCheckBox, new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME))
+                        .withStyleName(UIConstants.META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("100px"), isOvertimeCheckBox)
+                .alignAll(Alignment.MIDDLE_LEFT);
         grid.addComponent(attrContainer, 2, 1);
 
         timeInputTable = new Table();
@@ -116,8 +120,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         updateTimeTableHeader();
         content.addComponent(timeInputTable);
 
-        Label descriptionLbl = new Label(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
-        content.addComponent(descriptionLbl);
+        content.addComponent(new ELabel(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)).withStyleName(UIConstants.META_COLOR));
 
         descArea = new RichTextArea();
         descArea.setWidth("100%");
