@@ -55,7 +55,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
 
     private ItemTimeLoggingService itemTimeLoggingService;
 
-    public AddTimeEntryWindow(TimeTrackingListView view) {
+    public AddTimeEntryWindow() {
         itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
         this.setModal(true);
         this.setResizable(false);

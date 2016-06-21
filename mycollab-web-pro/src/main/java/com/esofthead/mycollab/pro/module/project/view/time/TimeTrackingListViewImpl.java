@@ -40,7 +40,6 @@ import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -87,15 +86,6 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         });
 
         this.addComponent(searchPanel);
-        searchPanel.addClickListener(new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow(TimeTrackingListViewImpl.this);
-                UI.getCurrent().addWindow(addTimeEntry);
-            }
-        });
 
         final MHorizontalLayout headerLayout = new MHorizontalLayout().withFullWidth();
         headerWrapper.addComponent(headerLayout);

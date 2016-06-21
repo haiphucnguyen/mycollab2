@@ -1,15 +1,24 @@
 package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
+import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.ui.components.ProjectMemberLink;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.vaadin.shared.ui.MarginInfo;
 import org.apache.commons.collections.CollectionUtils;
+import org.joda.time.DateTime;
+import org.vaadin.alump.distributionbar.DistributionBar;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,6 +27,7 @@ import java.util.List;
  */
 @ViewComponent
 public class MembersWeeklyHoursViewImpl extends AbstractPageView implements MembersWeeklyHoursView {
+
     @Override
     public void display() {
         removeAllComponents();
@@ -36,5 +46,38 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
         MVerticalLayout contentLayout = new MVerticalLayout();
         addComponent(contentLayout);
         contentLayout.with(ELabel.h3(project.getName()));
+        ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
+        DateTime now = new DateTime();
+        Date start = now.dayOfWeek().withMinimumValue().toDate();
+        Date end = now.dayOfWeek().withMaximumValue().toDate();
+        List<SimpleProjectMember> members = projectMemberService.findMembersHourlyInProject(project.getId(), AppContext.getAccountId(),
+                start, end);
+
+        for (SimpleProjectMember member : members) {
+            MHorizontalLayout memberLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false));
+            ProjectMemberLink assignUserLink = new ProjectMemberLink(member.getProjectid(), member.getUsername(),
+                    member.getMemberAvatarId(), member.getDisplayName());
+            assignUserLink.setWidth("120px");
+            memberLayout.with(assignUserLink);
+            Double billableHours = member.getTotalBillableLogTime();
+            Double nonBillableHours = member.getTotalNonBillableLogTime();
+            DistributionBar memberBarDist = new DistributionBar(3);
+            memberBarDist.setZeroSizedVisible(false);
+            memberBarDist.setWidth("600px");
+            memberBarDist.setPartTooltip(0, AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
+            memberBarDist.setPartSize(0, member.getTotalBillableLogTime());
+            memberBarDist.setPartTooltip(1, AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
+            memberBarDist.setPartSize(1, member.getTotalNonBillableLogTime());
+            if ((billableHours + nonBillableHours) > 40) {
+                memberBarDist.setPartSize(2, 0);
+            } else {
+                memberBarDist.setPartSize(2, 40 - (billableHours + nonBillableHours));
+            }
+            memberBarDist.setPartTooltip(2, AppContext.getMessage(TimeTrackingI18nEnum.OPT_REMAIN_HOURS));
+            memberLayout.with(memberBarDist);
+            addComponent(memberLayout);
+        }
+
+
     }
 }

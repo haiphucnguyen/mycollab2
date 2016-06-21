@@ -33,6 +33,7 @@ $v-line-height--header:1.5em;
 @import "components/document";
 @import "components/project";
 @import "components/gantt";
+@import "components/alump_dbar";
 
 /* This font-face declaration must be outside your theme mixin. */
 @font-face {
@@ -62,6 +63,7 @@ $v-line-height--header:1.5em;
   @include mycollab-document;
   @include mycollab-project;
   @include gantt;
+  @include alump-dbar;
 
   /**
    * "optional-" prefix means that the style is not necessarily used, it can be left blank
