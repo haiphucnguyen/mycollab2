@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.web.ui;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.vaadin.AppContext;
 import org.vaadin.risto.stylecalendar.StyleCalendarField;
@@ -26,7 +27,7 @@ import java.util.Date;
  * @author MyCollab Ltd.
  * @since 4.0
  */
-public class StyleCalendarFieldExp extends StyleCalendarField {
+public class WeeklyCalendarFieldExp extends StyleCalendarField {
     private static final long serialVersionUID = 1L;
 
     public void setPopupClose() {
@@ -39,18 +40,13 @@ public class StyleCalendarFieldExp extends StyleCalendarField {
         if (value == null) {
             if (getNullRepresentation() != null) {
                 return getNullRepresentation();
-
             } else {
-                return "null";
+                return AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED);
             }
-
         } else {
             Date selectedDate = (Date) value;
-            Date[] bounceDateofWeek = DateTimeUtils
-                    .getBounceDatesOfWeek(selectedDate);
-            return AppContext.formatDate(bounceDateofWeek[0])
-                    + " - "
-                    + AppContext.formatDate(bounceDateofWeek[1]);
+            Date[] bounceDateofWeek = DateTimeUtils.getBounceDatesOfWeek(selectedDate);
+            return AppContext.formatDate(bounceDateofWeek[0]) + " - " + AppContext.formatDate(bounceDateofWeek[1]);
         }
     }
 }

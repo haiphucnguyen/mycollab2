@@ -21,7 +21,7 @@ import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
-import com.esofthead.mycollab.vaadin.web.ui.StyleCalendarFieldExp;
+import com.esofthead.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -45,7 +45,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
     private static final long serialVersionUID = 1L;
 
     private Date selectedDate;
-    private StyleCalendarFieldExp weekSelectionCalendar;
+    private WeeklyCalendarFieldExp weekSelectionCalendar;
     private CheckBox isBillableCheckBox;
     private CheckBox isOvertimeCheckBox;
     private Table timeInputTable;
@@ -77,7 +77,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
         grid.addComponent(projectMemberSelectionBox, 0, 1);
 
-        weekSelectionCalendar = new StyleCalendarFieldExp();
+        weekSelectionCalendar = new WeeklyCalendarFieldExp();
         weekSelectionCalendar.setWidth("200px");
 
         weekSelectionCalendar.setValue(selectedDate);
