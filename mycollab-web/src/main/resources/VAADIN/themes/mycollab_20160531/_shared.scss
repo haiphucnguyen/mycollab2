@@ -870,4 +870,11 @@
     height: 30px;
     font-size: 14px;
   }
+
+  .v-filterselect-no-input [class*="input"] {
+    background-image: none !important;
+    box-shadow: none !important;
+    background-color: #fff;
+
+  }
 }

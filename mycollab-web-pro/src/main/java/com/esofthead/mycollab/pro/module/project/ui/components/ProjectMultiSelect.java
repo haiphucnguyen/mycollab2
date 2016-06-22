@@ -13,6 +13,7 @@ import java.util.List;
 public class ProjectMultiSelect extends ComboBoxMultiselect {
 
     public ProjectMultiSelect(List<SimpleProject> projects) {
+        this.setWidth("200px");
         this.setTextInputAllowed(false);
         for (SimpleProject project: projects) {
             this.addItem(project);
