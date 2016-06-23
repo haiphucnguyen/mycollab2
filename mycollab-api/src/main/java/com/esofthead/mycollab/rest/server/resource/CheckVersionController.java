@@ -5,7 +5,6 @@ import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.ondemand.module.support.dao.ProEditionInfoMapper;
 import com.esofthead.mycollab.ondemand.module.support.domain.ProEditionInfoExample;
 import com.esofthead.mycollab.ondemand.module.support.service.EditionInfoResolver;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +24,7 @@ public class CheckVersionController {
     private EditionInfoResolver editionInfoResolver;
 
     @RequestMapping(value = "/checkupdate", method = RequestMethod.GET)
-    public String getLatestVersion(@RequestParam("version") String version) {
+    public Properties getLatestVersion(@RequestParam("version") String version) {
         Properties props = new Properties();
 
         String liveVersion = editionInfoResolver.getEditionInfo().getVersion();
@@ -39,15 +38,14 @@ public class CheckVersionController {
             props.put("autoDownload", editionInfoResolver.getEditionInfo().getCommunityUpgradeLink());
         }
 
-        Gson gson = new Gson();
-        return gson.toJson(props);
+        return props;
     }
 
     @Autowired
     private ProEditionInfoMapper proEditionInfoMapper;
 
     @RequestMapping(value = "/checkpremiumupdate", method = RequestMethod.GET)
-    public String getLatestPremiumUpdate(@RequestParam("version") String version, @RequestParam("customerId") String customerId) {
+    public Properties getLatestPremiumUpdate(@RequestParam("version") String version, @RequestParam("customerId") String customerId) {
         Properties props = new Properties();
         String liveVersion = editionInfoResolver.getEditionInfo().getVersion();
         props.put("version", liveVersion);
@@ -61,7 +59,6 @@ public class CheckVersionController {
             props.put("autoDownload", editionInfoResolver.getEditionInfo().getPremiumUpgradeLink());
         }
 
-        Gson gson = new Gson();
-        return gson.toJson(props);
+        return props;
     }
 }

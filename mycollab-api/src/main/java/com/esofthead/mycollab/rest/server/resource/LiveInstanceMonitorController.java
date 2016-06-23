@@ -24,7 +24,7 @@ public class LiveInstanceMonitorController {
     private LiveInstanceMapper liveInstanceMapper;
 
     @RequestMapping(value = "/checkInstance", method = RequestMethod.POST)
-    public ResponseEntity<String> checkInstance(@RequestBody LiveInstance instance) {
+    public String checkInstance(@RequestBody LiveInstance instance) {
         String sysId = instance.getSysid();
         LiveInstanceExample ex = new LiveInstanceExample();
         ex.createCriteria().andSysidEqualTo(sysId);
@@ -42,6 +42,6 @@ public class LiveInstanceMonitorController {
                 liveInstanceMapper.updateByPrimaryKey(instance);
             }
         }
-        return new ResponseEntity<>("Ok", HttpStatus.OK);
+        return "Ok";
     }
 }
