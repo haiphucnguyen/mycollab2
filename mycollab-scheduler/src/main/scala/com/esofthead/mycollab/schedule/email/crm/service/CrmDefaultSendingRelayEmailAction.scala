@@ -106,7 +106,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List(userMail)
           extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
-            null, null, subject, contentGenerator.parseFile("mailCrmItemUpdatedNotifier", context.getLocale), null)
+            null, null, subject, contentGenerator.parseFile("mailCrmItemUpdatedNotifier.ftl", context.getLocale), null)
         }
       }
     }
@@ -139,7 +139,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
         val userMail = new MailRecipientField(user.getEmail, user.getUsername)
         val recipients = List(userMail)
         extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, seqAsJavaList(recipients),
-          null, null, subject, contentGenerator.parseFile("mailCrmItemAddNoteNotifier", context.getLocale), null)
+          null, null, subject, contentGenerator.parseFile("mailCrmItemAddNoteNotifier.ftl", context.getLocale), null)
       }
     }
   }

@@ -39,7 +39,7 @@ import org.springframework.stereotype.Component
     val summary = bean.getSubject
     val summaryLink = CrmLinkGenerator.generateTaskPreviewFullLink(siteUrl, bean.getId)
     val emailNotification = context.getEmailNotification
-  
+
     val avatarId = if (changeUser != null) changeUser.getAvatarid else ""
     val userAvatar: Img = LinkUtils.newAvatar(avatarId)
 
