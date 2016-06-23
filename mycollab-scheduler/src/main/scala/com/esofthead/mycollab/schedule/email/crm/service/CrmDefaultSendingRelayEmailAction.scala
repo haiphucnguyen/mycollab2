@@ -1,19 +1,19 @@
 /**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
+  * This file is part of mycollab-scheduler.
+  *
+  * mycollab-scheduler is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * mycollab-scheduler is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
+  */
 package com.esofthead.mycollab.schedule.email.crm.service
 
 import com.esofthead.mycollab.common.MonitorTypeConstants
@@ -46,23 +46,25 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
   @Autowired protected val notificationService: CrmNotificationSettingService = null
   @Autowired protected val contentGenerator: IContentGenerator = null
   protected var bean: B = _
+  protected var changeUser: SimpleUser = _
   protected var siteUrl: String = null
 
   override def sendNotificationForCreateAction(notification: SimpleRelayEmailNotification): Unit = {
     val notifiers = getListNotifyUserWithFilter(notification, MonitorTypeConstants.CREATE_ACTION)
     if ((notifiers != null) && notifiers.nonEmpty) {
       onInitAction(notification)
-      import scala.collection.JavaConversions._
-      for (user <- notifiers) {
-        val notifierFullName = user.getDisplayName
-        if (StringUtils.isBlank(notifierFullName)) {
-          LOG.error("Can not find user {} of notification {}", Array[AnyRef](BeanUtility.printBeanObj(user),
-            BeanUtility.printBeanObj(notification)))
-          return
-        }
-        val context = new MailContext[B](notification, user, siteUrl)
-        bean = getBeanInContext(context)
-        if (bean != null) {
+      bean = getBeanInContext(notification)
+      if (bean != null) {
+        import scala.collection.JavaConversions._
+        for (user <- notifiers) {
+          val notifierFullName = user.getDisplayName
+          if (StringUtils.isBlank(notifierFullName)) {
+            LOG.error("Can not find user {} of notification {}", Array[AnyRef](BeanUtility.printBeanObj(user),
+              BeanUtility.printBeanObj(notification)))
+            return
+          }
+          val context = new MailContext[B](notification, user, siteUrl)
+
           val subject = context.getMessage(getCreateSubjectKey, context.getChangeByUserFullName, getItemName)
           context.wrappedBean = bean
           contentGenerator.putVariable("context", context)
@@ -72,8 +74,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List(userMail)
           extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
-            null, null, subject,
-            contentGenerator.parseFile(getCreateContentPath, context.getLocale), null)
+            null, null, subject, contentGenerator.parseFile("mailCrmItemCreatedNotifier.ftl", context.getLocale), null)
         }
       }
     }
@@ -83,18 +84,18 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
     val notifiers = getListNotifyUserWithFilter(notification, MonitorTypeConstants.UPDATE_ACTION)
     if ((notifiers != null) && notifiers.nonEmpty) {
       onInitAction(notification)
-      import scala.collection.JavaConversions._
-      for (user <- notifiers) {
-        val notifierFullName = user.getDisplayName
-        if (notifierFullName == null) {
-          LOG.error("Can not find user {} of notification {}", Array[AnyRef](BeanUtility.printBeanObj(user),
-            BeanUtility.printBeanObj(notification)))
-          return
-        }
-        contentGenerator.putVariable("userName", notifierFullName)
-        val context = new MailContext[B](notification, user, siteUrl)
-        bean = getBeanInContext(context)
-        if (bean != null) {
+      bean = getBeanInContext(notification)
+      if (bean != null) {
+        import scala.collection.JavaConversions._
+        for (user <- notifiers) {
+          val notifierFullName = user.getDisplayName
+          if (notifierFullName == null) {
+            LOG.error("Can not find user {} of notification {}", Array[AnyRef](BeanUtility.printBeanObj(user),
+              BeanUtility.printBeanObj(notification)))
+            return
+          }
+          contentGenerator.putVariable("userName", notifierFullName)
+          val context = new MailContext[B](notification, user, siteUrl)
           val subject = context.getMessage(getUpdateSubjectKey, context.getChangeByUserFullName, getItemName)
           val auditLog = auditLogService.findLastestLog(context.getTypeid.toInt, context.getSaccountid)
           contentGenerator.putVariable("historyLog", auditLog)
@@ -105,8 +106,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List(userMail)
           extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
-            null, null, subject,
-            contentGenerator.parseFile(getUpdateContentPath, context.getLocale), null)
+            null, null, subject, contentGenerator.parseFile("mailCrmItemUpdatedNotifier", context.getLocale), null)
         }
       }
     }
@@ -131,16 +131,15 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
 
         contentGenerator.putVariable("userName", notifierFullName)
         val context = new MailContext[B](notification, user, siteUrl)
-        bean = getBeanInContext(context)
+        bean = getBeanInContext(notification)
         context.setWrappedBean(bean)
         buildExtraTemplateVariables(context)
         contentGenerator.putVariable("comment", context.getEmailNotification)
         val subject = context.getMessage(getCommentSubjectKey, context.getChangeByUserFullName, getItemName)
         val userMail = new MailRecipientField(user.getEmail, user.getUsername)
         val recipients = List(userMail)
-        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, seqAsJavaList
-        (recipients), null, null, subject,
-          contentGenerator.parseFile(getNoteContentPath, context.getLocale), null)
+        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, seqAsJavaList(recipients),
+          null, null, subject, contentGenerator.parseFile("mailCrmItemAddNoteNotifier", context.getLocale), null)
       }
     }
   }
@@ -154,15 +153,10 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
 
   private def onInitAction(notification: SimpleRelayEmailNotification) {
     siteUrl = MailUtils.getSiteUrl(notification.getSaccountid)
+    changeUser = userService.findUserByUserNameInAccount(notification.getChangeby, notification.getSaccountid)
   }
 
-  protected def getBeanInContext(context: MailContext[B]): B
-
-  private def getCreateContentPath: String = "mailCrmItemCreatedNotifier.ftl"
-
-  private def getUpdateContentPath: String = "mailCrmItemUpdatedNotifier.ftl"
-
-  private def getNoteContentPath: String = "mailCrmItemAddNoteNotifier.ftl"
+  protected def getBeanInContext(context: SimpleRelayEmailNotification): B
 
   protected def buildExtraTemplateVariables(context: MailContext[B])
 
