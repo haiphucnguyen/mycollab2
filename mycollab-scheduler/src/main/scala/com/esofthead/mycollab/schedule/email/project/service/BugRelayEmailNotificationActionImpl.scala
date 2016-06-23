@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.schedule.email.project.service
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum
@@ -24,7 +8,7 @@ import com.esofthead.mycollab.html.LinkUtils
 import com.esofthead.mycollab.module.mail.MailUtils
 import com.esofthead.mycollab.module.project.domain._
 import com.esofthead.mycollab.module.project.i18n.{BugI18nEnum, OptionI18nEnum}
-import com.esofthead.mycollab.module.project.service.{MilestoneService, ProjectMemberService, ProjectNotificationSettingService}
+import com.esofthead.mycollab.module.project.service.{MilestoneService, ProjectNotificationSettingService}
 import com.esofthead.mycollab.module.project.{ProjectLinkGenerator, ProjectResources, ProjectTypeConstants}
 import com.esofthead.mycollab.module.tracker.domain.{BugWithBLOBs, SimpleBug}
 import com.esofthead.mycollab.module.tracker.service.BugService
@@ -35,7 +19,7 @@ import com.esofthead.mycollab.schedule.email.format._
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.esofthead.mycollab.spring.AppContextUtil
-import com.hp.gagawa.java.elements.{A, Img, Span, Text}
+import com.hp.gagawa.java.elements.{Span, Text}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.config.BeanDefinition
@@ -52,21 +36,15 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
   private val LOG = LoggerFactory.getLogger(classOf[BugRelayEmailNotificationActionImpl])
 
   @Autowired var bugService: BugService = _
-
-  @Autowired var projectMemberService: ProjectMemberService = _
-
   @Autowired var projectNotificationService: ProjectNotificationSettingService = _
 
   private val mapper = new BugFieldNameMapper
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleBug]) {
-    val projectHyperLink = new WebItem(bean.getProjectname, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
     val emailNotification = context.getEmailNotification
 
     val summary = "#" + bean.getBugkey + " - " + bean.getSummary
     val summaryLink = ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bean.getBugkey, bean.getProjectShortName)
-    val projectMember = projectMemberService.findMemberByUsername(emailNotification.getChangeby,
-      bean.getProjectid, emailNotification.getSaccountid)
 
     val avatarId = if (projectMember != null) projectMember.getMemberAvatarId else ""
     val userAvatar = LinkUtils.newAvatar(avatarId)
@@ -79,7 +57,6 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
     }
 
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("projectHyperLink", projectHyperLink)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }
@@ -229,7 +206,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
     def formatField(context: MailContext[_]): String = {
       val bug = context.getWrappedBean.asInstanceOf[SimpleBug]
       if (bug.getLogby != null) {
-        val userAvatarLink  = MailUtils.getAvatarLink(bug.getLoguserAvatarId, 16)
+        val userAvatarLink = MailUtils.getAvatarLink(bug.getLoguserAvatarId, 16)
         val img = newImg("avatar", userAvatarLink)
         val userLink = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(bug.getSaccountid), bug.getLogby)
         val link = newA(userLink, bug.getLoguserFullName)
@@ -255,4 +232,5 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
         value
     }
   }
+
 }

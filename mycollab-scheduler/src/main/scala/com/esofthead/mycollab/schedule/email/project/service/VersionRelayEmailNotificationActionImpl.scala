@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.schedule.email.project.service
 
 import com.esofthead.mycollab.common.MonitorTypeConstants
@@ -23,10 +7,9 @@ import com.esofthead.mycollab.html.LinkUtils
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator
 import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification
 import com.esofthead.mycollab.module.project.i18n.VersionI18nEnum
-import com.esofthead.mycollab.module.project.service.ProjectService
 import com.esofthead.mycollab.module.tracker.domain.{SimpleVersion, Version}
 import com.esofthead.mycollab.module.tracker.service.VersionService
-import com.esofthead.mycollab.schedule.email.format.{DateFieldFormat, I18nFieldFormat, WebItem}
+import com.esofthead.mycollab.schedule.email.format.{DateFieldFormat, I18nFieldFormat}
 import com.esofthead.mycollab.schedule.email.project.VersionRelayEmailNotificationAction
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import org.springframework.beans.factory.annotation.Autowired
@@ -42,19 +25,13 @@ import org.springframework.stereotype.Service
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class VersionRelayEmailNotificationActionImpl extends SendMailToAllMembersAction[SimpleVersion] with VersionRelayEmailNotificationAction {
   @Autowired var versionService: VersionService = _
-  @Autowired var projectService: ProjectService = _
   private val mapper = new VersionFieldNameMapper
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleVersion]) {
     val emailNotification = context.getEmailNotification
 
-    val project = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
-    val projectHyperLink = new WebItem(project.getName, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
-
     val summary = bean.getVersionname
     val summaryLink = ProjectLinkGenerator.generateBugComponentPreviewFullLink(siteUrl, bean.getProjectid, bean.getId)
-    val projectMember = projectMemberService.findMemberByUsername(emailNotification.getChangeby,
-      bean.getProjectid, emailNotification.getSaccountid)
 
     val avatarId = if (projectMember != null) projectMember.getMemberAvatarId else ""
     val userAvatar = LinkUtils.newAvatar(avatarId)
@@ -67,7 +44,6 @@ class VersionRelayEmailNotificationActionImpl extends SendMailToAllMembersAction
     }
 
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("projectHyperLink", projectHyperLink)
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }
