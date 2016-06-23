@@ -3,10 +3,10 @@ package com.esofthead.mycollab.premium.schedule.jobs;
 import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.core.NewUpdateAvailableNotification;
 import com.esofthead.mycollab.core.NotificationBroadcaster;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.schedule.jobs.GenericQuartzJobBean;
-import com.google.gson.Gson;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
@@ -48,8 +48,7 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
         String customerId = licenseInfo.getCustomerId();
         String result = restTemplate.getForObject("https://api.mycollab.com/api/checkpremiumupdate?version=" +
                 MyCollabVersion.getVersion() + "&customerId=" + customerId, String.class);
-        Gson gson = new Gson();
-        final Properties props = gson.fromJson(result, Properties.class);
+        final Properties props = JsonDeSerializer.fromJson(result, Properties.class);
         String version = props.getProperty("version");
         if (MyCollabVersion.isEditionNewer(version)) {
             if (licenseInfo.isInvalid() || licenseInfo.isTrial() || licenseInfo.isExpired()) {

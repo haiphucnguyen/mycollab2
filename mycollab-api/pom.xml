@@ -51,11 +51,5 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>${gsonVersion}</version>
-        </dependency>
-
     </dependencies>
 </project>
