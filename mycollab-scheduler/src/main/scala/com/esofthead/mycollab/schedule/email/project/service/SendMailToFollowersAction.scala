@@ -1,24 +1,6 @@
-/**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.schedule.email.project.service
 
-import java.util.Locale
-
-import com.esofthead.mycollab.common.domain.{MailRecipientField, SimpleAuditLog, SimpleRelayEmailNotification}
+import com.esofthead.mycollab.common.domain.{MailRecipientField, SimpleRelayEmailNotification}
 import com.esofthead.mycollab.common.service.AuditLogService
 import com.esofthead.mycollab.configuration.SiteConfiguration
 import com.esofthead.mycollab.module.mail.MailUtils
@@ -44,11 +26,11 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
     val notifiers = getListNotifyUsersWithFilter(notification.asInstanceOf[ProjectRelayEmailNotification])
     if (notifiers != null && notifiers.nonEmpty) {
       onInitAction(notification)
-      import scala.collection.JavaConversions._
-      for (user <- notifiers) {
-        val context = new MailContext[B](notification, user, siteUrl)
-        bean = getBeanInContext(context)
-        if (bean != null) {
+      bean = getBeanInContext(notification.asInstanceOf[ProjectRelayEmailNotification])
+      if (bean != null) {
+        import scala.collection.JavaConversions._
+        for (user <- notifiers) {
+          val context = new MailContext[B](notification, user, siteUrl)
           context.setWrappedBean(bean)
           buildExtraTemplateVariables(context)
           contentGenerator.putVariable("context", context)
@@ -68,11 +50,11 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
     val notifiers = getListNotifyUsersWithFilter(notification.asInstanceOf[ProjectRelayEmailNotification])
     if (notifiers != null && notifiers.nonEmpty) {
       onInitAction(notification)
-      import scala.collection.JavaConversions._
-      for (user <- notifiers) {
-        val context = new MailContext[B](notification, user, siteUrl)
-        bean = getBeanInContext(context)
-        if (bean != null) {
+      bean = getBeanInContext(notification.asInstanceOf[ProjectRelayEmailNotification])
+      if (bean != null) {
+        import scala.collection.JavaConversions._
+        for (user <- notifiers) {
+          val context = new MailContext[B](notification, user, siteUrl)
           context.setWrappedBean(bean)
           buildExtraTemplateVariables(context)
           if (context.getTypeid != null) {
@@ -95,11 +77,11 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
     val notifiers = getListNotifyUsersWithFilter(notification.asInstanceOf[ProjectRelayEmailNotification])
     if (notifiers != null && notifiers.nonEmpty) {
       onInitAction(notification)
-      import scala.collection.JavaConversions._
-      for (user <- notifiers) {
-        val context = new MailContext[B](notification, user, siteUrl)
-        bean = getBeanInContext(context)
-        if (bean != null) {
+      bean = getBeanInContext(notification.asInstanceOf[ProjectRelayEmailNotification])
+      if (bean != null) {
+        import scala.collection.JavaConversions._
+        for (user <- notifiers) {
+          val context = new MailContext[B](notification, user, siteUrl)
           context.wrappedBean = bean
           buildExtraTemplateVariables(context)
           contentGenerator.putVariable("comment", context.getEmailNotification)
@@ -117,7 +99,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
     siteUrl = MailUtils.getSiteUrl(notification.getSaccountid)
   }
 
-  protected def getBeanInContext(context: MailContext[B]): B
+  protected def getBeanInContext(notification: ProjectRelayEmailNotification): B
 
   protected def getItemName: String
 

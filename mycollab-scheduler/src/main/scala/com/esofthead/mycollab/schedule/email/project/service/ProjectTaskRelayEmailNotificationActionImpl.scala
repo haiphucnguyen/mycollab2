@@ -84,7 +84,8 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
     contentGenerator.putVariable("summaryLink", summaryLink)
   }
 
-  protected def getBeanInContext(context: MailContext[SimpleTask]): SimpleTask = projectTaskService.findById(context.getTypeid.toInt, context.getSaccountid)
+  protected def getBeanInContext(notification: ProjectRelayEmailNotification): SimpleTask =
+    projectTaskService.findById(notification.getTypeid.toInt, notification.getSaccountid)
 
   protected def getItemName: String = StringUtils.trim(bean.getTaskname, 100)
 

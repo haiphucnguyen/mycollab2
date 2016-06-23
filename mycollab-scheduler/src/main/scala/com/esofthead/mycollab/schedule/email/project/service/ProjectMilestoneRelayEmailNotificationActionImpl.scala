@@ -22,7 +22,7 @@ import com.esofthead.mycollab.core.utils.StringUtils
 import com.esofthead.mycollab.html.{FormatUtils, LinkUtils}
 import com.esofthead.mycollab.module.mail.MailUtils
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator
-import com.esofthead.mycollab.module.project.domain.{Milestone, SimpleMilestone}
+import com.esofthead.mycollab.module.project.domain.{Milestone, ProjectRelayEmailNotification, SimpleMilestone}
 import com.esofthead.mycollab.module.project.i18n.{MilestoneI18nEnum, OptionI18nEnum}
 import com.esofthead.mycollab.module.project.service.{MilestoneService, ProjectService}
 import com.esofthead.mycollab.module.user.AccountLinkGenerator
@@ -64,8 +64,8 @@ class ProjectMilestoneRelayEmailNotificationActionImpl extends SendMailToAllMemb
 
   override protected def getItemFieldMapper: ItemFieldMapper = mapper
 
-  override protected def getBeanInContext(context: MailContext[SimpleMilestone]): SimpleMilestone = milestoneService.
-    findById(context.getTypeid.toInt, context.getSaccountid)
+  override protected def getBeanInContext(notification: ProjectRelayEmailNotification): SimpleMilestone =
+    milestoneService.findById(notification.getTypeid.toInt, notification.getSaccountid)
 
   class MilestoneFieldNameMapper extends ItemFieldMapper {
     put(Milestone.Field.name, GenericI18Enum.FORM_NAME, isColSpan = true)

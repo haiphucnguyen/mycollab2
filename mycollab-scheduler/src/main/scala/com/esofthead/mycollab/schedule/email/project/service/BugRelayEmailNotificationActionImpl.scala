@@ -84,7 +84,8 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
     contentGenerator.putVariable("summaryLink", summaryLink)
   }
 
-  protected def getBeanInContext(context: MailContext[SimpleBug]): SimpleBug = bugService.findById(context.getTypeid.toInt, context.getSaccountid)
+  protected def getBeanInContext(notification: ProjectRelayEmailNotification): SimpleBug =
+    bugService.findById(notification.getTypeid.toInt, notification.getSaccountid)
 
   protected def getItemName: String = StringUtils.trim(bean.getSummary, 100)
 
@@ -192,7 +193,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
   class AssigneeFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
 
     def formatField(context: MailContext[_]): String = {
-      val bug: SimpleBug = context.getWrappedBean.asInstanceOf[SimpleBug]
+      val bug = context.getWrappedBean.asInstanceOf[SimpleBug]
       if (bug.getAssignuser != null) {
         val userAvatarLink = MailUtils.getAvatarLink(bug.getAssignUserAvatarId, 16)
         val img = newImg("avatar", userAvatarLink)
@@ -226,12 +227,12 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
   class LogUserFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
 
     def formatField(context: MailContext[_]): String = {
-      val bug: SimpleBug = context.getWrappedBean.asInstanceOf[SimpleBug]
+      val bug = context.getWrappedBean.asInstanceOf[SimpleBug]
       if (bug.getLogby != null) {
-        val userAvatarLink: String = MailUtils.getAvatarLink(bug.getLoguserAvatarId, 16)
-        val img: Img = newImg("avatar", userAvatarLink)
-        val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(bug.getSaccountid), bug.getLogby)
-        val link: A = newA(userLink, bug.getLoguserFullName)
+        val userAvatarLink  = MailUtils.getAvatarLink(bug.getLoguserAvatarId, 16)
+        val img = newImg("avatar", userAvatarLink)
+        val userLink = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(bug.getSaccountid), bug.getLogby)
+        val link = newA(userLink, bug.getLoguserFullName)
         newLink(img, link).write
       }
       else
@@ -242,17 +243,16 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
       if (StringUtils.isBlank(value))
         return new Span().write
 
-      val userService: UserService = AppContextUtil.getSpringBean(classOf[UserService])
-      val user: SimpleUser = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
+      val userService = AppContextUtil.getSpringBean(classOf[UserService])
+      val user = userService.findUserByUserNameInAccount(value, context.getUser.getAccountId)
       if (user != null) {
-        val userAvatarLink: String = MailUtils.getAvatarLink(user.getAvatarid, 16)
-        val userLink: String = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
-        val img: Img = newImg("avatar", userAvatarLink)
-        val link: A = newA(userLink, user.getDisplayName)
+        val userAvatarLink = MailUtils.getAvatarLink(user.getAvatarid, 16)
+        val userLink = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.getAccountId), user.getUsername)
+        val img = newImg("avatar", userAvatarLink)
+        val link = newA(userLink, user.getDisplayName)
         newLink(img, link).write
       } else
         value
     }
   }
-
 }

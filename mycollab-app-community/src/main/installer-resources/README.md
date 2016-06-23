@@ -56,6 +56,7 @@ Version 5.3.4
 * Change the template engine from Velocity to Freemarker
 * Allow to customize the report fields
 * Externalize more strings for localization
+* Reduce the SQL queries in schedule task by caching objects
 * Support German language (Contributor: Marco Gantenbein)
 * Other minor improvements
 

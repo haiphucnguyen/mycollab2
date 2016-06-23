@@ -22,6 +22,7 @@ import com.esofthead.mycollab.core.utils.StringUtils
 import com.esofthead.mycollab.html.{FormatUtils, LinkUtils}
 import com.esofthead.mycollab.module.mail.MailUtils
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator
+import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification
 import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum
 import com.esofthead.mycollab.module.project.service.ProjectService
 import com.esofthead.mycollab.module.tracker.domain.{Component, SimpleComponent}
@@ -78,8 +79,8 @@ class ComponentRelayEmailNotificationActionImpl extends SendMailToAllMembersActi
   protected def getUpdateSubject(context: MailContext[SimpleComponent]): String = context.getMessage(
     ComponentI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, bean.getProjectName, context.getChangeByUserFullName, getItemName)
 
-  protected def getBeanInContext(context: MailContext[SimpleComponent]): SimpleComponent = componentService.findById(context.getTypeid.toInt,
-    context.getSaccountid)
+  protected def getBeanInContext(notification: ProjectRelayEmailNotification): SimpleComponent =
+    componentService.findById(notification.getTypeid.toInt, notification.getSaccountid)
 
   protected def getItemName: String = StringUtils.trim(bean.getDescription, 100)
 

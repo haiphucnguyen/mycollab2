@@ -22,7 +22,7 @@ import com.esofthead.mycollab.core.SimpleLogging
 import com.esofthead.mycollab.core.utils.StringUtils
 import com.esofthead.mycollab.html.{FormatUtils, LinkUtils}
 import com.esofthead.mycollab.module.mail.MailUtils
-import com.esofthead.mycollab.module.project.domain.{Risk, SimpleRisk}
+import com.esofthead.mycollab.module.project.domain.{ProjectRelayEmailNotification, Risk, SimpleRisk}
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum
 import com.esofthead.mycollab.module.project.service.{MilestoneService, ProjectService, RiskService}
 import com.esofthead.mycollab.module.project.{ProjectLinkGenerator, ProjectResources, ProjectTypeConstants}
@@ -62,8 +62,8 @@ class ProjectRiskRelayEmailNotificationActionImpl extends SendMailToAllMembersAc
 
   override protected def getItemFieldMapper: ItemFieldMapper = mapper
 
-  override protected def getBeanInContext(context: MailContext[SimpleRisk]): SimpleRisk = riskService.findById(
-    context.getTypeid.toInt, context.getSaccountid)
+  override protected def getBeanInContext(notification: ProjectRelayEmailNotification): SimpleRisk =
+    riskService.findById(notification.getTypeid.toInt, notification.getSaccountid)
 
   override protected def buildExtraTemplateVariables(context: MailContext[SimpleRisk]) {
     val emailNotification = context.getEmailNotification

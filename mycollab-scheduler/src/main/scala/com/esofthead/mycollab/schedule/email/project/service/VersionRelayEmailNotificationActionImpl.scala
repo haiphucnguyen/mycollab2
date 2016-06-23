@@ -21,6 +21,7 @@ import com.esofthead.mycollab.common.i18n.{GenericI18Enum, OptionI18nEnum}
 import com.esofthead.mycollab.core.utils.StringUtils
 import com.esofthead.mycollab.html.LinkUtils
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator
+import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification
 import com.esofthead.mycollab.module.project.i18n.VersionI18nEnum
 import com.esofthead.mycollab.module.project.service.ProjectService
 import com.esofthead.mycollab.module.tracker.domain.{SimpleVersion, Version}
@@ -84,8 +85,8 @@ class VersionRelayEmailNotificationActionImpl extends SendMailToAllMembersAction
 
   protected def getItemFieldMapper: ItemFieldMapper = mapper
 
-  protected def getBeanInContext(context: MailContext[SimpleVersion]): SimpleVersion = versionService.findById(context.getTypeid.toInt,
-    context.getSaccountid)
+  protected def getBeanInContext(notification: ProjectRelayEmailNotification): SimpleVersion =
+    versionService.findById(notification.getTypeid.toInt, notification.getSaccountid)
 
   class VersionFieldNameMapper extends ItemFieldMapper {
     put(Version.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)

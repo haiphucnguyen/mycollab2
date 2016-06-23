@@ -20,7 +20,7 @@ import com.esofthead.mycollab.common.MonitorTypeConstants
 import com.esofthead.mycollab.core.utils.StringUtils
 import com.esofthead.mycollab.html.LinkUtils
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator
-import com.esofthead.mycollab.module.project.domain.SimpleMessage
+import com.esofthead.mycollab.module.project.domain.{ProjectRelayEmailNotification, SimpleMessage}
 import com.esofthead.mycollab.module.project.i18n.MessageI18nEnum
 import com.esofthead.mycollab.module.project.service.{MessageService, ProjectService}
 import com.esofthead.mycollab.schedule.email.format.WebItem
@@ -54,8 +54,8 @@ class MessageRelayEmailNotificationActionImpl extends SendMailToAllMembersAction
 
   protected def getItemFieldMapper: ItemFieldMapper = null
 
-  protected def getBeanInContext(context: MailContext[SimpleMessage]): SimpleMessage = messageService.findById(context.getTypeid.toInt,
-    context.getSaccountid)
+  protected def getBeanInContext(notification: ProjectRelayEmailNotification): SimpleMessage =
+    messageService.findById(notification.getTypeid.toInt, notification.getSaccountid)
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleMessage]) {
     val projectHyperLink = new WebItem(bean.getProjectName, ProjectLinkGenerator.generateProjectFullLink(siteUrl, bean.getProjectid))
