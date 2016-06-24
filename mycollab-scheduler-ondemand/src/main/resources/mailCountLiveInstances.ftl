@@ -21,12 +21,12 @@
       <th>Num of Users</th>
       <th>Num of Projects</th>
     </tr>
-    <#list instances as instance)
+    <#list instances as instance>
     <tr>
       <th>${instance.appversion!}</th>
       <th>${instance.javaversion!}</th>
-      <th>${instance.installeddate!}</th>
-      <th>${instance.lastupdateddate!}</th>
+      <th>${instance.installeddate?date!}</th>
+      <th>${instance.lastupdateddate?date!}</th>
       <th>${instance.sysproperties!}</th>
       <th>${instance.numusers!}</th>
       <th>${instance.numprojects!}</th>

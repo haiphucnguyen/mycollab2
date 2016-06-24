@@ -24,6 +24,6 @@
       </div>
     </td>
   </tr>
-  </#include "mailFooter.ftl">
+  <#include "mailFooter.ftl">
 </table>
 </body>
