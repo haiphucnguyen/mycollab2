@@ -1,23 +1,23 @@
 /**
- * This file is part of mycollab-esb.
- *
- * mycollab-esb is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-esb is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-esb.  If not, see <http://www.gnu.org/licenses/>.
- */
+  * This file is part of mycollab-esb.
+  *
+  * mycollab-esb is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * mycollab-esb is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with mycollab-esb.  If not, see <http://www.gnu.org/licenses/>.
+  */
 package com.esofthead.mycollab.module.billing.esb.impl
 
 import java.util
-import java.util.GregorianCalendar
+import java.util.{GregorianCalendar, Timer, TimerTask}
 
 import com.esofthead.mycollab.common.NotificationType
 import com.esofthead.mycollab.common.domain.OptionVal
@@ -245,5 +245,13 @@ import org.springframework.stereotype.Component
     folder.setDescription("Sample folder")
     folder.setPath(PathUtils.getProjectDocumentPath(accountId, projectId) + "/" + StringUtils.generateSoftUniqueId())
     pageService.createFolder(folder, initialUser)
+
+    val timer = new Timer("Set member notification")
+    timer.schedule(new TimerTask {
+      override def run(): Unit = {
+        projectNotificationSetting.setLevel(NotificationType.Default.name())
+        projectNotificationSettingService.updateWithSession(projectNotificationSetting, initialUser)
+      }
+    }, 90000)
   }
 }
