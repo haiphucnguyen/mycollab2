@@ -7,7 +7,7 @@
 <body>
   <table border="1">
     <tr>
-      <th>Count: $!count</th>
+      <th>Count: ${count}</th>
     </tr>
   </table>
   <br/>

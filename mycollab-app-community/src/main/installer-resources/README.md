@@ -40,6 +40,24 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.3.5
+-----------------------------
+
+**Library Upgrades**
+
+* Jackrabbit 2.12.2
+* Flyway 4.0.3
+* Other libraries
+
+**Improvements & New Features**
+
+* [Premium] Allow customize the project home widgets
+* [Premium] Customize project assignment fields
+* [Premium] Real-time notification assignment changes
+
+**Bug Fixes**
+
+
 Version 5.3.4
 -----------------------------
 
@@ -50,10 +68,10 @@ Version 5.3.4
 
 **Improvements & New Features**
 
-* [Premium] Allow to add the new assignment in calendar view
+* [Premium] Allow adding the new assignment in calendar view
 * [Premium] The new Hourly weekly report
 * Change the template engine from Velocity to Freemarker
-* Allow to customize the report fields
+* Allow customizing the report fields
 * Externalize more strings for localization
 * Reduce the SQL queries in schedule task by caching objects
 * Support German language (Contributor: Marco Gantenbein)
