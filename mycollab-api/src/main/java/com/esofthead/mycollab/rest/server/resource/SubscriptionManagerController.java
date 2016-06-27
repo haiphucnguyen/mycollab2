@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 5.3.4
  */
 @RestController
+@RequestMapping(path = "/subscription")
 public class SubscriptionManagerController {
-    @RequestMapping(path = "/subscription", method = RequestMethod.POST, headers =
+    @RequestMapping(path = "/activate", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
     public String registerEE() {
         return "";

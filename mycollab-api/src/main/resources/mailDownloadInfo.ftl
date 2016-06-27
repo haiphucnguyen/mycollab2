@@ -26,7 +26,7 @@
             <li style="padding: 5px 0px">Install MyCollab on your server <a href="https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/installing-mycollab/">Installation</a>
             <li style="padding: 5px 0px">If you are using Windows, you can install MyCollab as a Window service by following steps
             at
-            <a href="https://community.mycollab.com/administration/startup-via-windows-service/">Startup as Windows Service</a></li>
+            <a href="https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/startup-as-windows-service/">Startup as Windows Service</a></li>
             <li>If you are using Unix, you can configure MyCollab as a Unit startup script by following steps at <a
                     href="https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/startup-as-unix-service/">Startup as Unix Service</a></li>
             <li style="padding: 5px 0px">Common questions that MyCollab users asked us, such as how to change the server port, are
