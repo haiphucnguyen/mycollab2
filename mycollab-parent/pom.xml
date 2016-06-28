@@ -13,7 +13,7 @@
     <properties>
         <springVersion>4.3.0.RELEASE</springVersion>
         <aspectjVersion>1.8.9</aspectjVersion>
-        <javaVersion>1.7</javaVersion>
+        <javaVersion>1.8</javaVersion>
         <slf4jVersion>1.7.21</slf4jVersion>
         <servletVersion>3.1.0</servletVersion>
         <vaadinVersion>7.6.6</vaadinVersion>

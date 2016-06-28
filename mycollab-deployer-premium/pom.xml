@@ -24,6 +24,7 @@
         <module>../mycollab-caching-community</module>
         <module>../mycollab-migration</module>
         <module>../mycollab-services</module>
+        <module>../mycollab-services-pro</module>
         <module>../mycollab-services-premium</module>
         <module>../mycollab-esb</module>
         <module>../mycollab-reporting</module>

@@ -32,13 +32,11 @@ public class BillingServiceTest extends IntergrationServiceTest {
     @DataSet
     public void testGetTrialAccountsWithOwners() {
         List<BillingAccountWithOwners> accounts = billingService.getTrialAccountsWithOwners();
-
         assertThat(accounts.size()).isEqualTo(1);
 
         BillingAccountWithOwners account = accounts.get(0);
 
         assertThat(account.getOwners().size()).isEqualTo(1);
-
         SimpleUser user = account.getOwners().get(0);
         assertThat(user.getUsername()).isEqualTo("hainguyen@esofthead.com");
     }
@@ -49,9 +47,7 @@ public class BillingServiceTest extends IntergrationServiceTest {
         expectedEx.expect(MyCollabException.class);
         expectedEx.expectMessage("Subdomain must be an ascii string");
 
-        billingService.registerAccount("ANguyễnHai", 1,
-                "hainguyen@esofthead.com", "123", "hainguyen@esofthead.com",
-                "3", false);
+        billingService.registerAccount("ANguyễnHai", 1, "hainguyen@esofthead.com", "123", "hainguyen@esofthead.com", "3", false);
     }
 
     @Test
@@ -66,8 +62,6 @@ public class BillingServiceTest extends IntergrationServiceTest {
     @Test(expected = SubdomainExistedException.class)
     @DataSet
     public void registerAccountFailedBecauseSubDomainExisted() {
-        billingService.registerAccount("abc", 1, "haiphucnguyen@gmail.com",
-                "123", "haiphucnguyen@gmail.com", "3", false);
+        billingService.registerAccount("abc", 1, "haiphucnguyen@gmail.com", "123", "haiphucnguyen@gmail.com", "3", false);
     }
-
 }

@@ -67,6 +67,7 @@ public class MyBatisConfiguration {
                 "classpath:sqlMap/ecm/*Mapper*.xml",
                 "classpath:sqlMap/crm/*Mapper*.xml",
                 "classpath:sqlMap/project/*Mapper*.xml",
+                "classpath:sqlMapExt/project/*Mapper*.xml",
                 "classpath:sqlMap/tracker/*Mapper*.xml",
                 "classpath:sqlMap/support/*Mapper*.xml"));
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.pro.module.project.dao.ItemTimeLoggingMapperExt">
     
-    <resultMap extends="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapper.ResultMapWithBLOBs"
+    <resultMap extends="com.esofthead.mycollab.pro.module.project.dao.ItemTimeLoggingMapper.ResultMapWithBLOBs"
         id="TimeLoggingResult" type="com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging">
         <result column="logUserAvatarId" jdbcType="VARCHAR" property="logUserAvatarId" />
         <result column="logUserFullName" jdbcType="VARCHAR" property="logUserFullName" />

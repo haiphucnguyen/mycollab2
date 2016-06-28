@@ -26,6 +26,7 @@
         <module>../mycollab-migration</module>
         <module>../mycollab-migration-ondemand</module>
         <module>../mycollab-services</module>
+        <module>../mycollab-services-pro</module>
         <module>../mycollab-services-ondemand</module>
         <module>../mycollab-esb</module>
         <module>../mycollab-esb-ondemand</module>
