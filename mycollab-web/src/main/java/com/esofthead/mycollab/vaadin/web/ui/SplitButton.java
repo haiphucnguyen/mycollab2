@@ -131,14 +131,11 @@ public class SplitButton extends CustomComponent {
     }
 
     public void addClickListener(SplitButtonClickListener listener) {
-        addListener(SplitButtonClickEvent.class, listener,
-                SPLIT_BUTTON_CLICK_CHANGE_METHOD);
+        addListener(SplitButtonClickEvent.class, listener, SPLIT_BUTTON_CLICK_CHANGE_METHOD);
     }
 
-    public void addPopupVisibilityListener(
-            SplitButtonPopupVisibilityListener listener) {
-        addListener(SplitButtonPopupVisibilityEvent.class, listener,
-                SPLIT_POPUP_VISIBLE_CHANGE_METHOD);
+    public void addPopupVisibilityListener(SplitButtonPopupVisibilityListener listener) {
+        addListener(SplitButtonPopupVisibilityEvent.class, listener, SPLIT_POPUP_VISIBLE_CHANGE_METHOD);
     }
 
     public interface SplitButtonPopupVisibilityListener extends Serializable {

@@ -50,6 +50,7 @@ import com.vaadin.ui.*;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MMarginInfo;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -191,34 +192,25 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
         timePostLbl.setStyleName(UIConstants.META_INFO);
 
         if (hasDeletePermission(comment)) {
-            Button msgDeleteBtn = new Button();
-            msgDeleteBtn.setIcon(FontAwesome.TRASH_O);
-            msgDeleteBtn.setStyleName(UIConstants.BUTTON_ICON_ONLY);
-            msgDeleteBtn.setVisible(true);
-            msgDeleteBtn.addClickListener(new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
+            MButton msgDeleteBtn = new MButton(FontAwesome.TRASH_O).withListener(clickEvent -> {
+                ConfirmDialogExt.show(UI.getCurrent(),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
 
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    ConfirmDialogExt.show(UI.getCurrent(),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                            new ConfirmDialog.Listener() {
-                                private static final long serialVersionUID = 1L;
-
-                                @Override
-                                public void onClose(ConfirmDialog dialog) {
-                                    if (dialog.isConfirmed()) {
-                                        CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
-                                        commentService.removeWithSession(comment, AppContext.getUsername(), AppContext.getAccountId());
-                                        activityBox.removeComponent(layout);
-                                    }
+                            @Override
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
+                                    commentService.removeWithSession(comment, AppContext.getUsername(), AppContext.getAccountId());
+                                    activityBox.removeComponent(layout);
                                 }
-                            });
-                }
-            });
+                            }
+                        });
+            }).withStyleName(UIConstants.BUTTON_ICON_ONLY).withVisible(true);
             messageHeader.with(timePostLbl, msgDeleteBtn).expand(timePostLbl);
         } else {
             messageHeader.with(timePostLbl).expand(timePostLbl);

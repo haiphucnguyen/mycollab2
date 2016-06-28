@@ -316,55 +316,51 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
 
             if (totalAssignments > 0) {
                 final Button viewIssuesBtn = new Button(AppContext.getMessage(ProjectI18nEnum.ACTION_VIEW_ASSIGNMENTS));
-                Button.ClickListener viewIssuesListener = new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        showIssues = !showIssues;
-                        if (showIssues) {
-                            issueLayout.setVisible(true);
-                            viewIssuesBtn.setCaption(AppContext.getMessage(ProjectI18nEnum.ACTION_HIDE_ASSIGNMENTS));
-                            ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
-                            searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                            searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK));
-                            searchCriteria.setMilestoneId(new NumberSearchField(milestone.getId()));
-                            ProjectGenericTaskService genericTaskService = AppContextUtil.getSpringBean
-                                    (ProjectGenericTaskService.class);
-                            List<ProjectGenericTask> genericTasks = genericTaskService.findPagableListByCriteria(new
-                                    BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
-                            for (ProjectGenericTask genericTask : genericTasks) {
-                                ToggleGenericTaskSummaryField toggleGenericTaskSummaryField = new ToggleGenericTaskSummaryField(genericTask);
-                                MHorizontalLayout rowComp = new MHorizontalLayout();
-                                rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-                                rowComp.with(new ELabel(ProjectAssetsManager.getAsset(genericTask.getType()).getHtml(), ContentMode.HTML).withWidthUndefined());
-                                String status = "";
-                                if (genericTask.isBug()) {
-                                    status = AppContext.getMessage(OptionI18nEnum.BugStatus.class, genericTask.getStatus());
-                                } else if (genericTask.isMilestone()) {
-                                    status = AppContext.getMessage(OptionI18nEnum.MilestoneStatus.class, genericTask.getStatus());
-                                } else if (genericTask.isRisk()) {
-                                    status = AppContext.getMessage(com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum.class,
-                                            genericTask.getStatus());
-                                } else if (genericTask.isTask()) {
-                                    status = AppContext.getMessage(com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum.class, genericTask.getStatus());
-                                }
-                                rowComp.with(new ELabel(status).withStyleName(UIConstants.FIELD_NOTE).withWidthUndefined());
-                                String avatarLink = StorageFactory.getInstance().getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
-                                Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setTitle(genericTask
-                                        .getAssignUserFullName());
-                                rowComp.with(new ELabel(img.write(), ContentMode.HTML).withWidthUndefined());
-
-                                rowComp.with(toggleGenericTaskSummaryField).expand(toggleGenericTaskSummaryField);
-                                issueLayout.addComponent(rowComp);
-
+                viewIssuesBtn.addClickListener(clickEvent -> {
+                    showIssues = !showIssues;
+                    if (showIssues) {
+                        issueLayout.setVisible(true);
+                        viewIssuesBtn.setCaption(AppContext.getMessage(ProjectI18nEnum.ACTION_HIDE_ASSIGNMENTS));
+                        ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
+                        searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+                        searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK));
+                        searchCriteria.setMilestoneId(new NumberSearchField(milestone.getId()));
+                        ProjectGenericTaskService genericTaskService = AppContextUtil.getSpringBean
+                                (ProjectGenericTaskService.class);
+                        List<ProjectGenericTask> genericTasks = genericTaskService.findPagableListByCriteria(new
+                                BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
+                        for (ProjectGenericTask genericTask : genericTasks) {
+                            ToggleGenericTaskSummaryField toggleGenericTaskSummaryField = new ToggleGenericTaskSummaryField(genericTask);
+                            MHorizontalLayout rowComp = new MHorizontalLayout();
+                            rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
+                            rowComp.with(new ELabel(ProjectAssetsManager.getAsset(genericTask.getType()).getHtml(), ContentMode.HTML).withWidthUndefined());
+                            String status = "";
+                            if (genericTask.isBug()) {
+                                status = AppContext.getMessage(OptionI18nEnum.BugStatus.class, genericTask.getStatus());
+                            } else if (genericTask.isMilestone()) {
+                                status = AppContext.getMessage(OptionI18nEnum.MilestoneStatus.class, genericTask.getStatus());
+                            } else if (genericTask.isRisk()) {
+                                status = AppContext.getMessage(com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum.class,
+                                        genericTask.getStatus());
+                            } else if (genericTask.isTask()) {
+                                status = AppContext.getMessage(com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum.class, genericTask.getStatus());
                             }
-                        } else {
-                            viewIssuesBtn.setCaption(AppContext.getMessage(ProjectI18nEnum.ACTION_VIEW_ASSIGNMENTS));
-                            issueLayout.removeAllComponents();
-                            issueLayout.setVisible(false);
+                            rowComp.with(new ELabel(status).withStyleName(UIConstants.FIELD_NOTE).withWidthUndefined());
+                            String avatarLink = StorageFactory.getInstance().getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
+                            Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setTitle(genericTask
+                                    .getAssignUserFullName());
+                            rowComp.with(new ELabel(img.write(), ContentMode.HTML).withWidthUndefined());
+
+                            rowComp.with(toggleGenericTaskSummaryField).expand(toggleGenericTaskSummaryField);
+                            issueLayout.addComponent(rowComp);
+
                         }
+                    } else {
+                        viewIssuesBtn.setCaption(AppContext.getMessage(ProjectI18nEnum.ACTION_VIEW_ASSIGNMENTS));
+                        issueLayout.removeAllComponents();
+                        issueLayout.setVisible(false);
                     }
-                };
-                viewIssuesBtn.addClickListener(viewIssuesListener);
+                });
                 viewIssuesBtn.addStyleName(UIConstants.BUTTON_LINK);
                 progressLayout.with(viewIssuesBtn);
             }

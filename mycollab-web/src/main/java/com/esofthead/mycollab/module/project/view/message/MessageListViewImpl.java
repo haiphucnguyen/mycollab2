@@ -269,18 +269,9 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
                     });
             nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 
-            Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-            searchBtn.addClickListener(new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final Button.ClickEvent event) {
-                    doSearch();
-                }
-            });
+            Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> doSearch());
             searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             searchBtn.setIcon(FontAwesome.SEARCH);
-
             basicSearchBody.with(nameField, searchBtn).withAlign(nameField, Alignment.MIDDLE_LEFT);
 
             this.setCompositionRoot(basicSearchBody);

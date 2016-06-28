@@ -311,20 +311,17 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             public Component generateRow(AbstractBeanPagedList host, final SimpleTask item, int rowIndex) {
                 Button taskLink = new Button(item.getTaskname());
                 taskLink.addStyleName(UIConstants.BUTTON_LINK);
-                taskLink.addClickListener(new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        if (item.getId().equals(parentTask.getId())) {
-                            NotificationUtil.showErrorNotification(AppContext.getMessage(TaskI18nEnum.ERROR_CAN_NOT_ASSIGN_PARENT_TASK_TO_ITSELF));
-                        } else {
-                            item.setParenttaskid(parentTask.getId());
-                            ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                            projectTaskService.updateWithSession(item, AppContext.getUsername());
-                            EventBusFactory.getInstance().post(new TaskEvent.NewTaskAdded(this, item.getId()));
-                        }
-
-                        close();
+                taskLink.addClickListener(clickEvent -> {
+                    if (item.getId().equals(parentTask.getId())) {
+                        NotificationUtil.showErrorNotification(AppContext.getMessage(TaskI18nEnum.ERROR_CAN_NOT_ASSIGN_PARENT_TASK_TO_ITSELF));
+                    } else {
+                        item.setParenttaskid(parentTask.getId());
+                        ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+                        projectTaskService.updateWithSession(item, AppContext.getUsername());
+                        EventBusFactory.getInstance().post(new TaskEvent.NewTaskAdded(this, item.getId()));
                     }
+
+                    close();
                 });
                 return new MCssLayout(taskLink).withStyleName("list-row").withFullWidth();
             }
