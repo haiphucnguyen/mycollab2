@@ -104,10 +104,10 @@
             <artifactId>jackrabbit-spi-commons</artifactId>
             <version>${jackrabbitVersion}</version>
         </dependency>
-
     </dependencies>
     <build>
         <plugins>
+            <!--
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -227,6 +227,7 @@
 
                 </executions>
             </plugin>
+            -->
         </plugins>
     </build>
 

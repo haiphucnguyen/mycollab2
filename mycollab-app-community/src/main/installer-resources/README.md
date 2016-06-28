@@ -47,6 +47,7 @@ Version 5.3.5
 
 * Jackrabbit 2.12.2
 * Flyway 4.0.3
+* MyBatis 3.4.1
 * Other libraries
 
 **Improvements & New Features**
