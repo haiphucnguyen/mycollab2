@@ -78,12 +78,9 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived() &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TIME));
-        createBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent clickEvent) {
-                AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow();
-                UI.getCurrent().addWindow(addTimeEntry);
-            }
+        createBtn.addClickListener((event) -> {
+            AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow();
+            UI.getCurrent().addWindow(addTimeEntry);
         });
         return createBtn;
     }

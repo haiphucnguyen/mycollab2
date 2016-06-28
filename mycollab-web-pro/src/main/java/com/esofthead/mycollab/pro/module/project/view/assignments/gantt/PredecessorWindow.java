@@ -220,14 +220,10 @@ class PredecessorWindow extends Window {
                 lagField.setWidth(LAG_WIDTH);
                 this.addComponent(lagField);
 
-                Button deleteBtn = new Button();
-                deleteBtn.addClickListener(new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        if (PredecessorsLayout.this.getComponentCount() == 1) {
-                        } else {
-                            PredecessorsLayout.this.removeComponent(PredecessorInputLayout.this);
-                        }
+                Button deleteBtn = new Button("", clickEvent -> {
+                    if (PredecessorsLayout.this.getComponentCount() == 1) {
+                    } else {
+                        PredecessorsLayout.this.removeComponent(PredecessorInputLayout.this);
                     }
                 });
                 deleteBtn.setIcon(FontAwesome.TRASH_O);

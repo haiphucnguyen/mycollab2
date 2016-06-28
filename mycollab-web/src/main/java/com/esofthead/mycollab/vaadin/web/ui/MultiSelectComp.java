@@ -63,14 +63,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
         componentsText.setWidth("100%");
 
         componentPopupSelection = new PopupButton();
-        componentPopupSelection.addClickListener(new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                initContentPopup();
-            }
-        });
+        componentPopupSelection.addClickListener(clickEvent -> initContentPopup());
 
         popupContent = new MVerticalLayout();
         componentPopupSelection.setContent(popupContent);

@@ -282,20 +282,14 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         newTaskBtn.setStyleName(UIConstants.BUTTON_ACTION);
         final ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         final Button weekViewBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_WEEK));
-        weekViewBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                displayWeekView();
-                viewButtons.withDefaultButton(weekViewBtn);
-            }
+        weekViewBtn.addClickListener(clickEvent -> {
+            displayWeekView();
+            viewButtons.withDefaultButton(weekViewBtn);
         });
         final Button monthViewBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_MONTH));
-        monthViewBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                displayMonthView();
-                viewButtons.withDefaultButton(monthViewBtn);
-            }
+        monthViewBtn.addClickListener(clickEvent -> {
+            displayMonthView();
+            viewButtons.withDefaultButton(monthViewBtn);
         });
         viewButtons.addButton(weekViewBtn);
         viewButtons.addButton(monthViewBtn);

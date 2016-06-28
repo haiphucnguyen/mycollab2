@@ -54,7 +54,6 @@ import com.esofthead.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.web.ui.SearchTextField;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.google.common.eventbus.Subscribe;
-import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -120,18 +119,15 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
 
         isSortAsc = true;
         final Button sortBtn = new Button("");
-        sortBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                isSortAsc = !isSortAsc;
-                if (searchCriteria != null) {
-                    if (isSortAsc) {
-                        sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
-                    } else {
-                        sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
-                    }
-                    displayFavoriteList();
+        sortBtn.addClickListener(clickEvent -> {
+            isSortAsc = !isSortAsc;
+            if (searchCriteria != null) {
+                if (isSortAsc) {
+                    sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
+                } else {
+                    sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
                 }
+                displayFavoriteList();
             }
         });
         sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
@@ -217,19 +213,16 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
             final MHorizontalLayout layout = new MHorizontalLayout().withStyleName(UIConstants.BORDER_LIST_ROW)
                     .withStyleName(UIConstants.CURSOR_POINTER).withFullWidth();
             Button favoriteBtn = new Button(FontAwesome.STAR);
-            favoriteBtn.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    FavoriteItem favoriteItem = new FavoriteItem();
-                    favoriteItem.setExtratypeid(item.getProjectId());
-                    favoriteItem.setType(item.getType());
-                    favoriteItem.setTypeid(item.getTypeId() + "");
-                    favoriteItem.setSaccountid(AppContext.getAccountId());
-                    favoriteItem.setCreateduser(AppContext.getUsername());
-                    FavoriteItemService favoriteItemService = AppContextUtil.getSpringBean(FavoriteItemService.class);
-                    favoriteItemService.saveOrDelete(favoriteItem);
-                    host.removeRow(layout);
-                }
+            favoriteBtn.addClickListener(clickEvent -> {
+                FavoriteItem favoriteItem = new FavoriteItem();
+                favoriteItem.setExtratypeid(item.getProjectId());
+                favoriteItem.setType(item.getType());
+                favoriteItem.setTypeid(item.getTypeId() + "");
+                favoriteItem.setSaccountid(AppContext.getAccountId());
+                favoriteItem.setCreateduser(AppContext.getUsername());
+                FavoriteItemService favoriteItemService = AppContextUtil.getSpringBean(FavoriteItemService.class);
+                favoriteItemService.saveOrDelete(favoriteItem);
+                host.removeRow(layout);
             });
             favoriteBtn.addStyleName("favorite-btn-selected");
             favoriteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
@@ -237,12 +230,9 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
             ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(item.getType()).getHtml() + " " + item
                     .getSummary(), ContentMode.HTML).withFullWidth().withStyleName(UIConstants.TEXT_ELLIPSIS);
             layout.with(favoriteBtn, headerLbl).expand(headerLbl);
-            layout.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
-                @Override
-                public void layoutClick(LayoutEvents.LayoutClickEvent event) {
-                    EventBusFactory.getInstance().post(new ProjectEvent.SelectFavoriteItem(this, item));
-                    host.setSelectedRow(layout);
-                }
+            layout.addLayoutClickListener(layoutClickEvent -> {
+                EventBusFactory.getInstance().post(new ProjectEvent.SelectFavoriteItem(this, item));
+                host.setSelectedRow(layout);
             });
             return layout;
         }
@@ -261,27 +251,18 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + bug.getSummary());
 
                         final PrintButton printBtn = new PrintButton();
-                        printBtn.addClickListener(new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(final Button.ClickEvent event) {
-                                printBtn.doPrint(bug, new FormReportLayout(ProjectTypeConstants.BUG, BugWithBLOBs.Field.summary.name(),
-                                        BugDefaultFormLayoutFactory.getForm(), SimpleBug.Field.components.name(), SimpleBug.Field
-                                        .affectedVersions.name(), SimpleBug.Field.fixedVersions.name(), BugWithBLOBs.Field.id.name(),
-                                        SimpleBug.Field.selected.name()));
-                            }
+                        printBtn.addClickListener(clickEvent -> {
+                            printBtn.doPrint(bug, new FormReportLayout(ProjectTypeConstants.BUG, BugWithBLOBs.Field.summary.name(),
+                                    BugDefaultFormLayoutFactory.getForm(), SimpleBug.Field.components.name(), SimpleBug.Field
+                                    .affectedVersions.name(), SimpleBug.Field.fixedVersions.name(), BugWithBLOBs.Field.id.name(),
+                                    SimpleBug.Field.selected.name()));
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
                         printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
                         printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS));
 
-                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(Button.ClickEvent clickEvent) {
-                                EventBusFactory.getInstance().post(new BugEvent.GotoEdit(this, bug));
-                            }
-                        });
+                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
+                                clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoEdit(this, bug)));
                         editBtn.setIcon(FontAwesome.EDIT);
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
                         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
@@ -307,26 +288,17 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + task.getTaskname());
 
                         final PrintButton printBtn = new PrintButton();
-                        printBtn.addClickListener(new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(final Button.ClickEvent event) {
-                                printBtn.doPrint(task, new FormReportLayout(ProjectTypeConstants.TASK, Task.Field.taskname.name(),
-                                        TaskDefaultFormLayoutFactory.getForm(), Task.Field.taskname.name(), Task.Field.id.name(),
-                                        Task.Field.parenttaskid.name()));
-                            }
+                        printBtn.addClickListener(clickEvent -> {
+                            printBtn.doPrint(task, new FormReportLayout(ProjectTypeConstants.TASK, Task.Field.taskname.name(),
+                                    TaskDefaultFormLayoutFactory.getForm(), Task.Field.taskname.name(), Task.Field.id.name(),
+                                    Task.Field.parenttaskid.name()));
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
                         printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
                         printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
 
-                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(Button.ClickEvent clickEvent) {
-                                EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(this, task));
-                            }
-                        });
+                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
+                                clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(this, task)));
                         editBtn.setIcon(FontAwesome.EDIT);
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
                         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
@@ -347,32 +319,23 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
             } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
                     MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                    final SimpleMilestone milestone = milestoneService.findById(Integer.parseInt(assignment.getTypeId()), AppContext
-                            .getAccountId());
+                    final SimpleMilestone milestone = milestoneService.findById(Integer.parseInt(assignment.getTypeId()),
+                            AppContext.getAccountId());
                     if (milestone != null) {
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
                                 + milestone.getName());
 
                         final PrintButton printBtn = new PrintButton();
-                        printBtn.addClickListener(new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(final Button.ClickEvent event) {
-                                printBtn.doPrint(milestone, new FormReportLayout(ProjectTypeConstants.MILESTONE, Milestone.Field.name.name(),
-                                        MilestoneDefaultFormLayoutFactory.getForm(), Milestone.Field.id.name()));
-                            }
+                        printBtn.addClickListener(clickEvent -> {
+                            printBtn.doPrint(milestone, new FormReportLayout(ProjectTypeConstants.MILESTONE, Milestone.Field.name.name(),
+                                    MilestoneDefaultFormLayoutFactory.getForm(), Milestone.Field.id.name()));
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
                         printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
                         printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES));
 
-                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(Button.ClickEvent clickEvent) {
-                                EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(this, milestone));
-                            }
-                        });
+                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
+                                clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(this, milestone)));
                         editBtn.setIcon(FontAwesome.EDIT);
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
                         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
@@ -398,25 +361,16 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + risk.getRiskname());
 
                         final PrintButton printBtn = new PrintButton();
-                        printBtn.addClickListener(new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(final Button.ClickEvent event) {
-                                printBtn.doPrint(risk, new FormReportLayout(ProjectTypeConstants.RISK, Risk.Field.riskname.name(),
-                                        RiskDefaultFormLayoutFactory.getForm()));
-                            }
+                        printBtn.addClickListener(clickEvent -> {
+                            printBtn.doPrint(risk, new FormReportLayout(ProjectTypeConstants.RISK, Risk.Field.riskname.name(),
+                                    RiskDefaultFormLayoutFactory.getForm()));
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
                         printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
                         printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS));
 
-                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(Button.ClickEvent clickEvent) {
-                                EventBusFactory.getInstance().post(new RiskEvent.GotoEdit(this, risk));
-                            }
-                        });
+                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
+                                clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoEdit(this, risk)));
                         editBtn.setIcon(FontAwesome.EDIT);
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
                         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
@@ -443,26 +397,17 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + component.getComponentname());
 
                         final PrintButton printBtn = new PrintButton();
-                        printBtn.addClickListener(new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(final Button.ClickEvent event) {
-                                printBtn.doPrint(component, new FormReportLayout(ProjectTypeConstants.BUG_COMPONENT, com
-                                        .esofthead.mycollab.module.tracker.domain.Component.Field.componentname.name(),
-                                        ComponentDefaultFormLayoutFactory.getForm(), com.esofthead.mycollab.module.tracker.domain.Component.Field.id.name()));
-                            }
+                        printBtn.addClickListener(clickEvent -> {
+                            printBtn.doPrint(component, new FormReportLayout(ProjectTypeConstants.BUG_COMPONENT,
+                                    com.esofthead.mycollab.module.tracker.domain.Component.Field.componentname.name(),
+                                    ComponentDefaultFormLayoutFactory.getForm(), com.esofthead.mycollab.module.tracker.domain.Component.Field.id.name()));
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
                         printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
                         printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS));
 
-                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(Button.ClickEvent clickEvent) {
-                                EventBusFactory.getInstance().post(new BugComponentEvent.GotoEdit(this, component));
-                            }
-                        });
+                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
+                                clickEvent -> EventBusFactory.getInstance().post(new BugComponentEvent.GotoEdit(this, component)));
                         editBtn.setIcon(FontAwesome.EDIT);
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
                         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
@@ -484,38 +429,27 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
             } else if (ProjectTypeConstants.BUG_VERSION.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS)) {
                     VersionService versionService = AppContextUtil.getSpringBean(VersionService.class);
-                    final SimpleVersion version = versionService.findById(Integer.parseInt(assignment.getTypeId()), AppContext
-                            .getAccountId());
+                    final SimpleVersion version = versionService.findById(Integer.parseInt(assignment.getTypeId()),
+                            AppContext.getAccountId());
                     if (version != null) {
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + version.getVersionname());
                         final PrintButton printBtn = new PrintButton();
-                        printBtn.addClickListener(new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(final Button.ClickEvent event) {
-                                printBtn.doPrint(version, new FormReportLayout(ProjectTypeConstants.BUG_VERSION, Version
-                                        .Field.versionname.name(),
-                                        VersionDefaultFormLayoutFactory.getForm(), Version.Field.id.name()));
-                            }
+                        printBtn.addClickListener(clickEvent -> {
+                            printBtn.doPrint(version, new FormReportLayout(ProjectTypeConstants.BUG_VERSION, Version.Field.versionname.name(),
+                                    VersionDefaultFormLayoutFactory.getForm(), Version.Field.id.name()));
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
                         printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
                         printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS));
 
-                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(Button.ClickEvent clickEvent) {
-                                EventBusFactory.getInstance().post(new BugVersionEvent.GotoEdit(this, version));
-                            }
-                        });
+                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
+                                clickEvent -> EventBusFactory.getInstance().post(new BugVersionEvent.GotoEdit(this, version)));
                         editBtn.setIcon(FontAwesome.EDIT);
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
                         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn).withAlign
-                                (editBtn, Alignment.TOP_RIGHT).withAlign(printBtn, Alignment.TOP_RIGHT).expand(headerLbl)
-                                .withFullWidth();
+                                (editBtn, Alignment.TOP_RIGHT).withAlign(printBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
                         addComponent(headerLayout);
                         VersionPreviewForm form = new VersionPreviewForm();
                         form.setBean(version);

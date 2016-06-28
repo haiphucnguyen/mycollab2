@@ -77,26 +77,12 @@ class ProjectGenericTaskSelectionWindow extends Window {
         searchBtn.setIcon(FontAwesome.SEARCH);
         searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
 
-        searchBtn.addClickListener(new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                callSearchAction();
-            }
-        });
+        searchBtn.addClickListener(clickEvent -> callSearchAction());
         searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
         basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
 
         final Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
-        cancelBtn.addClickListener(new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                nameField.setValue("");
-            }
-        });
+        cancelBtn.addClickListener(clickEvent -> nameField.setValue(""));
         cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
         basicSearchBody.addComponent(cancelBtn);
 

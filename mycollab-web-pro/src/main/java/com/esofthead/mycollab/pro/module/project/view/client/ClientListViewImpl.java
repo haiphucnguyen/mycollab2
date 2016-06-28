@@ -79,12 +79,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
 
         MHorizontalLayout buttonControls = new MHorizontalLayout();
         Button editBtn = new Button("", FontAwesome.EDIT);
-        editBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, client));
-            }
-        });
+        editBtn.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, client)));
         editBtn.setVisible(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
         editBtn.setDescription("Edit client '" + client.getAccountname() + "' information");
         editBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
@@ -92,27 +87,24 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
         blockContent.setComponentAlignment(editBtn, Alignment.TOP_RIGHT);
 
         Button deleteBtn = new Button("", FontAwesome.TRASH_O);
-        deleteBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                ConfirmDialogExt.show(UI.getCurrent(),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                        new ConfirmDialog.Listener() {
-                            private static final long serialVersionUID = 1L;
+        deleteBtn.addClickListener(clickEvent -> {
+            ConfirmDialogExt.show(UI.getCurrent(),
+                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                    AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                    AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                    new ConfirmDialog.Listener() {
+                        private static final long serialVersionUID = 1L;
 
-                            @Override
-                            public void onClose(ConfirmDialog dialog) {
-                                if (dialog.isConfirmed()) {
-                                    AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                                    accountService.removeWithSession(client, AppContext.getUsername(), AppContext.getAccountId());
-                                    EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
-                                }
+                        @Override
+                        public void onClose(ConfirmDialog dialog) {
+                            if (dialog.isConfirmed()) {
+                                AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
+                                accountService.removeWithSession(client, AppContext.getUsername(), AppContext.getAccountId());
+                                EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
                             }
-                        });
-            }
+                        }
+                    });
         });
         deleteBtn.setDescription(AppContext.getMessage(ClientI18nEnum.OPT_REMOVE_CLIENT, client.getAccountname()));
         deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);

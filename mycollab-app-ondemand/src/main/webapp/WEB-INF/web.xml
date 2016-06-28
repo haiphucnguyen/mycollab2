@@ -51,6 +51,11 @@
         <param-value>production</param-value>
     </context-param>
 
+    <init-param>
+        <param-name>org.atmosphere.cpr.asyncSupport</param-name>
+        <param-value>org.atmosphere.container.JSR356AsyncSupport</param-value>
+    </init-param>
+
     <filter>
         <filter-name>instrumentedFilter</filter-name>
         <filter-class>com.codahale.metrics.servlet.InstrumentedFilter</filter-class>

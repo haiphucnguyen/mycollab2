@@ -34,35 +34,22 @@ public class GanttExt extends Gantt {
         this.setHeight((Page.getCurrent().getBrowserWindowHeight() - 270) + "px");
         beanContainer = new GanttItemContainer();
 
-        this.addClickListener(new Gantt.ClickListener() {
-            @Override
-            public void onGanttClick(Gantt.ClickEvent event) {
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    StepExt step = (StepExt) event.getStep();
-                    getUI().addWindow(new QuickEditGanttItemWindow(GanttExt.this, step.getGanttItemWrapper()));
-                }
+        this.addClickListener(clickEvent -> {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                StepExt step = (StepExt) clickEvent.getStep();
+                getUI().addWindow(new QuickEditGanttItemWindow(GanttExt.this, step.getGanttItemWrapper()));
             }
         });
 
-        this.addMoveListener(new Gantt.MoveListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onGanttMove(MoveEvent event) {
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    updateTasksInfoByResizeOrMove((StepExt) event.getStep(), event.getStartDate(), event.getEndDate());
-                }
+        this.addMoveListener(moveEvent -> {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                updateTasksInfoByResizeOrMove((StepExt) moveEvent.getStep(), moveEvent.getStartDate(), moveEvent.getEndDate());
             }
         });
 
-        this.addResizeListener(new Gantt.ResizeListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onGanttResize(ResizeEvent event) {
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    updateTasksInfoByResizeOrMove((StepExt) event.getStep(), event.getStartDate(), event.getEndDate());
-                }
+        this.addResizeListener(resizeEvent -> {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                updateTasksInfoByResizeOrMove((StepExt) resizeEvent.getStep(), resizeEvent.getStartDate(), resizeEvent.getEndDate());
             }
         });
     }

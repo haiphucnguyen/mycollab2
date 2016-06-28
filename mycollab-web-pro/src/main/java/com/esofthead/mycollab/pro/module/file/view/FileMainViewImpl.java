@@ -75,17 +75,11 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         MHorizontalLayout navButton = new MHorizontalLayout();
         topControlMenu.with(navButton).withAlign(navButton, Alignment.MIDDLE_RIGHT);
 
-        Button settingBtn = new Button();
-        settingBtn.setIcon(FontAwesome.COG);
-        settingBtn.addClickListener(new ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                CloudDriveSettingWindow cloudDriveSettingWindow = new CloudDriveSettingWindow();
-                UI.getCurrent().addWindow(cloudDriveSettingWindow);
-            }
+        Button settingBtn = new Button("", clickEvent -> {
+            CloudDriveSettingWindow cloudDriveSettingWindow = new CloudDriveSettingWindow();
+            UI.getCurrent().addWindow(cloudDriveSettingWindow);
         });
+        settingBtn.setIcon(FontAwesome.COG);
         settingBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
         navButton.with(settingBtn);
 
