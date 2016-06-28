@@ -181,6 +181,17 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>Project Artifacts Premium Generator</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <configurationFile>${basedir}/src/main/resources/ProjectGeneratorPremiumConfig.xml</configurationFile>
+                            <overwrite>true</overwrite>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>Tracker Artifacts Generator</id>
                         <phase>validate</phase>
                         <goals>

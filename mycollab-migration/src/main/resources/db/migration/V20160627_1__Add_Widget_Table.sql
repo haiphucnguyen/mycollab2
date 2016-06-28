@@ -33,4 +33,5 @@ ADD CONSTRAINT `FK_s_tag_2`
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 DROP TABLE `m_tracker_metadata`;
+DROP TABLE `m_tracker_query`;
 
