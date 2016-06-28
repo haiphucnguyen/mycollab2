@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.common.service.ibatis;
+package com.esofthead.mycollab.pro.common.service.ibatis;
 
 import com.esofthead.mycollab.cache.CleanCacheEvent;
 import com.esofthead.mycollab.common.dao.FavoriteItemMapper;

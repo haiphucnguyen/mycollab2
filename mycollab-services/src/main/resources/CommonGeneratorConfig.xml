@@ -39,10 +39,8 @@
         <table schema="mycollab_base" tableName="s_save_search_result" domainObjectName="SaveSearchResult"/>
         <table schema="mycollab_base" tableName="s_table_customize_view" domainObjectName="CustomViewStore"/>
         <table schema="mycollab_base" tableName="s_tag" domainObjectName="Tag"/>
-        <table schema="mycollab_base" tableName="s_favorite" domainObjectName="FavoriteItem"/>
         <table schema="mycollab_base" tableName="s_timeline_tracking" domainObjectName="TimelineTracking"/>
         <table schema="mycollab_base" tableName="s_timeline_tracking_cache" domainObjectName="TimelineTrackingCaching"/>
-        <table domainObjectName="LiveInstance" schema="mycollab_base" tableName="s_live_instances" />
     </context>
 
 </generatorConfiguration>

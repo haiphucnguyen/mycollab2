@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.common.interceptor.aspect;
+package com.esofthead.mycollab.ondemand.interceptor.aspect;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
