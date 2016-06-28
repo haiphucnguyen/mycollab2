@@ -54,9 +54,11 @@ Version 5.3.5
 * [Premium] Allow customize the project home widgets
 * [Premium] Customize project assignment fields
 * [Premium] Real-time notification assignment changes
+* Remove redundant files in the community edition
 
 **Bug Fixes**
 
+* [Premium] Can not remove favorite flag in Favorite view 
 
 Version 5.3.4
 -----------------------------

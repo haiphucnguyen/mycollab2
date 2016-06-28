@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.common.dao;
+package com.esofthead.mycollab.pro.common.dao;
 
 import com.esofthead.mycollab.common.domain.AggregateTag;
 import com.esofthead.mycollab.common.domain.criteria.TagSearchCriteria;

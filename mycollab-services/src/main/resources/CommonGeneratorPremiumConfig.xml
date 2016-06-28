@@ -16,14 +16,16 @@
             <property name="rootClass" value="com.esofthead.mycollab.core.arguments.ValuedBean"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="." targetProject="../mycollab-services-pro/src/main/resources/sqlMap/common"/>
+        <sqlMapGenerator targetPackage="." targetProject="../mycollab-services-pro/src/main/resources/sqlMapExt/common"/>
 
-        <javaClientGenerator targetPackage="com.esofthead.mycollab.common.dao" targetProject="../mycollab-services-pro/src/main/java" type="XMLMAPPER">
+        <javaClientGenerator targetPackage="com.esofthead.mycollab.pro.common.dao"
+                             targetProject="../mycollab-services-pro/src/main/java" type="XMLMAPPER">
             <property name="exampleMethodVisibility" value="public"/>
             <property name="rootInterface" value="com.esofthead.mycollab.core.persistence.ICrudGenericDAO"/>
         </javaClientGenerator>
 
         <table schema="mycollab_base" tableName="s_favorite" domainObjectName="FavoriteItem"/>
+        <table schema="mycollab_base" tableName="s_tag" domainObjectName="Tag"/>
         <!--
         <table schema="mycollab_base" tableName="s_live_instances" domainObjectName="LiveInstance" />
         -->

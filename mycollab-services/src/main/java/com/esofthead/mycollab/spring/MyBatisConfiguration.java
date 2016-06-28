@@ -61,6 +61,7 @@ public class MyBatisConfiguration {
         sqlSessionFactory.setTypeHandlersPackage("com.esofthead.mybatis.plugin.ext");
         sqlSessionFactory.setMapperLocations(buildBatchMapperResources(
                 "classpath:sqlMap/common/*Mapper*.xml",
+                "classpath:sqlMapExt/common/*Mapper*.xml",
                 "classpath:sqlMap/user/*Mapper*.xml",
                 "classpath:sqlMap/form/*Mapper*.xml",
                 "classpath:sqlMap/ecm/*Mapper*.xml",

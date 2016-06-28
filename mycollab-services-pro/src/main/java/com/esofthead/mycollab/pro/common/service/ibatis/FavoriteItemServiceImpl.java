@@ -17,12 +17,12 @@
 package com.esofthead.mycollab.pro.common.service.ibatis;
 
 import com.esofthead.mycollab.cache.CleanCacheEvent;
-import com.esofthead.mycollab.common.dao.FavoriteItemMapper;
 import com.esofthead.mycollab.common.domain.FavoriteItem;
 import com.esofthead.mycollab.common.domain.FavoriteItemExample;
 import com.esofthead.mycollab.common.service.FavoriteItemService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
+import com.esofthead.mycollab.pro.common.dao.FavoriteItemMapper;
 import com.google.common.eventbus.AsyncEventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

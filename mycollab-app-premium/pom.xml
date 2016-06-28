@@ -75,6 +75,12 @@
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-services-pro</artifactId>
+            <version>5.3.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-services-premium</artifactId>
             <version>5.3.4</version>
         </dependency>

@@ -14,10 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.common.service.ibatis;
+package com.esofthead.mycollab.pro.common.service.ibatis;
 
-import com.esofthead.mycollab.common.dao.TagMapper;
-import com.esofthead.mycollab.common.dao.TagMapperExt;
 import com.esofthead.mycollab.common.domain.AggregateTag;
 import com.esofthead.mycollab.common.domain.Tag;
 import com.esofthead.mycollab.common.domain.TagExample;
@@ -27,6 +25,8 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
+import com.esofthead.mycollab.pro.common.dao.TagMapper;
+import com.esofthead.mycollab.pro.common.dao.TagMapperExt;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
