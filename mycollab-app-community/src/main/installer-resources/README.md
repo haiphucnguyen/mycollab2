@@ -43,9 +43,15 @@ Last changelog
 Version 5.3.5
 -----------------------------
 
+** Notes
+
+* Due to the clean code and other improvements of MyCollab, we only support Java 8 and higher
+
 **Library Upgrades**
 
 * Jackrabbit 2.12.2
+* Vaadin 7.6.7
+* Jetty 9.3.10.v20160621
 * Flyway 4.0.3
 * MyBatis 3.4.1
 * Other libraries

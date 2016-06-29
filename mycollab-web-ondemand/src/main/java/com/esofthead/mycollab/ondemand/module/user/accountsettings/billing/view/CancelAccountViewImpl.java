@@ -65,7 +65,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
         return header;
     }
 
-    protected CssLayout createBody() {
+    private CssLayout createBody() {
         CssLayout layout = new CssLayout();
         layout.setWidth("100%");
         layout.addStyleName("cancelAccountBody");
@@ -125,14 +125,8 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
         });
         submitBtn.addStyleName(UIConstants.BUTTON_DANGER);
 
-        Button cancelBtn = new Button("Never mind, go back", new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(CancelAccountViewImpl.this, null));
-            }
-        });
+        Button cancelBtn = new Button("Never mind, go back",
+                clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(this, null)));
         cancelBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
         innerLayout.with(new MHorizontalLayout(submitBtn, cancelBtn).withMargin(true));

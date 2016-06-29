@@ -249,7 +249,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
     private MHorizontalLayout buildAccountMenuLayout() {
         accountLayout.removeAllComponents();
 
-        if (SiteConfiguration.isDemandEdition()) {
+        if (!SiteConfiguration.isDemandEdition()) {
             // display trial box if user in trial mode
             SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
             if (AccountStatusConstants.TRIAL.equals(billingAccount.getStatus())) {
@@ -293,8 +293,8 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                     Duration dur = new Duration(new DateTime(billingAccount.getCreatedtime()), new DateTime());
                     int daysLeft = dur.toStandardDays().getDays();
                     if (daysLeft > 30) {
-                        informLbl.setValue("<div class='informBlock'>Trial<br></div><div class='informBlock'>&gt;&gt;</div>");
-//                        AppContext.getInstance().setIsValidAccount(false);
+                        informLbl.setValue("<div class='informBlock'>Trial ended<br></div>");
+                        AppContext.getInstance().setIsValidAccount(false);
                     } else {
                         informLbl.setValue(String.format("<div class='informBlock'>Trial ending<br>%d days " +
                                 "left</div><div class='informBlock'>&gt;&gt;</div>", 30 - daysLeft));
