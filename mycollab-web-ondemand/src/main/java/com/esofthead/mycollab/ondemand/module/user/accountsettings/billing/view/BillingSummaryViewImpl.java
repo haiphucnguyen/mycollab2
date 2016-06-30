@@ -30,7 +30,6 @@ import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
@@ -38,7 +37,10 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
@@ -52,7 +54,6 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@SuppressWarnings("serial")
 @ViewComponent
 public class BillingSummaryViewImpl extends AbstractLazyPageView implements BillingSummaryView {
     private static final Logger LOG = LoggerFactory.getLogger(BillingSummaryViewImpl.class);
@@ -127,16 +128,22 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             Label billingProject = ELabel.html("<span class='billing-project'>" + plan.getNumprojects() +
                     "</span>&nbsp;Projects").withWidthUndefined();
 
-            MButton selectPlanBtn;
-            if (isTrial && currentBillingPlan.getId().equals(plan.getId())) {
-                selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT),
-                        clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan))).withStyleName(UIConstants.BUTTON_DANGER);
+
+            if (currentBillingPlan.getId().equals(plan.getId())) {
+                if (isTrial) {
+                    MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE),
+                            clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan))).withStyleName(UIConstants.BUTTON_DANGER);
+                    singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
+                } else {
+                    singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject);
+                }
             } else {
-                selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT),
+                MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT),
                         clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan))).withStyleName(UIConstants.BUTTON_ACTION);
+                singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
             }
 
-            singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
+
             plansLayout.with(singlePlan).expand(singlePlan);
         }
 

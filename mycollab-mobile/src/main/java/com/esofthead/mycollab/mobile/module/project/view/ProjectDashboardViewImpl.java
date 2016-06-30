@@ -125,8 +125,8 @@ public class ProjectDashboardViewImpl extends ProjectMobileMenuPageView implemen
                 (currentProject.getCreatedtime())).withDescription("Created time").withStyleName(UIConstants.META_INFO);
         metaInfo.addComponent(createdTimeLbl);
 
-        Label billableHoursLbl = new ELabel(FontAwesome.MONEY.getHtml() + " " + NumberUtils.roundDouble(2, currentProject.getTotalBillableHours()),
-                ContentMode.HTML).withDescription("Billable hours").withStyleName(UIConstants.META_INFO);
+        Label billableHoursLbl = ELabel.html(FontAwesome.MONEY.getHtml() + " " + NumberUtils.roundDouble(2, currentProject.getTotalBillableHours()))
+                .withDescription(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)).withStyleName(UIConstants.META_INFO);
         metaInfo.addComponent(billableHoursLbl);
 
         Label nonBillableHoursLbl = new ELabel(FontAwesome.GIFT.getHtml() + " " + NumberUtils.roundDouble(2,
