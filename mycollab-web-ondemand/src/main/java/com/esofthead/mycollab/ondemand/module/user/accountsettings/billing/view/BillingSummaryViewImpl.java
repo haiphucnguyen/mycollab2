@@ -35,6 +35,7 @@ import com.esofthead.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -73,6 +74,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
     @Override
     protected void displayView() {
+        removeAllComponents();
         MCssLayout layout = new MCssLayout().withStyleName("billing-setting").withFullWidth();
         MHorizontalLayout topLayout = new MHorizontalLayout().withFullWidth();
 
@@ -100,7 +102,6 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
         BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
         SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
-        boolean isTrial = AccountStatusConstants.TRIAL.equals(billingAccount.getStatus());
         List<BillingPlan> availablePlans = billingService.getAvailablePlans();
 
         for (int i = 0; i < availablePlans.size(); i++) {
@@ -128,11 +129,11 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             Label billingProject = ELabel.html("<span class='billing-project'>" + plan.getNumprojects() +
                     "</span>&nbsp;Projects").withWidthUndefined();
 
-
             if (currentBillingPlan.getId().equals(plan.getId())) {
-                if (isTrial) {
-                    MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE),
-                            clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan))).withStyleName(UIConstants.BUTTON_DANGER);
+                if (billingAccount.isTrial()) {
+                    MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(UIConstants.BUTTON_ACTION);
+                    BrowserWindowOpener opener = new BrowserWindowOpener(plan.getShoppingurl());
+                    opener.extend(selectPlanBtn);
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
                 } else {
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject);
@@ -157,10 +158,19 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
 
     private void loadCurrentPlan() {
+        currentPlanLayout.removeAllComponents();
         BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
 
         ELabel introText = ELabel.h2("Your current plan: " + currentBillingPlan.getBillingtype());
-        currentPlanLayout.addComponent(introText);
+        SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
+        if (billingAccount.isTrial()) {
+            MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(UIConstants.BUTTON_DANGER);
+            BrowserWindowOpener opener = new BrowserWindowOpener(currentBillingPlan.getShoppingurl());
+            opener.extend(selectPlanBtn);
+            currentPlanLayout.with(new MHorizontalLayout(introText, selectPlanBtn));
+        } else {
+            currentPlanLayout.addComponent(introText);
+        }
 
         ELabel currentBillingPrice = ELabel.h3("$" + currentBillingPlan.getPricing() + "/ Month");
         currentPlanLayout.addComponent(currentBillingPrice);
@@ -236,10 +246,15 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 }
 
                 billingService.updateBillingPlan(AppContext.getAccountId(), chosenPlan.getId());
-
                 updateBillingPlan();
                 close();
             }).withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+
+            SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
+            if (billingAccount.isTrial()) {
+                BrowserWindowOpener opener = new BrowserWindowOpener(chosenPlan.getShoppingurl());
+                opener.extend(saveBtn);
+            }
 
             MHorizontalLayout controlBtns = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(true);
             contentLayout.with(controlBtns).withAlign(controlBtns, Alignment.MIDDLE_RIGHT);
@@ -247,7 +262,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
         private void updateBillingPlan() {
             AppContext.getBillingAccount().setBillingPlan(chosenPlan);
-            loadCurrentPlan();
+            displayView();
         }
     }
 }
