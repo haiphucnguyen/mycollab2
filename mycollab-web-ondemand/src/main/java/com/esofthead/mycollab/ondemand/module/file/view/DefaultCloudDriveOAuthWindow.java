@@ -23,6 +23,7 @@ import com.vaadin.ui.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -124,46 +125,33 @@ public abstract class DefaultCloudDriveOAuthWindow extends Window {
 
         MHorizontalLayout controllGroupBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false)).withHeight("50px");
 
-        Button doneBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_OK), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                try {
-                    String name = folderName.getValue().trim();
-                    if (StringUtils.isBlank(name)) {
-                        NotificationUtil.showWarningNotification("Please enter the folder name");
-                        return;
-                    }
-                    ExternalDrive externalDrive = new ExternalDrive();
-                    externalDrive.setAccesstoken(cloudDriveInfo.getAccessToken());
-                    externalDrive.setCreatedtime(new GregorianCalendar().getTime());
-                    externalDrive.setFoldername(name);
-                    externalDrive.setOwner(AppContext.getUsername());
-                    externalDrive.setStoragename(getStorageName());
-
-                    ExternalDriveService service = AppContextUtil.getSpringBean(ExternalDriveService.class);
-                    service.saveWithSession(externalDrive, AppContext.getUsername());
-                    EventBusFactory.getInstance().post(new FileEvent.ExternalDriveConnectedEvent
-                            (DefaultCloudDriveOAuthWindow.this, externalDrive));
-                } catch (Exception e) {
-                    throw new MyCollabException(e);
+        MButton doneBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
+            try {
+                String name = folderName.getValue().trim();
+                if (StringUtils.isBlank(name)) {
+                    NotificationUtil.showWarningNotification("Please enter the folder name");
+                    return;
                 }
-                DefaultCloudDriveOAuthWindow.this.close();
+                ExternalDrive externalDrive = new ExternalDrive();
+                externalDrive.setAccesstoken(cloudDriveInfo.getAccessToken());
+                externalDrive.setCreatedtime(new GregorianCalendar().getTime());
+                externalDrive.setFoldername(name);
+                externalDrive.setOwner(AppContext.getUsername());
+                externalDrive.setStoragename(getStorageName());
+
+                ExternalDriveService service = AppContextUtil.getSpringBean(ExternalDriveService.class);
+                service.saveWithSession(externalDrive, AppContext.getUsername());
+                EventBusFactory.getInstance().post(new FileEvent.ExternalDriveConnectedEvent
+                        (DefaultCloudDriveOAuthWindow.this, externalDrive));
+            } catch (Exception e) {
+                throw new MyCollabException(e);
             }
-        });
-        doneBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            close();
+        }).withStyleName(UIConstants.BUTTON_ACTION);
         controllGroupBtn.addComponent(doneBtn);
 
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                DefaultCloudDriveOAuthWindow.this.close();
-            }
-        });
-        cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
+        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                .withStyleName(UIConstants.BUTTON_OPTION);
         controllGroupBtn.addComponent(cancelBtn);
 
         mainLayout.addComponent(controllGroupBtn);

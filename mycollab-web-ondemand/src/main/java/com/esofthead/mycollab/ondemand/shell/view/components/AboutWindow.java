@@ -44,9 +44,9 @@ public class AboutWindow extends AbstractAboutWindow {
         Div licenseDiv = new Div().appendChild(new Text("Powered by: "))
                 .appendChild(new A("https://www.mycollab.com")
                         .appendText("MyCollab")).appendChild(new Text(". MyCollab Commercial license"));
-        Label licenseLbl = new Label(licenseDiv.write(), ContentMode.HTML);
-        Label copyRightLbl = new Label(String.format("&copy; %s - %s MyCollab Ltd. All rights reserved", "2011",
-                new GregorianCalendar().get(Calendar.YEAR) + ""), ContentMode.HTML);
+        Label licenseLbl = ELabel.html(licenseDiv.write());
+        Label copyRightLbl = ELabel.html(String.format("&copy; %s - %s MyCollab Ltd. All rights reserved", "2011",
+                new GregorianCalendar().get(Calendar.YEAR) + ""));
         rightPanel.with(versionLbl, osLbl, licenseLbl, copyRightLbl)
                 .withAlign(copyRightLbl, Alignment.BOTTOM_LEFT);
         content.with(about, rightPanel).expand(rightPanel);

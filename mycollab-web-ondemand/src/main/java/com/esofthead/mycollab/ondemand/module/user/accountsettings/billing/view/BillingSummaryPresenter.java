@@ -28,7 +28,7 @@ public class BillingSummaryPresenter extends AbstractPresenter<BillingSummaryVie
         accountContainer.removeAllComponents();
         accountContainer.addComponent(view);
 
-        view.loadCurrentPlan();
+        view.lazyLoadView();
         AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
         breadcrumb.gotoBillingPage();
     }

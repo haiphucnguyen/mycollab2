@@ -1,11 +1,11 @@
 package com.esofthead.mycollab.ondemand.module.user.accountsettings.billing.view;
 
-import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.esofthead.mycollab.vaadin.mvp.LazyPageView;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public interface BillingSummaryView extends PageView {
-    void loadCurrentPlan();
+public interface BillingSummaryView extends LazyPageView {
+
 }
