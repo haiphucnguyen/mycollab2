@@ -48,15 +48,10 @@ public class CloudDriveSettingWindow extends Window {
         externalDriveService = AppContextUtil.getSpringBean(ExternalDriveService.class);
         externalResourceService = AppContextUtil.getSpringBean(ExternalResourceService.class);
 
-        Button connectAccountBtn = new Button("Connect account", new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                OauthWindowFactory oauthWindowFactory = ViewManager.getCacheComponent(OauthWindowFactory.class);
-                Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
-                UI.getCurrent().addWindow(dropboxWindow);
-            }
+        Button connectAccountBtn = new Button("Connect account", clickEvent -> {
+            OauthWindowFactory oauthWindowFactory = ViewManager.getCacheComponent(OauthWindowFactory.class);
+            Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
+            UI.getCurrent().addWindow(dropboxWindow);
         });
         connectAccountBtn.addStyleName(UIConstants.BUTTON_ACTION);
         mainLayout.addComponent(connectAccountBtn);
@@ -72,12 +67,7 @@ public class CloudDriveSettingWindow extends Window {
         }
 
         mainLayout.addComponent(bodyLayout);
-        Button closeBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                CloudDriveSettingWindow.this.close();
-            }
-        });
+        Button closeBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE), clickEvent -> close());
         closeBtn.setStyleName(UIConstants.BUTTON_OPTION);
         mainLayout.with(closeBtn).withAlign(closeBtn, Alignment.MIDDLE_RIGHT);
 
@@ -123,56 +113,45 @@ public class CloudDriveSettingWindow extends Window {
 
                 final OptionPopupContent popupOptionActionLayout = new OptionPopupContent();
 
-                Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        popupBtn.setPopupVisible(false);
-                        if (!isEdit) {
-                            isEdit = true;
-                            externalDriveEditLayout.addStyleName("driveEditting");
-                            titleLayout.removeComponent(popupBtn);
-                            HorizontalLayout layout = editActionHorizontalLayout(drive);
-                            titleLayout.replaceComponent(foldernameLbl, layout);
-                            titleLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
-                            titleLayout.setExpandRatio(layout, 1.0f);
-                            titleLayout.addComponent(popupBtn);
-                            titleLayout.setComponentAlignment(popupBtn, Alignment.MIDDLE_RIGHT);
-                        }
+                Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent -> {
+                    popupBtn.setPopupVisible(false);
+                    if (!isEdit) {
+                        isEdit = true;
+                        externalDriveEditLayout.addStyleName("driveEditting");
+                        titleLayout.removeComponent(popupBtn);
+                        HorizontalLayout layout = editActionHorizontalLayout(drive);
+                        titleLayout.replaceComponent(foldernameLbl, layout);
+                        titleLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
+                        titleLayout.setExpandRatio(layout, 1.0f);
+                        titleLayout.addComponent(popupBtn);
+                        titleLayout.setComponentAlignment(popupBtn, Alignment.MIDDLE_RIGHT);
                     }
                 });
                 popupOptionActionLayout.addOption(editBtn);
 
-                Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+                Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
+                    try {
+                        ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
+                                AppContext.getSiteName()),
+                                AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                                AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                                AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                                new ConfirmDialog.Listener() {
+                                    private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        try {
-                            ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                    AppContext.getSiteName()),
-                                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                                    AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                                    AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                                    new ConfirmDialog.Listener() {
-                                        private static final long serialVersionUID = 1L;
+                                    @Override
+                                    public void onClose(final ConfirmDialog dialog) {
+                                        if (dialog.isConfirmed()) {
+                                            externalDriveService.removeWithSession(drive, AppContext.getUsername(),
+                                                    AppContext.getAccountId());
+                                            bodyLayout.removeComponent(OneDriveConnectionBodyLayout.this);
+                                            EventBusFactory.getInstance().post(new FileEvent.ExternalDriveDeleteEvent(CloudDriveSettingWindow.this, drive));
 
-                                        @Override
-                                        public void onClose(final ConfirmDialog dialog) {
-                                            if (dialog.isConfirmed()) {
-                                                externalDriveService.removeWithSession(drive,
-                                                        AppContext.getUsername(), AppContext.getAccountId());
-                                                bodyLayout.removeComponent(OneDriveConnectionBodyLayout.this);
-                                                EventBusFactory.getInstance().post(new FileEvent
-                                                        .ExternalDriveDeleteEvent(CloudDriveSettingWindow.this, drive));
-
-                                            }
                                         }
-                                    });
-                        } catch (Exception e) {
-                            throw new MyCollabException(e);
-                        }
+                                    }
+                                });
+                    } catch (Exception e) {
+                        throw new MyCollabException(e);
                     }
                 });
 
