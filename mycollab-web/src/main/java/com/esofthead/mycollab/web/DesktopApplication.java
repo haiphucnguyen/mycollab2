@@ -44,6 +44,7 @@ import com.esofthead.mycollab.vaadin.MyCollabUI;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.ui.service.BroadcastReceiverService;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.annotations.Theme;
@@ -75,14 +76,15 @@ import static com.esofthead.mycollab.core.utils.ExceptionUtils.getExceptionType;
 @Widgetset("com.esofthead.mycollab.widgetset.MyCollabWidgetSet")
 public class DesktopApplication extends MyCollabUI {
     private static final long serialVersionUID = 1L;
-
     private static final Logger LOG = LoggerFactory.getLogger(DesktopApplication.class);
+
     public static final String ACCOUNT_COOKIE = "mycollab";
     public static final String TEMP_ACCOUNT_COOKIE = "temp_account_mycollab";
-    public static final ShellUrlResolver rootUrlResolver = new ShellUrlResolver();
+
+    private static List<String> ipLists = new ArrayList<>();
 
     private MainWindowContainer mainWindowContainer;
-    private static List<String> ipLists = new ArrayList<>();
+    private BroadcastReceiverService broadcastReceiverService = AppContextUtil.getSpringBean(BroadcastReceiverService.class);
 
     @Override
     protected void doInit(final VaadinRequest request) {
@@ -301,7 +303,7 @@ public class DesktopApplication extends MyCollabUI {
     }
 
     private void enter(String newFragmentUrl) {
-        rootUrlResolver.resolveFragment(newFragmentUrl);
+        ShellUrlResolver.ROOT().resolveFragment(newFragmentUrl);
     }
 
     private void clearSession() {
@@ -309,6 +311,13 @@ public class DesktopApplication extends MyCollabUI {
             currentContext.clearSessionVariables();
             setCurrentFragmentUrl("");
         }
+        Broadcaster.unregister(broadcastReceiverService);
+    }
+
+    @Override
+    public void detach() {
+        Broadcaster.unregister(broadcastReceiverService);
+        super.detach();
     }
 
     public void doLogin(String username, String password, boolean isRememberPassword) {
@@ -339,6 +348,7 @@ public class DesktopApplication extends MyCollabUI {
         ex.createCriteria().andAccountidEqualTo(billingAccount.getId()).andUsernameEqualTo(user.getUsername());
         userAccountMapper.updateByExampleSelective(userAccount, ex);
         EventBusFactory.getInstance().post(new ShellEvent.GotoMainPage(this, null));
+        Broadcaster.register(broadcastReceiverService);
     }
 
     public void redirectToLoginView() {

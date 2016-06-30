@@ -28,7 +28,7 @@ import java.util.concurrent.Executors;
  * @author MyCollab Ltd
  * @since 5.1.3
  */
-public class NotificationBroadcaster implements Serializable {
+public class Broadcaster implements Serializable {
     static ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private static LinkedList<BroadcastListener> listeners = new LinkedList<>();

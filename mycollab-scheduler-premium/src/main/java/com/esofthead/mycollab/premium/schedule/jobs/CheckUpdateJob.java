@@ -3,7 +3,7 @@ package com.esofthead.mycollab.premium.schedule.jobs;
 import com.esofthead.mycollab.core.BroadcastMessage;
 import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.core.NewUpdateAvailableNotification;
-import com.esofthead.mycollab.core.NotificationBroadcaster;
+import com.esofthead.mycollab.core.Broadcaster;
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
@@ -54,7 +54,7 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
         if (MyCollabVersion.isEditionNewer(version)) {
             if (licenseInfo.isInvalid() || licenseInfo.isTrial() || licenseInfo.isExpired()) {
                 String manualDownloadLink = props.getProperty("downloadLink");
-                NotificationBroadcaster.broadcast(new BroadcastMessage(new NewUpdateAvailableNotification(version, null,
+                Broadcaster.broadcast(new BroadcastMessage(new NewUpdateAvailableNotification(version, null,
                         manualDownloadLink, null)));
             }
             if (!isDownloading) {
@@ -76,10 +76,10 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
                         File installerFile = downloadMyCollabThread.tmpFile;
                         if (installerFile.exists() && installerFile.isFile() && installerFile.length() > 0 && isValid(installerFile)) {
                             latestFileDownloadedPath = installerFile.getAbsolutePath();
-                            NotificationBroadcaster.broadcast(new BroadcastMessage(new NewUpdateAvailableNotification(version,
+                            Broadcaster.broadcast(new BroadcastMessage(new NewUpdateAvailableNotification(version,
                                     autoDownloadLink, manualDownloadLink, latestFileDownloadedPath)));
                         } else {
-                            NotificationBroadcaster.broadcast(new BroadcastMessage(new NewUpdateAvailableNotification(version, null,
+                            Broadcaster.broadcast(new BroadcastMessage(new NewUpdateAvailableNotification(version, null,
                                     manualDownloadLink, null)));
                         }
                     } catch (Exception e) {
@@ -88,7 +88,7 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
                         isDownloading = false;
                     }
                 } else {
-                    NotificationBroadcaster.broadcast(new BroadcastMessage(new NewUpdateAvailableNotification(version, autoDownloadLink,
+                    Broadcaster.broadcast(new BroadcastMessage(new NewUpdateAvailableNotification(version, autoDownloadLink,
                             manualDownloadLink, latestFileDownloadedPath)));
                 }
             }

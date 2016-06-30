@@ -52,7 +52,7 @@ public class MainViewPresenter extends AbstractPresenter<MainView> {
                 if (url.startsWith("/")) {
                     url = url.substring(1);
                 }
-                DesktopApplication.rootUrlResolver.resolveFragment(url);
+                ShellUrlResolver.ROOT().resolveFragment(url);
             } else {
                 SimpleUser pref = AppContext.getUser();
                 if (ModuleNameConstants.CRM.equals(pref.getLastModuleVisit())) {
