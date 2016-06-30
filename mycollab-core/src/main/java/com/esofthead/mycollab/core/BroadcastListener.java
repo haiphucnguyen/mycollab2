@@ -6,7 +6,7 @@ package com.esofthead.mycollab.core;
  */
 public interface BroadcastListener {
     /**
-     * @param notification
+     * @param message
      */
-    void broadcast(BroadcastMessage notification);
+    void broadcast(BroadcastMessage message);
 }

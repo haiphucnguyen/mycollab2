@@ -35,6 +35,7 @@ import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.eclipse.jetty.util.ConcurrentHashSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -42,8 +43,8 @@ import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * @author MyCollab Ltd.
@@ -54,12 +55,12 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
     private static Logger LOG = LoggerFactory.getLogger(NotificationComponent.class);
     private static final long serialVersionUID = 2908372640829060184L;
 
-    private final List<AbstractNotification> notificationItems;
+    private final Set<AbstractNotification> notificationItems;
     private final VerticalLayout notificationContainer;
 
     public NotificationComponent() {
         super();
-        notificationItems = new ArrayList<>();
+        notificationItems = new ConcurrentHashSet<>();
         notificationContainer = new VerticalLayout();
         new Restrain(notificationContainer).setMaxWidth("500px");
         this.setContent(notificationContainer);
@@ -84,13 +85,14 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
         notificationContainer.removeAllComponents();
 
         if (notificationItems.size() > 0) {
-            for (int i = 0; i < notificationItems.size(); i++) {
-                AbstractNotification item = notificationItems.get(i);
+            Iterator<AbstractNotification> iterator = notificationItems.iterator();
+            while (iterator.hasNext()) {
+                AbstractNotification item = iterator.next();
                 Component comp = buildComponentFromNotification(item);
                 comp.setStyleName("notification-type");
                 comp.addStyleName("notification-type-" + item.getType());
                 notificationContainer.addComponent(comp);
-                if (i < notificationItems.size() - 1) {
+                if (iterator.hasNext()) {
                     notificationContainer.addComponent(ELabel.hr());
                 }
             }

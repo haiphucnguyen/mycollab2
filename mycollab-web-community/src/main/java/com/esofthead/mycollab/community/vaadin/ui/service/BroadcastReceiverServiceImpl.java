@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.community.vaadin.ui.service;
 
 import com.esofthead.mycollab.core.BroadcastMessage;
+import com.esofthead.mycollab.vaadin.ui.service.AbstractBroadcastReceiverService;
 import com.esofthead.mycollab.vaadin.ui.service.BroadcastReceiverService;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +10,9 @@ import org.springframework.stereotype.Service;
  * @since 5.3.5
  */
 @Service
-public class BroadcastReceiverServiceImpl implements BroadcastReceiverService {
+public class BroadcastReceiverServiceImpl extends AbstractBroadcastReceiverService implements BroadcastReceiverService {
     @Override
-    public void broadcast(BroadcastMessage notification) {
+    protected void onBroadcast(BroadcastMessage message) {
 
     }
 }
