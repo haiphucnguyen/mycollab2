@@ -20,7 +20,6 @@ package com.esofthead.mycollab.core;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,54 +31,18 @@ import java.util.concurrent.Executors;
 public class NotificationBroadcaster implements Serializable {
     static ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    public interface BroadcastListener {
-        void broadcastNotification(AbstractNotification notification);
-
-        void removeNotification(AbstractNotification notification);
-    }
-
-    private static Collection<AbstractNotification> globalNotifications = new ArrayList<>();
-
     private static LinkedList<BroadcastListener> listeners = new LinkedList<>();
 
     public static synchronized void register(BroadcastListener listener) {
         listeners.add(listener);
-        for (AbstractNotification notification : globalNotifications) {
-            listener.broadcastNotification(notification);
-        }
-    }
-
-    public static void removeGlobalNotification(Class<?> notificationCls) {
-        Iterator<AbstractNotification> iter = globalNotifications.iterator();
-        while (iter.hasNext()) {
-            final AbstractNotification notification = iter.next();
-            if (notification.getClass() == notificationCls) {
-                iter.remove();
-                for (final BroadcastListener listener : listeners)
-                    executorService.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.removeNotification(notification);
-                        }
-                    });
-            }
-        }
     }
 
     public static synchronized void unregister(BroadcastListener listener) {
         listeners.remove(listener);
     }
 
-    public static synchronized void broadcast(final AbstractNotification notification) {
-        if (notification.isGlobalScope() && !globalNotifications.contains(notification)) {
-            globalNotifications.add(notification);
-        }
+    public static synchronized void broadcast(final BroadcastMessage notification) {
         for (final BroadcastListener listener : listeners)
-            executorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    listener.broadcastNotification(notification);
-                }
-            });
+            executorService.execute(() -> listener.broadcast(notification));
     }
 }
