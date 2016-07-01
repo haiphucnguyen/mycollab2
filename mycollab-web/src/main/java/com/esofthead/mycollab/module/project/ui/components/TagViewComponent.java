@@ -89,12 +89,9 @@ public class TagViewComponent extends CssLayout {
         field.setInputPrompt(AppContext.getMessage(TagI18nEnum.OPT_ENTER_TAG_NAME));
         field.setMinimumQueryCharacters(2);
         field.setSuggestionConverter(new TagSuggestionConverter());
-        field.setSuggestionHandler(new SuggestField.SuggestionHandler() {
-            @Override
-            public List<Object> searchItems(String query) {
-                tagQuery = query;
-                return handleSearchQuery(query);
-            }
+        field.setSuggestionHandler(query -> {
+            tagQuery = query;
+            return handleSearchQuery(query);
         });
 
         MButton addBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), clickEvent -> {

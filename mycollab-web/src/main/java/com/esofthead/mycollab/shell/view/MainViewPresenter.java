@@ -41,8 +41,7 @@ public class MainViewPresenter extends AbstractPresenter<MainView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        // if user type remember URL, instead of going to main page, to to his
-        // url
+        // if user type remember URL, instead of going to main page, to to his url
         String url = ((DesktopApplication) UI.getCurrent()).getCurrentFragmentUrl();
         view.display();
         if (!AppContext.getInstance().getIsValidAccount()) {

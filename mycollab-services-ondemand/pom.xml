@@ -138,11 +138,20 @@
                     </dependency>
                 </dependencies>
                 <executions>
-                    <!--
-                    <execution> <id>Demand Artifacts Generator</id> <phase>validate</phase>
-                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/DemandGeneratorConfig.xml</configurationFile>
-                        <overwrite>true</overwrite> </configuration> </execution>
-                        -->
+
+                    <execution>
+                        <id>Demand Artifacts Generator</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <configurationFile>${basedir}/src/main/resources/DemandGeneratorConfig.xml
+                            </configurationFile>
+                            <overwrite>true</overwrite>
+                        </configuration>
+                    </execution>
+
                 </executions>
             </plugin>
         </plugins>

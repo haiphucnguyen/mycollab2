@@ -100,13 +100,10 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
         final String newestFirstDirection = AppContext.getMessage(GenericI18Enum.OPT_NEWEST_FIRST);
         sortDirection.addItems(newestFirstDirection, oldestFirstDirection);
         sortDirection.setValue(newestFirstDirection);
-        sortDirection.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent event) {
-                Object value = sortDirection.getValue();
-                isAscending = newestFirstDirection.equals(value);
-                displayActivities();
-            }
+        sortDirection.addValueChangeListener(valueChangeEvent -> {
+            Object value = sortDirection.getValue();
+            isAscending = newestFirstDirection.equals(value);
+            displayActivities();
         });
 
         MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(UIConstants.FORM_SECTION)

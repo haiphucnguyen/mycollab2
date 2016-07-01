@@ -87,12 +87,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
         this.withSpacing(true).withMargin(true).withFullWidth();
 
         topMessagePanel = new TopMessagePanel();
-        topMessagePanel.getSearchHandlers().addSearchHandler(new SearchHandler<MessageSearchCriteria>() {
-            @Override
-            public void onSearch(final MessageSearchCriteria criteria) {
-                messageList.setSearchCriteria(criteria);
-            }
-        });
+        topMessagePanel.getSearchHandlers().addSearchHandler(criteria -> messageList.setSearchCriteria(criteria));
         messageList = new DefaultBeanPagedList<>(AppContextUtil.getSpringBean(MessageService.class), new MessageRowDisplayHandler());
         messageList.setControlStyle("borderlessControl");
     }
@@ -123,7 +118,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
         this.removeAllComponents();
         this.searchCriteria = criteria;
         MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
-        int totalCount = messageService.getTotalCount(searchCriteria);
+        Integer totalCount = messageService.getTotalCount(searchCriteria);
 
         this.isEmpty = !(totalCount > 0);
         topMessagePanel.createBasicLayout();
@@ -181,10 +176,8 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
                                 @Override
                                 public void onClose(final ConfirmDialog dialog) {
                                     if (dialog.isConfirmed()) {
-                                        MessageService messageService = AppContextUtil
-                                                .getSpringBean(MessageService.class);
-                                        messageService.removeWithSession(message,
-                                                AppContext.getUsername(), AppContext.getAccountId());
+                                        MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
+                                        messageService.removeWithSession(message, AppContext.getUsername(), AppContext.getAccountId());
                                         messageList.setSearchCriteria(searchCriteria);
                                     }
                                 }
@@ -242,12 +235,11 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
         }
     }
 
-    @SuppressWarnings({"serial"})
     private static class MessageSearchPanel extends GenericSearchPanel<MessageSearchCriteria> {
         private MessageSearchCriteria messageSearchCriteria;
         private TextField nameField;
 
-        public MessageSearchPanel() {
+        MessageSearchPanel() {
             createBasicSearchLayout();
         }
 
@@ -290,10 +282,9 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
         private MessageSearchPanel messageSearchPanel;
         private MHorizontalLayout messagePanelBody;
 
-        public TopMessagePanel() {
+        TopMessagePanel() {
             this.withFullWidth().withStyleName("message-toppanel");
-            messagePanelBody = new MHorizontalLayout().withSpacing(false).withStyleName("message-toppanel-body")
-                    .withFullWidth();
+            messagePanelBody = new MHorizontalLayout().withSpacing(false).withStyleName("message-toppanel-body").withFullWidth();
             messagePanelBody.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
             messageSearchPanel = new MessageSearchPanel();
@@ -383,7 +374,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
             messagePanelBody.addComponent(addMessageWrapper);
         }
 
-        public void createBasicLayout() {
+        void createBasicLayout() {
             messagePanelBody.removeAllComponents();
             messagePanelBody.addComponent(messageSearchPanel);
 
@@ -412,7 +403,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
         }
     }
 
-    public void createAddMessageLayout() {
+    private void createAddMessageLayout() {
         removeAllComponents();
         topMessagePanel.createAddMessageLayout();
         addComponent(topMessagePanel);
@@ -443,12 +434,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
 
         @Override
         protected Button.ClickListener actionListener() {
-            return new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent clickEvent) {
-                    MessageListViewImpl.this.createAddMessageLayout();
-                }
-            };
+            return clickEvent -> MessageListViewImpl.this.createAddMessageLayout();
         }
 
         @Override

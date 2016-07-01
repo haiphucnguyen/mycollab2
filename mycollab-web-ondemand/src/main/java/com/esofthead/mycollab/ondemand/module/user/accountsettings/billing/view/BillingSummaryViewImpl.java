@@ -17,9 +17,9 @@
 package com.esofthead.mycollab.ondemand.module.user.accountsettings.billing.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.configuration.EnDecryptHelper;
 import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.ecm.service.DriveInfoService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
@@ -132,7 +132,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             if (currentBillingPlan.getId().equals(plan.getId())) {
                 if (billingAccount.isTrial()) {
                     MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(UIConstants.BUTTON_ACTION);
-                    BrowserWindowOpener opener = new BrowserWindowOpener(plan.getShoppingurl());
+                    BrowserWindowOpener opener = new BrowserWindowOpener(plan.getShoppingurl() +
+                            "?referrer=" + EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
                     opener.extend(selectPlanBtn);
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
                 } else {

@@ -323,9 +323,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
 
         NotificationComponent notificationComponent = new NotificationComponent();
         accountLayout.addComponent(notificationComponent);
-
-        EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new RequestUploadAvatarNotification()));
-        EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new RequestUploadAvatarNotification()));
+        
         if (StringUtils.isBlank(AppContext.getUser().getAvatarid())) {
             EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new RequestUploadAvatarNotification()));
         }

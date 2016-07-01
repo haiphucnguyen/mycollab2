@@ -35,7 +35,7 @@
     <logger name="org.mybatis.spring" level="INFO"/>
     <logger name="com.esofthead" level="INFO"/>
     <logger name="org.eclipse.jetty" level="INFO"/>
-    <root level="INFO">
+    <root level="FINE">
         <appender-ref ref="stdout"/>
         <appender-ref ref="email"/>
         <appender-ref ref="R"/>
