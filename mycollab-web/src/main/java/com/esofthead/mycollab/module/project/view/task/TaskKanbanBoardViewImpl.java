@@ -81,6 +81,7 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.jouni.restrain.Restrain;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
@@ -138,33 +139,21 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
         groupWrapLayout.addComponent(toggleShowColumsBtn);
         toggleShowButton();
 
-        Button addNewColumnBtn = new Button(AppContext.getMessage(TaskI18nEnum.ACTION_NEW_COLUMN), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new AddNewColumnWindow(TaskKanbanBoardViewImpl.this, ProjectTypeConstants.TASK, "status"));
-            }
-        });
+        Button addNewColumnBtn = new Button(AppContext.getMessage(TaskI18nEnum.ACTION_NEW_COLUMN),
+                clickEvent -> UI.getCurrent().addWindow(new AddNewColumnWindow(this, ProjectTypeConstants.TASK, "status")));
         addNewColumnBtn.setIcon(FontAwesome.PLUS);
         addNewColumnBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
         addNewColumnBtn.setStyleName(UIConstants.BUTTON_ACTION);
         groupWrapLayout.addComponent(addNewColumnBtn);
 
-        Button deleteColumnBtn = new Button("Delete columns", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().addWindow(new DeleteColumnWindow(TaskKanbanBoardViewImpl.this, ProjectTypeConstants.TASK));
-            }
-        });
+        Button deleteColumnBtn = new Button("Delete columns",
+                clickEvent -> UI.getCurrent().addWindow(new DeleteColumnWindow(this, ProjectTypeConstants.TASK)));
         deleteColumnBtn.setIcon(FontAwesome.TRASH_O);
         deleteColumnBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
         deleteColumnBtn.setStyleName(UIConstants.BUTTON_DANGER);
 
-        Button advanceDisplayBtn = new Button("List", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(TaskKanbanBoardViewImpl.this, null));
-            }
-        });
+        Button advanceDisplayBtn = new Button("List",
+                clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(this, null)));
         advanceDisplayBtn.setWidth("100px");
         advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
         advanceDisplayBtn.setDescription("Advance View");
@@ -456,12 +445,9 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
             boolean canExecute = CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS);
 
             OptionPopupContent popupContent = new OptionPopupContent();
-            Button renameColumnBtn = new Button(AppContext.getMessage(TaskI18nEnum.ACTION_RENAME_COLUMN), new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    controlsBtn.setPopupVisible(false);
-                    UI.getCurrent().addWindow(new RenameColumnWindow());
-                }
+            Button renameColumnBtn = new Button(AppContext.getMessage(TaskI18nEnum.ACTION_RENAME_COLUMN), clickEvent -> {
+                controlsBtn.setPopupVisible(false);
+                UI.getCurrent().addWindow(new RenameColumnWindow());
             });
             renameColumnBtn.setIcon(FontAwesome.EDIT);
             renameColumnBtn.setEnabled(canExecute && canRename);
@@ -483,23 +469,19 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
             hideColumnBtn.setEnabled(canExecute);
             popupContent.addOption(hideColumnBtn);
 
-            Button changeColorBtn = new Button(AppContext.getMessage(TaskI18nEnum.ACTION_CHANGE_COLOR), clickEvent -> {
+            MButton changeColorBtn = new MButton(AppContext.getMessage(TaskI18nEnum.ACTION_CHANGE_COLOR), clickEvent -> {
                 ColumnColorPickerWindow popup = new ColumnColorPickerWindow(Color.CYAN);
                 UI.getCurrent().addWindow(popup);
-                popup.addColorChangeListener(new ColorChangeListener() {
-                    @Override
-                    public void colorChanged(ColorChangeEvent colorChangeEvent) {
-                        Color color = colorChangeEvent.getColor();
-                        String colorStr = color.getCSS().substring(1);
-                        OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
-                        optionVal.setColor(colorStr);
-                        optionValService.updateWithSession(optionVal, AppContext.getUsername());
-                        JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'#" + colorStr + "'});");
-                    }
+                popup.addColorChangeListener(colorChangeEvent -> {
+                    Color color = colorChangeEvent.getColor();
+                    String colorStr = color.getCSS().substring(1);
+                    OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
+                    optionVal.setColor(colorStr);
+                    optionValService.updateWithSession(optionVal, AppContext.getUsername());
+                    JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'#" + colorStr + "'});");
                 });
                 controlsBtn.setPopupVisible(false);
-            });
-            changeColorBtn.setIcon(FontAwesome.PENCIL);
+            }).withIcon(FontAwesome.PENCIL);
             changeColorBtn.setEnabled(canExecute);
             popupContent.addOption(changeColorBtn);
 
@@ -532,27 +514,18 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
 
             popupContent.addSeparator();
 
-            Button addBtn = new Button(AppContext.getMessage(TaskI18nEnum.NEW), new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    controlsBtn.setPopupVisible(false);
-                    addNewTaskComp();
-                }
-            });
-            addBtn.setIcon(FontAwesome.PLUS);
+            MButton addBtn = new MButton(AppContext.getMessage(TaskI18nEnum.NEW), clickEvent -> {
+                controlsBtn.setPopupVisible(false);
+                addNewTaskComp();
+            }).withIcon(FontAwesome.PLUS);
             addBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             popupContent.addOption(addBtn);
             controlsBtn.setContent(popupContent);
 
-            Button addNewBtn = new Button(AppContext.getMessage(TaskI18nEnum.NEW), new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    addNewTaskComp();
-                }
-            });
-            addNewBtn.setIcon(FontAwesome.PLUS);
+            MButton addNewBtn = new MButton(AppContext.getMessage(TaskI18nEnum.NEW), clickEvent -> addNewTaskComp())
+                    .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.BUTTON_ACTION);
             addNewBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
-            addNewBtn.addStyleName(UIConstants.BUTTON_ACTION);
+
             buttonControls = new MHorizontalLayout(addNewBtn).withAlign(addNewBtn, Alignment.MIDDLE_RIGHT).withFullWidth();
             this.with(headerLayout, dragLayoutContainer, buttonControls);
             toggleShowButton();
@@ -609,31 +582,23 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
                 taskNameField.setWidth("100%");
                 layout.with(taskNameField);
                 MHorizontalLayout controlsBtn = new MHorizontalLayout();
-                Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        String taskName = taskNameField.getValue();
-                        if (StringUtils.isNotBlank(taskName)) {
-                            task.setTaskname(taskName);
-                            ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                            taskService.saveWithSession(task, AppContext.getUsername());
-                            dragLayoutContainer.removeComponent(layout);
-                            KanbanTaskBlockItem kanbanTaskBlockItem = new KanbanTaskBlockItem(task);
-                            dragLayoutContainer.addComponent(kanbanTaskBlockItem, 0);
-                            updateComponentCount();
-                        }
-                    }
-                });
-                saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
-
-                Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
+                MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), clickEvent -> {
+                    String taskName = taskNameField.getValue();
+                    if (StringUtils.isNotBlank(taskName)) {
+                        task.setTaskname(taskName);
+                        ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+                        taskService.saveWithSession(task, AppContext.getUsername());
                         dragLayoutContainer.removeComponent(layout);
-                        newTaskComp = null;
+                        KanbanTaskBlockItem kanbanTaskBlockItem = new KanbanTaskBlockItem(task);
+                        dragLayoutContainer.addComponent(kanbanTaskBlockItem, 0);
+                        updateComponentCount();
                     }
-                });
-                cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
+                }).withStyleName(UIConstants.BUTTON_ACTION);
+
+                MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> {
+                    dragLayoutContainer.removeComponent(layout);
+                    newTaskComp = null;
+                }).withStyleName(UIConstants.BUTTON_OPTION);
                 controlsBtn.with(cancelBtn, saveBtn);
                 layout.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
                 if (newTaskComp != null && newTaskComp.getParent() != null) {
@@ -659,38 +624,28 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
                 GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);
                 gridFormLayoutHelper.addComponent(columnNameField, "Column name", 0, 0);
 
-                Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        close();
-                    }
-                });
-                cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
+                MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                        .withStyleName(UIConstants.BUTTON_OPTION);
 
-                Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        if (StringUtils.isNotBlank(columnNameField.getValue())) {
-                            OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
-                            if (optionValService.isExistedOptionVal(ProjectTypeConstants.TASK, columnNameField
-                                    .getValue(), "status", optionVal.getExtraid(), AppContext.getAccountId())) {
-                                NotificationUtil.showErrorNotification(AppContext.getMessage(TaskI18nEnum.ERROR_THERE_IS_ALREADY_COLUMN_NAME, columnNameField.getValue()));
-                            } else {
-                                taskService.massUpdateStatuses(optionVal.getTypeval(), columnNameField.getValue(), optionVal.getExtraid(),
-                                        AppContext.getAccountId());
-                                optionVal.setTypeval(columnNameField.getValue());
-                                optionValService.updateWithSession(optionVal, AppContext.getUsername());
-                                KanbanBlock.this.updateComponentCount();
-                            }
+                MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+                    if (StringUtils.isNotBlank(columnNameField.getValue())) {
+                        OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
+                        if (optionValService.isExistedOptionVal(ProjectTypeConstants.TASK, columnNameField
+                                .getValue(), "status", optionVal.getExtraid(), AppContext.getAccountId())) {
+                            NotificationUtil.showErrorNotification(AppContext.getMessage(TaskI18nEnum.ERROR_THERE_IS_ALREADY_COLUMN_NAME, columnNameField.getValue()));
                         } else {
-                            NotificationUtil.showErrorNotification(AppContext.getMessage(TaskI18nEnum.ERROR_COLUMN_NAME_NOT_NULL));
+                            taskService.massUpdateStatuses(optionVal.getTypeval(), columnNameField.getValue(), optionVal.getExtraid(),
+                                    AppContext.getAccountId());
+                            optionVal.setTypeval(columnNameField.getValue());
+                            optionValService.updateWithSession(optionVal, AppContext.getUsername());
+                            KanbanBlock.this.updateComponentCount();
                         }
-
-                        RenameColumnWindow.this.close();
+                    } else {
+                        NotificationUtil.showErrorNotification(AppContext.getMessage(TaskI18nEnum.ERROR_COLUMN_NAME_NOT_NULL));
                     }
-                });
-                saveBtn.setIcon(FontAwesome.SAVE);
-                saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
+
+                    close();
+                }).withIcon(FontAwesome.SAVE).withStyleName(UIConstants.BUTTON_ACTION);
 
                 MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(false, true, true, false))
                         .with(cancelBtn, saveBtn);

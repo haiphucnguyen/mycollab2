@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
  * @author MyCollab Ltd
  * @since 5.3.5
  */
+@Service
 public class BroadcastReceiverServiceImpl extends AbstractBroadcastReceiverService implements BroadcastReceiverService {
     @Override
     protected void onBroadcast(BroadcastMessage message) {
