@@ -7,7 +7,8 @@
     <#include "mailLogo.ftl">
     <tr>
         <td>
-            <div style="padding: 25px 25px 10px 25px">
+            <div style="padding: 0px 0px 10px 25px">
+                <h1>Thank you for your payment</h1><br/>
                 Dear ${name}, <br/>
                 Congratulations! MyCollab license is ready for download and use in your team. You can get the license
                 file in this email's attachment.

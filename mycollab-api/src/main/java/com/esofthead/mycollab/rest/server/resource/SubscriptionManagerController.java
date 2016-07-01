@@ -38,9 +38,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.UUID;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
@@ -54,6 +53,8 @@ public class SubscriptionManagerController {
     private static Logger LOG = LoggerFactory.getLogger(SubscriptionManagerController.class);
 
     private static final DateTimeFormatter dateFormatter = DateTimeFormat.forPattern("MMM d, yyyy");
+
+    private static Map<String, String> tempVariables = new WeakHashMap<>();
 
     @Autowired
     private SubscriptionMapper subscriptionMapper;
@@ -92,6 +93,7 @@ public class SubscriptionManagerController {
         subscription.setCreatedtime(new DateTime().toDate());
         subscription.setStatus("Active");
         subscriptionMapper.insert(subscription);
+        tempVariables.put(subscriptionReference, reference);
         return "Ok";
     }
 
@@ -118,7 +120,13 @@ public class SubscriptionManagerController {
             Subscription subscription = subscriptions.get(0);
             SubscriptionHistory subscriptionHistory = new SubscriptionHistory();
             subscriptionHistory.setSubscriptionid(subscription.getId());
-            subscriptionHistory.setOrderid(UUID.randomUUID().toString() + new DateTime().millisOfSecond().get());
+            String reference = tempVariables.get(subscriptionReference);
+            if (reference == null) {
+                reference = UUID.randomUUID().toString() + new DateTime().millisOfSecond().get();
+            } else {
+                tempVariables.remove(subscriptionReference);
+            }
+            subscriptionHistory.setOrderid(reference);
             subscriptionHistory.setCreatedtime(new DateTime().toDate());
             subscriptionHistory.setStatus("Success");
             subscriptionHistory.setExpireddate(dateFormatter.parseLocalDate(nextPaymentDate).toDate());
@@ -141,7 +149,7 @@ public class SubscriptionManagerController {
 
             contentGenerator.putVariable("customerName", customerFullName);
             contentGenerator.putVariable("nextPaymentDate", nextPaymentDate);
-            File receiptReport = receiptReport(subscriptionReference, productName, email, customerFullName,
+            File receiptReport = receiptReport(subscriptionReference, reference, productName, email, customerFullName,
                     companyName, Double.parseDouble(totalPrice));
             extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
                     Arrays.asList(new MailRecipientField(email, customerFullName)), null, null, String.format("[%s] " +
@@ -157,7 +165,7 @@ public class SubscriptionManagerController {
         return "Ok";
     }
 
-    private File receiptReport(String subscriptionReference, String productName, String email, String customerFullName,
+    private File receiptReport(String subscriptionReference, String reference, String productName, String email, String customerFullName,
                                String customerCompany, Double price) throws Exception {
         File referenceFile = File.createTempFile("mycollab", "pdf");
         ReportStyles reportStyles = ReportStyles.instance();
@@ -171,10 +179,10 @@ public class SubscriptionManagerController {
                         cmp.text("Phu Nhuan District, HCM city, Viet Nam"),
                         cmp.text("Web: <a href=\"https://www.mycollab.com\"><u>https://www.mycollab.com</u></a>").setStyle(style),
                         cmp.text("Email: <a href=\"mailto:support@mycollab.com\"><u>support@mycollab.com</u></a>").setStyle(style)))
-                        .add(cmp.verticalList(cmp.text("Receipt no: " + subscriptionReference),
+                        .add(cmp.verticalList(cmp.text("Receipt no: " + reference),
                                 cmp.text("Receipt date: " + DateTimeFormat.forPattern("E, dd MMM yyyy").print(new LocalDate())),
                                 cmp.text("Company: " + customerCompany),
-                                cmp.text("Reference ID: " + subscriptionReference)))
+                                cmp.text("Subscription Reference ID: " + subscriptionReference)))
         );
 
         HorizontalListBuilder add = cmp.horizontalList().add(dynamicReportsComponent).newRow().add(cmp.verticalGap(15));
@@ -190,6 +198,7 @@ public class SubscriptionManagerController {
                                 .setHyperLink(hyperLink("mailto:support@mycollab.com")).setHorizontalTextAlignment(HorizontalTextAlignment.CENTER),
                         cmp.text("We thank you for your business").setStyle(stl.style().setFontSize(14)
                                 .setForegroundColor(new Color(221, 133, 44)).setHorizontalTextAlignment(HorizontalTextAlignment.CENTER)));
+        report.summary(summaryComp);
 
         report.toPdf(new FileOutputStream(referenceFile));
         return referenceFile;

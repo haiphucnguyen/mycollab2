@@ -221,7 +221,6 @@ public class OrderManagerController {
 
         report.summary(summaryComp);
 
-
         report.toPdf(new FileOutputStream(referenceFile));
         return referenceFile;
     }

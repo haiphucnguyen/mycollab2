@@ -7,7 +7,7 @@
     <#include "mailLogo.ftl">
     <tr>
       <td>
-        <div style="padding: 25px 25px 10px 25px">
+        <div style="padding: 0px 0px 10px 25px">
           <h1>Thank you for your payment</h1><br/>
           Dear ${customerName}, <br/>
           Payment for MyCollab workspace charged successfully<br/>
