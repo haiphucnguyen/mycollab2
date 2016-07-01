@@ -44,7 +44,7 @@ import com.esofthead.mycollab.vaadin.MyCollabUI;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.vaadin.ui.service.BroadcastReceiverService;
+import com.esofthead.mycollab.vaadin.ui.service.AbstractBroadcastReceiverService;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.annotations.Theme;
@@ -84,7 +84,7 @@ public class DesktopApplication extends MyCollabUI {
     private static List<String> ipLists = new ArrayList<>();
 
     private MainWindowContainer mainWindowContainer;
-    private BroadcastReceiverService broadcastReceiverService = AppContextUtil.getSpringBean(BroadcastReceiverService.class);
+    private AbstractBroadcastReceiverService broadcastReceiverService = AppContextUtil.getSpringBean(AbstractBroadcastReceiverService.class);
 
     @Override
     protected void doInit(final VaadinRequest request) {
@@ -348,6 +348,7 @@ public class DesktopApplication extends MyCollabUI {
         ex.createCriteria().andAccountidEqualTo(billingAccount.getId()).andUsernameEqualTo(user.getUsername());
         userAccountMapper.updateByExampleSelective(userAccount, ex);
         EventBusFactory.getInstance().post(new ShellEvent.GotoMainPage(this, null));
+        broadcastReceiverService.registerApp(this);
         Broadcaster.register(broadcastReceiverService);
     }
 

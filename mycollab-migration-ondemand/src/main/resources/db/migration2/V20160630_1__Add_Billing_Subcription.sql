@@ -7,6 +7,7 @@ CREATE TABLE `s_billing_subscription` (
   `subReference` varchar(400) NOT NULL,
   `accountId` int(11) NOT NULL,
   `createdTime` datetime NOT NULL,
+  `status` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_s_billing_subscription_1_idx` (`billingId`),
   KEY `FK_s_billing_subscription_2_idx` (`accountId`),

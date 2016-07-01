@@ -166,7 +166,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
         if (billingAccount.isTrial()) {
             MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(UIConstants.BUTTON_DANGER);
-            BrowserWindowOpener opener = new BrowserWindowOpener(currentBillingPlan.getShoppingurl());
+            BrowserWindowOpener opener = new BrowserWindowOpener(currentBillingPlan.getShoppingurl() + "?referrer=" +
+                    EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
             opener.extend(selectPlanBtn);
             currentPlanLayout.with(new MHorizontalLayout(introText, selectPlanBtn));
         } else {
@@ -253,7 +254,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
             SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
             if (billingAccount.isTrial()) {
-                BrowserWindowOpener opener = new BrowserWindowOpener(chosenPlan.getShoppingurl());
+                BrowserWindowOpener opener = new BrowserWindowOpener(chosenPlan.getShoppingurl() + "?referrer=" +
+                        EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
                 opener.extend(saveBtn);
             }
 
