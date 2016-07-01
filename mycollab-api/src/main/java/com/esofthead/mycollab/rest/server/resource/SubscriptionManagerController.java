@@ -70,7 +70,6 @@ public class SubscriptionManagerController {
                                        @RequestParam("SubscriptionQuantity") String subscriptionQuantity,
                                        @RequestParam("SubscriptionReference") String subscriptionReference,
                                        @RequestParam("SubscriptionReferrer") String subscriptionReferrer) {
-        LOG.info("Subscription reference: " + subscriptionReference);
         SubscriptionExample ex = new SubscriptionExample();
         Integer sAccountId = Integer.parseInt(EnDecryptHelper.decryptText(subscriptionReferrer));
         ex.createCriteria().andSubreferenceEqualTo(subscriptionReference).andAccountidEqualTo(sAccountId);

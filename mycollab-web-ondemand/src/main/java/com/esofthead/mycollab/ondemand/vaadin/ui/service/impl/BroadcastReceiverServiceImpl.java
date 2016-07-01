@@ -14,7 +14,8 @@ public class BroadcastReceiverServiceImpl extends AbstractBroadcastReceiverServi
     @Override
     protected void onBroadcast(BroadcastMessage message) {
         if (message.getsAccountId() != null) {
-            if (AppContext.getAccountId().equals(message.getsAccountId())) {
+            AppContext context = myCollabApp.getAssociateContext();
+            if (context.isMatchAccount(message.getsAccountId())) {
                 myCollabApp.reloadPage();
             }
         }

@@ -391,11 +391,11 @@ public class DesktopApplication extends MyCollabUI {
     }
 
     public AppContext getAssociateContext() {
-        return AppContext.getInstance();
+        return (AppContext) getAttribute("context");
     }
 
     public void reloadPage() {
-        Page.getCurrent().getJavaScript().execute("window.location.reload();");
+        this.getUI().getPage().getJavaScript().execute("window.location.reload();");
     }
 
     private class ShellErrorHandler {
