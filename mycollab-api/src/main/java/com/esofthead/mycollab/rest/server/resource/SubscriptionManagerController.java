@@ -1,14 +1,32 @@
 package com.esofthead.mycollab.rest.server.resource;
 
+import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.configuration.EnDecryptHelper;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.BroadcastMessage;
 import com.esofthead.mycollab.core.Broadcaster;
+import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
+import com.esofthead.mycollab.module.mail.service.ExtMailService;
+import com.esofthead.mycollab.module.mail.service.IContentGenerator;
+import com.esofthead.mycollab.module.user.dao.BillingAccountMapper;
 import com.esofthead.mycollab.ondemand.module.support.dao.SubscriptionHistoryMapper;
 import com.esofthead.mycollab.ondemand.module.support.dao.SubscriptionMapper;
 import com.esofthead.mycollab.ondemand.module.support.domain.Subscription;
 import com.esofthead.mycollab.ondemand.module.support.domain.SubscriptionExample;
 import com.esofthead.mycollab.ondemand.module.support.domain.SubscriptionHistory;
+import com.esofthead.mycollab.reporting.ReportStyles;
+import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
+import net.sf.dynamicreports.report.builder.component.VerticalListBuilder;
+import net.sf.dynamicreports.report.builder.style.StyleBuilder;
+import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
+import net.sf.dynamicreports.report.constant.Markup;
+import net.sf.dynamicreports.report.constant.PageType;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +35,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.awt.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+
+import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
 /**
  * @author MyCollab Ltd
@@ -29,16 +53,26 @@ import java.util.UUID;
 public class SubscriptionManagerController {
     private static Logger LOG = LoggerFactory.getLogger(SubscriptionManagerController.class);
 
+    private static final DateTimeFormatter dateFormatter = DateTimeFormat.forPattern("MMM d, yyyy");
+
     @Autowired
     private SubscriptionMapper subscriptionMapper;
 
     @Autowired
     private SubscriptionHistoryMapper subscriptionHistoryMapper;
 
+    @Autowired
+    private BillingAccountMapper billingAccountMapper;
+
+    @Autowired
+    private ExtMailService extMailService;
+
+    @Autowired
+    private IContentGenerator contentGenerator;
+
     @RequestMapping(path = "/register", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
-    public String registerEE(@RequestParam("company") String company,
-                             @RequestParam("email") String email,
+    public String registerEE(@RequestParam("email") String email,
                              @RequestParam("internalProductName") String internalProductName,
                              @RequestParam("name") String name,
                              @RequestParam("quantity") int quantity,
@@ -51,7 +85,6 @@ public class SubscriptionManagerController {
         Integer sAccountId = Integer.parseInt(EnDecryptHelper.decryptText(referrer));
         Subscription subscription = new Subscription();
         subscription.setEmail(email);
-        subscription.setCompany(company);
         subscription.setAccountid(sAccountId);
         subscription.setName(name);
         subscription.setBillingid(Integer.parseInt(billingPlanId));
@@ -69,7 +102,14 @@ public class SubscriptionManagerController {
                                        @RequestParam("SubscriptionIsTest") String subscriptionIsTest,
                                        @RequestParam("SubscriptionQuantity") String subscriptionQuantity,
                                        @RequestParam("SubscriptionReference") String subscriptionReference,
-                                       @RequestParam("SubscriptionReferrer") String subscriptionReferrer) {
+                                       @RequestParam("SubscriptionReferrer") String subscriptionReferrer,
+                                       @RequestParam("NextPeriodDate") String nextPaymentDate,
+                                       @RequestParam("ProductName") String productName,
+                                       @RequestParam("TotalPrice") String totalPrice,
+                                       @RequestParam("CustomerFullName") String customerFullName,
+                                       @RequestParam("Email") String email,
+                                       @RequestParam("CompanyName") String companyName,
+                                       @RequestParam("Phone") String phone) throws Exception {
         SubscriptionExample ex = new SubscriptionExample();
         Integer sAccountId = Integer.parseInt(EnDecryptHelper.decryptText(subscriptionReferrer));
         ex.createCriteria().andSubreferenceEqualTo(subscriptionReference).andAccountidEqualTo(sAccountId);
@@ -81,11 +121,77 @@ public class SubscriptionManagerController {
             subscriptionHistory.setOrderid(UUID.randomUUID().toString() + new DateTime().millisOfSecond().get());
             subscriptionHistory.setCreatedtime(new DateTime().toDate());
             subscriptionHistory.setStatus("Success");
+            subscriptionHistory.setExpireddate(dateFormatter.parseLocalDate(nextPaymentDate).toDate());
+            subscriptionHistory.setProductname(productName);
+            subscriptionHistory.setTotalprice(Double.parseDouble(totalPrice));
             subscriptionHistoryMapper.insert(subscriptionHistory);
+
+            subscription.setCompany(companyName);
+            subscription.setContactname(customerFullName);
+            subscription.setPhone(phone);
+
+            subscriptionMapper.updateByPrimaryKey(subscription);
             Broadcaster.broadcast(new BroadcastMessage(subscription.getAccountid(), null, ""));
+
+//            BillingAccountExample accountEx = new BillingAccountExample();
+//            accountEx.createCriteria().andIdEqualTo(sAccountId);
+//            BillingAccount billingAccount = new BillingAccount();
+//            billingAccount.setStatus(AccountStatusConstants.ACTIVE);
+//            billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
+
+            contentGenerator.putVariable("customerName", customerFullName);
+            contentGenerator.putVariable("nextPaymentDate", nextPaymentDate);
+            File receiptReport = receiptReport(subscriptionReference, productName, email, customerFullName,
+                    companyName, Double.parseDouble(totalPrice));
+            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
+                    Arrays.asList(new MailRecipientField(email, customerFullName)), null, null, String.format("[%s] " +
+                            "Payment charged successfully", SiteConfiguration.getDefaultSiteName()),
+                    contentGenerator.parseFile("paymentChargedSuccessfully.ftl"), Arrays.asList(
+                            new FileEmailAttachmentSource
+                                    (receiptReport, "Receipt-" + subscriptionReference + ".pdf")));
+
+
         } else {
             LOG.error("Find subscription with id " + subscriptionReference + " has count " + subscriptions.size());
         }
         return "Ok";
+    }
+
+    private File receiptReport(String subscriptionReference, String productName, String email, String customerFullName,
+                               String customerCompany, Double price) throws Exception {
+        File referenceFile = File.createTempFile("mycollab", "pdf");
+        ReportStyles reportStyles = ReportStyles.instance();
+        JasperReportBuilder report = report().setPageFormat(PageType.A3);
+        StyleBuilder style = stl.style().setMarkup(Markup.STYLED);
+        ComponentBuilder<?, ?> dynamicReportsComponent = cmp.verticalList(
+                cmp.image(getClass().getClassLoader().getResourceAsStream("images/logo.png")).setFixedDimension(150, 28),
+                cmp.text("MyCollab LLC").setStyle(reportStyles.getH2Style()),
+                cmp.horizontalList().newRow(15).add(reportStyles.line()).newRow(15),
+                cmp.horizontalList().add(cmp.verticalList(cmp.text("79/11 Tran Huy Lieu, 12th Ward,"),
+                        cmp.text("Phu Nhuan District, HCM city, Viet Nam"),
+                        cmp.text("Web: <a href=\"https://www.mycollab.com\"><u>https://www.mycollab.com</u></a>").setStyle(style),
+                        cmp.text("Email: <a href=\"mailto:support@mycollab.com\"><u>support@mycollab.com</u></a>").setStyle(style)))
+                        .add(cmp.verticalList(cmp.text("Receipt no: " + subscriptionReference),
+                                cmp.text("Receipt date: " + DateTimeFormat.forPattern("E, dd MMM yyyy").print(new LocalDate())),
+                                cmp.text("Company: " + customerCompany),
+                                cmp.text("Reference ID: " + subscriptionReference)))
+        );
+
+        HorizontalListBuilder add = cmp.horizontalList().add(dynamicReportsComponent).newRow().add(cmp.verticalGap(15));
+        report.title(add);
+
+        VerticalListBuilder summaryComp = cmp.verticalList()
+                .add(cmp.horizontalList().add(cmp.text("Service subscription: " + productName).setStyle(reportStyles.getH3Style()),
+                        cmp.text(price + " USD").setStyle(reportStyles.getH3Style()))
+                        .setStyle(stl.style().setBackgroundColor(new Color(235, 184, 132))))
+                .add(cmp.horizontalList().newRow(15))
+                .add(cmp.text("All prices are in USD. If you have any questions concerning this receipt, contact us at"),
+                        cmp.text("Billing Support").setStyle(reportStyles.getUnderlineStyle())
+                                .setHyperLink(hyperLink("mailto:support@mycollab.com")).setHorizontalTextAlignment(HorizontalTextAlignment.CENTER),
+                        cmp.text("We thank you for your business").setStyle(stl.style().setFontSize(14)
+                                .setForegroundColor(new Color(221, 133, 44)).setHorizontalTextAlignment(HorizontalTextAlignment.CENTER)));
+
+        report.toPdf(new FileOutputStream(referenceFile));
+        return referenceFile;
     }
 }

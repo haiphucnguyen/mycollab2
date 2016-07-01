@@ -130,7 +130,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                     "</span>&nbsp;Projects").withWidthUndefined();
 
             if (currentBillingPlan.getId().equals(plan.getId())) {
-                if (billingAccount.isTrial()) {
+                if (billingAccount.isNotActive()) {
                     MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(UIConstants.BUTTON_ACTION);
                     BrowserWindowOpener opener = new BrowserWindowOpener(plan.getShoppingurl() +
                             "?referrer=" + EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
@@ -164,7 +164,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
         ELabel introText = ELabel.h2("Your current plan: " + currentBillingPlan.getBillingtype());
         SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
-        if (billingAccount.isTrial()) {
+        if (billingAccount.isNotActive()) {
             MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(UIConstants.BUTTON_DANGER);
             BrowserWindowOpener opener = new BrowserWindowOpener(currentBillingPlan.getShoppingurl() + "?referrer=" +
                     EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
@@ -253,7 +253,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             }).withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
             SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
-            if (billingAccount.isTrial()) {
+            if (billingAccount.isNotActive()) {
                 BrowserWindowOpener opener = new BrowserWindowOpener(chosenPlan.getShoppingurl() + "?referrer=" +
                         EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
                 opener.extend(saveBtn);

@@ -88,7 +88,7 @@ public class SimpleBillingAccount extends BillingAccount {
         return currencyInstance;
     }
 
-    public Boolean isTrial() {
-        return AccountStatusConstants.TRIAL.equals(getStatus());
+    public Boolean isNotActive() {
+        return !AccountStatusConstants.ACTIVE.equals(getStatus());
     }
 }

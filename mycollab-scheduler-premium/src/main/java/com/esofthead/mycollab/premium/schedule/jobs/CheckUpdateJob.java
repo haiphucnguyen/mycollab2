@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.premium.schedule.jobs;
 
+import com.esofthead.mycollab.configuration.EnDecryptHelper;
 import com.esofthead.mycollab.core.BroadcastMessage;
 import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.core.NewUpdateAvailableNotification;
@@ -46,17 +47,12 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
     public void executeJob(JobExecutionContext context) throws JobExecutionException {
         RestTemplate restTemplate = new RestTemplate();
         LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
-        String customerId = licenseInfo.getCustomerId();
+        String customerId = EnDecryptHelper.encryptText(licenseInfo.getCustomerId());
         String result = restTemplate.getForObject("https://api.mycollab.com/api/checkpremiumupdate?version=" +
                 MyCollabVersion.getVersion() + "&customerId=" + customerId, String.class);
         final Properties props = JsonDeSerializer.fromJson(result, Properties.class);
         String version = props.getProperty("version");
         if (MyCollabVersion.isEditionNewer(version)) {
-            if (licenseInfo.isInvalid() || licenseInfo.isTrial() || licenseInfo.isExpired()) {
-                String manualDownloadLink = props.getProperty("downloadLink");
-                Broadcaster.broadcast(new BroadcastMessage(new NewUpdateAvailableNotification(version, null,
-                        manualDownloadLink, null)));
-            }
             if (!isDownloading) {
                 if (latestFileDownloadedPath != null) {
                     File installerFile = new File(latestFileDownloadedPath);

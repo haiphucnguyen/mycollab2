@@ -71,7 +71,8 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
         } else {
             RestTemplate restTemplate = new RestTemplate();
             try {
-                String licenseRequest = restTemplate.postForObject("https://api.mycollab.com/api/register-trial", null, String.class);
+                String licenseRequest = restTemplate.postForObject("https://api.mycollab.com/api/order/register-trial",
+                        null, String.class);
                 checkAndSaveLicenseInfo(licenseRequest);
             } catch (Exception e) {
                 LOG.error("Can not retrieve a trial license", e);
