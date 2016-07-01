@@ -44,8 +44,8 @@ import com.esofthead.mycollab.vaadin.MyCollabUI;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.vaadin.ui.service.AbstractBroadcastReceiverService;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.web.ui.service.BroadcastReceiverService;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -84,10 +84,11 @@ public class DesktopApplication extends MyCollabUI {
     private static List<String> ipLists = new ArrayList<>();
 
     private MainWindowContainer mainWindowContainer;
-    private AbstractBroadcastReceiverService broadcastReceiverService = AppContextUtil.getSpringBean(AbstractBroadcastReceiverService.class);
+    private BroadcastReceiverService broadcastReceiverService;
 
     @Override
     protected void doInit(final VaadinRequest request) {
+        broadcastReceiverService = AppContextUtil.getSpringBean(BroadcastReceiverService.class);
         if (SiteConfiguration.getPullMethod() == SiteConfiguration.PullMethod.push) {
             getPushConfiguration().setPushMode(PushMode.MANUAL);
         }
@@ -387,6 +388,14 @@ public class DesktopApplication extends MyCollabUI {
     public void unsetRememberPassword() {
         BrowserCookie.setCookie(ACCOUNT_COOKIE, "");
         BrowserCookie.setCookie(TEMP_ACCOUNT_COOKIE, "");
+    }
+
+    public AppContext getAssociateContext() {
+        return AppContext.getInstance();
+    }
+
+    public void reloadPage() {
+        Page.getCurrent().getJavaScript().execute("window.location.reload();");
     }
 
     private class ShellErrorHandler {

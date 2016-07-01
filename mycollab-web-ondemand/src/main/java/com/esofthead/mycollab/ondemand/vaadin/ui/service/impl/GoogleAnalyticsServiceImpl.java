@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.ondemand.vaadin.ui.service;
+package com.esofthead.mycollab.ondemand.vaadin.ui.service.impl;
 
 import com.esofthead.mycollab.configuration.IDeploymentMode;
 import com.esofthead.mycollab.vaadin.ui.MyCollabSession;

@@ -1,9 +1,8 @@
-package com.esofthead.mycollab.community.vaadin.ui.service;
+package com.esofthead.mycollab.ondemand.vaadin.ui.service.impl;
 
 import com.esofthead.mycollab.core.BroadcastMessage;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.web.ui.service.AbstractBroadcastReceiverService;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,10 +10,13 @@ import org.springframework.stereotype.Service;
  * @since 5.3.5
  */
 @Service
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class BroadcastReceiverServiceImpl extends AbstractBroadcastReceiverService {
     @Override
     protected void onBroadcast(BroadcastMessage message) {
-
+        if (message.getsAccountId() != null) {
+            if (AppContext.getAccountId().equals(message.getsAccountId())) {
+                myCollabApp.reloadPage();
+            }
+        }
     }
 }

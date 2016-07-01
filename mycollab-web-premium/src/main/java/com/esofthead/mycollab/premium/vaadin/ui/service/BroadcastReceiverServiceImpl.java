@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.premium.vaadin.ui.service;
 
 import com.esofthead.mycollab.core.BroadcastMessage;
-import com.esofthead.mycollab.vaadin.ui.service.AbstractBroadcastReceiverService;
+import com.esofthead.mycollab.vaadin.web.ui.service.AbstractBroadcastReceiverService;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
