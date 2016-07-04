@@ -25,12 +25,13 @@ import com.vaadin.ui.TextField;
  * @author MyCollab Ltd
  * @since 5.3.5
  */
-class ProjectGeneralInfoStep implements ProjectAddWindow.FormWizardStep {
+public class ProjectGeneralInfoStep implements AbstractProjectAddWindow.FormWizardStep {
     private Project project;
     private AdvancedEditBeanForm<Project> editForm;
     private EditFormFieldFactory editFormFieldFactory;
 
-    ProjectGeneralInfoStep(Project project) {
+    public ProjectGeneralInfoStep(Project project) {
+        this.project = project;
         editForm = new AdvancedEditBeanForm<>();
         editForm.setFormLayoutFactory(buildFormLayout());
         editFormFieldFactory = new EditFormFieldFactory(editForm);

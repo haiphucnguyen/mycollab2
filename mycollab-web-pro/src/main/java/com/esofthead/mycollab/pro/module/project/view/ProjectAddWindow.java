@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.pro.module.project.view;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Project;
@@ -24,17 +25,24 @@ import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.view.AbstractProjectAddWindow;
+import com.esofthead.mycollab.module.project.view.ProjectAddBaseTemplateWindow;
+import com.esofthead.mycollab.module.project.view.ProjectGeneralInfoStep;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.UI;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.teemu.wizards.Wizard;
-import org.vaadin.teemu.wizards.WizardStep;
 import org.vaadin.teemu.wizards.event.*;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -46,14 +54,16 @@ import java.util.Set;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ProjectAddWindow extends Window implements WizardProgressListener {
+@ViewComponent
+@LoadPolicy(scope = ViewScope.PROTOTYPE)
+public class ProjectAddWindow extends AbstractProjectAddWindow implements WizardProgressListener {
     private static final long serialVersionUID = 1L;
 
     private Project project;
     private ProjectAddWizard wizard;
     private ProjectGeneralInfoStep infoStep;
     private ProjectBillingAccountStep billingAccountStep;
-    private CustomizeFeatureStep customizeFeatureStep;
+    private ProjectCustomizeFeatureStep customizeFeatureStep;
 
     public ProjectAddWindow() {
         this(new Project());
@@ -74,6 +84,7 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
         wizard = new ProjectAddWizard();
         infoStep = new ProjectGeneralInfoStep(project);
         billingAccountStep = new ProjectBillingAccountStep(project);
+        customizeFeatureStep = new ProjectCustomizeFeatureStep(project);
         wizard.addStep(infoStep);
         wizard.addStep(customizeFeatureStep);
         wizard.addStep(billingAccountStep);
@@ -148,17 +159,17 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
             this.getBackButton().setStyleName(UIConstants.BUTTON_OPTION);
             this.getNextButton().setStyleName(UIConstants.BUTTON_ACTION);
             this.getFinishButton().setStyleName(UIConstants.BUTTON_ACTION);
-            this.footer.setMargin(new MarginInfo(true, true, false, false));
+            footer.setMargin(new MarginInfo(true, true, false, false));
 
-            Button newProjectFromTemplateBtn = new Button(AppContext.getMessage(ProjectI18nEnum.OPT_CREATE_PROJECT_FROM_TEMPLATE), new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    close();
-                    UI.getCurrent().addWindow(new ProjectAddBaseTemplateWindow());
-                }
-            });
-            newProjectFromTemplateBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            footer.addComponent(newProjectFromTemplateBtn, 0);
+            if (!SiteConfiguration.isCommunityEdition()) {
+                Button newProjectFromTemplateBtn = new Button(AppContext.getMessage(ProjectI18nEnum.OPT_CREATE_PROJECT_FROM_TEMPLATE),
+                        clickEvent -> {
+                            close();
+                            UI.getCurrent().addWindow(new ProjectAddBaseTemplateWindow());
+                        });
+                newProjectFromTemplateBtn.addStyleName(UIConstants.BUTTON_ACTION);
+                footer.addComponent(newProjectFromTemplateBtn, 0);
+            }
         }
 
         @Override
@@ -166,37 +177,6 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
             if (this.currentStep.onAdvance()) {
                 this.fireEvent(new WizardCompletedEvent(this));
             }
-        }
-    }
-
-    interface FormWizardStep extends WizardStep {
-        boolean commit();
-    }
-
-    private class CustomizeFeatureStep implements FormWizardStep {
-        @Override
-        public boolean commit() {
-            return false;
-        }
-
-        @Override
-        public String getCaption() {
-            return null;
-        }
-
-        @Override
-        public Component getContent() {
-            return null;
-        }
-
-        @Override
-        public boolean onAdvance() {
-            return false;
-        }
-
-        @Override
-        public boolean onBack() {
-            return false;
         }
     }
 }

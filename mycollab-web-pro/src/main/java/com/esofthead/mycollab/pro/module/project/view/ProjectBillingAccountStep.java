@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.pro.module.project.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
@@ -8,6 +8,7 @@ import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
+import com.esofthead.mycollab.module.project.view.AbstractProjectAddWindow;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
@@ -19,12 +20,13 @@ import com.vaadin.ui.Field;
  * @author MyCollab Ltd
  * @since 5.3.5
  */
-class ProjectBillingAccountStep  implements ProjectAddWindow.FormWizardStep {
+class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardStep {
     private Project project;
     private AdvancedEditBeanForm<Project> editForm;
     private EditFormFieldFactory editFormFieldFactory;
 
     ProjectBillingAccountStep(Project project) {
+        this.project = project;
         editForm = new AdvancedEditBeanForm<>();
         editForm.setFormLayoutFactory(buildFormLayout());
         editFormFieldFactory = new EditFormFieldFactory(editForm);
