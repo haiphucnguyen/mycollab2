@@ -57,7 +57,6 @@ import java.util.Set;
 public class ProjectAddWindow extends AbstractProjectAddWindow implements WizardProgressListener {
     private static final long serialVersionUID = 1L;
 
-    private Project project;
     private ProjectAddWizard wizard;
     private ProjectGeneralInfoStep infoStep;
     private ProjectBillingAccountStep billingAccountStep;
@@ -68,16 +67,9 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
     }
 
     public ProjectAddWindow(Project valuePrj) {
-        setCaption(AppContext.getMessage(ProjectI18nEnum.NEW));
-        this.setWidth("900px");
-        this.center();
-        this.setResizable(false);
-        this.setModal(true);
-
+        super(valuePrj);
         MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, false, true, false));
         setContent(contentLayout);
-
-        project = valuePrj;
 
         wizard = new ProjectAddWizard();
         infoStep = new ProjectGeneralInfoStep(project);
@@ -132,7 +124,7 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
         } else {
             project.setSaccountid(AppContext.getAccountId());
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-            Integer projectId = projectService.saveWithSession(project, AppContext.getUsername());
+            projectService.saveWithSession(project, AppContext.getUsername());
             customizeFeatureStep.saveProjectFeatures();
 
             EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this,
