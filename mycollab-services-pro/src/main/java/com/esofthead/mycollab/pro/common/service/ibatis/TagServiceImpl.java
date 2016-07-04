@@ -71,7 +71,7 @@ public class TagServiceImpl extends DefaultCrudService<Integer, Tag> implements 
     }
 
     @Override
-    public int deleteByExample(TagExample example) {
+    public Integer deleteByExample(TagExample example) {
         return tagMapper.deleteByExample(example);
     }
 }

@@ -16,15 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
-import com.esofthead.mycollab.form.view.builder.TextAreaDynaFieldBuilder;
-import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
-import com.esofthead.mycollab.form.view.builder.type.DynaForm;
-import com.esofthead.mycollab.form.view.builder.type.DynaSection;
-import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
@@ -33,14 +25,10 @@ import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
-import com.esofthead.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.ui.*;
-import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
-import com.esofthead.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
-import com.esofthead.mycollab.vaadin.web.ui.I18nValueComboBox;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -63,8 +51,9 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
 
     private Project project;
     private ProjectAddWizard wizard;
-    private GeneralInfoStep infoStep;
-    private BillingAccountStep billingAccountStep;
+    private ProjectGeneralInfoStep infoStep;
+    private ProjectBillingAccountStep billingAccountStep;
+    private CustomizeFeatureStep customizeFeatureStep;
 
     public ProjectAddWindow() {
         this(new Project());
@@ -83,9 +72,10 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
         project = valuePrj;
 
         wizard = new ProjectAddWizard();
-        infoStep = new GeneralInfoStep();
-        billingAccountStep = new BillingAccountStep();
+        infoStep = new ProjectGeneralInfoStep(project);
+        billingAccountStep = new ProjectBillingAccountStep(project);
         wizard.addStep(infoStep);
+        wizard.addStep(customizeFeatureStep);
         wizard.addStep(billingAccountStep);
         wizard.getFinishButton().setEnabled(true);
         wizard.addListener(this);
@@ -163,7 +153,7 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
             Button newProjectFromTemplateBtn = new Button(AppContext.getMessage(ProjectI18nEnum.OPT_CREATE_PROJECT_FROM_TEMPLATE), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
-                    ProjectAddWindow.this.close();
+                    close();
                     UI.getCurrent().addWindow(new ProjectAddBaseTemplateWindow());
                 }
             });
@@ -179,215 +169,8 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
         }
     }
 
-    private static class ProjectStatusComboBox extends I18nValueComboBox {
-        private static final long serialVersionUID = 1L;
-
-        public ProjectStatusComboBox() {
-            super(false, StatusI18nEnum.Open, StatusI18nEnum.Closed);
-        }
-    }
-
-    private interface FormWizardStep extends WizardStep {
+    interface FormWizardStep extends WizardStep {
         boolean commit();
-    }
-
-    private class GeneralInfoStep implements FormWizardStep {
-        private AdvancedEditBeanForm<Project> editForm;
-        private EditFormFieldFactory editFormFieldFactory;
-
-        GeneralInfoStep() {
-            editForm = new AdvancedEditBeanForm<>();
-            editForm.setFormLayoutFactory(buildFormLayout());
-            editFormFieldFactory = new EditFormFieldFactory(editForm);
-            editForm.setBeanFormFieldFactory(editFormFieldFactory);
-            editForm.setBean(project);
-        }
-
-        private IDynaFormLayout buildFormLayout() {
-            DynaForm defaultForm = new DynaForm();
-            DynaSection mainSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
-
-            mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.name).displayName(AppContext
-                    .getMessage(GenericI18Enum.FORM_NAME)).fieldIndex(0).mandatory(true).required(true).build());
-
-            mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.homepage).displayName(AppContext
-                    .getMessage(ProjectI18nEnum.FORM_HOME_PAGE)).fieldIndex(1).build());
-
-            mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.shortname).displayName(AppContext
-                    .getMessage(ProjectI18nEnum.FORM_SHORT_NAME)).contextHelp(AppContext.getMessage(ProjectI18nEnum
-                    .FORM_SHORT_NAME_HELP)).fieldIndex(2).mandatory(true).required(true).build());
-
-            mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.planstartdate).displayName
-                    (AppContext.getMessage(GenericI18Enum.FORM_START_DATE)).fieldIndex(3).build());
-
-            mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.projectstatus).displayName
-                    (AppContext.getMessage(GenericI18Enum.FORM_STATUS)).fieldIndex(4).build());
-
-            mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.planenddate).displayName
-                    (AppContext.getMessage(GenericI18Enum.FORM_END_DATE)).fieldIndex(5).build());
-
-            mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.lead).displayName
-                    (AppContext.getMessage(ProjectI18nEnum.FORM_LEADER)).fieldIndex(6).build());
-
-            mainSection.fields(new TextAreaDynaFieldBuilder().fieldName(Project.Field.description).displayName
-                    (AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)).fieldIndex(7).colSpan(true).build());
-            defaultForm.sections(mainSection);
-
-            return new DefaultDynaFormLayout(defaultForm);
-        }
-
-        @Override
-        public boolean commit() {
-            return editFormFieldFactory.commit();
-        }
-
-        @Override
-        public String getCaption() {
-            return "General";
-        }
-
-        @Override
-        public Component getContent() {
-            return editForm;
-        }
-
-        @Override
-        public boolean onAdvance() {
-            return true;
-        }
-
-        @Override
-        public boolean onBack() {
-            return false;
-        }
-
-        private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Project> {
-            private static final long serialVersionUID = 1L;
-
-            public EditFormFieldFactory(GenericBeanForm<Project> form) {
-                super(form);
-            }
-
-            @Override
-            protected Field<?> onCreateField(final Object propertyId) {
-                if (Project.Field.description.equalTo(propertyId)) {
-                    return new RichTextArea();
-                } else if (Project.Field.projectstatus.equalTo(propertyId)) {
-                    ProjectStatusComboBox projectCombo = new ProjectStatusComboBox();
-                    projectCombo.setRequired(true);
-                    projectCombo.setRequiredError("Project status must be not null");
-                    if (project.getProjectstatus() == null) {
-                        project.setProjectstatus(StatusI18nEnum.Open.name());
-                    }
-                    return projectCombo;
-                } else if (Project.Field.shortname.equalTo(propertyId)) {
-                    TextField tf = new TextField();
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("Project short name must be not null");
-                    return tf;
-                } else if (Project.Field.name.equalTo(propertyId)) {
-                    TextField tf = new TextField();
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("Project name must be not null");
-                    return tf;
-                } else if (Project.Field.lead.equalTo(propertyId)) {
-                    return new ActiveUserComboBox();
-                }
-
-                return null;
-            }
-        }
-    }
-
-    private class BillingAccountStep implements FormWizardStep {
-        private AdvancedEditBeanForm<Project> editForm;
-        private EditFormFieldFactory editFormFieldFactory;
-
-        BillingAccountStep() {
-            editForm = new AdvancedEditBeanForm<>();
-            editForm.setFormLayoutFactory(buildFormLayout());
-            editFormFieldFactory = new EditFormFieldFactory(editForm);
-            editForm.setBeanFormFieldFactory(editFormFieldFactory);
-            editForm.setBean(project);
-        }
-
-        private IDynaFormLayout buildFormLayout() {
-            DynaForm defaultForm = new DynaForm();
-            DynaSection mainSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
-
-            mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.accountid)
-                    .displayName(AppContext.getMessage(ProjectI18nEnum.FORM_ACCOUNT_NAME))
-                    .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_ACCOUNT_NAME_HELP))
-                    .fieldIndex(0).colSpan(true).build());
-
-            mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.currencyid)
-                    .displayName(AppContext.getMessage(GenericI18Enum.FORM_CURRENCY))
-                    .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_CURRENCY_HELP)).fieldIndex(1).build());
-
-            mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.targetbudget).displayName
-                    (AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET))
-                    .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET_HELP)).fieldIndex(2).build());
-
-            mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.defaultbillingrate).displayName
-                    (AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE))
-                    .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE_HELP)).fieldIndex(3).build());
-
-            mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.defaultovertimebillingrate)
-                    .displayName(AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE))
-                    .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE_HELP)).fieldIndex(4).build());
-
-            defaultForm.sections(mainSection);
-            return new DefaultDynaFormLayout(defaultForm);
-        }
-
-        @Override
-        public boolean commit() {
-            return editFormFieldFactory.commit();
-        }
-
-        @Override
-        public String getCaption() {
-            return "Account & Billing";
-        }
-
-        @Override
-        public Component getContent() {
-            return editForm;
-        }
-
-        @Override
-        public boolean onAdvance() {
-            return true;
-        }
-
-        @Override
-        public boolean onBack() {
-            return true;
-        }
-
-        private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Project> {
-            private static final long serialVersionUID = 1L;
-
-            public EditFormFieldFactory(GenericBeanForm<Project> form) {
-                super(form);
-            }
-
-            @Override
-            protected Field<?> onCreateField(final Object propertyId) {
-                if (Project.Field.currencyid.equalTo(propertyId)) {
-                    return new CurrencyComboBoxField();
-                } else if (Project.Field.accountid.equalTo(propertyId)) {
-                    return new AccountSelectionField();
-                } else if (Project.Field.targetbudget.equalTo(propertyId)
-                        || Project.Field.defaultbillingrate.equalTo(propertyId)
-                        || Project.Field.defaultovertimebillingrate.equalTo(propertyId)) {
-                    return new DoubleField();
-                }
-                return null;
-            }
-        }
     }
 
     private class CustomizeFeatureStep implements FormWizardStep {
