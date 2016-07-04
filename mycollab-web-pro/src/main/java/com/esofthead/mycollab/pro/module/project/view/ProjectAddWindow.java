@@ -20,6 +20,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Project;
+import com.esofthead.mycollab.module.project.domain.ProjectCustomizeView;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
@@ -31,10 +32,8 @@ import com.esofthead.mycollab.module.project.view.ProjectGeneralInfoStep;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.shared.ui.MarginInfo;
@@ -55,7 +54,6 @@ import java.util.Set;
  * @since 1.0
  */
 @ViewComponent
-@LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class ProjectAddWindow extends AbstractProjectAddWindow implements WizardProgressListener {
     private static final long serialVersionUID = 1L;
 
@@ -134,7 +132,8 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
         } else {
             project.setSaccountid(AppContext.getAccountId());
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-            projectService.saveWithSession(project, AppContext.getUsername());
+            Integer projectId = projectService.saveWithSession(project, AppContext.getUsername());
+            customizeFeatureStep.saveProjectFeatures();
 
             EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this,
                     new PageActionChain(new ProjectScreenData.Goto(project.getId()))));

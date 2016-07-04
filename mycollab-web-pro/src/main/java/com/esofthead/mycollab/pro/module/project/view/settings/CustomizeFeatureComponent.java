@@ -9,17 +9,15 @@ import com.esofthead.mycollab.module.project.events.CustomizeUIEvent;
 import com.esofthead.mycollab.module.project.i18n.*;
 import com.esofthead.mycollab.module.project.service.ProjectCustomizeViewService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
+import com.esofthead.mycollab.pro.module.project.ui.components.FeatureSelectionBox;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.web.ui.BlockWidget;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
-import com.google.common.base.MoreObjects;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.VerticalLayout;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -46,30 +44,31 @@ public class CustomizeFeatureComponent extends BlockWidget {
         leftColLayout.setSpacing(true);
         leftColLayout.setWidth("100%");
 
-        final SelectionBox displayMsgSelection = new SelectionBox(ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE),
+        final FeatureSelectionBox displayMsgSelection = new FeatureSelectionBox(
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE),
                 AppContext.getMessage(MessageI18nEnum.LIST),
                 customizeView.getDisplaymessage());
         leftColLayout.addComponent(displayMsgSelection);
 
-        final SelectionBox displayPhaseSelection = new SelectionBox(
+        final FeatureSelectionBox displayPhaseSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE),
                 AppContext.getMessage(MilestoneI18nEnum.LIST),
                 customizeView.getDisplaymilestone());
         leftColLayout.addComponent(displayPhaseSelection);
 
-        final SelectionBox displayTaskSelection = new SelectionBox(
+        final FeatureSelectionBox displayTaskSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK),
                 AppContext.getMessage(TaskI18nEnum.LIST),
                 customizeView.getDisplaytask());
         leftColLayout.addComponent(displayTaskSelection);
 
-        final SelectionBox displayBugSelection = new SelectionBox(
+        final FeatureSelectionBox displayBugSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG),
                 AppContext.getMessage(BugI18nEnum.LIST),
                 customizeView.getDisplaybug());
         leftColLayout.addComponent(displayBugSelection);
 
-        final SelectionBox displayPageSelection = new SelectionBox(
+        final FeatureSelectionBox displayPageSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE),
                 AppContext.getMessage(PageI18nEnum.LIST),
                 customizeView.getDisplaypage());
@@ -81,94 +80,65 @@ public class CustomizeFeatureComponent extends BlockWidget {
         rightColLayout.setWidth("100%");
         rightColLayout.setSpacing(true);
 
-        final SelectionBox displayFileSelection = new SelectionBox(
+        final FeatureSelectionBox displayFileSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE),
                 AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
                 customizeView.getDisplayfile());
         rightColLayout.addComponent(displayFileSelection);
 
-        final SelectionBox displayRiskSelection = new SelectionBox(
+        final FeatureSelectionBox displayRiskSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK),
                 AppContext.getMessage(RiskI18nEnum.LIST),
                 customizeView.getDisplayrisk());
         rightColLayout.addComponent(displayRiskSelection);
 
-        final SelectionBox displayTimeSelection = new SelectionBox(
+        final FeatureSelectionBox displayTimeSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
                 AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
                 customizeView.getDisplaytimelogging());
         rightColLayout.addComponent(displayTimeSelection);
 
-        final SelectionBox displayStandupSelection = new SelectionBox(
+        final FeatureSelectionBox displayStandupSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP),
                 AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
                 customizeView.getDisplaystandup());
         rightColLayout.addComponent(displayStandupSelection);
 
-        final SelectionBox displayInvoiceSelection = new SelectionBox(
+        final FeatureSelectionBox displayInvoiceSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE),
                 AppContext.getMessage(InvoiceI18nEnum.LIST),
                 customizeView.getDisplayinvoice());
         rightColLayout.addComponent(displayInvoiceSelection);
 
         layout.addComponent(rightColLayout);
-
         body.addComponent(layout);
 
-        Button updateFeaturesBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), new ClickListener() {
-            private static final long serialVersionUID = 1L;
+        MButton updateFeaturesBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
+            customizeView.setDisplaymessage(displayMsgSelection.getSelected());
+            customizeView.setDisplaymilestone(displayPhaseSelection.getSelected());
+            customizeView.setDisplaytask(displayTaskSelection.getSelected());
+            customizeView.setDisplaybug(displayBugSelection.getSelected());
+            customizeView.setDisplaypage(displayPageSelection.getSelected());
+            customizeView.setDisplayfile(displayFileSelection.getSelected());
+            customizeView.setDisplayrisk(displayRiskSelection.getSelected());
+            customizeView.setDisplaytimelogging(displayTimeSelection.getSelected());
+            customizeView.setDisplaystandup(displayStandupSelection.getSelected());
+            customizeView.setDisplayinvoice(displayInvoiceSelection.getSelected());
 
-            @Override
-            public void buttonClick(ClickEvent event) {
-                customizeView.setDisplaymessage(displayMsgSelection.getSelected());
-                customizeView.setDisplaymilestone(displayPhaseSelection.getSelected());
-                customizeView.setDisplaytask(displayTaskSelection.getSelected());
-                customizeView.setDisplaybug(displayBugSelection.getSelected());
-                customizeView.setDisplaypage(displayPageSelection.getSelected());
-                customizeView.setDisplayfile(displayFileSelection.getSelected());
-                customizeView.setDisplayrisk(displayRiskSelection.getSelected());
-                customizeView.setDisplaytimelogging(displayTimeSelection.getSelected());
-                customizeView.setDisplaystandup(displayStandupSelection.getSelected());
-                customizeView.setDisplayinvoice(displayInvoiceSelection.getSelected());
-
-                ProjectCustomizeViewService projectCustomizeService = AppContextUtil
-                        .getSpringBean(ProjectCustomizeViewService.class);
-                if (customizeView.getId() == null) {
-                    projectCustomizeService.saveWithSession(customizeView, AppContext.getUsername());
-                } else {
-                    projectCustomizeService.updateWithSession(customizeView, AppContext.getUsername());
-                }
-
-                CurrentProjectVariables.getProject().setCustomizeView(customizeView);
-                EventBusFactory.getInstance().post(new CustomizeUIEvent.UpdateFeaturesList(CustomizeFeatureComponent.this));
+            ProjectCustomizeViewService projectCustomizeService = AppContextUtil.getSpringBean(ProjectCustomizeViewService.class);
+            if (customizeView.getId() == null) {
+                projectCustomizeService.saveWithSession(customizeView, AppContext.getUsername());
+            } else {
+                projectCustomizeService.updateWithSession(customizeView, AppContext.getUsername());
             }
-        });
+
+            CurrentProjectVariables.getProject().setCustomizeView(customizeView);
+            EventBusFactory.getInstance().post(new CustomizeUIEvent.UpdateFeaturesList(CustomizeFeatureComponent.this));
+        }).withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.REFRESH);
         updateFeaturesBtn.setEnabled(CurrentProjectVariables.isAdmin());
-        updateFeaturesBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        updateFeaturesBtn.setIcon(FontAwesome.REFRESH);
+
         body.addComponent(updateFeaturesBtn);
         this.addToBody(body);
-    }
-
-    private static class SelectionBox extends MHorizontalLayout {
-        private static final long serialVersionUID = 1L;
-
-        private CheckBox checkbox;
-
-        SelectionBox(FontAwesome iconResource, String caption, Boolean selected) {
-            this.withMargin(true).withFullWidth().withStyleName("feature-select-box");
-            Label captionLbl = new Label(iconResource.getHtml() + " " + caption, ContentMode.HTML);
-            this.addComponent(captionLbl);
-            this.setExpandRatio(captionLbl, 1.0f);
-            this.setComponentAlignment(captionLbl, Alignment.MIDDLE_LEFT);
-            checkbox = new CheckBox("", MoreObjects.firstNonNull(selected, Boolean.FALSE));
-            this.addComponent(checkbox);
-            this.setComponentAlignment(checkbox, Alignment.MIDDLE_LEFT);
-        }
-
-        public Boolean getSelected() {
-            return checkbox.getValue();
-        }
     }
 
 }
