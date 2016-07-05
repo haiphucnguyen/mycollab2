@@ -156,7 +156,7 @@ public class ProjectMemberInvitePresenter extends AbstractPresenter<ProjectMembe
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoInviteMembers(CanSendEmailInstructionWindow.this, null));
-                    CanSendEmailInstructionWindow.this.close();
+                    close();
                 }
             });
             addNewBtn.setStyleName(UIConstants.BUTTON_ACTION);
@@ -167,7 +167,7 @@ public class ProjectMemberInvitePresenter extends AbstractPresenter<ProjectMembe
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null));
-                    CanSendEmailInstructionWindow.this.close();
+                    close();
                 }
             });
             doneBtn.setStyleName(UIConstants.BUTTON_ACTION);

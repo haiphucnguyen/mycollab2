@@ -47,6 +47,7 @@ import com.vaadin.ui.*;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -95,64 +96,52 @@ public class ReOpenWindow extends Window {
             public ComponentContainer getLayout() {
                 VerticalLayout layout = new VerticalLayout();
                 informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 6);
-
                 layout.addComponent(informationLayout.getLayout());
 
-                MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
-                layout.addComponent(controlsBtn);
+                MButton reOpenBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
+                    if (EditForm.this.validateForm()) {
+                        bug.setStatus(BugStatus.ReOpen.name());
+                        bug.setResolution(OptionI18nEnum.BugResolution.None.name());
 
-                Button reOpenBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(final Button.ClickEvent event) {
-                        if (EditForm.this.validateForm()) {
-                            bug.setStatus(BugStatus.ReOpen.name());
-                            bug.setResolution(OptionI18nEnum.BugResolution.None.name());
+                        // Save bug status and assignee
+                        BugService bugService = AppContextUtil.getSpringBean(BugService.class);
+                        bugService.updateSelectiveWithSession(bug, AppContext.getUsername());
 
-                            // Save bug status and assignee
-                            BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                            bugService.updateSelectiveWithSession(bug, AppContext.getUsername());
+                        BugRelatedItemService bugRelatedItemService = AppContextUtil.getSpringBean(BugRelatedItemService.class);
+                        bugRelatedItemService.updateAffectedVersionsOfBug(bug.getId(), affectedVersionsSelect.getSelectedItems());
+                        bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), null);
 
-                            BugRelatedItemService bugRelatedItemService = AppContextUtil.getSpringBean(BugRelatedItemService.class);
-                            bugRelatedItemService.updateAffectedVersionsOfBug(bug.getId(), affectedVersionsSelect.getSelectedItems());
-                            bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), null);
+                        BugRelationService bugRelationService = AppContextUtil.getSpringBean(BugRelationService.class);
+                        bugRelationService.removeDuplicatedBugs(bug.getId());
 
-                            BugRelationService bugRelationService = AppContextUtil.getSpringBean(BugRelationService.class);
-                            bugRelationService.removeDuplicatedBugs(bug.getId());
+                        // Save comment
+                        String commentValue = commentArea.getValue();
+                        if (StringUtils.isNotBlank(commentValue)) {
+                            CommentWithBLOBs comment = new CommentWithBLOBs();
+                            comment.setComment(Jsoup.clean(commentValue, Whitelist.relaxed()));
+                            comment.setCreatedtime(new GregorianCalendar().getTime());
+                            comment.setCreateduser(AppContext.getUsername());
+                            comment.setSaccountid(AppContext.getAccountId());
+                            comment.setType(ProjectTypeConstants.BUG);
+                            comment.setTypeid("" + bug.getId());
+                            comment.setExtratypeid(CurrentProjectVariables.getProjectId());
 
-                            // Save comment
-                            String commentValue = commentArea.getValue();
-                            if (StringUtils.isNotBlank(commentValue)) {
-                                CommentWithBLOBs comment = new CommentWithBLOBs();
-                                comment.setComment(Jsoup.clean(commentValue, Whitelist.relaxed()));
-                                comment.setCreatedtime(new GregorianCalendar().getTime());
-                                comment.setCreateduser(AppContext.getUsername());
-                                comment.setSaccountid(AppContext.getAccountId());
-                                comment.setType(ProjectTypeConstants.BUG);
-                                comment.setTypeid("" + bug.getId());
-                                comment.setExtratypeid(CurrentProjectVariables.getProjectId());
-
-                                CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
-                                commentService.saveWithSession(comment, AppContext.getUsername());
-                            }
-
-                            close();
-                            EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, bug.getId()));
+                            CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
+                            commentService.saveWithSession(comment, AppContext.getUsername());
                         }
 
+                        close();
+                        EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, bug.getId()));
                     }
-                });
-                reOpenBtn.setStyleName(UIConstants.BUTTON_ACTION);
+                }).withStyleName(UIConstants.BUTTON_ACTION);
                 reOpenBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
-                Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        close();
-                    }
-                });
-                cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                controlsBtn.with(cancelBtn, reOpenBtn);
+                MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                        .withStyleName(UIConstants.BUTTON_OPTION);
 
+                MHorizontalLayout controlsBtn = new MHorizontalLayout(cancelBtn, reOpenBtn).withMargin(new MarginInfo(true, true, true, false));
+
+                layout.addComponent(controlsBtn);
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
                 return layout;
             }

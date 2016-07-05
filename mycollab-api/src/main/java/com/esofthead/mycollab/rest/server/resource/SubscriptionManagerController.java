@@ -5,10 +5,13 @@ import com.esofthead.mycollab.configuration.EnDecryptHelper;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.BroadcastMessage;
 import com.esofthead.mycollab.core.Broadcaster;
+import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.mail.service.IContentGenerator;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapper;
+import com.esofthead.mycollab.module.user.domain.BillingAccount;
+import com.esofthead.mycollab.module.user.domain.BillingAccountExample;
 import com.esofthead.mycollab.ondemand.module.support.dao.SubscriptionHistoryMapper;
 import com.esofthead.mycollab.ondemand.module.support.dao.SubscriptionMapper;
 import com.esofthead.mycollab.ondemand.module.support.domain.Subscription;
@@ -113,7 +116,14 @@ public class SubscriptionManagerController {
                                        @RequestParam("CompanyName") String companyName,
                                        @RequestParam("Phone") String phone) throws Exception {
         SubscriptionExample ex = new SubscriptionExample();
-        Integer sAccountId = Integer.parseInt(EnDecryptHelper.decryptText(subscriptionReferrer));
+        Integer sAccountId = 0;
+        try {
+            LOG.info("Referrer: " + subscriptionReferrer);
+            sAccountId = Integer.parseInt(EnDecryptHelper.decryptText(subscriptionReferrer));
+        } catch (Exception e) {
+            LOG.error("Referrer is invalid " + subscriptionReferrer);
+            return "Failed";
+        }
         ex.createCriteria().andSubreferenceEqualTo(subscriptionReference).andAccountidEqualTo(sAccountId);
         List<Subscription> subscriptions = subscriptionMapper.selectByExample(ex);
         if (subscriptions.size() == 1) {
@@ -141,11 +151,11 @@ public class SubscriptionManagerController {
             subscriptionMapper.updateByPrimaryKey(subscription);
             Broadcaster.broadcast(new BroadcastMessage(subscription.getAccountid(), null, ""));
 
-//            BillingAccountExample accountEx = new BillingAccountExample();
-//            accountEx.createCriteria().andIdEqualTo(sAccountId);
-//            BillingAccount billingAccount = new BillingAccount();
-//            billingAccount.setStatus(AccountStatusConstants.ACTIVE);
-//            billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
+            BillingAccountExample accountEx = new BillingAccountExample();
+            accountEx.createCriteria().andIdEqualTo(sAccountId);
+            BillingAccount billingAccount = new BillingAccount();
+            billingAccount.setStatus(AccountStatusConstants.ACTIVE);
+            billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
 
             contentGenerator.putVariable("customerName", customerFullName);
             contentGenerator.putVariable("nextPaymentDate", nextPaymentDate);
@@ -160,7 +170,8 @@ public class SubscriptionManagerController {
 
 
         } else {
-            LOG.error("Find subscription with id " + subscriptionReference + " has count " + subscriptions.size());
+            LOG.error("Find subscription with id " + subscriptionReference + "in account " + sAccountId + " has count" +
+                    subscriptions.size());
         }
         return "Ok";
     }
