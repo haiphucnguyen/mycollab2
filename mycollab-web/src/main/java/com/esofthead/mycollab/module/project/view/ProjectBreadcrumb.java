@@ -60,14 +60,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.setShowAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
         this.setHideAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
         this.setUseDefaultClickBehaviour(false);
-        homeBtn = new Button(null, new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(new ProjectEvent.GotoDashboard(this, null));
-            }
-        });
+        homeBtn = new Button(null, clickEvent -> EventBusFactory.getInstance().post(new ProjectEvent.GotoDashboard(this, null)));
         this.addLink(homeBtn);
     }
 
@@ -112,14 +105,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoMessage(Message message) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(MessageI18nEnum.LIST), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(new MessageEvent.GotoList(this, null));
-            }
-        }));
+        this.addLink(new Button(AppContext.getMessage(MessageI18nEnum.LIST),
+                clickEvent -> EventBusFactory.getInstance().post(new MessageEvent.GotoList(this, null))));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(message.getTitle()));
         AppContext.addFragment(ProjectLinkGenerator.generateMessagePreviewLink(project.getId(), message.getId()),
@@ -148,14 +135,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(RiskI18nEnum.LIST), new GotoRiskListListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(generateBreadcrumbLink(risk.getRiskname(), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(new RiskEvent.GotoRead(this, risk.getId()));
-            }
-        }));
+        this.addLink(generateBreadcrumbLink(risk.getRiskname(),
+                clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoRead(this, risk.getId()))));
         this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
         AppContext.addFragment(ProjectLinkGenerator.generateRiskEditLink(project.getId(), risk.getId()),
                 AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
@@ -207,14 +188,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(MilestoneI18nEnum.LIST), new GotoMilestoneListListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(generateBreadcrumbLink(milestone.getName(), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(new MilestoneEvent.GotoRead(this, milestone.getId()));
-            }
-        }));
+        this.addLink(generateBreadcrumbLink(milestone.getName(),
+                clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoRead(this, milestone.getId()))));
         this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
         AppContext.addFragment("project/milestone/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + milestone.getId()),
                 AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
@@ -369,14 +344,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
                 new GotoTaskAssignmentDashboard()));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-                AppContext.getMessage(TaskI18nEnum.SINGLE), task.getTaskname()), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(new TaskEvent.GotoRead(this, task.getId()));
-            }
-        }));
+                AppContext.getMessage(TaskI18nEnum.SINGLE), task.getTaskname()),
+                clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoRead(this, task.getId()))));
         this.setLinkEnabled(true, 2);
         this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
         AppContext.addFragment(ProjectLinkGenerator.generateTaskEditLink(task.getTaskkey(), task.getProjectShortname()),
@@ -426,14 +395,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.addLink(new Button(AppContext.getMessage(BugI18nEnum.LIST), new GotoBugListListener()));
         this.setLinkEnabled(true, 1);
 
-        this.addLink(generateBreadcrumbLink(bug.getSummary(), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(new BugEvent.GotoRead(this, bug.getId()));
-            }
-        }));
+        this.addLink(generateBreadcrumbLink(bug.getSummary(),
+                clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoRead(this, bug.getId()))));
         this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
         AppContext.addFragment(ProjectLinkGenerator.generateBugEditLink(bug.getBugkey(),
                 bug.getProjectShortName()), AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
@@ -472,14 +435,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(VersionI18nEnum.LIST), new GotoVersionListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(generateBreadcrumbLink(version.getVersionname(), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(new BugVersionEvent.GotoRead(this, version.getId()));
-            }
-        }));
+        this.addLink(generateBreadcrumbLink(version.getVersionname(),
+                clickEvent -> EventBusFactory.getInstance().post(new BugVersionEvent.GotoRead(this, version.getId()))));
         this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
         AppContext.addFragment("project/version/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + version.getId()),
                 AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
@@ -539,14 +496,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(ComponentI18nEnum.LIST), new GotoComponentListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(generateBreadcrumbLink(component.getComponentname(), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(new BugComponentEvent.GotoRead(this, component.getId()));
-            }
-        }));
+        this.addLink(generateBreadcrumbLink(component.getComponentname(),
+                clickEvent -> EventBusFactory.getInstance().post(new BugComponentEvent.GotoRead(this, component.getId()))));
         this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
         AppContext.addFragment("project/component/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + component.getId()),
                 AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,

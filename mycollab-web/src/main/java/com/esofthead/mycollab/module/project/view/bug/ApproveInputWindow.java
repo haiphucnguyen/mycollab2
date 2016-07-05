@@ -32,9 +32,9 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
-import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.event.ShortcutAction;
@@ -43,6 +43,7 @@ import com.vaadin.ui.*;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -93,56 +94,41 @@ public class ApproveInputWindow extends Window {
 
                 layout.addComponent(this.informationLayout.getLayout());
 
-                final MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
-                layout.addComponent(controlsBtn);
+                final MButton approveBtn = new MButton(AppContext.getMessage(BugI18nEnum.BUTTON_APPROVE_CLOSE), clickEvent -> {
+                    if (EditForm.this.validateForm()) {
+                        // Save bug status and assignee
+                        bug.setStatus(BugStatus.Verified.name());
 
-                final Button approveBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_APPROVE_CLOSE), new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+                        BugService bugService = AppContextUtil.getSpringBean(BugService.class);
+                        bugService.updateSelectiveWithSession(bug, AppContext.getUsername());
 
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        if (EditForm.this.validateForm()) {
-                            // Save bug status and assignee
-                            bug.setStatus(BugStatus.Verified.name());
+                        // Save comment
+                        String commentValue = commentArea.getValue();
+                        if (StringUtils.isNotBlank(commentValue)) {
+                            CommentWithBLOBs comment = new CommentWithBLOBs();
+                            comment.setComment(Jsoup.clean(commentArea.getValue(), Whitelist.relaxed()));
+                            comment.setCreatedtime(new GregorianCalendar().getTime());
+                            comment.setCreateduser(AppContext.getUsername());
+                            comment.setSaccountid(AppContext.getAccountId());
+                            comment.setType(ProjectTypeConstants.BUG);
+                            comment.setTypeid("" + bug.getId());
+                            comment.setExtratypeid(CurrentProjectVariables.getProjectId());
 
-                            BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                            bugService.updateSelectiveWithSession(bug, AppContext.getUsername());
-
-                            // Save comment
-                            String commentValue = commentArea.getValue();
-                            if (StringUtils.isNotBlank(commentValue)) {
-                                CommentWithBLOBs comment = new CommentWithBLOBs();
-                                comment.setComment(Jsoup.clean(commentArea.getValue(), Whitelist.relaxed()));
-                                comment.setCreatedtime(new GregorianCalendar().getTime());
-                                comment.setCreateduser(AppContext.getUsername());
-                                comment.setSaccountid(AppContext.getAccountId());
-                                comment.setType(ProjectTypeConstants.BUG);
-                                comment.setTypeid("" + bug.getId());
-                                comment.setExtratypeid(CurrentProjectVariables.getProjectId());
-
-                                CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
-                                commentService.saveWithSession(comment, AppContext.getUsername());
-                            }
-
-                            close();
-                            EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, bug.getId()));
+                            CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
+                            commentService.saveWithSession(comment, AppContext.getUsername());
                         }
+
+                        close();
+                        EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, bug.getId()));
                     }
-                });
-                approveBtn.setStyleName(UIConstants.BUTTON_ACTION);
+                }).withStyleName(UIConstants.BUTTON_ACTION);
                 approveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
-                Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+                MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                        .withStyleName(UIConstants.BUTTON_OPTION);
 
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        close();
-                    }
-                });
-                cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                controlsBtn.with(cancelBtn, approveBtn);
-
+                final MHorizontalLayout controlsBtn = new MHorizontalLayout(cancelBtn, approveBtn).withMargin(new MarginInfo(true, true, true, false));
+                layout.addComponent(controlsBtn);
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
                 return layout;
             }

@@ -82,20 +82,14 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
             serviceMenu.selectService(0);
 
             if (!SiteConfiguration.isCommunityEdition()) {
-                serviceMenu.addService(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_CLIENTS), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
-                        serviceMenu.selectService(1);
-                    }
+                serviceMenu.addService(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_CLIENTS), clickEvent -> {
+                    EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
+                    serviceMenu.selectService(1);
                 });
 
-                serviceMenu.addService(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        EventBusFactory.getInstance().post(new ReportEvent.GotoConsole(this));
-                        serviceMenu.selectService(2);
-                    }
+                serviceMenu.addService(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), clickEvent -> {
+                    EventBusFactory.getInstance().post(new ReportEvent.GotoConsole(this));
+                    serviceMenu.selectService(2);
                 });
             }
 

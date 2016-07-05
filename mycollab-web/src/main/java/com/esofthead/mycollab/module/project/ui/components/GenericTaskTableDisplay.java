@@ -36,6 +36,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Table;
+import org.vaadin.viritin.button.MButton;
 
 import java.util.List;
 
@@ -75,14 +76,10 @@ public class GenericTaskTableDisplay extends DefaultPagedBeanTable<ProjectGeneri
 
                 div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink);
 
-                Button assignmentLink = new Button(div.write(), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        fireTableEvent(new TableClickEvent(GenericTaskTableDisplay.this, task, "name"));
-                    }
-                });
+                MButton assignmentLink = new MButton(div.write(),
+                        clickEvent -> fireTableEvent(new TableClickEvent(GenericTaskTableDisplay.this, task, "name")))
+                        .withStyleName(UIConstants.BUTTON_LINK);
                 assignmentLink.setCaptionAsHtml(true);
-                assignmentLink.setStyleName(UIConstants.BUTTON_LINK);
                 return assignmentLink;
             }
         });
