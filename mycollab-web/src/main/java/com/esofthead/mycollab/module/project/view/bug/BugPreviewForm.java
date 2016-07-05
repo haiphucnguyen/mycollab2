@@ -45,6 +45,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
+import org.vaadin.viritin.button.MButton;
 
 import java.util.List;
 
@@ -123,7 +124,7 @@ public class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
     private static class PreviewFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<SimpleBug> {
         private static final long serialVersionUID = 1L;
 
-        public PreviewFormFieldFactory(GenericBeanForm<SimpleBug> form) {
+        PreviewFormFieldFactory(GenericBeanForm<SimpleBug> form) {
             super(form);
         }
 
@@ -149,18 +150,10 @@ public class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
                 if (CollectionUtils.isNotEmpty(components)) {
                     ContainerViewField componentContainer = new ContainerViewField();
                     for (final Component component : beanItem.getComponents()) {
-                        Button componentLink = new Button(StringUtils.trim(component.getComponentname(), 25, true), new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(Button.ClickEvent event) {
-                                EventBusFactory.getInstance().post(new BugComponentEvent.GotoRead(this, component.getId()));
-                            }
-                        });
-                        componentLink.setDescription(component.getComponentname());
+                        MButton componentLink = new MButton(StringUtils.trim(component.getComponentname(), 25, true),
+                                clickEvent -> EventBusFactory.getInstance().post(new BugComponentEvent.GotoRead(this, component.getId())))
+                                .withDescription(component.getComponentname()).withStyleName(UIConstants.BUTTON_BLOCK, ValoTheme.BUTTON_SMALL);
                         componentContainer.addComponentField(componentLink);
-                        componentLink.setStyleName(ValoTheme.BUTTON_SMALL);
-                        componentLink.addStyleName(UIConstants.BUTTON_BLOCK);
                     }
                     return componentContainer;
                 } else {
@@ -171,18 +164,10 @@ public class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
                 if (CollectionUtils.isNotEmpty(affectedVersions)) {
                     ContainerViewField componentContainer = new ContainerViewField();
                     for (final Version version : beanItem.getAffectedVersions()) {
-                        Button versionLink = new Button(StringUtils.trim(version.getVersionname(), 25, true), new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(Button.ClickEvent event) {
-                                EventBusFactory.getInstance().post(new BugVersionEvent.GotoRead(this, version.getId()));
-                            }
-                        });
-                        versionLink.setDescription(version.getVersionname());
+                        MButton versionLink = new MButton(StringUtils.trim(version.getVersionname(), 25, true),
+                                clickEvent -> EventBusFactory.getInstance().post(new BugVersionEvent.GotoRead(this, version.getId())))
+                                .withDescription(version.getVersionname()).withStyleName(UIConstants.BUTTON_BLOCK, ValoTheme.BUTTON_SMALL);
                         componentContainer.addComponentField(versionLink);
-                        versionLink.setStyleName(ValoTheme.BUTTON_SMALL);
-                        versionLink.addStyleName(UIConstants.BUTTON_BLOCK);
                     }
                     return componentContainer;
                 } else {
@@ -193,18 +178,10 @@ public class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
                 if (CollectionUtils.isNotEmpty(fixedVersions)) {
                     ContainerViewField componentContainer = new ContainerViewField();
                     for (final Version version : beanItem.getFixedVersions()) {
-                        Button versionLink = new Button(StringUtils.trim(version.getVersionname(), 25, true), new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(Button.ClickEvent event) {
-                                EventBusFactory.getInstance().post(new BugVersionEvent.GotoRead(this, version.getId()));
-                            }
-                        });
-                        versionLink.setDescription(version.getVersionname());
+                        MButton versionLink = new MButton(StringUtils.trim(version.getVersionname(), 25, true),
+                                clickEvent -> EventBusFactory.getInstance().post(new BugVersionEvent.GotoRead(this, version.getId())))
+                                .withDescription(version.getVersionname()).withStyleName(UIConstants.BUTTON_BLOCK, ValoTheme.BUTTON_SMALL);
                         componentContainer.addComponentField(versionLink);
-                        versionLink.setStyleName(ValoTheme.BUTTON_SMALL);
-                        versionLink.addStyleName(UIConstants.BUTTON_BLOCK);
                     }
                     return componentContainer;
                 } else {

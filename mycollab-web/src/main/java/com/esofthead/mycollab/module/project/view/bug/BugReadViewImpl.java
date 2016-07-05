@@ -120,69 +120,38 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             bugWorkflowControl.removeAllComponents();
             ButtonGroup navButton = new ButtonGroup();
 
-            Button resolveBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new ResolvedInputWindow(beanItem));
-                }
-            });
-            resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            MButton resolveBtn = new MButton(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED),
+                    clickEvent -> UI.getCurrent().addWindow(new ResolvedInputWindow(beanItem)))
+                    .withStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(resolveBtn);
             bugWorkflowControl.addComponent(navButton);
         } else if (BugStatus.Verified.name().equals(beanItem.getStatus())) {
             bugWorkflowControl.removeAllComponents();
             ButtonGroup navButton = new ButtonGroup();
-            Button reopenBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new ReOpenWindow(beanItem));
-                }
-            });
-            reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            MButton reopenBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
+                    clickEvent -> UI.getCurrent().addWindow(new ReOpenWindow(beanItem))).withStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(reopenBtn);
 
             bugWorkflowControl.addComponent(navButton);
         } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
             bugWorkflowControl.removeAllComponents();
             ButtonGroup navButton = new ButtonGroup();
-            Button reopenBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new ReOpenWindow(beanItem));
-                }
-            });
-            reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            MButton reopenBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
+                    clickEvent -> UI.getCurrent().addWindow(new ReOpenWindow(beanItem)))
+                    .withStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(reopenBtn);
 
-            Button approveNCloseBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_APPROVE_CLOSE), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new ApproveInputWindow(beanItem));
-                }
-            });
-            approveNCloseBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            MButton approveNCloseBtn = new MButton(AppContext.getMessage(BugI18nEnum.BUTTON_APPROVE_CLOSE),
+                    clickEvent -> UI.getCurrent().addWindow(new ApproveInputWindow(beanItem)))
+                    .withStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(approveNCloseBtn);
             bugWorkflowControl.addComponent(navButton);
         } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
             bugWorkflowControl.removeAllComponents();
             ButtonGroup navButton = new ButtonGroup();
-            Button reopenBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().addWindow(new ReOpenWindow(beanItem));
-                }
-            });
-            reopenBtn.setStyleName(UIConstants.BUTTON_ACTION);
+            MButton reopenBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
+                    clickEvent -> UI.getCurrent().addWindow(new ReOpenWindow(beanItem)))
+                    .withStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(reopenBtn);
 
             bugWorkflowControl.addComponent(navButton);
@@ -302,14 +271,10 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     @Override
     protected ComponentContainer createButtonControls() {
         ProjectPreviewFormControlsGenerator<SimpleBug> bugPreviewFormControls = new ProjectPreviewFormControlsGenerator<>(previewForm);
-        MButton linkBtn = new MButton(AppContext.getMessage(BugI18nEnum.OPT_BUG_DEPENDENCIES), new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new LinkIssueWindow(beanItem));
-            }
-        });
+        MButton linkBtn = new MButton(AppContext.getMessage(BugI18nEnum.OPT_BUG_DEPENDENCIES),
+                clickEvent -> UI.getCurrent().addWindow(new LinkIssueWindow(beanItem)))
+                .withIcon(FontAwesome.BOLT);
         linkBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
-        linkBtn.setIcon(FontAwesome.BOLT);
         bugPreviewFormControls.addOptionButton(linkBtn);
 
         HorizontalLayout topPanel = bugPreviewFormControls.createButtonControls(
@@ -321,18 +286,10 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                         | ProjectPreviewFormControlsGenerator.NAVIGATOR_BTN_PRESENTED,
                 ProjectRolePermissionCollections.BUGS);
 
-        Button assignBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ASSIGN), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                UI.getCurrent().addWindow(new AssignBugWindow(beanItem));
-            }
-        });
+        MButton assignBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_ASSIGN),
+                clickEvent -> UI.getCurrent().addWindow(new AssignBugWindow(beanItem)))
+                .withIcon(FontAwesome.SHARE).withStyleName(UIConstants.BUTTON_ACTION);
         assignBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
-        assignBtn.setIcon(FontAwesome.SHARE);
-
-        assignBtn.setStyleName(UIConstants.BUTTON_ACTION);
 
         bugWorkflowControl = new CssLayout();
         bugPreviewFormControls.insertToControlBlock(bugWorkflowControl);
