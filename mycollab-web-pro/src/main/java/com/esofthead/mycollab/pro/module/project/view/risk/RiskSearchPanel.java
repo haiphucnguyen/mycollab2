@@ -24,13 +24,14 @@ import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
+class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
     private static final long serialVersionUID = 1L;
 
     private static Param[] paramFields = new Param[]{
@@ -47,16 +48,9 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
 
     @Override
     protected Component buildExtraControls() {
-        Button createBtn = new Button(AppContext.getMessage(RiskI18nEnum.NEW), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null));
-            }
-        });
-        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        createBtn.setIcon(FontAwesome.PLUS);
+        MButton createBtn = new MButton(AppContext.getMessage(RiskI18nEnum.NEW),
+                clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null)))
+                .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
         return createBtn;
     }
@@ -77,14 +71,12 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
         private TextField nameField;
         private CheckBox myItemCheckbox;
 
-        public RiskBasicSearchLayout() {
+        RiskBasicSearchLayout() {
             super(RiskSearchPanel.this);
         }
 
         @Override
         public ComponentContainer constructBody() {
-            MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
-
             nameField = ShortcutExtension.installShortcutAction(new TextField(),
                     new ShortcutListener("RiskSearchRequest", ShortcutAction.KeyCode.ENTER, null) {
                         @Override
@@ -94,34 +86,21 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
                     });
             nameField.setInputPrompt("Query by risk name");
             nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-            basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_CENTER);
 
-            this.myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
-            basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
+            myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
 
-            Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-            searchBtn.setIcon(FontAwesome.SEARCH);
-            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
-            searchBtn.addClickListener(clickEvent -> callSearchAction());
-            basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
+            MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
+                    .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
 
-            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
+            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""));
             cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-            cancelBtn.addClickListener(clickEvent -> nameField.setValue(""));
-            basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
-            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    moveToAdvancedSearchLayout();
-                }
-            });
+            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
+                    clickEvent -> moveToAdvancedSearchLayout());
             advancedSearchBtn.setStyleName(UIConstants.BUTTON_LINK);
-            basicSearchBody.with(advancedSearchBtn).withAlign(advancedSearchBtn, Alignment.MIDDLE_CENTER);
 
-            return basicSearchBody;
+            return new MHorizontalLayout(nameField, myItemCheckbox, searchBtn, cancelBtn, advancedSearchBtn)
+                    .alignAll(Alignment.MIDDLE_LEFT).withMargin(true);
         }
 
         @Override
@@ -147,7 +126,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
     private class RiskAdvancedSearchLayout extends DynamicQueryParamLayout<RiskSearchCriteria> {
         private static final long serialVersionUID = 1L;
 
-        public RiskAdvancedSearchLayout() {
+        RiskAdvancedSearchLayout() {
             super(RiskSearchPanel.this, ProjectTypeConstants.RISK);
         }
 

@@ -14,8 +14,8 @@ import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.AppContextUtil;
-import com.esofthead.mycollab.vaadin.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.TooltipHelper;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.LabelLink;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
@@ -47,15 +47,13 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
     private static final Logger LOG = LoggerFactory.getLogger(TimeTrackingTableDisplay.class);
 
     public TimeTrackingTableDisplay(List<TableViewField> displayColumns) {
-        super(AppContextUtil.getSpringBean(ItemTimeLoggingService.class),
-                SimpleItemTimeLogging.class, displayColumns);
+        super(AppContextUtil.getSpringBean(ItemTimeLoggingService.class), SimpleItemTimeLogging.class, displayColumns);
 
         this.addGeneratedColumn("logUserFullName", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public com.vaadin.ui.Component generateCell(final Table source,
-                                                        final Object itemId, final Object columnId) {
+            public com.vaadin.ui.Component generateCell(final Table source, final Object itemId, final Object columnId) {
                 SimpleItemTimeLogging timeItem = getBeanByIndex(itemId);
                 return new ProjectUserLink(timeItem.getLoguser(), timeItem.getLogUserAvatarId(), timeItem.getLogUserFullName());
 

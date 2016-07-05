@@ -167,7 +167,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
             public void buttonClick(ClickEvent event) {
                 ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
                         TimeTrackingEditViewWindow.this);
-                TimeTrackingEditViewWindow.this.getUI().addWindow(selectionTaskWindow);
+                UI.getCurrent().addWindow(selectionTaskWindow);
             }
         });
         attachTaskBtn.addStyleName(UIConstants.BUTTON_ACTION);

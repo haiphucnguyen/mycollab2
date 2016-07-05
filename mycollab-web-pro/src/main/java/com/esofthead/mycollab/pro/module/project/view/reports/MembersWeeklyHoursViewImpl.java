@@ -29,6 +29,7 @@ import com.vaadin.ui.GridLayout;
 import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.DateTime;
 import org.vaadin.alump.distributionbar.DistributionBar;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -71,19 +72,15 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
 
         searchLayout.addComponent(dateFieldExt, 3, 0);
         container.with(searchLayout);
-        Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                Collection<SimpleProject> selectedProjects = (Collection<SimpleProject>) projectsSelection.getValue();
-                if (CollectionUtils.isEmpty(selectedProjects)) {
-                    NotificationUtil.showErrorNotification("You must select at least one project");
-                    return;
-                } else {
-                    buildHourlyProjectsReport(selectedProjects, dateFieldExt.getValue());
-                }
+        MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> {
+            Collection<SimpleProject> selectedProjects = (Collection<SimpleProject>) projectsSelection.getValue();
+            if (CollectionUtils.isEmpty(selectedProjects)) {
+                NotificationUtil.showErrorNotification("You must select at least one project");
+                return;
+            } else {
+                buildHourlyProjectsReport(selectedProjects, dateFieldExt.getValue());
             }
-        });
-        searchBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        }).withStyleName(UIConstants.BUTTON_ACTION);
         searchLayout.addComponent(searchBtn, 4, 0);
         with(new MCssLayout(new MHorizontalLayout(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)))
                 .withWidth("150px").withMargin(new MarginInfo(false, true, false, true))

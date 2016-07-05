@@ -10,11 +10,12 @@ import com.esofthead.mycollab.module.project.ui.components.GenericTaskTableDispl
 import com.esofthead.mycollab.module.project.ui.components.GenericTaskTableFieldDef;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickEvent;
-import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.Window;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -41,16 +42,11 @@ class ProjectGenericTaskSelectionWindow extends Window {
         assignmentTableDisplay = new GenericTaskTableDisplay(Arrays.asList(GenericTaskTableFieldDef.name,
                 GenericTaskTableFieldDef.assignUser));
         assignmentTableDisplay.setDisplayNumItems(10);
-        assignmentTableDisplay.addTableListener(new TableClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void itemClick(final TableClickEvent event) {
-                final ProjectGenericTask task = (ProjectGenericTask) event.getData();
-                if ("name".equals(event.getFieldName())) {
-                    timeEntryWindow.updateLinkTask(task);
-                    close();
-                }
+        assignmentTableDisplay.addTableListener(event -> {
+            final ProjectGenericTask task = (ProjectGenericTask) event.getData();
+            if ("name".equals(event.getFieldName())) {
+                timeEntryWindow.updateLinkTask(task);
+                close();
             }
         });
 
@@ -64,29 +60,18 @@ class ProjectGenericTaskSelectionWindow extends Window {
     }
 
     private ComponentContainer constructTopPanel() {
-        final MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
-
         Label nameLbl = new Label("Name:");
-        basicSearchBody.with(nameLbl).withAlign(nameLbl, Alignment.MIDDLE_LEFT);
 
         this.nameField = new TextField();
         this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-        basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_CENTER);
 
-        final Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-        searchBtn.setIcon(FontAwesome.SEARCH);
-        searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
+        final MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
+                .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
 
-        searchBtn.addClickListener(clickEvent -> callSearchAction());
-        searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
+        final MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
+                .withStyleName(UIConstants.BUTTON_OPTION);
 
-        final Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
-        cancelBtn.addClickListener(clickEvent -> nameField.setValue(""));
-        cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-        basicSearchBody.addComponent(cancelBtn);
-
-        return basicSearchBody;
+        return new MHorizontalLayout(nameLbl, nameField, searchBtn, cancelBtn).withMargin(true);
     }
 
     private void callSearchAction() {

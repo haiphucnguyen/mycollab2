@@ -30,6 +30,7 @@ import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.collections.CollectionUtils;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -45,7 +46,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
     private static final long serialVersionUID = 1L;
 
     private TimeLoggingBasicSearchLayout layout;
-    private Button createBtn;
+    private MButton createBtn;
 
     @Override
     protected SearchLayout<ItemTimeLoggingSearchCriteria> createBasicSearchLayout() {
@@ -73,15 +74,12 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
     @Override
     protected Component buildExtraControls() {
-        createBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME));
-        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        createBtn.setIcon(FontAwesome.PLUS);
-        createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived() &&
-                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TIME));
-        createBtn.addClickListener((event) -> {
+        createBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow();
             UI.getCurrent().addWindow(addTimeEntry);
-        });
+        }).withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
+        createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived() &&
+                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TIME));
         return createBtn;
     }
 
@@ -133,20 +131,10 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
             groupField = new ValueComboBox(false, AppContext.getMessage(DayI18nEnum.OPT_DATE),
                     AppContext.getMessage(UserI18nEnum.SINGLE));
-            groupField.addValueChangeListener(new Property.ValueChangeListener() {
-                @Override
-                public void valueChange(Property.ValueChangeEvent event) {
-                    callSearchAction();
-                }
-            });
+            groupField.addValueChangeListener(valueChangeEvent -> callSearchAction());
 
             orderField = new ItemOrderComboBox();
-            orderField.addValueChangeListener(new Property.ValueChangeListener() {
-                @Override
-                public void valueChange(Property.ValueChangeEvent event) {
-                    callSearchAction();
-                }
-            });
+            orderField.addValueChangeListener(valueChangeEvent -> callSearchAction());
 
             Label dateStartLb = new ELabel(AppContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(UIConstants
                     .META_COLOR, UIConstants.TEXT_ALIGN_RIGHT);
@@ -173,27 +161,13 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             userField = new ProjectMemberListSelect();
             gridLayout.addComponent(userField, 5, 0, 5, 1);
 
-            MHorizontalLayout buttonControls = new MHorizontalLayout();
+            MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
+                    .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
 
-            Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), new Button.ClickListener() {
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    callSearchAction();
-                }
-            });
+            MButton clearBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> userField.setValue(null))
+                    .withStyleName(UIConstants.BUTTON_OPTION);
 
-            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
-            searchBtn.setIcon(FontAwesome.SEARCH);
-
-            Button clearBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), new Button.ClickListener() {
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    userField.setValue(null);
-                }
-            });
-            clearBtn.setStyleName(UIConstants.BUTTON_OPTION);
-
-            buttonControls.with(searchBtn, clearBtn).alignAll(Alignment.MIDDLE_LEFT);
+            MHorizontalLayout buttonControls = new MHorizontalLayout(searchBtn, clearBtn);
             bodyWrap.with(gridLayout, buttonControls).withAlign(buttonControls, Alignment.MIDDLE_CENTER);
 
             return bodyWrap;

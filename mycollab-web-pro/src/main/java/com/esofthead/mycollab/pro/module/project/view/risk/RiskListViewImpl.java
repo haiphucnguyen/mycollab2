@@ -27,7 +27,6 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Table.ColumnGenerator;
 import org.vaadin.teemu.ratingstars.RatingStars;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -87,10 +86,10 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public com.vaadin.ui.Component generateCell(final Table source,
-                                                        final Object itemId, final Object columnId) {
+            public com.vaadin.ui.Component generateCell(final Table source, final Object itemId, final Object columnId) {
                 SimpleRisk risk = tableItem.getBeanByIndex(itemId);
-                LabelLink b = new LabelLink(risk.getRiskname(), ProjectLinkBuilder.generateRiskPreviewFullLink(risk.getProjectid(), risk.getId()));
+                LabelLink b = new LabelLink(risk.getRiskname(), ProjectLinkBuilder.generateRiskPreviewFullLink(risk.getProjectid(),
+                        risk.getId()));
 
                 if ("Closed".equals(risk.getStatus())) {
                     b.addStyleName(UIConstants.LINK_COMPLETED);
@@ -196,14 +195,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         selectedItemsNumberLabel.setWidth("100%");
         layout.with(selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER).expand(selectedItemsNumberLabel);
 
-        Button customizeViewBtn = new Button("", new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                UI.getCurrent().addWindow(new RiskListCustomizeWindow(tableItem));
-            }
-        });
+        Button customizeViewBtn = new Button("", clickEvent -> UI.getCurrent().addWindow(new RiskListCustomizeWindow(tableItem)));
         customizeViewBtn.setIcon(FontAwesome.ADJUST);
         customizeViewBtn.setDescription("Layout Options");
         customizeViewBtn.addStyleName(UIConstants.BUTTON_ACTION);

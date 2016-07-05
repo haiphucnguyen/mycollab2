@@ -13,7 +13,10 @@ import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.joda.time.LocalDate;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+
+import static com.esofthead.mycollab.vaadin.web.ui.UIConstants.BUTTON_ACTION;
 
 /**
  * @author MyCollab Ltd
@@ -45,14 +48,9 @@ public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGeneri
     @Override
     protected Component buildExtraControls() {
         if (isCreateAssignment) {
-            Button newAssignmentBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT), new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(), CurrentProjectVariables.getProjectId()));
-                }
-            });
-            newAssignmentBtn.setIcon(FontAwesome.PLUS);
-            newAssignmentBtn.setStyleName(UIConstants.BUTTON_ACTION);
+            MButton newAssignmentBtn = new MButton(AppContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT),
+                    clickEvent -> UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(),
+                            CurrentProjectVariables.getProjectId()))).withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
             return newAssignmentBtn;
         }
         return null;
@@ -84,7 +82,7 @@ public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGeneri
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction());
             searchBtn.setIcon(FontAwesome.SEARCH);
-            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
+            searchBtn.setStyleName(BUTTON_ACTION);
             basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
 
             Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""));

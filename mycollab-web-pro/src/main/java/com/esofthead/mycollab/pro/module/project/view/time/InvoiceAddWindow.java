@@ -21,6 +21,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -47,42 +48,29 @@ public class InvoiceAddWindow extends Window {
         editBeanForm.setBeanFormFieldFactory(invoiceEditFormFieldFactory);
         editBeanForm.setBean(invoice);
 
-        MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
-        buttonControls.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
+        MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+            if (editBeanForm.validateForm()) {
+                InvoiceService invoiceService = AppContextUtil.getSpringBean(InvoiceService.class);
 
-        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                if (editBeanForm.validateForm()) {
-                    InvoiceService invoiceService = AppContextUtil.getSpringBean(InvoiceService.class);
-
-                    if (invoice.getId() == null) {
-                        invoiceService.saveWithSession(invoice, AppContext.getUsername());
-                        EventBusFactory.getInstance().post(new InvoiceEvent.NewInvoiceAdded(this, invoice));
-                    } else {
-                        invoiceService.updateWithSession(invoice, AppContext.getUsername());
-                        EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceUpdateAdded(this, invoice));
-                    }
-                    AttachmentUploadField uploadField = invoiceEditFormFieldFactory.getAttachmentUploadField();
-                    String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), invoice.getProjectid(),
-                            ProjectTypeConstants.INVOICE, "" + invoice.getId());
-                    uploadField.saveContentsToRepo(attachPath);
-                    close();
+                if (invoice.getId() == null) {
+                    invoiceService.saveWithSession(invoice, AppContext.getUsername());
+                    EventBusFactory.getInstance().post(new InvoiceEvent.NewInvoiceAdded(this, invoice));
+                } else {
+                    invoiceService.updateWithSession(invoice, AppContext.getUsername());
+                    EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceUpdateAdded(this, invoice));
                 }
-            }
-        });
-        saveBtn.setIcon(FontAwesome.SAVE);
-        saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
+                AttachmentUploadField uploadField = invoiceEditFormFieldFactory.getAttachmentUploadField();
+                String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), invoice.getProjectid(),
+                        ProjectTypeConstants.INVOICE, "" + invoice.getId());
+                uploadField.saveContentsToRepo(attachPath);
                 close();
             }
-        });
-        cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-        buttonControls.with(cancelBtn, saveBtn);
+        }).withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+        saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+
+        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                .withStyleName(UIConstants.BUTTON_OPTION);
+        MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(new MarginInfo(true, true, true, false));
         content.addComponent(buttonControls);
         content.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);
     }

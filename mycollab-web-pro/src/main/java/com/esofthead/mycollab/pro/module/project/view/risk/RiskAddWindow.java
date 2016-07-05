@@ -20,6 +20,7 @@ import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -65,47 +66,34 @@ public class RiskAddWindow extends Window {
                 MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
                 buttonControls.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
 
-                Button updateAllBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, EditForm.this.bean));
-                        close();
-                    }
-                });
-                updateAllBtn.addStyleName(UIConstants.BUTTON_LINK);
+                MButton updateAllBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), clickEvent -> {
+                    EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, EditForm.this.bean));
+                    close();
+                }).withStyleName(UIConstants.BUTTON_LINK);
 
-                Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        if (EditForm.this.validateForm()) {
-                            RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                            Integer riskId;
-                            if (bean.getId() == null) {
-                                riskId = riskService.saveWithSession(bean, AppContext.getUsername());
-                            } else {
-                                riskService.updateWithSession(bean, AppContext.getUsername());
-                                riskId = bean.getId();
-                            }
-                            AttachmentUploadField uploadField = ((RiskEditFormFieldFactory) getFieldFactory()).getAttachmentUploadField();
-                            String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), bean.getProjectid(),
-                                    ProjectTypeConstants.RISK, "" + riskId);
-                            uploadField.saveContentsToRepo(attachPath);
-
-                            close();
-                            EventBusFactory.getInstance().post(new AssignmentEvent.NewAssignmentAdd(this,
-                                    ProjectTypeConstants.RISK, riskId));
+                MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+                    if (EditForm.this.validateForm()) {
+                        RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
+                        Integer riskId;
+                        if (bean.getId() == null) {
+                            riskId = riskService.saveWithSession(bean, AppContext.getUsername());
+                        } else {
+                            riskService.updateWithSession(bean, AppContext.getUsername());
+                            riskId = bean.getId();
                         }
-                    }
-                });
-                saveBtn.setIcon(FontAwesome.SAVE);
-                saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
+                        AttachmentUploadField uploadField = ((RiskEditFormFieldFactory) getFieldFactory()).getAttachmentUploadField();
+                        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), bean.getProjectid(),
+                                ProjectTypeConstants.RISK, "" + riskId);
+                        uploadField.saveContentsToRepo(attachPath);
 
-                Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
                         close();
+                        EventBusFactory.getInstance().post(new AssignmentEvent.NewAssignmentAdd(this,
+                                ProjectTypeConstants.RISK, riskId));
                     }
-                });
+                }).withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+
+                MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                        .withStyleName(UIConstants.BUTTON_OPTION);
                 cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
                 buttonControls.with(updateAllBtn, saveBtn, cancelBtn);
 

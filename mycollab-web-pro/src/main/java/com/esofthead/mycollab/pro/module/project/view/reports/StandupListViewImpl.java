@@ -177,13 +177,10 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
                     projectLbl, new ELabel(" (" + project.getTotalWrittenReports() + " / "
                     + project.getTotalReports() + ")").withWidthUndefined()).expand(projectLbl).withStyleName(UIConstants
                     .BORDER_LIST_ROW).withStyleName(UIConstants.CURSOR_POINTER).withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
-            layout.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
-                @Override
-                public void layoutClick(LayoutEvents.LayoutClickEvent layoutClickEvent) {
-                    selectedProject = project;
-                    EventBusFactory.getInstance().post(new StandUpEvent.DisplayStandupInProject(this, project.getProjectId()));
-                    host.setSelectedRow(layout);
-                }
+            layout.addLayoutClickListener(layoutClickEvent -> {
+                selectedProject = project;
+                EventBusFactory.getInstance().post(new StandUpEvent.DisplayStandupInProject(this, project.getProjectId()));
+                host.setSelectedRow(layout);
             });
             return layout;
         }

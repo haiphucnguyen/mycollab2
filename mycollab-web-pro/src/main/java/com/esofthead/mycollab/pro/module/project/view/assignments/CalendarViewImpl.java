@@ -50,6 +50,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.vaadin.peter.buttongroup.ButtonGroup;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -209,47 +210,34 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         MHorizontalLayout header = new MHorizontalLayout().withFullWidth();
 
         MHorizontalLayout headerLeftContainer = new MHorizontalLayout();
-        Button todayBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_TODAY), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                baseDate = new LocalDate();
-                displayCalendarView();
-            }
-        });
+        MButton todayBtn = new MButton(AppContext.getMessage(DayI18nEnum.OPT_TODAY), clickEvent -> {
+            baseDate = new LocalDate();
+            displayCalendarView();
+        }).withStyleName(UIConstants.BUTTON_ACTION);
         todayBtn.setStyleName(UIConstants.BUTTON_ACTION);
         ButtonGroup navigationBtns = new ButtonGroup();
-        Button previousBtn = new Button("", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                if (mode == CalendarMode.DAILY) {
-                    baseDate = baseDate.minusDays(1);
-                } else if (mode == CalendarMode.WEEKLY) {
-                    baseDate = baseDate.minusWeeks(1);
-                } else {
-                    baseDate = baseDate.minusMonths(1);
-                }
-                displayCalendarView();
+        MButton previousBtn = new MButton("", clickEvent -> {
+            if (mode == CalendarMode.DAILY) {
+                baseDate = baseDate.minusDays(1);
+            } else if (mode == CalendarMode.WEEKLY) {
+                baseDate = baseDate.minusWeeks(1);
+            } else {
+                baseDate = baseDate.minusMonths(1);
             }
-        });
-        previousBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        previousBtn.setIcon(FontAwesome.CHEVRON_LEFT);
+            displayCalendarView();
+        }).withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.CHEVRON_LEFT);
         navigationBtns.addButton(previousBtn);
 
-        Button nextBtn = new Button("", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                if (mode == CalendarMode.DAILY) {
-                    baseDate = baseDate.plusDays(1);
-                } else if (mode == CalendarMode.WEEKLY) {
-                    baseDate = baseDate.plusWeeks(1);
-                } else {
-                    baseDate = baseDate.plusMonths(1);
-                }
-                displayCalendarView();
+        MButton nextBtn = new MButton("", clickEvent -> {
+            if (mode == CalendarMode.DAILY) {
+                baseDate = baseDate.plusDays(1);
+            } else if (mode == CalendarMode.WEEKLY) {
+                baseDate = baseDate.plusWeeks(1);
+            } else {
+                baseDate = baseDate.plusMonths(1);
             }
-        });
-        nextBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        nextBtn.setIcon(FontAwesome.CHEVRON_RIGHT);
+            displayCalendarView();
+        }).withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.CHEVRON_RIGHT);
         navigationBtns.addButton(nextBtn);
 
         headerLeftContainer.with(todayBtn, navigationBtns);
@@ -259,34 +247,20 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         headerLbl = ELabel.h2("");
         titleWrapper.addComponent(headerLbl);
 
-        Button dailyBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_DAILY), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                baseDate = new LocalDate();
-                displayDayView();
-            }
-        });
-        dailyBtn.setWidth("80px");
+        MButton dailyBtn = new MButton(AppContext.getMessage(DayI18nEnum.OPT_DAILY), clickEvent -> {
+            baseDate = new LocalDate();
+            displayDayView();
+        }).withWidth("80px");
 
-        Button weeklyBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_WEEKLY), new Button.ClickListener() {
-            private static final long serialVersionUID = -5707546605789537298L;
+        MButton weeklyBtn = new MButton(AppContext.getMessage(DayI18nEnum.OPT_WEEKLY), clickEvent -> {
+            baseDate = new LocalDate();
+            displayWeekView();
+        }).withWidth("80px");
 
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                baseDate = new LocalDate();
-                displayWeekView();
-            }
-        });
-        weeklyBtn.setWidth("80px");
-
-        Button monthlyBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_MONTHLY), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                baseDate = new LocalDate();
-                displayMonthView();
-            }
-        });
-        monthlyBtn.setWidth("80px");
+        MButton monthlyBtn = new MButton(AppContext.getMessage(DayI18nEnum.OPT_MONTHLY), clickEvent -> {
+            baseDate = new LocalDate();
+            displayMonthView();
+        }).withWidth("80px");
 
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(dailyBtn);

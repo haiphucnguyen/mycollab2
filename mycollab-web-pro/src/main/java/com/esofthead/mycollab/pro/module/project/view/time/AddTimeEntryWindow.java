@@ -21,8 +21,8 @@ import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
-import com.esofthead.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -30,7 +30,7 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -97,7 +97,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         isBillableCheckBox = new CheckBox();
         isOvertimeCheckBox = new CheckBox();
         attrContainer.with(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE)).withStyleName
-                (UIConstants.META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("100px"),
+                        (UIConstants.META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("100px"),
                 isBillableCheckBox, new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME))
                         .withStyleName(UIConstants.META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("100px"), isOvertimeCheckBox)
                 .alignAll(Alignment.MIDDLE_LEFT);
@@ -125,41 +125,24 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         descArea = new RichTextArea();
         descArea.setWidth("100%");
         content.addComponent(descArea);
-        MHorizontalLayout footer = new MHorizontalLayout();
+        MHorizontalLayout footer = new MHorizontalLayout().withFullWidth();
         taskLayout = new MHorizontalLayout();
         taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         createLinkTaskButton();
         footer.addComponent(taskLayout);
 
-        MHorizontalLayout controlsLayout = new MHorizontalLayout();
+        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                .withStyleName(UIConstants.BUTTON_OPTION);
 
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                close();
-            }
-        });
-        cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
-
-        Button saveBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                saveTimeLoggingItems();
-                close();
-            }
-        });
-        saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        MButton saveBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
+            saveTimeLoggingItems();
+            close();
+        }).withStyleName(UIConstants.BUTTON_ACTION);
         saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
-        controlsLayout.with(cancelBtn, saveBtn);
+        MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);
+        footer.with(controlsLayout).withAlign(controlsLayout, Alignment.TOP_RIGHT);
 
-        footer.addComponent(controlsLayout);
-        footer.setWidth("100%");
-        footer.setComponentAlignment(controlsLayout, Alignment.TOP_RIGHT);
         content.addComponent(footer);
         this.setContent(content);
         this.center();
@@ -172,17 +155,10 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
             String taskName = this.selectionTask.getName();
             taskLayout.removeAllComponents();
 
-            Button detachTaskBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), new Button.ClickListener() {
-
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    createLinkTaskButton();
-                    updateLinkTask(null);
-                }
-            });
-            detachTaskBtn.setStyleName(UIConstants.BUTTON_DANGER);
+            MButton detachTaskBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), clickEvent -> {
+                createLinkTaskButton();
+                updateLinkTask(null);
+            }).withStyleName(UIConstants.BUTTON_DANGER);
             taskLayout.addComponent(detachTaskBtn);
 
             Label attachTaskBtn = new Label(StringUtils.trim(taskName, 60, true));
@@ -199,16 +175,10 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
 
     private void createLinkTaskButton() {
         taskLayout.removeAllComponents();
-        Button attachTaskBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(AddTimeEntryWindow.this);
-                getUI().addWindow(selectionTaskWindow);
-            }
-        });
-        attachTaskBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        MButton attachTaskBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), clickEvent -> {
+            ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(AddTimeEntryWindow.this);
+            getUI().addWindow(selectionTaskWindow);
+        }).withStyleName(UIConstants.BUTTON_ACTION);
 
         taskLayout.addComponent(attachTaskBtn);
     }
