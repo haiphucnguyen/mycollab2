@@ -104,31 +104,25 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
                 }
             }
         });
-        optionGroup.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent event) {
-                String val = (String) optionGroup.getValue();
-                if (ACT_CODE.equals(val)) {
-                    uploadFilenameField.setReadOnly(false);
-                    uploadFilenameField.setValue("");
-                    uploadFilenameField.setReadOnly(true);
-                    activationField.setReadOnly(false);
-                } else {
-                    activationField.setReadOnly(false);
-                    activationField.setValue("");
-                    activationField.setReadOnly(true);
-                    licenseUploadField.setEnabled(true);
-                    licenseUploadField.markAsDirtyRecursive();
-                }
-                changeLicenseBtn.setEnabled(false);
+        optionGroup.addValueChangeListener(valueChangeEvent -> {
+            String val = (String) optionGroup.getValue();
+            if (ACT_CODE.equals(val)) {
+                uploadFilenameField.setReadOnly(false);
+                uploadFilenameField.setValue("");
+                uploadFilenameField.setReadOnly(true);
+                activationField.setReadOnly(false);
+            } else {
+                activationField.setReadOnly(false);
+                activationField.setValue("");
+                activationField.setReadOnly(true);
+                licenseUploadField.setEnabled(true);
+                licenseUploadField.markAsDirtyRecursive();
             }
+            changeLicenseBtn.setEnabled(false);
         });
-        activationField.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                if (StringUtils.isNotBlank(activationField.getValue())) {
-                    changeLicenseBtn.setEnabled(true);
-                }
+        activationField.addValueChangeListener(valueChangeEvent -> {
+            if (StringUtils.isNotBlank(activationField.getValue())) {
+                changeLicenseBtn.setEnabled(true);
             }
         });
         optionGroup.setValue(ACT_CODE);

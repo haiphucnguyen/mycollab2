@@ -74,15 +74,12 @@ public class GanttChartViewImpl extends AbstractLazyPageView implements GanttCha
         MHorizontalLayout resWrapper = new MHorizontalLayout();
         Label resLbl = new Label("Resolution: ");
         final ComboBox resValue = new ValueComboBox(false, "Day", "Week");
-        resValue.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent event) {
-                String val = (String) resValue.getValue();
-                if ("Day".equals(val)) {
-                    gantt.setResolution(Resolution.Day);
-                } else if ("Week".equals(val)) {
-                    gantt.setResolution(Resolution.Week);
-                }
+        resValue.addValueChangeListener(valueChangeEvent -> {
+            String val = (String) resValue.getValue();
+            if ("Day".equals(val)) {
+                gantt.setResolution(Resolution.Day);
+            } else if ("Week".equals(val)) {
+                gantt.setResolution(Resolution.Week);
             }
         });
         resWrapper.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);

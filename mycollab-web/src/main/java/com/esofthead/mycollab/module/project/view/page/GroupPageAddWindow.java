@@ -36,6 +36,7 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -104,38 +105,22 @@ class GroupPageAddWindow extends Window {
                 final MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
                 layout.addComponent(controlsBtn);
 
-                final Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+                final MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                        .withStyleName(UIConstants.BUTTON_OPTION);
 
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
+                MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+                    if (EditForm.this.validateForm()) {
+                        PageService pageService = AppContextUtil.getSpringBean(PageService.class);
+                        pageService.createFolder(folder, AppContext.getUsername());
+                        folder.setCreatedTime(new GregorianCalendar());
+                        folder.setCreatedUser(AppContext.getUsername());
                         GroupPageAddWindow.this.close();
+                        EventBusFactory.getInstance().post(new PageEvent.GotoList(GroupPageAddWindow.this, folder.getPath()));
                     }
-                });
-                cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-
-                Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(final Button.ClickEvent event) {
-                        if (EditForm.this.validateForm()) {
-                            PageService pageService = AppContextUtil.getSpringBean(PageService.class);
-                            pageService.createFolder(folder, AppContext.getUsername());
-                            folder.setCreatedTime(new GregorianCalendar());
-                            folder.setCreatedUser(AppContext.getUsername());
-                            GroupPageAddWindow.this.close();
-                            EventBusFactory.getInstance().post(new PageEvent.GotoList(GroupPageAddWindow.this, folder.getPath()));
-                        }
-                    }
-                });
-                saveBtn.setIcon(FontAwesome.SAVE);
-                saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
+                }).withIcon(FontAwesome.SAVE).withStyleName(UIConstants.BUTTON_ACTION);
                 saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
                 controlsBtn.with(cancelBtn, saveBtn);
-
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
-
                 return layout;
             }
 

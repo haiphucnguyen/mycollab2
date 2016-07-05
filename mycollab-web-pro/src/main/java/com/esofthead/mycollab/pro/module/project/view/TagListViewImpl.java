@@ -120,18 +120,15 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         public TagButton(final AggregateTag tag) {
             super(tag.getName() + " (" + tag.getCount() + ")");
             this.setStyleName("tagbutton");
-            this.addClickListener(new ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent clickEvent) {
-                    isSelected = !isSelected;
-                    if (isSelected) {
-                        selectedTags.add(tag.getName());
-                    } else {
-                        selectedTags.remove(tag.getName());
-                    }
-                    displaySelectedTags();
-                    setSelected(isSelected);
+            this.addClickListener(clickEvent -> {
+                isSelected = !isSelected;
+                if (isSelected) {
+                    selectedTags.add(tag.getName());
+                } else {
+                    selectedTags.remove(tag.getName());
                 }
+                displaySelectedTags();
+                setSelected(isSelected);
             });
         }
 

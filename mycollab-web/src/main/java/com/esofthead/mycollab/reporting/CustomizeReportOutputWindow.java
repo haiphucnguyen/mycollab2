@@ -33,16 +33,15 @@ import com.esofthead.mycollab.vaadin.resources.LazyStreamSource;
 import com.esofthead.mycollab.vaadin.resources.OnDemandFileDownloader;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
-import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.Sizeable;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.*;
 import org.vaadin.tepi.listbuilder.ListBuilder;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -111,29 +110,15 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         contentLayout.with(sampleTableDisplay);
         filterColumns();
 
-        listBuilder.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                filterColumns();
-            }
-        });
+        listBuilder.addValueChangeListener(valueChangeEvent -> filterColumns());
 
-        Button resetBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_RESET), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                listBuilder.setValue(getDefaultColumns());
-                filterColumns();
-            }
-        });
-        resetBtn.addStyleName(UIConstants.BUTTON_LINK);
+        MButton resetBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_RESET), clickEvent -> {
+            listBuilder.setValue(getDefaultColumns());
+            filterColumns();
+        }).withStyleName(UIConstants.BUTTON_LINK);
 
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                close();
-            }
-        });
-        cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
+        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                .withStyleName(UIConstants.BUTTON_OPTION);
 
 
         final Button exportBtn = new Button(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
@@ -141,29 +126,26 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         OnDemandFileDownloader pdfFileDownloader = new OnDemandFileDownloader(new LazyStreamSource() {
             @Override
             protected StreamResource.StreamSource buildStreamSource() {
-                return new StreamResource.StreamSource() {
-                    @Override
-                    public InputStream getStream() {
-                        Collection<TableViewField> columns = (Collection<TableViewField>) listBuilder.getValue();
-                        // Save custom table view def
-                        CustomViewStoreService customViewStoreService = AppContextUtil.getSpringBean(CustomViewStoreService.class);
-                        CustomViewStore viewDef = new CustomViewStore();
-                        viewDef.setSaccountid(AppContext.getAccountId());
-                        viewDef.setCreateduser(AppContext.getUsername());
-                        viewDef.setViewid(viewId);
-                        viewDef.setViewinfo(FieldDefAnalyzer.toJson(new ArrayList<>(columns)));
-                        customViewStoreService.saveOrUpdateViewLayoutDef(viewDef);
+                return (StreamResource.StreamSource) () -> {
+                    Collection<TableViewField> columns = (Collection<TableViewField>) listBuilder.getValue();
+                    // Save custom table view def
+                    CustomViewStoreService customViewStoreService = AppContextUtil.getSpringBean(CustomViewStoreService.class);
+                    CustomViewStore viewDef = new CustomViewStore();
+                    viewDef.setSaccountid(AppContext.getAccountId());
+                    viewDef.setCreateduser(AppContext.getUsername());
+                    viewDef.setViewid(viewId);
+                    viewDef.setViewinfo(FieldDefAnalyzer.toJson(new ArrayList<>(columns)));
+                    customViewStoreService.saveOrUpdateViewLayoutDef(viewDef);
 
-                        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>(reportTitle,
-                                new RpFieldsBuilder(columns), exportType, beanCls, searchableService);
-                        ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
-                            @Override
-                            protected void initReportParameters(Map<String, Object> parameters) {
-                                parameters.put(SimpleReportTemplateExecutor.CRITERIA, variableInjector.eval());
-                            }
-                        };
-                        return streamSource.getStream();
-                    }
+                    SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>(reportTitle,
+                            new RpFieldsBuilder(columns), exportType, beanCls, searchableService);
+                    ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
+                        @Override
+                        protected void initReportParameters(Map<String, Object> parameters) {
+                            parameters.put(SimpleReportTemplateExecutor.CRITERIA, variableInjector.eval());
+                        }
+                    };
+                    return streamSource.getStream();
                 };
             }
 

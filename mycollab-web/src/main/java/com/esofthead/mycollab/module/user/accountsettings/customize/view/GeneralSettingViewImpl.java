@@ -212,8 +212,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         Button resetButton = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_RESET), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                BillingAccountService billingAccountService = AppContextUtil.getSpringBean
-                        (BillingAccountService.class);
+                BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
                 billingAccount.setLogopath(null);
                 billingAccountService.updateWithSession(billingAccount, AppContext.getUsername());
                 Page.getCurrent().getJavaScript().execute("window.location.reload();");

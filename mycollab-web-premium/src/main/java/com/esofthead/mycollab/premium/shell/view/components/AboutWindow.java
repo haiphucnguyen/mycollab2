@@ -22,6 +22,7 @@ import com.vaadin.server.Page;
 import com.vaadin.server.WebBrowser;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -80,24 +81,16 @@ public class AboutWindow extends AbstractAboutWindow {
         }
 
         if (licenseInfo != null && licenseInfo.isTrial()) {
-            Button buyBtn = new Button(AppContext.getMessage(LicenseI18nEnum.ACTION_BUY_LICENSE), new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow());
-                    close();
-                }
-            });
-            buyBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            Button editLicenseBtn = new Button(AppContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE), new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
-                    UI.getCurrent().addWindow(activateWindow);
-                    close();
-                }
-            });
-            editLicenseBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            rightPanel.addComponent(new MHorizontalLayout().with(buyBtn, editLicenseBtn));
+            MButton buyBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.ACTION_BUY_LICENSE), clickEvent -> {
+                UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow());
+                close();
+            }).withStyleName(UIConstants.BUTTON_ACTION);
+            MButton editLicenseBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE), clickEvent -> {
+                Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
+                UI.getCurrent().addWindow(activateWindow);
+                close();
+            }).withStyleName(UIConstants.BUTTON_ACTION);
+            rightPanel.addComponent(new MHorizontalLayout(buyBtn, editLicenseBtn));
         }
 
         Label copyRightLbl = new Label(String.format("&copy; %s - %s MyCollab Ltd. All rights reserved", "2011",

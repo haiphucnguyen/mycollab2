@@ -39,6 +39,7 @@ import com.vaadin.data.Validator;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -124,29 +125,19 @@ class AccountInfoChangeWindow extends Window {
         editForm.setBean(billingAccount);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(true);
-        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                if (editForm.validateForm()) {
-                    BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
-                    billingAccountService.updateSelectiveWithSession(billingAccount, AppContext.getUsername());
-                    close();
-                    String siteUrl = SiteConfiguration.getSiteUrl(billingAccount.getSubdomain());
-                    String assignExec = String.format("window.location.assign(\'%s\');", siteUrl);
-                    Page.getCurrent().getJavaScript().execute(assignExec);
-                }
-            }
-        });
-        saveBtn.setIcon(FontAwesome.SAVE);
-        saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
-
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
+        MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+            if (editForm.validateForm()) {
+                BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
+                billingAccountService.updateSelectiveWithSession(billingAccount, AppContext.getUsername());
                 close();
+                String siteUrl = SiteConfiguration.getSiteUrl(billingAccount.getSubdomain());
+                String assignExec = String.format("window.location.assign(\'%s\');", siteUrl);
+                Page.getCurrent().getJavaScript().execute(assignExec);
             }
-        });
-        cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
+        }).withIcon(FontAwesome.SAVE).withStyleName(UIConstants.BUTTON_ACTION);
+
+        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                .withStyleName(UIConstants.BUTTON_OPTION);
         buttonControls.with(cancelBtn, saveBtn);
 
         content.with(editForm, buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);

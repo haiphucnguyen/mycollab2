@@ -18,6 +18,7 @@ import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -48,53 +49,45 @@ public class AssignmentAddWindow extends Window {
         MVerticalLayout content = new MVerticalLayout().withMargin(true);
         this.setContent(content);
 
-        Button okButton = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_OK), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                String type = (String) typeSelection.getValue();
-                Date dateValue = dateSelection.getValue();
-                if (AppContext.getMessage(TaskI18nEnum.SINGLE).equals(type)) {
-                    close();
-                    SimpleTask task = new SimpleTask();
-                    task.setProjectid(prjId);
-                    task.setSaccountid(AppContext.getAccountId());
-                    task.setLogby(AppContext.getUsername());
-                    task.setStartdate(dateValue);
-                    UI.getCurrent().addWindow(new TaskAddWindow(task));
-                } else if (AppContext.getMessage(BugI18nEnum.SINGLE).equals(type)) {
-                    close();
-                    SimpleBug bug = new SimpleBug();
-                    bug.setProjectid(prjId);
-                    bug.setSaccountid(AppContext.getAccountId());
-                    bug.setStartdate(dateValue);
-                    bug.setLogby(AppContext.getUsername());
-                    UI.getCurrent().addWindow(new BugAddWindow(bug));
-                } else if (AppContext.getMessage(MilestoneI18nEnum.SINGLE).equals(type)) {
-                    close();
-                    SimpleMilestone milestone = new SimpleMilestone();
-                    milestone.setSaccountid(AppContext.getAccountId());
-                    milestone.setProjectid(prjId);
-                    milestone.setStartdate(dateValue);
-                    UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
-                } else {
-                    close();
-                    SimpleRisk risk = new SimpleRisk();
-                    risk.setSaccountid(AppContext.getAccountId());
-                    risk.setProjectid(prjId);
-                    risk.setStartdate(dateValue);
-                    risk.setRaisedbyuser(AppContext.getUsername());
-                    UI.getCurrent().addWindow(new RiskAddWindow(risk));
-                }
-            }
-        });
-        okButton.addStyleName(UIConstants.BUTTON_ACTION);
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
+       MButton okButton = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
+            String type = (String) typeSelection.getValue();
+            Date dateValue = dateSelection.getValue();
+            if (AppContext.getMessage(TaskI18nEnum.SINGLE).equals(type)) {
                 close();
+                SimpleTask task = new SimpleTask();
+                task.setProjectid(prjId);
+                task.setSaccountid(AppContext.getAccountId());
+                task.setLogby(AppContext.getUsername());
+                task.setStartdate(dateValue);
+                UI.getCurrent().addWindow(new TaskAddWindow(task));
+            } else if (AppContext.getMessage(BugI18nEnum.SINGLE).equals(type)) {
+                close();
+                SimpleBug bug = new SimpleBug();
+                bug.setProjectid(prjId);
+                bug.setSaccountid(AppContext.getAccountId());
+                bug.setStartdate(dateValue);
+                bug.setLogby(AppContext.getUsername());
+                UI.getCurrent().addWindow(new BugAddWindow(bug));
+            } else if (AppContext.getMessage(MilestoneI18nEnum.SINGLE).equals(type)) {
+                close();
+                SimpleMilestone milestone = new SimpleMilestone();
+                milestone.setSaccountid(AppContext.getAccountId());
+                milestone.setProjectid(prjId);
+                milestone.setStartdate(dateValue);
+                UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
+            } else {
+                close();
+                SimpleRisk risk = new SimpleRisk();
+                risk.setSaccountid(AppContext.getAccountId());
+                risk.setProjectid(prjId);
+                risk.setStartdate(dateValue);
+                risk.setRaisedbyuser(AppContext.getUsername());
+                UI.getCurrent().addWindow(new RiskAddWindow(risk));
             }
-        });
-        cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
+        }).withStyleName(UIConstants.BUTTON_ACTION);
+
+        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                .withStyleName(UIConstants.BUTTON_OPTION);
         MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, okButton);
         GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, 1, "60px");
         formLayoutHelper.addComponent(dateSelection, "Date", 0, 0);

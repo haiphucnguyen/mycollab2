@@ -53,6 +53,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -80,7 +81,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         headerText = ComponentUtils.headerH2(ProjectTypeConstants.MEMBER, AppContext.getMessage(ProjectMemberI18nEnum.LIST));
         viewHeader.with(headerText).expand(headerText);
 
-        final Button sortBtn = new Button();
+        final MButton sortBtn = new MButton().withIcon(FontAwesome.SORT_ALPHA_ASC).withStyleName(UIConstants.BUTTON_ICON_ONLY);
         sortBtn.addClickListener(clickEvent -> {
             sortAsc = !sortAsc;
             if (sortAsc) {
@@ -91,8 +92,6 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
                 displayMembers();
             }
         });
-        sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
-        sortBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
         viewHeader.addComponent(sortBtn);
 
         final SearchTextField searchTextField = new SearchTextField() {
@@ -111,33 +110,20 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         searchTextField.addStyleName(ValoTheme.TEXTFIELD_SMALL);
         viewHeader.addComponent(searchTextField);
 
-        Button printBtn = new Button("", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new ProjectMemberCustomizeReportOutputWindow(new LazyValueInjector() {
-                    @Override
-                    protected Object doEval() {
-                        return searchCriteria;
-                    }
-                }));
-            }
-        });
-        printBtn.setIcon(FontAwesome.PRINT);
-        printBtn.addStyleName(UIConstants.BUTTON_OPTION);
-        printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
+        MButton printBtn = new MButton("", clickEvent -> {
+            UI.getCurrent().addWindow(new ProjectMemberCustomizeReportOutputWindow(new LazyValueInjector() {
+                @Override
+                protected Object doEval() {
+                    return searchCriteria;
+                }
+            }));
+        }).withIcon(FontAwesome.PRINT).withStyleName(UIConstants.BUTTON_OPTION).withDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
         viewHeader.addComponent(printBtn);
 
-        Button createBtn = new Button(AppContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEES), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoInviteMembers(this, null));
-            }
-        });
+        MButton createBtn = new MButton(AppContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEES),
+                clickEvent -> EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoInviteMembers(this, null)))
+                .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEND);
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
-        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        createBtn.setIcon(FontAwesome.SEND);
         viewHeader.addComponent(createBtn);
 
         addComponent(viewHeader);
@@ -188,11 +174,10 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
 
         MHorizontalLayout buttonControls = new MHorizontalLayout();
 
-        Button editBtn = new Button("", FontAwesome.EDIT);
-        editBtn.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoEdit(this, member)));
-        editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
+        MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoEdit(this, member)))
+                .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.BUTTON_LINK)
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
         editBtn.setDescription("Edit user '" + member.getDisplayName() + "' information");
-        editBtn.addStyleName(UIConstants.BUTTON_LINK);
 
         Button deleteBtn = new Button("", FontAwesome.TRASH_O);
         deleteBtn.addClickListener(clickEvent -> {

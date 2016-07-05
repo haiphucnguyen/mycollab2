@@ -43,12 +43,7 @@ public class CalendarPresenter extends AbstractPresenter<CalendarView> implement
     protected void postInitView() {
         HasSearchHandlers<ProjectGenericTaskSearchCriteria> searchHandlers = view.getSearchHandlers();
         if (searchHandlers != null) {
-            searchHandlers.addSearchHandler(new SearchHandler<ProjectGenericTaskSearchCriteria>() {
-                @Override
-                public void onSearch(ProjectGenericTaskSearchCriteria criteria) {
-                    view.queryAssignments(criteria);
-                }
-            });
+            searchHandlers.addSearchHandler(criteria -> view.queryAssignments(criteria));
         }
     }
 

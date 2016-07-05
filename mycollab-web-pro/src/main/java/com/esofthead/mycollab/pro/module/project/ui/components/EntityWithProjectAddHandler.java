@@ -13,6 +13,7 @@ import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -59,27 +60,18 @@ public class EntityWithProjectAddHandler {
             GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);
             projectCombo = new UserInvolvedProjectsSelection();
             layoutHelper.addComponent(projectCombo, AppContext.getMessage(ProjectI18nEnum.SINGLE), 0, 0);
-            MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(false, true, true, false));
-            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    prjSelectionWindow.close();
-                }
-            });
-            cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
 
-            Button nextBtn = new Button(AppContext.getMessage(GenericI18Enum.ACTION_NEXT), new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    SimpleProject selectedProject = (SimpleProject) projectCombo.getValue();
-                    if (selectedProject != null) {
-                        prjSelectionWindow.close();
-                        displayEntityEditForm(selectedProject.getId());
-                    }
+            MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> prjSelectionWindow.close())
+                    .withStyleName(UIConstants.BUTTON_OPTION);
+
+            MButton nextBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_NEXT), clickEvent -> {
+                SimpleProject selectedProject = (SimpleProject) projectCombo.getValue();
+                if (selectedProject != null) {
+                    prjSelectionWindow.close();
+                    displayEntityEditForm(selectedProject.getId());
                 }
-            });
-            nextBtn.setStyleName(UIConstants.BUTTON_ACTION);
-            buttonControls.with(cancelBtn, nextBtn);
+            }).withStyleName(UIConstants.BUTTON_ACTION);
+            MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, nextBtn).withMargin(new MarginInfo(false, true, true, false));
             this.with(layoutHelper.getLayout(), buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
         }
     }

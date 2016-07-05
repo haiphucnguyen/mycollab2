@@ -22,6 +22,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -199,15 +200,8 @@ public class CloudDriveSettingWindow extends Window {
             saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
             saveBtn.setIcon(FontAwesome.SAVE);
 
-            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    close();
-                }
-            });
-            cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
+            MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                    .withStyleName(UIConstants.BUTTON_OPTION);
             layout.with(saveBtn, cancelBtn);
             return layout;
         }

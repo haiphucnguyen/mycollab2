@@ -13,13 +13,14 @@ import com.esofthead.mycollab.pro.module.project.events.GanttEvent;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
-import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -65,51 +66,36 @@ public class QuickEditGanttItemWindow extends Window {
                 informationLayout.getLayout().setSpacing(false);
                 layout.addComponent(informationLayout.getLayout());
 
-                MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
-                buttonControls.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
+                MButton updateAllBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), clickEvent -> {
+                    if (bean instanceof TaskGanttItem) {
+                        ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+                        SimpleTask task = taskService.findById(bean.getId(), AppContext.getAccountId());
+                        EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(QuickEditGanttItemWindow.this, task));
+                    } else if (bean instanceof MilestoneGanttItem) {
+                        MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
+                        SimpleMilestone milestone = milestoneService.findById(bean.getId(), AppContext.getAccountId());
+                        EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(QuickEditGanttItemWindow.this, milestone));
+                    } else {
+                        throw new MyCollabException("Do not support gantt item type " + bean);
+                    }
+                    close();
+                }).withStyleName(UIConstants.BUTTON_LINK);
 
-                Button updateAllBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        if (bean instanceof TaskGanttItem) {
-                            ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                            SimpleTask task = taskService.findById(bean.getId(), AppContext.getAccountId());
-                            EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(QuickEditGanttItemWindow.this, task));
-                        } else if (bean instanceof MilestoneGanttItem) {
-                            MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                            SimpleMilestone milestone = milestoneService.findById(bean.getId(), AppContext.getAccountId());
-                            EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(QuickEditGanttItemWindow.this, milestone));
-                        } else {
-                            throw new MyCollabException("Do not support gantt item type " + bean);
-                        }
+                MButton updateBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
+                    if (EditForm.this.validateForm()) {
+                        ganttItem.setTask(bean);
+                        gantt.markStepDirty(ganttItem.getStep());
+                        gantt.calculateMaxMinDates(ganttItem);
+                        EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(QuickEditGanttItemWindow.this, ganttItem));
+                        EventBusFactory.getInstance().post(new GanttEvent.UpdateGanttItem(QuickEditGanttItemWindow.this, ganttItem));
                         close();
                     }
-                });
-                updateAllBtn.addStyleName(UIConstants.BUTTON_LINK);
+                }).withStyleName(UIConstants.BUTTON_ACTION);
 
-                Button updateBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        if (EditForm.this.validateForm()) {
-                            ganttItem.setTask(bean);
-                            gantt.markStepDirty(ganttItem.getStep());
-                            gantt.calculateMaxMinDates(ganttItem);
-                            EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(QuickEditGanttItemWindow.this, ganttItem));
-                            EventBusFactory.getInstance().post(new GanttEvent.UpdateGanttItem(QuickEditGanttItemWindow.this, ganttItem));
-                            close();
-                        }
-                    }
-                });
-                updateBtn.setStyleName(UIConstants.BUTTON_ACTION);
+                MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                        .withStyleName(UIConstants.BUTTON_OPTION);
 
-                Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        QuickEditGanttItemWindow.this.close();
-                    }
-                });
-                cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                buttonControls.with(updateAllBtn, cancelBtn, updateBtn);
+                MHorizontalLayout buttonControls = new MHorizontalLayout(updateAllBtn, cancelBtn, updateBtn).withMargin(new MarginInfo(true, true, true, false));
 
                 layout.addComponent(buttonControls);
                 layout.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);

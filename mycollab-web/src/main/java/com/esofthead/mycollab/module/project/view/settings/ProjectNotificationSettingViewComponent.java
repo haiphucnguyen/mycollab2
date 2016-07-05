@@ -88,8 +88,7 @@ public class ProjectNotificationSettingViewComponent extends BlockWidget {
             public void buttonClick(ClickEvent event) {
                 try {
                     bean.setLevel((String) optionGroup.getValue());
-                    ProjectNotificationSettingService projectNotificationSettingService = AppContextUtil
-                            .getSpringBean(ProjectNotificationSettingService.class);
+                    ProjectNotificationSettingService projectNotificationSettingService = AppContextUtil.getSpringBean(ProjectNotificationSettingService.class);
 
                     if (bean.getId() == null) {
                         projectNotificationSettingService.saveWithSession(bean, AppContext.getUsername());

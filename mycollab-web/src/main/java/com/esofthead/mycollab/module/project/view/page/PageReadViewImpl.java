@@ -245,18 +245,13 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
                 pageSelection.setNullSelectionAllowed(false);
                 pageSelection.setTextInputAllowed(false);
 
-                pageSelection.addValueChangeListener(new ValueChangeListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
-                        selectedVersion = (PageVersion) pageSelection.getValue();
-                        if (selectedVersion != null) {
-                            Page page = pageService.getPageByVersion(beanItem.getPath(), selectedVersion.getName());
-                            page.setPath(beanItem.getPath());
-                            previewForm.setBean(page);
-                            ((PagePreviewFormLayout) previewLayout).displayPageInfo(page);
-                        }
+                pageSelection.addValueChangeListener(valueChangeEvent -> {
+                    selectedVersion = (PageVersion) pageSelection.getValue();
+                    if (selectedVersion != null) {
+                        Page page = pageService.getPageByVersion(beanItem.getPath(), selectedVersion.getName());
+                        page.setPath(beanItem.getPath());
+                        previewForm.setBean(page);
+                        ((PagePreviewFormLayout) previewLayout).displayPageInfo(page);
                     }
                 });
 

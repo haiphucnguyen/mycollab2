@@ -48,6 +48,7 @@ import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
@@ -96,14 +97,7 @@ public class ProjectListViewImpl extends AbstractPageView implements ProjectList
                 final SimpleProject item = tableItem.getBeanByIndex(itemId);
                 final CheckBoxDecor cb = new CheckBoxDecor("", item.isSelected());
                 cb.setImmediate(true);
-                cb.addValueChangeListener(new Property.ValueChangeListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void valueChange(Property.ValueChangeEvent event) {
-                        tableItem.fireSelectItemEvent(item);
-                    }
-                });
+                cb.addValueChangeListener(valueChangeEvent -> tableItem.fireSelectItemEvent(item));
                 item.setExtraData(cb);
                 return cb;
             }
@@ -222,18 +216,9 @@ public class ProjectListViewImpl extends AbstractPageView implements ProjectList
         selectedItemsNumberLabel.setWidth("100%");
         layout.with(selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER).expand(selectedItemsNumberLabel);
 
-        Button customizeViewBtn = new Button("", new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().addWindow(new ProjectListCustomizeWindow(tableItem));
-
-            }
-        });
-        customizeViewBtn.setIcon(FontAwesome.ADJUST);
+        MButton customizeViewBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new ProjectListCustomizeWindow(tableItem)))
+                .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.ADJUST);
         customizeViewBtn.setDescription("Layout Options");
-        customizeViewBtn.addStyleName(UIConstants.BUTTON_ACTION);
         layout.with(customizeViewBtn).withAlign(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
         return layout;

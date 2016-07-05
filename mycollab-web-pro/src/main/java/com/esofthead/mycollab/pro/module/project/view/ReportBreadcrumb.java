@@ -26,14 +26,7 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
         this.setShowAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
         this.setHideAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
         this.setUseDefaultClickBehaviour(false);
-        homeBtn = new Button(null, new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                EventBusFactory.getInstance().post(new ReportEvent.GotoConsole(this));
-            }
-        });
+        homeBtn = new Button(null, clickEvent -> EventBusFactory.getInstance().post(new ReportEvent.GotoConsole(this)));
         this.addLink(homeBtn);
     }
 
