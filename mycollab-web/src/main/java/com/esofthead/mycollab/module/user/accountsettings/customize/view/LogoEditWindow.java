@@ -56,7 +56,6 @@ import java.io.IOException;
  */
 public class LogoEditWindow extends Window {
     private static final long serialVersionUID = -5294741083557671011L;
-
     private static final Logger LOG = LoggerFactory.getLogger(LogoEditWindow.class);
 
     private MVerticalLayout content;

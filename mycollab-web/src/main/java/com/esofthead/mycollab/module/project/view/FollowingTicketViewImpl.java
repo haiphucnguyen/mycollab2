@@ -68,16 +68,8 @@ public class FollowingTicketViewImpl extends AbstractPageView implements Followi
         ELabel layoutHeader = ELabel.h2(FontAwesome.EYE.getHtml() + " " + AppContext.getMessage(FollowerI18nEnum
                 .OPT_MY_FOLLOWING_TICKETS, 0)).withWidthUndefined();
 
-        Button exportBtn = new Button(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                exportButtonControl.setPopupVisible(true);
-            }
-        });
+        Button exportBtn = new Button(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT), clickEvent -> exportButtonControl.setPopupVisible(true));
         exportButtonControl = new SplitButton(exportBtn);
-        exportButtonControl.setWidthUndefined();
         exportButtonControl.addStyleName(UIConstants.BUTTON_OPTION);
         exportButtonControl.setIcon(FontAwesome.EXTERNAL_LINK);
 

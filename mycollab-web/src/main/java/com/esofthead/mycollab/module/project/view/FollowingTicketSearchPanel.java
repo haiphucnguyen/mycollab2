@@ -35,6 +35,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.ArrayList;
@@ -138,15 +139,8 @@ public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<Follow
             projectField.setRows(4);
             selectionLayout.addComponent(projectField, 3, 0, 3, 1);
 
-            Button queryBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SUBMIT), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    doSearch();
-                }
-            });
-            queryBtn.setStyleName(UIConstants.BUTTON_ACTION);
+            MButton queryBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SUBMIT), clickEvent -> doSearch())
+                    .withStyleName(UIConstants.BUTTON_ACTION);
             selectionLayout.addComponent(queryBtn, 4, 0);
 
             return basicSearchBody;

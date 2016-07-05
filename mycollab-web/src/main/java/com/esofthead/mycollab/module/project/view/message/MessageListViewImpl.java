@@ -60,6 +60,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.MultiFileUploadExt;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -160,32 +161,25 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
             ELabel timePostLbl = new ELabel().prettyDateTime(message.getPosteddate());
             timePostLbl.setStyleName(UIConstants.META_INFO);
 
-            Button deleteBtn = new Button("", new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
+            MButton deleteBtn = new MButton("", clickEvent -> {
+                ConfirmDialogExt.show(UI.getCurrent(),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
 
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    ConfirmDialogExt.show(UI.getCurrent(),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                            new ConfirmDialog.Listener() {
-                                private static final long serialVersionUID = 1L;
-
-                                @Override
-                                public void onClose(final ConfirmDialog dialog) {
-                                    if (dialog.isConfirmed()) {
-                                        MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
-                                        messageService.removeWithSession(message, AppContext.getUsername(), AppContext.getAccountId());
-                                        messageList.setSearchCriteria(searchCriteria);
-                                    }
+                            @Override
+                            public void onClose(final ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
+                                    messageService.removeWithSession(message, AppContext.getUsername(), AppContext.getAccountId());
+                                    messageList.setSearchCriteria(searchCriteria);
                                 }
-                            });
-                }
-            });
-            deleteBtn.setIcon(FontAwesome.TRASH_O);
-            deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+                            }
+                        });
+            }).withIcon(FontAwesome.TRASH_O).withStyleName(UIConstants.BUTTON_ICON_ONLY);
             deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MESSAGES));
 
             MHorizontalLayout rightHeader = new MHorizontalLayout();
@@ -327,42 +321,30 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
             final CheckBox chkIsStick = new CheckBox(AppContext.getMessage(MessageI18nEnum.FORM_IS_STICK));
             controls.with(chkIsStick).withAlign(chkIsStick, Alignment.TOP_RIGHT);
 
-            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    MessageListViewImpl.this.setCriteria(searchCriteria);
-                }
-            });
+            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
+                    clickEvent -> MessageListViewImpl.this.setCriteria(searchCriteria));
             cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
             controls.with(cancelBtn).withAlign(cancelBtn, Alignment.TOP_RIGHT);
 
-            Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_POST), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
+            Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_POST), clickEvent -> {
+                Message message = new Message();
+                message.setProjectid(CurrentProjectVariables.getProjectId());
+                message.setPosteddate(new GregorianCalendar().getTime());
+                if (!titleField.getValue().trim().equals("")) {
+                    message.setTitle(titleField.getValue());
+                    message.setMessage(ckEditorTextField.getValue());
+                    message.setPosteduser(AppContext.getUsername());
+                    message.setSaccountid(AppContext.getAccountId());
+                    message.setIsstick(chkIsStick.getValue());
+                    MessageListViewImpl.this.fireSaveItem(message);
 
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    Message message = new Message();
-                    message.setProjectid(CurrentProjectVariables.getProjectId());
-                    message.setPosteddate(new GregorianCalendar().getTime());
-                    if (!titleField.getValue().trim().equals("")) {
-                        message.setTitle(titleField.getValue());
-                        message.setMessage(ckEditorTextField.getValue());
-                        message.setPosteduser(AppContext.getUsername());
-                        message.setSaccountid(AppContext.getAccountId());
-                        message.setIsstick(chkIsStick.getValue());
-                        MessageListViewImpl.this.fireSaveItem(message);
-
-                        String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(
-                                AppContext.getAccountId(), message.getProjectid(),
-                                ProjectTypeConstants.MESSAGE, "" + message.getId());
-                        attachments.saveContentsToRepo(attachmentPath);
-                    } else {
-                        titleField.addStyleName("errorField");
-                        NotificationUtil.showErrorNotification(AppContext
-                                .getMessage(MessageI18nEnum.FORM_TITLE_REQUIRED_ERROR));
-                    }
+                    String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(
+                            AppContext.getAccountId(), message.getProjectid(),
+                            ProjectTypeConstants.MESSAGE, "" + message.getId());
+                    attachments.saveContentsToRepo(attachmentPath);
+                } else {
+                    titleField.addStyleName("errorField");
+                    NotificationUtil.showErrorNotification(AppContext.getMessage(MessageI18nEnum.FORM_TITLE_REQUIRED_ERROR));
                 }
             });
             saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
@@ -390,7 +372,6 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
                 createMessageBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
                 createMessageBtn.setStyleName(UIConstants.BUTTON_ACTION);
                 createMessageBtn.setIcon(FontAwesome.PLUS);
-                createMessageBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
 
                 messagePanelBody.addComponent(createMessageBtn);
                 messagePanelBody.setComponentAlignment(createMessageBtn, Alignment.MIDDLE_RIGHT);

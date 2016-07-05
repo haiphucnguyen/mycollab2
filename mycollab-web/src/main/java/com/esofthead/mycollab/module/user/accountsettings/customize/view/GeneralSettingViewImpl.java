@@ -47,6 +47,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.teemu.VaadinIcons;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -82,13 +83,8 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         MHorizontalLayout generalSettingHeader = new MHorizontalLayout();
         Label headerLbl = new Label(AppContext.getMessage(AdminI18nEnum.OPT_GENERAL_SETTINGS));
 
-        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new AccountInfoChangeWindow());
-            }
-        });
-        editBtn.setStyleName(UIConstants.BUTTON_LINK);
+        MButton editBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent -> UI.getCurrent().addWindow(new AccountInfoChangeWindow()))
+                .withStyleName(UIConstants.BUTTON_LINK);
 
         generalSettingHeader.with(headerLbl, editBtn).alignAll(Alignment.MIDDLE_LEFT);
 

@@ -39,14 +39,11 @@ import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -113,50 +110,36 @@ public class MessageReadViewImpl extends AbstractPageView implements MessageRead
             header.removeAllComponents();
             MVerticalLayout messageAddLayout = new MVerticalLayout().withMargin(false).withFullWidth();
 
-            Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
+            MButton deleteBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
+                ConfirmDialogExt.show(UI.getCurrent(),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
 
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    ConfirmDialogExt.show(UI.getCurrent(),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                            new ConfirmDialog.Listener() {
-                                private static final long serialVersionUID = 1L;
-
-                                @Override
-                                public void onClose(
-                                        final ConfirmDialog dialog) {
-                                    if (dialog.isConfirmed()) {
-                                        MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
-                                        messageService.removeWithSession(message, AppContext.getUsername(), AppContext.getAccountId());
-                                        previewForm.fireCancelForm(message);
-                                    }
+                            @Override
+                            public void onClose(final ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
+                                    messageService.removeWithSession(message, AppContext.getUsername(), AppContext.getAccountId());
+                                    previewForm.fireCancelForm(message);
                                 }
-                            });
-                }
-            });
-            deleteBtn.setIcon(FontAwesome.TRASH_O);
-            deleteBtn.addStyleName(UIConstants.BUTTON_DANGER);
+                            }
+                        });
+            }).withIcon(FontAwesome.TRASH_O).withStyleName(UIConstants.BUTTON_DANGER);
             deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MESSAGES));
 
             stickyCheck = new CheckBox(AppContext.getMessage(MessageI18nEnum.FORM_IS_STICK), message.getIsstick());
-            stickyCheck.addValueChangeListener(new ValueChangeListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void valueChange(ValueChangeEvent event) {
-                    if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES)) {
-                        message.setIsstick(stickyCheck.getValue());
-                        message.setSaccountid(AppContext.getAccountId());
-                        MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
-                        messageService.updateWithSession(message, AppContext.getUsername());
-                    } else {
-                        NotificationUtil.showMessagePermissionAlert();
-                    }
-
+            stickyCheck.addValueChangeListener(valueChangeEvent -> {
+                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES)) {
+                    message.setIsstick(stickyCheck.getValue());
+                    message.setSaccountid(AppContext.getAccountId());
+                    MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
+                    messageService.updateWithSession(message, AppContext.getUsername());
+                } else {
+                    NotificationUtil.showMessagePermissionAlert();
                 }
             });
 
@@ -226,7 +209,7 @@ public class MessageReadViewImpl extends AbstractPageView implements MessageRead
             return messageAddLayout;
         }
 
-        protected CommentDisplay createCommentPanel() {
+        CommentDisplay createCommentPanel() {
             CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.MESSAGE, CurrentProjectVariables.getProjectId());
             commentDisplay.loadComments("" + message.getId());
             return commentDisplay;

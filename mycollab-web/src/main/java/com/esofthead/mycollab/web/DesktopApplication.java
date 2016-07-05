@@ -143,8 +143,8 @@ public class DesktopApplication extends MyCollabUI {
     }
 
     private boolean isInNotSupportedBrowserList(String userAgent) {
-        return (userAgent.indexOf("msie 6.0") != -1) || (userAgent.indexOf("msie 6.1") != -1)
-                || userAgent.indexOf("msie 7.0") != -1 || userAgent.indexOf("msie 8.0") != -1 || userAgent.indexOf("msie 9.0") != -1;
+        return (userAgent.contains("msie 6.0")) || (userAgent.contains("msie 6.1"))
+                || userAgent.contains("msie 7.0") || userAgent.contains("msie 8.0") || userAgent.contains("msie 9.0");
     }
 
     private static Class[] systemExceptions = new Class[]{UncategorizedSQLException.class, MyBatisSystemException.class};
@@ -385,7 +385,7 @@ public class DesktopApplication extends MyCollabUI {
         JavaScript.getCurrent().execute(setCookieVal);
     }
 
-    public void unsetRememberPassword() {
+    private void unsetRememberPassword() {
         BrowserCookie.setCookie(ACCOUNT_COOKIE, "");
         BrowserCookie.setCookie(TEMP_ACCOUNT_COOKIE, "");
     }
