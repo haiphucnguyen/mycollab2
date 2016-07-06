@@ -1,9 +1,9 @@
 package com.mycollab.pro.module.project.view.risk;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.module.project.*;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
-import com.mycollab.module.project.*;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.spring.AppContextUtil;
@@ -22,12 +22,9 @@ import com.mycollab.vaadin.web.ui.SelectionOptionButton;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Table.ColumnGenerator;
 import org.vaadin.teemu.ratingstars.RatingStars;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -61,95 +58,55 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
                 RiskTableFieldDef.name(), RiskTableFieldDef.assignUser(),
                 RiskTableFieldDef.duedate(), RiskTableFieldDef.rating()));
 
-        tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public Object generateCell(Table source, Object itemId, Object columnId) {
-                final SimpleRisk item = tableItem.getBeanByIndex(itemId);
-                final CheckBoxDecor cb = new CheckBoxDecor("", item.isSelected());
-                cb.setImmediate(true);
-                cb.addValueChangeListener(new ValueChangeListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void valueChange(ValueChangeEvent event) {
-                        tableItem.fireSelectItemEvent(item);
-                    }
-                });
-                item.setExtraData(cb);
-                return cb;
-            }
+        tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
+            final SimpleRisk item = tableItem.getBeanByIndex(itemId);
+            final CheckBoxDecor cb = new CheckBoxDecor("", item.isSelected());
+            cb.setImmediate(true);
+            cb.addValueChangeListener(valueChangeEvent -> tableItem.fireSelectItemEvent(item));
+            item.setExtraData(cb);
+            return cb;
         });
 
-        tableItem.addGeneratedColumn("riskname", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("riskname", (source, itemId, columnId) -> {
+            SimpleRisk risk = tableItem.getBeanByIndex(itemId);
+            LabelLink b = new LabelLink(risk.getRiskname(), ProjectLinkBuilder.generateRiskPreviewFullLink(risk.getProjectid(),
+                    risk.getId()));
 
-            @Override
-            public com.vaadin.ui.Component generateCell(final Table source, final Object itemId, final Object columnId) {
-                SimpleRisk risk = tableItem.getBeanByIndex(itemId);
-                LabelLink b = new LabelLink(risk.getRiskname(), ProjectLinkBuilder.generateRiskPreviewFullLink(risk.getProjectid(),
-                        risk.getId()));
-
-                if ("Closed".equals(risk.getStatus())) {
-                    b.addStyleName(UIConstants.LINK_COMPLETED);
-                } else {
-                    if (risk.isOverdue()) {
-                        b.addStyleName(UIConstants.LINK_OVERDUE);
-                    }
+            if ("Closed".equals(risk.getStatus())) {
+                b.addStyleName(UIConstants.LINK_COMPLETED);
+            } else {
+                if (risk.isOverdue()) {
+                    b.addStyleName(UIConstants.LINK_OVERDUE);
                 }
-                b.setDescription(ProjectTooltipGenerator.generateToolTipRisk(AppContext.getUserLocale(), AppContext.getDateFormat(),
-                        risk, AppContext.getSiteUrl(), AppContext.getUserTimeZone(), false));
-                return b;
-
             }
+            b.setDescription(ProjectTooltipGenerator.generateToolTipRisk(AppContext.getUserLocale(), AppContext.getDateFormat(),
+                    risk, AppContext.getSiteUrl(), AppContext.getUserTimeZone(), false));
+            return b;
         });
 
-        tableItem.addGeneratedColumn("assignedToUserFullName", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
-                SimpleRisk risk = tableItem.getBeanByIndex(itemId);
-                return new ProjectUserLink(risk.getAssigntouser(), risk.getAssignToUserAvatarId(),
-                        risk.getAssignedToUserFullName());
-
-            }
+        tableItem.addGeneratedColumn("assignedToUserFullName", (source, itemId, columnId) -> {
+            SimpleRisk risk = tableItem.getBeanByIndex(itemId);
+            return new ProjectUserLink(risk.getAssigntouser(), risk.getAssignToUserAvatarId(),
+                    risk.getAssignedToUserFullName());
         });
 
-        tableItem.addGeneratedColumn("raisedByUserFullName", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
-                SimpleRisk risk = tableItem.getBeanByIndex(itemId);
-                return new ProjectUserLink(risk.getRaisedbyuser(), risk.getRaisedByUserAvatarId(), risk.getRaisedByUserFullName());
-
-            }
+        tableItem.addGeneratedColumn("raisedByUserFullName", (source, itemId, columnId) -> {
+            SimpleRisk risk = tableItem.getBeanByIndex(itemId);
+            return new ProjectUserLink(risk.getRaisedbyuser(), risk.getRaisedByUserAvatarId(), risk.getRaisedByUserFullName());
         });
 
-        tableItem.addGeneratedColumn("datedue", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
-                SimpleRisk item = tableItem.getBeanByIndex(itemId);
-                return new ELabel().prettyDate(item.getDatedue());
-            }
+        tableItem.addGeneratedColumn("datedue", (source, itemId, columnId) -> {
+            SimpleRisk item = tableItem.getBeanByIndex(itemId);
+            return new ELabel().prettyDate(item.getDatedue());
         });
 
-        tableItem.addGeneratedColumn("level", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
-                SimpleRisk item = tableItem.getBeanByIndex(itemId);
-                RatingStars tinyRs = new RatingStars();
-                tinyRs.setValue(item.getLevel());
-                tinyRs.addStyleName("tiny");
-                tinyRs.setReadOnly(true);
-                return tinyRs;
-            }
+        tableItem.addGeneratedColumn("level", (source, itemId, columnId) -> {
+            SimpleRisk item = tableItem.getBeanByIndex(itemId);
+            RatingStars tinyRs = new RatingStars();
+            tinyRs.setValue(item.getLevel());
+            tinyRs.addStyleName("tiny");
+            tinyRs.setReadOnly(true);
+            return tinyRs;
         });
 
         tableItem.setWidth("100%");

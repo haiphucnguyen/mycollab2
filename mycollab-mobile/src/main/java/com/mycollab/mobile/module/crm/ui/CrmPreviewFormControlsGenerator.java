@@ -91,12 +91,9 @@ public class CrmPreviewFormControlsGenerator<T> {
         }
 
         if ((buttonEnableFlags & CLONE_BTN_PRESENTED) == CLONE_BTN_PRESENTED) {
-            Button cloneBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLONE), new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent clickEvent) {
-                    final T item = previewForm.getBean();
-                    previewForm.fireCloneForm(item);
-                }
+            Button cloneBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLONE), clickEvent -> {
+                T item = previewForm.getBean();
+                previewForm.fireCloneForm(item);
             });
             cloneBtn.setWidth("100%");
             editButtons.addComponent(cloneBtn);

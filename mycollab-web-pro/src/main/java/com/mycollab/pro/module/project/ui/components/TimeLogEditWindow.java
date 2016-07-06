@@ -21,9 +21,8 @@ import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.themes.ValoTheme;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -47,7 +46,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
     private HorizontalLayout headerPanel;
 
     private boolean hasTimeChange = false;
-    private Button addBtn;
+    private MButton addBtn;
     private Label totalSpentTimeLbl;
     private DoubleField newTimeInputField;
     private CheckBox isBillableField, isOvertimeField;
@@ -68,12 +67,9 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 
         this.initUI();
         this.loadTimeValue();
-        this.addCloseListener(new CloseListener() {
-            @Override
-            public void windowClose(CloseEvent e) {
-                if (hasTimeChange) {
-                    EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TimeLogEditWindow.this));
-                }
+        this.addCloseListener(closeEvent -> {
+            if (hasTimeChange) {
+                EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TimeLogEditWindow.this));
             }
         });
     }
@@ -91,90 +87,48 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
                         TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(), new TableViewField(null, "id",
                                 UIConstants.TABLE_CONTROL_WIDTH)));
 
-        tableItem.addGeneratedColumn("logUserFullName", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {
+            final SimpleItemTimeLogging timeLoggingItem = tableItem.getBeanByIndex(itemId);
 
-            @Override
-            public com.vaadin.ui.Component generateCell(final Table source, final Object itemId, final Object columnId) {
-                final SimpleItemTimeLogging timeLoggingItem = tableItem.getBeanByIndex(itemId);
-
-                return new ProjectUserLink(timeLoggingItem.getLoguser(), timeLoggingItem.getLogUserAvatarId(),
-                        timeLoggingItem.getLogUserFullName());
-
-            }
+            return new ProjectUserLink(timeLoggingItem.getLoguser(), timeLoggingItem.getLogUserAvatarId(),
+                    timeLoggingItem.getLogUserFullName());
         });
 
-        tableItem.addGeneratedColumn("logforday", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
-                SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
-                return new Label(AppContext.formatDate(monitorItem.getLogforday()));
-            }
+        tableItem.addGeneratedColumn("logforday", (source, itemId, columnId) -> {
+            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
+            return new Label(AppContext.formatDate(monitorItem.getLogforday()));
         });
 
-        tableItem.addGeneratedColumn("logvalue", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                                                        Object itemId, Object columnId) {
-                SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
-                return new Label(itemTimeLogging.getLogvalue() + "");
-            }
+        tableItem.addGeneratedColumn("logvalue", (source, itemId, columnId) -> {
+            SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
+            return new Label(itemTimeLogging.getLogvalue() + "");
         });
 
-        tableItem.addGeneratedColumn("isbillable", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public Object generateCell(Table source, Object itemId,
-                                       Object columnId) {
-                SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
-                ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
-                icon.setStyleName(UIConstants.BUTTON_ICON_ONLY);
-                return icon;
-            }
+        tableItem.addGeneratedColumn("isbillable", (source, itemId, columnId) -> {
+            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
+            ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+            icon.setStyleName(UIConstants.BUTTON_ICON_ONLY);
+            return icon;
         });
 
-        tableItem.addGeneratedColumn("isovertime", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public Object generateCell(Table source, Object itemId,
-                                       Object columnId) {
-                SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
-                ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
-                icon.setStyleName(UIConstants.BUTTON_ICON_ONLY);
-                return icon;
-            }
+        tableItem.addGeneratedColumn("isovertime", (source, itemId, columnId) -> {
+            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
+            ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+            icon.setStyleName(UIConstants.BUTTON_ICON_ONLY);
+            return icon;
         });
 
-        tableItem.addGeneratedColumn("id", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
+            final SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
+            MButton deleteBtn = new MButton("", clickEvent -> {
+                itemTimeLoggingService.removeWithSession(itemTimeLogging, AppContext.getUsername(), AppContext.getAccountId());
+                TimeLogEditWindow.this.loadTimeValue();
+                hasTimeChange = true;
+            }).withIcon(FontAwesome.TRASH_O).withStyleName(UIConstants.BUTTON_ICON_ONLY);
+            itemTimeLogging.setExtraData(deleteBtn);
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                                                        Object itemId, Object columnId) {
-                final SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
-                Button deleteBtn = new Button(null, new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        itemTimeLoggingService.removeWithSession(itemTimeLogging, AppContext.getUsername(), AppContext.getAccountId());
-                        TimeLogEditWindow.this.loadTimeValue();
-                        hasTimeChange = true;
-                    }
-                });
-                deleteBtn.setIcon(FontAwesome.TRASH_O);
-                deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
-                itemTimeLogging.setExtraData(deleteBtn);
-
-                deleteBtn.setEnabled(CurrentProjectVariables.isAdmin() || AppContext.getUsername().equals(itemTimeLogging.getLoguser()));
-                return deleteBtn;
-            }
+            deleteBtn.setEnabled(CurrentProjectVariables.isAdmin() || AppContext.getUsername().equals(itemTimeLogging.getLoguser()));
+            return deleteBtn;
         });
 
         tableItem.setWidth("100%");
@@ -208,25 +162,16 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         isBillableField = new CheckBox(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE), true);
         isOvertimeField = new CheckBox(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME), false);
 
-        addBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                double d = newTimeInputField.getValue();
-                if (d > 0) {
-                    hasTimeChange = true;
-                    saveTimeInvest();
-                    loadTimeValue();
-                    newTimeInputField.setValue(0d);
-                }
+        addBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), clickEvent -> {
+            double d = newTimeInputField.getValue();
+            if (d > 0) {
+                hasTimeChange = true;
+                saveTimeInvest();
+                loadTimeValue();
+                newTimeInputField.setValue(0d);
             }
-
-        });
-
+        }).withIcon(FontAwesome.PLUS).withStyleName(UIConstants.BUTTON_ACTION);
         addBtn.setEnabled(isEnableAdd());
-        addBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        addBtn.setIcon(FontAwesome.PLUS);
         addLayout.with(newTimeInputField, forDateField, isBillableField, isOvertimeField, addBtn);
     }
 
@@ -253,23 +198,17 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         addLayout.addComponent(remainTimeInputField);
         addLayout.setComponentAlignment(remainTimeInputField, Alignment.MIDDLE_LEFT);
 
-        addBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                double d = remainTimeInputField.getValue();
-                if (d >= 0) {
-                    hasTimeChange = true;
-                    updateTimeRemain();
-                    remainTimeLbl.setValue(remainTimeInputField.getValue() + "");
-                    remainTimeInputField.setValue(0d);
-                }
+        addBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
+            double d = remainTimeInputField.getValue();
+            if (d >= 0) {
+                hasTimeChange = true;
+                updateTimeRemain();
+                remainTimeLbl.setValue(remainTimeInputField.getValue() + "");
+                remainTimeInputField.setValue(0d);
             }
-        });
+        }).withStyleName(UIConstants.BUTTON_ACTION);
 
         addBtn.setEnabled(isEnableAdd());
-        addBtn.setStyleName(UIConstants.BUTTON_ACTION);
         addLayout.with(addBtn).withAlign(addBtn, Alignment.MIDDLE_LEFT);
     }
 

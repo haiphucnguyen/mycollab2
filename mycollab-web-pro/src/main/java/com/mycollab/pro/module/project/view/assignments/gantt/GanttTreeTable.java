@@ -1,5 +1,6 @@
 package com.mycollab.pro.module.project.view.assignments.gantt;
 
+import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.DateTimeUtils;
@@ -25,7 +26,6 @@ import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.field.DefaultViewField;
 import com.mycollab.vaadin.web.ui.field.converter.LocalDateConverter;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.addon.contextmenu.ContextMenu;
 import com.vaadin.addon.contextmenu.MenuItem;
 import com.vaadin.data.Container;
@@ -97,12 +97,9 @@ public class GanttTreeTable extends TreeTable {
         this.setEditable(true);
         this.setNullSelectionAllowed(false);
 
-        this.addGeneratedColumn("ganttIndex", new ColumnGenerator() {
-            @Override
-            public Object generateCell(Table table, Object itemId, Object columnId) {
-                GanttItemWrapper item = (GanttItemWrapper) itemId;
-                return new ELabel("" + item.getGanttIndex()).withStyleName(ValoTheme.LABEL_SMALL);
-            }
+        this.addGeneratedColumn("ganttIndex", (source, itemId, columnId) -> {
+            GanttItemWrapper item = (GanttItemWrapper) itemId;
+            return new ELabel("" + item.getGanttIndex()).withStyleName(ValoTheme.LABEL_SMALL);
         });
 
         this.setTableFieldFactory(new TableFieldFactory() {
@@ -190,35 +187,26 @@ public class GanttTreeTable extends TreeTable {
             }
         });
 
-        this.addExpandListener(new Tree.ExpandListener() {
-            @Override
-            public void nodeExpand(Tree.ExpandEvent expandEvent) {
-                GanttItemWrapper item = (GanttItemWrapper) expandEvent.getItemId();
-                List<GanttItemWrapper> subTasks = item.subTasks();
-                insertSubSteps(item, subTasks);
-            }
+        this.addExpandListener(expandEvent -> {
+            GanttItemWrapper item = (GanttItemWrapper) expandEvent.getItemId();
+            List<GanttItemWrapper> subTasks = item.subTasks();
+            insertSubSteps(item, subTasks);
         });
 
-        this.addCollapseListener(new Tree.CollapseListener() {
-            @Override
-            public void nodeCollapse(Tree.CollapseEvent collapseEvent) {
-                GanttItemWrapper item = (GanttItemWrapper) collapseEvent.getItemId();
-                List<GanttItemWrapper> subTasks = item.subTasks();
-                removeSubSteps(item, subTasks);
-            }
+        this.addCollapseListener(collapseEvent -> {
+            GanttItemWrapper item = (GanttItemWrapper) collapseEvent.getItemId();
+            List<GanttItemWrapper> subTasks = item.subTasks();
+            removeSubSteps(item, subTasks);
         });
 
-        this.setCellStyleGenerator(new CellStyleGenerator() {
-            @Override
-            public String getStyle(Table source, Object itemId, Object propertyId) {
-                GanttItemWrapper item = (GanttItemWrapper) itemId;
-                if (item.isMilestone()) {
-                    return "root";
-                } else if (item.isTask()) {
-                    return "";
-                }
+        this.setCellStyleGenerator((source, itemId, propertyId) -> {
+            GanttItemWrapper item = (GanttItemWrapper) itemId;
+            if (item.isMilestone()) {
+                return "root";
+            } else if (item.isTask()) {
                 return "";
             }
+            return "";
         });
 
         gantt.setVerticalScrollDelegateTarget(this);
