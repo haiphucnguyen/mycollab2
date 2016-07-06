@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.rest.server.resource;
+package com.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import org.slf4j.Logger;

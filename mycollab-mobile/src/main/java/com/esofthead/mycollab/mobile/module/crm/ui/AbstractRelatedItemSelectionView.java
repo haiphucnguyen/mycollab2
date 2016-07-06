@@ -45,14 +45,9 @@ public abstract class AbstractRelatedItemSelectionView<T, S extends SearchCriter
         this.relatedListView = relatedListView;
         initUI();
         this.setContent(itemList);
-        Button doneBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
-            private static final long serialVersionUID = -652476076947907047L;
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                if (!selections.isEmpty()) {
-                    relatedListView.fireSelectedRelatedItems(selections);
-                }
+        Button doneBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+            if (!selections.isEmpty()) {
+                relatedListView.fireSelectedRelatedItems(selections);
             }
         });
         this.setRightComponent(doneBtn);

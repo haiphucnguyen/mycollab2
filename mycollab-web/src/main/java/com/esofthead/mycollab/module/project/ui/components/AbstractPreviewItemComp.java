@@ -83,7 +83,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
             header.with(headerLbl).expand(headerLbl);
         } else {
             favoriteBtn = new Button(FontAwesome.STAR);
-            favoriteBtn.addClickListener((clickEvent) -> toggleFavorite());
+            favoriteBtn.addClickListener(clickEvent -> toggleFavorite());
 
             Label spaceLbl = new Label();
             header.with(headerLbl, favoriteBtn, spaceLbl).expand(spaceLbl);

@@ -38,6 +38,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -64,55 +65,38 @@ public class MilestoneAddWindow extends Window {
         editForm.setBeanFormFieldFactory(milestoneEditFormFieldFactory);
         editForm.setBean(milestone);
 
-        MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
-        buttonControls.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
+        MButton updateAllBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), clickEvent -> {
+            EventBusFactory.getInstance().post(new MilestoneEvent.GotoAdd(MilestoneAddWindow.this, milestone));
+            close();
+        }).withStyleName(UIConstants.BUTTON_LINK);
 
-        Button updateAllBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(new MilestoneEvent.GotoAdd(MilestoneAddWindow.this, milestone));
+        MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+            if (editForm.validateForm()) {
+                MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
+                Integer milestoneId;
+                if (milestone.getId() == null) {
+                    milestoneId = milestoneService.saveWithSession(milestone, AppContext.getUsername());
+                } else {
+                    milestoneService.updateWithSession(milestone, AppContext.getUsername());
+                    milestoneId = milestone.getId();
+                }
+
+                AttachmentUploadField uploadField = milestoneEditFormFieldFactory.getAttachmentUploadField();
+                String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), milestone.getProjectid(),
+                        ProjectTypeConstants.MILESTONE, "" + milestone.getId());
+                uploadField.saveContentsToRepo(attachPath);
+
+                EventBusFactory.getInstance().post(new MilestoneEvent.NewMilestoneAdded(MilestoneAddWindow.this, milestoneId));
+                EventBusFactory.getInstance().post(new AssignmentEvent.NewAssignmentAdd(MilestoneAddWindow.this,
+                        ProjectTypeConstants.MILESTONE, milestoneId));
                 close();
             }
-        });
-        updateAllBtn.addStyleName(UIConstants.BUTTON_LINK);
-
-        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                if (editForm.validateForm()) {
-                    MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                    Integer milestoneId;
-                    if (milestone.getId() == null) {
-                        milestoneId = milestoneService.saveWithSession(milestone, AppContext.getUsername());
-                    } else {
-                        milestoneService.updateWithSession(milestone, AppContext.getUsername());
-                        milestoneId = milestone.getId();
-                    }
-
-                    AttachmentUploadField uploadField = milestoneEditFormFieldFactory.getAttachmentUploadField();
-                    String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), milestone.getProjectid(),
-                            ProjectTypeConstants.MILESTONE, "" + milestone.getId());
-                    uploadField.saveContentsToRepo(attachPath);
-
-                    EventBusFactory.getInstance().post(new MilestoneEvent.NewMilestoneAdded(MilestoneAddWindow.this, milestoneId));
-                    EventBusFactory.getInstance().post(new AssignmentEvent.NewAssignmentAdd(MilestoneAddWindow.this,
-                            ProjectTypeConstants.MILESTONE, milestoneId));
-                    close();
-                }
-            }
-        });
-        saveBtn.setIcon(FontAwesome.SAVE);
-        saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.SAVE).withStyleName(UIConstants.BUTTON_ACTION);
         saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                close();
-            }
-        });
-        cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-        buttonControls.with(updateAllBtn, cancelBtn, saveBtn);
+        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                .withStyleName(UIConstants.BUTTON_OPTION);
+        MHorizontalLayout buttonControls = new MHorizontalLayout(updateAllBtn, cancelBtn, saveBtn).withMargin(new MarginInfo(true, true, true, false));
         content.addComponent(buttonControls);
         content.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);
     }

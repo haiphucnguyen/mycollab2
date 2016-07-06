@@ -51,6 +51,8 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
 
+import static com.esofthead.mycollab.module.user.accountsettings.localization.BillingI18nEnum.OPTION_BILLING_FAQ;
+
 /**
  * @author MyCollab Ltd.
  * @since 1.0
@@ -115,17 +117,12 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             final BillingPlan plan = availablePlans.get(i);
 
             ELabel billingType = ELabel.h3(plan.getBillingtype()).withStyleName("billing-type");
-
             Label billingPrice = ELabel.html("<span class='billing-price'>$" + plan.getPricing() + "</span>/month")
                     .withStyleName("billing-price-lbl").withWidthUndefined();
-
             Label billingUser = ELabel.html("<span class='billing-user'>" + plan.getNumusers() + "</span>&nbsp;" +
                     "Users").withWidthUndefined();
-
             String planVolume = FileUtils.getVolumeDisplay(plan.getVolume());
-
             Label billingStorage = ELabel.html("<span class='billing-storage'>" + planVolume + "</span>&nbsp;Storage").withWidthUndefined();
-
             Label billingProject = ELabel.html("<span class='billing-project'>" + plan.getNumprojects() +
                     "</span>&nbsp;Projects").withWidthUndefined();
 
@@ -137,7 +134,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                     opener.extend(selectPlanBtn);
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
                 } else {
-                    singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject);
+                    singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, new
+                            MButton("Selected").withStyleName(UIConstants.BUTTON_DANGER));
                 }
             } else {
                 MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT),
@@ -145,14 +143,11 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
             }
 
-
             plansLayout.with(singlePlan).expand(singlePlan);
         }
 
         layout.addComponent(plansLayout);
-
-        String billingFAQText = "<div class='prig-bottom'><div class='prig-bottom-cnt'><div class='pri-bott-coll pri-coll-1'><div class='pri-bott-block'><h2>How does the 30-day trial work?</h2><p>When you sign up, you are automatically enrolled in a free30-day trial that gives you unrestricted access to all the great features MyCollab has to offer. During your free trial, you have the option to cancel at any time. When your trial ends, you can choose to remain on your current package, upgrade to another one with more users and storages, downgrade, or cancel.</p></div><div class='pri-bott-block'><h2>Can I upgrade my plan at any time?</h2><p>Yes, you may upgrade your plan at any time. Choose a plan that suits your needs today, and upgrade as the numbers of users and spaces grow. After you upgrade the changes will be updated on your next billing cycle.</p></div><div class='pri-bott-block'><h2>What if I want to downgrade my plan?</h2><p>You can downgrade your package at any time as long as the one you select is consistent with your current usage. For example, if you currently have 30 users, you must delete 10 of them before you can downgrade to a Compact package that allows for up to 20 users.</p></div></div><div class='pri-bott-coll'><div class='pri-bott-block prig-block-1'><h2>Do I have to provide payment information up front?</h2><p>No, you can choose the \"manual payment\" option in the billing information panel. At the end of the trial, we will send you an email to remind you to submit payment information. You can then choose if and how you want to pay.</p></div><div class='pri-bott-block prig-block-2'><h2>What payment options are available?</h2><p>We accept Visa, Mastercard, and American Express for automatic payments. We also accept PayPal, checks, and bankwires for manual payments.</p></div><div class='pri-bott-block'><h2>Do I have to sign a long-term contract?</h2><p>No, there are no contracts. You can choose to pay monthly,or you can pay in advance for a year and get 2 months free (12 months for the price of 10). By paying in advance, you can submit one expense report or purchase order for the year.</p></div></div></div><div class='clear'></div></div>";
-        this.with(layout, ELabel.html(billingFAQText));
+        this.with(layout, ELabel.html(AppContext.getMessage(OPTION_BILLING_FAQ)));
 
         loadCurrentPlan();
     }
@@ -162,7 +157,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         currentPlanLayout.removeAllComponents();
         BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
 
-        ELabel introText = ELabel.h2("Your current plan: " + currentBillingPlan.getBillingtype());
+        ELabel introText = ELabel.h2(AppContext.getMessage(BillingI18nEnum.OPT_CURRENT_PLAN, currentBillingPlan.getBillingtype()));
         SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
         if (billingAccount.isNotActive()) {
             MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(UIConstants.BUTTON_DANGER);
@@ -174,26 +169,26 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             currentPlanLayout.addComponent(introText);
         }
 
-        ELabel currentBillingPrice = ELabel.h3("$" + currentBillingPlan.getPricing() + "/ Month");
+        ELabel currentBillingPrice = ELabel.h3(AppContext.getMessage(BillingI18nEnum.OPT_PRICING_MONTH, currentBillingPlan.getPricing()));
         currentPlanLayout.addComponent(currentBillingPrice);
 
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         numOfActiveProjects = projectService.getTotalActiveProjectsInAccount(AppContext.getAccountId());
 
-        ELabel projectInfo = new ELabel(String.format("<span class='infoTitle'>Projects:</span> %d of %d</div>",
-                numOfActiveProjects, currentBillingPlan.getNumprojects()), ContentMode.HTML).withStyleName(UIConstants.FIELD_NOTE);
+        ELabel projectInfo = ELabel.html(String.format("<span class='infoTitle'>Projects:</span> %d of %d</div>",
+                numOfActiveProjects, currentBillingPlan.getNumprojects())).withStyleName(UIConstants.FIELD_NOTE);
 
         DriveInfoService driveInfoService = AppContextUtil.getSpringBean(DriveInfoService.class);
         usedStorageVolume = driveInfoService.getUsedStorageVolume(AppContext.getAccountId());
         String usedStorageTxt = FileUtils.getVolumeDisplay(usedStorageVolume);
-        ELabel storageInfo = new ELabel(String.format("<span class='infoTitle'>Storage:</span> %s of %s</div>",
-                usedStorageTxt, FileUtils.getVolumeDisplay(currentBillingPlan.getVolume())), ContentMode.HTML)
+        ELabel storageInfo = ELabel.html(String.format("<span class='infoTitle'>Storage:</span> %s of %s</div>",
+                usedStorageTxt, FileUtils.getVolumeDisplay(currentBillingPlan.getVolume())))
                 .withStyleName(UIConstants.FIELD_NOTE);
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
         numOfActiveUsers = userService.getTotalActiveUsersInAccount(AppContext.getAccountId());
-        ELabel userInfo = new ELabel(String.format("<span class='infoTitle'>Users:</span> %d of %d</div>",
-                numOfActiveUsers, currentBillingPlan.getNumusers()), ContentMode.HTML).withStyleName(UIConstants.FIELD_NOTE);
+        ELabel userInfo = ELabel.html(String.format("<span class='infoTitle'>Users:</span> %d of %d</div>",
+                numOfActiveUsers, currentBillingPlan.getNumusers())).withStyleName(UIConstants.FIELD_NOTE);
 
         currentPlanLayout.addComponent(new MHorizontalLayout(projectInfo, storageInfo, userInfo));
     }
@@ -229,8 +224,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             contentLayout.addComponent(chosenPlanPrice);
 
 
-            final MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent ->
-                    close()).withStyleName(UIConstants.BUTTON_OPTION);
+            final MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                    .withStyleName(UIConstants.BUTTON_OPTION);
 
             final MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
                 if (chosenPlan.getNumprojects() < numOfActiveProjects

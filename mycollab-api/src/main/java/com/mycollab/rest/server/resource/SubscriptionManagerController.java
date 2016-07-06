@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.rest.server.resource;
+package com.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.configuration.EnDecryptHelper;
@@ -102,13 +102,9 @@ public class SubscriptionManagerController {
 
     @RequestMapping(path = "/activated", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
-    public String activateSubscription(@RequestParam("SubscriptionCustomerUrl") String subscriptionCustomerUrl,
-                                       @RequestParam("SubscriptionEndDate") String subscriptionEndDate,
-                                       @RequestParam("SubscriptionIsTest") String subscriptionIsTest,
-                                       @RequestParam("SubscriptionQuantity") String subscriptionQuantity,
-                                       @RequestParam("SubscriptionReference") String subscriptionReference,
+    public String activateSubscription(@RequestParam("SubscriptionReference") String subscriptionReference,
                                        @RequestParam("SubscriptionReferrer") String subscriptionReferrer,
-                                       @RequestParam("NextPeriodDate") String nextPaymentDate,
+                                       @RequestParam("NextPeriodDate") String nextPeriodDate,
                                        @RequestParam("ProductName") String productName,
                                        @RequestParam("TotalPrice") String totalPrice,
                                        @RequestParam("CustomerFullName") String customerFullName,
@@ -139,7 +135,7 @@ public class SubscriptionManagerController {
             subscriptionHistory.setOrderid(reference);
             subscriptionHistory.setCreatedtime(new DateTime().toDate());
             subscriptionHistory.setStatus("Success");
-            subscriptionHistory.setExpireddate(dateFormatter.parseLocalDate(nextPaymentDate).toDate());
+            subscriptionHistory.setExpireddate(dateFormatter.parseLocalDate(nextPeriodDate).toDate());
             subscriptionHistory.setProductname(productName);
             subscriptionHistory.setTotalprice(Double.parseDouble(totalPrice));
             subscriptionHistoryMapper.insert(subscriptionHistory);
@@ -158,7 +154,7 @@ public class SubscriptionManagerController {
             billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
 
             contentGenerator.putVariable("customerName", customerFullName);
-            contentGenerator.putVariable("nextPaymentDate", nextPaymentDate);
+            contentGenerator.putVariable("nextPaymentDate", nextPeriodDate);
             File receiptReport = receiptReport(subscriptionReference, reference, productName, email, customerFullName,
                     companyName, Double.parseDouble(totalPrice));
             extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
@@ -175,6 +171,40 @@ public class SubscriptionManagerController {
         }
         return "Ok";
     }
+
+    @RequestMapping(path = "/rebill-completed", method = RequestMethod.POST, headers =
+            {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
+    public String reBillSubscription(@RequestParam("OrderId") String orderId,
+                                     @RequestParam("OrderProductName") String orderProductName,
+                                     @RequestParam("CustomerName") String customerFullName,
+                                     @RequestParam("CustomerCompany") String customerCompany,
+                                     @RequestParam("OrderReferrer") String orderReferrer,
+                                     @RequestParam("NextPeriodDate") String nextPeriodDate,
+                                     @RequestParam("CustomerEmail") String email,
+                                     @RequestParam("SubscriptionReference") String subscriptionReference,
+                                     @RequestParam("OrderSubTotalUSD") String orderSubTotalUSD,
+                                     @RequestParam("Status") String status) throws Exception {
+        LOG.info("Referrer: " + orderReferrer);
+        contentGenerator.putVariable("customerName", customerFullName);
+        contentGenerator.putVariable("nextPaymentDate", nextPeriodDate);
+        File receiptReport = receiptReport(subscriptionReference, orderId, orderProductName, email, customerFullName,
+                customerCompany, Double.parseDouble(orderSubTotalUSD));
+        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
+                Arrays.asList(new MailRecipientField(email, customerFullName)), null, null, String.format("[%s] " +
+                        "Payment charged successfully", SiteConfiguration.getDefaultSiteName()),
+                contentGenerator.parseFile("paymentChargedSuccessfully.ftl"), Arrays.asList(
+                        new FileEmailAttachmentSource
+                                (receiptReport, "Receipt-" + subscriptionReference + ".pdf")));
+        return "Ok";
+    }
+
+    @RequestMapping(path = "/subscription-failed", method = RequestMethod.POST, headers =
+            {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
+    public String returnCompletedSubscription(@RequestParam("SubscriptionReference") String subscriptionReference) {
+
+        return "Ok";
+    }
+
 
     private File receiptReport(String subscriptionReference, String reference, String productName, String email, String customerFullName,
                                String customerCompany, Double price) throws Exception {

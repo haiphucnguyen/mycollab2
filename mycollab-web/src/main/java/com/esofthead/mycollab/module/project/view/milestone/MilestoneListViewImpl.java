@@ -33,10 +33,6 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus
 import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
-import com.esofthead.mycollab.reporting.ReportExportType;
-import com.esofthead.mycollab.reporting.ReportStreamSource;
-import com.esofthead.mycollab.reporting.RpFieldsBuilder;
-import com.esofthead.mycollab.reporting.SimpleReportTemplateExecutor;
 import com.esofthead.mycollab.spring.AppContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -51,18 +47,16 @@ import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.teemu.VaadinIcons;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author MyCollab Ltd.
@@ -152,36 +146,22 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
     private HorizontalLayout createHeaderRight() {
         MHorizontalLayout layout = new MHorizontalLayout();
 
-        Button createBtn = new Button(AppContext.getMessage(MilestoneI18nEnum.NEW), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                SimpleMilestone milestone = new SimpleMilestone();
-                milestone.setSaccountid(AppContext.getAccountId());
-                milestone.setProjectid(CurrentProjectVariables.getProjectId());
-                UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
-            }
-        });
-        createBtn.setIcon(FontAwesome.PLUS);
-        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
+        MButton createBtn = new MButton(AppContext.getMessage(MilestoneI18nEnum.NEW), clickEvent -> {
+            SimpleMilestone milestone = new SimpleMilestone();
+            milestone.setSaccountid(AppContext.getAccountId());
+            milestone.setProjectid(CurrentProjectVariables.getProjectId());
+            UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
+        }).withIcon(FontAwesome.PLUS).withStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         layout.with(createBtn);
 
-        Button printBtn = new Button("", new Button.ClickListener() {
+        MButton printBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new
+                MilestoneCustomizeReportOutputWindow(new LazyValueInjector() {
             @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new MilestoneCustomizeReportOutputWindow(new LazyValueInjector() {
-                    @Override
-                    protected Object doEval() {
-                        return baseCriteria;
-                    }
-                }));
+            protected Object doEval() {
+                return baseCriteria;
             }
-        });
-        printBtn.setIcon(FontAwesome.PRINT);
-        printBtn.addStyleName(UIConstants.BUTTON_OPTION);
-        printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
+        }))).withIcon(FontAwesome.PRINT).withStyleName(UIConstants.BUTTON_OPTION).withDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
         layout.addComponent(printBtn);
 
         Button kanbanBtn = new Button("Board");
@@ -250,24 +230,6 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         this.addComponent(bodyContent);
     }
 
-    private StreamResource buildStreamSource(ReportExportType exportType) {
-        List fields = Arrays.asList(MilestoneTableFieldDef.milestoneName(), MilestoneTableFieldDef.status(),
-                MilestoneTableFieldDef.startDate(), MilestoneTableFieldDef.endDate(), MilestoneTableFieldDef.id(),
-                MilestoneTableFieldDef.assignee());
-        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Milestones",
-                new RpFieldsBuilder(fields), exportType, SimpleMilestone.class, AppContextUtil.getSpringBean
-                (MilestoneService.class));
-        ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
-            @Override
-            protected void initReportParameters(Map<String, Object> parameters) {
-                MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
-                searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                parameters.put(SimpleReportTemplateExecutor.CRITERIA, searchCriteria);
-            }
-        };
-        return new StreamResource(streamSource, exportType.getDefaultFileName());
-    }
-
     private void updateClosedMilestoneNumber(int closeMilestones) {
         closedHeader.setValue(FontAwesome.MINUS_CIRCLE.getHtml() + " " +
                 AppContext.getMessage(MilestoneI18nEnum.WIDGET_CLOSED_PHASE_TITLE) + " (" + closeMilestones + ")");
@@ -302,43 +264,31 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
             taskSettingPopupBtn.setWidth("15px");
             OptionPopupContent filterBtnLayout = new OptionPopupContent();
 
-            Button editButton = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(MilestoneBox.this, milestone));
-                }
-            });
+            MButton editButton = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
+                    clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(MilestoneBox.this, milestone)))
+                    .withIcon(FontAwesome.EDIT);
             editButton.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
-            editButton.setIcon(FontAwesome.EDIT);
             filterBtnLayout.addOption(editButton);
 
-            Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
+            MButton deleteBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
+                ConfirmDialogExt.show(UI.getCurrent(),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
 
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    ConfirmDialogExt.show(UI.getCurrent(),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                            new ConfirmDialog.Listener() {
-                                private static final long serialVersionUID = 1L;
-
-                                @Override
-                                public void onClose(ConfirmDialog dialog) {
-                                    if (dialog.isConfirmed()) {
-                                        MilestoneService projectTaskService = AppContextUtil.getSpringBean(MilestoneService.class);
-                                        projectTaskService.removeWithSession(milestone, AppContext.getUsername(), AppContext.getAccountId());
-                                        displayMilestones();
-                                    }
+                            @Override
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    MilestoneService projectTaskService = AppContextUtil.getSpringBean(MilestoneService.class);
+                                    projectTaskService.removeWithSession(milestone, AppContext.getUsername(), AppContext.getAccountId());
+                                    displayMilestones();
                                 }
-                            });
-                }
-            });
-            deleteBtn.setIcon(FontAwesome.TRASH_O);
+                            }
+                        });
+            }).withIcon(FontAwesome.TRASH_O);
             deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MILESTONES));
             filterBtnLayout.addDangerOption(deleteBtn);
 

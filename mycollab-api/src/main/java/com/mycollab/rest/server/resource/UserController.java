@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.rest.server.resource;
+package com.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.billing.service.BillingService;

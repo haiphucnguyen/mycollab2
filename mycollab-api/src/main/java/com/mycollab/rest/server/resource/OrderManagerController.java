@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.rest.server.resource;
+package com.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.configuration.EnDecryptHelper;

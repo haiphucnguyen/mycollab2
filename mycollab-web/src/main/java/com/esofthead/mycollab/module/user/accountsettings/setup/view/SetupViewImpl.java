@@ -42,6 +42,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.io.File;
@@ -100,15 +101,9 @@ public class SetupViewImpl extends AbstractPageView implements SetupView {
         private Layout createButtonControls() {
             final MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(true);
 
-            final Button closeBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final Button.ClickEvent event) {
-                    EventBusFactory.getInstance().post(new ProfileEvent.GotoProfileView(this));
-                }
-            });
-            closeBtn.setStyleName(UIConstants.BUTTON_OPTION);
+            final MButton closeBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE),
+                    clickEvent -> EventBusFactory.getInstance().post(new ProfileEvent.GotoProfileView(this)))
+                    .withStyleName(UIConstants.BUTTON_OPTION);
 
             final Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;

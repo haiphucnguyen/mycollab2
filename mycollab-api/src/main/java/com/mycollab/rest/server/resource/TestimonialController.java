@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.rest.server.resource;
+package com.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.module.mail.service.IContentGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
