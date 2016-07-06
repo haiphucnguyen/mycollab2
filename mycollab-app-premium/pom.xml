@@ -5,7 +5,7 @@
     <name>mycollab-app-premium</name>
     <artifactId>mycollab-app-premium</artifactId>
     <parent>
-        <groupId>com.esofthead.mycollab</groupId>
+        <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent-premium</artifactId>
         <version>5.3.4</version>
         <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
@@ -20,73 +20,73 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
             <version>5.3.4</version>
             <exclusions>
                 <exclusion>
-                    <groupId>com.esofthead.mycollab</groupId>
+                    <groupId>com.mycollab</groupId>
                     <artifactId>mycollab-test</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-caching-community</artifactId>
             <version>5.3.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-servlet</artifactId>
             <version>5.3.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-license</artifactId>
             <version>5.3.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-scheduler-premium</artifactId>
             <version>5.3.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-reporting-premium</artifactId>
             <version>5.3.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-mobile</artifactId>
             <version>5.3.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-mobile-premium</artifactId>
             <version>5.3.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-services-pro</artifactId>
             <version>5.3.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-services-premium</artifactId>
             <version>5.3.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-web-premium</artifactId>
             <version>5.3.4</version>
         </dependency>
@@ -148,7 +148,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.esofthead.mycollab.server.DefaultServerRunner</mainClass>
+                                    <mainClass>com.mycollab.server.DefaultServerRunner</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
@@ -169,7 +169,7 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>com.esofthead.mycollab:*</include>
+                                    <include>com.mycollab:*</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
@@ -206,10 +206,10 @@
                         <lib>${java.home}/lib/rt.jar</lib>
                         <lib>${java.home}/lib/jsse.jar</lib>
                     </libs>
-                    <inFilter>!com/esofthead/mycollab/optional/**</inFilter>
+                    <inFilter>!com.mycollab/optional/**</inFilter>
                     <exclusions>
                         <exclusion>
-                            <groupId>com.esofthead.mycollab</groupId>
+                            <groupId>com.mycollab</groupId>
                             <artifactId>*</artifactId>
                         </exclusion>
                     </exclusions>
@@ -238,7 +238,7 @@
                         <configuration>
                             <outputDirectory>${installer.staging.dir}/lib</outputDirectory>
                             <excludeScope>provided</excludeScope>
-                            <excludeGroupIds>com.esofthead.mycollab</excludeGroupIds>
+                            <excludeGroupIds>com.mycollab</excludeGroupIds>
                         </configuration>
                     </execution>
                 </executions>
@@ -266,7 +266,7 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>com.esofthead.mycollab</groupId>
+                                    <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-esb</artifactId>
                                     <version>5.3.4</version>
                                     <type>jar</type>
@@ -274,7 +274,7 @@
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>
-                                    <groupId>com.esofthead.mycollab</groupId>
+                                    <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-localization</artifactId>
                                     <version>5.3.4</version>
                                     <type>jar</type>
@@ -283,7 +283,7 @@
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>
-                                    <groupId>com.esofthead.mycollab</groupId>
+                                    <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-scheduler</artifactId>
                                     <version>5.3.4</version>
                                     <type>jar</type>
@@ -291,7 +291,7 @@
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>
-                                    <groupId>com.esofthead.mycollab</groupId>
+                                    <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-servlet</artifactId>
                                     <version>5.3.4</version>
                                     <type>jar</type>
@@ -449,8 +449,8 @@
                                     <!-- if you don't specify any modules,
                                         the plugin will find them -->
                                     <modules>
-                                        <module>com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet</module>
-                                        <module>com.esofthead.mycollab.widgetset.MyCollabWidgetSet</module>
+                                        <module>com.mycollab.widgetset.MyCollabMobileWidgetSet</module>
+                                        <module>com.mycollab.widgetset.MyCollabWidgetSet</module>
                                     </modules>
                                 </configuration>
                                 <goals>

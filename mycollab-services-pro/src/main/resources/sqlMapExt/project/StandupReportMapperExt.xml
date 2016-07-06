@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.esofthead.mycollab.pro.module.project.dao.StandupReportMapperExt">
-    <resultMap extends="com.esofthead.mycollab.pro.module.project.dao.StandupReportMapper.ResultMapWithBLOBs"
-        id="StandupResult" type="com.esofthead.mycollab.module.project.domain.SimpleStandupReport">
+<mapper namespace="com.mycollab.pro.module.project.dao.StandupReportMapperExt">
+    <resultMap extends="com.mycollab.pro.module.project.dao.StandupReportMapper.ResultMapWithBLOBs"
+        id="StandupResult" type="com.mycollab.module.project.domain.SimpleStandupReport">
         <result column="logByFullName" property="logByFullName" jdbcType="VARCHAR" />
         <result column="logByAvatarId" property="logByAvatarId" jdbcType="VARCHAR" />
     </resultMap>
 
-    <resultMap id="StandupStatisticResult" type="com.esofthead.mycollab.module.project.domain.StandupReportStatistic">
+    <resultMap id="StandupStatisticResult" type="com.mycollab.module.project.domain.StandupReportStatistic">
         <result column="projectId" property="projectId" jdbcType="INTEGER" />
         <result column="projectKey" property="projectKey" jdbcType="VARCHAR" />
         <result column="projectAvatarId" property="projectAvatarId" jdbcType="VARCHAR" />
@@ -130,7 +130,7 @@
     </select>
     
     <select id="findUsersNotDoReportYet" parameterType="StandupReportSearchCriteria"
-        resultMap="com.esofthead.mycollab.module.user.dao.UserMapperExt.SimpleUserResult" lang="velocity">
+            resultMap="com.mycollab.module.user.dao.UserMapperExt.SimpleUserResult" lang="velocity">
         <![CDATA[
         SELECT s_user.username, s_user.firstname, s_user.lastname, s_user.avatarId
             FROM s_user, m_prj_member

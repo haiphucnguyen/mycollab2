@@ -1,7 +1,7 @@
 package com.mycollab.rest.server.resource;
 
-import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.module.billing.service.BillingService;
+import com.mycollab.core.utils.BeanUtility;
+import com.mycollab.module.billing.service.BillingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

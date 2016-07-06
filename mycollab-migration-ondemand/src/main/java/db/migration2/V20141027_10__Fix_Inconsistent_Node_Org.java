@@ -5,10 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.esofthead.mycollab.module.ecm.domain.Content;
-import com.esofthead.mycollab.module.ecm.domain.Resource;
-import com.esofthead.mycollab.module.ecm.service.ContentJcrDao;
-import com.esofthead.mycollab.spring.AppContextUtil;
+import com.mycollab.module.ecm.domain.Content;
+import com.mycollab.module.ecm.domain.Resource;
+import com.mycollab.module.ecm.service.ContentJcrDao;
+import com.mycollab.spring.AppContextUtil;
 
 public class V20141027_10__Fix_Inconsistent_Node_Org implements
 		SpringJdbcMigration {

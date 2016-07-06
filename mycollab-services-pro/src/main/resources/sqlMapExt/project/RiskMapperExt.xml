@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.esofthead.mycollab.pro.module.project.dao.RiskMapperExt">
+<mapper namespace="com.mycollab.pro.module.project.dao.RiskMapperExt">
 
-    <resultMap extends="com.esofthead.mycollab.pro.module.project.dao.RiskMapper.ResultMapWithBLOBs"
-        id="RiskResult" type="com.esofthead.mycollab.module.project.domain.SimpleRisk">
+    <resultMap extends="com.mycollab.pro.module.project.dao.RiskMapper.ResultMapWithBLOBs"
+        id="RiskResult" type="com.mycollab.module.project.domain.SimpleRisk">
         <result column="risksource" property="risksource" jdbcType="VARCHAR" />
         <result column="raisedByUserAvatarId" property="raisedByUserAvatarId" jdbcType="VARCHAR" />
         <result column="raisedByUserFullName" property="raisedByUserFullName" jdbcType="VARCHAR" />
@@ -147,7 +147,7 @@
 
     <!-- Here for Mass Update -->
     <update id="updateBySearchCriteria" parameterType="map" lang="velocity">
-        <include refid="com.esofthead.mycollab.pro.module.project.dao.RiskMapper.massUpdateWithSessionSql" />
+        <include refid="com.mycollab.pro.module.project.dao.RiskMapper.massUpdateWithSessionSql" />
         #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")
                 <include refid="queryTotalCountSearchCriteria" />

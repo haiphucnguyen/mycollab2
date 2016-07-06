@@ -1,15 +1,15 @@
 package db.migration2;
 
-import com.esofthead.mycollab.core.utils.ImageUtil;
-import com.esofthead.mycollab.core.utils.MimeTypesUtil;
-import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.module.ecm.domain.Content;
-import com.esofthead.mycollab.module.ecm.domain.Folder;
-import com.esofthead.mycollab.module.ecm.domain.Resource;
-import com.esofthead.mycollab.module.ecm.service.ContentJcrDao;
-import com.esofthead.mycollab.module.ecm.service.ResourceService;
-import com.esofthead.mycollab.module.file.service.RawContentService;
-import com.esofthead.mycollab.spring.AppContextUtil;
+import com.mycollab.core.utils.ImageUtil;
+import com.mycollab.core.utils.MimeTypesUtil;
+import com.mycollab.core.utils.StringUtils;
+import com.mycollab.module.ecm.domain.Content;
+import com.mycollab.module.ecm.domain.Folder;
+import com.mycollab.module.ecm.domain.Resource;
+import com.mycollab.module.ecm.service.ContentJcrDao;
+import com.mycollab.module.ecm.service.ResourceService;
+import com.mycollab.module.file.service.RawContentService;
+import com.mycollab.spring.AppContextUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.flywaydb.core.api.migration.spring.SpringJdbcMigration;
 import org.slf4j.Logger;

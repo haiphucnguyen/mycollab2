@@ -1,7 +1,7 @@
 package com.mycollab.rest.server.resource;
 
-import com.esofthead.mycollab.module.mail.service.IContentGenerator;
-import com.esofthead.mycollab.module.mail.service.MailRelayService;
+import com.mycollab.module.mail.service.IContentGenerator;
+import com.mycollab.module.mail.service.MailRelayService;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Li;
 import com.hp.gagawa.java.elements.Ul;

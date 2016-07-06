@@ -14,7 +14,7 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>com.esofthead.mycollab.spring.WebConfiguration</param-value>
+            <param-value>com.mycollab.spring.WebConfiguration</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -29,11 +29,11 @@
     </listener>
 
     <listener>
-        <listener-class>com.esofthead.mycollab.servlet.MetricsServletContextListener</listener-class>
+        <listener-class>com.mycollab.servlet.MetricsServletContextListener</listener-class>
     </listener>
 
     <listener>
-        <listener-class>com.esofthead.mycollab.servlet.HealthcheckServletContextListener</listener-class>
+        <listener-class>com.mycollab.servlet.HealthcheckServletContextListener</listener-class>
     </listener>
 
     <context-param>
@@ -43,7 +43,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>com.esofthead.mycollab.spring.RootConfiguration</param-value>
+        <param-value>com.mycollab.spring.RootConfiguration</param-value>
     </context-param>
 
     <context-param>
@@ -66,7 +66,7 @@
     </filter-mapping>
 
     <listener>
-        <listener-class>com.esofthead.mycollab.servlet.MyCollabHttpSessionListener</listener-class>
+        <listener-class>com.mycollab.servlet.MyCollabHttpSessionListener</listener-class>
     </listener>
 
     <filter>
@@ -142,7 +142,7 @@
     </error-page>
 
     <error-page>
-        <exception-type>javax.servlet.ServletException, com.esofthead.mycollab.core.ResourceNotFoundException
+        <exception-type>javax.servlet.ServletException, com.mycollab.core.ResourceNotFoundException
         </exception-type>
         <location>/error</location>
     </error-page>

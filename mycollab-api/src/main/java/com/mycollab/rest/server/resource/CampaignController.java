@@ -1,16 +1,16 @@
 package com.mycollab.rest.server.resource;
 
-import com.esofthead.mycollab.common.domain.MailRecipientField;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.MyCollabVersion;
-import com.esofthead.mycollab.core.utils.FileUtils;
-import com.esofthead.mycollab.module.mail.service.ExtMailService;
-import com.esofthead.mycollab.module.mail.service.IContentGenerator;
-import com.esofthead.mycollab.ondemand.module.support.dao.CommunityLeadMapper;
-import com.esofthead.mycollab.ondemand.module.support.domain.CommunityLead;
-import com.esofthead.mycollab.ondemand.module.support.domain.CommunityLeadExample;
-import com.esofthead.mycollab.ondemand.module.support.domain.EditionInfo;
-import com.esofthead.mycollab.ondemand.module.support.service.EditionInfoResolver;
+import com.mycollab.common.domain.MailRecipientField;
+import com.mycollab.configuration.SiteConfiguration;
+import com.mycollab.core.MyCollabVersion;
+import com.mycollab.core.utils.FileUtils;
+import com.mycollab.module.mail.service.ExtMailService;
+import com.mycollab.module.mail.service.IContentGenerator;
+import com.mycollab.ondemand.module.support.dao.CommunityLeadMapper;
+import com.mycollab.ondemand.module.support.domain.CommunityLead;
+import com.mycollab.ondemand.module.support.domain.CommunityLeadExample;
+import com.mycollab.ondemand.module.support.domain.EditionInfo;
+import com.mycollab.ondemand.module.support.service.EditionInfoResolver;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**

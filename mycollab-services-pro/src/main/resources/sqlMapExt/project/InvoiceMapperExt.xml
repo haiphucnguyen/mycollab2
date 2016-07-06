@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.esofthead.mycollab.pro.module.project.dao.InvoiceMapperExt">
-    <resultMap extends="com.esofthead.mycollab.pro.module.project.dao.InvoiceMapper.ResultMapWithBLOBs"
-               id="InvoiceResult" type="com.esofthead.mycollab.module.project.domain.SimpleInvoice">
+<mapper namespace="com.mycollab.pro.module.project.dao.InvoiceMapperExt">
+    <resultMap extends="com.mycollab.pro.module.project.dao.InvoiceMapper.ResultMapWithBLOBs"
+               id="InvoiceResult" type="com.mycollab.module.project.domain.SimpleInvoice">
         <result column="createUserFullName" jdbcType="VARCHAR" property="createUserFullName" />
         <result column="createUserAvatarId" jdbcType="VARCHAR" property="createUserAvatarId" />
         <result column="assignUserFullName" jdbcType="VARCHAR" property="assignUserFullName" />
         <result column="assignUserAvatarId" jdbcType="VARCHAR" property="assignUserAvatarId" />
-        <association property="client" resultMap="com.esofthead.mycollab.module.crm.dao.AccountMapper.BaseResultMap"
+        <association property="client" resultMap="com.mycollab.module.crm.dao.AccountMapper.BaseResultMap"
                      columnPrefix="client_"/>
     </resultMap>
 

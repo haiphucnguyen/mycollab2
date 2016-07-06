@@ -1,12 +1,10 @@
 package com.mycollab.rest.server.resource;
 
-import com.esofthead.mycollab.common.dao.LiveInstanceMapper;
-import com.esofthead.mycollab.common.domain.LiveInstance;
-import com.esofthead.mycollab.common.domain.LiveInstanceExample;
+import com.mycollab.common.dao.LiveInstanceMapper;
+import com.mycollab.common.domain.LiveInstance;
+import com.mycollab.common.domain.LiveInstanceExample;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

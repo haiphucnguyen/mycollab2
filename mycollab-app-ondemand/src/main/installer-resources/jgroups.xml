@@ -15,7 +15,7 @@
     or see the FSF site: http://www.fsf.org. -->
 <config>
     <TCP bind_port="7800" />
-    <com.esofthead.mycollab.jgroups.protocols.JDBC_PING_EXT />
+    <com.mycollab.jgroups.protocols.JDBC_PING_EXT />
     <MERGE2 max_interval="30000" min_interval="10000" />
     <FD_SOCK />
     <FD timeout="10000" max_tries="5" />

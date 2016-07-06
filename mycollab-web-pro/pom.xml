@@ -5,7 +5,7 @@
     <name>mycollab-web-pro</name>
     <artifactId>mycollab-web-pro</artifactId>
     <parent>
-        <groupId>com.esofthead.mycollab</groupId>
+        <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent-premium</artifactId>
         <version>5.3.4</version>
         <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
@@ -13,19 +13,19 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-ui</artifactId>
             <version>5.3.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-services</artifactId>
             <version>5.3.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-web</artifactId>
             <version>5.3.4</version>
         </dependency>

@@ -1,10 +1,10 @@
 package com.mycollab.rest.server.resource;
 
-import com.esofthead.mycollab.configuration.EnDecryptHelper;
-import com.esofthead.mycollab.core.MyCollabVersion;
-import com.esofthead.mycollab.ondemand.module.support.dao.ProEditionInfoMapper;
-import com.esofthead.mycollab.ondemand.module.support.domain.ProEditionInfoExample;
-import com.esofthead.mycollab.ondemand.module.support.service.EditionInfoResolver;
+import com.mycollab.configuration.EnDecryptHelper;
+import com.mycollab.core.MyCollabVersion;
+import com.mycollab.ondemand.module.support.dao.ProEditionInfoMapper;
+import com.mycollab.ondemand.module.support.domain.ProEditionInfoExample;
+import com.mycollab.ondemand.module.support.service.EditionInfoResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

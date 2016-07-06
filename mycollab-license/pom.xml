@@ -5,7 +5,7 @@
     <name>mycollab-license</name>
     <artifactId>mycollab-license</artifactId>
     <parent>
-        <groupId>com.esofthead.mycollab</groupId>
+        <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent-premium</artifactId>
         <version>5.3.4</version>
         <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
@@ -13,17 +13,17 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-config</artifactId>
             <version>5.3.4</version>
         </dependency>
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-core</artifactId>
             <version>5.3.4</version>
         </dependency>
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-test</artifactId>
             <version>5.3.4</version>
             <scope>test</scope>

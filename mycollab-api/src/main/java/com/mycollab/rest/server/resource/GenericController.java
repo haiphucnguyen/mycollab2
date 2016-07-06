@@ -1,6 +1,6 @@
 package com.mycollab.rest.server.resource;
 
-import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.mycollab.core.UserInvalidInputException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author MyCollab Ltd
  * @since 5.2.4
  */
-@ControllerAdvice(basePackages = {"com.esofthead.mycollab.rest.server.resource"})
+@ControllerAdvice(basePackages = {"com.mycollab.rest.server.resource"})
 public class GenericController {
     private static Logger LOG = LoggerFactory.getLogger(GenericController.class);
 

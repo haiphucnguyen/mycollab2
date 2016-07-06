@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.esofthead.mycollab.pro.module.project.dao.GanttMapperExt">
-  <resultMap id="TaskPredecessor" type="com.esofthead.mycollab.module.project.domain.TaskPredecessor"
-         extends="com.esofthead.mycollab.module.project.dao.PredecessorMapper.BaseResultMap">
+<mapper namespace="com.mycollab.pro.module.project.dao.GanttMapperExt">
+  <resultMap id="TaskPredecessor" type="com.mycollab.module.project.domain.TaskPredecessor"
+         extends="com.mycollab.module.project.dao.PredecessorMapper.BaseResultMap">
     <result column="ganttIndex" jdbcType="INTEGER" property="ganttIndex"/>
   </resultMap>
 
-  <resultMap id="AssignWithPredecessors" type="com.esofthead.mycollab.module.project.domain.AssignWithPredecessors">
+  <resultMap id="AssignWithPredecessors" type="com.mycollab.module.project.domain.AssignWithPredecessors">
     <result column="projectName" property="projectName" jdbcType="VARCHAR"/>
     <result column="name" property="name" jdbcType="VARCHAR"/>
     <result column="type" property="type" jdbcType="VARCHAR"/>
@@ -28,25 +28,25 @@
     <collection property="dependents" resultMap="TaskPredecessor" columnPrefix="dep_"/>
   </resultMap>
 
-  <resultMap id="TaskGanttItem" type="com.esofthead.mycollab.module.project.domain.TaskGanttItem"
+  <resultMap id="TaskGanttItem" type="com.mycollab.module.project.domain.TaskGanttItem"
          extends="AssignWithPredecessors">
     <result column="parentTaskId" property="parentTaskId" jdbcType="INTEGER"/>
     <result column="milestoneId" property="milestoneId" jdbcType="INTEGER"/>
-    <collection property="subTasks" ofType="com.esofthead.mycollab.module.project.domain.TaskGanttItem"
+    <collection property="subTasks" ofType="com.mycollab.module.project.domain.TaskGanttItem"
           column="{type=type, id=id}" select="selectSubTasks"/>
   </resultMap>
 
-  <resultMap id="MilestoneGanttItem" type="com.esofthead.mycollab.module.project.domain.MilestoneGanttItem"
+  <resultMap id="MilestoneGanttItem" type="com.mycollab.module.project.domain.MilestoneGanttItem"
          extends="AssignWithPredecessors">
-    <collection property="subTasks" ofType="com.esofthead.mycollab.module.project.domain.TaskGanttItem"
+    <collection property="subTasks" ofType="com.mycollab.module.project.domain.TaskGanttItem"
           select="selectTasksWithMilestone" column="id" />
   </resultMap>
 
-  <resultMap id="ProjectGanttItem" type="com.esofthead.mycollab.module.project.domain.ProjectGanttItem"
+  <resultMap id="ProjectGanttItem" type="com.mycollab.module.project.domain.ProjectGanttItem"
          extends="AssignWithPredecessors">
-    <collection property="milestones" ofType="com.esofthead.mycollab.module.project.domain.MilestoneGanttItem"
+    <collection property="milestones" ofType="com.mycollab.module.project.domain.MilestoneGanttItem"
           select="selectMilestones" column="prjId"/>
-    <collection property="tasksWithNoMilestones" ofType="com.esofthead.mycollab.module.project.domain.TaskGanttItem"
+    <collection property="tasksWithNoMilestones" ofType="com.mycollab.module.project.domain.TaskGanttItem"
           select="selectTasksWithoutMilestone" column="prjId"/>
   </resultMap>
 
