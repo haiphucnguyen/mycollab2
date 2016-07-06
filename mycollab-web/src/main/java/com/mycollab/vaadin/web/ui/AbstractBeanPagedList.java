@@ -80,7 +80,7 @@ public abstract class AbstractBeanPagedList<T> extends VerticalLayout implements
         controlBarWrapper = new MHorizontalLayout().withFullWidth().withMargin(new MarginInfo(false, true, false, true))
                 .withStyleName(listControlStyle);
 
-        pageManagement = new MHorizontalLayout().withWidthUndefined();
+        pageManagement = new MHorizontalLayout();
 
         // defined layout here ---------------------------
 

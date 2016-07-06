@@ -16,16 +16,19 @@
  */
 package com.mycollab.module.project.view.milestone;
 
+import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
+import com.google.common.eventbus.Subscribe;
+import com.hp.gagawa.java.elements.Img;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.configuration.StorageFactory;
+import com.mycollab.core.utils.BeanUtility;
+import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.query.LazyValueInjector;
-import com.mycollab.core.utils.BeanUtility;
-import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
@@ -50,10 +53,6 @@ import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.UIConstants;
-import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
-import com.google.common.eventbus.Subscribe;
-import com.hp.gagawa.java.elements.Img;
-import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -134,27 +133,16 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
         final CheckBox futureMilestoneSelection = new CheckBox(AppContext.getMessage(MilestoneI18nEnum
                 .WIDGET_FUTURE_PHASE_TITLE) + " (" + totalFutureCount + ")", true);
 
-        closeMilestoneSelection.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                displayMilestones(tmpCriteria, closeMilestoneSelection.getValue(), inProgressMilestoneSelection
-                        .getValue(), futureMilestoneSelection.getValue());
-            }
-        });
-        inProgressMilestoneSelection.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                displayMilestones(tmpCriteria, closeMilestoneSelection.getValue(), inProgressMilestoneSelection
-                        .getValue(), futureMilestoneSelection.getValue());
-            }
-        });
-        futureMilestoneSelection.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                displayMilestones(tmpCriteria, closeMilestoneSelection.getValue(), inProgressMilestoneSelection
-                        .getValue(), futureMilestoneSelection.getValue());
-            }
-        });
+        closeMilestoneSelection.addValueChangeListener(valueChangeEvent ->
+                displayMilestones(tmpCriteria, closeMilestoneSelection.getValue(), inProgressMilestoneSelection.getValue(),
+                        futureMilestoneSelection.getValue())
+        );
+        inProgressMilestoneSelection.addValueChangeListener(valueChangeEvent ->
+                displayMilestones(tmpCriteria, closeMilestoneSelection.getValue(), inProgressMilestoneSelection.getValue(),
+                        futureMilestoneSelection.getValue()));
+        futureMilestoneSelection.addValueChangeListener(valueChangeEvent ->
+                displayMilestones(tmpCriteria, closeMilestoneSelection.getValue(), inProgressMilestoneSelection.getValue(),
+                        futureMilestoneSelection.getValue()));
         futureMilestoneSelection.setIcon(FontAwesome.CLOCK_O);
         filterPanel.addComponent(futureMilestoneSelection);
     }

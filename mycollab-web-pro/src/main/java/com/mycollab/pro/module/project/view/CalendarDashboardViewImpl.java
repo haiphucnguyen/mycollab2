@@ -52,6 +52,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.vaadin.peter.buttongroup.ButtonGroup;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -225,47 +226,32 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     private MHorizontalLayout buildHeader() {
         MHorizontalLayout header = new MHorizontalLayout().withFullWidth();
 
-        MHorizontalLayout headerLeftContainer = new MHorizontalLayout();
-        Button todayBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_TODAY), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                baseDate = new LocalDate();
-                displayCalendar();
-            }
-        });
-        todayBtn.setStyleName(UIConstants.BUTTON_ACTION);
+        MButton todayBtn = new MButton(AppContext.getMessage(DayI18nEnum.OPT_TODAY), clickEvent -> {
+            baseDate = new LocalDate();
+            displayCalendar();
+        }).withStyleName(UIConstants.BUTTON_ACTION);
         ButtonGroup navigationBtns = new ButtonGroup();
-        Button previousBtn = new Button("", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                if (isMonthView) {
-                    baseDate = baseDate.minusMonths(1);
-                } else {
-                    baseDate = baseDate.minusWeeks(1);
-                }
-                displayCalendar();
+        MButton previousBtn = new MButton("", clickEvent -> {
+            if (isMonthView) {
+                baseDate = baseDate.minusMonths(1);
+            } else {
+                baseDate = baseDate.minusWeeks(1);
             }
-        });
-        previousBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        previousBtn.setIcon(FontAwesome.CHEVRON_LEFT);
+            displayCalendar();
+        }).withIcon(FontAwesome.CHEVRON_LEFT).withStyleName(UIConstants.BUTTON_ACTION);
         navigationBtns.addButton(previousBtn);
 
-        Button nextBtn = new Button("", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                if (isMonthView) {
-                    baseDate = baseDate.plusMonths(1);
-                } else {
-                    baseDate = baseDate.plusWeeks(1);
-                }
-                displayCalendar();
+        MButton nextBtn = new MButton("", clickEvent -> {
+            if (isMonthView) {
+                baseDate = baseDate.plusMonths(1);
+            } else {
+                baseDate = baseDate.plusWeeks(1);
             }
-        });
-        nextBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        nextBtn.setIcon(FontAwesome.CHEVRON_RIGHT);
+            displayCalendar();
+        }).withIcon(FontAwesome.CHEVRON_RIGHT).withStyleName(UIConstants.BUTTON_ACTION);
         navigationBtns.addButton(nextBtn);
 
-        headerLeftContainer.with(todayBtn, navigationBtns);
+        MHorizontalLayout headerLeftContainer = new MHorizontalLayout(todayBtn, navigationBtns);
         header.with(headerLeftContainer).withAlign(headerLeftContainer, Alignment.MIDDLE_LEFT);
 
         CssLayout titleWrapper = new CssLayout();
@@ -273,13 +259,9 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         headerLbl.setStyleName(ValoTheme.LABEL_H2);
         titleWrapper.addComponent(headerLbl);
 
-        Button newTaskBtn = new Button(AppContext.getMessage(TaskI18nEnum.NEW), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(new SimpleTask()));
-            }
-        });
-        newTaskBtn.setStyleName(UIConstants.BUTTON_ACTION);
+        MButton newTaskBtn = new MButton(AppContext.getMessage(TaskI18nEnum.NEW),
+                clickEvent -> UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(new SimpleTask())))
+                .withStyleName(UIConstants.BUTTON_ACTION);
         final ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         final Button weekViewBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_WEEK));
         weekViewBtn.addClickListener(clickEvent -> {
@@ -331,12 +313,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         calendar.setEndDate(endDate.toDate());
 
         final GenericAssignmentProvider provider = new GenericAssignmentProvider();
-        provider.addEventSetChangeListener(new CalendarEventProvider.EventSetChangeListener() {
-            @Override
-            public void eventSetChange(CalendarEventProvider.EventSetChangeEvent event) {
-                displayInfo(provider);
-            }
-        });
+        provider.addEventSetChangeListener(eventSetChangeEvent -> displayInfo(provider));
         if (CollectionUtils.isNotEmpty(projectKeys)) {
             RangeDateSearchField dateRange = new RangeDateSearchField(startDate.toDate(), endDate.toDate());
             searchCriteria.setDateInRange(dateRange);

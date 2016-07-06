@@ -168,12 +168,8 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         kanbanBtn.setDescription("Board View");
         kanbanBtn.setIcon(FontAwesome.TH);
 
-        Button roadmapBtn = new Button("List", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(new MilestoneEvent.GotoRoadmap(MilestoneListViewImpl.this));
-            }
-        });
+        Button roadmapBtn = new Button("List",
+                clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoRoadmap(MilestoneListViewImpl.this)));
         roadmapBtn.setDescription("Roadmap");
         roadmapBtn.setIcon(VaadinIcons.CUBE);
 
