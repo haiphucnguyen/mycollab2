@@ -18,6 +18,7 @@ import com.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -93,32 +94,16 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
         footer.addComponent(taskLayout);
 
-        MHorizontalLayout controlsLayout = new MHorizontalLayout();
 
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
+        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                .withStyleName(UIConstants.BUTTON_OPTION);
 
-            @Override
-            public void buttonClick(ClickEvent event) {
-                close();
-            }
-        });
-        cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
+        MButton saveBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
+            saveTimeLoggingItems();
+            close();
+        }).withIcon(FontAwesome.SAVE).withStyleName(UIConstants.BUTTON_ACTION);
 
-
-        Button saveBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                saveTimeLoggingItems();
-                close();
-            }
-        });
-        saveBtn.setIcon(FontAwesome.SAVE);
-        saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
-
-        controlsLayout.with(cancelBtn, saveBtn);
+        MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);
 
         footer.addComponent(controlsLayout);
         footer.setSizeFull();
@@ -135,17 +120,10 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
             final String taskName = selectionTask.getName();
             taskLayout.removeAllComponents();
 
-            Button detachTaskBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    createLinkTaskButton();
-                    updateLinkTask(null);
-                }
-            });
-            detachTaskBtn.setStyleName(UIConstants.BUTTON_DANGER);
-            detachTaskBtn.setIcon(FontAwesome.UNLINK);
+            MButton detachTaskBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), clickEvent -> {
+                createLinkTaskButton();
+                updateLinkTask(null);
+            }).withIcon(FontAwesome.UNLINK).withStyleName(UIConstants.BUTTON_DANGER);
             taskLayout.addComponent(detachTaskBtn);
 
             Label attachTaskBtn = new Label(StringUtils.trim(taskName, 40, true));
@@ -160,17 +138,11 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
     private void createLinkTaskButton() {
         taskLayout.removeAllComponents();
-        Button attachTaskBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
-                        TimeTrackingEditViewWindow.this);
-                UI.getCurrent().addWindow(selectionTaskWindow);
-            }
-        });
-        attachTaskBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        MButton attachTaskBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), clickEvent -> {
+            ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
+                    TimeTrackingEditViewWindow.this);
+            UI.getCurrent().addWindow(selectionTaskWindow);
+        }).withStyleName(UIConstants.BUTTON_ACTION);
 
         taskLayout.addComponent(attachTaskBtn);
     }

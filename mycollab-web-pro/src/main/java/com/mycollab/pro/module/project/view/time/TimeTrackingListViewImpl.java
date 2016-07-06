@@ -1,5 +1,6 @@
 package com.mycollab.pro.module.project.view.time;
 
+import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
@@ -36,13 +37,13 @@ import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickEvent;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
@@ -78,12 +79,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
         searchPanel = new ItemTimeLoggingSearchPanel();
-        searchPanel.addSearchHandler(new SearchHandler<ItemTimeLoggingSearchCriteria>() {
-            @Override
-            public void onSearch(ItemTimeLoggingSearchCriteria criteria) {
-                setSearchCriteria(criteria);
-            }
-        });
+        searchPanel.addSearchHandler(criteria -> setSearchCriteria(criteria));
 
         this.addComponent(searchPanel);
 
@@ -92,20 +88,12 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
 
         lbTimeRange = ELabel.h3("");
 
-        Button printBtn = new Button("", new Button.ClickListener() {
+        MButton printBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new TimesheetCustomizeReportOutputWindow(new LazyValueInjector() {
             @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new TimesheetCustomizeReportOutputWindow(new LazyValueInjector() {
-                    @Override
-                    protected Object doEval() {
-                        return searchCriteria;
-                    }
-                }));
+            protected Object doEval() {
+                return searchCriteria;
             }
-        });
-        printBtn.setIcon(FontAwesome.PRINT);
-        printBtn.addStyleName(UIConstants.BUTTON_OPTION);
-        printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
+        }))).withIcon(FontAwesome.PRINT).withStyleName(UIConstants.BUTTON_OPTION).withDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
         headerLayout.with(lbTimeRange, printBtn).expand(lbTimeRange);
         this.addComponent(headerWrapper);

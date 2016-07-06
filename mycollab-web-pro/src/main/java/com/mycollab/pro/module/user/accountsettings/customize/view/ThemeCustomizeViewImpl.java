@@ -14,7 +14,10 @@ import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.ui.*;
+import com.mycollab.vaadin.ui.AccountAssetsResolver;
+import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.FormContainer;
+import com.mycollab.vaadin.ui.ThemeManager;
 import com.mycollab.vaadin.web.ui.ServiceMenu;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
@@ -25,13 +28,10 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.colorpicker.Color;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.components.colorpicker.ColorChangeEvent;
-import com.vaadin.ui.components.colorpicker.ColorChangeListener;
 import org.vaadin.teemu.VaadinIcons;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
-
-import java.util.Iterator;
 
 /**
  * @author MyCollab Ltd.
@@ -59,36 +59,22 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         // Add customizable blocks
         mainBody.with(constructTopMenuCustomizeBlock(), constructVTabsheetCustomizeBlock(), constructButtonCustomizeBlock());
 
-        MHorizontalLayout controlButtons = new MHorizontalLayout().withFullWidth().withMargin(new MarginInfo(true,
-                true, false, true));
 
         ELabel viewTitle = ELabel.h2(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING).getHtml() + " " +
                 "Theme Customization");
 
-        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
-            private static final long serialVersionUID = -6901103392231786935L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(new SettingEvent.SaveTheme(this, accountTheme));
-            }
-        });
-        saveBtn.setIcon(FontAwesome.SAVE);
-        saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
+        MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
+                clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.SaveTheme(this, accountTheme)))
+                .withIcon(FontAwesome.SAVE).withStyleName(UIConstants.BUTTON_ACTION);
         saveBtn.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
-        Button resetToDefaultBtn = new Button(AppContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT), new Button.ClickListener() {
-            private static final long serialVersionUID = 5182152510759528123L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(new SettingEvent.ResetTheme(ThemeCustomizeViewImpl.this, null));
-            }
-        });
-        resetToDefaultBtn.setStyleName(UIConstants.BUTTON_DANGER);
+        MButton resetToDefaultBtn = new MButton(AppContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
+                clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.ResetTheme(ThemeCustomizeViewImpl.this, null)))
+                .withStyleName(UIConstants.BUTTON_DANGER);
         resetToDefaultBtn.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
-        controlButtons.with(viewTitle, resetToDefaultBtn, saveBtn).expand(viewTitle);
 
+        MHorizontalLayout controlButtons = new MHorizontalLayout(viewTitle, resetToDefaultBtn, saveBtn).withFullWidth()
+                .withMargin(new MarginInfo(true, true, false, true)).expand(viewTitle);
         this.with(controlButtons, mainBody);
     }
 
@@ -105,53 +91,33 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         propertyLayout.setWidth("250px");
 
         CustomColorPickerArea topMenuBg = new CustomColorPickerArea(accountTheme.getTopmenubg());
-        topMenuBg.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -3462278784149813444L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setTopmenubg(event.getColor().getCSS().substring(1).toUpperCase());
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        topMenuBg.addColorChangeListener(colorChangeEvent -> {
+            accountTheme.setTopmenubg(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label(AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)), 0, 0);
         propertyLayout.addComponent(topMenuBg, 1, 0);
 
         CustomColorPickerArea topMenuText = new CustomColorPickerArea(accountTheme.getTopmenutext());
-        topMenuText.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -1370026552930193996L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setTopmenutext(event.getColor().getCSS().substring(1).toUpperCase());
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        topMenuText.addColorChangeListener(colorChangeEvent -> {
+            accountTheme.setTopmenutext(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label(AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU_TEXT)), 0, 1);
         propertyLayout.addComponent(topMenuText, 1, 1);
 
         CustomColorPickerArea topMenuBgSelected = new CustomColorPickerArea(accountTheme.getTopmenubgselected());
-        topMenuBgSelected.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -7897981001643385884L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setTopmenubgselected(event.getColor().getCSS().substring(1).toUpperCase());
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        topMenuBgSelected.addColorChangeListener(colorChangeEvent -> {
+            accountTheme.setTopmenubgselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label("Selected Menu"), 0, 2);
         propertyLayout.addComponent(topMenuBgSelected, 1, 2);
 
         CustomColorPickerArea topMenuTextSelected = new CustomColorPickerArea(accountTheme.getTopmenutextselected());
-        topMenuTextSelected.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -5381166604049121169L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setTopmenutextselected(event.getColor().getCSS().substring(1).toUpperCase());
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        topMenuTextSelected.addColorChangeListener(colorChangeEvent -> {
+            accountTheme.setTopmenutextselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label("Selected Menu Text"), 0, 3);
         propertyLayout.addComponent(topMenuTextSelected, 1, 3);
@@ -172,10 +138,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
 
             @Override
             public void buttonClick(final ClickEvent event) {
-                Iterator<Component> iterator = serviceMenu.iterator();
 
-                while (iterator.hasNext()) {
-                    Component comp = iterator.next();
+                for (Component comp : serviceMenu) {
                     if (comp != event.getButton()) {
                         comp.removeStyleName("selected");
                     }
@@ -207,53 +171,33 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         propertyLayout.setWidth("250px");
 
         CustomColorPickerArea vTabsheetBg = new CustomColorPickerArea(accountTheme.getVtabsheetbg());
-        vTabsheetBg.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -675674373089622451L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setVtabsheetbg(event.getColor().getCSS().substring(1).toUpperCase());
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        vTabsheetBg.addColorChangeListener(colorChangeEvent -> {
+            accountTheme.setVtabsheetbg(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label("Normal Menu"), 0, 0);
         propertyLayout.addComponent(vTabsheetBg, 1, 0);
 
         CustomColorPickerArea vTabsheetText = new CustomColorPickerArea(accountTheme.getVtabsheettext());
-        vTabsheetText.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = 3487570137637191332L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setVtabsheettext(event.getColor().getCSS().substring(1).toUpperCase());
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        vTabsheetText.addColorChangeListener(colorChangeEvent -> {
+            accountTheme.setVtabsheettext(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label("Normal Menu Text"), 0, 1);
         propertyLayout.addComponent(vTabsheetText, 1, 1);
 
         CustomColorPickerArea vTabsheetBgSelected = new CustomColorPickerArea(accountTheme.getVtabsheetbgselected());
-        vTabsheetBgSelected.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -2435453092194064504L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setVtabsheetbgselected(event.getColor().getCSS().substring(1).toUpperCase());
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        vTabsheetBgSelected.addColorChangeListener(colorChangeEvent -> {
+            accountTheme.setVtabsheetbgselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label("Selected Menu"), 0, 2);
         propertyLayout.addComponent(vTabsheetBgSelected, 1, 2);
 
         CustomColorPickerArea vTabsheetTextSelected = new CustomColorPickerArea(accountTheme.getVtabsheettextselected());
-        vTabsheetTextSelected.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = 3190273972739835060L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setVtabsheettextselected(event.getColor().getCSS().substring(1).toUpperCase());
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        vTabsheetTextSelected.addColorChangeListener(colorChangeEvent -> {
+            accountTheme.setVtabsheettextselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label("Selected Menu Text"), 0, 3);
         propertyLayout.addComponent(vTabsheetTextSelected, 1, 3);
@@ -313,28 +257,18 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         actionBtnPanel.addComponent(actionBtnColorPane);
 
         CustomColorPickerArea actionBtnBg = new CustomColorPickerArea(accountTheme.getActionbtn());
-        actionBtnBg.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -3852566371241071966L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1).toUpperCase();
-                accountTheme.setActionbtn(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        actionBtnBg.addColorChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getColor().getCSS().substring(1).toUpperCase();
+            accountTheme.setActionbtn(colorHexString);
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         actionBtnColorPane.addComponent(actionBtnBg);
 
         CustomColorPickerArea actionBtnText = new CustomColorPickerArea(accountTheme.getActionbtntext());
-        actionBtnText.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = 7947045019055649130L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1).toUpperCase();
-                accountTheme.setActionbtntext(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        actionBtnText.addColorChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getColor().getCSS().substring(1).toUpperCase();
+            accountTheme.setActionbtntext(colorHexString);
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         actionBtnColorPane.addComponent(actionBtnText);
 
@@ -357,28 +291,18 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         optionBtnPanel.addComponent(optionBtnColorPane);
 
         CustomColorPickerArea optionBtnBg = new CustomColorPickerArea(accountTheme.getOptionbtn());
-        optionBtnBg.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -3852566371241071966L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1).toUpperCase();
-                accountTheme.setOptionbtn(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        optionBtnBg.addColorChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getColor().getCSS().substring(1).toUpperCase();
+            accountTheme.setOptionbtn(colorHexString);
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         optionBtnColorPane.addComponent(optionBtnBg);
 
         CustomColorPickerArea optionBtnText = new CustomColorPickerArea(accountTheme.getOptionbtntext());
-        optionBtnText.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = 7947045019055649130L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1).toUpperCase();
-                accountTheme.setOptionbtntext(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        optionBtnText.addColorChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getColor().getCSS().substring(1).toUpperCase();
+            accountTheme.setOptionbtntext(colorHexString);
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         optionBtnColorPane.addComponent(optionBtnText);
 
@@ -399,28 +323,18 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         dangerBtnPanel.addComponent(dangerBtnColorPane);
 
         CustomColorPickerArea dangerBtnBg = new CustomColorPickerArea(accountTheme.getDangerbtn());
-        dangerBtnBg.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -3852566371241071966L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1).toUpperCase();
-                accountTheme.setDangerbtn(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        dangerBtnBg.addColorChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getColor().getCSS().substring(1).toUpperCase();
+            accountTheme.setDangerbtn(colorHexString);
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         dangerBtnColorPane.addComponent(dangerBtnBg);
 
         CustomColorPickerArea dangerBtnText = new CustomColorPickerArea(accountTheme.getDangerbtntext());
-        dangerBtnText.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = 7947045019055649130L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1).toUpperCase();
-                accountTheme.setDangerbtntext(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
+        dangerBtnText.addColorChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getColor().getCSS().substring(1).toUpperCase();
+            accountTheme.setDangerbtntext(colorHexString);
+            ThemeManager.loadDemoTheme(accountTheme);
         });
         dangerBtnColorPane.addComponent(dangerBtnText);
 
@@ -430,7 +344,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
     private static class CustomColorPickerArea extends ColorPickerArea {
         private static final long serialVersionUID = -8631349584720412229L;
 
-        public CustomColorPickerArea(String initialColor) {
+        CustomColorPickerArea(String initialColor) {
             super();
             if (initialColor != null) {
                 this.setColor(new Color(Integer.parseInt(initialColor, 16)));
