@@ -95,46 +95,34 @@ public class OpportunityContactListComp extends RelatedListComp2<ContactOpportun
             note.setStyleName("note-label");
             note.addStyleName(colormap.get(CrmDataTypeFactory.getOpportunityContactRoleList()[i]));
             note.setSizeUndefined();
-
             noteBlock.addComponent(note);
         }
         notesWrap.with(noteBlock).expand(noteBlock);
-
         controlsBtnWrap.addComponent(notesWrap);
 
-        final SplitButton controlsBtn = new SplitButton();
-        controlsBtn.setSizeUndefined();
-        controlsBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CONTACT));
-        controlsBtn.addStyleName(UIConstants.BUTTON_ACTION);
-        controlsBtn.setCaption("Add/Edit Contacts' Role");
-        controlsBtn.setIcon(FontAwesome.PLUS);
-        controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void splitButtonClick(final SplitButton.SplitButtonClickEvent event) {
-                EventBusFactory.getInstance().post(new OpportunityEvent.GotoContactRoleEdit(this, opportunity));
-            }
-        });
-        final Button selectBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
+        if (AppContext.canWrite(RolePermissionCollections.CRM_CONTACT)) {
+            final SplitButton controlsBtn = new SplitButton();
+            controlsBtn.setSizeUndefined();
+            controlsBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            controlsBtn.setCaption("Add/Edit Contacts' Role");
+            controlsBtn.setIcon(FontAwesome.PLUS);
+            controlsBtn.addClickListener(event -> EventBusFactory.getInstance().post(new OpportunityEvent.GotoContactRoleEdit(this, opportunity)));
+            final Button selectBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> {
                 OpportunityContactSelectionWindow contactsWindow = new OpportunityContactSelectionWindow(OpportunityContactListComp.this);
                 ContactSearchCriteria criteria = new ContactSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
                 UI.getCurrent().addWindow(contactsWindow);
                 contactsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
-            }
-        });
-        selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
-        OptionPopupContent buttonControlLayout = new OptionPopupContent();
-        buttonControlLayout.addOption(selectBtn);
-        controlsBtn.setContent(buttonControlLayout);
+            });
+            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
+            OptionPopupContent buttonControlLayout = new OptionPopupContent();
+            buttonControlLayout.addOption(selectBtn);
+            controlsBtn.setContent(buttonControlLayout);
 
-        controlsBtnWrap.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
+            controlsBtnWrap.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
+        }
+
         return controlsBtnWrap;
     }
 

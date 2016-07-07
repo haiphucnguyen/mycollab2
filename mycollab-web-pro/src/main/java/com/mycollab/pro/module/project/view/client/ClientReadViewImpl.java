@@ -185,7 +185,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                 Project project = new Project();
                 project.setAccountid(accountId);
                 UI.getCurrent().addWindow(new ProjectAddWindow(project));
-            }).withStyleName(UIConstants.BUTTON_ACTION);
+            }).withStyleName(UIConstants.BUTTON_ACTION).withVisible(AppContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
 
             MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(UIConstants.FORM_SECTION)
                     .withFullWidth().with(headerLbl, newProjectBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT)

@@ -16,18 +16,20 @@
  */
 package com.mycollab.module.project.view.bug;
 
+import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.domain.OptionVal;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.core.utils.StringUtils;
+import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SearchCriteria;
-import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.events.BugEvent;
+import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.bug.components.BugSavedFilterComboBox;
@@ -42,11 +44,10 @@ import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
+import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.UIConstants;
-import com.mycollab.vaadin.ui.UIUtils;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
@@ -65,6 +66,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.jouni.restrain.Restrain;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -356,27 +358,19 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
                 headerLayout.addComponent(controlsBtn);
                 headerLayout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
-                Button addBtn = new Button("New issue", new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        addNewBugComp();
-                    }
-                });
-                addBtn.setIcon(FontAwesome.PLUS);
-                addBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
-                popupContent.addOption(addBtn);
+                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                    MButton addBtn = new MButton(AppContext.getMessage(BugI18nEnum.NEW), clickEvent -> addNewBugComp())
+                            .withIcon(FontAwesome.PLUS);
+                    popupContent.addOption(addBtn);
+                }
                 controlsBtn.setContent(popupContent);
 
-                Button addNewBtn = new Button("New issue", new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        addNewBugComp();
-                    }
-                });
-                addNewBtn.setIcon(FontAwesome.PLUS);
-                addNewBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
-                addNewBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                root.with(addNewBtn).withAlign(addNewBtn, Alignment.TOP_RIGHT);
+                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                    MButton addNewBtn = new MButton(AppContext.getMessage(BugI18nEnum.NEW), clickEvent -> addNewBugComp())
+                            .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.BUTTON_ACTION);
+                    addNewBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
+                    root.with(addNewBtn).withAlign(addNewBtn, Alignment.TOP_RIGHT);
+                }
             }
         }
 
