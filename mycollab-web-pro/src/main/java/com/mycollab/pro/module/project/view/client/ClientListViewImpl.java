@@ -1,5 +1,9 @@
 package com.mycollab.pro.module.project.view.client;
 
+import com.google.common.base.MoreObjects;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.db.arguments.BasicSearchRequest;
@@ -22,14 +26,14 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.UIConstants;
-import com.google.common.base.MoreObjects;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.Img;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.UI;
 import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -73,21 +77,15 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
     }
 
     private Component generateClientBlock(final SimpleAccount client) {
-        VerticalLayout blockContent = new VerticalLayout();
-        blockContent.setStyleName("member-block");
-        blockContent.setWidth("350px");
+        MVerticalLayout blockContent = new MVerticalLayout().withStyleName("member-block").withWidth("350px")
+                .withMargin(false).withSpacing(false);
 
-        MHorizontalLayout buttonControls = new MHorizontalLayout();
-        Button editBtn = new Button("", FontAwesome.EDIT);
-        editBtn.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, client)));
-        editBtn.setVisible(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+        MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, client)))
+                .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.BUTTON_ICON_ONLY)
+                .withVisible(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
         editBtn.setDescription("Edit client '" + client.getAccountname() + "' information");
-        editBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
-        blockContent.addComponent(editBtn);
-        blockContent.setComponentAlignment(editBtn, Alignment.TOP_RIGHT);
 
-        Button deleteBtn = new Button("", FontAwesome.TRASH_O);
-        deleteBtn.addClickListener(clickEvent -> {
+        MButton deleteBtn = new MButton("", clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
                     AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
                     AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
@@ -105,12 +103,11 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
                             }
                         }
                     });
-        });
+        }).withIcon(FontAwesome.TRASH_O).withStyleName(UIConstants.BUTTON_ICON_ONLY)
+                .withVisible(AppContext.canAccess(RolePermissionCollections.CRM_ACCOUNT));
         deleteBtn.setDescription(AppContext.getMessage(ClientI18nEnum.OPT_REMOVE_CLIENT, client.getAccountname()));
-        deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
-        deleteBtn.setVisible(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
 
-        buttonControls.with(editBtn, deleteBtn);
+        MHorizontalLayout buttonControls = new MHorizontalLayout(editBtn, deleteBtn);
         blockContent.addComponent(buttonControls);
         blockContent.setComponentAlignment(buttonControls, Alignment.TOP_RIGHT);
 

@@ -259,13 +259,13 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
                         printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
-                        printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS));
+                        printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoEdit(this, bug)));
                         editBtn.setIcon(FontAwesome.EDIT);
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                        editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
+                        editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn).withAlign(printBtn, Alignment.TOP_RIGHT)
                                 .withAlign(editBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
@@ -295,13 +295,13 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
                         printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
-                        printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
+                        printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(this, task)));
                         editBtn.setIcon(FontAwesome.EDIT);
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                        editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+                        editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
                                 .withAlign(printBtn, Alignment.TOP_RIGHT).withAlign(editBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
@@ -332,13 +332,13 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
                         printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
-                        printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES));
+                        printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(this, milestone)));
                         editBtn.setIcon(FontAwesome.EDIT);
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                        editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
+                        editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
                                 .withAlign(printBtn, Alignment.TOP_RIGHT).withAlign(editBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
@@ -367,13 +367,13 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
                         printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
-                        printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS));
+                        printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoEdit(this, risk)));
                         editBtn.setIcon(FontAwesome.EDIT);
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                        editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
+                        editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
                                 .withAlign(printBtn, Alignment.TOP_RIGHT).withAlign(editBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
@@ -404,13 +404,13 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
                         printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
-                        printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS));
+                        printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new BugComponentEvent.GotoEdit(this, component)));
                         editBtn.setIcon(FontAwesome.EDIT);
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                        editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
+                        editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
                                 .withAlign(printBtn, Alignment.TOP_RIGHT)
@@ -440,13 +440,13 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         });
                         printBtn.setStyleName(UIConstants.BUTTON_OPTION);
                         printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_PRINT));
-                        printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS));
+                        printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS));
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new BugVersionEvent.GotoEdit(this, version)));
                         editBtn.setIcon(FontAwesome.EDIT);
                         editBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                        editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
+                        editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn).withAlign
                                 (editBtn, Alignment.TOP_RIGHT).withAlign(printBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();

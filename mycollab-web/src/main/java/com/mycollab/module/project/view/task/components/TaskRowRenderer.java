@@ -36,7 +36,10 @@ import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
+import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.UI;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.button.MButton;
@@ -142,64 +145,70 @@ public class TaskRowRenderer extends MVerticalLayout {
     private OptionPopupContent createPopupContent() {
         OptionPopupContent filterBtnLayout = new OptionPopupContent();
 
-        MButton editButton = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent -> {
-            taskSettingPopupBtn.setPopupVisible(false);
-            EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(TaskRowRenderer.this, task));
-        }).withIcon(FontAwesome.EDIT);
-        editButton.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
-        filterBtnLayout.addOption(editButton);
-        filterBtnLayout.addSeparator();
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+            MButton editButton = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent -> {
+                taskSettingPopupBtn.setPopupVisible(false);
+                EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(TaskRowRenderer.this, task));
+            }).withIcon(FontAwesome.EDIT);
+            filterBtnLayout.addOption(editButton);
+            filterBtnLayout.addSeparator();
+        }
 
         if (!task.isCompleted()) {
-            MButton closeBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE), clickEvent -> {
-                task.setStatus(OptionI18nEnum.StatusI18nEnum.Closed.name());
-                task.setPercentagecomplete(100d);
-                ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
-                taskSettingPopupBtn.setPopupVisible(false);
-                closeTask();
-                EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskRowRenderer.this, null));
-            }).withIcon(FontAwesome.CHECK_CIRCLE_O);
-            closeBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
-            filterBtnLayout.addOption(closeBtn);
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                MButton closeBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE), clickEvent -> {
+                    task.setStatus(OptionI18nEnum.StatusI18nEnum.Closed.name());
+                    task.setPercentagecomplete(100d);
+                    ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+                    projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
+                    taskSettingPopupBtn.setPopupVisible(false);
+                    closeTask();
+                    EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskRowRenderer.this, null));
+                }).withIcon(FontAwesome.CHECK_CIRCLE_O);
+                filterBtnLayout.addOption(closeBtn);
+            }
         } else {
-            MButton reOpenBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
-                taskSettingPopupBtn.setPopupVisible(false);
-                task.setStatus(OptionI18nEnum.StatusI18nEnum.Open.name());
-                task.setPercentagecomplete(0d);
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                MButton reOpenBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
+                    taskSettingPopupBtn.setPopupVisible(false);
+                    task.setStatus(OptionI18nEnum.StatusI18nEnum.Open.name());
+                    task.setPercentagecomplete(0d);
 
-                ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
-                reOpenTask();
-                EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskRowRenderer.this, null));
-            }).withIcon(FontAwesome.UNLOCK);
-            reOpenBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
-            filterBtnLayout.addOption(reOpenBtn);
+                    ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+                    projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
+                    reOpenTask();
+                    EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskRowRenderer.this, null));
+                }).withIcon(FontAwesome.UNLOCK);
+                filterBtnLayout.addOption(reOpenBtn);
+            }
         }
 
         filterBtnLayout.addSeparator();
-        MButton deleteBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
-            taskSettingPopupBtn.setPopupVisible(false);
-            ConfirmDialogExt.show(UI.getCurrent(),
-                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                    AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                    AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                    new ConfirmDialog.Listener() {
-                        private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void onClose(ConfirmDialog dialog) {
-                            if (dialog.isConfirmed()) {
-                                ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                                projectTaskService.removeWithSession(task, AppContext.getUsername(), AppContext.getAccountId());
-                                deleteTask();
+        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS)) {
+            MButton deleteBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
+                taskSettingPopupBtn.setPopupVisible(false);
+                ConfirmDialogExt.show(UI.getCurrent(),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+                                    projectTaskService.removeWithSession(task, AppContext.getUsername(), AppContext.getAccountId());
+                                    deleteTask();
+                                }
                             }
-                        }
-                    });
-        }).withIcon(FontAwesome.TRASH_O);
-        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
-        filterBtnLayout.addDangerOption(deleteBtn);
+                        });
+            }).withIcon(FontAwesome.TRASH_O);
+            filterBtnLayout.addDangerOption(deleteBtn);
+        }
+
         return filterBtnLayout;
     }
 }

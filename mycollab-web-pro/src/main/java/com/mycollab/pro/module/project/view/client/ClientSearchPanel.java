@@ -24,6 +24,7 @@ import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -46,15 +47,10 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
 
     @Override
     protected Component buildExtraControls() {
-        Button createBtn = new Button(AppContext.getMessage(ClientI18nEnum.NEW), new Button.ClickListener() {
-            @Override
-            public void buttonClick(final Button.ClickEvent event) {
-                EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null));
-            }
-        });
-        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        createBtn.setIcon(FontAwesome.PLUS);
-        createBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+        MButton createBtn = new MButton(AppContext.getMessage(ClientI18nEnum.NEW),
+                clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null)))
+                .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.BUTTON_ACTION);
+        createBtn.setVisible(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
         return createBtn;
     }
 
@@ -108,8 +104,6 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
 
         @Override
         public ComponentContainer constructBody() {
-            MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
-
             nameField = ShortcutExtension.installShortcutAction(new TextField(),
                     new ShortcutListener("AccountSearchRequest", ShortcutAction.KeyCode.ENTER, null) {
                         @Override
@@ -120,44 +114,20 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
             nameField.setInputPrompt(AppContext.getMessage(ClientI18nEnum.OPT_QUERY_BY_CLIENT_NAME));
             nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 
-            basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_CENTER);
-
             myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
             myItemCheckbox.addStyleName(ValoTheme.CHECKBOX_SMALL);
 
-            basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
+            MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
+                    .withIcon(FontAwesome.SEARCH).withStyleName(UIConstants.BUTTON_ACTION);
 
-            Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
-            searchBtn.setIcon(FontAwesome.SEARCH);
-            searchBtn.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(final Button.ClickEvent event) {
-                    AccountBasicSearchLayout.this.callSearchAction();
-                }
-            });
+            MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
+                    .withStyleName(UIConstants.BUTTON_OPTION);
 
-            basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
+            MButton advancedSearchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
+                    clickEvent -> moveToAdvancedSearchLayout()).withStyleName(UIConstants.BUTTON_LINK);
 
-            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
-            cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-            cancelBtn.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(final Button.ClickEvent event) {
-                    nameField.setValue("");
-                }
-            });
-            basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
-
-            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH), new Button.ClickListener() {
-                @Override
-                public void buttonClick(final Button.ClickEvent event) {
-                    ClientSearchPanel.this.moveToAdvancedSearchLayout();
-                }
-            });
-            advancedSearchBtn.setStyleName(UIConstants.BUTTON_LINK);
-            basicSearchBody.with(advancedSearchBtn).withAlign(advancedSearchBtn, Alignment.MIDDLE_CENTER);
-            return basicSearchBody;
+            return new MHorizontalLayout(nameField, myItemCheckbox, searchBtn, cancelBtn, advancedSearchBtn)
+                    .withMargin(true).alignAll(Alignment.MIDDLE_LEFT);
         }
 
         @Override

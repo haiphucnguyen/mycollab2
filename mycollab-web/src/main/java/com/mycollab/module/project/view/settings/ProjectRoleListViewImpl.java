@@ -115,9 +115,6 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements Project
         selectOptionButton = new SelectionOptionButton(this.tableItem);
         layout.addComponent(this.selectOptionButton);
 
-        Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
-        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.ROLES));
-
         tableActionControls = new DefaultMassItemActionHandlerContainer();
         if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.ROLES)) {
             tableActionControls.addDeleteActionItem();

@@ -30,9 +30,10 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebResourceIds;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -101,38 +102,30 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
 
         innerLayout.with(layoutHelper.getLayout());
 
-        Button submitBtn = new Button("Submit and delete my account", new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                CustomerFeedbackWithBLOBs feedback = new CustomerFeedbackWithBLOBs();
-                String whyLeavingMsg = whyLeaving.getValue();
-                feedback.setUsername(AppContext.getUsername());
-                feedback.setSaccountid(AppContext.getAccountId());
-                feedback.setOthertool(alternativeTool.getValue());
-                feedback.setReasontoback(reasonToBack.getValue());
-                if (optionGroupField.getValue() != null) {
-                    feedback.setReasontoleave(optionGroupField.getValue().toString() + ": " + whyLeavingMsg);
-                } else {
-                    feedback.setReasontoleave(whyLeavingMsg);
-                }
-
-                BillingService billingService = AppContextUtil.getSpringBean(BillingService.class);
-                billingService.cancelAccount(AppContext.getAccountId(), feedback);
-                UI.getCurrent().getPage().setLocation("https://www.mycollab.com");
+        MButton submitBtn = new MButton("Submit and delete my account", clickEvent -> {
+            CustomerFeedbackWithBLOBs feedback = new CustomerFeedbackWithBLOBs();
+            String whyLeavingMsg = whyLeaving.getValue();
+            feedback.setUsername(AppContext.getUsername());
+            feedback.setSaccountid(AppContext.getAccountId());
+            feedback.setOthertool(alternativeTool.getValue());
+            feedback.setReasontoback(reasonToBack.getValue());
+            if (optionGroupField.getValue() != null) {
+                feedback.setReasontoleave(optionGroupField.getValue().toString() + ": " + whyLeavingMsg);
+            } else {
+                feedback.setReasontoleave(whyLeavingMsg);
             }
-        });
-        submitBtn.addStyleName(UIConstants.BUTTON_DANGER);
 
-        Button cancelBtn = new Button("Never mind, go back",
-                clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(this, null)));
-        cancelBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            BillingService billingService = AppContextUtil.getSpringBean(BillingService.class);
+            billingService.cancelAccount(AppContext.getAccountId(), feedback);
+            UI.getCurrent().getPage().setLocation("https://www.mycollab.com");
+        }).withStyleName(UIConstants.BUTTON_DANGER);
 
-        innerLayout.with(new MHorizontalLayout(submitBtn, cancelBtn).withMargin(true));
+        MButton cancelBtn = new MButton("Never mind, go back",
+                clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(this, null)))
+                .withStyleName(UIConstants.BUTTON_ACTION);
 
-        ELabel confirmNote = new ELabel(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_CONFIRM_NOTE), ContentMode.HTML).withWidth("600px");
-        innerLayout.with(confirmNote);
+        innerLayout.with(new MHorizontalLayout(submitBtn, cancelBtn).withMargin(new MarginInfo(false, true, false, true)));
+        innerLayout.with(ELabel.html(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_CONFIRM_NOTE)).withWidth("600px"));
         layout.addComponent(innerLayout);
         return layout;
     }

@@ -49,7 +49,7 @@ public abstract class ProjectListNoItemView extends VerticalLayout {
 
     protected MHorizontalLayout createControlButtons() {
         Button createItemBtn = new Button(actionMessage(), actionListener());
-        createItemBtn.setEnabled(hasPermission());
+        createItemBtn.setVisible(hasPermission());
         createItemBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
         return new MHorizontalLayout().with(createItemBtn);

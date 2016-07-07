@@ -66,7 +66,7 @@ public class ComponentSearchPanel extends DefaultGenericSearchPanel<ComponentSea
         MButton createBtn = new MButton(AppContext.getMessage(ComponentI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new BugComponentEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.BUTTON_ACTION);
-        createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
+        createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
         return createBtn;
     }
 

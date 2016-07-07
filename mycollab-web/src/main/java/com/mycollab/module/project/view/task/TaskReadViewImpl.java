@@ -173,10 +173,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         }).withStyleName(UIConstants.BUTTON_ACTION);
 
         taskPreviewForm.insertToControlBlock(quickActionStatusBtn);
-
-        if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-            quickActionStatusBtn.setEnabled(false);
-        }
+        quickActionStatusBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
         return topPanel;
     }

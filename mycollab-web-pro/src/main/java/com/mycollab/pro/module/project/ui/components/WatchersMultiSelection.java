@@ -6,6 +6,7 @@ import com.mycollab.common.service.MonitorItemService;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectMemberStatusConstants;
+import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.mycollab.module.project.service.ProjectMemberService;
@@ -34,13 +35,15 @@ import java.util.List;
 public class WatchersMultiSelection extends MVerticalLayout {
     private List<SimpleProjectMember> unsavedMembers = new ArrayList<>();
     private List<SimpleUser> followers;
+    private boolean canModified;
     private String type;
     private Integer typeId;
     private MonitorItemService monitorItemService;
 
-    public WatchersMultiSelection(String type, Integer typeId) {
+    public WatchersMultiSelection(String type, Integer typeId, boolean canModified) {
         this.type = type;
         this.typeId = typeId;
+        this.canModified = canModified;
         monitorItemService = AppContextUtil.getSpringBean(MonitorItemService.class);
         followers = monitorItemService.getWatchers(type, typeId);
         new Restrain(this).setMaxHeight("600px");
@@ -92,23 +95,21 @@ public class WatchersMultiSelection extends MVerticalLayout {
                     isWatching = true;
                 }
             }
-            isSelectedBox.addValueChangeListener(new Property.ValueChangeListener() {
-                @Override
-                public void valueChange(Property.ValueChangeEvent event) {
-                    if (isSelectedBox.getValue()) {
-                        if (!isWatching) {
-                            unsavedMembers.add(member);
-                        }
+            isSelectedBox.addValueChangeListener(valueChangeEvent -> {
+                if (isSelectedBox.getValue()) {
+                    if (!isWatching) {
+                        unsavedMembers.add(member);
+                    }
+                } else {
+                    if (isWatching) {
+                        unfollowItem(member.getUsername());
+                        isWatching = false;
                     } else {
-                        if (isWatching) {
-                            unfollowItem(member.getUsername());
-                            isWatching = false;
-                        } else {
-                            unsavedMembers.remove(member);
-                        }
+                        unsavedMembers.remove(member);
                     }
                 }
             });
+            isSelectedBox.setEnabled(canModified);
         }
 
         private void unfollowItem(String username) {

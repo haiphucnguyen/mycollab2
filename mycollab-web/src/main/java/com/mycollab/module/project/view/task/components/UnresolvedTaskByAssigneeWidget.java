@@ -129,14 +129,14 @@ public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
         private static final long serialVersionUID = 1L;
 
         public TaskAssigneeLink(final String assignee, String assigneeAvatarId, final String assigneeFullName) {
-            super(StringUtils.trim(assigneeFullName, 25, true), clickEvent -> {
+            super(StringUtils.trim(assigneeFullName, 25, true));
+
+            this.withListener(clickEvent -> {
                 TaskSearchCriteria criteria = BeanUtility.deepClone(searchCriteria);
                 criteria.setAssignUser(StringSearchField.and(assignee));
                 EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(UnresolvedTaskByAssigneeWidget.this, criteria));
-            });
-
-            this.withWidth("100%").withStyleName(UIConstants.BUTTON_LINK, UIConstants.TEXT_ELLIPSIS);
-            this.setIcon(UserAvatarControlFactory.createAvatarResource(assigneeAvatarId, 16));
+            }).withWidth("100%").withIcon(UserAvatarControlFactory.createAvatarResource(assigneeAvatarId, 16))
+                    .withStyleName(UIConstants.BUTTON_LINK, UIConstants.TEXT_ELLIPSIS);
             UserService service = AppContextUtil.getSpringBean(UserService.class);
             SimpleUser user = service.findUserByUserNameInAccount(assignee, AppContext.getAccountId());
             this.setDescription(CommonTooltipGenerator.generateTooltipUser(AppContext.getUserLocale(), user,

@@ -71,34 +71,31 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
         content.with(new MHorizontalLayout(optionGroup.getItemComponent(LICENSE_FILE), new Label(AppContext
                 .getMessage(LicenseI18nEnum.OPT_BROWSE_LICENSE_HELP))), licenseFileUploadLayout);
 
-        changeLicenseBtn = new Button(AppContext.getMessage(LicenseI18nEnum.ACTION_CHANGE_LICENSE), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                String val = (String) optionGroup.getValue();
-                LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
-                if (ACT_CODE.equals(val)) {
-                    String licenseText = activationField.getValue();
-                    licenseResolver.checkAndSaveLicenseInfo(licenseText);
-                    if (licenseResolver.getLicenseInfo().isInvalid()) {
-                        NotificationUtil.showErrorNotification(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID));
-                    } else {
-                        close();
-                        Page.getCurrent().getJavaScript().execute("window.location.reload();");
-                    }
-
+        changeLicenseBtn = new Button(AppContext.getMessage(LicenseI18nEnum.ACTION_CHANGE_LICENSE), clickEvent -> {
+            String val = (String) optionGroup.getValue();
+            LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
+            if (ACT_CODE.equals(val)) {
+                String licenseText = activationField.getValue();
+                licenseResolver.checkAndSaveLicenseInfo(licenseText);
+                if (licenseResolver.getLicenseInfo().isInvalid()) {
+                    NotificationUtil.showErrorNotification(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID));
                 } else {
-                    InputStream inputStream = licenseUploadField.getContentAsStream();
-                    if (inputStream == null) {
+                    close();
+                    Page.getCurrent().getJavaScript().execute("window.location.reload();");
+                }
+
+            } else {
+                InputStream inputStream = licenseUploadField.getContentAsStream();
+                if (inputStream == null) {
+                    throw new UserInvalidInputException(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_FILE_INVALID));
+                } else {
+                    try {
+                        byte[] licenseByes = IOUtils.toByteArray(inputStream);
+                        licenseResolver.checkLicenseInfo(licenseByes, true);
+                        close();
+                    } catch (Exception e) {
+                        LOG.error("Error", e);
                         throw new UserInvalidInputException(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_FILE_INVALID));
-                    } else {
-                        try {
-                            byte[] licenseByes = IOUtils.toByteArray(inputStream);
-                            licenseResolver.checkLicenseInfo(licenseByes, true);
-                            close();
-                        } catch (Exception e) {
-                            LOG.error("Error", e);
-                            throw new UserInvalidInputException(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_FILE_INVALID));
-                        }
                     }
                 }
             }

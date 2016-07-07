@@ -66,12 +66,12 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.SaveTheme(this, accountTheme)))
                 .withIcon(FontAwesome.SAVE).withStyleName(UIConstants.BUTTON_ACTION);
-        saveBtn.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+        saveBtn.setVisible(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         MButton resetToDefaultBtn = new MButton(AppContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.ResetTheme(ThemeCustomizeViewImpl.this, null)))
                 .withStyleName(UIConstants.BUTTON_DANGER);
-        resetToDefaultBtn.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+        resetToDefaultBtn.setVisible(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         MHorizontalLayout controlButtons = new MHorizontalLayout(viewTitle, resetToDefaultBtn, saveBtn).withFullWidth()
                 .withMargin(new MarginInfo(true, true, false, true)).expand(viewTitle);

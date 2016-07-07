@@ -135,7 +135,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
             invoice.setStatus(OptionI18nEnum.InvoiceStatus.Scheduled.name());
             UI.getCurrent().addWindow(new InvoiceAddWindow(invoice));
         }).withIcon(FontAwesome.PLUS).withStyleName(UIConstants.BUTTON_ACTION);
-        createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
+        createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
         return new MHorizontalLayout(createBtn);
     }
 
@@ -273,14 +273,14 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
 
             PrintButton printBtn = new PrintButton();
             printBtn.setStyleName(UIConstants.BUTTON_OPTION);
-            printBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE));
+            printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE));
             printBtn.doPrint(invoice, new FormReportLayout(ProjectTypeConstants.INVOICE, Invoice.Field.noid.name(),
                     InvoiceDefaultFormLayoutFactory.getForm(), Invoice.Field.id.name()));
 
             MButton editBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                     clickEvent -> UI.getCurrent().addWindow(new InvoiceAddWindow(invoice)))
                     .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.EDIT);
-            editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
+            editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
 
             MButton deleteBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
@@ -301,7 +301,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
                             }
                         });
             }).withStyleName(UIConstants.BUTTON_DANGER).withIcon(FontAwesome.TRASH_O);
-            deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INVOICE));
+            deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INVOICE));
 
             MHorizontalLayout buttonControls = new MHorizontalLayout(printBtn, editBtn, deleteBtn);
             header.with(headerLbl, buttonControls).expand(headerLbl);

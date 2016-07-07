@@ -1,11 +1,15 @@
 package com.mycollab.pro.module.project.view.client;
 
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
+import com.mycollab.configuration.Storage;
 import com.mycollab.configuration.StorageFactory;
-import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.core.utils.StringUtils;
+import com.mycollab.db.arguments.BasicSearchRequest;
+import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.SimpleAccount;
@@ -32,9 +36,6 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.UserLink;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.Img;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -42,6 +43,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -89,8 +91,8 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
     @Override
     protected String initFormTitle() {
         if (beanItem.getAvatarid() != null) {
-            Img img = new Img("", StorageFactory.getInstance().getEntityLogoPath(AppContext.getAccountId(), beanItem
-                    .getAvatarid(), 32)).setCSSClass(UIConstants.CIRCLE_BOX);
+            Img img = new Img("", Storage.getEntityLogoPath(AppContext.getAccountId(), beanItem.getAvatarid(), 32))
+                    .setCSSClass(UIConstants.CIRCLE_BOX);
             return new Div().appendChild(img).appendChild(DivLessFormatter.EMPTY_SPACE()).appendText(beanItem.getAccountname()).write();
         } else {
             return beanItem.getAccountname();
@@ -179,15 +181,12 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
             int totalCount = projectService.getTotalCount(searchCriteria);
             ELabel headerLbl = new ELabel(AppContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, totalCount));
-            Button newProjectBtn = new Button(AppContext.getMessage(ProjectI18nEnum.NEW), new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    Project project = new Project();
-                    project.setAccountid(accountId);
-                    UI.getCurrent().addWindow(new ProjectAddWindow(project));
-                }
-            });
-            newProjectBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            MButton newProjectBtn = new MButton(AppContext.getMessage(ProjectI18nEnum.NEW), clickEvent -> {
+                Project project = new Project();
+                project.setAccountid(accountId);
+                UI.getCurrent().addWindow(new ProjectAddWindow(project));
+            }).withStyleName(UIConstants.BUTTON_ACTION);
+
             MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(UIConstants.FORM_SECTION)
                     .withFullWidth().with(headerLbl, newProjectBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
                     .withAlign(newProjectBtn, Alignment.MIDDLE_RIGHT);

@@ -301,8 +301,10 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         protected void doShow() {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
-            watchersMultiSelection = new WatchersMultiSelection(ProjectTypeConstants.TASK, task.getId());
-            layout.with(new ELabel("Modify watchers").withStyleName(ValoTheme.LABEL_H3), watchersMultiSelection);
+            watchersMultiSelection = new WatchersMultiSelection(ProjectTypeConstants.TASK, task.getId(),
+                    CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+            layout.with(new ELabel(AppContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS))
+                    .withStyleName(ValoTheme.LABEL_H3), watchersMultiSelection);
         }
 
         @Override

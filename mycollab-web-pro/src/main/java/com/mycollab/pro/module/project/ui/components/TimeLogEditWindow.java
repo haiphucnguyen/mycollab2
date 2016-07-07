@@ -127,7 +127,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
             }).withIcon(FontAwesome.TRASH_O).withStyleName(UIConstants.BUTTON_ICON_ONLY);
             itemTimeLogging.setExtraData(deleteBtn);
 
-            deleteBtn.setEnabled(CurrentProjectVariables.isAdmin() || AppContext.getUsername().equals(itemTimeLogging.getLoguser()));
+            deleteBtn.setVisible(CurrentProjectVariables.isAdmin() || AppContext.getUsername().equals(itemTimeLogging.getLoguser()));
             return deleteBtn;
         });
 
@@ -170,8 +170,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
                 loadTimeValue();
                 newTimeInputField.setValue(0d);
             }
-        }).withIcon(FontAwesome.PLUS).withStyleName(UIConstants.BUTTON_ACTION);
-        addBtn.setEnabled(isEnableAdd());
+        }).withIcon(FontAwesome.PLUS).withStyleName(UIConstants.BUTTON_ACTION).withVisible(isEnableAdd());
         addLayout.with(newTimeInputField, forDateField, isBillableField, isOvertimeField, addBtn);
     }
 
@@ -206,9 +205,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
                 remainTimeLbl.setValue(remainTimeInputField.getValue() + "");
                 remainTimeInputField.setValue(0d);
             }
-        }).withStyleName(UIConstants.BUTTON_ACTION);
-
-        addBtn.setEnabled(isEnableAdd());
+        }).withStyleName(UIConstants.BUTTON_ACTION).withVisible(isEnableAdd());
         addLayout.with(addBtn).withAlign(addBtn, Alignment.MIDDLE_LEFT);
     }
 

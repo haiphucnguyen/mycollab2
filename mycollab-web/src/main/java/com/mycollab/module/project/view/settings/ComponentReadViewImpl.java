@@ -40,8 +40,10 @@ import com.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -161,10 +163,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
             service.updateSelectiveWithSession(beanItem, AppContext.getUsername());
         }).withStyleName(UIConstants.BUTTON_ACTION);
         componentPreviewForm.insertToControlBlock(quickActionStatusBtn);
-
-        if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS)) {
-            quickActionStatusBtn.setEnabled(false);
-        }
+        quickActionStatusBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
         return topPanel;
     }
 

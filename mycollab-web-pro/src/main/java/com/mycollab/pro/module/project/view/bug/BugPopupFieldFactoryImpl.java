@@ -152,7 +152,8 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         protected void doShow() {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
-            watchersMultiSelection = new WatchersMultiSelection(ProjectTypeConstants.BUG, bug.getId());
+            watchersMultiSelection = new WatchersMultiSelection(ProjectTypeConstants.BUG, bug.getId(),
+                    CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
             layout.with(new ELabel(AppContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS)).withStyleName(ValoTheme.LABEL_H3),
                     watchersMultiSelection);
         }
@@ -232,33 +233,33 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ResolvedInputWindow(beanItem)));
                 }).withStyleName(UIConstants.BUTTON_ACTION);
-                resolveBtn.setEnabled(hasPermission);
+                resolveBtn.setVisible(hasPermission);
                 content.with(resolveBtn);
             } else if (OptionI18nEnum.BugStatus.Verified.name().equals(beanItem.getStatus())) {
                 MButton reopenBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem)));
                 }).withStyleName(UIConstants.BUTTON_ACTION);
-                reopenBtn.setEnabled(hasPermission);
+                reopenBtn.setVisible(hasPermission);
                 content.with(reopenBtn);
             } else if (OptionI18nEnum.BugStatus.Resolved.name().equals(beanItem.getStatus())) {
                 MButton reopenBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem)));
                 }).withStyleName(UIConstants.BUTTON_ACTION);
-                reopenBtn.setEnabled(hasPermission);
+                reopenBtn.setVisible(hasPermission);
 
                 MButton approveNCloseBtn = new MButton(AppContext.getMessage(BugI18nEnum.BUTTON_APPROVE_CLOSE), clickEvent -> {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ApproveInputWindow(beanItem)));
                 }).withStyleName(UIConstants.BUTTON_ACTION);
-                approveNCloseBtn.setEnabled(hasPermission);
+                approveNCloseBtn.setVisible(hasPermission);
                 content.with(reopenBtn, approveNCloseBtn);
             } else if (OptionI18nEnum.BugStatus.Resolved.name().equals(beanItem.getStatus())) {
                 MButton reopenBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
                         clickEvent -> UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem))))
                         .withStyleName(UIConstants.BUTTON_ACTION);
-                reopenBtn.setEnabled(hasPermission);
+                reopenBtn.setVisible(hasPermission);
                 content.with(reopenBtn);
             }
             if (!hasPermission) {

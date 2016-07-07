@@ -50,7 +50,7 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
         MButton createBtn = new MButton(AppContext.getMessage(RiskI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null)))
                 .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
-        createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
+        createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
         return createBtn;
     }
 
@@ -91,12 +91,11 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
             MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
                     .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
 
-            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""));
-            cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
+            MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
+                    .withStyleName(UIConstants.BUTTON_OPTION);
 
-            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
-                    clickEvent -> moveToAdvancedSearchLayout());
-            advancedSearchBtn.setStyleName(UIConstants.BUTTON_LINK);
+            MButton advancedSearchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
+                    clickEvent -> moveToAdvancedSearchLayout()).withStyleName(UIConstants.BUTTON_LINK);
 
             return new MHorizontalLayout(nameField, myItemCheckbox, searchBtn, cancelBtn, advancedSearchBtn)
                     .alignAll(Alignment.MIDDLE_LEFT).withMargin(true);

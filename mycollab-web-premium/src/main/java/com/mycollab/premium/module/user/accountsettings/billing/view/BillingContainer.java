@@ -29,7 +29,11 @@ import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
+import org.vaadin.viritin.button.MButton;
 
 /**
  * @author MyCollab Ltd.
@@ -74,14 +78,11 @@ public class BillingContainer extends AbstractPageView implements IBillingContai
                 with(layoutHelper.getLayout()).withAlign(layoutHelper.getLayout(), Alignment.TOP_CENTER);
 
                 if (licenseInfo.isTrial() || licenseInfo.isExpired() || licenseInfo.isInvalid()) {
-                    Button licenseBtn = new Button(AppContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE), new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(Button.ClickEvent clickEvent) {
-                            Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
-                            UI.getCurrent().addWindow(activateWindow);
-                        }
-                    });
-                    licenseBtn.addStyleName(UIConstants.BUTTON_ACTION);
+                    MButton licenseBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE), clickEvent -> {
+                        Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
+                        UI.getCurrent().addWindow(activateWindow);
+                    }).withStyleName(UIConstants.BUTTON_ACTION);
+
                     with(licenseBtn).withAlign(licenseBtn, Alignment.TOP_CENTER);
                 }
             } catch (Exception e) {

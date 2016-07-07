@@ -64,7 +64,7 @@ public class ProjectRoleSearchPanel extends DefaultGenericSearchPanel<ProjectRol
         MButton createBtn = new MButton(AppContext.getMessage(ProjectRoleI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new ProjectRoleEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.BUTTON_ACTION);
-        createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.ROLES));
+        createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.ROLES));
         return createBtn;
     }
 

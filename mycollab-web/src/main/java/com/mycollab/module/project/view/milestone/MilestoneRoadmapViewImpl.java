@@ -105,7 +105,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
     @Override
     protected void displayView() {
         initUI();
-        createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
+        createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
 
         baseCriteria = new MilestoneSearchCriteria();
         baseCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
@@ -203,7 +203,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
         }).withIcon(FontAwesome.PLUS).withStyleName(UIConstants.BUTTON_ACTION);
-        createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
+        createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         layout.with(createBtn);
 
         MButton printBtn = new MButton("", clickEvent -> {

@@ -238,19 +238,9 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                     Label informLbl = new Label("<div class='informBlock'>FREE CHARGE<br>UPGRADE</div><div class='informBlock'>&gt;&gt;</div>", ContentMode.HTML);
                     informLbl.addStyleName("trialEndingNotification");
                     informLbl.setHeight("100%");
-                    HorizontalLayout informBox = new HorizontalLayout();
-                    informBox.addStyleName("trialInformBox");
-                    informBox.setSizeFull();
-                    informBox.addComponent(informLbl);
+                    MHorizontalLayout informBox = new MHorizontalLayout(informLbl).withFullHeight().withStyleName("trialInformBox");
                     informBox.setMargin(new MarginInfo(false, true, false, false));
-                    informBox.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
-                        private static final long serialVersionUID = 1L;
-
-                        @Override
-                        public void layoutClick(LayoutClickEvent event) {
-                            EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"billing"}));
-                        }
-                    });
+                    informBox.addLayoutClickListener(layoutClickEvent -> EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"billing"})));
                     accountLayout.with(informBox).withAlign(informBox, Alignment.MIDDLE_LEFT);
                 } else {
                     Label informLbl = new Label("", ContentMode.HTML);

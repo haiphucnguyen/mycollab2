@@ -26,6 +26,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.teemu.ratingstars.RatingStars;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
@@ -121,15 +122,11 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
     }
 
     private ComponentContainer constructTableActionControls() {
-        MHorizontalLayout layout = new MHorizontalLayout().withFullWidth();
-        layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+        MHorizontalLayout layout = new MHorizontalLayout().withFullWidth().withStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 
         selectOptionButton = new SelectionOptionButton(tableItem);
         selectOptionButton.setWidthUndefined();
         layout.addComponent(selectOptionButton);
-
-        Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
-        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.RISKS));
 
         tableActionControls = new DefaultMassItemActionHandlerContainer();
 
@@ -152,10 +149,9 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         selectedItemsNumberLabel.setWidth("100%");
         layout.with(selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER).expand(selectedItemsNumberLabel);
 
-        Button customizeViewBtn = new Button("", clickEvent -> UI.getCurrent().addWindow(new RiskListCustomizeWindow(tableItem)));
-        customizeViewBtn.setIcon(FontAwesome.ADJUST);
+        MButton customizeViewBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new RiskListCustomizeWindow(tableItem)))
+                .withIcon(FontAwesome.ADJUST).withStyleName(UIConstants.BUTTON_ACTION);
         customizeViewBtn.setDescription("Layout Options");
-        customizeViewBtn.addStyleName(UIConstants.BUTTON_ACTION);
         layout.with(customizeViewBtn).withAlign(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
         return layout;
