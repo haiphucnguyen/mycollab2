@@ -89,10 +89,12 @@ public class WatchersMultiSelection extends MVerticalLayout {
             Label icon = new Label(StringUtils.trim(member.getDisplayName(), 20, true));
             icon.setDescription(member.getDisplayName());
             this.with(isSelectedBox, avatarResource, icon);
+
             for (SimpleUser follower : followers) {
                 if (follower.getUsername().equals(member.getUsername())) {
                     isSelectedBox.setValue(true);
                     isWatching = true;
+                    break;
                 }
             }
             isSelectedBox.addValueChangeListener(valueChangeEvent -> {

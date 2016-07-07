@@ -122,7 +122,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
             final SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
             MButton deleteBtn = new MButton("", clickEvent -> {
                 itemTimeLoggingService.removeWithSession(itemTimeLogging, AppContext.getUsername(), AppContext.getAccountId());
-                TimeLogEditWindow.this.loadTimeValue();
+                loadTimeValue();
                 hasTimeChange = true;
             }).withIcon(FontAwesome.TRASH_O).withStyleName(UIConstants.BUTTON_ICON_ONLY);
             itemTimeLogging.setExtraData(deleteBtn);
