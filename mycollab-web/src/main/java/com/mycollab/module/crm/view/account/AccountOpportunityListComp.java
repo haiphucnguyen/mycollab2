@@ -139,31 +139,21 @@ public class AccountOpportunityListComp extends RelatedListComp2<OpportunityServ
             VerticalLayout opportunityInfo = new VerticalLayout();
             opportunityInfo.setSpacing(true);
 
-            MButton btnDelete = new MButton(FontAwesome.TRASH_O);
-            btnDelete.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    ConfirmDialogExt.show(UI.getCurrent(),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                            new ConfirmDialog.Listener() {
-                                private static final long serialVersionUID = 1L;
-
-                                @Override
-                                public void onClose(ConfirmDialog dialog) {
-                                    if (dialog.isConfirmed()) {
-                                        OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
-                                        opportunityService.removeWithSession(opportunity,
-                                                AppContext.getUsername(), AppContext.getAccountId());
-                                        AccountOpportunityListComp.this.refresh();
-                                    }
-                                }
-                            });
-                }
-            });
-            btnDelete.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+            MButton btnDelete = new MButton("", clickEvent -> {
+                ConfirmDialogExt.show(UI.getCurrent(),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        confirmDialog -> {
+                            if (confirmDialog.isConfirmed()) {
+                                OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
+                                opportunityService.removeWithSession(opportunity,
+                                        AppContext.getUsername(), AppContext.getAccountId());
+                                AccountOpportunityListComp.this.refresh();
+                            }
+                        });
+            }).withIcon(FontAwesome.TRASH_O).withStyleName(UIConstants.BUTTON_ICON_ONLY);
 
             VerticalLayout blockContent = new VerticalLayout();
             blockContent.addComponent(btnDelete);

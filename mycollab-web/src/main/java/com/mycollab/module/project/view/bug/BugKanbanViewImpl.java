@@ -112,20 +112,12 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
 
         searchPanel.addHeaderRight(groupWrapLayout);
 
-        Button advanceDisplayBtn = new Button("List", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(new BugEvent.GotoList(BugKanbanViewImpl.this, null));
-            }
-        });
-        advanceDisplayBtn.setWidth("100px");
-        advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
+        MButton advanceDisplayBtn = new MButton("List", clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoList(this, null)))
+                .withWidth("100px").withIcon(FontAwesome.SITEMAP);
         advanceDisplayBtn.setDescription("Detail");
 
-        Button kanbanBtn = new Button("Kanban");
-        kanbanBtn.setWidth("100px");
+        MButton kanbanBtn = new MButton("Kanban").withWidth("100px").withIcon(FontAwesome.TH);
         kanbanBtn.setDescription("Kanban View");
-        kanbanBtn.setIcon(FontAwesome.TH);
 
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(advanceDisplayBtn);
@@ -133,8 +125,8 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
         viewButtons.withDefaultButton(kanbanBtn);
         groupWrapLayout.addComponent(viewButtons);
 
-        kanbanLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withFullHeight();
-        kanbanLayout.addStyleName("kanban-layout");
+        kanbanLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withStyleName("kanban-layout")
+                .withFullHeight();
         this.with(searchPanel, kanbanLayout).expand(kanbanLayout);
     }
 
@@ -177,7 +169,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
         AsyncInvoker.access(new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-                List<OptionVal> optionVals = new ArrayList();
+                List<OptionVal> optionVals = new ArrayList<>();
                 for (OptionI18nEnum.BugStatus bugStatus : OptionI18nEnum.bug_statuses) {
                     OptionVal option = new OptionVal();
                     option.setTypeval(bugStatus.name());
@@ -399,33 +391,26 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
                 bugNameField.focus();
                 bugNameField.setWidth("100%");
                 layout.with(bugNameField);
-                MHorizontalLayout controlsBtn = new MHorizontalLayout();
-                Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        String summary = bugNameField.getValue();
-                        if (StringUtils.isNotBlank(summary)) {
-                            bug.setSummary(summary);
-                            BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                            bugService.saveWithSession(bug, AppContext.getUsername());
-                            dragLayoutContainer.removeComponent(layout);
-                            KanbanBugBlockItem kanbanBugBlockItem = new KanbanBugBlockItem(bug);
-                            dragLayoutContainer.addComponent(kanbanBugBlockItem, 0);
-                            updateComponentCount();
-                        }
-                    }
-                });
-                saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
-                Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
+                MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), clickEvent -> {
+                    String summary = bugNameField.getValue();
+                    if (StringUtils.isNotBlank(summary)) {
+                        bug.setSummary(summary);
+                        BugService bugService = AppContextUtil.getSpringBean(BugService.class);
+                        bugService.saveWithSession(bug, AppContext.getUsername());
                         dragLayoutContainer.removeComponent(layout);
-                        newBugComp = null;
+                        KanbanBugBlockItem kanbanBugBlockItem = new KanbanBugBlockItem(bug);
+                        dragLayoutContainer.addComponent(kanbanBugBlockItem, 0);
+                        updateComponentCount();
                     }
-                });
-                cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
-                controlsBtn.with(cancelBtn, saveBtn);
+                }).withStyleName(UIConstants.BUTTON_ACTION);
+
+                MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> {
+                    dragLayoutContainer.removeComponent(layout);
+                    newBugComp = null;
+                }).withStyleName(UIConstants.BUTTON_OPTION);
+
+                MHorizontalLayout controlsBtn = new MHorizontalLayout(cancelBtn, saveBtn);
                 layout.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
                 if (newBugComp != null) {
                     if (newBugComp.getParent() != null) {
