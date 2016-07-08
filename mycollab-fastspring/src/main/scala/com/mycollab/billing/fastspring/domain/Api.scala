@@ -23,7 +23,7 @@ class Api(val username: String, val password: String) {
     request.setHeader(HttpHeaders.AUTHORIZATION, authHeader)
     val response = client.execute(request)
     val rd = new BufferedReader(new InputStreamReader(response.getEntity.getContent))
-    
+
     null
   }
 }
