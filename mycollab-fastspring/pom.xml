@@ -45,5 +45,17 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>${jacksonVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.woodstox</groupId>
+            <artifactId>woodstox-core</artifactId>
+            <version>5.0.2</version>
+        </dependency>
+
     </dependencies>
 </project>
