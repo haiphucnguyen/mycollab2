@@ -137,18 +137,11 @@ public class CloudDriveSettingWindow extends Window {
                                 AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                                 AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                                 AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                                new ConfirmDialog.Listener() {
-                                    private static final long serialVersionUID = 1L;
-
-                                    @Override
-                                    public void onClose(final ConfirmDialog dialog) {
-                                        if (dialog.isConfirmed()) {
-                                            externalDriveService.removeWithSession(drive, AppContext.getUsername(),
-                                                    AppContext.getAccountId());
-                                            bodyLayout.removeComponent(OneDriveConnectionBodyLayout.this);
-                                            EventBusFactory.getInstance().post(new FileEvent.ExternalDriveDeleteEvent(CloudDriveSettingWindow.this, drive));
-
-                                        }
+                                confirmDialog -> {
+                                    if (confirmDialog.isConfirmed()) {
+                                        externalDriveService.removeWithSession(drive, AppContext.getUsername(), AppContext.getAccountId());
+                                        bodyLayout.removeComponent(OneDriveConnectionBodyLayout.this);
+                                        EventBusFactory.getInstance().post(new FileEvent.ExternalDriveDeleteEvent(this, drive));
                                     }
                                 });
                     } catch (Exception e) {

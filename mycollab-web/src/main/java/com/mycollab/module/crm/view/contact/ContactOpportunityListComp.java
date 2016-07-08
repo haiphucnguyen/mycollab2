@@ -132,19 +132,14 @@ public class ContactOpportunityListComp extends RelatedListComp2<OpportunityServ
                         AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                         AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                        new ConfirmDialog.Listener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void onClose(ConfirmDialog dialog) {
-                                if (dialog.isConfirmed()) {
-                                    ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
-                                    ContactOpportunity associateOpportunity = new ContactOpportunity();
-                                    associateOpportunity.setContactid(contact.getId());
-                                    associateOpportunity.setOpportunityid(opportunity.getId());
-                                    contactService.removeContactOpportunityRelationship(associateOpportunity, AppContext.getAccountId());
-                                    ContactOpportunityListComp.this.refresh();
-                                }
+                        confirmDialog -> {
+                            if (confirmDialog.isConfirmed()) {
+                                ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
+                                ContactOpportunity associateOpportunity = new ContactOpportunity();
+                                associateOpportunity.setContactid(contact.getId());
+                                associateOpportunity.setOpportunityid(opportunity.getId());
+                                contactService.removeContactOpportunityRelationship(associateOpportunity, AppContext.getAccountId());
+                                ContactOpportunityListComp.this.refresh();
                             }
                         });
             }).withIcon(FontAwesome.TRASH_O).withStyleName(UIConstants.BUTTON_ICON_ONLY)

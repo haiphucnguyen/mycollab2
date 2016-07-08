@@ -149,29 +149,24 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                 AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                 AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                new ConfirmDialog.Listener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void onClose(final ConfirmDialog dialog) {
-                        if (dialog.isConfirmed()) {
-                            for (Resource res : deletedResources) {
-                                if (res.isExternalResource()) {
-                                    externalResourceService.deleteResource(
-                                            ((ExternalFolder) res).getExternalDrive(), res.getPath());
-                                } else {
-                                    if (res instanceof Folder) {
-                                        EventBusFactory.getInstance().post(new FileEvent.ResourceRemovedEvent
-                                                (ResourcesDisplayComponent.this, res));
-                                    }
-                                    resourceService.removeResource(res.getPath(), AppContext.getUsername(),
-                                            AppContext.getAccountId());
+                confirmDialog -> {
+                    if (confirmDialog.isConfirmed()) {
+                        for (Resource res : deletedResources) {
+                            if (res.isExternalResource()) {
+                                externalResourceService.deleteResource(
+                                        ((ExternalFolder) res).getExternalDrive(), res.getPath());
+                            } else {
+                                if (res instanceof Folder) {
+                                    EventBusFactory.getInstance().post(new FileEvent.ResourceRemovedEvent
+                                            (ResourcesDisplayComponent.this, res));
                                 }
+                                resourceService.removeResource(res.getPath(), AppContext.getUsername(),
+                                        AppContext.getAccountId());
                             }
-
-                            resourcesContainer.constructBody(baseFolder);
-                            NotificationUtil.showNotification("Congrats", "Deleted content successfully.");
                         }
+
+                        resourcesContainer.constructBody(baseFolder);
+                        NotificationUtil.showNotification("Congrats", "Deleted content successfully.");
                     }
                 });
     }

@@ -449,7 +449,7 @@ public class GanttTreeTable extends TreeTable {
                 }
             });
             predecessorMenuItem.setIcon(FontAwesome.MAP_MARKER);
-            predecessorMenuItem.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+            predecessorMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
             MenuItem indentMenuItem = this.addItem("Indent", new Command() {
                 @Override
@@ -504,7 +504,7 @@ public class GanttTreeTable extends TreeTable {
                 }
             });
             outdentMenuItem.setIcon(FontAwesome.OUTDENT);
-            outdentMenuItem.setEnabled(ganttItemWrapper.isOutdentable() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+            outdentMenuItem.setVisible(ganttItemWrapper.isOutdentable() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
             if (beanContainer.indexOfId(ganttItemWrapper) > 0) {
                 MenuItem inserRowBeforeMenuItem = this.addItem("Insert row before", new Command() {
@@ -538,7 +538,7 @@ public class GanttTreeTable extends TreeTable {
                     }
                 });
                 inserRowBeforeMenuItem.setIcon(FontAwesome.PLUS_CIRCLE);
-                inserRowBeforeMenuItem.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+                inserRowBeforeMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             }
 
             MenuItem insertRowAfterMenuItem = this.addItem("Insert row after", new Command() {
@@ -573,30 +573,22 @@ public class GanttTreeTable extends TreeTable {
                 }
             });
             insertRowAfterMenuItem.setIcon(FontAwesome.PLUS_CIRCLE);
-            insertRowAfterMenuItem.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+            insertRowAfterMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
-            MenuItem deleteRowMenuItem = this.addItem("Delete row", new Command() {
-                @Override
-                public void menuSelected(MenuItem menuItem) {
-                    ConfirmDialogExt.show(UI.getCurrent(),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                            new ConfirmDialog.Listener() {
-                                private static final long serialVersionUID = 1L;
-
-                                @Override
-                                public void onClose(ConfirmDialog dialog) {
-                                    if (dialog.isConfirmed()) {
-                                        removeAssignments(ganttItemWrapper);
-                                    }
-                                }
-                            });
-                }
+            MenuItem deleteRowMenuItem = this.addItem("Delete row", menuItem -> {
+                ConfirmDialogExt.show(UI.getCurrent(),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        confirmDialog -> {
+                            if (confirmDialog.isConfirmed()) {
+                                removeAssignments(ganttItemWrapper);
+                            }
+                        });
             });
             deleteRowMenuItem.setIcon(FontAwesome.TRASH_O);
-            deleteRowMenuItem.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
+            deleteRowMenuItem.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
         }
 
         private void removeAssignments(GanttItemWrapper task) {

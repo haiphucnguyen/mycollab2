@@ -83,15 +83,10 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
                         AppContext.getMessage(AdminI18nEnum.OPT_CONFIRM_RESET_DEFAULT_THEME),
                         AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                         AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-                        new ConfirmDialog.Listener() {
-                            private static final long serialVersionUID = 2086515060473457749L;
-
-                            @Override
-                            public void onClose(ConfirmDialog dialog) {
-                                if (dialog.isConfirmed()) {
-                                    themeService.removeTheme(AppContext.getAccountId());
-                                    Page.getCurrent().getJavaScript().execute("window.location.reload();");
-                                }
+                        confirmDialog -> {
+                            if (confirmDialog.isConfirmed()) {
+                                themeService.removeTheme(AppContext.getAccountId());
+                                Page.getCurrent().getJavaScript().execute("window.location.reload();");
                             }
                         });
             }

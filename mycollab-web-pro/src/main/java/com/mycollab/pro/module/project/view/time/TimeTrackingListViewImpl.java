@@ -29,7 +29,6 @@ import com.mycollab.pro.module.project.view.reports.TimesheetCustomizeReportOutp
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.AsyncInvoker;
-import com.mycollab.vaadin.events.SearchHandler;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -39,10 +38,8 @@ import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickEvent;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -213,19 +210,13 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
                         AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                         AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                        new ConfirmDialog.Listener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void onClose(ConfirmDialog dialog) {
-                                if (dialog.isConfirmed()) {
-                                    ItemTimeLoggingService itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
-                                    itemTimeLoggingService.removeWithSession(itemLogging, AppContext.getUsername(), AppContext.getAccountId());
-                                    displayTimeEntries();
-                                }
+                        confirmDialog -> {
+                            if (confirmDialog.isConfirmed()) {
+                                ItemTimeLoggingService itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                                itemTimeLoggingService.removeWithSession(itemLogging, AppContext.getUsername(), AppContext.getAccountId());
+                                displayTimeEntries();
                             }
                         });
-
             } else if ("edit".equals(event.getFieldName())) {
                 TimeTrackingEditViewWindow timeTrackingEdit = new TimeTrackingEditViewWindow(TimeTrackingListViewImpl.this, itemLogging);
                 UI.getCurrent().addWindow(timeTrackingEdit);

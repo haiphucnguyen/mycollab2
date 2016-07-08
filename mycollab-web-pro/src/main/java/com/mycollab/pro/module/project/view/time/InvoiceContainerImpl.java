@@ -1,9 +1,10 @@
 package com.mycollab.pro.module.project.view.time;
 
+import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.db.arguments.SearchField;
 import com.mycollab.core.utils.StringUtils;
+import com.mycollab.db.arguments.SearchField;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
@@ -27,12 +28,10 @@ import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.*;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -288,16 +287,11 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
                         AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                         AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                        new ConfirmDialog.Listener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void onClose(ConfirmDialog dialog) {
-                                if (dialog.isConfirmed()) {
-                                    InvoiceService invoiceService = AppContextUtil.getSpringBean(InvoiceService.class);
-                                    invoiceService.removeWithSession(invoice, AppContext.getUsername(), AppContext.getAccountId());
-                                    EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceDelete(this, invoice));
-                                }
+                        confirmDialog -> {
+                            if (confirmDialog.isConfirmed()) {
+                                InvoiceService invoiceService = AppContextUtil.getSpringBean(InvoiceService.class);
+                                invoiceService.removeWithSession(invoice, AppContext.getUsername(), AppContext.getAccountId());
+                                EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceDelete(this, invoice));
                             }
                         });
             }).withStyleName(UIConstants.BUTTON_DANGER).withIcon(FontAwesome.TRASH_O);

@@ -169,15 +169,10 @@ public class TagViewComponent extends CssLayout {
                             AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                             AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                            new ConfirmDialog.Listener() {
-                                private static final long serialVersionUID = 1L;
-
-                                @Override
-                                public void onClose(ConfirmDialog dialog) {
-                                    if (dialog.isConfirmed()) {
-                                        tagService.removeWithSession(tag, AppContext.getUsername(), AppContext.getAccountId());
-                                        TagViewComponent.this.removeComponent(TagBlock.this);
-                                    }
+                            confirmDialog -> {
+                                if (confirmDialog.isConfirmed()) {
+                                    tagService.removeWithSession(tag, AppContext.getUsername(), AppContext.getAccountId());
+                                    TagViewComponent.this.removeComponent(TagBlock.this);
                                 }
                             });
                 }).withDescription(AppContext.getMessage(TagI18nEnum.ACTION_DELETE)).withStyleName("remove-btn-sup");

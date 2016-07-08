@@ -32,7 +32,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
-import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -91,16 +90,11 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
                     AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                     AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                    new ConfirmDialog.Listener() {
-                        private static final long serialVersionUID = 1L;
-
-                        @Override
-                        public void onClose(ConfirmDialog dialog) {
-                            if (dialog.isConfirmed()) {
-                                AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                                accountService.removeWithSession(client, AppContext.getUsername(), AppContext.getAccountId());
-                                EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
-                            }
+                    confirmDialog -> {
+                        if (confirmDialog.isConfirmed()) {
+                            AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
+                            accountService.removeWithSession(client, AppContext.getUsername(), AppContext.getAccountId());
+                            EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
                         }
                     });
         }).withIcon(FontAwesome.TRASH_O).withStyleName(UIConstants.BUTTON_ICON_ONLY)
