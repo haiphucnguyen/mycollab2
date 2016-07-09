@@ -360,8 +360,8 @@
                         <email>support@mycollab.com</email>
                     </properties>
                     <includes>
-                        <include>src/main/java/com/esofthead/**/*.java</include>
-                        <include>src/test/java/com/esofthead/**/*.java</include>
+                        <include>src/main/java/com/mycollab/**/*.java</include>
+                        <include>src/test/java/com/mycollab/**/*.java</include>
                         <include>src/main/scala/**/*.scala</include>
                     </includes>
                 </configuration>

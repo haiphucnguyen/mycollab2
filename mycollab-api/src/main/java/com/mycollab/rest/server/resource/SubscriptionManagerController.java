@@ -12,11 +12,11 @@ import com.mycollab.module.mail.service.IContentGenerator;
 import com.mycollab.module.user.dao.BillingAccountMapper;
 import com.mycollab.module.user.domain.BillingAccount;
 import com.mycollab.module.user.domain.BillingAccountExample;
-import com.mycollab.ondemand.module.support.dao.SubscriptionHistoryMapper;
-import com.mycollab.ondemand.module.support.dao.SubscriptionMapper;
-import com.mycollab.ondemand.module.support.domain.Subscription;
-import com.mycollab.ondemand.module.support.domain.SubscriptionExample;
-import com.mycollab.ondemand.module.support.domain.SubscriptionHistory;
+import com.mycollab.ondemand.module.support.dao.BillingSubscriptionHistoryMapper;
+import com.mycollab.ondemand.module.support.dao.BillingSubscriptionMapper;
+import com.mycollab.ondemand.module.support.domain.BillingSubscription;
+import com.mycollab.ondemand.module.support.domain.BillingSubscriptionExample;
+import com.mycollab.ondemand.module.support.domain.BillingSubscriptionHistory;
 import com.mycollab.reporting.ReportStyles;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
@@ -60,10 +60,10 @@ public class SubscriptionManagerController {
     private static Map<String, String> tempVariables = new WeakHashMap<>();
 
     @Autowired
-    private SubscriptionMapper subscriptionMapper;
+    private BillingSubscriptionMapper subscriptionMapper;
 
     @Autowired
-    private SubscriptionHistoryMapper subscriptionHistoryMapper;
+    private BillingSubscriptionHistoryMapper subscriptionHistoryMapper;
 
     @Autowired
     private BillingAccountMapper billingAccountMapper;
@@ -87,7 +87,7 @@ public class SubscriptionManagerController {
                              @RequestParam("test") String test,
                              @RequestParam("security_request_hash") String security_request_hash) {
         Integer sAccountId = Integer.parseInt(EnDecryptHelper.decryptText(referrer));
-        Subscription subscription = new Subscription();
+        BillingSubscription subscription = new BillingSubscription();
         subscription.setEmail(email);
         subscription.setAccountid(sAccountId);
         subscription.setName(name);
@@ -111,7 +111,7 @@ public class SubscriptionManagerController {
                                        @RequestParam("Email") String email,
                                        @RequestParam("CompanyName") String companyName,
                                        @RequestParam("Phone") String phone) throws Exception {
-        SubscriptionExample ex = new SubscriptionExample();
+        BillingSubscriptionExample ex = new BillingSubscriptionExample();
         Integer sAccountId = 0;
         try {
             LOG.info("Referrer: " + subscriptionReferrer);
@@ -121,10 +121,10 @@ public class SubscriptionManagerController {
             return "Failed";
         }
         ex.createCriteria().andSubreferenceEqualTo(subscriptionReference).andAccountidEqualTo(sAccountId);
-        List<Subscription> subscriptions = subscriptionMapper.selectByExample(ex);
+        List<BillingSubscription> subscriptions = subscriptionMapper.selectByExample(ex);
         if (subscriptions.size() == 1) {
-            Subscription subscription = subscriptions.get(0);
-            SubscriptionHistory subscriptionHistory = new SubscriptionHistory();
+            BillingSubscription subscription = subscriptions.get(0);
+            BillingSubscriptionHistory subscriptionHistory = new BillingSubscriptionHistory();
             subscriptionHistory.setSubscriptionid(subscription.getId());
             String reference = tempVariables.get(subscriptionReference);
             if (reference == null) {
