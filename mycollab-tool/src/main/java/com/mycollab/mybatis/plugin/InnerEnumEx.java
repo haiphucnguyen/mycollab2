@@ -1,4 +1,4 @@
-package com.esofthead.mybatis.plugin;
+package com.mycollab.mybatis.plugin;
 
 import java.util.Iterator;
 

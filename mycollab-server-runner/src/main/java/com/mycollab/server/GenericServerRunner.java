@@ -74,12 +74,12 @@ public abstract class GenericServerRunner {
      * @return
      */
     private String detectWebApp() {
-        File webappFolder = FileUtils.getDesireFile(FileUtils.getUserFolder(), "webapp", "src/main/webapp");
+        File webAppFolder = FileUtils.getDesireFile(FileUtils.getUserFolder(), "webapp", "src/main/webapp");
 
-        if (webappFolder == null) {
+        if (webAppFolder == null) {
             throw new MyCollabException("Can not detect webapp base folder");
         } else {
-            return webappFolder.getAbsolutePath();
+            return webAppFolder.getAbsolutePath();
         }
     }
 
@@ -116,10 +116,6 @@ public abstract class GenericServerRunner {
 
         System.setProperty(ApplicationProperties.MYCOLLAB_PORT, port + "");
         execute();
-    }
-
-    public GenericServerRunner() {
-        super();
     }
 
     private void execute() throws Exception {

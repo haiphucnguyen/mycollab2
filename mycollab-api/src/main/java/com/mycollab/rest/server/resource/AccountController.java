@@ -2,6 +2,7 @@ package com.mycollab.rest.server.resource;
 
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.module.billing.service.BillingService;
+import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class AccountController {
         LOG.debug("Register account with subDomain {}, username {}", subdomain, email);
         if (isEmailVerified == null) {
             isEmailVerified = Boolean.FALSE;
+            HttpGet a;
         }
         billingService.registerAccount(subdomain, planId, email, password, email, timezoneId, isEmailVerified);
         return SiteConfiguration.getSiteUrl(subdomain);

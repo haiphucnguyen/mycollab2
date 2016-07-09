@@ -1,4 +1,4 @@
-package com.esofthead.mybatis.plugin;
+package com.mycollab.mybatis.plugin;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -229,8 +229,8 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
 
     @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        topLevelClass.addImportedType("com.esofthead.mycollab.core.db.metadata.Column");
-        topLevelClass.addImportedType("com.esofthead.mycollab.core.db.metadata.Table");
+        topLevelClass.addImportedType("com.mycollab.db.metadata.Column");
+        topLevelClass.addImportedType("com.mycollab.db.metadata.Table");
         String commentLine = "/*Domain class of table %s*/";
         topLevelClass.addFileCommentLine(String.format(commentLine,
                 introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime()));
@@ -265,8 +265,8 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
 
     @Override
     public boolean modelRecordWithBLOBsClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        topLevelClass.addImportedType("com.esofthead.mycollab.core.db.metadata.Column");
-        topLevelClass.addImportedType("com.esofthead.mycollab.core.db.metadata.Table");
+        topLevelClass.addImportedType("com.mycollab.db.metadata.Column");
+        topLevelClass.addImportedType("com.mycollab.db.metadata.Table");
         topLevelClass.addAnnotation("@SuppressWarnings(\"ucd\")");
         Field staticField = new Field("serialVersionUID", new FullyQualifiedJavaType("long"));
         staticField.setInitializationString("1");

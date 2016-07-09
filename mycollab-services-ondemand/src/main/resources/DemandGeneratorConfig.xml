@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
     <context id="MySQL" targetRuntime="MyBatis3">
-        <plugin type="com.esofthead.mybatis.plugin.MyCollabModelFilePlugin" />
+        <plugin type="com.mycollab.mybatis.plugin.MyCollabModelFilePlugin" />
 
         <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/mycollab_base"
                         driverClass="com.mysql.jdbc.Driver" password="esofthead321"
@@ -28,8 +28,9 @@
         <table domainObjectName="Testimonial" schema="mycollab_base" tableName="s_testimonial" />
         <table domainObjectName="CommunityLead" schema="mycollab_base" tableName="s_customer_lead" />
         <table domainObjectName="ProEditionInfo" schema="mycollab_base" tableName="s_pro_edition_info" />
-        <table domainObjectName="Subscription" schema="mycollab_base" tableName="s_billing_subscription" />
-        <table domainObjectName="SubscriptionHistory" schema="mycollab_base" tableName="s_billing_subscription_history" />
+        <table domainObjectName="BillingSubscription" schema="mycollab_base" tableName="s_billing_subscription" />
+        <table domainObjectName="BillingSubscriptionHistory" schema="mycollab_base"
+               tableName="s_billing_subscription_history" />
     </context>
 
 </generatorConfiguration>
