@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapperExt">
+    <resultMap type="com.mycollab.ondemand.module.billing.domain.SimpleBillingSubscription"
+               extends="com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapper.BaseResultMap"
+               id="SimpleBillingSubscriptionResult">
+        <result column="expireDate" jdbcType="TIMESTAMP" property="expireDate"/>
+        <association property="billingPlan" resultMap="com.mycollab.module.user.dao.BillingPlanMapper.BaseResultMap"
+                     columnPrefix="plan_"/>
+    </resultMap>
+    <select id="findSubscription" resultMap="SimpleBillingSubscriptionResult"
+            parameterType="map" lang="velocity">
+        SELECT s_billing_subscription.id, s_billing_subscription.company, s_billing_subscription.email,
+            s_billing_subscription.billingId, s_billing_subscription.name, s_billing_subscription.subReference,
+            s_billing_subscription.accountId, s_billing_subscription.createdTime, s_billing_subscription.status,
+            s_billing_subscription.country, s_billing_subscription.city, s_billing_subscription.address,
+            s_billing_subscription.state, s_billing_subscription.zipcode, s_billing_subscription.phone,
+            s_billing_subscription.contactName,
+            (SELECT MAX(expiredDate)
+                FROM s_billing_subscription_history
+                WHERE s_billing_subscription_history.subscriptionId = s_billing_subscription.id) AS expireDate,
+            s_billing_plan.billingType AS plan_billingType, s_billing_plan.numUsers AS plan_numUsers,
+            s_billing_plan.volume AS plan_volume, s_billing_plan.numProjects AS plan_numProjects,
+            s_billing_plan.pricing AS plan_pricing, s_billing_plan.description AS plan_description,
+            s_billing_plan.shoppingUrl AS plan_shoppingUrl
+        FROM s_billing_subscription
+            INNER JOIN s_billing_plan ON (s_billing_plan.id = s_billing_subscription.billingId)
+    </select>
+</mapper>

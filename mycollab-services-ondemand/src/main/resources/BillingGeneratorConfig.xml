@@ -17,7 +17,7 @@
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="."
-                         targetProject="src/main/resources/sqlMap/support" />
+                         targetProject="src/main/resources/sqlMap/billing" />
 
         <javaClientGenerator targetPackage="com.mycollab.ondemand.module.billing.dao"
                              targetProject="src/main/java" type="XMLMAPPER">

@@ -28,6 +28,7 @@ public class BillingHistoryPresenter extends AbstractPresenter<BillingHistoryVie
         accountContainer.removeAllComponents();
         accountContainer.addComponent(view);
 
+        view.lazyLoadView();
         AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
         breadcrumb.gotoBillingHistory();
     }

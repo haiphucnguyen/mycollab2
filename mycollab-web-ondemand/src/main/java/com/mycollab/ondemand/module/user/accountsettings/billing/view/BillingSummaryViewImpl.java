@@ -43,6 +43,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -137,7 +138,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 }
             } else {
                 MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT),
-                        clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan))).withStyleName(UIConstants.BUTTON_LINK);
+                        clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan))).withStyleName
+                        (UIConstants.BUTTON_ACTION);
                 singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
             }
 
@@ -166,7 +168,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         } else {
             MButton historyBtn = new MButton(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY),
                     clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoHistory(this, null)))
-                    .withStyleName(UIConstants.BUTTON_ACTION);
+                    .withStyleName(UIConstants.BUTTON_ACTION, ValoTheme.BUTTON_TINY);
             currentPlanLayout.addComponent(new MHorizontalLayout(introText, historyBtn));
         }
 
