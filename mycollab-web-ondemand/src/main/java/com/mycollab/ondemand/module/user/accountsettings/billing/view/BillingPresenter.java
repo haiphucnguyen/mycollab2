@@ -33,6 +33,8 @@ public class BillingPresenter extends AbstractPresenter<IBillingContainer> imple
             presenter = PresenterResolver.getPresenter(BillingSummaryPresenter.class);
         } else if (data instanceof BillingScreenData.CancelAccount) {
             presenter = PresenterResolver.getPresenter(CancelAccountPresenter.class);
+        } else if (data instanceof BillingScreenData.BillingHistory) {
+            presenter = PresenterResolver.getPresenter(BillingHistoryPresenter.class);
         } else {
             throw new MyCollabException("Do not support screen data " + data);
         }

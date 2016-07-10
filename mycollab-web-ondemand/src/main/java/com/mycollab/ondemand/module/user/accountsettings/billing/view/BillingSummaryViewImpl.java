@@ -21,8 +21,10 @@ import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.billing.service.BillingService;
+import com.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.mycollab.module.ecm.service.DriveInfoService;
 import com.mycollab.module.project.service.ProjectService;
+import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
 import com.mycollab.module.user.domain.BillingPlan;
@@ -166,7 +168,10 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             opener.extend(selectPlanBtn);
             currentPlanLayout.with(new MHorizontalLayout(introText, selectPlanBtn));
         } else {
-            currentPlanLayout.addComponent(introText);
+            MButton historyBtn = new MButton(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY),
+                    clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoHistory(this, null)))
+                    .withStyleName(UIConstants.BUTTON_ACTION);
+            currentPlanLayout.addComponent(new MHorizontalLayout(introText, historyBtn));
         }
 
         ELabel currentBillingPrice = ELabel.h3(AppContext.getMessage(BillingI18nEnum.OPT_PRICING_MONTH, currentBillingPlan.getPricing()));

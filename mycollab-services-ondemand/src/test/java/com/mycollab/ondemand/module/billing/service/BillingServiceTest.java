@@ -5,7 +5,7 @@ import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.module.billing.service.BillingService;
 import com.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.mycollab.module.user.domain.SimpleUser;
-import com.mycollab.ondemand.module.billing.SubdomainExistedException;
+import com.mycollab.ondemand.module.billing.SubDomainExistedException;
 import com.mycollab.test.DataSet;
 import com.mycollab.test.service.IntergrationServiceTest;
 import org.junit.Rule;
@@ -59,7 +59,7 @@ public class BillingServiceTest extends IntergrationServiceTest {
                 "abc", "hainguyen@esofthead.com", "3", false);
     }
 
-    @Test(expected = SubdomainExistedException.class)
+    @Test(expected = SubDomainExistedException.class)
     @DataSet
     public void registerAccountFailedBecauseSubDomainExisted() {
         billingService.registerAccount("abc", 1, "haiphucnguyen@gmail.com", "123", "haiphucnguyen@gmail.com", "3", false);

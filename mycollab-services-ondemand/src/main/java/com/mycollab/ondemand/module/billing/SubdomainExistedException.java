@@ -6,10 +6,10 @@ import com.mycollab.core.UserInvalidInputException;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class SubdomainExistedException extends UserInvalidInputException {
+public class SubDomainExistedException extends UserInvalidInputException {
     private static final long serialVersionUID = 1L;
 
-    public SubdomainExistedException(String errorMsg) {
+    public SubDomainExistedException(String errorMsg) {
         super(errorMsg);
     }
 }

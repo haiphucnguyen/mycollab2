@@ -16,9 +16,13 @@ import com.mycollab.module.user.dao.BillingPlanMapper;
 import com.mycollab.module.user.domain.*;
 import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.ondemand.module.billing.AccountPaymentTypeConstants;
-import com.mycollab.ondemand.module.billing.SubdomainExistedException;
+import com.mycollab.ondemand.module.billing.SubDomainExistedException;
 import com.mycollab.ondemand.module.billing.esb.DeleteAccountEvent;
+import com.mycollab.ondemand.module.billing.esb.DeleteSubscriptionEvent;
+import com.mycollab.ondemand.module.billing.esb.UpdateBillingPlanEvent;
 import com.mycollab.ondemand.module.support.dao.BillingSubscriptionMapper;
+import com.mycollab.ondemand.module.support.domain.BillingSubscription;
+import com.mycollab.ondemand.module.support.domain.BillingSubscriptionExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +70,7 @@ public class BillingServiceImpl implements BillingService {
 
         // check subdomain belong to keyword list
         if (ACCOUNT_BLACK_LIST.contains(subDomain)) {
-            throw new SubdomainExistedException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
+            throw new SubDomainExistedException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
                     ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }
 
@@ -74,7 +78,7 @@ public class BillingServiceImpl implements BillingService {
         BillingAccountExample billingEx = new BillingAccountExample();
         billingEx.createCriteria().andSubdomainEqualTo(subDomain);
         if (this.billingAccountMapper.countByExample(billingEx) > 0) {
-            throw new SubdomainExistedException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
+            throw new SubDomainExistedException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
                     ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }
 
@@ -96,7 +100,7 @@ public class BillingServiceImpl implements BillingService {
         try {
             billingAccountMapper.insertAndReturnKey(billingAccount);
         } catch (DuplicateKeyException e) {
-            throw new SubdomainExistedException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
+            throw new SubDomainExistedException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
                     ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }
         int accountId = billingAccount.getId();
@@ -122,10 +126,19 @@ public class BillingServiceImpl implements BillingService {
         record.setId(accountId);
         record.setBillingplanid(newBillingPlanId);
         billingAccountMapper.updateByPrimaryKeySelective(record);
+
+        UpdateBillingPlanEvent event = new UpdateBillingPlanEvent(accountId);
+
     }
 
     @Override
     public void cancelAccount(Integer accountId, CustomerFeedbackWithBLOBs feedback) {
+        BillingSubscriptionExample subscriptionExample = new BillingSubscriptionExample();
+        subscriptionExample.createCriteria().andAccountidEqualTo(accountId);
+        List<BillingSubscription> billingSubscriptions = billingSubscriptionMapper.selectByExample(subscriptionExample);
+        DeleteSubscriptionEvent deleteSubscriptionEvent = new DeleteSubscriptionEvent(billingSubscriptions);
+        asyncEventBus.post(deleteSubscriptionEvent);
+
         billingAccountMapper.deleteByPrimaryKey(accountId);
         DeleteAccountEvent event = new DeleteAccountEvent(accountId, feedback);
         asyncEventBus.post(event);

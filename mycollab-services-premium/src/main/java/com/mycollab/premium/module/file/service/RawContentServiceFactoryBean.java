@@ -23,12 +23,10 @@ public class RawContentServiceFactoryBean extends AbstractFactoryBean<RawContent
 	@Override
 	protected RawContentService createInstance() throws Exception {
 		return new FileRawContentServiceImpl();
-
 	}
 
 	@Override
 	public Class<RawContentService> getObjectType() {
 		return RawContentService.class;
 	}
-
 }
