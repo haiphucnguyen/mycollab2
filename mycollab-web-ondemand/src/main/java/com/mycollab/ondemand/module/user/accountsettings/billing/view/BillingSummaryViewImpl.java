@@ -21,7 +21,6 @@ import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.billing.service.BillingService;
-import com.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.mycollab.module.ecm.service.DriveInfoService;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
@@ -44,8 +43,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -61,7 +58,6 @@ import static com.mycollab.module.user.accountsettings.localization.BillingI18nE
  */
 @ViewComponent
 public class BillingSummaryViewImpl extends AbstractLazyPageView implements BillingSummaryView {
-    private static final Logger LOG = LoggerFactory.getLogger(BillingSummaryViewImpl.class);
 
     private BillingService billingService;
     private MVerticalLayout currentPlanLayout;
@@ -141,7 +137,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 }
             } else {
                 MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT),
-                        clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan))).withStyleName(UIConstants.BUTTON_ACTION);
+                        clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan))).withStyleName(UIConstants.BUTTON_LINK);
                 singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
             }
 

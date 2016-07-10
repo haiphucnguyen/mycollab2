@@ -2,9 +2,9 @@ package com.mycollab.ondemand.schedule.jobs
 
 import com.google.common.eventbus.AsyncEventBus
 import com.mycollab.db.arguments.{BasicSearchRequest, DateSearchField, SetSearchField}
+import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria
 import com.mycollab.ondemand.module.billing.esb.DeleteAccountEvent
-import com.mycollab.ondemand.module.support.domain.criteria.BillingAccountSearchCriteria
-import com.mycollab.ondemand.module.support.service.BillingAccountExtService
+import com.mycollab.ondemand.module.billing.service.BillingAccountExtService
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.joda.time.LocalDate
 import org.quartz.{JobExecutionContext, JobExecutionException}

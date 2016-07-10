@@ -1,8 +1,8 @@
-package com.mycollab.ondemand.module.support.service;
+package com.mycollab.ondemand.module.billing.service;
 
 import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.ondemand.module.support.domain.SimpleBillingAccount2;
-import com.mycollab.ondemand.module.support.domain.criteria.BillingAccountSearchCriteria;
+import com.mycollab.ondemand.module.billing.domain.SimpleBillingAccount2;
+import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria;
 
 import java.util.List;
 

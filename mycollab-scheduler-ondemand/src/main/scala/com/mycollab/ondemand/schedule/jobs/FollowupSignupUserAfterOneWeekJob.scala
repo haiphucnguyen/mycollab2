@@ -7,8 +7,8 @@ import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.db.arguments.{BasicSearchRequest, RangeDateSearchField, SetSearchField}
 import com.mycollab.module.billing.AccountStatusConstants
 import com.mycollab.module.mail.service.ExtMailService
-import com.mycollab.ondemand.module.support.domain.criteria.BillingAccountSearchCriteria
-import com.mycollab.ondemand.module.support.service.BillingAccountExtService
+import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria
+import com.mycollab.ondemand.module.billing.service.BillingAccountExtService
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.joda.time.DateTime
 import org.quartz.{JobExecutionContext, JobExecutionException}

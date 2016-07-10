@@ -1,4 +1,4 @@
-package com.mycollab.ondemand.module.support.domain;
+package com.mycollab.ondemand.module.billing.domain;
 
 import com.mycollab.module.user.domain.BillingAccount;
 import com.mycollab.module.user.domain.SimpleUser;

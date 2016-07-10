@@ -1,10 +1,10 @@
-package com.mycollab.ondemand.module.support.service.ibatis;
+package com.mycollab.ondemand.module.billing.service.ibatis;
 
 import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.ondemand.module.support.dao.BillingAccountMapperExt2;
-import com.mycollab.ondemand.module.support.domain.SimpleBillingAccount2;
-import com.mycollab.ondemand.module.support.domain.criteria.BillingAccountSearchCriteria;
-import com.mycollab.ondemand.module.support.service.BillingAccountExtService;
+import com.mycollab.ondemand.module.billing.dao.BillingAccountMapperExt2;
+import com.mycollab.ondemand.module.billing.domain.SimpleBillingAccount2;
+import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria;
+import com.mycollab.ondemand.module.billing.service.BillingAccountExtService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

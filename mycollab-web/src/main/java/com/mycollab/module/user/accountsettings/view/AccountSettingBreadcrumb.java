@@ -82,7 +82,7 @@ public class AccountSettingBreadcrumb extends Breadcrumb implements CacheableCom
 
     public void gotoBillingHistory() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY),
+        this.addLink(new Button(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING),
                 clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(this, null))));
         this.addLink(new Button(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY)));
         AppContext.addFragment("account/cancel_account", AppContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY));

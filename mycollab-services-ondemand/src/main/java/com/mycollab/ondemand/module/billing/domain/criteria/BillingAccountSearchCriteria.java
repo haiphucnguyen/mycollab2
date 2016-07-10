@@ -1,4 +1,4 @@
-package com.mycollab.ondemand.module.support.domain.criteria;
+package com.mycollab.ondemand.module.billing.domain.criteria;
 
 import com.mycollab.db.arguments.DateSearchField;
 import com.mycollab.db.arguments.RangeDateSearchField;
