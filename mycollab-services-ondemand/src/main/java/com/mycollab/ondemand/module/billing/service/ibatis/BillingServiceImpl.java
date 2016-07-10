@@ -18,6 +18,7 @@ import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.ondemand.module.billing.AccountPaymentTypeConstants;
 import com.mycollab.ondemand.module.billing.SubdomainExistedException;
 import com.mycollab.ondemand.module.billing.esb.DeleteAccountEvent;
+import com.mycollab.ondemand.module.support.dao.BillingSubscriptionMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,9 @@ public class BillingServiceImpl implements BillingService {
 
     @Autowired
     private BillingAccountService billingAccountService;
+
+    @Autowired
+    private BillingSubscriptionMapper billingSubscriptionMapper;
 
     @Autowired
     private AsyncEventBus asyncEventBus;

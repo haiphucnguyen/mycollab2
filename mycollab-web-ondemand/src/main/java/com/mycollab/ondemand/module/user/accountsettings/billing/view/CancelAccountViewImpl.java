@@ -69,7 +69,6 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
     private CssLayout createBody() {
         CssLayout layout = new CssLayout();
         layout.setWidth("100%");
-        layout.addStyleName("cancelAccountBody");
 
         MVerticalLayout innerLayout = new MVerticalLayout();
         innerLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
@@ -78,8 +77,6 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
         innerLayout.with(helpNoteLbl);
 
         GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
-        layoutHelper.getLayout().setSpacing(false);
-        layoutHelper.getLayout().setMargin(false);
         layoutHelper.getLayout().setWidth("800px");
 
         final TextArea whyLeaving = new TextArea();

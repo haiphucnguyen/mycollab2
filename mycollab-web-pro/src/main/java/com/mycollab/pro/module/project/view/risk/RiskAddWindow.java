@@ -18,7 +18,6 @@ import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -59,12 +58,7 @@ public class RiskAddWindow extends Window {
             public ComponentContainer getLayout() {
                 VerticalLayout layout = new VerticalLayout();
                 informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 5);
-                informationLayout.getLayout().setMargin(false);
-                informationLayout.getLayout().setSpacing(false);
                 layout.addComponent(informationLayout.getLayout());
-
-                MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
-                buttonControls.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
 
                 MButton updateAllBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), clickEvent -> {
                     EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, EditForm.this.bean));
@@ -94,8 +88,8 @@ public class RiskAddWindow extends Window {
 
                 MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                         .withStyleName(UIConstants.BUTTON_OPTION);
-                cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
-                buttonControls.with(updateAllBtn, saveBtn, cancelBtn);
+
+                MHorizontalLayout buttonControls = new MHorizontalLayout(updateAllBtn, cancelBtn, saveBtn).withMargin(true);
 
                 layout.addComponent(buttonControls);
                 layout.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);
