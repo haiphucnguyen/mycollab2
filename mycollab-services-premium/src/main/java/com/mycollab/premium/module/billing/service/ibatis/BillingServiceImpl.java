@@ -28,7 +28,7 @@ public class BillingServiceImpl implements BillingService {
 
     @Override
     @Transactional
-    public void registerAccount(final String subdomain, final int billingPlanId, final String username,
+    public void registerAccount(final String subDomain, final int billingPlanId, final String username,
                                 final String password, final String email, final String timezoneId, boolean isEmailVerified) {
         throw new UnsupportedFeatureException("This feature is not supported except onsite mode");
     }
@@ -50,7 +50,7 @@ public class BillingServiceImpl implements BillingService {
     }
 
     @Override
-    public void cancelAccount(Integer accountid, CustomerFeedbackWithBLOBs feedback) {
+    public void cancelAccount(Integer accountId, CustomerFeedbackWithBLOBs feedback) {
         throw new UnsupportedFeatureException("This feature is not supported except onsite mode");
     }
 

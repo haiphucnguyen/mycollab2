@@ -222,8 +222,17 @@ public class SubscriptionManagerController {
 
     @RequestMapping(path = "/subscription-failed", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
-    public String returnCompletedSubscription(@RequestParam("SubscriptionReference") String subscriptionReference) {
+    public String returnCompletedSubscription(@RequestParam("SubscriptionReference") String subscriptionReference,
+                                              @RequestParam("SubscriptionEndDate") String subscriptionEndDate) {
+        BillingSubscriptionExample ex = new BillingSubscriptionExample();
+        ex.createCriteria().andSubreferenceEqualTo(subscriptionReference);
+        List<BillingSubscription> billingSubscriptions = subscriptionMapper.selectByExample(ex);
+        if (billingSubscriptions.size() == 1) {
 
+        } else {
+            LOG.error("Find subscription with id " + subscriptionReference + "in account has count" +
+                    billingSubscriptions.size());
+        }
         return "Ok";
     }
 
