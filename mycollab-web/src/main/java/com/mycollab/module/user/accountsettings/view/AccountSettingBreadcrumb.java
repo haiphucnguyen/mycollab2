@@ -85,7 +85,7 @@ public class AccountSettingBreadcrumb extends Breadcrumb implements CacheableCom
         this.addLink(new Button(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING),
                 clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(this, null))));
         this.addLink(new Button(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY)));
-        AppContext.addFragment("account/billing_summary", AppContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY));
+        AppContext.addFragment("account/billing/history", AppContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY));
     }
 
     public void gotoCancelAccountPage() {
@@ -93,7 +93,7 @@ public class AccountSettingBreadcrumb extends Breadcrumb implements CacheableCom
         this.addLink(new Button(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING),
                 clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(this, null))));
         this.addLink(new Button(AppContext.getMessage(AdminI18nEnum.ACTION_CANCEL_ACCOUNT)));
-        AppContext.addFragment("account/cancel_account", AppContext.getMessage(AdminI18nEnum.ACTION_CANCEL_ACCOUNT));
+        AppContext.addFragment("account/billing/cancel", AppContext.getMessage(AdminI18nEnum.ACTION_CANCEL_ACCOUNT));
     }
 
     public void gotoUserList() {

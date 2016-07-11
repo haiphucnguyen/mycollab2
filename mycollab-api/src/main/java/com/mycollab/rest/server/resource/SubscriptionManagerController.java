@@ -93,6 +93,7 @@ public class SubscriptionManagerController {
         subscription.setName(name);
         subscription.setBillingid(Integer.parseInt(billingPlanId));
         subscription.setSubreference(subscriptionReference);
+        subscription.setSubscriptioncustomerurl("");
         subscription.setCreatedtime(new DateTime().toDate());
         subscription.setStatus("Active");
         subscriptionMapper.insert(subscription);
@@ -110,7 +111,8 @@ public class SubscriptionManagerController {
                                        @RequestParam("CustomerFullName") String customerFullName,
                                        @RequestParam("Email") String email,
                                        @RequestParam("CompanyName") String companyName,
-                                       @RequestParam("Phone") String phone) throws Exception {
+                                       @RequestParam("Phone") String phone,
+                                       @RequestParam("SubscriptionCustomerUrl") String subscriptionCustomerUrl) throws Exception {
         BillingSubscriptionExample ex = new BillingSubscriptionExample();
         Integer sAccountId = 0;
         try {
@@ -143,6 +145,7 @@ public class SubscriptionManagerController {
             subscription.setCompany(companyName);
             subscription.setContactname(customerFullName);
             subscription.setPhone(phone);
+            subscription.setSubscriptioncustomerurl(subscriptionCustomerUrl);
 
             subscriptionMapper.updateByPrimaryKey(subscription);
             Broadcaster.broadcast(new BroadcastMessage(subscription.getAccountid(), null, ""));
@@ -184,17 +187,36 @@ public class SubscriptionManagerController {
                                      @RequestParam("SubscriptionReference") String subscriptionReference,
                                      @RequestParam("OrderSubTotalUSD") String orderSubTotalUSD,
                                      @RequestParam("Status") String status) throws Exception {
-        LOG.info("Referrer: " + orderReferrer);
-        contentGenerator.putVariable("customerName", customerFullName);
-        contentGenerator.putVariable("nextPaymentDate", nextPeriodDate);
-        File receiptReport = receiptReport(subscriptionReference, orderId, orderProductName, email, customerFullName,
-                customerCompany, Double.parseDouble(orderSubTotalUSD));
-        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
-                Arrays.asList(new MailRecipientField(email, customerFullName)), null, null, String.format("[%s] " +
-                        "Payment charged successfully", SiteConfiguration.getDefaultSiteName()),
-                contentGenerator.parseFile("paymentChargedSuccessfully.ftl"), Arrays.asList(
-                        new FileEmailAttachmentSource
-                                (receiptReport, "Receipt-" + subscriptionReference + ".pdf")));
+        BillingSubscriptionExample ex = new BillingSubscriptionExample();
+        ex.createCriteria().andSubreferenceEqualTo(subscriptionReference);
+        List<BillingSubscription> billingSubscriptions = subscriptionMapper.selectByExample(ex);
+        if (billingSubscriptions.size() == 1) {
+            BillingSubscriptionHistory subscriptionHistory = new BillingSubscriptionHistory();
+            subscriptionHistory.setSubscriptionid(billingSubscriptions.get(0).getId());
+            subscriptionHistory.setOrderid(orderId);
+            subscriptionHistory.setCreatedtime(new DateTime().toDate());
+            subscriptionHistory.setStatus("Success");
+            subscriptionHistory.setExpireddate(dateFormatter.parseLocalDate(nextPeriodDate).toDate());
+            subscriptionHistory.setProductname(orderProductName);
+            subscriptionHistory.setTotalprice(Double.parseDouble(orderSubTotalUSD));
+            subscriptionHistoryMapper.insert(subscriptionHistory);
+
+            LOG.info("Referrer: " + orderReferrer);
+            contentGenerator.putVariable("customerName", customerFullName);
+            contentGenerator.putVariable("nextPaymentDate", nextPeriodDate);
+            File receiptReport = receiptReport(subscriptionReference, orderId, orderProductName, email, customerFullName,
+                    customerCompany, Double.parseDouble(orderSubTotalUSD));
+            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
+                    Arrays.asList(new MailRecipientField(email, customerFullName)), null, null, String.format("[%s] " +
+                            "Payment charged successfully", SiteConfiguration.getDefaultSiteName()),
+                    contentGenerator.parseFile("paymentChargedSuccessfully.ftl"), Arrays.asList(
+                            new FileEmailAttachmentSource
+                                    (receiptReport, "Receipt-" + subscriptionReference + ".pdf")));
+        } else {
+            LOG.error("Find subscription with id " + subscriptionReference + "in account has count" +
+                    billingSubscriptions.size());
+        }
+
         return "Ok";
     }
 

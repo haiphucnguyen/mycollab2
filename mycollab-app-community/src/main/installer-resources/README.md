@@ -62,9 +62,6 @@ Version 5.3.5
 
 **Improvements & New Features**
 
-* [Premium] Allow customize the project home widgets
-* [Premium] Customize project assignment fields
-* [Premium] Real-time notification assignment changes
 * Remove redundant files in the community edition
 * Other minor improvements
 

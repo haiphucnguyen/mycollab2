@@ -22,7 +22,8 @@ ADD COLUMN `address` VARCHAR(400) NULL,
 ADD COLUMN `state` VARCHAR(400) NULL,
 ADD COLUMN `zipcode` VARCHAR(45) NULL,
 ADD COLUMN `phone` VARCHAR(45) NULL,
-ADD COLUMN `contactName` VARCHAR(400) NULL;
+ADD COLUMN `contactName` VARCHAR(400) NULL,
+ADD COLUMN `subscriptionCustomerUrl` VARCHAR(400) NULL;
 
 CREATE TABLE `s_billing_subscription_history` (
   `id` INT NOT NULL AUTO_INCREMENT,

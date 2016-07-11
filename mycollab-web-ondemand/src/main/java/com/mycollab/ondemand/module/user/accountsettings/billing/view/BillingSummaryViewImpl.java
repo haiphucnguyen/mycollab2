@@ -137,7 +137,9 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                             MButton("Selected").withStyleName(UIConstants.BUTTON_DANGER));
                 }
             } else {
-                MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT),
+                String actionTxt = (plan.getPricing() < currentBillingPlan.getPricing()) ? AppContext.getMessage
+                        (BillingI18nEnum.ACTION_DOWNGRADE) : AppContext.getMessage(BillingI18nEnum.ACTION_UPGRADE);
+                MButton selectPlanBtn = new MButton(actionTxt,
                         clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan))).withStyleName
                         (UIConstants.BUTTON_ACTION);
                 singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
@@ -169,6 +171,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             MButton historyBtn = new MButton(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY),
                     clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoHistory(this, null)))
                     .withStyleName(UIConstants.BUTTON_ACTION, ValoTheme.BUTTON_TINY);
+
             currentPlanLayout.addComponent(new MHorizontalLayout(introText, historyBtn));
         }
 

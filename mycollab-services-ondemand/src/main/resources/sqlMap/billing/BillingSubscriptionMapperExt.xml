@@ -15,7 +15,7 @@
             s_billing_subscription.accountId, s_billing_subscription.createdTime, s_billing_subscription.status,
             s_billing_subscription.country, s_billing_subscription.city, s_billing_subscription.address,
             s_billing_subscription.state, s_billing_subscription.zipcode, s_billing_subscription.phone,
-            s_billing_subscription.contactName,
+            s_billing_subscription.contactName, s_billing_subscription.subscriptionCustomerUrl,
             (SELECT MAX(expiredDate)
                 FROM s_billing_subscription_history
                 WHERE s_billing_subscription_history.subscriptionId = s_billing_subscription.id) AS expireDate,
