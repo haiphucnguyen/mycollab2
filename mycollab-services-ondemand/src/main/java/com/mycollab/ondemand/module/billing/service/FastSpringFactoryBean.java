@@ -17,6 +17,6 @@ public class FastSpringFactoryBean extends AbstractFactoryBean<FastSpring> {
 
     @Override
     protected FastSpring createInstance() throws Exception {
-        return new FastSpring("mycollab", "linhduong@esofthead.com", "24pIlObiL14A");
+        return new FastSpring("mycollab", "haiphucnguyen@gmail.com", "8ADellm064OP");
     }
 }
