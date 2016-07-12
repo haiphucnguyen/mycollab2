@@ -10,13 +10,12 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.UIConstants;
-import com.vaadin.data.Property;
-import com.vaadin.event.FieldEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.jouni.restrain.Restrain;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -69,27 +68,17 @@ class PredecessorWindow extends Window {
         preWrapper.addComponent(headerLayout);
         preWrapper.addComponent(predecessorsLayout);
 
-        MHorizontalLayout buttonControls = new MHorizontalLayout();
+        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                .withStyleName(UIConstants.BUTTON_OPTION);
+
+        MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+            List<TaskPredecessor> predecessors = predecessorsLayout.buildPredecessors();
+            EventBusFactory.getInstance().post(new GanttEvent.ModifyPredecessors(ganttItemWrapper, predecessors));
+            close();
+        }).withIcon(FontAwesome.SAVE).withStyleName(UIConstants.BUTTON_ACTION);
+
+        MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn);
         content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
-
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                PredecessorWindow.this.close();
-            }
-        });
-        cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
-
-        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                List<TaskPredecessor> predecessors = predecessorsLayout.buildPredecessors();
-                EventBusFactory.getInstance().post(new GanttEvent.ModifyPredecessors(ganttItemWrapper, predecessors));
-                PredecessorWindow.this.close();
-            }
-        });
-        saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
-        buttonControls.with(cancelBtn, saveBtn);
     }
 
     private boolean hasRelationship(GanttItemWrapper item1, GanttItemWrapper item2) {
@@ -147,67 +136,58 @@ class PredecessorWindow extends Window {
             PredecessorInputLayout(TaskPredecessor taskPredecessor) {
                 rowField = new TextField();
                 rowField.setWidth(ROW_WIDTH);
-                rowField.addBlurListener(new FieldEvents.BlurListener() {
-                    @Override
-                    public void blur(FieldEvents.BlurEvent event) {
-                        String value = rowField.getValue();
-                        try {
-                            int rowValue = Integer.parseInt(value);
-                            GanttItemWrapper item = taskTreeTable.getRawContainer().getItemByGanttIndex(rowValue);
-                            if (item != null) {
-                                if (hasRelationship(item, ganttItemWrapper)) {
-                                    NotificationUtil.showErrorNotification("Circular dependency");
-                                } else {
-                                    if (item.isTask()) {
-                                        assignmentComboBox.setValue(item);
-                                        if (predecessorComboBox.getValue() == null) {
-                                            predecessorComboBox.setValue(TaskPredecessor.FS);
-                                        }
-
-                                        if (!PredecessorsLayout.this.hasEmptyRow()) {
-                                            PredecessorsLayout.this.addComponent(new PredecessorInputLayout());
-                                        }
-                                    } else {
-                                        NotificationUtil.showWarningNotification("The predecessor must be a task");
-                                    }
-                                }
+                rowField.addBlurListener(blurEvent -> {
+                    String value = rowField.getValue();
+                    try {
+                        int rowValue = Integer.parseInt(value);
+                        GanttItemWrapper item = taskTreeTable.getRawContainer().getItemByGanttIndex(rowValue);
+                        if (item != null) {
+                            if (hasRelationship(item, ganttItemWrapper)) {
+                                NotificationUtil.showErrorNotification("Circular dependency");
                             } else {
-                                rowField.setValue("");
-                                predecessorComboBox.setValue(null);
+                                if (item.isTask()) {
+                                    assignmentComboBox.setValue(item);
+                                    if (predecessorComboBox.getValue() == null) {
+                                        predecessorComboBox.setValue(TaskPredecessor.FS);
+                                    }
+
+                                    if (!PredecessorsLayout.this.hasEmptyRow()) {
+                                        PredecessorsLayout.this.addComponent(new PredecessorInputLayout());
+                                    }
+                                } else {
+                                    NotificationUtil.showWarningNotification("The predecessor must be a task");
+                                }
                             }
-                        } catch (NumberFormatException e) {
+                        } else {
                             rowField.setValue("");
+                            predecessorComboBox.setValue(null);
                         }
+                    } catch (NumberFormatException e) {
+                        rowField.setValue("");
                     }
                 });
                 this.addComponent(rowField);
 
                 assignmentComboBox = new AssignmentComboBox();
                 assignmentComboBox.setWidth(TASK_WIDTH);
-                assignmentComboBox.addValueChangeListener(new Property.ValueChangeListener() {
-                    @Override
-                    public void valueChange(Property.ValueChangeEvent event) {
-                        GanttItemWrapper item = (GanttItemWrapper) assignmentComboBox.getValue();
-                        if (item == null) {
-                            rowField.setValue("");
-                            predecessorComboBox.setValue(null);
+                assignmentComboBox.addValueChangeListener(valueChangeEvent -> {
+                    GanttItemWrapper item = (GanttItemWrapper) assignmentComboBox.getValue();
+                    if (item == null) {
+                        rowField.setValue("");
+                        predecessorComboBox.setValue(null);
+                    } else {
+                        if (hasRelationship(item, ganttItemWrapper)) {
+                            NotificationUtil.showErrorNotification("Circular dependency");
+                            assignmentComboBox.setValue(null);
                         } else {
-                            if (hasRelationship(item, ganttItemWrapper)) {
-                                NotificationUtil.showErrorNotification("Circular dependency");
-                                assignmentComboBox.setValue(null);
-                            } else {
-                                rowField.setValue(item.getGanttIndex() + "");
-                            }
+                            rowField.setValue(item.getGanttIndex() + "");
                         }
                     }
                 });
-                assignmentComboBox.addBlurListener(new FieldEvents.BlurListener() {
-                    @Override
-                    public void blur(FieldEvents.BlurEvent event) {
-                        GanttItemWrapper item = (GanttItemWrapper) assignmentComboBox.getValue();
-                        if (item != null) {
-                            PredecessorsLayout.this.addComponent(new PredecessorInputLayout());
-                        }
+                assignmentComboBox.addBlurListener(blurEvent -> {
+                    GanttItemWrapper item = (GanttItemWrapper) assignmentComboBox.getValue();
+                    if (item != null) {
+                        PredecessorsLayout.this.addComponent(new PredecessorInputLayout());
                     }
                 });
                 this.addComponent(assignmentComboBox);

@@ -7,4 +7,7 @@ import com.vaadin.ui.Window;
  * @since 5.3.5
  */
 public class ChangeBillingPlanInformationWindow extends Window {
+    ChangeBillingPlanInformationWindow() {
+
+    }
 }

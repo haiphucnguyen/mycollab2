@@ -1,7 +1,7 @@
 package com.mycollab.ondemand.module.esb.billing.impl
 
+import com.fastspring.FastSpring
 import com.google.common.eventbus.Subscribe
-import com.mycollab.billing.fastspring.FastSpring
 import com.mycollab.module.esb.GenericCommand
 import com.mycollab.ondemand.module.billing.esb.DeleteSubscriptionEvent
 import org.springframework.beans.factory.annotation.Autowired

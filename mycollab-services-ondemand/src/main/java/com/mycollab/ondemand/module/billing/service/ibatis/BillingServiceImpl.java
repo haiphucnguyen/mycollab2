@@ -111,7 +111,7 @@ public class BillingServiceImpl implements BillingService {
     @Override
     public List<String> getSubDomainsOfUser(final String username) {
         LOG.debug("Get subdomain of user {}", username);
-        return this.billingAccountMapperExt.getSubdomainsOfUser(username);
+        return this.billingAccountMapperExt.getSubDomainsOfUser(username);
     }
 
     @Override

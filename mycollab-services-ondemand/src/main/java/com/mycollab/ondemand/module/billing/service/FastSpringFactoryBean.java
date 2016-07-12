@@ -1,6 +1,6 @@
 package com.mycollab.ondemand.module.billing.service;
 
-import com.mycollab.billing.fastspring.FastSpring;
+import com.fastspring.FastSpring;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.springframework.stereotype.Service;
 

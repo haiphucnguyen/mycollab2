@@ -138,7 +138,6 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
 
             @Override
             public void buttonClick(final ClickEvent event) {
-
                 for (Component comp : serviceMenu) {
                     if (comp != event.getButton()) {
                         comp.removeStyleName("selected");

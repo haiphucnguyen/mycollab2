@@ -1,8 +1,10 @@
 package com.mycollab.pro.module.project.view.reports;
 
+import com.google.common.eventbus.Subscribe;
+import com.hp.gagawa.java.elements.A;
+import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.DateSearchField;
 import com.mycollab.db.arguments.SetSearchField;
-import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.ProjectLinkBuilder;
@@ -16,23 +18,20 @@ import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
 import com.mycollab.vaadin.web.ui.UIConstants;
-import com.google.common.eventbus.Subscribe;
-import com.hp.gagawa.java.elements.A;
-import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.collections.CollectionUtils;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -71,12 +70,9 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
     public StandupListViewImpl() {
         super();
         this.setMargin(new MarginInfo(false, false, true, false));
-        standupCalendar.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                onDate = standupCalendar.getValue();
-                showReports();
-            }
+        standupCalendar.addValueChangeListener(valueChangeEvent -> {
+            onDate = standupCalendar.getValue();
+            showReports();
         });
     }
 
@@ -197,20 +193,13 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         headerLeft.with(titleLbl, standupCalendar);
         header.with(headerLeft).withAlign(headerLeft, Alignment.TOP_LEFT);
 
-        Button newReportBtn = new Button(AppContext.getMessage(StandupI18nEnum.BUTTON_ADD_REPORT_LABEL), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                if (selectedProject != null) {
-                    UI.getCurrent().addWindow(new StandupAddWindow(selectedProject, onDate));
-                } else {
-                    NotificationUtil.showErrorNotification("You do not select any project");
-                }
+        MButton newReportBtn = new MButton(AppContext.getMessage(StandupI18nEnum.BUTTON_ADD_REPORT_LABEL), clickEvent -> {
+            if (selectedProject != null) {
+                UI.getCurrent().addWindow(new StandupAddWindow(selectedProject, onDate));
+            } else {
+                NotificationUtil.showErrorNotification("You do not select any project");
             }
-        });
-        newReportBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        newReportBtn.setIcon(FontAwesome.PLUS);
+        }).withIcon(FontAwesome.PLUS).withStyleName(UIConstants.BUTTON_ACTION);
 
         header.with(newReportBtn).withAlign(newReportBtn, Alignment.TOP_RIGHT);
         this.addComponent(header);
@@ -235,7 +224,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         }
     }
 
-    public static class StandupReportRowDisplay extends RowDisplayHandler<SimpleStandupReport> {
+    private static class StandupReportRowDisplay extends RowDisplayHandler<SimpleStandupReport> {
         private static final long serialVersionUID = 1L;
 
         @Override

@@ -230,10 +230,10 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
     private MHorizontalLayout buildAccountMenuLayout() {
         accountLayout.removeAllComponents();
 
-        if (SiteConfiguration.isDemandEdition()) {
+        if (!SiteConfiguration.isDemandEdition()) {
             // display trial box if user in trial mode
             SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
-            if (AccountStatusConstants.TRIAL.equals(billingAccount.getStatus())) {
+            if (billingAccount.isNotActive()) {
                 if ("Free".equals(billingAccount.getBillingPlan().getBillingtype())) {
                     Label informLbl = new Label("<div class='informBlock'>FREE CHARGE<br>UPGRADE</div><div class='informBlock'>&gt;&gt;</div>", ContentMode.HTML);
                     informLbl.addStyleName("trialEndingNotification");
@@ -243,8 +243,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                     informBox.addLayoutClickListener(layoutClickEvent -> EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"billing"})));
                     accountLayout.with(informBox).withAlign(informBox, Alignment.MIDDLE_LEFT);
                 } else {
-                    Label informLbl = new Label("", ContentMode.HTML);
-                    informLbl.addStyleName("trialEndingNotification");
+                    ELabel informLbl = ELabel.html("").withStyleName("trialEndingNotification");
                     informLbl.setHeight("100%");
                     MHorizontalLayout informBox = new MHorizontalLayout(informLbl).withStyleName("trialInformBox")
                             .withMargin(new MarginInfo(false, true, false, false)).withFullHeight();
