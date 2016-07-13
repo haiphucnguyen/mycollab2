@@ -37,8 +37,7 @@ public class AboutWindow extends AbstractAboutWindow {
         MVerticalLayout rightPanel = new MVerticalLayout();
         ELabel versionLbl = ELabel.h2(String.format("MyCollab Cloud Edition %s", MyCollabVersion.getVersion()));
         WebBrowser browser = Page.getCurrent().getWebBrowser();
-        Label osLbl = new Label(String.format("%s, %s", System.getProperty("os.name"),
-                browser.getBrowserApplication()));
+        Label osLbl = new Label(String.format("%s, %s", System.getProperty("os.name"), browser.getBrowserApplication()));
         osLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
         Div licenseDiv = new Div().appendChild(new Text("Powered by: "))
                 .appendChild(new A("https://www.mycollab.com")

@@ -31,7 +31,6 @@ import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebResourceIds;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -57,7 +56,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
 
         ELabel headerTopLine = ELabel.h2(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_FIRST_LINE)).withWidthUndefined();
 
-        Label headerMsg = new Label(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_MESSAGE), ContentMode.HTML);
+        Label headerMsg = ELabel.html(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_MESSAGE));
 
         ELabel headerNote = new ELabel(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE))
                 .withStyleName(UIConstants.META_INFO).withWidthUndefined();

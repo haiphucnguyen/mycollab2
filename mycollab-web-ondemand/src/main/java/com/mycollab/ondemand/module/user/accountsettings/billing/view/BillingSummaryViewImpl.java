@@ -173,12 +173,28 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             MButton historyBtn = new MButton(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY),
                     clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoHistory(this, null)))
                     .withStyleName(UIConstants.BUTTON_ACTION, ValoTheme.BUTTON_TINY);
-
-            currentPlanLayout.addComponent(new MHorizontalLayout(introText, historyBtn));
+            MHorizontalLayout buttonControls = new MHorizontalLayout(introText, historyBtn);
+            currentPlanLayout.addComponent(buttonControls);
+            if (!subscription.isValid()) {
+                MButton retryChargeBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE))
+                        .withStyleName(UIConstants.BUTTON_DANGER, ValoTheme.BUTTON_TINY);
+                BrowserWindowOpener paymentOpener = new BrowserWindowOpener(subscription.getSubscriptioncustomerurl());
+                paymentOpener.extend(retryChargeBtn);
+                buttonControls.with(retryChargeBtn);
+            }
         }
 
-        ELabel currentBillingPrice = ELabel.h3(AppContext.getMessage(BillingI18nEnum.OPT_PRICING_MONTH, currentBillingPlan.getPricing()));
-        currentPlanLayout.addComponent(currentBillingPrice);
+        if (subscription == null) {
+            ELabel currentBillingPrice = ELabel.h3(AppContext.getMessage(BillingI18nEnum.OPT_PRICING_MONTH, currentBillingPlan.getPricing()));
+            currentPlanLayout.addComponent(currentBillingPrice);
+        } else {
+            ELabel currentBillingPrice = ELabel.h3(AppContext.getMessage(BillingI18nEnum.OPT_PRICING_MONTH, currentBillingPlan.getPricing()));
+            ELabel expiredDateLbl = ELabel.h3(" | Expired Date: " + AppContext.formatDate(subscription.getExpireDate()));
+            if (!subscription.isValid()) {
+                expiredDateLbl.withStyleName(UIConstants.LABEL_OVERDUE);
+            }
+            currentPlanLayout.addComponent(new MHorizontalLayout(currentBillingPrice, expiredDateLbl));
+        }
 
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         numOfActiveProjects = projectService.getTotalActiveProjectsInAccount(AppContext.getAccountId());

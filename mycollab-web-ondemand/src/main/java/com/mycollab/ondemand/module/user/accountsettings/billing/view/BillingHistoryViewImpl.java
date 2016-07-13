@@ -52,9 +52,14 @@ public class BillingHistoryViewImpl extends AbstractLazyPageView implements Bill
                     .withStyleName(UIConstants.BUTTON_ACTION, ValoTheme.BUTTON_SMALL);
 
             MButton updatePaymentMethodBtn = new MButton(AppContext.getMessage(BillingI18nEnum.ACTION_UPDATE_PAYMENT_METHOD))
-                    .withStyleName(UIConstants.BUTTON_ACTION, ValoTheme.BUTTON_SMALL);
+                    .withStyleName(ValoTheme.BUTTON_SMALL);
             BrowserWindowOpener paymentOpener = new BrowserWindowOpener(subscription.getSubscriptioncustomerurl());
             paymentOpener.extend(updatePaymentMethodBtn);
+            if (!subscription.isValid()) {
+                updatePaymentMethodBtn.withStyleName(UIConstants.BUTTON_DANGER);
+            } else {
+                updatePaymentMethodBtn.withStyleName(UIConstants.BUTTON_ACTION);
+            }
 
             headerLayout.with(changeBillingInfoBtn, updatePaymentMethodBtn);
             GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 6);
@@ -63,7 +68,11 @@ public class BillingHistoryViewImpl extends AbstractLazyPageView implements Bill
             gridFormLayoutHelper.addComponent(new Label(subscription.getPhone()), "Phone", 0, 2);
             gridFormLayoutHelper.addComponent(new Label(subscription.getCompany()), "Company", 0, 3);
             gridFormLayoutHelper.addComponent(new Label(subscription.getSubreference()), "Reference", 0, 4);
-            gridFormLayoutHelper.addComponent(new Label(AppContext.formatDate(subscription.getExpireDate())), "Next Billing Date", 0, 5);
+            ELabel nextExpiredDate = new ELabel(AppContext.formatDate(subscription.getExpireDate()));
+            if (!subscription.isValid()) {
+                nextExpiredDate.withStyleName(UIConstants.LABEL_OVERDUE);
+            }
+            gridFormLayoutHelper.addComponent(nextExpiredDate, "Next Billing Date", 0, 5);
             with(gridFormLayoutHelper.getLayout());
 
             BillingSubscriptionHistoryMapper billingSubscriptionHistoryMapper = AppContextUtil.getSpringBean(BillingSubscriptionHistoryMapper.class);
