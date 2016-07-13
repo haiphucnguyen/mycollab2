@@ -1,11 +1,11 @@
 package com.mycollab.premium.module.billing.service.ibatis;
 
-import com.mycollab.license.LicenseInfo;
-import com.mycollab.license.LicenseResolver;
 import com.mycollab.module.billing.UsageExceedBillingPlanException;
 import com.mycollab.module.billing.service.BillingPlanCheckerService;
 import com.mycollab.module.billing.service.BillingService;
 import com.mycollab.module.user.service.UserService;
+import com.mycollab.premium.license.service.LicenseResolver;
+import com.mycollab.pro.license.LicenseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

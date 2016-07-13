@@ -21,6 +21,7 @@ import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.renderers.DateRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
@@ -47,7 +48,8 @@ public class BillingHistoryViewImpl extends AbstractLazyPageView implements Bill
         BillingSubscriptionMapperExt billingSubscriptionMapperExt = AppContextUtil.getSpringBean(BillingSubscriptionMapperExt.class);
         SimpleBillingSubscription subscription = billingSubscriptionMapperExt.findSubscription(AppContext.getAccountId());
         if (subscription != null) {
-            MButton changeBillingInfoBtn = new MButton(AppContext.getMessage(BillingI18nEnum.ACTION_CHANGE_BILLING_INFORMATION))
+            MButton changeBillingInfoBtn = new MButton(AppContext.getMessage(BillingI18nEnum.ACTION_CHANGE_BILLING_INFORMATION),
+                    clickEvent -> UI.getCurrent().addWindow(new ChangeBillingPlanInformationWindow(subscription)))
                     .withStyleName(UIConstants.BUTTON_ACTION, ValoTheme.BUTTON_SMALL);
 
             MButton updatePaymentMethodBtn = new MButton(AppContext.getMessage(BillingI18nEnum.ACTION_UPDATE_PAYMENT_METHOD))

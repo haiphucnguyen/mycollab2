@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.shell.view;
+package com.mycollab.community.shell.view.components;
 
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.ui.ELabel;
@@ -50,7 +50,7 @@ import java.util.zip.GZIPInputStream;
  */
 public class CommunitySliderPanel {
 
-    static SliderPanel buildCommunitySliderPanel() {
+    public static SliderPanel buildCommunitySliderPanel() {
         final CommunitySliderContent sliderContent = new CommunitySliderContent();
         SliderPanel sliderPanel = new SliderPanelBuilder(sliderContent).caption("Community")
                 .flowInContent(true).mode(SliderMode.RIGHT).tabPosition(SliderTabPosition.MIDDLE).build();

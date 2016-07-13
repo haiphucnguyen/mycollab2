@@ -1,5 +1,6 @@
 package com.mycollab.ondemand.module.billing.domain;
 
+import com.mycollab.core.arguments.NotBindable;
 import com.mycollab.module.user.domain.BillingPlan;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.Date;
 public class SimpleBillingSubscription extends BillingSubscription {
     private Date expireDate;
 
+    @NotBindable
     private BillingPlan billingPlan;
 
     public Date getExpireDate() {

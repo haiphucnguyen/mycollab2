@@ -5,7 +5,7 @@ import java.util.Arrays
 import com.mycollab.common.domain.OptionValExample
 import com.mycollab.module.page.service.PageService
 import com.mycollab.ondemand.module.billing.esb.DeleteAccountEvent
-import com.google.common.eventbus.Subscribe
+import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.mycollab.common.dao.OptionValMapper
 import com.mycollab.common.domain.{MailRecipientField, OptionValExample}
 import com.mycollab.configuration.SiteConfiguration
@@ -26,6 +26,7 @@ import org.springframework.stereotype.Component
   @Autowired private val optionValMapper: OptionValMapper = null
   @Autowired private val mailService: ExtMailService = null
 
+  @AllowConcurrentEvents
   @Subscribe
   def deleteAccount(event: DeleteAccountEvent): Unit = {
     val rootPath = event.accountId + ""

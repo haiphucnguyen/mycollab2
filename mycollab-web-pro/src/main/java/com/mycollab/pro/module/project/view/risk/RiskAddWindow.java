@@ -21,25 +21,23 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.7
  */
-public class RiskAddWindow extends Window {
+public class RiskAddWindow extends MWindow {
     public RiskAddWindow(SimpleRisk risk) {
         if (risk.getId() == null) {
             setCaption(AppContext.getMessage(RiskI18nEnum.NEW));
         } else {
             setCaption(AppContext.getMessage(RiskI18nEnum.EDIT));
         }
-        this.setWidth("800px");
-        this.setModal(true);
-        this.setResizable(false);
 
         EditForm editForm = new EditForm();
         editForm.setBean(risk);
-        this.setContent(editForm);
+        this.withWidth("800px").withModal(true).withResizable(false).withContent(editForm);
     }
 
     private class EditForm extends AdvancedEditBeanForm<SimpleRisk> {

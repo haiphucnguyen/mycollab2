@@ -49,7 +49,7 @@ Version 5.3.5
 
 **Library Upgrades**
 
-* Jackrabbit 2.12.2
+* Jackrabbit 2.13.0
 * Spring framework 4.3.1.RELEASE
 * Vaadin 7.6.7
 * Jetty 9.3.10.v20160621

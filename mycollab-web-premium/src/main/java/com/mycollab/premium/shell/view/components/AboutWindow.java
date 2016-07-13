@@ -1,9 +1,12 @@
 package com.mycollab.premium.shell.view.components;
 
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.i18n.LicenseI18nEnum;
 import com.mycollab.core.MyCollabVersion;
-import com.mycollab.license.LicenseInfo;
-import com.mycollab.license.LicenseResolver;
+import com.mycollab.premium.license.service.LicenseResolver;
+import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.shell.view.components.AbstractAboutWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AbstractLicenseActivationWindow;
@@ -14,14 +17,13 @@ import com.mycollab.vaadin.ui.AssetResource;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebResourceIds;
-import com.mycollab.web.BuyPremiumSoftwareWindow;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.Text;
 import com.vaadin.server.Page;
 import com.vaadin.server.WebBrowser;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -47,8 +49,7 @@ public class AboutWindow extends AbstractAboutWindow {
         Label javaNameLbl = new Label(String.format("%s, %s", System.getProperty("java.vm.name"),
                 System.getProperty("java.runtime.version")));
         WebBrowser browser = Page.getCurrent().getWebBrowser();
-        Label osLbl = new Label(String.format("%s, %s", System.getProperty("os.name"),
-                browser.getBrowserApplication()));
+        Label osLbl = new Label(String.format("%s, %s", System.getProperty("os.name"), browser.getBrowserApplication()));
         osLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
         Div licenseDiv = new Div().appendChild(new Text("Powered by: "))
                 .appendChild(new A("https://www.mycollab.com")

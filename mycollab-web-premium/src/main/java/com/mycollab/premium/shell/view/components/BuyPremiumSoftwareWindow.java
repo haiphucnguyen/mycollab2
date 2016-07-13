@@ -14,16 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.web;
+package com.mycollab.premium.shell.view.components;
 
 import com.mycollab.core.utils.FileUtils;
-import com.mycollab.license.LicenseResolver;
+import com.mycollab.premium.license.service.LicenseResolver;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AbstractLicenseActivationWindow;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -51,13 +54,11 @@ public class BuyPremiumSoftwareWindow extends Window {
             this.setContent(content.with(webPage).withAlign(webPage, Alignment.TOP_CENTER));
         }
         LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
-        if (licenseResolver != null) {
-            MButton editLicenseBtn = new MButton("Enter license code", clickEvent -> {
-                Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
-                UI.getCurrent().addWindow(activateWindow);
-                close();
-            }).withStyleName(UIConstants.BUTTON_ACTION);
-            content.with(editLicenseBtn).withAlign(editLicenseBtn, Alignment.MIDDLE_CENTER);
-        }
+        MButton editLicenseBtn = new MButton("Enter license code", clickEvent -> {
+            Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
+            UI.getCurrent().addWindow(activateWindow);
+            close();
+        }).withStyleName(UIConstants.BUTTON_ACTION);
+        content.with(editLicenseBtn).withAlign(editLicenseBtn, Alignment.MIDDLE_CENTER);
     }
 }

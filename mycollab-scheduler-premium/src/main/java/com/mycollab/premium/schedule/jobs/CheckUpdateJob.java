@@ -2,12 +2,12 @@ package com.mycollab.premium.schedule.jobs;
 
 import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.core.BroadcastMessage;
+import com.mycollab.core.Broadcaster;
 import com.mycollab.core.MyCollabVersion;
 import com.mycollab.core.NewUpdateAvailableNotification;
-import com.mycollab.core.Broadcaster;
 import com.mycollab.core.utils.JsonDeSerializer;
-import com.mycollab.license.LicenseInfo;
-import com.mycollab.license.LicenseResolver;
+import com.mycollab.premium.license.service.LicenseResolver;
+import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.schedule.jobs.GenericQuartzJobBean;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;

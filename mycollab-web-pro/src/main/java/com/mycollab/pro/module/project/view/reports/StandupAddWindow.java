@@ -14,9 +14,13 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.UIConstants;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Field;
+import com.vaadin.ui.RichTextArea;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.Date;
 
@@ -26,18 +30,14 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @author MyCollab Ltd
  * @since 5.3.0
  */
-class StandupAddWindow extends Window implements IEditFormHandler<StandupReportWithBLOBs> {
+class StandupAddWindow extends MWindow implements IEditFormHandler<StandupReportWithBLOBs> {
     private StandupReportService standupReportService;
     private AdvancedEditBeanForm<StandupReportWithBLOBs> editForm;
     private Date onDate;
 
     StandupAddWindow(StandupReportStatistic standupReportStatistic, Date onDate) {
-        this.setModal(true);
-        this.setClosable(true);
-        this.setResizable(false);
-        this.center();
-        this.setWidth(UIUtils.getBrowserWidth() + "px");
-        this.setHeight(UIUtils.getBrowserHeight() + "px");
+        this.withModal(true).withClosable(true).withResizable(false).withCenter().withWidth(UIUtils.getBrowserWidth() + "px")
+                .withHeight(UIUtils.getBrowserHeight() + "px");
 
         this.onDate = onDate;
         standupReportService = AppContextUtil.getSpringBean(StandupReportService.class);
