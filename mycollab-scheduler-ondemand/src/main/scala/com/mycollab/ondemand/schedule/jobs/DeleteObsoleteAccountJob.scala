@@ -27,7 +27,7 @@ class DeleteObsoleteAccountJob extends GenericQuartzJobBean {
   def executeJob(context: JobExecutionContext): Unit = {
     val searchCriteria = new BillingAccountSearchCriteria
     searchCriteria.setStatuses(new SetSearchField[String]("Trial"))
-    searchCriteria.setLastAccessTime(new DateSearchField(new LocalDate().minusDays(60).toDate))
+    searchCriteria.setLastAccessTime(new DateSearchField(new LocalDate().minusDays(40).toDate))
     import collection.JavaConverters._
     val obsoleteAccounts = billingAccountExtService.findPagableListByCriteria(new
         BasicSearchRequest[BillingAccountSearchCriteria](searchCriteria, 0, Integer.MAX_VALUE)).asScala.toList

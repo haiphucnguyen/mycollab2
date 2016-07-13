@@ -65,4 +65,9 @@ public class AppPropertiesServiceImpl implements AppPropertiesService, Initializ
             return new GregorianCalendar().getTime();
         }
     }
+
+    @Override
+    public String getEdition() {
+        return "Cloud";
+    }
 }

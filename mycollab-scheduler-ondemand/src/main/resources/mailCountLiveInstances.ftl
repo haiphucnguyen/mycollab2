@@ -20,6 +20,7 @@
       <th>Properties</th>
       <th>Num of Users</th>
       <th>Num of Projects</th>
+      <th>Edition</th>
     </tr>
     <#list instances as instance>
     <tr>
@@ -30,6 +31,7 @@
       <th>${instance.sysproperties!}</th>
       <th>${instance.numusers!}</th>
       <th>${instance.numprojects!}</th>
+      <th>${instance.edition!}</th>
     </tr>
     </#list>
   </table>
