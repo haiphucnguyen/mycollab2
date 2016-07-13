@@ -1,5 +1,6 @@
 package com.mycollab.premium.shell.view.components;
 
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.vaadin.AbstractLicenseActivationWindow;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -25,7 +26,7 @@ public class BuyPremiumSoftwareWindow extends MWindow {
         RestTemplate restTemplate = new RestTemplate();
         MVerticalLayout content = new MVerticalLayout();
         try {
-            String result = restTemplate.getForObject("https://api.mycollab.com/api/linktobuy", String.class);
+            String result = restTemplate.getForObject(SiteConfiguration.getApiUrl("linktobuy"), String.class);
             Label webPage = new Label(result, ContentMode.HTML);
             webPage.setHeight("600px");
             this.setContent(content.with(webPage).withAlign(webPage, Alignment.TOP_CENTER));

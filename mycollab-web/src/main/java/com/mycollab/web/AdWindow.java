@@ -18,6 +18,8 @@ package com.mycollab.web;
 
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
+import com.mycollab.configuration.SiteConfiguration;
+import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
@@ -36,8 +38,8 @@ public class AdWindow extends MWindow {
         RestTemplate restTemplate = new RestTemplate();
         MVerticalLayout content = new MVerticalLayout();
         try {
-            String result = restTemplate.getForObject("https://api.mycollab.com/api/storeweb", String.class);
-            Label webPage = new Label(result, ContentMode.HTML);
+            String result = restTemplate.getForObject(SiteConfiguration.getApiUrl("storeweb"), String.class);
+            ELabel webPage = ELabel.html(result);
             webPage.setHeight("600px");
             this.setContent(content.with(webPage).withAlign(webPage, Alignment.TOP_CENTER));
         } catch (Exception e) {

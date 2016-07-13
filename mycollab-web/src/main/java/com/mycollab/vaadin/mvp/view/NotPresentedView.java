@@ -19,6 +19,7 @@ package com.mycollab.vaadin.mvp.view;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -52,7 +53,7 @@ public class NotPresentedView extends AbstractPageView {
 
         RestTemplate restTemplate = new RestTemplate();
         try {
-            String result = restTemplate.getForObject("https://api.mycollab.com/api/storeweb", String.class);
+            String result = restTemplate.getForObject(SiteConfiguration.getApiUrl("storeweb"), String.class);
             ELabel webPage = ELabel.html(result);
             webPage.setHeight("480px");
             this.with(new MVerticalLayout(webPage).withMargin(false).withAlign(webPage, Alignment.TOP_CENTER));

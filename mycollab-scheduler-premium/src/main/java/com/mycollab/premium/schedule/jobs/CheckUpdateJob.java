@@ -1,6 +1,7 @@
 package com.mycollab.premium.schedule.jobs;
 
 import com.mycollab.configuration.EnDecryptHelper;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.BroadcastMessage;
 import com.mycollab.core.Broadcaster;
 import com.mycollab.core.MyCollabVersion;
@@ -48,8 +49,8 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
         RestTemplate restTemplate = new RestTemplate();
         LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
         String customerId = EnDecryptHelper.encryptText(licenseInfo.getCustomerId());
-        String result = restTemplate.getForObject("https://api.mycollab.com/api/checkpremiumupdate?version=" +
-                MyCollabVersion.getVersion() + "&customerId=" + customerId, String.class);
+        String result = restTemplate.getForObject(SiteConfiguration.getApiUrl("checkpremiumupdate?version=" +
+                MyCollabVersion.getVersion() + "&customerId=" + customerId), String.class);
         final Properties props = JsonDeSerializer.fromJson(result, Properties.class);
         String version = props.getProperty("version");
         if (MyCollabVersion.isEditionNewer(version)) {
