@@ -29,11 +29,13 @@ import com.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
 import com.mycollab.module.user.domain.BillingPlan;
 import com.mycollab.module.user.domain.SimpleBillingAccount;
 import com.mycollab.module.user.service.UserService;
+import com.mycollab.ondemand.module.billing.domain.SimpleBillingSubscription;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.BrowserWindowOpener;
@@ -160,8 +162,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
 
         ELabel introText = ELabel.h2(AppContext.getMessage(BillingI18nEnum.OPT_CURRENT_PLAN, currentBillingPlan.getBillingtype()));
-        SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
-        if (billingAccount.isNotActive()) {
+        SimpleBillingSubscription subscription = (SimpleBillingSubscription) MyCollabSession.getCurrentUIVariable("subscription");
+        if (subscription == null) {
             MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(UIConstants.BUTTON_DANGER);
             BrowserWindowOpener opener = new BrowserWindowOpener(currentBillingPlan.getShoppingurl() + "?referrer=" +
                     EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));

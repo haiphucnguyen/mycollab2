@@ -119,18 +119,22 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
     void saveProjectFeatures() {
         ProjectCustomizeView features = new ProjectCustomizeView();
         features.setProjectid(project.getId());
-        features.setDisplayinvoice(displayInvoiceSelection.getSelected());
-        features.setDisplaybug(displayBugSelection.getSelected());
-        features.setDisplayfile(displayFileSelection.getSelected());
-        features.setDisplaymessage(displayMsgSelection.getSelected());
-        features.setDisplaymilestone(displayPhaseSelection.getSelected());
-        features.setDisplaypage(displayPageSelection.getSelected());
-        features.setDisplaystandup(displayStandupSelection.getSelected());
-        features.setDisplaytask(displayTaskSelection.getSelected());
-        features.setDisplayrisk(displayRiskSelection.getSelected());
-        features.setDisplaytimelogging(displayTimeSelection.getSelected());
+        features.setDisplayinvoice(getFeatureSelected(displayInvoiceSelection));
+        features.setDisplaybug(getFeatureSelected(displayBugSelection));
+        features.setDisplayfile(getFeatureSelected(displayFileSelection));
+        features.setDisplaymessage(getFeatureSelected(displayMsgSelection));
+        features.setDisplaymilestone(getFeatureSelected(displayPhaseSelection));
+        features.setDisplaypage(getFeatureSelected(displayPageSelection));
+        features.setDisplaystandup(getFeatureSelected(displayStandupSelection));
+        features.setDisplaytask(getFeatureSelected(displayTaskSelection));
+        features.setDisplayrisk(getFeatureSelected(displayRiskSelection));
+        features.setDisplaytimelogging(getFeatureSelected(displayTimeSelection));
         ProjectCustomizeViewService projectCustomizeViewService = AppContextUtil.getSpringBean(ProjectCustomizeViewService.class);
         projectCustomizeViewService.saveWithSession(features, AppContext.getUsername());
+    }
+
+    private Boolean getFeatureSelected(FeatureSelectionBox comp) {
+        return (comp != null) ? comp.getSelected() : Boolean.TRUE;
     }
 
     @Override

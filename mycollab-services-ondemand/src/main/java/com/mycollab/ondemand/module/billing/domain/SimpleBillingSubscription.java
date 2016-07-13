@@ -2,6 +2,7 @@ package com.mycollab.ondemand.module.billing.domain;
 
 import com.mycollab.core.arguments.NotBindable;
 import com.mycollab.module.user.domain.BillingPlan;
+import org.joda.time.DateTime;
 
 import java.util.Date;
 
@@ -29,5 +30,13 @@ public class SimpleBillingSubscription extends BillingSubscription {
 
     public void setBillingPlan(BillingPlan billingPlan) {
         this.billingPlan = billingPlan;
+    }
+
+    public Boolean canAccess() {
+        return (expireDate != null) ? new DateTime(expireDate).isAfter(new DateTime().minus(7)) : false;
+    }
+
+    public Boolean isValid() {
+        return (expireDate != null) ? new DateTime(expireDate).isAfter(new DateTime()) : false;
     }
 }

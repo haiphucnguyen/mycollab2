@@ -9,13 +9,17 @@ import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.mycollab.module.user.domain.SimpleBillingAccount;
 import com.mycollab.module.user.ui.SettingAssetsManager;
 import com.mycollab.module.user.ui.SettingUIConstants;
+import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapperExt;
+import com.mycollab.ondemand.module.billing.domain.SimpleBillingSubscription;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.shell.view.AbstractMainView;
 import com.mycollab.shell.view.components.AbstractAboutWindow;
+import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.mycollab.vaadin.web.ui.NotificationComponent;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
@@ -25,7 +29,6 @@ import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -43,35 +46,34 @@ public class MainViewImpl extends AbstractMainView {
     protected MHorizontalLayout buildAccountMenuLayout() {
         accountLayout.removeAllComponents();
 
-        // display trial box if user in trial mode
-        SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
-        if (billingAccount.isNotActive()) {
-            if ("Free".equals(billingAccount.getBillingPlan().getBillingtype())) {
-                Label informLbl = new Label("<div class='informBlock'>FREE CHARGE<br>UPGRADE</div><div class='informBlock'>&gt;&gt;</div>", ContentMode.HTML);
-                informLbl.addStyleName("trialEndingNotification");
-                informLbl.setHeight("100%");
-                MHorizontalLayout informBox = new MHorizontalLayout(informLbl).withFullHeight().withStyleName("trialInformBox");
-                informBox.setMargin(new MarginInfo(false, true, false, false));
-                informBox.addLayoutClickListener(layoutClickEvent -> EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"billing"})));
-                accountLayout.with(informBox).withAlign(informBox, Alignment.MIDDLE_LEFT);
-            } else {
-                ELabel informLbl = ELabel.html("").withStyleName("trialEndingNotification");
-                informLbl.setHeight("100%");
-                MHorizontalLayout informBox = new MHorizontalLayout(informLbl).withStyleName("trialInformBox")
-                        .withMargin(new MarginInfo(false, true, false, false)).withFullHeight();
-                informBox.addLayoutClickListener(layoutClickEvent -> EventBusFactory.getInstance().post(
-                        new ShellEvent.GotoUserAccountModule(this, new String[]{"billing"})));
-                accountLayout.with(informBox).withAlign(informBox, Alignment.MIDDLE_LEFT);
+        BillingSubscriptionMapperExt billingSubscriptionMapperExt = AppContextUtil.getSpringBean(BillingSubscriptionMapperExt.class);
+        SimpleBillingSubscription subscription = billingSubscriptionMapperExt.findSubscription(AppContext.getAccountId());
+        if (subscription != null) {
+            MyCollabSession.putCurrentUIVariable("subscription", subscription);
+            if (!subscription.canAccess()) {
+                TrialBlock trialBlock = new TrialBlock();
+                accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
+                trialBlock.setText("<div class='informBlock'>Account is suspended<br></div>");
+                AppContext.getInstance().setIsValidAccount(false);
+            } else if (!subscription.isValid()) {
+                TrialBlock trialBlock = new TrialBlock();
+                accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
+                trialBlock.setText("<div class='informBlock'>Payment charge fail<br></div>");
+                AppContext.getInstance().setIsValidAccount(true);
+            }
+        } else {
+            SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
+            TrialBlock trialBlock = new TrialBlock();
+            accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
 
-                Duration dur = new Duration(new DateTime(billingAccount.getCreatedtime()), new DateTime());
-                int daysLeft = dur.toStandardDays().getDays();
-                if (daysLeft > 30) {
-                    informLbl.setValue("<div class='informBlock'>Trial ended<br></div>");
-                    AppContext.getInstance().setIsValidAccount(false);
-                } else {
-                    informLbl.setValue(String.format("<div class='informBlock'>Trial ending<br>%d days " +
-                            "left</div><div class='informBlock'>&gt;&gt;</div>", 30 - daysLeft));
-                }
+            Duration dur = new Duration(new DateTime(billingAccount.getCreatedtime()), new DateTime());
+            int daysLeft = dur.toStandardDays().getDays();
+            if (daysLeft > 30) {
+                trialBlock.setText("<div class='informBlock'>Trial ended<br></div>");
+                AppContext.getInstance().setIsValidAccount(false);
+            } else {
+                trialBlock.setText(String.format("<div class='informBlock'>Trial ending<br>%d days " +
+                        "left</div><div class='informBlock'>&gt;&gt;</div>", 30 - daysLeft));
             }
         }
 
@@ -175,5 +177,22 @@ public class MainViewImpl extends AbstractMainView {
         accountMenu.setContent(accountPopupContent);
         accountLayout.addComponent(accountMenu);
         return accountLayout;
+    }
+
+    private static class TrialBlock extends MHorizontalLayout {
+        private ELabel informLbl;
+
+        TrialBlock() {
+            informLbl = ELabel.html("").withStyleName("trialEndingNotification");
+            informLbl.setHeight("100%");
+            with(informLbl).withStyleName("trialInformBox")
+                    .withMargin(new MarginInfo(false, true, false, false)).withFullHeight();
+            this.addLayoutClickListener(layoutClickEvent -> EventBusFactory.getInstance().post(
+                    new ShellEvent.GotoUserAccountModule(this, new String[]{"billing"})));
+        }
+
+        void setText(String value) {
+            informLbl.setValue(value);
+        }
     }
 }

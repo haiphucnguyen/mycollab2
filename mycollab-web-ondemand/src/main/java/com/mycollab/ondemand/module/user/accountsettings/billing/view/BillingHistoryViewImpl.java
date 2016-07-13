@@ -2,7 +2,6 @@ package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionHistoryMapper;
-import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapperExt;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionHistory;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionHistoryExample;
 import com.mycollab.ondemand.module.billing.domain.SimpleBillingSubscription;
@@ -11,6 +10,7 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.field.EmailViewField;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -45,8 +45,7 @@ public class BillingHistoryViewImpl extends AbstractLazyPageView implements Bill
         MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.h2("Billing Overview"));
         with(headerLayout);
 
-        BillingSubscriptionMapperExt billingSubscriptionMapperExt = AppContextUtil.getSpringBean(BillingSubscriptionMapperExt.class);
-        SimpleBillingSubscription subscription = billingSubscriptionMapperExt.findSubscription(AppContext.getAccountId());
+        SimpleBillingSubscription subscription = (SimpleBillingSubscription) MyCollabSession.getCurrentUIVariable("subscription");
         if (subscription != null) {
             MButton changeBillingInfoBtn = new MButton(AppContext.getMessage(BillingI18nEnum.ACTION_CHANGE_BILLING_INFORMATION),
                     clickEvent -> UI.getCurrent().addWindow(new ChangeBillingPlanInformationWindow(subscription)))
