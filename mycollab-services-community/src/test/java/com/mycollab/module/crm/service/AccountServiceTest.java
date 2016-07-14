@@ -57,7 +57,6 @@ public class AccountServiceTest extends IntegrationServiceTest {
     @Test
     public void testSearchByCriteria() {
         List<SimpleAccount> accounts = accountService.findPagableListByCriteria(new BasicSearchRequest<>(getCriteria(), 0, Integer.MAX_VALUE));
-
         assertThat(accounts.size()).isEqualTo(2);
         assertThat(accounts).extracting("id", "accountname", "industry").contains(tuple(1, "xyz", "a"), tuple(2, "xyz1", "b"));
     }
