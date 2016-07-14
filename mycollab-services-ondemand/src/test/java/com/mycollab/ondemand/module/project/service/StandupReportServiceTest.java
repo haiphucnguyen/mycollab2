@@ -5,7 +5,7 @@ import com.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntergrationServiceTest;
+import com.mycollab.test.service.IntegrationServiceTest;
 import com.mycollab.db.arguments.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class StandupReportServiceTest extends IntergrationServiceTest {
+public class StandupReportServiceTest extends IntegrationServiceTest {
     @Autowired
     protected StandupReportService reportService;
 

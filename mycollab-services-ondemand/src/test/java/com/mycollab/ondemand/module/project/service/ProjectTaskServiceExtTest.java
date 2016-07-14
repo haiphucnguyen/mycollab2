@@ -3,7 +3,7 @@ package com.mycollab.ondemand.module.project.service;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.service.ProjectTaskService;
-import com.mycollab.test.service.IntergrationServiceTest;
+import com.mycollab.test.service.IntegrationServiceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class ProjectTaskServiceExtTest extends IntergrationServiceTest {
+public class ProjectTaskServiceExtTest extends IntegrationServiceTest {
     private static Logger LOG = LoggerFactory.getLogger(ProjectTaskServiceExtTest.class);
 
     @Autowired

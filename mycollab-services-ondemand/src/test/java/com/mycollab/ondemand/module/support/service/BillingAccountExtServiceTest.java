@@ -7,7 +7,7 @@ import com.mycollab.ondemand.module.billing.domain.SimpleBillingAccount2;
 import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria;
 import com.mycollab.ondemand.module.billing.service.BillingAccountExtService;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntergrationServiceTest;
+import com.mycollab.test.service.IntegrationServiceTest;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import org.joda.time.LocalDate;
@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 5.2.8
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-public class BillingAccountExtServiceTest extends IntergrationServiceTest {
+public class BillingAccountExtServiceTest extends IntegrationServiceTest {
     @Autowired
     private BillingAccountExtService billingAccountExtService;
 

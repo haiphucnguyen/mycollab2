@@ -5,7 +5,7 @@ import com.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntergrationServiceTest;
+import com.mycollab.test.service.IntegrationServiceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.Map;
  * @since 5.2.2
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TimelineTrackingServiceTest extends IntergrationServiceTest {
+public class TimelineTrackingServiceTest extends IntegrationServiceTest {
     @Autowired
     private TimelineTrackingService timelineTrackingService;
 

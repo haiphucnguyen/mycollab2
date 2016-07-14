@@ -142,8 +142,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 String actionTxt = (plan.getPricing() < currentBillingPlan.getPricing()) ? AppContext.getMessage
                         (BillingI18nEnum.ACTION_DOWNGRADE) : AppContext.getMessage(BillingI18nEnum.ACTION_UPGRADE);
                 MButton selectPlanBtn = new MButton(actionTxt,
-                        clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan))).withStyleName
-                        (UIConstants.BUTTON_ACTION);
+                        clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan)))
+                        .withStyleName(UIConstants.BUTTON_ACTION);
                 singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
             }
 

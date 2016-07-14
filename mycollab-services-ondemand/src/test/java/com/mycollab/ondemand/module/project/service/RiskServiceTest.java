@@ -8,7 +8,7 @@ import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntergrationServiceTest;
+import com.mycollab.test.service.IntegrationServiceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class RiskServiceTest extends IntergrationServiceTest {
+public class RiskServiceTest extends IntegrationServiceTest {
 
     @Autowired
     protected RiskService riskService;

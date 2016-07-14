@@ -6,7 +6,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.service.GanttAssignmentService;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntergrationServiceTest;
+import com.mycollab.test.service.IntegrationServiceTest;
 import org.assertj.core.groups.Tuple;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class GanttTaskServiceTest extends IntergrationServiceTest {
+public class GanttTaskServiceTest extends IntegrationServiceTest {
     @Autowired
     private GanttAssignmentService ganttAssignmentService;
 

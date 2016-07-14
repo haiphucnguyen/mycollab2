@@ -8,7 +8,7 @@ import com.mycollab.module.project.domain.ItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntergrationServiceTest;
+import com.mycollab.test.service.IntegrationServiceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class ItemTimeLoggingServiceTest extends IntergrationServiceTest {
+public class ItemTimeLoggingServiceTest extends IntegrationServiceTest {
 
     private static final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 

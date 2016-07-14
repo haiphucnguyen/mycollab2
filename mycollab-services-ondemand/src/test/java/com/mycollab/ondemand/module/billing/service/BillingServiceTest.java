@@ -7,7 +7,7 @@ import com.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.ondemand.module.billing.SubDomainExistedException;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntergrationServiceTest;
+import com.mycollab.test.service.IntegrationServiceTest;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -20,7 +20,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class BillingServiceTest extends IntergrationServiceTest {
+public class BillingServiceTest extends IntegrationServiceTest {
 
     @Autowired
     private BillingService billingService;
