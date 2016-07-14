@@ -4,10 +4,10 @@ import java.util.Arrays
 
 import com.mycollab.common.domain.LiveInstanceExample
 import com.mycollab.module.mail.service.IContentGenerator
-import com.mycollab.common.dao.LiveInstanceMapper
 import com.mycollab.common.domain.{LiveInstanceExample, MailRecipientField}
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.module.mail.service.ExtMailService
+import com.mycollab.pro.common.dao.LiveInstanceMapper
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.quartz.{JobExecutionContext, JobExecutionException}
 import org.springframework.beans.factory.annotation.Autowired

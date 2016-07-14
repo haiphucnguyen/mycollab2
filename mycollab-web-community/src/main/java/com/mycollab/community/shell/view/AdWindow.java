@@ -14,11 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.web;
+package com.mycollab.community.shell.view;
 
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.mycollab.configuration.SiteConfiguration;
+import com.mycollab.core.utils.FileUtils;
 import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -31,22 +32,25 @@ import org.vaadin.viritin.layouts.MWindow;
  * @author MyCollab Ltd
  * @since 5.2.2
  */
-public class AdWindow extends MWindow {
-    public AdWindow() {
+class AdWindow extends MWindow {
+    AdWindow() {
         super("Buy MyCollab Pro edition");
-        this.withModal(true).withResizable(false).withWidth("700px");
+        this.withModal(true).withResizable(false).withWidth("1000px");
         RestTemplate restTemplate = new RestTemplate();
         MVerticalLayout content = new MVerticalLayout();
-        try {
-            String result = restTemplate.getForObject(SiteConfiguration.getApiUrl("storeweb"), String.class);
-            ELabel webPage = ELabel.html(result);
-            webPage.setHeight("600px");
-            this.setContent(content.with(webPage).withAlign(webPage, Alignment.TOP_CENTER));
-        } catch (Exception e) {
-            Div informDiv = new Div().appendText("Can not load the store page. You can check the online edition at ")
-                    .appendChild(new A("https://www.mycollab.com/pricing/download/", "_blank").appendText("here"));
-            Label webPage = new Label(informDiv.write(), ContentMode.HTML);
-            this.setContent(content.with(webPage).withAlign(webPage, Alignment.TOP_CENTER));
-        }
+//        try {
+//            String result = restTemplate.getForObject(SiteConfiguration.getApiUrl("storeweb"), String.class);
+//            ELabel webPage = ELabel.html(result);
+//            webPage.setHeight("600px");
+//            this.setContent(content.with(webPage).withAlign(webPage, Alignment.TOP_CENTER));
+//        } catch (Exception e) {
+//            Div informDiv = new Div().appendText("Can not load the store page. You can check the online edition at ")
+//                    .appendChild(new A("https://www.mycollab.com/pricing/download/", "_blank").appendText("here"));
+//            Label webPage = new Label(informDiv.write(), ContentMode.HTML);
+//            this.setContent(content.with(webPage).withAlign(webPage, Alignment.TOP_CENTER));
+//        }
+        String result = FileUtils.readFileAsPlainString("pricing.html");
+        Label webPage = new Label(result, ContentMode.HTML);
+        this.setContent(content.with(webPage).withAlign(webPage, Alignment.TOP_CENTER));
     }
 }

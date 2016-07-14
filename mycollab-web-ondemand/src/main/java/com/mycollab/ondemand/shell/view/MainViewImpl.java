@@ -2,7 +2,6 @@ package com.mycollab.ondemand.shell.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.ui.components.notification.RequestUploadAvatarNotification;
-import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
@@ -23,7 +22,6 @@ import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.mycollab.vaadin.web.ui.NotificationComponent;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
-import com.mycollab.web.AdWindow;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
@@ -80,12 +78,6 @@ public class MainViewImpl extends AbstractMainView {
         Label accountNameLabel = new Label(AppContext.getSubDomain());
         accountNameLabel.addStyleName("subdomain");
         accountLayout.addComponent(accountNameLabel);
-
-        if (SiteConfiguration.isCommunityEdition()) {
-            MButton buyPremiumBtn = new MButton("Upgrade to Pro edition", clickEvent -> UI.getCurrent().addWindow(new AdWindow()))
-                    .withIcon(FontAwesome.SHOPPING_CART).withStyleName("ad");
-            accountLayout.addComponent(buyPremiumBtn);
-        }
 
         NotificationComponent notificationComponent = new NotificationComponent();
         accountLayout.addComponent(notificationComponent);

@@ -1,7 +1,7 @@
 package com.mycollab.ondemand.schedule.jobs
 
-import com.mycollab.common.dao.LiveInstanceMapper
 import com.mycollab.common.domain.LiveInstanceExample
+import com.mycollab.pro.common.dao.LiveInstanceMapper
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.joda.time.LocalDate
 import org.quartz.{JobExecutionContext, JobExecutionException}
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class DeleteObsoleteLiveInstancesJob extends GenericQuartzJobBean {
   @Autowired private val liveInstanceMapper: LiveInstanceMapper = null
-
+  
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext): Unit = {
     val ex = new LiveInstanceExample
