@@ -3,14 +3,13 @@ package com.mycollab.ondemand.module.user.schedule.email.impl
 import java.text.{DateFormat, SimpleDateFormat}
 import java.util.{Arrays, Calendar, Locale, TimeZone}
 
-import com.mycollab.module.mail.service.IContentGenerator
-import com.mycollab.module.user.domain.BillingAccountWithOwners
-import com.mycollab.module.user.service.BillingAccountService
 import com.mycollab.common.GenericLinkUtils
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.configuration.SiteConfiguration
-import com.mycollab.module.billing.service.BillingService
-import com.mycollab.module.mail.service.ExtMailService
+import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
+import com.mycollab.module.user.domain.BillingAccountWithOwners
+import com.mycollab.module.user.service.BillingAccountService
+import com.mycollab.ondemand.module.billing.service.BillingService
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.quartz.{JobExecutionContext, JobExecutionException}
 import org.slf4j.{Logger, LoggerFactory}
@@ -33,12 +32,12 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
   private val NUM_DAY_FREE_TRIAL: Integer = 60
   private val INFORM_EXPIRE_ACCOUNT_TEMPLATE: String = "mailInformAccountIsExpiredNotification.ftl"
   private val INFORM_FILLING_BILLING_INFORMATION_TEMPLATE: String = "mailRemindAccountIsAboutExpiredNotification.ftl"
-
+  
   @Autowired var billingService: BillingService = _
   @Autowired var billingAccountService: BillingAccountService = _
   @Autowired var extMailService: ExtMailService = _
   @Autowired var contentGenerator: IContentGenerator = _
-
+  
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext) {
     //    import scala.collection.JavaConverters._
@@ -86,7 +85,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
     //      }
     //    }
   }
-
+  
   private def sendingEmailInformConvertToFreePlan(account: BillingAccountWithOwners) {
     import scala.collection.JavaConversions._
     for (user <- account.getOwners) {
@@ -101,7 +100,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
         contentGenerator.parseFile(INFORM_EXPIRE_ACCOUNT_TEMPLATE, Locale.US), null)
     }
   }
-
+  
   private def sendRemindEmailAskUpdateBillingAccount(account: BillingAccountWithOwners, afterDay: Integer) {
     val df: DateFormat = new SimpleDateFormat("MM/dd/yyyy")
     import scala.collection.JavaConversions._
@@ -118,7 +117,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("link", link)
       extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)), null, null,
-         "Your trial is about to end",
+        "Your trial is about to end",
         contentGenerator.parseFile(INFORM_FILLING_BILLING_INFORMATION_TEMPLATE, Locale.US), null)
     }
   }

@@ -1,7 +1,7 @@
 package com.mycollab.rest.server.resource;
 
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.module.billing.service.BillingService;
+import com.mycollab.ondemand.module.billing.service.BillingService;
 import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

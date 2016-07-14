@@ -7,9 +7,9 @@ import com.mycollab.core.MyCollabException;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.cache.CacheKey;
 import com.mycollab.core.utils.StringUtils;
+import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.module.billing.AccountStatusConstants;
-import com.mycollab.module.billing.service.BillingService;
 import com.mycollab.module.user.dao.BillingAccountMapper;
 import com.mycollab.module.user.dao.BillingAccountMapperExt;
 import com.mycollab.module.user.dao.BillingPlanMapper;
@@ -17,14 +17,17 @@ import com.mycollab.module.user.domain.*;
 import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.ondemand.module.billing.AccountPaymentTypeConstants;
 import com.mycollab.ondemand.module.billing.SubDomainExistedException;
+import com.mycollab.ondemand.module.billing.dao.BillingAccountMapperExt2;
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapper;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscription;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionExample;
+import com.mycollab.ondemand.module.billing.domain.SimpleBillingAccount2;
+import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria;
 import com.mycollab.ondemand.module.billing.esb.DeleteAccountEvent;
 import com.mycollab.ondemand.module.billing.esb.DeleteSubscriptionEvent;
 import com.mycollab.ondemand.module.billing.esb.UpdateBillingPlanEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.mycollab.ondemand.module.billing.service.BillingService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -34,20 +37,25 @@ import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-@Service(value = "billingService")
+/**
+ * @author MyCollab Ltd
+ * @since 5.2.8
+ */
+@Service
 public class BillingServiceImpl implements BillingService {
-    private static final Logger LOG = LoggerFactory.getLogger(BillingServiceImpl.class);
-
     private static List<String> ACCOUNT_BLACK_LIST = Arrays.asList("api", "esofthead", "blog", "forum", "wiki", "support", "community");
+
+    @Autowired
+    private BillingAccountMapperExt2 billingAccountMapperExt2;
+
+    @Autowired
+    private BillingAccountMapperExt billingAccountMapperExt;
 
     @Autowired
     private BillingPlanMapper billingPlanMapper;
 
     @Autowired
     private BillingAccountMapper billingAccountMapper;
-
-    @Autowired
-    private BillingAccountMapperExt billingAccountMapperExt;
 
     @Autowired
     private BillingAccountService billingAccountService;
@@ -74,7 +82,6 @@ public class BillingServiceImpl implements BillingService {
                     ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }
 
-        LOG.debug("Check whether subdomain {} is existed", subDomain);
         BillingAccountExample billingEx = new BillingAccountExample();
         billingEx.createCriteria().andSubdomainEqualTo(subDomain);
         if (this.billingAccountMapper.countByExample(billingEx) > 0) {
@@ -84,7 +91,6 @@ public class BillingServiceImpl implements BillingService {
 
         BillingPlan billingPlan = billingPlanMapper.selectByPrimaryKey(billingPlanId);
         // Save billing account
-        LOG.debug("Saving billing account for user {} with subdomain {}", username, subDomain);
         BillingAccount billingAccount = new BillingAccount();
         billingAccount.setBillingplanid(billingPlan.getId());
         billingAccount.setCreatedtime(new GregorianCalendar().getTime());
@@ -109,29 +115,6 @@ public class BillingServiceImpl implements BillingService {
     }
 
     @Override
-    public List<String> getSubDomainsOfUser(final String username) {
-        LOG.debug("Get subdomain of user {}", username);
-        return this.billingAccountMapperExt.getSubDomainsOfUser(username);
-    }
-
-    @Override
-    public List<BillingPlan> getAvailablePlans() {
-        BillingPlanExample ex = new BillingPlanExample();
-        return billingPlanMapper.selectByExample(ex);
-    }
-
-    @Override
-    public void updateBillingPlan(Integer accountId, int newBillingPlanId) {
-        BillingAccount record = new BillingAccount();
-        record.setId(accountId);
-        record.setBillingplanid(newBillingPlanId);
-        billingAccountMapper.updateByPrimaryKeySelective(record);
-
-        UpdateBillingPlanEvent event = new UpdateBillingPlanEvent(accountId);
-
-    }
-
-    @Override
     public void cancelAccount(Integer accountId, CustomerFeedbackWithBLOBs feedback) {
         BillingSubscriptionExample subscriptionExample = new BillingSubscriptionExample();
         subscriptionExample.createCriteria().andAccountidEqualTo(accountId);
@@ -145,15 +128,35 @@ public class BillingServiceImpl implements BillingService {
     }
 
     @Override
-    public BillingPlan getFreeBillingPlan() {
+    public List<SimpleBillingAccount2> findPagableListByCriteria(BasicSearchRequest<BillingAccountSearchCriteria> searchRequest) {
+        return billingAccountMapperExt2.findPagableListByCriteria(searchRequest.getSearchCriteria(),
+                new RowBounds((searchRequest.getCurrentPage() - 1) * searchRequest.getNumberOfItems(),
+                        searchRequest.getNumberOfItems()));
+    }
+
+    @Override
+    public void updateBillingPlan(@CacheKey Integer accountId, BillingPlan oldPlan, BillingPlan newPlan) {
+        BillingAccount record = new BillingAccount();
+        record.setId(accountId);
+        record.setBillingplanid(newPlan.getId());
+        billingAccountMapper.updateByPrimaryKeySelective(record);
+
+        UpdateBillingPlanEvent event = new UpdateBillingPlanEvent(accountId);
+    }
+
+    @Override
+    public List<BillingPlan> getAvailablePlans() {
         BillingPlanExample ex = new BillingPlanExample();
-        ex.createCriteria().andBillingtypeEqualTo("Free");
-        List<BillingPlan> billingPlans = billingPlanMapper.selectByExample(ex);
-        if (billingPlans != null && billingPlans.size() == 1) {
-            return billingPlans.get(0);
-        } else {
-            throw new MyCollabException("Can not query free billing plan");
-        }
+        return billingPlanMapper.selectByExample(ex);
+    }
+
+    @Override
+    public List<String> getSubDomainsOfUser(String username) {
+        return this.billingAccountMapperExt.getSubDomainsOfUser(username);
+    }
+
+    public List<BillingAccountWithOwners> getTrialAccountsWithOwners() {
+        return billingAccountMapperExt.getTrialAccountsWithOwners();
     }
 
     @Override
@@ -163,14 +166,7 @@ public class BillingServiceImpl implements BillingService {
             Integer billingId = billingAccount.getBillingplanid();
             return billingPlanMapper.selectByPrimaryKey(billingId);
         } else {
-            LOG.error("Can not find billing plan with account {}", sAccountId);
-            return getFreeBillingPlan();
+            throw new MyCollabException("Can not find the billing plan for account " + sAccountId);
         }
     }
-
-    @Override
-    public List<BillingAccountWithOwners> getTrialAccountsWithOwners() {
-        return billingAccountMapperExt.getTrialAccountsWithOwners();
-    }
-
 }

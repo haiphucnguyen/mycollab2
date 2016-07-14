@@ -5,7 +5,7 @@ import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.ondemand.module.billing.domain.SimpleBillingAccount2;
 import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria;
-import com.mycollab.ondemand.module.billing.service.BillingAccountExtService;
+import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.test.DataSet;
 import com.mycollab.test.service.IntegrationServiceTest;
 import com.google.common.base.Predicate;
@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class BillingAccountExtServiceTest extends IntegrationServiceTest {
     @Autowired
-    private BillingAccountExtService billingAccountExtService;
+    private BillingService billingService;
 
     @Test
     @DataSet
@@ -36,7 +36,7 @@ public class BillingAccountExtServiceTest extends IntegrationServiceTest {
         BillingAccountSearchCriteria criteria = new BillingAccountSearchCriteria();
         criteria.setStatuses(new SetSearchField<>("Active"));
         criteria.setLastAccessTime(new DateSearchField(new LocalDate(2016, 1, 3).toDate()));
-        List<SimpleBillingAccount2> billingAccounts = billingAccountExtService.findPagableListByCriteria(
+        List<SimpleBillingAccount2> billingAccounts = billingService.findPagableListByCriteria(
                 new BasicSearchRequest<>(criteria));
         assertThat(billingAccounts).hasSize(2);
         Collection<SimpleBillingAccount2> filter = Collections2.filter(billingAccounts, new Predicate<SimpleBillingAccount2>() {

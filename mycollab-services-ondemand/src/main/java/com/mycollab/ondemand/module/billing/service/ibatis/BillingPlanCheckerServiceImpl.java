@@ -2,12 +2,12 @@ package com.mycollab.ondemand.module.billing.service.ibatis;
 
 import com.mycollab.module.billing.UsageExceedBillingPlanException;
 import com.mycollab.module.billing.service.BillingPlanCheckerService;
-import com.mycollab.module.billing.service.BillingService;
 import com.mycollab.module.ecm.domain.DriveInfo;
 import com.mycollab.module.ecm.service.DriveInfoService;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.user.domain.BillingPlan;
 import com.mycollab.module.user.service.UserService;
+import com.mycollab.ondemand.module.billing.service.BillingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

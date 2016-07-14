@@ -20,7 +20,6 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.module.billing.service.BillingService;
 import com.mycollab.module.ecm.service.DriveInfoService;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
@@ -30,6 +29,7 @@ import com.mycollab.module.user.domain.BillingPlan;
 import com.mycollab.module.user.domain.SimpleBillingAccount;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.ondemand.module.billing.domain.SimpleBillingSubscription;
+import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -40,16 +40,15 @@ import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.List;
 
@@ -136,7 +135,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
                 } else {
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, new
-                            MButton("Selected").withStyleName(UIConstants.BUTTON_DANGER));
+                            MButton("Selected").withStyleName(UIConstants.BUTTON_OPTION));
                 }
             } else {
                 String actionTxt = (plan.getPricing() < currentBillingPlan.getPricing()) ? AppContext.getMessage
@@ -146,7 +145,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                         .withStyleName(UIConstants.BUTTON_ACTION);
                 singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
             }
-
+            singlePlan.with(new Label(plan.getProductpath()));
             plansLayout.with(singlePlan).expand(singlePlan);
         }
 
@@ -217,22 +216,18 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         currentPlanLayout.addComponent(new MHorizontalLayout(projectInfo, storageInfo, userInfo));
     }
 
-    private class UpdateBillingPlanWindow extends Window {
+    private class UpdateBillingPlanWindow extends MWindow {
         private BillingPlan chosenPlan;
 
         private MVerticalLayout contentLayout;
 
         UpdateBillingPlanWindow(BillingPlan billingPlan) {
+            super(AppContext.getMessage(BillingI18nEnum.VIEW_CHANGE_BILLING_PLAN_TITLE));
             this.chosenPlan = billingPlan;
-            this.setWidth("400px");
-            this.setResizable(false);
-            this.setModal(true);
-
             contentLayout = new MVerticalLayout();
-            this.setContent(contentLayout);
             initUI();
-            this.center();
-            this.setCaption(AppContext.getMessage(BillingI18nEnum.VIEW_CHANGE_BILLING_PLAN_TITLE));
+
+            this.withModal(true).withResizable(false).withWidth("400px").withContent(contentLayout).withCenter();
         }
 
         private void initUI() {
@@ -243,8 +238,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             chosenPlanType.addStyleName("billing-type");
             contentLayout.addComponent(chosenPlanType);
 
-            Label chosenPlanPrice = new Label(AppContext.getMessage(BillingI18nEnum.FORM_BILLING_PRICE, chosenPlan.getPricing()), ContentMode.HTML);
-            chosenPlanPrice.addStyleName("billing-price-lbl");
+            ELabel chosenPlanPrice = ELabel.html(AppContext.getMessage(BillingI18nEnum.FORM_BILLING_PRICE, chosenPlan.getPricing()))
+                    .withStyleName("billing-price-lbl");
             contentLayout.addComponent(chosenPlanPrice);
 
 
@@ -266,7 +261,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                     return;
                 }
 
-                billingService.updateBillingPlan(AppContext.getAccountId(), chosenPlan.getId());
+                billingService.updateBillingPlan(AppContext.getAccountId(), AppContext.getBillingAccount().getBillingPlan(), chosenPlan);
                 updateBillingPlan();
                 close();
             }).withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);

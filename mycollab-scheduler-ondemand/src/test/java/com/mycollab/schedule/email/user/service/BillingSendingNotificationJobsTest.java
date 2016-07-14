@@ -1,11 +1,11 @@
 package com.mycollab.schedule.email.user.service;
 
 import com.mycollab.module.billing.AccountReminderStatusContants;
-import com.mycollab.module.billing.service.BillingService;
 import com.mycollab.module.user.domain.BillingAccount;
 import com.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.mycollab.module.user.domain.BillingPlan;
 import com.mycollab.module.user.domain.SimpleUser;
+import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.ondemand.module.user.schedule.email.impl.BillingSendingNotificationJob;
 import com.mycollab.schedule.email.GenericJobTest;
 import org.junit.Assert;
@@ -101,9 +101,9 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
         List<BillingAccountWithOwners> accounts = Collections.singletonList(account);
         when(billingService.getTrialAccountsWithOwners()).thenReturn(accounts);
 
-        BillingPlan freePlan = new BillingPlan();
-        freePlan.setId(1);
-        when(billingService.getFreeBillingPlan()).thenReturn(freePlan);
+//        BillingPlan freePlan = new BillingPlan();
+//        freePlan.setId(1);
+//        when(billingService.getFreeBillingPlan()).thenReturn(freePlan);
 
         billingNotificationJob.executeJob(context);
 

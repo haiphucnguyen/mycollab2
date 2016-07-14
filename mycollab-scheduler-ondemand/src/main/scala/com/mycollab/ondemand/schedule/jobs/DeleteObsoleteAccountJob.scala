@@ -4,7 +4,7 @@ import com.google.common.eventbus.AsyncEventBus
 import com.mycollab.db.arguments.{BasicSearchRequest, DateSearchField, SetSearchField}
 import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria
 import com.mycollab.ondemand.module.billing.esb.DeleteAccountEvent
-import com.mycollab.ondemand.module.billing.service.BillingAccountExtService
+import com.mycollab.ondemand.module.billing.service.BillingService
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.joda.time.LocalDate
 import org.quartz.{JobExecutionContext, JobExecutionException}
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class DeleteObsoleteAccountJob extends GenericQuartzJobBean {
-  @Autowired private val billingAccountExtService: BillingAccountExtService = null
+  @Autowired private val billingAccountExtService: BillingService = null
   @Autowired private val asyncEventBus: AsyncEventBus = null
 
   @throws(classOf[JobExecutionException])

@@ -8,7 +8,7 @@ import com.mycollab.db.arguments.{BasicSearchRequest, RangeDateSearchField, SetS
 import com.mycollab.module.billing.AccountStatusConstants
 import com.mycollab.module.mail.service.ExtMailService
 import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria
-import com.mycollab.ondemand.module.billing.service.BillingAccountExtService
+import com.mycollab.ondemand.module.billing.service.BillingService
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.joda.time.DateTime
 import org.quartz.{JobExecutionContext, JobExecutionException}
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class FollowupSignupUserAfterOneWeekJob extends GenericQuartzJobBean {
   @Autowired var contentGenerator: IContentGenerator = _
-  @Autowired var billingAccountExtService: BillingAccountExtService = _
+  @Autowired var billingAccountExtService: BillingService = _
   @Autowired var extMailService: ExtMailService = _
 
   @throws(classOf[JobExecutionException])
