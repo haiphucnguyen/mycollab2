@@ -16,8 +16,7 @@
  */
 package com.mycollab.vaadin.resources;
 
-import com.mycollab.configuration.Storage;
-import com.mycollab.configuration.StorageFactory;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.vaadin.resources.file.VaadinFileResource;
 
@@ -32,10 +31,7 @@ public class VaadinResourceFactory {
     private VaadinResource vaadinResource;
 
     private VaadinResourceFactory() {
-        Storage storage = StorageFactory.getInstance();
-        if (storage.isFileStorage()) {
-            vaadinResource = new VaadinFileResource();
-        } else if (storage.isS3Storage()) {
+        if (SiteConfiguration.isDemandEdition()) {
             try {
                 Class<VaadinResource> cls = (Class<VaadinResource>) Class.forName(S3_CLS);
                 vaadinResource = cls.newInstance();
@@ -43,7 +39,7 @@ public class VaadinResourceFactory {
                 throw new MyCollabException("Exception when load s3 resource file", e);
             }
         } else {
-            throw new MyCollabException("Do not support storage system setting. Accept file or s3 only");
+            vaadinResource = new VaadinFileResource();
         }
     }
 

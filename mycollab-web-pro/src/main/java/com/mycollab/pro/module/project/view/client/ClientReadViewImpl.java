@@ -3,7 +3,6 @@ package com.mycollab.pro.module.project.view.client;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
-import com.mycollab.configuration.Storage;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.NumberUtils;
@@ -91,7 +90,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
     @Override
     protected String initFormTitle() {
         if (beanItem.getAvatarid() != null) {
-            Img img = new Img("", Storage.getEntityLogoPath(AppContext.getAccountId(), beanItem.getAvatarid(), 32))
+            Img img = new Img("", StorageFactory.getEntityLogoPath(AppContext.getAccountId(), beanItem.getAvatarid(), 32))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
             return new Div().appendChild(img).appendChild(DivLessFormatter.EMPTY_SPACE()).appendText(beanItem.getAccountname()).write();
         } else {
@@ -224,7 +223,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                     DivLessFormatter.EMPTY_SPACE(), billableHoursDiv, DivLessFormatter.EMPTY_SPACE(),
                     nonBillableHoursDiv, DivLessFormatter.EMPTY_SPACE());
             if (project.getLead() != null) {
-                Div leadDiv = new Div().appendChild(new Img("", StorageFactory.getInstance().getAvatarPath(project
+                Div leadDiv = new Div().appendChild(new Img("", StorageFactory.getAvatarPath(project
                         .getLeadAvatarId(), 16)), DivLessFormatter.EMPTY_SPACE(), new A(ProjectLinkBuilder.generateProjectMemberFullLink(project
                         .getId(), project.getLead())).appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
                         .setTitle("Manager");

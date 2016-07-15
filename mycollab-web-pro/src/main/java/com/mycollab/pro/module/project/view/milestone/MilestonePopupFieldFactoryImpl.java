@@ -37,7 +37,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String avatarLink = StorageFactory.getInstance().getAvatarPath(milestone.getOwnerAvatarId(), 16);
+                String avatarLink = StorageFactory.getAvatarPath(milestone.getOwnerAvatarId(), 16);
                 Img img = new Img(milestone.getOwnerFullName(), avatarLink);
                 if (isDisplayName) {
                     img.setTitle(milestone.getOwnerFullName());
@@ -49,7 +49,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
             protected String generateSmallAsHtmlAfterUpdate() {
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 SimpleMilestone newMilestone = milestoneService.findById(milestone.getId(), AppContext.getAccountId());
-                String avatarLink = StorageFactory.getInstance().getAvatarPath(newMilestone.getOwnerAvatarId(), 16);
+                String avatarLink = StorageFactory.getAvatarPath(newMilestone.getOwnerAvatarId(), 16);
                 Img img = new Img(newMilestone.getOwnerFullName(), avatarLink);
                 if (isDisplayName) {
                     img.setTitle(newMilestone.getOwnerFullName());

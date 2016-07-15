@@ -95,7 +95,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String avatarLink = StorageFactory.getInstance().getAvatarPath(bug.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageFactory.getAvatarPath(bug.getAssignUserAvatarId(), 16);
                 Img img = new Img(bug.getAssignuserFullName(), avatarLink).setTitle(bug.getAssignuserFullName());
                 return img.write();
             }
@@ -104,7 +104,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             protected String generateSmallAsHtmlAfterUpdate() {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 SimpleBug newBug = bugService.findById(bug.getId(), AppContext.getAccountId());
-                String avatarLink = StorageFactory.getInstance().getAvatarPath(newBug.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageFactory.getAvatarPath(newBug.getAssignUserAvatarId(), 16);
                 Img img = new Img(newBug.getAssignuserFullName(), avatarLink).setTitle(newBug.getAssignuserFullName());
                 return img.write();
             }

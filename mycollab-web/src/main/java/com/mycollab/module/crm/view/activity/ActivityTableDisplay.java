@@ -328,7 +328,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
                             new Td().setStyle("width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
                                     .appendChild(new A().setHref((event.getAssignUser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(
                                             AppContext.getSiteUrl(), event.getAssignUser()) : "")
-                                            .appendChild(new Img("", StorageFactory.getInstance().getAvatarPath(event.getAssignUserAvatarId(), 16)))
+                                            .appendChild(new Img("", StorageFactory.getAvatarPath(event.getAssignUserAvatarId(), 16)))
                                             .appendText(StringUtils.trimHtmlTags(event.getAssignUserFullName()))));
 
             Tr trRow4 = new Tr();

@@ -124,7 +124,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
                 ", " + MoreObjects.firstNonNull(client.getBillingcountry(), "None"));
         clientInfo.addComponent(new ELabel(addressDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO));
         Div assignUserDiv = new Div().appendText(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + " : ").
-                appendChild(new Img("", StorageFactory.getInstance().getAvatarPath(client.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
+                appendChild(new Img("", StorageFactory.getAvatarPath(client.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
                         new A(AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(), client.getAssignuser())).
                                 appendText(client.getAssignUserFullName()));
         clientInfo.addComponent(new ELabel(assignUserDiv.write(), ContentMode.HTML).withStyleName(UIConstants

@@ -72,7 +72,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String avatarLink = StorageFactory.getInstance().getAvatarPath(task.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageFactory.getAvatarPath(task.getAssignUserAvatarId(), 16);
                 Img img = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName());
                 return img.write();
             }
@@ -81,7 +81,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             protected String generateSmallAsHtmlAfterUpdate() {
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                 SimpleTask newTask = taskService.findById(task.getId(), AppContext.getAccountId());
-                String avatarLink = StorageFactory.getInstance().getAvatarPath(newTask.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageFactory.getAvatarPath(newTask.getAssignUserAvatarId(), 16);
                 Img img = new Img(newTask.getAssignUserFullName(), avatarLink).setTitle(newTask.getAssignUserFullName());
                 return img.write();
             }

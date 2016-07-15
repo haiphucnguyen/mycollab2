@@ -16,7 +16,9 @@
  */
 package com.mycollab.vaadin.ui;
 
+import com.mycollab.configuration.MyCollabAssets;
 import com.mycollab.vaadin.resources.VaadinResourceFactory;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Image;
 
@@ -37,7 +39,7 @@ public class UserAvatarControlFactory {
 
     public static Resource createAvatarResource(String avatarId, int size) {
         if (avatarId == null) {
-            return new AssetResource(String.format("icons/default_user_avatar_%d.png", size));
+            return new ExternalResource(MyCollabAssets.newAssetLink((String.format("icons/default_user_avatar_%d.png", size))));
         }
         return VaadinResourceFactory.getInstance().getAvatarResource(avatarId, size);
     }

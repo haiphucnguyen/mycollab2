@@ -13,6 +13,16 @@
                 <@lib.block content=comment.changecomment!/>
             </td>
         </tr>
+        <#if lastComments?has_content>
+            <tr>
+                <td style="padding: 10px 30px;">
+                    <h3 style="font-size:14px">Latest comments (${lastComments?size})</h3>
+                </td>
+            </tr>
+            <#list lastComments as commentItem>
+                <@lib.commentBlock avatar=commentItem.ownerAvatarId displayName=commentItem.ownerFullName comment=commentItem.comment/>
+            </#list>
+        </#if>
         <#include "mailFooter.ftl">
     </table>
 </body>

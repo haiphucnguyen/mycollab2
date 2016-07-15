@@ -29,14 +29,14 @@ public abstract class VaadinResource {
     public abstract Resource getStreamResource(String documentPath);
 
     public Resource getResource(String documentPath) {
-        return new ExternalResource(StorageFactory.getInstance().getResourcePath(documentPath));
+        return new ExternalResource(StorageFactory.getResourcePath(documentPath));
     }
 
     public Resource getLogoResource(String logoId, int size) {
-        return new ExternalResource(StorageFactory.getInstance().getLogoPath(AppContext.getAccountId(), logoId, size));
+        return new ExternalResource(StorageFactory.getLogoPath(AppContext.getAccountId(), logoId, size));
     }
 
     public Resource getAvatarResource(String avatarId, int size) {
-        return new ExternalResource(StorageFactory.getInstance().getAvatarPath(avatarId, size));
+        return new ExternalResource(StorageFactory.getAvatarPath(avatarId, size));
     }
 }

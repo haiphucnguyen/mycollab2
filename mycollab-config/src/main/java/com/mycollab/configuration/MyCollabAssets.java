@@ -16,7 +16,6 @@
  */
 package com.mycollab.configuration;
 
-
 import com.mycollab.core.MyCollabVersion;
 
 /**

@@ -17,6 +17,7 @@
 package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 
 import com.mycollab.common.domain.CustomerFeedbackWithBLOBs;
+import com.mycollab.configuration.MyCollabAssets;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
@@ -25,11 +26,11 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.ui.AssetResource;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebResourceIds;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -61,7 +62,8 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
         ELabel headerNote = new ELabel(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE))
                 .withStyleName(UIConstants.META_INFO).withWidthUndefined();
 
-        header.with(new Image(null, new AssetResource(WebResourceIds._sad_face)), headerTopLine, headerMsg, headerNote);
+        header.with(new Image(null, new ExternalResource(MyCollabAssets.newAssetLink(WebResourceIds._sad_face))),
+                headerTopLine, headerMsg, headerNote);
         return header;
     }
 

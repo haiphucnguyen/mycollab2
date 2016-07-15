@@ -17,6 +17,7 @@
 package com.mycollab.configuration;
 
 import com.mycollab.core.MyCollabException;
+import com.mycollab.core.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,5 +56,37 @@ public class StorageFactory {
 
     public static Storage getInstance() {
         return _instance.storage;
+    }
+
+    public static String getResourcePath(String documentPath) {
+        return SiteConfiguration.getResourceDownloadUrl() + documentPath;
+    }
+
+    public static String getLogoPath(Integer accountId, String logoName, int size) {
+        if (StringUtils.isBlank(logoName)) {
+            return MyCollabAssets.newAssetLink("icons/logo.png");
+        }
+        return String.format("%s%d/.assets/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), accountId,
+                logoName, size);
+    }
+
+    public static String getEntityLogoPath(Integer accountId, String id, Integer size) {
+        return String.format("%s%d/.assets/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), accountId,
+                id, size);
+    }
+
+    public static String getFavIconPath(Integer sAccountId, String favIconName) {
+        if (StringUtils.isBlank(favIconName)) {
+            return MyCollabAssets.newAssetLink("favicon.ico");
+        }
+        return String.format("%s%d/.assets/%s.ico", SiteConfiguration.getResourceDownloadUrl(), sAccountId, favIconName);
+    }
+
+    public static String getAvatarPath(String userAvatarId, int size) {
+        if (StringUtils.isBlank(userAvatarId)) {
+            return MyCollabAssets.newAssetLink(String.format("icons/default_user_avatar_%d.png", size));
+        } else {
+            return String.format("%savatar/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), userAvatarId, size);
+        }
     }
 }

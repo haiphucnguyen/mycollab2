@@ -4,6 +4,7 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.i18n.LicenseI18nEnum;
+import com.mycollab.configuration.MyCollabAssets;
 import com.mycollab.core.MyCollabVersion;
 import com.mycollab.premium.license.service.LicenseResolver;
 import com.mycollab.pro.license.LicenseInfo;
@@ -13,10 +14,10 @@ import com.mycollab.vaadin.AbstractLicenseActivationWindow;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
-import com.mycollab.vaadin.ui.AssetResource;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebResourceIds;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;
 import com.vaadin.server.WebBrowser;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -43,7 +44,7 @@ public class AboutWindow extends AbstractAboutWindow {
         MHorizontalLayout content = new MHorizontalLayout().withMargin(true).withFullWidth();
         this.setContent(content);
 
-        Image about = new Image("", new AssetResource(WebResourceIds._about));
+        Image about = new Image("", new ExternalResource(MyCollabAssets.newAssetLink(WebResourceIds._about)));
         MVerticalLayout rightPanel = new MVerticalLayout();
         ELabel versionLbl = ELabel.h2(String.format("MyCollab Enterprise Edition %s", MyCollabVersion.getVersion()));
         Label javaNameLbl = new Label(String.format("%s, %s", System.getProperty("java.vm.name"),
