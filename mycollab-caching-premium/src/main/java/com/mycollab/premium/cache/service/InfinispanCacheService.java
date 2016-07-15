@@ -1,5 +1,6 @@
-package com.mycollab.cache.service;
+package com.mycollab.premium.cache.service;
 
+import com.mycollab.cache.service.CacheService;
 import org.apache.commons.collections.CollectionUtils;
 import org.infinispan.AdvancedCache;
 import org.infinispan.commons.api.BasicCache;

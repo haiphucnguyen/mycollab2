@@ -1,6 +1,7 @@
-package com.mycollab.cache.service;
+package com.mycollab.premium.cache.service;
 
 import com.mycollab.cache.CleanCacheEvent;
+import com.mycollab.cache.service.CacheService;
 import com.mycollab.module.esb.GenericCommand;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;

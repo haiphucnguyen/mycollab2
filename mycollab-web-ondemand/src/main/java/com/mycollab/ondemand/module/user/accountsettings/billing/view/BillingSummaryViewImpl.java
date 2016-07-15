@@ -145,7 +145,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                         .withStyleName(UIConstants.BUTTON_ACTION);
                 singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
             }
-            singlePlan.with(new Label(plan.getProductpath()));
+
             plansLayout.with(singlePlan).expand(singlePlan);
         }
 
@@ -198,19 +198,19 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         numOfActiveProjects = projectService.getTotalActiveProjectsInAccount(AppContext.getAccountId());
 
-        ELabel projectInfo = ELabel.html(String.format("<span class='infoTitle'>Projects:</span> %d of %d</div>",
+        ELabel projectInfo = ELabel.html(AppContext.getMessage(BillingI18nEnum.OPT_PLAN_NUM_PROJECTS,
                 numOfActiveProjects, currentBillingPlan.getNumprojects())).withStyleName(UIConstants.FIELD_NOTE);
 
         DriveInfoService driveInfoService = AppContextUtil.getSpringBean(DriveInfoService.class);
         usedStorageVolume = driveInfoService.getUsedStorageVolume(AppContext.getAccountId());
         String usedStorageTxt = FileUtils.getVolumeDisplay(usedStorageVolume);
-        ELabel storageInfo = ELabel.html(String.format("<span class='infoTitle'>Storage:</span> %s of %s</div>",
+        ELabel storageInfo = ELabel.html(AppContext.getMessage(BillingI18nEnum.OPT_PLAN_STORAGE,
                 usedStorageTxt, FileUtils.getVolumeDisplay(currentBillingPlan.getVolume())))
                 .withStyleName(UIConstants.FIELD_NOTE);
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
         numOfActiveUsers = userService.getTotalActiveUsersInAccount(AppContext.getAccountId());
-        ELabel userInfo = ELabel.html(String.format("<span class='infoTitle'>Users:</span> %d of %d</div>",
+        ELabel userInfo = ELabel.html(AppContext.getMessage(BillingI18nEnum.OPT_PLAN_USERS,
                 numOfActiveUsers, currentBillingPlan.getNumusers())).withStyleName(UIConstants.FIELD_NOTE);
 
         currentPlanLayout.addComponent(new MHorizontalLayout(projectInfo, storageInfo, userInfo));

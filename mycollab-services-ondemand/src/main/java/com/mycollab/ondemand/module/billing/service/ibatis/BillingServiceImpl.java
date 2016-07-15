@@ -141,7 +141,7 @@ public class BillingServiceImpl implements BillingService {
         record.setBillingplanid(newPlan.getId());
         billingAccountMapper.updateByPrimaryKeySelective(record);
 
-        UpdateBillingPlanEvent event = new UpdateBillingPlanEvent(accountId);
+        asyncEventBus.post(new UpdateBillingPlanEvent(accountId, newPlan));
     }
 
     @Override

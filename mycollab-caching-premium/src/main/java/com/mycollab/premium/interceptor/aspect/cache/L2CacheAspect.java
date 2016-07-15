@@ -1,6 +1,6 @@
-package com.mycollab.common.interceptor.aspect.cache;
+package com.mycollab.premium.interceptor.aspect.cache;
 
-import com.mycollab.cache.CacheUtils;
+import com.mycollab.premium.cache.CacheUtils;
 import com.mycollab.cache.service.CacheService;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.BasicSearchRequest;

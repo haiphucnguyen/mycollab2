@@ -1,4 +1,4 @@
-package com.mycollab.jgroups.service.impl;
+package com.mycollab.premium.jgroups.service.impl;
 
 import com.mycollab.cache.service.CacheService;
 import com.mycollab.lock.DistributionLockService;
