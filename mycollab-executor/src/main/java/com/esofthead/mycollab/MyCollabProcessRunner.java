@@ -66,7 +66,7 @@ class MyCollabProcessRunner {
                         classPaths.append("./lib/" + subFile.getName());
                     }
 
-                    javaOptions.addAll(Arrays.asList("-cp", classPaths.toString(), "com.esofthead.mycollab.server.DefaultServerRunner", "--port",
+                    javaOptions.addAll(Arrays.asList("-cp", classPaths.toString(), "com.mycollab.server.DefaultServerRunner", "--port",
                             processRunningPort + "", "--cport", clientListenPort + ""));
                     StringBuilder strBuilder = new StringBuilder();
                     for (String option : javaOptions) {
