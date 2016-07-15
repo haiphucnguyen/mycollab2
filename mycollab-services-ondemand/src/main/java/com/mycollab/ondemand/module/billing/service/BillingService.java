@@ -5,6 +5,7 @@ import com.mycollab.core.cache.CacheEvict;
 import com.mycollab.core.cache.CacheKey;
 import com.mycollab.core.cache.Cacheable;
 import com.mycollab.db.arguments.BasicSearchRequest;
+import com.mycollab.db.persistence.service.IService;
 import com.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.mycollab.module.user.domain.BillingPlan;
 import com.mycollab.ondemand.module.billing.domain.SimpleBillingAccount2;
@@ -16,7 +17,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.8
  */
-public interface BillingService {
+public interface BillingService extends IService {
     List<SimpleBillingAccount2> findPagableListByCriteria(BasicSearchRequest<BillingAccountSearchCriteria> searchRequest);
 
     void registerAccount(String subDomain, int billingPlanId, String username,
