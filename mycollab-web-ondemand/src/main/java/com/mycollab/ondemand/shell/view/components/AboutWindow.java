@@ -3,7 +3,7 @@ package com.mycollab.ondemand.shell.view.components;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
-import com.mycollab.configuration.MyCollabAssets;
+import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.MyCollabVersion;
 import com.mycollab.shell.view.components.AbstractAboutWindow;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -34,7 +34,7 @@ public class AboutWindow extends AbstractAboutWindow {
         MHorizontalLayout content = new MHorizontalLayout().withMargin(true).withFullWidth();
         this.setContent(content);
 
-        Image about = new Image("", new ExternalResource(MyCollabAssets.newAssetLink(WebResourceIds._about)));
+        Image about = new Image("", new ExternalResource(StorageFactory.generateAssetRelativeLink(WebResourceIds._about)));
         MVerticalLayout rightPanel = new MVerticalLayout();
         ELabel versionLbl = ELabel.h2(String.format("MyCollab Cloud Edition %s", MyCollabVersion.getVersion()));
         WebBrowser browser = Page.getCurrent().getWebBrowser();

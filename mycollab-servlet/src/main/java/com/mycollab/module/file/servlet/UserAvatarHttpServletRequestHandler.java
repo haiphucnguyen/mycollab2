@@ -41,7 +41,7 @@ public class UserAvatarHttpServletRequestHandler extends GenericHttpServlet {
 
     @Override
     protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (!SiteConfiguration.isDemandEdition()) {
+        if (SiteConfiguration.isDemandEdition()) {
             throw new MyCollabException("This servlet support file system setting only");
         }
 

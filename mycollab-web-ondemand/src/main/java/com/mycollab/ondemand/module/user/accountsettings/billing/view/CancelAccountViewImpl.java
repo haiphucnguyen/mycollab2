@@ -17,7 +17,7 @@
 package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 
 import com.mycollab.common.domain.CustomerFeedbackWithBLOBs;
-import com.mycollab.configuration.MyCollabAssets;
+import com.mycollab.configuration.StorageFactory;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
@@ -62,7 +62,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
         ELabel headerNote = new ELabel(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE))
                 .withStyleName(UIConstants.META_INFO).withWidthUndefined();
 
-        header.with(new Image(null, new ExternalResource(MyCollabAssets.newAssetLink(WebResourceIds._sad_face))),
+        header.with(new Image(null, new ExternalResource(StorageFactory.generateAssetRelativeLink(WebResourceIds._sad_face))),
                 headerTopLine, headerMsg, headerNote);
         return header;
     }

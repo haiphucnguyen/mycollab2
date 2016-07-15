@@ -64,7 +64,7 @@ public class StorageFactory {
 
     public static String getLogoPath(Integer accountId, String logoName, int size) {
         if (StringUtils.isBlank(logoName)) {
-            return MyCollabAssets.newAssetLink("icons/logo.png");
+            return StorageFactory.generateAssetRelativeLink("icons/logo.png");
         }
         return String.format("%s%d/.assets/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), accountId,
                 logoName, size);
@@ -77,16 +77,20 @@ public class StorageFactory {
 
     public static String getFavIconPath(Integer sAccountId, String favIconName) {
         if (StringUtils.isBlank(favIconName)) {
-            return MyCollabAssets.newAssetLink("favicon.ico");
+            return StorageFactory.generateAssetRelativeLink("favicon.ico");
         }
         return String.format("%s%d/.assets/%s.ico", SiteConfiguration.getResourceDownloadUrl(), sAccountId, favIconName);
     }
 
     public static String getAvatarPath(String userAvatarId, int size) {
         if (StringUtils.isBlank(userAvatarId)) {
-            return MyCollabAssets.newAssetLink(String.format("icons/default_user_avatar_%d.png", size));
+            return StorageFactory.generateAssetRelativeLink(String.format("icons/default_user_avatar_%d.png", size));
         } else {
             return String.format("%savatar/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), userAvatarId, size);
         }
+    }
+
+    public static String generateAssetRelativeLink(String resourceId) {
+        return _instance.storage.generateAssetLink(resourceId);
     }
 }

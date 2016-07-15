@@ -18,7 +18,7 @@ import java.io.InputStream;
  * @author MyCollab Ltd.
  * @since 4.5.1
  */
-public class VaadinS3Resource extends VaadinResource {
+public class VaadinS3Resource implements VaadinResource {
 
     @Override
     public Resource getStreamResource(String documentPath) {

@@ -16,8 +16,6 @@
  */
 package com.mycollab.configuration;
 
-import com.mycollab.core.utils.StringUtils;
-
 /**
  * File configuration for storage file in MyCollab. We support two kinds of file
  * system:
@@ -31,6 +29,6 @@ import com.mycollab.core.utils.StringUtils;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public abstract class Storage {
-
+public interface Storage {
+    String generateAssetLink(String resourceId);
 }

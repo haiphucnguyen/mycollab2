@@ -10,12 +10,11 @@
                 <p>${actionHeading}</p>
                 <p><@lib.hyperLink displayName=projectHyperLink.displayName() webLink=projectHyperLink.webLink()/></p>
                 <p><b><@lib.hyperLink displayName=summary webLink=summaryLink/></b></p>
-                <@lib.block content=comment.changecomment!/>
             </td>
         </tr>
         <#if lastComments?has_content>
             <tr>
-                <td style="padding: 10px 30px;">
+                <td style="padding: 0px 30px;">
                     <h3 style="font-size:14px">Latest comments (${lastComments?size})</h3>
                 </td>
             </tr>

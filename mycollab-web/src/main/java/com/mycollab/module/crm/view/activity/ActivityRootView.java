@@ -16,7 +16,7 @@
  */
 package com.mycollab.module.crm.view.activity;
 
-import com.mycollab.configuration.MyCollabAssets;
+import com.mycollab.configuration.StorageFactory;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.mycollab.module.crm.i18n.ActivityI18nEnum;
@@ -74,11 +74,11 @@ public class ActivityRootView extends AbstractPageView {
     private void buildComponents() {
         activityTabs.addTab(constructCalendarView(), "calendar",
                 AppContext.getMessage(ActivityI18nEnum.TAB_CALENDAR_TITLE),
-                new ExternalResource(MyCollabAssets.newAssetLink("icons/22/crm/calendar.png")));
+                new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/22/crm/calendar.png")));
 
         activityTabs.addTab(constructActivityListView(), "activities",
                 AppContext.getMessage(ActivityI18nEnum.TAB_ACTIVITY_TITLE),
-                new ExternalResource(MyCollabAssets.newAssetLink("icons/22/crm/activitylist.png")));
+                new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/22/crm/activitylist.png")));
 
         activityTabs.addSelectedTabChangeListener(selectedTabChangeEvent -> {
             Tab tab = ((VerticalTabsheet) selectedTabChangeEvent.getSource()).getSelectedTab();

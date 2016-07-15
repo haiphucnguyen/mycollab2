@@ -16,7 +16,7 @@
  */
 package com.mycollab.vaadin.ui;
 
-import com.mycollab.configuration.MyCollabAssets;
+import com.mycollab.configuration.StorageFactory;
 import com.mycollab.vaadin.resources.VaadinResourceFactory;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
@@ -37,9 +37,9 @@ public class AccountAssetsResolver {
 
     public static Resource createLogoResource(String logoId, int size) {
         if (logoId == null) {
-            return new ExternalResource(MyCollabAssets.newAssetLink("icons/logo.png"));
+            return new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/logo.png"));
         }
 
-        return VaadinResourceFactory.getInstance().getLogoResource(logoId, size);
+        return VaadinResourceFactory.getLogoResource(logoId, size);
     }
 }

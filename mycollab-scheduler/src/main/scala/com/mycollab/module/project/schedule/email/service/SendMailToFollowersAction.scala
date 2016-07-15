@@ -70,7 +70,9 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
         val searchCriteria: CommentSearchCriteria = new CommentSearchCriteria
         searchCriteria.setType(StringSearchField.and(notification.getType))
         searchCriteria.setTypeId(StringSearchField.and(notification.getTypeid))
+        searchCriteria.setSaccountid(null)
         val comments = commentService.findPagableListByCriteria(new BasicSearchRequest[CommentSearchCriteria](searchCriteria, 0, 5))
+        contentGenerator.putVariable("lastComments", comments)
         
         for (user <- notifiers) {
           val context = new MailContext[B](notification, user, siteUrl)

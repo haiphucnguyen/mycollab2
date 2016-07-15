@@ -18,6 +18,7 @@ package com.mycollab.ondemand.configuration;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.configuration.Storage;
 
 /**
@@ -26,12 +27,17 @@ import com.mycollab.configuration.Storage;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class S3Storage extends Storage {
+public class S3Storage implements Storage {
     public final AmazonS3 newS3Client() {
         return new AmazonS3Client(AmazonServiceConfiguration.amazonCredentials());
     }
 
     public String getBucket() {
         return AmazonServiceConfiguration.getBucket();
+    }
+
+    @Override
+    public String generateAssetLink(String resourceId) {
+        return SiteConfiguration.getCdnUrl() + resourceId;
     }
 }
