@@ -39,7 +39,7 @@
 				</div>
 			</td>
 		</tr>
-		#parse("mailFooter_en-US.html")
+		#parse("mailFooter.html")
 	</table>
 </body>
 </html>	

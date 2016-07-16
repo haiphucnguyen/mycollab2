@@ -6,7 +6,6 @@ import java.util.{Arrays, Calendar, Locale, TimeZone}
 import com.mycollab.common.GenericLinkUtils
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.configuration.SiteConfiguration
-import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.module.billing.AccountReminderStatusContants
 import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
 import com.mycollab.module.user.domain.{BillingAccount, BillingAccountWithOwners}
