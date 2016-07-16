@@ -498,18 +498,18 @@ public class ProjectTooltipGenerator {
             Tr trRow3 = new Tr();
             trRow3.appendChild(new Td().setStyle("width: 165px; vertical-align: top; text-align: right;")
                     .appendText(LocalizationHelper.getMessage(locale, StandupI18nEnum.STANDUP_LASTDAY)))
-                    .appendChild(new Td().setStyle("word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+                    .appendChild(new Td().setStyle("word-wrap: break-word; white-space: normal;vertical-align: top;")
                             .appendText(standup.getWhatlastday()));
 
             Tr trRow4 = new Tr();
             trRow4.appendChild(new Td().setStyle("width: 165px;vertical-align: top; text-align: right;")
                     .appendText(LocalizationHelper.getMessage(locale, StandupI18nEnum.STANDUP_TODAY)))
-                    .appendChild(new Td().setStyle("break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+                    .appendChild(new Td().setStyle("break-word; white-space: normal;vertical-align: top;")
                             .appendText(standup.getWhattoday()));
             Tr trRow5 = new Tr();
             trRow5.appendChild(new Td().setStyle("width: 165px;vertical-align: top; text-align: right;")
                     .appendText(LocalizationHelper.getMessage(locale, StandupI18nEnum.STANDUP_ISSUE)))
-                    .appendChild(new Td().setStyle("break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+                    .appendChild(new Td().setStyle("break-word; white-space: normal;vertical-align: top;")
                             .appendText(standup.getWhatproblem()));
 
             table.appendChild(trRow3);

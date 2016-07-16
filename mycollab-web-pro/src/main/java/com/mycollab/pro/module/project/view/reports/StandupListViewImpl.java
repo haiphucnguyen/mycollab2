@@ -224,7 +224,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         }
     }
 
-    private static class StandupReportRowDisplay extends RowDisplayHandler<SimpleStandupReport> {
+    public static class StandupReportRowDisplay extends RowDisplayHandler<SimpleStandupReport> {
         private static final long serialVersionUID = 1L;
 
         @Override

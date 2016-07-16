@@ -81,7 +81,7 @@ public class CommonTooltipGenerator {
             Tr trRow5 = new Tr().appendChild(
                     new Td().setStyle("width: 110px; vertical-align: top; text-align: right;color:#999")
                             .appendText(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_LAST_ACCESSED_TIME)))
-                    .appendChild(new Td().setStyle("word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+                    .appendChild(new Td().setStyle("word-wrap: break-word; white-space: normal;vertical-align: top;")
                             .appendText(DateTimeUtils.getPrettyDateValue(user.getLastaccessedtime(), locale)));
             table.appendChild(trRow1, trRow2, trRow3, trRow4, trRow5);
             div.appendChild(table);

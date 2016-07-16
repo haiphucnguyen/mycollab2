@@ -17,7 +17,7 @@
         <javaVersion>1.8</javaVersion>
         <slf4jVersion>1.7.21</slf4jVersion>
         <servletVersion>3.1.0</servletVersion>
-        <vaadinVersion>7.6.7</vaadinVersion>
+        <vaadinVersion>7.6.8</vaadinVersion>
         <jettyVersion>9.3.10.v20160621</jettyVersion>
         <mysqlVersion>5.1.39</mysqlVersion>
         <junitVersion>4.12</junitVersion>
