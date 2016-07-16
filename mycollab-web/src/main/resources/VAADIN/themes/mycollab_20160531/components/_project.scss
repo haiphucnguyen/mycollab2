@@ -90,9 +90,6 @@
     border-radius: 5px;
     position: relative;
     overflow: visible;
-    .v-label.wordWrap {
-      word-break: break-all !important;
-    }
     &:before {
       content: "";
       position: absolute;
