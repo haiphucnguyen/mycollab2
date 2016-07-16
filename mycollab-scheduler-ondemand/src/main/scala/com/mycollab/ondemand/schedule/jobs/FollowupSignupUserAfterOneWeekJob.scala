@@ -2,11 +2,10 @@ package com.mycollab.ondemand.schedule.jobs
 
 import java.util.Arrays
 
-import com.mycollab.module.mail.service.IContentGenerator
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.db.arguments.{BasicSearchRequest, RangeDateSearchField, SetSearchField}
 import com.mycollab.module.billing.AccountStatusConstants
-import com.mycollab.module.mail.service.ExtMailService
+import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
 import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria
 import com.mycollab.ondemand.module.billing.service.BillingService
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
@@ -27,11 +26,11 @@ class FollowupSignupUserAfterOneWeekJob extends GenericQuartzJobBean {
   @Autowired var contentGenerator: IContentGenerator = _
   @Autowired var billingAccountExtService: BillingService = _
   @Autowired var extMailService: ExtMailService = _
-
+  
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext): Unit = {
-    var searchCriteria = new BillingAccountSearchCriteria
-    var now = new DateTime()
+    val searchCriteria = new BillingAccountSearchCriteria
+    val now = new DateTime()
     searchCriteria.setRegisterTimeDuration(new RangeDateSearchField(now.minusDays(7).toDate, now.minusDays(6).toDate))
     searchCriteria.setStatuses(new SetSearchField[String](AccountStatusConstants.TRIAL))
     import collection.JavaConverters._

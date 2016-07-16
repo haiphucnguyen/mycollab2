@@ -13,6 +13,12 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${jodaVersion}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-core</artifactId>
             <version>5.3.5</version>

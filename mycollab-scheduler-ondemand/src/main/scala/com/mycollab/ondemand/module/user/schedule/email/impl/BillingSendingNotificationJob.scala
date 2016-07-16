@@ -6,12 +6,15 @@ import java.util.{Arrays, Calendar, Locale, TimeZone}
 import com.mycollab.common.GenericLinkUtils
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.core.utils.DateTimeUtils
+import com.mycollab.module.billing.AccountReminderStatusContants
 import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
-import com.mycollab.module.user.domain.BillingAccountWithOwners
+import com.mycollab.module.user.domain.{BillingAccount, BillingAccountWithOwners}
 import com.mycollab.module.user.service.BillingAccountService
 import com.mycollab.ondemand.module.billing.service.BillingService
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
-import org.quartz.{JobExecutionContext, JobExecutionException}
+import org.joda.time.LocalDateTime
+import org.quartz.{DisallowConcurrentExecution, JobExecutionContext, JobExecutionException}
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.config.BeanDefinition
@@ -24,80 +27,72 @@ import org.springframework.stereotype.Component
   */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+@DisallowConcurrentExecution
 class BillingSendingNotificationJob extends GenericQuartzJobBean {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[BillingSendingNotificationJob])
-  private val DATE_REMIND_FOR_FREEPLAN_1ST: Integer = 54
-  private val DATE_REMIND_FOR_FREEPLAN_2ND: Integer = 59
-  private val DATE_NOTIFY_EXPIRE: Integer = 62
-  private val NUM_DAY_FREE_TRIAL: Integer = 60
-  private val INFORM_EXPIRE_ACCOUNT_TEMPLATE: String = "mailInformAccountIsExpiredNotification.ftl"
-  private val INFORM_FILLING_BILLING_INFORMATION_TEMPLATE: String = "mailRemindAccountIsAboutExpiredNotification.ftl"
+  private val DATE_REMIND_FOR_ENDING_TRIAL_1ST: Integer = 24
+  private val DATE_REMIND_FOR_ENDING_TRIAL_2ND: Integer = 29
+  private val DATE_NOTIFY_EXPIRE: Integer = 32
+  private val NUM_DAY_FREE_TRIAL: Integer = 30
   
-  @Autowired var billingService: BillingService = _
-  @Autowired var billingAccountService: BillingAccountService = _
-  @Autowired var extMailService: ExtMailService = _
-  @Autowired var contentGenerator: IContentGenerator = _
+  @Autowired private val billingService: BillingService = null
+  @Autowired private val billingAccountService: BillingAccountService = null
+  @Autowired private val extMailService: ExtMailService = null
+  @Autowired private val contentGenerator: IContentGenerator = null
   
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext) {
-    //    import scala.collection.JavaConverters._
-    //    val trialAccountsWithOwners: List[BillingAccountWithOwners] = billingService.getTrialAccountsWithOwners.asScala
-    //      .toList
-    //    var cal: Calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-    //    cal.add(Calendar.DATE, (-1) * DATE_REMIND_FOR_FREEPLAN_1ST)
-    //    val dateRemind1st: Date = DateTimeUtils.trimHMSOfDate(cal.getTime)
-    //    cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-    //    cal.add(Calendar.DATE, (-1) * DATE_REMIND_FOR_FREEPLAN_2ND)
-    //    val dateRemind2nd: Date = DateTimeUtils.trimHMSOfDate(cal.getTime)
-    //    cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-    //    cal.add(Calendar.DATE, (-1) * DATE_NOTIFY_EXPIRE)
-    //    val dateExpire: Date = DateTimeUtils.trimHMSOfDate(cal.getTime)
-    //    if (trialAccountsWithOwners != null) {
-    //      for (account <- trialAccountsWithOwners) {
-    //        LOG.debug("Check whether account exceed 25 days to remind user upgrade account")
-    //        val accCreatedDate: Date = DateTimeUtils.trimHMSOfDate(account.getCreatedtime)
-    //        if (accCreatedDate.before(dateRemind1st) && (account.getReminderstatus == null)) {
-    //          sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_FREEPLAN_1ST)
-    //          val billingAccount: BillingAccount = new BillingAccount
-    //          billingAccount.setId(account.getId)
-    //          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)
-    //          billingAccountService.updateSelectiveWithSession(billingAccount, "")
-    //        }
-    //        else if (accCreatedDate.before(dateRemind2nd) && ((account.getReminderstatus eq AccountReminderStatusContants
-    //          .REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME) || account.getReminderstatus == null)) {
-    //          LOG.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account")
-    //          sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_FREEPLAN_2ND)
-    //          val billingAccount: BillingAccount = new BillingAccount
-    //          billingAccount.setId(account.getId)
-    //          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME)
-    //          billingAccountService.updateSelectiveWithSession(billingAccount, "")
-    //        }
-    //        else if (accCreatedDate.before(dateExpire)) {
-    //          LOG.debug("Check whether account exceed 32 days to convert to basic plan")
-    //          sendingEmailInformConvertToFreePlan(account)
-    //          val billingAccount: BillingAccount = new BillingAccount
-    //          billingAccount.setId(account.getId)
-    //          val freeBillingPlan: BillingPlan = billingService.getFreeBillingPlan
-    //          billingAccount.setBillingplanid(freeBillingPlan.getId)
-    //          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_CONVERTED_TO_FREE_PLAN)
-    //          billingAccountService.updateSelectiveWithSession(billingAccount, "")
-    //        }
-    //      }
-    //    }
+    import scala.collection.JavaConverters._
+    val trialAccountsWithOwners = billingService.getTrialAccountsWithOwners.asScala.toList
+    val now = new LocalDateTime()
+    val dateRemind1st = now.minusDays(DATE_REMIND_FOR_ENDING_TRIAL_1ST)
+    val dateRemind2nd = now.minusDays(DATE_REMIND_FOR_ENDING_TRIAL_2ND)
+    val dateExpire = now.minusDays(DATE_NOTIFY_EXPIRE)
+    
+    if (trialAccountsWithOwners != null) {
+      for (account <- trialAccountsWithOwners) {
+        LOG.debug("Check whether account exceed 25 days to remind user upgrade account")
+        val accCreatedDate = new LocalDateTime(account.getCreatedtime)
+        if (accCreatedDate.isBefore(dateRemind1st) && (account.getReminderstatus == null)) {
+          sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_ENDING_TRIAL_1ST)
+          val billingAccount = new BillingAccount
+          billingAccount.setId(account.getId)
+          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)
+          billingAccountService.updateSelectiveWithSession(billingAccount, "")
+        }
+        else if (accCreatedDate.isBefore(dateRemind2nd) &&
+          ((account.getReminderstatus eq AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)
+            || account.getReminderstatus == null)) {
+          LOG.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account")
+          sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_ENDING_TRIAL_2ND)
+          val billingAccount: BillingAccount = new BillingAccount
+          billingAccount.setId(account.getId)
+          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME)
+          billingAccountService.updateSelectiveWithSession(billingAccount, "")
+        }
+        else if (accCreatedDate.isBefore(dateExpire)) {
+          LOG.debug("Check whether account exceed 32 days to convert to basic plan")
+          sendingEmailInformAccountIsRemoved(account)
+          val billingAccount: BillingAccount = new BillingAccount
+          billingAccount.setId(account.getId)
+          // Remove the account
+        }
+      }
+    }
   }
   
-  private def sendingEmailInformConvertToFreePlan(account: BillingAccountWithOwners) {
+  private def sendingEmailInformAccountIsRemoved(account: BillingAccountWithOwners) {
     import scala.collection.JavaConversions._
     for (user <- account.getOwners) {
       LOG.info("Send mail after 32 days for username {} , mail {}", Array(user.getUsername, user.getEmail))
       contentGenerator.putVariable("account", account)
       contentGenerator.putVariable("userName", user.getUsername)
-      val link: String = GenericLinkUtils.generateSiteUrlByAccountId(account.getId) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
+      val link = GenericLinkUtils.generateSiteUrlByAccountId(account.getId) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
       contentGenerator.putVariable("link", link)
       extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)),
         null, null, "Your trial has been ended",
-        contentGenerator.parseFile(INFORM_EXPIRE_ACCOUNT_TEMPLATE, Locale.US), null)
+        contentGenerator.parseFile("mailInformAccountIsExpiredNotification", Locale.US), null)
     }
   }
   
@@ -107,8 +102,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
     for (user <- account.getOwners) {
       LOG.info("Send mail after " + afterDay + "days for username {} , mail {}", Array(user.getUsername, user.getEmail))
       contentGenerator.putVariable("account", account)
-      val link: String = GenericLinkUtils.generateSiteUrlByAccountId(account.getId) +
-        GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
+      val link = GenericLinkUtils.generateSiteUrlByAccountId(account.getId) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
       val cal: Calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
       cal.setTime(account.getCreatedtime)
       cal.add(Calendar.DATE, NUM_DAY_FREE_TRIAL)
@@ -118,7 +112,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)), null, null,
         "Your trial is about to end",
-        contentGenerator.parseFile(INFORM_FILLING_BILLING_INFORMATION_TEMPLATE, Locale.US), null)
+        contentGenerator.parseFile("mailRemindAccountIsAboutExpiredNotification.ftl", Locale.US), null)
     }
   }
 }

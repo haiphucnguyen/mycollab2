@@ -1,9 +1,9 @@
 package com.mycollab.ondemand.schedule.spring;
 
+import com.mycollab.ondemand.module.user.schedule.email.impl.BillingSendingNotificationJob;
 import com.mycollab.ondemand.schedule.jobs.*;
 import com.mycollab.schedule.AutowiringSpringBeanJobFactory;
 import com.mycollab.schedule.QuartzScheduleProperties;
-import com.mycollab.ondemand.module.user.schedule.email.impl.BillingSendingNotificationJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -47,14 +47,14 @@ public class DemandScheduleConfiguration {
     }
 
     @Bean
-    public JobDetailFactoryBean sendOneweekFollowupDownloadedUsersJob() {
+    public JobDetailFactoryBean sendOneWeekFollowupDownloadedUsersJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
         bean.setJobClass(FollowupDownloadedUsersAfterOneWeekJob.class);
         return bean;
     }
 
     @Bean
-    public JobDetailFactoryBean sendOneweekFollowupSignupUsersJob() {
+    public JobDetailFactoryBean sendOneWeekFollowupSignupUsersJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
         bean.setJobClass(FollowupSignupUserAfterOneWeekJob.class);
         return bean;
@@ -95,7 +95,7 @@ public class DemandScheduleConfiguration {
     @Bean
     public CronTriggerFactoryBean sendOneweekFollowupDownloadedUsersTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
-        bean.setJobDetail(sendOneweekFollowupDownloadedUsersJob().getObject());
+        bean.setJobDetail(sendOneWeekFollowupDownloadedUsersJob().getObject());
         bean.setCronExpression("0 0 0 * * ?");
         return bean;
     }
@@ -103,7 +103,7 @@ public class DemandScheduleConfiguration {
     @Bean
     public CronTriggerFactoryBean sendOneweekFollowupSignipUsersTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
-        bean.setJobDetail(sendOneweekFollowupSignupUsersJob().getObject());
+        bean.setJobDetail(sendOneWeekFollowupSignupUsersJob().getObject());
         bean.setCronExpression("0 0 0 * * ?");
         return bean;
     }
@@ -119,7 +119,7 @@ public class DemandScheduleConfiguration {
     public CronTriggerFactoryBean sendAccountBillingEmailTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(sendAccountBillingRequestEmailJob().getObject());
-        bean.setCronExpression("0 0 0 * * ?");
+        bean.setCronExpression("0 * * * * ?");
         return bean;
     }
 
