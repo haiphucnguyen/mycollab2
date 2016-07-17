@@ -36,11 +36,11 @@ public abstract class AbstractBroadcastReceiverService implements BroadcastRecei
 
     @Override
     public void broadcast(BroadcastMessage message) {
-        if (message.getWrapObj() instanceof AbstractNotification) {
-            EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, message.getWrapObj()));
-        } else {
-            onBroadcast(message);
-        }
+//        if (message.getWrapObj() instanceof AbstractNotification) {
+//            EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, message.getWrapObj()));
+//        } else {
+//            onBroadcast(message);
+//        }
     }
 
     abstract protected void onBroadcast(BroadcastMessage message);
