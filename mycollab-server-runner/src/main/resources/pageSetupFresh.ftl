@@ -1,18 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html style="height: 100%;">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<link rel="icon" href="${defaultUrls.cdn_url}favicon.ico" type="image/x-icon">
-<link rel="shortcut icon" href="${defaultUrls.cdn_url}favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="${defaultUrls.cdn_url}css/main.css">
+<#import "macroPage.ftl" as lib>
+<@lib.headElements title="MyCollab Setup Assistant Page"/>
 <style media="screen" type="text/css">
-#container {
-    background-image: url('${defaultUrls.cdn_url}icons/footer_clouds.png');  background-repeat: no-repeat;
-    background-position: bottom right;
-}
-#mainContent {
-    padding: 10px 0 8px 0px;
-}
 input {
     font-size:18px;
     height: 35px;
@@ -25,20 +16,15 @@ label {
 h3 {
     padding-right:20px;
 }
-#body {
-    letter-spacing: 0.5px;
-}
 </style>
-<title>MyCollab Setup Assistant Page</title>
 </head>
-<body style="height: 100%; margin: 0; padding: 0; width: 100%;">
-<div id="container">
+<body>
     <#include "pageLogo.ftl">
     <div id="body">
         <div id="spacing""></div>
         <div id="mainBody">
             <div id="title">
-                <h1 style="font-size:40px; margin-bottom:15px;">Welcome <span style="font-style:italic; font-size:20px;"></span><h1>
+                <h1>Thank you for trial MyCollab<h1>
             </div>
             <hr size="1" style="margin: 1px 0 20px 0; ">
             <div id="title">
@@ -218,7 +204,6 @@ h3 {
             </div>
             <#include "pageFooter.ftl">
         </div>
-    </div>
 </div>
 <input type="hidden" id="postUrl" value=${postUrl}>
 </body>
