@@ -16,11 +16,13 @@
  */
 package com.mycollab.vaadin.web.ui.service;
 
+import com.google.common.eventbus.EventBus;
 import com.mycollab.core.AbstractNotification;
 import com.mycollab.core.BroadcastMessage;
-import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.web.DesktopApplication;
+
+import static com.mycollab.vaadin.ui.MyCollabSession.EVENT_BUS_VAL;
 
 /**
  * @author MyCollab Ltd
@@ -36,11 +38,12 @@ public abstract class AbstractBroadcastReceiverService implements BroadcastRecei
 
     @Override
     public void broadcast(BroadcastMessage message) {
-//        if (message.getWrapObj() instanceof AbstractNotification) {
-//            EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, message.getWrapObj()));
-//        } else {
-//            onBroadcast(message);
-//        }
+        if (message.getWrapObj() instanceof AbstractNotification) {
+            EventBus eventBus = (EventBus) myCollabApp.getAttribute(EVENT_BUS_VAL);
+            eventBus.post(new ShellEvent.NewNotification(this, message.getWrapObj()));
+        } else {
+            onBroadcast(message);
+        }
     }
 
     abstract protected void onBroadcast(BroadcastMessage message);

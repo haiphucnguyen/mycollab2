@@ -15,7 +15,7 @@ object EventBusFactory {
   private val LOG = LoggerFactory.getLogger(EventBusFactory.getClass)
   
   def getInstance(): EventBus = {
-    var eventBus: EventBus = MyCollabSession.getCurrentUIVariable(EVENT_BUS_VAL).asInstanceOf[EventBus]
+    var eventBus = MyCollabSession.getCurrentUIVariable(EVENT_BUS_VAL).asInstanceOf[EventBus]
     if (eventBus == null) {
       eventBus = new EventBus(new SubscriberEventBusExceptionHandler)
       MyCollabSession.putCurrentUIVariable(EVENT_BUS_VAL, eventBus)
