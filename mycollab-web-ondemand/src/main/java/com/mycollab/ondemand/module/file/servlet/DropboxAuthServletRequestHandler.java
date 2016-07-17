@@ -1,15 +1,15 @@
 package com.mycollab.ondemand.module.file.servlet;
 
+import com.google.common.eventbus.EventBus;
 import com.mycollab.cache.service.CacheService;
 import com.mycollab.module.ecm.StorageNames;
-import com.mycollab.module.ecm.esb.CloudDriveOAuthCallbackEvent;
 import com.mycollab.module.file.CloudDriveInfo;
 import com.mycollab.oauth.service.MyCollabOauthServiceFactory;
+import com.mycollab.ondemand.module.file.event.CloudDriveOAuthCallbackEvent;
 import com.mycollab.servlet.GenericHttpServlet;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.ui.MyCollabSession;
-import com.google.common.eventbus.EventBus;
 import com.vaadin.ui.UI;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;

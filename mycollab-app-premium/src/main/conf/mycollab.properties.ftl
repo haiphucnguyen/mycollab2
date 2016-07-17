@@ -28,7 +28,7 @@ mail.port=${smtpPort}
 mail.username=${smtpUserName}
 mail.password=${smtpPassword}
 mail.isTLS=${smtpTLSEnable}
-mail.notify=
+mail.notify=notify@mycollab.com
 
 #=====================================================
 #    ERROR REPORTING
@@ -38,7 +38,7 @@ mail.notify=
 # want to send report automatically to our team, you can
 # leave this field to empty
 #=====================================================
-error.sendTo=support@mycollab.com
+error.sendTo=error@mycollab.com
 
 #=====================================================
 #    LINK CONFIGURATION

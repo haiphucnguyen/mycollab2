@@ -16,7 +16,7 @@
  */
 package com.mycollab.pro.module.project.events
 
-import com.mycollab.eventmanager.ApplicationEvent
+import com.mycollab.events.ApplicationEvent
 import com.mycollab.module.project.domain.TaskPredecessor
 import com.mycollab.pro.module.project.view.assignments.gantt.GanttItemWrapper
 

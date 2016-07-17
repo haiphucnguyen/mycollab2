@@ -1,21 +1,21 @@
 package com.mycollab.ondemand.module.file.view;
 
+import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.ecm.domain.ExternalDrive;
-import com.mycollab.module.ecm.esb.CloudDriveOAuthCallbackEvent;
 import com.mycollab.module.ecm.service.ExternalDriveService;
 import com.mycollab.module.file.CloudDriveInfo;
 import com.mycollab.module.file.events.FileEvent;
+import com.mycollab.ondemand.module.file.event.CloudDriveOAuthCallbackEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.UIConstants;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
