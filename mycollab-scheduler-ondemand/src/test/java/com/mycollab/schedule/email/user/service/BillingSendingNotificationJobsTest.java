@@ -33,8 +33,7 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
     private BillingService billingService;
 
     @Test
-    public void testSendEmailForAccountExceed25days()
-            throws JobExecutionException {
+    public void testSendEmailForAccountExceed25days() throws JobExecutionException {
         BillingAccountWithOwners account = new BillingAccountWithOwners();
         SimpleUser owner = new SimpleUser();
         account.setOwners(Collections.singletonList(owner));

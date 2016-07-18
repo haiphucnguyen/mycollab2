@@ -11,7 +11,6 @@ import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.module.billing.AccountStatusConstants;
 import com.mycollab.module.user.dao.BillingAccountMapper;
-import com.mycollab.module.user.dao.BillingAccountMapperExt;
 import com.mycollab.module.user.dao.BillingPlanMapper;
 import com.mycollab.module.user.domain.*;
 import com.mycollab.module.user.service.BillingAccountService;
@@ -47,9 +46,6 @@ public class BillingServiceImpl implements BillingService {
 
     @Autowired
     private BillingAccountMapperExt2 billingAccountMapperExt2;
-
-    @Autowired
-    private BillingAccountMapperExt billingAccountMapperExt;
 
     @Autowired
     private BillingPlanMapper billingPlanMapper;
@@ -152,11 +148,11 @@ public class BillingServiceImpl implements BillingService {
 
     @Override
     public List<String> getSubDomainsOfUser(String username) {
-        return this.billingAccountMapperExt.getSubDomainsOfUser(username);
+        return this.billingAccountMapperExt2.getSubDomainsOfUser(username);
     }
 
     public List<BillingAccountWithOwners> getTrialAccountsWithOwners() {
-        return billingAccountMapperExt.getTrialAccountsWithOwners();
+        return billingAccountMapperExt2.getTrialAccountsWithOwners();
     }
 
     @Override
