@@ -31,7 +31,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[BillingSendingNotificationJob])
   private val DATE_REMIND_FOR_ENDING_TRIAL_1ST: Integer = 24
   private val DATE_REMIND_FOR_ENDING_TRIAL_2ND: Integer = 29
-  private val DATE_NOTIFY_EXPIRE: Integer = 32
+  private val DATE_NOTIFY_EXPIRE: Integer = 35
   private val NUM_DAY_FREE_TRIAL: Integer = 30
   
   @Autowired private val billingService: BillingService = null
@@ -41,13 +41,13 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
   
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext) {
-    import scala.collection.JavaConverters._
-    val trialAccountsWithOwners = billingService.getTrialAccountsWithOwners.asScala.toList
     val now = new LocalDateTime()
     val dateRemind1st = now.minusDays(DATE_REMIND_FOR_ENDING_TRIAL_1ST)
     val dateRemind2nd = now.minusDays(DATE_REMIND_FOR_ENDING_TRIAL_2ND)
     val dateExpire = now.minusDays(DATE_NOTIFY_EXPIRE)
-    
+  
+    import scala.collection.JavaConverters._
+    val trialAccountsWithOwners = billingService.getTrialAccountsWithOwners.asScala.toList
     if (trialAccountsWithOwners != null) {
       for (account <- trialAccountsWithOwners) {
         LOG.debug("Check whether account exceed 25 days to remind user upgrade account")
@@ -58,8 +58,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
           billingAccount.setId(account.getId)
           billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)
           billingAccountService.updateSelectiveWithSession(billingAccount, "")
-        }
-        else if (accCreatedDate.isBefore(dateRemind2nd) &&
+        } else if (accCreatedDate.isBefore(dateRemind2nd) &&
           ((account.getReminderstatus eq AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)
             || account.getReminderstatus == null)) {
           LOG.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account")
@@ -68,8 +67,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
           billingAccount.setId(account.getId)
           billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME)
           billingAccountService.updateSelectiveWithSession(billingAccount, "")
-        }
-        else if (accCreatedDate.isBefore(dateExpire)) {
+        } else if (accCreatedDate.isBefore(dateExpire)) {
           LOG.debug("Check whether account exceed 32 days to convert to basic plan")
           sendingEmailInformAccountIsRemoved(account)
           val billingAccount: BillingAccount = new BillingAccount
@@ -90,8 +88,8 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("link", link)
       extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)),
-        null, null, "Your trial has been ended",
-        contentGenerator.parseFile("mailInformAccountIsExpiredNotification", Locale.US), null)
+        null, null, "Your trial has expired",
+        contentGenerator.parseFile("mailInformAccountIsExpiredNotification.ftl", Locale.US), null)
     }
   }
   
@@ -110,7 +108,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("link", link)
       extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)), null, null,
-        "Your trial is about to end",
+        "Your trial will end soon",
         contentGenerator.parseFile("mailRemindAccountIsAboutExpiredNotification.ftl", Locale.US), null)
     }
   }

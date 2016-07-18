@@ -5,40 +5,35 @@
 <#include "mailHeader.ftl">
 </head>
 <body>
-	<table width="800" cellpadding="0" cellspacing="0" class="wrapContent">
-       <tr>
-       		<td style="text-align: center; padding: 50px 0px 0px;">
-       			<img src="${defaultUrls.cdn_url}icons/logo_email.png" alt="The power productivity tool for your organization" width="130" height="30" style="margin: 0px; padding: 0px;">
-       		</td>			
-		</tr>
+    <table width="600" cellpadding="0" cellspacing="0" class="wrapContent">
+        <#include "mailLogo.ftl">
         <tr>
-            <td style="padding: 20px 30px; text-align: center;">
-				<p style="font-size: 22px; padding-top: 10px;"><b><i>Oh no, your trial has ended!</i></b><p>
-				<hr size="1">
-				<div id="contentBody" style="text-align: left;">
-					<p>Hi <b>$!userName</b>,</p>
-					<p>
-					Your free trial of MyCollab has just ended. If you wish to continue using MyCollab to manage projects and tasks, you may enter a payment method in your account under Billing Info. <br><br>
-					
-					To access your account, visit  
-					#confirmLink( $!link $!link )
-					<br><br>
-					
-					If you decide not to upgrade to a paid plan, you may still use MyCollab free for personal stuff. You don't need to do anything if you want to use it personally. We'll simply convert your account for you. If you wish to cancel your account entirely, please login and go to your Account section.<br></br>
-					
-					<p><b>Thank you!</b></p>
-					</p>
-					<div style="padding-top:10px;">
-						<hr size="1">
-					</div>
-				</div>
-				<div id="contentFooter" style="padding-top:10px; text-align: left;">
-					<span>Question?</span>
-					#confirmLink( "mailto:support@mycollab.com" "Get help" )
-				</div>
-			</td>
-		</tr>
-		#parse("mailFooter_en-US.html")
-	</table>
+            <td style="padding: 0px 30px; text-align: left;">
+                <div id="contentBody">
+                    <p>Hi <b>${userName}</b>,</p>
+
+                    <p>Your free trial of MyCollab has just ended. If you wish to continue using MyCollab to manage
+                    projects and tasks, you may enter a payment method in your account under Billing Info.</p>
+                    
+                    <p>To access your account, visit  <@lib.hyperLink displayName="Your account" webLink=link/></p>
+
+                    <p>We will keep your account and data safe for 30 days so that you can export it or upgrade to a paid plan.</p>
+
+                    <p>If you have any questions, we are always happy to help, please contact us through our Help Center
+                     at <@lib.hyperLink displayName="http://support.mycollab.com" webLink="http://support.mycollab.com"/>
+                     or our <@lib.hyperLink displayName="Contact Form" webLink="https://www.mycollab.com/contact"/></p>
+                </div>
+                <div id="contentFooter">
+                    Best regards, <br>
+                    John Adams <br>
+                    <span style="font-weight: bold;">MyCollab's Customer Support Team </span><br>
+                    (+84) 862-924-513 <br>
+                    <@lib.hyperLink displayName="support@mycollab.com" webLink="support@mycollab.com"/>
+                </div>
+            </td>
+        </tr>
+        <#include "mailFooter.ftl">
+    </table>
+    <#include "mailUnsubscribe.ftl">
 </body>
-</html>	
+</html>    

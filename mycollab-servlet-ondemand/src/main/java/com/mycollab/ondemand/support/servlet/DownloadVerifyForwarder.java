@@ -1,4 +1,4 @@
-package com.mycollab.module.billing.servlet;
+package com.mycollab.ondemand.support.servlet;
 
 import com.mycollab.core.ResourceNotFoundException;
 import com.mycollab.ondemand.module.support.dao.CommunityLeadMapper;

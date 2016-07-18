@@ -26,6 +26,7 @@
         </javaClientGenerator>
 
         <table domainObjectName="Testimonial" schema="mycollab_base" tableName="s_testimonial" />
+        <table domainObjectName="EmailReference" schema="mycollab_base" tableName="s_email_preference" />
         <table domainObjectName="CommunityLead" schema="mycollab_base" tableName="s_customer_lead" />
     </context>
 

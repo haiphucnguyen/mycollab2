@@ -1,4 +1,4 @@
-package com.mycollab.module.billing.servlet;
+package com.mycollab.ondemand.support.servlet;
 
 import com.mycollab.servlet.GenericHttpServlet;
 
@@ -9,12 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author MyCollab Ltd.
- * @since 4.5.1
+ * @author MyCollab Ltd
+ * @since 5.3.5
  */
-@WebServlet(name = "activateBillingAccountServlet", urlPatterns = "/billing/activate")
-public class ActivateBillingAccountHandler extends GenericHttpServlet {
-
+@WebServlet(name = "unsubsribeEmailHandler", urlPatterns = "/unsubscribe")
+public class UnsubscribeEmailHandler extends GenericHttpServlet {
     @Override
     protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

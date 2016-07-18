@@ -55,3 +55,9 @@ ADD COLUMN `city` VARCHAR(400) NULL;
 
 ALTER TABLE `s_live_instances` ADD COLUMN `edition` VARCHAR(45) NULL;
 
+CREATE TABLE `s_email_preference` (
+  `email` VARCHAR(45) NOT NULL,
+  `createdTime` DATETIME NOT NULL,
+  `subscribe` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`email`));
+
