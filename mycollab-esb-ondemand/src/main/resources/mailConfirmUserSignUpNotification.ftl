@@ -2,19 +2,8 @@
 <html>
 <#import "macroTextBlock.ftl" as lib>
 <#include "mailHeader.ftl">
-<body style="background-color: ${styles.background}; font: ${styles.font}; color: #4e4e4e; padding: 0px;">
-#macro( confirmLink $webLink $displayText )
-<a href="$webLink">$displayText</a>
-#end
-
-#macro( linkBlock $webLink )
-<div style="padding: 20px 15px; background-color: rgb(237, 248, 255);">
-    <a href="$webLink"
-       style="width: 100%; display: inline-block; word-wrap: break-word; white-space: normal;">$webLink</a>
-</div>
-#end
-
-<table width="760" cellpadding="0" cellspacing="0" border="0" style="margin: 20px 0px;">
+<body>
+<table width="760" cellpadding="0" cellspacing="0">
     <#include "mailLogo.ftl">
     <tr>
         <td style="padding: 0px 25px; text-align: center;">

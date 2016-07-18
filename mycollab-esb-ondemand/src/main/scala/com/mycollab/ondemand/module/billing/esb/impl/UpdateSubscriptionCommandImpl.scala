@@ -1,4 +1,4 @@
-package com.mycollab.ondemand.module.esb.billing.impl
+package com.mycollab.ondemand.module.billing.esb.impl
 
 import com.fastspring.FastSpring
 import com.fastspring.domain.{Customer, Subscription}

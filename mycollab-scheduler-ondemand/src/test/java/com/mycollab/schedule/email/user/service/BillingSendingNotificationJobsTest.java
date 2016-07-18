@@ -3,7 +3,6 @@ package com.mycollab.schedule.email.user.service;
 import com.mycollab.module.billing.AccountReminderStatusContants;
 import com.mycollab.module.user.domain.BillingAccount;
 import com.mycollab.module.user.domain.BillingAccountWithOwners;
-import com.mycollab.module.user.domain.BillingPlan;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.ondemand.module.user.schedule.email.impl.BillingSendingNotificationJob;
