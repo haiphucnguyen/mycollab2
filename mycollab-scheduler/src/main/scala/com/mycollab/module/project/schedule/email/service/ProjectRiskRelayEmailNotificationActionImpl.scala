@@ -82,6 +82,7 @@ class ProjectRiskRelayEmailNotificationActionImpl extends SendMailToAllMembersAc
     }
   
     contentGenerator.putVariable("projectName", bean.getProjectName)
+    contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, bean.getProjectid))
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)

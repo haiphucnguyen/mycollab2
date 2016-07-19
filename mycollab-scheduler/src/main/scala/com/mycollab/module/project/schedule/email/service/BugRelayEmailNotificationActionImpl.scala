@@ -73,6 +73,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
     }
 
     contentGenerator.putVariable("projectName", bean.getProjectname)
+    contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, bean.getProjectid))
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
     contentGenerator.putVariable("summary", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
