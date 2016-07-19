@@ -182,8 +182,8 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
     }
 
     @Override
-    public List findPagableListByCriteria(BasicSearchRequest<ProjectMemberSearchCriteria> searchRequest) {
-        return super.findPagableListByCriteria(searchRequest);
+    public List findPageableListByCriteria(BasicSearchRequest<ProjectMemberSearchCriteria> searchRequest) {
+        return super.findPageableListByCriteria(searchRequest);
     }
 
     @Override

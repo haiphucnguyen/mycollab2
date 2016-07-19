@@ -20,16 +20,16 @@ import org.springframework.stereotype.Component
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class DeleteObsoleteAccountJob extends GenericQuartzJobBean {
-  @Autowired private val billingAccountExtService: BillingService = null
+  @Autowired private val billingService: BillingService = null
   @Autowired private val asyncEventBus: AsyncEventBus = null
 
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext): Unit = {
     val searchCriteria = new BillingAccountSearchCriteria
     searchCriteria.setStatuses(new SetSearchField[String]("Trial"))
-    searchCriteria.setLastAccessTime(new DateSearchField(new LocalDate().minusDays(40).toDate))
+    searchCriteria.setLastAccessTime(new DateSearchField(new LocalDate().minusDays(30).toDate))
     import collection.JavaConverters._
-    val obsoleteAccounts = billingAccountExtService.findPagableListByCriteria(new
+    val obsoleteAccounts = billingService.findPageableListByCriteria(new
         BasicSearchRequest[BillingAccountSearchCriteria](searchCriteria, 0, Integer.MAX_VALUE)).asScala.toList
     for (obsoleteAccount <- obsoleteAccounts) {
       val deleteAccountEvent = new DeleteAccountEvent(obsoleteAccount.getId, null)

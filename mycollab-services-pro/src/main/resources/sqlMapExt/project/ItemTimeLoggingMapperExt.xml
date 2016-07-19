@@ -156,7 +156,7 @@
         #end
     </select>
 
-    <select id="findPagableListByCriteria" parameterType="ItemTimeLoggingSearchCriteria"
+    <select id="findPageableListByCriteria" parameterType="ItemTimeLoggingSearchCriteria"
         resultMap="TimeLoggingResult" lang="velocity">
 		(
 		<include refid="selectTask" />

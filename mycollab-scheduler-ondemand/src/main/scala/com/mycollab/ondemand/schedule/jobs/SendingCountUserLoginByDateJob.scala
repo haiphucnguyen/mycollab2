@@ -45,7 +45,7 @@ class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
     criteria.setOrderFields(Arrays.asList(new OrderField("subdomain", SearchCriteria.ASC)))
 
     import scala.collection.JavaConverters._
-    val accessedUsers = userService.findPagableListByCriteria(new BasicSearchRequest[UserSearchCriteria](criteria, 0, Integer.MAX_VALUE)).asScala.toList.asInstanceOf[List[SimpleUser]]
+    val accessedUsers = userService.findPageableListByCriteria(new BasicSearchRequest[UserSearchCriteria](criteria, 0, Integer.MAX_VALUE)).asScala.toList.asInstanceOf[List[SimpleUser]]
     if (accessedUsers != null && accessedUsers.nonEmpty) {
       contentGenerator.putVariable("lstUser", accessedUsers)
       contentGenerator.putVariable("count", accessedUsers.size)

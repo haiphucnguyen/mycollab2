@@ -124,8 +124,8 @@ public class BillingServiceImpl implements BillingService {
     }
 
     @Override
-    public List<SimpleBillingAccount2> findPagableListByCriteria(BasicSearchRequest<BillingAccountSearchCriteria> searchRequest) {
-        return billingAccountMapperExt2.findPagableListByCriteria(searchRequest.getSearchCriteria(),
+    public List<SimpleBillingAccount2> findPageableListByCriteria(BasicSearchRequest<BillingAccountSearchCriteria> searchRequest) {
+        return billingAccountMapperExt2.findPageableListByCriteria(searchRequest.getSearchCriteria(),
                 new RowBounds((searchRequest.getCurrentPage() - 1) * searchRequest.getNumberOfItems(),
                         searchRequest.getNumberOfItems()));
     }

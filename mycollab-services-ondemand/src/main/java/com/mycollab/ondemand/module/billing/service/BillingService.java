@@ -18,7 +18,7 @@ import java.util.List;
  * @since 5.2.8
  */
 public interface BillingService extends IService {
-    List<SimpleBillingAccount2> findPagableListByCriteria(BasicSearchRequest<BillingAccountSearchCriteria> searchRequest);
+    List<SimpleBillingAccount2> findPageableListByCriteria(BasicSearchRequest<BillingAccountSearchCriteria> searchRequest);
 
     void registerAccount(String subDomain, int billingPlanId, String username,
                          String password, String email, String timezoneId,

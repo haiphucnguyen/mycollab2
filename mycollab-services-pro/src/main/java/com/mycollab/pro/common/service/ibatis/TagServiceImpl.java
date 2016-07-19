@@ -67,7 +67,7 @@ public class TagServiceImpl extends DefaultCrudService<Integer, Tag> implements 
         TagSearchCriteria searchCriteria = new TagSearchCriteria();
         searchCriteria.setSaccountid(NumberSearchField.and(accountId));
         searchCriteria.setProjectId(NumberSearchField.and(projectId));
-        return tagMapperExt.findPagableListByCriteria(searchCriteria, new RowBounds(0, Integer.MAX_VALUE));
+        return tagMapperExt.findPageableListByCriteria(searchCriteria, new RowBounds(0, Integer.MAX_VALUE));
     }
 
     @Override

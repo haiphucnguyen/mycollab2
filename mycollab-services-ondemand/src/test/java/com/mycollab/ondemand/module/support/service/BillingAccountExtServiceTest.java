@@ -36,7 +36,7 @@ public class BillingAccountExtServiceTest extends IntegrationServiceTest {
         BillingAccountSearchCriteria criteria = new BillingAccountSearchCriteria();
         criteria.setStatuses(new SetSearchField<>("Active"));
         criteria.setLastAccessTime(new DateSearchField(new LocalDate(2016, 1, 3).toDate()));
-        List<SimpleBillingAccount2> billingAccounts = billingService.findPagableListByCriteria(
+        List<SimpleBillingAccount2> billingAccounts = billingService.findPageableListByCriteria(
                 new BasicSearchRequest<>(criteria));
         assertThat(billingAccounts).hasSize(2);
         Collection<SimpleBillingAccount2> filter = Collections2.filter(billingAccounts, new Predicate<SimpleBillingAccount2>() {

@@ -77,7 +77,7 @@ public class StandupReportServiceImpl extends DefaultService<Integer, StandupRep
         criteria.setProjectIds(new SetSearchField<>(projectId));
         criteria.setLogBy(StringSearchField.and(username));
         criteria.setOnDate(new DateSearchField(onDate));
-        List reports = standupReportMapperExt.findPagableListByCriteria(criteria, new RowBounds(0, Integer.MAX_VALUE));
+        List reports = standupReportMapperExt.findPageableListByCriteria(criteria, new RowBounds(0, Integer.MAX_VALUE));
 
         if (CollectionUtils.isNotEmpty(reports)) {
             return (SimpleStandupReport) reports.get(0);

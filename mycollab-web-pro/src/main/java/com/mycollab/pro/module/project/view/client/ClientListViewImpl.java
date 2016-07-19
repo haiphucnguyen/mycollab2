@@ -69,7 +69,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
         this.searchCriteria = searchCriteria;
         content.removeAllComponents();
         AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-        List<SimpleAccount> clients = accountService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
+        List<SimpleAccount> clients = accountService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
         for (SimpleAccount client : clients) {
             content.addComponent(generateClientBlock(client));
         }

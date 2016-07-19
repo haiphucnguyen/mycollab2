@@ -230,7 +230,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         searchCriteria.setSaccountid(new NumberSearchField(sAccountId));
         searchCriteria.setParentTaskId(new NumberSearchField(parentTaskId));
         searchCriteria.setOrderFields(Collections.singletonList(orderField));
-        return taskMapperExt.findPagableListByCriteria(searchCriteria, new RowBounds(0, Integer.MAX_VALUE));
+        return taskMapperExt.findPageableListByCriteria(searchCriteria, new RowBounds(0, Integer.MAX_VALUE));
     }
 
     @Override

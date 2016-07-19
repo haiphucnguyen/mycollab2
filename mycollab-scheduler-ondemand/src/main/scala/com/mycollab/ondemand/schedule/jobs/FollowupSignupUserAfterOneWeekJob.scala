@@ -36,7 +36,7 @@ class FollowupSignupUserAfterOneWeekJob extends GenericQuartzJobBean {
     searchCriteria.setRegisterTimeDuration(new RangeDateSearchField(now.minusDays(7).toDate, now.minusDays(6).toDate))
     searchCriteria.setStatuses(new SetSearchField[String](AccountStatusConstants.TRIAL))
     import collection.JavaConverters._
-    val accounts = billingService.findPagableListByCriteria(new
+    val accounts = billingService.findPageableListByCriteria(new
         BasicSearchRequest[BillingAccountSearchCriteria](searchCriteria)).asScala
     for (account <- accounts) {
       val accountOwners = account.getAccountOwners.asScala

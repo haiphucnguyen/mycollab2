@@ -115,7 +115,7 @@ public class ProjectTemplateServiceImpl implements ProjectTemplateService {
         Map<Integer, Integer> mapRoleIds = new HashMap<>();
         ProjectRoleSearchCriteria searchCriteria = new ProjectRoleSearchCriteria();
         searchCriteria.setProjectId(new NumberSearchField(projectId));
-        List<SimpleProjectRole> roles = projectRoleService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        List<SimpleProjectRole> roles = projectRoleService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         for (SimpleProjectRole role : roles) {
             role.setId(null);
             role.setProjectid(newProjectId);
@@ -131,7 +131,7 @@ public class ProjectTemplateServiceImpl implements ProjectTemplateService {
         Map<Integer, Integer> taskMapIds = new HashMap<>();
         TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
         searchCriteria.setProjectId(NumberSearchField.and(projectId));
-        List<SimpleTask> tasks = projectTaskService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        List<SimpleTask> tasks = projectTaskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         cloneProjectTasks(newProjectId, milestoneMapIds, taskMapIds, tasks, username);
     }
 
@@ -171,7 +171,7 @@ public class ProjectTemplateServiceImpl implements ProjectTemplateService {
         Map<Integer, Integer> versionMapIds = new HashMap<>();
         VersionSearchCriteria searchCriteria = new VersionSearchCriteria();
         searchCriteria.setProjectId(NumberSearchField.and(projectId));
-        List<SimpleVersion> versions = versionService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        List<SimpleVersion> versions = versionService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         for (SimpleVersion version : versions) {
             Integer versionId = version.getId();
             version.setId(null);
@@ -187,7 +187,7 @@ public class ProjectTemplateServiceImpl implements ProjectTemplateService {
         Map<Integer, Integer> componentMapIds = new HashMap<>();
         ComponentSearchCriteria searchCriteria = new ComponentSearchCriteria();
         searchCriteria.setProjectId(NumberSearchField.and(projectId));
-        List<SimpleComponent> components = componentService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        List<SimpleComponent> components = componentService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         for (SimpleComponent component : components) {
             Integer componentId = component.getId();
             component.setId(null);
@@ -204,7 +204,7 @@ public class ProjectTemplateServiceImpl implements ProjectTemplateService {
         LOG.info("Clone project bugs");
         BugSearchCriteria searchCriteria = new BugSearchCriteria();
         searchCriteria.setProjectId(NumberSearchField.and(projectId));
-        List<SimpleBug> bugs = bugService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        List<SimpleBug> bugs = bugService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         for (SimpleBug bug : bugs) {
             bug.setId(null);
             bug.setProjectid(newProjectId);
@@ -246,7 +246,7 @@ public class ProjectTemplateServiceImpl implements ProjectTemplateService {
         searchCriteria.setProjectId(new NumberSearchField(projectId));
         searchCriteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE,
                 ProjectMemberStatusConstants.NOT_ACCESS_YET));
-        List<SimpleProjectMember> members = projectMemberService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        List<SimpleProjectMember> members = projectMemberService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         for (SimpleProjectMember member : members) {
             member.setId(null);
             member.setProjectid(newProjectId);
@@ -262,7 +262,7 @@ public class ProjectTemplateServiceImpl implements ProjectTemplateService {
         LOG.info("Clone project messages");
         MessageSearchCriteria searchCriteria = new MessageSearchCriteria();
         searchCriteria.setProjectids(new SetSearchField<>(projectId));
-        List<SimpleMessage> messages = messageService.findPagableListByCriteria(new BasicSearchRequest<>
+        List<SimpleMessage> messages = messageService.findPageableListByCriteria(new BasicSearchRequest<>
                 (searchCriteria, 0, Integer.MAX_VALUE));
         for (SimpleMessage message : messages) {
             message.setId(null);
@@ -275,7 +275,7 @@ public class ProjectTemplateServiceImpl implements ProjectTemplateService {
         LOG.info("Clone project risks");
         RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
         searchCriteria.setProjectId(NumberSearchField.and(projectId));
-        List<SimpleRisk> risks = riskService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        List<SimpleRisk> risks = riskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         for (SimpleRisk risk : risks) {
             risk.setId(null);
             risk.setProjectid(newProjectId);
@@ -288,7 +288,7 @@ public class ProjectTemplateServiceImpl implements ProjectTemplateService {
         Map<Integer, Integer> milestoneMapIds = new HashMap<>();
         MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(projectId));
-        List<SimpleMilestone> milestones = milestoneService.findPagableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        List<SimpleMilestone> milestones = milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         for (SimpleMilestone milestone : milestones) {
             Integer milestoneId = milestone.getId();
             milestone.setId(null);

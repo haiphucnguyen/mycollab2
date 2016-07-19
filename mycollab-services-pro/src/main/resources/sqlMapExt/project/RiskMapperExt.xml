@@ -116,7 +116,7 @@
         #end
     </select>
 
-    <select id="findPagableListByCriteria" resultMap="RiskResult" parameterType="RiskSearchCriteria" lang="velocity">
+    <select id="findPageableListByCriteria" resultMap="RiskResult" parameterType="RiskSearchCriteria" lang="velocity">
         <include refid="selectRisk" />
         #ifnotnull($_parameter.searchCriteria)
           #trimext("WHERE" "AND|OR")

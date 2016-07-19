@@ -12,5 +12,5 @@ import java.util.List;
  * @since 5.0.1
  */
 public interface TagMapperExt {
-    List<AggregateTag> findPagableListByCriteria(@Param("searchCriteria") TagSearchCriteria criteria, RowBounds rowBounds);
+    List<AggregateTag> findPageableListByCriteria(@Param("searchCriteria") TagSearchCriteria criteria, RowBounds rowBounds);
 }

@@ -64,7 +64,7 @@
         #end
     </select>
 
-    <select id="findPagableListByCriteria" parameterType="InvoiceSearchCriteria" resultMap="InvoiceResult" lang="velocity">
+    <select id="findPageableListByCriteria" parameterType="InvoiceSearchCriteria" resultMap="InvoiceResult" lang="velocity">
         <include refid="selectInvoice" />
         #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")

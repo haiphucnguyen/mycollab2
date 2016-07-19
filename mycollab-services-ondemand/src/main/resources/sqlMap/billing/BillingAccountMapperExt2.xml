@@ -58,7 +58,7 @@
         s_account.createdTime DESC
     </sql>
 
-    <select id="findPagableListByCriteria" resultMap="SimpleBillingAccountResult" parameterType="BillingAccountSearchCriteria" lang="velocity">
+    <select id="findPageableListByCriteria" resultMap="SimpleBillingAccountResult" parameterType="BillingAccountSearchCriteria" lang="velocity">
         <include refid="selectBillingAccount" />
         #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")
@@ -107,4 +107,14 @@
         WHERE s_account.status="Trial" AND s_billing_plan.billingType <> 'Free'
         ]]>
     </select>
+
+    <select id="getUsersNotBelongToAnyAccount" resultMap="com.mycollab.module.user.dao.UserMapper.BaseResultMap"
+            lang="velocity">
+        SELECT username, avatarId FROM s_user
+        WHERE (SELECT COUNT(*) FROM s_user_account WHERE s_user.username = s_user_account.username) = 0
+    </select>
+
+    <delete id="removeUsersNotBelongToAnyAccount" lang="velocity">
+        DELETE FROM s_user WHERE (SELECT COUNT(*) FROM s_user_account WHERE s_user.username = s_user_account.username) = 0
+    </delete>
 </mapper>
