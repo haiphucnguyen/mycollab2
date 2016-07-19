@@ -1,8 +1,7 @@
 package com.mycollab.ondemand.support.servlet;
 
-import com.mycollab.ondemand.module.support.dao.EmailReferenceMapper;
-import com.mycollab.ondemand.module.support.domain.EmailReference;
-import com.mycollab.ondemand.module.support.domain.EmailReferenceExample;
+import com.mycollab.core.ResourceNotFoundException;
+import com.mycollab.ondemand.module.support.service.EmailReferenceService;
 import com.mycollab.servlet.GenericHttpServlet;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +19,15 @@ import java.io.IOException;
 @WebServlet(name = "unsubsribeEmailHandler", urlPatterns = "/unsubscribe/action")
 public class UnsubscribeEmailPreferenceHandler extends GenericHttpServlet {
     @Autowired
-    private EmailReferenceMapper emailReferenceMapper;
+    private EmailReferenceService emailReferenceService;
 
     @Override
     protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, TemplateException {
         String email = request.getParameter("email");
         if (email != null) {
-            EmailReferenceExample ex = new EmailReferenceExample();
-            ex.createCriteria().andEmailEqualTo(email);
-            emailReferenceMapper.deleteByExample(ex);
+            emailReferenceService.remove(email);
+        } else {
+            throw new ResourceNotFoundException();
         }
     }
 }

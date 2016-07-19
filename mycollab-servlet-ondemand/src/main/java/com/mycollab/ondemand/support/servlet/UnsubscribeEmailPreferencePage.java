@@ -1,12 +1,9 @@
 package com.mycollab.ondemand.support.servlet;
 
 import com.mycollab.common.UrlEncodeDecoder;
-import com.mycollab.common.UrlTokenizer;
 import com.mycollab.core.ResourceNotFoundException;
-import com.mycollab.ondemand.module.support.dao.EmailReferenceMapper;
 import com.mycollab.servlet.TemplateWebServletRequestHandler;
 import freemarker.template.TemplateException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,9 +21,6 @@ import java.util.Map;
 @WebServlet(name = "unsubsribeEmailPage", urlPatterns = "/unsubscribe")
 public class UnsubscribeEmailPreferencePage extends TemplateWebServletRequestHandler {
 
-    @Autowired
-    private EmailReferenceMapper emailReferenceMapper;
-
     @Override
     protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, TemplateException {
         String encryptEmail = request.getParameter("email");
@@ -34,6 +28,8 @@ public class UnsubscribeEmailPreferencePage extends TemplateWebServletRequestHan
             String email = UrlEncodeDecoder.decode(encryptEmail);
             Map<String, Object> context = new HashMap<>();
             context.put("email", email);
+            String unSubscribeUrl = request.getContextPath() + "/unsubscribe/action";
+            context.put("unSubscribeUrl", unSubscribeUrl);
             String html = generatePageByTemplate(response.getLocale(), "pageEmailUnsubscribe.ftl", context);
             PrintWriter out = response.getWriter();
             out.print(html);
