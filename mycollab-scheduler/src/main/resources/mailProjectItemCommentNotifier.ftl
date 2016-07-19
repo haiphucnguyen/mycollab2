@@ -22,7 +22,7 @@
                 <@lib.commentBlock avatar=commentItem.ownerAvatarId displayName=commentItem.ownerFullName comment=commentItem.comment/>
             </#list>
         </#if>
-        <#include "mailFooter.ftl">
     </table>
+    <#include "mailProjectFooter.ftl">
 </body>
 </html>

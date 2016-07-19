@@ -4,7 +4,7 @@
 <#import "macroTextBlock.ftl" as lib>
 <#include "mailHeader.ftl">
 </head>
-<body>
+<body style="width:600px">
     <table width="600" cellpadding="0" cellspacing="0" class="wrapContent">
         <#include "mailLogo.ftl">
         <tr>
@@ -32,7 +32,6 @@
                 </div>
             </td>
         </tr>
-        <#include "mailFooter.ftl">
     </table>
     <#include "mailUnsubscribe.ftl">
 </body>

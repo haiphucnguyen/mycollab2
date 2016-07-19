@@ -11,6 +11,6 @@
         <a style="display: inline-block; vertical-align: middle;" href="${defaultUrls.twitter_url}">
           <img src="${defaultUrls.cdn_url}icons/email/footer-twitter.png">
         </a>
-      </div>
-    </td>
+    </div>
+  </td>
 </tr>

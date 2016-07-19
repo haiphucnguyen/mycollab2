@@ -26,6 +26,6 @@
                 </#if>
             </td>
         </tr>
-        <#include "mailFooter.ftl">
     </table>
+    <#include "mailProjectFooter.ftl">
 </body>

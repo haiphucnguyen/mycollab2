@@ -86,6 +86,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("userName", user.getUsername)
       val link = GenericLinkUtils.generateSiteUrlByAccountId(account.getId) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
       contentGenerator.putVariable("link", link)
+      System.out.println(contentGenerator.parseFile("mailInformAccountIsExpiredNotification.ftl", Locale.US))
       extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)),
         null, null, "Your trial has expired",

@@ -12,7 +12,7 @@
                 <@lib.block content=comment.changecomment!/>
             </td>
         </tr>
-        <#include "mailFooter.ftl">
+        <#include "mailCrmFooter.ftl">
     </table>
 </body>
 </html>

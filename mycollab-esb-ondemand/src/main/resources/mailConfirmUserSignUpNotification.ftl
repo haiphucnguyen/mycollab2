@@ -2,8 +2,8 @@
 <html>
 <#import "macroTextBlock.ftl" as lib>
 <#include "mailHeader.ftl">
-<body>
-<table width="760" cellpadding="0" cellspacing="0">
+<body style="width: 600px">
+<table width="600" cellpadding="0" cellspacing="0">
     <#include "mailLogo.ftl">
     <tr>
         <td style="padding: 0px 25px; text-align: center;">
@@ -45,7 +45,7 @@
             </div>
         </td>
     </tr>
-    <#include "mailFooter.ftl">
 </table>
+<#include "mailFooter2.ftl">
 </body>
 </html>    
