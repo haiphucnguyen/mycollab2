@@ -38,8 +38,7 @@ class FollowupDownloadedUsersAfterOneWeekJob extends GenericQuartzJobBean {
     for (customerLead <- leads) {
       val leadName = customerLead.getFirstname + " " + customerLead.getLastname
       contentGenerator.putVariable("lead", leadName)
-//      contentGenerator.putVariable("unsubscribeUrl", SupportLinkGenerator.generateUnsubscribeEmailFullLink(SiteConfiguration.getSiteUrl("settings"), customerLead.getEmail))
-      System.out.println(contentGenerator.parseFile("mailFollowupDownloadedUserAfter1Week.ftl"))
+      contentGenerator.putVariable("unsubscribeUrl", SupportLinkGenerator.generateUnsubscribeEmailFullLink(SiteConfiguration.getSiteUrl("settings"), customerLead.getEmail))
       extMailService.sendHTMLMail("john.adam@mycollab.com", "John Adams",
         Arrays.asList(new MailRecipientField(customerLead.getEmail, leadName)),
         null, null, "How are things going with MyCollab?",

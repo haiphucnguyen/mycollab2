@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class FollowupSignupUserAfterOneWeekJob extends GenericQuartzJobBean {
   @Autowired var contentGenerator: IContentGenerator = _
-  @Autowired var billingAccountExtService: BillingService = _
+  @Autowired var billingService: BillingService = _
   @Autowired var extMailService: ExtMailService = _
   
   @throws(classOf[JobExecutionException])
@@ -36,11 +36,12 @@ class FollowupSignupUserAfterOneWeekJob extends GenericQuartzJobBean {
     searchCriteria.setRegisterTimeDuration(new RangeDateSearchField(now.minusDays(7).toDate, now.minusDays(6).toDate))
     searchCriteria.setStatuses(new SetSearchField[String](AccountStatusConstants.TRIAL))
     import collection.JavaConverters._
-    val accounts = billingAccountExtService.findPagableListByCriteria(new
+    val accounts = billingService.findPagableListByCriteria(new
         BasicSearchRequest[BillingAccountSearchCriteria](searchCriteria)).asScala
     for (account <- accounts) {
       val accountOwners = account.getAccountOwners.asScala
-      for (accountOwner <- accountOwners) {
+      for (accountOwner <- accountOwners
+           if accountOwner.getCanSendEmail) {
         val leadName = accountOwner.getFirstname + " " + accountOwner.getLastname
         contentGenerator.putVariable("lead", leadName)
         contentGenerator.putVariable("unsubscribeUrl", SupportLinkGenerator.generateUnsubscribeEmailFullLink(SiteConfiguration.getSiteUrl("settings"), accountOwner.getEmail))
