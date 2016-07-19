@@ -6,6 +6,7 @@ import com.mycollab.ondemand.module.support.domain.CommunityLead;
 import com.mycollab.ondemand.module.support.domain.CommunityLeadExample;
 import com.mycollab.ondemand.module.support.domain.EditionInfo;
 import com.mycollab.ondemand.module.support.service.EditionInfoResolver;
+import com.mycollab.ondemand.module.support.service.EmailReferenceService;
 import com.mycollab.servlet.GenericHttpServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,14 +29,17 @@ public class DownloadVerifyForwarder extends GenericHttpServlet {
     @Autowired
     private EditionInfoResolver editionInfoResolver;
 
+    @Autowired
+    private EmailReferenceService emailReferenceService;
+
     @Override
     protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
+        String email = request.getParameter("email");
         String edition = request.getParameter("edition");
         final EditionInfo info = editionInfoResolver.getEditionInfo();
 
         CommunityLeadExample ex = new CommunityLeadExample();
-        ex.createCriteria().andEmailEqualTo(username);
+        ex.createCriteria().andEmailEqualTo(email);
         if (communityLeadMapper.countByExample(ex) > 0) {
             CommunityLead lead = new CommunityLead();
             lead.setValid(true);
@@ -45,6 +49,7 @@ public class DownloadVerifyForwarder extends GenericHttpServlet {
             } else {
                 response.sendRedirect(info.getCommunityDownloadLink());
             }
+            emailReferenceService.save(email);
         } else {
             throw new ResourceNotFoundException();
         }

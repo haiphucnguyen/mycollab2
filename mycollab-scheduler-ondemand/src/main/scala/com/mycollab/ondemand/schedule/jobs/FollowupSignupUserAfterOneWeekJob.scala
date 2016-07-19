@@ -3,11 +3,13 @@ package com.mycollab.ondemand.schedule.jobs
 import java.util.Arrays
 
 import com.mycollab.common.domain.MailRecipientField
+import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.db.arguments.{BasicSearchRequest, RangeDateSearchField, SetSearchField}
 import com.mycollab.module.billing.AccountStatusConstants
 import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
 import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria
 import com.mycollab.ondemand.module.billing.service.BillingService
+import com.mycollab.ondemand.module.support.SupportLinkGenerator
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.joda.time.DateTime
 import org.quartz.{JobExecutionContext, JobExecutionException}
@@ -41,6 +43,7 @@ class FollowupSignupUserAfterOneWeekJob extends GenericQuartzJobBean {
       for (accountOwner <- accountOwners) {
         val leadName = accountOwner.getFirstname + " " + accountOwner.getLastname
         contentGenerator.putVariable("lead", leadName)
+        contentGenerator.putVariable("unsubscribeUrl", SupportLinkGenerator.generateUnsubscribeEmailFullLink(SiteConfiguration.getSiteUrl("settings"), accountOwner.getEmail))
         extMailService.sendHTMLMail("john.adam@mycollab.com", "John Adams",
           Arrays.asList(new MailRecipientField(accountOwner.getEmail, leadName)),
           null, null, "How are things going with MyCollab?",

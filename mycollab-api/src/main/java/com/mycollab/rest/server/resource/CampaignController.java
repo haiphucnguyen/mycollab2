@@ -6,6 +6,7 @@ import com.mycollab.core.MyCollabVersion;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.module.mail.service.IContentGenerator;
+import com.mycollab.ondemand.module.support.SupportLinkGenerator;
 import com.mycollab.ondemand.module.support.dao.CommunityLeadMapper;
 import com.mycollab.ondemand.module.support.domain.CommunityLead;
 import com.mycollab.ondemand.module.support.domain.CommunityLeadExample;
@@ -84,9 +85,9 @@ public class CampaignController {
                 contentGenerator.putVariable("lastname", lastname);
                 contentGenerator.putVariable("version", info.getVersion());
                 if ("Ultimate".equals(edition)) {
-                    contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab.com/download/verify?username=%s&&edition=Ultimate", email));
+                    contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab.com/download/verify?email=%s&&edition=Ultimate", email));
                 } else {
-                    contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab.com/download/verify?username=%s", email));
+                    contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab.com/download/verify?email=%s", email));
                 }
 
                 extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),

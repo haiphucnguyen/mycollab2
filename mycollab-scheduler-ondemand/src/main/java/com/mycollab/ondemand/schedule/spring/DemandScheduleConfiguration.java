@@ -96,7 +96,7 @@ public class DemandScheduleConfiguration {
     public CronTriggerFactoryBean sendOneweekFollowupDownloadedUsersTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(sendOneWeekFollowupDownloadedUsersJob().getObject());
-        bean.setCronExpression("0 0 0 * * ?");
+        bean.setCronExpression("0 * * * * ?");
         return bean;
     }
 

@@ -27,3 +27,4 @@
 </table>
 <#include "mailUnsubscribe.ftl">
 </body>
+</html>

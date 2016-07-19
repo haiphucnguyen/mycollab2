@@ -10,6 +10,7 @@ import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.module.mail.service.IContentGenerator;
 import com.mycollab.ondemand.module.billing.dao.ProEditionInfoMapper;
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfo;
+import com.mycollab.ondemand.module.support.SupportLinkGenerator;
 import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.pro.license.LicenseType;
 import com.mycollab.reporting.ReportStyles;
