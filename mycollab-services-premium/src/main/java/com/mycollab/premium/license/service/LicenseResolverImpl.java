@@ -12,10 +12,10 @@ import com.verhas.licensor.License;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,22 +23,39 @@ import java.io.*;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Properties;
+import java.util.UUID;
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.6
  */
 @Service
-public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
+public class LicenseResolverImpl implements LicenseResolver, AppPropertiesService, InitializingBean {
     private static final Logger LOG = LoggerFactory.getLogger(LicenseResolverImpl.class);
 
+    private Properties properties;
     private LicenseInfo licenseInfo = null;
-
-    @Autowired
-    private AppPropertiesService appPropertiesService;
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        File homeFolder = FileUtils.getHomeFolder();
+        File sysFile = new File(homeFolder, ".app.properties");
+        properties = new Properties();
+        try {
+            if (sysFile.isFile() && sysFile.exists()) {
+                properties.load(new FileInputStream(sysFile));
+                String startDate = properties.getProperty("startdate");
+                if (startDate == null) {
+                    properties.setProperty("startdate", DateTimeUtils.formatDateToW3C(new GregorianCalendar().getTime()));
+                }
+            } else {
+                properties.setProperty("id", UUID.randomUUID().toString() + new LocalDateTime().getMillisOfSecond());
+                properties.setProperty("startdate", DateTimeUtils.formatDateToW3C(new GregorianCalendar().getTime()));
+            }
+        } catch (IOException e) {
+            LOG.error("Error", e);
+        }
+
         File licenseFile = getLicenseFile();
         if (licenseFile.isFile() && licenseFile.exists()) {
             byte[] licenseBytes = org.apache.commons.io.FileUtils.readFileToByteArray(licenseFile);
@@ -46,11 +63,18 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
         } else {
             acquireALicense();
         }
+
+        properties.store(new FileOutputStream(sysFile), "");
     }
 
     private File getLicenseFile() {
         File homeDir = FileUtils.getHomeFolder();
-        return new File(homeDir, "mycollab.lic");
+        File potentialOldFile = new File(homeDir, "mycollab.lic");
+        File licenseFile = new File(homeDir, ".mycollab.lic");
+        if (potentialOldFile.exists() && !licenseFile.exists()) {
+            potentialOldFile.renameTo(licenseFile);
+        }
+        return licenseFile;
     }
 
     @Override
@@ -64,12 +88,14 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
 
     private void acquireALicense() {
         LOG.info("Acquire the trial license");
-        DateTime startDate = new DateTime(appPropertiesService.getStartDate());
+        DateTime startDate = new DateTime(getStartDate());
         DateTime now = new DateTime();
         int days = (int) new Duration(startDate, now).getStandardDays();
-        if (days > 30) {
-            licenseInfo = createTempValidLicense(30);
-        } else {
+        String edition = properties.getProperty("edition", "Community");
+        if (!getEdition().equals(edition))
+            days = 30;
+        if (!getEdition().equals(edition) || days < 30) {
+            properties.setProperty("edition", getEdition());
             RestTemplate restTemplate = new RestTemplate();
             try {
                 String licenseRequest = restTemplate.postForObject(SiteConfiguration.getApiUrl("order/register-trial"), null, String.class);
@@ -78,6 +104,8 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
                 LOG.error("Can not retrieve a trial license", e);
                 licenseInfo = createTempValidLicense(30 - days);
             }
+        } else {
+            licenseInfo = createInvalidLicense();
         }
     }
 
@@ -146,5 +174,25 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
     @Override
     public LicenseInfo getLicenseInfo() {
         return licenseInfo;
+    }
+
+    @Override
+    public String getSysId() {
+        return properties.getProperty("id", UUID.randomUUID().toString() + new LocalDateTime().getMillisOfSecond());
+    }
+
+    @Override
+    public Date getStartDate() {
+        try {
+            String dateValue = properties.getProperty("startdate");
+            return DateTimeUtils.convertDateByString(dateValue, "yyyy-MM-dd'T'HH:mm:ss");
+        } catch (Exception e) {
+            return new GregorianCalendar().getTime();
+        }
+    }
+
+    @Override
+    public String getEdition() {
+        return "Premium";
     }
 }

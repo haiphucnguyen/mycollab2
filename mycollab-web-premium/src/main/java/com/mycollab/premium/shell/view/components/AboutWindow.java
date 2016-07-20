@@ -10,10 +10,8 @@ import com.mycollab.premium.license.service.LicenseResolver;
 import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.shell.view.components.AbstractAboutWindow;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AbstractLicenseActivationWindow;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebResourceIds;
@@ -24,7 +22,6 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -88,8 +85,7 @@ public class AboutWindow extends AbstractAboutWindow {
                 close();
             }).withStyleName(UIConstants.BUTTON_ACTION);
             MButton editLicenseBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE), clickEvent -> {
-                Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
-                UI.getCurrent().addWindow(activateWindow);
+                UI.getCurrent().addWindow(new LicenseActivationWindow());
                 close();
             }).withStyleName(UIConstants.BUTTON_ACTION);
             rightPanel.addComponent(new MHorizontalLayout(buyBtn, editLicenseBtn));

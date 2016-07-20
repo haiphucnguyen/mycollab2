@@ -36,7 +36,7 @@ public class ContactUsController {
                 new Li().appendText(String.format("Subject: %s", subject)),
                 new Li().appendText(String.format("Message: %s", message))));
         mailRelayService.saveRelayEmail(new String[]{"Sir"},
-                new String[]{"hainguyen@mycollab.com"}, "New guy want to contact", bodyContent.write());
+                new String[]{"hainguyen@mycollab.com"}, "MyCollab inquiry", bodyContent.write());
         return "Ok";
     }
 }

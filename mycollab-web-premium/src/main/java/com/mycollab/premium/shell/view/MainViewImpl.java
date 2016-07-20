@@ -13,6 +13,7 @@ import com.mycollab.module.user.ui.SettingAssetsManager;
 import com.mycollab.module.user.ui.SettingUIConstants;
 import com.mycollab.premium.license.service.LicenseResolver;
 import com.mycollab.premium.shell.view.components.BuyPremiumSoftwareWindow;
+import com.mycollab.premium.shell.view.components.LicenseActivationWindow;
 import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.shell.view.AbstractMainView;
@@ -61,10 +62,14 @@ public class MainViewImpl extends AbstractMainView {
         LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
         if (licenseInfo != null) {
             if (licenseInfo.isExpired()) {
-                MButton buyPremiumBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.EXPIRE_NOTIFICATION),
-                        clickEvent -> UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow()))
-                        .withIcon(FontAwesome.SHOPPING_CART).withStyleName("ad");
-                accountLayout.addComponent(buyPremiumBtn);
+                if (licenseInfo.isTrial()) {
+                    UI.getCurrent().addWindow(new LicenseActivationWindow());
+                } else {
+                    MButton buyPremiumBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.EXPIRE_NOTIFICATION),
+                            clickEvent -> UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow()))
+                            .withIcon(FontAwesome.SHOPPING_CART).withStyleName("ad");
+                    accountLayout.addComponent(buyPremiumBtn);
+                }
             } else if (licenseInfo.isTrial()) {
                 Duration dur = new Duration(new DateTime(), new DateTime(licenseInfo.getExpireDate()));
                 int days = dur.toStandardDays().getDays();

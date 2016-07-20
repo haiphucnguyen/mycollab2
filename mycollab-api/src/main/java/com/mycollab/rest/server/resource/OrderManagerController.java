@@ -24,6 +24,7 @@ import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
 import net.sf.dynamicreports.report.constant.Markup;
 import net.sf.dynamicreports.report.constant.PageType;
 import org.apache.commons.io.FileUtils;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -144,7 +145,7 @@ public class OrderManagerController {
         return encode(info);
     }
 
-    private String encode(LicenseInfo licenseInfo) {
+    private static String encode(LicenseInfo licenseInfo) {
         try {
             Properties prop = new Properties();
             prop.setProperty("customerId", licenseInfo.getCustomerId());
@@ -167,7 +168,7 @@ public class OrderManagerController {
         }
     }
 
-    private Properties decode(String encodeStr) {
+    private static Properties decode(String encodeStr) {
         try {
             License license = new License();
             InputStream publicStream = OrderManagerController.class.getClassLoader().getResourceAsStream("pubring.gpg");
@@ -224,5 +225,16 @@ public class OrderManagerController {
 
         report.toPdf(new FileOutputStream(referenceFile));
         return referenceFile;
+    }
+
+    public static void main(String[] args) {
+        LicenseInfo licenseInfo = new LicenseInfo();
+        licenseInfo.setCustomerId("0");
+        licenseInfo.setExpireDate(new DateTime().minusDays(1).toDate());
+        licenseInfo.setIssueDate(new DateTime().minusDays(30).toDate());
+        licenseInfo.setMaxUsers(10);
+        licenseInfo.setLicenseType(LicenseType.PRO_TRIAL);
+        licenseInfo.setLicenseOrg("Org");
+        System.out.println(encode(licenseInfo));
     }
 }

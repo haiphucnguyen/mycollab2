@@ -7,9 +7,7 @@ import com.mycollab.core.utils.StringUtils;
 import com.mycollab.premium.license.service.LicenseResolver;
 import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AbstractLicenseActivationWindow;
 import com.mycollab.vaadin.AppContext;
-import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.UIConstants;
@@ -22,6 +20,7 @@ import org.vaadin.easyuploads.UploadField;
 import org.vaadin.hene.flexibleoptiongroup.FlexibleOptionGroup;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 import java.io.InputStream;
 
@@ -29,8 +28,7 @@ import java.io.InputStream;
  * @author MyCollab Ltd
  * @since 5.2.6
  */
-@ViewComponent
-public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
+public class LicenseActivationWindow extends MWindow {
     private static final Logger LOG = LoggerFactory.getLogger(LicenseActivationWindow.class);
 
     private static final String ACT_CODE = "ACT_CODE";
@@ -42,10 +40,8 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
     private Button changeLicenseBtn;
 
     public LicenseActivationWindow() {
-        super();
-        this.setModal(true);
-        this.setResizable(false);
-        this.setWidth("700px");
+        super("Activate MyCollab");
+        this.withModal(true).withResizable(false).withWidth("700px");
         MVerticalLayout content = new MVerticalLayout();
         ELabel titleLbl = ELabel.h2(AppContext.getMessage(LicenseI18nEnum.OPT_LICENSE_ACTIVATED));
 

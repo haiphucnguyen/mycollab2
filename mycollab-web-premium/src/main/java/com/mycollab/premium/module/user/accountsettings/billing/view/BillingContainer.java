@@ -19,20 +19,18 @@ package com.mycollab.premium.module.user.accountsettings.billing.view;
 import com.mycollab.common.i18n.LicenseI18nEnum;
 import com.mycollab.module.user.accountsettings.billing.view.IBillingContainer;
 import com.mycollab.premium.license.service.LicenseResolver;
+import com.mycollab.premium.shell.view.components.LicenseActivationWindow;
 import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AbstractLicenseActivationWindow;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 import org.vaadin.viritin.button.MButton;
 
 /**
@@ -77,10 +75,8 @@ public class BillingContainer extends AbstractPageView implements IBillingContai
             with(layoutHelper.getLayout()).withAlign(layoutHelper.getLayout(), Alignment.TOP_CENTER);
 
             if (licenseInfo.isTrial() || licenseInfo.isExpired() || licenseInfo.isInvalid()) {
-                MButton licenseBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE), clickEvent -> {
-                    Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
-                    UI.getCurrent().addWindow(activateWindow);
-                }).withStyleName(UIConstants.BUTTON_ACTION);
+                MButton licenseBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE),
+                        clickEvent -> UI.getCurrent().addWindow(new LicenseActivationWindow())).withStyleName(UIConstants.BUTTON_ACTION);
 
                 with(licenseBtn).withAlign(licenseBtn, Alignment.TOP_CENTER);
             }
