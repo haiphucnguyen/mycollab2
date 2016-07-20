@@ -55,6 +55,7 @@ public class MeetingServiceImpl extends DefaultService<Integer, MeetingWithBLOBs
 
     @Autowired
     private MeetingMapper meetingMapper;
+
     @Autowired
     private MeetingMapperExt meetingMapperExt;
 

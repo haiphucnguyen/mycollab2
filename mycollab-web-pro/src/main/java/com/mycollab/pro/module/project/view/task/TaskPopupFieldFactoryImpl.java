@@ -43,6 +43,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
+import com.mycollab.vaadin.web.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
@@ -73,7 +74,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             @Override
             protected String generateSmallContentAsHtml() {
                 String avatarLink = StorageFactory.getAvatarPath(task.getAssignUserAvatarId(), 16);
-                Img img = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName());
+                Img img = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName())
+                        .setCSSClass(UIConstants.CIRCLE_BOX);
                 return img.write();
             }
 
@@ -82,7 +84,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                 SimpleTask newTask = taskService.findById(task.getId(), AppContext.getAccountId());
                 String avatarLink = StorageFactory.getAvatarPath(newTask.getAssignUserAvatarId(), 16);
-                Img img = new Img(newTask.getAssignUserFullName(), avatarLink).setTitle(newTask.getAssignUserFullName());
+                Img img = new Img(newTask.getAssignUserFullName(), avatarLink).setTitle(newTask.getAssignUserFullName())
+                        .setCSSClass(UIConstants.CIRCLE_BOX);
                 return img.write();
             }
 

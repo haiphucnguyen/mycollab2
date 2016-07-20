@@ -19,6 +19,7 @@ import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
+import com.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
@@ -38,7 +39,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
             @Override
             protected String generateSmallContentAsHtml() {
                 String avatarLink = StorageFactory.getAvatarPath(milestone.getOwnerAvatarId(), 16);
-                Img img = new Img(milestone.getOwnerFullName(), avatarLink);
+                Img img = new Img(milestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX);
                 if (isDisplayName) {
                     img.setTitle(milestone.getOwnerFullName());
                 }
@@ -50,7 +51,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 SimpleMilestone newMilestone = milestoneService.findById(milestone.getId(), AppContext.getAccountId());
                 String avatarLink = StorageFactory.getAvatarPath(newMilestone.getOwnerAvatarId(), 16);
-                Img img = new Img(newMilestone.getOwnerFullName(), avatarLink);
+                Img img = new Img(newMilestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX);
                 if (isDisplayName) {
                     img.setTitle(newMilestone.getOwnerFullName());
                 }

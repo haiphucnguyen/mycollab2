@@ -17,13 +17,12 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
 import com.mycollab.vaadin.web.ui.DynamicQueryParamLayout;
-import com.mycollab.vaadin.web.ui.ShortcutExtension;
 import com.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -47,11 +46,10 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
 
     @Override
     protected Component buildExtraControls() {
-        MButton createBtn = new MButton(AppContext.getMessage(RiskI18nEnum.NEW),
+        return new MButton(AppContext.getMessage(RiskI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null)))
-                .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
-        createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
-        return createBtn;
+                .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS)
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
     }
 
     @Override
@@ -76,20 +74,14 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
 
         @Override
         public ComponentContainer constructBody() {
-            nameField = ShortcutExtension.installShortcutAction(new TextField(),
-                    new ShortcutListener("RiskSearchRequest", ShortcutAction.KeyCode.ENTER, null) {
-                        @Override
-                        public void handleAction(Object o, Object o1) {
-                            callSearchAction();
-                        }
-                    });
-            nameField.setInputPrompt("Query by risk name");
-            nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+            nameField = new MTextField().withInputPrompt(AppContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
+                    .withWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 
             myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
 
             MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                    .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
+                    .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH)
+                    .withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
             MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
                     .withStyleName(UIConstants.BUTTON_OPTION);

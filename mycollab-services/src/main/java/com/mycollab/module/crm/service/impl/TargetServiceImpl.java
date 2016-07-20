@@ -32,9 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class TargetServiceImpl extends
-        DefaultService<Integer, Target, TargetSearchCriteria> implements
-        TargetService {
+public class TargetServiceImpl extends DefaultService<Integer, Target, TargetSearchCriteria> implements TargetService {
 
     @Autowired
     private TargetMapper targetMapper;

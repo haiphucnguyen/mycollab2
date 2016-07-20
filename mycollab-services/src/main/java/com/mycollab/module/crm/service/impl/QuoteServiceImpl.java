@@ -35,15 +35,17 @@ import java.util.List;
 
 @Service
 @Transactional
-public class QuoteServiceImpl extends DefaultService<Integer, Quote, QuoteSearchCriteria> implements
-        QuoteService {
+public class QuoteServiceImpl extends DefaultService<Integer, Quote, QuoteSearchCriteria> implements QuoteService {
 
     @Autowired
     private QuoteMapper quoteMapper;
+
     @Autowired
     private QuoteMapperExt quoteMapperExt;
+
     @Autowired
     private QuoteGroupProductService quoteGroupProductService;
+
     @Autowired
     private ProductMapper productMapper;
 
@@ -62,17 +64,14 @@ public class QuoteServiceImpl extends DefaultService<Integer, Quote, QuoteSearch
     }
 
     @Override
-    public void saveSimpleQuoteGroupProducts(int accountid, int quoteId,
-                                             List<SimpleQuoteGroupProduct> entity) {
+    public void saveSimpleQuoteGroupProducts(int accountid, int quoteId, List<SimpleQuoteGroupProduct> entity) {
         quoteGroupProductService.deleteQuoteGroupByQuoteId(quoteId);
 
         for (SimpleQuoteGroupProduct simpleQuoteGroupProduct : entity) {
-            QuoteGroupProduct quoteGroupProduct = simpleQuoteGroupProduct
-                    .getQuoteGroupProduct();
+            QuoteGroupProduct quoteGroupProduct = simpleQuoteGroupProduct.getQuoteGroupProduct();
             quoteGroupProductService.insertQuoteGroupExt(quoteGroupProduct);
 
-            for (Product quoteProduct : simpleQuoteGroupProduct
-                    .getQuoteProducts()) {
+            for (Product quoteProduct : simpleQuoteGroupProduct.getQuoteProducts()) {
                 // quoteProduct.setAccountid(accountid);
                 quoteProduct.setGroupid(quoteGroupProduct.getId());
                 quoteProduct.setStatus("Quoted");
@@ -82,10 +81,8 @@ public class QuoteServiceImpl extends DefaultService<Integer, Quote, QuoteSearch
     }
 
     @Override
-    public List<SimpleQuoteGroupProduct> getListSimpleQuoteGroupProducts(
-            int quoteId) {
-        List<QuoteGroupProduct> quoteGroupProducts = quoteGroupProductService
-                .findQuoteGroupByQuoteId(quoteId);
+    public List<SimpleQuoteGroupProduct> getListSimpleQuoteGroupProducts(int quoteId) {
+        List<QuoteGroupProduct> quoteGroupProducts = quoteGroupProductService.findQuoteGroupByQuoteId(quoteId);
 
         List<SimpleQuoteGroupProduct> result = new ArrayList<SimpleQuoteGroupProduct>();
         for (QuoteGroupProduct quoteGroupProduct : quoteGroupProducts) {
@@ -93,10 +90,8 @@ public class QuoteServiceImpl extends DefaultService<Integer, Quote, QuoteSearch
             simpleQuoteGroupProduct.setQuoteGroupProduct(quoteGroupProduct);
 
             ProductExample quoteProductEx = new ProductExample();
-            quoteProductEx.createCriteria().andGroupidEqualTo(
-                    quoteGroupProduct.getId());
-            List<Product> quoteProducts = productMapper
-                    .selectByExample(quoteProductEx);
+            quoteProductEx.createCriteria().andGroupidEqualTo(quoteGroupProduct.getId());
+            List<Product> quoteProducts = productMapper.selectByExample(quoteProductEx);
             simpleQuoteGroupProduct.setQuoteProducts(quoteProducts);
             result.add(simpleQuoteGroupProduct);
         }

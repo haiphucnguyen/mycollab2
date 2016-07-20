@@ -30,8 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class ProductServiceImpl extends DefaultService<Integer, Product, ProductSearchCriteria>
-        implements ProductService {
+public class ProductServiceImpl extends DefaultService<Integer, Product, ProductSearchCriteria> implements ProductService {
 
     @Autowired
     private ProductMapper productMapper;

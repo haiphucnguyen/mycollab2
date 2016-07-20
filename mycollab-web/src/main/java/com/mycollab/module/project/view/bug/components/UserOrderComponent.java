@@ -78,7 +78,8 @@ public class UserOrderComponent extends BugGroupOrderComponent {
 
         GroupComponent(SimpleBug bug) {
             initComponent();
-            Img img = new Img("", StorageFactory.getAvatarPath(bug.getAssignUserAvatarId(), 32));
+            Img img = new Img("", StorageFactory.getAvatarPath(bug.getAssignUserAvatarId(), 32))
+                    .setCSSClass(UIConstants.CIRCLE_BOX);
             Div userDiv = new Div().appendChild(img, new Text(" " + bug.getAssignuserFullName()));
             headerLbl.setValue(userDiv.write());
         }

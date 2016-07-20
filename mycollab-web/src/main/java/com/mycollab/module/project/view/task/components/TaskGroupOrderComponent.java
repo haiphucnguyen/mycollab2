@@ -18,6 +18,7 @@ package com.mycollab.module.project.view.task.components;
 
 import com.mycollab.module.project.domain.SimpleTask;
 import com.vaadin.ui.CssLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
 
@@ -25,9 +26,9 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-abstract public class TaskGroupOrderComponent extends CssLayout {
+abstract public class TaskGroupOrderComponent extends MVerticalLayout {
     public TaskGroupOrderComponent() {
-        this.setWidth("100%");
+        this.withWidth("100%").withMargin(false);
     }
 
     abstract public void insertTasks(List<SimpleTask> tasks);

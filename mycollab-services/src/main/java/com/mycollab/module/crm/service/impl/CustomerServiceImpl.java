@@ -27,8 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class CustomerServiceImpl extends DefaultCrudService<Integer, Customer>
-        implements CustomerService {
+public class CustomerServiceImpl extends DefaultCrudService<Integer, Customer> implements CustomerService {
 
     @Autowired
     private CustomerMapper customerMapper;

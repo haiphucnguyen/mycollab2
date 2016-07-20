@@ -31,8 +31,7 @@ import com.mycollab.module.crm.service.TargetGroupService;
 
 @Service
 @Transactional
-public class TargetGroupServiceImpl extends
-		DefaultService<Integer, TargetGroup, TargetGroupSearchCriteria> implements TargetGroupService {
+public class TargetGroupServiceImpl extends DefaultService<Integer, TargetGroup, TargetGroupSearchCriteria> implements TargetGroupService {
 
 	@Autowired
 	private TargetGroupMapper targetGroupMapper;

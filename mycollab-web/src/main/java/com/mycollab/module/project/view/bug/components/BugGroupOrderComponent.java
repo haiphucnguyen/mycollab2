@@ -17,7 +17,7 @@
 package com.mycollab.module.project.view.bug.components;
 
 import com.mycollab.module.tracker.domain.SimpleBug;
-import com.vaadin.ui.CssLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
 
@@ -25,9 +25,9 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public abstract class BugGroupOrderComponent extends CssLayout {
+public abstract class BugGroupOrderComponent extends MVerticalLayout {
     public BugGroupOrderComponent() {
-        this.setWidth("100%");
+        this.withWidth("100%").withMargin(false);
     }
 
     abstract public void insertBugs(List<SimpleBug> tasks);
