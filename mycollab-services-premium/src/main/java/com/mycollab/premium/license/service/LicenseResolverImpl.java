@@ -31,6 +31,7 @@ import java.util.Properties;
 @Service
 public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
     private static final Logger LOG = LoggerFactory.getLogger(LicenseResolverImpl.class);
+
     private LicenseInfo licenseInfo = null;
 
     @Autowired

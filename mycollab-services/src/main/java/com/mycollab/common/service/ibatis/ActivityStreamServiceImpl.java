@@ -28,34 +28,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 @Service
 public class ActivityStreamServiceImpl extends DefaultService<Integer, ActivityStreamWithBLOBs, ActivityStreamSearchCriteria>
-		implements ActivityStreamService {
+        implements ActivityStreamService {
 
-	@Autowired
-	private ActivityStreamMapper activityStreamMapper;
+    @Autowired
+    private ActivityStreamMapper activityStreamMapper;
 
-	@Autowired
-	private ActivityStreamMapperExt activityStreamMapperExt;
+    @Autowired
+    private ActivityStreamMapperExt activityStreamMapperExt;
 
-	@Override
-	public ICrudGenericDAO<Integer, ActivityStreamWithBLOBs> getCrudMapper() {
-		return activityStreamMapper;
-	}
+    @Override
+    public ICrudGenericDAO<Integer, ActivityStreamWithBLOBs> getCrudMapper() {
+        return activityStreamMapper;
+    }
 
-	@Override
-	public ISearchableDAO<ActivityStreamSearchCriteria> getSearchMapper() {
-		return activityStreamMapperExt;
-	}
+    @Override
+    public ISearchableDAO<ActivityStreamSearchCriteria> getSearchMapper() {
+        return activityStreamMapperExt;
+    }
 
-	@Override
-	public Integer save(ActivityStreamWithBLOBs activityStream) {
-		activityStreamMapper.insertAndReturnKey(activityStream);
-		return activityStream.getId();
-	}
+    @Override
+    public Integer save(ActivityStreamWithBLOBs activityStream) {
+        activityStreamMapper.insertAndReturnKey(activityStream);
+        return activityStream.getId();
+    }
 }

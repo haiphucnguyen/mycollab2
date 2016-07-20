@@ -40,6 +40,13 @@ public class DemandScheduleConfiguration {
     }
 
     @Bean
+    public JobDetailFactoryBean removeObsoleteUsersJob() {
+        JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setJobClass(DeleteObsoleteUsersJob.class);
+        return bean;
+    }
+
+    @Bean
     public JobDetailFactoryBean removeObsoleteLiveInstancesJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
         bean.setJobClass(DeleteObsoleteLiveInstancesJob.class);
@@ -80,6 +87,14 @@ public class DemandScheduleConfiguration {
     public CronTriggerFactoryBean deleteObsoleteAccountsTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(removeObsoleteAccountsJob().getObject());
+        bean.setCronExpression("0 0 0 * * ?");
+        return bean;
+    }
+
+    @Bean
+    public CronTriggerFactoryBean deleteObsoleteUsersTrigger() {
+        CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
+        bean.setJobDetail(removeObsoleteUsersJob().getObject());
         bean.setCronExpression("0 0 0 * * ?");
         return bean;
     }
@@ -148,6 +163,7 @@ public class DemandScheduleConfiguration {
         bean.setTriggers(sendingCountUserLoginByDateTrigger().getObject(),
                 sendingCountLiveInstancesByDateTrigger().getObject(),
                 deleteObsoleteAccountsTrigger().getObject(),
+                deleteObsoleteUsersTrigger().getObject(),
                 sendAccountBillingEmailTrigger().getObject(),
                 deleteObsoleteLiveInstancesTrigger().getObject(),
                 sendOneweekFollowupDownloadedUsersTrigger().getObject(),
