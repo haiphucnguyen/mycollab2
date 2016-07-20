@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class SimpleListOrderComponent extends TaskGroupOrderComponent {
     public SimpleListOrderComponent() {
-        this.withStyleName(UIConstants.BORDER_LIST);
+        this.addStyleName(UIConstants.BORDER_LIST);
     }
 
     @Override
