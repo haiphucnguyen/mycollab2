@@ -1,20 +1,17 @@
 package com.mycollab.rest.server.resource;
 
-import com.mycollab.common.domain.MailRecipientField;
+import com.google.common.base.MoreObjects;
 import com.mycollab.configuration.EnDecryptHelper;
-import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.DateTimeUtils;
-import com.mycollab.module.mail.FileAttachmentSource;
-import com.mycollab.module.mail.UrlAttachmentSource;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.module.mail.service.IContentGenerator;
 import com.mycollab.ondemand.module.billing.dao.ProEditionInfoMapper;
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfo;
+import com.mycollab.ondemand.module.billing.domain.ProEditionInfoExample;
 import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.pro.license.LicenseType;
 import com.verhas.licensor.License;
-import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -26,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.*;
-import java.net.URL;
-import java.util.Arrays;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -54,51 +53,44 @@ public class OrderManagerController {
     @RequestMapping(path = "/generatelicense", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
     public String generateLicense(@RequestParam("name") String name,
-                                         @RequestParam("quantity") String quantity,
-                                         @RequestParam("reference") String reference,
-                                         @RequestParam("email") String email,
-                                         @RequestParam(value = "company", required = false) String company,
-                                         @RequestParam("referrer") String referrer,
-                                         @RequestParam("internalProductName") String internalProductName,
-                                         @RequestParam("tags") String tags,
-                                         @RequestParam("tagValues") String tagValues,
-                                         @RequestParam("sourceKey") String sourceKey,
-                                         @RequestParam("sourceCampaign") String sourceCampaign,
-                                         @RequestParam("test") String test,
-                                         @RequestParam("subscriptionReference") String subscriptionReference) throws Exception {
-//        LocalDateTime now = new LocalDateTime();
-//
-//        ProEditionInfo proEditionInfo = new ProEditionInfo();
-//        proEditionInfo.setAddress1(addressStreet1);
-//        proEditionInfo.setAddress2(addressStreet2);
-//        proEditionInfo.setCity(addressCity);
-//        proEditionInfo.setCountry(addressCountry);
-//        proEditionInfo.setPhone(customerPhone);
-//        proEditionInfo.setCost(Double.parseDouble(orderSubTotalUSD));
-//        proEditionInfo.setCompany(customerCompany);
-//        proEditionInfo.setEmail(customerEmail);
-//        proEditionInfo.setInternalproductname(orderProductNames);
-//        proEditionInfo.setName(customerName);
-//        proEditionInfo.setQuantity(1);
-//        proEditionInfo.setOrderid(orderId);
-//        proEditionInfo.setIssuedate(now.toDate());
-//        proEditionInfo.setType("New");
-//        Integer customerId = proEditionMapper.insertAndReturnKey(proEditionInfo);
-//
-//        LicenseInfo licenseInfo = new LicenseInfo();
-//        licenseInfo.setCustomerId(EnDecryptHelper.encryptText("" + customerId));
-//        licenseInfo.setLicenseType(LicenseType.PRO);
-//        if ("Growing (For less than 10 users)".equals(orderProductNames)) {
-//            licenseInfo.setMaxUsers(10);
-//        } else {
-//            licenseInfo.setMaxUsers(9999);
-//        }
-//
-//        licenseInfo.setIssueDate(now.toDate());
-//        licenseInfo.setLicenseOrg(customerCompany);
-//        licenseInfo.setExpireDate(now.plusYears(1).toDate());
-//        return encode(licenseInfo);
-        return "Ok";
+                                  @RequestParam("quantity") String quantity,
+                                  @RequestParam("reference") String reference,
+                                  @RequestParam("email") String email,
+                                  @RequestParam(value = "company", required = false) String company,
+                                  @RequestParam(value = "referrer", required = false) String referrer,
+                                  @RequestParam("internalProductName") String internalProductName,
+                                  @RequestParam(value = "tags", required = false) String tags,
+                                  @RequestParam(value = "tagValues", required = false) String tagValues,
+                                  @RequestParam(value = "sourceKey", required = false) String sourceKey,
+                                  @RequestParam(value = "sourceCampaign", required = false) String sourceCampaign,
+                                  @RequestParam(value = "test", required = false) String test,
+                                  @RequestParam(value = "subscriptionReference", required = false) String subscriptionReference)
+            throws Exception {
+        LocalDateTime now = new LocalDateTime();
+
+        ProEditionInfo proEditionInfo = new ProEditionInfo();
+        proEditionInfo.setInternalproductname(internalProductName);
+        proEditionInfo.setEmail(email);
+        proEditionInfo.setName(name);
+        proEditionInfo.setQuantity(1);
+        proEditionInfo.setOrderid(reference);
+        proEditionInfo.setIssuedate(now.toDate());
+        proEditionInfo.setType("New");
+        Integer customerId = proEditionMapper.insertAndReturnKey(proEditionInfo);
+
+        LicenseInfo licenseInfo = new LicenseInfo();
+        licenseInfo.setCustomerId(EnDecryptHelper.encryptText("" + customerId));
+        licenseInfo.setLicenseType(LicenseType.PRO);
+        if ("Growing (For less than 10 users)".equals(internalProductName)) {
+            licenseInfo.setMaxUsers(10);
+        } else {
+            licenseInfo.setMaxUsers(9999);
+        }
+
+        licenseInfo.setIssueDate(now.toDate());
+        licenseInfo.setLicenseOrg(MoreObjects.firstNonNull(company, "Default"));
+        licenseInfo.setExpireDate(now.plusYears(1).toDate());
+        return encode(licenseInfo);
     }
 
     @RequestMapping(path = "/completed", method = RequestMethod.POST, headers =
@@ -116,56 +108,23 @@ public class OrderManagerController {
                                          @RequestParam("OrderProductNames") String orderProductNames,
                                          @RequestParam("OrderReferrer") String orderReferrer,
                                          @RequestParam("OrderSubTotalUSD") String orderSubTotalUSD) throws Exception {
-//        LocalDateTime now = new LocalDateTime();
-//
-//        ProEditionInfo proEditionInfo = new ProEditionInfo();
-//        proEditionInfo.setAddress1(addressStreet1);
-//        proEditionInfo.setAddress2(addressStreet2);
-//        proEditionInfo.setCity(addressCity);
-//        proEditionInfo.setCountry(addressCountry);
-//        proEditionInfo.setPhone(customerPhone);
-//        proEditionInfo.setCost(Double.parseDouble(orderSubTotalUSD));
-//        proEditionInfo.setCompany(customerCompany);
-//        proEditionInfo.setEmail(customerEmail);
-//        proEditionInfo.setInternalproductname(orderProductNames);
-//        proEditionInfo.setName(customerName);
-//        proEditionInfo.setQuantity(1);
-//        proEditionInfo.setOrderid(orderId);
-//        proEditionInfo.setIssuedate(now.toDate());
-//        proEditionInfo.setType("New");
-//        Integer customerId = proEditionMapper.insertAndReturnKey(proEditionInfo);
-
-//        LicenseInfo licenseInfo = new LicenseInfo();
-//        licenseInfo.setCustomerId(EnDecryptHelper.encryptText("" + customerId));
-//        licenseInfo.setLicenseType(LicenseType.PRO);
-//        if ("Growing (For less than 10 users)".equals(orderProductNames)) {
-//            licenseInfo.setMaxUsers(10);
-//        } else {
-//            licenseInfo.setMaxUsers(9999);
-//        }
-//
-//        licenseInfo.setIssueDate(now.toDate());
-//        licenseInfo.setLicenseOrg(customerCompany);
-//        licenseInfo.setExpireDate(now.plusYears(1).toDate());
-//        String license = encode(licenseInfo);
-//        try {
-//            File tempFile = File.createTempFile("mycollab", "lic");
-//            FileUtils.write(tempFile, license, "UTF-8");
-//            contentGenerator.putVariable("name", customerName);
-//            contentGenerator.putVariable("productName", orderProductNames);
-//            contentGenerator.putVariable("issueDate", now.toDate());
-//            contentGenerator.putVariable("orderId", orderId);
-//
-//            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
-//                    Arrays.asList(new MailRecipientField(customerEmail, customerName)), null, null, String.format("MyCollab " +
-//                            "Order Receipt %s", orderId),
-//                    contentGenerator.parseFile("mailLicenseInfo.ftl"), Arrays.asList(new
-//                            FileAttachmentSource("mycollab.lic", tempFile), new UrlAttachmentSource("Invoice.pdf", new
-//                            URL("https://sites.fastspring.com/mycollab/order/invoice/" + orderId + "/pdf"))));
-//            tempFile.delete();
-//        } catch (Exception e) {
-//            LOG.error("Error to generate the license", e);
-//        }
+        ProEditionInfoExample ex = new ProEditionInfoExample();
+        ex.createCriteria().andOrderidEqualTo(orderId);
+        List<ProEditionInfo> proEditionInfos = proEditionMapper.selectByExample(ex);
+        if (proEditionInfos.size() == 1) {
+            ProEditionInfo proEditionInfo = proEditionInfos.get(0);
+            proEditionInfo.setAddress1(addressStreet1);
+            proEditionInfo.setAddress2(addressStreet2);
+            proEditionInfo.setCity(addressCity);
+            proEditionInfo.setCountry(addressCountry);
+            proEditionInfo.setPhone(customerPhone);
+            proEditionInfo.setCost(Double.parseDouble(orderSubTotalUSD));
+            proEditionInfo.setCompany(customerCompany);
+            proEditionInfo.setType("New");
+            proEditionMapper.updateByPrimaryKeySelective(proEditionInfo);
+        } else {
+            LOG.error("There is invalid order " + orderId);
+        }
         return "Ok";
     }
 
