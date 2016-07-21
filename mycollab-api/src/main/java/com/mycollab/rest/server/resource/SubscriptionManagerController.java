@@ -187,7 +187,16 @@ public class SubscriptionManagerController {
         ex.createCriteria().andSubreferenceEqualTo(subscriptionReference);
         List<BillingSubscription> billingSubscriptions = subscriptionMapper.selectByExample(ex);
         if (billingSubscriptions.size() == 1) {
-
+            BillingSubscription billingSubscription = billingSubscriptions.get(0);
+            BillingSubscriptionHistory subscriptionHistory = new BillingSubscriptionHistory();
+            subscriptionHistory.setSubscriptionid(billingSubscription.getId());
+            subscriptionHistory.setOrderid("");
+            subscriptionHistory.setCreatedtime(new DateTime().toDate());
+            subscriptionHistory.setStatus("Failed");
+            subscriptionHistory.setExpireddate(null);
+            subscriptionHistory.setProductname("");
+            subscriptionHistory.setTotalprice(-1d);
+            subscriptionHistoryMapper.insert(subscriptionHistory);
         } else {
             LOG.error("Find subscription with id " + subscriptionReference + "in account has count" +
                     billingSubscriptions.size());
