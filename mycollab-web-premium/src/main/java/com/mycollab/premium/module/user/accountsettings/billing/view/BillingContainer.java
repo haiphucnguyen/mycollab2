@@ -53,8 +53,8 @@ public class BillingContainer extends AbstractPageView implements IBillingContai
         try {
             LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
             if (licenseInfo.isExpired()) {
-                with(ELabel.h2(AppContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_DATE, AppContext.formatDate(licenseInfo.getExpireDate())))
-                        .withWidthUndefined());
+                with(ELabel.h2(AppContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_DATE, AppContext.formatDate
+                        (licenseInfo.getExpireDate()))).withStyleName(UIConstants.LABEL_OVERDUE).withWidthUndefined());
             } else if (licenseInfo.isTrial()) {
                 with(ELabel.h2(AppContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_SOON_DATE, AppContext.formatDate(licenseInfo.getExpireDate())))
                         .withWidthUndefined());

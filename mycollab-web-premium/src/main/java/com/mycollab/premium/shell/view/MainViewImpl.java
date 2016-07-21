@@ -64,6 +64,7 @@ public class MainViewImpl extends AbstractMainView {
             if (licenseInfo.isExpired()) {
                 if (licenseInfo.isTrial()) {
                     UI.getCurrent().addWindow(new LicenseActivationWindow());
+                    AppContext.getInstance().setIsValidAccount(false);
                 } else {
                     MButton buyPremiumBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.EXPIRE_NOTIFICATION),
                             clickEvent -> UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow()))

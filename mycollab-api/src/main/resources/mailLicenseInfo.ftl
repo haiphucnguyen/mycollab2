@@ -6,22 +6,21 @@
 <table width="600" cellpadding="0" cellspacing="0" class="wrapContent">
     <#include "mailLogo.ftl">
     <tr>
-        <td>
-            <div style="padding: 0px 0px 10px 25px">
+        <td style="padding: 10px 30px">
+            <p>
                 <h1>Thank you for your payment</h1><br/>
                 Dear ${name}, <br/>
                 Congratulations! MyCollab license is ready for download and use in your team. You can get the license
                 file in this email's attachment.
-            </div>
-            <div style="padding: 0px 25px;">
+            </p>
+            <p>
                 To activate MyCollab, please follow the instruction <a
                     href="https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/enter-the-license-for-mycollab-ultimate-edition/">Enter the license for MyCollab Ultimate Edition</a>
-
-            </div>
-            <div style="padding: 0px 25px;">
-                We hope you enjoy MyCollab! If you have any issue, please contact us at <a
-                    href="http://support.mycollab.com">Support forum</a>
-            </div>
+            </p>
+            <p>We hope you enjoy MyCollab! If you have any issue, please contact us at <a href="http://support.mycollab.com">Support forum</a></p>
+            <p>Check your online invoice <@lib.hyperLink displayName="Online Invoice" webLink="https://sites.fastspring.com/mycollab/order/invoice/${orderId}"/>. We also enclosed the PDF invoice in this email as
+            well.
+            </p>
         </td>
     </tr>
 </table>

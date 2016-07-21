@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.hene.flexibleoptiongroup.FlexibleOptionGroup;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
@@ -37,7 +38,7 @@ public class LicenseActivationWindow extends MWindow {
     private TextField uploadFilenameField;
     private TextArea activationField;
     private LicenseUploadField licenseUploadField;
-    private Button changeLicenseBtn;
+    private MButton changeLicenseBtn;
 
     public LicenseActivationWindow() {
         super("Activate MyCollab");
@@ -61,13 +62,13 @@ public class LicenseActivationWindow extends MWindow {
         uploadFilenameField.setReadOnly(true);
         licenseUploadField = new LicenseUploadField();
         licenseUploadField.setEnabled(false);
-        MHorizontalLayout licenseFileUploadLayout = new MHorizontalLayout().with(uploadFilenameField, licenseUploadField).expand
-                (uploadFilenameField);
+        MHorizontalLayout licenseFileUploadLayout = new MHorizontalLayout().with(uploadFilenameField, licenseUploadField)
+                .expand(uploadFilenameField);
 
-        content.with(new MHorizontalLayout(optionGroup.getItemComponent(LICENSE_FILE), new Label(AppContext
-                .getMessage(LicenseI18nEnum.OPT_BROWSE_LICENSE_HELP))), licenseFileUploadLayout);
+        content.with(new MHorizontalLayout(optionGroup.getItemComponent(LICENSE_FILE),
+                new Label(AppContext.getMessage(LicenseI18nEnum.OPT_BROWSE_LICENSE_HELP))), licenseFileUploadLayout);
 
-        changeLicenseBtn = new Button(AppContext.getMessage(LicenseI18nEnum.ACTION_CHANGE_LICENSE), clickEvent -> {
+        changeLicenseBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.ACTION_CHANGE_LICENSE), clickEvent -> {
             String val = (String) optionGroup.getValue();
             LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
             if (ACT_CODE.equals(val)) {
@@ -95,7 +96,9 @@ public class LicenseActivationWindow extends MWindow {
                     }
                 }
             }
-        });
+        }).withStyleName(UIConstants.BUTTON_ACTION);
+        changeLicenseBtn.setEnabled(false);
+
         optionGroup.addValueChangeListener(valueChangeEvent -> {
             String val = (String) optionGroup.getValue();
             if (ACT_CODE.equals(val)) {
@@ -118,9 +121,14 @@ public class LicenseActivationWindow extends MWindow {
             }
         });
         optionGroup.setValue(ACT_CODE);
-        changeLicenseBtn.setEnabled(false);
-        changeLicenseBtn.addStyleName(UIConstants.BUTTON_ACTION);
-        content.with(changeLicenseBtn).withAlign(changeLicenseBtn, Alignment.BOTTOM_RIGHT);
+
+        MButton getLicenseLink = new MButton("Not have a license yet? Buy here", clickEvent -> {
+            UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow());
+            close();
+        }).withStyleName(UIConstants.BUTTON_LINK);
+
+        MHorizontalLayout buttonControls = new MHorizontalLayout(getLicenseLink, changeLicenseBtn);
+        content.with(buttonControls).withAlign(buttonControls, Alignment.BOTTOM_RIGHT);
         setContent(content);
 
         LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);

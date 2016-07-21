@@ -6,7 +6,7 @@ import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.BroadcastMessage;
 import com.mycollab.core.Broadcaster;
 import com.mycollab.module.billing.AccountStatusConstants;
-import com.mycollab.module.mail.FileEmailAttachmentSource;
+import com.mycollab.module.mail.FileAttachmentSource;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.module.mail.service.IContentGenerator;
 import com.mycollab.module.user.dao.BillingAccountMapper;
@@ -164,8 +164,7 @@ public class SubscriptionManagerController {
                     Arrays.asList(new MailRecipientField(email, customerFullName)), null, null, String.format("[%s] " +
                             "Payment charged successfully", SiteConfiguration.getDefaultSiteName()),
                     contentGenerator.parseFile("paymentChargedSuccessfully.ftl"), Arrays.asList(
-                            new FileEmailAttachmentSource
-                                    (receiptReport, "Receipt-" + subscriptionReference + ".pdf")));
+                            new FileAttachmentSource("Receipt-" + subscriptionReference + ".pdf", receiptReport)));
 
 
         } else {
@@ -210,8 +209,7 @@ public class SubscriptionManagerController {
                     Arrays.asList(new MailRecipientField(email, customerFullName)), null, null, String.format("[%s] " +
                             "Payment charged successfully", SiteConfiguration.getDefaultSiteName()),
                     contentGenerator.parseFile("paymentChargedSuccessfully.ftl"), Arrays.asList(
-                            new FileEmailAttachmentSource
-                                    (receiptReport, "Receipt-" + subscriptionReference + ".pdf")));
+                            new FileAttachmentSource("Receipt-" + subscriptionReference + ".pdf", receiptReport)));
         } else {
             LOG.error("Find subscription with id " + subscriptionReference + "in account has count" +
                     billingSubscriptions.size());
