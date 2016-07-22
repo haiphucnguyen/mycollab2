@@ -18,10 +18,7 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -50,7 +47,7 @@ public class OrderManagerController {
     @Autowired
     private IContentGenerator contentGenerator;
 
-    @RequestMapping(path = "/generatelicense", method = RequestMethod.POST, headers =
+    @PostMapping(path = "/generatelicense", headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
     public String generateLicense(@RequestParam("name") String name,
                                   @RequestParam("quantity") String quantity,
@@ -90,7 +87,17 @@ public class OrderManagerController {
         licenseInfo.setIssueDate(now.toDate());
         licenseInfo.setLicenseOrg(MoreObjects.firstNonNull(company, "Default"));
         licenseInfo.setExpireDate(now.plusYears(1).toDate());
-        return encode(licenseInfo);
+        String license = encode(licenseInfo);
+        StringBuilder result = new StringBuilder();
+        result.append("Mime-Version: 1.0\n")
+                .append("Content-Type: multipart/mixed; boundary=license\n\n\n")
+                .append("--license\n")
+                .append("Content-Disposition: inline; filename=mycollab.lic\n")
+                .append("Content-Type: text/plain\n")
+                .append("Content-Transfer-Encoding: 8BIT\n\n")
+                .append(license)
+                .append("\n--license--");
+        return result.toString();
     }
 
     @RequestMapping(path = "/completed", method = RequestMethod.POST, headers =
