@@ -16,17 +16,19 @@
  */
 package com.mycollab.cache.service;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * @author MyCollab Ltd
  * @since 5.1.4
  */
 public interface CacheService {
 
-    Object getValue(String group, String key);
+    Object getValue(String group, String key) throws ExecutionException;
 
-    void putValue(String group, String key, Object value);
+    void putValue(String group, String key, Object value) throws ExecutionException;
 
-    void removeCacheItems(String group, String prefixKey);
+    void removeCacheItems(String group, String prefixKey) throws ExecutionException;
 
-    void removeCacheItems(String group, Class<?>... cls);
+    void removeCacheItems(String group, Class<?>... cls) throws ExecutionException;
 }

@@ -16,15 +16,18 @@
  */
 package com.mycollab.community.cache.service;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.mycollab.cache.service.CacheService;
 import com.mycollab.community.cache.CacheObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author MyCollab Ltd
@@ -33,10 +36,17 @@ import java.util.WeakHashMap;
 @Service
 @Order(value = 10)
 public class DefaultCacheService implements CacheService {
-    private Map<String, Object> cacheManager = new WeakHashMap<>();
+
+    private LoadingCache<String, Object> cacheManager = CacheBuilder.newBuilder()
+            .expireAfterAccess(30, TimeUnit.MINUTES).build(new CacheLoader<String, Object>() {
+                @Override
+                public Object load(String s) throws Exception {
+                    return null;
+                }
+            });
 
     @Override
-    public Object getValue(String group, String key) {
+    public Object getValue(String group, String key) throws ExecutionException {
         CacheObject<String, Object> cacheObject = getCache(group);
         if (cacheObject != null) {
             return cacheObject.get(key);
@@ -44,9 +54,9 @@ public class DefaultCacheService implements CacheService {
         return null;
     }
 
-    private synchronized CacheObject<String, Object> getCache(String group) {
-        if (!cacheManager.containsKey(group)) {
-            CacheObject<String, Object> newCacheObject = new CacheObject();
+    private synchronized CacheObject<String, Object> getCache(String group) throws ExecutionException {
+        if (cacheManager.get(group) == null) {
+            CacheObject<String, Object> newCacheObject = new CacheObject<>();
             cacheManager.put(group, newCacheObject);
             return newCacheObject;
         }
@@ -54,17 +64,16 @@ public class DefaultCacheService implements CacheService {
     }
 
     @Override
-    public void putValue(String group, String key, Object value) {
+    public void putValue(String group, String key, Object value) throws ExecutionException {
         CacheObject<String, Object> cache = getCache(group);
         cache.put(key, value);
     }
 
     @Override
-    public void removeCacheItems(String group, String prefixKey) {
+    public void removeCacheItems(String group, String prefixKey) throws ExecutionException {
         CacheObject<String, Object> cache = getCache(group);
         Set<String> keys = cache.keySet();
         if (CollectionUtils.isNotEmpty(keys)) {
-
             String[] keyArr = keys.toArray(new String[0]);
             for (int i = 0; i < keyArr.length; i++) {
                 if (keyArr[i].startsWith(prefixKey)) {
@@ -75,7 +84,7 @@ public class DefaultCacheService implements CacheService {
     }
 
     @Override
-    public void removeCacheItems(String group, Class<?>... classes) {
+    public void removeCacheItems(String group, Class<?>... classes) throws ExecutionException {
         for (Class<?> prefKey : classes) {
             removeCacheItems(group, prefKey.getName());
         }
