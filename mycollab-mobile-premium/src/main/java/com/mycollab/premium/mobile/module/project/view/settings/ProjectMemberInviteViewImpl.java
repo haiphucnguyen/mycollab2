@@ -1,5 +1,6 @@
 package com.mycollab.premium.mobile.module.project.view.settings;
 
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.SecurityI18nEnum;
 import com.mycollab.mobile.module.project.events.ProjectMemberEvent;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberInviteView;
@@ -69,7 +70,7 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
         inviteFormLayout.setWidth("100%");
 
         inviteEmailField = new EmailField();
-        inviteEmailField.setCaption(AppContext.getMessage(ProjectMemberI18nEnum.M_FORM_EMAIL));
+        inviteEmailField.setCaption(AppContext.getMessage(GenericI18Enum.FORM_EMAIL));
         inviteFormLayout.addComponent(inviteEmailField);
 
         messageArea = new TextArea();

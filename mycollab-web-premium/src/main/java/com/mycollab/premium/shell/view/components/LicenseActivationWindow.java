@@ -122,7 +122,7 @@ public class LicenseActivationWindow extends MWindow {
         });
         optionGroup.setValue(ACT_CODE);
 
-        MButton getLicenseLink = new MButton("Not have a license yet? Buy here", clickEvent -> {
+        MButton getLicenseLink = new MButton(AppContext.getMessage(LicenseI18nEnum.OPT_BUY_LICENSE), clickEvent -> {
             UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow());
             close();
         }).withStyleName(UIConstants.BUTTON_LINK);

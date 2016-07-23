@@ -24,11 +24,11 @@ import java.util.concurrent.ExecutionException;
  */
 public interface CacheService {
 
-    Object getValue(String group, String key) throws ExecutionException;
+    Object getValue(String group, String key);
 
-    void putValue(String group, String key, Object value) throws ExecutionException;
+    void putValue(String group, String key, Object value);
 
-    void removeCacheItems(String group, String prefixKey) throws ExecutionException;
+    void removeCacheItems(String group, String prefixKey);
 
-    void removeCacheItems(String group, Class<?>... cls) throws ExecutionException;
+    void removeCacheItems(String group, Class<?>... cls);
 }

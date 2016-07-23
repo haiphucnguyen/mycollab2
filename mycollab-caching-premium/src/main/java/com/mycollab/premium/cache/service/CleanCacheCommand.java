@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.ExecutionException;
-
 /**
  * @author MyCollab Ltd
  * @since 5.1.3
@@ -27,10 +25,6 @@ public class CleanCacheCommand extends GenericCommand {
     @AllowConcurrentEvents
     @Subscribe
     public void cleanCaches(CleanCacheEvent event) {
-        try {
-            cacheService.removeCacheItems(event.sAccountId().toString(), event.cls());
-        } catch (ExecutionException e) {
-            LOG.error("Error", e);
-        }
+        cacheService.removeCacheItems(event.sAccountId().toString(), event.cls());
     }
 }
