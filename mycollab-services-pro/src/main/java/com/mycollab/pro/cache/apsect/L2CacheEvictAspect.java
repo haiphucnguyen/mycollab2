@@ -1,6 +1,5 @@
-package com.mycollab.premium.interceptor.aspect.cache;
+package com.mycollab.pro.cache.apsect;
 
-import com.mycollab.premium.cache.CacheUtils;
 import com.mycollab.cache.service.CacheService;
 import com.mycollab.core.cache.CacheArgs;
 import com.mycollab.core.cache.CacheEvict;
@@ -75,7 +74,7 @@ public class L2CacheEvictAspect {
                         String prefixKey = CacheUtils.getEnclosingServiceInterfaceName(cls);
 
                         if (groupId != null) {
-                            cacheService.removeCacheItems(groupId.toString(), prefixKey);
+                            cacheService.removeCacheItem(groupId.toString(), prefixKey);
 
                             try {
                                 method = cls.getDeclaredMethod(method.getName(), method.getParameterTypes());
@@ -87,7 +86,7 @@ public class L2CacheEvictAspect {
                             if (cacheable != null) {
                                 if (cacheable.values() != null && cacheable.values().length > 0) {
                                     for (Class prefKey : cacheable.values()) {
-                                        cacheService.removeCacheItems(groupId.toString(), prefKey.getName());
+                                        cacheService.removeCacheItem(groupId.toString(), prefKey.getName());
                                     }
                                 }
                             }

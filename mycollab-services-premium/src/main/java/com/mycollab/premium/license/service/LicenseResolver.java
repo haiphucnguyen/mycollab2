@@ -11,5 +11,5 @@ public interface LicenseResolver {
 
     void checkAndSaveLicenseInfo(String licenseInputText);
 
-    void checkLicenseInfo(byte[] licenseBytes, boolean isSave);
+    LicenseInfo checkLicenseInfo(byte[] licenseBytes, boolean isSave);
 }

@@ -110,7 +110,7 @@ public class LicenseResolverImpl implements LicenseResolver, AppPropertiesServic
     }
 
     @Override
-    public void checkLicenseInfo(byte[] licenseBytes, boolean isSave) {
+    public LicenseInfo checkLicenseInfo(byte[] licenseBytes, boolean isSave) {
         try {
             License license = new License();
             InputStream publicStream = LicenseResolverImpl.class.getClassLoader().getResourceAsStream("pubring.gpg");
@@ -146,6 +146,7 @@ public class LicenseResolverImpl implements LicenseResolver, AppPropertiesServic
         } catch (Exception e) {
             licenseInfo = createInvalidLicense();
         }
+        return licenseInfo;
     }
 
     private LicenseInfo createInvalidLicense() {

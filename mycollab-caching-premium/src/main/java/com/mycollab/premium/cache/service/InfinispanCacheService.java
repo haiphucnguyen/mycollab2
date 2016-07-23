@@ -64,7 +64,7 @@ public class InfinispanCacheService implements CacheService, InitializingBean {
     }
 
     @Override
-    public void removeCacheItems(String id, String prefixKey) {
+    public void removeCacheItem(String id, String prefixKey) {
         BasicCache<String, Object> cache = instance.getCache(id);
         LOG.debug("Remove cache has prefix {} in group {}", prefixKey, id);
         Set<String> keys = cache.keySet();
@@ -83,7 +83,7 @@ public class InfinispanCacheService implements CacheService, InitializingBean {
     @Override
     public void removeCacheItems(String group, Class<?>... classes) {
         for (Class<?> prefKey : classes) {
-            removeCacheItems(group, prefKey.getName());
+            removeCacheItem(group, prefKey.getName());
         }
     }
 }

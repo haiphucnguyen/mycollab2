@@ -1,6 +1,5 @@
-package com.mycollab.premium.interceptor.aspect.cache;
+package com.mycollab.pro.cache.apsect;
 
-import com.mycollab.premium.cache.CacheUtils;
 import com.mycollab.cache.service.CacheService;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.BasicSearchRequest;
@@ -111,6 +110,5 @@ public class L2CacheAspect {
         } else {
             return pjp.proceed();
         }
-
     }
 }

@@ -62,7 +62,7 @@ public class LicenseActivationWindow extends MWindow {
         uploadFilenameField.setReadOnly(true);
         licenseUploadField = new LicenseUploadField();
         licenseUploadField.setEnabled(false);
-        MHorizontalLayout licenseFileUploadLayout = new MHorizontalLayout().with(uploadFilenameField, licenseUploadField)
+        MHorizontalLayout licenseFileUploadLayout = new MHorizontalLayout(uploadFilenameField, licenseUploadField)
                 .expand(uploadFilenameField);
 
         content.with(new MHorizontalLayout(optionGroup.getItemComponent(LICENSE_FILE),
@@ -145,6 +145,7 @@ public class LicenseActivationWindow extends MWindow {
             this.setButtonCaption(AppContext.getMessage(GenericI18Enum.ACTION_BROWSE));
             this.setAcceptFilter("*.lic");
             this.setDisplayUpload(false);
+            this.addStyleName(UIConstants.BUTTON_ACTION);
         }
 
         @Override

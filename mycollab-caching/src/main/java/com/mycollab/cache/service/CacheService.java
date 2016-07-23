@@ -16,8 +16,6 @@
  */
 package com.mycollab.cache.service;
 
-import java.util.concurrent.ExecutionException;
-
 /**
  * @author MyCollab Ltd
  * @since 5.1.4
@@ -28,7 +26,7 @@ public interface CacheService {
 
     void putValue(String group, String key, Object value);
 
-    void removeCacheItems(String group, String prefixKey);
+    void removeCacheItem(String group, String prefixKey);
 
     void removeCacheItems(String group, Class<?>... cls);
 }

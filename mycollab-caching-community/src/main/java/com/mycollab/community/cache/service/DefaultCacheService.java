@@ -75,7 +75,7 @@ public class DefaultCacheService implements CacheService {
     }
 
     @Override
-    public void removeCacheItems(String group, String prefixKey) {
+    public void removeCacheItem(String group, String prefixKey) {
         CacheObject<String, Object> cache = getCache(group);
         Set<String> keys = cache.keySet();
         if (CollectionUtils.isNotEmpty(keys)) {
@@ -91,7 +91,7 @@ public class DefaultCacheService implements CacheService {
     @Override
     public void removeCacheItems(String group, Class<?>... classes) {
         for (Class<?> prefKey : classes) {
-            removeCacheItems(group, prefKey.getName());
+            removeCacheItem(group, prefKey.getName());
         }
     }
 }

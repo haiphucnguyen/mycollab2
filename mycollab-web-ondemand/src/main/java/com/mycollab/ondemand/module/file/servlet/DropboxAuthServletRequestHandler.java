@@ -52,7 +52,7 @@ public class DropboxAuthServletRequestHandler extends GenericHttpServlet {
                 }
             }
         } finally {
-            cacheService.removeCacheItems("tempCache", state);
+            cacheService.removeCacheItem("tempCache", state);
             // response script close current window
             PrintWriter out = response.getWriter();
             out.println("<html>"
