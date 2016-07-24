@@ -88,7 +88,10 @@ public class LicenseActivationWindow extends MWindow {
                 } else {
                     try {
                         byte[] licenseByes = IOUtils.toByteArray(inputStream);
-                        licenseResolver.checkLicenseInfo(licenseByes, true);
+                        LicenseInfo licenseInfo = licenseResolver.checkLicenseInfo(licenseByes, true);
+                        if (licenseInfo.isExpired() || licenseInfo.isInvalid() || licenseInfo.isTrial()) {
+                            NotificationUtil.showErrorNotification(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID));
+                        }
                         close();
                     } catch (Exception e) {
                         LOG.error("Error", e);

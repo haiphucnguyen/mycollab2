@@ -40,6 +40,8 @@ import com.vaadin.ui.*;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
@@ -84,7 +86,9 @@ public class SetupNewInstanceView extends MVerticalLayout {
         languageBox.setValue(Locale.US.toLanguageTag());
         content.with(formLayoutHelper.getLayout());
 
-        Button installBtn = new Button("Setup", clickEvent -> {
+        CheckBox createSampleDataSelection = new CheckBox("Create sample data", true);
+
+        MButton installBtn = new MButton("Setup", clickEvent -> {
             String adminName = adminField.getValue();
             String password = passwordField.getValue();
             String retypePassword = retypePasswordField.getValue();
@@ -121,12 +125,16 @@ public class SetupNewInstanceView extends MVerticalLayout {
 
             BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
 
-            billingAccountService.createDefaultAccountData(adminName, password, timezoneDbId, language, true, true,
-                    AppContext.getAccountId());
+            if (Boolean.TRUE.equals(createSampleDataSelection.getValue())) {
+                billingAccountService.createDefaultAccountData(adminName, password, timezoneDbId, language, true, true,
+                        AppContext.getAccountId());
+            }
+
             ((DesktopApplication) UI.getCurrent()).doLogin(adminName, password, false);
-        });
-        installBtn.addStyleName(UIConstants.BUTTON_ACTION);
-        content.with(installBtn).withAlign(installBtn, Alignment.TOP_RIGHT);
+        }).withStyleName(UIConstants.BUTTON_ACTION);
+
+        MHorizontalLayout buttonControls = new MHorizontalLayout(createSampleDataSelection, installBtn).alignAll(Alignment.MIDDLE_RIGHT);
+        content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
     }
 
     private boolean isValidDayPattern(String dateFormat) {

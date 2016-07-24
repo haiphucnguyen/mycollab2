@@ -70,7 +70,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
         } else if (accCreatedDate.isBefore(dateExpire)) {
           LOG.debug("Check whether account exceed 32 days to convert to basic plan")
           sendingEmailInformAccountIsRemoved(account)
-          val billingAccount: BillingAccount = new BillingAccount
+          val billingAccount = new BillingAccount
           billingAccount.setId(account.getId)
           // Remove the account
         }
