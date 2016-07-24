@@ -1,4 +1,4 @@
-package com.mycollab.pro.cache.apsect;
+package com.mycollab.pro.cache.aspect;
 
 import com.mycollab.cache.service.CacheService;
 import com.mycollab.core.cache.CacheArgs;

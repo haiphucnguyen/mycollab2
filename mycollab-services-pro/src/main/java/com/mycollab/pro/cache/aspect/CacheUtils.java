@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-caching.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.pro.cache.apsect;
+package com.mycollab.pro.cache.aspect;
 
 import com.mycollab.cache.IgnoreCacheClass;
 import com.mycollab.core.utils.ClassUtils;

@@ -21,7 +21,6 @@
         <module>../mycollab-test</module>
         <module>../mycollab-localization</module>
         <module>../mycollab-caching</module>
-        <module>../mycollab-caching-community</module>
         <module>../mycollab-migration</module>
         <module>../mycollab-services</module>
         <module>../mycollab-services-pro</module>

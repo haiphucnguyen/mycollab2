@@ -44,12 +44,6 @@
 
         <dependency>
             <groupId>com.mycollab</groupId>
-            <artifactId>mycollab-caching-community</artifactId>
-            <version>5.3.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-scheduler-community</artifactId>
             <version>5.3.5</version>
         </dependency>
