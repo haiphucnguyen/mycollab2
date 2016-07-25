@@ -1,6 +1,8 @@
 package com.mycollab.ondemand.module.billing.dao;
 
+import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionHistory;
 import com.mycollab.ondemand.module.billing.domain.SimpleBillingSubscription;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author MyCollab Ltd
@@ -8,4 +10,6 @@ import com.mycollab.ondemand.module.billing.domain.SimpleBillingSubscription;
  */
 public interface BillingSubscriptionMapperExt {
     SimpleBillingSubscription findSubscription(Integer sAccountId);
+
+    BillingSubscriptionHistory getTheLastBillingSuccess(@Param("sAccountId") Integer sAccountId);
 }

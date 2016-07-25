@@ -39,12 +39,8 @@ public class BillingAccountExtServiceTest extends IntegrationServiceTest {
         List<SimpleBillingAccount2> billingAccounts = billingService.findPageableListByCriteria(
                 new BasicSearchRequest<>(criteria));
         assertThat(billingAccounts).hasSize(2);
-        Collection<SimpleBillingAccount2> filter = Collections2.filter(billingAccounts, new Predicate<SimpleBillingAccount2>() {
-            @Override
-            public boolean apply(SimpleBillingAccount2 account) {
-                return (account.getId() == 1);
-            }
-        });
+
+        Collection<SimpleBillingAccount2> filter = Collections2.filter(billingAccounts, account -> (account.getId() == 1));
         SimpleBillingAccount2 account = filter.iterator().next();
         assertThat(account).extracting("numProjects", "numUsers", "lastAccessTime").containsSequence(2, 3, new
                 LocalDate(2016, 1, 1).toDate());

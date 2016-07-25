@@ -51,12 +51,7 @@ public class GanttTaskServiceTest extends IntegrationServiceTest {
         assertThat(subTasks).hasSize(2);
         assertThat(subTasks).extracting("name", "id").contains(Tuple.tuple("Task 3", 3), Tuple.tuple("Task 4", 4));
 
-        Collection<TaskGanttItem> taskFilterResult = Collections2.filter(subTasks, new Predicate<TaskGanttItem>() {
-            @Override
-            public boolean apply(TaskGanttItem task) {
-                return "Task 4".equals(task.getName());
-            }
-        });
+        Collection<TaskGanttItem> taskFilterResult = Collections2.filter(subTasks, task -> "Task 4".equals(task.getName()));
 
         assertThat(taskFilterResult).hasSize(1);
         TaskGanttItem task = taskFilterResult.iterator().next();
@@ -69,18 +64,8 @@ public class GanttTaskServiceTest extends IntegrationServiceTest {
         TaskPredecessor predecessor = task5.getPredecessors().get(0);
         assertThat(predecessor.getDescid()).isEqualTo(2);
 
-        MilestoneGanttItem milestone1 = Collections2.filter(subMilestones, new Predicate<MilestoneGanttItem>() {
-            @Override
-            public boolean apply(MilestoneGanttItem input) {
-                return "Milestone 1".equals(input.getName());
-            }
-        }).iterator().next();
-        TaskGanttItem task2 = Collections2.filter(milestone1.getSubTasks(), new Predicate<TaskGanttItem>() {
-            @Override
-            public boolean apply(TaskGanttItem input) {
-                return "Task 2".equals(input.getName());
-            }
-        }).iterator().next();
+        MilestoneGanttItem milestone1 = Collections2.filter(subMilestones, input -> "Milestone 1".equals(input.getName())).iterator().next();
+        TaskGanttItem task2 = Collections2.filter(milestone1.getSubTasks(), input -> "Task 2".equals(input.getName())).iterator().next();
         List<TaskPredecessor> dependents = task2.getDependents();
         assertThat(dependents).hasSize(1);
 

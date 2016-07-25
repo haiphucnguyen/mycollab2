@@ -28,7 +28,7 @@ public class ItemTimeLoggingServiceTest extends IntegrationServiceTest {
     private static final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     @Autowired
-    protected ItemTimeLoggingService itemTimeLoggingService;
+    private ItemTimeLoggingService itemTimeLoggingService;
 
     private ItemTimeLoggingSearchCriteria getCriteria() {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();

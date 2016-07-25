@@ -60,25 +60,30 @@ public class MainViewImpl extends AbstractMainView {
         LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
 
         LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
-        if (licenseInfo != null) {
-            if (licenseInfo.isExpired()) {
-                if (licenseInfo.isTrial()) {
-                    UI.getCurrent().addWindow(new LicenseActivationWindow());
-                    AppContext.getInstance().setIsValidAccount(false);
-                } else {
-                    MButton buyPremiumBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.EXPIRE_NOTIFICATION),
-                            clickEvent -> UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow()))
-                            .withIcon(FontAwesome.SHOPPING_CART).withStyleName("ad");
-                    accountLayout.addComponent(buyPremiumBtn);
-                }
-            } else if (licenseInfo.isTrial()) {
-                Duration dur = new Duration(new DateTime(), new DateTime(licenseInfo.getExpireDate()));
-                int days = dur.toStandardDays().getDays();
-                MButton buyPremiumBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.TRIAL_NOTIFICATION, days),
+
+        if (licenseInfo.isExpired()) {
+            if (licenseInfo.isTrial()) {
+                UI.getCurrent().addWindow(new LicenseActivationWindow());
+                AppContext.getInstance().setIsValidAccount(false);
+            } else if (licenseInfo.isInvalid()){
+                MButton buyPremiumBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.EXPIRE_NOTIFICATION),
+                        clickEvent -> UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow()))
+                        .withIcon(FontAwesome.SHOPPING_CART).withStyleName("ad");
+                accountLayout.addComponent(buyPremiumBtn);
+                AppContext.getInstance().setIsValidAccount(false);
+            } else {
+                MButton buyPremiumBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.EXPIRE_NOTIFICATION),
                         clickEvent -> UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow()))
                         .withIcon(FontAwesome.SHOPPING_CART).withStyleName("ad");
                 accountLayout.addComponent(buyPremiumBtn);
             }
+        } else if (licenseInfo.isTrial()) {
+            Duration dur = new Duration(new DateTime(), new DateTime(licenseInfo.getExpireDate()));
+            int days = dur.toStandardDays().getDays();
+            MButton buyPremiumBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.TRIAL_NOTIFICATION, days),
+                    clickEvent -> UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow()))
+                    .withIcon(FontAwesome.SHOPPING_CART).withStyleName("ad");
+            accountLayout.addComponent(buyPremiumBtn);
         }
 
         NotificationComponent notificationComponent = new NotificationComponent();

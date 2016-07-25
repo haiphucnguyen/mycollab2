@@ -91,8 +91,10 @@ public class LicenseActivationWindow extends MWindow {
                         LicenseInfo licenseInfo = licenseResolver.checkLicenseInfo(licenseByes, true);
                         if (licenseInfo.isExpired() || licenseInfo.isInvalid() || licenseInfo.isTrial()) {
                             NotificationUtil.showErrorNotification(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID));
+                        } else {
+                            close();
+                            Page.getCurrent().getJavaScript().execute("window.location.reload();");
                         }
-                        close();
                     } catch (Exception e) {
                         LOG.error("Error", e);
                         throw new UserInvalidInputException(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_FILE_INVALID));

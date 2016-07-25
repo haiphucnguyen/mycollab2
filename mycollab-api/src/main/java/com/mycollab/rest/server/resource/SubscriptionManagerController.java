@@ -1,19 +1,20 @@
 package com.mycollab.rest.server.resource;
 
+import com.google.common.eventbus.AsyncEventBus;
 import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.core.BroadcastMessage;
 import com.mycollab.core.Broadcaster;
 import com.mycollab.module.billing.AccountStatusConstants;
-import com.mycollab.module.mail.service.ExtMailService;
-import com.mycollab.module.mail.service.IContentGenerator;
 import com.mycollab.module.user.dao.BillingAccountMapper;
 import com.mycollab.module.user.domain.BillingAccount;
 import com.mycollab.module.user.domain.BillingAccountExample;
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionHistoryMapper;
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapper;
+import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapperExt;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscription;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionExample;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionHistory;
+import com.mycollab.ondemand.module.billing.esb.DeleteAccountEvent;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -47,16 +48,16 @@ public class SubscriptionManagerController {
     private BillingSubscriptionMapper subscriptionMapper;
 
     @Autowired
+    private BillingSubscriptionMapperExt subscriptionMapperExt;
+
+    @Autowired
     private BillingSubscriptionHistoryMapper subscriptionHistoryMapper;
 
     @Autowired
     private BillingAccountMapper billingAccountMapper;
 
     @Autowired
-    private ExtMailService extMailService;
-
-    @Autowired
-    private IContentGenerator contentGenerator;
+    private AsyncEventBus asyncEventBus;
 
     @RequestMapping(path = "/register", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
@@ -68,7 +69,7 @@ public class SubscriptionManagerController {
                              @RequestParam("reference") String reference,
                              @RequestParam("subscriptionReference") String subscriptionReference,
                              @RequestParam("billingPlanId") String billingPlanId,
-                             @RequestParam("test") String test,
+                             @RequestParam(value = "test", required = false) String test,
                              @RequestParam("security_request_hash") String security_request_hash) {
         Integer sAccountId = Integer.parseInt(EnDecryptHelper.decryptText(referrer));
         BillingSubscription subscription = new BillingSubscription();
@@ -150,11 +151,11 @@ public class SubscriptionManagerController {
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
     public String reBillSubscription(@RequestParam("OrderId") String orderId,
                                      @RequestParam("OrderProductName") String orderProductName,
-                                     @RequestParam("CustomerName") String customerFullName,
-                                     @RequestParam("CustomerCompany") String customerCompany,
+                                     @RequestParam(value = "CustomerName", required = false) String customerFullName,
+                                     @RequestParam(value = "CustomerCompany", required = false) String customerCompany,
                                      @RequestParam("OrderReferrer") String orderReferrer,
                                      @RequestParam("NextPeriodDate") String nextPeriodDate,
-                                     @RequestParam("CustomerEmail") String email,
+                                     @RequestParam(value = "CustomerEmail", required = false) String email,
                                      @RequestParam("SubscriptionReference") String subscriptionReference,
                                      @RequestParam("OrderSubTotalUSD") String orderSubTotalUSD,
                                      @RequestParam("Status") String status) throws Exception {
@@ -181,8 +182,8 @@ public class SubscriptionManagerController {
 
     @RequestMapping(path = "/subscription-failed", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
-    public String returnCompletedSubscription(@RequestParam("SubscriptionReference") String subscriptionReference,
-                                              @RequestParam("SubscriptionEndDate") String subscriptionEndDate) {
+    public String subscriptionFailedNotification(@RequestParam("SubscriptionReference") String subscriptionReference,
+                                                 @RequestParam("SubscriptionEndDate") String subscriptionEndDate) {
         BillingSubscriptionExample ex = new BillingSubscriptionExample();
         ex.createCriteria().andSubreferenceEqualTo(subscriptionReference);
         List<BillingSubscription> billingSubscriptions = subscriptionMapper.selectByExample(ex);
@@ -193,10 +194,42 @@ public class SubscriptionManagerController {
             subscriptionHistory.setOrderid("");
             subscriptionHistory.setCreatedtime(new DateTime().toDate());
             subscriptionHistory.setStatus("Failed");
-            subscriptionHistory.setExpireddate(null);
+            BillingSubscriptionHistory previousHistory = subscriptionMapperExt.getTheLastBillingSuccess(billingSubscription.getAccountid());
+            if (previousHistory != null) {
+                subscriptionHistory.setExpireddate(previousHistory.getExpireddate());
+                subscriptionHistory.setProductname(previousHistory.getProductname());
+            } else {
+                subscriptionHistory.setExpireddate(new DateTime().toDate());
+            }
+
             subscriptionHistory.setProductname("");
             subscriptionHistory.setTotalprice(-1d);
             subscriptionHistoryMapper.insert(subscriptionHistory);
+        } else {
+            LOG.error("Find subscription with id " + subscriptionReference + "in account has count" +
+                    billingSubscriptions.size());
+        }
+        return "Ok";
+    }
+
+    @RequestMapping(path = "/deactivated", method = RequestMethod.POST, headers =
+            {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
+    public String subscriptionDeactivatedNotification(@RequestParam("SubscriptionCustomerUrl") String subscriptionCustomerUrl,
+                                                      @RequestParam("SubscriptionEndDate") String subscriptionEndDate,
+                                                      @RequestParam(value = "SubscriptionIsTest", required = false)
+                                                              String subscriptionIsTest,
+                                                      @RequestParam(value = "SubscriptionQuantity", required = false)
+                                                                  String subscriptionQuantity,
+                                                      @RequestParam("SubscriptionReference") String subscriptionReference,
+                                                      @RequestParam(value = "SubscriptionReferrer", required = false)
+                                                                  String subscriptionReferrer) {
+        BillingSubscriptionExample ex = new BillingSubscriptionExample();
+        ex.createCriteria().andSubreferenceEqualTo(subscriptionReference);
+        List<BillingSubscription> billingSubscriptions = subscriptionMapper.selectByExample(ex);
+        if (billingSubscriptions.size() == 1) {
+            BillingSubscription subscription = billingSubscriptions.get(0);
+            DeleteAccountEvent event = new DeleteAccountEvent(subscription.getAccountid(), null);
+            asyncEventBus.post(event);
         } else {
             LOG.error("Find subscription with id " + subscriptionReference + "in account has count" +
                     billingSubscriptions.size());

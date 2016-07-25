@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.tuple;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class StandupReportServiceTest extends IntegrationServiceTest {
     @Autowired
-    protected StandupReportService reportService;
+    private StandupReportService reportService;
 
     @SuppressWarnings("unchecked")
     @Test

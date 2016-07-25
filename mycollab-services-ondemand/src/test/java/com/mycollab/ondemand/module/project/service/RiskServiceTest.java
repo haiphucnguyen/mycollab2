@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.tuple;
 public class RiskServiceTest extends IntegrationServiceTest {
 
     @Autowired
-    protected RiskService riskService;
+    private RiskService riskService;
 
     @DataSet
     @Test

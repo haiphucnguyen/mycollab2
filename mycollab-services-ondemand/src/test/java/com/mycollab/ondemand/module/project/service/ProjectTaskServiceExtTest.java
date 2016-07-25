@@ -36,12 +36,9 @@ public class ProjectTaskServiceExtTest extends IntegrationServiceTest {
 
         for (int i = 0; i < 100; i++) {
             LOG.info("Initialize thread " + i);
-            Runnable exeService = new Runnable() {
-                @Override
-                public void run() {
-                    Task record = (Task) baseRecord.copy();
-                    projectTaskService.saveWithSession(record, "hainguyen@esofthead.com");
-                }
+            Runnable exeService = () -> {
+                Task record = (Task) baseRecord.copy();
+                projectTaskService.saveWithSession(record, "hainguyen@esofthead.com");
             };
 
             Future<?> result = executorService.submit(exeService);

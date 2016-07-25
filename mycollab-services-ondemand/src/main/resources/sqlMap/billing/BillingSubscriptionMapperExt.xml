@@ -18,13 +18,29 @@
             s_billing_subscription.contactName, s_billing_subscription.subscriptionCustomerUrl,
             (SELECT MAX(expiredDate)
                 FROM s_billing_subscription_history
-                WHERE s_billing_subscription_history.subscriptionId = s_billing_subscription.id) AS expireDate,
+                WHERE s_billing_subscription_history.subscriptionId = s_billing_subscription.id
+                      AND s_billing_subscription_history.status="Success") AS expireDate,
             s_billing_plan.billingType AS plan_billingType, s_billing_plan.numUsers AS plan_numUsers,
             s_billing_plan.volume AS plan_volume, s_billing_plan.numProjects AS plan_numProjects,
             s_billing_plan.pricing AS plan_pricing, s_billing_plan.description AS plan_description,
             s_billing_plan.shoppingUrl AS plan_shoppingUrl, s_billing_plan.productPath AS plan_productPath
         FROM s_billing_subscription
             INNER JOIN s_billing_plan ON (s_billing_plan.id = s_billing_subscription.billingId)
+        LIMIT 1
+    </select>
+
+    <select id="getTheLastBillingSuccess" parameterType="map"
+            resultMap="com.mycollab.ondemand.module.billing.dao.BillingSubscriptionHistoryMapper.BaseResultMap"
+            lang="velocity">
+        SELECT s_billing_subscription_history.id, s_billing_subscription_history.orderId,
+            s_billing_subscription_history.createdTime, s_billing_subscription_history.subscriptionId,
+            s_billing_subscription_history.status, s_billing_subscription_history.expiredDate,
+            s_billing_subscription_history.totalPrice, s_billing_subscription_history.productName
+            FROM s_billing_subscription, s_billing_subscription_history
+            WHERE s_billing_subscription.accountId=@{sAccountId}
+                AND s_billing_subscription.id=s_billing_subscription_history.subscriptionId
+                AND s_billing_subscription_history.status="Success"
+            ORDER BY s_billing_subscription_history.createdTime
         LIMIT 1
     </select>
 </mapper>
