@@ -2,6 +2,7 @@ package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
+import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionHistoryMapper;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionHistory;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionHistoryExample;
@@ -65,15 +66,19 @@ public class BillingHistoryViewImpl extends AbstractLazyPageView implements Bill
             headerLayout.with(changeBillingInfoBtn, updatePaymentMethodBtn);
             GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 6);
             gridFormLayoutHelper.addComponent(new Label(subscription.getName()), AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
-            gridFormLayoutHelper.addComponent(new EmailViewField(subscription.getEmail()), "Email", 0, 1);
-            gridFormLayoutHelper.addComponent(new Label(subscription.getPhone()), "Phone", 0, 2);
-            gridFormLayoutHelper.addComponent(new Label(subscription.getCompany()), "Company", 0, 3);
-            gridFormLayoutHelper.addComponent(new Label(subscription.getSubreference()), "Reference", 0, 4);
+            gridFormLayoutHelper.addComponent(new EmailViewField(subscription.getEmail()),
+                    AppContext.getMessage(GenericI18Enum.FORM_EMAIL), 0, 1);
+            gridFormLayoutHelper.addComponent(new Label(subscription.getPhone()), AppContext.getMessage
+                    (GenericI18Enum.FORM_PHONE), 0, 2);
+            gridFormLayoutHelper.addComponent(new Label(subscription.getCompany()),
+                    AppContext.getMessage(UserI18nEnum.FORM_COMPANY), 0, 3);
+            gridFormLayoutHelper.addComponent(new Label(subscription.getSubreference()), AppContext.getMessage
+                    (BillingI18nEnum.OPT_SUBSCRIPTION_REFERENCE), 0, 4);
             ELabel nextExpiredDate = new ELabel(AppContext.formatDate(subscription.getExpireDate()));
             if (!subscription.isValid()) {
                 nextExpiredDate.withStyleName(UIConstants.LABEL_OVERDUE);
             }
-            gridFormLayoutHelper.addComponent(nextExpiredDate, "Next Billing Date", 0, 5);
+            gridFormLayoutHelper.addComponent(nextExpiredDate, AppContext.getMessage(BillingI18nEnum.OPT_NEXT_BILLING_DATE), 0, 5);
             with(gridFormLayoutHelper.getLayout());
 
             BillingSubscriptionHistoryMapper billingSubscriptionHistoryMapper = AppContextUtil.getSpringBean(BillingSubscriptionHistoryMapper.class);
@@ -86,13 +91,13 @@ public class BillingHistoryViewImpl extends AbstractLazyPageView implements Bill
             Grid grid = new Grid(container);
             grid.setWidth("100%");
             grid.setColumnOrder("productname", "orderid", "status", "expireddate", "totalprice", "createdtime");
-            grid.getColumn("productname").setHeaderCaption("Name");
-            grid.getColumn("orderid").setHeaderCaption("Order");
-            grid.getColumn("status").setHeaderCaption("Status");
-            grid.getColumn("expireddate").setHeaderCaption("Expired Date");
+            grid.getColumn("productname").setHeaderCaption(AppContext.getMessage(GenericI18Enum.FORM_NAME));
+            grid.getColumn("orderid").setHeaderCaption(AppContext.getMessage(BillingI18nEnum.OPT_ORDER));
+            grid.getColumn("status").setHeaderCaption(AppContext.getMessage(GenericI18Enum.FORM_STATUS));
+            grid.getColumn("expireddate").setHeaderCaption(AppContext.getMessage(BillingI18nEnum.OPT_EXPIRED_DATE));
             grid.getColumn("expireddate").setRenderer(new DateRenderer("%1$tB %1$te, %1$tY", AppContext.getUserLocale()));
-            grid.getColumn("totalprice").setHeaderCaption("Price (USD)");
-            grid.getColumn("createdtime").setHeaderCaption("Created");
+            grid.getColumn("totalprice").setHeaderCaption(AppContext.getMessage(BillingI18nEnum.OPT_PRICE_IN_USD));
+            grid.getColumn("createdtime").setHeaderCaption(AppContext.getMessage(GenericI18Enum.FORM_CREATED_TIME));
             grid.getColumn("createdtime").setRenderer(new DateRenderer("%1$tB %1$te, %1$tY", AppContext.getUserLocale()));
             grid.removeColumn("id");
             grid.removeColumn("selected");
