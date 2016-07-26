@@ -42,7 +42,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
             attachmentUploadField.getAttachments(item.getProjectid(), ProjectTypeConstants.TASK, item.getId());
         }
         super.editItem(item);
-        this.editForm.addComponent(attachmentUploadField);
+        editForm.addComponent(attachmentUploadField);
     }
 
     @Override
@@ -80,8 +80,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
                 return new TaskPercentageCompleteComboBox();
             } else if ("priority".equals(propertyId)) {
                 return new TaskPriorityComboBox();
-            } else if (propertyId.equals("startdate") || propertyId.equals("actualstartdate") || propertyId.equals("enddate")
-                    || propertyId.equals("actualenddate") || propertyId.equals("deadline")) {
+            } else if (propertyId.equals("startdate") || propertyId.equals("enddate") || propertyId.equals("deadline")) {
                 return new DatePicker();
             }
             return null;
