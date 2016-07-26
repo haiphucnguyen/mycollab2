@@ -17,7 +17,7 @@ import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.UserLink;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -76,11 +76,11 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     @Override
     protected void onPreviewItem() {
         if (StatusI18nEnum.Closed.name().equals(beanItem.getStatus())) {
-            addLayoutStyleName(UIConstants.LINK_COMPLETED);
+            addLayoutStyleName(WebUIConstants.LINK_COMPLETED);
         }
 
         if (beanItem.isOverdue()) {
-            previewLayout.addTitleStyleName(UIConstants.LABEL_OVERDUE);
+            previewLayout.addTitleStyleName(WebUIConstants.LABEL_OVERDUE);
         }
 
         if (!SiteConfiguration.isCommunityEdition()) {

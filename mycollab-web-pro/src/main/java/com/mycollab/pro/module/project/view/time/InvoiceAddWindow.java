@@ -12,7 +12,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
@@ -64,11 +64,11 @@ public class InvoiceAddWindow extends Window {
                 uploadField.saveContentsToRepo(attachPath);
                 close();
             }
-        }).withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
         saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                .withStyleName(UIConstants.BUTTON_OPTION);
+                .withStyleName(WebUIConstants.BUTTON_OPTION);
         MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(new MarginInfo(true, true, true, false));
         content.addComponent(buttonControls);
         content.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);

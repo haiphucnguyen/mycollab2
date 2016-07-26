@@ -14,10 +14,9 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.DoubleField;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -96,12 +95,12 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
 
         MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                .withStyleName(UIConstants.BUTTON_OPTION);
+                .withStyleName(WebUIConstants.BUTTON_OPTION);
 
         MButton saveBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             saveTimeLoggingItems();
             close();
-        }).withIcon(FontAwesome.SAVE).withStyleName(UIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
 
         MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);
 
@@ -123,7 +122,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
             MButton detachTaskBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), clickEvent -> {
                 createLinkTaskButton();
                 updateLinkTask(null);
-            }).withIcon(FontAwesome.UNLINK).withStyleName(UIConstants.BUTTON_DANGER);
+            }).withIcon(FontAwesome.UNLINK).withStyleName(WebUIConstants.BUTTON_DANGER);
             taskLayout.addComponent(detachTaskBtn);
 
             Label attachTaskBtn = new Label(StringUtils.trim(taskName, 40, true));
@@ -142,7 +141,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
             ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
                     TimeTrackingEditViewWindow.this);
             UI.getCurrent().addWindow(selectionTaskWindow);
-        }).withStyleName(UIConstants.BUTTON_ACTION);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION);
 
         taskLayout.addComponent(attachTaskBtn);
     }

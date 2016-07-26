@@ -14,7 +14,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
@@ -61,7 +61,7 @@ public class RiskAddWindow extends MWindow {
                 MButton updateAllBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), clickEvent -> {
                     EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, EditForm.this.bean));
                     close();
-                }).withStyleName(UIConstants.BUTTON_LINK);
+                }).withStyleName(WebUIConstants.BUTTON_LINK);
 
                 MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
                     if (EditForm.this.validateForm()) {
@@ -82,10 +82,10 @@ public class RiskAddWindow extends MWindow {
                         EventBusFactory.getInstance().post(new AssignmentEvent.NewAssignmentAdd(this,
                                 ProjectTypeConstants.RISK, riskId));
                     }
-                }).withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+                }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
                 MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                        .withStyleName(UIConstants.BUTTON_OPTION);
+                        .withStyleName(WebUIConstants.BUTTON_OPTION);
 
                 MHorizontalLayout buttonControls = new MHorizontalLayout(updateAllBtn, cancelBtn, saveBtn).withMargin(true);
 

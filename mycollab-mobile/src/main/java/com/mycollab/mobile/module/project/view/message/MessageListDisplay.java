@@ -16,10 +16,11 @@
  */
 package com.mycollab.mobile.module.project.view.message;
 
+import com.hp.gagawa.java.elements.A;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
 import com.mycollab.mobile.ui.MobileAttachmentUtils;
-import com.mycollab.mobile.ui.UIConstants;
+import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.module.file.AttachmentUtils;
@@ -32,9 +33,8 @@ import com.mycollab.module.project.service.MessageService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.hp.gagawa.java.elements.A;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -68,7 +68,7 @@ public class MessageListDisplay extends DefaultPagedBeanList<MessageService, Mes
             MHorizontalLayout metadataRow = new MHorizontalLayout().withFullWidth();
 
             ELabel userNameLbl = new ELabel(message.getFullPostedUserName()).withStyleName(UIConstants.META_INFO);
-            userNameLbl.addStyleName(UIConstants.TRUNCATE);
+            userNameLbl.addStyleName(MobileUIConstants.TRUNCATE);
             CssLayout userNameLblWrap = new CssLayout(userNameLbl);
 
             ELabel messageTimePost = new ELabel(AppContext.formatPrettyTime(message.getPosteddate())).withStyleName
@@ -81,8 +81,7 @@ public class MessageListDisplay extends DefaultPagedBeanList<MessageService, Mes
 
             A messageLink = new A(ProjectLinkBuilder.generateMessagePreviewFullLink(CurrentProjectVariables
                     .getProjectId(), message.getId())).appendText(message.getTitle());
-            ELabel messageTitle = new ELabel(messageLink.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_H3);
-            messageTitle.addStyleName(UIConstants.TRUNCATE);
+            ELabel messageTitle = ELabel.h3(messageLink.write());
             CssLayout messageWrap = new CssLayout(messageTitle);
 
             if (message.getCommentsCount() > 0) {

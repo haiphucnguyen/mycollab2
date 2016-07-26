@@ -22,7 +22,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.datefield.Resolution;
@@ -75,7 +75,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         createBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow();
             UI.getCurrent().addWindow(addTimeEntry);
-        }).withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
         createBtn.setVisible(!CurrentProjectVariables.isProjectArchived() &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TIME));
         return createBtn;
@@ -134,22 +134,22 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             orderField = new ItemOrderComboBox();
             orderField.addValueChangeListener(valueChangeEvent -> callSearchAction());
 
-            Label dateStartLb = new ELabel(AppContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(UIConstants
-                    .META_COLOR, UIConstants.TEXT_ALIGN_RIGHT);
-            Label dateEndLb = new ELabel(AppContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(UIConstants.META_COLOR,
-                    UIConstants.TEXT_ALIGN_RIGHT);
+            Label dateStartLb = new ELabel(AppContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(WebUIConstants
+                    .META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT);
+            Label dateEndLb = new ELabel(AppContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebUIConstants.META_COLOR,
+                    WebUIConstants.TEXT_ALIGN_RIGHT);
 
-            Label groupLb = new ELabel(AppContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName(UIConstants.META_COLOR,
-                    UIConstants.TEXT_ALIGN_RIGHT);
-            Label sortLb = new ELabel(AppContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(UIConstants.META_COLOR,
-                    UIConstants.TEXT_ALIGN_RIGHT);
+            Label groupLb = new ELabel(AppContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName(WebUIConstants.META_COLOR,
+                    WebUIConstants.TEXT_ALIGN_RIGHT);
+            Label sortLb = new ELabel(AppContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(WebUIConstants.META_COLOR,
+                    WebUIConstants.TEXT_ALIGN_RIGHT);
 
             gridLayout.addComponent(dateStartLb, 0, 0);
             gridLayout.addComponent(startDateField, 1, 0);
             gridLayout.addComponent(dateEndLb, 2, 0);
             gridLayout.addComponent(endDateField, 3, 0);
-            gridLayout.addComponent(new ELabel(AppContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(UIConstants.META_COLOR,
-                    UIConstants.TEXT_ALIGN_RIGHT), 4, 0);
+            gridLayout.addComponent(new ELabel(AppContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(WebUIConstants.META_COLOR,
+                    WebUIConstants.TEXT_ALIGN_RIGHT), 4, 0);
 
             gridLayout.addComponent(groupLb, 0, 1);
             gridLayout.addComponent(groupField, 1, 1);
@@ -160,10 +160,10 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             gridLayout.addComponent(userField, 5, 0, 5, 1);
 
             MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                    .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
+                    .withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
 
             MButton clearBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> userField.setValue(null))
-                    .withStyleName(UIConstants.BUTTON_OPTION);
+                    .withStyleName(WebUIConstants.BUTTON_OPTION);
 
             MHorizontalLayout buttonControls = new MHorizontalLayout(searchBtn, clearBtn);
             bodyWrap.with(gridLayout, buttonControls).withAlign(buttonControls, Alignment.MIDDLE_CENTER);

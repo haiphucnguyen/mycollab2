@@ -17,7 +17,7 @@ import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
 import com.hp.gagawa.java.elements.A;
 import com.vaadin.server.FontAwesome;
@@ -53,7 +53,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
     public void display() {
         removeAllComponents();
         with(ELabel.h2(FontAwesome.BALANCE_SCALE.getHtml() + " " + AppContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY)));
-        MVerticalLayout container = new MVerticalLayout().withStyleName(UIConstants.BOX);
+        MVerticalLayout container = new MVerticalLayout().withStyleName(WebUIConstants.BOX);
         with(container);
 
         GridLayout searchLayout = new GridLayout(5, 1);
@@ -63,9 +63,9 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         List<SimpleProject> projects = projectService.getProjectsUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
         final ProjectMultiSelect projectsSelection = new ProjectMultiSelect(projects);
-        searchLayout.addComponent(new ELabel("Projects").withStyleName(UIConstants.META_COLOR), 0, 0);
+        searchLayout.addComponent(new ELabel("Projects").withStyleName(WebUIConstants.META_COLOR), 0, 0);
         searchLayout.addComponent(projectsSelection, 1, 0);
-        searchLayout.addComponent(new ELabel("Week").withStyleName(UIConstants.META_COLOR), 2, 0);
+        searchLayout.addComponent(new ELabel("Week").withStyleName(WebUIConstants.META_COLOR), 2, 0);
         final WeeklyCalendarFieldExp dateFieldExt = new WeeklyCalendarFieldExp();
         dateFieldExt.setValue(new DateTime().toDate());
 
@@ -79,7 +79,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
             } else {
                 buildHourlyProjectsReport(selectedProjects, dateFieldExt.getValue());
             }
-        }).withStyleName(UIConstants.BUTTON_ACTION);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION);
         searchLayout.addComponent(searchBtn, 4, 0);
         with(new MCssLayout(new MHorizontalLayout(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)))
                 .withWidth("150px").withMargin(new MarginInfo(false, true, false, true))
@@ -100,7 +100,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
             MVerticalLayout contentLayout = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
             Component projectLogo = ProjectAssetsUtil.buildProjectLogo(project.getShortname(), project.getId(), project.getAvatarid(), 32);
             A projectDiv = new A(ProjectLinkBuilder.generateProjectFullLink(project.getId())).appendText(project.getName());
-            ELabel projectLbl = ELabel.h3(projectDiv.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
+            ELabel projectLbl = ELabel.h3(projectDiv.write()).withStyleName(WebUIConstants.TEXT_ELLIPSIS).withFullWidth();
             contentLayout.with(new MHorizontalLayout(projectLogo, projectLbl).expand(projectLbl).withFullWidth());
             ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
             DateTime now = new DateTime(dateInWeek);

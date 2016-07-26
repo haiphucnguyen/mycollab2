@@ -13,8 +13,8 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.MyCollabSession;
-import com.mycollab.vaadin.web.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.field.EmailViewField;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.ui.field.EmailViewField;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.sort.SortOrder;
 import com.vaadin.data.util.BeanItemContainer;
@@ -51,16 +51,16 @@ public class BillingHistoryViewImpl extends AbstractLazyPageView implements Bill
         if (subscription != null) {
             MButton changeBillingInfoBtn = new MButton(AppContext.getMessage(BillingI18nEnum.ACTION_CHANGE_BILLING_INFORMATION),
                     clickEvent -> UI.getCurrent().addWindow(new ChangeBillingPlanInformationWindow(subscription)))
-                    .withStyleName(UIConstants.BUTTON_ACTION, ValoTheme.BUTTON_SMALL);
+                    .withStyleName(WebUIConstants.BUTTON_ACTION, ValoTheme.BUTTON_SMALL);
 
             MButton updatePaymentMethodBtn = new MButton(AppContext.getMessage(BillingI18nEnum.ACTION_UPDATE_PAYMENT_METHOD))
                     .withStyleName(ValoTheme.BUTTON_SMALL);
             BrowserWindowOpener paymentOpener = new BrowserWindowOpener(subscription.getSubscriptioncustomerurl());
             paymentOpener.extend(updatePaymentMethodBtn);
             if (!subscription.isValid()) {
-                updatePaymentMethodBtn.withStyleName(UIConstants.BUTTON_DANGER);
+                updatePaymentMethodBtn.withStyleName(WebUIConstants.BUTTON_DANGER);
             } else {
-                updatePaymentMethodBtn.withStyleName(UIConstants.BUTTON_ACTION);
+                updatePaymentMethodBtn.withStyleName(WebUIConstants.BUTTON_ACTION);
             }
 
             headerLayout.with(changeBillingInfoBtn, updatePaymentMethodBtn);
@@ -76,7 +76,7 @@ public class BillingHistoryViewImpl extends AbstractLazyPageView implements Bill
                     (BillingI18nEnum.OPT_SUBSCRIPTION_REFERENCE), 0, 4);
             ELabel nextExpiredDate = new ELabel(AppContext.formatDate(subscription.getExpireDate()));
             if (!subscription.isValid()) {
-                nextExpiredDate.withStyleName(UIConstants.LABEL_OVERDUE);
+                nextExpiredDate.withStyleName(WebUIConstants.LABEL_OVERDUE);
             }
             gridFormLayoutHelper.addComponent(nextExpiredDate, AppContext.getMessage(BillingI18nEnum.OPT_NEXT_BILLING_DATE), 0, 5);
             with(gridFormLayoutHelper.getLayout());

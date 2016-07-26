@@ -10,7 +10,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import org.apache.commons.io.IOUtils;
@@ -101,7 +101,7 @@ public class LicenseActivationWindow extends MWindow {
                     }
                 }
             }
-        }).withStyleName(UIConstants.BUTTON_ACTION);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION);
         changeLicenseBtn.setEnabled(false);
 
         optionGroup.addValueChangeListener(valueChangeEvent -> {
@@ -130,7 +130,7 @@ public class LicenseActivationWindow extends MWindow {
         MButton getLicenseLink = new MButton(AppContext.getMessage(LicenseI18nEnum.OPT_BUY_LICENSE), clickEvent -> {
             UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow());
             close();
-        }).withStyleName(UIConstants.BUTTON_LINK);
+        }).withStyleName(WebUIConstants.BUTTON_LINK);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(getLicenseLink, changeLicenseBtn);
         content.with(buttonControls).withAlign(buttonControls, Alignment.BOTTOM_RIGHT);
@@ -150,7 +150,7 @@ public class LicenseActivationWindow extends MWindow {
             this.setButtonCaption(AppContext.getMessage(GenericI18Enum.ACTION_BROWSE));
             this.setAcceptFilter("*.lic");
             this.setDisplayUpload(false);
-            this.addStyleName(UIConstants.BUTTON_ACTION);
+            this.addStyleName(WebUIConstants.BUTTON_ACTION);
         }
 
         @Override

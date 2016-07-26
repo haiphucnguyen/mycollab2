@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.web.ui.field;
+package com.mycollab.vaadin.ui.field;
 
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.vaadin.AppContext;
+import com.hp.gagawa.java.elements.A;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
@@ -27,34 +27,19 @@ import com.vaadin.ui.Label;
  * @author MyCollab Ltd.
  * @since 4.5.3
  */
-public class I18nFormViewField extends CustomField<String> {
+public class UrlLinkViewField extends CustomField<String> {
     private static final long serialVersionUID = 1L;
 
-    private Label label;
+    private String url;
+    private String caption;
 
-    public I18nFormViewField(final String key, Class<? extends Enum> enumCls) {
-        String key1 = key;
-        Class<? extends Enum> enumClass = enumCls;
-        label = new Label();
-        label.setContentMode(ContentMode.TEXT);
-        label.setWidthUndefined();
-        label.addStyleName("wordWrap");
-
-        if (StringUtils.isNotBlank(key)) {
-            try {
-                String value = AppContext.getMessage(enumClass, key);
-                label.setValue(value);
-            } catch (Exception e) {
-                label.setValue("");
-            }
-        } else {
-            label.setValue("");
-        }
+    public UrlLinkViewField(String url) {
+        this(url, url);
     }
 
-    public I18nFormViewField withStyleName(String styleName) {
-        label.addStyleName(styleName);
-        return this;
+    public UrlLinkViewField(String url, String caption) {
+        this.url = url;
+        this.caption = caption;
     }
 
     @Override
@@ -64,6 +49,13 @@ public class I18nFormViewField extends CustomField<String> {
 
     @Override
     protected Component initContent() {
-        return label;
+        if (StringUtils.isBlank(url) || StringUtils.isBlank(caption)) {
+            Label lbl = new Label("&nbsp;");
+            lbl.setContentMode(ContentMode.HTML);
+            return lbl;
+        } else {
+            final A link = new A(url).appendText(caption).setTarget("_blank");
+            return new Label(link.write(), ContentMode.HTML);
+        }
     }
 }

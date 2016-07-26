@@ -25,7 +25,7 @@ import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.DetailFie
 import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.IntegerDetailFieldInfoPanel;
 import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.TextDetailFieldInfoPanel;
 import com.mycollab.vaadin.AppContext;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
@@ -109,7 +109,7 @@ public class CreateCustomFieldWindow extends Window {
                 CreateCustomFieldWindow.this.close();
             }
         });
-        saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
+        saveBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
         buttonControls.with(saveBtn).withAlign(saveBtn, Alignment.MIDDLE_CENTER);
 
@@ -121,7 +121,7 @@ public class CreateCustomFieldWindow extends Window {
                 CreateCustomFieldWindow.this.close();
             }
         });
-        cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
+        cancelBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
         buttonControls.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
         content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
@@ -153,7 +153,7 @@ public class CreateCustomFieldWindow extends Window {
 
                 }
             });
-            typeLink.addStyleName(UIConstants.BUTTON_LINK);
+            typeLink.addStyleName(WebUIConstants.BUTTON_LINK);
             fieldSelectionTable.addItem(new Object[]{new Embedded("", (Resource) rowItems[0]), typeLink}, rowItems[1]);
         }
 

@@ -19,7 +19,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.FormContainer;
 import com.mycollab.vaadin.ui.ThemeManager;
 import com.mycollab.vaadin.web.ui.ServiceMenu;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.web.CustomLayoutExt;
 import com.vaadin.server.FontAwesome;
@@ -65,12 +65,12 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
 
         MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.SaveTheme(this, accountTheme)))
-                .withIcon(FontAwesome.SAVE).withStyleName(UIConstants.BUTTON_ACTION);
+                .withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
         saveBtn.setVisible(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         MButton resetToDefaultBtn = new MButton(AppContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.ResetTheme(ThemeCustomizeViewImpl.this, null)))
-                .withStyleName(UIConstants.BUTTON_DANGER);
+                .withStyleName(WebUIConstants.BUTTON_DANGER);
         resetToDefaultBtn.setVisible(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         MHorizontalLayout controlButtons = new MHorizontalLayout(viewTitle, resetToDefaultBtn, saveBtn).withFullWidth()
@@ -235,7 +235,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
 
         GridLayout propertyLayout = new GridLayout(3, 1);
         propertyLayout.setStyleName("example-block");
-        propertyLayout.addStyleName(UIConstants.THEME_NO_BORDER);
+        propertyLayout.addStyleName(WebUIConstants.THEME_NO_BORDER);
         propertyLayout.setSpacing(true);
         blockBody.addComponent(propertyLayout);
 
@@ -247,7 +247,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         propertyLayout.addComponent(actionBtnPanel, 0, 0);
 
         Button exampleActionBtn = new Button("Button");
-        exampleActionBtn.setStyleName(UIConstants.BUTTON_ACTION);
+        exampleActionBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
         actionBtnPanel.addComponent(exampleActionBtn);
 
         HorizontalLayout actionBtnColorPane = new HorizontalLayout();
@@ -281,7 +281,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         propertyLayout.addComponent(optionBtnPanel, 1, 0);
 
         Button exampleOptionBtn = new Button("Button");
-        exampleOptionBtn.setStyleName(UIConstants.BUTTON_OPTION);
+        exampleOptionBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
         optionBtnPanel.addComponent(exampleOptionBtn);
 
         HorizontalLayout optionBtnColorPane = new HorizontalLayout();
@@ -312,7 +312,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         propertyLayout.addComponent(dangerBtnPanel, 2, 0);
 
         Button exampleDangerBtn = new Button("Button");
-        exampleDangerBtn.setStyleName(UIConstants.BUTTON_DANGER);
+        exampleDangerBtn.setStyleName(WebUIConstants.BUTTON_DANGER);
         dangerBtnPanel.addComponent(exampleDangerBtn);
 
         HorizontalLayout dangerBtnColorPane = new HorizontalLayout();

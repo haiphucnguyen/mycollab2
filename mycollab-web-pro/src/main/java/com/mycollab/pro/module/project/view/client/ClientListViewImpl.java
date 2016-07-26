@@ -24,8 +24,9 @@ import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -45,7 +46,6 @@ import java.util.List;
 @ViewComponent
 public class ClientListViewImpl extends AbstractPageView implements ClientListView {
 
-    private AccountSearchCriteria searchCriteria;
     private ClientSearchPanel accountSearchPanel;
     private CssLayout content;
 
@@ -55,7 +55,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
         this.addComponent(accountSearchPanel);
         content = new CssLayout();
         content.setSizeFull();
-        content.addStyleName(UIConstants.FLEX_DISPLAY);
+        content.addStyleName(WebUIConstants.FLEX_DISPLAY);
         this.addComponent(content);
     }
 
@@ -66,7 +66,6 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
 
     @Override
     public void display(AccountSearchCriteria searchCriteria) {
-        this.searchCriteria = searchCriteria;
         content.removeAllComponents();
         AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
         List<SimpleAccount> clients = accountService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
@@ -80,7 +79,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
                 .withMargin(false).withSpacing(false);
 
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, client)))
-                .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.BUTTON_ICON_ONLY)
+                .withIcon(FontAwesome.EDIT).withStyleName(WebUIConstants.BUTTON_ICON_ONLY)
                 .withVisible(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
         editBtn.setDescription("Edit client '" + client.getAccountname() + "' information");
 
@@ -97,7 +96,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
                             EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
                         }
                     });
-        }).withIcon(FontAwesome.TRASH_O).withStyleName(UIConstants.BUTTON_ICON_ONLY)
+        }).withIcon(FontAwesome.TRASH_O).withStyleName(WebUIConstants.BUTTON_ICON_ONLY)
                 .withVisible(AppContext.canAccess(RolePermissionCollections.CRM_ACCOUNT));
         deleteBtn.setDescription(AppContext.getMessage(ClientI18nEnum.OPT_REMOVE_CLIENT, client.getAccountname()));
 
@@ -111,7 +110,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
 
         A clientLink = new A(ProjectLinkBuilder.generateClientPreviewFullLink(client.getId())).appendText(client
                 .getAccountname()).setTitle(client.getAccountname());
-        ELabel clientLinkLbl = ELabel.h3(clientLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
+        ELabel clientLinkLbl = ELabel.h3(clientLink.write()).withStyleName(WebUIConstants.TEXT_ELLIPSIS).withFullWidth();
 
         MVerticalLayout clientInfo = new MVerticalLayout().withMargin(false).with(clientLinkLbl, ELabel.hr());
         Div websiteDiv = new Div().appendText(AppContext.getMessage(AccountI18nEnum.FORM_WEBSITE) + ": " +
@@ -127,8 +126,8 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
                 appendChild(new Img("", StorageFactory.getAvatarPath(client.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
                         new A(AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(), client.getAssignuser())).
                                 appendText(client.getAssignUserFullName()));
-        clientInfo.addComponent(new ELabel(assignUserDiv.write(), ContentMode.HTML).withStyleName(UIConstants
-                .META_INFO, UIConstants.TEXT_ELLIPSIS));
+        clientInfo.addComponent(new ELabel(assignUserDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO,
+                WebUIConstants.TEXT_ELLIPSIS));
         Div numProjectsDiv = new Div().appendText(AppContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, client.getNumProjects()));
         clientInfo.addComponent(new ELabel(numProjectsDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO));
 

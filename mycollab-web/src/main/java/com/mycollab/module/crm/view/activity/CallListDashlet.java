@@ -28,7 +28,7 @@ import com.mycollab.module.crm.service.CallService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.web.ui.Depot;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
@@ -53,10 +53,10 @@ public class CallListDashlet extends Depot {
         this.setMargin(new MarginInfo(true, false, false, false));
 
         tableItem = new CallTableDisplay(
-                new TableViewField(null, "isClosed", UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
-                new TableViewField(CallI18nEnum.FORM_SUBJECT, "subject", UIConstants.TABLE_X_LABEL_WIDTH),
-                new TableViewField(GenericI18Enum.FORM_START_DATE, "startdate", UIConstants.TABLE_DATE_TIME_WIDTH),
-                new TableViewField(GenericI18Enum.FORM_STATUS, "status", UIConstants.TABLE_S_LABEL_WIDTH)));
+                new TableViewField(null, "isClosed", WebUIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
+                new TableViewField(CallI18nEnum.FORM_SUBJECT, "subject", WebUIConstants.TABLE_X_LABEL_WIDTH),
+                new TableViewField(GenericI18Enum.FORM_START_DATE, "startdate", WebUIConstants.TABLE_DATE_TIME_WIDTH),
+                new TableViewField(GenericI18Enum.FORM_STATUS, "status", WebUIConstants.TABLE_S_LABEL_WIDTH)));
 
         tableItem.addTableListener(event -> {
             final SimpleCall call = (SimpleCall) event.getData();
@@ -76,7 +76,7 @@ public class CallListDashlet extends Depot {
             public void buttonClick(ClickEvent event) {
 
             }
-        }).withIcon(FontAwesome.ADJUST).withStyleName(UIConstants.BUTTON_ICON_ONLY).withDescription("Layout Options");
+        }).withIcon(FontAwesome.ADJUST).withStyleName(WebUIConstants.BUTTON_ICON_ONLY).withDescription("Layout Options");
         this.addHeaderElement(customizeViewBtn);
     }
 

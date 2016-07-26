@@ -21,7 +21,7 @@ import java.util.List;
 
 import com.mycollab.form.view.builder.type.AbstractDynaField;
 import com.mycollab.form.view.builder.type.DynaSection;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 
@@ -41,7 +41,7 @@ public class GenericSectionComp extends VerticalLayout {
 
 	public GenericSectionComp(DynaSection section) {
 		this.originSection = section;
-		this.addStyleName(UIConstants.CUSTOM_FIELD_SECTION);
+		this.addStyleName(WebUIConstants.CUSTOM_FIELD_SECTION);
 	}
 
 	protected void removeEmptyRow(DDGridLayout srcGridLayout, int srcRow) {

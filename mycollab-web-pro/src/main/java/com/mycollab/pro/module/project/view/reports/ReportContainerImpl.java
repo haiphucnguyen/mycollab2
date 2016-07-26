@@ -11,7 +11,7 @@ import com.mycollab.vaadin.mvp.PageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.hp.gagawa.java.elements.A;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -39,7 +39,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
         body.removeAllComponents();
         body.with(ELabel.h2(FontAwesome.PIE_CHART.getHtml() + " " + AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS)));
         CssLayout content = new CssLayout();
-        content.setStyleName(UIConstants.FLEX_DISPLAY);
+        content.setStyleName(WebUIConstants.FLEX_DISPLAY);
         this.addComponent(content);
 
         MVerticalLayout standupConsole = new MVerticalLayout().withWidth("300px").withStyleName("member-block");

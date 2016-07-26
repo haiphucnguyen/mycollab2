@@ -14,38 +14,37 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.web.ui.field;
+package com.mycollab.vaadin.ui.field;
 
+import com.mycollab.core.utils.CurrencyUtils;
+import com.mycollab.core.utils.StringUtils;
 import com.mycollab.vaadin.AppContext;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
-import com.vaadin.ui.Label;
 
-import java.util.Date;
+import java.util.Currency;
 
 /**
  * @author MyCollab Ltd
- * @since 5.3.3
+ * @since 5.3.1
  */
-public class DateTimeOptionViewField extends CustomField<String> {
-    private Date date;
+public class CurrencyViewField extends CustomField<String> {
+    private ELabel label;
 
-    public DateTimeOptionViewField(Date dateVal) {
-        this.date = dateVal;
+    public CurrencyViewField(String value) {
+        if (StringUtils.isBlank(value)) {
+            label = new ELabel();
+        } else {
+            Currency currency = CurrencyUtils.getInstance(value);
+            label = new ELabel(String.format("%s (%s)", currency.getDisplayName(AppContext.getUserLocale()), currency.getCurrencyCode()))
+                    .withFullWidth().withStyleName("wordWrap");
+        }
     }
 
     @Override
     protected Component initContent() {
-        final Label l = new Label();
-        l.setWidth("100%");
-        if (date == null) {
-            l.setValue("&nbsp;");
-            l.setContentMode(ContentMode.HTML);
-        } else {
-            l.setValue(AppContext.formatDateTime(date));
-        }
-        return l;
+        return label;
     }
 
     @Override

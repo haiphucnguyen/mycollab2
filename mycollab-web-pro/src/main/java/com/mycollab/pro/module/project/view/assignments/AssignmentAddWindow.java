@@ -13,7 +13,7 @@ import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.pro.module.project.view.risk.RiskAddWindow;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.mycollab.module.project.i18n.*;
 import com.vaadin.ui.*;
@@ -83,10 +83,10 @@ public class AssignmentAddWindow extends Window {
                 risk.setRaisedbyuser(AppContext.getUsername());
                 UI.getCurrent().addWindow(new RiskAddWindow(risk));
             }
-        }).withStyleName(UIConstants.BUTTON_ACTION);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION);
 
         MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                .withStyleName(UIConstants.BUTTON_OPTION);
+                .withStyleName(WebUIConstants.BUTTON_OPTION);
         MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, okButton);
         GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, 1, "60px");
         formLayoutHelper.addComponent(dateSelection, "Date", 0, 0);

@@ -35,7 +35,7 @@ import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.mycollab.vaadin.web.ui.DepotWithChart;
 import com.mycollab.vaadin.web.ui.ProgressBarIndicator;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.ui.Alignment;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -104,7 +104,7 @@ public class UnresolvedBugsByAssigneeWidget extends DepotWithChart {
                 searchCriteria.setAssignuser(StringSearchField.and(assignee));
                 EventBusFactory.getInstance().post(new BugEvent.SearchRequest(this, searchCriteria));
             }).withIcon(UserAvatarControlFactory.createAvatarResource(assigneeAvatarId, 16))
-                    .withStyleName(UIConstants.BUTTON_LINK, UIConstants.TEXT_ELLIPSIS).withWidth("110px");
+                    .withStyleName(WebUIConstants.BUTTON_LINK, WebUIConstants.TEXT_ELLIPSIS).withWidth("110px");
             UserService service = AppContextUtil.getSpringBean(UserService.class);
             SimpleUser user = service.findUserByUserNameInAccount(assignee, AppContext.getAccountId());
             this.setDescription(CommonTooltipGenerator.generateTooltipUser(AppContext.getUserLocale(), user,

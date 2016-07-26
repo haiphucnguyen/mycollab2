@@ -33,7 +33,7 @@ import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickEvent;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.server.FontAwesome;
@@ -90,7 +90,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
             protected Object doEval() {
                 return searchCriteria;
             }
-        }))).withIcon(FontAwesome.PRINT).withStyleName(UIConstants.BUTTON_OPTION).withDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
+        }))).withIcon(FontAwesome.PRINT).withStyleName(WebUIConstants.BUTTON_OPTION).withDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
         headerLayout.with(lbTimeRange, printBtn).expand(lbTimeRange);
         this.addComponent(headerWrapper);

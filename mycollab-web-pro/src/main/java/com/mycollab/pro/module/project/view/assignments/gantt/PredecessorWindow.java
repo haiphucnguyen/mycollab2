@@ -9,7 +9,7 @@ import com.mycollab.pro.module.project.events.GanttEvent;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.*;
@@ -51,7 +51,7 @@ class PredecessorWindow extends Window {
         MVerticalLayout content = new MVerticalLayout();
         this.setContent(content);
         ELabel headerLbl = ELabel.h2(String.format("Row %d: %s", ganttItemWrapper.getGanttIndex(), ganttItemWrapper
-                .getName())).withStyleName(UIConstants.TEXT_ELLIPSIS);
+                .getName())).withStyleName(WebUIConstants.TEXT_ELLIPSIS);
         content.add(headerLbl);
 
         CssLayout preWrapper = new CssLayout();
@@ -69,13 +69,13 @@ class PredecessorWindow extends Window {
         preWrapper.addComponent(predecessorsLayout);
 
         MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                .withStyleName(UIConstants.BUTTON_OPTION);
+                .withStyleName(WebUIConstants.BUTTON_OPTION);
 
         MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             List<TaskPredecessor> predecessors = predecessorsLayout.buildPredecessors();
             EventBusFactory.getInstance().post(new GanttEvent.ModifyPredecessors(ganttItemWrapper, predecessors));
             close();
-        }).withIcon(FontAwesome.SAVE).withStyleName(UIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn);
         content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
@@ -207,7 +207,7 @@ class PredecessorWindow extends Window {
                     }
                 });
                 deleteBtn.setIcon(FontAwesome.TRASH_O);
-                deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+                deleteBtn.addStyleName(WebUIConstants.BUTTON_ICON_ONLY);
                 this.addComponent(deleteBtn);
 
                 if (taskPredecessor != null) {

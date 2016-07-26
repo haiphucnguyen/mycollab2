@@ -87,7 +87,7 @@ class ResolvedInputView extends AbstractMobilePageView {
                     final CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
                     commentService.saveWithSession(comment, AppContext.getUsername());
                 }
-                ResolvedInputView.this.callbackForm.previewItem(bug);
+                callbackForm.previewItem(bug);
                 EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
             }
         });

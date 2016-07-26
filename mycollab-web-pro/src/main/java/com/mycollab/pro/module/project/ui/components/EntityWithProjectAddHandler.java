@@ -9,7 +9,7 @@ import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.view.task.TaskAddWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -62,7 +62,7 @@ public class EntityWithProjectAddHandler {
             layoutHelper.addComponent(projectCombo, AppContext.getMessage(ProjectI18nEnum.SINGLE), 0, 0);
 
             MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> prjSelectionWindow.close())
-                    .withStyleName(UIConstants.BUTTON_OPTION);
+                    .withStyleName(WebUIConstants.BUTTON_OPTION);
 
             MButton nextBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_NEXT), clickEvent -> {
                 SimpleProject selectedProject = (SimpleProject) projectCombo.getValue();
@@ -70,7 +70,7 @@ public class EntityWithProjectAddHandler {
                     prjSelectionWindow.close();
                     displayEntityEditForm(selectedProject.getId());
                 }
-            }).withStyleName(UIConstants.BUTTON_ACTION);
+            }).withStyleName(WebUIConstants.BUTTON_ACTION);
             MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, nextBtn).withMargin(new MarginInfo(false, true, true, false));
             this.with(layoutHelper.getLayout(), buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
         }

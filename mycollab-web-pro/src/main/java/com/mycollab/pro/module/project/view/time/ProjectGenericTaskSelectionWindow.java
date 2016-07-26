@@ -9,7 +9,7 @@ import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCrite
 import com.mycollab.module.project.ui.components.GenericTaskTableDisplay;
 import com.mycollab.module.project.ui.components.GenericTaskTableFieldDef;
 import com.mycollab.vaadin.AppContext;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Label;
@@ -63,13 +63,13 @@ class ProjectGenericTaskSelectionWindow extends Window {
         Label nameLbl = new Label("Name:");
 
         this.nameField = new TextField();
-        this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+        this.nameField.setWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
 
         final MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
+                .withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
 
         final MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
-                .withStyleName(UIConstants.BUTTON_OPTION);
+                .withStyleName(WebUIConstants.BUTTON_OPTION);
 
         return new MHorizontalLayout(nameLbl, nameField, searchBtn, cancelBtn).withMargin(true);
     }

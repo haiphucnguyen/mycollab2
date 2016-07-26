@@ -1,7 +1,7 @@
 package com.mycollab.pro.module.project.ui.components;
 
 import com.mycollab.module.project.domain.SimpleProject;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import org.vaadin.addons.comboboxmultiselect.ComboBoxMultiselect;
 
 import java.util.List;
@@ -20,6 +20,6 @@ public class ProjectMultiSelect extends ComboBoxMultiselect {
             this.setItemCaption(project, project.getName());
         }
 
-        this.setItemStyleGenerator(((comboBoxMultiselect, o) -> UIConstants.TEXT_ELLIPSIS));
+        this.setItemStyleGenerator(((comboBoxMultiselect, o) -> WebUIConstants.TEXT_ELLIPSIS));
     }
 }

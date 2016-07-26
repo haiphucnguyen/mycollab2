@@ -11,10 +11,10 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
-import com.mycollab.vaadin.web.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.field.DateViewField;
-import com.mycollab.vaadin.web.ui.field.I18nFormViewField;
-import com.mycollab.vaadin.web.ui.field.RichTextViewField;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.ui.field.DateViewField;
+import com.mycollab.vaadin.ui.field.I18nFormViewField;
+import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.vaadin.ui.Field;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
@@ -51,7 +51,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
                 return tinyRs;
             } else if (Risk.Field.status.equalTo(propertyId)) {
                 return new I18nFormViewField(risk.getStatus(), OptionI18nEnum.StatusI18nEnum.class).withStyleName
-                        (UIConstants.FIELD_NOTE);
+                        (WebUIConstants.FIELD_NOTE);
             } else if (Risk.Field.datedue.equalTo(propertyId)) {
                 return new DateViewField(risk.getDatedue());
             } else if (Risk.Field.startdate.equalTo(propertyId)) {

@@ -3,7 +3,7 @@ package com.mycollab.pro.module.crm.view.setting.customlayout;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.form.view.builder.type.AbstractDynaField;
 import com.mycollab.vaadin.AppContext;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -28,7 +28,7 @@ public class CustomFieldComponent extends CssLayout {
     private PopupButton editFieldBtn;
 
     public CustomFieldComponent(AbstractDynaField field) {
-        this.setStyleName(UIConstants.CUSTOM_FIELD_COMPONENT);
+        this.setStyleName(WebUIConstants.CUSTOM_FIELD_COMPONENT);
         this.field = field;
         if (field == null) {
             fieldName = "&nbsp;";
@@ -45,9 +45,9 @@ public class CustomFieldComponent extends CssLayout {
             fieldWrapper.with(fieldNameLbl).expand(fieldNameLbl);
 
             editFieldBtn = new PopupButton();
-            editFieldBtn.setStyleName(UIConstants.POPUP_WITHOUT_INDICATOR);
+            editFieldBtn.setStyleName(WebUIConstants.POPUP_WITHOUT_INDICATOR);
             editFieldBtn.addStyleName("editFieldBtn");
-            editFieldBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+            editFieldBtn.addStyleName(WebUIConstants.BUTTON_ICON_ONLY);
             editFieldBtn.setIcon(FontAwesome.EDIT);
 
             fieldEditPanel = new Panel();
@@ -81,7 +81,7 @@ public class CustomFieldComponent extends CssLayout {
                         .getValue());
             }
         });
-        saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
+        saveBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
         panelContentLayout.addComponent(saveBtn);
         ((VerticalLayout) fieldEditPanel.getContent()).setComponentAlignment(

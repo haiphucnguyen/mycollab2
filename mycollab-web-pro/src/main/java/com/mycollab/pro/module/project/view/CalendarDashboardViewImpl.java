@@ -36,14 +36,13 @@ import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.calendar.CalendarComponentEvents;
-import com.vaadin.ui.components.calendar.event.CalendarEventProvider;
 import com.vaadin.ui.components.calendar.handler.BasicEventMoveHandler;
 import com.vaadin.ui.components.calendar.handler.BasicEventResizeHandler;
 import com.vaadin.ui.themes.ValoTheme;
@@ -229,7 +228,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         MButton todayBtn = new MButton(AppContext.getMessage(DayI18nEnum.OPT_TODAY), clickEvent -> {
             baseDate = new LocalDate();
             displayCalendar();
-        }).withStyleName(UIConstants.BUTTON_ACTION);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION);
         ButtonGroup navigationBtns = new ButtonGroup();
         MButton previousBtn = new MButton("", clickEvent -> {
             if (isMonthView) {
@@ -238,7 +237,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
                 baseDate = baseDate.minusWeeks(1);
             }
             displayCalendar();
-        }).withIcon(FontAwesome.CHEVRON_LEFT).withStyleName(UIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.CHEVRON_LEFT).withStyleName(WebUIConstants.BUTTON_ACTION);
         navigationBtns.addButton(previousBtn);
 
         MButton nextBtn = new MButton("", clickEvent -> {
@@ -248,7 +247,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
                 baseDate = baseDate.plusWeeks(1);
             }
             displayCalendar();
-        }).withIcon(FontAwesome.CHEVRON_RIGHT).withStyleName(UIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.CHEVRON_RIGHT).withStyleName(WebUIConstants.BUTTON_ACTION);
         navigationBtns.addButton(nextBtn);
 
         MHorizontalLayout headerLeftContainer = new MHorizontalLayout(todayBtn, navigationBtns);
@@ -261,7 +260,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
 
         MButton newTaskBtn = new MButton(AppContext.getMessage(TaskI18nEnum.NEW),
                 clickEvent -> UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(new SimpleTask())))
-                .withStyleName(UIConstants.BUTTON_ACTION);
+                .withStyleName(WebUIConstants.BUTTON_ACTION);
         final ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         final Button weekViewBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_WEEK));
         weekViewBtn.addClickListener(clickEvent -> {

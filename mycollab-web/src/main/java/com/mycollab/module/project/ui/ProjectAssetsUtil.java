@@ -23,7 +23,8 @@ import com.mycollab.module.file.PathUtils;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable;
@@ -52,7 +53,7 @@ public class ProjectAssetsUtil {
                     (String.format("%s/%s_%d.png", PathUtils.getProjectLogoPath(AppContext.getAccountId(), projectId),
                             projectAvatarId, size))));
         } else {
-            ELabel projectIcon = new ELabel(projectShortname).withStyleName(UIConstants.TEXT_ELLIPSIS, "center");
+            ELabel projectIcon = new ELabel(projectShortname).withStyleName(WebUIConstants.TEXT_ELLIPSIS, "center");
             wrapper = new VerticalLayout();
             ((VerticalLayout) wrapper).addComponent(projectIcon);
             ((VerticalLayout) wrapper).setComponentAlignment(projectIcon, Alignment.MIDDLE_CENTER);
@@ -73,7 +74,7 @@ public class ProjectAssetsUtil {
         } else {
             String accountName = account.getAccountname();
             accountName = (accountName.length() > 3) ? accountName.substring(0, 3) : accountName;
-            ELabel projectIcon = new ELabel(accountName).withStyleName(UIConstants.TEXT_ELLIPSIS, "center");
+            ELabel projectIcon = new ELabel(accountName).withStyleName(WebUIConstants.TEXT_ELLIPSIS, "center");
             wrapper = new VerticalLayout();
             ((VerticalLayout) wrapper).addComponent(projectIcon);
             ((VerticalLayout) wrapper).setComponentAlignment(projectIcon, Alignment.MIDDLE_CENTER);

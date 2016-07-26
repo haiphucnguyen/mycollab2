@@ -26,7 +26,7 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
@@ -54,7 +54,7 @@ public class BillingContainer extends AbstractPageView implements IBillingContai
             LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
             if (licenseInfo.isExpired()) {
                 with(ELabel.h2(AppContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_DATE, AppContext.formatDate
-                        (licenseInfo.getExpireDate()))).withStyleName(UIConstants.LABEL_OVERDUE).withWidthUndefined());
+                        (licenseInfo.getExpireDate()))).withStyleName(WebUIConstants.LABEL_OVERDUE).withWidthUndefined());
             } else if (licenseInfo.isTrial()) {
                 with(ELabel.h2(AppContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_SOON_DATE, AppContext.formatDate(licenseInfo.getExpireDate())))
                         .withWidthUndefined());
@@ -76,7 +76,7 @@ public class BillingContainer extends AbstractPageView implements IBillingContai
 
             if (licenseInfo.isTrial() || licenseInfo.isExpired() || licenseInfo.isInvalid()) {
                 MButton licenseBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE),
-                        clickEvent -> UI.getCurrent().addWindow(new LicenseActivationWindow())).withStyleName(UIConstants.BUTTON_ACTION);
+                        clickEvent -> UI.getCurrent().addWindow(new LicenseActivationWindow())).withStyleName(WebUIConstants.BUTTON_ACTION);
 
                 with(licenseBtn).withAlign(licenseBtn, Alignment.TOP_CENTER);
             }

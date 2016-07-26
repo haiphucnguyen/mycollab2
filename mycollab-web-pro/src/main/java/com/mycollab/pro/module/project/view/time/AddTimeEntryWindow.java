@@ -21,7 +21,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.DoubleField;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -71,8 +71,8 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         grid.setSpacing(true);
         content.addComponent(grid);
 
-        grid.addComponent(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)).withStyleName(UIConstants.META_COLOR), 0, 0);
-        grid.addComponent(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)).withStyleName(UIConstants.META_COLOR), 1, 0);
+        grid.addComponent(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)).withStyleName(WebUIConstants.META_COLOR), 0, 0);
+        grid.addComponent(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)).withStyleName(WebUIConstants.META_COLOR), 1, 0);
 
         projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
         grid.addComponent(projectMemberSelectionBox, 0, 1);
@@ -97,9 +97,9 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         isBillableCheckBox = new CheckBox();
         isOvertimeCheckBox = new CheckBox();
         attrContainer.with(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE)).withStyleName
-                        (UIConstants.META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("100px"),
+                        (WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("100px"),
                 isBillableCheckBox, new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME))
-                        .withStyleName(UIConstants.META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("100px"), isOvertimeCheckBox)
+                        .withStyleName(WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("100px"), isOvertimeCheckBox)
                 .alignAll(Alignment.MIDDLE_LEFT);
         grid.addComponent(attrContainer, 2, 1);
 
@@ -120,7 +120,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         updateTimeTableHeader();
         content.addComponent(timeInputTable);
 
-        content.addComponent(new ELabel(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)).withStyleName(UIConstants.META_COLOR));
+        content.addComponent(new ELabel(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)).withStyleName(WebUIConstants.META_COLOR));
 
         descArea = new RichTextArea();
         descArea.setWidth("100%");
@@ -132,12 +132,12 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         footer.addComponent(taskLayout);
 
         MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                .withStyleName(UIConstants.BUTTON_OPTION);
+                .withStyleName(WebUIConstants.BUTTON_OPTION);
 
         MButton saveBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             saveTimeLoggingItems();
             close();
-        }).withStyleName(UIConstants.BUTTON_ACTION);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION);
         saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);
@@ -158,7 +158,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
             MButton detachTaskBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), clickEvent -> {
                 createLinkTaskButton();
                 updateLinkTask(null);
-            }).withStyleName(UIConstants.BUTTON_DANGER);
+            }).withStyleName(WebUIConstants.BUTTON_DANGER);
             taskLayout.addComponent(detachTaskBtn);
 
             Label attachTaskBtn = new Label(StringUtils.trim(taskName, 60, true));
@@ -178,7 +178,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         MButton attachTaskBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), clickEvent -> {
             ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(AddTimeEntryWindow.this);
             getUI().addWindow(selectionTaskWindow);
-        }).withStyleName(UIConstants.BUTTON_ACTION);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION);
 
         taskLayout.addComponent(attachTaskBtn);
     }

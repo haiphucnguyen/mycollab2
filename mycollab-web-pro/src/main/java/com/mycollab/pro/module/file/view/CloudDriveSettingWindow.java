@@ -16,11 +16,10 @@ import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -54,7 +53,7 @@ public class CloudDriveSettingWindow extends Window {
             Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
             UI.getCurrent().addWindow(dropboxWindow);
         });
-        connectAccountBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        connectAccountBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
         mainLayout.addComponent(connectAccountBtn);
 
         bodyLayout = new MVerticalLayout().withSpacing(false).withMargin(false).withFullWidth();
@@ -69,7 +68,7 @@ public class CloudDriveSettingWindow extends Window {
 
         mainLayout.addComponent(bodyLayout);
         Button closeBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE), clickEvent -> close());
-        closeBtn.setStyleName(UIConstants.BUTTON_OPTION);
+        closeBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
         mainLayout.with(closeBtn).withAlign(closeBtn, Alignment.MIDDLE_RIGHT);
 
         this.setContent(mainLayout);
@@ -110,7 +109,7 @@ public class CloudDriveSettingWindow extends Window {
                 titleLayout.with(foldernameLbl).expand(foldernameLbl);
 
                 final PopupButton popupBtn = new PopupButton();
-                popupBtn.setStyleName(UIConstants.BUTTON_ACTION);
+                popupBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
 
                 final OptionPopupContent popupOptionActionLayout = new OptionPopupContent();
 
@@ -190,11 +189,11 @@ public class CloudDriveSettingWindow extends Window {
                     }
                 }
             });
-            saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            saveBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
             saveBtn.setIcon(FontAwesome.SAVE);
 
             MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                    .withStyleName(UIConstants.BUTTON_OPTION);
+                    .withStyleName(WebUIConstants.BUTTON_OPTION);
             layout.with(saveBtn, cancelBtn);
             return layout;
         }

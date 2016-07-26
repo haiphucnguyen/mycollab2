@@ -9,11 +9,11 @@ import com.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
 import com.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.mycollab.vaadin.web.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.field.CurrencyViewField;
-import com.mycollab.vaadin.web.ui.field.DateViewField;
-import com.mycollab.vaadin.web.ui.field.DefaultViewField;
-import com.mycollab.vaadin.web.ui.field.I18nFormViewField;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.ui.field.CurrencyViewField;
+import com.mycollab.vaadin.ui.field.DateViewField;
+import com.mycollab.vaadin.ui.field.DefaultViewField;
+import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.vaadin.ui.Field;
 
 /**
@@ -39,7 +39,7 @@ public class InvoiceReadFormFieldFactory extends AbstractBeanFieldGroupViewField
         } else if (Invoice.Field.assignuser.equalTo(propertyId)) {
             return new ProjectUserFormLinkField(invoice.getAssignuser(), invoice.getAssignUserAvatarId(), invoice.getAssignUserFullName());
         } else if (Invoice.Field.amount.equalTo(propertyId)) {
-            return new DefaultViewField(invoice.getAmount() + "").withStyleName(UIConstants.FIELD_NOTE);
+            return new DefaultViewField(invoice.getAmount() + "").withStyleName(WebUIConstants.FIELD_NOTE);
         } else if (Invoice.Field.id.equalTo(propertyId)) {
             return new ProjectFormAttachmentDisplayField(invoice.getProjectid(), ProjectTypeConstants.INVOICE, invoice.getId());
         }

@@ -8,7 +8,7 @@ import com.mycollab.core.MyCollabVersion;
 import com.mycollab.shell.view.components.AbstractAboutWindow;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebResourceIds;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;

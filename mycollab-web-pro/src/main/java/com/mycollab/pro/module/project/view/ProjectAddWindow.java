@@ -34,7 +34,7 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -145,10 +145,10 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
 
     private class ProjectAddWizard extends Wizard {
         ProjectAddWizard() {
-            this.getCancelButton().setStyleName(UIConstants.BUTTON_OPTION);
-            this.getBackButton().setStyleName(UIConstants.BUTTON_OPTION);
-            this.getNextButton().setStyleName(UIConstants.BUTTON_ACTION);
-            this.getFinishButton().setStyleName(UIConstants.BUTTON_ACTION);
+            this.getCancelButton().setStyleName(WebUIConstants.BUTTON_OPTION);
+            this.getBackButton().setStyleName(WebUIConstants.BUTTON_OPTION);
+            this.getNextButton().setStyleName(WebUIConstants.BUTTON_ACTION);
+            this.getFinishButton().setStyleName(WebUIConstants.BUTTON_ACTION);
             footer.setMargin(new MarginInfo(true, true, false, false));
 
             if (!SiteConfiguration.isCommunityEdition()) {
@@ -157,7 +157,7 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
                             close();
                             UI.getCurrent().addWindow(new ProjectAddBaseTemplateWindow());
                         });
-                newProjectFromTemplateBtn.addStyleName(UIConstants.BUTTON_ACTION);
+                newProjectFromTemplateBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
                 footer.addComponent(newProjectFromTemplateBtn, 0);
             }
         }

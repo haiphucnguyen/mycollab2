@@ -20,9 +20,9 @@ import com.mycollab.module.crm.domain.SimpleCall;
 import com.mycollab.module.crm.ui.components.RelatedReadItemField;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.mycollab.vaadin.web.ui.field.DateTimeViewField;
-import com.mycollab.vaadin.web.ui.field.DefaultViewField;
-import com.mycollab.vaadin.web.ui.field.RichTextViewField;
+import com.mycollab.vaadin.ui.field.DateTimeViewField;
+import com.mycollab.vaadin.ui.field.DefaultViewField;
+import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.mycollab.vaadin.web.ui.field.UserLinkViewField;
 import com.vaadin.ui.Field;
 

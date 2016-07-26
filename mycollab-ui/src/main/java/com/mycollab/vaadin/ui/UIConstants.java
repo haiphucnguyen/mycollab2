@@ -1,0 +1,11 @@
+package com.mycollab.vaadin.ui;
+
+/**
+ * @author MyCollab Ltd
+ * @since 5.3.5
+ */
+public class UIConstants {
+    public static final String CIRCLE_BOX = "circle-box";
+    public static final String LABEL_WORD_WRAP = "wordWrap";
+    public static final String META_INFO = "meta-info";
+}

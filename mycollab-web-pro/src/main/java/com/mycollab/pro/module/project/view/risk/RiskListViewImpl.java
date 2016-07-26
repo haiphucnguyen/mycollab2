@@ -19,7 +19,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.CheckBoxDecor;
 import com.mycollab.vaadin.web.ui.LabelLink;
 import com.mycollab.vaadin.web.ui.SelectionOptionButton;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.server.FontAwesome;
@@ -74,10 +74,10 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
                     risk.getId()));
 
             if ("Closed".equals(risk.getStatus())) {
-                b.addStyleName(UIConstants.LINK_COMPLETED);
+                b.addStyleName(WebUIConstants.LINK_COMPLETED);
             } else {
                 if (risk.isOverdue()) {
-                    b.addStyleName(UIConstants.LINK_OVERDUE);
+                    b.addStyleName(WebUIConstants.LINK_OVERDUE);
                 }
             }
             b.setDescription(ProjectTooltipGenerator.generateToolTipRisk(AppContext.getUserLocale(), AppContext.getDateFormat(),
@@ -122,7 +122,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
     }
 
     private ComponentContainer constructTableActionControls() {
-        MHorizontalLayout layout = new MHorizontalLayout().withFullWidth().withStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+        MHorizontalLayout layout = new MHorizontalLayout().withFullWidth().withStyleName(WebUIConstants.TABLE_ACTION_CONTROLS);
 
         selectOptionButton = new SelectionOptionButton(tableItem);
         selectOptionButton.setWidthUndefined();
@@ -150,7 +150,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         layout.with(selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER).expand(selectedItemsNumberLabel);
 
         MButton customizeViewBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new RiskListCustomizeWindow(tableItem)))
-                .withIcon(FontAwesome.ADJUST).withStyleName(UIConstants.BUTTON_ACTION);
+                .withIcon(FontAwesome.ADJUST).withStyleName(WebUIConstants.BUTTON_ACTION);
         customizeViewBtn.setDescription("Layout Options");
         layout.with(customizeViewBtn).withAlign(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 

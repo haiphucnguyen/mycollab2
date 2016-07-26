@@ -17,7 +17,7 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.DoubleField;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -85,7 +85,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(ItemTimeLoggingService.class), SimpleItemTimeLogging.class,
                 Arrays.asList(TimeTableFieldDef.logUser(), TimeTableFieldDef.logForDate(), TimeTableFieldDef.logValue(),
                         TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(), new TableViewField(null, "id",
-                                UIConstants.TABLE_CONTROL_WIDTH)));
+                                WebUIConstants.TABLE_CONTROL_WIDTH)));
 
         tableItem.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {
             final SimpleItemTimeLogging timeLoggingItem = tableItem.getBeanByIndex(itemId);
@@ -107,14 +107,14 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         tableItem.addGeneratedColumn("isbillable", (source, itemId, columnId) -> {
             SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
             ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
-            icon.setStyleName(UIConstants.BUTTON_ICON_ONLY);
+            icon.setStyleName(WebUIConstants.BUTTON_ICON_ONLY);
             return icon;
         });
 
         tableItem.addGeneratedColumn("isovertime", (source, itemId, columnId) -> {
             SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
             ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
-            icon.setStyleName(UIConstants.BUTTON_ICON_ONLY);
+            icon.setStyleName(WebUIConstants.BUTTON_ICON_ONLY);
             return icon;
         });
 
@@ -124,7 +124,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
                 itemTimeLoggingService.removeWithSession(itemTimeLogging, AppContext.getUsername(), AppContext.getAccountId());
                 loadTimeValue();
                 hasTimeChange = true;
-            }).withIcon(FontAwesome.TRASH_O).withStyleName(UIConstants.BUTTON_ICON_ONLY);
+            }).withIcon(FontAwesome.TRASH_O).withStyleName(WebUIConstants.BUTTON_ICON_ONLY);
             itemTimeLogging.setExtraData(deleteBtn);
 
             deleteBtn.setVisible(CurrentProjectVariables.isAdmin() || AppContext.getUsername().equals(itemTimeLogging.getLoguser()));
@@ -139,7 +139,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         MVerticalLayout spentTimePanel = new MVerticalLayout().withMargin(false);
         headerPanel.addComponent(spentTimePanel);
 
-        final MVerticalLayout totalLayout = new MVerticalLayout().withStyleName(UIConstants.BOX);
+        final MVerticalLayout totalLayout = new MVerticalLayout().withStyleName(WebUIConstants.BOX);
         spentTimePanel.addComponent(totalLayout);
         Label lbTimeInstructTotal = new Label(AppContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_SPENT_HOURS));
         totalLayout.addComponent(lbTimeInstructTotal);
@@ -170,7 +170,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
                 loadTimeValue();
                 newTimeInputField.setValue(0d);
             }
-        }).withIcon(FontAwesome.PLUS).withStyleName(UIConstants.BUTTON_ACTION).withVisible(isEnableAdd());
+        }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION).withVisible(isEnableAdd());
         addLayout.with(newTimeInputField, forDateField, isBillableField, isOvertimeField, addBtn);
     }
 
@@ -178,7 +178,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         MVerticalLayout remainTimePanel = new MVerticalLayout().withMargin(false);
         headerPanel.addComponent(remainTimePanel);
 
-        final MVerticalLayout updateLayout = new MVerticalLayout().withStyleName(UIConstants.BOX);
+        final MVerticalLayout updateLayout = new MVerticalLayout().withStyleName(WebUIConstants.BOX);
         remainTimePanel.addComponent(updateLayout);
 
         final Label lbTimeInstructTotal = new Label(AppContext.getMessage(TimeTrackingI18nEnum.OPT_REMAINING_WORK_HOURS));
@@ -205,7 +205,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
                 remainTimeLbl.setValue(remainTimeInputField.getValue() + "");
                 remainTimeInputField.setValue(0d);
             }
-        }).withStyleName(UIConstants.BUTTON_ACTION).withVisible(isEnableAdd());
+        }).withStyleName(WebUIConstants.BUTTON_ACTION).withVisible(isEnableAdd());
         addLayout.with(addBtn).withAlign(addBtn, Alignment.MIDDLE_LEFT);
     }
 

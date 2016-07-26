@@ -5,7 +5,7 @@ import com.mycollab.mobile.module.project.view.settings.ProjectMemberEditView;
 import com.mycollab.mobile.module.project.view.settings.ProjectRoleComboBox;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
 import com.mycollab.mobile.ui.FormSectionBuilder;
-import com.mycollab.mobile.ui.UIConstants;
+import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
@@ -25,7 +25,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.mycollab.vaadin.web.ui.field.DefaultViewField;
+import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
@@ -94,7 +94,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         public ComponentContainer getLayout() {
             final VerticalLayout layout = new VerticalLayout();
             layout.setMargin(false);
-            layout.addStyleName(UIConstants.FULL_WIDTH_COMP);
+            layout.addStyleName(MobileUIConstants.FULL_WIDTH_COMP);
             layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(ProjectMemberI18nEnum.FORM_INFORMATION_SECTION)));
 
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 2);

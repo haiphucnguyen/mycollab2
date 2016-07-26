@@ -35,7 +35,7 @@ import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable;
 import com.vaadin.data.Property;
@@ -143,7 +143,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
                 }
             });
             printBtn.setIcon(FontAwesome.PRINT);
-            printBtn.addStyleName(UIConstants.BUTTON_OPTION);
+            printBtn.addStyleName(WebUIConstants.BUTTON_OPTION);
             printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
             headerWrapper.with(titleLbl, printBtn).expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);
@@ -153,7 +153,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             CssLayout contentWrapper = new CssLayout();
             contentWrapper.setWidth("100%");
 
-            MHorizontalLayout controlsPanel = new MHorizontalLayout().withFullWidth().withStyleName(UIConstants.BOX);
+            MHorizontalLayout controlsPanel = new MHorizontalLayout().withFullWidth().withStyleName(WebUIConstants.BOX);
             contentWrapper.addComponent(controlsPanel);
 
             GridLayout selectionLayout = new GridLayout(9, 2);
@@ -162,22 +162,22 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             selectionLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
             controlsPanel.addComponent(selectionLayout);
 
-            selectionLayout.addComponent(new ELabel(AppContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(UIConstants
-                    .META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 0);
+            selectionLayout.addComponent(new ELabel(AppContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(WebUIConstants
+                    .META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 0);
 
             fromDateField = new PopupDateFieldExt();
             fromDateField.setResolution(Resolution.DAY);
             selectionLayout.addComponent(fromDateField, 1, 0);
 
-            selectionLayout.addComponent(new ELabel(AppContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(UIConstants
-                    .META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 0);
+            selectionLayout.addComponent(new ELabel(AppContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebUIConstants
+                    .META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 0);
 
             toDateField = new PopupDateFieldExt();
             toDateField.setResolution(Resolution.DAY);
             selectionLayout.addComponent(toDateField, 3, 0);
 
             selectionLayout.addComponent(new ELabel(AppContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName
-                    (UIConstants.META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 1);
+                    (WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 1);
 
             groupField = new ValueComboBox(false, AppContext.getMessage(ProjectI18nEnum.SINGLE), AppContext
                     .getMessage(DayI18nEnum.OPT_DATE), AppContext.getMessage(UserI18nEnum.SINGLE));
@@ -189,8 +189,8 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             });
             selectionLayout.addComponent(groupField, 1, 1);
 
-            selectionLayout.addComponent(new ELabel(AppContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(UIConstants
-                    .META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 1);
+            selectionLayout.addComponent(new ELabel(AppContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(WebUIConstants
+                    .META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 1);
 
             orderField = new ItemOrderComboBox();
             orderField.addValueChangeListener(new Property.ValueChangeListener() {
@@ -202,14 +202,14 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             selectionLayout.addComponent(orderField, 3, 1);
 
             selectionLayout.addComponent(new ELabel(AppContext.getMessage(ProjectI18nEnum.SINGLE))
-                    .withStyleName(UIConstants.META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 4, 0);
+                    .withStyleName(WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 4, 0);
 
             projectField = new UserInvolvedProjectsListSelect();
             initListSelectStyle(projectField);
             selectionLayout.addComponent(projectField, 5, 0, 5, 1);
 
             selectionLayout.addComponent(new ELabel(AppContext.getMessage(UserI18nEnum.SINGLE))
-                    .withStyleName(UIConstants.META_COLOR, UIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 6, 0);
+                    .withStyleName(WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 6, 0);
 
             userField = new UserInvolvedProjectsMemberListSelect(getProjectIds());
             initListSelectStyle(userField);
@@ -223,7 +223,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
                     searchTimeReporting();
                 }
             });
-            queryBtn.setStyleName(UIConstants.BUTTON_ACTION);
+            queryBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
 
             selectionLayout.addComponent(queryBtn, 8, 0);
 

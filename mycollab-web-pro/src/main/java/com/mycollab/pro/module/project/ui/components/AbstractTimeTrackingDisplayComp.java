@@ -22,7 +22,7 @@ import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.pro.module.project.view.time.TimeTrackingTableDisplay;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;

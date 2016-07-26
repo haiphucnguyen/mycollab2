@@ -37,7 +37,7 @@ import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
@@ -89,7 +89,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         if (AppContext.isAdmin()) {
             MButton cancelBtn = new MButton(AppContext.getMessage(BillingI18nEnum.BUTTON_CANCEL_ACCOUNT),
                     clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.CancelAccount(this, null)))
-                    .withStyleName(UIConstants.BUTTON_DANGER);
+                    .withStyleName(WebUIConstants.BUTTON_DANGER);
             faqLayout.addComponent(cancelBtn);
         }
 
@@ -128,21 +128,21 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
             if (currentBillingPlan.getId().equals(plan.getId())) {
                 if (billingAccount.isNotActive()) {
-                    MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(UIConstants.BUTTON_ACTION);
+                    MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(WebUIConstants.BUTTON_ACTION);
                     BrowserWindowOpener opener = new BrowserWindowOpener(plan.getShoppingurl() +
                             "?referrer=" + EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
                     opener.extend(selectPlanBtn);
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
                 } else {
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, new
-                            MButton("Selected").withStyleName(UIConstants.BUTTON_OPTION));
+                            MButton("Selected").withStyleName(WebUIConstants.BUTTON_OPTION));
                 }
             } else {
                 String actionTxt = (plan.getPricing() < currentBillingPlan.getPricing()) ? AppContext.getMessage
                         (BillingI18nEnum.ACTION_DOWNGRADE) : AppContext.getMessage(BillingI18nEnum.ACTION_UPGRADE);
                 MButton selectPlanBtn = new MButton(actionTxt,
                         clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan)))
-                        .withStyleName(UIConstants.BUTTON_ACTION);
+                        .withStyleName(WebUIConstants.BUTTON_ACTION);
                 singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
             }
 
@@ -163,7 +163,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         ELabel introText = ELabel.h2(AppContext.getMessage(BillingI18nEnum.OPT_CURRENT_PLAN, currentBillingPlan.getBillingtype()));
         SimpleBillingSubscription subscription = (SimpleBillingSubscription) MyCollabSession.getCurrentUIVariable("subscription");
         if (subscription == null) {
-            MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(UIConstants.BUTTON_DANGER);
+            MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(WebUIConstants.BUTTON_DANGER);
             BrowserWindowOpener opener = new BrowserWindowOpener(currentBillingPlan.getShoppingurl() + "?referrer=" +
                     EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
             opener.extend(selectPlanBtn);
@@ -171,12 +171,12 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         } else {
             MButton historyBtn = new MButton(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY),
                     clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoHistory(this, null)))
-                    .withStyleName(UIConstants.BUTTON_ACTION, ValoTheme.BUTTON_TINY);
+                    .withStyleName(WebUIConstants.BUTTON_ACTION, ValoTheme.BUTTON_TINY);
             MHorizontalLayout buttonControls = new MHorizontalLayout(introText, historyBtn);
             currentPlanLayout.addComponent(buttonControls);
             if (!subscription.isValid()) {
                 MButton retryChargeBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE))
-                        .withStyleName(UIConstants.BUTTON_DANGER, ValoTheme.BUTTON_TINY);
+                        .withStyleName(WebUIConstants.BUTTON_DANGER, ValoTheme.BUTTON_TINY);
                 BrowserWindowOpener paymentOpener = new BrowserWindowOpener(subscription.getSubscriptioncustomerurl());
                 paymentOpener.extend(retryChargeBtn);
                 buttonControls.with(retryChargeBtn);
@@ -190,7 +190,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             ELabel currentBillingPrice = ELabel.h3(AppContext.getMessage(BillingI18nEnum.OPT_PRICING_MONTH, currentBillingPlan.getPricing()));
             ELabel expiredDateLbl = ELabel.h3(" | Expired Date: " + AppContext.formatDate(subscription.getExpireDate()));
             if (!subscription.isValid()) {
-                expiredDateLbl.withStyleName(UIConstants.LABEL_OVERDUE);
+                expiredDateLbl.withStyleName(WebUIConstants.LABEL_OVERDUE);
             }
             currentPlanLayout.addComponent(new MHorizontalLayout(currentBillingPrice, expiredDateLbl));
         }
@@ -199,19 +199,19 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         numOfActiveProjects = projectService.getTotalActiveProjectsInAccount(AppContext.getAccountId());
 
         ELabel projectInfo = ELabel.html(AppContext.getMessage(BillingI18nEnum.OPT_PLAN_NUM_PROJECTS,
-                numOfActiveProjects, currentBillingPlan.getNumprojects())).withStyleName(UIConstants.FIELD_NOTE);
+                numOfActiveProjects, currentBillingPlan.getNumprojects())).withStyleName(WebUIConstants.FIELD_NOTE);
 
         DriveInfoService driveInfoService = AppContextUtil.getSpringBean(DriveInfoService.class);
         usedStorageVolume = driveInfoService.getUsedStorageVolume(AppContext.getAccountId());
         String usedStorageTxt = FileUtils.getVolumeDisplay(usedStorageVolume);
         ELabel storageInfo = ELabel.html(AppContext.getMessage(BillingI18nEnum.OPT_PLAN_STORAGE,
                 usedStorageTxt, FileUtils.getVolumeDisplay(currentBillingPlan.getVolume())))
-                .withStyleName(UIConstants.FIELD_NOTE);
+                .withStyleName(WebUIConstants.FIELD_NOTE);
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
         numOfActiveUsers = userService.getTotalActiveUsersInAccount(AppContext.getAccountId());
         ELabel userInfo = ELabel.html(AppContext.getMessage(BillingI18nEnum.OPT_PLAN_USERS,
-                numOfActiveUsers, currentBillingPlan.getNumusers())).withStyleName(UIConstants.FIELD_NOTE);
+                numOfActiveUsers, currentBillingPlan.getNumusers())).withStyleName(WebUIConstants.FIELD_NOTE);
 
         currentPlanLayout.addComponent(new MHorizontalLayout(projectInfo, storageInfo, userInfo));
     }
@@ -244,7 +244,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
 
             final MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                    .withStyleName(UIConstants.BUTTON_OPTION);
+                    .withStyleName(WebUIConstants.BUTTON_OPTION);
 
             final MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
                 if (chosenPlan.getNumprojects() < numOfActiveProjects
@@ -264,7 +264,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 billingService.updateBillingPlan(AppContext.getAccountId(), AppContext.getBillingAccount().getBillingPlan(), chosenPlan);
                 updateBillingPlan();
                 close();
-            }).withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+            }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
             SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
             if (billingAccount.isNotActive()) {

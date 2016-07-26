@@ -15,7 +15,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.Separator;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -79,12 +79,12 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             UI.getCurrent().addWindow(cloudDriveSettingWindow);
         });
         settingBtn.setIcon(FontAwesome.COG);
-        settingBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+        settingBtn.addStyleName(WebUIConstants.BUTTON_ICON_ONLY);
         navButton.with(settingBtn);
 
         final PopupButton linkBtn = new PopupButton();
         linkBtn.setIcon(FontAwesome.LINK);
-        linkBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+        linkBtn.addStyleName(WebUIConstants.BUTTON_ICON_ONLY);
 
         final OptionPopupContent filterBtnLayout = new OptionPopupContent();
 

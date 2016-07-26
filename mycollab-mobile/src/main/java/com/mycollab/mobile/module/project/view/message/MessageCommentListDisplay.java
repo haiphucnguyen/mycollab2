@@ -22,7 +22,7 @@ import com.mycollab.common.service.CommentService;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.mobile.module.project.ui.ProjectCommentRequestComp;
 import com.mycollab.mobile.ui.MobileAttachmentUtils;
-import com.mycollab.mobile.ui.UIConstants;
+import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;

@@ -16,11 +16,13 @@
  */
 package com.mycollab.mobile.module.project.view.settings;
 
-import com.mycollab.db.arguments.NumberSearchField;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Span;
 import com.mycollab.core.utils.NumberUtils;
+import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.mobile.ui.AbstractPagedBeanList.RowDisplayHandler;
 import com.mycollab.mobile.ui.AbstractSelectionView;
-import com.mycollab.mobile.ui.UIConstants;
+import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -29,9 +31,8 @@ import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Span;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -97,7 +98,7 @@ public class ProjectMemberSelectionView extends AbstractSelectionView<SimpleProj
             Image memberAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(member.getMemberAvatarId(), 48);
 
             VerticalLayout memberInfoLayout = new VerticalLayout();
-            mainLayout.addStyleName(UIConstants.TRUNCATE);
+            mainLayout.addStyleName(MobileUIConstants.TRUNCATE);
             mainLayout.with(memberAvatar, memberInfoLayout).expand(memberInfoLayout);
 
             A memberLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables

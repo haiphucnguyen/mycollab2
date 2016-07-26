@@ -1,5 +1,8 @@
 package com.mycollab.pro.module.project.view.milestone;
 
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
@@ -16,10 +19,7 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Span;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;

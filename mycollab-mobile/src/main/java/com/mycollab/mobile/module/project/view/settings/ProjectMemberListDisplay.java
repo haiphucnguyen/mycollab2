@@ -18,7 +18,7 @@ package com.mycollab.mobile.module.project.view.settings;
 
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
-import com.mycollab.mobile.ui.UIConstants;
+import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -29,6 +29,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Span;
@@ -60,7 +61,7 @@ public class ProjectMemberListDisplay extends DefaultPagedBeanList<ProjectMember
             Image memberAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(member.getMemberAvatarId(), 48);
 
             VerticalLayout memberInfoLayout = new VerticalLayout();
-            mainLayout.addStyleName(UIConstants.TRUNCATE);
+            mainLayout.addStyleName(MobileUIConstants.TRUNCATE);
             mainLayout.with(memberAvatar, memberInfoLayout).expand(memberInfoLayout);
 
             A memberLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables
@@ -69,9 +70,8 @@ public class ProjectMemberListDisplay extends DefaultPagedBeanList<ProjectMember
                     .withWidthUndefined();
             memberInfoLayout.addComponent(new MCssLayout(memberLbl).withFullWidth());
 
-            Label memberEmailLabel = new Label(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(),
-                    member.getUsername()), ContentMode.HTML);
-            memberEmailLabel.addStyleName(UIConstants.META_INFO);
+            Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(), member.getUsername()))
+                    .withStyleName(UIConstants.META_INFO);
             memberInfoLayout.addComponent(memberEmailLabel);
 
             ELabel memberSinceLabel = new ELabel(String.format("Member since: %s", AppContext.formatPrettyTime(member.getJoindate())))

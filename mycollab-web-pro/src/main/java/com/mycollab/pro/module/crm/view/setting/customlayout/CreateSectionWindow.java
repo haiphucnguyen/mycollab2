@@ -6,7 +6,7 @@ import com.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -59,7 +59,7 @@ public class CreateSectionWindow extends Window {
                         CreateSectionWindow.this.close();
                     }
                 });
-        saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
+        saveBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
 
 
@@ -73,7 +73,7 @@ public class CreateSectionWindow extends Window {
                         CreateSectionWindow.this.close();
                     }
                 });
-        cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
+        cancelBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
 
         controlLayout.with(saveBtn, cancelBtn);
 

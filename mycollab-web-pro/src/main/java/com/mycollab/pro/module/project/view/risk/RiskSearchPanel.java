@@ -17,7 +17,7 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
 import com.mycollab.vaadin.web.ui.DynamicQueryParamLayout;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -48,7 +48,7 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
     protected Component buildExtraControls() {
         return new MButton(AppContext.getMessage(RiskI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null)))
-                .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS)
+                .withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
     }
 
@@ -75,19 +75,19 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
         @Override
         public ComponentContainer constructBody() {
             nameField = new MTextField().withInputPrompt(AppContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
-                    .withWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+                    .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
 
             myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
 
             MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                    .withStyleName(UIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH)
+                    .withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH)
                     .withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
             MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
-                    .withStyleName(UIConstants.BUTTON_OPTION);
+                    .withStyleName(WebUIConstants.BUTTON_OPTION);
 
             MButton advancedSearchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
-                    clickEvent -> moveToAdvancedSearchLayout()).withStyleName(UIConstants.BUTTON_LINK);
+                    clickEvent -> moveToAdvancedSearchLayout()).withStyleName(WebUIConstants.BUTTON_LINK);
 
             return new MHorizontalLayout(nameField, myItemCheckbox, searchBtn, cancelBtn, advancedSearchBtn)
                     .alignAll(Alignment.MIDDLE_LEFT).withMargin(true);

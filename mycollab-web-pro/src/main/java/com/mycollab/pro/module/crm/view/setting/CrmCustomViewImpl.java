@@ -39,7 +39,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
@@ -76,7 +76,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
         MHorizontalLayout headerTitle = new MHorizontalLayout()
                 .withFullWidth().withSpacing(false)
                 .withMargin(new MarginInfo(true, false, true, false));
-        headerTitle.addStyleName(UIConstants.HEADER_VIEW);
+        headerTitle.addStyleName(WebUIConstants.HEADER_VIEW);
         headerTitle.with(headerLbl).withAlign(headerLbl, Alignment.MIDDLE_LEFT).expand(headerLbl);
 
         headerBox.addComponent(headerTitle);
@@ -100,7 +100,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 
             }
         });
-        createCustomFieldBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        createCustomFieldBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
         createCustomFieldBtn.setIcon(FontAwesome.PLUS);
         controlLayout.addComponent(createCustomFieldBtn);
         controlLayout.setComponentAlignment(createCustomFieldBtn,
@@ -116,7 +116,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 
             }
         });
-        createSectionBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        createSectionBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
         createSectionBtn.setIcon(FontAwesome.PLUS);
         controlLayout.addComponent(createSectionBtn);
         controlLayout.setComponentAlignment(createSectionBtn, Alignment.MIDDLE_LEFT);
@@ -146,7 +146,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
                 formService.saveCustomForm(AppContext.getAccountId(), moduleName, rebuildForm);
             }
         });
-        saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        saveBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
         buttonsLayout.addComponent(saveBtn);
 
@@ -158,7 +158,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
                 display(moduleName);
             }
         });
-        cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
+        cancelBtn.addStyleName(WebUIConstants.BUTTON_OPTION);
         buttonsLayout.addComponent(cancelBtn);
 
         headerContent.addComponent(buttonsLayout);

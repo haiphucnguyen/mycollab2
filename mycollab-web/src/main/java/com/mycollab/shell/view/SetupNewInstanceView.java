@@ -31,11 +31,10 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.TimeZoneSelectionField;
-import com.mycollab.vaadin.web.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.field.DateFormatField;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.ui.field.DateFormatField;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.mycollab.web.DesktopApplication;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -60,7 +59,7 @@ public class SetupNewInstanceView extends MVerticalLayout {
         content.with(ELabel.h2("Last step, you are almost there!").withWidthUndefined());
         content.with(ELabel.h3("All fields are required *").withStyleName("overdue").withWidthUndefined());
         content.with(ELabel.html(AppContext.getMessage(ShellI18nEnum.OPT_SUPPORTED_LANGUAGES_INTRO))
-                .withStyleName(UIConstants.META_COLOR));
+                .withStyleName(WebUIConstants.META_COLOR));
         GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, 8, "200px");
         formLayoutHelper.getLayout().setWidth("600px");
         final TextField adminField = formLayoutHelper.addComponent(new TextField(), "Admin email", 0, 0);
@@ -131,7 +130,7 @@ public class SetupNewInstanceView extends MVerticalLayout {
             }
 
             ((DesktopApplication) UI.getCurrent()).doLogin(adminName, password, false);
-        }).withStyleName(UIConstants.BUTTON_ACTION);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(createSampleDataSelection, installBtn).alignAll(Alignment.MIDDLE_RIGHT);
         content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);

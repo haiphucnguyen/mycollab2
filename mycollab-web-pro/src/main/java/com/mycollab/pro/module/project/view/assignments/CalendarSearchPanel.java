@@ -9,7 +9,7 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
-import com.mycollab.vaadin.web.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -18,7 +18,7 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import static com.mycollab.vaadin.web.ui.UIConstants.BUTTON_ACTION;
+import static com.mycollab.vaadin.web.ui.WebUIConstants.BUTTON_ACTION;
 
 /**
  * @author MyCollab Ltd
@@ -75,19 +75,19 @@ public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGeneri
             basicSearchBody.with(nameLbl).withAlign(nameLbl, Alignment.MIDDLE_LEFT);
 
             nameField = new MTextField().withInputPrompt(AppContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
-                    .withWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+                    .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
             basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_CENTER);
 
             myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
             basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
             MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                    .withIcon(FontAwesome.SEARCH).withStyleName(UIConstants.BUTTON_ACTION)
+                    .withIcon(FontAwesome.SEARCH).withStyleName(WebUIConstants.BUTTON_ACTION)
                     .withClickShortcut(ShortcutAction.KeyCode.ENTER);
             basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
 
             Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""));
-            cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
+            cancelBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
             basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
             return basicSearchBody;
         }

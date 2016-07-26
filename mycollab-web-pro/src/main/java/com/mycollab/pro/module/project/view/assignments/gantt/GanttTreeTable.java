@@ -24,7 +24,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
-import com.mycollab.vaadin.web.ui.field.DefaultViewField;
+import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.web.ui.field.converter.LocalDateConverter;
 import com.vaadin.addon.contextmenu.ContextMenu;
 import com.vaadin.addon.contextmenu.MenuItem;
@@ -38,7 +38,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.dialogs.ConfirmDialog;
 
 import java.util.*;
 
