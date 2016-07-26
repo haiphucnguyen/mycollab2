@@ -14,7 +14,6 @@ import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapperExt;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscription;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionExample;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionHistory;
-import com.mycollab.ondemand.module.billing.esb.DeleteAccountEvent;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -163,8 +162,9 @@ public class SubscriptionManagerController {
         ex.createCriteria().andSubreferenceEqualTo(subscriptionReference);
         List<BillingSubscription> billingSubscriptions = subscriptionMapper.selectByExample(ex);
         if (billingSubscriptions.size() == 1) {
+            BillingSubscription billingSubscription = billingSubscriptions.get(0);
             BillingSubscriptionHistory subscriptionHistory = new BillingSubscriptionHistory();
-            subscriptionHistory.setSubscriptionid(billingSubscriptions.get(0).getId());
+            subscriptionHistory.setSubscriptionid(billingSubscription.getId());
             subscriptionHistory.setOrderid(orderId);
             subscriptionHistory.setCreatedtime(new DateTime().toDate());
             subscriptionHistory.setStatus("Success");
@@ -172,6 +172,12 @@ public class SubscriptionManagerController {
             subscriptionHistory.setProductname(orderProductName);
             subscriptionHistory.setTotalprice(Double.parseDouble(orderSubTotalUSD));
             subscriptionHistoryMapper.insert(subscriptionHistory);
+
+            BillingAccountExample accountEx = new BillingAccountExample();
+            accountEx.createCriteria().andIdEqualTo(billingSubscription.getAccountid());
+            BillingAccount billingAccount = new BillingAccount();
+            billingAccount.setStatus(AccountStatusConstants.ACTIVE);
+            billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
         } else {
             LOG.error("Find subscription with id " + subscriptionReference + "in account has count" +
                     billingSubscriptions.size());
@@ -205,6 +211,12 @@ public class SubscriptionManagerController {
             subscriptionHistory.setProductname("");
             subscriptionHistory.setTotalprice(-1d);
             subscriptionHistoryMapper.insert(subscriptionHistory);
+
+            BillingAccountExample accountEx = new BillingAccountExample();
+            accountEx.createCriteria().andIdEqualTo(billingSubscription.getAccountid());
+            BillingAccount billingAccount = new BillingAccount();
+            billingAccount.setStatus(AccountStatusConstants.INVALID);
+            billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
         } else {
             LOG.error("Find subscription with id " + subscriptionReference + "in account has count" +
                     billingSubscriptions.size());
@@ -219,17 +231,20 @@ public class SubscriptionManagerController {
                                                       @RequestParam(value = "SubscriptionIsTest", required = false)
                                                               String subscriptionIsTest,
                                                       @RequestParam(value = "SubscriptionQuantity", required = false)
-                                                                  String subscriptionQuantity,
+                                                              String subscriptionQuantity,
                                                       @RequestParam("SubscriptionReference") String subscriptionReference,
                                                       @RequestParam(value = "SubscriptionReferrer", required = false)
-                                                                  String subscriptionReferrer) {
+                                                              String subscriptionReferrer) {
         BillingSubscriptionExample ex = new BillingSubscriptionExample();
         ex.createCriteria().andSubreferenceEqualTo(subscriptionReference);
         List<BillingSubscription> billingSubscriptions = subscriptionMapper.selectByExample(ex);
         if (billingSubscriptions.size() == 1) {
             BillingSubscription subscription = billingSubscriptions.get(0);
-            DeleteAccountEvent event = new DeleteAccountEvent(subscription.getAccountid(), null);
-            asyncEventBus.post(event);
+            BillingAccountExample accountEx = new BillingAccountExample();
+            accountEx.createCriteria().andIdEqualTo(subscription.getAccountid());
+            BillingAccount billingAccount = new BillingAccount();
+            billingAccount.setStatus(AccountStatusConstants.INVALID);
+            billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
         } else {
             LOG.error("Find subscription with id " + subscriptionReference + "in account has count" +
                     billingSubscriptions.size());

@@ -33,7 +33,7 @@ public class UserController {
             LOG.debug("There are subdomains for user {} {}", username, BeanUtility.printBeanObj(result));
 
         } else {
-            LOG.debug("There is no subdomain for user {}", username);
+            LOG.debug("There is no subDomain for user {}", username);
             result = new String[0];
         }
         return result;

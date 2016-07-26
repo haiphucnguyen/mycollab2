@@ -16,7 +16,7 @@ public class AccountResourceTest extends RestServiceTest {
     @DataSet
     @Test
     public void testSignupSuccessfully() {
-        RestAssured.given().contentType(ContentType.URLENC).formParam("subdomain", "xyz")
+        RestAssured.given().contentType(ContentType.URLENC).formParam("subDomain", "xyz")
                 .formParam("planId", "1").formParam("password", "1a2b3c4d5e")
                 .formParam("email", "baohan@esofthead.com")
                 .formParam("timezoneId", "3")
@@ -30,7 +30,7 @@ public class AccountResourceTest extends RestServiceTest {
     @DataSet
     @Test
     public void testSignupWithExistingDomain() {
-        RestAssured.given().contentType(ContentType.URLENC).formParam("subdomain", "abc")
+        RestAssured.given().contentType(ContentType.URLENC).formParam("subDomain", "abc")
                 .formParam("planId", "1").formParam("password", "1a2b3c4d5e")
                 .formParam("email", "baohan@esofthead.com")
                 .formParam("timezoneId", "3")

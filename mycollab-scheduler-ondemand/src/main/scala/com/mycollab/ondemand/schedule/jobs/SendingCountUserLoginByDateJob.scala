@@ -42,7 +42,7 @@ class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
     val from = to.minusDays(1)
     criteria.setSaccountid(null)
     criteria.setLastAccessTimeRange(from.toDate, to.toDate)
-    criteria.setOrderFields(Arrays.asList(new OrderField("subdomain", SearchCriteria.ASC)))
+    criteria.setOrderFields(Arrays.asList(new OrderField("subDomain", SearchCriteria.ASC)))
 
     import scala.collection.JavaConverters._
     val accessedUsers = userService.findPageableListByCriteria(new BasicSearchRequest[UserSearchCriteria](criteria, 0, Integer.MAX_VALUE)).asScala.toList.asInstanceOf[List[SimpleUser]]

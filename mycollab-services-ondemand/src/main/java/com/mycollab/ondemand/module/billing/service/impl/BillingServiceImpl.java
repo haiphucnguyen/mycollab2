@@ -67,12 +67,12 @@ public class BillingServiceImpl implements BillingService {
     public void registerAccount(String subDomain, int billingPlanId, String username, String password, String email, String timezoneId,
                                 boolean isEmailVerified) {
 
-        // check subdomain is ascii string
+        // check subDomain is ascii string
         if (!StringUtils.isAsciiString(subDomain)) {
             throw new UserInvalidInputException("Subdomain must be an ascii string");
         }
 
-        // check subdomain belong to keyword list
+        // check subDomain belong to keyword list
         if (ACCOUNT_BLACK_LIST.contains(subDomain)) {
             throw new SubDomainExistedException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
                     ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));

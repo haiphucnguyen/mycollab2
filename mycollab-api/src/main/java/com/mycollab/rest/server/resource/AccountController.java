@@ -27,7 +27,7 @@ public class AccountController {
     private EmailReferenceService emailReferenceService;
 
     @RequestMapping(value = "signup", method = RequestMethod.POST, headers = "Content-Type=application/x-www-form-urlencoded")
-    public String signup(@RequestParam("subdomain") String subdomain, @RequestParam("planId") Integer planId,
+    public String signup(@RequestParam("subDomain") String subdomain, @RequestParam("planId") Integer planId,
                          @RequestParam("password") String password, @RequestParam("email") String email,
                          @RequestParam("timezone") String timezoneId, @RequestParam("isEmailVerified") Boolean isEmailVerified) {
         LOG.debug("Register account with subDomain {}, username {}", subdomain, email);

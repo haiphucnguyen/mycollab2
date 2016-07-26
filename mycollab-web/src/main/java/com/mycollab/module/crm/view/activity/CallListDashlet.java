@@ -29,13 +29,12 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.web.ui.Depot;
 import com.mycollab.vaadin.web.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickEvent;
-import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.viritin.button.MButton;
 
 import java.util.Arrays;
 
@@ -59,32 +58,25 @@ public class CallListDashlet extends Depot {
                 new TableViewField(GenericI18Enum.FORM_START_DATE, "startdate", UIConstants.TABLE_DATE_TIME_WIDTH),
                 new TableViewField(GenericI18Enum.FORM_STATUS, "status", UIConstants.TABLE_S_LABEL_WIDTH)));
 
-        tableItem.addTableListener(new TableClickListener() {
-            @Override
-            public void itemClick(final TableClickEvent event) {
-                final SimpleCall call = (SimpleCall) event.getData();
-                if ("isClosed".equals(event.getFieldName())) {
-                    call.setIsclosed(true);
-                    final CallService callService = AppContextUtil.getSpringBean(CallService.class);
-                    callService.updateWithSession(call, AppContext.getUsername());
-                    display();
-                }
+        tableItem.addTableListener(event -> {
+            final SimpleCall call = (SimpleCall) event.getData();
+            if ("isClosed".equals(event.getFieldName())) {
+                call.setIsclosed(true);
+                final CallService callService = AppContextUtil.getSpringBean(CallService.class);
+                callService.updateWithSession(call, AppContext.getUsername());
+                display();
             }
         });
         bodyContent.addComponent(tableItem);
 
-        Button customizeViewBtn = new Button("", new Button.ClickListener() {
+        MButton customizeViewBtn = new MButton("", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void buttonClick(ClickEvent event) {
 
             }
-        });
-        customizeViewBtn.setIcon(FontAwesome.ADJUST);
-        customizeViewBtn.setDescription("Layout Options");
-        customizeViewBtn.setStyleName(UIConstants.BUTTON_ICON_ONLY);
-
+        }).withIcon(FontAwesome.ADJUST).withStyleName(UIConstants.BUTTON_ICON_ONLY).withDescription("Layout Options");
         this.addHeaderElement(customizeViewBtn);
     }
 

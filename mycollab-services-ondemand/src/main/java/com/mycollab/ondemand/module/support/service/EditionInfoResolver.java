@@ -23,47 +23,44 @@ public class EditionInfoResolver implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                File versionFile = FileUtils.getDesireFile(FileUtils.getUserFolder(), "version", "src/main/conf/version");
-                if (versionFile == null || !versionFile.exists()) {
-                    throw new MyCollabException("Can not find version file");
-                } else {
-                    // Create a new Watch Service
-                    try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
-                        loadEditionInfo(versionFile);
-                        Path path = Paths.get(versionFile.getParent());
-                        // Register events
-                        path.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
-                        while (true) {
-                            // Obtaining watch keys
-                            final WatchKey key = watchService.poll(10, TimeUnit.SECONDS);
-                            if (key != null) {
-                                // key value can be null if no event was triggered
-                                for (WatchEvent<?> watchEvent : key.pollEvents()) {
-                                    final WatchEvent.Kind<?> kind = watchEvent.kind();
-                                    // Overflow event
-                                    if (StandardWatchEventKinds.OVERFLOW == kind) {
-                                    } else if (StandardWatchEventKinds.ENTRY_MODIFY == kind) {
-                                        // A new Path was created
-                                        Path modifiedPath = ((WatchEvent<Path>) watchEvent).context();
-                                        // Output
-                                        String fileName = modifiedPath.toFile().getName();
-                                        if ("version".equals(modifiedPath.toFile().getName())) {
-                                            loadEditionInfo(versionFile);
-                                        }
+        new Thread(()-> {
+            File versionFile = FileUtils.getDesireFile(FileUtils.getUserFolder(), "version", "src/main/conf/version");
+            if (versionFile == null || !versionFile.exists()) {
+                throw new MyCollabException("Can not find version file");
+            } else {
+                // Create a new Watch Service
+                try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
+                    loadEditionInfo(versionFile);
+                    Path path = Paths.get(versionFile.getParent());
+                    // Register events
+                    path.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
+                    while (true) {
+                        // Obtaining watch keys
+                        final WatchKey key = watchService.poll(10, TimeUnit.SECONDS);
+                        if (key != null) {
+                            // key value can be null if no event was triggered
+                            for (WatchEvent<?> watchEvent : key.pollEvents()) {
+                                final WatchEvent.Kind<?> kind = watchEvent.kind();
+                                // Overflow event
+                                if (StandardWatchEventKinds.OVERFLOW == kind) {
+                                } else if (StandardWatchEventKinds.ENTRY_MODIFY == kind) {
+                                    // A new Path was created
+                                    Path modifiedPath = ((WatchEvent<Path>) watchEvent).context();
+                                    // Output
+                                    String fileName = modifiedPath.toFile().getName();
+                                    if ("version".equals(modifiedPath.toFile().getName())) {
+                                        loadEditionInfo(versionFile);
                                     }
                                 }
-                                if (!key.reset()) {
-                                    break; //loop
-                                }
                             }
-
+                            if (!key.reset()) {
+                                break; //loop
+                            }
                         }
-                    } catch (IOException | InterruptedException e) {
-                        throw new MyCollabException(e);
+
                     }
+                } catch (IOException | InterruptedException e) {
+                    throw new MyCollabException(e);
                 }
             }
         }).start();

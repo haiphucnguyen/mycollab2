@@ -2,6 +2,7 @@ package com.mycollab.ondemand.schedule.jobs
 
 import com.google.common.eventbus.AsyncEventBus
 import com.mycollab.db.arguments.{BasicSearchRequest, DateSearchField, SetSearchField}
+import com.mycollab.module.billing.AccountStatusConstants
 import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria
 import com.mycollab.ondemand.module.billing.esb.DeleteAccountEvent
 import com.mycollab.ondemand.module.billing.service.BillingService
@@ -26,7 +27,7 @@ class DeleteObsoleteAccountJob extends GenericQuartzJobBean {
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext): Unit = {
     val searchCriteria = new BillingAccountSearchCriteria
-    searchCriteria.setStatuses(new SetSearchField[String]("Trial"))
+    searchCriteria.setStatuses(new SetSearchField[String](AccountStatusConstants.TRIAL, AccountStatusConstants.INVALID))
     searchCriteria.setLastAccessTime(new DateSearchField(new LocalDate().minusDays(30).toDate))
     import collection.JavaConverters._
     val obsoleteAccounts = billingService.findPageableListByCriteria(new

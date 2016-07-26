@@ -25,13 +25,10 @@ import com.mycollab.vaadin.web.ui.field.RichTextViewField;
 import com.vaadin.ui.Field;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 3.0
- * 
  */
-class MeetingReadFormFieldFactory extends
-		AbstractBeanFieldGroupViewFieldFactory<SimpleMeeting> {
+class MeetingReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<SimpleMeeting> {
 	private static final long serialVersionUID = 1L;
 
 	public MeetingReadFormFieldFactory(GenericBeanForm<SimpleMeeting> form) {
@@ -55,5 +52,4 @@ class MeetingReadFormFieldFactory extends
 		}
 		return null;
 	}
-
 }

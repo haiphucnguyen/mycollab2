@@ -76,7 +76,7 @@ public class MainViewImpl extends AbstractMainView {
         }
 
         Label accountNameLabel = new Label(AppContext.getSubDomain());
-        accountNameLabel.addStyleName("subdomain");
+        accountNameLabel.addStyleName("subDomain");
         accountLayout.addComponent(accountNameLabel);
 
         NotificationComponent notificationComponent = new NotificationComponent();
