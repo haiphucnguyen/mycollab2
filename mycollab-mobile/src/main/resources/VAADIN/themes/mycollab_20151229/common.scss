@@ -45,13 +45,45 @@
   -ms-writing-mode:lr-tb;
 }
 
-@mixin truncate() {
+@mixin text-ellipsis {
   white-space: nowrap !important;
-  overflow: hidden !important;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
+.text-ellipsis a {
+  display: inline-block;
+  width: 100%;
+  @include text-ellipsis;
+}
+
+.v-label.text-ellipsis {
+  display: inline-block;
+  width: 100%;
+  @include text-ellipsis;
+}
+
+.row {
+  padding: 10px;
+  border-bottom: 1px solid $my-separator-color;
+  &:last-child {
+    border-style: none;
+  }
+}
+
 @mixin common {
+  .v-label {
+    &.wordWrap {
+      word-wrap: break-word;
+      white-space: normal;
+    }
+  }
+  .circle-box, img .circle-box{
+    border-radius: 50%;
+    background-color: #b9ecfb;
+    text-align: center;
+  }
+
   .meta-info {
     color: $my-meta-color;
     font-size: smaller !important;
@@ -71,14 +103,6 @@
   a {
     color: $my-link-color !important;
     text-decoration: none !important;
-  }
-
-  .truncate .v-layout,  .truncate .v-label, .truncate {
-    width: 100% !important;
-    a {
-     display: block;
-     @include truncate();
-    }
   }
 
   .v-gridlayout.colored-gridlayout {
@@ -131,12 +155,8 @@
     font-size: smaller;
     span {
     display: block;
-      @include truncate();
+      @include text-ellipsis();
     }
-  }
-
-  .v-touchkit-navbar-left, .v-touchkit-navbar-right {
-    width: 68px !important;
   }
 
   .v-touchkit-navbar-right {

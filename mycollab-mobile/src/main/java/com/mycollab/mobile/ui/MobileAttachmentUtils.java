@@ -82,7 +82,7 @@ public class MobileAttachmentUtils {
             MButton b = new MButton(attachment.getTitle(), clickEvent -> {
                 AttachmentPreviewView previewView = new AttachmentPreviewView(VaadinResourceFactory.getResource(attachment.getPath()));
                 EventBusFactory.getInstance().post(new ShellEvent.PushView(attachment, previewView));
-            }).withStyleName(MobileUIConstants.TRUNCATE);
+            }).withStyleName(UIConstants.TEXT_ELLIPSIS);
             b.setWidth("100%");
             attachmentRow.with(b).expand(b);
         } else {
@@ -118,7 +118,7 @@ public class MobileAttachmentUtils {
         thumbnailWrap.addComponent(thumbnail);
         attachmentLayout.addComponent(thumbnailWrap);
 
-        ELabel attachmentLink = new ELabel(docName).withStyleName(UIConstants.META_INFO, MobileUIConstants.TRUNCATE);
+        ELabel attachmentLink = new ELabel(docName).withStyleName(UIConstants.META_INFO, UIConstants.TEXT_ELLIPSIS);
         attachmentLayout.with(attachmentLink).expand(attachmentLink);
 
         MButton removeAttachment = new MButton("", clickEvent -> {

@@ -95,7 +95,7 @@ public class MessageCommentListDisplay extends VerticalLayout implements Reloada
             MHorizontalLayout commentBlock = new MHorizontalLayout().withSpacing(false).withFullWidth();
             commentBlock.setStyleName("comment-block");
             Image userAvatarImg = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(comment.getOwnerAvatarId(), 32);
-            userAvatarImg.setStyleName("user-avatar");
+            userAvatarImg.addStyleName(UIConstants.CIRCLE_BOX);
             commentBlock.addComponent(userAvatarImg);
 
             CssLayout rightCol = new CssLayout();

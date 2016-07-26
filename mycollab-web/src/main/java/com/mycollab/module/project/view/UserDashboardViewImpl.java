@@ -167,7 +167,7 @@ public class UserDashboardViewImpl extends AbstractPageView implements UserDashb
 
         MVerticalLayout headerContent = new MVerticalLayout().withMargin(new MarginInfo(false, false, false, true));
 
-        ELabel headerLabel = ELabel.h2(AppContext.getUser().getDisplayName()).withStyleName(WebUIConstants.TEXT_ELLIPSIS);
+        ELabel headerLabel = ELabel.h2(AppContext.getUser().getDisplayName()).withStyleName(UIConstants.TEXT_ELLIPSIS);
         MHorizontalLayout headerContentTop = new MHorizontalLayout();
         headerContentTop.with(headerLabel).withAlign(headerLabel, Alignment.TOP_LEFT).expand(headerLabel);
 

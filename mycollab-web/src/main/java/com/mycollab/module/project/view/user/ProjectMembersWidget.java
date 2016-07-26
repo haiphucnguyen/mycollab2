@@ -134,7 +134,7 @@ public class ProjectMembersWidget extends Depot {
             layout.addComponent(userAvatar);
 
             VerticalLayout content = new VerticalLayout();
-            content.addComponent(new ELabel(buildAssigneeValue(member), ContentMode.HTML).withStyleName(WebUIConstants.TEXT_ELLIPSIS));
+            content.addComponent(new ELabel(buildAssigneeValue(member), ContentMode.HTML).withStyleName(UIConstants.TEXT_ELLIPSIS));
             layout.with(content).expand(content);
 
             CssLayout footer = new CssLayout();

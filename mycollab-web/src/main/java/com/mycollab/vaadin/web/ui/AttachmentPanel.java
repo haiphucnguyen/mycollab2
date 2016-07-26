@@ -83,7 +83,7 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
             }
         }).withIcon(FontAwesome.TRASH_O).withStyleName(WebUIConstants.BUTTON_ICON_ONLY);
 
-        ELabel fileLbl = new ELabel(fileName, ContentMode.HTML).withDescription(fileName).withStyleName(WebUIConstants.TEXT_ELLIPSIS);
+        ELabel fileLbl = new ELabel(fileName, ContentMode.HTML).withDescription(fileName).withStyleName(UIConstants.TEXT_ELLIPSIS);
         fileAttachmentLayout.with(new ELabel(FileAssetsUtil.getFileIconResource(fileName).getHtml(), ContentMode.HTML).withWidthUndefined(),
                 fileLbl, new ELabel(" - " + FileUtils.getVolumeDisplay(file.length()))
                         .withStyleName(UIConstants.META_INFO).withWidthUndefined(), removeBtn).expand(fileLbl);

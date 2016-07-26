@@ -17,6 +17,7 @@
 package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.core.MyCollabException;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.ErrorMessage;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
@@ -144,7 +145,7 @@ public class VerticalTabsheet extends CustomComponent {
                 button.setIcon(resource);
             }
             button.setStyleName(TAB_STYLENAME);
-            button.addStyleName(WebUIConstants.TEXT_ELLIPSIS);
+            button.addStyleName(UIConstants.TEXT_ELLIPSIS);
             button.setWidth("90%");
 
             if (button.getLevel() > 0) {
@@ -175,7 +176,7 @@ public class VerticalTabsheet extends CustomComponent {
             navigatorContainer.addComponent(button);
             navigatorContainer.setComponentAlignment(button, Alignment.MIDDLE_CENTER);
             button.setStyleName(TAB_STYLENAME);
-            button.addStyleName(WebUIConstants.TEXT_ELLIPSIS);
+            button.addStyleName(UIConstants.TEXT_ELLIPSIS);
             button.setWidth("90%");
             button.setIcon(icon);
             return button;

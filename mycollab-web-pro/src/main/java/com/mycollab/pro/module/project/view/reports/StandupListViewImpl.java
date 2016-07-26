@@ -166,7 +166,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
     private class ProjectRowHandler implements AbstractBeanPagedList.RowDisplayHandler<StandupReportStatistic> {
         @Override
         public Component generateRow(final AbstractBeanPagedList host, final StandupReportStatistic project, int rowIndex) {
-            ELabel projectLbl = new ELabel(project.getProjectName()).withStyleName(WebUIConstants.TEXT_ELLIPSIS);
+            ELabel projectLbl = new ELabel(project.getProjectName()).withStyleName(UIConstants.TEXT_ELLIPSIS);
             final MHorizontalLayout layout = new MHorizontalLayout(ProjectAssetsUtil.buildProjectLogo(project
                     .getProjectKey(), project.getProjectId(), project.getProjectAvatarId(), 32),
                     projectLbl, new ELabel(" (" + project.getTotalWrittenReports() + " / "

@@ -17,7 +17,8 @@
 package com.mycollab.vaadin.ui.field;
 
 import com.mycollab.core.utils.StringUtils;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Label;
@@ -34,9 +35,7 @@ public class RichTextViewField extends CustomField<String> {
 
     public RichTextViewField(String value) {
         this.value = value;
-        label = new Label(StringUtils.formatRichText(value), ContentMode.HTML);
-        label.setWidth("100%");
-        label.addStyleName("wordWrap");
+        label = ELabel.html(StringUtils.formatRichText(value)).withStyleName(UIConstants.LABEL_WORD_WRAP).withFullWidth();
     }
 
     @Override

@@ -360,14 +360,9 @@
 
     .taskrow {
       padding: 10px;
-      border-style: solid;
-      border-color: $my-separator-color;
-      border-width: 0px 0px 1px 0px;
+      border-bottom: 1px solid $my-separator-color;
       &:last-child {
         border-style: none;
-      }
-      &:hover {
-        @include hover-effect;
       }
     }
   }

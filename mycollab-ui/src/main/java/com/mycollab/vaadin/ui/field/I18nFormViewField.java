@@ -18,6 +18,7 @@ package com.mycollab.vaadin.ui.field;
 
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
@@ -38,7 +39,7 @@ public class I18nFormViewField extends CustomField<String> {
         label = new Label();
         label.setContentMode(ContentMode.TEXT);
         label.setWidthUndefined();
-        label.addStyleName("wordWrap");
+        label.addStyleName(UIConstants.LABEL_WORD_WRAP);
 
         if (StringUtils.isNotBlank(key)) {
             try {

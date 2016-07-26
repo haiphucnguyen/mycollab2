@@ -30,6 +30,8 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.resources.VaadinResourceFactory;
 import com.mycollab.vaadin.resources.file.FileAssetsUtil;
+import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -98,8 +100,7 @@ public class AttachmentDisplayComponent extends CssLayout {
         attachmentNameWrap.setWidth(WebUIConstants.DEFAULT_ATTACHMENT_THUMBNAIL_WIDTH);
         attachmentNameWrap.setStyleName("attachment-name-wrap");
 
-        Label attachmentName = new Label(StringUtils.trim(docName, 60, true));
-        attachmentName.setStyleName("attachment-name");
+        Label attachmentName = new ELabel(docName).withStyleName(UIConstants.TEXT_ELLIPSIS);
         attachmentNameWrap.addComponent(attachmentName);
         attachmentLayout.addComponent(attachmentNameWrap, "bottom: 0px; left: 0px; right: 0px; z-index: 1;");
 

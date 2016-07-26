@@ -23,7 +23,6 @@ import com.mycollab.core.MyCollabException;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.mobile.ui.AbstractMobilePageView;
-import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectLinkGenerator;
@@ -75,7 +74,7 @@ public class IssueListView extends AbstractMobilePageView {
 
         @Override
         public Component generateRow(ProjectGenericTask issue, int rowIndex) {
-            MVerticalLayout ticketLayout = new MVerticalLayout().withFullWidth();
+            MVerticalLayout ticketLayout = new MVerticalLayout().withFullWidth().withStyleName("row");
             A issueLink;
             if (ProjectTypeConstants.BUG.equals(issue.getType())) {
                 issueLink = new A(ProjectLinkBuilder.generateBugPreviewFullLink(issue.getExtraTypeId(), issue.getProjectShortName()))
@@ -89,9 +88,9 @@ public class IssueListView extends AbstractMobilePageView {
             } else {
                 throw new MyCollabException("Do not support issue type " + issue.getType());
             }
-            CssLayout taskLbl = new CssLayout(new ELabel(issueLink.write(), ContentMode.HTML).withStyleName(MobileUIConstants.TRUNCATE));
-            ticketLayout.with(new MHorizontalLayout(new ELabel(ProjectAssetsManager.getAsset(issue.getType())
-                    .getHtml(), ContentMode.HTML).withWidthUndefined(), taskLbl).expand(taskLbl).withFullWidth());
+            ELabel taskLbl = ELabel.html(issueLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
+            ticketLayout.with(new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(issue.getType())).withWidthUndefined(),
+                    taskLbl).expand(taskLbl).withFullWidth());
 
             CssLayout metaInfoLayout = new CssLayout();
             ticketLayout.with(metaInfoLayout);
@@ -107,7 +106,7 @@ public class IssueListView extends AbstractMobilePageView {
 
             ELabel assigneeLbl = new ELabel(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + (issue.getAssignUserFullName() == null ?
                     ":&nbsp;N/A&nbsp;" : ":&nbsp;" + assigneeLink.write()), ContentMode.HTML).withStyleName(UIConstants.META_INFO);
-            assigneeLbl.addStyleName(MobileUIConstants.TRUNCATE);
+            assigneeLbl.addStyleName(UIConstants.TEXT_ELLIPSIS);
             metaInfoLayout.addComponent(assigneeLbl);
 
             ELabel statusLbl = new ELabel(AppContext.getMessage(GenericI18Enum.FORM_STATUS) + ": " + AppContext.getMessage

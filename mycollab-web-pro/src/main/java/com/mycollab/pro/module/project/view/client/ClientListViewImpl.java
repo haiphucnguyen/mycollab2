@@ -110,7 +110,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
 
         A clientLink = new A(ProjectLinkBuilder.generateClientPreviewFullLink(client.getId())).appendText(client
                 .getAccountname()).setTitle(client.getAccountname());
-        ELabel clientLinkLbl = ELabel.h3(clientLink.write()).withStyleName(WebUIConstants.TEXT_ELLIPSIS).withFullWidth();
+        ELabel clientLinkLbl = ELabel.h3(clientLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
 
         MVerticalLayout clientInfo = new MVerticalLayout().withMargin(false).with(clientLinkLbl, ELabel.hr());
         Div websiteDiv = new Div().appendText(AppContext.getMessage(AccountI18nEnum.FORM_WEBSITE) + ": " +
@@ -127,7 +127,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
                         new A(AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(), client.getAssignuser())).
                                 appendText(client.getAssignUserFullName()));
         clientInfo.addComponent(new ELabel(assignUserDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO,
-                WebUIConstants.TEXT_ELLIPSIS));
+                UIConstants.TEXT_ELLIPSIS));
         Div numProjectsDiv = new Div().appendText(AppContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, client.getNumProjects()));
         clientInfo.addComponent(new ELabel(numProjectsDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO));
 

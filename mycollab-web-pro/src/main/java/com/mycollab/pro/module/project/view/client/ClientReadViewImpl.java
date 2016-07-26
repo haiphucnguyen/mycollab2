@@ -210,7 +210,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             ELabel headerLbl = new ELabel(projectDiv.write(), ContentMode.HTML).withStyleName("header");
             headerLbl.addStyleName(ValoTheme.LABEL_H3);
             headerLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
-            headerLbl.addStyleName(WebUIConstants.TEXT_ELLIPSIS);
+            headerLbl.addStyleName(UIConstants.TEXT_ELLIPSIS);
             this.addComponent(headerLbl);
 
             Div activeMembersDiv = new Div().appendText(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers()).setTitle("Active members");

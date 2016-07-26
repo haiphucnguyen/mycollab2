@@ -3,9 +3,6 @@
   .message-list-view, .message-read-view {
     .message-block {
       padding: 1.2rem 0.8rem 0rem 0.8rem;
-      .user-avatar {
-        padding-right: 0.8rem;
-      }
       .title-row {
         padding: .5rem 0;
         .comment-count {
@@ -33,12 +30,10 @@
   .comment-list {
     .comment-block {
       padding: 0.8rem;
-      .user-avatar {
-        padding-right: 0.8rem;
-      }
       .right-col {
         border: 1px solid $my-separator-color;
         padding: 0.5rem 0.5rem 0 0.5rem;
+        border-radius: .5rem;
         &:before {
           content: "";
           position: absolute;

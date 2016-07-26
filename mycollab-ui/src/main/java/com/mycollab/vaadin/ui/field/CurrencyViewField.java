@@ -20,6 +20,7 @@ import com.mycollab.core.utils.CurrencyUtils;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 
@@ -38,7 +39,7 @@ public class CurrencyViewField extends CustomField<String> {
         } else {
             Currency currency = CurrencyUtils.getInstance(value);
             label = new ELabel(String.format("%s (%s)", currency.getDisplayName(AppContext.getUserLocale()), currency.getCurrencyCode()))
-                    .withFullWidth().withStyleName("wordWrap");
+                    .withFullWidth().withStyleName(UIConstants.LABEL_WORD_WRAP);
         }
     }
 

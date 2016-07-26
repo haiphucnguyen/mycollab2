@@ -203,13 +203,13 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
 
         A memberLink = new A(AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(),
                 member.getUsername())).appendText(member.getDisplayName());
-        ELabel memberLinkLbl = ELabel.h3(memberLink.write()).withStyleName(WebUIConstants.TEXT_ELLIPSIS);
+        ELabel memberLinkLbl = ELabel.h3(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
         memberInfo.addComponent(memberLinkLbl);
         memberInfo.addComponent(ELabel.hr());
 
         if (member.getRoleid() != null) {
             String memberRoleLinkPrefix = String.format("<a href=\"%s\"", AccountLinkBuilder.generatePreviewFullRoleLink(member.getRoleid()));
-            ELabel memberRole = new ELabel(ContentMode.HTML).withStyleName(WebUIConstants.TEXT_ELLIPSIS);
+            ELabel memberRole = new ELabel(ContentMode.HTML).withStyleName(UIConstants.TEXT_ELLIPSIS);
             if (Boolean.TRUE.equals(member.getIsAccountOwner())) {
                 memberRole.setValue(String.format("%sstyle=\"color: #B00000;\">Account Owner</a>", memberRoleLinkPrefix));
             } else {
@@ -229,7 +229,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
 
         if (Boolean.TRUE.equals(AppContext.showEmailPublicly())) {
             Label memberEmailLabel = new ELabel(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(),
-                    member.getUsername()), ContentMode.HTML).withStyleName(WebUIConstants.TEXT_ELLIPSIS, UIConstants.META_INFO)
+                    member.getUsername()), ContentMode.HTML).withStyleName(UIConstants.TEXT_ELLIPSIS, UIConstants.META_INFO)
                     .withFullWidth();
             memberInfo.addComponent(memberEmailLabel);
         }

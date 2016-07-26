@@ -241,7 +241,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         private void displaySelectedResourceControls() {
             if (selectedResource != null) {
                 selectedResourceControlLayout.removeAllComponents();
-                ELabel resourceHeaderLbl = ELabel.h3(selectedResource.getName()).withStyleName(WebUIConstants.TEXT_ELLIPSIS);
+                ELabel resourceHeaderLbl = ELabel.h3(selectedResource.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS);
                 MHorizontalLayout headerLayout = new MHorizontalLayout(resourceHeaderLbl).withMargin(new MarginInfo
                         (false, true, false, true)).withStyleName("panel-header").withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
                 selectedResourceControlLayout.with(headerLayout);
@@ -349,7 +349,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
             MVerticalLayout informationLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
 
-            ELabel resourceLbl = ELabel.h3(resource.getName()).withFullWidth().withStyleName("link", WebUIConstants.TEXT_ELLIPSIS);
+            ELabel resourceLbl = ELabel.h3(resource.getName()).withFullWidth().withStyleName("link", UIConstants.TEXT_ELLIPSIS);
             CssLayout resourceLinkLayout = new CssLayout(resourceLbl);
             resourceLinkLayout.addLayoutClickListener(layoutClickEvent -> {
                 if (resource instanceof Folder) {

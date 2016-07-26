@@ -9,6 +9,7 @@ import com.mycollab.pro.module.project.events.GanttEvent;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.combobox.FilteringMode;
@@ -51,7 +52,7 @@ class PredecessorWindow extends Window {
         MVerticalLayout content = new MVerticalLayout();
         this.setContent(content);
         ELabel headerLbl = ELabel.h2(String.format("Row %d: %s", ganttItemWrapper.getGanttIndex(), ganttItemWrapper
-                .getName())).withStyleName(WebUIConstants.TEXT_ELLIPSIS);
+                .getName())).withStyleName(UIConstants.TEXT_ELLIPSIS);
         content.add(headerLbl);
 
         CssLayout preWrapper = new CssLayout();

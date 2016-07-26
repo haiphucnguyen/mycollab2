@@ -101,12 +101,12 @@ public class TaskListViewImpl extends AbstractListPageView<TaskSearchCriteria, S
 
         @Override
         public Component generateRow(final SimpleTask task, int rowIndex) {
-            MVerticalLayout rowLayout = new MVerticalLayout().withFullWidth();
+            MVerticalLayout rowLayout = new MVerticalLayout().withFullWidth().withStyleName("row");
 
             A taskLink = new A(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(), task
                     .getProjectShortname())).appendText(String.format("[#%s] - %s", task.getTaskkey(), task.getTaskname()));
 
-            CssLayout taskLbl = new CssLayout(new ELabel(taskLink.write(), ContentMode.HTML).withStyleName(MobileUIConstants.TRUNCATE));
+            CssLayout taskLbl = new CssLayout(new ELabel(taskLink.write(), ContentMode.HTML).withStyleName(UIConstants.TEXT_ELLIPSIS));
             rowLayout.with(new MHorizontalLayout(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK)
                     .getHtml(), ContentMode.HTML).withWidthUndefined(), taskLbl).expand(taskLbl).withFullWidth());
 

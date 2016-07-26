@@ -76,43 +76,6 @@
   }
   
   /* Edit View Layout */
-  
-  .attachment-panel {
-    .v-label.attachment-name {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-  }  
-  
-  /* Note List */
-  .noteList {
-    background-color: rgb(255, 255, 255);
-  }
-  
-  /* Message Row */
-  .message {
-    border-bottom: 1px solid rgb(203, 203, 203);
-    
-    .message-header {
-      .user-name {
-        color: rgb(227, 146, 65);
-      }
-      .time-post {
-        color: rgb(191, 191, 191);
-      }
-    }
-    
-    .message-body {
-      color: rgb(149, 149, 149);
-    }
-  }
-  
-  .v-touchkit-navbutton {
-    &:after {
-      content: "";
-      right: 0px !important;
-    }
-  }
 
   /* Include common components */
   @include attachment-preview;

@@ -1,6 +1,7 @@
 
 package com.mycollab.pro.module.project.view;
 
+import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.domain.FavoriteItem;
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
@@ -48,12 +49,12 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.SearchTextField;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -228,7 +229,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
             favoriteBtn.addStyleName(WebUIConstants.BUTTON_ICON_ONLY);
 
             ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(item.getType()).getHtml() + " " + item
-                    .getSummary(), ContentMode.HTML).withFullWidth().withStyleName(WebUIConstants.TEXT_ELLIPSIS);
+                    .getSummary(), ContentMode.HTML).withFullWidth().withStyleName(UIConstants.TEXT_ELLIPSIS);
             layout.with(favoriteBtn, headerLbl).expand(headerLbl);
             layout.addLayoutClickListener(layoutClickEvent -> {
                 EventBusFactory.getInstance().post(new ProjectEvent.SelectFavoriteItem(this, item));
