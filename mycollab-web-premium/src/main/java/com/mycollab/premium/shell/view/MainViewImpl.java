@@ -88,9 +88,8 @@ public class MainViewImpl extends AbstractMainView {
         NotificationComponent notificationComponent = new NotificationComponent();
         accountLayout.addComponent(notificationComponent);
 
-        EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new RequestUploadAvatarNotification()));
         if (StringUtils.isBlank(AppContext.getUser().getAvatarid())) {
-
+            EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new RequestUploadAvatarNotification()));
         }
 
         ExtMailService mailService = AppContextUtil.getSpringBean(ExtMailService.class);

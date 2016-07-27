@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project.view.settings
 
 import com.mycollab.common.UrlTokenizer
@@ -38,7 +22,7 @@ class UserUrlResolver extends ProjectUrlResolver {
   this.addSubResolver("preview", new PreviewUrlResolver)
   this.addSubResolver("add", new AddUrlResolver)
   this.addSubResolver("edit", new EditUrlResolver)
-
+  
   private class ListUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {
       val projectId = UrlTokenizer(params(0)).getInt
@@ -49,18 +33,17 @@ class UserUrlResolver extends ProjectUrlResolver {
       EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
-
+  
   private class PreviewUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {
       val token = UrlTokenizer(params(0))
       val projectId = token.getInt
       val memberName = token.getString
-      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
-        new ProjectMemberScreenData.Read(memberName))
+      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new ProjectMemberScreenData.Read(memberName))
       EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
-
+  
   private class AddUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {
       val token = UrlTokenizer(params(0))
@@ -70,7 +53,7 @@ class UserUrlResolver extends ProjectUrlResolver {
       EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
-
+  
   private class EditUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {
       val token = UrlTokenizer(params(0))
@@ -78,10 +61,9 @@ class UserUrlResolver extends ProjectUrlResolver {
       val memberId = token.getInt
       val projectMemberService = AppContextUtil.getSpringBean(classOf[ProjectMemberService])
       val member = projectMemberService.findById(memberId, AppContext.getAccountId)
-      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
-        new ProjectMemberScreenData.Add(member))
+      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new ProjectMemberScreenData.Add(member))
       EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
-
+  
 }

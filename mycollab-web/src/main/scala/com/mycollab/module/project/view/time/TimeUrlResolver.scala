@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project.view.time
 
 import com.mycollab.common.UrlTokenizer
@@ -32,19 +16,17 @@ import com.mycollab.vaadin.mvp.PageActionChain
   */
 class TimeUrlResolver extends ProjectUrlResolver {
   this.addSubResolver("list", new ListUrlResolver)
-
+  
   private class ListUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {
       val projectId = UrlTokenizer(params(0)).getInt
       val searchCriteria = new ItemTimeLoggingSearchCriteria
       searchCriteria.setProjectIds(new SetSearchField[Integer](projectId))
-      searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
-        VariableInjector.THIS_WEEK));
-      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
-        new TimeTrackingScreenData.Search(searchCriteria))
+      searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates, VariableInjector.THIS_WEEK))
+      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new TimeTrackingScreenData.Search(searchCriteria))
       EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
-
+  
 }
 

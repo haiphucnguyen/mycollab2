@@ -1,5 +1,8 @@
 package com.mycollab.pro.module.project.view.assignments.gantt;
 
+import com.google.common.base.MoreObjects;
+import com.hp.gagawa.java.elements.Td;
+import com.hp.gagawa.java.elements.Tr;
 import com.mycollab.common.TooltipBuilder;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
@@ -12,9 +15,6 @@ import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.pro.module.project.events.GanttEvent;
 import com.mycollab.vaadin.AppContext;
-import com.google.common.base.MoreObjects;
-import com.hp.gagawa.java.elements.Td;
-import com.hp.gagawa.java.elements.Tr;
 import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;
 import org.tltv.gantt.client.shared.Step;
@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.mycollab.common.TooltipBuilder.TdUtil.buildCellName;
-import static com.mycollab.common.TooltipBuilder.TdUtil.buildCellValue;
+import static com.mycollab.common.TooltipBuilder.buildCellName;
+import static com.mycollab.common.TooltipBuilder.buildCellValue;
 
 /**
  * @author MyCollab Ltd.
