@@ -218,7 +218,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
             standupMissingComp.search(projectId, onDate);
 
             StandupReportSearchCriteria baseCriteria = new StandupReportSearchCriteria();
-            baseCriteria.setOnDate(new DateSearchField(onDate, DateSearchField.EQUAL));
+            baseCriteria.setOnDate(new DateSearchField(onDate, DateSearchField.EQUAL()));
             baseCriteria.setProjectIds(new SetSearchField<>(projectId));
             reportInDay.setSearchCriteria(baseCriteria);
         }

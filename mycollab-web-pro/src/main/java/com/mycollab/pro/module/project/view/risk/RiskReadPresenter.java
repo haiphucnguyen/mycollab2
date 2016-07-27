@@ -92,8 +92,8 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
             public void gotoNext(SimpleRisk data) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 RiskSearchCriteria criteria = new RiskSearchCriteria();
-                criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
+                criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId()));
+                criteria.setId(NumberSearchField.greaterThan(data.getId()));
                 Integer nextId = riskService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new RiskEvent.GotoRead(this, nextId));
@@ -107,8 +107,8 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
             public void gotoPrevious(SimpleRisk data) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 RiskSearchCriteria criteria = new RiskSearchCriteria();
-                criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESSTHAN));
+                criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId()));
+                criteria.setId(NumberSearchField.lessThan(data.getId()));
                 Integer nextId = riskService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new RiskEvent.GotoRead(this, nextId));

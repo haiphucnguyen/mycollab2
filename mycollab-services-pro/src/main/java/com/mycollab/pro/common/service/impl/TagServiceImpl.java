@@ -65,8 +65,8 @@ public class TagServiceImpl extends DefaultCrudService<Integer, Tag> implements 
     @Override
     public List<AggregateTag> findTagsInProject(Integer projectId, @CacheKey Integer accountId) {
         TagSearchCriteria searchCriteria = new TagSearchCriteria();
-        searchCriteria.setSaccountid(NumberSearchField.and(accountId));
-        searchCriteria.setProjectId(NumberSearchField.and(projectId));
+        searchCriteria.setSaccountid(NumberSearchField.equal(accountId));
+        searchCriteria.setProjectId(NumberSearchField.equal(projectId));
         return tagMapperExt.findPageableListByCriteria(searchCriteria, new RowBounds(0, Integer.MAX_VALUE));
     }
 

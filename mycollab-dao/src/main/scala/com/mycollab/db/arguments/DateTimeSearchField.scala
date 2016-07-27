@@ -16,17 +16,25 @@
  */
 package com.mycollab.db.arguments
 
+import java.util.Date
+
+import com.mycollab.core.utils.DateTimeUtils
+
 import scala.beans.BeanProperty
 
 /**
   * @author MyCollab Ltd
   * @since 5.3.5
   */
-@SerialVersionUID(1L)
-class SearchRequest(@BeanProperty var currentPage: Integer, @BeanProperty var numberOfItems: Integer) {
-  @BeanProperty val requestedUser: String = GroupIdProvider.getRequestedUser
+class DateTimeSearchField(operation: String, @BeanProperty val comparison: String, dateVal: Date) extends SearchField(operation) {
+  @BeanProperty val value = DateTimeUtils.convertDateTimeToUTC(dateVal)
 }
 
-object SearchRequest {
-  val DEFAULT_NUMBER_SEARCH_ITEMS = 25
+object DateTimeSearchField {
+  val LESS_THAN = "<"
+  val LESS_THAN_EQUAL = "<="
+  val GREATER_THAN = ">"
+  val GREATER_THAN_EQUAL = ">="
+  val EQUAL = "="
+  val NOT_EQUAL = "<>"
 }

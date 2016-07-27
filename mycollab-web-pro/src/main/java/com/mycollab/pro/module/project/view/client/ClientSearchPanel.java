@@ -2,7 +2,6 @@ package com.mycollab.pro.module.project.view.client;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.NumberSearchField;
-import com.mycollab.db.arguments.SearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.db.query.Param;
 import com.mycollab.eventmanager.EventBusFactory;
@@ -131,7 +130,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
         @Override
         protected AccountSearchCriteria fillUpSearchCriteria() {
             AccountSearchCriteria searchCriteria = new AccountSearchCriteria();
-            searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND, AppContext.getAccountId()));
+            searchCriteria.setSaccountid(NumberSearchField.equal(AppContext.getAccountId()));
             searchCriteria.setAccountname(StringSearchField.and(nameField.getValue().trim()));
             if (myItemCheckbox.getValue()) {
                 searchCriteria.setAssignUser(StringSearchField.and(AppContext.getUsername()));

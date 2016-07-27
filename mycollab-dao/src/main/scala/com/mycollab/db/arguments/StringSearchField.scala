@@ -16,17 +16,18 @@
  */
 package com.mycollab.db.arguments
 
+import com.mycollab.core.utils.StringUtils
+
 import scala.beans.BeanProperty
 
 /**
   * @author MyCollab Ltd
   * @since 5.3.5
   */
-@SerialVersionUID(1L)
-class SearchRequest(@BeanProperty var currentPage: Integer, @BeanProperty var numberOfItems: Integer) {
-  @BeanProperty val requestedUser: String = GroupIdProvider.getRequestedUser
+class StringSearchField(operation: String, @BeanProperty val value: String) extends SearchField(operation) {
+  def this() = this(SearchField.AND, "")
 }
 
-object SearchRequest {
-  val DEFAULT_NUMBER_SEARCH_ITEMS = 25
+object StringSearchField {
+  def and(value: String): StringSearchField = if (StringUtils.isNotBlank(value)) new StringSearchField(SearchField.AND, value) else null
 }

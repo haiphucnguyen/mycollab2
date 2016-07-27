@@ -177,7 +177,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
 
         void displayProjects(final Integer accountId) {
             ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
-            searchCriteria.setAccountId(NumberSearchField.and(accountId));
+            searchCriteria.setAccountId(NumberSearchField.equal(accountId));
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
             int totalCount = projectService.getTotalCount(searchCriteria);
             ELabel headerLbl = new ELabel(AppContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, totalCount));
@@ -191,7 +191,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                     .withFullWidth().with(headerLbl, newProjectBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
                     .withAlign(newProjectBtn, Alignment.MIDDLE_RIGHT);
             this.addComponent(headerPanel);
-            List<SimpleProject> projects = projectService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
+            List<SimpleProject> projects = projectService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
             CssLayout content = new CssLayout();
             content.setStyleName(WebUIConstants.FLEX_DISPLAY);
             this.addComponent(content);

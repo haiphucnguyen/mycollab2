@@ -88,8 +88,8 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
             public void gotoNext(SimpleAccount data) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
+                criteria.setSaccountid(NumberSearchField.equal(AppContext.getAccountId()));
+                criteria.setId(NumberSearchField.greaterThan(data.getId()));
                 Integer nextId = accountService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ClientEvent.GotoRead(this, nextId));
@@ -102,8 +102,8 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
             public void gotoPrevious(SimpleAccount data) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESSTHAN));
+                criteria.setSaccountid(NumberSearchField.equal(AppContext.getAccountId()));
+                criteria.setId(NumberSearchField.lessThan(data.getId()));
                 Integer nextId = accountService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ClientEvent.GotoRead(this, nextId));
