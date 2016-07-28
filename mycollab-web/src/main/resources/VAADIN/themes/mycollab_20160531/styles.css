@@ -15882,6 +15882,10 @@ div.v-button.token-field {
 	padding-left: 12px;
 }
 
+.gantt_container .v-table-table tr td.v-table-cell-content:first-child {
+	padding-top: 10px;
+}
+
 .gantt_container .v-table-table tr td.v-table-cell-content .v-disabled {
 	opacity: 1 !important;
 }

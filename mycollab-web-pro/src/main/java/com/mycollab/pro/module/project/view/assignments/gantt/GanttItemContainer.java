@@ -19,14 +19,14 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.3
  */
-public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> implements Container.Hierarchical {
+class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> implements Container.Hierarchical {
     private List<GanttItemWrapper> rootItems = new ArrayList<>();
 
-    public GanttItemContainer() {
+    GanttItemContainer() {
         super(GanttItemWrapper.class);
     }
 
-    public GanttItemWrapper getItemByGanttIndex(int rowIndex) {
+    GanttItemWrapper getItemByGanttIndex(int rowIndex) {
         List items = getAllItemIds();
         for (Object item : items) {
             GanttItemWrapper itemWrapper = (GanttItemWrapper) item;

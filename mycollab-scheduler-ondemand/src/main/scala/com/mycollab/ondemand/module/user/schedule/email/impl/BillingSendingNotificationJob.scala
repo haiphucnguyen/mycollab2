@@ -41,41 +41,41 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
   
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext) {
-    val now = new LocalDateTime()
-    val dateRemind1st = now.minusDays(DATE_REMIND_FOR_ENDING_TRIAL_1ST)
-    val dateRemind2nd = now.minusDays(DATE_REMIND_FOR_ENDING_TRIAL_2ND)
-    val dateExpire = now.minusDays(DATE_NOTIFY_EXPIRE)
-  
-    import scala.collection.JavaConverters._
-    val trialAccountsWithOwners = billingService.getTrialAccountsWithOwners.asScala.toList
-    if (trialAccountsWithOwners != null) {
-      for (account <- trialAccountsWithOwners) {
-        LOG.debug("Check whether account exceed 25 days to remind user upgrade account")
-        val accCreatedDate = new LocalDateTime(account.getCreatedtime)
-        if (accCreatedDate.isBefore(dateRemind1st) && (account.getReminderstatus == null)) {
-          sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_ENDING_TRIAL_1ST)
-          val billingAccount = new BillingAccount
-          billingAccount.setId(account.getId)
-          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)
-          billingAccountService.updateSelectiveWithSession(billingAccount, "")
-        } else if (accCreatedDate.isBefore(dateRemind2nd) &&
-          ((account.getReminderstatus eq AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)
-            || account.getReminderstatus == null)) {
-          LOG.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account")
-          sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_ENDING_TRIAL_2ND)
-          val billingAccount: BillingAccount = new BillingAccount
-          billingAccount.setId(account.getId)
-          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME)
-          billingAccountService.updateSelectiveWithSession(billingAccount, "")
-        } else if (accCreatedDate.isBefore(dateExpire)) {
-          LOG.debug("Check whether account exceed 32 days to convert to basic plan")
-          sendingEmailInformAccountIsRemoved(account)
-          val billingAccount = new BillingAccount
-          billingAccount.setId(account.getId)
-          // Remove the account
-        }
-      }
-    }
+//    val now = new LocalDateTime()
+//    val dateRemind1st = now.minusDays(DATE_REMIND_FOR_ENDING_TRIAL_1ST)
+//    val dateRemind2nd = now.minusDays(DATE_REMIND_FOR_ENDING_TRIAL_2ND)
+//    val dateExpire = now.minusDays(DATE_NOTIFY_EXPIRE)
+//
+//    import scala.collection.JavaConverters._
+//    val trialAccountsWithOwners = billingService.getTrialAccountsWithOwners.asScala.toList
+//    if (trialAccountsWithOwners != null) {
+//      for (account <- trialAccountsWithOwners) {
+//        LOG.debug("Check whether account exceed 25 days to remind user upgrade account")
+//        val accCreatedDate = new LocalDateTime(account.getCreatedtime)
+//        if (accCreatedDate.isBefore(dateRemind1st) && (account.getReminderstatus == null)) {
+//          sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_ENDING_TRIAL_1ST)
+//          val billingAccount = new BillingAccount
+//          billingAccount.setId(account.getId)
+//          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)
+//          billingAccountService.updateSelectiveWithSession(billingAccount, "")
+//        } else if (accCreatedDate.isBefore(dateRemind2nd) &&
+//          ((account.getReminderstatus eq AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)
+//            || account.getReminderstatus == null)) {
+//          LOG.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account")
+//          sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_ENDING_TRIAL_2ND)
+//          val billingAccount: BillingAccount = new BillingAccount
+//          billingAccount.setId(account.getId)
+//          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME)
+//          billingAccountService.updateSelectiveWithSession(billingAccount, "")
+//        } else if (accCreatedDate.isBefore(dateExpire)) {
+//          LOG.debug("Check whether account exceed 32 days to convert to basic plan")
+//          sendingEmailInformAccountIsRemoved(account)
+//          val billingAccount = new BillingAccount
+//          billingAccount.setId(account.getId)
+//          // Remove the account
+//        }
+//      }
+//    }
   }
   
   private def sendingEmailInformAccountIsRemoved(account: BillingAccountWithOwners) {

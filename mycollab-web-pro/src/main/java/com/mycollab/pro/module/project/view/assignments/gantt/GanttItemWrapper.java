@@ -33,7 +33,7 @@ import static com.mycollab.common.TooltipBuilder.buildCellValue;
 public class GanttItemWrapper {
     private AssignWithPredecessors task;
     private LocalDate startDate, endDate;
-    private LocalDate fixedStartDateByChilds = new LocalDate(1970, 1, 1), fixedEndDatebyChilds = new LocalDate(2100, 1, 1);
+    private LocalDate fixedStartDateByChildren = new LocalDate(1970, 1, 1), fixedEndDateByChildren = new LocalDate(2100, 1, 1);
 
     private GanttExt gantt;
     private GanttItemWrapper parent;
@@ -174,8 +174,8 @@ public class GanttItemWrapper {
                 calStartDate = DateTimeUtils.min(calStartDate, item.getStartDate());
                 calEndDate = DateTimeUtils.max(calEndDate, item.getEndDate());
             }
-            fixedStartDateByChilds = calStartDate;
-            fixedEndDatebyChilds = calEndDate;
+            fixedStartDateByChildren = calStartDate;
+            fixedEndDateByChildren = calEndDate;
             setStartAndEndDate(calStartDate, calEndDate, true, true);
         }
     }
@@ -273,7 +273,7 @@ public class GanttItemWrapper {
 
     public boolean setStartAndEndDate(LocalDate newStartDate, LocalDate newEndDate, boolean askToCheckPredecessors,
                                       boolean requestToCheckDependents) {
-        if (newStartDate.isBefore(fixedStartDateByChilds) || newEndDate.isAfter(fixedEndDatebyChilds)) {
+        if (newStartDate.isBefore(fixedStartDateByChildren) || newEndDate.isAfter(fixedEndDateByChildren)) {
             throw new UserInvalidInputException("Invalid constraints");
         }
         boolean hasChange = false;

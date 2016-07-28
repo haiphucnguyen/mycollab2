@@ -46,20 +46,20 @@ public class MainViewImpl extends AbstractMainView {
 
         BillingSubscriptionMapperExt billingSubscriptionMapperExt = AppContextUtil.getSpringBean(BillingSubscriptionMapperExt.class);
         SimpleBillingSubscription subscription = billingSubscriptionMapperExt.findSubscription(AppContext.getAccountId());
-        if (subscription != null) {
-            MyCollabSession.putCurrentUIVariable("subscription", subscription);
-            if (!subscription.canAccess()) {
-                TrialBlock trialBlock = new TrialBlock();
-                accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
-                trialBlock.setText("<div class='informBlock'>Account is suspended<br></div>");
-                AppContext.getInstance().setIsValidAccount(false);
-            } else if (!subscription.isValid()) {
-                TrialBlock trialBlock = new TrialBlock();
-                accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
-                trialBlock.setText("<div class='informBlock'>Payment charge fail<br></div>");
-                AppContext.getInstance().setIsValidAccount(true);
-            }
-        } else {
+//        if (subscription != null) {
+//            MyCollabSession.putCurrentUIVariable("subscription", subscription);
+//            if (!subscription.canAccess()) {
+//                TrialBlock trialBlock = new TrialBlock();
+//                accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
+//                trialBlock.setText("<div class='informBlock'>Account is suspended<br></div>");
+//                AppContext.getInstance().setIsValidAccount(false);
+//            } else if (!subscription.isValid()) {
+//                TrialBlock trialBlock = new TrialBlock();
+//                accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
+//                trialBlock.setText("<div class='informBlock'>Payment charge fail<br></div>");
+//                AppContext.getInstance().setIsValidAccount(true);
+//            }
+//        } else {
             SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
             TrialBlock trialBlock = new TrialBlock();
             accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
@@ -67,13 +67,13 @@ public class MainViewImpl extends AbstractMainView {
             Duration dur = new Duration(new DateTime(billingAccount.getCreatedtime()), new DateTime());
             int daysLeft = dur.toStandardDays().getDays();
             if (daysLeft > 30) {
-                trialBlock.setText("<div class='informBlock'>Trial ended<br></div>");
-                AppContext.getInstance().setIsValidAccount(false);
+                trialBlock.setText("<div class='informBlock'>Trial ending<br></div>");
+//                AppContext.getInstance().setIsValidAccount(false);
             } else {
                 trialBlock.setText(String.format("<div class='informBlock'>Trial ending<br>%d days " +
                         "left</div><div class='informBlock'>&gt;&gt;</div>", 30 - daysLeft));
             }
-        }
+//        }
 
         Label accountNameLabel = new Label(AppContext.getSubDomain());
         accountNameLabel.addStyleName("subDomain");
