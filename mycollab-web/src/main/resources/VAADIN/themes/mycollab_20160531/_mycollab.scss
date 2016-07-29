@@ -1244,7 +1244,7 @@ $v-line-height--header:1.5em;
   }
 
   .trialEndingNotification {
-    background-color: rgb(232, 160, 82);
+    background-color: $my-warning-color;
     color: $my-white-color;
     padding: 0px 10px;
     display: inline-block;

@@ -68,11 +68,8 @@
   }
 
   /* Messages */
-  .message-toppanel-body {
-    @include margin-container(7px, 5px, 7px, 18px);
-  }
 
-  .message .message-container {
+  .message-container {
     .v-verticallayout {
       display: block;
     }
@@ -116,55 +113,19 @@
     }
   }
 
-  .message {
-    &.important-message .message-container {
-      border-color: $my-separator-color;
-      &:before {
-        border-color: transparent $my-separator-color;
-      }
+
+  &.important-message .message-container {
+    border-color: $my-warning-color;
+    &:before {
+      border-color: transparent $my-warning-color;
     }
   }
 
   /* End Messages */
 
-  .message-toppanel {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    border: 1px solid $my-separator-color;
-    background: none no-repeat left top $my-background-color;
-    border-radius: 0px;
-  }
-
   .projectfeed-hdr-wrapper {
     padding: 15px 30px;
     border-bottom: 1px solid $my-separator-color;
-  }
-
-  .project-tableless {
-    display: table;
-    width: 100%;
-    &:hover {
-      background-color: beige;
-    }
-    .columnExpand {
-      display: table-cell;
-      line-height: 20px;
-      padding: 5px;
-      padding-left:0px;
-    }
-    .column100 {
-      display: table-cell;
-      width: 100px;
-      padding: 5px;
-      padding-left:0px;
-    }
-    .column200 {
-      display: table-cell;
-      width: 160px;
-      padding: 5px;
-      padding-left:0px;
-    }
   }
 
   div.v-csslayout.followers-container {

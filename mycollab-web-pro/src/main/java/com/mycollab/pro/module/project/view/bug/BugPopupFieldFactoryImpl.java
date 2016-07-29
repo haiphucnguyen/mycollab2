@@ -192,7 +192,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         @Override
         protected void doShow() {
             CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.BUG, CurrentProjectVariables.getProjectId());
-            MVerticalLayout layout = getWrapContent();
+            MVerticalLayout layout = getWrapContent().withStyleName(WebUIConstants.SCROLLABLE_CONTAINER);
             layout.removeAllComponents();
             layout.with(commentDisplay);
             commentDisplay.loadComments(bug.getId() + "");
