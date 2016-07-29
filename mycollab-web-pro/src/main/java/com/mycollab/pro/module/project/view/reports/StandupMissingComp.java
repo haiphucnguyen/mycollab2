@@ -15,6 +15,7 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
@@ -41,7 +42,7 @@ public class StandupMissingComp extends MVerticalLayout {
         Label headerLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_MEMBER_NOT_REPORT));
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true)).
                 withHeight("34px").withFullWidth().with(headerLbl).
-                withAlign(headerLbl, Alignment.MIDDLE_LEFT).withStyleName("panel-header");
+                withAlign(headerLbl, Alignment.MIDDLE_LEFT).withStyleName(WebUIConstants.PANEL_HEADER);
 
         bodyWrap = new MVerticalLayout().withStyleName("panel-body");
         this.with(header, bodyWrap).withFullWidth();

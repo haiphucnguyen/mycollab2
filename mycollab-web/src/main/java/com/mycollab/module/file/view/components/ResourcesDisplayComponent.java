@@ -243,7 +243,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 selectedResourceControlLayout.removeAllComponents();
                 ELabel resourceHeaderLbl = ELabel.h3(selectedResource.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS);
                 MHorizontalLayout headerLayout = new MHorizontalLayout(resourceHeaderLbl).withMargin(new MarginInfo
-                        (false, true, false, true)).withStyleName("panel-header").withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
+                        (false, true, false, true)).withStyleName(WebUIConstants.PANEL_HEADER).withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
                 selectedResourceControlLayout.with(headerLayout);
 
                 MButton renameBtn = new MButton("Rename", clickEvent -> UI.getCurrent().addWindow(new

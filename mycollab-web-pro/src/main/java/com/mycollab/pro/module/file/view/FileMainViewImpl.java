@@ -67,7 +67,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         MVerticalLayout topControlMenuWrapper = new MVerticalLayout().withSpacing(false).withWidth("250px");
 
         MHorizontalLayout topControlMenu = new MHorizontalLayout().withFullWidth();
-        topControlMenu.addStyleName("panel-header");
+        topControlMenu.addStyleName(WebUIConstants.PANEL_HEADER);
 
         topControlMenuWrapper.addComponent(topControlMenu);
 

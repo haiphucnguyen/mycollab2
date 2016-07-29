@@ -131,7 +131,7 @@ public class CreateCustomFieldWindow extends Window {
         MVerticalLayout panel = new MVerticalLayout().withSpacing(false).withMargin(false);
         Label title = new Label("Select Field Type");
         MHorizontalLayout header = new MHorizontalLayout().withSpacing(false).with(title).
-                expand(title).withStyleName("panel-header");
+                expand(title).withStyleName(WebUIConstants.PANEL_HEADER);
         header.setWidthUndefined();
 
         Table fieldSelectionTable = new Table();
@@ -165,7 +165,7 @@ public class CreateCustomFieldWindow extends Window {
         MVerticalLayout panel = new MVerticalLayout().withMargin(false).withWidth("300px");
         Label title = new Label("Provide Field Detail");
         MHorizontalLayout header = new MHorizontalLayout().withFullWidth().withSpacing(false).with(title).expand(title)
-                .withStyleName("panel-header");
+                .withStyleName(WebUIConstants.PANEL_HEADER);
 
         fieldLayoutWrapper = new CssLayout();
         fieldLayoutWrapper.setWidth("100%");

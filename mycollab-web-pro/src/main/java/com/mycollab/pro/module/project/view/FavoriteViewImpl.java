@@ -151,7 +151,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
         searchTextField.addStyleName(ValoTheme.TEXTFIELD_SMALL);
         ELabel listLnl = new ELabel();
         MHorizontalLayout favoriteListHeaderPanel = new MHorizontalLayout(listLnl, sortBtn, searchTextField).expand(listLnl)
-                .withStyleName("panel-header").withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
+                .withStyleName(WebUIConstants.PANEL_HEADER).withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
 
         favoriteListComp = new FavoriteListComp();
 

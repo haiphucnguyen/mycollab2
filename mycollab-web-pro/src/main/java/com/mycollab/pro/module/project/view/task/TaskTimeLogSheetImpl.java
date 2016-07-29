@@ -16,6 +16,9 @@
  */
 package com.mycollab.pro.module.project.view.task;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
 import com.mycollab.db.arguments.BooleanSearchField;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
@@ -31,13 +34,11 @@ import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria
 import com.mycollab.module.project.events.ProjectEvent;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
-import com.mycollab.pro.module.project.ui.components.TimeLogEditWindow;
 import com.mycollab.module.project.view.task.components.TaskTimeLogSheet;
+import com.mycollab.pro.module.project.ui.components.TimeLogEditWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.google.common.eventbus.AllowConcurrentEvents;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.ui.UI;
 
 /**
@@ -124,18 +125,11 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
         UI.getCurrent().addWindow(new TaskTimeLogEditWindow(bean));
     }
 
-    @SuppressWarnings("serial")
     private class TaskTimeLogEditWindow extends TimeLogEditWindow<SimpleTask> {
         public TaskTimeLogEditWindow(SimpleTask bean) {
             super(bean);
-            this.setModal(true);
             this.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
-            this.addCloseListener(new CloseListener() {
-                @Override
-                public void windowClose(CloseEvent e) {
-                    displayTime(TaskTimeLogEditWindow.this.bean);
-                }
-            });
+            this.addCloseListener(closeEvent -> displayTime(bean));
         }
 
         @Override
@@ -158,7 +152,6 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
             bean.setRemainestimate(getUpdateRemainTime());
             taskService.updateWithSession(bean, AppContext.getUsername());
-
         }
 
         @Override
@@ -172,7 +165,7 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
 
         @Override
         protected double getEstimateRemainTime() {
-            return (bean.getRemainestimate() != null) ? bean.getRemainestimate() : 0;
+            return MoreObjects.firstNonNull(bean.getRemainestimate(), 0d);
         }
 
         @Override

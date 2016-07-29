@@ -71,7 +71,7 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
                 true, true, true)).withWidth("450px");
         MHorizontalLayout panelHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
                 false, true)).withFullWidth();
-        panelHeader.addStyleName("panel-header");
+        panelHeader.addStyleName(WebUIConstants.PANEL_HEADER);
 
         panelHeader.with(ELabel.h3(AppContext.getMessage(TagI18nEnum.OPT_TAG_CLOUD))).alignAll(Alignment.MIDDLE_LEFT);
 

@@ -1,6 +1,7 @@
 package com.mycollab.pro.module.project.view.assignments.gantt;
 
 import com.mycollab.module.project.ui.ProjectAssetsManager;
+import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator;
 import com.vaadin.event.FieldEvents;
@@ -77,8 +78,8 @@ public class AssignmentNameCellField extends CustomField<String> implements Fiel
         layout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         field.setBuffered(true);
         field.setWidth("100%");
-        Label icon = new Label(ProjectAssetsManager.getAsset(type).getHtml(), ContentMode.HTML);
-        layout.with(new CssLayout(icon), field).expand(field);
+        Label icon = ELabel.fontIcon(ProjectAssetsManager.getAsset(type)).withWidthUndefined();
+        layout.with(icon, field).expand(field);
         return layout;
     }
 

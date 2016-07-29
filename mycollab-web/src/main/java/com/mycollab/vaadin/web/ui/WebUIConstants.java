@@ -66,6 +66,7 @@ public class WebUIConstants {
     public static final String CURSOR_POINTER = "cursor_pointer";
     public static final String HOVER_EFFECT_NOT_BOX = "hover-effect-not-box";
     public static final String FLEX_DISPLAY = "flex";
+    public static final String PANEL_HEADER = "panel-header";
     public static final String SCROLLABLE_CONTAINER = "scrollable-container";
 
     public static final String BORDER_LIST = "tasklist";

@@ -25,6 +25,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -34,7 +35,7 @@ import java.util.GregorianCalendar;
  * @author MyCollab Ltd.
  * @since 4.3.3
  */
-public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
+public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
     private static final long serialVersionUID = 1L;
 
     protected ItemTimeLoggingService itemTimeLoggingService;
@@ -57,11 +58,8 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 
     protected TimeLogEditWindow(final V bean) {
         this.bean = bean;
-        this.center();
-        this.setResizable(false);
-        this.setModal(true);
         content = new MVerticalLayout();
-        this.setContent(content);
+        withModal(true).withResizable(false).withCenter().withContent(content);
 
         this.itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 

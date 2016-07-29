@@ -102,7 +102,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
             ELabel listLnl = ELabel.h3("Projects (" + projectIds.size() + ")");
             MHorizontalLayout favoriteListHeaderPanel = new MHorizontalLayout(listLnl).expand(listLnl).withMargin(new
-                    MarginInfo(false, true, false, true)).withStyleName("panel-header").withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
+                    MarginInfo(false, true, false, true)).withStyleName(WebUIConstants.PANEL_HEADER).withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
             projectListComp = new ProjectListComp();
             MVerticalLayout projectListPanel = new MVerticalLayout(favoriteListHeaderPanel, projectListComp).withMargin(false).withSpacing(false).withWidth("300px");
 

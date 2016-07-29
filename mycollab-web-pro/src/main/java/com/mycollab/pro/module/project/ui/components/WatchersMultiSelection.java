@@ -4,13 +4,13 @@ import com.mycollab.common.domain.MonitorItem;
 import com.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.mycollab.common.service.MonitorItemService;
 import com.mycollab.core.utils.StringUtils;
+import com.mycollab.db.arguments.*;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectMemberStatusConstants;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.user.domain.SimpleUser;
-import com.mycollab.db.arguments.*;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -53,8 +53,7 @@ public class WatchersMultiSelection extends MVerticalLayout {
         criteria.addOrderField(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC));
 
         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-        List<SimpleProjectMember> projectMembers = projectMemberService.findPageableListByCriteria(new BasicSearchRequest<>(
-                criteria, 0, Integer.MAX_VALUE));
+        List<SimpleProjectMember> projectMembers = projectMemberService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
         for (SimpleProjectMember member : projectMembers) {
             this.addComponent(new FollowerRow(member));
         }
