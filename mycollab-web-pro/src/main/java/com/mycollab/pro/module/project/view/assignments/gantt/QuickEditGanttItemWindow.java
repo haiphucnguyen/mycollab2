@@ -22,12 +22,13 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class QuickEditGanttItemWindow extends Window {
+public class QuickEditGanttItemWindow extends MWindow {
     private GanttExt gantt;
     private GanttItemWrapper ganttItem;
 
@@ -35,15 +36,10 @@ public class QuickEditGanttItemWindow extends Window {
         super("Quick Edit Task");
         this.gantt = gantt;
         this.ganttItem = ganttItem;
-        this.setWidth("800px");
-        this.setModal(true);
-        this.setResizable(false);
-        this.setClosable(true);
-        this.center();
 
         EditForm editForm = new EditForm();
         editForm.setBean(ganttItem.getTask());
-        this.setContent(editForm);
+        withWidth("800px").withModal(true).withResizable(false).withClosable(true).withContent(editForm).withCenter();
     }
 
     private class EditForm extends AdvancedEditBeanForm<AssignWithPredecessors> {
@@ -120,7 +116,7 @@ public class QuickEditGanttItemWindow extends Window {
         private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<AssignWithPredecessors> {
             private static final long serialVersionUID = 1L;
 
-            public EditFormFieldFactory(GenericBeanForm<AssignWithPredecessors> form) {
+            EditFormFieldFactory(GenericBeanForm<AssignWithPredecessors> form) {
                 super(form);
             }
 
