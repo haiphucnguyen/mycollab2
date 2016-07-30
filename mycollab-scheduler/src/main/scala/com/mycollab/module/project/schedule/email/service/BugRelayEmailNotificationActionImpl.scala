@@ -100,7 +100,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
                 notifyUsers += prjMember
               }
             }
-          case Some(user) => {}
+          case Some(user) =>
         }
       }
       else if (NotificationType.Full.name == notificationSetting.getLevel) {
@@ -136,7 +136,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
       if (bug.getMilestoneid == null || bug.getMilestoneName == null) {
         new Span().write
       } else {
-        val img = new Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.MILESTONE));
+        val img = new Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.MILESTONE))
         val milestoneLink = ProjectLinkGenerator.generateMilestonePreviewFullLink(context.siteUrl,
           bug.getProjectid, bug.getMilestoneid)
         val link = newA(milestoneLink, bug.getMilestoneName)
@@ -153,7 +153,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
           val milestoneService = AppContextUtil.getSpringBean(classOf[MilestoneService])
           val milestone = milestoneService.findById(milestoneId, context.getUser.getAccountId)
           if (milestone != null) {
-            val img = new Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.MILESTONE));
+            val img = new Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.MILESTONE))
             val milestoneLink = ProjectLinkGenerator.generateMilestonePreviewFullLink(context.siteUrl,
               milestone.getProjectid, milestone.getId)
             val link = newA(milestoneLink, milestone.getName)

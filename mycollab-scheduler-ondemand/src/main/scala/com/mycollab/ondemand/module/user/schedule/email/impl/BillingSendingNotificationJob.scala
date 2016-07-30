@@ -1,10 +1,10 @@
 package com.mycollab.ondemand.module.user.schedule.email.impl
 
-import java.util.{Arrays, Collections, Locale}
+import java.util.{Collections, Locale}
 
 import com.mycollab.common.GenericLinkUtils
 import com.mycollab.common.domain.MailRecipientField
-import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.configuration.{IDeploymentMode, SiteConfiguration}
 import com.mycollab.module.billing.AccountReminderStatusContants
 import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
 import com.mycollab.module.user.domain.{BillingAccount, BillingAccountWithOwners}
@@ -38,6 +38,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
   @Autowired var billingAccountService: BillingAccountService = _
   @Autowired var extMailService: ExtMailService = _
   @Autowired var contentGenerator: IContentGenerator = _
+  @Autowired var deploymentMode: IDeploymentMode = _
   
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext) {
@@ -68,9 +69,6 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       } else if (accCreatedDate.isBefore(dateExpire)) {
         LOG.debug("Check whether account exceed 32 days to convert to basic plan")
         sendingEmailInformAccountIsRemoved(account)
-        val billingAccount = new BillingAccount
-        billingAccount.setId(account.getId)
-        // Remove the account
       }
     }
   }
@@ -81,9 +79,8 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       LOG.info("Send mail after 32 days for username {} , mail {}", Array(user.getUsername, user.getEmail))
       contentGenerator.putVariable("account", account)
       contentGenerator.putVariable("userName", user.getUsername)
-      val link = SiteConfiguration.getSiteUrl(account.getSubdomain) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
+      val link = deploymentMode.getSiteUrl(account.getSubdomain) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
       contentGenerator.putVariable("link", link)
-      System.out.println(contentGenerator.parseFile("mailInformAccountIsExpiredNotification.ftl", Locale.US))
       extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Collections.singletonList(new MailRecipientField(user.getEmail, user.getDisplayName)),
         null, Collections.singletonList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")), "Your trial has expired",
@@ -97,7 +94,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
     for (user <- account.getOwners) {
       LOG.info("Send mail after " + afterDay + "days for username {} , mail {}", Array(user.getUsername, user.getEmail))
       contentGenerator.putVariable("account", account)
-      val link = SiteConfiguration.getSiteUrl(account.getSubdomain) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
+      val link = deploymentMode.getSiteUrl(account.getSubdomain) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
       val cal = new LocalDateTime(account.getCreatedtime)
       cal.plusDays(NUM_DAY_FREE_TRIAL)
       contentGenerator.putVariable("expireDay", df.print(cal))
