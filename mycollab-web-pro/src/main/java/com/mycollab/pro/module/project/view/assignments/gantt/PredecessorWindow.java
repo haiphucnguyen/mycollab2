@@ -19,6 +19,7 @@ import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,7 +30,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.3
  */
-class PredecessorWindow extends Window {
+class PredecessorWindow extends MWindow {
     private static final String ROW_WIDTH = "50px";
     private static final String TASK_WIDTH = "300px";
     private static final String PRE_TYPE_WIDTH = "140px";
@@ -42,10 +43,7 @@ class PredecessorWindow extends Window {
 
     PredecessorWindow(final GanttTreeTable taskTreeTable, final GanttItemWrapper ganttItemWrapper) {
         super("Edit predecessors");
-        this.setModal(true);
-        this.setResizable(false);
-        this.setWidth("650px");
-        this.center();
+        this.withModal(true).withResizable(false).withWidth("650px").withCenter();
         this.taskTreeTable = taskTreeTable;
         this.ganttItemWrapper = ganttItemWrapper;
 

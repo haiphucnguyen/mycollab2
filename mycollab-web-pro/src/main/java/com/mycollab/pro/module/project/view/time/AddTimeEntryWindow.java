@@ -33,6 +33,7 @@ import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.*;
 import java.util.Calendar;
@@ -41,7 +42,7 @@ import java.util.Calendar;
  * @author MyCollab Ltd.
  * @since 4.0
  */
-public class AddTimeEntryWindow extends Window implements AssignmentSelectableComp {
+public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableComp {
     private static final long serialVersionUID = 1L;
 
     private Date selectedDate;
@@ -57,15 +58,13 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
     private ItemTimeLoggingService itemTimeLoggingService;
 
     public AddTimeEntryWindow() {
-        itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
-        this.setModal(true);
-        this.setResizable(false);
-        this.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
+        super(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
+        this.withModal(true).withResizable(false);
 
+        itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
         selectedDate = new GregorianCalendar().getTime();
 
         MVerticalLayout content = new MVerticalLayout();
-
         GridLayout grid = new GridLayout(3, 2);
         grid.setMargin(new MarginInfo(false, false, true, false));
         grid.setSpacing(true);
@@ -81,15 +80,10 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         weekSelectionCalendar.setWidth("200px");
 
         weekSelectionCalendar.setValue(selectedDate);
-        weekSelectionCalendar.addValueChangeListener(new ValueChangeListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void valueChange(ValueChangeEvent event) {
-                selectedDate = weekSelectionCalendar.getValue();
-                weekSelectionCalendar.setPopupClose();
-                updateTimeTableHeader();
-            }
+        weekSelectionCalendar.addValueChangeListener(valueChangeEvent -> {
+            selectedDate = weekSelectionCalendar.getValue();
+            weekSelectionCalendar.setPopupClose();
+            updateTimeTableHeader();
         });
         grid.addComponent(weekSelectionCalendar, 1, 1);
 

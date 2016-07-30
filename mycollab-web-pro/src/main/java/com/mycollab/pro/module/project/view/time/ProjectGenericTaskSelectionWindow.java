@@ -14,10 +14,10 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Window;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.Arrays;
 
@@ -25,7 +25,7 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 4.0
  */
-class ProjectGenericTaskSelectionWindow extends Window {
+class ProjectGenericTaskSelectionWindow extends MWindow {
     private static final long serialVersionUID = 1L;
 
     private GenericTaskTableDisplay assignmentTableDisplay;
@@ -34,10 +34,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 
     public ProjectGenericTaskSelectionWindow(final AssignmentSelectableComp timeEntryWindow) {
         super("Select Assignments");
-        this.center();
-        this.setResizable(false);
-        this.setModal(true);
-        this.setWidth("800px");
+        this.withCenter().withResizable(false).withModal(true).withWidth("800px");
         MVerticalLayout content = new MVerticalLayout();
         assignmentTableDisplay = new GenericTaskTableDisplay(Arrays.asList(GenericTaskTableFieldDef.name,
                 GenericTaskTableFieldDef.assignUser));
@@ -55,12 +52,11 @@ class ProjectGenericTaskSelectionWindow extends Window {
         assignmentTableDisplay.setSearchCriteria(searchCriteria);
 
         content.with(constructTopPanel(), assignmentTableDisplay);
-
         this.setContent(content);
     }
 
     private ComponentContainer constructTopPanel() {
-        Label nameLbl = new Label("Name:");
+        Label nameLbl = new Label(AppContext.getMessage(GenericI18Enum.FORM_NAME) + ": ");
 
         this.nameField = new TextField();
         this.nameField.setWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);

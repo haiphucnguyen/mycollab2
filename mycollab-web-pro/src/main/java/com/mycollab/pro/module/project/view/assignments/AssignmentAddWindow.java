@@ -5,6 +5,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.SimpleTask;
+import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.bug.BugAddWindow;
 import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
@@ -15,11 +16,14 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
-import com.mycollab.module.project.i18n.*;
-import com.vaadin.ui.*;
+import com.vaadin.ui.AbstractSelect;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.UI;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.Date;
 
@@ -27,10 +31,11 @@ import java.util.Date;
  * @author MyCollab Ltd
  * @since 5.2.7
  */
-public class AssignmentAddWindow extends Window {
+public class AssignmentAddWindow extends MWindow {
 
     public AssignmentAddWindow(Date date, final Integer prjId) {
         super(AppContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT));
+        withModal(true).withResizable(false).withCenter().withWidth("500px");
         final PopupDateFieldExt dateSelection = new PopupDateFieldExt(date);
         final ComboBox typeSelection = new ComboBox();
         typeSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
@@ -42,13 +47,10 @@ public class AssignmentAddWindow extends Window {
         typeSelection.setItemIcon(AppContext.getMessage(RiskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
         typeSelection.select(AppContext.getMessage(TaskI18nEnum.SINGLE));
         typeSelection.setNullSelectionAllowed(false);
-        this.setModal(true);
-        this.setResizable(false);
-        this.setWidth("500px");
         MVerticalLayout content = new MVerticalLayout().withMargin(true);
         this.setContent(content);
 
-       MButton okButton = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
+        MButton okButton = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
             String type = (String) typeSelection.getValue();
             Date dateValue = dateSelection.getValue();
             if (AppContext.getMessage(TaskI18nEnum.SINGLE).equals(type)) {

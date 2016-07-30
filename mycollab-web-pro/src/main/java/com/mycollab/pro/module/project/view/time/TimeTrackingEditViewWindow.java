@@ -20,12 +20,13 @@ import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.0
  */
-public class TimeTrackingEditViewWindow extends Window implements AssignmentSelectableComp {
+public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSelectableComp {
     private static final long serialVersionUID = 1L;
 
     private CheckBox isBillableCheckBox;
@@ -39,12 +40,9 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
     private SimpleItemTimeLogging timeLogging;
 
     public TimeTrackingEditViewWindow(TimeTrackingListView view, SimpleItemTimeLogging timeLogging) {
+        super(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
         this.timeLogging = timeLogging;
-        this.setWidth("800px");
-        this.setModal(true);
-        this.setResizable(false);
-
-        this.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
+        this.withWidth("800px").withModal(true).withResizable(false).withCenter();
 
         dateField = new PopupDateFieldExt(timeLogging.getLogforday());
         dateField.setCaption("Select date");
@@ -109,7 +107,6 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
         footer.setComponentAlignment(controlsLayout, Alignment.TOP_RIGHT);
         content.addComponent(footer);
         this.setContent(content);
-        this.center();
     }
 
     @Override

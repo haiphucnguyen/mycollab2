@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.GregorianCalendar;
 
@@ -33,7 +34,7 @@ import java.util.GregorianCalendar;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public abstract class DefaultCloudDriveOAuthWindow extends Window {
+public abstract class DefaultCloudDriveOAuthWindow extends MWindow {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(DefaultCloudDriveOAuthWindow.class);
 
@@ -45,10 +46,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends Window {
     private ApplicationEventListener<CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo> listener;
 
     public DefaultCloudDriveOAuthWindow() {
-        this.setWidth("420px");
-        this.setResizable(false);
-        this.setModal(true);
-        this.center();
+        this.withWidth("420px").withResizable(false).withModal(true).withCenter();
         this.setCaption(windowTitle());
         constructBody();
         registerListeners();

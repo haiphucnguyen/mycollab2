@@ -19,26 +19,23 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.10
  */
-public class InvoiceAddWindow extends Window {
+public class InvoiceAddWindow extends MWindow {
     InvoiceAddWindow(final SimpleInvoice invoice) {
         if (invoice.getId() == null) {
             setCaption(AppContext.getMessage(InvoiceI18nEnum.NEW));
         } else {
             setCaption(AppContext.getMessage(InvoiceI18nEnum.EDIT));
         }
-        this.setWidth("800px");
-        this.setModal(true);
-        this.setResizable(false);
         VerticalLayout content = new VerticalLayout();
-        this.setContent(content);
+        this.withWidth("800px").withModal(true).withResizable(false).withCenter().withContent(content);
         final AdvancedEditBeanForm<SimpleInvoice> editBeanForm = new AdvancedEditBeanForm<>();
         content.addComponent(editBeanForm);
         editBeanForm.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.INVOICE,
