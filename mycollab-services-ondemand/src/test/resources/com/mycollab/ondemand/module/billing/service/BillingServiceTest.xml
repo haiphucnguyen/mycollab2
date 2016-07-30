@@ -1,22 +1,22 @@
 <!DOCTYPE dataset PUBLIC "-//MyCollab/MyCollab Database Schema//EN" "http://www.mycollab.com/mycollab.dtd">
 <dataset>
     <s_billing_plan id="1" billingType="Credit Card"
-        numProjects="10" numUsers="10" volume="500" pricing="20" />
+                    numProjects="10" numUsers="10" volume="500" pricing="20"/>
     <s_account id="1" status="Trial" paymentMethod="Credit Card"
-        createdTime="2013-04-10 13:29:23" billingPlanId="1" subdomain="abc" />
+               createdTime="2013-04-10 13:29:23" billingPlanId="1" subdomain="abc"/>
 
     <s_user firstname="Nguyen" lastname="Hai" middlename="Phuc"
-        username="hainguyen@esofthead.com" password="123" email="hainguyen@esofthead.com"
-        avatarId="1" />
+            username="hainguyen@esofthead.com" password="123" email="hainguyen@esofthead.com"
+            avatarId="1"/>
 
     <s_user firstname="Duong" lastname="Linh" username="linhduong@esofthead.com"
-        password="123" email="linhduong@esofthead.com" avatarId="1" />
+            password="123" email="linhduong@esofthead.com" avatarId="1"/>
 
     <s_user_account id="1" isAccountOwner="1"
-        registerStatus="active" username="hainguyen@esofthead.com" accountId="1"
-        registeredTime="2013-04-10 13:29:23" />
+                    registerStatus="active" username="hainguyen@esofthead.com" accountId="1"
+                    registeredTime="2013-04-10 13:29:23"/>
 
     <s_user_account id="2" isAccountOwner="0"
-        registerStatus="active" username="linhduong@esofthead.com" accountId="1"
-        registeredTime="2013-04-10 13:29:23" />
+                    registerStatus="active" username="linhduong@esofthead.com" accountId="1"
+                    registeredTime="2013-04-10 13:29:23"/>
 </dataset>

@@ -1,5 +1,6 @@
 package com.mycollab.schedule.email.user.service;
 
+import com.mycollab.configuration.IDeploymentMode;
 import com.mycollab.module.billing.AccountReminderStatusContants;
 import com.mycollab.module.user.domain.BillingAccount;
 import com.mycollab.module.user.domain.BillingAccountWithOwners;
@@ -8,6 +9,7 @@ import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.ondemand.module.user.schedule.email.impl.BillingSendingNotificationJob;
 import com.mycollab.schedule.email.GenericJobTest;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
@@ -32,6 +34,14 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
     @Mock
     private BillingService billingService;
 
+    @Mock
+    private IDeploymentMode deploymentMode;
+
+    @Before
+    public void initTest() {
+
+    }
+
     @Test
     public void testSendEmailForAccountExceed25days() throws JobExecutionException {
         BillingAccountWithOwners account = new BillingAccountWithOwners();
@@ -51,8 +61,7 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
 
         ArgumentCaptor<String> strArgument = ArgumentCaptor.forClass(String.class);
 
-        verify(billingAccountService).updateSelectiveWithSession(
-                billingAccountArgument.capture(), strArgument.capture());
+        verify(billingAccountService).updateSelectiveWithSession(billingAccountArgument.capture(), strArgument.capture());
         Assert.assertEquals("", strArgument.getValue());
         Assert.assertEquals(
                 AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME,

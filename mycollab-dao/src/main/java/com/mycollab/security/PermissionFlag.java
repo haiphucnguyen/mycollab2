@@ -38,7 +38,7 @@ public class PermissionFlag {
             return SecurityI18nEnum.READ_WRITE;
         } else if (flag == ACCESS) {
             return SecurityI18nEnum.ACCESS;
-        } else if (flag==TRUE) {
+        } else if (flag == TRUE) {
             return SecurityI18nEnum.YES;
         } else if (flag == FALSE) {
             return SecurityI18nEnum.NO;
