@@ -14,7 +14,7 @@ import com.mycollab.module.user.dao.BillingAccountMapper;
 import com.mycollab.module.user.dao.BillingPlanMapper;
 import com.mycollab.module.user.domain.*;
 import com.mycollab.module.user.service.BillingAccountService;
-import com.mycollab.ondemand.module.billing.SubDomainExistedException;
+import com.mycollab.ondemand.module.billing.ExistedSubDomainException;
 import com.mycollab.ondemand.module.billing.dao.BillingAccountMapperExt2;
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapper;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscription;
@@ -73,14 +73,14 @@ public class BillingServiceImpl implements BillingService {
 
         // check subDomain belong to keyword list
         if (ACCOUNT_BLACK_LIST.contains(subDomain)) {
-            throw new SubDomainExistedException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
+            throw new ExistedSubDomainException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
                     ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }
 
         BillingAccountExample billingEx = new BillingAccountExample();
         billingEx.createCriteria().andSubdomainEqualTo(subDomain);
         if (this.billingAccountMapper.countByExample(billingEx) > 0) {
-            throw new SubDomainExistedException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
+            throw new ExistedSubDomainException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
                     ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }
 
@@ -97,7 +97,7 @@ public class BillingServiceImpl implements BillingService {
         try {
             billingAccountMapper.insertAndReturnKey(billingAccount);
         } catch (DuplicateKeyException e) {
-            throw new SubDomainExistedException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
+            throw new ExistedSubDomainException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
                     ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }
         int accountId = billingAccount.getId();
