@@ -31,7 +31,7 @@ class DeleteObsoleteAccountJob extends GenericQuartzJobBean {
     searchCriteria.setLastAccessTime(new DateSearchField(new LocalDate().minusDays(30).toDate))
     import collection.JavaConverters._
     val obsoleteAccounts = billingService.findPageableListByCriteria(new
-        BasicSearchRequest[BillingAccountSearchCriteria](searchCriteria, 0, Integer.MAX_VALUE)).asScala.toList
+        BasicSearchRequest[BillingAccountSearchCriteria](searchCriteria)).asScala.toList
     for (obsoleteAccount <- obsoleteAccounts) {
       val deleteAccountEvent = new DeleteAccountEvent(obsoleteAccount.getId, null)
       asyncEventBus.post(deleteAccountEvent)

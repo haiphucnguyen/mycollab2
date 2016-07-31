@@ -14,10 +14,7 @@
                     <b>${expireDay}</b> and we wanted to remind you that in order to keep using MyCollab for project
                     management, please visit your account and enter a valid form of payment under the Billing Info section. That way, there will be no interruption of service for you or your users. <br><br>
                     
-                    You may still use MyCollab free for personal stuff if you decide not to keep projects in the system. You don't need to do anything if you want to use it personally. At the end of the trial, we'll simply convert your account for you.<br><br>
-                    
-                    To access your account, visit
-                    <@lib.hyperLink displayName=link webLink=link/>
+                    To access your account, visit <@lib.hyperLink displayName=link webLink=link/>
                     </p>
 
                     <p>If you have any questions, we are always happy to help, please contact us through our Help Center

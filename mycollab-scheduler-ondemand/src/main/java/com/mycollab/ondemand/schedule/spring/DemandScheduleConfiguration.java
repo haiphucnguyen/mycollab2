@@ -134,7 +134,7 @@ public class DemandScheduleConfiguration {
     public CronTriggerFactoryBean sendAccountBillingEmailTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(sendAccountBillingRequestEmailJob().getObject());
-        bean.setCronExpression("0 0 0 * * ?");
+        bean.setCronExpression("0 * * * * ?");
         return bean;
     }
 

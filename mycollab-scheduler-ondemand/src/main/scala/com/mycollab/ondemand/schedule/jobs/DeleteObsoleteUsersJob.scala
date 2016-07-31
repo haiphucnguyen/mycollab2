@@ -23,8 +23,8 @@ class DeleteObsoleteUsersJob extends GenericQuartzJobBean {
   @Autowired
   private val userAvatarService: UserAvatarService = null
   
-  @throws(classOf[JobExecutionException]) override protected
-  def executeJob(context: JobExecutionContext): Unit = {
+  @throws(classOf[JobExecutionException])
+  override protected def executeJob(context: JobExecutionContext): Unit = {
     import collection.JavaConverters._
     val users = billingAccountMapperExt2.getUsersNotBelongToAnyAccount().asScala.toList
     for (user <- users) {

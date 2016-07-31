@@ -14,7 +14,6 @@ import com.mycollab.module.user.dao.BillingAccountMapper;
 import com.mycollab.module.user.dao.BillingPlanMapper;
 import com.mycollab.module.user.domain.*;
 import com.mycollab.module.user.service.BillingAccountService;
-import com.mycollab.ondemand.module.billing.AccountPaymentTypeConstants;
 import com.mycollab.ondemand.module.billing.SubDomainExistedException;
 import com.mycollab.ondemand.module.billing.dao.BillingAccountMapperExt2;
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapper;
@@ -90,10 +89,6 @@ public class BillingServiceImpl implements BillingService {
         BillingAccount billingAccount = new BillingAccount();
         billingAccount.setBillingplanid(billingPlan.getId());
         billingAccount.setCreatedtime(new GregorianCalendar().getTime());
-        billingAccount.setPaymentmethod(AccountPaymentTypeConstants.CREDIT_CARD);
-        billingAccount.setPricing(billingPlan.getPricing());
-        billingAccount.setPricingeffectfrom(new GregorianCalendar().getTime());
-        billingAccount.setPricingeffectto(new GregorianCalendar(2099, 11, 31).getTime());
         billingAccount.setStatus(AccountStatusConstants.TRIAL);
         billingAccount.setSubdomain(subDomain);
         billingAccount.setDisplayemailpublicly(true);

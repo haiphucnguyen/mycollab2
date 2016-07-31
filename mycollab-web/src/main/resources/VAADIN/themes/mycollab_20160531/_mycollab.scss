@@ -118,9 +118,9 @@ $v-line-height--header:1.5em;
   .v-label {
     word-wrap: break-word;
     &.overdue {
-      color: red;
+      color: $my-alert-color;
       a {
-        color: red;
+        color: $my-alert-color;
       }
     }
     &.completed {
@@ -787,11 +787,11 @@ $v-line-height--header:1.5em;
   /* Footer */
   .footer {
     border-top: 1px solid $my-separator-color;
-    background-color: #3b3b3b;
-    color: #fff;
+    background-color: white;
+    color: #000;
     font-size: $font-small;
     a {
-      color: #fff;
+      color: #000;
     }
   }
   /* End Footer */

@@ -12,7 +12,7 @@
       text-decoration: line-through;
     }
     &.overdue {
-      color:red;
+      color: $my-alert-color;
     }
     &.pending {
       color: #108e2a;
@@ -124,9 +124,9 @@
     padding: 3px 5px;
     margin-right: 5px;
     color: $my-white-color;
-    background-color: #39d98e;
+    background-color: $my-note-color;
     &:hover {
-      background-color: darken(#39d98e, 5%);
+      background-color: darken($my-note-color, 5%);
     }
   }
 
@@ -135,7 +135,7 @@
     text-align:center;
     padding:0 10px;
     color:#ffffff;
-    background-color:#39d98e;
+    background-color: $my-note-color;
     position:relative;
     display:inline-block;
     margin-right: 10px;
@@ -147,7 +147,7 @@
       height: 0px;
       border-style: solid;
       border-width: 10px 0 10px 10px;
-      border-color: transparent transparent transparent #39d98e;
+      border-color: transparent transparent transparent $my-note-color;
     }
   }
 
@@ -541,9 +541,13 @@
     padding: 3px 5px;
     margin-right: 5px;
     color: $my-white-color;
+    background-color: $my-note-color;
     font-size: $font-small;
     a {
       color: $my-white-color;
+    }
+    &:hover {
+      background-color: darken($my-note-color, 5%);
     }
   }
 
@@ -794,7 +798,7 @@
             font-size: $font-small;
             color: $my-meta-color;
             .date.overdue {
-              color: red;
+              color: $my-alert-color;
             }
           }
           .status {
@@ -826,6 +830,7 @@
               &:before {
                 content: 'C';
                 background-color: #d9cfb5;
+                color: white;
                 border: none;
                 transition: all 200ms ease-in;
               }
@@ -833,10 +838,11 @@
           }
           &.inprogress {
             .status {
-              border-top: 2px solid #66DC71;
+              border-top: 2px solid $my-link-color;
               &:before {
                 content: 'P';
-                background-color: #66DC71;
+                background-color: $my-link-color;
+                color: white;
                 border: none;
                 transition: all 200ms ease-in;
               }
@@ -844,10 +850,11 @@
           }
           &.future {
             .status {
-              border-top: 2px solid #2981fe;
+              border-top: 2px solid $my-note-color;
               &:before {
                 content: 'F';
-                background-color: #2981fe;
+                background-color: $my-note-color;
+                color: white;
                 border: none;
                 transition: all 200ms ease-in;
               }

@@ -5,7 +5,7 @@ import java.util.{Collections, Locale}
 import com.mycollab.common.GenericLinkUtils
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.configuration.{IDeploymentMode, SiteConfiguration}
-import com.mycollab.module.billing.AccountReminderStatusContants
+import com.mycollab.module.billing.{AccountReminderStatusContants, AccountStatusConstants, RegisterStatusConstants}
 import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
 import com.mycollab.module.user.domain.{BillingAccount, BillingAccountWithOwners}
 import com.mycollab.module.user.service.BillingAccountService
@@ -59,8 +59,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
         billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)
         billingAccountService.updateSelectiveWithSession(billingAccount, "")
       } else if (accCreatedDate.isBefore(dateRemind2nd) &&
-        ((account.getReminderstatus == AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)
-          || account.getReminderstatus == null)) {
+        (account.getReminderstatus == AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)) {
         sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_ENDING_TRIAL_2ND)
         val billingAccount: BillingAccount = new BillingAccount
         billingAccount.setId(account.getId)
@@ -68,7 +67,13 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
         billingAccountService.updateSelectiveWithSession(billingAccount, "")
       } else if (accCreatedDate.isBefore(dateExpire)) {
         LOG.debug("Check whether account exceed 32 days to convert to basic plan")
+        val billingAccount: BillingAccount = new BillingAccount
+        billingAccount.setId(account.getId)
+        billingAccount.setStatus(AccountStatusConstants.INVALID)
+        billingAccountService.updateSelectiveWithSession(billingAccount, "")
         sendingEmailInformAccountIsRemoved(account)
+      } else {
+        LOG.info("Condition here")
       }
     }
   }
@@ -78,7 +83,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
     for (user <- account.getOwners) {
       LOG.info("Send mail after 32 days for username {} , mail {}", Array(user.getUsername, user.getEmail))
       contentGenerator.putVariable("account", account)
-      contentGenerator.putVariable("userName", user.getUsername)
+      contentGenerator.putVariable("userName", user.getLastname)
       val link = deploymentMode.getSiteUrl(account.getSubdomain) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
       contentGenerator.putVariable("link", link)
       extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
@@ -98,7 +103,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       val cal = new LocalDateTime(account.getCreatedtime)
       cal.plusDays(NUM_DAY_FREE_TRIAL)
       contentGenerator.putVariable("expireDay", df.print(cal))
-      contentGenerator.putVariable("userName", user.getUsername)
+      contentGenerator.putVariable("userName", user.getLastname)
       contentGenerator.putVariable("link", link)
       extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Collections.singletonList(new MailRecipientField(user.getEmail, user.getDisplayName)), null,
