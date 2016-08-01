@@ -29,11 +29,11 @@
     </listener>
 
     <listener>
-        <listener-class>com.mycollab.servlet.MetricsServletContextListener</listener-class>
+        <listener-class>com.mycollab.monitoring.servlet.MetricsServletContextListener</listener-class>
     </listener>
 
     <listener>
-        <listener-class>com.mycollab.servlet.HealthcheckServletContextListener</listener-class>
+        <listener-class>com.mycollab.monitoring.servlet.HealthcheckServletContextListener</listener-class>
     </listener>
 
     <context-param>

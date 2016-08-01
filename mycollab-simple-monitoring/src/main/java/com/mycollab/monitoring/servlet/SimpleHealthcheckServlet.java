@@ -30,34 +30,18 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.servlet;
+package com.mycollab.monitoring.servlet;
 
-import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.servlets.MetricsServlet;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import com.codahale.metrics.servlets.HealthCheckServlet;
 
-import javax.servlet.ServletContextEvent;
+import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.WebServlet;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.3
  */
-public class MetricsServletContextListener extends MetricsServlet.ContextListener {
-    @Autowired
-    private MetricRegistry metricRegistry;
-
-    @Override
-    public void contextInitialized(ServletContextEvent event) {
-        WebApplicationContextUtils
-                .getRequiredWebApplicationContext(event.getServletContext())
-                .getAutowireCapableBeanFactory()
-                .autowireBean(this);
-        super.contextInitialized(event);
-    }
-
-    @Override
-    protected MetricRegistry getMetricRegistry() {
-        return metricRegistry;
-    }
+@WebServlet(name = "Healthcheck Servlets", urlPatterns = "/healthcheck", asyncSupported = true, loadOnStartup = 0,
+        initParams = {@WebInitParam(name = "show-jvm-metrics", value = "true")})
+public class SimpleHealthcheckServlet extends HealthCheckServlet {
 }

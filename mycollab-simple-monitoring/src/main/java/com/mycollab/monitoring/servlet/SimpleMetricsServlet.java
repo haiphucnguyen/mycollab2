@@ -30,9 +30,9 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.servlet;
+package com.mycollab.monitoring.servlet;
 
-import com.codahale.metrics.servlets.HealthCheckServlet;
+import com.codahale.metrics.servlets.MetricsServlet;
 
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -41,7 +41,7 @@ import javax.servlet.annotation.WebServlet;
  * @author MyCollab Ltd
  * @since 5.1.3
  */
-@WebServlet(name = "Healthcheck Servlets", urlPatterns = "/healthcheck", asyncSupported = true, loadOnStartup = 0,
-        initParams = {@WebInitParam(name = "show-jvm-metrics", value = "true")})
-public class SimpleHealthcheckServlet extends HealthCheckServlet {
+@WebServlet(name = "Metric Servlets", urlPatterns = "/metrics", asyncSupported = true, loadOnStartup = 0, initParams =
+        {@WebInitParam(name = "show-jvm-metrics", value = "true")})
+public class SimpleMetricsServlet extends MetricsServlet {
 }

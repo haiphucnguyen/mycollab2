@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-simple-monitoring.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.servlet;
+package com.mycollab.monitoring.servlet;
 
-import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.servlet.InstrumentedFilterContextListener;
+import com.codahale.metrics.health.HealthCheckRegistry;
+import com.codahale.metrics.servlets.HealthCheckServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -27,11 +27,10 @@ import javax.servlet.ServletContextEvent;
  * @author MyCollab Ltd
  * @since 5.1.3
  */
-public class AppInstrumentedFilterContextListener extends InstrumentedFilterContextListener {
-    public static final MetricRegistry REGISTRY = new MetricRegistry();
+public class HealthcheckServletContextListener extends HealthCheckServlet.ContextListener {
 
     @Autowired
-    private MetricRegistry metricRegistry;
+    private HealthCheckRegistry healthCheckRegistry;
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
@@ -43,7 +42,7 @@ public class AppInstrumentedFilterContextListener extends InstrumentedFilterCont
     }
 
     @Override
-    protected MetricRegistry getMetricRegistry() {
-        return metricRegistry;
+    protected HealthCheckRegistry getHealthCheckRegistry() {
+        return healthCheckRegistry;
     }
 }

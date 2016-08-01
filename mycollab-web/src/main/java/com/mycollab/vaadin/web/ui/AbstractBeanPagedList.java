@@ -142,7 +142,7 @@ public abstract class AbstractBeanPagedList<T> extends VerticalLayout implements
         } else {
             String msg = stringWhenEmptyList();
             if (msg != null) {
-                listContainer.addComponent(msgWhenEmptyList());
+                listContainer.addComponent(msgWhenEmptyList(msg));
             }
         }
     }
@@ -153,11 +153,7 @@ public abstract class AbstractBeanPagedList<T> extends VerticalLayout implements
         return null;
     }
 
-    private Component msgWhenEmptyList() {
-        String value = stringWhenEmptyList();
-        if (StringUtils.isBlank(value)) {
-            return null;
-        }
+    private Component msgWhenEmptyList(String message) {
         return new MHorizontalLayout().withMargin(true).withFullWidth().withStyleName("panel-body").with(new Label(stringWhenEmptyList()));
     }
 
@@ -226,7 +222,7 @@ public abstract class AbstractBeanPagedList<T> extends VerticalLayout implements
                 i++;
             }
         } else {
-            Component component = msgWhenEmptyList();
+            Component component = msgWhenEmptyList(stringWhenEmptyList());
             if (component != null) {
                 listContainer.addComponent(component);
             }

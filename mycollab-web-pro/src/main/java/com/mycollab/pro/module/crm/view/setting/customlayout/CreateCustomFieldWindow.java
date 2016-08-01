@@ -30,8 +30,8 @@ import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Table.ColumnHeaderMode;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -98,32 +98,17 @@ public class CreateCustomFieldWindow extends Window {
         body.with(constructLeftBodyPanel(), rightPanel);
         content.with(body).expand(body);
 
-        MHorizontalLayout buttonControls = new MHorizontalLayout();
-        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
 
-            @Override
-            public void buttonClick(ClickEvent event) {
-                DynaSection section = fieldPanel.updateCustomField();
-                viewParent.refreshSectionLayout(section);
-                CreateCustomFieldWindow.this.close();
-            }
-        });
-        saveBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
-        saveBtn.setIcon(FontAwesome.SAVE);
-        buttonControls.with(saveBtn).withAlign(saveBtn, Alignment.MIDDLE_CENTER);
+        MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+            DynaSection section = fieldPanel.updateCustomField();
+            viewParent.refreshSectionLayout(section);
+            close();
+        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
+        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                .withStyleName(WebUIConstants.BUTTON_OPTION);
 
-            @Override
-            public void buttonClick(ClickEvent event) {
-                CreateCustomFieldWindow.this.close();
-            }
-        });
-        cancelBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
-        buttonControls.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
-
+        MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(true);
         content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
     }
 
@@ -140,19 +125,10 @@ public class CreateCustomFieldWindow extends Window {
         fieldSelectionTable.addContainerProperty("icon", Embedded.class, null);
         fieldSelectionTable.addContainerProperty("type", Button.class, null);
         fieldSelectionTable.setColumnWidth("icon", 20);
-        fieldSelectionTable.setVisibleColumns(new String[]{"icon", "type"});
+        fieldSelectionTable.setVisibleColumns("icon", "type");
 
-        for (int i = 0; i < fieldsTable.length; i++) {
-            final Object[] rowItems = fieldsTable[i];
-            final Button typeLink = new Button((String) rowItems[1], new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    constructFieldPanel((String) rowItems[1]);
-
-                }
-            });
+        for (final Object[] rowItems : fieldsTable) {
+            final Button typeLink = new Button((String) rowItems[1], clickEvent -> constructFieldPanel((String) rowItems[1]));
             typeLink.addStyleName(WebUIConstants.BUTTON_LINK);
             fieldSelectionTable.addItem(new Object[]{new Embedded("", (Resource) rowItems[0]), typeLink}, rowItems[1]);
         }
