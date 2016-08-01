@@ -28,7 +28,7 @@ public class RiskServiceTest extends IntegrationServiceTest {
     @DataSet
     @Test
     public void testGetListRisks() {
-        List<SimpleRisk> risks = riskService.findPageableListByCriteria(new BasicSearchRequest<>(null, 0, Integer.MAX_VALUE));
+        List<SimpleRisk> risks = riskService.findPageableListByCriteria(new BasicSearchRequest<>(null));
         assertThat(risks.size()).isEqualTo(3);
         assertThat(risks).extracting("id", "riskname").contains(tuple(1, "a"), tuple(2, "ab"), tuple(3, "c"));
     }
@@ -39,7 +39,7 @@ public class RiskServiceTest extends IntegrationServiceTest {
         RiskSearchCriteria criteria = new RiskSearchCriteria();
         criteria.setRiskname(StringSearchField.and("a"));
         criteria.setSaccountid(new NumberSearchField(1));
-        List<SimpleRisk> risks = riskService.findPageableListByCriteria(new BasicSearchRequest<>(criteria, 0, Integer.MAX_VALUE));
+        List<SimpleRisk> risks = riskService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
 
         assertThat(risks.size()).isEqualTo(2);
         assertThat(risks).extracting("id", "riskname").contains(tuple(1, "a"), tuple(2, "ab"));

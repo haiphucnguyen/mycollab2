@@ -1,8 +1,8 @@
 package com.mycollab.ondemand.module.project.service;
 
+import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.BooleanSearchField;
 import com.mycollab.db.arguments.NumberSearchField;
-import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.domain.ItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -41,8 +41,7 @@ public class ItemTimeLoggingServiceTest extends IntegrationServiceTest {
     @DataSet
     @Test
     public void testGetListItemTimeLoggings() throws ParseException {
-        List<ItemTimeLogging> itemTimeLoggings = itemTimeLoggingService
-                .findPageableListByCriteria(new BasicSearchRequest<>(getCriteria(), 0, Integer.MAX_VALUE));
+        List<ItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPageableListByCriteria(new BasicSearchRequest<>(getCriteria()));
 
         assertThat(itemTimeLoggings.size()).isEqualTo(2);
         assertThat(itemTimeLoggings).extracting("id", "type", "logforday", "loguser", "summary").contains(
@@ -53,8 +52,7 @@ public class ItemTimeLoggingServiceTest extends IntegrationServiceTest {
     @DataSet
     @Test
     public void testGetTotalCount() {
-        List<ItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPageableListByCriteria(
-                new BasicSearchRequest<>(getCriteria(), 0, Integer.MAX_VALUE));
+        List<ItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPageableListByCriteria(new BasicSearchRequest<>(getCriteria()));
         assertThat(itemTimeLoggings.size()).isEqualTo(2);
     }
 }
