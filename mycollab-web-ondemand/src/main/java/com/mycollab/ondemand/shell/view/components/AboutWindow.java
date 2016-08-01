@@ -40,7 +40,7 @@ public class AboutWindow extends AbstractAboutWindow {
         WebBrowser browser = Page.getCurrent().getWebBrowser();
         Label osLbl = new Label(String.format("%s, %s", System.getProperty("os.name"), browser.getBrowserApplication()));
         osLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
-        Div licenseDiv = new Div().appendChild(new Text("Powered by: "))
+        Div licenseDiv = new Div().appendChild(new Text("Powered 11by: "))
                 .appendChild(new A("https://www.mycollab.com")
                         .appendText("MyCollab")).appendChild(new Text(". MyCollab Commercial license"));
         Label licenseLbl = ELabel.html(licenseDiv.write());
