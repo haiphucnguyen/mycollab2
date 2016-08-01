@@ -36,7 +36,7 @@
 
     <sql id="selectBillingAccount">
         <![CDATA[
-        SELECT s_account.id, s_account.subdomain, s_account.createdTime, s_account.pricing,
+        SELECT s_account.id, s_account.subdomain, s_account.createdTime,
             (SELECT COUNT(*) FROM m_prj_project WHERE m_prj_project.sAccountId = s_account.id) AS numProjects,
             (SELECT COUNT(*) FROM s_user_account AS accountUser WHERE accountUser.accountId = s_account.id) AS numUsers,
             (SELECT MAX(lastAccessedTime) FROM s_user_account AS accountUser2 WHERE accountUser2.accountId = s_account.id) AS lastAccessTime,
