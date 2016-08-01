@@ -68,7 +68,7 @@
         <include refid="orderStatement" />
     </select>
 
-    <select id="getSubdomainsOfUser" resultType="java.lang.String" parameterType="java.lang.String">
+    <select id="getSubDomainsOfUser" resultType="java.lang.String" parameterType="java.lang.String">
         <![CDATA[
         SELECT DISTINCT s_account.subdomain
             FROM s_account, s_user_account
