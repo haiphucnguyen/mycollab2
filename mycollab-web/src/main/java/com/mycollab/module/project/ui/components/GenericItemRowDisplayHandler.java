@@ -16,22 +16,21 @@
  */
 package com.mycollab.module.project.ui.components;
 
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Text;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.module.project.ProjectLinkBuilder;
-import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectGenericItem;
-import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.SafeHtmlLabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Text;
 import com.vaadin.ui.Component;
 import org.apache.commons.lang3.StringUtils;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -47,13 +46,8 @@ public class GenericItemRowDisplayHandler implements AbstractBeanPagedList.RowDi
     public Component generateRow(AbstractBeanPagedList host, ProjectGenericItem item, int rowIndex) {
         MVerticalLayout layout = new MVerticalLayout().withFullWidth().withStyleName("border-bottom", WebUIConstants.HOVER_EFFECT_NOT_BOX);
         ELabel link = ELabel.h3("");
-        if (ProjectTypeConstants.BUG.equals(item.getType()) || ProjectTypeConstants.TASK.equals(item.getType())) {
-            link.setValue(ProjectLinkBuilder.generateProjectItemHtmlLinkAndTooltip(item.getProjectShortName(),
-                    item.getProjectId(), item.getSummary(), item.getType(), item.getExtraTypeId() + ""));
-        } else {
-            link.setValue(ProjectLinkBuilder.generateProjectItemHtmlLinkAndTooltip(item.getProjectShortName(),
-                    item.getProjectId(), item.getSummary(), item.getType(), item.getTypeId()));
-        }
+        link.setValue(ProjectLinkBuilder.generateProjectItemHtmlLinkAndTooltip(item.getProjectShortName(),
+                item.getProjectId(), item.getSummary(), item.getType(), item.getTypeId()));
 
         String desc = (StringUtils.isBlank(item.getDescription())) ? "&lt;&lt;No description&gt;&gt;" : item.getDescription();
         SafeHtmlLabel descLbl = new SafeHtmlLabel(desc);

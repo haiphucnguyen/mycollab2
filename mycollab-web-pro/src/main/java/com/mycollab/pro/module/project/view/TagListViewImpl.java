@@ -89,7 +89,7 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
             searchCriteria.setTagNames(new SetSearchField<>(selectedTags));
             assignmentList.setSearchCriteria(searchCriteria);
         } else {
-            assignmentList.setCurrentDataList(new ArrayList<ProjectGenericItem>());
+            assignmentList.setCurrentDataList(new ArrayList<>());
         }
     }
 
