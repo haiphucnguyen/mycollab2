@@ -20,6 +20,7 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Text;
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.module.project.ProjectLinkBuilder;
@@ -54,12 +55,12 @@ public class GenericItemRowDisplayHandler implements AbstractBeanPagedList.RowDi
 
         Div div = new Div().setStyle("width:100%");
         Text createdByTxt = new Text("Created by: ");
-        Div lastUpdatedOn = new Div().appendChild(new Text("Modified: " + AppContext.formatPrettyTime(item.getLastUpdatedTime
-                ()))).setTitle(AppContext.formatDateTime(item.getLastUpdatedTime())).setStyle("float:right;" +
-                "margin-right:5px");
+        Div lastUpdatedOn = new Div().appendChild(new Text("Modified: " + AppContext.formatPrettyTime(item.getLastUpdatedTime())))
+                .setTitle(AppContext.formatDateTime(item.getLastUpdatedTime())).setStyle("float:right;margin-right:5px");
 
         if (StringUtils.isBlank(item.getCreatedUser())) {
-            div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), new Text("None"), lastUpdatedOn);
+            div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), new Text(AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED)),
+                    lastUpdatedOn);
         } else {
             Img userAvatar = new Img("", StorageFactory.getAvatarPath(item.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);

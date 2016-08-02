@@ -6,6 +6,7 @@ import com.mycollab.common.domain.FavoriteItemExample;
 import com.mycollab.common.service.FavoriteItemService;
 import com.mycollab.db.persistence.ICrudGenericDAO;
 import com.mycollab.db.persistence.service.DefaultCrudService;
+import com.mycollab.module.project.service.ProjectGenericItemService;
 import com.mycollab.pro.common.dao.FavoriteItemMapper;
 import com.google.common.eventbus.AsyncEventBus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,8 @@ public class FavoriteItemServiceImpl extends DefaultCrudService<Integer, Favorit
             item.setCreatedtime(now);
             favoriteItemMapper.insert(item);
         }
-        asyncEventBus.post(new CleanCacheEvent(item.getSaccountid(), new Class[]{FavoriteItemService.class}));
+        asyncEventBus.post(new CleanCacheEvent(item.getSaccountid(), new Class[]{FavoriteItemService.class,
+                ProjectGenericItemService.class}));
     }
 
     @Override
