@@ -6,7 +6,6 @@ import com.mycollab.core.MyCollabVersion;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.module.mail.service.IContentGenerator;
-import com.mycollab.ondemand.module.support.SupportLinkGenerator;
 import com.mycollab.ondemand.module.support.dao.CommunityLeadMapper;
 import com.mycollab.ondemand.module.support.domain.CommunityLead;
 import com.mycollab.ondemand.module.support.domain.CommunityLeadExample;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,7 +90,7 @@ public class CampaignController {
                 }
 
                 extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
-                        Arrays.asList(new MailRecipientField(email, firstname + " " + lastname)), null, null,
+                        Collections.singletonList(new MailRecipientField(email, firstname + " " + lastname)), null, null,
                         "MyCollab is ready for download", contentGenerator.parseFile("mailDownloadInfo.ftl"), null);
             }
         }.start();

@@ -6,6 +6,7 @@ import com.mycollab.ondemand.module.billing.dao.ProEditionInfoMapper;
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfoExample;
 import com.mycollab.ondemand.module.support.service.EditionInfoResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,7 @@ public class CheckVersionController {
     @Autowired
     private EditionInfoResolver editionInfoResolver;
 
-    @RequestMapping(value = "/checkupdate", method = RequestMethod.GET)
+    @RequestMapping(value = "/checkupdate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Properties getLatestVersion(@RequestParam("version") String version) {
         Properties props = new Properties();
 

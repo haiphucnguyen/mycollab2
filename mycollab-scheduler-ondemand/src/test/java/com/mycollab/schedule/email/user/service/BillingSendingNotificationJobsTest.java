@@ -6,7 +6,7 @@ import com.mycollab.module.user.domain.BillingAccount;
 import com.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.ondemand.module.billing.service.BillingService;
-import com.mycollab.ondemand.module.user.schedule.email.impl.BillingSendingNotificationJob;
+import com.mycollab.ondemand.schedule.jobs.BillingSendingNotificationJob;
 import com.mycollab.schedule.email.GenericJobTest;
 import org.junit.Assert;
 import org.junit.Before;

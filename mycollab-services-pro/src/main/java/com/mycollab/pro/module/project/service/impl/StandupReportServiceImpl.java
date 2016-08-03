@@ -2,9 +2,9 @@ package com.mycollab.pro.module.project.service.impl;
 
 import com.mycollab.cache.CleanCacheEvent;
 import com.mycollab.common.ModuleNameConstants;
-import com.mycollab.common.interceptor.aspect.ClassInfo;
-import com.mycollab.common.interceptor.aspect.ClassInfoMap;
-import com.mycollab.common.interceptor.aspect.Traceable;
+import com.mycollab.aspect.ClassInfo;
+import com.mycollab.aspect.ClassInfoMap;
+import com.mycollab.aspect.Traceable;
 import com.mycollab.db.arguments.DateSearchField;
 import com.mycollab.db.arguments.SearchRequest;
 import com.mycollab.db.arguments.SetSearchField;

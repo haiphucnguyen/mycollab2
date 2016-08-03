@@ -1,6 +1,6 @@
 package com.mycollab.ondemand.schedule.spring;
 
-import com.mycollab.ondemand.module.user.schedule.email.impl.BillingSendingNotificationJob;
+import com.mycollab.ondemand.schedule.jobs.BillingSendingNotificationJob;
 import com.mycollab.ondemand.schedule.jobs.*;
 import com.mycollab.schedule.AutowiringSpringBeanJobFactory;
 import com.mycollab.schedule.QuartzScheduleProperties;

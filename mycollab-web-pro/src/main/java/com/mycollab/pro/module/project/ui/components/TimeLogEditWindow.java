@@ -20,7 +20,10 @@ import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -59,7 +62,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
     protected TimeLogEditWindow(final V bean) {
         this.bean = bean;
         content = new MVerticalLayout();
-        withModal(true).withResizable(false).withCenter().withContent(content);
+        withModal(true).withResizable(false).withCenter().withContent(content).withWidth("980px");
 
         this.itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
@@ -73,8 +76,6 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
     }
 
     private void initUI() {
-        this.setWidth("980px");
-
         headerPanel = new MHorizontalLayout().withFullWidth();
         content.addComponent(headerPanel);
         constructSpentTimeEntryPanel();
@@ -141,13 +142,10 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         spentTimePanel.addComponent(totalLayout);
         Label lbTimeInstructTotal = new Label(AppContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_SPENT_HOURS));
         totalLayout.addComponent(lbTimeInstructTotal);
-        totalSpentTimeLbl = new Label("_");
-        totalSpentTimeLbl.addStyleName(ValoTheme.LABEL_LARGE);
-        totalSpentTimeLbl.addStyleName(ValoTheme.LABEL_BOLD);
+        totalSpentTimeLbl = new ELabel("_").withStyleName(ValoTheme.LABEL_LARGE, ValoTheme.LABEL_BOLD);
         totalLayout.addComponent(totalSpentTimeLbl);
 
-        MHorizontalLayout addLayout = new MHorizontalLayout();
-        addLayout.setSizeUndefined();
+        MHorizontalLayout addLayout = new MHorizontalLayout().withWidthUndefined();
         addLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         spentTimePanel.addComponent(addLayout);
 
@@ -207,7 +205,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         addLayout.with(addBtn).withAlign(addBtn, Alignment.MIDDLE_LEFT);
     }
 
-    public void loadTimeValue() {
+    private void loadTimeValue() {
         ItemTimeLoggingSearchCriteria searchCriteria = getItemSearchCriteria();
         tableItem.setSearchCriteria(searchCriteria);
         setTotalTimeValue();
