@@ -3,7 +3,6 @@ package com.mycollab.ondemand.configuration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author MyCollab Ltd
@@ -27,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
         "com.mycollab.ondemand.schedule.spring",
         "com.mycollab.ondemand.schedule.jobs",
         "com.mycollab.ondemand.vaadin.ui.service"
-}, includeFilters = {@ComponentScan.Filter(classes = RestController.class)})
+})
 @Profile("production")
 public class SpringConfiguration {
 
