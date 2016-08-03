@@ -1,9 +1,10 @@
-package com.mycollab.module.mail.service
+package com.mycollab.module.mail.service.impl
 
 import java.io._
 import java.util.Locale
 
 import com.mycollab.configuration.{SiteConfiguration, StorageFactory}
+import com.mycollab.module.mail.service.IContentGenerator
 import com.mycollab.schedule.email.MailStyles
 import freemarker.ext.beans.BeansWrapperBuilder
 import freemarker.template.Configuration

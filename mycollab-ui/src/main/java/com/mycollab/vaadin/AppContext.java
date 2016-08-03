@@ -201,7 +201,7 @@ public class AppContext implements Serializable {
             Enum key = Enum.valueOf(enumCls, option);
             return getMessage(key, objects);
         } catch (Exception e) {
-            return AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED);
+            return option;
         }
     }
 
