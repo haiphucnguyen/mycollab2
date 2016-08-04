@@ -75,7 +75,7 @@ class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAc
     val avatarId = if (changeUser != null) changeUser.getAvatarid else ""
     val userAvatar = LinkUtils.newAvatar(avatarId)
 
-    val makeChangeUser = userAvatar.toString + emailNotification.getChangeByUserFullName
+    val makeChangeUser = userAvatar.toString + " " + emailNotification.getChangeByUserFullName
     val actionEnum = emailNotification.getAction match {
       case MonitorTypeConstants.CREATE_ACTION => CaseI18nEnum.MAIL_CREATE_ITEM_HEADING
       case MonitorTypeConstants.UPDATE_ACTION => CaseI18nEnum.MAIL_UPDATE_ITEM_HEADING
