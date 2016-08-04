@@ -23,8 +23,7 @@ import org.springframework.stereotype.Component
   @Autowired private val pageService: PageService = null
   @Autowired private val optionValMapper: OptionValMapper = null
   @Autowired private val mailService: ExtMailService = null
-
-  @AllowConcurrentEvents
+  
   @Subscribe
   def deleteAccount(event: DeleteAccountEvent): Unit = {
     val rootPath = event.accountId + ""
