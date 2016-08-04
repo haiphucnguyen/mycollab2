@@ -163,13 +163,14 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>*</include>
+                                    <include>com.mycollab:*</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
 
             <plugin>
                 <groupId>com.github.wvengen</groupId>
@@ -207,34 +208,6 @@
                         </exclusion>
                     </exclusions>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.10</version>
-                <configuration>
-                    <excludeTransitive>false</excludeTransitive>
-                    <useBaseVersion>true</useBaseVersion>
-                    <stripVersion>false</stripVersion>
-                    <overWriteReleases>true</overWriteReleases>
-                    <overWriteSnapshots>true</overWriteSnapshots>
-                    <overWriteIfNewer>true</overWriteIfNewer>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>copy-product-dependencies</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${installer.staging.dir}/lib</outputDirectory>
-                            <excludeScope>provided</excludeScope>
-                            <excludeGroupIds>com.mycollab</excludeGroupIds>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
 
             <plugin>
@@ -294,18 +267,18 @@
                             </artifactItems>
                         </configuration>
                     </execution>
-                    <execution>
-                        <!-- copy *application* jars to izpack staging lib -->
-                        <id>copy-product-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${installer.staging.dir}/lib</outputDirectory>
-                            <excludeScope>provided</excludeScope>
-                        </configuration>
-                    </execution>
+                        <execution>
+                            <id>copy-product-dependencies</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${installer.staging.dir}/lib</outputDirectory>
+                                <excludeScope>provided</excludeScope>
+                                <excludeGroupIds>com.mycollab</excludeGroupIds>
+                            </configuration>
+                        </execution>
                 </executions>
             </plugin>
 
