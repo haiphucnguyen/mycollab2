@@ -163,14 +163,13 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>com.mycollab:*</include>
+                                    <include>*</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
 
             <plugin>
                 <groupId>com.github.wvengen</groupId>
