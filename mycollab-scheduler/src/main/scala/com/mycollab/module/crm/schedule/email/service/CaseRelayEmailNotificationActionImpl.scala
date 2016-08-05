@@ -16,24 +16,20 @@
  */
 package com.mycollab.module.crm.schedule.email.service
 
-import com.mycollab.html.FormatUtils
-import com.mycollab.module.crm.domain.CaseWithBLOBs
-import com.mycollab.module.crm.service.CaseService
-import com.mycollab.module.crm.CrmTypeConstants
-import com.mycollab.module.user.service.UserService
-import com.mycollab.schedule.email.crm.CaseRelayEmailNotificationAction
 import com.hp.gagawa.java.elements.{Span, Text}
 import com.mycollab.common.MonitorTypeConstants
 import com.mycollab.common.domain.SimpleRelayEmailNotification
 import com.mycollab.common.i18n.GenericI18Enum
 import com.mycollab.core.utils.StringUtils
-import com.mycollab.html.LinkUtils
+import com.mycollab.html.{FormatUtils, LinkUtils}
 import com.mycollab.module.crm.domain.{CaseWithBLOBs, SimpleCase}
-import com.mycollab.module.crm.{CrmLinkGenerator, CrmResources, CrmTypeConstants}
 import com.mycollab.module.crm.i18n.CaseI18nEnum
 import com.mycollab.module.crm.service.{AccountService, CaseService}
+import com.mycollab.module.crm.{CrmLinkGenerator, CrmResources, CrmTypeConstants}
 import com.mycollab.module.mail.MailUtils
 import com.mycollab.module.user.AccountLinkGenerator
+import com.mycollab.module.user.service.UserService
+import com.mycollab.schedule.email.crm.CaseRelayEmailNotificationAction
 import com.mycollab.schedule.email.format.FieldFormat
 import com.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.mycollab.spring.AppContextUtil

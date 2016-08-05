@@ -17,7 +17,6 @@
 package com.mycollab.module.crm.schedule.email.service
 
 import com.mycollab.html.FormatUtils
-import com.mycollab.module.crm.domain.SimpleAccount
 import com.mycollab.module.user.service.UserService
 import com.mycollab.schedule.email.crm.AccountRelayEmailNotificationAction
 import com.hp.gagawa.java.elements.Span
