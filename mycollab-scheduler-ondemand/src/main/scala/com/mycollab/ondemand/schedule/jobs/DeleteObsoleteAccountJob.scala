@@ -1,10 +1,8 @@
 package com.mycollab.ondemand.schedule.jobs
 
-import com.google.common.eventbus.AsyncEventBus
 import com.mycollab.db.arguments.{BasicSearchRequest, DateSearchField, SetSearchField}
 import com.mycollab.module.billing.AccountStatusConstants
 import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria
-import com.mycollab.ondemand.module.billing.esb.DeleteAccountEvent
 import com.mycollab.ondemand.module.billing.service.BillingService
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.joda.time.LocalDate
@@ -22,8 +20,7 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class DeleteObsoleteAccountJob extends GenericQuartzJobBean {
   @Autowired private val billingService: BillingService = null
-  @Autowired private val asyncEventBus: AsyncEventBus = null
-
+  
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext): Unit = {
     val searchCriteria = new BillingAccountSearchCriteria
@@ -33,9 +30,7 @@ class DeleteObsoleteAccountJob extends GenericQuartzJobBean {
     val obsoleteAccounts = billingService.findPageableListByCriteria(new
         BasicSearchRequest[BillingAccountSearchCriteria](searchCriteria)).asScala.toList
     for (obsoleteAccount <- obsoleteAccounts) {
-      val deleteAccountEvent = new DeleteAccountEvent(obsoleteAccount.getId, null)
-      println(obsoleteAccount.getNumProjects)
-//      asyncEventBus.post(deleteAccountEvent)
+      billingService.cancelAccount(obsoleteAccount.getId, null)
     }
   }
 }
