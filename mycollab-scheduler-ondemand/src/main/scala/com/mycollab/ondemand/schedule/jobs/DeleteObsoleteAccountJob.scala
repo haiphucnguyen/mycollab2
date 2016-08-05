@@ -34,7 +34,8 @@ class DeleteObsoleteAccountJob extends GenericQuartzJobBean {
         BasicSearchRequest[BillingAccountSearchCriteria](searchCriteria)).asScala.toList
     for (obsoleteAccount <- obsoleteAccounts) {
       val deleteAccountEvent = new DeleteAccountEvent(obsoleteAccount.getId, null)
-      asyncEventBus.post(deleteAccountEvent)
+      println(obsoleteAccount.getNumProjects)
+//      asyncEventBus.post(deleteAccountEvent)
     }
   }
 }
