@@ -79,24 +79,21 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         content.addComponent(addFormLayout);
         content.addComponent(bottomRow);
 
-        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                final SimpleMessage message = new SimpleMessage();
-                message.setProjectid(CurrentProjectVariables.getProjectId());
-                message.setPosteddate(new GregorianCalendar().getTime());
-                if (StringUtils.isNotBlank(subjectField.getValue())) {
-                    message.setTitle(subjectField.getValue());
-                    message.setMessage(contentField.getValue());
-                    message.setPosteduser(AppContext.getUsername());
-                    message.setSaccountid(AppContext.getAccountId());
-                    message.setIsstick(isStickField.getValue());
-                    MessageAddViewImpl.this.fireSaveItem(message);
+        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+            final SimpleMessage message = new SimpleMessage();
+            message.setProjectid(CurrentProjectVariables.getProjectId());
+            message.setPosteddate(new GregorianCalendar().getTime());
+            if (StringUtils.isNotBlank(subjectField.getValue())) {
+                message.setTitle(subjectField.getValue());
+                message.setMessage(contentField.getValue());
+                message.setPosteduser(AppContext.getUsername());
+                message.setSaccountid(AppContext.getAccountId());
+                message.setIsstick(isStickField.getValue());
+                MessageAddViewImpl.this.fireSaveItem(message);
 
-                } else {
-                    subjectField.addStyleName("errorField");
-                    NotificationUtil.showErrorNotification(AppContext.getMessage(MessageI18nEnum.FORM_TITLE_REQUIRED_ERROR));
-                }
+            } else {
+                subjectField.addStyleName("errorField");
+                NotificationUtil.showErrorNotification(AppContext.getMessage(MessageI18nEnum.FORM_TITLE_REQUIRED_ERROR));
             }
         });
         this.setRightComponent(saveBtn);

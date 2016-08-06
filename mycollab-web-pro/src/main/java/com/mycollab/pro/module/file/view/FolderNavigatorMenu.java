@@ -136,14 +136,9 @@ public class FolderNavigatorMenu extends Tree {
             }
         });
 
-        this.addItemClickListener(new ItemClickEvent.ItemClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void itemClick(final ItemClickEvent event) {
-                Folder item = (Folder) event.getItemId();
-                fireEvent(new SelectFolderEvent(FolderNavigatorMenu.this, item));
-            }
+        this.addItemClickListener(itemClickEvent -> {
+            Folder item = (Folder) itemClickEvent.getItemId();
+            fireEvent(new SelectFolderEvent(FolderNavigatorMenu.this, item))
         });
     }
 

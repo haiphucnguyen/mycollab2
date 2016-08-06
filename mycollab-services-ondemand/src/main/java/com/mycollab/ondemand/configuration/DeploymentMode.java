@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class DeploymentMode implements IDeploymentMode {
     @Override
     public boolean isDemandEdition() {
-        return true;
+        return false;
     }
 
     @Override
@@ -25,13 +25,13 @@ public class DeploymentMode implements IDeploymentMode {
 
     @Override
     public boolean isPremiumEdition() {
-        return false;
+        return true;
     }
 
     @Override
     public String getSiteUrl(String subDomain) {
-        return String.format(ApplicationProperties.getString(ApplicationProperties.APP_URL), subDomain);
-//        return String.format(ApplicationProperties.getString(ApplicationProperties.APP_URL),
-//                SiteConfiguration.getServerAddress(), SiteConfiguration.getServerPort());
+//        return String.format(ApplicationProperties.getString(ApplicationProperties.APP_URL), subDomain);
+        return String.format(ApplicationProperties.getString(ApplicationProperties.APP_URL),
+                SiteConfiguration.getServerAddress(), SiteConfiguration.getServerPort());
     }
 }

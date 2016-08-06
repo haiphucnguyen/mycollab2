@@ -23,7 +23,6 @@ import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
@@ -86,20 +85,14 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
         permissionsPanel = new VerticalComponentGroup();
         mainLayout.addComponent(permissionsPanel);
 
-        Button inviteBtn = new Button(AppContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEE), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                if ("".equals(inviteEmailField.getValue())) {
-                    return;
-                }
-                roleId = (Integer) roleComboBox.getValue();
-                fireEvent(new ViewEvent<>(ProjectMemberInviteViewImpl.this,
-                        new ProjectMemberEvent.InviteProjectMembers(Collections.singletonList(inviteEmailField.getValue()),
-                                ProjectMemberInviteViewImpl.this.roleId, messageArea.getValue())));
-
+        Button inviteBtn = new Button(AppContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEE), clickEvent -> {
+            if ("".equals(inviteEmailField.getValue())) {
+                return;
             }
+            roleId = (Integer) roleComboBox.getValue();
+            fireEvent(new ViewEvent<>(ProjectMemberInviteViewImpl.this,
+                    new ProjectMemberEvent.InviteProjectMembers(Collections.singletonList(inviteEmailField.getValue()),
+                            ProjectMemberInviteViewImpl.this.roleId, messageArea.getValue())));
         });
         this.setRightComponent(inviteBtn);
         this.setContent(mainLayout);

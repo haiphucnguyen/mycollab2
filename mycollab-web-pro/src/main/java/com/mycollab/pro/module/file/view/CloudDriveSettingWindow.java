@@ -79,7 +79,7 @@ public class CloudDriveSettingWindow extends Window {
         private boolean isEdit = false;
         private Label foldernameLbl;
 
-        public OneDriveConnectionBodyLayout(final ExternalDrive drive) {
+        OneDriveConnectionBodyLayout(final ExternalDrive drive) {
             final MVerticalLayout externalDriveEditLayout = new MVerticalLayout();
 
             final MHorizontalLayout titleLayout = new MHorizontalLayout().withFullWidth();
@@ -167,30 +167,23 @@ public class CloudDriveSettingWindow extends Window {
             folderNameTextField.setValue(drive.getFoldername());
             layout.addComponent(folderNameTextField);
 
-            Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
+            MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+                String folderName = folderNameTextField.getValue().trim();
+                try {
+                    if (folderName.length() > 0) {
+                        FileUtils.assertValidFolderName(folderName);
+                        drive.setFoldername(folderName);
+                        externalDriveService.updateWithSession(drive, AppContext.getUsername());
 
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    String folderName = folderNameTextField.getValue().trim();
-                    try {
-                        if (folderName.length() > 0) {
-                            FileUtils.assertValidFolderName(folderName);
-                            drive.setFoldername(folderName);
-                            externalDriveService.updateWithSession(drive, AppContext.getUsername());
-
-                            foldernameLbl = new Label(folderName);
-                            foldernameLbl.addStyleName(ValoTheme.LABEL_H3);
-                            ExternalFolder res = (ExternalFolder) externalResourceService.getCurrentResourceByPath(drive, "/");
-                            // TODO: reload external drives
-                        }
-                    } catch (Exception e) {
-                        throw new MyCollabException(e);
+                        foldernameLbl = new Label(folderName);
+                        foldernameLbl.addStyleName(ValoTheme.LABEL_H3);
+                        ExternalFolder res = (ExternalFolder) externalResourceService.getCurrentResourceByPath(drive, "/");
+                        // TODO: reload external drives
                     }
+                } catch (Exception e) {
+                    throw new MyCollabException(e);
                 }
-            });
-            saveBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
-            saveBtn.setIcon(FontAwesome.SAVE);
+            }).withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
 
             MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                     .withStyleName(WebUIConstants.BUTTON_OPTION);
