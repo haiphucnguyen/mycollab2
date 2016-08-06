@@ -138,7 +138,7 @@ public class FolderNavigatorMenu extends Tree {
 
         this.addItemClickListener(itemClickEvent -> {
             Folder item = (Folder) itemClickEvent.getItemId();
-            fireEvent(new SelectFolderEvent(FolderNavigatorMenu.this, item))
+            fireEvent(new SelectFolderEvent(FolderNavigatorMenu.this, item));
         });
     }
 
