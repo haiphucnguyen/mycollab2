@@ -92,9 +92,7 @@ public class LicenseResolverImpl implements LicenseResolver, AppPropertiesServic
         DateTime now = new DateTime();
         int days = (int) new Duration(startDate, now).getStandardDays();
         String edition = properties.getProperty("edition", "Community");
-        if (!getEdition().equals(edition))
-            days = 30;
-        if (!getEdition().equals(edition) || days < 30) {
+        if (!getEdition().equals(edition)) {
             properties.setProperty("edition", getEdition());
             RestTemplate restTemplate = new RestTemplate();
             try {

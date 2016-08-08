@@ -83,7 +83,7 @@ Version 5.4.0
 **Bug Fixes**
 
 * Fix the pdfEncoding mistyping in the reporting module (Thanks to mchubby)
-* The NumberFormatException throws when user type a valid day duration in task form. 
+* The NumberFormatException throws when the user types a valid day duration in task form. 
 * [Premium] Not adding the second cache layer to the service classes
 * [Premium] Can not remove favorite flag in Favorite view 
 * [Premium] Fix the form layout text 
