@@ -49,7 +49,7 @@ class DeleteSectionComp extends GenericSectionComp {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DeleteSectionComp.class);
 
-	public DeleteSectionComp(DynaSection section) {
+	DeleteSectionComp(DynaSection section) {
 		super(section);
 
 		this.addStyleName("deleteSection");

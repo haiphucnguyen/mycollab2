@@ -78,7 +78,7 @@ public class OrderManagerController {
         LicenseInfo licenseInfo = new LicenseInfo();
         licenseInfo.setCustomerId(EnDecryptHelper.encryptText("" + customerId));
         licenseInfo.setLicenseType(LicenseType.PRO);
-        if ("Growing (For less than 10 users)".equals(internalProductName)) {
+        if (internalProductName.contains("Growing")) {
             licenseInfo.setMaxUsers(10);
         } else {
             licenseInfo.setMaxUsers(9999);

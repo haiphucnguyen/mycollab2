@@ -148,8 +148,8 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
         final int logCount = auditLogService.getTotalCount(logCriteria);
         setTotalNums(commentCount + logCount);
 
-        List<SimpleComment> comments = commentService.findPageableListByCriteria(new BasicSearchRequest<>(commentCriteria, 0, Integer.MAX_VALUE));
-        List<SimpleAuditLog> auditLogs = auditLogService.findPageableListByCriteria(new BasicSearchRequest<>(logCriteria, 0, Integer.MAX_VALUE));
+        List<SimpleComment> comments = commentService.findPageableListByCriteria(new BasicSearchRequest<>(commentCriteria));
+        List<SimpleAuditLog> auditLogs = auditLogService.findPageableListByCriteria(new BasicSearchRequest<>(logCriteria));
         List activities = new ArrayList(commentCount + logCount);
         activities.addAll(comments);
         activities.addAll(auditLogs);

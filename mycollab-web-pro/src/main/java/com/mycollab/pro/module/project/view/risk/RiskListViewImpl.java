@@ -151,7 +151,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 
         MButton customizeViewBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new RiskListCustomizeWindow(tableItem)))
                 .withIcon(FontAwesome.ADJUST).withStyleName(WebUIConstants.BUTTON_ACTION);
-        customizeViewBtn.setDescription("Layout Options");
+        customizeViewBtn.setDescription(AppContext.getMessage(GenericI18Enum.OPT_LAYOUT_OPTIONS));
         layout.with(customizeViewBtn).withAlign(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
         return layout;

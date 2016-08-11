@@ -188,8 +188,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
                 searchPanel.setTotalCountNumber(totalBugs);
                 int pages = totalBugs / 50;
                 for (int page = 0; page < pages + 1; page++) {
-                    List<SimpleBug> bugs = bugService.findPageableListByCriteria(new BasicSearchRequest<>
-                            (searchCriteria, page + 1, 50));
+                    List<SimpleBug> bugs = bugService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
                     if (CollectionUtils.isNotEmpty(bugs)) {
                         for (SimpleBug bug : bugs) {
                             String status = bug.getStatus();

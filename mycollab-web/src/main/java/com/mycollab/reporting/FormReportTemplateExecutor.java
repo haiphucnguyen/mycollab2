@@ -248,8 +248,8 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                 .setStyle(reportStyles.getH3Style()));
         titleContent.add(historyHeader, reportStyles.line(), cmp.verticalGap(10));
 
-        List<SimpleComment> comments = commentService.findPageableListByCriteria(new BasicSearchRequest<>(commentCriteria, 0, Integer.MAX_VALUE));
-        List<SimpleAuditLog> auditLogs = auditLogService.findPageableListByCriteria(new BasicSearchRequest<>(logCriteria, 0, Integer.MAX_VALUE));
+        List<SimpleComment> comments = commentService.findPageableListByCriteria(new BasicSearchRequest<>(commentCriteria));
+        List<SimpleAuditLog> auditLogs = auditLogService.findPageableListByCriteria(new BasicSearchRequest<>(logCriteria));
         List activities = new ArrayList(commentCount + logCount);
         activities.addAll(comments);
         activities.addAll(auditLogs);
