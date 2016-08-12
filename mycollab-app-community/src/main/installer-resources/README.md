@@ -45,6 +45,7 @@ Version 5.4.1
 
 **Library Upgrades**
 
+* Add Spanish into the supported list 
 
 **Improvements & New Features**
 

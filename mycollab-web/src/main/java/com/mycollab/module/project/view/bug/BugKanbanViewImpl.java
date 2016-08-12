@@ -264,7 +264,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
         private DDVerticalLayout dragLayoutContainer;
         private Label header;
 
-        public KanbanBlock(OptionVal stage) {
+        KanbanBlock(OptionVal stage) {
             this.setHeight("100%");
             this.optionVal = stage;
             root = new MVerticalLayout();

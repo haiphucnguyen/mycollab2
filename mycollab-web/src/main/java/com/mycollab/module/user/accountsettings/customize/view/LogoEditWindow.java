@@ -36,7 +36,6 @@ import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,7 +92,7 @@ public class LogoEditWindow extends MWindow {
 
         MVerticalLayout previewBoxRight = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, true, false, true));
 
-        previewBoxRight.addComponent(ELabel.html(AppContext.getMessage(ShellI18nEnum.OPT_LOGO_EDIT_INSTRUCTION)));
+        previewBoxRight.addComponent(ELabel.html(AppContext.getMessage(ShellI18nEnum.OPT_IMAGE_EDIT_INSTRUCTION)));
 
         MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.GotoGeneralSetting(LogoEditWindow.this, null)))
