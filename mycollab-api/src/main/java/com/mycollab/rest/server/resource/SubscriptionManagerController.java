@@ -67,15 +67,15 @@ public class SubscriptionManagerController {
                              @RequestParam("referrer") String referrer,
                              @RequestParam("reference") String reference,
                              @RequestParam("subscriptionReference") String subscriptionReference,
-                             @RequestParam("billingPlanId") String billingPlanId,
                              @RequestParam(value = "test", required = false) String test,
                              @RequestParam("security_request_hash") String security_request_hash) {
-        Integer sAccountId = Integer.parseInt(EnDecryptHelper.decryptText(referrer));
+        String decryptReferrer = EnDecryptHelper.decryptText(referrer);
+        String[] arr = decryptReferrer.split(";");
         BillingSubscription subscription = new BillingSubscription();
         subscription.setEmail(email);
-        subscription.setAccountid(sAccountId);
+        subscription.setAccountid(Integer.parseInt(arr[0]));
         subscription.setName(name);
-        subscription.setBillingid(Integer.parseInt(billingPlanId));
+        subscription.setBillingid(Integer.parseInt(arr[1]));
         subscription.setSubreference(subscriptionReference);
         subscription.setSubscriptioncustomerurl("");
         subscription.setCreatedtime(new DateTime().toDate());
@@ -97,15 +97,17 @@ public class SubscriptionManagerController {
                                        @RequestParam("CompanyName") String companyName,
                                        @RequestParam("Phone") String phone,
                                        @RequestParam("SubscriptionCustomerUrl") String subscriptionCustomerUrl) throws Exception {
-        BillingSubscriptionExample ex = new BillingSubscriptionExample();
+        String decryptReferrer = EnDecryptHelper.decryptText(subscriptionReferrer);
+        String[] arr = decryptReferrer.split(";");
         Integer sAccountId = 0;
         try {
             LOG.info("Referrer: " + subscriptionReferrer);
-            sAccountId = Integer.parseInt(EnDecryptHelper.decryptText(subscriptionReferrer));
+            sAccountId = Integer.parseInt(EnDecryptHelper.decryptText(arr[0]));
         } catch (Exception e) {
             LOG.error("Referrer is invalid " + subscriptionReferrer);
             return "Failed";
         }
+        BillingSubscriptionExample ex = new BillingSubscriptionExample();
         ex.createCriteria().andSubreferenceEqualTo(subscriptionReference).andAccountidEqualTo(sAccountId);
         List<BillingSubscription> subscriptions = subscriptionMapper.selectByExample(ex);
         if (subscriptions.size() == 1) {
