@@ -45,12 +45,17 @@ Version 5.4.1
 
 **Library Upgrades**
 
-* Add Spanish into the supported list 
+* Java Mail 1.5.6
+* Other libraries
 
 **Improvements & New Features**
 
-* [Premium] Users can customize the project front pages
-* [Premium] Users can receive the notifications such as overdue assignments, or any assignment to her
+* For some instant emails, if the application can not send the email, it saves state and send again later
+* Minor improvements
+
+**Bug Fixes**
+
+* Can not send email for user who do not have the avatar
 
 
 Version 5.4.0

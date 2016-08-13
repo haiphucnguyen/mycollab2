@@ -19,6 +19,7 @@ package com.mycollab.premium.module.user.accountsettings.billing.view;
 import com.mycollab.common.i18n.LicenseI18nEnum;
 import com.mycollab.module.user.accountsettings.billing.view.IBillingContainer;
 import com.mycollab.premium.license.service.LicenseResolver;
+import com.mycollab.premium.shell.view.components.BuyPremiumSoftwareWindow;
 import com.mycollab.premium.shell.view.components.LicenseActivationWindow;
 import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.spring.AppContextUtil;
@@ -26,12 +27,16 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -75,17 +80,16 @@ public class BillingContainer extends AbstractPageView implements IBillingContai
             with(layoutHelper.getLayout()).withAlign(layoutHelper.getLayout(), Alignment.TOP_CENTER);
 
             if (licenseInfo.isTrial() || licenseInfo.isExpired() || licenseInfo.isInvalid()) {
+                MButton checkoutBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.OPT_BUY_LICENSE),
+                        clickEvent -> UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow())).withStyleName(WebUIConstants.BUTTON_ACTION);
                 MButton licenseBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE),
                         clickEvent -> UI.getCurrent().addWindow(new LicenseActivationWindow())).withStyleName(WebUIConstants.BUTTON_ACTION);
 
-                with(licenseBtn).withAlign(licenseBtn, Alignment.TOP_CENTER);
+                with(new Image("", new ExternalResource("http://fastspring.info/dev/sb_buttons/images/bn/fs_button05.gif")),
+                        new MHorizontalLayout(checkoutBtn, licenseBtn).alignAll(Alignment.MIDDLE_CENTER));
             }
         } catch (Exception e) {
-            buildInvalidLicenseComp();
+            with(ELabel.h2(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID)).withWidthUndefined());
         }
-    }
-
-    private void buildInvalidLicenseComp() {
-        with(ELabel.h2(AppContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID)).withWidthUndefined());
     }
 }

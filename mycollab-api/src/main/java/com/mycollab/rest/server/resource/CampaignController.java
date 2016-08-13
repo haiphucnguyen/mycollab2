@@ -90,8 +90,8 @@ public class CampaignController {
                 }
 
                 extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
-                        Collections.singletonList(new MailRecipientField(email, firstname + " " + lastname)), null, null,
-                        "MyCollab is ready for download", contentGenerator.parseFile("mailDownloadInfo.ftl"), null);
+                        Collections.singletonList(new MailRecipientField(email, firstname + " " + lastname)),
+                        "MyCollab is ready for download", contentGenerator.parseFile("mailDownloadInfo.ftl"));
             }
         }.start();
 

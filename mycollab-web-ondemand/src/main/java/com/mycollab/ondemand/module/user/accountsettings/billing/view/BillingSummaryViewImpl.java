@@ -39,8 +39,10 @@ import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.BrowserWindowOpener;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
@@ -78,13 +80,13 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
     protected void displayView() {
         removeAllComponents();
         MCssLayout layout = new MCssLayout().withStyleName("billing-setting").withFullWidth();
-        MHorizontalLayout topLayout = new MHorizontalLayout().withFullWidth();
+        MHorizontalLayout topLayout = new MHorizontalLayout().withFullWidth().withHeight("200px");
 
         currentPlanLayout = new MVerticalLayout().withMargin(false).withStyleName("current-plan-information").withFullWidth();
         currentPlanLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         topLayout.with(currentPlanLayout).withAlign(currentPlanLayout, Alignment.MIDDLE_CENTER).expand(currentPlanLayout);
 
-        MVerticalLayout faqLayout = new MVerticalLayout().withWidth("285px").withStyleName("faq-layout");
+        MVerticalLayout faqLayout = new MVerticalLayout().withWidth("285px").withFullHeight().withStyleName("faq-layout");
 
         if (AppContext.isAdmin()) {
             MButton cancelBtn = new MButton(AppContext.getMessage(BillingI18nEnum.BUTTON_CANCEL_ACCOUNT),
@@ -93,10 +95,9 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             faqLayout.addComponent(cancelBtn);
         }
 
-        ELabel header = ELabel.h3(AppContext.getMessage(BillingI18nEnum.HELP_QUESTION));
-        faqLayout.addComponent(header);
+        faqLayout.addComponent(ELabel.h3(AppContext.getMessage(BillingI18nEnum.HELP_QUESTION)).witHeightUndefined());
 
-        faqLayout.addComponent(ELabel.html(AppContext.getMessage(BillingI18nEnum.HELP_INFO)));
+        faqLayout.addComponent(ELabel.html(AppContext.getMessage(BillingI18nEnum.HELP_INFO)).witHeightUndefined());
         topLayout.with(faqLayout).withAlign(faqLayout, Alignment.TOP_RIGHT);
         layout.addComponent(topLayout);
 
@@ -158,6 +159,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
     private void loadCurrentPlan() {
         currentPlanLayout.removeAllComponents();
+        currentPlanLayout.with(new Image(null, new ExternalResource("http://fastspring.info/dev/sb_buttons/images/bn/fs_button05.gif")));
         BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
 
         ELabel introText = ELabel.h2(AppContext.getMessage(BillingI18nEnum.OPT_CURRENT_PLAN, currentBillingPlan.getBillingtype()));

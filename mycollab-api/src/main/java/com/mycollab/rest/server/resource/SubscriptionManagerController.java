@@ -99,14 +99,7 @@ public class SubscriptionManagerController {
                                        @RequestParam("SubscriptionCustomerUrl") String subscriptionCustomerUrl) throws Exception {
         String decryptReferrer = EnDecryptHelper.decryptText(subscriptionReferrer);
         String[] arr = decryptReferrer.split(";");
-        Integer sAccountId = 0;
-        try {
-            LOG.info("Referrer: " + subscriptionReferrer);
-            sAccountId = Integer.parseInt(EnDecryptHelper.decryptText(arr[0]));
-        } catch (Exception e) {
-            LOG.error("Referrer is invalid " + subscriptionReferrer);
-            return "Failed";
-        }
+        Integer sAccountId = Integer.parseInt(EnDecryptHelper.decryptText(arr[0]));
         BillingSubscriptionExample ex = new BillingSubscriptionExample();
         ex.createCriteria().andSubreferenceEqualTo(subscriptionReference).andAccountidEqualTo(sAccountId);
         List<BillingSubscription> subscriptions = subscriptionMapper.selectByExample(ex);

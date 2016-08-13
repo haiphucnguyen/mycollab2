@@ -57,8 +57,8 @@ class SendingRelayEmailJob extends GenericQuartzJobBean {
           i = i + 1
         }
 
-        extMailService.sendHTMLMail(relayEmail.getFromemail, relayEmail.getFromname, toMailList.toList, null, null, relayEmail
-          .getSubject, relayEmail.getBodycontent, null)
+        extMailService.sendHTMLMail(relayEmail.getFromemail, relayEmail.getFromname, toMailList.toList, relayEmail
+          .getSubject, relayEmail.getBodycontent)
       } catch {
         case e: Exception => LOG.error("Error when send relay email", e)
       }

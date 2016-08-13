@@ -40,8 +40,8 @@ import org.springframework.stereotype.Component
 //    val confirmLink = siteUrl + "user/confirm_signup/" + UrlEncodeDecoder.encode(user.getUsername + "/" + user.getAccountId)
 //    contentGenerator.putVariable("linkConfirm", confirmLink)
     extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
-      Arrays.asList(new MailRecipientField(user.getEmail, user.getFirstname + " " + user.getLastname)), null, null,
+      Arrays.asList(new MailRecipientField(user.getEmail, user.getFirstname + " " + user.getLastname)),
       LocalizationHelper.getMessage(Locale.US, UserI18nEnum.MAIL_CONFIRM_PASSWORD_SUBJECT),
-      contentGenerator.parseFile("src/main/resources/mailConfirmUserSignUpNotification.ftl", Locale.US), null)
+      contentGenerator.parseFile("src/main/resources/mailConfirmUserSignUpNotification.ftl", Locale.US))
   }
 }

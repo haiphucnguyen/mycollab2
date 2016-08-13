@@ -84,7 +84,7 @@ object NewUserJoinCommand {
     contentGenerator.putVariable("newUser", newUser)
     contentGenerator.putVariable("formatter", new Formatter)
     extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
-      null, null, String.format("%s has just joined on MyCollab workspace", newUser.getDisplayName),
-      contentGenerator.parseFile("mailNewUserJoinAccountNotifier.ftl", Locale.US), null)
+      String.format("%s has just joined on MyCollab workspace", newUser.getDisplayName),
+      contentGenerator.parseFile("mailNewUserJoinAccountNotifier.ftl", Locale.US))
   }
 }

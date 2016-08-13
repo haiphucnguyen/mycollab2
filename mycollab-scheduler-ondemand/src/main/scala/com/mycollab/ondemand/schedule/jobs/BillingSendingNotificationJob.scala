@@ -88,8 +88,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("link", link)
       extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Collections.singletonList(new MailRecipientField(user.getEmail, user.getDisplayName)),
-        null, Collections.singletonList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")), "Your trial has expired",
-        contentGenerator.parseFile("mailInformAccountIsExpiredNotification.ftl", Locale.US), null)
+        "Your trial has expired", contentGenerator.parseFile("mailInformAccountIsExpiredNotification.ftl", Locale.US))
     }
   }
   
@@ -106,10 +105,8 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("userName", user.getLastname)
       contentGenerator.putVariable("link", link)
       extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
-        Collections.singletonList(new MailRecipientField(user.getEmail, user.getDisplayName)), null,
-        Collections.singletonList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")),
-        "Your trial will end soon",
-        contentGenerator.parseFile("mailRemindAccountIsAboutExpiredNotification.ftl", Locale.US), null)
+        Collections.singletonList(new MailRecipientField(user.getEmail, user.getDisplayName)),
+        "Your trial will end soon", contentGenerator.parseFile("mailRemindAccountIsAboutExpiredNotification.ftl", Locale.US))
     }
   }
 }
