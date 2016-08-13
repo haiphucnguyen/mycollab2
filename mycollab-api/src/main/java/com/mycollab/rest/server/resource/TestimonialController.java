@@ -1,5 +1,6 @@
 package com.mycollab.rest.server.resource;
 
+import com.mycollab.common.domain.MailRecipientField;
 import com.mycollab.module.mail.service.IContentGenerator;
 import com.mycollab.module.mail.service.MailRelayService;
 import com.hp.gagawa.java.elements.Div;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collections;
 
 /**
  * @author MyCollab Ltd
@@ -36,7 +39,8 @@ public class TestimonialController {
                 new Li().appendText(String.format("Email: %s", email)),
                 new Li().appendText(String.format("Website: %s", website)),
                 new Li().appendText(String.format("Testimonial: %s", testimonial))));
-        mailRelayService.saveRelayEmail(new String[]{"Sir"}, new String[]{"hainguyen@mycollab.com"},
+        mailRelayService.saveRelayEmail(Collections.singletonList(new MailRecipientField("hainguyen@mycollab.com",
+                        "Hai Nguyen")),
                 "New testimonial for you", bodyContent.write());
     }
 }
