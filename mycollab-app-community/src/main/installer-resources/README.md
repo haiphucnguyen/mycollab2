@@ -50,7 +50,6 @@ Version 5.4.1
 
 **Improvements & New Features**
 
-* For some instant emails, if the application can not send the email, it saves state and send again later
 * Minor improvements
 
 **Bug Fixes**
