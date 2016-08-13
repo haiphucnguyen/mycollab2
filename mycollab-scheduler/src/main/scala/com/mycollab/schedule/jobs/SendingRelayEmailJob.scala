@@ -16,7 +16,6 @@
  */
 package com.mycollab.schedule.jobs
 
-import com.mycollab.module.mail.service.MailRelayService
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.core.utils.JsonDeSerializer
 import com.mycollab.module.mail.service.{ExtMailService, MailRelayService}
@@ -47,18 +46,10 @@ class SendingRelayEmailJob extends GenericQuartzJobBean {
     import scala.collection.JavaConversions._
     for (relayEmail <- relayEmails) {
       val recipientVal = relayEmail.getRecipients
-      val recipientArr = JsonDeSerializer.fromJson(recipientVal, classOf[Array[Array[String]]])
+      import collection.JavaConverters._
+      val recipientArr = JsonDeSerializer.fromJson(recipientVal, classOf[java.util.List[MailRecipientField]]).asScala.toList
       try {
-        var toMailList = Set[MailRecipientField]()
-
-        var i: Int = 0
-        while (i < recipientArr(0).length) {
-          toMailList = toMailList + (new MailRecipientField(recipientArr(0)(i), recipientArr(1)(i)))
-          i = i + 1
-        }
-
-        extMailService.sendHTMLMail(relayEmail.getFromemail, relayEmail.getFromname, toMailList.toList, relayEmail
-          .getSubject, relayEmail.getBodycontent)
+        extMailService.sendHTMLMail(relayEmail.getFromemail, relayEmail.getFromname, recipientArr, relayEmail.getSubject, relayEmail.getBodycontent)
       } catch {
         case e: Exception => LOG.error("Error when send relay email", e)
       }

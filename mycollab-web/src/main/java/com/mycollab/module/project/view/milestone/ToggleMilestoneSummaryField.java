@@ -77,7 +77,7 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
                     editField.addBlurListener(blurEvent -> updateFieldValue(editField));
                     isRead = !isRead;
                 }
-            }).withDescription(AppContext.getMessage(MilestoneI18nEnum.OPT_EDIT_MILESTONE_NAME))
+            }).withDescription(AppContext.getMessage(MilestoneI18nEnum.OPT_EDIT_PHASE_NAME))
                     .withIcon(FontAwesome.EDIT).withStyleName(ValoTheme.BUTTON_ICON_ONLY, ValoTheme.BUTTON_ICON_ALIGN_TOP);
             buttonControls.with(instantEditBtn);
             this.addComponent(buttonControls);
