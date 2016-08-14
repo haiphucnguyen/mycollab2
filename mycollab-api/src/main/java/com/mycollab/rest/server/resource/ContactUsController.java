@@ -38,7 +38,8 @@ public class ContactUsController {
                 new Li().appendText(String.format("Budget: %s", budget)),
                 new Li().appendText(String.format("Subject: %s", subject)),
                 new Li().appendText(String.format("Message: %s", message))));
-        extMailService.sendHTMLMail(email, name, Collections.singletonList(new MailRecipientField("hainguyen@mycollab.com",
+        extMailService.sendHTMLMail("hainguyen@mycollab.com", "Hai Nguyen", Collections.singletonList(new
+                MailRecipientField("hainguyen@mycollab.com",
                 "Hai Nguyen")), "MyCollab inquiry", bodyContent.write());
         return "Ok";
     }
