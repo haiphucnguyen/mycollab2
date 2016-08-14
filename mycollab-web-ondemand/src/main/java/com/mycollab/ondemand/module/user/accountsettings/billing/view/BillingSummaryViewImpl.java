@@ -161,7 +161,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
     private void loadCurrentPlan() {
         currentPlanLayout.removeAllComponents();
-        currentPlanLayout.with(new Image(null, new ExternalResource(StorageFactory.generateAssetRelativeLink("fs_button05.gif"))));
+        currentPlanLayout.with(new Image(null, new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/fs_button05.gif"))));
         BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
 
         ELabel introText = ELabel.h2(AppContext.getMessage(BillingI18nEnum.OPT_CURRENT_PLAN, currentBillingPlan.getBillingtype()));
