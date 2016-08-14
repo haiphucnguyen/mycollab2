@@ -1,11 +1,11 @@
 package com.mycollab.rest.server.resource;
 
-import com.mycollab.common.domain.MailRecipientField;
-import com.mycollab.module.mail.service.IContentGenerator;
-import com.mycollab.module.mail.service.MailRelayService;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Li;
 import com.hp.gagawa.java.elements.Ul;
+import com.mycollab.common.domain.MailRecipientField;
+import com.mycollab.module.mail.service.ExtMailService;
+import com.mycollab.module.mail.service.IContentGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +26,7 @@ public class TestimonialController {
     private IContentGenerator contentGenerator;
 
     @Autowired
-    private MailRelayService mailRelayService;
+    private ExtMailService extMailService;
 
     @RequestMapping(method = RequestMethod.POST, headers = "Content-Type=application/x-www-form-urlencoded")
     public void submit(@RequestParam("company") String company, @RequestParam("displayname") String displayname,
@@ -39,8 +39,7 @@ public class TestimonialController {
                 new Li().appendText(String.format("Email: %s", email)),
                 new Li().appendText(String.format("Website: %s", website)),
                 new Li().appendText(String.format("Testimonial: %s", testimonial))));
-        mailRelayService.saveRelayEmail(Collections.singletonList(new MailRecipientField("hainguyen@mycollab.com",
-                        "Hai Nguyen")),
+        extMailService.sendHTMLMail(email, displayname, Collections.singletonList(new MailRecipientField("hainguyen@mycollab.com", "Hai Nguyen")),
                 "New testimonial for you", bodyContent.write());
     }
 }

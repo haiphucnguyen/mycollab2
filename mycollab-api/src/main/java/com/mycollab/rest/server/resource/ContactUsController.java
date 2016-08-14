@@ -1,10 +1,10 @@
 package com.mycollab.rest.server.resource;
 
-import com.mycollab.common.domain.MailRecipientField;
-import com.mycollab.module.mail.service.MailRelayService;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Li;
 import com.hp.gagawa.java.elements.Ul;
+import com.mycollab.common.domain.MailRecipientField;
+import com.mycollab.module.mail.service.ExtMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,13 +22,13 @@ import java.util.Collections;
 public class ContactUsController {
 
     @Autowired
-    private MailRelayService mailRelayService;
+    private ExtMailService extMailService;
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST, headers = {"Content-Type=application/x-www-form-urlencoded"})
     public String doContact(@RequestParam("name") String name, @RequestParam("email") String email,
-                          @RequestParam("company") String company, @RequestParam("role") String role,
-                          @RequestParam("industry") String industry, @RequestParam("budget") String budget,
-                          @RequestParam("subject") String subject, @RequestParam("message") String message) {
+                            @RequestParam("company") String company, @RequestParam("role") String role,
+                            @RequestParam("industry") String industry, @RequestParam("budget") String budget,
+                            @RequestParam("subject") String subject, @RequestParam("message") String message) {
         Div bodyContent = new Div().appendChild(new Ul().appendChild(
                 new Li().appendText(String.format("Name: %s", name)),
                 new Li().appendText(String.format("Email: %s", email)),
@@ -38,8 +38,8 @@ public class ContactUsController {
                 new Li().appendText(String.format("Budget: %s", budget)),
                 new Li().appendText(String.format("Subject: %s", subject)),
                 new Li().appendText(String.format("Message: %s", message))));
-        mailRelayService.saveRelayEmail(Collections.singletonList(new MailRecipientField("hainguyen@mycollab.com",
-                        "Hai Nguyen")), "MyCollab inquiry", bodyContent.write());
+        extMailService.sendHTMLMail(email, name, Collections.singletonList(new MailRecipientField("hainguyen@mycollab.com",
+                "Hai Nguyen")), "MyCollab inquiry", bodyContent.write());
         return "Ok";
     }
 }
