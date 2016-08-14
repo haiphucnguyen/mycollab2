@@ -4,6 +4,7 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Li;
 import com.hp.gagawa.java.elements.Ul;
 import com.mycollab.common.domain.MailRecipientField;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.module.mail.service.IContentGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,8 @@ public class TestimonialController {
                 new Li().appendText(String.format("Email: %s", email)),
                 new Li().appendText(String.format("Website: %s", website)),
                 new Li().appendText(String.format("Testimonial: %s", testimonial))));
-        extMailService.sendHTMLMail("hainguyen@mycollab.com", "Hai Nguyen", Collections.singletonList(new MailRecipientField("hainguyen@mycollab.com", "Hai Nguyen")),
+        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), "MyCollab", Collections.singletonList(new
+                        MailRecipientField("hainguyen@mycollab.com", "Hai Nguyen")),
                 "New testimonial for you", bodyContent.write());
     }
 }

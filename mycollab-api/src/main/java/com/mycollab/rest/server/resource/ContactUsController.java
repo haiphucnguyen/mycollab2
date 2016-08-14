@@ -4,6 +4,7 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Li;
 import com.hp.gagawa.java.elements.Ul;
 import com.mycollab.common.domain.MailRecipientField;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.module.mail.service.ExtMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,9 +39,8 @@ public class ContactUsController {
                 new Li().appendText(String.format("Budget: %s", budget)),
                 new Li().appendText(String.format("Subject: %s", subject)),
                 new Li().appendText(String.format("Message: %s", message))));
-        extMailService.sendHTMLMail("hainguyen@mycollab.com", "Hai Nguyen", Collections.singletonList(new
-                MailRecipientField("hainguyen@mycollab.com",
-                "Hai Nguyen")), "MyCollab inquiry", bodyContent.write());
+        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), "MyCollab", Collections.singletonList(new
+                MailRecipientField("hainguyen@mycollab.com", "Hai Nguyen")), "MyCollab inquiry", bodyContent.write());
         return "Ok";
     }
 }
