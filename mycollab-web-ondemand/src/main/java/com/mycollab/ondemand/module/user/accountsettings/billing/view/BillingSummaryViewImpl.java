@@ -18,6 +18,7 @@ package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.EnDecryptHelper;
+import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.ecm.service.DriveInfoService;
@@ -37,6 +38,7 @@ import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.ui.NotificationUtil;
+import com.mycollab.vaadin.web.ui.WebResourceIds;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
@@ -159,7 +161,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
     private void loadCurrentPlan() {
         currentPlanLayout.removeAllComponents();
-        currentPlanLayout.with(new Image(null, new ExternalResource("http://fastspring.info/dev/sb_buttons/images/bn/fs_button05.gif")));
+        currentPlanLayout.with(new Image(null, new ExternalResource(StorageFactory.generateAssetRelativeLink("fs_button.gif"))));
         BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
 
         ELabel introText = ELabel.h2(AppContext.getMessage(BillingI18nEnum.OPT_CURRENT_PLAN, currentBillingPlan.getBillingtype()));
