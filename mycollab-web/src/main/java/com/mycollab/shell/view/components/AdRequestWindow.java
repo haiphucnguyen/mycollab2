@@ -16,19 +16,22 @@
  */
 package com.mycollab.shell.view.components;
 
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Text;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.Text;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -40,36 +43,40 @@ import org.vaadin.viritin.layouts.MWindow;
  */
 public class AdRequestWindow extends MWindow {
     public AdRequestWindow(final SimpleUser user) {
-        super("Need help!");
-        this.withModal(true).withResizable(false).withWidth("600px").withCenter();
+        super("No one has ever become poor by giving -  Anne Frank, diary of Anne Frank");
+        this.withModal(true).withResizable(false).withWidth("800px").withCenter();
 
         MVerticalLayout content = new MVerticalLayout();
 
         Label message = new Label("Hey <b>" + AppContext.getUser().getDisplayName() + "</b>, you've been " +
-                "using MyCollab for a while now. And we hope you are happy with it. We spent countless hours and money developing this free " +
-                "software for you. If you like it, please write a few words on twitter, blog or our " +
-                "testimonial form. It will help other " +
-                "people find this useful software quickly. <b> Thank you</b>", ContentMode.HTML);
+                "using MyCollab for a while now, and we hope you are happy with it. We invested a lot of time and " +
+                "money developing MyCollab. If you like it, please write a few words on twitter, blog or " +
+                "our testimonial form. Your kindness helps this software be continued.",
+                ContentMode.HTML);
 
-        MVerticalLayout shareControls = new MVerticalLayout();
-        Label rateSourceforge = new Label(new Div().appendChild(new Text(FontAwesome.THUMBS_O_UP.getHtml()), DivLessFormatter.EMPTY_SPACE(), new A("http://sourceforge.net/projects/mycollab/reviews/new", "_blank")
-                .appendText("Rate us on Sourceforge")).setStyle("color:#006dac").write(), ContentMode.HTML);
-
-        Label tweetUs = new Label(new Div().appendChild(new Text(FontAwesome.TWITTER.getHtml()), DivLessFormatter.EMPTY_SPACE(),
-                new A("https://twitter.com/intent/tweet?text=Im using MyCollab to manage all project activities, accounts and it works great @mycollabdotcom&source=webclient", "_blank")
+        Label tweetUs = new Label(new Div().appendChild(new Text("&nbsp;&nbsp;" + FontAwesome.TWITTER.getHtml()),
+                DivLessFormatter.EMPTY_SPACE(),
+                new A("https://twitter.com/intent/tweet?text=I am using MyCollab to manage all project activities, " +
+                        "accounts and it works great @mycollabdotcom&source=webclient", "_blank")
                         .appendText("Share on Twitter")).setStyle("color:#006dac").write(), ContentMode.HTML);
 
-        Label linkedIn = new Label(new Div().appendChild(new Text(FontAwesome.LINKEDIN_SQUARE.getHtml()), DivLessFormatter.EMPTY_SPACE(),
+        Label linkedIn = new Label(new Div().appendChild(new Text("&nbsp;&nbsp;" + FontAwesome.LINKEDIN_SQUARE.getHtml()),
+                DivLessFormatter.EMPTY_SPACE(),
                 new A("https://www.linkedin.com/cws/share?url=https%3A%2F%2Fwww.mycollab.com&original_referer=https%3A%2F%2Fwww.mycollab.com&token=&isFramed=false&lang=en_US", "_blank")
                         .appendText("Share on LinkedIn")).setStyle("color:#006dac").write(), ContentMode.HTML);
 
-        MButton testimonialBtn = new MButton("Write a testimonial", clickEvent -> {
-            close();
-            turnOffAdd(user);
-            UI.getCurrent().addWindow(new TestimonialWindow());
-        }).withIcon(FontAwesome.KEYBOARD_O).withStyleName(WebUIConstants.BUTTON_LINK);
-
-        shareControls.with(rateSourceforge, tweetUs, linkedIn, testimonialBtn);
+        Label testimonialAd = new Label("A chance to get a free license of the premium MyCollab software for 10 users" +
+                ". If you execute one of the following:");
+        Label rateSourceforge = new Label(new Div().appendChild(new Text("&nbsp;&nbsp;" + FontAwesome.FLAG_CHECKERED.getHtml()),
+                DivLessFormatter.EMPTY_SPACE(), new A("https://community.mycollab.com/docs/developing-mycollab/translating/", "_blank")
+                .appendText("Localize MyCollab to your language at least 20% of the phrases")).setStyle
+                ("color:#006dac").write(), ContentMode.HTML);
+        MButton testimonialBtn = new MButton("Write a testimonial which is selected to post on our website",
+                clickEvent -> {
+                    close();
+                    turnOffAdd(user);
+                    UI.getCurrent().addWindow(new TestimonialWindow());
+                }).withIcon(FontAwesome.KEYBOARD_O).withStyleName(WebUIConstants.BUTTON_LINK);
 
         MButton ignoreBtn = new MButton("No, thanks", clickEvent -> {
             close();
@@ -83,12 +90,15 @@ public class AdRequestWindow extends MWindow {
         }).withIcon(FontAwesome.HEART).withStyleName(WebUIConstants.BUTTON_ACTION);
 
         MHorizontalLayout btnControls = new MHorizontalLayout(ignoreBtn, loveBtn);
-        content.with(message, shareControls, btnControls).withAlign(btnControls, Alignment.MIDDLE_RIGHT);
+        content.with(message, rateSourceforge, tweetUs, linkedIn, testimonialAd, rateSourceforge, new
+                MHorizontalLayout(ELabel.html("&nbsp;&nbsp;"), testimonialBtn).withSpacing(false),
+                new Label("Sincerely,"), ELabel.html(new A("https://hainguyen.mycollab.com/about-me/", "_blank").appendText("Hai Nguyen").write()), btnControls)
+                .withAlign(btnControls, Alignment.MIDDLE_RIGHT);
         this.setContent(content);
     }
 
     private void turnOffAdd(SimpleUser user) {
-        user.setRequestad(false);
+        user.setRequestad(true);
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
         userService.updateSelectiveWithSession(user, AppContext.getUsername());
     }

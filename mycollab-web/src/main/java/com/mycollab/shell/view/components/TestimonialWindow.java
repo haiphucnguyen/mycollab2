@@ -18,6 +18,7 @@ package com.mycollab.shell.view.components;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.SiteConfiguration;
+import com.mycollab.core.MyCollabException;
 import com.mycollab.support.domain.TestimonialForm;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -28,8 +29,6 @@ import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -43,8 +42,7 @@ import org.vaadin.viritin.layouts.MWindow;
  * @author MyCollab Ltd
  * @since 5.1.3
  */
-public class TestimonialWindow extends MWindow {
-    private static Logger LOG = LoggerFactory.getLogger(TestimonialWindow.class);
+class TestimonialWindow extends MWindow {
 
     TestimonialWindow() {
         super("Thank you! We appreciate your help!");
@@ -98,8 +96,6 @@ public class TestimonialWindow extends MWindow {
 
         MButton submitBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SUBMIT), clickEvent -> {
             if (editForm.validateForm()) {
-                close();
-                NotificationUtil.showNotification("We appreciate your kindness action", "Thank you for your time");
                 try {
                     RestTemplate restTemplate = new RestTemplate();
                     restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
@@ -111,9 +107,13 @@ public class TestimonialWindow extends MWindow {
                     values.add("testimonial", entity.getTestimonial());
                     values.add("website", entity.getWebsite());
                     restTemplate.postForObject(SiteConfiguration.getApiUrl("testimonial"), values, String.class);
+                    NotificationUtil.showNotification("We appreciate your kindness action. We will contact you soon " +
+                            "to verify your information and provide the MyCollab growing license (for 10 users) to " +
+                            "you after that", "Thank you for your time");
                 } catch (Exception e) {
-                    LOG.error("Error when call remote api", e);
+                    throw new MyCollabException(e);
                 }
+                close();
             }
         }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.MAIL_FORWARD);
 

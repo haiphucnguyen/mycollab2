@@ -16,12 +16,13 @@
  */
 package com.mycollab.pro.module.user.accountsettings.customize.view;
 
+import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.module.user.accountsettings.customize.view.AccountSettingContainer;
 import com.mycollab.module.user.accountsettings.customize.view.IThemeCustomizePresenter;
 import com.mycollab.module.user.accountsettings.customize.view.IThemeCustomizeView;
-import com.mycollab.module.user.accountsettings.customize.view.AccountSettingContainer;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.mycollab.module.user.accountsettings.view.events.SettingEvent;
@@ -38,11 +39,9 @@ import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.ViewPermission;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.Page;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
-import org.vaadin.dialogs.ConfirmDialog;
 
 /**
  * @author MyCollab Ltd.

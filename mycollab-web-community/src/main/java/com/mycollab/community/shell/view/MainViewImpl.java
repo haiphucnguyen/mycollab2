@@ -98,7 +98,7 @@ public class MainViewImpl extends AbstractMainView {
         GregorianCalendar tenDaysAgo = new GregorianCalendar();
         tenDaysAgo.add(Calendar.DATE, -10);
 
-        if (Boolean.TRUE.equals(user.getRequestad()) && user.getRegisteredtime().before(tenDaysAgo.getTime())) {
+        if (!Boolean.TRUE.equals(user.getRequestad()) && user.getRegisteredtime().before(tenDaysAgo.getTime())) {
             UI.getCurrent().addWindow(new AdRequestWindow(user));
         }
 
