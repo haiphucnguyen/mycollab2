@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.shell.view.components;
+package com.mycollab.community.shell.view.components;
 
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
@@ -69,7 +69,7 @@ public class AdRequestWindow extends MWindow {
                 ". If you execute one of the following:");
         Label rateSourceforge = new Label(new Div().appendChild(new Text("&nbsp;&nbsp;" + FontAwesome.FLAG_CHECKERED.getHtml()),
                 DivLessFormatter.EMPTY_SPACE(), new A("https://community.mycollab.com/docs/developing-mycollab/translating/", "_blank")
-                .appendText("Localize MyCollab to your language at least 20% of the phrases")).setStyle
+                        .appendText("Localize MyCollab to your language at least 20% of the phrases")).setStyle
                 ("color:#006dac").write(), ContentMode.HTML);
         MButton testimonialBtn = new MButton("Write a testimonial which is selected to post on our website",
                 clickEvent -> {
@@ -91,7 +91,7 @@ public class AdRequestWindow extends MWindow {
 
         MHorizontalLayout btnControls = new MHorizontalLayout(ignoreBtn, loveBtn);
         content.with(message, rateSourceforge, tweetUs, linkedIn, testimonialAd, rateSourceforge, new
-                MHorizontalLayout(ELabel.html("&nbsp;&nbsp;"), testimonialBtn).withSpacing(false),
+                        MHorizontalLayout(ELabel.html("&nbsp;&nbsp;"), testimonialBtn).withSpacing(false),
                 new Label("Sincerely,"), ELabel.html(new A("https://hainguyen.mycollab.com/about-me/", "_blank").appendText("Hai Nguyen").write()), btnControls)
                 .withAlign(btnControls, Alignment.MIDDLE_RIGHT);
         this.setContent(content);

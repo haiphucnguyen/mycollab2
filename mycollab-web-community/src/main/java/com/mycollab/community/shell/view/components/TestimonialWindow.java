@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.shell.view.components;
+package com.mycollab.community.shell.view.components;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.SiteConfiguration;

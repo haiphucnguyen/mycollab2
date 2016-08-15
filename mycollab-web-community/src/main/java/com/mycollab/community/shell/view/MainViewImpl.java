@@ -31,7 +31,7 @@ import com.mycollab.module.user.ui.SettingUIConstants;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.shell.view.AbstractMainView;
 import com.mycollab.shell.view.components.AbstractAboutWindow;
-import com.mycollab.shell.view.components.AdRequestWindow;
+import com.mycollab.community.shell.view.components.AdRequestWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.ViewComponent;

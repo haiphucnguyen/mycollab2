@@ -8,7 +8,6 @@ import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
-import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.ui.SettingAssetsManager;
 import com.mycollab.module.user.ui.SettingUIConstants;
 import com.mycollab.premium.license.service.LicenseResolver;
@@ -18,7 +17,6 @@ import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.shell.view.AbstractMainView;
 import com.mycollab.shell.view.components.AbstractAboutWindow;
-import com.mycollab.shell.view.components.AdRequestWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -39,9 +37,6 @@ import org.joda.time.Duration;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * @author MyCollab Ltd
@@ -64,7 +59,7 @@ public class MainViewImpl extends AbstractMainView {
             if (licenseInfo.isTrial()) {
                 UI.getCurrent().addWindow(new LicenseActivationWindow());
                 AppContext.getInstance().setIsValidAccount(false);
-            } else if (licenseInfo.isInvalid()){
+            } else if (licenseInfo.isInvalid()) {
                 MButton buyPremiumBtn = new MButton(AppContext.getMessage(LicenseI18nEnum.EXPIRE_NOTIFICATION),
                         clickEvent -> UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow()))
                         .withIcon(FontAwesome.SHOPPING_CART).withStyleName("ad");
@@ -95,14 +90,6 @@ public class MainViewImpl extends AbstractMainView {
         ExtMailService mailService = AppContextUtil.getSpringBean(ExtMailService.class);
         if (!mailService.isMailSetupValid()) {
             EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new SmtpSetupNotification()));
-        }
-
-        SimpleUser user = AppContext.getUser();
-        GregorianCalendar tenDaysAgo = new GregorianCalendar();
-        tenDaysAgo.add(Calendar.DATE, -10);
-
-        if (Boolean.TRUE.equals(user.getRequestad()) && user.getRegisteredtime().before(tenDaysAgo.getTime())) {
-            UI.getCurrent().addWindow(new AdRequestWindow(user));
         }
 
         Resource userAvatarRes = UserAvatarControlFactory.createAvatarResource(AppContext.getUserAvatarId(), 24);
