@@ -33,8 +33,13 @@ public class DeploymentMode implements IDeploymentMode {
     }
 
     @Override
-    public boolean isStandaloneEdition() {
+    public boolean isCommunityEdition() {
         return true;
+    }
+
+    @Override
+    public boolean isPremiumEdition() {
+        return false;
     }
 
     @Override
