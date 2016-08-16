@@ -6,7 +6,6 @@ import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.cache.CacheKey;
-import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.module.billing.AccountStatusConstants;
@@ -41,7 +40,8 @@ import java.util.List;
  */
 @Service
 public class BillingServiceImpl implements BillingService {
-    private static List<String> ACCOUNT_BLACK_LIST = Arrays.asList("api", "esofthead", "blog", "forum", "wiki", "support", "community");
+    private static List<String> ACCOUNT_BLACK_LIST = Arrays.asList("api", "esofthead", "blog", "forum", "wiki",
+            "support", "community", "www");
 
     @Autowired
     private BillingAccountMapperExt2 billingAccountMapperExt2;
@@ -67,9 +67,9 @@ public class BillingServiceImpl implements BillingService {
                                 boolean isEmailVerified) {
 
         // check subDomain is ascii string
-        if (subDomain.matches("\\A[a-zA-Z0-9\\-]+\\z")) {
-            throw new UserInvalidInputException("Subdomain is not valid. You can use letters (abc), numbers (123) or " +
-                    "-, space is not allowed");
+        if (subDomain.matches("\\A[a-zA-Z0-9\\-_]+\\z")) {
+            throw new UserInvalidInputException("Subdomain is not valid. You can use letters (abc), numbers (123), - " +
+                    ". Space is not allowed");
         }
 
         // check subDomain belong to keyword list

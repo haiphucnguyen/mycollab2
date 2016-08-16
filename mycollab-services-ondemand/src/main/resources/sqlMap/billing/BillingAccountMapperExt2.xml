@@ -19,6 +19,7 @@
 
         #ifnotnull($searchCriteria.lastAccessTime)
             ${searchCriteria.lastAccessTime.operation} (SELECT MAX(lastAccessedTime) FROM s_user_account AS accountUser3 WHERE accountUser3.accountId = s_account.id) < @{searchCriteria.lastAccessTime.value}
+              OR (SELECT MAX(lastAccessedTime) FROM s_user_account AS accountUser3 WHERE accountUser3.accountId = s_account.id) IS NULL
         #end
 
         #ifnotnull($searchCriteria.statuses)

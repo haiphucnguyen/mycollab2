@@ -191,7 +191,7 @@ public class BillingAccountServiceImpl extends DefaultCrudService<Integer, Billi
         asyncEventBus.post(new AccountCreatedEvent(sAccountId, username, isCreatedDefaultData));
     }
 
-    private int saveEmployeeRole(Integer accountId) {
+    private int saveEmployeeRole(int accountId) {
         // Register default role for account
         Role role = new Role();
         role.setRolename(SimpleRole.EMPLOYEE);
@@ -203,7 +203,7 @@ public class BillingAccountServiceImpl extends DefaultCrudService<Integer, Billi
         return roleId;
     }
 
-    private int saveAdminRole(Integer accountId) {
+    private int saveAdminRole(int accountId) {
         // Register default role for account
         Role role = new Role();
         role.setRolename(SimpleRole.ADMIN);
@@ -215,7 +215,7 @@ public class BillingAccountServiceImpl extends DefaultCrudService<Integer, Billi
         return roleId;
     }
 
-    private Integer saveGuestRole(Integer accountId) {
+    private int saveGuestRole(Integer accountId) {
         // Register default role for account
         final Role role = new Role();
         role.setRolename(SimpleRole.GUEST);

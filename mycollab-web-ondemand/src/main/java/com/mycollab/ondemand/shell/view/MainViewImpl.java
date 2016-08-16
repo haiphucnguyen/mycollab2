@@ -70,8 +70,8 @@ public class MainViewImpl extends AbstractMainView {
             Duration dur = new Duration(new DateTime(), trialTo);
             int daysLeft = dur.toStandardDays().getDays();
             if (daysLeft < 0) {
-                trialBlock.setText("<div class='informBlock'>Trial ended<br></div>");
-                AppContext.getInstance().setIsValidAccount(false);
+                trialBlock.setText("<div class='informBlock'>Trial<br></div>");
+//                AppContext.getInstance().setIsValidAccount(false);
             } else {
                 trialBlock.setText(String.format("<div class='informBlock'>Trial ending<br>%d days " +
                         "left</div><div class='informBlock'>&gt;&gt;</div>", daysLeft));

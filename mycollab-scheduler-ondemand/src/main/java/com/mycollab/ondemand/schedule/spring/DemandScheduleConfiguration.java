@@ -134,7 +134,7 @@ public class DemandScheduleConfiguration {
     public CronTriggerFactoryBean sendAccountBillingEmailTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(sendAccountBillingRequestEmailJob().getObject());
-        bean.setCronExpression("0 * * * * ?");
+        bean.setCronExpression("0 0 0 * * ?");
         return bean;
     }
 
@@ -164,7 +164,7 @@ public class DemandScheduleConfiguration {
                 sendingCountLiveInstancesByDateTrigger().getObject(),
                 deleteObsoleteAccountsTrigger().getObject(),
                 deleteObsoleteUsersTrigger().getObject(),
-                sendAccountBillingEmailTrigger().getObject(),
+                /*sendAccountBillingEmailTrigger().getObject(),*/
                 deleteObsoleteLiveInstancesTrigger().getObject(),
                 sendOneWeekFollowupDownloadedUsersTrigger().getObject(),
                 sendOneWeekFollowupSignupUsersTrigger().getObject());
