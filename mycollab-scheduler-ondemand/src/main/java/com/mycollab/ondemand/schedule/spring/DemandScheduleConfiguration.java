@@ -108,7 +108,7 @@ public class DemandScheduleConfiguration {
     }
 
     @Bean
-    public CronTriggerFactoryBean sendOneweekFollowupDownloadedUsersTrigger() {
+    public CronTriggerFactoryBean sendOneWeekFollowupDownloadedUsersTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(sendOneWeekFollowupDownloadedUsersJob().getObject());
         bean.setCronExpression("0 0 0 * * ?");
@@ -116,7 +116,7 @@ public class DemandScheduleConfiguration {
     }
 
     @Bean
-    public CronTriggerFactoryBean sendOneweekFollowupSignipUsersTrigger() {
+    public CronTriggerFactoryBean sendOneWeekFollowupSignupUsersTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(sendOneWeekFollowupSignupUsersJob().getObject());
         bean.setCronExpression("0 0 0 * * ?");
@@ -164,10 +164,10 @@ public class DemandScheduleConfiguration {
                 sendingCountLiveInstancesByDateTrigger().getObject(),
                 deleteObsoleteAccountsTrigger().getObject(),
                 deleteObsoleteUsersTrigger().getObject(),
-                /*sendAccountBillingEmailTrigger().getObject(),*/
+                sendAccountBillingEmailTrigger().getObject(),
                 deleteObsoleteLiveInstancesTrigger().getObject(),
-                sendOneweekFollowupDownloadedUsersTrigger().getObject(),
-                sendOneweekFollowupSignipUsersTrigger().getObject());
+                sendOneWeekFollowupDownloadedUsersTrigger().getObject(),
+                sendOneWeekFollowupSignupUsersTrigger().getObject());
         return bean;
     }
 }

@@ -50,6 +50,7 @@ Version 5.4.1
 
 **Improvements & New Features**
 
+* Update the language files
 * Minor improvements
 
 **Bug Fixes**

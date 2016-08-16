@@ -1,5 +1,6 @@
 package com.mycollab.ondemand.shell.view;
 
+import com.google.common.base.MoreObjects;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.ui.components.notification.RequestUploadAvatarNotification;
 import com.mycollab.core.utils.StringUtils;
@@ -64,14 +65,16 @@ public class MainViewImpl extends AbstractMainView {
             TrialBlock trialBlock = new TrialBlock();
             accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
 
-            Duration dur = new Duration(new DateTime(billingAccount.getCreatedtime()), new DateTime());
+            DateTime trialFrom = new DateTime(MoreObjects.firstNonNull(billingAccount.getTrialfrom(), billingAccount.getCreatedtime()));
+            DateTime trialTo = new DateTime(MoreObjects.firstNonNull(billingAccount.getTrialto(), trialFrom.plusDays(30)));
+            Duration dur = new Duration(new DateTime(), trialTo);
             int daysLeft = dur.toStandardDays().getDays();
-            if (daysLeft > 30) {
-                trialBlock.setText("<div class='informBlock'>Trial<br></div>");
-//                AppContext.getInstance().setIsValidAccount(false);
+            if (daysLeft < 0) {
+                trialBlock.setText("<div class='informBlock'>Trial ended<br></div>");
+                AppContext.getInstance().setIsValidAccount(false);
             } else {
                 trialBlock.setText(String.format("<div class='informBlock'>Trial ending<br>%d days " +
-                        "left</div><div class='informBlock'>&gt;&gt;</div>", 30 - daysLeft));
+                        "left</div><div class='informBlock'>&gt;&gt;</div>", daysLeft));
             }
         }
 

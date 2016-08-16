@@ -3,6 +3,7 @@ package com.mycollab.premium.license.service;
 import com.mycollab.common.service.AppPropertiesService;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.MyCollabException;
+import com.mycollab.core.MyCollabVersion;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.FileUtils;
@@ -120,11 +121,14 @@ public class LicenseResolverImpl implements LicenseResolver, AppPropertiesServic
             Properties prop = new Properties();
             byte[] bytes = outputStream.toByteArray();
             prop.load(new ByteArrayInputStream(bytes));
-            Date expireDate = DateTimeUtils.parseDateByW3C(prop.getProperty("expireDate"));
+            DateTime expireDate = new DateTime(DateTimeUtils.parseDateByW3C(prop.getProperty("expireDate")));
+            if (MyCollabVersion.getReleasedDate() != null && MyCollabVersion.getReleasedDate().isAfter(expireDate)) {
+                return createInvalidLicense();
+            }
             LicenseInfo newLicenseInfo = new LicenseInfo();
             newLicenseInfo.setCustomerId(prop.getProperty("customerId"));
             newLicenseInfo.setLicenseType(LicenseType.valueOf(prop.getProperty("licenseType")));
-            newLicenseInfo.setExpireDate(expireDate);
+            newLicenseInfo.setExpireDate(expireDate.toDate());
             newLicenseInfo.setIssueDate(DateTimeUtils.parseDateByW3C(prop.getProperty("issueDate")));
             newLicenseInfo.setLicenseOrg(prop.getProperty("licenseOrg"));
             newLicenseInfo.setMaxUsers(Integer.parseInt(prop.getProperty("maxUsers", "10")));

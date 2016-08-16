@@ -38,7 +38,6 @@ import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.web.ui.WebResourceIds;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
@@ -94,12 +93,13 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             MButton cancelBtn = new MButton(AppContext.getMessage(BillingI18nEnum.BUTTON_CANCEL_ACCOUNT),
                     clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.CancelAccount(this, null)))
                     .withStyleName(WebUIConstants.BUTTON_DANGER);
-            faqLayout.addComponent(cancelBtn);
+            faqLayout.with(cancelBtn);
         }
 
-        faqLayout.addComponent(ELabel.h3(AppContext.getMessage(BillingI18nEnum.HELP_QUESTION)).witHeightUndefined());
+        Label spaceLbl = new Label();
+        faqLayout.with(ELabel.h3(AppContext.getMessage(BillingI18nEnum.HELP_QUESTION)), ELabel.html(AppContext
+                .getMessage(BillingI18nEnum.HELP_INFO)), spaceLbl).expand(spaceLbl);
 
-        faqLayout.addComponent(ELabel.html(AppContext.getMessage(BillingI18nEnum.HELP_INFO)).witHeightUndefined());
         topLayout.with(faqLayout).withAlign(faqLayout, Alignment.TOP_RIGHT);
         layout.addComponent(topLayout);
 
@@ -192,7 +192,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             currentPlanLayout.addComponent(currentBillingPrice);
         } else {
             ELabel currentBillingPrice = ELabel.h3(AppContext.getMessage(BillingI18nEnum.OPT_PRICING_MONTH, currentBillingPlan.getPricing()));
-            ELabel expiredDateLbl = ELabel.h3(" | Expired Date: " + AppContext.formatDate(subscription.getExpireDate()));
+            ELabel expiredDateLbl = ELabel.h3(" | " + AppContext.getMessage(BillingI18nEnum.OPT_EXPIRED_DATE) + ": " +
+                    AppContext.formatDate(subscription.getExpireDate()));
             if (!subscription.isValid()) {
                 expiredDateLbl.withStyleName(WebUIConstants.LABEL_OVERDUE);
             }

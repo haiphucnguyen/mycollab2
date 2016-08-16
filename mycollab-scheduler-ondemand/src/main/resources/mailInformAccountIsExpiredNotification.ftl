@@ -12,7 +12,7 @@
                 <div id="contentBody">
                     <p>Hi <b>${userName}</b>,</p>
 
-                    <p>Your free trial of MyCollab has just ended. If you wish to continue using MyCollab to manage
+                    <p>Your free trial of MyCollab has just ended. If you want to continue using MyCollab to manage
                     projects and tasks, you may enter a payment method in your account under Billing Info.</p>
                     
                     <p>To access your account, visit  <@lib.hyperLink displayName="Your account" webLink=link/></p>

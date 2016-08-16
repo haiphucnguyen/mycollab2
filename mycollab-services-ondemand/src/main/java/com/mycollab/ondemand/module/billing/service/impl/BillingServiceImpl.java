@@ -26,13 +26,13 @@ import com.mycollab.ondemand.module.billing.esb.DeleteSubscriptionEvent;
 import com.mycollab.ondemand.module.billing.esb.UpdateBillingPlanEvent;
 import com.mycollab.ondemand.module.billing.service.BillingService;
 import org.apache.ibatis.session.RowBounds;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -67,8 +67,9 @@ public class BillingServiceImpl implements BillingService {
                                 boolean isEmailVerified) {
 
         // check subDomain is ascii string
-        if (!StringUtils.isAsciiString(subDomain)) {
-            throw new UserInvalidInputException("Subdomain must be an ascii string");
+        if (subDomain.matches("\\A[a-zA-Z0-9\\-]+\\z")) {
+            throw new UserInvalidInputException("Subdomain is not valid. You can use letters (abc), numbers (123) or " +
+                    "-, space is not allowed");
         }
 
         // check subDomain belong to keyword list
@@ -85,10 +86,13 @@ public class BillingServiceImpl implements BillingService {
         }
 
         BillingPlan billingPlan = billingPlanMapper.selectByPrimaryKey(billingPlanId);
+        DateTime now = new DateTime();
         // Save billing account
         BillingAccount billingAccount = new BillingAccount();
         billingAccount.setBillingplanid(billingPlan.getId());
-        billingAccount.setCreatedtime(new GregorianCalendar().getTime());
+        billingAccount.setCreatedtime(now.toDate());
+        billingAccount.setTrialfrom(now.toDate());
+        billingAccount.setTrialto(now.plusDays(30).toDate());
         billingAccount.setStatus(AccountStatusConstants.TRIAL);
         billingAccount.setSubdomain(subDomain);
         billingAccount.setDisplayemailpublicly(true);
@@ -152,10 +156,9 @@ public class BillingServiceImpl implements BillingService {
 
     @Override
     public BillingPlan findBillingPlan(@CacheKey Integer sAccountId) {
-        BillingAccount billingAccount = billingAccountMapper.selectByPrimaryKey(sAccountId);
+        SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(sAccountId);
         if (billingAccount != null) {
-            Integer billingId = billingAccount.getBillingplanid();
-            return billingPlanMapper.selectByPrimaryKey(billingId);
+            return billingAccount.getBillingPlan();
         } else {
             throw new MyCollabException("Can not find the billing plan for account " + sAccountId);
         }
