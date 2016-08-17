@@ -1,6 +1,6 @@
 package com.mycollab.server;
 
-import org.eclipse.jetty.server.handler.gzip.GzipHandler;
+import org.eclipse.jetty.servlets.gzip.GzipHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
@@ -14,11 +14,11 @@ public class DefaultServerRunner extends GenericServerRunner {
         WebAppContext webAppContext = new WebAppContext();
         webAppContext.setContextPath("/");
         webAppContext.setWar(baseDir);
+        webAppContext.setResourceBase(baseDir);
         GzipHandler gzipHandler = new GzipHandler();
         gzipHandler.addIncludedMimeTypes("text/html,text/plain,text/xml,application/xhtml+xml,text/css," +
                 "application/javascript, image/svg+xml");
         webAppContext.setGzipHandler(gzipHandler);
-        webAppContext.setResourceBase(baseDir);
         return webAppContext;
     }
 

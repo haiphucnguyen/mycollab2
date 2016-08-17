@@ -1,6 +1,6 @@
-version=5.3.4
-communityDownloadLink=https://sourceforge.net/projects/mycollab/files/MyCollab_5.2.8/MyCollab-All-5.2.8.zip/download
+version=5.4.0
+communityDownloadLink=https://github.com/MyCollab/mycollab/releases/download/Release_5.4.0/MyCollab-All-5.4.0.zip
 altCommunityDownloadLink=bdd
 communityUpgradeLink=xxx
-premiumDownloadLink=https://www.dropbox.com/s/xl0wotnw7tm637w/MyCollab-5.2.11.zip?dl=0
+premiumDownloadLink=https://github.com/MyCollab/mycollab/releases/download/Release_5.4.0/MyCollab-All-Pro-5.4.0.zip
 premiumUpgradeLink=yyynn
