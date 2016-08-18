@@ -135,9 +135,9 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         public void setSelected(boolean isSelected) {
             if (isSelected) {
                 removeStyleName(WebUIConstants.BUTTON_OPTION);
-                addStyleName(WebUIConstants.BUTTON_BLOCK);
+                addStyleName(WebUIConstants.BLOCK);
             } else {
-                removeStyleName(WebUIConstants.BUTTON_BLOCK);
+                removeStyleName(WebUIConstants.BLOCK);
                 addStyleName(WebUIConstants.BUTTON_OPTION);
             }
         }
