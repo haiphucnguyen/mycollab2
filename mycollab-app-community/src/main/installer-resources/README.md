@@ -50,7 +50,7 @@ Version 5.4.1
 
 **Improvements & New Features**
 
-* Update the language files. Add the Danish to the supported list (Contributor: KrestenB)
+* Update the language files. Add the Danish (Contributor: KrestenB) and Spanish (Contributor: jfigueroa) to the supported list 
 * Minor improvements
 
 **Bug Fixes**
