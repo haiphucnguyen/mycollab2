@@ -41,6 +41,11 @@ public class AsyncInvoker {
                             pageCommand.postRun();
                         } finally {
                             pageCommand.cleanUp();
+                            try {
+                                ui.push();
+                            } catch (Exception e) {
+                                LOG.error("Error", e);
+                            }
                         }
                     });
                 }

@@ -120,12 +120,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.vaadin.external.atmosphere</groupId>
-            <artifactId>atmosphere-runtime</artifactId>
-            <version>2.2.9.vaadin2</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>loginform</artifactId>
             <version>0.6.2</version>
