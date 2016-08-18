@@ -67,7 +67,7 @@ public class BillingServiceImpl implements BillingService {
                                 boolean isEmailVerified) {
 
         // check subDomain is ascii string
-        if (subDomain.matches("\\A[a-zA-Z0-9\\-_]+\\z")) {
+        if (!subDomain.matches("\\A[a-zA-Z0-9\\-_]+\\z")) {
             throw new UserInvalidInputException("Subdomain is not valid. You can use letters (abc), numbers (123), - " +
                     ". Space is not allowed");
         }

@@ -23,6 +23,9 @@ CHANGE COLUMN `description` `description` MEDIUMTEXT CHARACTER SET 'utf8mb4' COL
 ALTER TABLE `m_prj_risk`
 CHANGE COLUMN `description` `description` MEDIUMTEXT CHARACTER SET 'utf8mb4' COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL ;
 
+ALTER TABLE `m_crm_opportunity`
+CHANGE COLUMN `amount` `amount` DOUBLE UNSIGNED NULL DEFAULT NULL ;
+
 
 
 
