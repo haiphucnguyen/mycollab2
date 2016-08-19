@@ -4,6 +4,7 @@ import com.mycollab.common.domain.GroupItem;
 import com.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
+import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.test.DataSet;
 import com.mycollab.test.service.IntegrationServiceTest;
 import org.junit.Test;
@@ -31,7 +32,7 @@ public class TimelineTrackingServiceTest extends IntegrationServiceTest {
         TimelineTrackingSearchCriteria criteria = new TimelineTrackingSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(1));
         Map<String, List<GroupItem>> timelineItems = timelineTrackingService.findTimelineItems("status",
-                Arrays.asList(OptionI18nEnum.BugStatus.ReOpen.name(), OptionI18nEnum.BugStatus.Resolved.name()),
+                Arrays.asList(BugStatus.ReOpen.name(), BugStatus.Resolved.name()),
                 new GregorianCalendar(2015, 9, 2).getTime(), new GregorianCalendar(2015, 9, 31).getTime(), criteria);
     }
 }

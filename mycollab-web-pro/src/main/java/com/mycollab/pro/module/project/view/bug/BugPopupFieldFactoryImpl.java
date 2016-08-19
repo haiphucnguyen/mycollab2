@@ -26,6 +26,7 @@ import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria
 import com.mycollab.module.project.events.ProjectEvent;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
+import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.CommentDisplay;
@@ -220,7 +221,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         private SimpleBug beanItem;
 
         BugStatusPopupView(SimpleBug bug) {
-            super(FontAwesome.INFO_CIRCLE.getHtml() + " " + AppContext.getMessage(OptionI18nEnum.BugStatus.class, bug.getStatus()));
+            super(FontAwesome.INFO_CIRCLE.getHtml() + " " + AppContext.getMessage(BugStatus.class, bug.getStatus()));
             this.beanItem = bug;
             this.setDescription(AppContext.getMessage(BugI18nEnum.FORM_STATUS_HELP));
         }
@@ -230,22 +231,22 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             MVerticalLayout content = getWrapContent();
             content.removeAllComponents();
             boolean hasPermission = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
-            if (OptionI18nEnum.BugStatus.Open.name().equals(beanItem.getStatus()) ||
-                    OptionI18nEnum.BugStatus.ReOpen.name().equals(beanItem.getStatus())) {
+            if (BugStatus.Open.name().equals(beanItem.getStatus()) ||
+                    BugStatus.ReOpen.name().equals(beanItem.getStatus())) {
                 MButton resolveBtn = new MButton(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), clickEvent -> {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ResolvedInputWindow(beanItem)));
                 }).withStyleName(WebUIConstants.BUTTON_ACTION);
                 resolveBtn.setVisible(hasPermission);
                 content.with(resolveBtn);
-            } else if (OptionI18nEnum.BugStatus.Verified.name().equals(beanItem.getStatus())) {
+            } else if (BugStatus.Verified.name().equals(beanItem.getStatus())) {
                 MButton reopenBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem)));
                 }).withStyleName(WebUIConstants.BUTTON_ACTION);
                 reopenBtn.setVisible(hasPermission);
                 content.with(reopenBtn);
-            } else if (OptionI18nEnum.BugStatus.Resolved.name().equals(beanItem.getStatus())) {
+            } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
                 MButton reopenBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem)));
@@ -258,7 +259,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                 }).withStyleName(WebUIConstants.BUTTON_ACTION);
                 approveNCloseBtn.setVisible(hasPermission);
                 content.with(reopenBtn, approveNCloseBtn);
-            } else if (OptionI18nEnum.BugStatus.Resolved.name().equals(beanItem.getStatus())) {
+            } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
                 MButton reopenBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
                         clickEvent -> UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem))))
                         .withStyleName(WebUIConstants.BUTTON_ACTION);
@@ -273,7 +274,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         @Override
         protected void doHide() {
             setMinimizedValueAsHTML(FontAwesome.INFO_CIRCLE.getHtml() + " " +
-                    AppContext.getMessage(OptionI18nEnum.BugStatus.class, beanItem.getStatus()));
+                    AppContext.getMessage(BugStatus.class, beanItem.getStatus()));
         }
 
         private Window bindCloseWindow(Window window) {
@@ -283,7 +284,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
         private void refresh() {
             setMinimizedValueAsHTML(FontAwesome.INFO_CIRCLE.getHtml() + " " +
-                    AppContext.getMessage(OptionI18nEnum.BugStatus.class, beanItem.getStatus()));
+                    AppContext.getMessage(BugStatus.class, beanItem.getStatus()));
             markAsDirty();
         }
     }

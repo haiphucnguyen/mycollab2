@@ -118,7 +118,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
                         DateTime endDateJoda = new DateTime(calculatedDate.toDate());
                         DateTimeOptionField endDateField = (DateTimeOptionField) fieldGroup.getField(Task.Field.enddate.name());
                         beanItem.setEnddate(endDateJoda.toDate());
-                        endDateField.setPropertyDataSource(new MethodProperty(beanItem, "enddate"));
+                        endDateField.setValue(endDateJoda.toDate());
                     }
                 }
             });

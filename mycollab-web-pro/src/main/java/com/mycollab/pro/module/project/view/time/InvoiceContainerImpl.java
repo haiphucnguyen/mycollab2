@@ -40,6 +40,8 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static com.mycollab.module.project.i18n.OptionI18nEnum.*;
+
 /**
  * @author MyCollab Ltd
  * @since 5.2.10
@@ -120,7 +122,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
                 Object value = statusComboBox.getValue();
                 displayInvoices((String) value);
             });
-            displayInvoices(OptionI18nEnum.InvoiceStatus.All.name());
+            displayInvoices(InvoiceStatus.All.name());
         } else {
             this.with(ELabel.h3(AppContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION))).alignAll(Alignment.MIDDLE_CENTER);
         }
@@ -131,7 +133,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
             SimpleInvoice invoice = new SimpleInvoice();
             invoice.setSaccountid(AppContext.getAccountId());
             invoice.setProjectid(CurrentProjectVariables.getProjectId());
-            invoice.setStatus(OptionI18nEnum.InvoiceStatus.Scheduled.name());
+            invoice.setStatus(InvoiceStatus.Scheduled.name());
             UI.getCurrent().addWindow(new InvoiceAddWindow(invoice));
         }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
         createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
@@ -141,7 +143,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
     private void displayInvoices(String status) {
         invoiceStatus = status;
         InvoiceSearchCriteria searchCriteria = new InvoiceSearchCriteria();
-        if (!OptionI18nEnum.InvoiceStatus.All.name().equals(status)) {
+        if (!InvoiceStatus.All.name().equals(status)) {
             searchCriteria.addExtraField(InvoiceSearchCriteria.p_status().buildPropertyParamInList(SearchField.AND,
                     Collections.singletonList(status)));
         }
@@ -162,7 +164,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
     }
 
     private void insertNewInvoiceAdded(SimpleInvoice invoice) {
-        if (invoice.getStatus().equals(invoiceStatus) || invoiceStatus.equals(OptionI18nEnum.InvoiceStatus.All.name())) {
+        if (invoice.getStatus().equals(invoiceStatus) || invoiceStatus.equals(InvoiceStatus.All.name())) {
             Component newRow = invoiceListComp.insertRowAt(invoice, 0);
             EventBusFactory.getInstance().post(new InvoiceEvent.DisplayInvoiceView(this, invoice));
             invoiceListComp.setSelectedRow(newRow);
@@ -170,7 +172,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
     }
 
     private void updateInvoiceAdded(SimpleInvoice invoice) {
-        if (invoice.getStatus().equals(invoiceStatus) || invoiceStatus.equals(OptionI18nEnum.InvoiceStatus.All.name())) {
+        if (invoice.getStatus().equals(invoiceStatus) || invoiceStatus.equals(InvoiceStatus.All.name())) {
             displayInvoices(invoiceStatus);
             EventBusFactory.getInstance().post(new InvoiceEvent.DisplayInvoiceView(this, invoice));
         }
@@ -196,13 +198,13 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
         public Component generateRow(final AbstractBeanPagedList host, final SimpleInvoice invoice, int rowIndex) {
             final MVerticalLayout layout = new MVerticalLayout().withStyleName(WebUIConstants.BORDER_LIST_ROW)
                     .withStyleName(WebUIConstants.CURSOR_POINTER);
-            OptionI18nEnum.InvoiceStatus invoiceStatus = OptionI18nEnum.InvoiceStatus.valueOf(invoice.getStatus());
+            InvoiceStatus invoiceStatus = InvoiceStatus.valueOf(invoice.getStatus());
             ELabel statusLbl = new ELabel(AppContext.getMessage(invoiceStatus)).withWidthUndefined();
-            if (invoiceStatus == OptionI18nEnum.InvoiceStatus.Paid) {
+            if (invoiceStatus == InvoiceStatus.Paid) {
                 statusLbl.withStyleName("invoice", "paid");
-            } else if (invoiceStatus == OptionI18nEnum.InvoiceStatus.Scheduled) {
+            } else if (invoiceStatus == InvoiceStatus.Scheduled) {
                 statusLbl.withStyleName("invoice", "scheduled");
-            } else if (invoiceStatus == OptionI18nEnum.InvoiceStatus.Sent) {
+            } else if (invoiceStatus == InvoiceStatus.Sent) {
                 statusLbl.withStyleName("invoice", "sent");
             }
             ELabel headerLbl = new ELabel(invoice.getNoid());
@@ -224,8 +226,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
             super();
             this.setNullSelectionAllowed(false);
             this.setCaption(null);
-            this.loadData(Arrays.asList(OptionI18nEnum.InvoiceStatus.All, OptionI18nEnum.InvoiceStatus.Paid,
-                    OptionI18nEnum.InvoiceStatus.Sent, OptionI18nEnum.InvoiceStatus.Scheduled));
+            this.loadData(Arrays.asList(InvoiceStatus.All, InvoiceStatus.Paid, InvoiceStatus.Sent, InvoiceStatus.Scheduled));
         }
     }
 

@@ -13,6 +13,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
+import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.pro.module.project.events.GanttEvent;
 import com.mycollab.vaadin.AppContext;
 import org.apache.commons.collections.CollectionUtils;
@@ -252,8 +253,7 @@ public class GanttItemWrapper {
         if (isTask() || isMilestone()) {
             return MoreObjects.firstNonNull(task.getProgress(), 0d);
         } else if (isBug()) {
-            if (OptionI18nEnum.BugStatus.Resolved.name().equals(task.getStatus()) || OptionI18nEnum.BugStatus
-                    .Verified.name().equals(task.getStatus())) {
+            if (BugStatus.Resolved.name().equals(task.getStatus()) || BugStatus.Verified.name().equals(task.getStatus())) {
                 return 100d;
             } else {
                 return MoreObjects.firstNonNull(task.getProgress(), 0d);
