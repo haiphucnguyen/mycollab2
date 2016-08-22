@@ -73,7 +73,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
     public BillingSummaryViewImpl() {
         super();
-        this.setMargin(true);
+        this.withMargin(true).withSpacing(true);
         this.billingService = AppContextUtil.getSpringBean(BillingService.class);
     }
 
@@ -153,7 +153,10 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         }
 
         layout.addComponent(plansLayout);
-        this.with(layout, ELabel.html(AppContext.getMessage(OPTION_BILLING_FAQ)));
+
+        ELabel bankWireTransfer = ELabel.h3(AppContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE));
+        ELabel conditionLbl = ELabel.html(AppContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE_DESC));
+        this.with(layout, bankWireTransfer, conditionLbl, ELabel.html(AppContext.getMessage(OPTION_BILLING_FAQ)));
 
         loadCurrentPlan();
     }
