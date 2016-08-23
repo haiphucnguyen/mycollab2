@@ -24,6 +24,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class CloudDriveSettingWindow extends Window {
+public class CloudDriveSettingWindow extends MWindow {
     private static final long serialVersionUID = 1L;
 
     private final MVerticalLayout bodyLayout;
@@ -41,9 +42,7 @@ public class CloudDriveSettingWindow extends Window {
 
     public CloudDriveSettingWindow() {
         super("Cloud drives setting");
-        this.setWidth("800px");
-        this.setModal(true);
-        this.setResizable(false);
+        this.withWidth("800px").withModal(true).withResizable(false);
         MVerticalLayout mainLayout = new MVerticalLayout().withFullWidth();
         externalDriveService = AppContextUtil.getSpringBean(ExternalDriveService.class);
         externalResourceService = AppContextUtil.getSpringBean(ExternalResourceService.class);

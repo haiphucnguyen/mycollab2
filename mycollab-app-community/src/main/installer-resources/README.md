@@ -40,6 +40,19 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.4.2
+-------------
+
+**Improvements & New Features**
+
+* Add the Russia language, and update the language files
+* Minor improvements
+
+**Bug Fixes**
+
+* Can not recognize some languages files due to the incompatibility issue of getlocalization service
+* Can not navigate to the task preview in mobile devices
+
 Version 5.4.1
 -------------
 

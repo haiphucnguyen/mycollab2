@@ -1,0 +1,54 @@
+package com.mycollab.ondemand.module.user.accountsettings.billing.view;
+
+import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.configuration.EnDecryptHelper;
+import com.mycollab.core.utils.FileUtils;
+import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
+import com.mycollab.module.user.domain.BillingPlan;
+import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.vaadin.server.BrowserWindowOpener;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Label;
+import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
+
+/**
+ * @author MyCollab Ltd
+ * @since 5.4.2
+ */
+class BankwireSelectionWindow extends MWindow {
+    private BillingPlan selectedPlan;
+
+    BankwireSelectionWindow(BillingPlan billingPlan) {
+        super(AppContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE));
+        this.selectedPlan = billingPlan;
+        MVerticalLayout contentLayout = new MVerticalLayout();
+        withModal(true).withResizable(false).withWidth("500px").withContent(contentLayout);
+        ELabel billingType = ELabel.h3(billingPlan.getBillingtype()).withStyleName("billing-type");
+        Label billingPrice = ELabel.html("<span class='billing-price'>$" + billingPlan.getPricing() * 10 + "</span>/year")
+                .withStyleName("billing-price-lbl").withWidthUndefined();
+        Label billingUser = ELabel.html("<span class='billing-user'>" + billingPlan.getNumusers() + "</span>&nbsp;" +
+                "Users").withWidthUndefined();
+        String planVolume = FileUtils.getVolumeDisplay(billingPlan.getVolume());
+        Label billingStorage = ELabel.html("<span class='billing-storage'>" + planVolume + "</span>&nbsp;Storage").withWidthUndefined();
+        Label billingProject = ELabel.html("<span class='billing-project'>" + billingPlan.getNumprojects() +
+                "</span>&nbsp;Projects").withWidthUndefined();
+        MButton chargeBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(WebUIConstants.BUTTON_ACTION);
+        BrowserWindowOpener opener = new BrowserWindowOpener(billingPlan.getBanktransferpath() +
+                "?referrer=" + EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
+        opener.extend(chargeBtn);
+        ELabel conditionLbl = ELabel.html(AppContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE_DESC));
+        contentLayout.with(billingType, billingPrice, billingUser, billingStorage, billingProject, chargeBtn).withAlign(chargeBtn,
+                Alignment.TOP_RIGHT);
+    }
+
+    private static class BillingPlanSelection extends ComboBox {
+        BillingPlanSelection() {
+
+        }
+    }
+}
