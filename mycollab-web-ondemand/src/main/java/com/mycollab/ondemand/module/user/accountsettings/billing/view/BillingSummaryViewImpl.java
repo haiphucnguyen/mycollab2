@@ -92,7 +92,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         currentPlanLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         topLayout.with(currentPlanLayout).withAlign(currentPlanLayout, Alignment.MIDDLE_CENTER).expand(currentPlanLayout);
 
-        MVerticalLayout faqLayout = new MVerticalLayout().withWidth("285px").withFullHeight().withStyleName("faq-layout");
+        MVerticalLayout faqLayout = new MVerticalLayout().withWidth("285px").withFullHeight().withStyleName("left-border-dotted-layout");
 
         if (AppContext.isAdmin()) {
             MButton cancelBtn = new MButton(AppContext.getMessage(BillingI18nEnum.BUTTON_CANCEL_ACCOUNT),
@@ -114,8 +114,9 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         MButton bankwireBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT),
                 event -> UI.getCurrent().addWindow(new BankwireSelectionWindow(currentBillingPlan)))
                 .withIcon(FontAwesome.BANK).withStyleName(WebUIConstants.BUTTON_LINK);
+        ELabel conditionLbl = ELabel.html(AppContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE_DESC));
         this.with(layout, new MHorizontalLayout(bankWireTransfer, bankwireBtn).alignAll(Alignment.MIDDLE_CENTER)
-                .withMargin(new MarginInfo(true, false, false, false)), ELabel.html(AppContext.getMessage(OPTION_BILLING_FAQ)));
+                .withMargin(new MarginInfo(true, false, false, false)), conditionLbl, ELabel.html(AppContext.getMessage(OPTION_BILLING_FAQ)));
         loadCurrentPlan();
         displayBillingMonthly();
     }
@@ -172,6 +173,62 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
             billingPlanListLayout.with(singlePlan).expand(singlePlan);
         }
+        showToggleBillingMode();
+    }
+
+    private void displayBillingYearly() {
+        billingPlanListLayout.removeAllComponents();
+
+        BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
+        SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
+        List<BillingPlan> availablePlans = billingService.getAvailablePlans();
+
+        for (int i = 0; i < availablePlans.size(); i++) {
+            MVerticalLayout singlePlan = new MVerticalLayout().withMargin(false).withStyleName("billing-plan");
+            singlePlan.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+
+            if ((i + 1) % 2 == 0) {
+                singlePlan.addStyleName("even");
+            }
+
+            final BillingPlan plan = availablePlans.get(i);
+
+            ELabel billingType = ELabel.h3(plan.getBillingtype()).withStyleName("billing-type");
+            Label billingPrice = ELabel.html("<span class='billing-price'>$" + plan.getPricing() * 10 + "</span>/" +
+                    AppContext.getMessage(DayI18nEnum.OPT_YEAR)).withStyleName("billing-price-lbl").withWidthUndefined();
+            Label billingUser = ELabel.html("<span class='billing-user'>" + plan.getNumusers() + "</span>&nbsp;" +
+                    "Users").withWidthUndefined();
+            String planVolume = FileUtils.getVolumeDisplay(plan.getVolume());
+            Label billingStorage = ELabel.html("<span class='billing-storage'>" + planVolume + "</span>&nbsp;Storage").withWidthUndefined();
+            Label billingProject = ELabel.html("<span class='billing-project'>" + plan.getNumprojects() +
+                    "</span>&nbsp;Projects").withWidthUndefined();
+
+            if (currentBillingPlan.getId().equals(plan.getId())) {
+                if (billingAccount.isNotActive()) {
+                    MButton selectPlanBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE))
+                            .withStyleName(WebUIConstants.BUTTON_DANGER)
+                            .withIcon(FontAwesome.CREDIT_CARD);
+                    BrowserWindowOpener opener = new BrowserWindowOpener(plan.getYearlyshoppingurl() +
+                            "?referrer=" + EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
+                    opener.extend(selectPlanBtn);
+                    singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
+                } else {
+                    singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, new
+                            MButton("Selected").withStyleName(WebUIConstants.BUTTON_OPTION)).withIcon(FontAwesome.CREDIT_CARD);
+                }
+            } else {
+                boolean isDowngrade = (plan.getPricing() < currentBillingPlan.getPricing());
+                String actionTxt = isDowngrade ? AppContext.getMessage(BillingI18nEnum.ACTION_DOWNGRADE) : AppContext.getMessage(BillingI18nEnum.ACTION_UPGRADE);
+                String style = isDowngrade ? WebUIConstants.BUTTON_OPTION : WebUIConstants.BUTTON_ACTION;
+                MButton selectPlanBtn = new MButton(actionTxt,
+                        clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan)))
+                        .withStyleName(style).withIcon(FontAwesome.CREDIT_CARD);
+                singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
+            }
+
+            billingPlanListLayout.with(singlePlan).expand(singlePlan);
+        }
+        showToggleBillingMode();
     }
 
     private void loadCurrentPlan() {
@@ -230,16 +287,25 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         ELabel userInfo = ELabel.html(AppContext.getMessage(BillingI18nEnum.OPT_PLAN_USERS,
                 numOfActiveUsers, currentBillingPlan.getNumusers())).withStyleName(WebUIConstants.FIELD_NOTE);
 
-        switchBillingModeLayout = new MHorizontalLayout();
+        switchBillingModeLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false));
+        switchBillingModeLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         currentPlanLayout.with(new MHorizontalLayout(projectInfo, storageInfo, userInfo), switchBillingModeLayout);
     }
 
     private void showToggleBillingMode() {
         switchBillingModeLayout.removeAllComponents();
         if (isMonthlyView) {
-            switchBillingModeLayout.with(new Label(AppContext.getMessage(BillingI18nEnum.OPT_DISCOUNT_YEARLY_SUBSCRIPTION)));
+            switchBillingModeLayout.with(ELabel.h3(AppContext.getMessage(BillingI18nEnum.OPT_DISCOUNT_YEARLY_SUBSCRIPTION)),
+                    new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHANGE), event -> {
+                        isMonthlyView = false;
+                        displayBillingYearly();
+                    }).withStyleName(WebUIConstants.BUTTON_LINK));
         } else {
-            switchBillingModeLayout.with(new Label(AppContext.getMessage(BillingI18nEnum.OPT_DISCOUNT_YEARLY_SUBSCRIPTION)));
+            switchBillingModeLayout.with(ELabel.h3(AppContext.getMessage(BillingI18nEnum.OPT_SWITCH_MONTHLY_SUBSCRIPTION)),
+                    new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHANGE), event -> {
+                        isMonthlyView = true;
+                        displayBillingMonthly();
+                    }).withStyleName(WebUIConstants.BUTTON_LINK));
         }
     }
 

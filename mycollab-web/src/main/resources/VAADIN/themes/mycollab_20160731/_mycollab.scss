@@ -1055,9 +1055,9 @@ $v-line-height--header:1.5em;
 
   .billing-setting {
     border: 1px solid $my-separator-color;
-    .faq-layout {
-      border-left: 2px dotted $my-separator-color;
-    }
+  }
+  .left-border-dotted-layout {
+    border-left: 2px dotted $my-separator-color;
   }
 
   .current-plan-information {

@@ -11,8 +11,11 @@ import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MCssLayout;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
@@ -22,6 +25,7 @@ import org.vaadin.viritin.layouts.MWindow;
  */
 class BankwireSelectionWindow extends MWindow {
     private BillingPlan selectedPlan;
+    private MVerticalLayout planLayout;
 
     BankwireSelectionWindow(BillingPlan billingPlan) {
         super(AppContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE));
@@ -41,9 +45,13 @@ class BankwireSelectionWindow extends MWindow {
         BrowserWindowOpener opener = new BrowserWindowOpener(billingPlan.getBanktransferpath() +
                 "?referrer=" + EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
         opener.extend(chargeBtn);
-        ELabel conditionLbl = ELabel.html(AppContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE_DESC));
-        contentLayout.with(billingType, billingPrice, billingUser, billingStorage, billingProject, chargeBtn).withAlign(chargeBtn,
-                Alignment.TOP_RIGHT);
+        planLayout = new MVerticalLayout(billingType, billingPrice, billingUser, billingStorage, billingProject)
+                .withWidth("200px");
+        MVerticalLayout bankwireNoteLbl = new MVerticalLayout(ELabel.html(AppContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE_NOTE)))
+                .withStyleName("left-border-dotted-layout").withFullHeight();
+        MHorizontalLayout planWrapper = new MHorizontalLayout(planLayout, bankwireNoteLbl).expand(bankwireNoteLbl).withFullWidth()
+                .alignAll(Alignment.TOP_LEFT);
+        contentLayout.with(planWrapper, chargeBtn).withAlign(chargeBtn, Alignment.TOP_RIGHT);
     }
 
     private static class BillingPlanSelection extends ComboBox {

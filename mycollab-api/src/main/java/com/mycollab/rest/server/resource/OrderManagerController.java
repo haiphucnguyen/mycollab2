@@ -191,11 +191,11 @@ public class OrderManagerController {
     public static void main(String[] args) {
         LicenseInfo licenseInfo = new LicenseInfo();
         licenseInfo.setCustomerId("0");
-        licenseInfo.setExpireDate(new DateTime().minusDays(1).toDate());
-        licenseInfo.setIssueDate(new DateTime().minusDays(30).toDate());
-        licenseInfo.setMaxUsers(10);
-        licenseInfo.setLicenseType(LicenseType.PRO_TRIAL);
-        licenseInfo.setLicenseOrg("Org");
+        licenseInfo.setExpireDate(new DateTime().plusDays(30).toDate());
+        licenseInfo.setIssueDate(new DateTime().toDate());
+        licenseInfo.setMaxUsers(99);
+        licenseInfo.setLicenseType(LicenseType.PRO);
+        licenseInfo.setLicenseOrg("William Yuan");
         System.out.println(encode(licenseInfo));
     }
 }
