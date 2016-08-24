@@ -51,6 +51,7 @@ Version 5.4.2
 **Bug Fixes**
 
 * Can not recognize some languages files due to the incompatibility issue of getlocalization service
+* Can not create the new case
 * Can not navigate to the task preview in mobile devices
 
 Version 5.4.1
