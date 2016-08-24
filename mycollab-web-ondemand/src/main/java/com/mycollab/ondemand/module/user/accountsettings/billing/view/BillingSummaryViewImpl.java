@@ -154,7 +154,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                             .withStyleName(WebUIConstants.BUTTON_DANGER)
                             .withIcon(FontAwesome.CREDIT_CARD);
                     BrowserWindowOpener opener = new BrowserWindowOpener(plan.getShoppingurl() +
-                            "?referrer=" + EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
+                            "?referrer=" + EnDecryptHelper.encryptText(AppContext.getAccountId() + ";" + currentBillingPlan.getId()));
                     opener.extend(selectPlanBtn);
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
                 } else {
@@ -209,7 +209,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                             .withStyleName(WebUIConstants.BUTTON_DANGER)
                             .withIcon(FontAwesome.CREDIT_CARD);
                     BrowserWindowOpener opener = new BrowserWindowOpener(plan.getYearlyshoppingurl() +
-                            "?referrer=" + EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
+                            "?referrer=" + EnDecryptHelper.encryptText(AppContext.getAccountId() + ";" + currentBillingPlan.getId()));
                     opener.extend(selectPlanBtn);
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
                 } else {

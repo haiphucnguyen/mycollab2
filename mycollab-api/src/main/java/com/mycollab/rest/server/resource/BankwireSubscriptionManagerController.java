@@ -1,12 +1,20 @@
 package com.mycollab.rest.server.resource;
 
-import org.springframework.http.MediaType;
+import com.mycollab.configuration.EnDecryptHelper;
+import com.mycollab.module.billing.AccountStatusConstants;
+import com.mycollab.module.user.dao.BillingAccountMapper;
+import com.mycollab.module.user.domain.BillingAccount;
+import com.mycollab.module.user.domain.BillingAccountExample;
+import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionHistoryMapper;
+import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapper;
+import com.mycollab.ondemand.module.billing.domain.BillingSubscription;
+import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionHistory;
+import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Properties;
 
 /**
  * @author MyCollab Ltd
@@ -15,6 +23,14 @@ import java.util.Properties;
 @RestController
 @RequestMapping(path = "/subscription")
 public class BankwireSubscriptionManagerController {
+    @Autowired
+    private BillingSubscriptionMapper subscriptionMapper;
+
+    @Autowired
+    private BillingSubscriptionHistoryMapper subscriptionHistoryMapper;
+
+    @Autowired
+    private BillingAccountMapper billingAccountMapper;
 
     @RequestMapping(path = "/bankwireMethod", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
@@ -31,6 +47,39 @@ public class BankwireSubscriptionManagerController {
                                          @RequestParam("OrderProductNames") String orderProductNames,
                                          @RequestParam("OrderReferrer") String orderReferrer,
                                          @RequestParam("OrderSubTotalUSD") String orderSubTotalUSD) throws Exception {
+        String decryptReferrer = EnDecryptHelper.decryptText(orderReferrer);
+        String[] arr = decryptReferrer.split(";");
+        BillingSubscription subscription = new BillingSubscription();
+        subscription.setEmail(customerEmail);
+        subscription.setAccountid(Integer.parseInt(arr[0]));
+        subscription.setName(orderProductNames);
+        subscription.setBillingid(Integer.parseInt(arr[1]));
+        subscription.setSubreference(orderId);
+        subscription.setSubscriptioncustomerurl("");
+        subscription.setCreatedtime(new DateTime().toDate());
+        subscription.setStatus("Active");
+        subscription.setCompany(customerCompany);
+        subscription.setContactname(customerName);
+        subscription.setPhone(customerPhone);
+        subscription.setSubscriptioncustomerurl("");
+        int subscriptionId = subscriptionMapper.insertAndReturnKey(subscription);
+
+        BillingSubscriptionHistory subscriptionHistory = new BillingSubscriptionHistory();
+        subscriptionHistory.setSubscriptionid(subscription.getId());
+        subscriptionHistory.setOrderid(orderId);
+        subscriptionHistory.setCreatedtime(new DateTime().toDate());
+        subscriptionHistory.setStatus("Success");
+        subscriptionHistory.setExpireddate(new DateTime().plusYears(1).toDate());
+        subscriptionHistory.setProductname(orderProductNames);
+        subscriptionHistory.setTotalprice(Double.parseDouble(orderSubTotalUSD));
+        subscriptionHistoryMapper.insert(subscriptionHistory);
+
+        BillingAccountExample accountEx = new BillingAccountExample();
+        accountEx.createCriteria().andIdEqualTo(Integer.parseInt(arr[0]));
+        BillingAccount billingAccount = new BillingAccount();
+        billingAccount.setStatus(AccountStatusConstants.ACTIVE);
+        billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
+
         return "Ok";
     }
 }

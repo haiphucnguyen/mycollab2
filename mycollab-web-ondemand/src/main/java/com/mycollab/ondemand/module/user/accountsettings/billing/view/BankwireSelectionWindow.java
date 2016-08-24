@@ -11,10 +11,8 @@ import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import org.vaadin.viritin.button.MButton;
-import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
@@ -41,9 +39,9 @@ class BankwireSelectionWindow extends MWindow {
         Label billingStorage = ELabel.html("<span class='billing-storage'>" + planVolume + "</span>&nbsp;Storage").withWidthUndefined();
         Label billingProject = ELabel.html("<span class='billing-project'>" + billingPlan.getNumprojects() +
                 "</span>&nbsp;Projects").withWidthUndefined();
-        MButton chargeBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(WebUIConstants.BUTTON_ACTION);
+        MButton chargeBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE), event -> close()).withStyleName(WebUIConstants.BUTTON_ACTION);
         BrowserWindowOpener opener = new BrowserWindowOpener(billingPlan.getBanktransferpath() +
-                "?referrer=" + EnDecryptHelper.encryptText(AppContext.getAccountId() + ""));
+                "?referrer=" + EnDecryptHelper.encryptText(AppContext.getAccountId() + ";" + billingPlan.getId()));
         opener.extend(chargeBtn);
         planLayout = new MVerticalLayout(billingType, billingPrice, billingUser, billingStorage, billingProject)
                 .withWidth("200px");
@@ -52,6 +50,13 @@ class BankwireSelectionWindow extends MWindow {
         MHorizontalLayout planWrapper = new MHorizontalLayout(planLayout, bankwireNoteLbl).expand(bankwireNoteLbl).withFullWidth()
                 .alignAll(Alignment.TOP_LEFT);
         contentLayout.with(planWrapper, chargeBtn).withAlign(chargeBtn, Alignment.TOP_RIGHT);
+    }
+
+    public static void main(String[] args) {
+        String a = EnDecryptHelper.encryptText("1;2");
+        System.out.println("A: " + a);
+        String s = EnDecryptHelper.decryptText("/eL1Z9SzqQp5kQ5QkaS3RA==");
+        System.out.println(s);
     }
 
     private static class BillingPlanSelection extends ComboBox {
