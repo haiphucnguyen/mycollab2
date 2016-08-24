@@ -27,6 +27,7 @@
         FROM s_billing_subscription
             INNER JOIN s_billing_plan ON (s_billing_plan.id = s_billing_subscription.billingId)
         WHERE s_billing_subscription.accountId=@{sAccountId}
+        ORDER BY s_billing_subscription.createdTime DESC
         LIMIT 1
     </select>
 

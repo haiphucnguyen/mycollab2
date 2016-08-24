@@ -62,7 +62,7 @@ public class BankwireSubscriptionManagerController {
         subscription.setContactname(customerName);
         subscription.setPhone(customerPhone);
         subscription.setSubscriptioncustomerurl("");
-        int subscriptionId = subscriptionMapper.insertAndReturnKey(subscription);
+        subscriptionMapper.insertAndReturnKey(subscription);
 
         BillingSubscriptionHistory subscriptionHistory = new BillingSubscriptionHistory();
         subscriptionHistory.setSubscriptionid(subscription.getId());
@@ -78,6 +78,7 @@ public class BankwireSubscriptionManagerController {
         accountEx.createCriteria().andIdEqualTo(Integer.parseInt(arr[0]));
         BillingAccount billingAccount = new BillingAccount();
         billingAccount.setStatus(AccountStatusConstants.ACTIVE);
+        billingAccount.setPaymentmethod("Bankwire");
         billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
 
         return "Ok";

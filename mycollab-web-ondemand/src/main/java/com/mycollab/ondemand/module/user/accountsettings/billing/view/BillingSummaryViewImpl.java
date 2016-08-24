@@ -159,7 +159,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
                 } else {
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, new
-                            MButton("Selected").withStyleName(WebUIConstants.BUTTON_OPTION)).withIcon(FontAwesome.CREDIT_CARD);
+                            MButton("Selected").withStyleName(WebUIConstants.BUTTON_OPTION).withIcon(FontAwesome.CREDIT_CARD));
                 }
             } else {
                 boolean isDowngrade = (plan.getPricing() < currentBillingPlan.getPricing());
