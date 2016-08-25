@@ -34,7 +34,7 @@ public class CustomFieldComponent extends CssLayout {
             fieldName = "&nbsp;";
             this.addStyleName("emptyField");
         } else {
-            fieldName = field.getDisplayName();
+//            fieldName = field.getDisplayName();
         }
         fieldNameLbl = new Label(fieldName);
         if (isEmptyField()) {

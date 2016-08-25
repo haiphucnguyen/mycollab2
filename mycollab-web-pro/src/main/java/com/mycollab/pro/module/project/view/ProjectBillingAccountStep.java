@@ -39,25 +39,23 @@ class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardSt
         DynaSection mainSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.accountid)
-                .displayName(AppContext.getMessage(ProjectI18nEnum.FORM_ACCOUNT_NAME))
-                .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_ACCOUNT_NAME_HELP))
+                .displayName(ProjectI18nEnum.FORM_ACCOUNT_NAME)
+                .contextHelp(ProjectI18nEnum.FORM_ACCOUNT_NAME_HELP)
                 .fieldIndex(0).colSpan(true).build());
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.currencyid)
-                .displayName(AppContext.getMessage(GenericI18Enum.FORM_CURRENCY))
-                .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_CURRENCY_HELP)).fieldIndex(1).build());
+                .displayName(GenericI18Enum.FORM_CURRENCY)
+                .contextHelp(ProjectI18nEnum.FORM_CURRENCY_HELP).fieldIndex(1).build());
 
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.targetbudget).displayName
-                (AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET))
-                .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET_HELP)).fieldIndex(2).build());
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.targetbudget).displayName(ProjectI18nEnum.FORM_TARGET_BUDGET)
+                .contextHelp(ProjectI18nEnum.FORM_TARGET_BUDGET_HELP).fieldIndex(2).build());
 
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.defaultbillingrate).displayName
-                (AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE))
-                .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE_HELP)).fieldIndex(3).build());
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.defaultbillingrate).displayName(ProjectI18nEnum.FORM_BILLING_RATE)
+                .contextHelp(ProjectI18nEnum.FORM_BILLING_RATE_HELP).fieldIndex(3).build());
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.defaultovertimebillingrate)
-                .displayName(AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE))
-                .contextHelp(AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE_HELP)).fieldIndex(4).build());
+                .displayName(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE)
+                .contextHelp(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE_HELP).fieldIndex(4).build());
 
         defaultForm.sections(mainSection);
         return new DefaultDynaFormLayout(defaultForm);

@@ -32,7 +32,7 @@ public class SectionSelectList extends ComboBox {
 
         for (DynaSection section : sections) {
             this.addItem(section);
-            this.setItemCaption(section, section.getHeader());
+//            this.setItemCaption(section, section.getHeader());
         }
 
         if (sections.length > 0) {

@@ -5,11 +5,10 @@ import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.mycollab.vaadin.AppContext;
-import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -42,48 +41,31 @@ public class CreateSectionWindow extends Window {
 
         MHorizontalLayout controlLayout = new MHorizontalLayout().withMargin(true);
 
-        Button saveBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), event -> {
+            DynaSection section = new DynaSection();
+            section.setDeletedSection(false);
+//                        section.setHeader(sectionName.getValue());
+            section.setLayoutType((LayoutType) sectionLayoutComboBox
+                    .getValue());
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        DynaSection section = new DynaSection();
-                        section.setDeletedSection(false);
-                        section.setHeader(sectionName.getValue());
-                        section.setLayoutType((LayoutType) sectionLayoutComboBox
-                                .getValue());
-
-                        customView.addActiveSection(section);
-                        CreateSectionWindow.this.close();
-                    }
-                });
+            customView.addActiveSection(section);
+            close();
+        });
         saveBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
 
 
-        Button cancelBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        CreateSectionWindow.this.close();
-                    }
-                });
+        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), event -> close());
         cancelBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
 
         controlLayout.with(saveBtn, cancelBtn);
-
         contentLayout.with(controlLayout).withAlign(controlLayout, Alignment.MIDDLE_RIGHT);
     }
 
     private static class SectionLayoutComboBox extends ComboBox {
         private static final long serialVersionUID = 1L;
 
-        public SectionLayoutComboBox() {
+        SectionLayoutComboBox() {
             this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
             this.setNullSelectionAllowed(false);
             this.addItem(LayoutType.ONE_COLUMN);

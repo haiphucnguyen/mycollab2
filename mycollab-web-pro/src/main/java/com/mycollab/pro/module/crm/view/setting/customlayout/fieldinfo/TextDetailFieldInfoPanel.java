@@ -51,7 +51,7 @@ public class TextDetailFieldInfoPanel extends DetailFieldInfoPanel<TextDynaField
 
         TextDynaField customField = new TextDynaField();
         customField.setCustom(true);
-        customField.setDisplayName(displayName);
+//        customField.setDisplayName(displayName);
         customField.setMandatory(false);
         customField.setRequired(false);
         customField.setFieldName(candidateFieldName);

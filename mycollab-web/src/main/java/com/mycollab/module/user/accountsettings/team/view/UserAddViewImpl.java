@@ -42,7 +42,6 @@ import com.mycollab.vaadin.events.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
-import com.mycollab.vaadin.ui.DateSelectionField;
 import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.Property;
@@ -170,20 +169,19 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
             private DefaultDynaFormLayout buildFormLayout() {
                 DynaForm defaultForm = new DynaForm();
-                DynaSection mainSection = new DynaSectionBuilder().header(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION))
+                DynaSection mainSection = new DynaSectionBuilder().header(UserI18nEnum.SECTION_BASIC_INFORMATION)
                         .layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
-                mainSection.fields(new TextDynaFieldBuilder().fieldName(User.Field.firstname).displayName(AppContext
-                        .getMessage(UserI18nEnum.FORM_FIRST_NAME)).fieldIndex(0).build());
-                mainSection.fields(new TextDynaFieldBuilder().fieldName(User.Field.email).displayName(AppContext
-                        .getMessage(GenericI18Enum.FORM_EMAIL)).fieldIndex(1).build());
-                mainSection.fields(new TextDynaFieldBuilder().fieldName(User.Field.lastname).displayName(AppContext
-                        .getMessage(UserI18nEnum.FORM_LAST_NAME)).fieldIndex(2).build());
-                mainSection.fields(new TextDynaFieldBuilder().fieldName(SimpleUser.Field.roleid).displayName(AppContext
-                        .getMessage(UserI18nEnum.FORM_ROLE)).fieldIndex(3).build());
+                mainSection.fields(new TextDynaFieldBuilder().fieldName(User.Field.firstname).displayName(UserI18nEnum.FORM_FIRST_NAME)
+                        .fieldIndex(0).build());
+                mainSection.fields(new TextDynaFieldBuilder().fieldName(User.Field.email).displayName(GenericI18Enum.FORM_EMAIL)
+                        .fieldIndex(1).build());
+                mainSection.fields(new TextDynaFieldBuilder().fieldName(User.Field.lastname).displayName(UserI18nEnum.FORM_LAST_NAME)
+                        .fieldIndex(2).build());
+                mainSection.fields(new TextDynaFieldBuilder().fieldName(SimpleUser.Field.roleid).displayName(UserI18nEnum.FORM_ROLE)
+                        .fieldIndex(3).build());
                 if (user.getUsername() == null) {
                     mainSection.fields(new TextDynaFieldBuilder().fieldName(User.Field.password).displayName
-                            (AppContext.getMessage(ShellI18nEnum.FORM_PASSWORD)).contextHelp(AppContext.getMessage
-                            (ShellI18nEnum.FORM_PASSWORD_HELP)).fieldIndex(4).build());
+                            (ShellI18nEnum.FORM_PASSWORD).contextHelp(ShellI18nEnum.FORM_PASSWORD_HELP).fieldIndex(4).build());
                 }
                 defaultForm.sections(mainSection);
                 return new DefaultDynaFormLayout(defaultForm);
@@ -338,7 +336,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
         private RoleComboBox roleBox;
 
-        public AdminRoleSelectionField() {
+        AdminRoleSelectionField() {
             roleBox = new RoleComboBox();
             roleBox.addValueChangeListener(new Property.ValueChangeListener() {
                 private static final long serialVersionUID = 1L;

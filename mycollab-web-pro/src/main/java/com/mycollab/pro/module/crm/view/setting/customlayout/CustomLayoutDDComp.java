@@ -66,12 +66,12 @@ public class CustomLayoutDDComp extends MHorizontalLayout {
 		}
 
 		if (!hasDeletedSection) {
-			DynaSection deleteSection = new DynaSectionBuilder()
-					.layoutType(LayoutType.ONE_COLUMN).header("Removed fields")
-					.deleteSection(true).build();
-			DeleteSectionComp sectionLayout = new DeleteSectionComp(
-					deleteSection);
-			deleteFormArea.addComponent(sectionLayout);
+//			DynaSection deleteSection = new DynaSectionBuilder()
+//					.layoutType(LayoutType.ONE_COLUMN).header("Removed fields")
+//					.deleteSection(true).build();
+//			DeleteSectionComp sectionLayout = new DeleteSectionComp(
+//					deleteSection);
+//			deleteFormArea.addComponent(sectionLayout);
 		}
 	}
 
