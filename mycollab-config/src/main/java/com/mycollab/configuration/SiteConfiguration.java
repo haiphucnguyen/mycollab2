@@ -57,6 +57,7 @@ public class SiteConfiguration {
     private String appUrl;
     private String apiUrl;
     private String resourceDownloadUrl;
+    private Locale defaultLocale;
 
     private String facebookUrl;
     private String twitterUrl;

@@ -110,11 +110,11 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
 
         MButton printBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new UserCustomizeReportOutputWindow(
                 new LazyValueInjector() {
-            @Override
-            protected Object doEval() {
-                return searchCriteria;
-            }
-        }))).withIcon(FontAwesome.PRINT).withStyleName(WebUIConstants.BUTTON_OPTION)
+                    @Override
+                    protected Object doEval() {
+                        return searchCriteria;
+                    }
+                }))).withIcon(FontAwesome.PRINT).withStyleName(WebUIConstants.BUTTON_OPTION)
                 .withDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
         header.with(headerText, sortBtn, searchTextField, printBtn, createBtn).alignAll(Alignment.MIDDLE_LEFT).expand(headerText);
@@ -182,20 +182,20 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
                 .withIcon(FontAwesome.EDIT).withStyleName(WebUIConstants.BUTTON_LINK);
         buttonControls.with(editBtn);
 
-        MButton deleteBtn = new MButton("", clickEvent -> {
-            ConfirmDialogExt.show(UI.getCurrent(),
-                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                    AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                    AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                    confirmDialog -> {
-                        if (confirmDialog.isConfirmed()) {
-                            UserService userService = AppContextUtil.getSpringBean(UserService.class);
-                            userService.pendingUserAccounts(Collections.singletonList(member.getUsername()), AppContext.getAccountId());
-                            EventBusFactory.getInstance().post(new UserEvent.GotoList(UserListViewImpl.this, null));
-                        }
-                    });
-        }).withIcon(FontAwesome.TRASH_O).withStyleName(WebUIConstants.BUTTON_LINK);
+        MButton deleteBtn = new MButton("", clickEvent ->
+                ConfirmDialogExt.show(UI.getCurrent(),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        confirmDialog -> {
+                            if (confirmDialog.isConfirmed()) {
+                                UserService userService = AppContextUtil.getSpringBean(UserService.class);
+                                userService.pendingUserAccounts(Collections.singletonList(member.getUsername()), AppContext.getAccountId());
+                                EventBusFactory.getInstance().post(new UserEvent.GotoList(UserListViewImpl.this, null));
+                            }
+                        })
+        ).withIcon(FontAwesome.TRASH_O).withStyleName(WebUIConstants.BUTTON_LINK);
         buttonControls.with(deleteBtn);
 
         memberInfo.addComponent(buttonControls);
@@ -228,21 +228,17 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         }
 
         if (Boolean.TRUE.equals(AppContext.showEmailPublicly())) {
-            Label memberEmailLabel = new ELabel(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(),
-                    member.getUsername()), ContentMode.HTML).withStyleName(UIConstants.TEXT_ELLIPSIS, UIConstants.META_INFO)
-                    .withFullWidth();
+            Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(), member.getUsername()))
+                    .withStyleName(UIConstants.TEXT_ELLIPSIS, UIConstants.META_INFO).withFullWidth();
             memberInfo.addComponent(memberEmailLabel);
         }
 
-        ELabel memberSinceLabel = new ELabel(AppContext.getMessage(UserI18nEnum.OPT_MEMBER_SINCE, AppContext
-                .formatPrettyTime(member.getRegisteredtime())))
-                .withDescription(AppContext.formatDateTime(member.getRegisteredtime())).withStyleName(UIConstants.META_INFO)
-                .withFullWidth();
+        ELabel memberSinceLabel = ELabel.html(AppContext.getMessage(UserI18nEnum.OPT_MEMBER_SINCE, AppContext.formatPrettyTime(member.getRegisteredtime())))
+                .withDescription(AppContext.formatDateTime(member.getRegisteredtime())).withFullWidth();
         memberInfo.addComponent(memberSinceLabel);
 
-        ELabel lastAccessTimeLbl = new ELabel(AppContext.getMessage(UserI18nEnum.OPT_MEMBER_LOGGED_IN, AppContext.formatPrettyTime
-                (member.getLastaccessedtime()))).withDescription(AppContext.formatDateTime(member.getLastaccessedtime()))
-                .withStyleName(UIConstants.META_INFO);
+        ELabel lastAccessTimeLbl = ELabel.html(AppContext.getMessage(UserI18nEnum.OPT_MEMBER_LOGGED_IN, AppContext
+                .formatPrettyTime(member.getLastaccessedtime()))).withDescription(AppContext.formatDateTime(member.getLastaccessedtime()));
         memberInfo.addComponent(lastAccessTimeLbl);
         blockTop.with(memberInfo).expand(memberInfo);
         blockContent.addComponent(blockTop);

@@ -190,10 +190,10 @@ public class OrderManagerController {
 
     public static void main(String[] args) {
         LicenseInfo licenseInfo = new LicenseInfo();
-        licenseInfo.setCustomerId("0");
-        licenseInfo.setExpireDate(new DateTime().plusDays(30).toDate());
+        licenseInfo.setCustomerId("2");
+        licenseInfo.setExpireDate(new DateTime().plusYears(1).toDate());
         licenseInfo.setIssueDate(new DateTime().toDate());
-        licenseInfo.setMaxUsers(99);
+        licenseInfo.setMaxUsers(9999);
         licenseInfo.setLicenseType(LicenseType.PRO);
         licenseInfo.setLicenseOrg("William Yuan");
         System.out.println(encode(licenseInfo));
