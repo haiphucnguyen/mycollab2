@@ -22,6 +22,7 @@ import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
+import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.NumberUtils;
@@ -31,18 +32,20 @@ import com.mycollab.module.project.domain.ProjectGenericTask;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;
+import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ProjectGenericTaskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.AbstractProjectPageView;
 import com.mycollab.module.project.view.user.ProjectActivityStreamPagedList;
+import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
-import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
+import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.web.ui.field.LinkViewField;
 import com.mycollab.vaadin.web.ui.field.UserLinkViewField;
 import com.vaadin.server.FontAwesome;
@@ -53,6 +56,7 @@ import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import static com.mycollab.common.i18n.OptionI18nEnum.*;
 import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
 
 /**
@@ -180,15 +184,13 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                 memberInfo.addComponent(memberEmailLabel);
             }
 
-            ELabel memberSinceLabel = new ELabel(String.format("Member since: %s", AppContext.formatPrettyTime(beanItem.getJoindate())))
-                    .withDescription(AppContext.formatDateTime(beanItem.getJoindate())).withStyleName(UIConstants
-                            .META_INFO).withFullWidth();
+            ELabel memberSinceLabel = ELabel.html(AppContext.getMessage(UserI18nEnum.OPT_MEMBER_SINCE, AppContext.formatPrettyTime(beanItem.getJoindate())))
+                    .withDescription(AppContext.formatDateTime(beanItem.getJoindate())).withFullWidth();
             memberInfo.addComponent(memberSinceLabel);
 
             if (ProjectMemberStatusConstants.ACTIVE.equals(beanItem.getStatus())) {
-                Label lastAccessTimeLbl = new ELabel(String.format("Logged in %s", AppContext.formatPrettyTime(beanItem.getLastAccessTime())))
+                Label lastAccessTimeLbl = ELabel.html(AppContext.getMessage(UserI18nEnum.OPT_MEMBER_LOGGED_IN, AppContext.formatPrettyTime(beanItem.getLastAccessTime())))
                         .withDescription(AppContext.formatDateTime(beanItem.getLastAccessTime()));
-                lastAccessTimeLbl.addStyleName(UIConstants.META_INFO);
                 memberInfo.addComponent(lastAccessTimeLbl);
             }
 
@@ -197,8 +199,10 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                     .getAsset(ProjectTypeConstants.BUG).getHtml() + " " + new Span().appendText("" + beanItem
                     .getNumOpenBugs()).setTitle("Open bugs") + " " +
                     " " + FontAwesome.MONEY.getHtml() + " " + new Span().appendText("" + NumberUtils.roundDouble(2,
-                    beanItem.getTotalBillableLogTime())).setTitle("Billable hours") + "  " + FontAwesome.GIFT.getHtml() +
-                    " " + new Span().appendText("" + NumberUtils.roundDouble(2, beanItem.getTotalNonBillableLogTime())).setTitle("Non billable hours");
+                    beanItem.getTotalBillableLogTime())).setTitle(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)) +
+                    "  " + FontAwesome.GIFT.getHtml() +
+                    " " + new Span().appendText("" + NumberUtils.roundDouble(2, beanItem.getTotalNonBillableLogTime()
+            )).setTitle(AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
 
             Label memberWorkStatus = new Label(memberWorksInfo, ContentMode.HTML);
             memberWorkStatus.addStyleName(UIConstants.META_INFO);
@@ -249,11 +253,11 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         private ProjectGenericTaskSearchCriteria searchCriteria;
         private final DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
 
-        public UserAssignmentWidget() {
+        UserAssignmentWidget() {
             super(String.format("Assignments: %d", 0), new CssLayout());
             this.setWidth("400px");
 
-            final CheckBox overdueSelection = new CheckBox("Overdue");
+            final CheckBox overdueSelection = new CheckBox(AppContext.getMessage(StatusI18nEnum.Overdue));
             overdueSelection.addValueChangeListener(valueChangeEvent -> {
                 boolean isOverdueOption = overdueSelection.getValue();
                 if (isOverdueOption) {
@@ -264,7 +268,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                 updateSearchResult();
             });
 
-            final CheckBox isOpenSelection = new CheckBox("Open", true);
+            final CheckBox isOpenSelection = new CheckBox(AppContext.getMessage(StatusI18nEnum.Open), true);
             isOpenSelection.addValueChangeListener(valueChangeEvent -> {
                 boolean isOpenOption = isOpenSelection.getValue();
                 if (isOpenOption) {

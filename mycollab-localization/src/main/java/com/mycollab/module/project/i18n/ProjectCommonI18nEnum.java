@@ -17,10 +17,8 @@
 package com.mycollab.module.project.i18n;
 
 import ch.qos.cal10n.BaseName;
-import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
-import com.mycollab.i18n.LocalizationHelper;
 
 @BaseName("project-common")
 @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
@@ -86,9 +84,4 @@ public enum ProjectCommonI18nEnum {
     M_VIEW_PROJECT_LIST,
     M_VIEW_PROJECT_ACTIVITIES,
     M_VIEW_PROJECT_FOLLOWING_TICKETS;
-
-    public static void main(String[] args) {
-        IMessageConveyor messageConveyor = LocalizationHelper.getMessageConveyor(java.util.Locale.SIMPLIFIED_CHINESE);
-        System.out.println(messageConveyor.getMessage(WIDGET_OVERDUE_ASSIGNMENTS_TITLE, 1));
-    }
 }

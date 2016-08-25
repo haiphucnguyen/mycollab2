@@ -151,6 +151,5 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
             searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
             return searchCriteria;
         }
-
     }
 }
