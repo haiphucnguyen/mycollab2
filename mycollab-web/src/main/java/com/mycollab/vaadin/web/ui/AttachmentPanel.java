@@ -16,6 +16,7 @@
  */
 package com.mycollab.vaadin.web.ui;
 
+import com.mycollab.common.i18n.FileI18nEnum;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.module.ecm.service.ResourceService;
@@ -78,13 +79,10 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
             }
             fileStores.remove(fileName);
             AttachmentPanel.this.removeComponent(fileAttachmentLayout);
-            if (multiFileUpload != null) {
-                multiFileUpload.removeAndReInitMultiUpload();
-            }
         }).withIcon(FontAwesome.TRASH_O).withStyleName(WebUIConstants.BUTTON_ICON_ONLY);
 
-        ELabel fileLbl = new ELabel(fileName, ContentMode.HTML).withDescription(fileName).withStyleName(UIConstants.TEXT_ELLIPSIS);
-        fileAttachmentLayout.with(new ELabel(FileAssetsUtil.getFileIconResource(fileName).getHtml(), ContentMode.HTML).withWidthUndefined(),
+        ELabel fileLbl = ELabel.html(fileName).withDescription(fileName).withStyleName(UIConstants.TEXT_ELLIPSIS);
+        fileAttachmentLayout.with(ELabel.fontIcon(FileAssetsUtil.getFileIconResource(fileName)).withWidthUndefined(),
                 fileLbl, new ELabel(" - " + FileUtils.getVolumeDisplay(file.length()))
                         .withStyleName(UIConstants.META_INFO).withWidthUndefined(), removeBtn).expand(fileLbl);
         this.addComponent(fileAttachmentLayout);
@@ -114,7 +112,6 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
                     File file = entry.getValue();
                     resourceService.saveContent(constructContent(fileName, attachmentPath),
                             AppContext.getUsername(), new FileInputStream(file), AppContext.getAccountId());
-
                 } catch (FileNotFoundException e) {
                     LOG.error("Error when attach content in UI", e);
                 }
@@ -156,7 +153,7 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
             fileStores = new HashMap<>();
         }
         if (fileStores.containsKey(fileName)) {
-            NotificationUtil.showWarningNotification("File " + fileName + " is existed.");
+            NotificationUtil.showWarningNotification(AppContext.getMessage(FileI18nEnum.ERROR_FILE_IS_EXISTED, fileName));
         } else {
             LOG.debug("Store file " + fileName + " in path " + file.getAbsolutePath() + " is existed: " + file.exists());
             fileStores.put(fileName, file);

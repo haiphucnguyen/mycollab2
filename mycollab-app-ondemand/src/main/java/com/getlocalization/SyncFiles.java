@@ -21,6 +21,7 @@ public class SyncFiles {
             if (file.getName().endsWith("en-US.properties")) {
                 GLMasterFile masterFile = new GLMasterFile(project, file.getAbsolutePath(), FileFormat
                         .javaproperties);
+
                 masterFile.push();
             } else if (file.getName().endsWith("html")) {
 //                GLMasterFile masterFile = new GLMasterFile(project, file.getAbsolutePath(), FileFormat.html);

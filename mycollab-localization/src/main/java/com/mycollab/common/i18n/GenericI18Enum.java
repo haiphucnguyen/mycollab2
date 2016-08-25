@@ -104,6 +104,7 @@ public enum GenericI18Enum {
     ACTION_SORT,
     ACTION_CHARGE,
     ACTION_QUERY_BY_TEXT,
+    ACTION_ADD_COMMENT,
 
     TABLE_SELECTED_ITEM_TITLE,
 
@@ -181,6 +182,7 @@ public enum GenericI18Enum {
     OPT_PLAIN,
     OPT_USER,
     OPT_LAYOUT_OPTIONS,
+    OPT_LAST_MODIFIED,
 
     M_BUTTON_BACK,
     M_BUTTON_SEND,
