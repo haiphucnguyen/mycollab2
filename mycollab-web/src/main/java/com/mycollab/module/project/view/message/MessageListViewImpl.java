@@ -292,7 +292,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
             MHorizontalLayout controls = new MHorizontalLayout().withFullWidth();
 
             MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
-            uploadExt.addComponent(attachments);
+//            uploadExt.addComponent(attachments);
             controls.with(uploadExt).withAlign(uploadExt, Alignment.TOP_LEFT).expand(uploadExt);
 
             final CheckBox chkIsStick = new CheckBox(AppContext.getMessage(MessageI18nEnum.FORM_IS_STICK));

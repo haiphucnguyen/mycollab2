@@ -6,6 +6,7 @@ import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.domain.MonitorItem;
 import com.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.mycollab.common.domain.criteria.MonitorSearchCriteria;
+import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.FollowerI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.service.CommentService;
@@ -25,8 +26,8 @@ import com.mycollab.module.project.domain.ItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.events.ProjectEvent;
 import com.mycollab.module.project.i18n.BugI18nEnum;
-import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
+import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.CommentDisplay;
@@ -128,7 +129,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
     @Override
     public PopupView createCommentsPopupField(SimpleBug bug) {
         BugCommentsPopupView view = new BugCommentsPopupView(bug);
-        view.setDescription("Add the new comment");
+        view.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_ADD_COMMENT));
         return view;
     }
 
@@ -188,6 +189,11 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             } else {
                 this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + bug.getNumComments());
             }
+        }
+
+        @Override
+        protected String getConstraintWidth() {
+            return "900px";
         }
 
         @Override
@@ -411,13 +417,14 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
                 timeInput.setValue("");
                 timeInput.setDescription("The format of duration must be [number] d [number] h [number] m [number] s");
-                String title = (isBillable) ? "Add billable hours" : "Add non billable hours";
+                String title = (isBillable) ? AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
+                        AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
                 Label headerLbl = new Label(title, ContentMode.HTML);
                 headerLbl.addStyleName(ValoTheme.LABEL_H3);
                 dateField = new PopupDateFieldExt();
                 dateField.setValue(new GregorianCalendar().getTime());
                 layout.with(headerLbl, timeInput);
-                Label dateCaption = new Label("For date");
+                Label dateCaption = new Label(AppContext.getMessage(DayI18nEnum.OPT_DATE));
                 dateCaption.addStyleName(ValoTheme.LABEL_H3);
                 layout.with(dateCaption, dateField);
             } else {

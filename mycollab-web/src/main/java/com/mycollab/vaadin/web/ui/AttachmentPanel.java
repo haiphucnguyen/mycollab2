@@ -27,15 +27,15 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.VerticalLayout;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.easyuploads.MultiFileUploadExt;
+import org.vaadin.easyuploads.FileBuffer;
+import org.vaadin.easyuploads.MultiFileUpload;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,25 +49,21 @@ import java.util.Map;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class AttachmentPanel extends VerticalLayout implements AttachmentUploadComponent {
+public class AttachmentPanel extends MVerticalLayout {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(AttachmentPanel.class);
     private Map<String, File> fileStores;
 
-    private AttachmentDisplayComponent attachmentDisplayComponent;
-    private MultiFileUploadExt multiFileUpload;
+
+    private MultiFileUpload multiFileUpload;
     private ResourceService resourceService;
 
     public AttachmentPanel() {
+        withMargin(false).withSpacing(false);
         resourceService = AppContextUtil.getSpringBean(ResourceService.class);
-        this.setSpacing(true);
-        attachmentDisplayComponent = new AttachmentDisplayComponent();
-        this.addComponent(attachmentDisplayComponent);
-    }
-
-    @Override
-    public void registerMultiUpload(MultiFileUploadExt fileUpload) {
-        multiFileUpload = fileUpload;
+        multiFileUpload = new MultiFileUploadExt();
+        multiFileUpload.setWidth("100%");
+        this.with(multiFileUpload);
     }
 
     private void displayFileName(File file, final String fileName) {
@@ -85,23 +81,23 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
         fileAttachmentLayout.with(ELabel.fontIcon(FileAssetsUtil.getFileIconResource(fileName)).withWidthUndefined(),
                 fileLbl, new ELabel(" - " + FileUtils.getVolumeDisplay(file.length()))
                         .withStyleName(UIConstants.META_INFO).withWidthUndefined(), removeBtn).expand(fileLbl);
-        this.addComponent(fileAttachmentLayout);
+        this.addComponent(fileAttachmentLayout, 0);
     }
 
-    public void removeAllAttachmentsDisplay() {
-        this.removeAllComponents();
+    private void removeAllAttachmentsDisplay() {
+
         if (fileStores != null) {
             fileStores.clear();
         }
     }
 
     public void getAttachments(String attachmentPath) {
-        List<Content> attachments = resourceService.getContents(attachmentPath);
-        if (CollectionUtils.isNotEmpty(attachments)) {
-            for (Content attachment : attachments) {
-                attachmentDisplayComponent.addAttachmentRow(attachment);
-            }
-        }
+//        List<Content> attachments = resourceService.getContents(attachmentPath);
+//        if (CollectionUtils.isNotEmpty(attachments)) {
+//            for (Content attachment : attachments) {
+//                attachmentDisplayComponent.addAttachmentRow(attachment);
+//            }
+//        }
     }
 
     public void saveContentsToRepo(String attachmentPath) {
@@ -116,6 +112,7 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
                     LOG.error("Error when attach content in UI", e);
                 }
             }
+            removeAllAttachmentsDisplay();
         }
     }
 
@@ -147,8 +144,7 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
         return listFile;
     }
 
-    @Override
-    public void receiveFile(File file, String fileName, String mimeType, long length) {
+    void receiveFile(File file, String fileName, String mimeType, long length) {
         if (fileStores == null) {
             fileStores = new HashMap<>();
         }
@@ -158,6 +154,26 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
             LOG.debug("Store file " + fileName + " in path " + file.getAbsolutePath() + " is existed: " + file.exists());
             fileStores.put(fileName, file);
             displayFileName(file, fileName);
+        }
+    }
+
+    private class MultiFileUploadExt extends MultiFileUpload {
+        private static final long serialVersionUID = 1L;
+
+        protected FileBuffer createReceiver() {
+            FileBuffer receiver = super.createReceiver();
+            receiver.setDeleteFiles(false);
+            return receiver;
+        }
+
+        @Override
+        protected String getAreaText() {
+            return "Attach files by dropping theme here or clicking this bar to upload";
+        }
+
+        @Override
+        protected void handleFile(File file, String fileName, String mimeType, long length) {
+            receiveFile(file, fileName, mimeType, length);
         }
     }
 }

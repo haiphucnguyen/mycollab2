@@ -1772,6 +1772,21 @@ a.pending {
 	margin: 0px;
 }
 
+.v-multifileupload-dropzone {
+	background: #e4e4e4 !important;
+	cursor: pointer;
+	width: 100% !important;
+	height: 30px !important;
+}
+
+.v-multifileupload-dropzone .v-label {
+	margin-top: 5px;
+}
+
+.v-multifileupload-uploads {
+	display: none !important;
+}
+
 .v-progressbar {
 	width: 100%;
 }
@@ -14460,6 +14475,21 @@ a.pending {
 	display: flex;
 	padding: 0px;
 	margin: 0px;
+}
+
+.v-multifileupload-dropzone {
+	background: #e4e4e4 !important;
+	cursor: pointer;
+	width: 100% !important;
+	height: 30px !important;
+}
+
+.v-multifileupload-dropzone .v-label {
+	margin-top: 5px;
+}
+
+.v-multifileupload-uploads {
+	display: none !important;
 }
 
 .v-progressbar {

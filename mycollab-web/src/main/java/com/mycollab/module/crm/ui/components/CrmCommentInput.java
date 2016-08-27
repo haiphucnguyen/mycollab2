@@ -101,7 +101,6 @@ class CrmCommentInput extends MHorizontalLayout {
             // save success, clear comment area and load list
             // comments again
             commentArea.setValue("");
-            attachments.removeAllAttachmentsDisplay();
             component.reload();
         }).withIcon(FontAwesome.SEND).withStyleName(WebUIConstants.BUTTON_ACTION);
         controlsLayout.with(cancelBtn, newCommentBtn);

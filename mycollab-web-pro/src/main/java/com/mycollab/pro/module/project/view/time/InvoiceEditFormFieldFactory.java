@@ -61,12 +61,13 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
             field.setRequiredError("Amount can not be null");
             return field;
         } else if (Invoice.Field.id.equalTo(propertyId)) {
-            attachmentUploadField = new AttachmentUploadField();
             Invoice beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
                 String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(),
                         CurrentProjectVariables.getProjectId(), ProjectTypeConstants.INVOICE, "" + beanItem.getId());
-                attachmentUploadField.getAttachments(attachmentPath);
+                attachmentUploadField = new AttachmentUploadField(attachmentPath);
+            } else {
+                attachmentUploadField = new AttachmentUploadField();
             }
             return attachmentUploadField;
         }

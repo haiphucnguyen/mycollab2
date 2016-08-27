@@ -16,26 +16,9 @@
  */
 package org.vaadin.easyuploads;
 
-import com.mycollab.common.i18n.FileI18nEnum;
-import com.mycollab.core.utils.FileUtils;
-import com.mycollab.core.utils.StringUtils;
-import com.mycollab.vaadin.AppContext;
-import com.mycollab.vaadin.web.ui.AttachmentUploadComponent;
-import com.vaadin.event.dd.DragAndDropEvent;
-import com.vaadin.event.dd.DropHandler;
-import com.vaadin.event.dd.acceptcriteria.AcceptAll;
-import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
-import com.vaadin.server.StreamVariable;
-import com.vaadin.server.WebBrowser;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
-import org.apache.commons.io.FilenameUtils;
+import com.mycollab.vaadin.web.ui.AttachmentPanel;
 
 import java.io.File;
-import java.io.OutputStream;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.LinkedList;
 
 /**
  * @author MyCollab Ltd.
@@ -44,16 +27,16 @@ import java.util.LinkedList;
 public class MultiFileUploadExt extends MultiFileUpload {
     private static final long serialVersionUID = 1L;
 
-    private AttachmentUploadComponent attachmentDisplayComponent;
+    private AttachmentPanel attachmentDisplayComponent;
 
-    public MultiFileUploadExt(AttachmentUploadComponent attachmentDisplayComponent) {
+    public MultiFileUploadExt(AttachmentPanel attachmentDisplayComponent) {
         this.attachmentDisplayComponent = attachmentDisplayComponent;
-        attachmentDisplayComponent.registerMultiUpload(this);
+//        attachmentDisplayComponent.registerMultiUpload(this);
 
     }
 
     @Override
     protected void handleFile(File file, String fileName, String mimeType, long length) {
-        attachmentDisplayComponent.receiveFile(file, fileName, mimeType, length);
+//        attachmentDisplayComponent.receiveFile(file, fileName, mimeType, length);
     }
 }

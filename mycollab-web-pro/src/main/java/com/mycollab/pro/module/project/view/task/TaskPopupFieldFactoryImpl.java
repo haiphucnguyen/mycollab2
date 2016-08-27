@@ -6,6 +6,7 @@ import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.domain.MonitorItem;
 import com.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.mycollab.common.domain.criteria.MonitorSearchCriteria;
+import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.FollowerI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.service.CommentService;
@@ -27,6 +28,7 @@ import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.events.ProjectEvent;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
+import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
@@ -50,7 +52,6 @@ import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
 import com.vaadin.ui.TextField;
@@ -211,10 +212,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("deadline").withCaption(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService
-                .class))
-                .withValue(task.getDeadline())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
+                .withValue(task.getDeadline()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -267,21 +266,21 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
     @Override
     public PopupView createCommentsPopupField(SimpleTask task) {
         TaskCommentsPopupView view = new TaskCommentsPopupView(task);
-        view.setDescription("Add the new comment");
+        view.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_ADD_COMMENT));
         return view;
     }
 
     @Override
     public PopupView createBillableHoursPopupField(SimpleTask task) {
         TaskBillableHoursPopupField view = new TaskBillableHoursPopupField(task, true);
-        view.setDescription("Billable hours");
+        view.setDescription(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
         return view;
     }
 
     @Override
     public PopupView createNonBillableHoursPopupField(SimpleTask task) {
         TaskBillableHoursPopupField view = new TaskBillableHoursPopupField(task, false);
-        view.setDescription("Non billable hours");
+        view.setDescription(AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
         return view;
     }
 
@@ -353,6 +352,11 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             int commentCount = commentService.getTotalCount(searchCriteria);
             this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);
         }
+
+        @Override
+        protected String getConstraintWidth() {
+            return "900px";
+        }
     }
 
     private static class TaskBillableHoursPopupField extends LazyPopupView {
@@ -379,15 +383,13 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
                 timeInput.setValue("");
                 timeInput.setDescription("The format of duration must be [number] d [number] h [number] m [number] s");
-                String title = (isBillable) ? "Add billable hours" : "Add non billable hours";
-                Label headerLbl = new Label(title, ContentMode.HTML);
-                headerLbl.addStyleName(ValoTheme.LABEL_H3);
+                String title = (isBillable) ? AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
+                        AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
+                Label headerLbl = ELabel.h3(title);
                 dateField = new PopupDateFieldExt();
                 dateField.setValue(new GregorianCalendar().getTime());
                 layout.with(headerLbl, timeInput);
-                Label dateCaption = new Label("For date");
-                dateCaption.addStyleName(ValoTheme.LABEL_H3);
-                layout.with(dateCaption, dateField);
+                layout.with(ELabel.h3(AppContext.getMessage(DayI18nEnum.OPT_DATE)), dateField);
             } else {
                 layout.add(new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
             }

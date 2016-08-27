@@ -3,6 +3,7 @@ package com.mycollab.pro.module.project.view.client;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.NumberUtils;
@@ -18,10 +19,7 @@ import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
-import com.mycollab.module.project.i18n.ClientI18nEnum;
-import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
-import com.mycollab.module.project.i18n.ProjectI18nEnum;
-import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
+import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.components.AbstractPreviewItemComp;
 import com.mycollab.module.project.ui.components.DateInfoComp;
@@ -40,7 +38,6 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
@@ -207,17 +204,15 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             this.addStyleName("entityblock");
             A projectDiv = new A(ProjectLinkBuilder.generateProjectFullLink(project.getId())).appendText(FontAwesome
                     .BUILDING_O.getHtml() + " " + project.getName()).setTitle(project.getName());
-            ELabel headerLbl = new ELabel(projectDiv.write(), ContentMode.HTML).withStyleName("header");
-            headerLbl.addStyleName(ValoTheme.LABEL_H3);
-            headerLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
-            headerLbl.addStyleName(UIConstants.TEXT_ELLIPSIS);
+            ELabel headerLbl = ELabel.h3(projectDiv.write()).withStyleName("header", UIConstants.TEXT_ELLIPSIS);
             this.addComponent(headerLbl);
 
-            Div activeMembersDiv = new Div().appendText(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers()).setTitle("Active members");
+            Div activeMembersDiv = new Div().appendText(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers())
+                    .setTitle(AppContext.getMessage(ProjectMemberI18nEnum.OPT_ACTIVE_MEMBERS));
             Div createdTimeDiv = new Div().appendText(FontAwesome.CLOCK_O.getHtml() + " " + AppContext
-                    .formatPrettyTime(project.getCreatedtime())).setTitle("Created time");
+                    .formatPrettyTime(project.getCreatedtime())).setTitle(AppContext.getMessage(GenericI18Enum.FORM_CREATED_TIME));
             Div billableHoursDiv = new Div().appendText(FontAwesome.MONEY.getHtml() + " " + NumberUtils.roundDouble(2, project.getTotalBillableHours())).
-                    setTitle("Billable hours");
+                    setTitle(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
             Div nonBillableHoursDiv = new Div().appendText(FontAwesome.GIFT.getHtml() + " " + NumberUtils.roundDouble(2,
                     project.getTotalNonBillableHours())).setTitle(AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
             Div metaDiv = new Div().appendChild(activeMembersDiv, DivLessFormatter.EMPTY_SPACE(), createdTimeDiv,
@@ -227,7 +222,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                 Div leadDiv = new Div().appendChild(new Img("", StorageFactory.getAvatarPath(project
                         .getLeadAvatarId(), 16)), DivLessFormatter.EMPTY_SPACE(), new A(ProjectLinkBuilder.generateProjectMemberFullLink(project
                         .getId(), project.getLead())).appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
-                        .setTitle("Manager");
+                        .setTitle(AppContext.getMessage(ProjectI18nEnum.FORM_LEADER));
                 metaDiv.appendChild(0, leadDiv);
                 metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE());
             }

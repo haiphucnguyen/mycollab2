@@ -146,8 +146,9 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         }
 
         if (project.getNumActiveMembers() > 0) {
-            ELabel activeMembersLbl = new ELabel(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers(),
-                    ContentMode.HTML).withDescription("Active members").withStyleName(ValoTheme.LABEL_SMALL).withWidthUndefined();
+            ELabel activeMembersLbl = ELabel.html(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers())
+                    .withDescription(AppContext.getMessage(ProjectMemberI18nEnum.OPT_ACTIVE_MEMBERS))
+                    .withStyleName(ValoTheme.LABEL_SMALL).withWidthUndefined();
             footer.addComponents(activeMembersLbl);
         }
 

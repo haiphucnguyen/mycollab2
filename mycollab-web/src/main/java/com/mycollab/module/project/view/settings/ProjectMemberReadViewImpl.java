@@ -22,7 +22,6 @@ import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
-import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.NumberUtils;
@@ -31,7 +30,9 @@ import com.mycollab.module.project.*;
 import com.mycollab.module.project.domain.ProjectGenericTask;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;
+import com.mycollab.module.project.i18n.ProjectRoleI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ProjectGenericTaskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
@@ -56,7 +57,7 @@ import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import static com.mycollab.common.i18n.OptionI18nEnum.*;
+import static com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
 
 /**
@@ -169,7 +170,8 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                     ProjectLinkGenerator.generateRolePreviewLink(beanItem.getProjectid(), beanItem.getProjectroleid()));
             ELabel memberRole = new ELabel(ContentMode.HTML).withStyleName(UIConstants.META_INFO);
             if (Boolean.TRUE.equals(beanItem.getIsadmin()) || beanItem.getProjectroleid() == null) {
-                memberRole.setValue(memberRoleLinkPrefix + "style=\"color: #B00000;\">" + "Project Owner" + "</a>");
+                memberRole.setValue(String.format("%sstyle=\"color: #B00000;\">%s</a>", memberRoleLinkPrefix,
+                        AppContext.getMessage(ProjectRoleI18nEnum.OPT_ADMIN_ROLE_DISPLAY)));
             } else {
                 memberRole.setValue(memberRoleLinkPrefix + "style=\"color:gray;font-size:12px;\">" + beanItem.getRoleName() + "</a>");
             }
@@ -177,10 +179,8 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             memberInfo.addComponent(memberRole);
 
             if (Boolean.TRUE.equals(AppContext.showEmailPublicly())) {
-                Label memberEmailLabel = new Label(String.format("<a href='mailto:%s'>%s</a>", beanItem.getUsername(),
-                        beanItem.getUsername()), ContentMode.HTML);
-                memberEmailLabel.addStyleName(UIConstants.META_INFO);
-                memberEmailLabel.setWidth("100%");
+                Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", beanItem.getUsername(),
+                        beanItem.getUsername())).withStyleName(UIConstants.META_INFO).withFullWidth();
                 memberInfo.addComponent(memberEmailLabel);
             }
 
@@ -194,18 +194,15 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                 memberInfo.addComponent(lastAccessTimeLbl);
             }
 
-            String memberWorksInfo = ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + " " + new Span
-                    ().appendText("" + beanItem.getNumOpenTasks()).setTitle("Open tasks") + "  " + ProjectAssetsManager
-                    .getAsset(ProjectTypeConstants.BUG).getHtml() + " " + new Span().appendText("" + beanItem
-                    .getNumOpenBugs()).setTitle("Open bugs") + " " +
-                    " " + FontAwesome.MONEY.getHtml() + " " + new Span().appendText("" + NumberUtils.roundDouble(2,
-                    beanItem.getTotalBillableLogTime())).setTitle(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)) +
-                    "  " + FontAwesome.GIFT.getHtml() +
-                    " " + new Span().appendText("" + NumberUtils.roundDouble(2, beanItem.getTotalNonBillableLogTime()
-            )).setTitle(AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
+            String memberWorksInfo = String.format("%s %s  %s %s  %s %s  %s %s",
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml(),
+                    new Span().appendText("" + beanItem.getNumOpenTasks()).setTitle(AppContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_TASKS)), ProjectAssetsManager
+                            .getAsset(ProjectTypeConstants.BUG).getHtml(), new Span().appendText("" + beanItem
+                            .getNumOpenBugs()).setTitle(AppContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_BUGS)), FontAwesome.MONEY.getHtml(), new Span().appendText("" + NumberUtils.roundDouble(2,
+                            beanItem.getTotalBillableLogTime())).setTitle(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)), FontAwesome.GIFT.getHtml(), new Span().appendText("" + NumberUtils.roundDouble(2, beanItem.getTotalNonBillableLogTime()
+                    )).setTitle(AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS)));
 
-            Label memberWorkStatus = new Label(memberWorksInfo, ContentMode.HTML);
-            memberWorkStatus.addStyleName(UIConstants.META_INFO);
+            Label memberWorkStatus = ELabel.html(memberWorksInfo).withStyleName(UIConstants.META_INFO);
             memberInfo.addComponent(memberWorkStatus);
             memberInfo.setWidth("100%");
 
@@ -237,7 +234,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                     return new LinkViewField(attachForm.getBean().getRoleName(), ProjectLinkBuilder.generateRolePreviewFullLink(
                             attachForm.getBean().getProjectid(), attachForm.getBean().getProjectroleid()), null);
                 } else {
-                    return new DefaultViewField("Project Admin");
+                    return new DefaultViewField(AppContext.getMessage(ProjectRoleI18nEnum.OPT_ADMIN_ROLE_DISPLAY));
                 }
             } else if (propertyId.equals("username")) {
                 return new UserLinkViewField(attachForm.getBean().getUsername(),
@@ -254,7 +251,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         private final DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
 
         UserAssignmentWidget() {
-            super(String.format("Assignments: %d", 0), new CssLayout());
+            super(AppContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGNMENT_VALUE, 0), new CssLayout());
             this.setWidth("400px");
 
             final CheckBox overdueSelection = new CheckBox(AppContext.getMessage(StatusI18nEnum.Overdue));
@@ -297,7 +294,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
 
         private void updateSearchResult() {
             taskList.setSearchCriteria(searchCriteria);
-            setTitle(String.format("Assignments: %d", taskList.getTotalCount()));
+            setTitle(AppContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGNMENT_VALUE, taskList.getTotalCount()));
         }
     }
 

@@ -43,6 +43,10 @@ Last changelog
 Version 5.4.2
 -------------
 
+**Library Upgrades**
+
+* Vaadin 7.7.0
+
 **Improvements & New Features**
 
 * [Premium] Integrating activity with Github and Bitbucket web-hooks
