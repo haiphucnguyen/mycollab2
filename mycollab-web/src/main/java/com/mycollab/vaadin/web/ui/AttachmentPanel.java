@@ -53,11 +53,11 @@ public class AttachmentPanel extends MVerticalLayout {
     private static final Logger LOG = LoggerFactory.getLogger(AttachmentPanel.class);
     private Map<String, File> fileStores;
 
-
     private MultiFileUpload multiFileUpload;
     private ResourceService resourceService;
 
     public AttachmentPanel() {
+        this.withStyleName("attachment-panel");
         withMargin(false).withSpacing(false);
         resourceService = AppContextUtil.getSpringBean(ResourceService.class);
         multiFileUpload = new MultiFileUploadExt();

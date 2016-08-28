@@ -272,7 +272,6 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
             ckEditorTextField.setWidth("100%");
             ckEditorTextField.setHeight("200px");
 
-
             MHorizontalLayout titleLayout = new MHorizontalLayout().withFullWidth();
             Label titleLbl = new Label(AppContext.getMessage(MessageI18nEnum.FORM_TITLE));
             final TextField titleField = new MTextField().withFullWidth().withNullRepresentation("").withRequired(true)
@@ -283,18 +282,12 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
             addMessageWrapper.with(titleLayout, ckEditorTextField).withAlign(titleLayout, Alignment.MIDDLE_LEFT)
                     .withAlign(ckEditorTextField, Alignment.MIDDLE_CENTER).expand(ckEditorTextField);
 
-            MHorizontalLayout controls = new MHorizontalLayout().withFullWidth();
-
             final AttachmentPanel attachments = new AttachmentPanel();
-            controls.with(attachments).withAlign(attachments, Alignment.TOP_LEFT).expand(attachments);
-
             final CheckBox chkIsStick = new CheckBox(AppContext.getMessage(MessageI18nEnum.FORM_IS_STICK));
-            controls.with(chkIsStick).withAlign(chkIsStick, Alignment.TOP_RIGHT);
 
             MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
                     clickEvent -> MessageListViewImpl.this.setCriteria(searchCriteria))
                     .withStyleName(WebUIConstants.BUTTON_OPTION);
-            controls.with(cancelBtn).withAlign(cancelBtn, Alignment.TOP_RIGHT);
 
             MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_POST), clickEvent -> {
                 Message message = new Message();
@@ -318,7 +311,8 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
                 }
             }).withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
 
-            controls.with(saveBtn).withAlign(saveBtn, Alignment.TOP_RIGHT);
+            MHorizontalLayout controls = new MHorizontalLayout(attachments, chkIsStick, cancelBtn, saveBtn)
+                    .expand(attachments).withFullWidth();
 
             addMessageWrapper.with(controls).withAlign(controls, Alignment.MIDDLE_CENTER);
             messagePanelBody.addComponent(addMessageWrapper);
