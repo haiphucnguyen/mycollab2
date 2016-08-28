@@ -6,6 +6,7 @@ import com.mycollab.common.ui.components.notification.RequestUploadAvatarNotific
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
+import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.module.user.domain.SimpleBillingAccount;
 import com.mycollab.module.user.ui.SettingAssetsManager;
 import com.mycollab.module.user.ui.SettingUIConstants;
@@ -52,12 +53,14 @@ public class MainViewImpl extends AbstractMainView {
             if (!subscription.canAccess()) {
                 TrialBlock trialBlock = new TrialBlock();
                 accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
-                trialBlock.setText("<div class='informBlock'>Account is suspended<br></div>");
+                trialBlock.setText(String.format("<div class='informBlock'>%s<br></div>",
+                        AppContext.getMessage(BillingI18nEnum.OPT_ACCOUNT_SUSPENDED)));
                 AppContext.getInstance().setIsValidAccount(false);
             } else if (!subscription.isValid()) {
                 TrialBlock trialBlock = new TrialBlock();
                 accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
-                trialBlock.setText("<div class='informBlock'>Payment charge fail<br></div>");
+                trialBlock.setText(String.format("<div class='informBlock'>%s<br></div>",
+                        AppContext.getMessage(BillingI18nEnum.OPT_PAYMENT_CHARGE_FAILED)));
                 AppContext.getInstance().setIsValidAccount(true);
             }
         } else {
