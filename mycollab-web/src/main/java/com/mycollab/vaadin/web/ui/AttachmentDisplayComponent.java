@@ -86,7 +86,7 @@ public class AttachmentDisplayComponent extends CssLayout {
         }
 
         Div contentTooltip = new Div().appendChild(new Span().appendText(docName).setStyle("font-weight:bold"));
-        Ul ul = new Ul().appendChild(new Li().appendText(AppContext.getMessage(FileI18nEnum.OPT_SIZE,
+        Ul ul = new Ul().appendChild(new Li().appendText(AppContext.getMessage(FileI18nEnum.OPT_SIZE_VALUE,
                 FileUtils.getVolumeDisplay(attachment.getSize())))).setStyle("line-height:1.5em");
         ul.appendChild(new Li().appendText(AppContext.getMessage(GenericI18Enum.OPT_LAST_MODIFIED,
                 AppContext.formatPrettyTime(attachment.getLastModified().getTime()))));

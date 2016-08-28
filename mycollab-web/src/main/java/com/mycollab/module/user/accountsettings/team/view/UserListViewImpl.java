@@ -211,7 +211,8 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
             String memberRoleLinkPrefix = String.format("<a href=\"%s\"", AccountLinkBuilder.generatePreviewFullRoleLink(member.getRoleid()));
             ELabel memberRole = new ELabel(ContentMode.HTML).withStyleName(UIConstants.TEXT_ELLIPSIS);
             if (Boolean.TRUE.equals(member.getIsAccountOwner())) {
-                memberRole.setValue(String.format("%sstyle=\"color: #B00000;\">Account Owner</a>", memberRoleLinkPrefix));
+                memberRole.setValue(String.format("%sstyle=\"color: #B00000;\">%s</a>", memberRoleLinkPrefix,
+                        AppContext.getMessage(RoleI18nEnum.OPT_ACCOUNT_OWNER)));
             } else {
                 memberRole.setValue(String.format("%sstyle=\"color:gray;font-size:12px;\">%s</a>",
                         memberRoleLinkPrefix, member.getRoleName()));

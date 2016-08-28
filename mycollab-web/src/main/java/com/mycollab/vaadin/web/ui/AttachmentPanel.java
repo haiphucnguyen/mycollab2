@@ -27,7 +27,6 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,15 +90,6 @@ public class AttachmentPanel extends MVerticalLayout {
         }
     }
 
-    public void getAttachments(String attachmentPath) {
-//        List<Content> attachments = resourceService.getContents(attachmentPath);
-//        if (CollectionUtils.isNotEmpty(attachments)) {
-//            for (Content attachment : attachments) {
-//                attachmentDisplayComponent.addAttachmentRow(attachment);
-//            }
-//        }
-    }
-
     public void saveContentsToRepo(String attachmentPath) {
         if (MapUtils.isNotEmpty(fileStores)) {
             for (Map.Entry<String, File> entry : fileStores.entrySet()) {
@@ -151,7 +141,6 @@ public class AttachmentPanel extends MVerticalLayout {
         if (fileStores.containsKey(fileName)) {
             NotificationUtil.showWarningNotification(AppContext.getMessage(FileI18nEnum.ERROR_FILE_IS_EXISTED, fileName));
         } else {
-            LOG.debug("Store file " + fileName + " in path " + file.getAbsolutePath() + " is existed: " + file.exists());
             fileStores.put(fileName, file);
             displayFileName(file, fileName);
         }
@@ -168,7 +157,7 @@ public class AttachmentPanel extends MVerticalLayout {
 
         @Override
         protected String getAreaText() {
-            return "Attach files by dropping theme here or clicking this bar to upload";
+            return AppContext.getMessage(FileI18nEnum.OPT_DRAG_OR_CLICK_TO_UPLOAD);
         }
 
         @Override

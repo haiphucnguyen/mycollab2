@@ -26,6 +26,7 @@ import com.mycollab.form.view.builder.type.DynaForm;
 import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.i18n.RolePermissionI18nEnum;
+import com.mycollab.module.user.accountsettings.localization.RoleI18nEnum;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.domain.SimpleRole;
 import com.mycollab.module.user.domain.SimpleUser;
@@ -51,6 +52,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.fields.MPasswordField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -146,16 +148,10 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
             private Layout createBottomPanel() {
                 MVerticalLayout bottomPanel = new MVerticalLayout().withMargin(false);
-                Button moreInfoBtn = new Button("More information...", new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        editUserForm.displayAdvancedForm(user);
-                        setFormBuffered(true);
-                    }
-                });
-                moreInfoBtn.addStyleName(WebUIConstants.BUTTON_LINK);
+                Button moreInfoBtn = new MButton(AppContext.getMessage(UserI18nEnum.ACTION_MORE_INFORMATION), event -> {
+                    editUserForm.displayAdvancedForm(user);
+                    setFormBuffered(true);
+                }).withStyleName(WebUIConstants.BUTTON_LINK);
                 MHorizontalLayout linkWrap = new MHorizontalLayout().withMargin(true).with(moreInfoBtn);
                 bottomPanel.with(linkWrap).withAlign(linkWrap, Alignment.MIDDLE_LEFT);
                 rolePermissionLayout = new RolePermissionContainer();
@@ -368,10 +364,10 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
             Integer roleId = (Integer) roleBox.getValue();
             if (roleId == -1) {
                 if (!AppContext.isAdmin()) {
-                    throw new UserInvalidInputException("Only the Account Owner can assign the role Account " + "Owner to the user");
+                    throw new UserInvalidInputException(AppContext.getMessage(RoleI18nEnum.ERROR_ONLY_OWNER_CAN_ASSIGN_OWNER_ROLE));
                 } else {
                     user.setIsAccountOwner(Boolean.TRUE);
-                    user.setRoleName("Account Owner");
+                    user.setRoleName(AppContext.getMessage(RoleI18nEnum.OPT_ACCOUNT_OWNER));
                 }
             } else {
                 user.setIsAccountOwner(Boolean.FALSE);

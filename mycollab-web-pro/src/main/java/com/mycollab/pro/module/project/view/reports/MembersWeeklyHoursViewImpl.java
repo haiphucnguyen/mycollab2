@@ -1,10 +1,12 @@
 package com.mycollab.pro.module.project.view.reports;
 
 import com.hp.gagawa.java.elements.A;
+import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.SimpleProjectMember;
+import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.i18n.ProjectReportI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ProjectMemberService;
@@ -64,9 +66,10 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         List<SimpleProject> projects = projectService.getProjectsUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
         final ProjectMultiSelect projectsSelection = new ProjectMultiSelect(projects);
-        searchLayout.addComponent(new ELabel("Projects").withStyleName(WebUIConstants.META_COLOR), 0, 0);
+        searchLayout.addComponent(new ELabel(AppContext.getMessage(ProjectI18nEnum.LIST)).withStyleName(WebUIConstants.META_COLOR), 0, 0);
         searchLayout.addComponent(projectsSelection, 1, 0);
-        searchLayout.addComponent(new ELabel("Week").withStyleName(WebUIConstants.META_COLOR), 2, 0);
+        searchLayout.addComponent(new ELabel(AppContext.getMessage(DayI18nEnum.OPT_WEEK)).withStyleName(WebUIConstants.META_COLOR), 2,
+                0);
         final WeeklyCalendarFieldExp dateFieldExt = new WeeklyCalendarFieldExp();
         dateFieldExt.setValue(new DateTime().toDate());
 
@@ -76,7 +79,6 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
             Collection<SimpleProject> selectedProjects = (Collection<SimpleProject>) projectsSelection.getValue();
             if (CollectionUtils.isEmpty(selectedProjects)) {
                 NotificationUtil.showErrorNotification("You must select at least one project");
-                return;
             } else {
                 buildHourlyProjectsReport(selectedProjects, dateFieldExt.getValue());
             }
