@@ -67,6 +67,7 @@ Version 5.4.2
 * Can not create the new case
 * Can not navigate to the task preview in mobile devices
 * Can not export the CSV, Excel with Asia languages like Japanese, Korean and Chinese
+* Not display the user language in the tooltip
 
 Version 5.4.1
 -------------

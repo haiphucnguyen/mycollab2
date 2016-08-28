@@ -26,7 +26,7 @@ import java.util.TimeZone;
 class ProjectGenericTaskTooltipGenerator {
     private String html;
 
-    public ProjectGenericTaskTooltipGenerator(String type, int typeId) {
+    ProjectGenericTaskTooltipGenerator(String type, int typeId) {
         html = "";
         int sAccountId = AppContext.getAccountId();
         TimeZone timeZone = AppContext.getUserTimeZone();
