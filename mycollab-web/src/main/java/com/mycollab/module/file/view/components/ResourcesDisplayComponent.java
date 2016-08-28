@@ -61,7 +61,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.easyuploads.MultiFileUploadExt;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -515,7 +514,6 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         private static final long serialVersionUID = 1L;
 
         private final GridFormLayoutHelper layoutHelper;
-        private final MultiFileUploadExt multiFileUploadExt;
 
         MultiUploadContentWindow() {
             super(AppContext.getMessage(GenericI18Enum.BUTTON_UPLOAD));
@@ -524,15 +522,11 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             VerticalLayout contentLayout = new VerticalLayout();
             contentLayout.setMargin(new MarginInfo(false, false, true, false));
             this.setContent(contentLayout);
-            final AttachmentPanel attachmentPanel = new AttachmentPanel();
 
             layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);
 
-            multiFileUploadExt = new MultiFileUploadExt(attachmentPanel);
-            multiFileUploadExt.addComponent(attachmentPanel);
-            multiFileUploadExt.setWidth("100%");
-
-            layoutHelper.addComponent(multiFileUploadExt, AppContext.getMessage(FileI18nEnum.SINGLE), 0, 0);
+            final AttachmentPanel attachmentPanel = new AttachmentPanel();
+            layoutHelper.addComponent(attachmentPanel, AppContext.getMessage(FileI18nEnum.SINGLE), 0, 0);
             contentLayout.addComponent(layoutHelper.getLayout());
 
             MButton uploadBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPLOAD), clickEvent -> {

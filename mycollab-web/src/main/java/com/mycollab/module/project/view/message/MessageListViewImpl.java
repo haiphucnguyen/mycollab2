@@ -54,7 +54,6 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
-import org.vaadin.easyuploads.MultiFileUploadExt;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -229,15 +228,14 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
         }
 
         private void createBasicSearchLayout() {
-            final MHorizontalLayout basicSearchBody = new MHorizontalLayout().withWidthUndefined();
-
             nameField = new MTextField().withInputPrompt(AppContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
                     .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
 
             MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> doSearch())
                     .withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH)
                     .withClickShortcut(ShortcutAction.KeyCode.ENTER);
-            basicSearchBody.with(nameField, searchBtn).withAlign(nameField, Alignment.MIDDLE_LEFT);
+            final MHorizontalLayout basicSearchBody = new MHorizontalLayout(nameField, searchBtn).withWidthUndefined()
+                    .withAlign(nameField, Alignment.MIDDLE_LEFT);
             this.setCompositionRoot(basicSearchBody);
         }
 
@@ -274,15 +272,11 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
             ckEditorTextField.setWidth("100%");
             ckEditorTextField.setHeight("200px");
 
-            final AttachmentPanel attachments = new AttachmentPanel();
-            final TextField titleField = new TextField();
 
             MHorizontalLayout titleLayout = new MHorizontalLayout().withFullWidth();
             Label titleLbl = new Label(AppContext.getMessage(MessageI18nEnum.FORM_TITLE));
-            titleField.setWidth("100%");
-            titleField.setNullRepresentation("");
-            titleField.setRequired(true);
-            titleField.setRequiredError(AppContext.getMessage(MessageI18nEnum.FORM_TITLE_REQUIRED_ERROR));
+            final TextField titleField = new MTextField().withFullWidth().withNullRepresentation("").withRequired(true)
+                    .withRequiredError(AppContext.getMessage(MessageI18nEnum.FORM_TITLE_REQUIRED_ERROR));
 
             titleLayout.with(titleLbl, titleField).expand(titleField);
 
@@ -291,9 +285,8 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
 
             MHorizontalLayout controls = new MHorizontalLayout().withFullWidth();
 
-            MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
-//            uploadExt.addComponent(attachments);
-            controls.with(uploadExt).withAlign(uploadExt, Alignment.TOP_LEFT).expand(uploadExt);
+            final AttachmentPanel attachments = new AttachmentPanel();
+            controls.with(attachments).withAlign(attachments, Alignment.TOP_LEFT).expand(attachments);
 
             final CheckBox chkIsStick = new CheckBox(AppContext.getMessage(MessageI18nEnum.FORM_IS_STICK));
             controls.with(chkIsStick).withAlign(chkIsStick, Alignment.TOP_RIGHT);
