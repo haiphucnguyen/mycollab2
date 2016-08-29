@@ -19,11 +19,13 @@ package com.mycollab.module.crm.view.activity;
 import com.mycollab.module.crm.CrmDataTypeFactory;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.Task;
+import com.mycollab.module.crm.i18n.TaskI18nEnum;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.crm.ui.components.AbstractEditItemComp;
 import com.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.mycollab.module.crm.view.contact.ContactSelectionField;
 import com.mycollab.module.user.ui.components.ActiveUserComboBox;
+import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
@@ -47,7 +49,7 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<Task> implements
 
     @Override
     protected String initFormTitle() {
-        return (beanItem.getId() == null) ? "New Task" : beanItem.getSubject();
+        return (beanItem.getId() == null) ? AppContext.getMessage(TaskI18nEnum.NEW) : beanItem.getSubject();
     }
 
     @Override

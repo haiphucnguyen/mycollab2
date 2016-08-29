@@ -14,6 +14,7 @@ import com.mycollab.module.project.events.BugEvent;
 import com.mycollab.module.project.events.MilestoneEvent;
 import com.mycollab.module.project.events.TaskEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.GanttAssignmentService;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.components.HumanTimeConverter;
@@ -492,7 +493,7 @@ public class GanttTreeTable extends TreeTable {
                         TaskGanttItem newTask = new TaskGanttItem();
                         newTask.setType(ProjectTypeConstants.TASK);
                         newTask.setPrjId(ganttItemWrapper.getTask().getPrjId());
-                        newTask.setName("New Task");
+                        newTask.setName(AppContext.getMessage(TaskI18nEnum.NEW));
                         newTask.setProgress(0d);
                         newTask.setsAccountId(AppContext.getAccountId());
                         GanttItemWrapper newGanttItem = new GanttItemWrapper(gantt, newTask);
@@ -522,7 +523,7 @@ public class GanttTreeTable extends TreeTable {
                 TaskGanttItem newTask = new TaskGanttItem();
                 newTask.setType(ProjectTypeConstants.TASK);
                 newTask.setPrjId(ganttItemWrapper.getTask().getPrjId());
-                newTask.setName("New Task");
+                newTask.setName(AppContext.getMessage(TaskI18nEnum.NEW));
                 newTask.setProgress(0d);
                 newTask.setsAccountId(AppContext.getAccountId());
                 GanttItemWrapper newGanttItem = new GanttItemWrapper(gantt, newTask);
