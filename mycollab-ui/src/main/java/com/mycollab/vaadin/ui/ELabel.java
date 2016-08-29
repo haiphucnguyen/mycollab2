@@ -16,6 +16,7 @@
  */
 package com.mycollab.vaadin.ui;
 
+import com.mycollab.core.utils.StringUtils;
 import com.mycollab.vaadin.AppContext;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -95,6 +96,10 @@ public class ELabel extends Label {
 
     public static final ELabel html(String value) {
         return new ELabel(value, ContentMode.HTML);
+    }
+
+    public static ELabel richText(String value) {
+        return ELabel.html(StringUtils.formatRichText(value)).withStyleName(UIConstants.LABEL_WORD_WRAP).withFullWidth();
     }
 
     public static final ELabel h2(String value) {

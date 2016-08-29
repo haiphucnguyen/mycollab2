@@ -68,6 +68,7 @@ Version 5.4.2
 * Can not navigate to the task preview in mobile devices
 * Can not export the CSV, Excel with Asia languages like Japanese, Korean and Chinese
 * Not display the user language in the tooltip
+* Project component, version can not display rich text description
 * Other minor issues fixed
 
 Version 5.4.1
