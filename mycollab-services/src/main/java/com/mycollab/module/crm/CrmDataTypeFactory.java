@@ -16,24 +16,29 @@
  */
 package com.mycollab.module.crm;
 
+import com.mycollab.module.crm.i18n.OptionI18nEnum.AccountIndustry;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.AccountType;
+import com.mycollab.module.crm.i18n.OptionI18nEnum.CampaignType;
+import com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunitySalesStage;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunityLeadSource;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
 public class CrmDataTypeFactory {
-    private static String[] ACCOUNT_INDUSTRY_LIST = new String[]{"Apparel",
-            "Banking", "Biotechnology", "Chemicals", "Communications",
-            "Construction", "Consulting", "Education", "Electronics", "Energy",
-            "Engineering", "Entertainment", "Environmental", "Finance",
-            "Goverment", "Healthcare", "Hospitality", "Insurance", "Machinery",
-            "Manufactory", "Media", "Not For Profit", "Recreation", "Retail",
-            "Shipping", "Technology", "Telecommunications", "Utilities",
-            "Other"};
+    private static AccountIndustry[] ACCOUNT_INDUSTRY_LIST = new AccountIndustry[]{AccountIndustry.Apparel,
+            AccountIndustry.Banking, AccountIndustry.Biotechnology, AccountIndustry.Chemicals, AccountIndustry.Communications,
+            AccountIndustry.Construction, AccountIndustry.Consulting, AccountIndustry.Education, AccountIndustry.Electronics,
+            AccountIndustry.Energy, AccountIndustry.Engineering, AccountIndustry.Entertainment, AccountIndustry.Environmental,
+            AccountIndustry.Finance, AccountIndustry.Government, AccountIndustry.Healthcare, AccountIndustry.Hospitality,
+            AccountIndustry.Insurance, AccountIndustry.Machinery, AccountIndustry.Manufactory, AccountIndustry.Media,
+            AccountIndustry.Not_For_Profit, AccountIndustry.Retail, AccountIndustry.Shipping, AccountIndustry.Technology,
+            AccountIndustry.Telecommunications, AccountIndustry.Other};
 
     private static final List<AccountType> ACCOUNT_TYPE_LIST = Arrays.asList(
             AccountType.Analyst, AccountType.Competitor, AccountType.Customer,
@@ -41,10 +46,12 @@ public class CrmDataTypeFactory {
             AccountType.Press, AccountType.Prospect, AccountType.Reseller,
             AccountType.Other);
 
-    private static String[] LEAD_SOURCE_LIST = new String[]{"Cold Call",
-            "Existing Customer", "Self Generated", "Employee", "Partner",
-            "Public Relations", "Direct Email", "Conference", "Trade Show",
-            "Website", "Word of mouth", "Email", "Campaign", "Other"};
+    private static OpportunityLeadSource[] LEAD_SOURCE_LIST = new OpportunityLeadSource[]{OpportunityLeadSource.Cold_Call,
+            OpportunityLeadSource.Existing_Customer, OpportunityLeadSource.Self_Generated, OpportunityLeadSource.Employee,
+            OpportunityLeadSource.Partner, OpportunityLeadSource.Public_Relations, OpportunityLeadSource.Direct_Email,
+            OpportunityLeadSource.Conference, OpportunityLeadSource.Trade_Show, OpportunityLeadSource.Website,
+            OpportunityLeadSource.Word_of_mouth, OpportunityLeadSource.Email, OpportunityLeadSource.Campaign,
+            OpportunityLeadSource.Other};
 
     private static String[] LEAD_STATUS_LIST = new String[]{"New",
             "Assigned", "In Process", "Converted", "Recycled", "Dead"};
@@ -52,16 +59,16 @@ public class CrmDataTypeFactory {
     private static String[] CAMPAIGN_STATUS_LIST = new String[]{"Planning",
             "Active", "Inactive", "Completed", "In Queue", "Sending"};
 
-    private static String[] CAMPAIGN_TYPE_LIST = new String[]{"Conference",
-            "Webinar", "Trade Show", "Public Relations", "Partners",
-            "Referral Program", "Advertisement", "Banner Ads", "Direct Email",
-            "Mail", "Telemarketing", "Others"};
+    private static CampaignType[] CAMPAIGN_TYPE_LIST = new CampaignType[]{CampaignType.Conference,
+            CampaignType.Webinar, CampaignType.Trade_Show, CampaignType.Public_Relations, CampaignType.Partners,
+            CampaignType.Referral_Program, CampaignType.Advertisement, CampaignType.Banner_Ads, CampaignType.Direct_Email,
+            CampaignType.Mail, CampaignType.Telemarketing, CampaignType.Other};
 
-    private static String[] OPPORTUNITY_SALES_STAGE_LIST = new String[]{
-            "Prospecting", "Qualification", "Need Analysis",
-            "Value Proposition", "Id. Decision Markers", "Perception Analysis",
-            "Proposal/Price Quote", "Negotiation/Review", "Closed Won",
-            "Closed Lost"};
+    private static OpportunitySalesStage[] OPPORTUNITY_SALES_STAGE_LIST = new OpportunitySalesStage[]{
+            OpportunitySalesStage.Prospecting, OpportunitySalesStage.Qualification, OpportunitySalesStage.Need_Analysis,
+            OpportunitySalesStage.Value_Proposition, OpportunitySalesStage.Perception_Analysis,
+            OpportunitySalesStage.Proposal_Price_Quote, OpportunitySalesStage.Negotiation_Review,
+            OpportunitySalesStage.Closed_Won, OpportunitySalesStage.Closed_Lost};
 
     private static String[] OPPORTUNITY_CONTACT_ROLE_LIST = new String[]{
             "Primary Decision Marker", "Evaluator", "Influencer", "Other"};
@@ -91,7 +98,7 @@ public class CrmDataTypeFactory {
     private static String[] TASK_STATUS_LIST = new String[]{"Not Started",
             "In Progress", "Completed", "Pending Input", "Deferred"};
 
-    public static String[] getAccountIndustryList() {
+    public static AccountIndustry[] getAccountIndustryList() {
         return ACCOUNT_INDUSTRY_LIST;
     }
 
@@ -99,7 +106,7 @@ public class CrmDataTypeFactory {
         return ACCOUNT_TYPE_LIST;
     }
 
-    public static String[] getLeadSourceList() {
+    public static OpportunityLeadSource[] getLeadSourceList() {
         return LEAD_SOURCE_LIST;
     }
 
@@ -111,11 +118,11 @@ public class CrmDataTypeFactory {
         return CAMPAIGN_STATUS_LIST;
     }
 
-    public static String[] getCampaignTypeList() {
+    public static CampaignType[] getCampaignTypeList() {
         return CAMPAIGN_TYPE_LIST;
     }
 
-    public static String[] getOpportunitySalesStageList() {
+    public static OpportunitySalesStage[] getOpportunitySalesStageList() {
         return OPPORTUNITY_SALES_STAGE_LIST;
     }
 

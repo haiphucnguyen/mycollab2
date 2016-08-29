@@ -40,4 +40,86 @@ public class OptionI18nEnum {
         Reseller,
         Other
     }
+
+    @BaseName("crm-accountindustry")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum AccountIndustry {
+        Apparel,
+        Banking,
+        Biotechnology,
+        Chemicals,
+        Communications,
+        Construction,
+        Consulting,
+        Education,
+        Electronics,
+        Energy,
+        Engineering,
+        Entertainment,
+        Environmental,
+        Finance,
+        Government,
+        Healthcare,
+        Hospitality,
+        Insurance,
+        Machinery,
+        Manufactory,
+        Media,
+        Not_For_Profit,
+        Retail,
+        Shipping,
+        Technology,
+        Telecommunications,
+        Other
+    }
+
+    @BaseName("crm-opportunitysalesstage")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum OpportunitySalesStage {
+        Prospecting,
+        Qualification,
+        Need_Analysis,
+        Value_Proposition,
+        Perception_Analysis,
+        Proposal_Price_Quote,
+        Negotiation_Review,
+        Closed_Won,
+        Closed_Lost
+    }
+
+    @BaseName("crm-opportunityleadsource")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum OpportunityLeadSource {
+        Cold_Call,
+        Existing_Customer,
+        Self_Generated,
+        Employee,
+        Partner,
+        Public_Relations,
+        Direct_Email,
+        Conference,
+        Trade_Show,
+        Website,
+        Word_of_mouth,
+        Email,
+        Campaign,
+        Other
+    }
+
+    @BaseName("crm-campaigntype")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum CampaignType {
+        Conference,
+        Webinar,
+        Trade_Show,
+        Public_Relations,
+        Partners,
+        Referral_Program,
+        Advertisement,
+        Banner_Ads,
+        Direct_Email,
+        Mail,
+        Telemarketing,
+        Other
+    }
 }
