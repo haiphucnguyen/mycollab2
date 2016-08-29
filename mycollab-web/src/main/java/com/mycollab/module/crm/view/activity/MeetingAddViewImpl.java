@@ -118,7 +118,6 @@ public class MeetingAddViewImpl extends AbstractEditItemComp<MeetingWithBLOBs> i
     }
 
     private static class MeetingStatusComboBox extends ValueComboBox {
-        private static final long serialVersionUID = 1L;
 
         MeetingStatusComboBox() {
             super();
