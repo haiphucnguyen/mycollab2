@@ -2,6 +2,7 @@ package com.mycollab.ondemand.shell.view;
 
 import com.google.common.base.MoreObjects;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.common.ui.components.notification.RequestUploadAvatarNotification;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
@@ -73,11 +74,10 @@ public class MainViewImpl extends AbstractMainView {
             Duration dur = new Duration(new DateTime(), trialTo);
             int daysLeft = dur.toStandardDays().getDays();
             if (daysLeft < 0) {
-                trialBlock.setText("<div class='informBlock'>Trial<br></div>");
+                trialBlock.setText(String.format("<div class='informBlock'>%s<br></div>", AppContext.getMessage(ShellI18nEnum.OPT_TRIAL)));
                 AppContext.getInstance().setIsValidAccount(false);
             } else {
-                trialBlock.setText(String.format("<div class='informBlock'>Trial ending<br>%d days " +
-                        "left</div><div class='informBlock'>&gt;&gt;</div>", daysLeft));
+                trialBlock.setText(String.format("<div class='informBlock'>%s</div><div class='informBlock'>&gt;&gt;</div>", AppContext.getMessage(ShellI18nEnum.OPT_TRIAL_LEFT, daysLeft)));
             }
         }
 
@@ -150,14 +150,14 @@ public class MainViewImpl extends AbstractMainView {
         accountPopupContent.addOption(myAccountBtn);
 
         accountPopupContent.addSeparator();
-        MButton aboutBtn = new MButton("About MyCollab", clickEvent -> {
+        MButton aboutBtn = new MButton(AppContext.getMessage(ShellI18nEnum.OPT_ABOUT_MYCOLLAB), clickEvent -> {
             accountMenu.setPopupVisible(false);
             Window aboutWindow = ViewManager.getCacheComponent(AbstractAboutWindow.class);
             UI.getCurrent().addWindow(aboutWindow);
         }).withIcon(FontAwesome.INFO_CIRCLE);
         accountPopupContent.addOption(aboutBtn);
 
-        Button releaseNotesBtn = new Button("Release Notes");
+        Button releaseNotesBtn = new Button(AppContext.getMessage(ShellI18nEnum.OPT_RELEASE_NOTES));
         ExternalResource releaseNotesRes = new ExternalResource("https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/releases/");
         BrowserWindowOpener releaseNotesOpener = new BrowserWindowOpener(releaseNotesRes);
         releaseNotesOpener.extend(releaseNotesBtn);
@@ -181,8 +181,7 @@ public class MainViewImpl extends AbstractMainView {
         private ELabel informLbl;
 
         TrialBlock() {
-            informLbl = ELabel.html("").withStyleName("trialEndingNotification");
-            informLbl.setHeight("100%");
+            informLbl = ELabel.html("").withStyleName("trialEndingNotification").withHeight("100%");
             with(informLbl).withStyleName("trialInformBox")
                     .withMargin(new MarginInfo(false, true, false, false)).withFullHeight();
             this.addLayoutClickListener(layoutClickEvent -> EventBusFactory.getInstance().post(
