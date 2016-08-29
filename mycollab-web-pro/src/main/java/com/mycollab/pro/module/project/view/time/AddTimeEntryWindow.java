@@ -214,7 +214,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
     private void saveTimeLoggingItems() {
         SimpleProjectMember user = (SimpleProjectMember) projectMemberSelectionBox.getValue();
         if (user == null) {
-            throw new UserInvalidInputException("You must select a member");
+            throw new UserInvalidInputException(AppContext.getMessage(TimeTrackingI18nEnum.ERROR_MEMBER_NOT_NULL));
         }
 
         Date monday = DateTimeUtils.getBounceDatesOfWeek(selectedDate)[0];

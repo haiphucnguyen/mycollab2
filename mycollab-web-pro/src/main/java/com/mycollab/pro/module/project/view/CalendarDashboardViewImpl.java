@@ -15,6 +15,7 @@ import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.mycollab.module.project.events.AssignmentEvent;
+import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.*;
@@ -334,9 +335,9 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     }
 
     private void displayInfo(GenericAssignmentProvider provider) {
-        assignMeLbl.setValue("Assign to me (" + provider.getAssignMeNum() + ")");
-        assignOtherLbl.setValue("Assign to others (" + provider.getAssignOthersNum() + ")");
-        nonAssigneeLbl.setValue("Not assign (" + provider.getNotAssignNum() + ")");
+        assignMeLbl.setValue(AppContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGN_TO_ME_VALUE, provider.getAssignMeNum()));
+        assignOtherLbl.setValue(AppContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGN_TO_OTHERS, provider.getAssignOthersNum()));
+        nonAssigneeLbl.setValue(AppContext.getMessage(ProjectCommonI18nEnum.OPT_UNASSIGNED, provider.getNotAssignNum()));
         billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " " + AppContext.getMessage(TimeTrackingI18nEnum
                 .OPT_BILLABLE_HOURS_VALUE, provider.getTotalBillableHours()));
         nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " " + AppContext.getMessage(TimeTrackingI18nEnum
