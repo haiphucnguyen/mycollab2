@@ -16,15 +16,10 @@
  */
 package com.mycollab.module.crm;
 
-import com.mycollab.module.crm.i18n.OptionI18nEnum.AccountIndustry;
-import com.mycollab.module.crm.i18n.OptionI18nEnum.AccountType;
-import com.mycollab.module.crm.i18n.OptionI18nEnum.CampaignType;
-import com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunitySalesStage;
+import com.mycollab.module.crm.i18n.OptionI18nEnum.*;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunityLeadSource;
 
 /**
  * @author MyCollab Ltd.
@@ -76,18 +71,18 @@ public class CrmDataTypeFactory {
     private static String[] OPPORTUNITY_TYPE_LIST = new String[]{
             "Existing Business", "New Business"};
 
-    private static String[] CASES_STATUS_LIST = new String[]{"New",
-            "Assigned", "Closed", "Pending Input", "Rejected", "Duplicate"};
+    private static CaseStatus[] CASES_STATUS_LIST = new CaseStatus[]{CaseStatus.New,
+            CaseStatus.Assigned, CaseStatus.Closed, CaseStatus.Pending_Input, CaseStatus.Rejected, CaseStatus.Duplicate};
 
-    private static String[] CASES_PRIORITY_LIST = new String[]{"High",
-            "Medium", "Low"};
+    private static CasePriority[] CASES_PRIORITY_LIST = new CasePriority[]{CasePriority.High,
+            CasePriority.Medium, CasePriority.Low};
 
-    private static String[] CASES_REASON_LIST = new String[]{
-            "User did not attend any training", "Complex functionality",
-            "New problem", "Ambigous instruction"};
+    private static CaseReason[] CASES_REASON_LIST = new CaseReason[]{
+            CaseReason.User_did_not_attend_any_training, CaseReason.Complex_functionality,
+            CaseReason.New_problem, CaseReason.Ambiguous_instruction};
 
-    private static String[] CASES_ORIGIN_LIST = new String[]{"Email",
-            "Phone", "Web", "Error Log"};
+    private static CaseOrigin[] CASES_ORIGIN_LIST = new CaseOrigin[]{CaseOrigin.Email,
+            CaseOrigin.Phone, CaseOrigin.Web, CaseOrigin.Error_Log};
 
     private static String[] CASES_TYPE_LIST = new String[]{"Problem",
             "Feature Request", "Question"};
@@ -134,19 +129,19 @@ public class CrmDataTypeFactory {
         return OPPORTUNITY_TYPE_LIST;
     }
 
-    public static String[] getCasesStatusList() {
+    public static CaseStatus[] getCasesStatusList() {
         return CASES_STATUS_LIST;
     }
 
-    public static String[] getCasesPriorityList() {
+    public static CasePriority[] getCasesPriorityList() {
         return CASES_PRIORITY_LIST;
     }
 
-    public static String[] getCasesReason() {
+    public static CaseReason[] getCasesReason() {
         return CASES_REASON_LIST;
     }
 
-    public static String[] getCasesOrigin() {
+    public static CaseOrigin[] getCasesOrigin() {
         return CASES_ORIGIN_LIST;
     }
 

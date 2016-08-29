@@ -122,4 +122,41 @@ public class OptionI18nEnum {
         Telemarketing,
         Other
     }
+
+    @BaseName("crm-casestatus")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum CaseStatus {
+        New,
+        Assigned,
+        Closed,
+        Pending_Input,
+        Rejected,
+        Duplicate
+    }
+
+    @BaseName("crm-casepriority")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum CasePriority {
+        High,
+        Medium,
+        Low
+    }
+
+    @BaseName("crm-caseorigin")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum CaseOrigin {
+        Email,
+        Phone,
+        Web,
+        Error_Log
+    }
+
+    @BaseName("crm-casereason")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum CaseReason {
+        User_did_not_attend_any_training,
+        Complex_functionality,
+        New_problem,
+        Ambiguous_instruction
+    }
 }
