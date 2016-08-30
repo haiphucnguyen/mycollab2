@@ -106,6 +106,33 @@ public class OptionI18nEnum {
         Other
     }
 
+    @BaseName("crm-opportunitytype")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum OpportunityType {
+        Existing_Business,
+        New_Business
+    }
+
+    @BaseName("crm-opportunitycontactrole")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum OpportunityContactRole {
+        Primary_Decision_Marker,
+        Evaluator,
+        Influencer,
+        Other
+    }
+
+    @BaseName("crm-leadstatus")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum LeadStatus {
+        New,
+        Assigned,
+        In_Process,
+        Converted,
+        Recycled,
+        Dead
+    }
+
     @BaseName("crm-campaigntype")
     @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
     public enum CampaignType {
@@ -121,6 +148,16 @@ public class OptionI18nEnum {
         Mail,
         Telemarketing,
         Other
+    }
+
+    @BaseName("crm-campaignstatus")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum CampaignStatus {
+        Planning,
+        Active,
+        Inactive,
+        Completed,
+        In_Queue
     }
 
     @BaseName("crm-casestatus")
@@ -158,5 +195,31 @@ public class OptionI18nEnum {
         Complex_functionality,
         New_problem,
         Ambiguous_instruction
+    }
+
+    @BaseName("crm-casetype")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum CaseType {
+        Problem,
+        Feature_Request,
+        Question
+    }
+
+    @BaseName("crm-taskpriority")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum TaskPriority {
+        High,
+        Medium,
+        Low
+    }
+
+    @BaseName("crm-taskstatus")
+    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
+    public enum TaskStatus {
+        Not_Started,
+        In_Progress,
+        Completed,
+        Pending_Input,
+        Deferred
     }
 }

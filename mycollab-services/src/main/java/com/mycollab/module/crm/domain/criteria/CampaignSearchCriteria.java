@@ -53,7 +53,7 @@ public class CampaignSearchCriteria extends SearchCriteria {
             new I18nStringListParam("type", "m_crm_campaign", "type", Arrays.asList(CrmDataTypeFactory.getCampaignTypeList())));
 
     public static final Param p_statuses = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_STATUS,
-            new StringListParam("status", "m_crm_campaign", "status", Arrays.asList(CrmDataTypeFactory.getCampaignStatusList())));
+            new I18nStringListParam("status", "m_crm_campaign", "status", Arrays.asList(CrmDataTypeFactory.getCampaignStatusList())));
 
     public static final Param p_assignee = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_ASSIGNEE,
             new PropertyListParam("assignuser", "m_crm_campaign", "assignUser"));

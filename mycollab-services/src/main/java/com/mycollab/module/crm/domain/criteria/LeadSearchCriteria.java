@@ -68,7 +68,7 @@ public class LeadSearchCriteria extends SearchCriteria {
                     Arrays.asList(CountryValueFactory.getCountryList())));
 
     public static final Param p_statuses = CacheParamMapper.register(CrmTypeConstants.LEAD, GenericI18Enum.FORM_STATUS,
-            new StringListParam("status", "m_crm_lead", "status", Arrays.asList(CrmDataTypeFactory.getLeadStatusList())));
+            new I18nStringListParam("status", "m_crm_lead", "status", Arrays.asList(CrmDataTypeFactory.getLeadStatusList())));
 
     public static final I18nStringListParam p_sources = CacheParamMapper.register(CrmTypeConstants.LEAD, LeadI18nEnum.FORM_LEAD_SOURCE,
             new I18nStringListParam("source", "m_crm_lead", "source", Arrays.asList(CrmDataTypeFactory.getLeadSourceList())));

@@ -48,11 +48,11 @@ public class CrmDataTypeFactory {
             OpportunityLeadSource.Word_of_mouth, OpportunityLeadSource.Email, OpportunityLeadSource.Campaign,
             OpportunityLeadSource.Other};
 
-    private static String[] LEAD_STATUS_LIST = new String[]{"New",
-            "Assigned", "In Process", "Converted", "Recycled", "Dead"};
+    private static LeadStatus[] LEAD_STATUS_LIST = new LeadStatus[]{LeadStatus.New,
+            LeadStatus.Assigned, LeadStatus.In_Process, LeadStatus.Converted, LeadStatus.Recycled, LeadStatus.Dead};
 
-    private static String[] CAMPAIGN_STATUS_LIST = new String[]{"Planning",
-            "Active", "Inactive", "Completed", "In Queue", "Sending"};
+    private static CampaignStatus[] CAMPAIGN_STATUS_LIST = new CampaignStatus[]{CampaignStatus.Planning,
+            CampaignStatus.Active, CampaignStatus.Inactive, CampaignStatus.Completed, CampaignStatus.In_Queue};
 
     private static CampaignType[] CAMPAIGN_TYPE_LIST = new CampaignType[]{CampaignType.Conference,
             CampaignType.Webinar, CampaignType.Trade_Show, CampaignType.Public_Relations, CampaignType.Partners,
@@ -65,11 +65,12 @@ public class CrmDataTypeFactory {
             OpportunitySalesStage.Proposal_Price_Quote, OpportunitySalesStage.Negotiation_Review,
             OpportunitySalesStage.Closed_Won, OpportunitySalesStage.Closed_Lost};
 
-    private static String[] OPPORTUNITY_CONTACT_ROLE_LIST = new String[]{
-            "Primary Decision Marker", "Evaluator", "Influencer", "Other"};
+    private static OpportunityContactRole[] OPPORTUNITY_CONTACT_ROLE_LIST = new OpportunityContactRole[]{
+            OpportunityContactRole.Primary_Decision_Marker, OpportunityContactRole.Evaluator,
+            OpportunityContactRole.Influencer, OpportunityContactRole.Other};
 
-    private static String[] OPPORTUNITY_TYPE_LIST = new String[]{
-            "Existing Business", "New Business"};
+    private static OpportunityType[] OPPORTUNITY_TYPE_LIST = new OpportunityType[]{
+            OpportunityType.Existing_Business, OpportunityType.New_Business};
 
     private static CaseStatus[] CASES_STATUS_LIST = new CaseStatus[]{CaseStatus.New,
             CaseStatus.Assigned, CaseStatus.Closed, CaseStatus.Pending_Input, CaseStatus.Rejected, CaseStatus.Duplicate};
@@ -84,14 +85,14 @@ public class CrmDataTypeFactory {
     private static CaseOrigin[] CASES_ORIGIN_LIST = new CaseOrigin[]{CaseOrigin.Email,
             CaseOrigin.Phone, CaseOrigin.Web, CaseOrigin.Error_Log};
 
-    private static String[] CASES_TYPE_LIST = new String[]{"Problem",
-            "Feature Request", "Question"};
+    private static CaseType[] CASES_TYPE_LIST = new CaseType[]{CaseType.Problem,
+            CaseType.Feature_Request, CaseType.Question};
 
-    private static String[] TASK_PRIORITY_LIST = new String[]{"High",
-            "Medium", "Low"};
+    private static TaskPriority[] TASK_PRIORITY_LIST = new TaskPriority[]{TaskPriority.High,
+            TaskPriority.Medium, TaskPriority.Low};
 
-    private static String[] TASK_STATUS_LIST = new String[]{"Not Started",
-            "In Progress", "Completed", "Pending Input", "Deferred"};
+    private static TaskStatus[] TASK_STATUS_LIST = new TaskStatus[]{TaskStatus.Not_Started,
+            TaskStatus.In_Progress, TaskStatus.Completed, TaskStatus.Pending_Input, TaskStatus.Deferred};
 
     public static AccountIndustry[] getAccountIndustryList() {
         return ACCOUNT_INDUSTRY_LIST;
@@ -105,11 +106,11 @@ public class CrmDataTypeFactory {
         return LEAD_SOURCE_LIST;
     }
 
-    public static String[] getLeadStatusList() {
+    public static LeadStatus[] getLeadStatusList() {
         return LEAD_STATUS_LIST;
     }
 
-    public static String[] getCampaignStatusList() {
+    public static CampaignStatus[] getCampaignStatusList() {
         return CAMPAIGN_STATUS_LIST;
     }
 
@@ -121,11 +122,11 @@ public class CrmDataTypeFactory {
         return OPPORTUNITY_SALES_STAGE_LIST;
     }
 
-    public static String[] getOpportunityContactRoleList() {
+    public static OpportunityContactRole[] getOpportunityContactRoleList() {
         return OPPORTUNITY_CONTACT_ROLE_LIST;
     }
 
-    public static String[] getOpportunityTypeList() {
+    public static OpportunityType[] getOpportunityTypeList() {
         return OPPORTUNITY_TYPE_LIST;
     }
 
@@ -145,15 +146,15 @@ public class CrmDataTypeFactory {
         return CASES_ORIGIN_LIST;
     }
 
-    public static String[] getCasesType() {
+    public static CaseType[] getCasesType() {
         return CASES_TYPE_LIST;
     }
 
-    public static String[] getTaskPriorities() {
+    public static TaskPriority[] getTaskPriorities() {
         return TASK_PRIORITY_LIST;
     }
 
-    public static String[] getTaskStatuses() {
+    public static TaskStatus[] getTaskStatuses() {
         return TASK_STATUS_LIST;
     }
 }

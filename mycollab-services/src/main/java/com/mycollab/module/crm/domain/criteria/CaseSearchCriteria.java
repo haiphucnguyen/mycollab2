@@ -45,7 +45,7 @@ public class CaseSearchCriteria extends SearchCriteria {
             new I18nStringListParam("status", "m_crm_case", "status", Arrays.asList(CrmDataTypeFactory.getCasesStatusList())));
 
     public static final Param p_type = CacheParamMapper.register(CrmTypeConstants.CASE, GenericI18Enum.FORM_TYPE,
-            new StringListParam("type", "m_crm_case", "type", Arrays.asList(CrmDataTypeFactory.getCasesType())));
+            new I18nStringListParam("type", "m_crm_case", "type", Arrays.asList(CrmDataTypeFactory.getCasesType())));
 
     public static final Param p_reason = CacheParamMapper.register(CrmTypeConstants.CASE, CaseI18nEnum.FORM_REASON,
             new I18nStringListParam("reason", "m_crm_case", "reason", Arrays.asList(CrmDataTypeFactory.getCasesReason())));

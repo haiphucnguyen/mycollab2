@@ -56,7 +56,7 @@ public class OpportunitySearchCriteria extends SearchCriteria {
                     Arrays.asList(CrmDataTypeFactory.getLeadSourceList())));
 
     public static final Param p_type = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY, GenericI18Enum.FORM_TYPE,
-            new StringListParam("type", "m_crm_opportunity", "type", Arrays.asList(CrmDataTypeFactory.getOpportunityTypeList())));
+            new I18nStringListParam("type", "m_crm_opportunity", "type", Arrays.asList(CrmDataTypeFactory.getOpportunityTypeList())));
 
     public static final Param p_assignee = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY, GenericI18Enum.FORM_ASSIGNEE,
             new PropertyListParam("assignee", "m_crm_opportunity", "assignUser"));
