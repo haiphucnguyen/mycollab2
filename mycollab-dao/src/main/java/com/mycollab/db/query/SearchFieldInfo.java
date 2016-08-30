@@ -63,6 +63,10 @@ public class SearchFieldInfo implements Serializable {
         return new SearchFieldInfo(SearchField.AND, param, QueryI18nEnum.CollectionI18nEnum.IN.name(), value);
     }
 
+    public static SearchFieldInfo inCollection(I18nStringListParam param, VariableInjector value) {
+        return new SearchFieldInfo(SearchField.AND, param, QueryI18nEnum.CollectionI18nEnum.IN.name(), value);
+    }
+
     public static SearchFieldInfo inCollection(StringListParam param, VariableInjector value) {
         return new SearchFieldInfo(SearchField.AND, param, IN.name(), value);
     }
