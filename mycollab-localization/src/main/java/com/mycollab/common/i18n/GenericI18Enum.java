@@ -188,6 +188,7 @@ public enum GenericI18Enum {
     OPT_CONGRATS,
     OPT_CREATED_BY,
     OPT_CREATED_BY_USERS,
+    OPT_TOTAL_VALUE,
 
     M_BUTTON_BACK,
     M_BUTTON_SEND,

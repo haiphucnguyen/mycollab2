@@ -215,7 +215,7 @@ public class DateTimeOptionField extends CustomField<Date> {
         private static final long serialVersionUID = 1L;
         private String[] MINUS = new String[]{"00", "15", "30", "45"};
 
-        public MinutePickerComboBox() {
+        MinutePickerComboBox() {
             super();
             setCaption(null);
             this.loadData(MINUS);
