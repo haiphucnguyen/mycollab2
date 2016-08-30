@@ -182,7 +182,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         private Label indexLbl;
         private ValueComboBox operatorSelectionBox;
         private ComboBox fieldSelectionBox;
-        private ValueComboBox compareSelectionBox;
+        private I18nValueComboBox compareSelectionBox;
         private MVerticalLayout valueBox;
         private Button deleteBtn;
 
@@ -329,30 +329,30 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 Param field = (Param) fieldSelectionBox.getValue();
                 if (field != null) {
                     if (field instanceof StringParam) {
-                        compareSelectionBox.loadData(StringParam.OPTIONS);
+                        compareSelectionBox.loadData(Arrays.asList(StringParam.OPTIONS));
                     } else if (field instanceof NumberParam) {
-                        compareSelectionBox.loadData(NumberParam.OPTIONS);
+                        compareSelectionBox.loadData(Arrays.asList(NumberParam.OPTIONS));
                     } else if (field instanceof DateParam) {
                         compareSelectionBox.loadData(DateParam.OPTIONS);
                     } else if (field instanceof PropertyParam) {
-                        compareSelectionBox.loadData(PropertyParam.OPTIONS);
+                        compareSelectionBox.loadData(Arrays.asList(PropertyParam.OPTIONS));
                     } else if (field instanceof PropertyListParam || field instanceof CustomSqlParam) {
-                        compareSelectionBox.loadData(PropertyListParam.OPTIONS);
+                        compareSelectionBox.loadData(Arrays.asList(PropertyListParam.OPTIONS));
                     } else if (field instanceof StringListParam) {
-                        compareSelectionBox.loadData(StringListParam.OPTIONS);
+                        compareSelectionBox.loadData(Arrays.asList(StringListParam.OPTIONS));
                     } else if (field instanceof I18nStringListParam) {
-                        compareSelectionBox.loadData(I18nStringListParam.OPTIONS);
+                        compareSelectionBox.loadData(Arrays.asList(I18nStringListParam.OPTIONS));
                     } else if (field instanceof CompositionStringParam) {
-                        compareSelectionBox.loadData(StringParam.OPTIONS);
+                        compareSelectionBox.loadData(Arrays.asList(StringParam.OPTIONS));
                     } else if (field instanceof ConcatStringParam) {
-                        compareSelectionBox.loadData(ConcatStringParam.OPTIONS);
+                        compareSelectionBox.loadData(Arrays.asList(ConcatStringParam.OPTIONS));
                     }
 
                     displayAssociateInputField((Param) fieldSelectionBox.getValue());
                 }
             });
 
-            compareSelectionBox = new ValueComboBox(false, "");
+            compareSelectionBox = new I18nValueComboBox(false);
             compareSelectionBox.setWidth("150px");
             compareSelectionBox.setImmediate(true);
             compareSelectionBox.addValueChangeListener(valueChangeEvent -> displayAssociateInputField((Param) fieldSelectionBox.getValue()));
