@@ -178,7 +178,8 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             roadMapView.addComponent(new MilestoneBlock(milestone));
         }
 
-        headerText.setValue(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " Roadmap (" + milestones.size() + ")");
+        headerText.setValue(String.format("%s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml(),
+                AppContext.getMessage(MilestoneI18nEnum.OPT_ROADMAP_VALUE, milestones.size())));
     }
 
     private void initUI() {
@@ -220,11 +221,9 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
         layout.addComponent(printBtn);
 
         Button kanbanBtn = new Button("Board", clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null)));
-        kanbanBtn.setDescription("Board View");
         kanbanBtn.setIcon(FontAwesome.TH);
 
         Button roadmapBtn = new Button("List");
-        roadmapBtn.setDescription("Roadmap");
         roadmapBtn.setIcon(VaadinIcons.CUBE);
 
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();

@@ -19,6 +19,7 @@ package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 import com.mycollab.common.domain.CustomerFeedbackWithBLOBs;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
 import com.mycollab.ondemand.module.billing.service.BillingService;
@@ -101,7 +102,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
 
         innerLayout.with(layoutHelper.getLayout());
 
-        MButton submitBtn = new MButton("Submit and delete my account", clickEvent -> {
+        MButton submitBtn = new MButton(AppContext.getMessage(BillingI18nEnum.ACTION_SUBMIT_CANCEL_ACCOUNT), clickEvent -> {
             CustomerFeedbackWithBLOBs feedback = new CustomerFeedbackWithBLOBs();
             String whyLeavingMsg = whyLeaving.getValue();
             feedback.setUsername(AppContext.getUsername());

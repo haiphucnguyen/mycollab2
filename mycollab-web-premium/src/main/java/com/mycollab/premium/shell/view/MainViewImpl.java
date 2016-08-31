@@ -2,6 +2,7 @@ package com.mycollab.premium.shell.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.LicenseI18nEnum;
+import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.common.ui.components.notification.RequestUploadAvatarNotification;
 import com.mycollab.common.ui.components.notification.SmtpSetupNotification;
 import com.mycollab.core.utils.StringUtils;
@@ -157,14 +158,14 @@ public class MainViewImpl extends AbstractMainView {
         accountPopupContent.addOption(myAccountBtn);
 
         accountPopupContent.addSeparator();
-        MButton aboutBtn = new MButton("About MyCollab", clickEvent -> {
+        MButton aboutBtn = new MButton(AppContext.getMessage(ShellI18nEnum.OPT_ABOUT_MYCOLLAB), clickEvent -> {
             accountMenu.setPopupVisible(false);
             Window aboutWindow = ViewManager.getCacheComponent(AbstractAboutWindow.class);
             UI.getCurrent().addWindow(aboutWindow);
         }).withIcon(FontAwesome.INFO_CIRCLE);
         accountPopupContent.addOption(aboutBtn);
 
-        Button releaseNotesBtn = new Button("Release Notes");
+        Button releaseNotesBtn = new Button(AppContext.getMessage(ShellI18nEnum.OPT_RELEASE_NOTES));
         ExternalResource releaseNotesRes = new ExternalResource("https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/releases/");
         BrowserWindowOpener releaseNotesOpener = new BrowserWindowOpener(releaseNotesRes);
         releaseNotesOpener.extend(releaseNotesBtn);

@@ -1,6 +1,7 @@
 package com.mycollab.pro.module.user.accountsettings.customize.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.common.i18n.ThemeI18nEnum;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.ComponentI18nEnum;
@@ -37,7 +38,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 4.1.2
  */
-
 @ViewComponent
 public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCustomizeView {
     private static final long serialVersionUID = 1181278209875228643L;
@@ -61,7 +61,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
 
 
         ELabel viewTitle = ELabel.h2(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING).getHtml() + " " +
-                "Theme Customization");
+                AppContext.getMessage(ThemeI18nEnum.OPT_THEME_CUSTOMIZATION));
 
         MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.SaveTheme(this, accountTheme)))
@@ -111,7 +111,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setTopmenubgselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label("Selected Menu"), 0, 2);
+        propertyLayout.addComponent(new Label(AppContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU)), 0, 2);
         propertyLayout.addComponent(topMenuBgSelected, 1, 2);
 
         CustomColorPickerArea topMenuTextSelected = new CustomColorPickerArea(accountTheme.getTopmenutextselected());
@@ -119,7 +119,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setTopmenutextselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label("Selected Menu Text"), 0, 3);
+        propertyLayout.addComponent(new Label(AppContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU_TEXT)), 0, 3);
         propertyLayout.addComponent(topMenuTextSelected, 1, 3);
 
         blockBody.addComponent(propertyLayout);
@@ -161,7 +161,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         FormContainer blockLayout = new FormContainer();
         MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(true).withFullWidth();
 
-        blockLayout.addSection("Vertical Menu", blockBody);
+        blockLayout.addSection(AppContext.getMessage(ThemeI18nEnum.OPT_VERTICAL_MENU), blockBody);
 
         GridLayout propertyLayout = new GridLayout(2, 4);
         propertyLayout.setSpacing(true);
@@ -174,7 +174,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setVtabsheetbg(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label("Normal Menu"), 0, 0);
+        propertyLayout.addComponent(new Label(AppContext.getMessage(ThemeI18nEnum.OPT_NORMAL_MENU)), 0, 0);
         propertyLayout.addComponent(vTabsheetBg, 1, 0);
 
         CustomColorPickerArea vTabsheetText = new CustomColorPickerArea(accountTheme.getVtabsheettext());
@@ -182,7 +182,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setVtabsheettext(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label("Normal Menu Text"), 0, 1);
+        propertyLayout.addComponent(new Label(AppContext.getMessage(ThemeI18nEnum.OPT_NORMAL_MENU_TEXT)), 0, 1);
         propertyLayout.addComponent(vTabsheetText, 1, 1);
 
         CustomColorPickerArea vTabsheetBgSelected = new CustomColorPickerArea(accountTheme.getVtabsheetbgselected());
@@ -190,7 +190,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setVtabsheetbgselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label("Selected Menu"), 0, 2);
+        propertyLayout.addComponent(new Label(AppContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU)), 0, 2);
         propertyLayout.addComponent(vTabsheetBgSelected, 1, 2);
 
         CustomColorPickerArea vTabsheetTextSelected = new CustomColorPickerArea(accountTheme.getVtabsheettextselected());
@@ -198,7 +198,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setVtabsheettextselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label("Selected Menu Text"), 0, 3);
+        propertyLayout.addComponent(new Label(AppContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU_TEXT)), 0, 3);
         propertyLayout.addComponent(vTabsheetTextSelected, 1, 3);
 
         blockBody.addComponent(propertyLayout);
@@ -231,7 +231,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         FormContainer blockLayout = new FormContainer();
 
         MVerticalLayout blockBody = new MVerticalLayout();
-        blockLayout.addSection("Buttons", blockBody);
+        blockLayout.addSection(AppContext.getMessage(ThemeI18nEnum.OPT_BUTTONS), blockBody);
 
         GridLayout propertyLayout = new GridLayout(3, 1);
         propertyLayout.setStyleName("example-block");
@@ -246,7 +246,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         actionBtnPanel.setSpacing(true);
         propertyLayout.addComponent(actionBtnPanel, 0, 0);
 
-        Button exampleActionBtn = new Button("Button");
+        Button exampleActionBtn = new Button(AppContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
         exampleActionBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
         actionBtnPanel.addComponent(exampleActionBtn);
 
@@ -280,7 +280,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         optionBtnPanel.setMargin(false);
         propertyLayout.addComponent(optionBtnPanel, 1, 0);
 
-        Button exampleOptionBtn = new Button("Button");
+        Button exampleOptionBtn = new Button(AppContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
         exampleOptionBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
         optionBtnPanel.addComponent(exampleOptionBtn);
 
@@ -311,14 +311,12 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         dangerBtnPanel.setSizeUndefined();
         propertyLayout.addComponent(dangerBtnPanel, 2, 0);
 
-        Button exampleDangerBtn = new Button("Button");
+        Button exampleDangerBtn = new Button(AppContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
         exampleDangerBtn.setStyleName(WebUIConstants.BUTTON_DANGER);
         dangerBtnPanel.addComponent(exampleDangerBtn);
 
-        HorizontalLayout dangerBtnColorPane = new HorizontalLayout();
-        dangerBtnColorPane
-                .setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        dangerBtnColorPane.setSpacing(true);
+        MHorizontalLayout dangerBtnColorPane = new MHorizontalLayout();
+        dangerBtnColorPane.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         dangerBtnPanel.addComponent(dangerBtnColorPane);
 
         CustomColorPickerArea dangerBtnBg = new CustomColorPickerArea(accountTheme.getDangerbtn());
