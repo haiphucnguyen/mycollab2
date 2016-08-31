@@ -177,7 +177,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         groupWrapLayout.addComponent(newBugBtn);
 
         MButton advanceDisplayBtn = new MButton(AppContext.getMessage(ProjectCommonI18nEnum.OPT_LIST)).withWidth("100px")
-                .withIcon(FontAwesome.SITEMAP);
+                .withIcon(FontAwesome.NAVICON);
 
         MButton kanbanBtn = new MButton(AppContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN), clickEvent ->
                 displayKanbanView()).withIcon(FontAwesome.TH).withWidth("100px");

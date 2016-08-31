@@ -43,6 +43,7 @@ import com.mycollab.module.project.events.MilestoneEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
+import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectGenericTaskService;
@@ -220,11 +221,10 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
 
         layout.addComponent(printBtn);
 
-        Button kanbanBtn = new Button("Board", clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null)));
+        Button kanbanBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD), clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null)));
         kanbanBtn.setIcon(FontAwesome.TH);
 
-        Button roadmapBtn = new Button("List");
-        roadmapBtn.setIcon(VaadinIcons.CUBE);
+        MButton roadmapBtn = new MButton(AppContext.getMessage(ProjectCommonI18nEnum.OPT_LIST)).withIcon(FontAwesome.NAVICON);
 
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(roadmapBtn);
