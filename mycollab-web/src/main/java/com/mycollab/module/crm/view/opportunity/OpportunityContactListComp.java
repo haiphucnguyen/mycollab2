@@ -81,7 +81,7 @@ public class OpportunityContactListComp extends RelatedListComp2<ContactOpportun
         MHorizontalLayout controlsBtnWrap = new MHorizontalLayout().withSpacing(false).withFullWidth();
 
         MHorizontalLayout notesWrap = new MHorizontalLayout().withFullWidth();
-        Label noteLbl = new Label("Note: ");
+        Label noteLbl = new Label(AppContext.getMessage(GenericI18Enum.OPT_NOTE));
         noteLbl.setSizeUndefined();
         noteLbl.setStyleName("list-note-lbl");
         notesWrap.addComponent(noteLbl);

@@ -107,6 +107,7 @@ public enum GenericI18Enum {
     ACTION_QUERY_BY_TEXT,
     ACTION_ADD_COMMENT,
     ACTION_RENAME,
+    ACTION_MOVE,
     ACTION_SET_TIME,
     ACTION_HIDE_TIME,
 
@@ -191,6 +192,8 @@ public enum GenericI18Enum {
     OPT_CREATED_BY,
     OPT_CREATED_BY_USERS,
     OPT_TOTAL_VALUE,
+    OPT_SELECTED,
+    OPT_NOTE,
 
     M_BUTTON_BACK,
     M_BUTTON_SEND,

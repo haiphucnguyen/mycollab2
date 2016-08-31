@@ -35,15 +35,15 @@ import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable;
-import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -126,25 +126,20 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
         if (CollectionUtils.isNotEmpty(projects)) {
             itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
-            Label titleLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() + " " + "Timesheet");
+            Label titleLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() + " " +
+                    AppContext.getMessage(TimeTrackingI18nEnum.OPT_TIMESHEET));
 
             MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true,
                     false)).withFullWidth();
 
-            Button printBtn = new Button("", new Button.ClickListener() {
+            MButton printBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new
+                    TimesheetCustomizeReportOutputWindow(new LazyValueInjector() {
                 @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    UI.getCurrent().addWindow(new TimesheetCustomizeReportOutputWindow(new LazyValueInjector() {
-                        @Override
-                        protected Object doEval() {
-                            return searchCriteria;
-                        }
-                    }));
+                protected Object doEval() {
+                    return searchCriteria;
                 }
-            });
-            printBtn.setIcon(FontAwesome.PRINT);
-            printBtn.addStyleName(WebUIConstants.BUTTON_OPTION);
-            printBtn.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
+            }))).withIcon(FontAwesome.PRINT).withStyleName(WebUIConstants.BUTTON_OPTION)
+                    .withDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
             headerWrapper.with(titleLbl, printBtn).expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);
 
@@ -181,24 +176,14 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
 
             groupField = new ValueComboBox(false, AppContext.getMessage(ProjectI18nEnum.SINGLE), AppContext
                     .getMessage(DayI18nEnum.OPT_DATE), AppContext.getMessage(UserI18nEnum.SINGLE));
-            groupField.addValueChangeListener(new Property.ValueChangeListener() {
-                @Override
-                public void valueChange(Property.ValueChangeEvent event) {
-                    searchTimeReporting();
-                }
-            });
+            groupField.addValueChangeListener(valueChangeEvent -> searchTimeReporting());
             selectionLayout.addComponent(groupField, 1, 1);
 
             selectionLayout.addComponent(new ELabel(AppContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(WebUIConstants
                     .META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 1);
 
             orderField = new ItemOrderComboBox();
-            orderField.addValueChangeListener(new Property.ValueChangeListener() {
-                @Override
-                public void valueChange(Property.ValueChangeEvent event) {
-                    searchTimeReporting();
-                }
-            });
+            orderField.addValueChangeListener(valueChangeEvent -> searchTimeReporting());
             selectionLayout.addComponent(orderField, 3, 1);
 
             selectionLayout.addComponent(new ELabel(AppContext.getMessage(ProjectI18nEnum.SINGLE))
@@ -246,7 +231,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             MVerticalLayout contentWrapper = new MVerticalLayout();
             contentWrapper.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
-            Label infoLbl = new Label("You are not involved in any project yet to track time working");
+            Label infoLbl = new Label(AppContext.getMessage(TimeTrackingI18nEnum.ERROR_NOT_INVOLVED_ANY_PROJECT));
             infoLbl.setWidthUndefined();
             contentWrapper.with(infoLbl);
             this.with(contentWrapper).withAlign(contentWrapper, Alignment.TOP_CENTER);
@@ -366,7 +351,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
     private class UserInvolvedProjectsListSelect extends ListSelect {
         private static final long serialVersionUID = 1L;
 
-        public UserInvolvedProjectsListSelect() {
+        UserInvolvedProjectsListSelect() {
             for (SimpleProject project : projects) {
                 this.addItem(project.getId());
                 this.setItemCaption(project.getId(), project.getName());
@@ -389,7 +374,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             }
         }
 
-        public List<String> getUsernames() {
+        List<String> getUsernames() {
             List<String> keys = new ArrayList<>();
             for (SimpleUser user : users) {
                 keys.add(user.getUsername());

@@ -16,6 +16,7 @@
  */
 package com.mycollab.module.file.view.components;
 
+import com.mycollab.common.i18n.FileI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.ecm.domain.ExternalDrive;
 import com.mycollab.module.ecm.domain.ExternalFolder;
@@ -69,7 +70,7 @@ public abstract class AbstractResourceMovingWindow extends MWindow {
     }
 
     AbstractResourceMovingWindow(Folder baseFolder, Collection<Resource> lstRes) {
-        super("Moving asset(s)");
+        super(AppContext.getMessage(FileI18nEnum.ACTION_MOVE_ASSETS));
         withModal(true).withResizable(false).withWidth("600px").withCenter();
         this.baseFolder = baseFolder;
         this.movedResources = lstRes;
@@ -167,21 +168,14 @@ public abstract class AbstractResourceMovingWindow extends MWindow {
             }
         });
 
-        folderTree.addItemClickListener(new ItemClickEvent.ItemClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void itemClick(final ItemClickEvent event) {
-                baseFolder = (Folder) event.getItemId();
-            }
-        });
+        folderTree.addItemClickListener(itemClickEvent -> baseFolder = (Folder) itemClickEvent.getItemId());
 
         CssLayout treeWrapper = new CssLayout(folderTree);
         treeWrapper.setSizeFull();
         contentLayout.addComponent(treeWrapper);
         displayFiles();
 
-        MButton moveBtn = new MButton("Move", clickEvent -> {
+        MButton moveBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_MOVE), clickEvent -> {
             if (!CollectionUtils.isEmpty(movedResources)) {
                 boolean checkingFail = false;
                 for (Resource res : movedResources) {
@@ -208,7 +202,7 @@ public abstract class AbstractResourceMovingWindow extends MWindow {
 
     private void displayFiles() {
         folderTree.addItem(baseFolder);
-        folderTree.setItemCaption(baseFolder, "Documents");
+        folderTree.setItemCaption(baseFolder, AppContext.getMessage(FileI18nEnum.OPT_MY_DOCUMENTS));
         folderTree.expandItem(baseFolder);
     }
 }

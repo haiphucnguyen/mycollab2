@@ -158,8 +158,9 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                     opener.extend(selectPlanBtn);
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
                 } else {
-                    singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, new
-                            MButton("Selected").withStyleName(WebUIConstants.BUTTON_OPTION).withIcon(FontAwesome.CREDIT_CARD));
+                    singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject,
+                            new MButton(AppContext.getMessage(GenericI18Enum.OPT_SELECTED))
+                                    .withStyleName(WebUIConstants.BUTTON_OPTION).withIcon(FontAwesome.CREDIT_CARD));
                 }
             } else {
                 boolean isDowngrade = (plan.getPricing() < currentBillingPlan.getPricing());
@@ -213,8 +214,9 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                     opener.extend(selectPlanBtn);
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
                 } else {
-                    singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, new
-                            MButton("Selected").withStyleName(WebUIConstants.BUTTON_OPTION)).withIcon(FontAwesome.CREDIT_CARD);
+                    singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject,
+                            new MButton(AppContext.getMessage(GenericI18Enum.OPT_SELECTED))
+                            .withStyleName(WebUIConstants.BUTTON_OPTION)).withIcon(FontAwesome.CREDIT_CARD);
                 }
             } else {
                 boolean isDowngrade = (plan.getPricing() < currentBillingPlan.getPricing());
