@@ -13,12 +13,13 @@ import java.io.File;
 public class SyncFiles {
     public static void main(String[] args) throws Exception {
         GLProject project = new GLProject("mycollab", "haiphucnguyen@gmail.com", "=5EqGRN5Y=<%`tbX");
+        project.setLanguageId("en-US");
 
         File parentFolder = new File("target/staging/i18n");
         File[] files = parentFolder.listFiles();
         for (File file : files) {
             System.out.println("File: " + file.getName());
-            if (file.getName().endsWith("en-US.properties")) {
+            if (file.getName().endsWith("project-invoice-status_en-US.properties")) {
                 GLMasterFile masterFile = new GLMasterFile(project, file.getAbsolutePath(), FileFormat
                         .javaproperties);
 
