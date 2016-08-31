@@ -1,5 +1,6 @@
 package com.mycollab.premium.mobile.module.project.view.bug;
 
+import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.bug.BugAddView;
@@ -25,6 +26,7 @@ import com.vaadin.addon.touchkit.ui.DatePicker;
 import com.vaadin.addon.touchkit.ui.NumberField;
 import com.vaadin.data.Property;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.fields.MTextField;
 
 /**
  * @author MyCollab Ltd.
@@ -63,7 +65,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
     private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleBug> {
         private static final long serialVersionUID = 1L;
 
-        public EditFormFieldFactory(GenericBeanForm<SimpleBug> form) {
+        EditFormFieldFactory(GenericBeanForm<SimpleBug> form) {
             super(form);
         }
 
@@ -92,11 +94,10 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
                 }
                 return new BugSeverityComboBox();
             } else if (propertyId.equals("summary")) {
-                final TextField tf = new TextField();
+                final MTextField tf = new MTextField();
                 if (isValidateForm) {
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("Bug summary must be not null");
+                    tf.withNullRepresentation("").withRequired(true).withRequiredError(AppContext.getMessage
+                            (ErrorI18nEnum.FIELD_MUST_NOT_NULL, AppContext.getMessage(BugI18nEnum.FORM_SUMMARY)));
                 }
 
                 return tf;
@@ -120,7 +121,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
         }
     }
 
-    public class EditFormLayoutFactory extends AbstractFormLayoutFactory {
+    class EditFormLayoutFactory extends AbstractFormLayoutFactory {
         private static final long serialVersionUID = -9159483523170247666L;
 
         private GridFormLayoutHelper informationLayout;

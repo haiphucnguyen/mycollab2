@@ -1,5 +1,6 @@
 package com.mycollab.premium.mobile.module.project.view.message;
 
+import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
@@ -93,7 +94,8 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
 
             } else {
                 subjectField.addStyleName("errorField");
-                NotificationUtil.showErrorNotification(AppContext.getMessage(MessageI18nEnum.FORM_TITLE_REQUIRED_ERROR));
+                NotificationUtil.showErrorNotification(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                        AppContext.getMessage(MessageI18nEnum.FORM_TITLE)));
             }
         });
         this.setRightComponent(saveBtn);
