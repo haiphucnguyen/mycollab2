@@ -94,7 +94,7 @@ public class ELabel extends Label {
         return this;
     }
 
-    public static final ELabel html(String value) {
+    public static ELabel html(String value) {
         return new ELabel(value, ContentMode.HTML);
     }
 
@@ -102,23 +102,36 @@ public class ELabel extends Label {
         return ELabel.html(StringUtils.formatRichText(value)).withStyleName(UIConstants.LABEL_WORD_WRAP).withFullWidth();
     }
 
-    public static final ELabel h2(String value) {
+    public static ELabel h2(String value) {
         return ELabel.html(value).withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN);
     }
 
-    public static final ELabel h3(String value) {
+    public static ELabel h3(String value) {
         return ELabel.html(value).withStyleName(ValoTheme.LABEL_H3, ValoTheme.LABEL_NO_MARGIN);
     }
 
-    public static final ELabel fontIcon(FontAwesome icon) {
+    public static ELabel fontIcon(FontAwesome icon) {
         return ELabel.html(icon.getHtml()).withWidthUndefined();
     }
 
-    public static final ELabel EMPTY_SPACE() {
+    public static ELabel EMPTY_SPACE() {
         return new ELabel("&nbsp;", ContentMode.HTML).withWidthUndefined();
     }
 
-    public static final ELabel hr() {
-        return new ELabel("<hr/>", ContentMode.HTML).withStyleName("hr");
+    public static ELabel hr() {
+        return ELabel.html("<hr/>").withStyleName("hr");
+    }
+
+    public static ELabel i18n(String value, Class<? extends Enum> enumType) {
+        if (StringUtils.isBlank(value)) {
+            return new ELabel("");
+        } else {
+            try {
+                Enum anEnum = Enum.valueOf(enumType, value);
+                return new ELabel(AppContext.getMessage(anEnum));
+            } catch (Exception e) {
+                return new ELabel(value);
+            }
+        }
     }
 }

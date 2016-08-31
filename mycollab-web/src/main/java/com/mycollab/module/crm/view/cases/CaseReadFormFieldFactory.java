@@ -20,10 +20,8 @@ import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.data.CrmLinkBuilder;
 import com.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.mycollab.module.crm.domain.SimpleCase;
-import com.mycollab.module.crm.i18n.OptionI18nEnum.CaseOrigin;
-import com.mycollab.module.crm.i18n.OptionI18nEnum.CasePriority;
-import com.mycollab.module.crm.i18n.OptionI18nEnum.CaseReason;
-import com.mycollab.module.crm.i18n.OptionI18nEnum.CaseStatus;
+import com.mycollab.module.crm.i18n.OptionI18nEnum;
+import com.mycollab.module.crm.i18n.OptionI18nEnum.*;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
@@ -65,9 +63,11 @@ class CaseReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<Si
         } else if (CaseWithBLOBs.Field.priority.equalTo(propertyId)) {
             return new I18nFormViewField(cases.getPriority(), CasePriority.class);
         } else if (CaseWithBLOBs.Field.status.equalTo(propertyId)) {
-            return new I18nFormViewField(cases.getPriority(), CaseStatus.class);
+            return new I18nFormViewField(cases.getStatus(), CaseStatus.class);
         } else if (CaseWithBLOBs.Field.reason.equalTo(propertyId)) {
-            return new I18nFormViewField(cases.getPriority(), CaseReason.class);
+            return new I18nFormViewField(cases.getReason(), CaseReason.class);
+        } else if (CaseWithBLOBs.Field.type.equalTo(propertyId)) {
+            return new I18nFormViewField(cases.getType(), CaseType.class);
         }
         return null;
     }
