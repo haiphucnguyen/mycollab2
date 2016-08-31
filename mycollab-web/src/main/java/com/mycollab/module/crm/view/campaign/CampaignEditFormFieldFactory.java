@@ -16,15 +16,18 @@
  */
 package com.mycollab.module.crm.view.campaign;
 
+import com.mycollab.common.i18n.ErrorI18nEnum;
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.mycollab.module.user.ui.components.ActiveUserComboBox;
+import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.DoubleField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.RichTextArea;
-import com.vaadin.ui.TextField;
+import org.vaadin.viritin.fields.MTextField;
 
 /**
  * @param <B>
@@ -50,11 +53,11 @@ class CampaignEditFormFieldFactory<B extends CampaignWithBLOBs> extends Abstract
         } else if ("status".equals(propertyId)) {
             return new CampaignStatusComboBox();
         } else if ("campaignname".equals(propertyId)) {
-            TextField tf = new TextField();
+            MTextField tf = new MTextField();
             if (isValidateForm) {
-                tf.setNullRepresentation("");
-                tf.setRequired(true);
-                tf.setRequiredError("Name must not be null");
+                tf.withNullRepresentation("").withRequired(true)
+                        .withRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                                AppContext.getMessage(GenericI18Enum.FORM_NAME)));
             }
 
             return tf;

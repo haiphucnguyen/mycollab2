@@ -1,5 +1,6 @@
 package com.mycollab.pro.module.project.view.time;
 
+import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -16,7 +17,7 @@ import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
-import com.vaadin.ui.TextField;
+import org.vaadin.viritin.fields.MTextField;
 
 /**
  * @author MyCollab Ltd
@@ -39,14 +40,14 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
         } else if (Invoice.Field.assignuser.equalTo(propertyId)) {
             return new ProjectMemberSelectionField();
         } else if (Invoice.Field.noid.equalTo(propertyId)) {
-            TextField field = new TextField();
-            field.setRequired(true);
-            field.setRequiredError("Invoice No/ID must not be null");
-            return field;
+            return new MTextField().withRequired(true)
+                    .withRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                            AppContext.getMessage(InvoiceI18nEnum.FORM_NOID_FIELD)));
         } else if (Invoice.Field.issuedate.equalTo(propertyId)) {
             PopupDateFieldExt field = new PopupDateFieldExt();
             field.setRequired(true);
-            field.setRequiredError("Issue date must not be null");
+            field.setRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                    AppContext.getMessage(InvoiceI18nEnum.FORM_ISSUE_DATE_FIELD)));
             return field;
         } else if (Invoice.Field.type.equalTo(propertyId)) {
             PricingTypeField field = new PricingTypeField();
@@ -58,7 +59,8 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
         } else if (Invoice.Field.amount.equalTo(propertyId)) {
             DoubleField field = new DoubleField();
             field.setRequired(true);
-            field.setRequiredError("Amount can not be null");
+            field.setRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                    AppContext.getMessage(InvoiceI18nEnum.FORM_AMOUNT)));
             return field;
         } else if (Invoice.Field.id.equalTo(propertyId)) {
             Invoice beanItem = attachForm.getBean();
