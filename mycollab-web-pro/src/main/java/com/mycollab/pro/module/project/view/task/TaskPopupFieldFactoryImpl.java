@@ -133,7 +133,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 if (task.getStatus() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(FontAwesome.INFO_CIRCLE.getHtml());
-                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                            .setCSSClass("hide"));
                     return divHint.write();
                 } else {
                     return FontAwesome.INFO_CIRCLE.getHtml() + " " + StringUtils.trim(task.getStatus(), 20, true);
@@ -155,7 +156,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 if (task.getMilestoneid() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
-                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                            .setCSSClass("hide"));
                     return divHint.write();
                 } else {
                     String milestoneName = ((MilestoneComboBox) field).getItemCaption(task.getMilestoneid());
@@ -182,7 +184,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 } else {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(VaadinIcons.CALENDAR_CLOCK.getHtml());
-                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                            .setCSSClass("hide"));
                     return divHint.write();
                 }
             }
@@ -203,7 +206,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 if (task.getDeadlineRoundPlusOne() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(FontAwesome.CLOCK_O.getHtml());
-                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                            .setCSSClass("hide"));
                     return divHint.write();
                 } else {
                     return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), AppContext.formatPrettyTime(task.getDeadlineRoundPlusOne()));
@@ -225,7 +229,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 if (task.getStartdate() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(VaadinIcons.TIME_FORWARD.getHtml());
-                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                            .setCSSClass("hide"));
                     return divHint.write();
                 } else {
                     return String.format(" %s %s", VaadinIcons.TIME_FORWARD.getHtml(), AppContext.formatDate(task.getStartdate()));
@@ -248,7 +253,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 if (task.getEnddate() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(VaadinIcons.TIME_BACKWARD.getHtml());
-                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                            .setCSSClass("hide"));
                     return divHint.write();
                 } else {
                     return String.format(" %s %s", VaadinIcons.TIME_BACKWARD.getHtml(), AppContext.formatDate(task.getEnddate()));

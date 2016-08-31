@@ -103,7 +103,7 @@ public class OpportunityContactListComp extends RelatedListComp2<ContactOpportun
             final SplitButton controlsBtn = new SplitButton();
             controlsBtn.setSizeUndefined();
             controlsBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
-            controlsBtn.setCaption("Add/Edit Contacts' Role");
+            controlsBtn.setCaption(AppContext.getMessage(ContactI18nEnum.OPT_ADD_EDIT_CONTACT_ROLES));
             controlsBtn.setIcon(FontAwesome.PLUS);
             controlsBtn.addClickListener(event -> EventBusFactory.getInstance().post(new OpportunityEvent.GotoContactRoleEdit(this, opportunity)));
             final Button selectBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> {
