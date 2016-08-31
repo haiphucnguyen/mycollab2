@@ -1,9 +1,13 @@
 package com.mycollab.pro.module.project.view.risk;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.common.i18n.OptionI18nEnum;
+import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.module.project.*;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
+import com.mycollab.module.project.i18n.OptionI18nEnum.RiskConsequence;
+import com.mycollab.module.project.i18n.OptionI18nEnum.RiskProbability;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.spring.AppContextUtil;
@@ -99,6 +103,21 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         tableItem.addGeneratedColumn("datedue", (source, itemId, columnId) -> {
             SimpleRisk item = tableItem.getBeanByIndex(itemId);
             return new ELabel().prettyDate(item.getDatedue());
+        });
+
+        tableItem.addGeneratedColumn("status", (source, itemId, columnId) -> {
+            SimpleRisk item = tableItem.getBeanByIndex(itemId);
+            return ELabel.i18n(item.getStatus(), StatusI18nEnum.class);
+        });
+
+        tableItem.addGeneratedColumn("consequence", (source, itemId, columnId) -> {
+            SimpleRisk item = tableItem.getBeanByIndex(itemId);
+            return ELabel.i18n(item.getConsequence(), RiskConsequence.class);
+        });
+
+        tableItem.addGeneratedColumn("probalitity", (source, itemId, columnId) -> {
+            SimpleRisk item = tableItem.getBeanByIndex(itemId);
+            return ELabel.i18n(item.getProbalitity(), RiskProbability.class);
         });
 
         tableItem.addGeneratedColumn("level", (source, itemId, columnId) -> {
