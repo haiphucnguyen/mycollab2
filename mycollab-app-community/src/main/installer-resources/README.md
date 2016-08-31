@@ -47,6 +47,7 @@ Version 5.4.2
 
 * Vaadin 7.7.0
 * Jackrabbit 2.13.2
+* Jackson 2.8.2
 * Other libraries
 
 **Improvements & New Features**
