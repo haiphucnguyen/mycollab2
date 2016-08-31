@@ -1,23 +1,26 @@
 package com.mycollab.pro.module.project.view.risk;
 
+import com.mycollab.common.i18n.ErrorI18nEnum;
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
+import com.mycollab.module.project.i18n.OptionI18nEnum.RiskConsequence;
+import com.mycollab.module.project.i18n.OptionI18nEnum.RiskProbability;
+import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
-import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
-import com.vaadin.data.Property;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.RichTextArea;
-import com.vaadin.ui.TextField;
 import org.vaadin.teemu.ratingstars.RatingStars;
+import org.vaadin.viritin.fields.MTextField;
 
 /**
  * @author MyCollab Ltd.
@@ -39,7 +42,8 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             final RichTextArea desc = new RichTextArea();
             desc.setRequired(true);
             desc.setNullRepresentation("");
-            desc.setRequiredError("Description must be not empty");
+            desc.setRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                    AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
             return desc;
         } else if (Risk.Field.raisedbyuser.equalTo(propertyId)) {
             if (risk.getRaisedbyuser() == null) {
@@ -52,14 +56,16 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             return new RichTextArea();
         } else if (Risk.Field.consequence.equalTo(propertyId)) {
             if (risk.getConsequence() == null) {
-                risk.setConsequence("Marginal");
+                risk.setConsequence(RiskConsequence.Marginal.name());
             }
-            return new ValueComboBox(false, "Catastrophic", "Critical", "Marginal", "Negligible");
+            return new I18nValueComboBox(false, RiskConsequence.Catastrophic, RiskConsequence.Critical,
+                    RiskConsequence.Marginal, RiskConsequence.Negligible);
         } else if (Risk.Field.probalitity.equalTo(propertyId)) {
             if (risk.getProbalitity() == null) {
-                risk.setProbalitity("Possible");
+                risk.setProbalitity(RiskProbability.Possible.name());
             }
-            return new ValueComboBox(false, "Certain", "Likely", "Possible", "Unlikely", "Rare");
+            return new I18nValueComboBox(false, RiskProbability.Certain, RiskProbability.Likely,
+                    RiskProbability.Possible, RiskProbability.Unlikely, RiskProbability.Rare);
         } else if (Risk.Field.status.equalTo(propertyId)) {
             if (risk.getStatus() == null) {
                 risk.setStatus(StatusI18nEnum.Open.name());
@@ -69,38 +75,29 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             final RatingStars ratingField = new RatingStars();
             ratingField.setMaxValue(5);
             ratingField.setImmediate(true);
-            ratingField.setDescription("Risk level");
             if (risk.getLevel() != null) {
                 ratingField.setValue(risk.getLevel());
             }
             ratingField.setValueCaption(RiskAddViewImpl.getValueCaptions().values().toArray(new String[5]));
 
-            ratingField.addValueChangeListener(new Property.ValueChangeListener() {
-                private static final long serialVersionUID = -3277119031169194273L;
+            ratingField.addValueChangeListener(valueChangeEvent -> {
+                final Double value = (Double) valueChangeEvent.getProperty().getValue();
+                final RatingStars changedRs = (RatingStars) valueChangeEvent.getProperty();
 
-                @Override
-                public void valueChange(final Property.ValueChangeEvent event) {
-                    final Double value = (Double) event.getProperty().getValue();
-                    final RatingStars changedRs = (RatingStars) event.getProperty();
-
-                    // reset value captions
-                    changedRs.setValueCaption(RiskAddViewImpl.getValueCaptions().values().toArray(new String[5]));
-                    // set "Your Rating" caption
-                    if (value == null) {
-                        changedRs.setValue(3d);
-                    } else {
-                        changedRs.setValueCaption((int) Math.round(value), "Your Rating");
-                    }
-
+                // reset value captions
+                changedRs.setValueCaption(RiskAddViewImpl.getValueCaptions().values().toArray(new String[5]));
+                // set "Your Rating" caption
+                if (value == null) {
+                    changedRs.setValue(3d);
+                } else {
+                    changedRs.setValueCaption((int) Math.round(value), AppContext.getMessage(RiskI18nEnum.FORM_RATING));
                 }
             });
             return ratingField;
         } else if (Risk.Field.riskname.equalTo(propertyId)) {
-            final TextField tf = new TextField();
-            tf.setNullRepresentation("");
-            tf.setRequired(true);
-            tf.setRequiredError("Name must be not empty");
-            return tf;
+            return new MTextField().withNullRepresentation("").withRequired(true)
+                    .withRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                            AppContext.getMessage(GenericI18Enum.FORM_NAME)));
         } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
             return new MilestoneComboBox();
         } else if (Risk.Field.id.equalTo(propertyId)) {

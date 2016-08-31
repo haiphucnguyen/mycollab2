@@ -1,20 +1,22 @@
 package com.mycollab.pro.module.project.view.risk;
 
-import com.mycollab.common.i18n.OptionI18nEnum;
+import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
+import com.mycollab.module.project.i18n.OptionI18nEnum.RiskConsequence;
+import com.mycollab.module.project.i18n.OptionI18nEnum.RiskProbability;
 import com.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
 import com.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
-import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.ui.field.DateViewField;
 import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
+import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
+import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.ui.Field;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
@@ -35,7 +37,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
     private static class RiskReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<SimpleRisk> {
         private static final long serialVersionUID = 1L;
 
-        public RiskReadFormFieldFactory(GenericBeanForm<SimpleRisk> form) {
+        RiskReadFormFieldFactory(GenericBeanForm<SimpleRisk> form) {
             super(form);
         }
 
@@ -50,8 +52,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
                 tinyRs.setReadOnly(true);
                 return tinyRs;
             } else if (Risk.Field.status.equalTo(propertyId)) {
-                return new I18nFormViewField(risk.getStatus(), OptionI18nEnum.StatusI18nEnum.class).withStyleName
-                        (WebUIConstants.FIELD_NOTE);
+                return new I18nFormViewField(risk.getStatus(), StatusI18nEnum.class).withStyleName(WebUIConstants.FIELD_NOTE);
             } else if (Risk.Field.datedue.equalTo(propertyId)) {
                 return new DateViewField(risk.getDatedue());
             } else if (Risk.Field.startdate.equalTo(propertyId)) {
@@ -67,10 +68,13 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
             } else if (Risk.Field.response.equalTo(propertyId)) {
                 return new RichTextViewField(risk.getResponse());
             } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
-                return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, risk.getMilestoneid() + "",
-                        risk.getMilestoneName());
+                return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, risk.getMilestoneid() + "", risk.getMilestoneName());
             } else if (Risk.Field.id.equalTo(propertyId)) {
                 return new ProjectFormAttachmentDisplayField(risk.getProjectid(), ProjectTypeConstants.RISK, risk.getId());
+            } else if (Risk.Field.consequence.equalTo(propertyId)) {
+                return new I18nFormViewField(risk.getConsequence(), RiskConsequence.class);
+            } else if (Risk.Field.probalitity.equalTo(propertyId)) {
+                return new I18nFormViewField(risk.getProbalitity(), RiskProbability.class);
             }
 
             return null;
