@@ -6,6 +6,8 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.events.MilestoneEvent;
 import com.mycollab.module.project.events.TaskEvent;
+import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
@@ -33,7 +35,7 @@ public class QuickEditGanttItemWindow extends MWindow {
     private GanttItemWrapper ganttItem;
 
     public QuickEditGanttItemWindow(GanttExt gantt, GanttItemWrapper ganttItem) {
-        super("Quick Edit Task");
+        super(AppContext.getMessage(TaskI18nEnum.EDIT));
         this.gantt = gantt;
         this.ganttItem = ganttItem;
 
@@ -133,9 +135,7 @@ public class QuickEditGanttItemWindow extends MWindow {
                 if ("startDate".equals(propertyId) || "endDate".equals(propertyId)) {
                     if (bean.hasSubAssignments()) {
                         field.setEnabled(false);
-                        ((AbstractComponent) field).setDescription("Because this row has sub-tasks, this cell " +
-                                "is a summary value and can not be edited directly. You can edit cells " +
-                                "beneath this row to change its value");
+                        ((AbstractComponent) field).setDescription(AppContext.getMessage(ProjectCommonI18nEnum.ERROR_NOT_EDIT_CELL_IN_GANTT_HELP));
                     }
                 }
             }

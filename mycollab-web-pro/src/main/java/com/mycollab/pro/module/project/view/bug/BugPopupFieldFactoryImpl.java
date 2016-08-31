@@ -419,16 +419,14 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             layout.removeAllComponents();
             if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
                 timeInput.setValue("");
-                timeInput.setDescription("The format of duration must be [number] d [number] h [number] m [number] s");
+                timeInput.setDescription(AppContext.getMessage(TimeTrackingI18nEnum.OPT_TIME_FORMAT));
                 String title = (isBillable) ? AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
                         AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
-                Label headerLbl = new Label(title, ContentMode.HTML);
-                headerLbl.addStyleName(ValoTheme.LABEL_H3);
+                Label headerLbl = ELabel.h3(title);
                 dateField = new PopupDateFieldExt();
                 dateField.setValue(new GregorianCalendar().getTime());
                 layout.with(headerLbl, timeInput);
-                Label dateCaption = new Label(AppContext.getMessage(DayI18nEnum.OPT_DATE));
-                dateCaption.addStyleName(ValoTheme.LABEL_H3);
+                Label dateCaption = ELabel.html(AppContext.getMessage(DayI18nEnum.OPT_DATE));
                 layout.with(dateCaption, dateField);
             } else {
                 layout.add(new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
@@ -470,7 +468,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                         this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + calculatedHours);
                     }
                 } else {
-                    NotificationUtil.showWarningNotification("Invalid value. The format of duration must be [number] d [number] h [number] m [number] s");
+                    NotificationUtil.showWarningNotification(AppContext.getMessage(TimeTrackingI18nEnum.ERROR_TIME_FORMAT));
                 }
             }
         }

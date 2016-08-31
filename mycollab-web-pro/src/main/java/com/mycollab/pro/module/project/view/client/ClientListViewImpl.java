@@ -81,7 +81,6 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, client)))
                 .withIcon(FontAwesome.EDIT).withStyleName(WebUIConstants.BUTTON_ICON_ONLY)
                 .withVisible(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
-        editBtn.setDescription("Edit client '" + client.getAccountname() + "' information");
 
         MButton deleteBtn = new MButton("", clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
@@ -114,13 +113,13 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
 
         MVerticalLayout clientInfo = new MVerticalLayout().withMargin(false).with(clientLinkLbl, ELabel.hr());
         Div websiteDiv = new Div().appendText(AppContext.getMessage(AccountI18nEnum.FORM_WEBSITE) + ": " +
-                MoreObjects.firstNonNull(client.getWebsite(), "None"));
-        clientInfo.addComponent(new ELabel(websiteDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO));
+                MoreObjects.firstNonNull(client.getWebsite(), AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED)));
+        clientInfo.addComponent(ELabel.html(websiteDiv.write()).withStyleName(UIConstants.META_INFO));
 
         Div addressDiv = new Div().appendText(AppContext.getMessage(AccountI18nEnum.FORM_BILLING_ADDRESS) + ": "
-                + MoreObjects.firstNonNull(client.getBillingaddress(), "None") +
-                ", " + MoreObjects.firstNonNull(client.getCity(), "None") +
-                ", " + MoreObjects.firstNonNull(client.getBillingcountry(), "None"));
+                + MoreObjects.firstNonNull(client.getBillingaddress(), AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED)) +
+                ", " + MoreObjects.firstNonNull(client.getCity(), AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED)) +
+                ", " + MoreObjects.firstNonNull(client.getBillingcountry(), AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED)));
         clientInfo.addComponent(new ELabel(addressDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO));
         Div assignUserDiv = new Div().appendText(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + " : ").
                 appendChild(new Img("", StorageFactory.getAvatarPath(client.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),

@@ -27,6 +27,7 @@ public enum TaskI18nEnum {
     DETAIL,
     LIST,
     SINGLE,
+    EDIT,
 
     ACTION_SELECT_TASK,
     ACTION_NEW_COLUMN,

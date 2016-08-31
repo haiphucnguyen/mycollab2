@@ -388,7 +388,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             layout.removeAllComponents();
             if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
                 timeInput.setValue("");
-                timeInput.setDescription("The format of duration must be [number] d [number] h [number] m [number] s");
+                timeInput.setDescription(AppContext.getMessage(TimeTrackingI18nEnum.OPT_TIME_FORMAT));
                 String title = (isBillable) ? AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
                         AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
                 Label headerLbl = ELabel.h3(title);
@@ -436,7 +436,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                         this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + calculatedHours);
                     }
                 } else {
-                    NotificationUtil.showWarningNotification("Invalid value. The format of duration must be [number] d [number] h [number] m [number] s");
+                    NotificationUtil.showWarningNotification(AppContext.getMessage(TimeTrackingI18nEnum.ERROR_TIME_FORMAT));
                 }
             }
         }
