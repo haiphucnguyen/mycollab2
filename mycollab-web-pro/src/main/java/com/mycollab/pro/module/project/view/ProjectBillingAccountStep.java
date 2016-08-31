@@ -89,7 +89,7 @@ class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardSt
     private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Project> {
         private static final long serialVersionUID = 1L;
 
-        public EditFormFieldFactory(GenericBeanForm<Project> form) {
+        EditFormFieldFactory(GenericBeanForm<Project> form) {
             super(form);
         }
 

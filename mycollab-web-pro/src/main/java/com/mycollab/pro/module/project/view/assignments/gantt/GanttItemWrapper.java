@@ -12,6 +12,7 @@ import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.*;
+import com.mycollab.module.project.i18n.GanttI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.pro.module.project.events.GanttEvent;
@@ -274,7 +275,7 @@ public class GanttItemWrapper {
     public boolean setStartAndEndDate(LocalDate newStartDate, LocalDate newEndDate, boolean askToCheckPredecessors,
                                       boolean requestToCheckDependents) {
         if (newStartDate.isBefore(fixedStartDateByChildren) || newEndDate.isAfter(fixedEndDateByChildren)) {
-            throw new UserInvalidInputException("Invalid constraints");
+            throw new UserInvalidInputException(AppContext.getMessage(GanttI18nEnum.ERROR_INVALID_CONSTRAINT));
         }
         boolean hasChange = false;
         if (!this.startDate.isEqual(newStartDate)) {
@@ -434,7 +435,7 @@ public class GanttItemWrapper {
                     }
 
                     if (currentEndDate.isBefore(currentStartDate)) {
-                        throw new UserInvalidInputException("Invalid constraint");
+                        throw new UserInvalidInputException(AppContext.getMessage(GanttI18nEnum.ERROR_INVALID_CONSTRAINT));
                     }
                 }
             }

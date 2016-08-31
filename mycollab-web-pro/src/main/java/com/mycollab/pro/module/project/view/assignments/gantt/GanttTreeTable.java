@@ -13,6 +13,7 @@ import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.events.BugEvent;
 import com.mycollab.module.project.events.MilestoneEvent;
 import com.mycollab.module.project.events.TaskEvent;
+import com.mycollab.module.project.i18n.GanttI18nEnum;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.GanttAssignmentService;
@@ -76,20 +77,20 @@ public class GanttTreeTable extends TreeTable {
                 "predecessors", "assignUser");
         this.setColumnHeader("ganttIndex", "");
         this.setColumnWidth("ganttIndex", 25);
-        this.setColumnHeader("name", "Task");
+        this.setColumnHeader("name", AppContext.getMessage(TaskI18nEnum.SINGLE));
         this.setColumnExpandRatio("name", 1.0f);
         this.setHierarchyColumn("name");
-        this.setColumnHeader("startDate", "Start");
+        this.setColumnHeader("startDate", AppContext.getMessage(GanttI18nEnum.OPT_START));
         this.setColumnWidth("startDate", 90);
-        this.setColumnHeader("endDate", "End");
+        this.setColumnHeader("endDate", AppContext.getMessage(GanttI18nEnum.OPT_END));
         this.setColumnWidth("endDate", 90);
-        this.setColumnHeader("duration", "Duration");
+        this.setColumnHeader("duration", AppContext.getMessage(GenericI18Enum.FORM_DURATION));
         this.setColumnWidth("duration", 65);
-        this.setColumnHeader("predecessors", "Predecessors");
+        this.setColumnHeader("predecessors", AppContext.getMessage(GanttI18nEnum.OPT_PREDECESSORS));
         this.setColumnWidth("predecessors", 100);
-        this.setColumnHeader("percentageComplete", "% Complete");
+        this.setColumnHeader("percentageComplete", AppContext.getMessage(GanttI18nEnum.OPT_PERCENTAGE_COMPLETE));
         this.setColumnWidth("percentageComplete", 90);
-        this.setColumnHeader("assignUser", "Assignee");
+        this.setColumnHeader("assignUser", AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE));
         this.setColumnWidth("assignUser", 80);
         this.setColumnCollapsingAllowed(true);
         this.setColumnCollapsed("assignUser", true);
@@ -169,8 +170,7 @@ public class GanttTreeTable extends TreeTable {
                             Field f = (Field) o;
                             if (f.isModified()) {
                                 f.commit();
-                                EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue
-                                        (GanttTreeTable.this, ganttItem));
+                                EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(GanttTreeTable.this, ganttItem));
                                 GanttTreeTable.this.refreshRowCache();
                             }
                         }
@@ -406,7 +406,7 @@ public class GanttTreeTable extends TreeTable {
 
         void displayContextMenu(final GanttItemWrapper ganttItemWrapper) {
             this.removeItems();
-            MenuItem detailMenuItem = this.addItem("Detail", (Command) menuItem -> {
+            MenuItem detailMenuItem = this.addItem(AppContext.getMessage(GanttI18nEnum.ACTION_DETAIL), (Command) menuItem -> {
                 if (ganttItemWrapper.isTask()) {
                     if (ganttItemWrapper.getId() == null) {
                         //New task, save then go to the task detail view
@@ -427,17 +427,13 @@ public class GanttTreeTable extends TreeTable {
             });
             detailMenuItem.setIcon(FontAwesome.BARS);
 
-            MenuItem predecessorMenuItem = this.addItem("Predecessors", (Command) menuItem -> {
-                if (ganttItemWrapper.isTask()) {
-                    UI.getCurrent().addWindow(new PredecessorWindow(GanttTreeTable.this, ganttItemWrapper));
-                } else {
-                    NotificationUtil.showWarningNotification("Can not edit predecessors for milestone");
-                }
+            MenuItem predecessorMenuItem = this.addItem(AppContext.getMessage(GanttI18nEnum.OPT_PREDECESSORS), (Command) menuItem -> {
+                UI.getCurrent().addWindow(new PredecessorWindow(GanttTreeTable.this, ganttItemWrapper));
             });
             predecessorMenuItem.setIcon(FontAwesome.MAP_MARKER);
             predecessorMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
-            MenuItem indentMenuItem = this.addItem("Indent", (Command) menuItem -> {
+            MenuItem indentMenuItem = this.addItem(AppContext.getMessage(GanttI18nEnum.ACTION_INDENT), (Command) menuItem -> {
                 GanttItemWrapper preItemWrapper = beanContainer.prevItemId(ganttItemWrapper);
                 if (preItemWrapper != null && preItemWrapper != ganttItemWrapper.getParent()) {
                     ganttItemWrapper.updateParentRelationship(preItemWrapper);
@@ -453,7 +449,7 @@ public class GanttTreeTable extends TreeTable {
             indentMenuItem.setIcon(FontAwesome.INDENT);
             indentMenuItem.setEnabled(ganttItemWrapper.isIndentable() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
-            MenuItem outdentMenuItem = this.addItem("Outdent", (Command) menuItem -> {
+            MenuItem outdentMenuItem = this.addItem(AppContext.getMessage(GanttI18nEnum.ACTION_OUTDENT), (Command) menuItem -> {
                 GanttItemWrapper parent = ganttItemWrapper.getParent();
                 if (parent != null) {
                     GanttTreeTable.this.setParent(ganttItemWrapper, parent.getParent());
@@ -487,7 +483,7 @@ public class GanttTreeTable extends TreeTable {
             outdentMenuItem.setVisible(ganttItemWrapper.isOutdentable() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
             if (beanContainer.indexOfId(ganttItemWrapper) > 0) {
-                MenuItem inserRowBeforeMenuItem = this.addItem("Insert row before", (Command) menuItem -> {
+                MenuItem insertRowBeforeMenuItem = this.addItem(AppContext.getMessage(GanttI18nEnum.ACTION_INSERT_ROW_BEFORE), (Command) menuItem -> {
                     int index = beanContainer.indexOfId(ganttItemWrapper);
                     if (index > 0) {
                         TaskGanttItem newTask = new TaskGanttItem();
@@ -514,11 +510,11 @@ public class GanttTreeTable extends TreeTable {
                     calculateWholeGanttIndexes();
                     refreshRowCache();
                 });
-                inserRowBeforeMenuItem.setIcon(FontAwesome.PLUS_CIRCLE);
-                inserRowBeforeMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+                insertRowBeforeMenuItem.setIcon(FontAwesome.PLUS_CIRCLE);
+                insertRowBeforeMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             }
 
-            MenuItem insertRowAfterMenuItem = this.addItem("Insert row after", (Command) menuItem -> {
+            MenuItem insertRowAfterMenuItem = this.addItem(AppContext.getMessage(GanttI18nEnum.ACTION_INSERT_ROW_AFTER), (Command) menuItem -> {
                 int index = beanContainer.indexOfId(ganttItemWrapper) + 1;
                 TaskGanttItem newTask = new TaskGanttItem();
                 newTask.setType(ProjectTypeConstants.TASK);
@@ -549,7 +545,7 @@ public class GanttTreeTable extends TreeTable {
             insertRowAfterMenuItem.setIcon(FontAwesome.PLUS_CIRCLE);
             insertRowAfterMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
-            MenuItem deleteRowMenuItem = this.addItem("Delete row", menuItem -> ConfirmDialogExt.show(UI.getCurrent(),
+            MenuItem deleteRowMenuItem = this.addItem(AppContext.getMessage(GanttI18nEnum.ACTION_DELETE_ROW), menuItem -> ConfirmDialogExt.show(UI.getCurrent(),
                     AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
                     AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
                     AppContext.getMessage(GenericI18Enum.BUTTON_YES),

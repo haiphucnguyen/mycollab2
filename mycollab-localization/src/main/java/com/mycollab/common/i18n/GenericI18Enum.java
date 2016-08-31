@@ -144,6 +144,7 @@ public enum GenericI18Enum {
     FORM_EMAIL,
     FORM_TYPE,
     FORM_CURRENCY,
+    FORM_DURATION,
     FORM_DATE_FORMAT_HELP,
 
     MODULE_CRM,
@@ -194,6 +195,8 @@ public enum GenericI18Enum {
     OPT_COMMENTS_VALUE,
     OPT_COMMENTS,
     OPT_COMMENT,
+    OPT_SIMPLE_MODE,
+    OPT_CHART_MODE,
 
     M_BUTTON_BACK,
     M_BUTTON_SEND,

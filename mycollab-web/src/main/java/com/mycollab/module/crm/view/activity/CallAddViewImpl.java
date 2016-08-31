@@ -81,7 +81,6 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
 
         CallEditFormFieldFactory(GenericBeanForm<CallWithBLOBs> form) {
             super(form);
-
             callStatusField = new CallStatusTypeField();
         }
 
@@ -127,21 +126,16 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
 
             @Override
             protected Component initContent() {
-                HorizontalLayout layout = new HorizontalLayout();
-                layout.setSpacing(true);
-
                 CallTypeComboBox typeField = new CallTypeComboBox();
-                layout.addComponent(typeField);
                 typeField.select(beanItem.getCalltype());
 
                 CallStatusComboBox statusField = new CallStatusComboBox();
-                layout.addComponent(statusField);
                 statusField.select(beanItem.getStatus());
 
                 // binding field group
                 fieldGroup.bind(typeField, "calltype");
                 fieldGroup.bind(statusField, "status");
-                return layout;
+                return new MHorizontalLayout(typeField, statusField);
             }
         }
     }
