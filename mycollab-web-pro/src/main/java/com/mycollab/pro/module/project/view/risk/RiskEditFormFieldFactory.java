@@ -78,14 +78,14 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             if (risk.getLevel() != null) {
                 ratingField.setValue(risk.getLevel());
             }
-            ratingField.setValueCaption(RiskAddViewImpl.getValueCaptions().values().toArray(new String[5]));
+            ratingField.setValueCaption(RiskAddViewImpl.getValueCaptions());
 
             ratingField.addValueChangeListener(valueChangeEvent -> {
                 final Double value = (Double) valueChangeEvent.getProperty().getValue();
                 final RatingStars changedRs = (RatingStars) valueChangeEvent.getProperty();
 
                 // reset value captions
-                changedRs.setValueCaption(RiskAddViewImpl.getValueCaptions().values().toArray(new String[5]));
+                changedRs.setValueCaption(RiskAddViewImpl.getValueCaptions());
                 // set "Your Rating" caption
                 if (value == null) {
                     changedRs.setValue(3d);

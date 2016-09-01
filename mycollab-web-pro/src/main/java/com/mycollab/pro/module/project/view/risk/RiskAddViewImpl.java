@@ -2,6 +2,8 @@ package com.mycollab.pro.module.project.view.risk;
 
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleRisk;
+import com.mycollab.module.project.i18n.OptionI18nEnum;
+import com.mycollab.module.project.i18n.OptionI18nEnum.RiskRate;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.AbstractEditItemComp;
@@ -16,7 +18,9 @@ import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEditFormControls;
 
@@ -28,18 +32,19 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
 public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements RiskAddView {
     private static final long serialVersionUID = 1L;
 
-    private static Map<Integer, String> valueCaptions = new HashMap<>(5);
+    private static Map<Integer, RiskRate> valueCaptions = new HashMap<>(5);
 
     static {
-        valueCaptions.put(1, "Epic Fail");
-        valueCaptions.put(2, "Poor");
-        valueCaptions.put(3, "OK");
-        valueCaptions.put(4, "Good");
-        valueCaptions.put(5, "Excellent");
+        valueCaptions.put(1, RiskRate.Epic_Fail);
+        valueCaptions.put(2, RiskRate.Poor);
+        valueCaptions.put(3, RiskRate.OK);
+        valueCaptions.put(4, RiskRate.Good);
+        valueCaptions.put(5, RiskRate.Excellent);
     }
 
-    public static Map<Integer, String> getValueCaptions() {
-        return valueCaptions;
+    public static String[] getValueCaptions() {
+        return valueCaptions.values().stream().map(item -> AppContext.getMessage(item)).collect(Collectors.toList())
+                .toArray(new String[0]);
     }
 
     @Override
