@@ -69,9 +69,8 @@ class CampaignEditFormFieldFactory<B extends CampaignWithBLOBs> extends Abstract
             return userBox;
         } else if (propertyId.equals("currencyid")) {
             return new CurrencyComboBoxField();
-        } else if (CampaignWithBLOBs.Field.budget.equalTo(propertyId) || CampaignWithBLOBs.Field.actualcost.equalTo
-                (propertyId) || CampaignWithBLOBs.Field.expectedcost.equalTo(propertyId) || CampaignWithBLOBs.Field
-                .expectedrevenue.equalTo(propertyId)) {
+        } else if (CampaignWithBLOBs.Field.budget.equalTo(propertyId) || CampaignWithBLOBs.Field.actualcost.equalTo(propertyId) ||
+                CampaignWithBLOBs.Field.expectedcost.equalTo(propertyId) || CampaignWithBLOBs.Field.expectedrevenue.equalTo(propertyId)) {
             return new DoubleField();
         }
         return null;
