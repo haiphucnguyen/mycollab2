@@ -149,6 +149,7 @@ public enum GenericI18Enum {
     FORM_CURRENCY,
     FORM_DURATION,
     FORM_DATE_FORMAT_HELP,
+    FORM_COMPANY,
 
     MODULE_CRM,
     MODULE_PROJECT,

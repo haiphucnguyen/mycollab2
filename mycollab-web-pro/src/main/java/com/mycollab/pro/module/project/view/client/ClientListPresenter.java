@@ -24,12 +24,7 @@ public class ClientListPresenter extends AbstractPresenter<ClientListView> {
 
     @Override
     protected void postInitView() {
-        view.getSearchHandlers().addSearchHandler(new SearchHandler<AccountSearchCriteria>() {
-            @Override
-            public void onSearch(AccountSearchCriteria criteria) {
-                view.display(criteria);
-            }
-        });
+        view.getSearchHandlers().addSearchHandler(criteria -> view.display(criteria));
     }
 
     @Override

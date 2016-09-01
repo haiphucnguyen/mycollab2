@@ -1,6 +1,7 @@
 package com.mycollab.ondemand.module.file.view;
 
 import com.google.common.eventbus.Subscribe;
+import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.BeanUtility;
@@ -100,7 +101,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends MWindow {
         messageBox.addComponent(btnLogin);
         messageBox.setComponentAlignment(btnLogin, Alignment.MIDDLE_CENTER);
 
-        mainLayout.addComponent(new Label("Folder Title"));
+        mainLayout.addComponent(new Label(AppContext.getMessage(GenericI18Enum.FORM_NAME)));
 
         HorizontalLayout folderNameLayout = new HorizontalLayout();
         folderNameLayout.setSpacing(false);
@@ -127,7 +128,8 @@ public abstract class DefaultCloudDriveOAuthWindow extends MWindow {
             try {
                 String name = folderName.getValue().trim();
                 if (StringUtils.isBlank(name)) {
-                    NotificationUtil.showWarningNotification("Please enter the folder name");
+                    NotificationUtil.showWarningNotification(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                            AppContext.getMessage(GenericI18Enum.FORM_NAME)));
                     return;
                 }
                 ExternalDrive externalDrive = new ExternalDrive();

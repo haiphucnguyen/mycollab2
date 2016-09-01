@@ -3,6 +3,7 @@ package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 import com.google.common.eventbus.AsyncEventBus;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.BeanUtility;
+import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapper;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscription;
 import com.mycollab.ondemand.module.billing.esb.UpdateSubscriptionEvent;
@@ -28,7 +29,7 @@ import org.vaadin.viritin.layouts.MWindow;
 class ChangeBillingPlanInformationWindow extends MWindow {
 
     ChangeBillingPlanInformationWindow(BillingSubscription billingSubscription) {
-        super("Change contact information");
+        super(AppContext.getMessage(BillingI18nEnum.OPT_CHANGE_CONTACT_INFO));
         EditForm editForm = new EditForm();
         editForm.setBean(BeanUtility.deepClone(billingSubscription));
         this.withModal(true).withResizable(false).withWidth("600px").withContent(editForm);
@@ -77,13 +78,13 @@ class ChangeBillingPlanInformationWindow extends MWindow {
             @Override
             protected Component onAttachField(Object propertyId, Field<?> field) {
                 if (BillingSubscription.Field.name.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, "Name", 0, 0);
+                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
                 } else if (BillingSubscription.Field.email.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, "Email", 0, 1);
+                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_EMAIL), 0, 1);
                 } else if (BillingSubscription.Field.phone.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, "Phone", 0, 2);
+                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_PHONE), 0, 2);
                 } else if (BillingSubscription.Field.company.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, "Company", 0, 3);
+                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_COMPANY), 0, 3);
                 }
                 return null;
             }

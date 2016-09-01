@@ -17,6 +17,7 @@
 package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 
 import com.mycollab.common.domain.CustomerFeedbackWithBLOBs;
+import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
@@ -76,29 +77,28 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
         MVerticalLayout innerLayout = new MVerticalLayout();
         innerLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
-        ELabel helpNoteLbl = ELabel.h3("Your feedback is valuable to make us better").withWidthUndefined();
+        ELabel helpNoteLbl = ELabel.h3(AppContext.getMessage(BillingI18nEnum.OPT_FEEDBACK_TITLE)).withWidthUndefined();
         innerLayout.with(helpNoteLbl);
 
         GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
         layoutHelper.getLayout().setWidth("800px");
 
         final TextArea whyLeaving = new TextArea();
-        layoutHelper.addComponent(whyLeaving, "Why are you leaving us?", 0, 0);
+        layoutHelper.addComponent(whyLeaving, AppContext.getMessage(BillingI18nEnum.OPT_WHY_YOU_LEAVE), 0, 0);
 
         final OptionGroup optionGroupField = new OptionGroup();
-        optionGroupField.addItem("I'm cancelling this account to join or open a new MyCollab account");
-        optionGroupField.addItem("I'm missing an important integration");
-        optionGroupField.addItem("MyCollab doesn't have all the features I'm looking for");
-        optionGroupField.addItem("Too expensive");
-        optionGroupField.addItem("None of the above");
+        optionGroupField.addItem(AppContext.getMessage(BillingI18nEnum.OPT_CANCEL_AND_OPEN_NEW_ACCOUNT));
+        optionGroupField.addItem(AppContext.getMessage(BillingI18nEnum.OPT_MISSING_IMPORTANT_FEATURE));
+        optionGroupField.addItem(AppContext.getMessage(BillingI18nEnum.OPT_TOO_EXPENSIVE));
+        optionGroupField.addItem(AppContext.getMessage(BillingI18nEnum.OPT_NONE_OF_ABOVE));
 
-        layoutHelper.addComponent(optionGroupField, "Do any of these apply?", 0, 1);
+        layoutHelper.addComponent(optionGroupField, AppContext.getMessage(BillingI18nEnum.OPT_ANY_APPLY), 0, 1);
 
         final TextArea alternativeTool = new TextArea();
-        layoutHelper.addComponent(alternativeTool, "Are you considering any other alternative tools?", 0, 2);
+        layoutHelper.addComponent(alternativeTool, AppContext.getMessage(BillingI18nEnum.OPT_CONSIDER_OTHER_TOOL), 0, 2);
 
         final TextArea reasonToBack = new TextArea();
-        layoutHelper.addComponent(reasonToBack, "What would it take to have you back?", 0, 3);
+        layoutHelper.addComponent(reasonToBack, AppContext.getMessage(BillingI18nEnum.OPT_HOW_TO_BACK), 0, 3);
 
         innerLayout.with(layoutHelper.getLayout());
 
@@ -120,7 +120,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
             UI.getCurrent().getPage().setLocation("https://www.mycollab.com");
         }).withStyleName(WebUIConstants.BUTTON_DANGER);
 
-        MButton cancelBtn = new MButton("Never mind, go back",
+        MButton cancelBtn = new MButton(AppContext.getMessage(BillingI18nEnum.ACTION_NOT_CANCEL_ACCOUNT),
                 clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(this, null)))
                 .withStyleName(WebUIConstants.BUTTON_ACTION);
 

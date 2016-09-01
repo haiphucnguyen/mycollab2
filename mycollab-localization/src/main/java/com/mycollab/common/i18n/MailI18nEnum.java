@@ -23,5 +23,12 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("common-mail")
 @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
 public enum MailI18nEnum {
-    Changes
+    Changes,
+    Last_Comments_Value,
+    Field,
+    Old_Value,
+    New_Value,
+    Copyright,
+    Project_Notification_Setting,
+    Project_Footer
 }
