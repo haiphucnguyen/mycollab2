@@ -27,9 +27,20 @@ import scala.beans.BeanProperty
 abstract class FieldFormat(@BeanProperty var fieldName: String, @BeanProperty var displayName: Enum[_],
                            @BeanProperty var isColSpan: Boolean) {
   def this(fieldName: String, displayName: Enum[_]) = this(fieldName, displayName, false)
-
+  
+  /**
+    *
+    * @param context
+    * @return
+    */
   def formatField(context: MailContext[_]): String
-
+  
+  /**
+    *
+    * @param context
+    * @param value
+    * @return
+    */
   def formatField(context: MailContext[_], value: String): String
 
   object Type extends Enumeration {
