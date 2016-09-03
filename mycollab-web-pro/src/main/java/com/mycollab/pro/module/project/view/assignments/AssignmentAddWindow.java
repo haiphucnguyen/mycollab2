@@ -1,5 +1,6 @@
 package com.mycollab.pro.module.project.view.assignments;
 
+import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleMilestone;
@@ -91,8 +92,8 @@ public class AssignmentAddWindow extends MWindow {
                 .withStyleName(WebUIConstants.BUTTON_OPTION);
         MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, okButton);
         GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, 1, "60px");
-        formLayoutHelper.addComponent(dateSelection, "Date", 0, 0);
-        formLayoutHelper.addComponent(typeSelection, "Type", 1, 0);
+        formLayoutHelper.addComponent(dateSelection, AppContext.getMessage(DayI18nEnum.OPT_DATE), 0, 0);
+        formLayoutHelper.addComponent(typeSelection, AppContext.getMessage(GenericI18Enum.FORM_TYPE), 1, 0);
         content.with(formLayoutHelper.getLayout(), buttonControls).withAlign(buttonControls, Alignment.TOP_RIGHT);
     }
 }

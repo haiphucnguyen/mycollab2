@@ -26,7 +26,7 @@ import com.mycollab.module.project.view.task.TaskAddWindow;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.pro.module.project.ui.components.EntityWithProjectAddHandler;
-import com.mycollab.pro.module.project.view.assignments.CalendarSearchPanel;
+import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.pro.module.project.view.assignments.GenericAssignmentEvent;
 import com.mycollab.pro.module.project.view.assignments.GenericAssignmentProvider;
 import com.mycollab.pro.module.project.view.risk.RiskAddWindow;
@@ -73,7 +73,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     private List<Integer> projectKeys;
     private boolean isMonthView = true;
     private ProjectGenericTaskSearchCriteria searchCriteria;
-    private CalendarSearchPanel searchPanel;
+    private AssignmentSearchPanel searchPanel;
 
     private ApplicationEventListener<AssignmentEvent.NewAssignmentAdd> taskChangeHandler = new ApplicationEventListener<AssignmentEvent.NewAssignmentAdd>() {
         @Override
@@ -106,7 +106,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     @Override
     public void initContent() {
         baseDate = new LocalDate();
-        searchPanel = new CalendarSearchPanel(false);
+        searchPanel = new AssignmentSearchPanel(false);
     }
 
     @Override

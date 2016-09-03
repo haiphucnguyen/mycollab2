@@ -24,16 +24,16 @@ import static com.mycollab.vaadin.web.ui.WebUIConstants.BUTTON_ACTION;
  * @author MyCollab Ltd
  * @since 5.2.8
  */
-public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGenericTaskSearchCriteria> {
+public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectGenericTaskSearchCriteria> {
     private boolean isCreateAssignment;
 
-    public CalendarSearchPanel(boolean isCreateAssignment) {
+    public AssignmentSearchPanel(boolean isCreateAssignment) {
         this.isCreateAssignment = isCreateAssignment;
     }
 
     @Override
     protected SearchLayout<ProjectGenericTaskSearchCriteria> createBasicSearchLayout() {
-        return new TaskBasicSearchLayout();
+        return new AssignmentBasicSearchLayout();
     }
 
     @Override
@@ -58,13 +58,13 @@ public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGeneri
         return null;
     }
 
-    private class TaskBasicSearchLayout extends BasicSearchLayout<ProjectGenericTaskSearchCriteria> {
+    private class AssignmentBasicSearchLayout extends BasicSearchLayout<ProjectGenericTaskSearchCriteria> {
         private static final long serialVersionUID = 1L;
         private TextField nameField;
         private CheckBox myItemCheckbox;
 
-        private TaskBasicSearchLayout() {
-            super(CalendarSearchPanel.this);
+        private AssignmentBasicSearchLayout() {
+            super(AssignmentSearchPanel.this);
         }
 
         @Override
@@ -107,7 +107,7 @@ public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGeneri
 
         @Override
         public ComponentContainer constructHeader() {
-            return CalendarSearchPanel.this.constructHeader();
+            return AssignmentSearchPanel.this.constructHeader();
         }
 
     }

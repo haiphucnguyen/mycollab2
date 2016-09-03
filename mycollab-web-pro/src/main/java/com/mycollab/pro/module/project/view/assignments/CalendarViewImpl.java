@@ -95,13 +95,13 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
     private Calendar calendar;
     private LocalDate baseDate, startDate, endDate;
     private CalendarMode mode = CalendarMode.MONTHLY;
-    private CalendarSearchPanel searchPanel;
+    private AssignmentSearchPanel searchPanel;
     private ProjectGenericTaskSearchCriteria searchCriteria;
 
     public CalendarViewImpl() {
         this.withMargin(true).withSpacing(true);
         baseDate = new LocalDate();
-        searchPanel = new CalendarSearchPanel(true);
+        searchPanel = new AssignmentSearchPanel(true);
     }
 
     @Override

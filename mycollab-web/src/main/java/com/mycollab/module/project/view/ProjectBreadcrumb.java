@@ -177,8 +177,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoKanban() {
         this.select(0);
+        this.addLink(new Button(AppContext.getMessage(MilestoneI18nEnum.LIST), new GotoMilestoneListListener()));
         this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)));
-        AppContext.addFragment("project/milestone/kanban" + UrlEncodeDecoder.encode(project.getId()),
+        AppContext.addFragment("project/milestone/kanban/" + UrlEncodeDecoder.encode(project.getId()),
                 AppContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN));
     }
 

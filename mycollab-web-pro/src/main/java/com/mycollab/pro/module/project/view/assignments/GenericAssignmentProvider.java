@@ -24,8 +24,7 @@ public class GenericAssignmentProvider extends BasicEventProvider {
 
     public void loadEvents(ProjectGenericTaskSearchCriteria searchCriteria, boolean showProject) {
         ProjectGenericTaskService genericTaskService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
-        List<ProjectGenericTask> assignments = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>
-                (searchCriteria, 0, Integer.MAX_VALUE));
+        List<ProjectGenericTask> assignments = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         for (ProjectGenericTask assignment : assignments) {
             totalBillableHours += MoreObjects.firstNonNull(assignment.getBillableHours(), 0d);
             totalNonBillableHours += MoreObjects.firstNonNull(assignment.getNonBillableHours(), 0d);
