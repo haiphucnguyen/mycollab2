@@ -1,7 +1,10 @@
 package com.mycollab.pro.module.project.view.milestone;
 
+import com.google.common.eventbus.Subscribe;
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SetSearchField;
+import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -11,11 +14,14 @@ import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.mycollab.module.project.events.MilestoneEvent;
+import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectGenericTaskService;
+import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.milestone.IMilestoneKanbanView;
+import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
@@ -56,6 +62,15 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
     private KanbanBlock nullBlock;
     private ProjectGenericTaskSearchCriteria baseCriteria;
 
+    private ApplicationEventListener<MilestoneEvent.NewMilestoneAdded> newMilestoneHandler = new
+            ApplicationEventListener<MilestoneEvent.NewMilestoneAdded>() {
+                @Override
+                @Subscribe
+                public void handle(MilestoneEvent.NewMilestoneAdded event) {
+                    insertMilestone((Integer) event.getData());
+                }
+            };
+
     public MilestoneKanbanViewImpl() {
         this.setSizeFull();
         this.withSpacing(true).withMargin(new MarginInfo(false, true, true, true));
@@ -63,7 +78,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
     @Override
     protected void displayView() {
-        searchPanel = new AssignmentSearchPanel(true);
+        searchPanel = new AssignmentSearchPanel(false);
 
         kanbanLayout = new DDHorizontalLayout();
         kanbanLayout.setHeight("100%");
@@ -83,14 +98,21 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
         MButton kanbanBtn = new MButton(AppContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)).withIcon(FontAwesome.TH)
                 .withWidth("100px");
-        MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
-        groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+
+        MButton newMilestoneBtn = new MButton(AppContext.getMessage(MilestoneI18nEnum.NEW), clickEvent -> {
+            SimpleMilestone milestone = new SimpleMilestone();
+            milestone.setSaccountid(AppContext.getAccountId());
+            milestone.setProjectid(CurrentProjectVariables.getProjectId());
+            UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
+        }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
+
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(boardBtn);
         viewButtons.addButton(advanceDisplayBtn);
         viewButtons.addButton(kanbanBtn);
         viewButtons.withDefaultButton(kanbanBtn);
-        groupWrapLayout.addComponent(viewButtons);
+        MHorizontalLayout groupWrapLayout = new MHorizontalLayout(newMilestoneBtn, viewButtons);
+        groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         searchPanel.addHeaderRight(groupWrapLayout);
 
         ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
@@ -134,12 +156,24 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                                 if (kanbanBlock != null) {
                                     kanbanBlock.addBlockItem(new KanbanAssignmentBlockItem(assignment));
                                 }
+                            } else {
+                                nullBlock.addBlockItem(new KanbanAssignmentBlockItem(assignment));
                             }
                         }
                     }
                 }
             }
         });
+    }
+
+    private void insertMilestone(Integer milestoneId) {
+        MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
+        SimpleMilestone milestone = milestoneService.findById(milestoneId, AppContext.getAccountId());
+        if (milestone != null) {
+            KanbanBlock kanbanBlock = new KanbanBlock(milestone);
+            kanbanBlocks.put(milestone.getId(), kanbanBlock);
+            kanbanLayout.addComponent(kanbanBlock, 0);
+        }
     }
 
     @Override
@@ -167,7 +201,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         private Label header;
 
         KanbanBlock(SimpleMilestone milestone) {
-            this.withFullHeight().withWidth("300px").withStyleName("kanban-block").withMargin(false);
+            this.withFullHeight().withWidth("350px").withStyleName("kanban-block").withMargin(false);
             this.milestone = milestone;
             dragLayoutContainer = new DDVerticalLayout();
             dragLayoutContainer.setSpacing(true);
@@ -176,7 +210,8 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((UIUtils.getBrowserHeight() - 450) + "px");
             MHorizontalLayout headerLayout = new MHorizontalLayout().withSpacing(false).withFullWidth().withStyleName("header");
             if (milestone == null) {
-                header = new ELabel(milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS).withDescription(milestone.getName());
+                header = new ELabel(AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED)).withStyleName(UIConstants.TEXT_ELLIPSIS)
+                        .withDescription(AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED));
             } else {
                 header = new ELabel(milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS).withDescription(milestone.getName());
             }
@@ -195,7 +230,12 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         }
 
         private void updateComponentCount() {
-            header.setValue(String.format("%s (%d)", milestone.getName(), getAssignmentComponentCount()));
+            if (milestone != null) {
+                header.setValue(String.format("%s (%d)", milestone.getName(), getAssignmentComponentCount()));
+            } else {
+                header.setValue(String.format("%s (%d)", AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED),
+                        getAssignmentComponentCount()));
+            }
         }
 
         private int getAssignmentComponentCount() {
@@ -217,7 +257,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             root.addStyleName("kanban-item");
             this.setCompositionRoot(root);
 
-            root.addComponent(new Label(assignment.getName()));
+            root.addComponent(ELabel.html(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + assignment.getName()));
         }
     }
 }

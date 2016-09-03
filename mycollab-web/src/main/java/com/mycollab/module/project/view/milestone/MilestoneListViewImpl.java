@@ -193,8 +193,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
 
         MHorizontalLayout closedHeaderLayout = new MHorizontalLayout();
 
-        closedHeader = new Label("", ContentMode.HTML);
-        closedHeader.setSizeUndefined();
+        closedHeader = ELabel.html("").withWidthUndefined();
         closedHeaderLayout.with(closedHeader).withAlign(closedHeader, Alignment.MIDDLE_CENTER);
 
         bodyContent.addComponent(closedHeaderLayout, "closed-header");
@@ -202,8 +201,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         bodyContent.addComponent(closeContainer, "closed-milestones");
 
         MHorizontalLayout inProgressHeaderLayout = new MHorizontalLayout();
-        inProgressHeader = new Label("", ContentMode.HTML);
-        inProgressHeader.setSizeUndefined();
+        inProgressHeader = ELabel.html("").withWidthUndefined();
         inProgressHeaderLayout.addComponent(inProgressHeader);
         inProgressHeaderLayout.setComponentAlignment(inProgressHeader, Alignment.MIDDLE_CENTER);
 
@@ -212,8 +210,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         bodyContent.addComponent(this.inProgressContainer, "in-progress-milestones");
 
         MHorizontalLayout futureHeaderLayout = new MHorizontalLayout();
-        futureHeader = ELabel.html("");
-        futureHeader.setSizeUndefined();
+        futureHeader = ELabel.html("").withWidthUndefined();
         futureHeaderLayout.addComponent(futureHeader);
         futureHeaderLayout.setComponentAlignment(futureHeader, Alignment.MIDDLE_CENTER);
 
