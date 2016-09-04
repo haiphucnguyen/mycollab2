@@ -52,7 +52,7 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectGene
         if (isCreateAssignment) {
             MButton newAssignmentBtn = new MButton(AppContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT),
                     clickEvent -> UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(),
-                            CurrentProjectVariables.getProjectId()))).withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
+                            CurrentProjectVariables.getProjectId(), true))).withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
             return newAssignmentBtn;
         }
         return null;

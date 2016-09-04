@@ -7,6 +7,8 @@ import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.ProjectRolePermissionCollections;
+import com.mycollab.module.project.ProjectTooltipGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Milestone;
 import com.mycollab.module.project.domain.ProjectGenericTask;
@@ -23,6 +25,7 @@ import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.milestone.IMilestoneKanbanView;
 import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
 import com.mycollab.module.project.view.milestone.ToggleGenericTaskSummaryField;
+import com.mycollab.pro.module.project.view.assignments.AssignmentAddWindow;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
@@ -32,6 +35,7 @@ import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UIUtils;
+import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.event.dd.DragAndDropEvent;
@@ -48,6 +52,7 @@ import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 import org.apache.commons.collections.CollectionUtils;
+import org.joda.time.LocalDate;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.button.MButton;
@@ -57,6 +62,8 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.mycollab.vaadin.web.ui.WebUIConstants.BUTTON_ACTION;
 
 /**
  * @author MyCollab Ltd
@@ -186,12 +193,14 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
     @Override
     public void attach() {
+        EventBusFactory.getInstance().register(newMilestoneHandler);
         super.attach();
     }
 
     @Override
     public void detach() {
         setProjectNavigatorVisibility(true);
+        EventBusFactory.getInstance().unregister(newMilestoneHandler);
         super.detach();
     }
 
@@ -205,7 +214,6 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
     private class KanbanBlock extends MVerticalLayout {
         private Milestone milestone;
         private DDVerticalLayout dragLayoutContainer;
-        private MHorizontalLayout buttonControls;
         private Label header;
 
         KanbanBlock(SimpleMilestone milestone) {
@@ -241,7 +249,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                             task.setMilestoneId(milestone.getId());
                         }
                         ProjectGenericTaskService projectGenericTaskService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
-
+                        projectGenericTaskService.updateAssignmentValue(task);
 
                         updateComponentCount();
 
@@ -264,15 +272,39 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 header = new ELabel(AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED)).withStyleName(UIConstants.TEXT_ELLIPSIS)
                         .withDescription(AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED));
             } else {
-                header = new ELabel(milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS).withDescription(milestone.getName());
+                header = new ELabel(milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS).withDescription
+                        (ProjectTooltipGenerator.generateToolTipMilestone(AppContext.getUserLocale(), AppContext.getDateFormat(),
+                                milestone, AppContext.getSiteUrl(), AppContext.getUserTimeZone(), false));
             }
 
             headerLayout.with(header).expand(header);
 
             final PopupButton controlsBtn = new PopupButton();
             controlsBtn.addStyleName(WebUIConstants.BUTTON_LINK);
+
+            boolean canWrite = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES);
+            boolean canExecute = CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MILESTONES);
+            OptionPopupContent popupContent = new OptionPopupContent();
+
+            if (canWrite) {
+                MButton editBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent -> {
+                }).withIcon(FontAwesome.EDIT);
+                popupContent.addOption(editBtn);
+            }
+            if (canExecute) {
+                MButton deleteBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
+                }).withIcon(FontAwesome.TRASH_O);
+                popupContent.addDangerOption(deleteBtn);
+            }
+
+            controlsBtn.setContent(popupContent);
             headerLayout.with(controlsBtn);
-            this.with(headerLayout, dragLayoutContainer);
+
+            MButton newAssignmentBtn = new MButton(AppContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT),
+                    clickEvent -> UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(),
+                            CurrentProjectVariables.getProjectId(), false))).withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
+
+            this.with(headerLayout, dragLayoutContainer, newAssignmentBtn).withAlign(newAssignmentBtn, Alignment.MIDDLE_RIGHT);
         }
 
         void addBlockItem(KanbanAssignmentBlockItem comp) {

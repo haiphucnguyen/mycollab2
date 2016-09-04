@@ -34,21 +34,26 @@ import java.util.Date;
  */
 public class AssignmentAddWindow extends MWindow {
 
-    public AssignmentAddWindow(Date date, final Integer prjId) {
+    public AssignmentAddWindow(Date date, final Integer prjId, boolean isIncludeMilestone) {
         super(AppContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT));
         withModal(true).withResizable(false).withCenter().withWidth("500px");
         final PopupDateFieldExt dateSelection = new PopupDateFieldExt(date);
         final ComboBox typeSelection = new ComboBox();
         typeSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-        typeSelection.addItems(AppContext.getMessage(TaskI18nEnum.SINGLE), AppContext.getMessage(BugI18nEnum.SINGLE),
-                AppContext.getMessage(MilestoneI18nEnum.SINGLE), AppContext.getMessage(RiskI18nEnum.SINGLE));
+        typeSelection.addItem(AppContext.getMessage(TaskI18nEnum.SINGLE));
         typeSelection.setItemIcon(AppContext.getMessage(TaskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
+        typeSelection.addItem(AppContext.getMessage(BugI18nEnum.SINGLE));
         typeSelection.setItemIcon(AppContext.getMessage(BugI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
-        typeSelection.setItemIcon(AppContext.getMessage(MilestoneI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
+        if (isIncludeMilestone) {
+            typeSelection.addItem(AppContext.getMessage(MilestoneI18nEnum.SINGLE));
+            typeSelection.setItemIcon(AppContext.getMessage(MilestoneI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
+        }
+
+        typeSelection.addItem(AppContext.getMessage(RiskI18nEnum.SINGLE));
         typeSelection.setItemIcon(AppContext.getMessage(RiskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
         typeSelection.select(AppContext.getMessage(TaskI18nEnum.SINGLE));
         typeSelection.setNullSelectionAllowed(false);
-        MVerticalLayout content = new MVerticalLayout().withMargin(true);
+        MVerticalLayout content = new MVerticalLayout();
         this.setContent(content);
 
         MButton okButton = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {

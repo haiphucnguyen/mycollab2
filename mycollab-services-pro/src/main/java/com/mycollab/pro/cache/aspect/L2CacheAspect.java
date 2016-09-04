@@ -64,7 +64,7 @@ public class L2CacheAspect {
                             } else if (arg instanceof SearchCriteria && (((SearchCriteria) arg).getSaccountid() != null)) {
                                 groupId = (Integer) ((SearchCriteria) arg).getSaccountid().getValue();
                             } else if (arg instanceof BasicSearchRequest) {
-                                SearchCriteria criteria = ((BasicSearchRequest) arg).getSearchCriteria();
+                                SearchCriteria criteria = (SearchCriteria) ((BasicSearchRequest) arg).getSearchCriteria();
                                 if (criteria instanceof SearchCriteria && (criteria.getSaccountid() != null)) {
                                     groupId = (Integer) criteria.getSaccountid().getValue();
                                 } else {
