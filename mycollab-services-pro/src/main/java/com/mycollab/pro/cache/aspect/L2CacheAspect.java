@@ -91,8 +91,7 @@ public class L2CacheAspect {
                                     return returnVal;
                                 }
                                 cacheService.putValue(groupId.toString(), key, returnVal);
-                                LOG.debug("There is no exist value of key {}, query from database then put it to " +
-                                        "cache", key);
+                                LOG.debug("There is no exist value of key {}, query from database then put it to cache", key);
                             } catch (Exception e) {
                                 LOG.error("Error while put to cache", e);
                             }

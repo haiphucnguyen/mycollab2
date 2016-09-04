@@ -35,6 +35,7 @@ import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UIUtils;
+import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -287,12 +288,24 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             OptionPopupContent popupContent = new OptionPopupContent();
 
             if (canWrite) {
-                MButton editBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent -> {
-                }).withIcon(FontAwesome.EDIT);
+                MButton editBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent ->
+                        EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(this, milestone))).withIcon(FontAwesome.EDIT);
                 popupContent.addOption(editBtn);
             }
             if (canExecute) {
                 MButton deleteBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
+                    ConfirmDialogExt.show(UI.getCurrent(),
+                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                            confirmDialog -> {
+                                if (confirmDialog.isConfirmed()) {
+                                    MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
+                                    milestoneService.removeWithSession(milestone, AppContext.getUsername(), AppContext.getAccountId());
+                                    ((ComponentContainer) KanbanBlock.this.getParent()).removeComponent(KanbanBlock.this);
+                                }
+                            });
                 }).withIcon(FontAwesome.TRASH_O);
                 popupContent.addDangerOption(deleteBtn);
             }
