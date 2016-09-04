@@ -22,6 +22,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.milestone.IMilestoneKanbanView;
 import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
+import com.mycollab.module.project.view.milestone.ToggleGenericTaskSummaryField;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
@@ -33,12 +34,19 @@ import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.vaadin.event.dd.DragAndDropEvent;
+import com.vaadin.event.dd.DropHandler;
+import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
+import com.vaadin.event.dd.acceptcriteria.Not;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.dd.VerticalDropLocation;
 import com.vaadin.ui.*;
 import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
+import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
+import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.jouni.restrain.Restrain;
@@ -207,6 +215,49 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             dragLayoutContainer.setSpacing(true);
             dragLayoutContainer.setComponentVerticalDropRatio(0.3f);
             dragLayoutContainer.setDragMode(LayoutDragMode.CLONE);
+            dragLayoutContainer.setDropHandler(new DropHandler() {
+                @Override
+                public void drop(DragAndDropEvent event) {
+                    LayoutBoundTransferable transferable = (LayoutBoundTransferable) event.getTransferable();
+
+                    DDVerticalLayout.VerticalLayoutTargetDetails details = (DDVerticalLayout.VerticalLayoutTargetDetails) event
+                            .getTargetDetails();
+
+                    Component dragComponent = transferable.getComponent();
+                    if (dragComponent instanceof KanbanAssignmentBlockItem) {
+                        KanbanAssignmentBlockItem kanbanItem = (KanbanAssignmentBlockItem) dragComponent;
+                        int newIndex = details.getOverIndex();
+                        if (details.getDropLocation() == VerticalDropLocation.BOTTOM) {
+                            dragLayoutContainer.addComponent(kanbanItem);
+                        } else if (newIndex == -1) {
+                            dragLayoutContainer.addComponent(kanbanItem, 0);
+                        } else {
+                            dragLayoutContainer.addComponent(kanbanItem, newIndex);
+                        }
+                        ProjectGenericTask task = kanbanItem.assignment;
+                        if (milestone == null) {
+                            task.setMilestoneId(null);
+                        } else {
+                            task.setMilestoneId(milestone.getId());
+                        }
+                        ProjectGenericTaskService projectGenericTaskService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
+
+
+                        updateComponentCount();
+
+                        Component sourceComponent = transferable.getSourceComponent();
+                        KanbanBlock sourceKanban = UIUtils.getRoot(sourceComponent, KanbanBlock.class);
+                        if (sourceKanban != null && sourceKanban != KanbanBlock.this) {
+                            sourceKanban.updateComponentCount();
+                        }
+                    }
+                }
+
+                @Override
+                public AcceptCriterion getAcceptCriterion() {
+                    return new Not(VerticalLocationIs.MIDDLE);
+                }
+            });
             new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((UIUtils.getBrowserHeight() - 450) + "px");
             MHorizontalLayout headerLayout = new MHorizontalLayout().withSpacing(false).withFullWidth().withStyleName("header");
             if (milestone == null) {
@@ -257,7 +308,10 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             root.addStyleName("kanban-item");
             this.setCompositionRoot(root);
 
-            root.addComponent(ELabel.html(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + assignment.getName()));
+            ToggleGenericTaskSummaryField toggleGenericTaskSummaryField = new ToggleGenericTaskSummaryField(assignment);
+            MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(assignment
+                    .getType())).withWidthUndefined(), toggleGenericTaskSummaryField);
+            root.addComponent(headerLayout);
         }
     }
 }

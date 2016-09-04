@@ -24,17 +24,17 @@ import com.mycollab.db.persistence.service.IService;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class CacheUtils {
+class CacheUtils {
 
-    public static Class<?> getEnclosingServiceInterface(Class<?> serviceClass) {
+    static Class<?> getEnclosingServiceInterface(Class<?> serviceClass) {
         return ClassUtils.getInterfaceInstanceOf(serviceClass, IService.class);
     }
 
-    public static String getEnclosingServiceInterfaceName(Class<?> serviceClass) {
+    static String getEnclosingServiceInterfaceName(Class<?> serviceClass) {
         return getEnclosingServiceInterface(serviceClass).getName();
     }
 
-    public static boolean isInBlackList(Class<?> cls) {
+    static boolean isInBlackList(Class<?> cls) {
         return (cls != null) && (cls.getAnnotation(IgnoreCacheClass.class) != null);
     }
 }
