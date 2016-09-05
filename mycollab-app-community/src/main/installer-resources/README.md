@@ -52,18 +52,16 @@ Version 5.4.2
 
 **Improvements & New Features**
 
-* [Premium] Show the card board of assignments in the milestone view
 * Allow users to drag file to upload
-* Ask users if they want to close the child tasks when he close the parent task or phase
 * Add the Russia language, and update the language files
 * Minor improvements
 
 **Bug Fixes**
 
 * [Premium] Can not receive the update notification from some clients
+* Display date format associates with user language
 * Can not recognize some languages files due to the incompatibility issue of getlocalization service
 * Can not create the new case, campaign
-* Can not navigate to the task preview in mobile devices
 * Can not export the CSV, Excel with Asia languages like Japanese, Korean and Chinese
 * Not display the user language in the tooltip
 * Project component, version can not display rich text description

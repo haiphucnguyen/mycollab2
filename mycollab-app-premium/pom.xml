@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent-premium</artifactId>
-        <version>5.4.1</version>
+        <version>5.4.2</version>
         <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.mycollab</groupId>
@@ -35,55 +35,55 @@
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-servlet</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-license</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-scheduler-premium</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-reporting-premium</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-mobile</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-mobile-premium</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-services-pro</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-services-premium</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-web-premium</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
         </dependency>
 
         <dependency>
@@ -235,7 +235,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-esb</artifactId>
-                                    <version>5.4.1</version>
+                                    <version>5.4.2</version>
                                     <type>jar</type>
                                     <includes>*.ftl</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
@@ -243,7 +243,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-localization</artifactId>
-                                    <version>5.4.1</version>
+                                    <version>5.4.2</version>
                                     <type>jar</type>
                                     <includes>*.properties</includes>
                                     <excludes>**/pom.properties</excludes>
@@ -252,7 +252,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-scheduler</artifactId>
-                                    <version>5.4.1</version>
+                                    <version>5.4.2</version>
                                     <type>jar</type>
                                     <includes>*.ftl</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
@@ -260,7 +260,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-servlet</artifactId>
-                                    <version>5.4.1</version>
+                                    <version>5.4.2</version>
                                     <type>jar</type>
                                     <includes>*.ftl</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>

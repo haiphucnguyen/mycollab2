@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent-premium</artifactId>
-        <version>5.4.1</version>
+        <version>5.4.2</version>
         <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
@@ -27,25 +27,25 @@
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-services-premium</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-ui</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-web</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-web-pro</artifactId>
-            <version>5.4.1</version>
+            <version>5.4.2</version>
         </dependency>
     </dependencies>
 </project>
