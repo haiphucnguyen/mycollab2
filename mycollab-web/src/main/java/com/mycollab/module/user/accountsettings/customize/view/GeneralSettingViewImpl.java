@@ -102,19 +102,19 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         Date now = new GregorianCalendar().getTime();
         String defaultFullDateFormat = billingAccount.getDateFormatInstance();
         gridFormLayoutHelper.addComponent(new Label(String.format("%s (%s)",
-                DateTimeUtils.formatDate(now, billingAccount.getDateFormatInstance()), defaultFullDateFormat)),
+                DateTimeUtils.formatDate(now, billingAccount.getDateFormatInstance(), AppContext.getUserLocale()), defaultFullDateFormat)),
                 AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_YYMMDD_FORMAT),
                 AppContext.getMessage(GenericI18Enum.FORM_DATE_FORMAT_HELP), 1, 0);
 
         String defaultShortDateFormat = billingAccount.getShortDateFormatInstance();
         gridFormLayoutHelper.addComponent(new Label(String.format("%s (%s)",
-                DateTimeUtils.formatDate(now, billingAccount.getShortDateFormatInstance()), defaultShortDateFormat)),
-                AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_MMDD_FORMAT),
+                DateTimeUtils.formatDate(now, billingAccount.getShortDateFormatInstance(), AppContext.getUserLocale()),
+                defaultShortDateFormat)), AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_MMDD_FORMAT),
                 AppContext.getMessage(GenericI18Enum.FORM_DATE_FORMAT_HELP), 1, 1);
 
         String defaultLongDateFormat = billingAccount.getLongDateFormatInstance();
         gridFormLayoutHelper.addComponent(new Label(String.format("%s (%s)",
-                DateTimeUtils.formatDate(now, billingAccount.getLongDateFormatInstance()), defaultLongDateFormat)),
+                DateTimeUtils.formatDate(now, billingAccount.getLongDateFormatInstance(), AppContext.getUserLocale()), defaultLongDateFormat)),
                 AppContext.getMessage(AdminI18nEnum.FORM_DEFAULT_HUMAN_DATE_FORMAT),
                 AppContext.getMessage(GenericI18Enum.FORM_DATE_FORMAT_HELP), 1, 2);
 
@@ -155,10 +155,8 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
 
             @Override
             public void buttonClick(final Button.ClickEvent event) {
-                Iterator<Component> iterator = serviceMenu.iterator();
 
-                while (iterator.hasNext()) {
-                    Component comp = iterator.next();
+                for (Component comp : serviceMenu) {
                     if (comp != event.getButton()) {
                         comp.removeStyleName("selected");
                     }

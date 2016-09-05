@@ -183,31 +183,31 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         calendar.setTime(monday);
 
         timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_MONDAY), AppContext.getMessage(TimeTrackingI18nEnum.MONDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_TUESDAY), AppContext.getMessage(TimeTrackingI18nEnum.TUESDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), AppContext.getMessage(TimeTrackingI18nEnum.WEDNESDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_THURSDAY), AppContext.getMessage(TimeTrackingI18nEnum.THURSDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_FRIDAY), AppContext.getMessage(TimeTrackingI18nEnum.FRIDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_SATURDAY), AppContext.getMessage(TimeTrackingI18nEnum.SATURDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_SUNDAY), AppContext.getMessage(TimeTrackingI18nEnum.SUNDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
 
     }
 

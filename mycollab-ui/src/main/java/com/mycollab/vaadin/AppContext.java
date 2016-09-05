@@ -454,7 +454,8 @@ public class AppContext implements Serializable {
      * @return
      */
     public static String formatDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, AppContext.getDateFormat(), AppContext.getUserTimeZone());
+        return date == null ? "" : DateTimeUtils.formatDate(date, AppContext.getDateFormat(), AppContext.getUserLocale(),
+                AppContext.getUserTimeZone());
     }
 
     /**
@@ -471,7 +472,8 @@ public class AppContext implements Serializable {
     }
 
     public static String formatShortDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, AppContext.getShortDateFormat(), AppContext.getUserTimeZone());
+        return date == null ? "" : DateTimeUtils.formatDate(date, AppContext.getShortDateFormat(), AppContext.getUserLocale(),
+                AppContext.getUserTimeZone());
     }
 
     public static String formatDuration(Date date) {

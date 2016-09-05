@@ -31,6 +31,7 @@ import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
+import com.mycollab.vaadin.ui.field.CountryViewField;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.ui.field.UrlLinkViewField;
@@ -211,6 +212,8 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
                             user.getTwitteraccount());
                 } else if (propertyId.equals("skypecontact")) {
                     return new UrlLinkViewField(String.format("skype:%s?chat", user.getSkypecontact()), user.getSkypecontact());
+                } else if (User.Field.country.equalTo(propertyId)) {
+                    return new CountryViewField(user.getCountry());
                 }
                 return null;
             }

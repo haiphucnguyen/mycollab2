@@ -3,6 +3,7 @@ package com.mycollab.pro.module.project.ui.components;
 import com.mycollab.common.TableViewField;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
+import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
 import org.apache.commons.lang3.time.FastDateFormat;
@@ -34,6 +35,6 @@ public class TimeTrackingDateOrderComponent extends AbstractTimeTrackingDisplayC
 
     @Override
     String getGroupCriteria(SimpleItemTimeLogging timeEntry) {
-        return DateTimeUtils.formatDate(timeEntry.getLogforday(), "yyyy/MM/dd");
+        return DateTimeUtils.formatDate(timeEntry.getLogforday(), "yyyy/MM/dd", AppContext.getUserLocale());
     }
 }

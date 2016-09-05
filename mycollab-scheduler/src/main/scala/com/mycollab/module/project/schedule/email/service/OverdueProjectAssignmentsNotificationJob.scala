@@ -52,7 +52,7 @@ object OverdueProjectAssignmentsNotificationJob {
   private val LOG = LoggerFactory.getLogger(classOf[OverdueProjectAssignmentsNotificationJob])
 
   class OverdueAssignmentFormatter {
-    def formatDate(date: Date): String = DateTimeUtils.formatDate(date, "yyyy-MM-dd")
+    def formatDate(date: Date): String = DateTimeUtils.formatDate(date, "yyyy-MM-dd", Locale.US)
 
     def formatLink(subDomain: String, assignment: ProjectGenericTask): String = {
       try {
