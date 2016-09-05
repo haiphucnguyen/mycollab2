@@ -45,7 +45,7 @@ import org.springframework.stereotype.Component
   @AllowConcurrentEvents
   @Subscribe
   def execute(event: SendUserInvitationEvent): Unit = {
-    val inviteeUser = userService.findUserByUserNameInAccount(event.invitee, event.sAccountId)
+    val inviteeUser = userService.findUserInAccount(event.invitee, event.sAccountId)
     if (inviteeUser != null) {
       contentGenerator.putVariable("siteUrl", SiteConfiguration.getSiteUrl(inviteeUser.getSubdomain))
       contentGenerator.putVariable("invitee", inviteeUser)
