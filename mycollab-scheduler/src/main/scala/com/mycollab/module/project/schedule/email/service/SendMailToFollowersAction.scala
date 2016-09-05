@@ -21,6 +21,7 @@ import com.mycollab.common.domain.{MailRecipientField, SimpleRelayEmailNotificat
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.common.service.{AuditLogService, CommentService}
 import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.db.arguments.{BasicSearchRequest, StringSearchField}
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.mail.MailUtils
@@ -64,6 +65,8 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
           contentGenerator.putVariable("context", context)
           contentGenerator.putVariable("mapper", getItemFieldMapper)
           contentGenerator.putVariable("userName", user.getDisplayName)
+          contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Copyright,
+            DateTimeUtils.getCurrentYear))
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List[MailRecipientField](userMail)
           extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
@@ -96,14 +99,15 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
           context.setWrappedBean(bean)
           buildExtraTemplateVariables(context)
           contentGenerator.putVariable("context", context)
-          val userLocale = LocalizationHelper.getLocaleInstance(user.getLanguage)
           if (comments.size() > 0) {
-            contentGenerator.putVariable("lastCommentsValue", LocalizationHelper.getMessage(userLocale, MailI18nEnum.Last_Comments_Value, "" + comments.size()))
+            contentGenerator.putVariable("lastCommentsValue", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Last_Comments_Value, "" + comments.size()))
           }
-          contentGenerator.putVariable("Changes", LocalizationHelper.getMessage(userLocale, MailI18nEnum.Changes))
-          contentGenerator.putVariable("Field", LocalizationHelper.getMessage(userLocale, MailI18nEnum.Field))
-          contentGenerator.putVariable("Old_Value", LocalizationHelper.getMessage(userLocale, MailI18nEnum.Old_Value))
-          contentGenerator.putVariable("New_Value", LocalizationHelper.getMessage(userLocale, MailI18nEnum.New_Value))
+          contentGenerator.putVariable("Changes", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Changes))
+          contentGenerator.putVariable("Field", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Field))
+          contentGenerator.putVariable("Old_Value", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Old_Value))
+          contentGenerator.putVariable("New_Value", LocalizationHelper.getMessage(context.locale, MailI18nEnum.New_Value))
+          contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Copyright,
+            DateTimeUtils.getCurrentYear))
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List[MailRecipientField](userMail)
           extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
@@ -135,6 +139,8 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
           val userLocale = LocalizationHelper.getLocaleInstance(user.getLanguage)
           contentGenerator.putVariable("lastCommentsValue", LocalizationHelper.getMessage(userLocale, MailI18nEnum.Last_Comments_Value, "" + comments.size()))
           contentGenerator.putVariable("comment", context.getEmailNotification)
+          contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Copyright,
+            DateTimeUtils.getCurrentYear))
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val toRecipients = List[MailRecipientField](userMail)
           extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, toRecipients,

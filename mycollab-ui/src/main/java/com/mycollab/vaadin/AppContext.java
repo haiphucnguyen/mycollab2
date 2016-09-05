@@ -434,16 +434,15 @@ public class AppContext implements Serializable {
      * @return
      */
     public static String formatDateTime(Date date) {
-//        return date == null ? "" : DateTimeUtils.formatDate(date, AppContext.getDateTimeFormat(), AppContext.getUserTimeZone());
         if (date == null) {
             return "";
         } else {
             DateTime jodaDate = new DateTime(date).toDateTime(DateTimeZone.forTimeZone(AppContext.getUserTimeZone()));
             if (jodaDate.getHourOfDay() > 0 || jodaDate.getMinuteOfHour() > 0) {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppContext.getDateTimeFormat());
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppContext.getDateTimeFormat()).withLocale(AppContext.getUserLocale());
                 return formatter.print(jodaDate);
             } else {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppContext.getDateFormat());
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppContext.getDateFormat()).withLocale(AppContext.getUserLocale());
                 return formatter.print(jodaDate);
             }
         }
