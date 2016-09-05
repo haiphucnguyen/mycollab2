@@ -21,8 +21,9 @@ import java.util.{Date, Locale}
 
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.mycollab.common.domain.MailRecipientField
+import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.configuration.SiteConfiguration
-import com.mycollab.core.utils.RandomPasswordGenerator
+import com.mycollab.core.utils.{DateTimeUtils, RandomPasswordGenerator}
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.billing.RegisterStatusConstants
 import com.mycollab.module.esb.GenericCommand
@@ -114,6 +115,8 @@ import org.springframework.stereotype.Component
         }
         projectMemberService.saveWithSession(member, "")
       }
+      contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
+        DateTimeUtils.getCurrentYear))
       contentGenerator.putVariable("urlAccept", ProjectLinkGenerator.generateProjectFullLink(SiteConfiguration.getSiteUrl(subDomain), event.projectId))
       val subject = LocalizationHelper.getMessage(Locale.US, ProjectMemberI18nEnum.MAIL_INVITE_USERS_SUBJECT,
         project.getName, SiteConfiguration.getDefaultSiteName)

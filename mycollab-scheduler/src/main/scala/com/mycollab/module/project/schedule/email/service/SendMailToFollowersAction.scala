@@ -16,6 +16,7 @@
  */
 package com.mycollab.module.project.schedule.email.service
 
+import com.hp.gagawa.java.elements.A
 import com.mycollab.common.domain.criteria.CommentSearchCriteria
 import com.mycollab.common.domain.{MailRecipientField, SimpleRelayEmailNotification}
 import com.mycollab.common.i18n.MailI18nEnum
@@ -49,6 +50,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
   protected var bean: B = _
   protected var projectMember: SimpleProjectMember = _
   protected var siteUrl: String = _
+  private var projectId: Integer = _
   
   def sendNotificationForCreateAction(notification: SimpleRelayEmailNotification) {
     val projectRelayEmailNotification = notification.asInstanceOf[ProjectRelayEmailNotification]
@@ -67,6 +69,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
           contentGenerator.putVariable("userName", user.getDisplayName)
           contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Copyright,
             DateTimeUtils.getCurrentYear))
+          contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List[MailRecipientField](userMail)
           extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
@@ -108,8 +111,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
           contentGenerator.putVariable("New_Value", LocalizationHelper.getMessage(context.locale, MailI18nEnum.New_Value))
           contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Copyright,
             DateTimeUtils.getCurrentYear))
-          contentGenerator.putVariable("Project_Footer", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Project_Footer,
-            getProjectName))
+          contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List[MailRecipientField](userMail)
           extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
@@ -143,6 +145,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
           contentGenerator.putVariable("comment", context.getEmailNotification)
           contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Copyright,
             DateTimeUtils.getCurrentYear))
+          contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val toRecipients = List[MailRecipientField](userMail)
           extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, toRecipients,
@@ -153,6 +156,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
   }
   
   private def onInitAction(notification: ProjectRelayEmailNotification) {
+    projectId = notification.getProjectId
     siteUrl = MailUtils.getSiteUrl(notification.getSaccountid)
     val relatedProject = projectService.findById(notification.getProjectId, notification.getSaccountid)
     val projectHyperLink = new WebItem(relatedProject.getName, ProjectLinkGenerator.generateProjectFullLink(siteUrl, relatedProject.getId))
@@ -166,6 +170,14 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
   protected def getItemName: String
   
   protected def getProjectName: String
+  
+  private def getProjectFooter(context: MailContext[B]):String = LocalizationHelper.getMessage(context.locale,
+    MailI18nEnum.Project_Footer, getProjectName, getProjectNotificationSettingLink(context))
+  
+  private def getProjectNotificationSettingLink(context: MailContext[B]): String = {
+    new A(ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, projectId)).
+      appendText(LocalizationHelper.getMessage(context.locale, MailI18nEnum.Project_Notification_Setting)).write()
+  }
   
   protected def buildExtraTemplateVariables(emailNotification: MailContext[B])
   

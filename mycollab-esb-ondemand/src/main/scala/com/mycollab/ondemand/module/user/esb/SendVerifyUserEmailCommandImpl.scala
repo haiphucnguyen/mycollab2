@@ -4,7 +4,9 @@ import java.util.{Arrays, Locale}
 
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.mycollab.common.domain.MailRecipientField
+import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.billing.UserStatusConstants
 import com.mycollab.module.esb.GenericCommand
@@ -39,6 +41,8 @@ import org.springframework.stereotype.Component
 //    contentGenerator.putVariable("siteUrl", siteUrl)
 //    val confirmLink = siteUrl + "user/confirm_signup/" + UrlEncodeDecoder.encode(user.getUsername + "/" + user.getAccountId)
 //    contentGenerator.putVariable("linkConfirm", confirmLink)
+    contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
+      DateTimeUtils.getCurrentYear))
     extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
       Arrays.asList(new MailRecipientField(user.getEmail, user.getFirstname + " " + user.getLastname)),
       LocalizationHelper.getMessage(Locale.US, UserI18nEnum.MAIL_CONFIRM_PASSWORD_SUBJECT),
