@@ -50,6 +50,8 @@ class ProjectRiskRelayEmailNotificationActionImpl extends SendMailToAllMembersAc
   
   override protected def getItemName: String = StringUtils.trim(bean.getRiskname, 100)
   
+  override protected def getProjectName: String = bean.getProjectName
+  
   override protected def getCreateSubject(context: MailContext[SimpleRisk]): String = context.getMessage(
     RiskI18nEnum.MAIL_CREATE_ITEM_SUBJECT, bean.getProjectName, context.getChangeByUserFullName, getItemName)
   

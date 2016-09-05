@@ -128,6 +128,8 @@ abstract class SendMailToAllMembersAction[B] extends SendingRelayEmailNotificati
           contentGenerator.putVariable("New_Value", LocalizationHelper.getMessage(context.locale, MailI18nEnum.New_Value))
           contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Copyright,
             DateTimeUtils.getCurrentYear))
+          contentGenerator.putVariable("Project_Footer", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Project_Footer,
+            getProjectName))
           contentGenerator.putVariable("context", context)
           context.setWrappedBean(bean)
           buildExtraTemplateVariables(context)
@@ -185,6 +187,8 @@ abstract class SendMailToAllMembersAction[B] extends SendingRelayEmailNotificati
   protected def buildExtraTemplateVariables(context: MailContext[B])
 
   protected def getItemName: String
+  
+  protected def getProjectName: String
 
   protected def getCreateSubject(context: MailContext[B]): String
 

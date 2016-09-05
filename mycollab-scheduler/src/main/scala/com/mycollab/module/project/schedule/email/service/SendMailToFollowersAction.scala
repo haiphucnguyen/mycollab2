@@ -108,6 +108,8 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
           contentGenerator.putVariable("New_Value", LocalizationHelper.getMessage(context.locale, MailI18nEnum.New_Value))
           contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Copyright,
             DateTimeUtils.getCurrentYear))
+          contentGenerator.putVariable("Project_Footer", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Project_Footer,
+            getProjectName))
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List[MailRecipientField](userMail)
           extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
@@ -162,6 +164,8 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
   protected def getBeanInContext(notification: ProjectRelayEmailNotification): B
   
   protected def getItemName: String
+  
+  protected def getProjectName: String
   
   protected def buildExtraTemplateVariables(emailNotification: MailContext[B])
   
