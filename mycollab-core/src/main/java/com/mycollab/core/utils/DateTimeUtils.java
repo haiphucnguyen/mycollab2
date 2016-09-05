@@ -103,8 +103,7 @@ public class DateTimeUtils {
         return "";
     }
 
-    public static String convertToStringWithUserTimeZone(Date date, String dateFormat, Locale locale, TimeZone
-            userTimeZone) {
+    public static String convertToStringWithUserTimeZone(Date date, String dateFormat, Locale locale, TimeZone userTimeZone) {
         if (date == null)
             return "";
         return formatDate(date, dateFormat, locale, userTimeZone);
@@ -147,7 +146,7 @@ public class DateTimeUtils {
             return "";
         }
 
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(dateFormat);
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(dateFormat).withLocale(locale);
         if (timezone != null) {
             formatter = formatter.withZone(DateTimeZone.forTimeZone(timezone));
         }
@@ -218,9 +217,7 @@ public class DateTimeUtils {
         return max;
     }
 
-    public static String getMonthName(int month, Locale locale) {
-        DateFormatSymbols symbols = new DateFormatSymbols(locale);
-        String[] monthNames = symbols.getMonths();
-        return monthNames[month - 1];
+    public static String getCurrentYear() {
+        return String.valueOf(new LocalDate().getYear());
     }
 }
