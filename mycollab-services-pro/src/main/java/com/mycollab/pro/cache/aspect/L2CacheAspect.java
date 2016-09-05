@@ -53,9 +53,9 @@ public class L2CacheAspect {
         if (ArrayUtils.isNotEmpty(args)) {
             Annotation[][] parameterAnnotations = method.getParameterAnnotations();
             for (int i = 0; i < parameterAnnotations.length; i++) {
-                Annotation[] annos = parameterAnnotations[i];
-                for (Annotation paramAnno : annos) {
-                    if (paramAnno instanceof CacheKey) {
+                Annotation[] annotations = parameterAnnotations[i];
+                for (Annotation paramAnnotation : annotations) {
+                    if (paramAnnotation instanceof CacheKey) {
                         Object arg = args[i];
                         Integer groupId;
                         try {
@@ -65,7 +65,7 @@ public class L2CacheAspect {
                                 groupId = (Integer) ((SearchCriteria) arg).getSaccountid().getValue();
                             } else if (arg instanceof BasicSearchRequest) {
                                 SearchCriteria criteria = (SearchCriteria) ((BasicSearchRequest) arg).getSearchCriteria();
-                                if (criteria instanceof SearchCriteria && (criteria.getSaccountid() != null)) {
+                                if (criteria.getSaccountid() != null) {
                                     groupId = (Integer) criteria.getSaccountid().getValue();
                                 } else {
                                     return pjp.proceed();
@@ -88,7 +88,7 @@ public class L2CacheAspect {
                             returnVal = pjp.proceed();
                             try {
                                 if (returnVal == null) {
-                                    return returnVal;
+                                    return null;
                                 }
                                 cacheService.putValue(groupId.toString(), key, returnVal);
                                 LOG.debug("There is no exist value of key {}, query from database then put it to cache", key);

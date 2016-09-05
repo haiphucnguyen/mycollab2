@@ -53,9 +53,9 @@ public class L2CacheEvictAspect {
         if (args != null && args.length > 0) {
             Annotation[][] parameterAnnotations = method.getParameterAnnotations();
             for (int i = 0; i < parameterAnnotations.length; i++) {
-                Annotation[] annos = parameterAnnotations[i];
-                for (Annotation paramAnno : annos) {
-                    if (paramAnno instanceof CacheKey) {
+                Annotation[] annotations = parameterAnnotations[i];
+                for (Annotation paramAnnotation : annotations) {
+                    if (paramAnnotation instanceof CacheKey) {
                         Object arg = args[i];
                         Integer groupId;
 
@@ -84,7 +84,7 @@ public class L2CacheEvictAspect {
 
                             CacheArgs cacheable = method.getAnnotation(CacheArgs.class);
                             if (cacheable != null) {
-                                if (cacheable.values() != null && cacheable.values().length > 0) {
+                                if (cacheable.values().length > 0) {
                                     for (Class prefKey : cacheable.values()) {
                                         cacheService.removeCacheItem(groupId.toString(), prefKey.getName());
                                     }
