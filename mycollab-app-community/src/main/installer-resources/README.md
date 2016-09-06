@@ -5,7 +5,7 @@ MyCollab is an open source Collaboration Platform of Project Management, CRM and
 
 MyCollab is licensed under the Affero GPLv3 terms.
 
-You can checkout our latest development source codes at [https://github.com/esofthead/mycollab](https://github.com/esofthead/mycollab)
+You can checkout our latest development source codes at [https://github.com/MyCollab/mycollab](https://github.com/MyCollab/mycollab)
 
 For further information, please visit:
 
@@ -39,6 +39,18 @@ understanding in a matter of minutes.
 
 Last changelog
 ==============
+
+Version 5.4.3
+-------------
+
+**Library Upgrades**
+
+
+**Improvements & New Features**
+
+
+**Bug Fixes**
+
 
 Version 5.4.2
 -------------
