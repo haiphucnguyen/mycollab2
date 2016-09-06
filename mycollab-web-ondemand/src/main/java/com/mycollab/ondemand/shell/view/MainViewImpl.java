@@ -56,7 +56,7 @@ public class MainViewImpl extends AbstractMainView {
                 accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
                 trialBlock.setText(String.format("<div class='informBlock'>%s<br></div>",
                         AppContext.getMessage(BillingI18nEnum.OPT_ACCOUNT_SUSPENDED)));
-                AppContext.getInstance().setIsValidAccount(false);
+//                AppContext.getInstance().setIsValidAccount(false);
             } else if (!subscription.isValid()) {
                 TrialBlock trialBlock = new TrialBlock();
                 accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
@@ -75,7 +75,7 @@ public class MainViewImpl extends AbstractMainView {
             int daysLeft = dur.toStandardDays().getDays();
             if (daysLeft < 0) {
                 trialBlock.setText(String.format("<div class='informBlock'>%s<br></div>", AppContext.getMessage(ShellI18nEnum.OPT_TRIAL)));
-                AppContext.getInstance().setIsValidAccount(false);
+//                AppContext.getInstance().setIsValidAccount(false);
             } else {
                 trialBlock.setText(String.format("<div class='informBlock'>%s</div><div class='informBlock'>&gt;&gt;</div>", AppContext.getMessage(ShellI18nEnum.OPT_TRIAL_LEFT, daysLeft)));
             }

@@ -164,7 +164,7 @@ public class DemandScheduleConfiguration {
                 sendingCountLiveInstancesByDateTrigger().getObject(),
                 deleteObsoleteAccountsTrigger().getObject(),
                 deleteObsoleteUsersTrigger().getObject(),
-                sendAccountBillingEmailTrigger().getObject(),
+                /*sendAccountBillingEmailTrigger().getObject(),*/
                 deleteObsoleteLiveInstancesTrigger().getObject(),
                 sendOneWeekFollowupDownloadedUsersTrigger().getObject(),
                 sendOneWeekFollowupSignupUsersTrigger().getObject());
