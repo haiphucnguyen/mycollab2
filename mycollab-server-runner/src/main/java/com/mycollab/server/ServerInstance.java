@@ -26,7 +26,6 @@ import java.io.File;
  * @since 5.0.4
  */
 public class ServerInstance {
-    Container a;
     private static ServerInstance instance = new ServerInstance();
     private JettyServerBasedRunner server;
     private boolean isUpgrading = false;

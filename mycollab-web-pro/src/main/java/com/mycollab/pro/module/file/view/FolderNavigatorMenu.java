@@ -205,8 +205,7 @@ public class FolderNavigatorMenu extends Tree {
     }
 
     public interface SelectedFolderListener extends EventListener, Serializable {
-        Method viewInitMethod = ReflectTools.findMethod(
-                SelectedFolderListener.class, "selectFolder", SelectFolderEvent.class);
+        Method viewInitMethod = ReflectTools.findMethod(SelectedFolderListener.class, "selectFolder", SelectFolderEvent.class);
 
         void selectFolder(SelectFolderEvent event);
     }
