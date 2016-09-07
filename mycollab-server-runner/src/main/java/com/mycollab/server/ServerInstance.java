@@ -17,6 +17,7 @@
 package com.mycollab.server;
 
 import com.mycollab.core.MyCollabException;
+import org.eclipse.jetty.util.component.Container;
 
 import java.io.File;
 
@@ -25,6 +26,7 @@ import java.io.File;
  * @since 5.0.4
  */
 public class ServerInstance {
+    Container a;
     private static ServerInstance instance = new ServerInstance();
     private JettyServerBasedRunner server;
     private boolean isUpgrading = false;
