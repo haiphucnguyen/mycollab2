@@ -36,6 +36,8 @@ import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.BugI18nEnum;
+import com.mycollab.module.project.i18n.OptionI18nEnum;
+import com.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
@@ -176,7 +178,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     private class BugPreviewBeanFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<SimpleBug> {
         private static final long serialVersionUID = -288972730658409446L;
 
-        public BugPreviewBeanFormFieldFactory(GenericBeanForm<SimpleBug> form) {
+        BugPreviewBeanFormFieldFactory(GenericBeanForm<SimpleBug> form) {
             super(form);
         }
 
@@ -217,7 +219,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 return new I18nFormViewField(beanItem.getStatus(), BugStatus.class);
             } else if (propertyId.equals("priority")) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
-                    String priorityLink = ProjectAssetsManager.getBugPriority(beanItem.getPriority()).getHtml() + " " + beanItem.getPriority();
+                    String priorityLink = ProjectAssetsManager.getBugPriority(beanItem.getPriority()).getHtml() + " "
+                            + AppContext.getMessage(BugPriority.class, beanItem.getPriority());
                     DefaultViewField field = new DefaultViewField(priorityLink, ContentMode.HTML);
                     field.addStyleName("bug-" + beanItem.getPriority().toLowerCase());
                     return field;
