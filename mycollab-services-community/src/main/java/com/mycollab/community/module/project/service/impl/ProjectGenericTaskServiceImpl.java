@@ -31,4 +31,9 @@ public class ProjectGenericTaskServiceImpl extends AbstractProjectGenericTaskSer
     public void updateAssignmentValue(ProjectGenericTask assignment) {
         throw new MyCollabException("Not support this operation in the community edition");
     }
+
+    @Override
+    public void closeSubAssignmentOfMilestone(Integer milestoneId) {
+        throw new MyCollabException("Not support this operation in the community edition");
+    }
 }

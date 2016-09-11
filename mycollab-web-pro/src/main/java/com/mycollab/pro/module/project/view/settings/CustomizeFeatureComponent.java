@@ -76,9 +76,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
         layout.addComponent(leftColLayout);
 
-        VerticalLayout rightColLayout = new VerticalLayout();
-        rightColLayout.setWidth("100%");
-        rightColLayout.setSpacing(true);
+        MVerticalLayout rightColLayout = new MVerticalLayout().withFullWidth().withMargin(false);
 
         final FeatureSelectionBox displayFileSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE),

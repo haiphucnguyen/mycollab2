@@ -34,4 +34,6 @@ public interface ProjectGenericTaskService extends ISearchableService<ProjectGen
     List<Integer> getProjectsHasOverdueAssignments(ProjectGenericTaskSearchCriteria searchCriteria);
 
     void updateAssignmentValue(ProjectGenericTask assignment);
+
+    void closeSubAssignmentOfMilestone(Integer milestoneId);
 }

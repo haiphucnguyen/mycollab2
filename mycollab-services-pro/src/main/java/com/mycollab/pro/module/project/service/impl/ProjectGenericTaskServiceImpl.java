@@ -57,4 +57,9 @@ public class ProjectGenericTaskServiceImpl extends AbstractProjectGenericTaskSer
 
         asyncEventBus.post(new CleanCacheEvent(assignment.getsAccountId(), new Class[]{ProjectService.class}));
     }
+
+    @Override
+    public void closeSubAssignmentOfMilestone(Integer milestoneId) {
+
+    }
 }

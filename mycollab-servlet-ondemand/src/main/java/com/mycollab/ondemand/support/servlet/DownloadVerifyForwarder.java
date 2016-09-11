@@ -51,7 +51,7 @@ public class DownloadVerifyForwarder extends GenericHttpServlet {
             }
             emailReferenceService.save(email);
         } else {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("Can not find email: " + email);
         }
     }
 }

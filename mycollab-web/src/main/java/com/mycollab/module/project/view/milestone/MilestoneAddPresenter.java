@@ -16,6 +16,11 @@
  */
 package com.mycollab.module.project.view.milestone;
 
+import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.configuration.SiteConfiguration;
+import com.mycollab.db.arguments.NumberSearchField;
+import com.mycollab.db.arguments.SearchField;
+import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
@@ -23,8 +28,12 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Milestone;
 import com.mycollab.module.project.domain.SimpleMilestone;
+import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.mycollab.module.project.events.MilestoneEvent;
+import com.mycollab.module.project.i18n.OptionI18nEnum;
+import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
+import com.mycollab.module.project.service.ProjectGenericTaskService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppContext;
@@ -35,8 +44,10 @@ import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.ViewScope;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
+import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UI;
 
 /**
  * @author MyCollab Ltd.
@@ -111,6 +122,29 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
         String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), milestone.getProjectid(),
                 ProjectTypeConstants.MILESTONE, "" + milestone.getId());
         uploadField.saveContentsToRepo(attachPath);
+
+        if (!SiteConfiguration.isCommunityEdition() && OptionI18nEnum.MilestoneStatus.Closed.name().equals(milestone.getStatus())) {
+            ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
+            searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+            searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.RISK,
+                    ProjectTypeConstants.TASK));
+            searchCriteria.setMilestoneId(NumberSearchField.equal(milestone.getId()));
+            searchCriteria.setIsOpenned(new SearchField());
+            ProjectGenericTaskService genericTaskService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
+            int openAssignmentsCount = genericTaskService.getTotalCount(searchCriteria);
+            if (openAssignmentsCount > 0) {
+                ConfirmDialogExt.show(UI.getCurrent(),
+                        AppContext.getMessage(GenericI18Enum.OPT_QUESTION, AppContext.getSiteName()),
+                        AppContext.getMessage(ProjectCommonI18nEnum.OPT_CLOSE_SUB_ASSIGNMENTS),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        confirmDialog -> {
+                            if (confirmDialog.isConfirmed()) {
+
+                            }
+                        });
+            }
+        }
         return milestone.getId();
     }
 

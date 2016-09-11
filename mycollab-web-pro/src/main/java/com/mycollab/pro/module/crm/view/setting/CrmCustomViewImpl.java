@@ -73,8 +73,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 
         headerLbl = new Label("", ContentMode.HTML);
 
-        MHorizontalLayout headerTitle = new MHorizontalLayout()
-                .withFullWidth().withSpacing(false)
+        MHorizontalLayout headerTitle = new MHorizontalLayout().withFullWidth().withSpacing(false)
                 .withMargin(new MarginInfo(true, false, true, false));
         headerTitle.addStyleName(WebUIConstants.HEADER_VIEW);
         headerTitle.with(headerLbl).withAlign(headerLbl, Alignment.MIDDLE_LEFT).expand(headerLbl);
@@ -103,8 +102,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
         createCustomFieldBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
         createCustomFieldBtn.setIcon(FontAwesome.PLUS);
         controlLayout.addComponent(createCustomFieldBtn);
-        controlLayout.setComponentAlignment(createCustomFieldBtn,
-                Alignment.MIDDLE_LEFT);
+        controlLayout.setComponentAlignment(createCustomFieldBtn, Alignment.MIDDLE_LEFT);
 
         Button createSectionBtn = new Button("New Section", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -198,8 +196,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
             } else if (CrmTypeConstants.TASK.equals(moduleName)) {
                 form = AssignmentDefaultFormLayoutFactory.getForm();
             } else {
-                throw new MyCollabException(
-                        "Do not support custom layout of module " + moduleName);
+                throw new MyCollabException("Do not support custom layout of module " + moduleName);
             }
         }
 
@@ -219,7 +216,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
     private class ModuleSelectionComboBox extends ValueComboBox {
         private static final long serialVersionUID = 1L;
 
-        public ModuleSelectionComboBox() {
+        ModuleSelectionComboBox() {
             super(false, CrmTypeConstants.ACCOUNT, CrmTypeConstants.CONTACT,
                     CrmTypeConstants.CAMPAIGN, CrmTypeConstants.LEAD,
                     CrmTypeConstants.OPPORTUNITY, CrmTypeConstants.CASE,
