@@ -12,6 +12,7 @@ import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.mycollab.module.project.events.RiskEvent;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.ui.components.ComponentUtils;
+import com.mycollab.module.project.view.milestone.MilestoneListSelect;
 import com.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.mycollab.vaadin.AppContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
@@ -34,6 +35,7 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
 
     private static Param[] paramFields = new Param[]{
             RiskSearchCriteria.p_assignee, RiskSearchCriteria.p_raisedUser,
+            RiskSearchCriteria.p_milestones,
             RiskSearchCriteria.p_status, RiskSearchCriteria.p_probalitity,
             RiskSearchCriteria.p_consequence, RiskSearchCriteria.p_duedate,
             RiskSearchCriteria.p_raiseddate, RiskSearchCriteria.p_createdtime,
@@ -141,6 +143,8 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
                 return new ProjectMemberListSelect();
             } else if ("raiseduser".equals(fieldId)) {
                 return new ProjectMemberListSelect();
+            } else if ("milestones".equals(fieldId)) {
+                return new MilestoneListSelect();
             }
             return null;
         }

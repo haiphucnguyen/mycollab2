@@ -250,7 +250,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                             task.setMilestoneId(milestone.getId());
                         }
                         ProjectGenericTaskService projectGenericTaskService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
-                        projectGenericTaskService.updateAssignmentValue(task);
+                        projectGenericTaskService.updateAssignmentValue(task, AppContext.getUsername());
 
                         updateComponentCount();
 
