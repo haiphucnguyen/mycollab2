@@ -178,7 +178,7 @@ public class AppContext implements Serializable {
         try {
             return getInstance().siteName;
         } catch (Exception e) {
-            return "MyCollab";
+            return SiteConfiguration.getDefaultSiteName();
         }
     }
 
@@ -190,7 +190,7 @@ public class AppContext implements Serializable {
         try {
             return (key != null) ? getInstance().messageHelper.getMessage(key, objects) : "";
         } catch (Exception e) {
-            return LocalizationHelper.getMessage(LocalizationHelper.defaultLocale, key, objects);
+            return LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), key, objects);
         }
     }
 
@@ -233,7 +233,6 @@ public class AppContext implements Serializable {
                 siteName = account.getSitename();
             }
 
-            LOG.debug("Get billing account {} of subDomain {}", BeanUtility.printBeanObj(account), domain);
             accountId = account.getId();
             ThemeManager.loadDesktopTheme(accountId);
         }

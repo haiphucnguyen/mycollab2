@@ -140,7 +140,7 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
                         AppContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
-
+                                genericTaskService.closeSubAssignmentOfMilestone(milestone.getId());
                             }
                         });
             }

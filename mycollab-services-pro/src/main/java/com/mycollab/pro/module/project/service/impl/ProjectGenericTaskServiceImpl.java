@@ -9,6 +9,7 @@ import com.mycollab.module.project.domain.ProjectGenericTask;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
+import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.service.ProjectTaskService;
@@ -77,7 +78,16 @@ public class ProjectGenericTaskServiceImpl extends AbstractProjectGenericTaskSer
         Risk risk = new Risk();
         risk.setStatus(StatusI18nEnum.Closed.name());
         RiskSearchCriteria riskSearchCriteria = new RiskSearchCriteria();
+        riskSearchCriteria.addExtraField(RiskSearchCriteria.p_milestones.buildPropertyParamInList(SearchField.AND,
+                Collections.singleton(milestoneId)));
+        riskService.updateBySearchCriteria(risk, riskSearchCriteria);
 
+        Task task = new Task();
+        task.setStatus(StatusI18nEnum.Closed.name());
+        TaskSearchCriteria taskSearchCriteria = new TaskSearchCriteria();
+        taskSearchCriteria.addExtraField(TaskSearchCriteria.p_milestoneId.buildPropertyParamInList(SearchField.AND,
+                Collections.singleton(milestoneId)));
+        taskService.updateBySearchCriteria(task, taskSearchCriteria);
 
     }
 }

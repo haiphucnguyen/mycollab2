@@ -17,11 +17,14 @@
 package com.mycollab.web;
 
 import com.google.common.eventbus.Subscribe;
+import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.*;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.module.billing.SubDomainNotExistException;
 import com.mycollab.module.billing.UsageExceedBillingPlanException;
 import com.mycollab.module.user.dao.UserAccountMapper;
@@ -51,13 +54,15 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.*;
 import com.vaadin.shared.communication.PushMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.JavaScript;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 import org.mybatis.spring.MyBatisSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.UncategorizedSQLException;
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.util.BrowserCookie;
 
 import java.util.*;
@@ -121,8 +126,7 @@ public class DesktopApplication extends MyCollabUI {
 
         String userAgent = request.getHeader("user-agent");
         if (isInNotSupportedBrowserList(userAgent.toLowerCase())) {
-            NotificationUtil.showWarningNotification("Your browser is out of date. Some features of MyCollab will not" +
-                    " behave correctly. You should upgrade to the newer browser.");
+            NotificationUtil.showWarningNotification(AppContext.getMessage(ErrorI18nEnum.BROWSER_OUT_UP_DATE));
         }
     }
 
@@ -155,6 +159,12 @@ public class DesktopApplication extends MyCollabUI {
     private void handleException(VaadinRequest request, Throwable e) {
         IgnoreException ignoreException = getExceptionType(e, IgnoreException.class);
         if (ignoreException != null) {
+            return;
+        }
+
+        DebugException debugException = getExceptionType(e, DebugException.class);
+        if (debugException != null) {
+            LOG.error("Debug error", e);
             return;
         }
 
@@ -203,7 +213,7 @@ public class DesktopApplication extends MyCollabUI {
 
         ResourceNotFoundException resourceNotFoundException = getExceptionType(e, ResourceNotFoundException.class);
         if (resourceNotFoundException != null) {
-            NotificationUtil.showWarningNotification("Can not found resource.");
+            NotificationUtil.showWarningNotification(AppContext.getMessage(ErrorI18nEnum.RESOURCE_NOT_FOUND));
             LOG.error("404", resourceNotFoundException);
             return;
         }
@@ -236,7 +246,7 @@ public class DesktopApplication extends MyCollabUI {
         if (asyncNotSupport != null && asyncNotSupport.getMessage().contains("!asyncSupported")) {
             ConfirmDialog dialog = ConfirmDialogExt.show(DesktopApplication.this,
                     AppContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppContext.getSiteName()),
-                    "Your network does not support websocket! Please contact your network administrator to solve it",
+                    AppContext.getMessage(ErrorI18nEnum.WEBSOCKET_NOT_SUPPORT),
                     AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                     AppContext.getMessage(GenericI18Enum.BUTTON_NO),
                     confirmDialog -> {
@@ -322,7 +332,7 @@ public class DesktopApplication extends MyCollabUI {
     public void redirectToLoginView() {
         clearSession();
 
-        AppContext.addFragment("", "Login Page");
+        AppContext.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
         // clear cookie remember username/password if any
         this.unsetRememberPassword();
 

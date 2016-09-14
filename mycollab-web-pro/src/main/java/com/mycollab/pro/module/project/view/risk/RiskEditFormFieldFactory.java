@@ -35,15 +35,21 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
         super(form);
     }
 
+    RiskEditFormFieldFactory(GenericBeanForm<SimpleRisk> form, boolean isValidateForm) {
+        super(form, isValidateForm);
+    }
+
     @Override
     protected Field<?> onCreateField(Object propertyId) {
         Risk risk = attachForm.getBean();
         if (Risk.Field.description.equalTo(propertyId)) {
             final RichTextArea desc = new RichTextArea();
-            desc.setRequired(true);
             desc.setNullRepresentation("");
-            desc.setRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                    AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
+            if (isValidateForm) {
+                desc.setRequired(true);
+                desc.setRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                        AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
+            }
             return desc;
         } else if (Risk.Field.raisedbyuser.equalTo(propertyId)) {
             if (risk.getRaisedbyuser() == null) {
@@ -95,9 +101,12 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             });
             return ratingField;
         } else if (Risk.Field.riskname.equalTo(propertyId)) {
-            return new MTextField().withNullRepresentation("").withRequired(true)
-                    .withRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                            AppContext.getMessage(GenericI18Enum.FORM_NAME)));
+            MTextField field = new MTextField().withNullRepresentation("");
+            if (isValidateForm) {
+                field.withRequired(true).withRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                        AppContext.getMessage(GenericI18Enum.FORM_NAME)));
+            }
+            return field;
         } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
             return new MilestoneComboBox();
         } else if (Risk.Field.id.equalTo(propertyId)) {

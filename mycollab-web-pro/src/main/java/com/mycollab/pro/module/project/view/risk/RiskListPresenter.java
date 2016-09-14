@@ -1,5 +1,6 @@
 package com.mycollab.pro.module.project.view.risk;
 
+import com.mycollab.core.arguments.ValuedBean;
 import com.mycollab.db.persistence.service.ISearchableService;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
@@ -23,6 +24,8 @@ import com.vaadin.ui.UI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author MyCollab Ltd.
@@ -121,16 +124,11 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
     @Override
     public void massUpdate(SimpleRisk value) {
         if (!isSelectAll) {
-            Collection<SimpleRisk> currentDataList = view.getPagedBeanTable().getCurrentDataList();
-            List<Integer> keyList = new ArrayList<>();
-            for (SimpleRisk item : currentDataList) {
-                if (item.isSelected()) {
-                    keyList.add(item.getId());
-                }
-            }
+            Collection<SimpleRisk> risks = view.getPagedBeanTable().getCurrentDataList();
+            List<Integer> riskKeys = risks.stream().filter(ValuedBean::isSelected).map(Risk::getId).collect(Collectors.toList());
 
-            if (keyList.size() > 0) {
-                riskService.massUpdateWithSession(value, keyList, AppContext.getAccountId());
+            if (riskKeys.size() > 0) {
+//                riskService.massUpdateWithSession(value, riskKeys, AppContext.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

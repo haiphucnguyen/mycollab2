@@ -50,7 +50,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
     private Label selectedItemsNumberLabel = new Label();
 
     public RiskListViewImpl() {
-        setMargin(new MarginInfo(false, true, false, true));
+        setMargin(new MarginInfo(false, true, true, true));
     }
 
     @Override

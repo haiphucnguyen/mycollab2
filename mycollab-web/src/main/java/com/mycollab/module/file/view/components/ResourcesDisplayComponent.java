@@ -22,6 +22,7 @@ import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.FileI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.StorageFactory;
+import com.mycollab.core.DebugException;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.core.utils.StringUtils;
@@ -112,7 +113,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             }
 
             if (selectedFolder == null) {
-                LOG.error(String.format("Can not find folder with path %s--%s", criteria.getBaseFolder(),
+                throw new DebugException(String.format("Can not find folder with path %s--%s", criteria.getBaseFolder(),
                         criteria.getRootFolder()));
             } else if (!(selectedFolder instanceof Folder)) {
                 LOG.error(String.format("Expect folder but the result is file %s--%s", criteria.getBaseFolder(),

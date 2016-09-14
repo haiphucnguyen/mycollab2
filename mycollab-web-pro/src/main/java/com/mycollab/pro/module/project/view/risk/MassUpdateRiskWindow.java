@@ -34,7 +34,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<SimpleRisk> {
 
     @Override
     protected AbstractBeanFieldGroupEditFieldFactory<SimpleRisk> buildBeanFormFieldFactory() {
-        return new RiskEditFormFieldFactory(updateForm);
+        return new RiskEditFormFieldFactory(updateForm, false);
     }
 
     private class MassUpdateRiskFormLayoutFactory extends AbstractFormLayoutFactory {
@@ -46,7 +46,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<SimpleRisk> {
         public ComponentContainer getLayout() {
             FormContainer formLayout = new FormContainer();
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 6);
-            formLayout.addSection("Risk Information", informationLayout.getLayout());
+            formLayout.addSection(AppContext.getMessage(RiskI18nEnum.SECTION_RISK_INFORMATION), informationLayout.getLayout());
             formLayout.addComponent(buildButtonControls());
             return formLayout;
         }

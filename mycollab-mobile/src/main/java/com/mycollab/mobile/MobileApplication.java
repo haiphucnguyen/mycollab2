@@ -17,7 +17,9 @@
 package com.mycollab.mobile;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.configuration.EnDecryptHelper;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.IgnoreException;
 import com.mycollab.core.MyCollabVersion;
 import com.mycollab.core.SessionExpireException;
@@ -25,6 +27,7 @@ import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.mobile.module.user.view.LoginPresenter;
 import com.mycollab.mobile.shell.ShellUrlResolver;
 import com.mycollab.mobile.shell.events.ShellEvent;
@@ -252,7 +255,7 @@ public class MobileApplication extends MyCollabUI {
 
     public void redirectToLoginView() {
         clearSession();
-        AppContext.addFragment("", "Login Page");
+        AppContext.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
         // clear cookie remember username/password if any
         this.unsetRememberPassword();
 

@@ -44,10 +44,9 @@ public abstract class MassUpdateWindow<B> extends MWindow {
     protected B beanItem;
     protected AdvancedEditBeanForm<B> updateForm;
     protected MassUpdateLayout contentLayout;
+    private MButton updateBtn, closeBtn;
 
     private MassUpdateCommand<B> massUpdateCommand;
-
-    private MButton updateBtn, closeBtn;
 
     public MassUpdateWindow(String title, Resource iconResource, B initialValue, MassUpdateCommand<B> massUpdatePresenter) {
         super(title);
