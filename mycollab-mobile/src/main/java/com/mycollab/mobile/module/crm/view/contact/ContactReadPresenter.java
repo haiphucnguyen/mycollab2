@@ -198,7 +198,7 @@ public class ContactReadPresenter extends AbstractCrmPresenter<ContactReadView> 
                     view.previewItem(contact);
                     super.onGo(container, data);
 
-                    UserUIContext.addFragment(CrmLinkGenerator.generateContactPreviewLink(contact.getId()),
+                    MyCollabUI.addFragment(CrmLinkGenerator.generateContactPreviewLink(contact.getId()),
                             UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                     UserUIContext.getMessage(ContactI18nEnum.SINGLE), contact.getContactName()));
 

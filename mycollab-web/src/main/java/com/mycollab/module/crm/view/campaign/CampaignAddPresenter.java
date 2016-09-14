@@ -91,10 +91,10 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
             view.editItem(campaign);
 
             if (campaign.getId() == null) {
-                UserUIContext.addFragment("crm/campaign/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                MyCollabUI.addFragment("crm/campaign/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(CampaignI18nEnum.SINGLE)));
             } else {
-                UserUIContext.addFragment("crm/campaign/edit/" + UrlEncodeDecoder.encode(campaign.getId()),
+                MyCollabUI.addFragment("crm/campaign/edit/" + UrlEncodeDecoder.encode(campaign.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(CampaignI18nEnum.SINGLE), campaign.getCampaignname()));
             }

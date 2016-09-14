@@ -93,10 +93,10 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
             view.editItem(lead);
 
             if (lead.getId() == null) {
-                UserUIContext.addFragment("crm/lead/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                MyCollabUI.addFragment("crm/lead/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(LeadI18nEnum.SINGLE)));
             } else {
-                UserUIContext.addFragment("crm/lead/edit/" + UrlEncodeDecoder.encode(lead.getId()),
+                MyCollabUI.addFragment("crm/lead/edit/" + UrlEncodeDecoder.encode(lead.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(LeadI18nEnum.SINGLE), lead.getLastname()));
             }

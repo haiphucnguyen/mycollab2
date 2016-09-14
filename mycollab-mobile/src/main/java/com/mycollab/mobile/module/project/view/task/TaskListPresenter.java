@@ -23,6 +23,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -43,7 +44,7 @@ public class TaskListPresenter extends ProjectListPresenter<TaskListView, TaskSe
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
             super.onGo(container, data);
-            UserUIContext.addFragment("project/task/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+            MyCollabUI.addFragment("project/task/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(TaskI18nEnum.M_VIEW_LIST_TITLE));
         } else {
             NotificationUtil.showMessagePermissionAlert();

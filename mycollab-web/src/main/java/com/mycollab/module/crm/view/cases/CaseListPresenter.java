@@ -116,7 +116,7 @@ public class CaseListPresenter extends CrmGenericListPresenter<CaseListView, Cas
                 this.displayNoExistItems(container, data);
             }
 
-            UserUIContext.addFragment("crm/cases/list", UserUIContext.getMessage(CaseI18nEnum.LIST));
+            MyCollabUI.addFragment("crm/cases/list", UserUIContext.getMessage(CaseI18nEnum.LIST));
         } else {
             throw new SecureAccessException();
         }

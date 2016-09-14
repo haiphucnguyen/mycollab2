@@ -52,7 +52,7 @@ public class MessageReadPresenter extends AbstractProjectPresenter<MessageReadVi
                 view.previewItem(message);
                 super.onGo(container, data);
 
-                UserUIContext.addFragment(ProjectLinkGenerator.generateMessagePreviewLink(CurrentProjectVariables.getProjectId(), message.getId()),
+                MyCollabUI.addFragment(ProjectLinkGenerator.generateMessagePreviewLink(CurrentProjectVariables.getProjectId(), message.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                 UserUIContext.getMessage(MessageI18nEnum.SINGLE), message.getTitle()));
             } else {

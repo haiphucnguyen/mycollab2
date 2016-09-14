@@ -52,10 +52,10 @@ public class MilestoneAddPresenter extends AbstractProjectPresenter<MilestoneAdd
             super.onGo(container, data);
 
             if (milestone.getId() == null) {
-                UserUIContext.addFragment("project/milestone/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+                MyCollabUI.addFragment("project/milestone/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                         UserUIContext.getMessage(MilestoneI18nEnum.NEW));
             } else {
-                UserUIContext.addFragment("project/milestone/edit/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(),
+                MyCollabUI.addFragment("project/milestone/edit/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(),
                         milestone.getId()), milestone.getName());
             }
         } else {

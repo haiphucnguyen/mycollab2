@@ -83,10 +83,10 @@ public class ContactAddPresenter extends AbstractCrmPresenter<ContactAddView> {
             view.editItem(contact);
 
             if (contact.getId() == null) {
-                UserUIContext.addFragment("crm/contact/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                MyCollabUI.addFragment("crm/contact/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(ContactI18nEnum.SINGLE)));
             } else {
-                UserUIContext.addFragment("crm/contact/edit/" + UrlEncodeDecoder.encode(contact.getId()),
+                MyCollabUI.addFragment("crm/contact/edit/" + UrlEncodeDecoder.encode(contact.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(ContactI18nEnum.SINGLE), contact.getLastname()));
             }

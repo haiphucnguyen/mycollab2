@@ -230,7 +230,7 @@ public class OpportunityReadPresenter extends CrmGenericPresenter<OpportunityRea
                     super.onGo(container, data);
                     view.previewItem(opportunity);
 
-                    UserUIContext.addFragment(CrmLinkGenerator.generateOpportunityPreviewLink(opportunity.getId()),
+                    MyCollabUI.addFragment(CrmLinkGenerator.generateOpportunityPreviewLink(opportunity.getId()),
                             UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                     UserUIContext.getMessage(OpportunityI18nEnum.SINGLE), opportunity.getOpportunityname()));
                 } else {

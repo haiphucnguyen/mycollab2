@@ -45,7 +45,7 @@ public class CrmNotificationSettingPresenter extends CrmGenericPresenter<CrmNoti
         CrmNotificationSetting setting = service.findNotification(UserUIContext.getUsername(), MyCollabUI.getAccountId());
         view.showNotificationSettings(setting);
 
-        UserUIContext.addFragment("crm/setting/notification",
+        MyCollabUI.addFragment("crm/setting/notification",
                 "Notification Settings");
     }
 }

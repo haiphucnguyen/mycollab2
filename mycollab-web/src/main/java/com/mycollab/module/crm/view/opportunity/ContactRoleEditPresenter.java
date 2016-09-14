@@ -19,6 +19,7 @@ package com.mycollab.module.crm.view.opportunity;
 import com.mycollab.module.crm.domain.SimpleOpportunity;
 import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.security.RolePermissionCollections;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -42,7 +43,7 @@ public class ContactRoleEditPresenter extends CrmGenericPresenter<ContactRoleEdi
             super.onGo(container, data);
             view.display(opportunity);
 
-            UserUIContext.addFragment("crm/opportunity/addcontactroles", "Add Contact Roles");
+            MyCollabUI.addFragment("crm/opportunity/addcontactroles", "Add Contact Roles");
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }

@@ -88,7 +88,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
         view.editItem(project);
 
         if (project.getId() == null) {
-            UserUIContext.addFragment("project/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+            MyCollabUI.addFragment("project/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                     UserUIContext.getMessage(ProjectI18nEnum.SINGLE)));
         }
     }

@@ -101,7 +101,7 @@ public class CampaignListPresenter extends CrmGenericListPresenter<CampaignListV
                 this.displayNoExistItems(container, data);
             }
 
-            UserUIContext.addFragment("crm/campaign/list", UserUIContext.getMessage(CampaignI18nEnum.LIST));
+            MyCollabUI.addFragment("crm/campaign/list", UserUIContext.getMessage(CampaignI18nEnum.LIST));
         } else {
             throw new SecureAccessException();
         }

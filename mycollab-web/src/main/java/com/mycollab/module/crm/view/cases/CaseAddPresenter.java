@@ -90,10 +90,10 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
             view.editItem(cases);
 
             if (cases.getId() == null) {
-                UserUIContext.addFragment("crm/cases/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                MyCollabUI.addFragment("crm/cases/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(CaseI18nEnum.SINGLE)));
             } else {
-                UserUIContext.addFragment("crm/cases/edit/" + UrlEncodeDecoder.encode(cases.getId()),
+                MyCollabUI.addFragment("crm/cases/edit/" + UrlEncodeDecoder.encode(cases.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(CaseI18nEnum.SINGLE), cases.getSubject()));
             }

@@ -135,7 +135,7 @@ public class AccountListPresenter extends CrmGenericListPresenter<AccountListVie
                 this.displayNoExistItems(container, data);
             }
 
-            UserUIContext.addFragment("crm/account/list", UserUIContext.getMessage(AccountI18nEnum.LIST));
+            MyCollabUI.addFragment("crm/account/list", UserUIContext.getMessage(AccountI18nEnum.LIST));
         } else {
             throw new SecureAccessException();
         }

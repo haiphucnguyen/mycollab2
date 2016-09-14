@@ -55,10 +55,10 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
             view.editItem(bug);
 
             if (bug.getId() == null) {
-                UserUIContext.addFragment("project/bug/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+                MyCollabUI.addFragment("project/bug/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                         UserUIContext.getMessage(BugI18nEnum.NEW));
             } else {
-                UserUIContext.addFragment(ProjectLinkGenerator.generateBugEditLink(bug.getBugkey(), bug.getProjectShortName()),
+                MyCollabUI.addFragment(ProjectLinkGenerator.generateBugEditLink(bug.getBugkey(), bug.getProjectShortName()),
                         UserUIContext.getMessage(BugI18nEnum.DETAIL));
             }
         } else {

@@ -196,7 +196,7 @@ public class LeadReadPresenter extends AbstractCrmPresenter<LeadReadView> {
                     view.previewItem(lead);
                     super.onGo(container, data);
 
-                    UserUIContext.addFragment(CrmLinkGenerator.generateLeadPreviewLink(lead.getId()),
+                    MyCollabUI.addFragment(CrmLinkGenerator.generateLeadPreviewLink(lead.getId()),
                             UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                     UserUIContext.getMessage(LeadI18nEnum.SINGLE), lead.getLeadName()));
 

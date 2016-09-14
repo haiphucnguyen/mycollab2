@@ -140,7 +140,7 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
             super.onGo(container, data);
 
             view.previewItem(call);
-            UserUIContext.addFragment(CrmLinkGenerator.generateCallPreviewLink(call.getId()), UserUIContext.
+            MyCollabUI.addFragment(CrmLinkGenerator.generateCallPreviewLink(call.getId()), UserUIContext.
                     getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE, UserUIContext.getMessage(CallI18nEnum.SINGLE),
                             call.getSubject()));
         } else {

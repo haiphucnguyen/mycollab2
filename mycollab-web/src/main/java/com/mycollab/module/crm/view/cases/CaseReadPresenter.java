@@ -203,7 +203,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
                     super.onGo(container, data);
                     view.previewItem(cases);
 
-                    UserUIContext.addFragment(CrmLinkGenerator.generateCasePreviewLink(cases.getId()),
+                    MyCollabUI.addFragment(CrmLinkGenerator.generateCasePreviewLink(cases.getId()),
                             UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                     UserUIContext.getMessage(CaseI18nEnum.SINGLE), cases.getSubject()));
                 } else {

@@ -115,7 +115,7 @@ public class LeadListPresenter extends CrmGenericListPresenter<LeadListView, Lea
                 this.displayNoExistItems(container, data);
             }
 
-            UserUIContext.addFragment("crm/lead/list", UserUIContext.getMessage(LeadI18nEnum.LIST));
+            MyCollabUI.addFragment("crm/lead/list", UserUIContext.getMessage(LeadI18nEnum.LIST));
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }

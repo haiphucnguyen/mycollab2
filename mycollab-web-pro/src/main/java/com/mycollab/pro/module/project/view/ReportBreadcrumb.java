@@ -6,6 +6,7 @@ import com.mycollab.module.project.events.ReportEvent;
 import com.mycollab.module.project.i18n.BreadcrumbI18nEnum;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectReportI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.CacheableComponent;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -33,7 +34,7 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
     public void gotoReportDashboard() {
         this.select(0);
         this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS)));
-        UserUIContext.addFragment("project/reports", UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS));
+        MyCollabUI.addFragment("project/reports", UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS));
     }
 
     public void gotoStandupList(Date onDate) {
@@ -42,10 +43,10 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
         this.setLinkEnabled(true, 1);
         this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP)));
         if (onDate == null) {
-            UserUIContext.addFragment("project/reports/standup/list/",
+            MyCollabUI.addFragment("project/reports/standup/list/",
                     UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP));
         } else {
-            UserUIContext.addFragment("project/reports/standup/list/" + UserUIContext.formatDate(onDate).replace('/', '-'),
+            MyCollabUI.addFragment("project/reports/standup/list/" + UserUIContext.formatDate(onDate).replace('/', '-'),
                     UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP));
         }
     }
@@ -69,7 +70,7 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
         this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(new Button(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD)));
-        UserUIContext.addFragment(ProjectLinkGenerator.generateUsersWorkloadReportLink(), UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
+        MyCollabUI.addFragment(ProjectLinkGenerator.generateUsersWorkloadReportLink(), UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
     }
 
     private static class GotoReportsListener implements Button.ClickListener {

@@ -220,7 +220,7 @@ public class OpportunityReadPresenter extends AbstractCrmPresenter<OpportunityRe
                     view.previewItem(opportunity);
                     super.onGo(container, data);
 
-                    UserUIContext.addFragment(CrmLinkGenerator.generateOpportunityPreviewLink(opportunity.getId()), UserUIContext.getMessage(
+                    MyCollabUI.addFragment(CrmLinkGenerator.generateOpportunityPreviewLink(opportunity.getId()), UserUIContext.getMessage(
                             GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE, "Opportunity", opportunity.getOpportunityname()));
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

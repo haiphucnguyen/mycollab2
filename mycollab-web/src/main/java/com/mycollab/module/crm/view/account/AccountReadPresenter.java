@@ -241,7 +241,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                 if (account != null) {
                     super.onGo(container, data);
                     view.previewItem(account);
-                    UserUIContext.addFragment(CrmLinkGenerator.generateAccountPreviewLink(account.getId()),
+                    MyCollabUI.addFragment(CrmLinkGenerator.generateAccountPreviewLink(account.getId()),
                             UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                     UserUIContext.getMessage(AccountI18nEnum.SINGLE), account.getAccountname()));
                 } else {

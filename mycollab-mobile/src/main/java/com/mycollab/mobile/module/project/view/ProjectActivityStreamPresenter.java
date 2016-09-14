@@ -22,6 +22,7 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.ProjectActivityStream;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -42,7 +43,7 @@ public class ProjectActivityStreamPresenter extends ProjectListPresenter<Project
     protected void onGo(ComponentContainer navigator, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PROJECT)) {
             super.onGo(navigator, data);
-            UserUIContext.addFragment("project/activities/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+            MyCollabUI.addFragment("project/activities/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES));
         } else {
             NotificationUtil.showMessagePermissionAlert();

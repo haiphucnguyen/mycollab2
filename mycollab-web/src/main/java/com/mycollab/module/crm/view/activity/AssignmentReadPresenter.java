@@ -140,7 +140,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
 
             super.onGo(container, data);
             view.previewItem(task);
-            UserUIContext.addFragment(CrmLinkGenerator.generateTaskPreviewLink(task.getId()),
+            MyCollabUI.addFragment(CrmLinkGenerator.generateTaskPreviewLink(task.getId()),
                     UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                             UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getSubject()));
 

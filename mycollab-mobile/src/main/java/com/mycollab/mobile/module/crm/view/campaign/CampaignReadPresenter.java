@@ -244,7 +244,7 @@ public class CampaignReadPresenter extends AbstractCrmPresenter<CampaignReadView
                     view.previewItem(campaign);
                     super.onGo(container, data);
 
-                    UserUIContext.addFragment(CrmLinkGenerator.generateCampaignPreviewLink(campaign.getId()),
+                    MyCollabUI.addFragment(CrmLinkGenerator.generateCampaignPreviewLink(campaign.getId()),
                             UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                     UserUIContext.getMessage(CampaignI18nEnum.SINGLE), campaign.getCampaignname()));
                 } else {

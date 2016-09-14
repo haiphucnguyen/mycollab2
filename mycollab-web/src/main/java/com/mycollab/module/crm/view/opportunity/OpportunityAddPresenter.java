@@ -90,10 +90,10 @@ public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddV
             view.editItem(opportunity);
 
             if (opportunity.getId() == null) {
-                UserUIContext.addFragment("crm/opportunity/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                MyCollabUI.addFragment("crm/opportunity/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(OpportunityI18nEnum.SINGLE)));
             } else {
-                UserUIContext.addFragment("crm/opportunity/edit/" + UrlEncodeDecoder.encode(opportunity.getId()),
+                MyCollabUI.addFragment("crm/opportunity/edit/" + UrlEncodeDecoder.encode(opportunity.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(OpportunityI18nEnum.SINGLE), opportunity.getOpportunityname()));
             }

@@ -59,7 +59,7 @@ public class ProjectMemberInvitePresenter extends AbstractProjectPresenter<Proje
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
             super.onGo(container, data);
             view.display();
-            UserUIContext.addFragment("project/user/invite/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+            MyCollabUI.addFragment("project/user/invite/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(ProjectMemberI18nEnum.NEW));
 
         } else {

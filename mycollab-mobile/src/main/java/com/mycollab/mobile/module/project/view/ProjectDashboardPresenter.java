@@ -21,6 +21,7 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -45,7 +46,7 @@ public class ProjectDashboardPresenter extends AbstractProjectPresenter<ProjectD
             if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PROJECT)) {
                 super.onGo(container, data);
                 view.displayDashboard();
-                UserUIContext.addFragment(ProjectLinkGenerator.generateProjectLink(CurrentProjectVariables
+                MyCollabUI.addFragment(ProjectLinkGenerator.generateProjectLink(CurrentProjectVariables
                         .getProject().getId()), UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));
             } else {
                 NotificationUtil.showMessagePermissionAlert();

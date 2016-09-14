@@ -19,6 +19,7 @@ package com.mycollab.module.project.view;
 
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -48,6 +49,6 @@ public class UserDashboardPresenter extends AbstractPresenter<UserDashboardView>
         } else {
             view.showDashboard();
         }
-        UserUIContext.addFragment("project", UserUIContext.getMessage(ProjectI18nEnum.SINGLE));
+        MyCollabUI.addFragment("project", UserUIContext.getMessage(ProjectI18nEnum.SINGLE));
     }
 }

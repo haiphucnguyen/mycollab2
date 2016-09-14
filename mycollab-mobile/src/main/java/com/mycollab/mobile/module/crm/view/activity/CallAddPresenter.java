@@ -87,10 +87,10 @@ public class CallAddPresenter extends AbstractCrmPresenter<CallAddView> {
             super.onGo(container, data);
             view.editItem(call);
             if (call.getId() == null) {
-                UserUIContext.addFragment("crm/activity/call/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                MyCollabUI.addFragment("crm/activity/call/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(CallI18nEnum.SINGLE)));
             } else {
-                UserUIContext.addFragment("crm/activity/call/edit/" + UrlEncodeDecoder.encode(call.getId()),
+                MyCollabUI.addFragment("crm/activity/call/edit/" + UrlEncodeDecoder.encode(call.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(CallI18nEnum.SINGLE), call.getSubject()));
             }

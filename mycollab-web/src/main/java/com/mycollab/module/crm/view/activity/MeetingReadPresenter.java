@@ -141,7 +141,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
             super.onGo(container, data);
             view.previewItem(meeting);
 
-            UserUIContext.addFragment(CrmLinkGenerator.generateMeetingPreviewLink(meeting.getId()),
+            MyCollabUI.addFragment(CrmLinkGenerator.generateMeetingPreviewLink(meeting.getId()),
                     UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                             UserUIContext.getMessage(MeetingI18nEnum.SINGLE), meeting.getSubject()));
         } else {

@@ -14,6 +14,7 @@ import com.mycollab.module.project.domain.SimpleMessage;
 import com.mycollab.module.project.i18n.MessageI18nEnum;
 import com.mycollab.module.project.service.MessageService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -52,7 +53,7 @@ public class MessageAddPresenter extends AbstractProjectPresenter<MessageAddView
     protected void onGo(ComponentContainer navigator, ScreenData<?> data) {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES)) {
             super.onGo(navigator, data);
-            UserUIContext.addFragment(ProjectLinkGenerator.generateMessageAddLink(CurrentProjectVariables.getProjectId()),
+            MyCollabUI.addFragment(ProjectLinkGenerator.generateMessageAddLink(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(MessageI18nEnum.NEW));
         } else {
             NotificationUtil.showMessagePermissionAlert();

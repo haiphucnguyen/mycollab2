@@ -249,7 +249,7 @@ public class MobileApplication extends MyCollabUI {
 
     public void redirectToLoginView() {
         clearSession();
-        UserUIContext.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
+        MyCollabUI.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
         // clear cookie remember username/password if any
         this.unsetRememberPassword();
 

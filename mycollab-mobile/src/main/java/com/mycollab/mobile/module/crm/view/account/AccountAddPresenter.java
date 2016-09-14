@@ -83,11 +83,11 @@ public class AccountAddPresenter extends AbstractCrmPresenter<AccountAddView> {
             super.onGo(container, data);
             view.editItem(account);
             if (account.getId() == null) {
-                UserUIContext.addFragment("crm/account/add", UserUIContext.getMessage(GenericI18Enum
+                MyCollabUI.addFragment("crm/account/add", UserUIContext.getMessage(GenericI18Enum
                         .BROWSER_ADD_ITEM_TITLE, UserUIContext.getMessage(AccountI18nEnum.SINGLE)));
 
             } else {
-                UserUIContext.addFragment("crm/account/edit/" + UrlEncodeDecoder.encode(account.getId()),
+                MyCollabUI.addFragment("crm/account/edit/" + UrlEncodeDecoder.encode(account.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(AccountI18nEnum.SINGLE), account.getAccountname()));
             }

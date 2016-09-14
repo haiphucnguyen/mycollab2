@@ -388,12 +388,4 @@ public class UserUIContext implements Serializable {
         return output;
     }
 
-    /**
-     * @param fragment
-     * @param windowTitle
-     */
-    public static void addFragment(String fragment, String windowTitle) {
-        Page.getCurrent().setUriFragment(fragment, false);
-        Page.getCurrent().setTitle(String.format("%s [%s]", StringUtils.trim(windowTitle, 150), MyCollabUI.getSiteName()));
-    }
 }

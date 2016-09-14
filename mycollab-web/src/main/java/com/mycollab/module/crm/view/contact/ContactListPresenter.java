@@ -116,7 +116,7 @@ public class ContactListPresenter extends CrmGenericListPresenter<ContactListVie
                 this.displayNoExistItems(container, data);
             }
 
-            UserUIContext.addFragment("crm/contact/list", UserUIContext.getMessage(ContactI18nEnum.LIST));
+            MyCollabUI.addFragment("crm/contact/list", UserUIContext.getMessage(ContactI18nEnum.LIST));
         } else {
             throw new SecureAccessException();
         }

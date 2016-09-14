@@ -72,10 +72,10 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
 
             view.editItem(account);
             if (account.getId() == null) {
-                UserUIContext.addFragment("project/client/add", UserUIContext.getMessage(GenericI18Enum
+                MyCollabUI.addFragment("project/client/add", UserUIContext.getMessage(GenericI18Enum
                         .BROWSER_ADD_ITEM_TITLE, UserUIContext.getMessage(ClientI18nEnum.SINGLE)));
             } else {
-                UserUIContext.addFragment("project/client/edit/" + UrlEncodeDecoder.encode(account.getId()),
+                MyCollabUI.addFragment("project/client/edit/" + UrlEncodeDecoder.encode(account.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE, UserUIContext.getMessage(ClientI18nEnum.SINGLE),
                                 account.getAccountname()));
             }

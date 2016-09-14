@@ -90,10 +90,10 @@ public class AssignmentAddPresenter extends CrmGenericPresenter<AssignmentAddVie
             view.editItem(task);
 
             if (task.getId() == null) {
-                UserUIContext.addFragment("crm/activity/task/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                MyCollabUI.addFragment("crm/activity/task/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(TaskI18nEnum.SINGLE)));
             } else {
-                UserUIContext.addFragment("crm/activity/task/edit/" + UrlEncodeDecoder.encode(task.getId()),
+                MyCollabUI.addFragment("crm/activity/task/edit/" + UrlEncodeDecoder.encode(task.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getSubject()));
             }

@@ -51,7 +51,7 @@ public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView
             view.editItem(project);
 
             if (project.getId() == null) {
-                UserUIContext.addFragment("project/add", "New Project");
+                MyCollabUI.addFragment("project/add", "New Project");
             }
         } else {
             NotificationUtil.showMessagePermissionAlert();

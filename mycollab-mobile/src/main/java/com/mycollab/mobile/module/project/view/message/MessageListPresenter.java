@@ -23,6 +23,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.SimpleMessage;
 import com.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.mycollab.module.project.i18n.MessageI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -43,7 +44,7 @@ public class MessageListPresenter extends ProjectListPresenter<MessageListView, 
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MESSAGES)) {
             super.onGo(container, data);
-            UserUIContext.addFragment(ProjectLinkGenerator.generateMessagesLink(CurrentProjectVariables.getProjectId()),
+            MyCollabUI.addFragment(ProjectLinkGenerator.generateMessagesLink(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(MessageI18nEnum.LIST));
         } else {
             NotificationUtil.showMessagePermissionAlert();

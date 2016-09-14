@@ -87,10 +87,10 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
             view.editItem(meeting);
 
             if (meeting.getId() == null) {
-                UserUIContext.addFragment("crm/activity/meeting/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                MyCollabUI.addFragment("crm/activity/meeting/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(MeetingI18nEnum.SINGLE)));
             } else {
-                UserUIContext.addFragment("crm/activity/meeting/edit/" + UrlEncodeDecoder.encode(meeting.getId()),
+                MyCollabUI.addFragment("crm/activity/meeting/edit/" + UrlEncodeDecoder.encode(meeting.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(MeetingI18nEnum.SINGLE), meeting.getSubject()));
             }

@@ -102,7 +102,7 @@ public class OpportunityListPresenter extends CrmGenericListPresenter<Opportunit
                 this.displayNoExistItems(container, data);
             }
 
-            UserUIContext.addFragment("crm/opportunity/list", UserUIContext.getMessage(OpportunityI18nEnum.LIST));
+            MyCollabUI.addFragment("crm/opportunity/list", UserUIContext.getMessage(OpportunityI18nEnum.LIST));
         } else {
             throw new SecureAccessException();
         }
