@@ -25,7 +25,6 @@ import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.*;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.i18n.LocalizationHelper;
-import com.mycollab.module.billing.SubDomainNotExistException;
 import com.mycollab.module.billing.UsageExceedBillingPlanException;
 import com.mycollab.module.user.dao.UserAccountMapper;
 import com.mycollab.module.user.domain.SimpleBillingAccount;
@@ -40,9 +39,8 @@ import com.mycollab.shell.view.LoginPresenter;
 import com.mycollab.shell.view.LoginView;
 import com.mycollab.shell.view.MainWindowContainer;
 import com.mycollab.shell.view.ShellUrlResolver;
-import com.mycollab.shell.view.components.NoSubDomainExistedWindow;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.mvp.ControllerRegistry;
@@ -105,15 +103,8 @@ public class DesktopApplication extends MyCollabUI {
         });
 
         setCurrentFragmentUrl(this.getPage().getUriFragment());
-        currentContext = new AppContext();
+        currentContext = new UserUIContext();
         postSetupApp(request);
-
-        try {
-            currentContext.initDomain(initialSubDomain);
-        } catch (SubDomainNotExistException e) {
-            this.setContent(new NoSubDomainExistedWindow(initialSubDomain));
-            return;
-        }
 
         EventBusFactory.getInstance().register(new ShellErrorHandler());
 
@@ -126,7 +117,7 @@ public class DesktopApplication extends MyCollabUI {
 
         String userAgent = request.getHeader("user-agent");
         if (isInNotSupportedBrowserList(userAgent.toLowerCase())) {
-            NotificationUtil.showWarningNotification(AppContext.getMessage(ErrorI18nEnum.BROWSER_OUT_UP_DATE));
+            NotificationUtil.showWarningNotification(UserUIContext.getMessage(ErrorI18nEnum.BROWSER_OUT_UP_DATE));
         }
     }
 
@@ -176,12 +167,12 @@ public class DesktopApplication extends MyCollabUI {
 
         UsageExceedBillingPlanException usageBillingException = getExceptionType(e, UsageExceedBillingPlanException.class);
         if (usageBillingException != null) {
-            if (AppContext.isAdmin()) {
+            if (UserUIContext.isAdmin()) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        AppContext.getMessage(GenericI18Enum.WINDOW_ATTENTION_TITLE, AppContext.getSiteName()),
-                        AppContext.getMessage(GenericI18Enum.EXCEED_BILLING_PLAN_MSG_FOR_ADMIN),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        UserUIContext.getMessage(GenericI18Enum.WINDOW_ATTENTION_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.EXCEED_BILLING_PLAN_MSG_FOR_ADMIN),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 Collection<Window> windowsList = UI.getCurrent().getWindows();
@@ -193,14 +184,14 @@ public class DesktopApplication extends MyCollabUI {
                         });
 
             } else {
-                NotificationUtil.showErrorNotification(AppContext.getMessage(GenericI18Enum.EXCEED_BILLING_PLAN_MSG_FOR_USER));
+                NotificationUtil.showErrorNotification(UserUIContext.getMessage(GenericI18Enum.EXCEED_BILLING_PLAN_MSG_FOR_USER));
             }
             return;
         }
 
         UserInvalidInputException invalidException = getExceptionType(e, UserInvalidInputException.class);
         if (invalidException != null) {
-            NotificationUtil.showWarningNotification(AppContext.getMessage(
+            NotificationUtil.showWarningNotification(UserUIContext.getMessage(
                     GenericI18Enum.ERROR_USER_INPUT_MESSAGE, invalidException.getMessage()));
             return;
         }
@@ -213,7 +204,7 @@ public class DesktopApplication extends MyCollabUI {
 
         ResourceNotFoundException resourceNotFoundException = getExceptionType(e, ResourceNotFoundException.class);
         if (resourceNotFoundException != null) {
-            NotificationUtil.showWarningNotification(AppContext.getMessage(ErrorI18nEnum.RESOURCE_NOT_FOUND));
+            NotificationUtil.showWarningNotification(UserUIContext.getMessage(ErrorI18nEnum.RESOURCE_NOT_FOUND));
             LOG.error("404", resourceNotFoundException);
             return;
         }
@@ -229,10 +220,10 @@ public class DesktopApplication extends MyCollabUI {
             Exception ex = (Exception) getExceptionType(e, systemEx);
             if (ex != null) {
                 ConfirmDialog dialog = ConfirmDialogExt.show(DesktopApplication.this,
-                        AppContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppContext.getSiteName()),
-                        AppContext.getMessage(GenericI18Enum.ERROR_USER_SYSTEM_ERROR, ex.getMessage()),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.ERROR_USER_SYSTEM_ERROR, ex.getMessage()),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                         });
                 Button okBtn = dialog.getOkButton();
@@ -245,10 +236,10 @@ public class DesktopApplication extends MyCollabUI {
         IllegalStateException asyncNotSupport = getExceptionType(e, IllegalStateException.class);
         if (asyncNotSupport != null && asyncNotSupport.getMessage().contains("!asyncSupported")) {
             ConfirmDialog dialog = ConfirmDialogExt.show(DesktopApplication.this,
-                    AppContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppContext.getSiteName()),
-                    AppContext.getMessage(ErrorI18nEnum.WEBSOCKET_NOT_SUPPORT),
-                    AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                    AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                    UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, UserUIContext.getSiteName()),
+                    UserUIContext.getMessage(ErrorI18nEnum.WEBSOCKET_NOT_SUPPORT),
+                    UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                    UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                     confirmDialog -> {
                     });
             Button okBtn = dialog.getOkButton();
@@ -268,10 +259,10 @@ public class DesktopApplication extends MyCollabUI {
 
         LOG.error("Error ", e);
         ConfirmDialog dialog = ConfirmDialogExt.show(DesktopApplication.this,
-                AppContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppContext.getSiteName()),
-                AppContext.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE),
-                AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, UserUIContext.getSiteName()),
+                UserUIContext.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE),
+                UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                 confirmDialog -> {
                 });
         Button okBtn = dialog.getOkButton();
@@ -299,7 +290,7 @@ public class DesktopApplication extends MyCollabUI {
 
     public void doLogin(String username, String password, boolean isRememberPassword) {
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        SimpleUser user = userService.authentication(username, password, AppContext.getSubDomain(), false);
+        SimpleUser user = userService.authentication(username, password, UserUIContext.getSubDomain(), false);
 
         if (isRememberPassword) {
             rememberAccount(username, password);
@@ -313,10 +304,10 @@ public class DesktopApplication extends MyCollabUI {
     public void afterDoLogin(SimpleUser user) {
         BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
 
-        SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(AppContext.getAccountId());
+        SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(UserUIContext.getAccountId());
         LOG.info(String.format("Get billing account successfully - Pricing: %s, User: %s - %s", "" + billingAccount.getBillingPlan().getPricing(),
                 user.getUsername(), user.getDisplayName()));
-        AppContext.getInstance().setSessionVariables(user, billingAccount);
+        UserUIContext.getInstance().setSessionVariables(user, billingAccount);
 
         UserAccountMapper userAccountMapper = AppContextUtil.getSpringBean(UserAccountMapper.class);
         UserAccount userAccount = new UserAccount();
@@ -332,7 +323,7 @@ public class DesktopApplication extends MyCollabUI {
     public void redirectToLoginView() {
         clearSession();
 
-        AppContext.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
+        UserUIContext.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
         // clear cookie remember username/password if any
         this.unsetRememberPassword();
 
@@ -366,8 +357,8 @@ public class DesktopApplication extends MyCollabUI {
         BrowserCookie.setCookie(TEMP_ACCOUNT_COOKIE, "");
     }
 
-    public AppContext getAssociateContext() {
-        return (AppContext) getAttribute("context");
+    public UserUIContext getAssociateContext() {
+        return (UserUIContext) getAttribute("context");
     }
 
     public void reloadPage() {

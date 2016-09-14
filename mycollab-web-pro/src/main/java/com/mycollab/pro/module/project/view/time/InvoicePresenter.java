@@ -4,7 +4,7 @@ import com.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.time.IInvoiceContainer;
 import com.mycollab.module.project.view.time.IInvoiceListPresenter;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
@@ -24,7 +24,7 @@ public class InvoicePresenter extends AbstractPresenter<IInvoiceContainer> imple
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         FinanceContainer timeContainer = (FinanceContainer) container;
         TabSheetDecorator.WrappedTab contentLayout = (TabSheetDecorator.WrappedTab) timeContainer.gotoSubView(
-                AppContext.getMessage(InvoiceI18nEnum.LIST));
+                UserUIContext.getMessage(InvoiceI18nEnum.LIST));
         contentLayout.addView(view);
         view.display();
 

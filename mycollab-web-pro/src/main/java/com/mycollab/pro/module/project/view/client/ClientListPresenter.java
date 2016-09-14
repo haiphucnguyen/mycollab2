@@ -3,8 +3,7 @@ package com.mycollab.pro.module.project.view.client;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.AppContext;
-import com.mycollab.vaadin.events.SearchHandler;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewScope;
@@ -32,10 +31,10 @@ public class ClientListPresenter extends AbstractPresenter<ClientListView> {
         ClientContainer clientContainer = (ClientContainer) container;
         clientContainer.removeAllComponents();
         clientContainer.addComponent(view);
-        if (AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
             AccountSearchCriteria searchCriteria = (AccountSearchCriteria) data.getParams();
             view.display(searchCriteria);
-            AppContext.addFragment("project/client/list", AppContext.getMessage(ClientI18nEnum.LIST));
+            UserUIContext.addFragment("project/client/list", UserUIContext.getMessage(ClientI18nEnum.LIST));
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }

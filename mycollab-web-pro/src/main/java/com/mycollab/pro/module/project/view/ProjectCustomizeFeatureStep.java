@@ -9,7 +9,7 @@ import com.mycollab.module.project.view.AbstractProjectAddWindow;
 import com.mycollab.pro.module.project.ui.components.FeatureSelectionBox;
 import com.mycollab.module.project.i18n.*;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -35,7 +35,7 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
 
     @Override
     public String getCaption() {
-        return AppContext.getMessage(ProjectI18nEnum.OPT_FEATURES);
+        return UserUIContext.getMessage(ProjectI18nEnum.OPT_FEATURES);
     }
 
     @Override
@@ -48,31 +48,31 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
 
         displayMsgSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE),
-                AppContext.getMessage(MessageI18nEnum.LIST),
+                UserUIContext.getMessage(MessageI18nEnum.LIST),
                 true);
         leftColLayout.addComponent(displayMsgSelection);
 
         displayPhaseSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE),
-                AppContext.getMessage(MilestoneI18nEnum.LIST),
+                UserUIContext.getMessage(MilestoneI18nEnum.LIST),
                 true);
         leftColLayout.addComponent(displayPhaseSelection);
 
         displayTaskSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK),
-                AppContext.getMessage(TaskI18nEnum.LIST),
+                UserUIContext.getMessage(TaskI18nEnum.LIST),
                 true);
         leftColLayout.addComponent(displayTaskSelection);
 
         displayBugSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG),
-                AppContext.getMessage(BugI18nEnum.LIST),
+                UserUIContext.getMessage(BugI18nEnum.LIST),
                 true);
         leftColLayout.addComponent(displayBugSelection);
 
         displayPageSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE),
-                AppContext.getMessage(PageI18nEnum.LIST),
+                UserUIContext.getMessage(PageI18nEnum.LIST),
                 true);
         leftColLayout.addComponent(displayPageSelection);
 
@@ -84,31 +84,31 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
 
         displayFileSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
                 true);
         rightColLayout.addComponent(displayFileSelection);
 
         displayRiskSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK),
-                AppContext.getMessage(RiskI18nEnum.LIST),
+                UserUIContext.getMessage(RiskI18nEnum.LIST),
                 true);
         rightColLayout.addComponent(displayRiskSelection);
 
         displayTimeSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
                 true);
         rightColLayout.addComponent(displayTimeSelection);
 
         displayStandupSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
                 true);
         rightColLayout.addComponent(displayStandupSelection);
 
         displayInvoiceSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE),
-                AppContext.getMessage(InvoiceI18nEnum.LIST),
+                UserUIContext.getMessage(InvoiceI18nEnum.LIST),
                 true);
         rightColLayout.addComponent(displayInvoiceSelection);
 
@@ -130,7 +130,7 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
         features.setDisplayrisk(getFeatureSelected(displayRiskSelection));
         features.setDisplaytimelogging(getFeatureSelected(displayTimeSelection));
         ProjectCustomizeViewService projectCustomizeViewService = AppContextUtil.getSpringBean(ProjectCustomizeViewService.class);
-        projectCustomizeViewService.saveWithSession(features, AppContext.getUsername());
+        projectCustomizeViewService.saveWithSession(features, UserUIContext.getUsername());
     }
 
     private Boolean getFeatureSelected(FeatureSelectionBox comp) {

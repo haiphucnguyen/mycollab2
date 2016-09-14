@@ -33,7 +33,7 @@ import com.mycollab.module.user.service.AccountThemeService;
 import com.mycollab.security.BooleanPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.ViewPermission;
@@ -78,13 +78,13 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
             @Subscribe
             @Override
             public void handle(ResetTheme event) {
-                ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(AdminI18nEnum.ACTION_RESET_DEFAULT_THEME),
-                        AppContext.getMessage(AdminI18nEnum.OPT_CONFIRM_RESET_DEFAULT_THEME),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
+                ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(AdminI18nEnum.ACTION_RESET_DEFAULT_THEME),
+                        UserUIContext.getMessage(AdminI18nEnum.OPT_CONFIRM_RESET_DEFAULT_THEME),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
-                                themeService.removeTheme(AppContext.getAccountId());
+                                themeService.removeTheme(UserUIContext.getAccountId());
                                 Page.getCurrent().getJavaScript().execute("window.location.reload();");
                             }
                         });
@@ -95,17 +95,17 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         AccountSettingContainer customizeContainer = (AccountSettingContainer) container;
-        customizeContainer.gotoSubView(AppContext.getMessage(AdminI18nEnum.OPT_THEME));
+        customizeContainer.gotoSubView(UserUIContext.getMessage(AdminI18nEnum.OPT_THEME));
 
         AccountTheme accountTheme;
         if (data == null || data.getParams() == null) {
-            accountTheme = themeService.findTheme(AppContext.getAccountId());
+            accountTheme = themeService.findTheme(UserUIContext.getAccountId());
         } else {
             accountTheme = (AccountTheme) data.getParams();
         }
 
         if (accountTheme == null) {
-            accountTheme = themeService.findDefaultTheme(AppContext.getAccountId());
+            accountTheme = themeService.findDefaultTheme(UserUIContext.getAccountId());
         }
 
         if (accountTheme == null) {
@@ -119,13 +119,13 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
 
     private void saveTheme(AccountTheme accountTheme) {
         if (accountTheme.getSaccountid() == null) {
-            accountTheme.setSaccountid(AppContext.getAccountId());
+            accountTheme.setSaccountid(UserUIContext.getAccountId());
             accountTheme.setId(null);
             accountTheme.setIsdefault(Boolean.FALSE);
-            themeService.saveWithSession(accountTheme, AppContext.getUsername());
+            themeService.saveWithSession(accountTheme, UserUIContext.getUsername());
         } else {
             accountTheme.setIsdefault(Boolean.FALSE);
-            themeService.updateWithSession(accountTheme, AppContext.getUsername());
+            themeService.updateWithSession(accountTheme, UserUIContext.getUsername());
         }
     }
 }

@@ -20,7 +20,7 @@ import com.mycollab.core.MyCollabException;
 import com.mycollab.form.view.builder.type.AbstractDynaField;
 import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.form.view.builder.type.DynaSection.LayoutType;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.event.dd.DragAndDropEvent;
@@ -61,7 +61,7 @@ class ActiveSectionComp extends GenericSectionComp {
         headerWrapper.addStyleName("header-wrapper");
         headerWrapper.setWidth("100%");
 
-        ELabel headerTitleLbl = ELabel.h3(AppContext.getMessage(originSection.getHeader()));
+        ELabel headerTitleLbl = ELabel.h3(UserUIContext.getMessage(originSection.getHeader()));
 
         HorizontalLayout header = new HorizontalLayout();
         header.setWidth("100%");

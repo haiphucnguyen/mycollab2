@@ -12,7 +12,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageView.ViewListener;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewEvent;
@@ -45,7 +45,7 @@ public class ProjectMemberInvitePresenter extends AbstractProjectPresenter<Proje
                 List<String> inviteEmails = inviteMembers.getInviteEmails();
                 if (CollectionUtils.isNotEmpty(inviteEmails)) {
                     projectMemberService.inviteProjectMembers(inviteEmails.toArray(new String[0]), CurrentProjectVariables.getProjectId(),
-                            inviteMembers.getRoleId(), AppContext.getUsername(), inviteMembers.getInviteMessage(), AppContext.getAccountId());
+                            inviteMembers.getRoleId(), UserUIContext.getUsername(), inviteMembers.getInviteMessage(), UserUIContext.getAccountId());
                     EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
                 }
 
@@ -58,8 +58,8 @@ public class ProjectMemberInvitePresenter extends AbstractProjectPresenter<Proje
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
             super.onGo(container, data);
             view.display();
-            AppContext.addFragment("project/user/invite/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
-                    AppContext.getMessage(ProjectMemberI18nEnum.NEW));
+            UserUIContext.addFragment("project/user/invite/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+                    UserUIContext.getMessage(ProjectMemberI18nEnum.NEW));
 
         } else {
             NotificationUtil.showMessagePermissionAlert();

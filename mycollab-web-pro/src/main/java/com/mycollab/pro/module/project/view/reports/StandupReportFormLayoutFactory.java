@@ -3,7 +3,7 @@ package com.mycollab.pro.module.project.view.reports;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.StandupI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -39,17 +39,17 @@ public abstract class StandupReportFormLayoutFactory extends AbstractFormLayoutF
         final MVerticalLayout layoutField = new MVerticalLayout().withMargin(new MarginInfo(false, false, true,
                 false)).withFullWidth();
 
-        final ELabel whatYesterdayLbl = ELabel.h3(AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
+        final ELabel whatYesterdayLbl = ELabel.h3(UserUIContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
         layoutField.addComponent(whatYesterdayLbl);
         whatYesterdayField = new StandupCustomField();
         layoutField.addComponent(whatYesterdayField);
 
-        final ELabel whatTodayLbl = ELabel.h3(AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
+        final ELabel whatTodayLbl = ELabel.h3(UserUIContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
         layoutField.with(new Label(""), whatTodayLbl);
         whatTodayField = new StandupCustomField();
         layoutField.addComponent(whatTodayField);
 
-        final ELabel roadblockLbl = ELabel.h3(AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
+        final ELabel roadblockLbl = ELabel.h3(UserUIContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
         roadblockLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
         layoutField.with(new Label(""), roadblockLbl);
         whatProblemField = new StandupCustomField();
@@ -62,10 +62,10 @@ public abstract class StandupReportFormLayoutFactory extends AbstractFormLayoutF
         instructionLayout.setStyleName("instruction-box");
         instructionLayout.setSpacing(true);
 
-        final Label instruct1Lbl = new Label(AppContext.getMessage(StandupI18nEnum.HINT1_MSG));
+        final Label instruct1Lbl = new Label(UserUIContext.getMessage(StandupI18nEnum.HINT1_MSG));
         instructionLayout.addComponent(instruct1Lbl);
 
-        final Label instruct1Lbl2 = new Label(AppContext.getMessage(StandupI18nEnum.HINT2_MG));
+        final Label instruct1Lbl2 = new Label(UserUIContext.getMessage(StandupI18nEnum.HINT2_MG));
         instructionLayout.addComponent(instruct1Lbl2);
 
         instructionLayout.setWidth("300px");

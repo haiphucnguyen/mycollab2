@@ -31,7 +31,7 @@ import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -74,13 +74,13 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         CrmModule.navigateItem(CrmTypeConstants.CAMPAIGN);
-        if (AppContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN)) {
             SimpleCampaign campaign = null;
             if (data.getParams() instanceof SimpleCampaign) {
                 campaign = (SimpleCampaign) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-                campaign = campaignService.findById((Integer) data.getParams(), AppContext.getAccountId());
+                campaign = campaignService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
             }
             if (campaign == null) {
                 throw new ResourceNotFoundException();
@@ -90,12 +90,12 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
             view.editItem(campaign);
 
             if (campaign.getId() == null) {
-                AppContext.addFragment("crm/campaign/add", AppContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
-                        AppContext.getMessage(CampaignI18nEnum.SINGLE)));
+                UserUIContext.addFragment("crm/campaign/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                        UserUIContext.getMessage(CampaignI18nEnum.SINGLE)));
             } else {
-                AppContext.addFragment("crm/campaign/edit/" + UrlEncodeDecoder.encode(campaign.getId()),
-                        AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
-                                AppContext.getMessage(CampaignI18nEnum.SINGLE), campaign.getCampaignname()));
+                UserUIContext.addFragment("crm/campaign/edit/" + UrlEncodeDecoder.encode(campaign.getId()),
+                        UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+                                UserUIContext.getMessage(CampaignI18nEnum.SINGLE), campaign.getCampaignname()));
             }
         } else {
             throw new SecureAccessException();
@@ -104,11 +104,11 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 
     private int saveCampaign(CampaignWithBLOBs campaign) {
         CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-        campaign.setSaccountid(AppContext.getAccountId());
+        campaign.setSaccountid(UserUIContext.getAccountId());
         if (campaign.getId() == null) {
-            campaignService.saveWithSession(campaign, AppContext.getUsername());
+            campaignService.saveWithSession(campaign, UserUIContext.getUsername());
         } else {
-            campaignService.updateWithSession(campaign, AppContext.getUsername());
+            campaignService.updateWithSession(campaign, UserUIContext.getUsername());
         }
         return campaign.getId();
     }

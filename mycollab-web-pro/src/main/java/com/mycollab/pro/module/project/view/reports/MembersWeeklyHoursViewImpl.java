@@ -15,7 +15,7 @@ import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.project.ui.components.ProjectMemberLink;
 import com.mycollab.pro.module.project.ui.components.ProjectMultiSelect;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -55,7 +55,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
     @Override
     public void display() {
         removeAllComponents();
-        with(ELabel.h2(FontAwesome.BALANCE_SCALE.getHtml() + " " + AppContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY)));
+        with(ELabel.h2(FontAwesome.BALANCE_SCALE.getHtml() + " " + UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY)));
         MVerticalLayout container = new MVerticalLayout().withStyleName(WebUIConstants.BOX);
         with(container);
 
@@ -64,18 +64,18 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
         searchLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-        List<SimpleProject> projects = projectService.getProjectsUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
+        List<SimpleProject> projects = projectService.getProjectsUserInvolved(UserUIContext.getUsername(), UserUIContext.getAccountId());
         final ProjectMultiSelect projectsSelection = new ProjectMultiSelect(projects);
-        searchLayout.addComponent(new ELabel(AppContext.getMessage(ProjectI18nEnum.LIST)).withStyleName(WebUIConstants.META_COLOR), 0, 0);
+        searchLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.LIST)).withStyleName(WebUIConstants.META_COLOR), 0, 0);
         searchLayout.addComponent(projectsSelection, 1, 0);
-        searchLayout.addComponent(new ELabel(AppContext.getMessage(DayI18nEnum.OPT_WEEK)).withStyleName(WebUIConstants.META_COLOR), 2,
+        searchLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_WEEK)).withStyleName(WebUIConstants.META_COLOR), 2,
                 0);
         final WeeklyCalendarFieldExp dateFieldExt = new WeeklyCalendarFieldExp();
         dateFieldExt.setValue(new DateTime().toDate());
 
         searchLayout.addComponent(dateFieldExt, 3, 0);
         container.with(searchLayout);
-        MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> {
+        MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> {
             Collection<SimpleProject> selectedProjects = (Collection<SimpleProject>) projectsSelection.getValue();
             if (CollectionUtils.isEmpty(selectedProjects)) {
                 NotificationUtil.showErrorNotification("You must select at least one project");
@@ -84,13 +84,13 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
             }
         }).withStyleName(WebUIConstants.BUTTON_ACTION);
         searchLayout.addComponent(searchBtn, 4, 0);
-        with(new MCssLayout(new MHorizontalLayout(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)))
+        with(new MCssLayout(new MHorizontalLayout(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)))
                 .withWidth("150px").withMargin(new MarginInfo(false, true, false, true))
                 .withStyleName("alump-dbar-part-1")).withStyleName("alump-dbar"));
-        with(new MCssLayout(new MHorizontalLayout(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS)))
+        with(new MCssLayout(new MHorizontalLayout(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS)))
                 .withWidth("150px").withMargin(new MarginInfo(false, true, false, true))
                 .withStyleName("alump-dbar-part-2")).withStyleName("alump-dbar"));
-        with(new MCssLayout(new MHorizontalLayout(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.OPT_REMAIN_HOURS)))
+        with(new MCssLayout(new MHorizontalLayout(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_REMAIN_HOURS)))
                 .withWidth("150px").withMargin(new MarginInfo(false, true, false, true))
                 .withStyleName("alump-dbar-part-3")).withStyleName("alump-dbar"));
         searchResultLayout = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
@@ -110,7 +110,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
             Date start = now.dayOfWeek().withMinimumValue().toDate();
             Date end = now.dayOfWeek().withMaximumValue().toDate();
             List<SimpleProjectMember> members = projectMemberService.findMembersHourlyInProject(project.getId(),
-                    AppContext.getAccountId(), start, end);
+                    UserUIContext.getAccountId(), start, end);
 
             for (SimpleProjectMember member : members) {
                 MHorizontalLayout memberLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, true));
@@ -123,9 +123,9 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
                 DistributionBar memberBarDist = new DistributionBar(3);
                 memberBarDist.setZeroSizedVisible(false);
 
-                memberBarDist.setPartTooltip(0, AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
+                memberBarDist.setPartTooltip(0, UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
                 memberBarDist.setPartSize(0, member.getTotalBillableLogTime());
-                memberBarDist.setPartTooltip(1, AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
+                memberBarDist.setPartTooltip(1, UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
                 memberBarDist.setPartSize(1, member.getTotalNonBillableLogTime());
                 if ((billableHours + nonBillableHours) > 40) {
                     memberBarDist.setPartSize(2, 0);
@@ -134,7 +134,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
                     memberBarDist.setPartSize(2, 40 - (billableHours + nonBillableHours));
                     memberBarDist.setWidth("400px");
                 }
-                memberBarDist.setPartTooltip(2, AppContext.getMessage(TimeTrackingI18nEnum.OPT_REMAIN_HOURS));
+                memberBarDist.setPartTooltip(2, UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_REMAIN_HOURS));
                 memberLayout.with(memberBarDist);
                 contentLayout.with(memberLayout);
             }

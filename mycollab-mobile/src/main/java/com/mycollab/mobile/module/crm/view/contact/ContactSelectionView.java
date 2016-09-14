@@ -22,7 +22,7 @@ import com.mycollab.mobile.ui.AbstractSelectionView;
 import com.mycollab.module.crm.domain.SimpleContact;
 import com.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.mycollab.module.crm.i18n.ContactI18nEnum;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 
@@ -39,7 +39,7 @@ public class ContactSelectionView extends AbstractSelectionView<SimpleContact> {
     public ContactSelectionView() {
         super();
         createUI();
-        this.setCaption(AppContext.getMessage(ContactI18nEnum.M_VIEW_CONTACT_NAME_LOOKUP));
+        this.setCaption(UserUIContext.getMessage(ContactI18nEnum.M_VIEW_CONTACT_NAME_LOOKUP));
     }
 
     public void createUI() {
@@ -52,7 +52,7 @@ public class ContactSelectionView extends AbstractSelectionView<SimpleContact> {
     @Override
     public void load() {
         ContactSearchCriteria searchCriteria = new ContactSearchCriteria();
-        searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
         itemList.search(searchCriteria);
 
         SimpleContact clearContact = new SimpleContact();

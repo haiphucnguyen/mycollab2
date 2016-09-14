@@ -30,7 +30,7 @@ import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.pro.module.project.view.risk.RiskAddWindow;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
@@ -135,22 +135,22 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
                 if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                     ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                    SimpleTask task = taskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    SimpleTask task = taskService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
                     UI.getCurrent().addWindow(new TaskAddWindow(task));
                 } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
                     MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
                     UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
                 } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
                     BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                    SimpleBug bug = bugService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    SimpleBug bug = bugService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
                     UI.getCurrent().addWindow(new BugAddWindow(bug));
                 } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
                     RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                    SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    SimpleRisk risk = riskService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
                     UI.getCurrent().addWindow(new RiskAddWindow(risk));
                 }
             }
@@ -211,7 +211,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         MHorizontalLayout header = new MHorizontalLayout().withFullWidth();
 
         MHorizontalLayout headerLeftContainer = new MHorizontalLayout();
-        MButton todayBtn = new MButton(AppContext.getMessage(DayI18nEnum.OPT_TODAY), clickEvent -> {
+        MButton todayBtn = new MButton(UserUIContext.getMessage(DayI18nEnum.OPT_TODAY), clickEvent -> {
             baseDate = new LocalDate();
             displayCalendarView();
         }).withStyleName(WebUIConstants.BUTTON_ACTION);
@@ -248,17 +248,17 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         headerLbl = ELabel.h2("");
         titleWrapper.addComponent(headerLbl);
 
-        MButton dailyBtn = new MButton(AppContext.getMessage(DayI18nEnum.OPT_DAILY), clickEvent -> {
+        MButton dailyBtn = new MButton(UserUIContext.getMessage(DayI18nEnum.OPT_DAILY), clickEvent -> {
             baseDate = new LocalDate();
             displayDayView();
         }).withWidth("80px");
 
-        MButton weeklyBtn = new MButton(AppContext.getMessage(DayI18nEnum.OPT_WEEKLY), clickEvent -> {
+        MButton weeklyBtn = new MButton(UserUIContext.getMessage(DayI18nEnum.OPT_WEEKLY), clickEvent -> {
             baseDate = new LocalDate();
             displayWeekView();
         }).withWidth("80px");
 
-        MButton monthlyBtn = new MButton(AppContext.getMessage(DayI18nEnum.OPT_MONTHLY), clickEvent -> {
+        MButton monthlyBtn = new MButton(UserUIContext.getMessage(DayI18nEnum.OPT_MONTHLY), clickEvent -> {
             baseDate = new LocalDate();
             displayMonthView();
         }).withWidth("80px");
@@ -308,12 +308,12 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         provider.addEventSetChangeListener(new CalendarEventProvider.EventSetChangeListener() {
             @Override
             public void eventSetChange(CalendarEventProvider.EventSetChangeEvent event) {
-                assignMeLbl.setValue(AppContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGN_TO_ME_VALUE, provider.getAssignMeNum()));
-                assignOtherLbl.setValue(AppContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGN_TO_OTHERS, provider.getAssignOthersNum()));
-                nonAssigneeLbl.setValue(AppContext.getMessage(ProjectCommonI18nEnum.OPT_UNASSIGNED, provider.getNotAssignNum()));
-                billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " " + AppContext.getMessage
+                assignMeLbl.setValue(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGN_TO_ME_VALUE, provider.getAssignMeNum()));
+                assignOtherLbl.setValue(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGN_TO_OTHERS, provider.getAssignOthersNum()));
+                nonAssigneeLbl.setValue(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_UNASSIGNED, provider.getNotAssignNum()));
+                billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " " + UserUIContext.getMessage
                         (TimeTrackingI18nEnum.OPT_BILLABLE_HOURS_VALUE, provider.getTotalBillableHours()));
-                nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " " + AppContext.getMessage
+                nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " " + UserUIContext.getMessage
                         (TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS_VALUE, provider.getTotalNonBillableHours()));
             }
         });

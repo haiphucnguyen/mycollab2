@@ -4,7 +4,7 @@ import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.view.reports.IReportContainer;
 import com.mycollab.pro.module.project.view.ReportBreadcrumb;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -33,7 +33,7 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView> {
         IReportContainer projectModule = (IReportContainer) container;
         projectModule.addView(view);
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-        List<Integer> projectKeys = projectService.getProjectKeysUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
+        List<Integer> projectKeys = projectService.getProjectKeysUserInvolved(UserUIContext.getUsername(), UserUIContext.getAccountId());
         if (CollectionUtils.isNotEmpty(projectKeys)) {
             Date date = (Date) data.getParams();
             view.display(projectKeys, date);

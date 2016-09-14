@@ -28,7 +28,7 @@ import com.mycollab.module.project.view.milestone.ToggleGenericTaskSummaryField;
 import com.mycollab.pro.module.project.view.assignments.AssignmentAddWindow;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
@@ -105,19 +105,19 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         kanbanLayout.setDragMode(LayoutDragMode.CLONE_OTHER);
 
         this.with(searchPanel, kanbanLayout).expand(kanbanLayout);
-        MButton boardBtn = new MButton(AppContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD), clickEvent ->
+        MButton boardBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD), clickEvent ->
                 EventBusFactory.getInstance().post(new MilestoneEvent.GotoRoadmap(this))).withIcon(FontAwesome.NAVICON);
 
-        MButton advanceDisplayBtn = new MButton(AppContext.getMessage(ProjectCommonI18nEnum.OPT_LIST),
+        MButton advanceDisplayBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST),
                 clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null)))
                 .withIcon(FontAwesome.SERVER).withWidth("100px");
 
-        MButton kanbanBtn = new MButton(AppContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)).withIcon(FontAwesome.TH)
+        MButton kanbanBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)).withIcon(FontAwesome.TH)
                 .withWidth("100px");
 
-        MButton newMilestoneBtn = new MButton(AppContext.getMessage(MilestoneI18nEnum.NEW), clickEvent -> {
+        MButton newMilestoneBtn = new MButton(UserUIContext.getMessage(MilestoneI18nEnum.NEW), clickEvent -> {
             SimpleMilestone milestone = new SimpleMilestone();
-            milestone.setSaccountid(AppContext.getAccountId());
+            milestone.setSaccountid(UserUIContext.getAccountId());
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
         }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
@@ -184,7 +184,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
     private void insertMilestone(Integer milestoneId) {
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-        SimpleMilestone milestone = milestoneService.findById(milestoneId, AppContext.getAccountId());
+        SimpleMilestone milestone = milestoneService.findById(milestoneId, UserUIContext.getAccountId());
         if (milestone != null) {
             KanbanBlock kanbanBlock = new KanbanBlock(milestone);
             kanbanBlocks.put(milestone.getId(), kanbanBlock);
@@ -250,7 +250,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                             task.setMilestoneId(milestone.getId());
                         }
                         ProjectGenericTaskService projectGenericTaskService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
-                        projectGenericTaskService.updateAssignmentValue(task, AppContext.getUsername());
+                        projectGenericTaskService.updateAssignmentValue(task, UserUIContext.getUsername());
 
                         updateComponentCount();
 
@@ -270,12 +270,12 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((UIUtils.getBrowserHeight() - 450) + "px");
             MHorizontalLayout headerLayout = new MHorizontalLayout().withSpacing(false).withFullWidth().withStyleName("header");
             if (milestone == null) {
-                header = new ELabel(AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED)).withStyleName(UIConstants.TEXT_ELLIPSIS)
-                        .withDescription(AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED));
+                header = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)).withStyleName(UIConstants.TEXT_ELLIPSIS)
+                        .withDescription(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED));
             } else {
                 header = new ELabel(milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS).withDescription
-                        (ProjectTooltipGenerator.generateToolTipMilestone(AppContext.getUserLocale(), AppContext.getDateFormat(),
-                                milestone, AppContext.getSiteUrl(), AppContext.getUserTimeZone(), false));
+                        (ProjectTooltipGenerator.generateToolTipMilestone(UserUIContext.getUserLocale(), UserUIContext.getDateFormat(),
+                                milestone, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
             }
 
             headerLayout.with(header).expand(header);
@@ -288,21 +288,21 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             OptionPopupContent popupContent = new OptionPopupContent();
 
             if (canWrite) {
-                MButton editBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent ->
+                MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent ->
                         EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(this, milestone))).withIcon(FontAwesome.EDIT);
                 popupContent.addOption(editBtn);
             }
             if (canExecute) {
-                MButton deleteBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
+                MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                            UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                            UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                             confirmDialog -> {
                                 if (confirmDialog.isConfirmed()) {
                                     MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                                    milestoneService.removeWithSession(milestone, AppContext.getUsername(), AppContext.getAccountId());
+                                    milestoneService.removeWithSession(milestone, UserUIContext.getUsername(), UserUIContext.getAccountId());
                                     ((ComponentContainer) KanbanBlock.this.getParent()).removeComponent(KanbanBlock.this);
                                 }
                             });
@@ -313,7 +313,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             controlsBtn.setContent(popupContent);
             headerLayout.with(controlsBtn);
 
-            MButton newAssignmentBtn = new MButton(AppContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT),
+            MButton newAssignmentBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT),
                     clickEvent -> UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(),
                             CurrentProjectVariables.getProjectId(), false))).withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
 
@@ -329,7 +329,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             if (milestone != null) {
                 header.setValue(String.format("%s (%d)", milestone.getName(), getAssignmentComponentCount()));
             } else {
-                header.setValue(String.format("%s (%d)", AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED),
+                header.setValue(String.format("%s (%d)", UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED),
                         getAssignmentComponentCount()));
             }
         }

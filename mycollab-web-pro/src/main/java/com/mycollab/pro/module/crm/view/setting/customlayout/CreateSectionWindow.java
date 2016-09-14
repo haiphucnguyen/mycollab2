@@ -4,7 +4,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.mycollab.module.crm.view.setting.ICrmCustomView;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
@@ -41,7 +41,7 @@ public class CreateSectionWindow extends Window {
 
         MHorizontalLayout controlLayout = new MHorizontalLayout().withMargin(true);
 
-        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), event -> {
+        Button saveBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), event -> {
             DynaSection section = new DynaSection();
             section.setDeletedSection(false);
 //                        section.setHeader(sectionName.getValue());
@@ -55,7 +55,7 @@ public class CreateSectionWindow extends Window {
         saveBtn.setIcon(FontAwesome.SAVE);
 
 
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), event -> close());
+        Button cancelBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), event -> close());
         cancelBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
 
         controlLayout.with(saveBtn, cancelBtn);

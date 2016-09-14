@@ -42,7 +42,7 @@ import com.mycollab.module.project.view.task.components.TaskStatusComboBox;
 import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -84,7 +84,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             @Override
             protected String generateSmallAsHtmlAfterUpdate() {
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                SimpleTask newTask = taskService.findById(task.getId(), AppContext.getAccountId());
+                SimpleTask newTask = taskService.findById(task.getId(), UserUIContext.getAccountId());
                 String avatarLink = StorageFactory.getAvatarPath(newTask.getAssignUserAvatarId(), 16);
                 Img img = new Img(newTask.getAssignUserFullName(), avatarLink).setTitle(newTask.getAssignUserFullName())
                         .setCSSClass(UIConstants.CIRCLE_BOX);
@@ -97,7 +97,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("assignuser").withDescription(task.getAssignUserFullName())
-                .withCaption(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
+                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
                 .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getAssignuser())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -117,8 +117,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("priority").withDescription(task.getPriority())
-                .withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY))
-                .withDescription(AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY_HELP))
+                .withCaption(UserUIContext.getMessage(TaskI18nEnum.FORM_PRIORITY))
+                .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_PRIORITY_HELP))
                 .withField(new TaskPriorityComboBox())
                 .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPriority())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
@@ -133,7 +133,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 if (task.getStatus() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(FontAwesome.INFO_CIRCLE.getHtml());
-                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                    divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
@@ -141,8 +141,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 }
             }
         };
-        builder.withBean(task).withBindProperty("status").withCaption(AppContext.getMessage(GenericI18Enum.FORM_STATUS))
-                .withDescription(AppContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP))
+        builder.withBean(task).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
+                .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP))
                 .withField(new TaskStatusComboBox()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStatus())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -156,7 +156,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 if (task.getMilestoneid() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
-                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                    divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
@@ -168,7 +168,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         };
         MilestoneComboBox milestoneComboBox = new MilestoneComboBox();
         milestoneComboBox.setWidth("300px");
-        builder.withBean(task).withBindProperty("milestoneid").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PHASE))
+        builder.withBean(task).withBindProperty("milestoneid").withCaption(UserUIContext.getMessage(TaskI18nEnum.FORM_PHASE))
                 .withField(milestoneComboBox).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
                 .withValue(task.getMilestoneid()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -184,15 +184,15 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 } else {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(VaadinIcons.CALENDAR_CLOCK.getHtml());
-                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                    divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 }
             }
         };
         builder.withBean(task).withBindProperty("percentagecomplete")
-                .withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE)).withField(new TaskSliderField())
-                .withDescription(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE))
+                .withCaption(UserUIContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE)).withField(new TaskSliderField())
+                .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE))
                 .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPercentagecomplete())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -206,16 +206,16 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 if (task.getDeadlineRoundPlusOne() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(FontAwesome.CLOCK_O.getHtml());
-                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                    divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), AppContext.formatPrettyTime(task.getDeadlineRoundPlusOne()));
+                    return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), UserUIContext.formatPrettyTime(task.getDeadlineRoundPlusOne()));
                 }
 
             }
         };
-        builder.withBean(task).withBindProperty("deadline").withCaption(AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
+        builder.withBean(task).withBindProperty("deadline").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
                 .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
                 .withValue(task.getDeadline()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -229,16 +229,16 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 if (task.getStartdate() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(VaadinIcons.TIME_FORWARD.getHtml());
-                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                    divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return String.format(" %s %s", VaadinIcons.TIME_FORWARD.getHtml(), AppContext.formatDate(task.getStartdate()));
+                    return String.format(" %s %s", VaadinIcons.TIME_FORWARD.getHtml(), UserUIContext.formatDate(task.getStartdate()));
                 }
 
             }
         };
-        builder.withBean(task).withBindProperty("startdate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
+        builder.withBean(task).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
                 .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService
                 .class)).withValue(task.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
@@ -253,16 +253,16 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 if (task.getEnddate() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(VaadinIcons.TIME_BACKWARD.getHtml());
-                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                    divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return String.format(" %s %s", VaadinIcons.TIME_BACKWARD.getHtml(), AppContext.formatDate(task.getEnddate()));
+                    return String.format(" %s %s", VaadinIcons.TIME_BACKWARD.getHtml(), UserUIContext.formatDate(task.getEnddate()));
                 }
 
             }
         };
-        builder.withBean(task).withBindProperty("enddate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
+        builder.withBean(task).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
                 .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService
                 .class)).withValue(task.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
@@ -272,21 +272,21 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
     @Override
     public PopupView createCommentsPopupField(SimpleTask task) {
         TaskCommentsPopupView view = new TaskCommentsPopupView(task);
-        view.setDescription(AppContext.getMessage(GenericI18Enum.ACTION_ADD_COMMENT));
+        view.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_ADD_COMMENT));
         return view;
     }
 
     @Override
     public PopupView createBillableHoursPopupField(SimpleTask task) {
         TaskBillableHoursPopupField view = new TaskBillableHoursPopupField(task, true);
-        view.setDescription(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
+        view.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
         return view;
     }
 
     @Override
     public PopupView createNonBillableHoursPopupField(SimpleTask task) {
         TaskBillableHoursPopupField view = new TaskBillableHoursPopupField(task, false);
-        view.setDescription(AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
+        view.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
         return view;
     }
 
@@ -302,7 +302,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         TaskFollowersPopupView(SimpleTask task) {
             super("");
             this.task = task;
-            this.setDescription(AppContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP));
+            this.setDescription(UserUIContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP));
             this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + NumberUtils.zeroIfNull(task.getNumFollowers()));
         }
 
@@ -312,7 +312,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             layout.removeAllComponents();
             watchersMultiSelection = new WatchersMultiSelection(ProjectTypeConstants.TASK, task.getId(),
                     CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
-            layout.with(new ELabel(AppContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS))
+            layout.with(new ELabel(UserUIContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS))
                     .withStyleName(ValoTheme.LABEL_H3), watchersMultiSelection);
         }
 
@@ -388,16 +388,16 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             layout.removeAllComponents();
             if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
                 timeInput.setValue("");
-                timeInput.setDescription(AppContext.getMessage(TimeTrackingI18nEnum.OPT_TIME_FORMAT));
-                String title = (isBillable) ? AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
-                        AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
+                timeInput.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TIME_FORMAT));
+                String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
+                        UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
                 Label headerLbl = ELabel.h3(title);
                 dateField = new PopupDateFieldExt();
                 dateField.setValue(new GregorianCalendar().getTime());
                 layout.with(headerLbl, timeInput);
-                layout.with(ELabel.h3(AppContext.getMessage(DayI18nEnum.OPT_DATE)), dateField);
+                layout.with(ELabel.h3(UserUIContext.getMessage(DayI18nEnum.OPT_DATE)), dateField);
             } else {
-                layout.add(new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
+                layout.add(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
             }
         }
 
@@ -411,16 +411,16 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                     ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
                     Double hours = delta.doubleValue() / (1000 * 60 * 60);
                     ItemTimeLogging timeLogging = new ItemTimeLogging();
-                    timeLogging.setCreateduser(AppContext.getUsername());
+                    timeLogging.setCreateduser(UserUIContext.getUsername());
                     timeLogging.setIsbillable(isBillable);
-                    timeLogging.setLoguser(AppContext.getUsername());
+                    timeLogging.setLoguser(UserUIContext.getUsername());
                     timeLogging.setLogforday(date);
                     timeLogging.setLogvalue(hours);
                     timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
                     timeLogging.setType(ProjectTypeConstants.TASK);
                     timeLogging.setTypeid(task.getId());
-                    timeLogging.setSaccountid(AppContext.getAccountId());
-                    timeLoggingService.saveWithSession(timeLogging, AppContext.getUsername());
+                    timeLogging.setSaccountid(UserUIContext.getAccountId());
+                    timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
                     EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TaskBillableHoursPopupField.this));
 
                     // load hours again
@@ -436,7 +436,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                         this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + calculatedHours);
                     }
                 } else {
-                    NotificationUtil.showWarningNotification(AppContext.getMessage(TimeTrackingI18nEnum.ERROR_TIME_FORMAT));
+                    NotificationUtil.showWarningNotification(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_TIME_FORMAT));
                 }
             }
         }

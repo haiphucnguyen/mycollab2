@@ -35,7 +35,7 @@ import com.mycollab.reporting.FormReportLayout;
 import com.mycollab.reporting.PrintButton;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.AbstractRelatedListHandler;
@@ -71,14 +71,14 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
             @Override
             public void onDelete(final SimpleAccount data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                                accountService.removeWithSession(data, AppContext.getUsername(), AppContext.getAccountId());
+                                accountService.removeWithSession(data, UserUIContext.getUsername(), UserUIContext.getAccountId());
                                 EventBusFactory.getInstance().post(new AccountEvent.GotoList(this, null));
                             }
                         });
@@ -112,7 +112,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
             public void gotoNext(SimpleAccount data) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = accountService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -126,7 +126,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
             public void gotoPrevious(SimpleAccount data) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = accountService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -152,7 +152,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                     SimpleAccount account = view.getItem();
                     for (SimpleContact contact : items) {
                         contact.setAccountid(account.getId());
-                        contactService.updateWithSession(contact, AppContext.getUsername());
+                        contactService.updateWithSession(contact, UserUIContext.getUsername());
                     }
 
                     view.getRelatedContactHandlers().refresh();
@@ -191,7 +191,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                     }
 
                     AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                    accountService.saveAccountLeadRelationship(associateLeads, AppContext.getAccountId());
+                    accountService.saveAccountLeadRelationship(associateLeads, UserUIContext.getAccountId());
 
                     view.getRelatedLeadHandlers().refresh();
                 }
@@ -233,16 +233,16 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         CrmModule.navigateItem(CrmTypeConstants.ACCOUNT);
-        if (AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
             if (data.getParams() instanceof Integer) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                SimpleAccount account = accountService.findById((Integer) data.getParams(), AppContext.getAccountId());
+                SimpleAccount account = accountService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
                 if (account != null) {
                     super.onGo(container, data);
                     view.previewItem(account);
-                    AppContext.addFragment(CrmLinkGenerator.generateAccountPreviewLink(account.getId()),
-                            AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-                                    AppContext.getMessage(AccountI18nEnum.SINGLE), account.getAccountname()));
+                    UserUIContext.addFragment(CrmLinkGenerator.generateAccountPreviewLink(account.getId()),
+                            UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                                    UserUIContext.getMessage(AccountI18nEnum.SINGLE), account.getAccountname()));
                 } else {
                     throw new ResourceNotFoundException();
                 }

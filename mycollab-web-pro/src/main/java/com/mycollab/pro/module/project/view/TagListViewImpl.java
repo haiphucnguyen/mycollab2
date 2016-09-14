@@ -13,7 +13,7 @@ import com.mycollab.module.project.service.ProjectGenericItemService;
 import com.mycollab.module.project.ui.components.GenericItemRowDisplayHandler;
 import com.mycollab.module.project.view.ITagListView;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -59,7 +59,7 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         }
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
                 .withFullWidth();
-        header.with(ELabel.h2(FontAwesome.TAGS.getHtml() + " " + AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG))
+        header.with(ELabel.h2(FontAwesome.TAGS.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG))
                 .withWidthUndefined());
 
         MHorizontalLayout contentWrapper = new MHorizontalLayout();
@@ -73,7 +73,7 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
                 false, true)).withFullWidth();
         panelHeader.addStyleName(WebUIConstants.PANEL_HEADER);
 
-        panelHeader.with(ELabel.h3(AppContext.getMessage(TagI18nEnum.OPT_TAG_CLOUD))).alignAll(Alignment.MIDDLE_LEFT);
+        panelHeader.with(ELabel.h3(UserUIContext.getMessage(TagI18nEnum.OPT_TAG_CLOUD))).alignAll(Alignment.MIDDLE_LEFT);
 
         TagCloudComp cloudComp = new TagCloudComp();
         cloudComp.displayTagItems();
@@ -99,9 +99,9 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         }
 
         void displayTagItems() {
-            List<AggregateTag> tags = tagService.findTagsInProject(CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
+            List<AggregateTag> tags = tagService.findTagsInProject(CurrentProjectVariables.getProjectId(), UserUIContext.getAccountId());
             if (CollectionUtils.isEmpty(tags)) {
-                this.addComponent(new Label(AppContext.getMessage(TagI18nEnum.OPT_NO_TAG_EXISTED)));
+                this.addComponent(new Label(UserUIContext.getMessage(TagI18nEnum.OPT_NO_TAG_EXISTED)));
             } else {
                 for (AggregateTag tag : tags) {
                     TagButton btn = new TagButton(tag);

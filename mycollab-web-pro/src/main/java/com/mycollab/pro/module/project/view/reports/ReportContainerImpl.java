@@ -5,7 +5,7 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectReportI18nEnum;
 import com.mycollab.module.project.view.reports.IReportContainer;
 import com.mycollab.pro.module.project.view.ReportBreadcrumb;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.PageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -37,7 +37,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
     @Override
     public void showDashboard() {
         body.removeAllComponents();
-        body.with(ELabel.h2(FontAwesome.PIE_CHART.getHtml() + " " + AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS)));
+        body.with(ELabel.h2(FontAwesome.PIE_CHART.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS)));
         CssLayout content = new CssLayout();
         content.setStyleName(WebUIConstants.FLEX_DISPLAY);
         this.addComponent(content);
@@ -46,18 +46,18 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
         standupConsole.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         standupConsole.addComponent(ELabel.fontIcon(FontAwesome.LEGAL).withStyleName("icon-38px"));
         A standupReportLink = new A(ProjectLinkBuilder.generateStandupDashboardLink())
-                .appendText(AppContext.getMessage(ProjectReportI18nEnum.REPORT_STANDUP));
+                .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_STANDUP));
         standupConsole.addComponent(ELabel.h3(standupReportLink.write()).withWidthUndefined());
-        standupConsole.addComponent(new ELabel(AppContext.getMessage(ProjectReportI18nEnum.REPORT_STANDUP_HELP)).withFullWidth());
+        standupConsole.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_STANDUP_HELP)).withFullWidth());
         content.addComponent(standupConsole);
 
         MVerticalLayout hoursWeeklyReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         hoursWeeklyReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         hoursWeeklyReport.addComponent(ELabel.fontIcon(FontAwesome.BALANCE_SCALE).withStyleName("icon-38px"));
         A hoursWeeklyReportLink = new A(ProjectLinkBuilder.generateHoursWeeklyReportLink())
-                .appendText(AppContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY));
+                .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY));
         hoursWeeklyReport.addComponent(ELabel.h3(hoursWeeklyReportLink.write()).withWidthUndefined());
-        hoursWeeklyReport.addComponent(new ELabel(AppContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY_HELP))
+        hoursWeeklyReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY_HELP))
                 .withFullWidth());
         content.addComponent(hoursWeeklyReport);
 
@@ -65,18 +65,18 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
         userWorkloadReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         userWorkloadReport.addComponent(ELabel.fontIcon(FontAwesome.BAR_CHART).withStyleName("icon-38px"));
         A userWorkloadReportLink = new A(ProjectLinkBuilder.generateUsersWorkloadReportLink())
-                .appendText(AppContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
+                .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
         userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withWidthUndefined());
-        userWorkloadReport.addComponent(new ELabel(AppContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD_HELP)).withFullWidth());
+        userWorkloadReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD_HELP)).withFullWidth());
 //        content.addComponent(userWorkloadReport);
 
         MVerticalLayout timesheetReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         timesheetReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         timesheetReport.addComponent(ELabel.fontIcon(FontAwesome.CLOCK_O).withStyleName("icon-38px"));
         A timesheetReportLink = new A(ProjectLinkBuilder.generateTimesheetReportLink())
-                .appendText(AppContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET));
+                .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET));
         timesheetReport.addComponent(ELabel.h3(timesheetReportLink.write()).withWidthUndefined());
-        timesheetReport.addComponent(new ELabel(AppContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET_HELP))
+        timesheetReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET_HELP))
                 .withFullWidth());
         content.addComponent(timesheetReport);
         body.addComponent(content);

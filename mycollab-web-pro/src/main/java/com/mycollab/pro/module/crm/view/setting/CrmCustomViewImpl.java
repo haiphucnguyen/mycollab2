@@ -36,7 +36,7 @@ import com.mycollab.pro.module.crm.view.setting.customlayout.CreateCustomFieldWi
 import com.mycollab.pro.module.crm.view.setting.customlayout.CreateSectionWindow;
 import com.mycollab.pro.module.crm.view.setting.customlayout.CustomLayoutDDComp;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -134,21 +134,21 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 
         MHorizontalLayout buttonsLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false));
 
-        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
+        Button saveBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void buttonClick(ClickEvent event) {
                 DynaForm rebuildForm = layoutComp.rebuildForm();
                 MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
-                formService.saveCustomForm(AppContext.getAccountId(), moduleName, rebuildForm);
+                formService.saveCustomForm(UserUIContext.getAccountId(), moduleName, rebuildForm);
             }
         });
         saveBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
         buttonsLayout.addComponent(saveBtn);
 
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+        Button cancelBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -174,7 +174,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 
     private static DynaForm getDynaForm(String moduleName) {
         MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
-        DynaForm form = formService.findCustomForm(AppContext.getAccountId(), moduleName);
+        DynaForm form = formService.findCustomForm(UserUIContext.getAccountId(), moduleName);
 
         if (form == null) {
             if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {

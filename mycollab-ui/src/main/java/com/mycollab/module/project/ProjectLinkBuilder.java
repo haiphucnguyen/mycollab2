@@ -26,7 +26,7 @@ import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.TooltipHelper;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
@@ -47,32 +47,32 @@ public class ProjectLinkBuilder {
         if (projectId == null) {
             return "";
         }
-        return ProjectLinkGenerator.generateProjectFullLink(AppContext.getSiteUrl(), projectId);
+        return ProjectLinkGenerator.generateProjectFullLink(UserUIContext.getSiteUrl(), projectId);
     }
 
     public static String generateComponentPreviewFullLink(Integer projectId, Integer componentId) {
         if (projectId == null || componentId == null) {
             return "";
         }
-        return ProjectLinkGenerator.generateBugComponentPreviewFullLink(AppContext.getSiteUrl(), projectId, componentId);
+        return ProjectLinkGenerator.generateBugComponentPreviewFullLink(UserUIContext.getSiteUrl(), projectId, componentId);
     }
 
     public static String generateBugVersionPreviewFullLink(Integer projectId, Integer versionId) {
         if (projectId == null || versionId == null) {
             return "";
         }
-        return ProjectLinkGenerator.generateBugVersionPreviewFullLink(AppContext.getSiteUrl(), projectId, versionId);
+        return ProjectLinkGenerator.generateBugVersionPreviewFullLink(UserUIContext.getSiteUrl(), projectId, versionId);
     }
 
     public static String generateRolePreviewFullLink(Integer projectId, Integer roleId) {
         if (projectId == null || roleId == null) {
             return "";
         }
-        return ProjectLinkGenerator.generateRolePreviewFullLink(AppContext.getSiteUrl(), projectId, roleId);
+        return ProjectLinkGenerator.generateRolePreviewFullLink(UserUIContext.getSiteUrl(), projectId, roleId);
     }
 
     public static String generateProjectMemberFullLink(Integer projectId, String memberName) {
-        return ProjectLinkGenerator.generateProjectMemberFullLink(AppContext.getSiteUrl(), projectId, memberName);
+        return ProjectLinkGenerator.generateProjectMemberFullLink(UserUIContext.getSiteUrl(), projectId, memberName);
     }
 
     public static String generateProjectMemberHtmlLink(Integer projectId, String username, String displayName, String avarId,
@@ -91,7 +91,7 @@ public class ProjectLinkBuilder {
 
     public static String generateProjectMemberHtmlLink(Integer projectId, String username, Boolean isDisplayTooltip) {
         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-        SimpleProjectMember member = projectMemberService.findMemberByUsername(username, projectId, AppContext.getAccountId());
+        SimpleProjectMember member = projectMemberService.findMemberByUsername(username, projectId, UserUIContext.getAccountId());
         if (member != null) {
             return generateProjectMemberHtmlLink(projectId, member.getUsername(), member.getDisplayName(), member
                     .getMemberAvatarId(), isDisplayTooltip);
@@ -101,7 +101,7 @@ public class ProjectLinkBuilder {
     }
 
     public static String generateBugPreviewFullLink(Integer bugKey, String prjShortName) {
-        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
+        return UserUIContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
                 + ProjectLinkGenerator.generateBugPreviewLink(bugKey, prjShortName);
     }
 
@@ -109,7 +109,7 @@ public class ProjectLinkBuilder {
         if (projectId == null || messageId == null) {
             return "";
         }
-        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
+        return UserUIContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
                 + ProjectLinkGenerator.generateMessagePreviewLink(projectId, messageId);
     }
 
@@ -117,12 +117,12 @@ public class ProjectLinkBuilder {
         if (projectId == null || riskId == null) {
             return "";
         }
-        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
+        return UserUIContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
                 + "project/risk/preview/" + UrlEncodeDecoder.encode(projectId + "/" + riskId);
     }
 
     public static String generateTaskPreviewFullLink(Integer taskKey, String prjShortName) {
-        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
+        return UserUIContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
                 + ProjectLinkGenerator.generateTaskPreviewLink(taskKey, prjShortName);
     }
 
@@ -130,12 +130,12 @@ public class ProjectLinkBuilder {
         if (projectId == null || milestoneId == null) {
             return "";
         }
-        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
+        return UserUIContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
                 + ProjectLinkGenerator.generateMilestonePreviewLink(projectId, milestoneId);
     }
 
     public static String generateClientPreviewFullLink(Integer clientId) {
-        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator
+        return UserUIContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator
                 .generateClientPreviewLink(clientId);
     }
 
@@ -143,38 +143,38 @@ public class ProjectLinkBuilder {
         if (projectId == null || folderPath == null) {
             return "";
         }
-        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
+        return UserUIContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
                 + ProjectLinkGenerator.generatePagesLink(projectId, folderPath);
     }
 
     public static final String generatePageFullLink(Integer projectId, String pagePath) {
-        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
+        return UserUIContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM
                 + ProjectLinkGenerator.generatePageRead(projectId, pagePath);
     }
 
     public static String generateStandupDashboardLink() {
-        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateStandupDashboardLink();
+        return UserUIContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateStandupDashboardLink();
     }
 
     public static final String generateHoursWeeklyReportLink() {
-        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator
+        return UserUIContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator
                 .generateHoursWeeklyReportLink();
     }
 
     public static final String generateTimesheetReportLink() {
-        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator
+        return UserUIContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator
                 .generateTimesheetReportLink();
     }
 
     public static final String generateUsersWorkloadReportLink() {
-        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator
+        return UserUIContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator
                 .generateUsersWorkloadReportLink();
     }
 
     public static String generateProjectItemHtmlLinkAndTooltip(String prjShortName, Integer projectId, String summary, String type, String typeId) {
         Text image = new Text(ProjectAssetsManager.getAsset(type).getHtml());
         A link = new A().setId("tag" + TOOLTIP_ID);
-        link.setHref(AppContext.getSiteUrl() + generateProjectItemLink(prjShortName, projectId, type, typeId)).appendChild(new Text(summary));
+        link.setHref(UserUIContext.getSiteUrl() + generateProjectItemLink(prjShortName, projectId, type, typeId)).appendChild(new Text(summary));
         link.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(type, typeId));
         link.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
         Div div = new DivLessFormatter().appendChild(image, DivLessFormatter.EMPTY_SPACE(), link);

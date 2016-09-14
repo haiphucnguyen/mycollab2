@@ -31,7 +31,7 @@ import com.mycollab.pro.module.project.view.assignments.GenericAssignmentEvent;
 import com.mycollab.pro.module.project.view.assignments.GenericAssignmentProvider;
 import com.mycollab.pro.module.project.view.risk.RiskAddWindow;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -125,7 +125,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     public void display() {
         this.removeAllComponents();
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-        projectKeys = projectService.getProjectKeysUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
+        projectKeys = projectService.getProjectKeysUserInvolved(UserUIContext.getUsername(), UserUIContext.getAccountId());
         searchCriteria = new ProjectGenericTaskSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(projectKeys));
         calendar = new Calendar();
@@ -159,22 +159,22 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
                 if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
                         ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.TASKS)) {
                     ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                    SimpleTask task = taskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    SimpleTask task = taskService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
                     UI.getCurrent().addWindow(new TaskAddWindow(task));
                 } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
                         ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.MILESTONES)) {
                     MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
                     UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
                 } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
                         ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.BUGS)) {
                     BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                    SimpleBug bug = bugService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    SimpleBug bug = bugService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
                     UI.getCurrent().addWindow(new BugAddWindow(bug));
                 } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
                         ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.RISKS)) {
                     RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                    SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    SimpleRisk risk = riskService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
                     UI.getCurrent().addWindow(new RiskAddWindow(risk));
                 }
             }
@@ -226,7 +226,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     private MHorizontalLayout buildHeader() {
         MHorizontalLayout header = new MHorizontalLayout().withFullWidth();
 
-        MButton todayBtn = new MButton(AppContext.getMessage(DayI18nEnum.OPT_TODAY), clickEvent -> {
+        MButton todayBtn = new MButton(UserUIContext.getMessage(DayI18nEnum.OPT_TODAY), clickEvent -> {
             baseDate = new LocalDate();
             displayCalendar();
         }).withStyleName(WebUIConstants.BUTTON_ACTION);
@@ -259,16 +259,16 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         headerLbl.setStyleName(ValoTheme.LABEL_H2);
         titleWrapper.addComponent(headerLbl);
 
-        MButton newTaskBtn = new MButton(AppContext.getMessage(TaskI18nEnum.NEW),
+        MButton newTaskBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.NEW),
                 clickEvent -> UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(new SimpleTask())))
                 .withStyleName(WebUIConstants.BUTTON_ACTION);
         final ToggleButtonGroup viewButtons = new ToggleButtonGroup();
-        final Button weekViewBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_WEEK));
+        final Button weekViewBtn = new Button(UserUIContext.getMessage(DayI18nEnum.OPT_WEEK));
         weekViewBtn.addClickListener(clickEvent -> {
             displayWeekView();
             viewButtons.withDefaultButton(weekViewBtn);
         });
-        final Button monthViewBtn = new Button(AppContext.getMessage(DayI18nEnum.OPT_MONTH));
+        final Button monthViewBtn = new Button(UserUIContext.getMessage(DayI18nEnum.OPT_MONTH));
         monthViewBtn.addClickListener(clickEvent -> {
             displayMonthView();
             viewButtons.withDefaultButton(monthViewBtn);
@@ -335,12 +335,12 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     }
 
     private void displayInfo(GenericAssignmentProvider provider) {
-        assignMeLbl.setValue(AppContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGN_TO_ME_VALUE, provider.getAssignMeNum()));
-        assignOtherLbl.setValue(AppContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGN_TO_OTHERS, provider.getAssignOthersNum()));
-        nonAssigneeLbl.setValue(AppContext.getMessage(ProjectCommonI18nEnum.OPT_UNASSIGNED, provider.getNotAssignNum()));
-        billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " " + AppContext.getMessage(TimeTrackingI18nEnum
+        assignMeLbl.setValue(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGN_TO_ME_VALUE, provider.getAssignMeNum()));
+        assignOtherLbl.setValue(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGN_TO_OTHERS, provider.getAssignOthersNum()));
+        nonAssigneeLbl.setValue(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_UNASSIGNED, provider.getNotAssignNum()));
+        billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " " + UserUIContext.getMessage(TimeTrackingI18nEnum
                 .OPT_BILLABLE_HOURS_VALUE, provider.getTotalBillableHours()));
-        nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " " + AppContext.getMessage(TimeTrackingI18nEnum
+        nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " " + UserUIContext.getMessage(TimeTrackingI18nEnum
                 .OPT_NON_BILLABLE_HOURS_VALUE, provider.getTotalNonBillableHours()));
     }
 

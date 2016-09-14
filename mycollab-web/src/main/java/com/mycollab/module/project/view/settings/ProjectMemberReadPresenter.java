@@ -30,7 +30,7 @@ import com.mycollab.module.project.events.ProjectMemberEvent;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -62,14 +62,14 @@ public class ProjectMemberReadPresenter extends AbstractPresenter<ProjectMemberR
             @Override
             public void onDelete(final SimpleProjectMember data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-                                projectMemberService.removeWithSession(data, AppContext.getUsername(), AppContext.getAccountId());
+                                projectMemberService.removeWithSession(data, UserUIContext.getUsername(), UserUIContext.getAccountId());
                                 EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null));
                             }
                         });
@@ -93,7 +93,7 @@ public class ProjectMemberReadPresenter extends AbstractPresenter<ProjectMemberR
                 ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
-                criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
                 criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET));
 
                 Integer nextId = projectMemberService.getNextItemKey(criteria);
@@ -128,7 +128,7 @@ public class ProjectMemberReadPresenter extends AbstractPresenter<ProjectMemberR
         boolean isCurrentUserAccess = false;
 
         if (data.getParams() instanceof String) {
-            if (AppContext.getUsername().equals(data.getParams())) {
+            if (UserUIContext.getUsername().equals(data.getParams())) {
                 isCurrentUserAccess = true;
             }
         }
@@ -136,11 +136,11 @@ public class ProjectMemberReadPresenter extends AbstractPresenter<ProjectMemberR
             ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
             SimpleProjectMember prjMember = null;
             if (data.getParams() instanceof Integer) {
-                prjMember = prjMemberService.findById((Integer) data.getParams(), AppContext.getAccountId());
+                prjMember = prjMemberService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
 
             } else if (data.getParams() instanceof String) {
                 String username = (String) data.getParams();
-                prjMember = prjMemberService.findMemberByUsername(username, CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
+                prjMember = prjMemberService.findMemberByUsername(username, CurrentProjectVariables.getProjectId(), UserUIContext.getAccountId());
             }
 
             if (prjMember != null) {

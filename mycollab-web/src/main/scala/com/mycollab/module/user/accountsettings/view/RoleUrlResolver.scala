@@ -19,9 +19,9 @@ package com.mycollab.premium.module.user.accountsettings.view
 import com.mycollab.eventmanager.EventBusFactory
 import com.mycollab.module.user.events.RoleEvent
 import com.mycollab.module.user.service.RoleService
-import com.mycollab.vaadin.AppContext
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.spring.AppContextUtil
+import com.mycollab.vaadin.UserUIContext
 
 /**
   * @author MyCollab Ltd
@@ -49,7 +49,7 @@ class RoleUrlResolver extends AccountSettingUrlResolver {
     protected override def handlePage(params: String*) {
       val roleId = UrlTokenizer(params(0)).getInt
       val roleService = AppContextUtil.getSpringBean(classOf[RoleService])
-      val role = roleService.findById(roleId, AppContext.getAccountId)
+      val role = roleService.findById(roleId, UserUIContext.getAccountId)
       EventBusFactory.getInstance().post(new RoleEvent.GotoEdit(EditUrlResolver.this, role))
     }
   }

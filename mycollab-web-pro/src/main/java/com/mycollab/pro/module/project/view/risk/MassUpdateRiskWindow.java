@@ -5,7 +5,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -46,7 +46,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<SimpleRisk> {
         public ComponentContainer getLayout() {
             FormContainer formLayout = new FormContainer();
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 6);
-            formLayout.addSection(AppContext.getMessage(RiskI18nEnum.SECTION_RISK_INFORMATION), informationLayout.getLayout());
+            formLayout.addSection(UserUIContext.getMessage(RiskI18nEnum.SECTION_RISK_INFORMATION), informationLayout.getLayout());
             formLayout.addComponent(buildButtonControls());
             return formLayout;
         }
@@ -55,17 +55,17 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<SimpleRisk> {
         @Override
         protected Component onAttachField(Object propertyId, Field<?> field) {
             if (propertyId.equals("raisedbyuser")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_RAISED_BY), 0, 0);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(RiskI18nEnum.FORM_RAISED_BY), 0, 0);
             } else if (propertyId.equals("assigntouser")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 0);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 0);
             } else if (propertyId.equals("consequence")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE), 0, 1);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE), 0, 1);
             } else if (propertyId.equals("datedue")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 1, 1);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 1, 1);
             } else if (propertyId.equals("probalitity")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_PROBABILITY), 0, 2);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(RiskI18nEnum.FORM_PROBABILITY), 0, 2);
             } else if (propertyId.equals("status")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_STATUS), 1, 2);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_STATUS), 1, 2);
             }
             return null;
         }

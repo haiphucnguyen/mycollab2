@@ -11,7 +11,7 @@ import com.mycollab.module.project.events.RiskEvent;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -30,9 +30,9 @@ import org.vaadin.viritin.layouts.MWindow;
 public class RiskAddWindow extends MWindow {
     public RiskAddWindow(SimpleRisk risk) {
         if (risk.getId() == null) {
-            setCaption(AppContext.getMessage(RiskI18nEnum.NEW));
+            setCaption(UserUIContext.getMessage(RiskI18nEnum.NEW));
         } else {
-            setCaption(AppContext.getMessage(RiskI18nEnum.EDIT));
+            setCaption(UserUIContext.getMessage(RiskI18nEnum.EDIT));
         }
 
         EditForm editForm = new EditForm();
@@ -58,23 +58,23 @@ public class RiskAddWindow extends MWindow {
                 informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 5);
                 layout.addComponent(informationLayout.getLayout());
 
-                MButton updateAllBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), clickEvent -> {
+                MButton updateAllBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), clickEvent -> {
                     EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, EditForm.this.bean));
                     close();
                 }).withStyleName(WebUIConstants.BUTTON_LINK);
 
-                MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+                MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
                     if (EditForm.this.validateForm()) {
                         RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                         Integer riskId;
                         if (bean.getId() == null) {
-                            riskId = riskService.saveWithSession(bean, AppContext.getUsername());
+                            riskId = riskService.saveWithSession(bean, UserUIContext.getUsername());
                         } else {
-                            riskService.updateWithSession(bean, AppContext.getUsername());
+                            riskService.updateWithSession(bean, UserUIContext.getUsername());
                             riskId = bean.getId();
                         }
                         AttachmentUploadField uploadField = ((RiskEditFormFieldFactory) getFieldFactory()).getAttachmentUploadField();
-                        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), bean.getProjectid(),
+                        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(), bean.getProjectid(),
                                 ProjectTypeConstants.RISK, "" + riskId);
                         uploadField.saveContentsToRepo(attachPath);
 
@@ -84,7 +84,7 @@ public class RiskAddWindow extends MWindow {
                     }
                 }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
-                MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                         .withStyleName(WebUIConstants.BUTTON_OPTION);
 
                 MHorizontalLayout buttonControls = new MHorizontalLayout(updateAllBtn, cancelBtn, saveBtn).withMargin(true);
@@ -97,21 +97,21 @@ public class RiskAddWindow extends MWindow {
             @Override
             protected Component onAttachField(Object propertyId, Field<?> field) {
                 if (Risk.Field.riskname.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0, 2, "100%");
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0, 2, "100%");
                 } else if (Risk.Field.assigntouser.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 1);
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 1);
                 } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_PHASE), 1, 1);
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(RiskI18nEnum.FORM_PHASE), 1, 1);
                 } else if (Risk.Field.datedue.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 2);
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 2);
                 } else if (Risk.Field.consequence.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE), 1, 2);
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE), 1, 2);
                 } else if (Risk.Field.probalitity.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_PROBABILITY), 0, 3);
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(RiskI18nEnum.FORM_PROBABILITY), 0, 3);
                 } else if (Risk.Field.level.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_RATING), 1, 3);
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(RiskI18nEnum.FORM_RATING), 1, 3);
                 } else if (Risk.Field.description.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 4, 2, "100%");
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 4, 2, "100%");
                 }
                 return null;
             }

@@ -21,7 +21,7 @@ import com.mycollab.core.utils.FileUtils;
 import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.resources.file.FileAssetsUtil;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -97,7 +97,7 @@ public class AttachmentPanel extends MVerticalLayout {
                     String fileName = entry.getKey();
                     File file = entry.getValue();
                     resourceService.saveContent(constructContent(fileName, attachmentPath),
-                            AppContext.getUsername(), new FileInputStream(file), AppContext.getAccountId());
+                            UserUIContext.getUsername(), new FileInputStream(file), UserUIContext.getAccountId());
                 } catch (FileNotFoundException e) {
                     LOG.error("Error when attach content in UI", e);
                 }
@@ -139,7 +139,7 @@ public class AttachmentPanel extends MVerticalLayout {
             fileStores = new HashMap<>();
         }
         if (fileStores.containsKey(fileName)) {
-            NotificationUtil.showWarningNotification(AppContext.getMessage(FileI18nEnum.ERROR_FILE_IS_EXISTED, fileName));
+            NotificationUtil.showWarningNotification(UserUIContext.getMessage(FileI18nEnum.ERROR_FILE_IS_EXISTED, fileName));
         } else {
             fileStores.put(fileName, file);
             displayFileName(file, fileName);
@@ -157,7 +157,7 @@ public class AttachmentPanel extends MVerticalLayout {
 
         @Override
         protected String getAreaText() {
-            return AppContext.getMessage(FileI18nEnum.OPT_DRAG_OR_CLICK_TO_UPLOAD);
+            return UserUIContext.getMessage(FileI18nEnum.OPT_DRAG_OR_CLICK_TO_UPLOAD);
         }
 
         @Override

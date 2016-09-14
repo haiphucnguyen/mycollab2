@@ -57,7 +57,7 @@ import com.mycollab.module.project.{CurrentProjectVariables, ProjectMemberStatus
 import com.mycollab.module.tracker.domain.SimpleBug
 import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria
 import com.mycollab.spring.AppContextUtil
-import com.mycollab.vaadin.AppContext
+import com.mycollab.vaadin.UserUIContext
 import com.mycollab.vaadin.mvp.{AbstractController, PageActionChain, PresenterResolver, ScreenData}
 import com.vaadin.addon.touchkit.ui.NavigationManager
 
@@ -85,7 +85,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
       @Subscribe def handle(event: ProjectEvent.GotoProjectList) {
         val presenter = PresenterResolver.getPresenter(classOf[UserProjectListPresenter])
         val criteria = new ProjectSearchCriteria
-        criteria.setInvolvedMember(StringSearchField.and(AppContext.getUsername))
+        criteria.setInvolvedMember(StringSearchField.and(UserUIContext.getUsername))
         criteria.setProjectStatuses(new SetSearchField[String](StatusI18nEnum.Open.name))
         presenter.go(navManager, new ScreenData.Search[ProjectSearchCriteria](criteria))
       }
@@ -100,10 +100,10 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
       @Subscribe def handle(event: ProjectEvent.AllActivities) {
         val presenter = PresenterResolver.getPresenter(classOf[AllActivityStreamPresenter])
         val prjService = AppContextUtil.getSpringBean(classOf[ProjectService])
-        val prjKeys = prjService.getProjectKeysUserInvolved(AppContext.getUsername, AppContext.getAccountId)
+        val prjKeys = prjService.getProjectKeysUserInvolved(UserUIContext.getUsername, UserUIContext.getAccountId)
         val searchCriteria = new ActivityStreamSearchCriteria()
         searchCriteria.setModuleSet(new SetSearchField(ModuleNameConstants.PRJ))
-        searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId))
+        searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId))
         searchCriteria.setExtraTypeIds(new SetSearchField(prjKeys))
         presenter.go(navManager, new ProjectScreenData.AllActivities(searchCriteria))
       }
@@ -113,7 +113,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
         val presenter = PresenterResolver.getPresenter(classOf[ProjectActivityStreamPresenter])
         val searchCriteria = new ActivityStreamSearchCriteria()
         searchCriteria.setModuleSet(new SetSearchField(ModuleNameConstants.PRJ))
-        searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId))
+        searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId))
         searchCriteria.setExtraTypeIds(new SetSearchField(event.getData.asInstanceOf[Integer]))
         presenter.go(navManager, new ProjectActivities(searchCriteria))
       }
@@ -307,7 +307,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
       @Subscribe def handle(event: ProjectMemberEvent.GotoList) {
         val criteria = new ProjectMemberSearchCriteria
         criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId))
-        criteria.setSaccountid(NumberSearchField.equal(AppContext.getAccountId))
+        criteria.setSaccountid(NumberSearchField.equal(UserUIContext.getAccountId))
         criteria.setStatuses(new SetSearchField(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET))
         val presenter = PresenterResolver.getPresenter(classOf[ProjectUserPresenter])
         presenter.go(navManager, new ProjectMemberScreenData.Search(criteria))

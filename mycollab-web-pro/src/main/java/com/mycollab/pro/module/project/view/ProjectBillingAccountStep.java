@@ -9,7 +9,7 @@ import com.mycollab.module.crm.view.account.AccountSelectionField;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.view.AbstractProjectAddWindow;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.DoubleField;
@@ -68,7 +68,7 @@ class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardSt
 
     @Override
     public String getCaption() {
-        return AppContext.getMessage(ProjectI18nEnum.OPT_CLIENT_AND_BILLING);
+        return UserUIContext.getMessage(ProjectI18nEnum.OPT_CLIENT_AND_BILLING);
     }
 
     @Override

@@ -8,7 +8,7 @@ import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapper;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscription;
 import com.mycollab.ondemand.module.billing.esb.UpdateSubscriptionEvent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -29,7 +29,7 @@ import org.vaadin.viritin.layouts.MWindow;
 class ChangeBillingPlanInformationWindow extends MWindow {
 
     ChangeBillingPlanInformationWindow(BillingSubscription billingSubscription) {
-        super(AppContext.getMessage(BillingI18nEnum.OPT_CHANGE_CONTACT_INFO));
+        super(UserUIContext.getMessage(BillingI18nEnum.OPT_CHANGE_CONTACT_INFO));
         EditForm editForm = new EditForm();
         editForm.setBean(BeanUtility.deepClone(billingSubscription));
         this.withModal(true).withResizable(false).withWidth("600px").withContent(editForm);
@@ -53,7 +53,7 @@ class ChangeBillingPlanInformationWindow extends MWindow {
                 informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
                 layout.addComponent(informationLayout.getLayout());
 
-                MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+                MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
                     if (EditForm.this.validateForm()) {
                         BillingSubscriptionMapper mapper = AppContextUtil.getSpringBean(BillingSubscriptionMapper.class);
                         mapper.updateByPrimaryKey(bean);
@@ -65,7 +65,7 @@ class ChangeBillingPlanInformationWindow extends MWindow {
                     }
                 }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
-                MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                         .withStyleName(WebUIConstants.BUTTON_OPTION);
 
                 MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(true);
@@ -78,13 +78,13 @@ class ChangeBillingPlanInformationWindow extends MWindow {
             @Override
             protected Component onAttachField(Object propertyId, Field<?> field) {
                 if (BillingSubscription.Field.name.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
+                    informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
                 } else if (BillingSubscription.Field.email.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_EMAIL), 0, 1);
+                    informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL), 0, 1);
                 } else if (BillingSubscription.Field.phone.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_PHONE), 0, 2);
+                    informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_PHONE), 0, 2);
                 } else if (BillingSubscription.Field.company.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_COMPANY), 0, 3);
+                    informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_COMPANY), 0, 3);
                 }
                 return null;
             }

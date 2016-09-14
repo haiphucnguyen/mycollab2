@@ -15,7 +15,6 @@ import com.mycollab.module.project.domain.SimpleInvoice;
 import com.mycollab.module.project.domain.criteria.InvoiceSearchCriteria;
 import com.mycollab.module.project.events.InvoiceEvent;
 import com.mycollab.module.project.i18n.InvoiceI18nEnum;
-import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.service.InvoiceService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.ProjectActivityComponent;
@@ -23,7 +22,7 @@ import com.mycollab.module.project.view.time.IInvoiceContainer;
 import com.mycollab.reporting.FormReportLayout;
 import com.mycollab.reporting.PrintButton;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -124,14 +123,14 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
             });
             displayInvoices(InvoiceStatus.All.name());
         } else {
-            this.with(ELabel.h3(AppContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION))).alignAll(Alignment.MIDDLE_CENTER);
+            this.with(ELabel.h3(UserUIContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION))).alignAll(Alignment.MIDDLE_CENTER);
         }
     }
 
     private HorizontalLayout createHeaderRight() {
-        MButton createBtn = new MButton(AppContext.getMessage(InvoiceI18nEnum.BUTTON_NEW_INVOICE), clickEvent -> {
+        MButton createBtn = new MButton(UserUIContext.getMessage(InvoiceI18nEnum.BUTTON_NEW_INVOICE), clickEvent -> {
             SimpleInvoice invoice = new SimpleInvoice();
-            invoice.setSaccountid(AppContext.getAccountId());
+            invoice.setSaccountid(UserUIContext.getAccountId());
             invoice.setProjectid(CurrentProjectVariables.getProjectId());
             invoice.setStatus(InvoiceStatus.Scheduled.name());
             UI.getCurrent().addWindow(new InvoiceAddWindow(invoice));
@@ -189,7 +188,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
 
         @Override
         protected String stringWhenEmptyList() {
-            return AppContext.getMessage(InvoiceI18nEnum.OPT_NO_INVOICE);
+            return UserUIContext.getMessage(InvoiceI18nEnum.OPT_NO_INVOICE);
         }
     }
 
@@ -199,7 +198,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
             final MVerticalLayout layout = new MVerticalLayout().withStyleName(WebUIConstants.BORDER_LIST_ROW)
                     .withStyleName(WebUIConstants.CURSOR_POINTER);
             InvoiceStatus invoiceStatus = InvoiceStatus.valueOf(invoice.getStatus());
-            ELabel statusLbl = new ELabel(AppContext.getMessage(invoiceStatus)).withWidthUndefined();
+            ELabel statusLbl = new ELabel(UserUIContext.getMessage(invoiceStatus)).withWidthUndefined();
             if (invoiceStatus == InvoiceStatus.Paid) {
                 statusLbl.withStyleName("invoice", "paid");
             } else if (invoiceStatus == InvoiceStatus.Scheduled) {
@@ -277,21 +276,21 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
             printBtn.doPrint(invoice, new FormReportLayout(ProjectTypeConstants.INVOICE, Invoice.Field.noid.name(),
                     InvoiceDefaultFormLayoutFactory.getForm(), Invoice.Field.id.name()));
 
-            MButton editBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
+            MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                     clickEvent -> UI.getCurrent().addWindow(new InvoiceAddWindow(invoice)))
                     .withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.EDIT);
             editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
 
-            MButton deleteBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
+            MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 InvoiceService invoiceService = AppContextUtil.getSpringBean(InvoiceService.class);
-                                invoiceService.removeWithSession(invoice, AppContext.getUsername(), AppContext.getAccountId());
+                                invoiceService.removeWithSession(invoice, UserUIContext.getUsername(), UserUIContext.getAccountId());
                                 EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceDelete(this, invoice));
                             }
                         });

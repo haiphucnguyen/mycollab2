@@ -15,7 +15,7 @@ import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.module.tracker.service.ComponentService;
 import com.mycollab.module.tracker.service.VersionService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import org.jsoup.Jsoup;
 
 import java.util.TimeZone;
@@ -28,8 +28,8 @@ public class GenericTaskDetailMapper {
     private String name;
 
     public GenericTaskDetailMapper(String type, int typeId) {
-        int sAccountId = AppContext.getAccountId();
-        TimeZone timeZone = AppContext.getUserTimeZone();
+        int sAccountId = UserUIContext.getAccountId();
+        TimeZone timeZone = UserUIContext.getUserTimeZone();
 
         if (ProjectTypeConstants.BUG.equals(type)) {
             BugService service = AppContextUtil.getSpringBean(BugService.class);
@@ -67,7 +67,7 @@ public class GenericTaskDetailMapper {
             SimpleStandupReport standup = service.findById(typeId, sAccountId);
             if (standup != null) {
                 name = Jsoup.parse(DateTimeUtils.convertToStringWithUserTimeZone(
-                        standup.getCreatedtime(), AppContext.getDateFormat(), AppContext.getUserLocale(), timeZone)).html();
+                        standup.getCreatedtime(), UserUIContext.getDateFormat(), UserUIContext.getUserLocale(), timeZone)).html();
             }
         }
     }

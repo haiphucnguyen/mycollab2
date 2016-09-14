@@ -8,7 +8,7 @@ import com.mycollab.module.project.domain.TaskPredecessor;
 import com.mycollab.module.project.i18n.GanttI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.pro.module.project.events.GanttEvent;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -43,14 +43,14 @@ class PredecessorWindow extends MWindow {
     private GanttItemWrapper ganttItemWrapper;
 
     PredecessorWindow(final GanttTreeTable taskTreeTable, final GanttItemWrapper ganttItemWrapper) {
-        super(AppContext.getMessage(GanttI18nEnum.OPT_EDIT_PREDECESSORS));
+        super(UserUIContext.getMessage(GanttI18nEnum.OPT_EDIT_PREDECESSORS));
         this.withModal(true).withResizable(false).withWidth("650px").withCenter();
         this.taskTreeTable = taskTreeTable;
         this.ganttItemWrapper = ganttItemWrapper;
 
         MVerticalLayout content = new MVerticalLayout();
         this.setContent(content);
-        ELabel headerLbl = ELabel.h2(String.format("%s %d: %s", AppContext.getMessage(GanttI18nEnum.OPT_ROW),
+        ELabel headerLbl = ELabel.h2(String.format("%s %d: %s", UserUIContext.getMessage(GanttI18nEnum.OPT_ROW),
                 ganttItemWrapper.getGanttIndex(), ganttItemWrapper.getName())).withStyleName(UIConstants.TEXT_ELLIPSIS);
         content.add(headerLbl);
 
@@ -58,20 +58,20 @@ class PredecessorWindow extends MWindow {
         content.with(preWrapper);
 
         MHorizontalLayout headerLayout = new MHorizontalLayout();
-        headerLayout.addComponent(new ELabel(AppContext.getMessage(GanttI18nEnum.OPT_ROW)).withWidth(ROW_WIDTH));
-        headerLayout.addComponent(new ELabel(AppContext.getMessage(TaskI18nEnum.SINGLE)).withWidth(TASK_WIDTH));
-        headerLayout.addComponent(new ELabel(AppContext.getMessage(GanttI18nEnum.OPT_DEPENDENCY)).withWidth(PRE_TYPE_WIDTH));
-        headerLayout.addComponent(new ELabel(AppContext.getMessage(GanttI18nEnum.OPT_LAG)).withWidth(LAG_WIDTH));
+        headerLayout.addComponent(new ELabel(UserUIContext.getMessage(GanttI18nEnum.OPT_ROW)).withWidth(ROW_WIDTH));
+        headerLayout.addComponent(new ELabel(UserUIContext.getMessage(TaskI18nEnum.SINGLE)).withWidth(TASK_WIDTH));
+        headerLayout.addComponent(new ELabel(UserUIContext.getMessage(GanttI18nEnum.OPT_DEPENDENCY)).withWidth(PRE_TYPE_WIDTH));
+        headerLayout.addComponent(new ELabel(UserUIContext.getMessage(GanttI18nEnum.OPT_LAG)).withWidth(LAG_WIDTH));
         predecessorsLayout = new PredecessorsLayout();
         new Restrain(predecessorsLayout).setMaxHeight("600px");
 
         preWrapper.addComponent(headerLayout);
         preWrapper.addComponent(predecessorsLayout);
 
-        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+        MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebUIConstants.BUTTON_OPTION);
 
-        MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+        MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             List<TaskPredecessor> predecessors = predecessorsLayout.buildPredecessors();
             EventBusFactory.getInstance().post(new GanttEvent.ModifyPredecessors(ganttItemWrapper, predecessors));
             close();
@@ -141,7 +141,7 @@ class PredecessorWindow extends MWindow {
                         GanttItemWrapper item = taskTreeTable.getRawContainer().getItemByGanttIndex(rowValue);
                         if (item != null) {
                             if (hasRelationship(item, ganttItemWrapper)) {
-                                NotificationUtil.showErrorNotification(AppContext.getMessage(GanttI18nEnum.ERROR_CIRCULAR_DEPENDENCY));
+                                NotificationUtil.showErrorNotification(UserUIContext.getMessage(GanttI18nEnum.ERROR_CIRCULAR_DEPENDENCY));
                             } else {
                                 if (item.isTask()) {
                                     assignmentComboBox.setValue(item);
@@ -175,7 +175,7 @@ class PredecessorWindow extends MWindow {
                         predecessorComboBox.setValue(null);
                     } else {
                         if (hasRelationship(item, ganttItemWrapper)) {
-                            NotificationUtil.showErrorNotification(AppContext.getMessage(GanttI18nEnum.ERROR_CIRCULAR_DEPENDENCY));
+                            NotificationUtil.showErrorNotification(UserUIContext.getMessage(GanttI18nEnum.ERROR_CIRCULAR_DEPENDENCY));
                             assignmentComboBox.setValue(null);
                         } else {
                             rowField.setValue(item.getGanttIndex() + "");
@@ -227,7 +227,7 @@ class PredecessorWindow extends MWindow {
                 GanttItemWrapper item = (GanttItemWrapper) assignmentComboBox.getValue();
                 if (item != null) {
                     if (hasRelationship(item, ganttItemWrapper)) {
-                        throw new UserInvalidInputException(AppContext.getMessage(GanttI18nEnum.ERROR_CIRCULAR_DEPENDENCY));
+                        throw new UserInvalidInputException(UserUIContext.getMessage(GanttI18nEnum.ERROR_CIRCULAR_DEPENDENCY));
                     } else {
                         TaskPredecessor predecessor = new TaskPredecessor();
                         predecessor.setGanttIndex(item.getGanttIndex());
@@ -271,7 +271,7 @@ class PredecessorWindow extends MWindow {
                     GanttItemWrapper item = (GanttItemWrapper) itemId;
                     if (item.isTask()) {
                         this.addItem(item);
-                        this.setItemCaption(item, String.format("[%s %d]: %s", AppContext.getMessage(GanttI18nEnum.OPT_ROW),
+                        this.setItemCaption(item, String.format("[%s %d]: %s", UserUIContext.getMessage(GanttI18nEnum.OPT_ROW),
                                 item.getGanttIndex(), StringUtils.trim(item.getName(), 50, true)));
                     }
                 }
@@ -284,16 +284,16 @@ class PredecessorWindow extends MWindow {
             this.setNullSelectionAllowed(false);
             this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
             this.addItem(TaskPredecessor.FS);
-            this.setItemCaption(TaskPredecessor.FS, AppContext.getMessage(GanttI18nEnum.OPT_FS));
+            this.setItemCaption(TaskPredecessor.FS, UserUIContext.getMessage(GanttI18nEnum.OPT_FS));
 
             this.addItem(TaskPredecessor.SF);
-            this.setItemCaption(TaskPredecessor.SF, AppContext.getMessage(GanttI18nEnum.OPT_SF));
+            this.setItemCaption(TaskPredecessor.SF, UserUIContext.getMessage(GanttI18nEnum.OPT_SF));
 
             this.addItem(TaskPredecessor.SS);
-            this.setItemCaption(TaskPredecessor.SS, AppContext.getMessage(GanttI18nEnum.OPT_SS));
+            this.setItemCaption(TaskPredecessor.SS, UserUIContext.getMessage(GanttI18nEnum.OPT_SS));
 
             this.addItem(TaskPredecessor.FF);
-            this.setItemCaption(TaskPredecessor.FF, AppContext.getMessage(GanttI18nEnum.OPT_FF));
+            this.setItemCaption(TaskPredecessor.FF, UserUIContext.getMessage(GanttI18nEnum.OPT_FF));
             this.setValue(TaskPredecessor.FS);
         }
     }

@@ -2,7 +2,7 @@ package com.mycollab.pro.module.crm.view.setting.customlayout;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.form.view.builder.type.AbstractDynaField;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -70,7 +70,7 @@ public class CustomFieldComponent extends CssLayout {
         panelContentLayout.addComponent(isRequired);
 
         Button saveBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
+                UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
 
             private static final long serialVersionUID = 1L;
 

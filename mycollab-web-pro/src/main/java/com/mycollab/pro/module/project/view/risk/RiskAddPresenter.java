@@ -11,7 +11,7 @@ import com.mycollab.module.project.events.RiskEvent;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -81,15 +81,15 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
     private int saveRisk(Risk risk) {
         RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
         risk.setProjectid(CurrentProjectVariables.getProjectId());
-        risk.setSaccountid(AppContext.getAccountId());
+        risk.setSaccountid(UserUIContext.getAccountId());
 
         if (risk.getId() == null) {
-            riskService.saveWithSession(risk, AppContext.getUsername());
+            riskService.saveWithSession(risk, UserUIContext.getUsername());
         } else {
-            riskService.updateWithSession(risk, AppContext.getUsername());
+            riskService.updateWithSession(risk, UserUIContext.getUsername());
         }
         AttachmentUploadField uploadField = view.getAttachUploadField();
-        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), risk.getProjectid(),
+        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(), risk.getProjectid(),
                 ProjectTypeConstants.RISK, "" + risk.getId());
         uploadField.saveContentsToRepo(attachPath);
         return risk.getId();

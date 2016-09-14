@@ -33,7 +33,7 @@ import com.mycollab.mobile.shell.ModuleHelper
 import com.mycollab.mobile.shell.events.ShellEvent
 import com.mycollab.module.project.service.ProjectService
 import com.mycollab.spring.AppContextUtil
-import com.mycollab.vaadin.AppContext
+import com.mycollab.vaadin.UserUIContext
 import com.mycollab.vaadin.mvp.{PageActionChain, UrlResolver}
 
 /**
@@ -88,10 +88,10 @@ class ProjectUrlResolver extends UrlResolver {
     protected override def handlePage(params: String*) {
       if (params.isEmpty) {
         val prjService = AppContextUtil.getSpringBean(classOf[ProjectService])
-        val prjKeys = prjService.getProjectKeysUserInvolved(AppContext.getUsername, AppContext.getAccountId)
+        val prjKeys = prjService.getProjectKeysUserInvolved(UserUIContext.getUsername, UserUIContext.getAccountId)
         val searchCriteria = new ActivityStreamSearchCriteria()
         searchCriteria.setModuleSet(new SetSearchField(ModuleNameConstants.PRJ))
-        searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId))
+        searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId))
         searchCriteria.setExtraTypeIds(new SetSearchField(prjKeys))
 
         val data = new AllActivities(searchCriteria)
@@ -101,7 +101,7 @@ class ProjectUrlResolver extends UrlResolver {
         val projectId =  UrlTokenizer(params(0)).getInt
         val searchCriteria = new ActivityStreamSearchCriteria()
         searchCriteria.setModuleSet(new SetSearchField(ModuleNameConstants.PRJ))
-        searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId))
+        searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId))
         searchCriteria.setExtraTypeIds(new SetSearchField(projectId))
         val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new ProjectScreenData.ProjectActivities(searchCriteria))
         EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))

@@ -16,7 +16,7 @@
  */
 package com.mycollab.vaadin.ui;
 
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.ui.PopupDateField;
 
 import java.util.Date;
@@ -38,7 +38,7 @@ public class PopupDateFieldExt extends PopupDateField {
 
     public PopupDateFieldExt(String caption, Date value) {
         super(null, value);
-        this.setTimeZone(AppContext.getUserTimeZone());
-        this.setDateFormat(AppContext.getDateFormat());
+        this.setTimeZone(UserUIContext.getUserTimeZone());
+        this.setDateFormat(UserUIContext.getDateFormat());
     }
 }

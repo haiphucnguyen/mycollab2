@@ -34,7 +34,7 @@ import com.mycollab.module.project.view.bug.BugTimeLogSheet;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
@@ -126,7 +126,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
     private class BugTimeLogEditWindow extends TimeLogEditWindow<SimpleBug> {
         BugTimeLogEditWindow(final SimpleBug bean) {
             super(bean);
-            this.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
+            this.setCaption(UserUIContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
             this.setModal(true);
             this.setModal(true);
             this.addCloseListener(new CloseListener() {
@@ -141,23 +141,23 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
         @Override
         protected void saveTimeInvest() {
             ItemTimeLogging item = new ItemTimeLogging();
-            item.setLoguser(AppContext.getUsername());
+            item.setLoguser(UserUIContext.getUsername());
             item.setLogvalue(getInvestValue());
             item.setTypeid(bean.getId());
             item.setType(ProjectTypeConstants.BUG);
-            item.setSaccountid(AppContext.getAccountId());
+            item.setSaccountid(UserUIContext.getAccountId());
             item.setProjectid(CurrentProjectVariables.getProjectId());
             item.setLogforday(forLogDate());
             item.setIsbillable(isBillableHours());
             item.setIsovertime(isOvertimeHours());
-            itemTimeLoggingService.saveWithSession(item, AppContext.getUsername());
+            itemTimeLoggingService.saveWithSession(item, UserUIContext.getUsername());
         }
 
         @Override
         protected void updateTimeRemain() {
             BugService bugService = AppContextUtil.getSpringBean(BugService.class);
             bean.setEstimateremaintime(getUpdateRemainTime());
-            bugService.updateWithSession(bean, AppContext.getUsername());
+            bugService.updateWithSession(bean, UserUIContext.getUsername());
         }
 
         @Override

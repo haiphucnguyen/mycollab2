@@ -13,7 +13,7 @@ import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.pro.module.project.events.GanttEvent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -35,7 +35,7 @@ public class QuickEditGanttItemWindow extends MWindow {
     private GanttItemWrapper ganttItem;
 
     public QuickEditGanttItemWindow(GanttExt gantt, GanttItemWrapper ganttItem) {
-        super(AppContext.getMessage(TaskI18nEnum.EDIT));
+        super(UserUIContext.getMessage(TaskI18nEnum.EDIT));
         this.gantt = gantt;
         this.ganttItem = ganttItem;
 
@@ -62,14 +62,14 @@ public class QuickEditGanttItemWindow extends MWindow {
                 informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 3);
                 layout.addComponent(informationLayout.getLayout());
 
-                MButton updateAllBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), clickEvent -> {
+                MButton updateAllBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), clickEvent -> {
                     if (bean instanceof TaskGanttItem) {
                         ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                        SimpleTask task = taskService.findById(bean.getId(), AppContext.getAccountId());
+                        SimpleTask task = taskService.findById(bean.getId(), UserUIContext.getAccountId());
                         EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(QuickEditGanttItemWindow.this, task));
                     } else if (bean instanceof MilestoneGanttItem) {
                         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                        SimpleMilestone milestone = milestoneService.findById(bean.getId(), AppContext.getAccountId());
+                        SimpleMilestone milestone = milestoneService.findById(bean.getId(), UserUIContext.getAccountId());
                         EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(QuickEditGanttItemWindow.this, milestone));
                     } else {
                         throw new MyCollabException("Do not support gantt item type " + bean);
@@ -77,7 +77,7 @@ public class QuickEditGanttItemWindow extends MWindow {
                     close();
                 }).withStyleName(WebUIConstants.BUTTON_LINK);
 
-                MButton updateBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
+                MButton updateBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
                     if (EditForm.this.validateForm()) {
                         ganttItem.setTask(bean);
                         gantt.markStepDirty(ganttItem.getStep());
@@ -88,7 +88,7 @@ public class QuickEditGanttItemWindow extends MWindow {
                     }
                 }).withStyleName(WebUIConstants.BUTTON_ACTION);
 
-                MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+                MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                         .withStyleName(WebUIConstants.BUTTON_OPTION);
 
                 MHorizontalLayout buttonControls = new MHorizontalLayout(updateAllBtn, cancelBtn, updateBtn).withMargin(new MarginInfo(true, true, true, false));
@@ -101,15 +101,15 @@ public class QuickEditGanttItemWindow extends MWindow {
             @Override
             protected Component onAttachField(Object propertyId, Field<?> field) {
                 if ("name".equals(propertyId)) {
-                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0, 2, "100%");
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0, 2, "100%");
                 } else if ("startDate".equals(propertyId)) {
-                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 1);
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 1);
                 } else if ("endDate".equals(propertyId)) {
-                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 1, 1);
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE), 1, 1);
                 } else if ("deadline".equals(propertyId)) {
-                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 2);
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 2);
                 } else if ("assignUser".equals(propertyId)) {
-                    return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 2);
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 2);
                 }
                 return null;
             }
@@ -135,7 +135,7 @@ public class QuickEditGanttItemWindow extends MWindow {
                 if ("startDate".equals(propertyId) || "endDate".equals(propertyId)) {
                     if (bean.hasSubAssignments()) {
                         field.setEnabled(false);
-                        ((AbstractComponent) field).setDescription(AppContext.getMessage(ProjectCommonI18nEnum.ERROR_NOT_EDIT_CELL_IN_GANTT_HELP));
+                        ((AbstractComponent) field).setDescription(UserUIContext.getMessage(ProjectCommonI18nEnum.ERROR_NOT_EDIT_CELL_IN_GANTT_HELP));
                     }
                 }
             }

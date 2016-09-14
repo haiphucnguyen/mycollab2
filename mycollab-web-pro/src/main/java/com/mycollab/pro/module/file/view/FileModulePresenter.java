@@ -4,7 +4,7 @@ import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.module.file.view.IFileModule;
 import com.mycollab.module.file.view.IFileModulePresenter;
 import com.mycollab.shell.view.MainView;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -31,6 +31,6 @@ public class FileModulePresenter extends AbstractPresenter<IFileModule> implemen
 
         FileMainPresenter mainPresenter = PresenterResolver.getPresenter(FileMainPresenter.class);
         mainPresenter.go(view, null);
-        AppContext.updateLastModuleVisit(ModuleNameConstants.FILE);
+        UserUIContext.updateLastModuleVisit(ModuleNameConstants.FILE);
     }
 }

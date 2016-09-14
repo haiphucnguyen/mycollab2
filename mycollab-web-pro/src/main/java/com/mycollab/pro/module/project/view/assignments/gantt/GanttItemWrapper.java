@@ -13,10 +13,9 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.i18n.GanttI18nEnum;
-import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.pro.module.project.events.GanttEvent;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;
 import org.tltv.gantt.client.shared.Step;
@@ -275,7 +274,7 @@ public class GanttItemWrapper {
     public boolean setStartAndEndDate(LocalDate newStartDate, LocalDate newEndDate, boolean askToCheckPredecessors,
                                       boolean requestToCheckDependents) {
         if (newStartDate.isBefore(fixedStartDateByChildren) || newEndDate.isAfter(fixedEndDateByChildren)) {
-            throw new UserInvalidInputException(AppContext.getMessage(GanttI18nEnum.ERROR_INVALID_CONSTRAINT));
+            throw new UserInvalidInputException(UserUIContext.getMessage(GanttI18nEnum.ERROR_INVALID_CONSTRAINT));
         }
         boolean hasChange = false;
         if (!this.startDate.isEqual(newStartDate)) {
@@ -321,11 +320,11 @@ public class GanttItemWrapper {
         TooltipBuilder tooltipBuilder = new TooltipBuilder();
         tooltipBuilder.appendTitle(task.getName());
         Tr trRow2 = new Tr();
-        Td cell21 = buildCellName(AppContext.getMessage(GenericI18Enum.FORM_START_DATE));
-        String startDate = AppContext.formatDate(task.getStartDate());
+        Td cell21 = buildCellName(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE));
+        String startDate = UserUIContext.formatDate(task.getStartDate());
         Td cell22 = buildCellValue(startDate);
-        Td cell23 = buildCellName(AppContext.getMessage(GenericI18Enum.FORM_END_DATE));
-        String endDate = AppContext.formatDate(task.getEndDate());
+        Td cell23 = buildCellName(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE));
+        String endDate = UserUIContext.formatDate(task.getEndDate());
         Td cell24 = buildCellValue(endDate);
         trRow2.appendChild(cell21, cell22, cell23, cell24);
         tooltipBuilder.appendRow(trRow2);
@@ -435,7 +434,7 @@ public class GanttItemWrapper {
                     }
 
                     if (currentEndDate.isBefore(currentStartDate)) {
-                        throw new UserInvalidInputException(AppContext.getMessage(GanttI18nEnum.ERROR_INVALID_CONSTRAINT));
+                        throw new UserInvalidInputException(UserUIContext.getMessage(GanttI18nEnum.ERROR_INVALID_CONSTRAINT));
                     }
                 }
             }

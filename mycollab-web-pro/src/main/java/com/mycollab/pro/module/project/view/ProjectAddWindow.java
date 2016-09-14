@@ -30,7 +30,7 @@ import com.mycollab.module.project.view.ProjectAddBaseTemplateWindow;
 import com.mycollab.module.project.view.ProjectGeneralInfoStep;
 import com.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -121,18 +121,18 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
             }
             NotificationUtil.showErrorNotification(errorMsg.toString());
         } else {
-            project.setSaccountid(AppContext.getAccountId());
+            project.setSaccountid(UserUIContext.getAccountId());
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-            projectService.saveWithSession(project, AppContext.getUsername());
+            projectService.saveWithSession(project, UserUIContext.getUsername());
             customizeFeatureStep.saveProjectFeatures();
 
             EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this,
                     new PageActionChain(new ProjectScreenData.Goto(project.getId()))));
-            if (project.getLead() != null && !AppContext.getUsername().equals(project.getLead())) {
+            if (project.getLead() != null && !UserUIContext.getUsername().equals(project.getLead())) {
                 ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
                 projectMemberService.inviteProjectMembers(new String[]{project.getLead()}, CurrentProjectVariables.getProjectId(),
-                        -1, AppContext.getUsername(), AppContext.getMessage(ProjectMemberI18nEnum
-                                .MSG_DEFAULT_INVITATION_COMMENT), AppContext.getAccountId());
+                        -1, UserUIContext.getUsername(), UserUIContext.getMessage(ProjectMemberI18nEnum
+                                .MSG_DEFAULT_INVITATION_COMMENT), UserUIContext.getAccountId());
             }
             close();
         }
@@ -152,7 +152,7 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
             footer.setMargin(new MarginInfo(true, true, false, false));
 
             if (!SiteConfiguration.isCommunityEdition()) {
-                Button newProjectFromTemplateBtn = new Button(AppContext.getMessage(ProjectI18nEnum.OPT_CREATE_PROJECT_FROM_TEMPLATE),
+                Button newProjectFromTemplateBtn = new Button(UserUIContext.getMessage(ProjectI18nEnum.OPT_CREATE_PROJECT_FROM_TEMPLATE),
                         clickEvent -> {
                             close();
                             UI.getCurrent().addWindow(new ProjectAddBaseTemplateWindow());

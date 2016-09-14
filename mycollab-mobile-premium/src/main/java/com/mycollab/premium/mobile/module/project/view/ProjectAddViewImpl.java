@@ -10,7 +10,7 @@ import com.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -93,19 +93,19 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
         @Override
         protected Component onAttachField(Object propertyId, Field<?> field) {
             if (Project.Field.name.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
             } else if (Project.Field.shortname.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME), 0, 1);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME), 0, 1);
             } else if (Project.Field.homepage.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE), 0, 2);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE), 0, 2);
             } else if (Project.Field.projectstatus.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_STATUS), 0, 3);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_STATUS), 0, 3);
             } else if (Project.Field.planstartdate.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 4);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 4);
             } else if (Project.Field.planenddate.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 0, 5);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE), 0, 5);
             } else if (Project.Field.description.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 6);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 6);
             }
             return null;
         }

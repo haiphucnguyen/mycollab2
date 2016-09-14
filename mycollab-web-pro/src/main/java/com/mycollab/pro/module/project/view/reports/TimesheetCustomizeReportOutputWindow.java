@@ -11,7 +11,7 @@ import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.mycollab.reporting.CustomizeReportOutputWindow;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import org.joda.time.LocalDate;
 
 import java.util.Arrays;
@@ -23,7 +23,7 @@ import java.util.Collection;
  */
 public class TimesheetCustomizeReportOutputWindow extends CustomizeReportOutputWindow<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> {
     public TimesheetCustomizeReportOutputWindow(VariableInjector<ItemTimeLoggingSearchCriteria> variableInjector) {
-        super(ProjectTypeConstants.TIME, AppContext.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE),
+        super(ProjectTypeConstants.TIME, UserUIContext.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE),
                 SimpleItemTimeLogging.class, AppContextUtil.getSpringBean(ItemTimeLoggingService.class), variableInjector);
     }
 
@@ -43,7 +43,7 @@ public class TimesheetCustomizeReportOutputWindow extends CustomizeReportOutputW
 
     @Override
     protected Object[] buildSampleData() {
-        return new Object[]{"Meeting", "John Adams", "2", AppContext.formatDate(new LocalDate().minusDays(2).toDate()
-        ), AppContext.getMessage(SecurityI18nEnum.YES), AppContext.getMessage(SecurityI18nEnum.NO), "MyCollab"};
+        return new Object[]{"Meeting", "John Adams", "2", UserUIContext.formatDate(new LocalDate().minusDays(2).toDate()
+        ), UserUIContext.getMessage(SecurityI18nEnum.YES), UserUIContext.getMessage(SecurityI18nEnum.NO), "MyCollab"};
     }
 }

@@ -17,7 +17,7 @@
 package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -73,13 +73,13 @@ public abstract class MassUpdateWindow<B> extends MWindow {
     protected ComponentContainer buildButtonControls() {
         MHorizontalLayout controlsLayout = new MHorizontalLayout().withMargin(true).withFullWidth();
 
-        updateBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
+        updateBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
             updateForm.commit();
             massUpdateCommand.massUpdate(beanItem);
             close();
         }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
-        closeBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE), clickEvent -> close())
+        closeBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLOSE), clickEvent -> close())
                 .withStyleName(WebUIConstants.BUTTON_OPTION);
 
         Label spacing = new Label();

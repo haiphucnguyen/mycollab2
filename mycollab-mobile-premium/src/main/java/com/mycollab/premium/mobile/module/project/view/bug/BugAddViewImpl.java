@@ -16,7 +16,7 @@ import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.mycollab.module.tracker.domain.SimpleBug;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -40,7 +40,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
 
     @Override
     protected String initFormTitle() {
-        return beanItem.getId() == null ? AppContext.getMessage(BugI18nEnum.NEW) : beanItem.getSummary();
+        return beanItem.getId() == null ? UserUIContext.getMessage(BugI18nEnum.NEW) : beanItem.getSummary();
     }
 
     @Override
@@ -96,8 +96,8 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
             } else if (propertyId.equals("summary")) {
                 final MTextField tf = new MTextField();
                 if (isValidateForm) {
-                    tf.withNullRepresentation("").withRequired(true).withRequiredError(AppContext.getMessage
-                            (ErrorI18nEnum.FIELD_MUST_NOT_NULL, AppContext.getMessage(BugI18nEnum.FORM_SUMMARY)));
+                    tf.withNullRepresentation("").withRequired(true).withRequiredError(UserUIContext.getMessage
+                            (ErrorI18nEnum.FIELD_MUST_NOT_NULL, UserUIContext.getMessage(BugI18nEnum.FORM_SUMMARY)));
                 }
 
                 return tf;
@@ -130,7 +130,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
         public ComponentContainer getLayout() {
             final VerticalLayout layout = new VerticalLayout();
             layout.setMargin(false);
-            layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(BugI18nEnum.SINGLE)));
+            layout.addComponent(FormSectionBuilder.build(UserUIContext.getMessage(BugI18nEnum.SINGLE)));
 
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 12);
             layout.addComponent(informationLayout.getLayout());
@@ -142,29 +142,29 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
         @Override
         protected Component onAttachField(Object propertyId, Field<?> field) {
             if (propertyId.equals("summary")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_SUMMARY), 0, 0);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_SUMMARY), 0, 0);
             } else if (propertyId.equals("milestoneid")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_PHASE), 0, 1);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_PHASE), 0, 1);
             } else if (propertyId.equals("environment")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_ENVIRONMENT), 0, 2);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_ENVIRONMENT), 0, 2);
             } else if (propertyId.equals("priority")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_PRIORITY), 0, 3);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_PRIORITY), 0, 3);
             } else if (propertyId.equals("severity")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_SEVERITY), 0, 4);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_SEVERITY), 0, 4);
             } else if (propertyId.equals("startdate")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 5);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 5);
             } else if (propertyId.equals("enddate")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 0, 6);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE), 0, 6);
             } else if (propertyId.equals("duedate")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 7);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 7);
             } else if (propertyId.equals("estimatetime")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_ORIGINAL_ESTIMATE), 0, 8);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_ORIGINAL_ESTIMATE), 0, 8);
             } else if (propertyId.equals("estimateremaintime")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_REMAIN_ESTIMATE), 0, 9);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_REMAIN_ESTIMATE), 0, 9);
             } else if (propertyId.equals("assignuser")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 10);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 10);
             } else if (propertyId.equals("description")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 11);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 11);
             }
             return null;
         }

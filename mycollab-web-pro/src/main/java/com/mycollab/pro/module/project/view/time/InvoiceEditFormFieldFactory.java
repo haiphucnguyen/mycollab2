@@ -8,7 +8,7 @@ import com.mycollab.module.project.domain.Invoice;
 import com.mycollab.module.project.domain.SimpleInvoice;
 import com.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.mycollab.vaadin.ui.GenericBeanForm;
@@ -41,13 +41,13 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
             return new ProjectMemberSelectionField();
         } else if (Invoice.Field.noid.equalTo(propertyId)) {
             return new MTextField().withRequired(true)
-                    .withRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                            AppContext.getMessage(InvoiceI18nEnum.FORM_NOID_FIELD)));
+                    .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                            UserUIContext.getMessage(InvoiceI18nEnum.FORM_NOID_FIELD)));
         } else if (Invoice.Field.issuedate.equalTo(propertyId)) {
             PopupDateFieldExt field = new PopupDateFieldExt();
             field.setRequired(true);
-            field.setRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                    AppContext.getMessage(InvoiceI18nEnum.FORM_ISSUE_DATE_FIELD)));
+            field.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                    UserUIContext.getMessage(InvoiceI18nEnum.FORM_ISSUE_DATE_FIELD)));
             return field;
         } else if (Invoice.Field.type.equalTo(propertyId)) {
             PricingTypeField field = new PricingTypeField();
@@ -59,13 +59,13 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
         } else if (Invoice.Field.amount.equalTo(propertyId)) {
             DoubleField field = new DoubleField();
             field.setRequired(true);
-            field.setRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                    AppContext.getMessage(InvoiceI18nEnum.FORM_AMOUNT)));
+            field.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                    UserUIContext.getMessage(InvoiceI18nEnum.FORM_AMOUNT)));
             return field;
         } else if (Invoice.Field.id.equalTo(propertyId)) {
             Invoice beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
-                String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(),
+                String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(),
                         CurrentProjectVariables.getProjectId(), ProjectTypeConstants.INVOICE, "" + beanItem.getId());
                 attachmentUploadField = new AttachmentUploadField(attachmentPath);
             } else {

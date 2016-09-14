@@ -11,7 +11,7 @@ import com.mycollab.module.ecm.service.ExternalDriveService;
 import com.mycollab.module.ecm.service.ExternalResourceService;
 import com.mycollab.module.file.events.FileEvent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
@@ -57,7 +57,7 @@ public class CloudDriveSettingWindow extends MWindow {
 
         bodyLayout = new MVerticalLayout().withSpacing(false).withMargin(false).withFullWidth();
 
-        List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(AppContext.getUsername());
+        List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(UserUIContext.getUsername());
 
         bodyLayout.addComponent(ELabel.hr());
         for (ExternalDrive drive : externalDrives) {
@@ -66,7 +66,7 @@ public class CloudDriveSettingWindow extends MWindow {
         }
 
         mainLayout.addComponent(bodyLayout);
-        Button closeBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE), clickEvent -> close());
+        Button closeBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLOSE), clickEvent -> close());
         closeBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
         mainLayout.with(closeBtn).withAlign(closeBtn, Alignment.MIDDLE_RIGHT);
 
@@ -112,7 +112,7 @@ public class CloudDriveSettingWindow extends MWindow {
 
                 final OptionPopupContent popupOptionActionLayout = new OptionPopupContent();
 
-                Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent -> {
+                Button editBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent -> {
                     popupBtn.setPopupVisible(false);
                     if (!isEdit) {
                         isEdit = true;
@@ -128,16 +128,16 @@ public class CloudDriveSettingWindow extends MWindow {
                 });
                 popupOptionActionLayout.addOption(editBtn);
 
-                Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
+                Button deleteBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                     try {
-                        ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                AppContext.getSiteName()),
-                                AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                                AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                                AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
+                                UserUIContext.getSiteName()),
+                                UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                                UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                                UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                                 confirmDialog -> {
                                     if (confirmDialog.isConfirmed()) {
-                                        externalDriveService.removeWithSession(drive, AppContext.getUsername(), AppContext.getAccountId());
+                                        externalDriveService.removeWithSession(drive, UserUIContext.getUsername(), UserUIContext.getAccountId());
                                         bodyLayout.removeComponent(OneDriveConnectionBodyLayout.this);
                                         EventBusFactory.getInstance().post(new FileEvent.ExternalDriveDeleteEvent(this, drive));
                                     }
@@ -166,13 +166,13 @@ public class CloudDriveSettingWindow extends MWindow {
             folderNameTextField.setValue(drive.getFoldername());
             layout.addComponent(folderNameTextField);
 
-            MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+            MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
                 String folderName = folderNameTextField.getValue().trim();
                 try {
                     if (folderName.length() > 0) {
                         FileUtils.assertValidFolderName(folderName);
                         drive.setFoldername(folderName);
-                        externalDriveService.updateWithSession(drive, AppContext.getUsername());
+                        externalDriveService.updateWithSession(drive, UserUIContext.getUsername());
 
                         foldernameLbl = new Label(folderName);
                         foldernameLbl.addStyleName(ValoTheme.LABEL_H3);
@@ -184,7 +184,7 @@ public class CloudDriveSettingWindow extends MWindow {
                 }
             }).withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
 
-            MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+            MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                     .withStyleName(WebUIConstants.BUTTON_OPTION);
             layout.with(saveBtn, cancelBtn);
             return layout;

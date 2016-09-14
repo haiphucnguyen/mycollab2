@@ -5,7 +5,7 @@ import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.module.user.domain.BillingPlan;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.BrowserWindowOpener;
@@ -26,7 +26,7 @@ class BankwireSelectionWindow extends MWindow {
     private MVerticalLayout planLayout;
 
     BankwireSelectionWindow(BillingPlan billingPlan) {
-        super(AppContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE));
+        super(UserUIContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE));
         this.selectedPlan = billingPlan;
         MVerticalLayout contentLayout = new MVerticalLayout();
         withModal(true).withResizable(false).withWidth("500px").withContent(contentLayout);
@@ -39,13 +39,13 @@ class BankwireSelectionWindow extends MWindow {
         Label billingStorage = ELabel.html("<span class='billing-storage'>" + planVolume + "</span>&nbsp;Storage").withWidthUndefined();
         Label billingProject = ELabel.html("<span class='billing-project'>" + billingPlan.getNumprojects() +
                 "</span>&nbsp;Projects").withWidthUndefined();
-        MButton chargeBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_CHARGE), event -> close()).withStyleName(WebUIConstants.BUTTON_ACTION);
+        MButton chargeBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE), event -> close()).withStyleName(WebUIConstants.BUTTON_ACTION);
         BrowserWindowOpener opener = new BrowserWindowOpener(billingPlan.getBanktransferpath() +
-                "?referrer=" + EnDecryptHelper.encryptText(AppContext.getAccountId() + ";" + billingPlan.getId()));
+                "?referrer=" + EnDecryptHelper.encryptText(UserUIContext.getAccountId() + ";" + billingPlan.getId()));
         opener.extend(chargeBtn);
         planLayout = new MVerticalLayout(billingType, billingPrice, billingUser, billingStorage, billingProject)
                 .withWidth("200px");
-        MVerticalLayout bankwireNoteLbl = new MVerticalLayout(ELabel.html(AppContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE_NOTE)))
+        MVerticalLayout bankwireNoteLbl = new MVerticalLayout(ELabel.html(UserUIContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE_NOTE)))
                 .withStyleName("left-border-dotted-layout").withFullHeight();
         MHorizontalLayout planWrapper = new MHorizontalLayout(planLayout, bankwireNoteLbl).expand(bankwireNoteLbl).withFullWidth()
                 .alignAll(Alignment.TOP_LEFT);

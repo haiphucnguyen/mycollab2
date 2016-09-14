@@ -27,7 +27,7 @@ import com.mycollab.pro.module.project.ui.components.TimeTrackingDateOrderCompon
 import com.mycollab.pro.module.project.ui.components.TimeTrackingUserOrderComponent;
 import com.mycollab.pro.module.project.view.reports.TimesheetCustomizeReportOutputWindow;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -90,7 +90,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
             protected Object doEval() {
                 return searchCriteria;
             }
-        }))).withIcon(FontAwesome.PRINT).withStyleName(WebUIConstants.BUTTON_OPTION).withDescription(AppContext.getMessage(GenericI18Enum.ACTION_EXPORT));
+        }))).withIcon(FontAwesome.PRINT).withStyleName(WebUIConstants.BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
         headerLayout.with(lbTimeRange, printBtn).expand(lbTimeRange);
         this.addComponent(headerWrapper);
@@ -113,8 +113,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     }
 
     private void setTimeRange() {
-        final String fromDate = AppContext.formatDate(searchPanel.getFromDate());
-        final String toDate = AppContext.formatDate(searchPanel.getToDate());
+        final String fromDate = UserUIContext.formatDate(searchPanel.getFromDate());
+        final String toDate = UserUIContext.formatDate(searchPanel.getToDate());
 
         searchCriteria.setIsBillable(new BooleanSearchField(true));
         Double billableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
@@ -126,10 +126,10 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         final Double totalHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
         if (totalHour > 0) {
-            lbTimeRange.setValue(AppContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
+            lbTimeRange.setValue(UserUIContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
                     fromDate, toDate, totalHour, billableHour, nonBillableHour));
         } else {
-            lbTimeRange.setValue(AppContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
+            lbTimeRange.setValue(UserUIContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
         }
     }
 
@@ -145,7 +145,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
 
     private void displayNoPermissionMessage() {
         timeTrackingWrapper.removeAllComponents();
-        timeTrackingWrapper.addComponent(ELabel.h3(AppContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
+        timeTrackingWrapper.addComponent(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
     }
 
     private void displayTimeEntries() {
@@ -174,13 +174,13 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     }
 
     private AbstractTimeTrackingDisplayComp buildTimeTrackingComp(String groupBy) {
-        if (AppContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupBy)) {
+        if (UserUIContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupBy)) {
             return new TimeTrackingDateOrderComponent(Arrays.asList(
                     TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(),
                     TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(),
                     TimeTableFieldDef.id()), this.tableClickListener);
 
-        } else if (AppContext.getMessage(UserI18nEnum.SINGLE).equals(groupBy)) {
+        } else if (UserUIContext.getMessage(UserI18nEnum.SINGLE).equals(groupBy)) {
             return new TimeTrackingUserOrderComponent(Arrays.asList(
                     TimeTableFieldDef.summary(), TimeTableFieldDef.logForDate(),
                     TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(),
@@ -206,14 +206,14 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
                 }
             } else if ("delete".equals(event.getFieldName())) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 ItemTimeLoggingService itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
-                                itemTimeLoggingService.removeWithSession(itemLogging, AppContext.getUsername(), AppContext.getAccountId());
+                                itemTimeLoggingService.removeWithSession(itemLogging, UserUIContext.getUsername(), UserUIContext.getAccountId());
                                 displayTimeEntries();
                             }
                         });

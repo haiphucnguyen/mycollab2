@@ -21,7 +21,7 @@ import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.setting.CrmSettingContainer;
 import com.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.mycollab.module.crm.view.setting.ICrmCustomViewPresenter;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
@@ -44,7 +44,7 @@ public class CrmCustomViewPresenter extends CrmGenericPresenter<ICrmCustomView>
 		CrmSettingContainer settingContainer = (CrmSettingContainer) container;
 		settingContainer.gotoSubView("customlayout");
 
-		AppContext.addFragment("crm/setting/customlayout", "Custom Layouts");
+		UserUIContext.addFragment("crm/setting/customlayout", "Custom Layouts");
 
 		view.display(CrmTypeConstants.ACCOUNT);
 	}

@@ -11,7 +11,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -49,7 +49,7 @@ public class ProjectMemberEditPresenter extends AbstractProjectPresenter<Project
             super.onGo(container, data);
             view.editItem(member);
 
-            AppContext.addFragment("project/user/edit/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(),
+            UserUIContext.addFragment("project/user/edit/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(),
                     member.getId()), member.getDisplayName());
         } else {
             NotificationUtil.showMessagePermissionAlert();
@@ -59,7 +59,7 @@ public class ProjectMemberEditPresenter extends AbstractProjectPresenter<Project
 
     public void saveProjectMember(SimpleProjectMember projectMember) {
         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-        projectMemberService.updateWithSession(projectMember, AppContext.getUsername());
+        projectMemberService.updateWithSession(projectMember, UserUIContext.getUsername());
 
     }
 

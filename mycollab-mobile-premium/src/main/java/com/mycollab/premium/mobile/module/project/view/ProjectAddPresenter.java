@@ -10,7 +10,7 @@ import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -41,7 +41,7 @@ public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (AppContext.canAccess(RolePermissionCollections.CREATE_NEW_PROJECT)) {
+        if (UserUIContext.canAccess(RolePermissionCollections.CREATE_NEW_PROJECT)) {
             super.onGo(container, data);
             SimpleProject project = (SimpleProject) data.getParams();
             if (project.getProjectstatus() == null) {
@@ -50,7 +50,7 @@ public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView
             view.editItem(project);
 
             if (project.getId() == null) {
-                AppContext.addFragment("project/add", "New Project");
+                UserUIContext.addFragment("project/add", "New Project");
             }
         } else {
             NotificationUtil.showMessagePermissionAlert();
@@ -59,7 +59,7 @@ public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView
 
     private Integer saveProject(SimpleProject project) {
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-        project.setSaccountid(AppContext.getAccountId());
-        return projectService.saveWithSession(project, AppContext.getUsername());
+        project.setSaccountid(UserUIContext.getAccountId());
+        return projectService.saveWithSession(project, UserUIContext.getUsername());
     }
 }

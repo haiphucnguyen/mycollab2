@@ -9,7 +9,7 @@ import com.mycollab.module.file.view.FileMainView;
 import com.mycollab.module.file.view.components.ResourcesDisplayComponent;
 import com.mycollab.module.user.domain.BillingPlan;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -51,7 +51,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         resourceService = AppContextUtil.getSpringBean(ResourceService.class);
         externalResourceService = AppContextUtil.getSpringBean(ExternalResourceService.class);
 
-        String rootPath = String.format("%d/Documents", AppContext.getAccountId());
+        String rootPath = String.format("%d/Documents", UserUIContext.getAccountId());
         rootFolder = new Folder(rootPath);
     }
 
@@ -106,9 +106,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         linkBtn.setContent(filterBtnLayout);
         navButton.with(linkBtn);
 
-        BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
+        BillingPlan currentBillingPlan = UserUIContext.getBillingAccount().getBillingPlan();
         DriveInfoService driveInfoService = AppContextUtil.getSpringBean(DriveInfoService.class);
-        String usedStorageTxt = FileUtils.getVolumeDisplay(driveInfoService.getUsedStorageVolume(AppContext.getAccountId()))
+        String usedStorageTxt = FileUtils.getVolumeDisplay(driveInfoService.getUsedStorageVolume(UserUIContext.getAccountId()))
                 + " of " + FileUtils.getVolumeDisplay(currentBillingPlan.getVolume());
         Label usedVolumeInfo = new Label("<div>" + usedStorageTxt + "</div>", ContentMode.HTML);
         usedVolumeInfo.addStyleName("volumeUsageInfo");

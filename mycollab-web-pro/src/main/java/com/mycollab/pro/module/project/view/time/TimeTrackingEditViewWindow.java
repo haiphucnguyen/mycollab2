@@ -11,7 +11,7 @@ import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -40,7 +40,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
     private SimpleItemTimeLogging timeLogging;
 
     public TimeTrackingEditViewWindow(TimeTrackingListView view, SimpleItemTimeLogging timeLogging) {
-        super(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
+        super(UserUIContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
         this.timeLogging = timeLogging;
         this.withWidth("800px").withModal(true).withResizable(false).withCenter();
 
@@ -53,12 +53,12 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
 
         projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
         projectMemberSelectionBox.setValue(timeLogging.getLoguser());
-        projectMemberSelectionBox.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO));
+        projectMemberSelectionBox.setCaption(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_WHO));
 
-        isBillableCheckBox = new CheckBox(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
+        isBillableCheckBox = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
         isBillableCheckBox.setValue(timeLogging.getIsbillable());
 
-        isOvertimeCheckBox = new CheckBox(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME));
+        isOvertimeCheckBox = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME));
         isOvertimeCheckBox.setValue(timeLogging.getIsovertime());
 
         MHorizontalLayout grid = new MHorizontalLayout();
@@ -67,7 +67,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         MVerticalLayout content = new MVerticalLayout();
         content.addComponent(grid);
 
-        content.addComponent(new Label(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
+        content.addComponent(new Label(UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
 
         descArea = new RichTextArea();
         descArea.setValue(timeLogging.getNote());
@@ -92,10 +92,10 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         footer.addComponent(taskLayout);
 
 
-        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+        MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebUIConstants.BUTTON_OPTION);
 
-        MButton saveBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
+        MButton saveBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             saveTimeLoggingItems();
             close();
         }).withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
@@ -116,7 +116,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
             final String taskName = selectionTask.getName();
             taskLayout.removeAllComponents();
 
-            MButton detachTaskBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), clickEvent -> {
+            MButton detachTaskBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), clickEvent -> {
                 createLinkTaskButton();
                 updateLinkTask(null);
             }).withIcon(FontAwesome.UNLINK).withStyleName(WebUIConstants.BUTTON_DANGER);
@@ -134,7 +134,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
 
     private void createLinkTaskButton() {
         taskLayout.removeAllComponents();
-        MButton attachTaskBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), clickEvent -> {
+        MButton attachTaskBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), clickEvent -> {
             ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
                     TimeTrackingEditViewWindow.this);
             UI.getCurrent().addWindow(selectionTaskWindow);
@@ -145,7 +145,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
 
     private void saveTimeLoggingItems() {
         SimpleProjectMember user = (SimpleProjectMember) projectMemberSelectionBox.getValue();
-        timeLogging.setCreateduser(AppContext.getUsername());
+        timeLogging.setCreateduser(UserUIContext.getUsername());
         timeLogging.setLoguser(user.getUsername());
         timeLogging.setLogUserFullName(user.getMemberFullName());
         if (user.getMemberAvatarId() != null) {
@@ -156,7 +156,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         timeLogging.setIsbillable(isBillableCheckBox.getValue());
         timeLogging.setIsovertime(isOvertimeCheckBox.getValue());
         timeLogging.setNote(descArea.getValue());
-        timeLogging.setSaccountid(AppContext.getAccountId());
+        timeLogging.setSaccountid(UserUIContext.getAccountId());
         if (selectionTask != null) {
             timeLogging.setType(selectionTask.getType());
             timeLogging.setTypeid(selectionTask.getTypeId());
@@ -168,7 +168,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         }
 
         ItemTimeLoggingService itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
-        itemTimeLoggingService.updateWithSession(timeLogging, AppContext.getUsername());
+        itemTimeLoggingService.updateWithSession(timeLogging, UserUIContext.getUsername());
         EventBusFactory.getInstance().post(new TimeTrackingEvent.TimeLoggingEntryChange(TimeTrackingEditViewWindow.this));
     }
 }

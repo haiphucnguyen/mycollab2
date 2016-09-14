@@ -10,10 +10,9 @@ import com.mycollab.module.project.i18n.StandupI18nEnum;
 import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.ui.*;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
@@ -42,13 +41,13 @@ class StandupAddWindow extends MWindow implements IEditFormHandler<StandupReport
         this.onDate = onDate;
         standupReportService = AppContextUtil.getSpringBean(StandupReportService.class);
         SimpleStandupReport report = standupReportService.findStandupReportByDateUser(standupReportStatistic.getProjectId(),
-                AppContext.getUsername(), onDate, AppContext.getAccountId());
+                UserUIContext.getUsername(), onDate, UserUIContext.getAccountId());
         if (report == null) {
             report = new SimpleStandupReport();
             report.setProjectid(standupReportStatistic.getProjectId());
-            report.setSaccountid(AppContext.getAccountId());
+            report.setSaccountid(UserUIContext.getAccountId());
             report.setForday(onDate);
-            report.setLogby(AppContext.getUsername());
+            report.setLogby(UserUIContext.getUsername());
         }
 
         editForm = new AdvancedEditBeanForm<>();
@@ -65,9 +64,9 @@ class StandupAddWindow extends MWindow implements IEditFormHandler<StandupReport
     @Override
     public void onSave(StandupReportWithBLOBs standupReport) {
         if (standupReport.getId() == null) {
-            standupReportService.saveWithSession(standupReport, AppContext.getUsername());
+            standupReportService.saveWithSession(standupReport, UserUIContext.getUsername());
         } else {
-            standupReportService.updateWithSession(standupReport, AppContext.getUsername());
+            standupReportService.updateWithSession(standupReport, UserUIContext.getUsername());
         }
         EventBusFactory.getInstance().post(new StandUpEvent.DisplayStandupInProject(this, standupReport.getProjectid()));
         close();
@@ -105,7 +104,7 @@ class StandupAddWindow extends MWindow implements IEditFormHandler<StandupReport
         private static final long serialVersionUID = 1L;
 
         public FormLayoutFactory() {
-            super(AppContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE, AppContext.formatDate(onDate)));
+            super(UserUIContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE, UserUIContext.formatDate(onDate)));
         }
 
         private ComponentContainer createButtonControls() {

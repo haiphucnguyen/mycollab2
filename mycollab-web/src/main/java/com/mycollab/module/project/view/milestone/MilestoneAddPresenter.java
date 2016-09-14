@@ -36,7 +36,7 @@ import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectGenericTaskService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -110,16 +110,16 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
     private int saveMilestone(Milestone milestone) {
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
         milestone.setProjectid(CurrentProjectVariables.getProjectId());
-        milestone.setSaccountid(AppContext.getAccountId());
+        milestone.setSaccountid(UserUIContext.getAccountId());
 
         if (milestone.getId() == null) {
-            milestone.setCreateduser(AppContext.getUsername());
-            milestoneService.saveWithSession(milestone, AppContext.getUsername());
+            milestone.setCreateduser(UserUIContext.getUsername());
+            milestoneService.saveWithSession(milestone, UserUIContext.getUsername());
         } else {
-            milestoneService.updateWithSession(milestone, AppContext.getUsername());
+            milestoneService.updateWithSession(milestone, UserUIContext.getUsername());
         }
         AttachmentUploadField uploadField = view.getAttachUploadField();
-        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), milestone.getProjectid(),
+        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(), milestone.getProjectid(),
                 ProjectTypeConstants.MILESTONE, "" + milestone.getId());
         uploadField.saveContentsToRepo(attachPath);
 
@@ -134,10 +134,10 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
             int openAssignmentsCount = genericTaskService.getTotalCount(searchCriteria);
             if (openAssignmentsCount > 0) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        AppContext.getMessage(GenericI18Enum.OPT_QUESTION, AppContext.getSiteName()),
-                        AppContext.getMessage(ProjectCommonI18nEnum.OPT_CLOSE_SUB_ASSIGNMENTS),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_CLOSE_SUB_ASSIGNMENTS),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 genericTaskService.closeSubAssignmentOfMilestone(milestone.getId());

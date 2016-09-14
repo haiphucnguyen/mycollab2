@@ -11,10 +11,9 @@ import com.mycollab.module.ecm.service.ExternalResourceService;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.module.file.events.FileEvent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Container;
-import com.vaadin.event.ItemClickEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Tree;
 import com.vaadin.util.ReflectTools;
@@ -55,7 +54,7 @@ public class FolderNavigatorMenu extends Tree {
 
                 // if expand folder is root, will load external drives also
                 if (rootPath.equals(expandFolder.getPath())) {
-                    List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(AppContext.getUsername());
+                    List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(UserUIContext.getUsername());
                     for (ExternalDrive externalDrive : externalDrives) {
                         ExternalFolder externalFolder = new ExternalFolder("/");
                         externalFolder.setStorageName(externalDrive.getStoragename());

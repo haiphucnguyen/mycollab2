@@ -2,12 +2,11 @@ package com.mycollab.pro.module.project.view.risk;
 
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleRisk;
-import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskRate;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.AbstractEditItemComp;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -18,7 +17,6 @@ import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -43,14 +41,14 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
     }
 
     public static String[] getValueCaptions() {
-        return valueCaptions.values().stream().map(item -> AppContext.getMessage(item)).collect(Collectors.toList())
+        return valueCaptions.values().stream().map(item -> UserUIContext.getMessage(item)).collect(Collectors.toList())
                 .toArray(new String[0]);
     }
 
     @Override
     protected String initFormHeader() {
-        return (beanItem.getId() == null) ? AppContext.getMessage(RiskI18nEnum.NEW) :
-                AppContext.getMessage(RiskI18nEnum.DETAIL);
+        return (beanItem.getId() == null) ? UserUIContext.getMessage(RiskI18nEnum.NEW) :
+                UserUIContext.getMessage(RiskI18nEnum.DETAIL);
     }
 
     @Override

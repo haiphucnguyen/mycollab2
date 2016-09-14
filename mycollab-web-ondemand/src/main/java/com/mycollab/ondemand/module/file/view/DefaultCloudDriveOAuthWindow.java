@@ -13,7 +13,7 @@ import com.mycollab.module.file.CloudDriveInfo;
 import com.mycollab.module.file.events.FileEvent;
 import com.mycollab.ondemand.module.file.event.CloudDriveOAuthCallbackEvent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -101,7 +101,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends MWindow {
         messageBox.addComponent(btnLogin);
         messageBox.setComponentAlignment(btnLogin, Alignment.MIDDLE_CENTER);
 
-        mainLayout.addComponent(new Label(AppContext.getMessage(GenericI18Enum.FORM_NAME)));
+        mainLayout.addComponent(new Label(UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
 
         HorizontalLayout folderNameLayout = new HorizontalLayout();
         folderNameLayout.setSpacing(false);
@@ -124,23 +124,23 @@ public abstract class DefaultCloudDriveOAuthWindow extends MWindow {
 
         MHorizontalLayout controllGroupBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false)).withHeight("50px");
 
-        MButton doneBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
+        MButton doneBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
             try {
                 String name = folderName.getValue().trim();
                 if (StringUtils.isBlank(name)) {
-                    NotificationUtil.showWarningNotification(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                            AppContext.getMessage(GenericI18Enum.FORM_NAME)));
+                    NotificationUtil.showWarningNotification(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                            UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
                     return;
                 }
                 ExternalDrive externalDrive = new ExternalDrive();
                 externalDrive.setAccesstoken(cloudDriveInfo.getAccessToken());
                 externalDrive.setCreatedtime(new GregorianCalendar().getTime());
                 externalDrive.setFoldername(name);
-                externalDrive.setOwner(AppContext.getUsername());
+                externalDrive.setOwner(UserUIContext.getUsername());
                 externalDrive.setStoragename(getStorageName());
 
                 ExternalDriveService service = AppContextUtil.getSpringBean(ExternalDriveService.class);
-                service.saveWithSession(externalDrive, AppContext.getUsername());
+                service.saveWithSession(externalDrive, UserUIContext.getUsername());
                 EventBusFactory.getInstance().post(new FileEvent.ExternalDriveConnectedEvent
                         (DefaultCloudDriveOAuthWindow.this, externalDrive));
             } catch (Exception e) {
@@ -150,7 +150,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends MWindow {
         }).withStyleName(WebUIConstants.BUTTON_ACTION);
         controllGroupBtn.addComponent(doneBtn);
 
-        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+        MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebUIConstants.BUTTON_OPTION);
         controllGroupBtn.addComponent(cancelBtn);
 

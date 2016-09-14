@@ -30,7 +30,7 @@ import com.mycollab.module.user.CommonTooltipGenerator;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -58,7 +58,7 @@ public class UnresolvedBugsByAssigneeWidget extends DepotWithChart {
         this.searchCriteria = searchCriteria;
         BugService bugService = AppContextUtil.getSpringBean(BugService.class);
         totalCount = bugService.getTotalCount(searchCriteria);
-        setTitle(AppContext.getMessage(BugI18nEnum.WIDGET_UNRESOLVED_BY_ASSIGNEE_TITLE) + " (" + totalCount + ")");
+        setTitle(UserUIContext.getMessage(BugI18nEnum.WIDGET_UNRESOLVED_BY_ASSIGNEE_TITLE) + " (" + totalCount + ")");
         groupItems = bugService.getAssignedDefectsSummary(searchCriteria);
         displayPlainMode();
     }
@@ -71,7 +71,7 @@ public class UnresolvedBugsByAssigneeWidget extends DepotWithChart {
                 MHorizontalLayout assigneeLayout = new MHorizontalLayout().withFullWidth();
                 assigneeLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
                 String assignUser = item.getGroupid();
-                String assignUserFullName = item.getGroupid() == null ? AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED) :
+                String assignUserFullName = item.getGroupid() == null ? UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED) :
                         item.getGroupname();
                 if (assignUserFullName == null || "".equals(assignUserFullName.trim())) {
                     assignUserFullName = StringUtils.extractNameFromEmail(assignUser);
@@ -107,9 +107,9 @@ public class UnresolvedBugsByAssigneeWidget extends DepotWithChart {
             }).withIcon(UserAvatarControlFactory.createAvatarResource(assigneeAvatarId, 16))
                     .withStyleName(WebUIConstants.BUTTON_LINK, UIConstants.TEXT_ELLIPSIS).withWidth("110px");
             UserService service = AppContextUtil.getSpringBean(UserService.class);
-            SimpleUser user = service.findUserByUserNameInAccount(assignee, AppContext.getAccountId());
-            this.setDescription(CommonTooltipGenerator.generateTooltipUser(AppContext.getUserLocale(), user,
-                    AppContext.getSiteUrl(), AppContext.getUserTimeZone()));
+            SimpleUser user = service.findUserByUserNameInAccount(assignee, UserUIContext.getAccountId());
+            this.setDescription(CommonTooltipGenerator.generateTooltipUser(UserUIContext.getUserLocale(), user,
+                    UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
         }
     }
 }

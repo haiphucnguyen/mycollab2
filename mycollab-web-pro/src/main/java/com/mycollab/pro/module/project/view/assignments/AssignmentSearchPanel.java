@@ -6,7 +6,7 @@ import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -43,14 +43,14 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectGene
 
     @Override
     protected ComponentContainer buildSearchTitle() {
-        return new MHorizontalLayout(ELabel.h2(FontAwesome.HASHTAG.getHtml() + " " + AppContext.getMessage
+        return new MHorizontalLayout(ELabel.h2(FontAwesome.HASHTAG.getHtml() + " " + UserUIContext.getMessage
                 (ProjectCommonI18nEnum.OPT_ASSIGNMENT_LIST)).withWidthUndefined());
     }
 
     @Override
     protected Component buildExtraControls() {
         if (isCreateAssignment) {
-            MButton newAssignmentBtn = new MButton(AppContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT),
+            MButton newAssignmentBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT),
                     clickEvent -> UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(),
                             CurrentProjectVariables.getProjectId(), true))).withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
             return newAssignmentBtn;
@@ -71,22 +71,22 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectGene
         public ComponentContainer constructBody() {
             MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
 
-            Label nameLbl = new Label(AppContext.getMessage(GenericI18Enum.FORM_NAME) + ":");
+            Label nameLbl = new Label(UserUIContext.getMessage(GenericI18Enum.FORM_NAME) + ":");
             basicSearchBody.with(nameLbl).withAlign(nameLbl, Alignment.MIDDLE_LEFT);
 
-            nameField = new MTextField().withInputPrompt(AppContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
+            nameField = new MTextField().withInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
                     .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
             basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_CENTER);
 
-            myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
+            myItemCheckbox = new CheckBox(UserUIContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
             basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
-            MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
+            MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
                     .withIcon(FontAwesome.SEARCH).withStyleName(WebUIConstants.BUTTON_ACTION)
                     .withClickShortcut(ShortcutAction.KeyCode.ENTER);
             basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
 
-            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""));
+            Button cancelBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""));
             cancelBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
             basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
             return basicSearchBody;
@@ -98,7 +98,7 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectGene
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
             searchCriteria.setName(StringSearchField.and(nameField.getValue().trim()));
             if (myItemCheckbox.getValue()) {
-                searchCriteria.setAssignUser(StringSearchField.and(AppContext.getUsername()));
+                searchCriteria.setAssignUser(StringSearchField.and(UserUIContext.getUsername()));
             } else {
                 searchCriteria.setAssignUser(null);
             }

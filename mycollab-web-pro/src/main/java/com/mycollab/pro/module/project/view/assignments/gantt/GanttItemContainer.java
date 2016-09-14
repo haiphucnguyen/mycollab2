@@ -4,7 +4,7 @@ import com.mycollab.core.MyCollabException;
 import com.mycollab.module.project.domain.TaskPredecessor;
 import com.mycollab.module.project.service.GanttAssignmentService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
@@ -81,7 +81,7 @@ class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> implements 
             if (CollectionUtils.isNotEmpty(removedPredecessors)) {
                 GanttAssignmentService ganttAssignmentService = AppContextUtil.getSpringBean
                         (GanttAssignmentService.class);
-                ganttAssignmentService.massDeletePredecessors(removedPredecessors, AppContext.getAccountId());
+                ganttAssignmentService.massDeletePredecessors(removedPredecessors, UserUIContext.getAccountId());
             }
 
             List<TaskPredecessor> dependents = item.getDependents();

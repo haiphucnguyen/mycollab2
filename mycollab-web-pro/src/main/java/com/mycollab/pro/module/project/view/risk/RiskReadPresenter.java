@@ -16,7 +16,7 @@ import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.reporting.FormReportLayout;
 import com.mycollab.reporting.PrintButton;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -56,14 +56,14 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
             @Override
             public void onDelete(final SimpleRisk data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                                riskService.removeWithSession(data, AppContext.getUsername(), AppContext.getAccountId());
+                                riskService.removeWithSession(data, UserUIContext.getUsername(), UserUIContext.getAccountId());
                                 EventBusFactory.getInstance().post(new RiskEvent.GotoList(this, null));
                             }
                         });
@@ -124,7 +124,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS)) {
             if (data.getParams() instanceof Integer) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                SimpleRisk risk = riskService.findById((Integer) data.getParams(), AppContext.getAccountId());
+                SimpleRisk risk = riskService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
                 if (risk != null) {
                     RiskContainer riskContainer = (RiskContainer) container;
                     riskContainer.removeAllComponents();

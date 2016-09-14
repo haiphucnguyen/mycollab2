@@ -8,7 +8,7 @@ import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.view.task.TaskAddWindow;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.shared.ui.MarginInfo;
@@ -34,7 +34,7 @@ public class EntityWithProjectAddHandler {
             prjSelectionWindow.setResizable(false);
             prjSelectionWindow.setModal(true);
             prjSelectionWindow.setWidth("500px");
-            prjSelectionWindow.setCaption(AppContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT));
+            prjSelectionWindow.setCaption(UserUIContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT));
             prjSelectionWindow.setContent(new ProjectSelectionLayout());
             return prjSelectionWindow;
         } else {
@@ -46,8 +46,8 @@ public class EntityWithProjectAddHandler {
         if (entity instanceof SimpleTask) {
             SimpleTask newTask = (SimpleTask) entity;
             newTask.setProjectid(projectId);
-            newTask.setSaccountid(AppContext.getAccountId());
-            newTask.setLogby(AppContext.getUsername());
+            newTask.setSaccountid(UserUIContext.getAccountId());
+            newTask.setLogby(UserUIContext.getUsername());
             UI.getCurrent().addWindow(new TaskAddWindow(newTask));
         }
     }
@@ -59,12 +59,12 @@ public class EntityWithProjectAddHandler {
             this.withMargin(false);
             GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);
             projectCombo = new UserInvolvedProjectsSelection();
-            layoutHelper.addComponent(projectCombo, AppContext.getMessage(ProjectI18nEnum.SINGLE), 0, 0);
+            layoutHelper.addComponent(projectCombo, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), 0, 0);
 
-            MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> prjSelectionWindow.close())
+            MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> prjSelectionWindow.close())
                     .withStyleName(WebUIConstants.BUTTON_OPTION);
 
-            MButton nextBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_NEXT), clickEvent -> {
+            MButton nextBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_NEXT), clickEvent -> {
                 SimpleProject selectedProject = (SimpleProject) projectCombo.getValue();
                 if (selectedProject != null) {
                     prjSelectionWindow.close();
@@ -80,7 +80,7 @@ public class EntityWithProjectAddHandler {
         UserInvolvedProjectsSelection() {
             this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-            List<SimpleProject> projects = projectService.getProjectsUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
+            List<SimpleProject> projects = projectService.getProjectsUserInvolved(UserUIContext.getUsername(), UserUIContext.getAccountId());
             for (SimpleProject project : projects) {
                 this.addItem(project);
                 this.setItemCaption(project, project.getName());

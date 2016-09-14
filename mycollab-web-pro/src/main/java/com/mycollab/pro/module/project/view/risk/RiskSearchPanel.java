@@ -14,7 +14,7 @@ import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.project.view.milestone.MilestoneListSelect;
 import com.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
 import com.mycollab.vaadin.web.ui.DynamicQueryParamLayout;
@@ -43,12 +43,12 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.headerH2(ProjectTypeConstants.RISK, AppContext.getMessage(RiskI18nEnum.LIST));
+        return ComponentUtils.headerH2(ProjectTypeConstants.RISK, UserUIContext.getMessage(RiskI18nEnum.LIST));
     }
 
     @Override
     protected Component buildExtraControls() {
-        return new MButton(AppContext.getMessage(RiskI18nEnum.NEW),
+        return new MButton(UserUIContext.getMessage(RiskI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null)))
                 .withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
@@ -76,19 +76,19 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
 
         @Override
         public ComponentContainer constructBody() {
-            nameField = new MTextField().withInputPrompt(AppContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
+            nameField = new MTextField().withInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
                     .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
 
-            myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
+            myItemCheckbox = new CheckBox(UserUIContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
 
-            MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
+            MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
                     .withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH)
                     .withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
-            MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
+            MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
                     .withStyleName(WebUIConstants.BUTTON_OPTION);
 
-            MButton advancedSearchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
+            MButton advancedSearchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
                     clickEvent -> moveToAdvancedSearchLayout()).withStyleName(WebUIConstants.BUTTON_LINK);
 
             return new MHorizontalLayout(nameField, myItemCheckbox, searchBtn, cancelBtn, advancedSearchBtn)
@@ -102,7 +102,7 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
             searchCriteria.setRiskname(StringSearchField.and(this.nameField.getValue().trim()));
 
             if (this.myItemCheckbox.getValue()) {
-                searchCriteria.setAssignToUser(StringSearchField.and(AppContext.getUsername()));
+                searchCriteria.setAssignToUser(StringSearchField.and(UserUIContext.getUsername()));
             } else {
                 searchCriteria.setAssignToUser(null);
             }

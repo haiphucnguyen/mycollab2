@@ -12,7 +12,7 @@ import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectGenericListPresenter;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.ViewItemAction;
 import com.mycollab.vaadin.mvp.*;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -24,7 +24,6 @@ import com.vaadin.ui.UI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -61,7 +60,7 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
 
             @Override
             protected String getReportTitle() {
-                return AppContext.getMessage(RiskI18nEnum.LIST);
+                return UserUIContext.getMessage(RiskI18nEnum.LIST);
             }
 
             @Override
@@ -106,10 +105,10 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
             }
 
             if (keyList.size() > 0) {
-                riskService.massRemoveWithSession(keyList, AppContext.getUsername(), AppContext.getAccountId());
+                riskService.massRemoveWithSession(keyList, UserUIContext.getUsername(), UserUIContext.getAccountId());
             }
         } else {
-            riskService.removeByCriteria(searchCriteria, AppContext.getAccountId());
+            riskService.removeByCriteria(searchCriteria, UserUIContext.getAccountId());
         }
 
         int totalCount = riskService.getTotalCount(searchCriteria);
@@ -128,7 +127,7 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
             List<Integer> riskKeys = risks.stream().filter(ValuedBean::isSelected).map(Risk::getId).collect(Collectors.toList());
 
             if (riskKeys.size() > 0) {
-//                riskService.massUpdateWithSession(value, riskKeys, AppContext.getAccountId());
+//                riskService.massUpdateWithSession(value, riskKeys, UserUIContext.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

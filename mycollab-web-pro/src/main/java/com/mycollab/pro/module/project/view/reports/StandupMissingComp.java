@@ -11,7 +11,7 @@ import com.mycollab.module.project.i18n.StandupI18nEnum;
 import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -39,7 +39,7 @@ public class StandupMissingComp extends MVerticalLayout {
 
     public StandupMissingComp() {
         this.withSpacing(false).withMargin(false);
-        Label headerLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_MEMBER_NOT_REPORT));
+        Label headerLbl = new Label(UserUIContext.getMessage(StandupI18nEnum.STANDUP_MEMBER_NOT_REPORT));
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true)).
                 withHeight("34px").withFullWidth().with(headerLbl).
                 withAlign(headerLbl, Alignment.MIDDLE_LEFT).withStyleName(WebUIConstants.PANEL_HEADER);
@@ -51,9 +51,9 @@ public class StandupMissingComp extends MVerticalLayout {
     public void search(Integer projectId, Date date) {
         bodyWrap.removeAllComponents();
         StandupReportService standupReportService = AppContextUtil.getSpringBean(StandupReportService.class);
-        List<SimpleUser> someGuys = standupReportService.findUsersNotDoReportYet(projectId, date, AppContext.getAccountId());
+        List<SimpleUser> someGuys = standupReportService.findUsersNotDoReportYet(projectId, date, UserUIContext.getAccountId());
         if (someGuys.size() == 0) {
-            bodyWrap.addComponent(new Label(AppContext.getMessage(GenericI18Enum.EXT_NO_ITEM)));
+            bodyWrap.addComponent(new Label(UserUIContext.getMessage(GenericI18Enum.EXT_NO_ITEM)));
         } else {
             for (SimpleUser user : someGuys) {
                 bodyWrap.addComponent(ELabel.html(buildMemberLink(projectId, user)));

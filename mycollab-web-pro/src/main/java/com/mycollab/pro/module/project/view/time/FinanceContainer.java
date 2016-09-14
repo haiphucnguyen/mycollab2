@@ -11,7 +11,7 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.parameters.TimeTrackingScreenData;
 import com.mycollab.module.project.view.time.IFinanceContainer;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -43,12 +43,12 @@ public class FinanceContainer extends AbstractPageView implements IFinanceContai
 
     private void buildComponents() {
         if (CurrentProjectVariables.hasTimeFeature()) {
-            myProjectTab.addWrappedTab(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
+            myProjectTab.addWrappedTab(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
                     ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME));
         }
 
         if (CurrentProjectVariables.hasInvoiceFeature()) {
-            myProjectTab.addWrappedTab(AppContext.getMessage(InvoiceI18nEnum.LIST),
+            myProjectTab.addWrappedTab(UserUIContext.getMessage(InvoiceI18nEnum.LIST),
                     ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE));
         }
 
@@ -59,7 +59,7 @@ public class FinanceContainer extends AbstractPageView implements IFinanceContai
             public void selectedTabChange(TabSheet.SelectedTabChangeEvent event) {
                 TabSheet.Tab tab = ((TabSheetDecorator) event.getTabSheet()).getSelectedTabInfo();
                 String caption = tab.getCaption();
-                if (AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME).equals(caption)) {
+                if (UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME).equals(caption)) {
                     showTimeView();
                 } else {
                     showInvoiceView();

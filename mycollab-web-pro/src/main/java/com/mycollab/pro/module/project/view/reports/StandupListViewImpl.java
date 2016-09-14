@@ -18,7 +18,7 @@ import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -188,12 +188,12 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         MHorizontalLayout headerLeft = new MHorizontalLayout();
 
         HeaderWithFontAwesome titleLbl = ComponentUtils.headerH2(ProjectTypeConstants.STANDUP,
-                AppContext.getMessage(StandupI18nEnum.VIEW_LIST_TITLE));
+                UserUIContext.getMessage(StandupI18nEnum.VIEW_LIST_TITLE));
 
         headerLeft.with(titleLbl, standupCalendar);
         header.with(headerLeft).withAlign(headerLeft, Alignment.TOP_LEFT);
 
-        MButton newReportBtn = new MButton(AppContext.getMessage(StandupI18nEnum.BUTTON_ADD_REPORT_LABEL), clickEvent -> {
+        MButton newReportBtn = new MButton(UserUIContext.getMessage(StandupI18nEnum.BUTTON_ADD_REPORT_LABEL), clickEvent -> {
             if (selectedProject != null) {
                 UI.getCurrent().addWindow(new StandupAddWindow(selectedProject, onDate));
             } else {
@@ -245,21 +245,21 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
             MVerticalLayout reportContent = new MVerticalLayout().withStyleName("report-content", WebUIConstants.HOVER_EFFECT_NOT_BOX);
 
-            ELabel whatYesterdayLbl = ELabel.h3(AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
+            ELabel whatYesterdayLbl = ELabel.h3(UserUIContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
             reportContent.addComponent(whatYesterdayLbl);
             Label whatYesterdayField = new SafeHtmlLabel(report.getWhatlastday());
             whatYesterdayField.setSizeUndefined();
             whatYesterdayField.addStyleName(WebUIConstants.STANDUP_ROW_CONTENT);
             reportContent.addComponent(whatYesterdayField);
 
-            ELabel whatTodayLbl = ELabel.h3(AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
+            ELabel whatTodayLbl = ELabel.h3(UserUIContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
             reportContent.addComponent(whatTodayLbl);
             Label whatTodayField = new SafeHtmlLabel(report.getWhattoday());
             whatTodayField.setSizeUndefined();
             whatTodayField.addStyleName(WebUIConstants.STANDUP_ROW_CONTENT);
             reportContent.addComponent(whatTodayField);
 
-            ELabel roadblockLbl = ELabel.h3(AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
+            ELabel roadblockLbl = ELabel.h3(UserUIContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
             reportContent.addComponent(roadblockLbl);
             Label whatProblemField = new SafeHtmlLabel(report.getWhatproblem());
             whatProblemField.setSizeUndefined();

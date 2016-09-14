@@ -22,7 +22,7 @@ import com.mycollab.module.crm.domain.Lead;
 import com.mycollab.module.crm.domain.SimpleLead;
 import com.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.mycollab.module.crm.i18n.LeadI18nEnum;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import org.vaadin.viritin.button.MButton;
@@ -41,7 +41,7 @@ public class LeadSelectionWindow extends MWindow {
     private FieldSelection<Lead> fieldSelection;
 
     public LeadSelectionWindow(FieldSelection<Lead> fieldSelection) {
-        super(AppContext.getMessage(GenericI18Enum.ACTION_SELECT_VALUE, AppContext.getMessage(LeadI18nEnum.SINGLE)));
+        super(UserUIContext.getMessage(GenericI18Enum.ACTION_SELECT_VALUE, UserUIContext.getMessage(LeadI18nEnum.SINGLE)));
         this.withModal(true).withResizable(false).withWidth("1000px").withCenter();
         this.fieldSelection = fieldSelection;
     }
@@ -67,8 +67,8 @@ public class LeadSelectionWindow extends MWindow {
             return new MButton(lead.getLeadName(), clickEvent -> {
                 fieldSelection.fireValueChange(lead);
                 close();
-            }).withStyleName(WebUIConstants.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateTooltipLead(AppContext.getUserLocale(),
-                    lead, AppContext.getSiteUrl(), AppContext.getUserTimeZone()));
+            }).withStyleName(WebUIConstants.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateTooltipLead(UserUIContext.getUserLocale(),
+                    lead, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
         tableItem.setSearchCriteria(new LeadSearchCriteria());
     }

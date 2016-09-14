@@ -5,7 +5,7 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.i18n.GanttI18nEnum;
 import com.mycollab.pro.module.project.events.GanttEvent;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.server.Page;
 import org.joda.time.LocalDate;
@@ -123,7 +123,7 @@ public class GanttExt extends Gantt {
             step.setStartDate(ganttItemWrapper.getStartDate().toDate());
             step.setEndDate(ganttItemWrapper.getEndDate().plusDays(1).toDate());
             EventBusFactory.getInstance().post(new GanttEvent.UpdateGanttItem(GanttExt.this, ganttItemWrapper));
-            NotificationUtil.showWarningNotification(AppContext.getMessage(GanttI18nEnum.ERROR_CAN_NOT_CHANGE_PARENT_TASK_DATES));
+            NotificationUtil.showWarningNotification(UserUIContext.getMessage(GanttI18nEnum.ERROR_CAN_NOT_CHANGE_PARENT_TASK_DATES));
         } else {
             LocalDate suggestedStartDate = new LocalDate(startDate);
             LocalDate suggestedEndDate = new LocalDate(endDate);

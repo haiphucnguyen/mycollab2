@@ -18,15 +18,13 @@ import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -58,7 +56,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
     private ItemTimeLoggingService itemTimeLoggingService;
 
     public AddTimeEntryWindow() {
-        super(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
+        super(UserUIContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
         this.withModal(true).withResizable(false);
 
         itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
@@ -70,8 +68,8 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         grid.setSpacing(true);
         content.addComponent(grid);
 
-        grid.addComponent(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)).withStyleName(WebUIConstants.META_COLOR), 0, 0);
-        grid.addComponent(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)).withStyleName(WebUIConstants.META_COLOR), 1, 0);
+        grid.addComponent(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)).withStyleName(WebUIConstants.META_COLOR), 0, 0);
+        grid.addComponent(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)).withStyleName(WebUIConstants.META_COLOR), 1, 0);
 
         projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
         grid.addComponent(projectMemberSelectionBox, 0, 1);
@@ -90,22 +88,22 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         MHorizontalLayout attrContainer = new MHorizontalLayout();
         isBillableCheckBox = new CheckBox();
         isOvertimeCheckBox = new CheckBox();
-        attrContainer.with(new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE)).withStyleName
+        attrContainer.with(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE)).withStyleName
                         (WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("100px"),
-                isBillableCheckBox, new ELabel(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME))
+                isBillableCheckBox, new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME))
                         .withStyleName(WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("100px"), isOvertimeCheckBox)
                 .alignAll(Alignment.MIDDLE_LEFT);
         grid.addComponent(attrContainer, 2, 1);
 
         timeInputTable = new Table();
         timeInputTable.setImmediate(true);
-        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_MONDAY), DoubleField.class, 0);
-        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_TUESDAY), DoubleField.class, 0);
-        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), DoubleField.class, 0);
-        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_THURSDAY), DoubleField.class, 0);
-        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_FRIDAY), DoubleField.class, 0);
-        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_SATURDAY), DoubleField.class, 0);
-        timeInputTable.addContainerProperty(AppContext.getMessage(DayI18nEnum.OPT_SUNDAY), DoubleField.class, 0);
+        timeInputTable.addContainerProperty(UserUIContext.getMessage(DayI18nEnum.OPT_MONDAY), DoubleField.class, 0);
+        timeInputTable.addContainerProperty(UserUIContext.getMessage(DayI18nEnum.OPT_TUESDAY), DoubleField.class, 0);
+        timeInputTable.addContainerProperty(UserUIContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), DoubleField.class, 0);
+        timeInputTable.addContainerProperty(UserUIContext.getMessage(DayI18nEnum.OPT_THURSDAY), DoubleField.class, 0);
+        timeInputTable.addContainerProperty(UserUIContext.getMessage(DayI18nEnum.OPT_FRIDAY), DoubleField.class, 0);
+        timeInputTable.addContainerProperty(UserUIContext.getMessage(DayI18nEnum.OPT_SATURDAY), DoubleField.class, 0);
+        timeInputTable.addContainerProperty(UserUIContext.getMessage(DayI18nEnum.OPT_SUNDAY), DoubleField.class, 0);
 
         timeInputTable.addItem(new DoubleField[]{new DoubleField(), new DoubleField(), new DoubleField(),
                 new DoubleField(), new DoubleField(), new DoubleField(), new DoubleField()}, "timeEntry");
@@ -114,7 +112,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         updateTimeTableHeader();
         content.addComponent(timeInputTable);
 
-        content.addComponent(new ELabel(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)).withStyleName(WebUIConstants.META_COLOR));
+        content.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)).withStyleName(WebUIConstants.META_COLOR));
 
         descArea = new RichTextArea();
         descArea.setWidth("100%");
@@ -125,10 +123,10 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         createLinkTaskButton();
         footer.addComponent(taskLayout);
 
-        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+        MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebUIConstants.BUTTON_OPTION);
 
-        MButton saveBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
+        MButton saveBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             saveTimeLoggingItems();
             close();
         }).withStyleName(WebUIConstants.BUTTON_ACTION);
@@ -149,7 +147,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
             String taskName = this.selectionTask.getName();
             taskLayout.removeAllComponents();
 
-            MButton detachTaskBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), clickEvent -> {
+            MButton detachTaskBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), clickEvent -> {
                 createLinkTaskButton();
                 updateLinkTask(null);
             }).withStyleName(WebUIConstants.BUTTON_DANGER);
@@ -169,7 +167,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
 
     private void createLinkTaskButton() {
         taskLayout.removeAllComponents();
-        MButton attachTaskBtn = new MButton(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), clickEvent -> {
+        MButton attachTaskBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), clickEvent -> {
             ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(AddTimeEntryWindow.this);
             getUI().addWindow(selectionTaskWindow);
         }).withStyleName(WebUIConstants.BUTTON_ACTION);
@@ -182,39 +180,39 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(monday);
 
-        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_MONDAY), AppContext.getMessage(TimeTrackingI18nEnum.MONDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
+        timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_MONDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.MONDAY_FIELD,
+                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_TUESDAY), AppContext.getMessage(TimeTrackingI18nEnum.TUESDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
+        timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_TUESDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.TUESDAY_FIELD,
+                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), AppContext.getMessage(TimeTrackingI18nEnum.WEDNESDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
+        timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.WEDNESDAY_FIELD,
+                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_THURSDAY), AppContext.getMessage(TimeTrackingI18nEnum.THURSDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
+        timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_THURSDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.THURSDAY_FIELD,
+                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_FRIDAY), AppContext.getMessage(TimeTrackingI18nEnum.FRIDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
+        timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_FRIDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.FRIDAY_FIELD,
+                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_SATURDAY), AppContext.getMessage(TimeTrackingI18nEnum.SATURDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
+        timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_SATURDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.SATURDAY_FIELD,
+                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader(AppContext.getMessage(DayI18nEnum.OPT_SUNDAY), AppContext.getMessage(TimeTrackingI18nEnum.SUNDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppContext.getShortDateFormat(), AppContext.getUserLocale())));
+        timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_SUNDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.SUNDAY_FIELD,
+                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
 
     }
 
     private void saveTimeLoggingItems() {
         SimpleProjectMember user = (SimpleProjectMember) projectMemberSelectionBox.getValue();
         if (user == null) {
-            throw new UserInvalidInputException(AppContext.getMessage(TimeTrackingI18nEnum.ERROR_MEMBER_NOT_NULL));
+            throw new UserInvalidInputException(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_MEMBER_NOT_NULL));
         }
 
         Date monday = DateTimeUtils.getBounceDatesOfWeek(selectedDate)[0];
@@ -223,48 +221,48 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
 
         List<ItemTimeLogging> timeLoggings = new ArrayList<>();
 
-        ItemTimeLogging timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_MONDAY), calendar, user);
+        ItemTimeLogging timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_MONDAY), calendar, user);
         if (timeLogging != null) {
-            timeLoggings.add(buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_MONDAY), calendar, user));
+            timeLoggings.add(buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_MONDAY), calendar, user));
         }
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_TUESDAY), calendar, user);
+        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_TUESDAY), calendar, user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), calendar, user);
+        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), calendar, user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_THURSDAY), calendar, user);
+        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_THURSDAY), calendar, user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_FRIDAY), calendar, user);
+        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_FRIDAY), calendar, user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_SATURDAY), calendar, user);
+        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_SATURDAY), calendar, user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging(AppContext.getMessage(DayI18nEnum.OPT_SUNDAY), calendar, user);
+        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_SUNDAY), calendar, user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
-        itemTimeLoggingService.batchSaveTimeLogging(timeLoggings, AppContext.getAccountId());
+        itemTimeLoggingService.batchSaveTimeLogging(timeLoggings, UserUIContext.getAccountId());
 
         updateProjectTimeLogging();
         EventBusFactory.getInstance().post(new TimeTrackingEvent.TimeLoggingEntryChange(AddTimeEntryWindow.this));
@@ -294,12 +292,12 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
             timeLogging.setIsbillable(isBillableCheckBox.getValue());
             timeLogging.setIsovertime(isOvertimeCheckBox.getValue());
             timeLogging.setLoguser(logForMember.getUsername());
-            timeLogging.setCreateduser(AppContext.getUsername());
+            timeLogging.setCreateduser(UserUIContext.getUsername());
             timeLogging.setLogforday(calendar.getTime());
             timeLogging.setLogvalue(timeVal);
             timeLogging.setNote(descArea.getValue());
             timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
-            timeLogging.setSaccountid(AppContext.getAccountId());
+            timeLogging.setSaccountid(UserUIContext.getAccountId());
             timeLogging.setCreatedtime(new GregorianCalendar().getTime());
             timeLogging.setLastupdatedtime(new GregorianCalendar().getTime());
 

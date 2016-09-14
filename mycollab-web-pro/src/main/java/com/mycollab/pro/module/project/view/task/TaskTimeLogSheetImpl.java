@@ -37,7 +37,7 @@ import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.view.task.components.TaskTimeLogSheet;
 import com.mycollab.pro.module.project.ui.components.TimeLogEditWindow;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.UI;
 
@@ -128,30 +128,30 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
     private class TaskTimeLogEditWindow extends TimeLogEditWindow<SimpleTask> {
         public TaskTimeLogEditWindow(SimpleTask bean) {
             super(bean);
-            this.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
+            this.setCaption(UserUIContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
             this.addCloseListener(closeEvent -> displayTime(bean));
         }
 
         @Override
         protected void saveTimeInvest() {
             ItemTimeLogging item = new ItemTimeLogging();
-            item.setLoguser(AppContext.getUsername());
+            item.setLoguser(UserUIContext.getUsername());
             item.setLogvalue(getInvestValue());
             item.setTypeid(bean.getId());
             item.setType(ProjectTypeConstants.TASK);
-            item.setSaccountid(AppContext.getAccountId());
+            item.setSaccountid(UserUIContext.getAccountId());
             item.setProjectid(CurrentProjectVariables.getProjectId());
             item.setLogforday(forLogDate());
             item.setIsbillable(isBillableHours());
             item.setIsovertime(isOvertimeHours());
-            itemTimeLoggingService.saveWithSession(item, AppContext.getUsername());
+            itemTimeLoggingService.saveWithSession(item, UserUIContext.getUsername());
         }
 
         @Override
         protected void updateTimeRemain() {
             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
             bean.setRemainestimate(getUpdateRemainTime());
-            taskService.updateWithSession(bean, AppContext.getUsername());
+            taskService.updateWithSession(bean, UserUIContext.getUsername());
         }
 
         @Override

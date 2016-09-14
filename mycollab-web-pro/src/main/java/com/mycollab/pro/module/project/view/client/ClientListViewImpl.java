@@ -19,7 +19,7 @@ import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -80,24 +80,24 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
 
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, client)))
                 .withIcon(FontAwesome.EDIT).withStyleName(WebUIConstants.BUTTON_ICON_ONLY)
-                .withVisible(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
 
         MButton deleteBtn = new MButton("", clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
-                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                    AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                    AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                    UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                    UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                     confirmDialog -> {
                         if (confirmDialog.isConfirmed()) {
                             AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                            accountService.removeWithSession(client, AppContext.getUsername(), AppContext.getAccountId());
+                            accountService.removeWithSession(client, UserUIContext.getUsername(), UserUIContext.getAccountId());
                             EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
                         }
                     });
         }).withIcon(FontAwesome.TRASH_O).withStyleName(WebUIConstants.BUTTON_ICON_ONLY)
-                .withVisible(AppContext.canAccess(RolePermissionCollections.CRM_ACCOUNT));
-        deleteBtn.setDescription(AppContext.getMessage(ClientI18nEnum.OPT_REMOVE_CLIENT, client.getAccountname()));
+                .withVisible(UserUIContext.canAccess(RolePermissionCollections.CRM_ACCOUNT));
+        deleteBtn.setDescription(UserUIContext.getMessage(ClientI18nEnum.OPT_REMOVE_CLIENT, client.getAccountname()));
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(editBtn, deleteBtn);
         blockContent.addComponent(buttonControls);
@@ -112,22 +112,22 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
         ELabel clientLinkLbl = ELabel.h3(clientLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
 
         MVerticalLayout clientInfo = new MVerticalLayout().withMargin(false).with(clientLinkLbl, ELabel.hr());
-        Div websiteDiv = new Div().appendText(AppContext.getMessage(AccountI18nEnum.FORM_WEBSITE) + ": " +
-                MoreObjects.firstNonNull(client.getWebsite(), AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED)));
+        Div websiteDiv = new Div().appendText(UserUIContext.getMessage(AccountI18nEnum.FORM_WEBSITE) + ": " +
+                MoreObjects.firstNonNull(client.getWebsite(), UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)));
         clientInfo.addComponent(ELabel.html(websiteDiv.write()).withStyleName(UIConstants.META_INFO));
 
-        Div addressDiv = new Div().appendText(AppContext.getMessage(AccountI18nEnum.FORM_BILLING_ADDRESS) + ": "
-                + MoreObjects.firstNonNull(client.getBillingaddress(), AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED)) +
-                ", " + MoreObjects.firstNonNull(client.getCity(), AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED)) +
-                ", " + MoreObjects.firstNonNull(client.getBillingcountry(), AppContext.getMessage(GenericI18Enum.OPT_UNDEFINED)));
+        Div addressDiv = new Div().appendText(UserUIContext.getMessage(AccountI18nEnum.FORM_BILLING_ADDRESS) + ": "
+                + MoreObjects.firstNonNull(client.getBillingaddress(), UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)) +
+                ", " + MoreObjects.firstNonNull(client.getCity(), UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)) +
+                ", " + MoreObjects.firstNonNull(client.getBillingcountry(), UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)));
         clientInfo.addComponent(new ELabel(addressDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO));
-        Div assignUserDiv = new Div().appendText(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + " : ").
+        Div assignUserDiv = new Div().appendText(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + " : ").
                 appendChild(new Img("", StorageFactory.getAvatarPath(client.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
-                        new A(AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(), client.getAssignuser())).
+                        new A(AccountLinkGenerator.generatePreviewFullUserLink(UserUIContext.getSiteUrl(), client.getAssignuser())).
                                 appendText(client.getAssignUserFullName()));
         clientInfo.addComponent(new ELabel(assignUserDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO,
                 UIConstants.TEXT_ELLIPSIS));
-        Div numProjectsDiv = new Div().appendText(AppContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, client.getNumProjects()));
+        Div numProjectsDiv = new Div().appendText(UserUIContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, client.getNumProjects()));
         clientInfo.addComponent(new ELabel(numProjectsDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO));
 
         blockTop.with(clientInfo).expand(clientInfo);

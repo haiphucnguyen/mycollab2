@@ -10,7 +10,7 @@ import com.mycollab.mobile.ui.AbstractEditItemComp;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
@@ -32,7 +32,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
 
     @Override
     protected String initFormTitle() {
-        return (beanItem.getId() == null) ? AppContext.getMessage(TaskI18nEnum.NEW) : beanItem.getTaskname();
+        return (beanItem.getId() == null) ? UserUIContext.getMessage(TaskI18nEnum.NEW) : beanItem.getTaskname();
     }
 
     @Override

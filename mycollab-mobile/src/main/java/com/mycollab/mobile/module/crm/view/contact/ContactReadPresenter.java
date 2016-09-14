@@ -33,7 +33,7 @@ import com.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.mycollab.module.crm.service.ContactService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -73,13 +73,13 @@ public class ContactReadPresenter extends AbstractCrmPresenter<ContactReadView> 
             @Override
             public void onDelete(final SimpleContact data) {
                 ConfirmDialog.show(UI.getCurrent(),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 ContactService ContactService = AppContextUtil.getSpringBean(ContactService.class);
-                                ContactService.removeWithSession(data, AppContext.getUsername(), AppContext.getAccountId());
+                                ContactService.removeWithSession(data, UserUIContext.getUsername(), UserUIContext.getAccountId());
                                 EventBusFactory.getInstance().post(new ContactEvent.GotoList(this, null));
                             }
                         });
@@ -101,7 +101,7 @@ public class ContactReadPresenter extends AbstractCrmPresenter<ContactReadView> 
             public void gotoNext(SimpleContact data) {
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
                 ContactSearchCriteria criteria = new ContactSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = contactService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -115,7 +115,7 @@ public class ContactReadPresenter extends AbstractCrmPresenter<ContactReadView> 
             public void gotoPrevious(SimpleContact data) {
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
                 ContactSearchCriteria criteria = new ContactSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = contactService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -141,7 +141,7 @@ public class ContactReadPresenter extends AbstractCrmPresenter<ContactReadView> 
 
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
                 contactService.saveContactOpportunityRelationship(
-                        associateOpportunities, AppContext.getAccountId());
+                        associateOpportunities, UserUIContext.getAccountId());
 
                 EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
             }
@@ -183,23 +183,23 @@ public class ContactReadPresenter extends AbstractCrmPresenter<ContactReadView> 
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (AppContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
             /*
              * CrmNavigationMenu crmToolbar = (CrmNavigationMenu) container
-			 * .getNavigationMenu(); crmToolbar.selectButton(AppContext
+			 * .getNavigationMenu(); crmToolbar.selectButton(UserUIContext
 			 * .getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER));
 			 */
 
             if (data.getParams() instanceof Integer) {
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
-                SimpleContact contact = contactService.findById((Integer) data.getParams(), AppContext.getAccountId());
+                SimpleContact contact = contactService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
                 if (contact != null) {
                     view.previewItem(contact);
                     super.onGo(container, data);
 
-                    AppContext.addFragment(CrmLinkGenerator.generateContactPreviewLink(contact.getId()),
-                            AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-                                    AppContext.getMessage(ContactI18nEnum.SINGLE), contact.getContactName()));
+                    UserUIContext.addFragment(CrmLinkGenerator.generateContactPreviewLink(contact.getId()),
+                            UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                                    UserUIContext.getMessage(ContactI18nEnum.SINGLE), contact.getContactName()));
 
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

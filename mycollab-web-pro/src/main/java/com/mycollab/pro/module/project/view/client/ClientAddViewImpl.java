@@ -13,7 +13,7 @@ import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.user.ui.components.ImagePreviewCropWindow;
 import com.mycollab.module.user.ui.components.UploadImageField;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -68,12 +68,12 @@ public class ClientAddViewImpl extends AbstractPageView implements ClientAddView
         @Override
         public void process(BufferedImage image) {
             EntityUploaderService entityUploaderService = AppContextUtil.getSpringBean(EntityUploaderService.class);
-            String newLogoId = entityUploaderService.upload(image, PathUtils.getEntityLogoPath(AppContext
-                            .getAccountId()), account.getAvatarid(), AppContext.getUsername(), AppContext.getAccountId(),
+            String newLogoId = entityUploaderService.upload(image, PathUtils.getEntityLogoPath(UserUIContext
+                            .getAccountId()), account.getAvatarid(), UserUIContext.getUsername(), UserUIContext.getAccountId(),
                     new int[]{16, 32, 48, 64, 100});
             AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
             account.setAvatarid(newLogoId);
-            accountService.updateSelectiveWithSession(account, AppContext.getUsername());
+            accountService.updateSelectiveWithSession(account, UserUIContext.getUsername());
         }
 
         private Layout createButtonControls() {
@@ -93,12 +93,12 @@ public class ClientAddViewImpl extends AbstractPageView implements ClientAddView
         private MHorizontalLayout buildHeaderTitle() {
             ELabel titleLbl;
             if (account.getId() == null) {
-                titleLbl = ELabel.h2(FontAwesome.INSTITUTION.getHtml() + " " + AppContext.getMessage(ClientI18nEnum.NEW));
+                titleLbl = ELabel.h2(FontAwesome.INSTITUTION.getHtml() + " " + UserUIContext.getMessage(ClientI18nEnum.NEW));
                 return new MHorizontalLayout(titleLbl).expand(titleLbl);
             } else {
                 titleLbl = ELabel.h2(account.getAccountname());
                 UploadImageField uploadImageField = new UploadImageField(this);
-                uploadImageField.setButtonCaption(AppContext.getMessage(FileI18nEnum.ACTION_CHANGE_LOGO));
+                uploadImageField.setButtonCaption(UserUIContext.getMessage(FileI18nEnum.ACTION_CHANGE_LOGO));
 
                 MVerticalLayout logoLayout = new MVerticalLayout(ProjectAssetsUtil.buildClientLogo(account, 100),
                         uploadImageField).withMargin(false).withWidth("-1px").alignAll(Alignment.TOP_CENTER);

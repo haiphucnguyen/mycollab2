@@ -12,7 +12,7 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.*;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
@@ -46,7 +46,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     private ProjectFollowersComp<SimpleRisk> followerSheet;
 
     public RiskReadViewImpl() {
-        super(AppContext.getMessage(RiskI18nEnum.DETAIL), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
+        super(UserUIContext.getMessage(RiskI18nEnum.DETAIL), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
     }
 
     @Override
@@ -132,7 +132,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             this.withMargin(false);
 
             Label peopleInfoHeader = new Label(FontAwesome.USER.getHtml() + " " +
-                    AppContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
+                    UserUIContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
             peopleInfoHeader.setStyleName("info-hdr");
             this.addComponent(peopleInfoHeader);
 
@@ -141,7 +141,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             layout.setWidth("100%");
             layout.setMargin(new MarginInfo(false, false, false, true));
             try {
-                Label createdLbl = new Label(AppContext.getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE));
+                Label createdLbl = new Label(UserUIContext.getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE));
                 createdLbl.setSizeUndefined();
                 layout.addComponent(createdLbl, 0, 0);
 
@@ -153,7 +153,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 layout.addComponent(createdUserLink, 1, 0);
                 layout.setColumnExpandRatio(1, 1.0f);
 
-                Label assigneeLbl = new Label(AppContext.getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE));
+                Label assigneeLbl = new Label(UserUIContext.getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE));
                 assigneeLbl.setSizeUndefined();
                 layout.addComponent(assigneeLbl, 0, 1);
                 String assignUserName = (String) PropertyUtils.getProperty(bean, "assigntouser");

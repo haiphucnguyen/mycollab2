@@ -1,7 +1,6 @@
 package com.mycollab.pro.module.project.view.risk;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.module.project.*;
 import com.mycollab.module.project.domain.SimpleRisk;
@@ -11,7 +10,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.RiskProbability;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.events.HasSelectableItemHandlers;
@@ -84,8 +83,8 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
                     b.addStyleName(WebUIConstants.LINK_OVERDUE);
                 }
             }
-            b.setDescription(ProjectTooltipGenerator.generateToolTipRisk(AppContext.getUserLocale(), AppContext.getDateFormat(),
-                    risk, AppContext.getSiteUrl(), AppContext.getUserTimeZone(), false));
+            b.setDescription(ProjectTooltipGenerator.generateToolTipRisk(UserUIContext.getUserLocale(), UserUIContext.getDateFormat(),
+                    risk, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
             return b;
         });
 
@@ -170,7 +169,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 
         MButton customizeViewBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new RiskListCustomizeWindow(tableItem)))
                 .withIcon(FontAwesome.ADJUST).withStyleName(WebUIConstants.BUTTON_ACTION);
-        customizeViewBtn.setDescription(AppContext.getMessage(GenericI18Enum.OPT_LAYOUT_OPTIONS));
+        customizeViewBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.OPT_LAYOUT_OPTIONS));
         layout.with(customizeViewBtn).withAlign(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
         return layout;
@@ -185,7 +184,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
     @Override
     public void enableActionControls(final int numOfSelectedItems) {
         tableActionControls.setVisible(true);
-        selectedItemsNumberLabel.setValue(AppContext.getMessage(GenericI18Enum.TABLE_SELECTED_ITEM_TITLE, numOfSelectedItems));
+        selectedItemsNumberLabel.setValue(UserUIContext.getMessage(GenericI18Enum.TABLE_SELECTED_ITEM_TITLE, numOfSelectedItems));
     }
 
     @Override

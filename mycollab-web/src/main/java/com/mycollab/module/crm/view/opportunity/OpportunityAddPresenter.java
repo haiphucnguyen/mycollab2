@@ -31,7 +31,7 @@ import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -74,13 +74,13 @@ public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddV
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         CrmModule.navigateItem(CrmTypeConstants.OPPORTUNITY);
-        if (AppContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) {
             SimpleOpportunity opportunity = null;
             if (data.getParams() instanceof SimpleOpportunity) {
                 opportunity = (SimpleOpportunity) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 OpportunityService accountService = AppContextUtil.getSpringBean(OpportunityService.class);
-                opportunity = accountService.findById((Integer) data.getParams(), AppContext.getAccountId());
+                opportunity = accountService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
             }
             if (opportunity == null) {
                 throw new ResourceNotFoundException();
@@ -89,12 +89,12 @@ public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddV
             view.editItem(opportunity);
 
             if (opportunity.getId() == null) {
-                AppContext.addFragment("crm/opportunity/add", AppContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
-                        AppContext.getMessage(OpportunityI18nEnum.SINGLE)));
+                UserUIContext.addFragment("crm/opportunity/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                        UserUIContext.getMessage(OpportunityI18nEnum.SINGLE)));
             } else {
-                AppContext.addFragment("crm/opportunity/edit/" + UrlEncodeDecoder.encode(opportunity.getId()),
-                        AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
-                                AppContext.getMessage(OpportunityI18nEnum.SINGLE), opportunity.getOpportunityname()));
+                UserUIContext.addFragment("crm/opportunity/edit/" + UrlEncodeDecoder.encode(opportunity.getId()),
+                        UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+                                UserUIContext.getMessage(OpportunityI18nEnum.SINGLE), opportunity.getOpportunityname()));
             }
         } else {
             throw new SecureAccessException();
@@ -103,11 +103,11 @@ public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddV
 
     private int saveOpportunity(Opportunity opportunity) {
         OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
-        opportunity.setSaccountid(AppContext.getAccountId());
+        opportunity.setSaccountid(UserUIContext.getAccountId());
         if (opportunity.getId() == null) {
-            opportunityService.saveWithSession(opportunity, AppContext.getUsername());
+            opportunityService.saveWithSession(opportunity, UserUIContext.getUsername());
         } else {
-            opportunityService.updateWithSession(opportunity, AppContext.getUsername());
+            opportunityService.updateWithSession(opportunity, UserUIContext.getUsername());
         }
         return opportunity.getId();
     }

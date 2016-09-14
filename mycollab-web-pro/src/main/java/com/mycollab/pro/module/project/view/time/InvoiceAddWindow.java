@@ -9,7 +9,7 @@ import com.mycollab.module.project.events.InvoiceEvent;
 import com.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.mycollab.module.project.service.InvoiceService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -30,9 +30,9 @@ import org.vaadin.viritin.layouts.MWindow;
 public class InvoiceAddWindow extends MWindow {
     InvoiceAddWindow(final SimpleInvoice invoice) {
         if (invoice.getId() == null) {
-            setCaption(AppContext.getMessage(InvoiceI18nEnum.NEW));
+            setCaption(UserUIContext.getMessage(InvoiceI18nEnum.NEW));
         } else {
-            setCaption(AppContext.getMessage(InvoiceI18nEnum.EDIT));
+            setCaption(UserUIContext.getMessage(InvoiceI18nEnum.EDIT));
         }
         VerticalLayout content = new VerticalLayout();
         this.withWidth("800px").withModal(true).withResizable(false).withCenter().withContent(content);
@@ -44,19 +44,19 @@ public class InvoiceAddWindow extends MWindow {
         editBeanForm.setBeanFormFieldFactory(invoiceEditFormFieldFactory);
         editBeanForm.setBean(invoice);
 
-        MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+        MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             if (editBeanForm.validateForm()) {
                 InvoiceService invoiceService = AppContextUtil.getSpringBean(InvoiceService.class);
 
                 if (invoice.getId() == null) {
-                    invoiceService.saveWithSession(invoice, AppContext.getUsername());
+                    invoiceService.saveWithSession(invoice, UserUIContext.getUsername());
                     EventBusFactory.getInstance().post(new InvoiceEvent.NewInvoiceAdded(this, invoice));
                 } else {
-                    invoiceService.updateWithSession(invoice, AppContext.getUsername());
+                    invoiceService.updateWithSession(invoice, UserUIContext.getUsername());
                     EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceUpdateAdded(this, invoice));
                 }
                 AttachmentUploadField uploadField = invoiceEditFormFieldFactory.getAttachmentUploadField();
-                String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(), invoice.getProjectid(),
+                String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(), invoice.getProjectid(),
                         ProjectTypeConstants.INVOICE, "" + invoice.getId());
                 uploadField.saveContentsToRepo(attachPath);
                 close();
@@ -64,7 +64,7 @@ public class InvoiceAddWindow extends MWindow {
         }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
         saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
-        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+        MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebUIConstants.BUTTON_OPTION);
         MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(new MarginInfo(true, true, true, false));
         content.addComponent(buttonControls);

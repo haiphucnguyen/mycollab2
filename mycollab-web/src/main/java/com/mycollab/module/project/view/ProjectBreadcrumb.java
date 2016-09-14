@@ -33,7 +33,7 @@ import com.mycollab.module.tracker.domain.Component;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.domain.Version;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.CacheableComponent;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.CommonUIFactory;
@@ -69,7 +69,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         if (getComponentCount() > 0)
             homeBtn.setCaption(null);
         else
-            homeBtn.setCaption(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));
+            homeBtn.setCaption(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));
 
         super.addLink(newBtn);
     }
@@ -77,7 +77,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
     @Override
     public void select(int id) {
         if (id == 0) {
-            homeBtn.setCaption(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));
+            homeBtn.setCaption(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));
         } else {
             homeBtn.setCaption(null);
         }
@@ -91,65 +91,65 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoSearchProjectItems() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH)));
-        AppContext.addFragment(ProjectLinkGenerator.generateProjectLink(project.getId()),
-                AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
+        this.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateProjectLink(project.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
     }
 
     public void gotoMessageList() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(MessageI18nEnum.LIST)));
-        AppContext.addFragment(ProjectLinkGenerator.generateMessagesLink(project.getId()),
-                AppContext.getMessage(MessageI18nEnum.LIST));
+        this.addLink(new Button(UserUIContext.getMessage(MessageI18nEnum.LIST)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateMessagesLink(project.getId()),
+                UserUIContext.getMessage(MessageI18nEnum.LIST));
     }
 
     public void gotoMessage(Message message) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(MessageI18nEnum.LIST),
+        this.addLink(new Button(UserUIContext.getMessage(MessageI18nEnum.LIST),
                 clickEvent -> EventBusFactory.getInstance().post(new MessageEvent.GotoList(this, null))));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(message.getTitle()));
-        AppContext.addFragment(ProjectLinkGenerator.generateMessagePreviewLink(project.getId(), message.getId()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-                        AppContext.getMessage(MessageI18nEnum.SINGLE), message.getTitle()));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateMessagePreviewLink(project.getId(), message.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                        UserUIContext.getMessage(MessageI18nEnum.SINGLE), message.getTitle()));
     }
 
     public void gotoRiskList() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(RiskI18nEnum.LIST)));
-        AppContext.addFragment(ProjectLinkGenerator.generateRisksLink(project.getId()),
-                AppContext.getMessage(RiskI18nEnum.LIST));
+        this.addLink(new Button(UserUIContext.getMessage(RiskI18nEnum.LIST)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateRisksLink(project.getId()),
+                UserUIContext.getMessage(RiskI18nEnum.LIST));
     }
 
     public void gotoRiskRead(Risk risk) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(RiskI18nEnum.LIST), new GotoRiskListListener()));
+        this.addLink(new Button(UserUIContext.getMessage(RiskI18nEnum.LIST), new GotoRiskListListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(risk.getRiskname()));
-        AppContext.addFragment(ProjectLinkGenerator.generateRiskPreviewLink(project.getId(), risk.getId()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-                        AppContext.getMessage(RiskI18nEnum.SINGLE), risk.getRiskname()));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateRiskPreviewLink(project.getId(), risk.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                        UserUIContext.getMessage(RiskI18nEnum.SINGLE), risk.getRiskname()));
     }
 
     public void gotoRiskEdit(final Risk risk) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(RiskI18nEnum.LIST), new GotoRiskListListener()));
+        this.addLink(new Button(UserUIContext.getMessage(RiskI18nEnum.LIST), new GotoRiskListListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(risk.getRiskname(),
                 clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoRead(this, risk.getId()))));
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
-        AppContext.addFragment(ProjectLinkGenerator.generateRiskEditLink(project.getId(), risk.getId()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
-                        AppContext.getMessage(RiskI18nEnum.SINGLE), risk.getRiskname()));
+        this.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateRiskEditLink(project.getId(), risk.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+                        UserUIContext.getMessage(RiskI18nEnum.SINGLE), risk.getRiskname()));
     }
 
     public void gotoRiskAdd() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(RiskI18nEnum.LIST), new GotoRiskListListener()));
+        this.addLink(new Button(UserUIContext.getMessage(RiskI18nEnum.LIST), new GotoRiskListListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD)));
-        AppContext.addFragment(ProjectLinkGenerator.generateRiskAddLink(project.getId()),
-                AppContext.getMessage(RiskI18nEnum.NEW));
+        this.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateRiskAddLink(project.getId()),
+                UserUIContext.getMessage(RiskI18nEnum.NEW));
     }
 
     private static class GotoRiskListListener implements Button.ClickListener {
@@ -163,55 +163,55 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoMilestoneList() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(MilestoneI18nEnum.LIST)));
-        AppContext.addFragment(ProjectLinkGenerator.generateMilestonesLink(project.getId()),
-                AppContext.getMessage(MilestoneI18nEnum.LIST));
+        this.addLink(new Button(UserUIContext.getMessage(MilestoneI18nEnum.LIST)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateMilestonesLink(project.getId()),
+                UserUIContext.getMessage(MilestoneI18nEnum.LIST));
     }
 
     public void gotoRoadmap() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_ROADMAP)));
-        AppContext.addFragment("project/roadmap/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_ROADMAP));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_ROADMAP)));
+        UserUIContext.addFragment("project/roadmap/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_ROADMAP));
     }
 
     public void gotoKanban() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(MilestoneI18nEnum.LIST), new GotoMilestoneListListener()));
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)));
-        AppContext.addFragment("project/milestone/kanban/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN));
+        this.addLink(new Button(UserUIContext.getMessage(MilestoneI18nEnum.LIST), new GotoMilestoneListListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)));
+        UserUIContext.addFragment("project/milestone/kanban/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN));
     }
 
     public void gotoMilestoneRead(Milestone milestone) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(MilestoneI18nEnum.LIST), new GotoMilestoneListListener()));
+        this.addLink(new Button(UserUIContext.getMessage(MilestoneI18nEnum.LIST), new GotoMilestoneListListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(milestone.getName()));
-        AppContext.addFragment(ProjectLinkGenerator.generateMilestonePreviewLink(project.getId(), milestone.getId()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-                        AppContext.getMessage(MilestoneI18nEnum.SINGLE), milestone.getName()));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateMilestonePreviewLink(project.getId(), milestone.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                        UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), milestone.getName()));
     }
 
     public void gotoMilestoneEdit(final Milestone milestone) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(MilestoneI18nEnum.LIST), new GotoMilestoneListListener()));
+        this.addLink(new Button(UserUIContext.getMessage(MilestoneI18nEnum.LIST), new GotoMilestoneListListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(milestone.getName(),
                 clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoRead(this, milestone.getId()))));
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
-        AppContext.addFragment("project/milestone/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + milestone.getId()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
-                        AppContext.getMessage(MilestoneI18nEnum.SINGLE), milestone.getName()));
+        this.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
+        UserUIContext.addFragment("project/milestone/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + milestone.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+                        UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), milestone.getName()));
     }
 
     public void gotoMilestoneAdd() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(MilestoneI18nEnum.LIST), new GotoMilestoneListListener()));
+        this.addLink(new Button(UserUIContext.getMessage(MilestoneI18nEnum.LIST), new GotoMilestoneListListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(MilestoneI18nEnum.NEW)));
-        AppContext.addFragment("project/milestone/add/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(MilestoneI18nEnum.NEW));
+        this.addLink(new Button(UserUIContext.getMessage(MilestoneI18nEnum.NEW)));
+        UserUIContext.addFragment("project/milestone/add/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(MilestoneI18nEnum.NEW));
     }
 
     private static class GotoMilestoneListListener implements Button.ClickListener {
@@ -224,10 +224,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
     }
 
     private void buildPageBreadcrumbChain() {
-        String basePath = PathUtils.getProjectDocumentPath(AppContext.getAccountId(), CurrentProjectVariables.getProjectId());
+        String basePath = PathUtils.getProjectDocumentPath(UserUIContext.getAccountId(), CurrentProjectVariables.getProjectId());
         String currentPath = CurrentProjectVariables.getCurrentPagePath();
 
-        this.addLink(new Button(AppContext.getMessage(PageI18nEnum.LIST), new GotoPageListListener(basePath)));
+        this.addLink(new Button(UserUIContext.getMessage(PageI18nEnum.LIST), new GotoPageListListener(basePath)));
         this.setLinkEnabled(true, 1);
 
         String extraPath = currentPath.substring(basePath.length());
@@ -256,33 +256,33 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
     public void gotoPageList() {
         this.select(0);
         buildPageBreadcrumbChain();
-        AppContext.addFragment(ProjectLinkGenerator.generatePagesLink(project.getId(),
-                CurrentProjectVariables.getCurrentPagePath()), AppContext.getMessage(PageI18nEnum.LIST));
+        UserUIContext.addFragment(ProjectLinkGenerator.generatePagesLink(project.getId(),
+                CurrentProjectVariables.getCurrentPagePath()), UserUIContext.getMessage(PageI18nEnum.LIST));
     }
 
     public void gotoPageAdd() {
         this.select(0);
         buildPageBreadcrumbChain();
-        this.addLink(new Button(AppContext.getMessage(PageI18nEnum.NEW)));
-        AppContext.addFragment(ProjectLinkGenerator.generatePageAdd(
+        this.addLink(new Button(UserUIContext.getMessage(PageI18nEnum.NEW)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generatePageAdd(
                 project.getId(), CurrentProjectVariables.getCurrentPagePath()),
-                AppContext.getMessage(PageI18nEnum.NEW));
+                UserUIContext.getMessage(PageI18nEnum.NEW));
     }
 
     public void gotoPageRead(Page page) {
         this.select(0);
         buildPageBreadcrumbChain();
         this.addLink(new Button(StringUtils.trim(page.getSubject(), 50)));
-        AppContext.addFragment(ProjectLinkGenerator.generatePageRead(project.getId(), page.getPath()),
-                AppContext.getMessage(PageI18nEnum.DETAIL));
+        UserUIContext.addFragment(ProjectLinkGenerator.generatePageRead(project.getId(), page.getPath()),
+                UserUIContext.getMessage(PageI18nEnum.DETAIL));
     }
 
     public void gotoPageEdit(Page page) {
         this.select(0);
         buildPageBreadcrumbChain();
 
-        AppContext.addFragment(ProjectLinkGenerator.generatePageEdit(project.getId(), page.getPath()),
-                AppContext.getMessage(PageI18nEnum.DETAIL));
+        UserUIContext.addFragment(ProjectLinkGenerator.generatePageEdit(project.getId(), page.getPath()),
+                UserUIContext.getMessage(PageI18nEnum.DETAIL));
     }
 
     private static class GotoPageListListener implements Button.ClickListener {
@@ -302,67 +302,67 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoTaskDashboard(String query) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(TaskI18nEnum.LIST)));
+        this.addLink(new Button(UserUIContext.getMessage(TaskI18nEnum.LIST)));
         String fragment = (StringUtils.isNotBlank(query)) ? ProjectLinkGenerator.generateTaskDashboardLink(project.getId()) + "?" + query : ProjectLinkGenerator.generateTaskDashboardLink(project.getId());
-        AppContext.addFragment(fragment, AppContext.getMessage(BreadcrumbI18nEnum.FRA_TASK_DASHBOARD));
+        UserUIContext.addFragment(fragment, UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_TASK_DASHBOARD));
     }
 
     public void gotoTaskAdd() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(TaskI18nEnum.LIST), new GotoTaskAssignmentDashboard()));
+        this.addLink(new Button(UserUIContext.getMessage(TaskI18nEnum.LIST), new GotoTaskAssignmentDashboard()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(TaskI18nEnum.NEW)));
-        AppContext.addFragment("project/task/add/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(TaskI18nEnum.NEW));
+        this.addLink(new Button(UserUIContext.getMessage(TaskI18nEnum.NEW)));
+        UserUIContext.addFragment("project/task/add/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(TaskI18nEnum.NEW));
     }
 
     public void gotoGanttView() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_GANTT_CHART)));
-        AppContext.addFragment("project/gantt/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_GANTT_CHART));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_GANTT_CHART)));
+        UserUIContext.addFragment("project/gantt/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_GANTT_CHART));
     }
 
     public void gotoTaskKanbanView() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(TaskI18nEnum.LIST), new GotoTaskAssignmentDashboard()));
+        this.addLink(new Button(UserUIContext.getMessage(TaskI18nEnum.LIST), new GotoTaskAssignmentDashboard()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)));
-        AppContext.addFragment("project/task/kanban/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)));
+        UserUIContext.addFragment("project/task/kanban/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN));
     }
 
     public void gotoCalendar() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_CALENDAR)));
-        AppContext.addFragment("project/calendar/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_CALENDAR));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_CALENDAR)));
+        UserUIContext.addFragment("project/calendar/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_CALENDAR));
     }
 
     public void gotoTaskRead(SimpleTask task) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(TaskI18nEnum.LIST), new GotoTaskAssignmentDashboard()));
+        this.addLink(new Button(UserUIContext.getMessage(TaskI18nEnum.LIST), new GotoTaskAssignmentDashboard()));
         this.setLinkEnabled(true, 1);
-        this.addLink(generateBreadcrumbLink(AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-                AppContext.getMessage(TaskI18nEnum.SINGLE), task.getTaskname())));
-        AppContext.addFragment(ProjectLinkGenerator.generateTaskPreviewLink(task.getTaskkey(), task.getProjectShortname()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-                        AppContext.getMessage(TaskI18nEnum.SINGLE), task.getTaskname()));
+        this.addLink(generateBreadcrumbLink(UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getTaskname())));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateTaskPreviewLink(task.getTaskkey(), task.getProjectShortname()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                        UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getTaskname()));
     }
 
     public void gotoTaskEdit(final SimpleTask task) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(TaskI18nEnum.LIST),
+        this.addLink(new Button(UserUIContext.getMessage(TaskI18nEnum.LIST),
                 new GotoTaskAssignmentDashboard()));
         this.setLinkEnabled(true, 1);
-        this.addLink(generateBreadcrumbLink(AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-                AppContext.getMessage(TaskI18nEnum.SINGLE), task.getTaskname()),
+        this.addLink(generateBreadcrumbLink(UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getTaskname()),
                 clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoRead(this, task.getId()))));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
-        AppContext.addFragment(ProjectLinkGenerator.generateTaskEditLink(task.getTaskkey(), task.getProjectShortname()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
-                        AppContext.getMessage(TaskI18nEnum.SINGLE), task.getTaskname()));
+        this.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateTaskEditLink(task.getTaskkey(), task.getProjectShortname()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+                        UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getTaskname()));
     }
 
     private static class GotoTaskAssignmentDashboard implements Button.ClickListener {
@@ -376,94 +376,94 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoBugKanbanView() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BugI18nEnum.LIST), new GotoBugListListener()));
+        this.addLink(new Button(UserUIContext.getMessage(BugI18nEnum.LIST), new GotoBugListListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)));
-        AppContext.addFragment("project/bug/kanban/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)));
+        UserUIContext.addFragment("project/bug/kanban/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN));
     }
 
     public void gotoBugList(String query) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BugI18nEnum.LIST)));
+        this.addLink(new Button(UserUIContext.getMessage(BugI18nEnum.LIST)));
         String fragment = (StringUtils.isNotBlank(query)) ? ProjectLinkGenerator.generateBugsLink(project.getId()) + "?" +
                 query : ProjectLinkGenerator.generateBugsLink(project.getId());
-        AppContext.addFragment(fragment, AppContext.getMessage(BugI18nEnum.LIST));
+        UserUIContext.addFragment(fragment, UserUIContext.getMessage(BugI18nEnum.LIST));
     }
 
     public void gotoBugAdd() {
         this.select(0);
 
-        this.addLink(new Button(AppContext.getMessage(BugI18nEnum.LIST), new GotoBugListListener()));
+        this.addLink(new Button(UserUIContext.getMessage(BugI18nEnum.LIST), new GotoBugListListener()));
         this.setLinkEnabled(true, 1);
 
-        this.addLink(new Button(AppContext.getMessage(BugI18nEnum.NEW)));
-        AppContext.addFragment("project/bug/add/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(BugI18nEnum.NEW));
+        this.addLink(new Button(UserUIContext.getMessage(BugI18nEnum.NEW)));
+        UserUIContext.addFragment("project/bug/add/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(BugI18nEnum.NEW));
     }
 
     public void gotoBugEdit(final SimpleBug bug) {
         this.select(0);
 
-        this.addLink(new Button(AppContext.getMessage(BugI18nEnum.LIST), new GotoBugListListener()));
+        this.addLink(new Button(UserUIContext.getMessage(BugI18nEnum.LIST), new GotoBugListListener()));
         this.setLinkEnabled(true, 1);
 
         this.addLink(generateBreadcrumbLink(bug.getSummary(),
                 clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoRead(this, bug.getId()))));
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
-        AppContext.addFragment(ProjectLinkGenerator.generateBugEditLink(bug.getBugkey(),
-                bug.getProjectShortName()), AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
-                AppContext.getMessage(BugI18nEnum.SINGLE), bug.getSummary()));
+        this.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateBugEditLink(bug.getBugkey(),
+                bug.getProjectShortName()), UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+                UserUIContext.getMessage(BugI18nEnum.SINGLE), bug.getSummary()));
     }
 
     public void gotoBugRead(SimpleBug bug) {
         this.select(0);
 
-        this.addLink(new Button(AppContext.getMessage(BugI18nEnum.LIST), new GotoBugListListener()));
+        this.addLink(new Button(UserUIContext.getMessage(BugI18nEnum.LIST), new GotoBugListListener()));
         this.setLinkEnabled(true, 1);
 
         this.addLink(generateBreadcrumbLink(bug.getSummary()));
-        AppContext.addFragment(ProjectLinkGenerator.generateBugPreviewLink(bug.getBugkey(), bug.getProjectShortName()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-                        AppContext.getMessage(BugI18nEnum.SINGLE), bug.getSummary()));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateBugPreviewLink(bug.getBugkey(), bug.getProjectShortName()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                        UserUIContext.getMessage(BugI18nEnum.SINGLE), bug.getSummary()));
     }
 
     public void gotoVersionList() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(VersionI18nEnum.LIST)));
-        AppContext.addFragment("project/version/list/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(VersionI18nEnum.LIST));
+        this.addLink(new Button(UserUIContext.getMessage(VersionI18nEnum.LIST)));
+        UserUIContext.addFragment("project/version/list/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(VersionI18nEnum.LIST));
     }
 
     public void gotoVersionAdd() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(VersionI18nEnum.LIST), new GotoVersionListener()));
+        this.addLink(new Button(UserUIContext.getMessage(VersionI18nEnum.LIST), new GotoVersionListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD)));
-        AppContext.addFragment("project/version/add/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(VersionI18nEnum.NEW));
+        this.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD)));
+        UserUIContext.addFragment("project/version/add/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(VersionI18nEnum.NEW));
     }
 
     public void gotoVersionEdit(final Version version) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(VersionI18nEnum.LIST), new GotoVersionListener()));
+        this.addLink(new Button(UserUIContext.getMessage(VersionI18nEnum.LIST), new GotoVersionListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(version.getVersionname(),
                 clickEvent -> EventBusFactory.getInstance().post(new BugVersionEvent.GotoRead(this, version.getId()))));
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
-        AppContext.addFragment("project/version/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + version.getId()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
-                        AppContext.getMessage(VersionI18nEnum.SINGLE), version.getVersionname()));
+        this.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
+        UserUIContext.addFragment("project/version/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + version.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+                        UserUIContext.getMessage(VersionI18nEnum.SINGLE), version.getVersionname()));
     }
 
     public void gotoVersionRead(Version version) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(VersionI18nEnum.LIST), new GotoVersionListener()));
+        this.addLink(new Button(UserUIContext.getMessage(VersionI18nEnum.LIST), new GotoVersionListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(version.getVersionname()));
-        AppContext.addFragment(ProjectLinkGenerator.generateBugVersionPreviewLink(project.getId(), version.getId()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-                        AppContext.getMessage(VersionI18nEnum.SINGLE), version.getVersionname()));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateBugVersionPreviewLink(project.getId(), version.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                        UserUIContext.getMessage(VersionI18nEnum.SINGLE), version.getVersionname()));
     }
 
     private static class GotoVersionListener implements Button.ClickListener {
@@ -477,151 +477,151 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoTagList() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG)));
-        AppContext.addFragment("project/tag/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG)));
+        UserUIContext.addFragment("project/tag/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG));
     }
 
     public void gotoFavoriteList() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES)));
-        AppContext.addFragment("project/favorite/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES)));
+        UserUIContext.addFragment("project/favorite/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES));
     }
 
     public void gotoComponentList() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ComponentI18nEnum.LIST)));
-        AppContext.addFragment("project/component/list/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(ComponentI18nEnum.LIST));
+        this.addLink(new Button(UserUIContext.getMessage(ComponentI18nEnum.LIST)));
+        UserUIContext.addFragment("project/component/list/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(ComponentI18nEnum.LIST));
     }
 
     public void gotoComponentAdd() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ComponentI18nEnum.LIST), new GotoComponentListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ComponentI18nEnum.LIST), new GotoComponentListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD)));
-        AppContext.addFragment("project/component/add/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(ComponentI18nEnum.NEW));
+        this.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD)));
+        UserUIContext.addFragment("project/component/add/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(ComponentI18nEnum.NEW));
     }
 
     public void gotoComponentEdit(final Component component) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ComponentI18nEnum.LIST), new GotoComponentListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ComponentI18nEnum.LIST), new GotoComponentListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(component.getComponentname(),
                 clickEvent -> EventBusFactory.getInstance().post(new BugComponentEvent.GotoRead(this, component.getId()))));
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
-        AppContext.addFragment("project/component/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + component.getId()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
-                        AppContext.getMessage(ComponentI18nEnum.SINGLE), component.getComponentname()));
+        this.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
+        UserUIContext.addFragment("project/component/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + component.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+                        UserUIContext.getMessage(ComponentI18nEnum.SINGLE), component.getComponentname()));
     }
 
     public void gotoComponentRead(Component component) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ComponentI18nEnum.LIST), new GotoComponentListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ComponentI18nEnum.LIST), new GotoComponentListener()));
         this.addLink(generateBreadcrumbLink(component.getComponentname()));
-        AppContext.addFragment(ProjectLinkGenerator.generateBugComponentPreviewLink(project.getId(), component.getId()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-                        AppContext.getMessage(ComponentI18nEnum.SINGLE), component.getComponentname()));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateBugComponentPreviewLink(project.getId(), component.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                        UserUIContext.getMessage(ComponentI18nEnum.SINGLE), component.getComponentname()));
     }
 
     public void gotoTimeTrackingList() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME)));
-        AppContext.addFragment(ProjectLinkGenerator.generateTimeReportLink(project.getId()),
-                AppContext.getMessage(BreadcrumbI18nEnum.FRA_TIME_TRACKING));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateTimeReportLink(project.getId()),
+                UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_TIME_TRACKING));
     }
 
     public void gotoInvoiceView() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(InvoiceI18nEnum.LIST)));
-        AppContext.addFragment(ProjectLinkGenerator.generateInvoiceListLink(project.getId()),
-                AppContext.getMessage(InvoiceI18nEnum.LIST));
+        this.addLink(new Button(UserUIContext.getMessage(InvoiceI18nEnum.LIST)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateInvoiceListLink(project.getId()),
+                UserUIContext.getMessage(InvoiceI18nEnum.LIST));
     }
 
     public void gotoFileList() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE)));
-        AppContext.addFragment(ProjectLinkGenerator.generateFileDashboardLink(project.getId()),
-                AppContext.getMessage(BreadcrumbI18nEnum.FRA_FILES));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateFileDashboardLink(project.getId()),
+                UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_FILES));
     }
 
     public void gotoUserList() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectMemberI18nEnum.LIST)));
-        AppContext.addFragment(ProjectLinkGenerator.generateUsersLink(project.getId()),
-                AppContext.getMessage(BreadcrumbI18nEnum.FRA_MEMBERS));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectMemberI18nEnum.LIST)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateUsersLink(project.getId()),
+                UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_MEMBERS));
     }
 
     public void gotoUserAdd() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectMemberI18nEnum.LIST), new GotoUserListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectMemberI18nEnum.LIST), new GotoUserListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEES)));
-        AppContext.addFragment("project/user/add/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(BreadcrumbI18nEnum.FRA_INVITE_MEMBERS));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEES)));
+        UserUIContext.addFragment("project/user/add/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_INVITE_MEMBERS));
     }
 
     public void gotoUserRead(SimpleProjectMember member) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectMemberI18nEnum.LIST), new GotoUserListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectMemberI18nEnum.LIST), new GotoUserListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(member.getMemberFullName()));
-        AppContext.addFragment("project/user/preview/" + UrlEncodeDecoder.encode(project.getId() + "/"
-                + member.getUsername()), AppContext.getMessage(BreadcrumbI18nEnum.FRA_MEMBER_READ, member.getMemberFullName()));
+        UserUIContext.addFragment("project/user/preview/" + UrlEncodeDecoder.encode(project.getId() + "/"
+                + member.getUsername()), UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_MEMBER_READ, member.getMemberFullName()));
     }
 
     public void gotoUserEdit(SimpleProjectMember member) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectMemberI18nEnum.LIST), new GotoUserListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectMemberI18nEnum.LIST), new GotoUserListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(member.getMemberFullName()));
-        AppContext.addFragment("project/user/edit/" + UrlEncodeDecoder.encode(project.getId() + "/"
-                + member.getId()), AppContext.getMessage(BreadcrumbI18nEnum.FRA_MEMBER_EDIT, member.getMemberFullName()));
+        UserUIContext.addFragment("project/user/edit/" + UrlEncodeDecoder.encode(project.getId() + "/"
+                + member.getId()), UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_MEMBER_EDIT, member.getMemberFullName()));
     }
 
     public void gotoRoleList() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectRoleI18nEnum.LIST)));
-        AppContext.addFragment("project/role/list/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(ProjectRoleI18nEnum.LIST));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectRoleI18nEnum.LIST)));
+        UserUIContext.addFragment("project/role/list/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(ProjectRoleI18nEnum.LIST));
     }
 
     public void gotoRoleRead(SimpleProjectRole role) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectRoleI18nEnum.LIST), new GotoRoleListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectRoleI18nEnum.LIST), new GotoRoleListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(role.getRolename()));
-        AppContext.addFragment("project/role/preview/" + UrlEncodeDecoder.encode(project.getId() + "/" + role.getId()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
-                        AppContext.getMessage(ProjectRoleI18nEnum.SINGLE), role.getRolename()));
+        UserUIContext.addFragment("project/role/preview/" + UrlEncodeDecoder.encode(project.getId() + "/" + role.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                        UserUIContext.getMessage(ProjectRoleI18nEnum.SINGLE), role.getRolename()));
     }
 
     public void gotoProjectSetting() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.FRA_SETTING), new GotoNotificationSettingListener()));
-        AppContext.addFragment(ProjectLinkGenerator.generateProjectSettingLink(project.getId()),
-                AppContext.getMessage(BreadcrumbI18nEnum.FRA_SETTING));
+        this.addLink(new Button(UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_SETTING), new GotoNotificationSettingListener()));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateProjectSettingLink(project.getId()),
+                UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_SETTING));
     }
 
     public void gotoRoleAdd() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectRoleI18nEnum.LIST), new GotoRoleListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectRoleI18nEnum.LIST), new GotoRoleListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD)));
-        AppContext.addFragment("project/role/add/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(ProjectRoleI18nEnum.NEW));
+        this.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD)));
+        UserUIContext.addFragment("project/role/add/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(ProjectRoleI18nEnum.NEW));
     }
 
     public void gotoRoleEdit(ProjectRole role) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectRoleI18nEnum.LIST), new GotoUserListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectRoleI18nEnum.LIST), new GotoUserListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(generateBreadcrumbLink(role.getRolename()));
-        AppContext.addFragment("project/role/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + role.getId()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
-                        AppContext.getMessage(ProjectRoleI18nEnum.SINGLE), role.getRolename()));
+        UserUIContext.addFragment("project/role/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + role.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+                        UserUIContext.getMessage(ProjectRoleI18nEnum.SINGLE), role.getRolename()));
     }
 
     private static class GotoNotificationSettingListener implements Button.ClickListener {
@@ -671,16 +671,16 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoProjectDashboard() {
         this.select(0);
-        AppContext.addFragment(ProjectLinkGenerator.generateProjectLink(project.getId()),
-                AppContext.getMessage(GenericI18Enum.VIEW_DASHBOARD));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateProjectLink(project.getId()),
+                UserUIContext.getMessage(GenericI18Enum.VIEW_DASHBOARD));
     }
 
     public void gotoProjectEdit() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
-        AppContext.addFragment("project/edit/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
-                        AppContext.getMessage(ProjectI18nEnum.SINGLE), project.getName()));
+        this.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
+        UserUIContext.addFragment("project/edit/" + UrlEncodeDecoder.encode(project.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
+                        UserUIContext.getMessage(ProjectI18nEnum.SINGLE), project.getName()));
     }
 
     @Override

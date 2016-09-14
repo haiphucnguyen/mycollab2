@@ -15,7 +15,7 @@ import com.mycollab.module.project.view.milestone.MilestonePopupFieldFactory;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
@@ -49,7 +49,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
             @Override
             protected String generateSmallAsHtmlAfterUpdate() {
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                SimpleMilestone newMilestone = milestoneService.findById(milestone.getId(), AppContext.getAccountId());
+                SimpleMilestone newMilestone = milestoneService.findById(milestone.getId(), UserUIContext.getAccountId());
                 String avatarLink = StorageFactory.getAvatarPath(newMilestone.getOwnerAvatarId(), 16);
                 Img img = new Img(newMilestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX);
                 if (isDisplayName) {
@@ -64,7 +64,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
             }
         };
         builder.withBean(milestone).withBindProperty("owner").withDescription(milestone.getOwnerFullName())
-                .withCaption(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
+                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
                 .withService(AppContextUtil.getSpringBean(MilestoneService.class)).withValue(milestone.getOwner())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
@@ -78,16 +78,16 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
                 if (milestone.getStartdate() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(VaadinIcons.TIME_FORWARD.getHtml());
-                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                    divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return String.format(" %s %s", VaadinIcons.TIME_FORWARD.getHtml(), AppContext.formatDate(milestone.getStartdate()));
+                    return String.format(" %s %s", VaadinIcons.TIME_FORWARD.getHtml(), UserUIContext.formatDate(milestone.getStartdate()));
                 }
 
             }
         };
-        builder.withBean(milestone).withBindProperty("startdate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_START_DATE))
+        builder.withBean(milestone).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
                 .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
                 .withValue(milestone.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
@@ -102,16 +102,16 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
                 if (milestone.getEnddate() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(VaadinIcons.TIME_BACKWARD.getHtml());
-                    divHint.appendChild(new Span().appendText(" " + AppContext.getMessage(GenericI18Enum.BUTTON_EDIT))
+                    divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return String.format(" %s %s", VaadinIcons.TIME_BACKWARD.getHtml(), AppContext.formatDate(milestone.getEnddate()));
+                    return String.format(" %s %s", VaadinIcons.TIME_BACKWARD.getHtml(), UserUIContext.formatDate(milestone.getEnddate()));
                 }
 
             }
         };
-        builder.withBean(milestone).withBindProperty("enddate").withCaption(AppContext.getMessage(GenericI18Enum.FORM_END_DATE))
+        builder.withBean(milestone).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
                 .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
                 .withValue(milestone.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));

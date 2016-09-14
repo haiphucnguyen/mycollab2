@@ -18,23 +18,18 @@ package com.mycollab.vaadin;
 
 import ch.qos.cal10n.IMessageConveyor;
 import com.mycollab.common.i18n.DayI18nEnum;
-import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.SessionExpireException;
-import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.core.utils.TimezoneVal;
 import com.mycollab.i18n.LocalizationHelper;
-import com.mycollab.module.billing.SubDomainNotExistException;
 import com.mycollab.module.user.dao.UserAccountMapper;
 import com.mycollab.module.user.domain.*;
-import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.security.PermissionFlag;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.ui.MyCollabSession;
-import com.mycollab.vaadin.ui.ThemeManager;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import org.joda.time.DateTime;
@@ -55,17 +50,17 @@ import static com.mycollab.vaadin.ui.MyCollabSession.*;
 /**
  * The core class that keep user session data while user login to MyCollab
  * successfully. We use thread local pattern to keep App context instance of
- * every user, so in current thread you can use static methods of AppContext to
+ * every user, so in current thread you can use static methods of UserUIContext to
  * get current user without fearing it impacts to other user sessions logging in
  * MyCollab system.
  *
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class AppContext implements Serializable {
+public class UserUIContext implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory.getLogger(AppContext.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserUIContext.class);
 
     /**
      * Current user LOG in to MyCollab
@@ -77,25 +72,12 @@ public class AppContext implements Serializable {
      */
     private SimpleBillingAccount billingAccount;
 
-    /**
-     * Subdomain associates with account of current user. This value is valid
-     * only for on-demand edition
-     */
-    private String subDomain;
-    private String siteName;
-
-    /**
-     * id of account of current user. This value is valid only for on-demand
-     * edition. Though other editions also use this id in all of queries but if
-     * you have two different account ids in system may cause abnormal issues
-     */
-    private Integer accountId = null;
     private transient IMessageConveyor messageHelper;
     private Locale userLocale = Locale.US;
     private TimeZone userTimeZone;
     private Boolean isValidAccount = true;
 
-    public AppContext() {
+    public UserUIContext() {
         MyCollabSession.putCurrentUIVariable("context", this);
     }
 
@@ -104,9 +86,9 @@ public class AppContext implements Serializable {
      *
      * @return context of current logged in user
      */
-    public static AppContext getInstance() {
+    public static UserUIContext getInstance() {
         try {
-            AppContext context = (AppContext) MyCollabSession.getCurrentUIVariable("context");
+            UserUIContext context = (UserUIContext) MyCollabSession.getCurrentUIVariable("context");
             if (context == null) {
                 throw new SessionExpireException("Session is expired");
             }
@@ -128,7 +110,7 @@ public class AppContext implements Serializable {
             UserAccount userAccount = new UserAccount();
             userAccount.setLastmodulevisit(moduleName);
             UserAccountExample ex = new UserAccountExample();
-            ex.createCriteria().andAccountidEqualTo(AppContext.getAccountId()).andUsernameEqualTo(AppContext.getUsername());
+            ex.createCriteria().andAccountidEqualTo(UserUIContext.getAccountId()).andUsernameEqualTo(UserUIContext.getUsername());
             userAccountMapper.updateByExampleSelective(userAccount, ex);
         } catch (Exception e) {
             LOG.error("There is error when try to update user preference for last module visit", e);
@@ -155,7 +137,7 @@ public class AppContext implements Serializable {
     }
 
     public boolean isMatchAccount(Integer sAccountId) {
-        return sAccountId.equals(accountId);
+        return sAccountId.equals(getAccountId());
     }
 
     public void clearSessionVariables() {
@@ -176,7 +158,7 @@ public class AppContext implements Serializable {
 
     public static String getSiteName() {
         try {
-            return getInstance().siteName;
+            return getInstance().billingAccount.getSitename();
         } catch (Exception e) {
             return SiteConfiguration.getDefaultSiteName();
         }
@@ -214,29 +196,6 @@ public class AppContext implements Serializable {
         return getInstance().session;
     }
 
-    /**
-     * Start application by query account base on <code>domain</code>
-     *
-     * @param domain associate with current user logged in.
-     */
-    public void initDomain(String domain) {
-        this.subDomain = domain;
-        BillingAccountService billingService = AppContextUtil.getSpringBean(BillingAccountService.class);
-        BillingAccount account = billingService.getAccountByDomain(domain);
-
-        if (account == null) {
-            throw new SubDomainNotExistException(AppContext.getMessage(ErrorI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));
-        } else {
-            if (StringUtils.isBlank(account.getSitename())) {
-                siteName = SiteConfiguration.getDefaultSiteName();
-            } else {
-                siteName = account.getSitename();
-            }
-
-            accountId = account.getId();
-            ThemeManager.loadDesktopTheme(accountId);
-        }
-    }
 
     /**
      * Get account id of current user
@@ -245,7 +204,7 @@ public class AppContext implements Serializable {
      */
     public static Integer getAccountId() {
         try {
-            return getInstance().accountId;
+            return getInstance().billingAccount.getId();
         } catch (Exception e) {
             return 0;
         }
@@ -257,7 +216,7 @@ public class AppContext implements Serializable {
      * @return subDomain of current user
      */
     public static String getSubDomain() {
-        return getInstance().subDomain;
+        return getInstance().billingAccount.getSubdomain();
     }
 
     private String siteUrl = null;
@@ -267,7 +226,7 @@ public class AppContext implements Serializable {
      */
     public static String getSiteUrl() {
         if (getInstance().siteUrl == null) {
-            getInstance().siteUrl = SiteConfiguration.getSiteUrl(getInstance().subDomain);
+            getInstance().siteUrl = SiteConfiguration.getSiteUrl(getSubDomain());
         }
 
         return getInstance().siteUrl;
@@ -425,7 +384,7 @@ public class AppContext implements Serializable {
 
     public static String getPermissionCaptionValue(PermissionMap permissionMap, String permissionItem) {
         Integer perVal = permissionMap.get(permissionItem);
-        return AppContext.getMessage(PermissionFlag.toVal(perVal));
+        return UserUIContext.getMessage(PermissionFlag.toVal(perVal));
     }
 
     /**
@@ -436,12 +395,12 @@ public class AppContext implements Serializable {
         if (date == null) {
             return "";
         } else {
-            DateTime jodaDate = new DateTime(date).toDateTime(DateTimeZone.forTimeZone(AppContext.getUserTimeZone()));
+            DateTime jodaDate = new DateTime(date).toDateTime(DateTimeZone.forTimeZone(UserUIContext.getUserTimeZone()));
             if (jodaDate.getHourOfDay() > 0 || jodaDate.getMinuteOfHour() > 0) {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppContext.getDateTimeFormat()).withLocale(AppContext.getUserLocale());
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(UserUIContext.getDateTimeFormat()).withLocale(UserUIContext.getUserLocale());
                 return formatter.print(jodaDate);
             } else {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppContext.getDateFormat()).withLocale(AppContext.getUserLocale());
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(UserUIContext.getDateFormat()).withLocale(UserUIContext.getUserLocale());
                 return formatter.print(jodaDate);
             }
         }
@@ -452,8 +411,8 @@ public class AppContext implements Serializable {
      * @return
      */
     public static String formatDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, AppContext.getDateFormat(), AppContext.getUserLocale(),
-                AppContext.getUserTimeZone());
+        return date == null ? "" : DateTimeUtils.formatDate(date, UserUIContext.getDateFormat(), UserUIContext.getUserLocale(),
+                UserUIContext.getUserTimeZone());
     }
 
     /**
@@ -470,8 +429,8 @@ public class AppContext implements Serializable {
     }
 
     public static String formatShortDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, AppContext.getShortDateFormat(), AppContext.getUserLocale(),
-                AppContext.getUserTimeZone());
+        return date == null ? "" : DateTimeUtils.formatDate(date, UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale(),
+                UserUIContext.getUserTimeZone());
     }
 
     public static String formatDuration(Date date) {
@@ -513,6 +472,6 @@ public class AppContext implements Serializable {
      */
     public static void addFragment(String fragment, String windowTitle) {
         Page.getCurrent().setUriFragment(fragment, false);
-        Page.getCurrent().setTitle(String.format("%s [%s]", StringUtils.trim(windowTitle, 150), AppContext.getSiteName()));
+        Page.getCurrent().setTitle(String.format("%s [%s]", StringUtils.trim(windowTitle, 150), UserUIContext.getSiteName()));
     }
 }

@@ -15,7 +15,7 @@ import com.mycollab.module.project.view.user.ProjectDashboardContainer;
 import com.mycollab.pro.module.project.events.GanttEvent;
 import com.mycollab.pro.module.project.view.assignments.gantt.GanttItemWrapper;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -65,7 +65,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
                         if (item.isTask()) {
                             Task newTask = item.buildNewTask();
                             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                            taskService.saveWithSession(newTask, AppContext.getUsername());
+                            taskService.saveWithSession(newTask, UserUIContext.getUsername());
                             item.setId(newTask.getId());
                         } else {
                             LOG.error("Milestone with id is null");
@@ -99,7 +99,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
                     GanttItemWrapper ganttItemWrapper = (GanttItemWrapper) event.getSource();
                     List<TaskPredecessor> predecessors = (List<TaskPredecessor>) event.getData();
                     ganttItemWrapper.adjustTaskDatesByPredecessors(predecessors);
-                    ganttAssignmentService.massUpdatePredecessors(ganttItemWrapper.getId(), predecessors, AppContext.getAccountId());
+                    ganttAssignmentService.massUpdatePredecessors(ganttItemWrapper.getId(), predecessors, UserUIContext.getAccountId());
                     ganttItemWrapper.getTask().setPredecessors(predecessors);
                     ((GanttChartView) view).getTaskTable().refreshRowCache();
                 }
@@ -132,7 +132,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
     private void massUpdateTasksInfoInQueue() {
         if (queueSetTasksUpdate.size() > 0) {
             try {
-                ganttAssignmentService.massUpdateGanttItems(new ArrayList<>(queueSetTasksUpdate), AppContext.getAccountId());
+                ganttAssignmentService.massUpdateGanttItems(new ArrayList<>(queueSetTasksUpdate), UserUIContext.getAccountId());
             } finally {
                 queueSetTasksUpdate.clear();
             }
@@ -142,7 +142,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
     private void massDeleteTasksInQueue() {
         if (queueSetTasksDelete.size() > 0) {
             try {
-                ganttAssignmentService.massDeleteGanttItems(new ArrayList<>(queueSetTasksDelete), AppContext.getAccountId());
+                ganttAssignmentService.massDeleteGanttItems(new ArrayList<>(queueSetTasksDelete), UserUIContext.getAccountId());
             } finally {
                 queueSetTasksDelete.clear();
             }

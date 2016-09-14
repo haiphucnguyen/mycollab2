@@ -3,7 +3,7 @@ package com.mycollab.pro.vaadin.web.ui.field;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.db.persistence.service.ICrudService;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -23,7 +23,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public abstract class PopupBeanFieldBuilder<B> {
     protected Object value;
     protected String caption;
-    protected String description = AppContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT);
+    protected String description = UserUIContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT);
     protected Field field;
     protected boolean hasPermission = true;
     protected B bean;
@@ -97,7 +97,7 @@ public abstract class PopupBeanFieldBuilder<B> {
             try {
                 if (fieldGroup.isModified()) {
                     fieldGroup.commit();
-                    crudService.updateWithSession(bean, AppContext.getUsername());
+                    crudService.updateWithSession(bean, UserUIContext.getUsername());
                     setMinimizedValueAsHTML(generateSmallAsHtmlAfterUpdate());
                     BeanPopupView.this.setDescription(generateDescription());
                 }
@@ -125,7 +125,7 @@ public abstract class PopupBeanFieldBuilder<B> {
             fieldGroup.bind(field, bindProperty);
             field.setVisible(hasPermission);
             if (!hasPermission) {
-                layout.add(new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
+                layout.add(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
             }
         }
     }

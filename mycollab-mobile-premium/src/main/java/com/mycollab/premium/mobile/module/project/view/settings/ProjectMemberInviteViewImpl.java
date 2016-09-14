@@ -15,7 +15,7 @@ import com.mycollab.module.project.i18n.RolePermissionI18nEnum;
 import com.mycollab.module.project.service.ProjectRoleService;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewEvent;
 import com.vaadin.addon.touchkit.ui.EmailField;
@@ -45,7 +45,7 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
 
     public ProjectMemberInviteViewImpl() {
         super();
-        this.setCaption(AppContext.getMessage(ProjectMemberI18nEnum.NEW));
+        this.setCaption(UserUIContext.getMessage(ProjectMemberI18nEnum.NEW));
         constructUI();
     }
 
@@ -60,7 +60,7 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
                 displayRolePermission(roleId);
             }
         });
-        roleComboBox.setCaption(AppContext.getMessage(ProjectMemberI18nEnum.FORM_ROLE));
+        roleComboBox.setCaption(UserUIContext.getMessage(ProjectMemberI18nEnum.FORM_ROLE));
 
         final VerticalLayout mainLayout = new VerticalLayout();
         mainLayout.setWidth("100%");
@@ -69,23 +69,23 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
         inviteFormLayout.setWidth("100%");
 
         inviteEmailField = new EmailField();
-        inviteEmailField.setCaption(AppContext.getMessage(GenericI18Enum.FORM_EMAIL));
+        inviteEmailField.setCaption(UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL));
         inviteFormLayout.addComponent(inviteEmailField);
 
         messageArea = new TextArea();
-        messageArea.setValue(AppContext.getMessage(ProjectMemberI18nEnum.MSG_DEFAULT_INVITATION_COMMENT));
-        messageArea.setCaption(AppContext.getMessage(ProjectMemberI18nEnum.FORM_MESSAGE));
+        messageArea.setValue(UserUIContext.getMessage(ProjectMemberI18nEnum.MSG_DEFAULT_INVITATION_COMMENT));
+        messageArea.setCaption(UserUIContext.getMessage(ProjectMemberI18nEnum.FORM_MESSAGE));
         inviteFormLayout.addComponent(messageArea);
 
         inviteFormLayout.addComponent(roleComboBox);
         mainLayout.addComponent(inviteFormLayout);
 
-        mainLayout.addComponent(FormSectionBuilder.build(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS)));
+        mainLayout.addComponent(FormSectionBuilder.build(UserUIContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS)));
 
         permissionsPanel = new VerticalComponentGroup();
         mainLayout.addComponent(permissionsPanel);
 
-        Button inviteBtn = new Button(AppContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEE), clickEvent -> {
+        Button inviteBtn = new Button(UserUIContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEE), clickEvent -> {
             if ("".equals(inviteEmailField.getValue())) {
                 return;
             }
@@ -103,20 +103,20 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
         if (roleId != null && roleId > 0) {
             ProjectRoleService roleService = AppContextUtil.getSpringBean(ProjectRoleService.class);
             SimpleProjectRole role = roleService.findById(roleId,
-                    AppContext.getAccountId());
+                    UserUIContext.getAccountId());
             if (role != null) {
                 final PermissionMap permissionMap = role.getPermissionMap();
                 for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
                     final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
-                    Label permissionLbl = new Label(AppContext.getPermissionCaptionValue(permissionMap, permissionPath));
-                    permissionLbl.setCaption(AppContext.getMessage(RolePermissionI18nEnum.valueOf(permissionPath)));
+                    Label permissionLbl = new Label(UserUIContext.getPermissionCaptionValue(permissionMap, permissionPath));
+                    permissionLbl.setCaption(UserUIContext.getMessage(RolePermissionI18nEnum.valueOf(permissionPath)));
                     permissionsPanel.addComponent(permissionLbl);
                 }
             }
         } else {
             for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
                 final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
-                Label permissionLbl = new Label(AppContext.getMessage(SecurityI18nEnum.ACCESS));
+                Label permissionLbl = new Label(UserUIContext.getMessage(SecurityI18nEnum.ACCESS));
                 permissionLbl.setCaption(permissionPath);
                 permissionsPanel.addComponent(permissionLbl);
             }
@@ -129,6 +129,6 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
         roleId = 0;
         displayRolePermission(roleId);
         inviteEmailField.setValue("");
-        messageArea.setValue(AppContext.getMessage(ProjectMemberI18nEnum.MSG_DEFAULT_INVITATION_COMMENT));
+        messageArea.setValue(UserUIContext.getMessage(ProjectMemberI18nEnum.MSG_DEFAULT_INVITATION_COMMENT));
     }
 }

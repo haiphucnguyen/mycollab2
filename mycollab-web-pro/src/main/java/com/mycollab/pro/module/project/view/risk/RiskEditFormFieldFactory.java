@@ -12,7 +12,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.RiskProbability;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
@@ -47,13 +47,13 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             desc.setNullRepresentation("");
             if (isValidateForm) {
                 desc.setRequired(true);
-                desc.setRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                        AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
+                desc.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                        UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
             }
             return desc;
         } else if (Risk.Field.raisedbyuser.equalTo(propertyId)) {
             if (risk.getRaisedbyuser() == null) {
-                risk.setRaisedbyuser(AppContext.getUsername());
+                risk.setRaisedbyuser(UserUIContext.getUsername());
             }
             return new ProjectMemberSelectionField();
         } else if (Risk.Field.assigntouser.equalTo(propertyId)) {
@@ -96,15 +96,15 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
                 if (value == null) {
                     changedRs.setValue(3d);
                 } else {
-                    changedRs.setValueCaption((int) Math.round(value), AppContext.getMessage(RiskI18nEnum.FORM_RATING));
+                    changedRs.setValueCaption((int) Math.round(value), UserUIContext.getMessage(RiskI18nEnum.FORM_RATING));
                 }
             });
             return ratingField;
         } else if (Risk.Field.riskname.equalTo(propertyId)) {
             MTextField field = new MTextField().withNullRepresentation("");
             if (isValidateForm) {
-                field.withRequired(true).withRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                        AppContext.getMessage(GenericI18Enum.FORM_NAME)));
+                field.withRequired(true).withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                        UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
             }
             return field;
         } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
@@ -112,7 +112,7 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
         } else if (Risk.Field.id.equalTo(propertyId)) {
             Risk beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
-                String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(),
+                String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(),
                         beanItem.getProjectid(), ProjectTypeConstants.RISK, "" + beanItem.getId());
                 attachmentUploadField = new AttachmentUploadField(attachmentPath);
             } else {

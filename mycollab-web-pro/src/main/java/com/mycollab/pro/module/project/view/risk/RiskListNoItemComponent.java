@@ -25,7 +25,7 @@ import com.mycollab.module.project.events.RiskEvent;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.ProjectListNoItemView;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -44,17 +44,17 @@ class RiskListNoItemComponent extends ProjectListNoItemView {
 
     @Override
     protected String viewTitle() {
-        return AppContext.getMessage(GenericI18Enum.VIEW_NO_ITEM_TITLE);
+        return UserUIContext.getMessage(GenericI18Enum.VIEW_NO_ITEM_TITLE);
     }
 
     @Override
     protected String viewHint() {
-        return AppContext.getMessage(GenericI18Enum.VIEW_NO_ITEM_HINT);
+        return UserUIContext.getMessage(GenericI18Enum.VIEW_NO_ITEM_HINT);
     }
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(RiskI18nEnum.NEW);
+        return UserUIContext.getMessage(RiskI18nEnum.NEW);
     }
 
     @Override

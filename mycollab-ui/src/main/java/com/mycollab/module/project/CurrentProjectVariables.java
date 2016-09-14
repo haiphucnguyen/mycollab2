@@ -24,7 +24,7 @@ import com.mycollab.module.project.esb.NewProjectMemberJoinEvent;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.MyCollabSession;
 import com.google.common.eventbus.AsyncEventBus;
 import org.slf4j.Logger;
@@ -54,7 +54,7 @@ public class CurrentProjectVariables {
 
         // get member permission
         ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-        SimpleProjectMember prjMember = prjMemberService.findMemberByUsername(AppContext.getUsername(), project.getId(), AppContext.getAccountId());
+        SimpleProjectMember prjMember = prjMemberService.findMemberByUsername(UserUIContext.getUsername(), project.getId(), UserUIContext.getAccountId());
         if (prjMember != null) {
             if (ProjectMemberStatusConstants.INACTIVE.equals(prjMember.getStatus())) {
                 throw new UserNotBelongProjectException("You are not belong to this project");
@@ -76,15 +76,15 @@ public class CurrentProjectVariables {
 
             if (ProjectMemberStatusConstants.NOT_ACCESS_YET.equals(prjMember.getStatus())) {
                 prjMember.setStatus(ProjectMemberStatusConstants.ACTIVE);
-                prjMemberService.updateSelectiveWithSession(prjMember, AppContext.getUsername());
+                prjMemberService.updateSelectiveWithSession(prjMember, UserUIContext.getUsername());
                 AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
-                asyncEventBus.post(new NewProjectMemberJoinEvent(prjMember.getUsername(), prjMember.getProjectid(), AppContext.getAccountId()));
+                asyncEventBus.post(new NewProjectMemberJoinEvent(prjMember.getUsername(), prjMember.getProjectid(), UserUIContext.getAccountId()));
             }
             setProjectMember(prjMember);
             if (getProjectToggleMenu() == null) {
                 setProjectToggleMenu(true);
             }
-        } else if (!AppContext.isAdmin()) {
+        } else if (!UserUIContext.isAdmin()) {
             throw new SecureAccessException("You are not belong to this project");
         }
     }
@@ -106,7 +106,7 @@ public class CurrentProjectVariables {
     }
 
     public static boolean isAdmin() {
-        if (AppContext.isAdmin()) {
+        if (UserUIContext.isAdmin()) {
             return true;
         }
         SimpleProjectMember member = getProjectMember();
@@ -237,7 +237,7 @@ public class CurrentProjectVariables {
     public static String getCurrentPagePath() {
         String path = (String) MyCollabSession.getCurrentUIVariable(CURRENT_PAGE_VAR);
         if (path == null) {
-            path = PathUtils.getProjectDocumentPath(AppContext.getAccountId(), getProjectId());
+            path = PathUtils.getProjectDocumentPath(UserUIContext.getAccountId(), getProjectId());
             setCurrentPagePath(path);
         }
 

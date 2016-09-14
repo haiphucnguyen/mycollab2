@@ -14,7 +14,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -52,7 +52,7 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
             super.onGo(navigator, data);
             if (task.getId() == null) {
             } else {
-                AppContext.addFragment(ProjectLinkGenerator.generateTaskEditLink(task.getTaskkey(), task.getProjectShortname()), task.getTaskname());
+                UserUIContext.addFragment(ProjectLinkGenerator.generateTaskEditLink(task.getTaskkey(), task.getProjectShortname()), task.getTaskname());
             }
         } else {
             NotificationUtil.showMessagePermissionAlert();
@@ -62,7 +62,7 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
     private void saveTask(SimpleTask task) {
         ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
 
-        task.setSaccountid(AppContext.getAccountId());
+        task.setSaccountid(UserUIContext.getAccountId());
         task.setProjectid(CurrentProjectVariables.getProjectId());
         if (task.getPercentagecomplete() == null) {
             task.setPercentagecomplete(new Double(0));
@@ -74,12 +74,12 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
         }
 
         if (task.getId() == null) {
-            task.setLogby(AppContext.getUsername());
-            int taskId = taskService.saveWithSession(task, AppContext.getUsername());
+            task.setLogby(UserUIContext.getUsername());
+            int taskId = taskService.saveWithSession(task, UserUIContext.getUsername());
             ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
             uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.TASK, taskId);
         } else {
-            taskService.updateWithSession(task, AppContext.getUsername());
+            taskService.updateWithSession(task, UserUIContext.getUsername());
             ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
             uploadField.saveContentsToRepo();
         }

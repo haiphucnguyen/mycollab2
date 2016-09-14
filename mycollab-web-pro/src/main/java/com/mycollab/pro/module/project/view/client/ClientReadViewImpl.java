@@ -26,7 +26,7 @@ import com.mycollab.module.project.ui.components.DateInfoComp;
 import com.mycollab.pro.module.project.view.ProjectAddWindow;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -60,7 +60,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
     private ProjectListComp projectListComp;
 
     public ClientReadViewImpl() {
-        super(AppContext.getMessage(ClientI18nEnum.SINGLE), FontAwesome.INSTITUTION);
+        super(UserUIContext.getMessage(ClientI18nEnum.SINGLE), FontAwesome.INSTITUTION);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
     @Override
     protected String initFormTitle() {
         if (beanItem.getAvatarid() != null) {
-            Img img = new Img("", StorageFactory.getEntityLogoPath(AppContext.getAccountId(), beanItem.getAvatarid(), 32))
+            Img img = new Img("", StorageFactory.getEntityLogoPath(UserUIContext.getAccountId(), beanItem.getAvatarid(), 32))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
             return new Div().appendChild(img).appendChild(DivLessFormatter.EMPTY_SPACE()).appendText(beanItem.getAccountname()).write();
         } else {
@@ -129,7 +129,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             this.withMargin(false);
 
             Label peopleInfoHeader = new Label(FontAwesome.USER.getHtml() + " " +
-                    AppContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
+                    UserUIContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
             peopleInfoHeader.setStyleName("info-hdr");
             this.addComponent(peopleInfoHeader);
 
@@ -138,7 +138,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             layout.setWidth("100%");
             layout.setMargin(new MarginInfo(false, false, false, true));
             try {
-                Label createdLbl = new Label(AppContext.getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE));
+                Label createdLbl = new Label(UserUIContext.getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE));
                 createdLbl.setSizeUndefined();
                 layout.addComponent(createdLbl, 0, 0);
 
@@ -150,7 +150,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                 layout.addComponent(createdUserLink, 1, 0);
                 layout.setColumnExpandRatio(1, 1.0f);
 
-                Label assigneeLbl = new Label(AppContext.getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE));
+                Label assigneeLbl = new Label(UserUIContext.getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE));
                 assigneeLbl.setSizeUndefined();
                 layout.addComponent(assigneeLbl, 0, 1);
                 String assignUserName = bean.getAssignuser();
@@ -177,12 +177,12 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             searchCriteria.setAccountId(NumberSearchField.equal(accountId));
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
             int totalCount = projectService.getTotalCount(searchCriteria);
-            ELabel headerLbl = new ELabel(AppContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, totalCount));
-            MButton newProjectBtn = new MButton(AppContext.getMessage(ProjectI18nEnum.NEW), clickEvent -> {
+            ELabel headerLbl = new ELabel(UserUIContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, totalCount));
+            MButton newProjectBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.NEW), clickEvent -> {
                 Project project = new Project();
                 project.setAccountid(accountId);
                 UI.getCurrent().addWindow(new ProjectAddWindow(project));
-            }).withStyleName(WebUIConstants.BUTTON_ACTION).withVisible(AppContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
+            }).withStyleName(WebUIConstants.BUTTON_ACTION).withVisible(UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
 
             MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(WebUIConstants.FORM_SECTION)
                     .withFullWidth().with(headerLbl, newProjectBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
@@ -208,13 +208,13 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             this.addComponent(headerLbl);
 
             Div activeMembersDiv = new Div().appendText(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers())
-                    .setTitle(AppContext.getMessage(ProjectMemberI18nEnum.OPT_ACTIVE_MEMBERS));
-            Div createdTimeDiv = new Div().appendText(FontAwesome.CLOCK_O.getHtml() + " " + AppContext
-                    .formatPrettyTime(project.getCreatedtime())).setTitle(AppContext.getMessage(GenericI18Enum.FORM_CREATED_TIME));
+                    .setTitle(UserUIContext.getMessage(ProjectMemberI18nEnum.OPT_ACTIVE_MEMBERS));
+            Div createdTimeDiv = new Div().appendText(FontAwesome.CLOCK_O.getHtml() + " " + UserUIContext
+                    .formatPrettyTime(project.getCreatedtime())).setTitle(UserUIContext.getMessage(GenericI18Enum.FORM_CREATED_TIME));
             Div billableHoursDiv = new Div().appendText(FontAwesome.MONEY.getHtml() + " " + NumberUtils.roundDouble(2, project.getTotalBillableHours())).
-                    setTitle(AppContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
+                    setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
             Div nonBillableHoursDiv = new Div().appendText(FontAwesome.GIFT.getHtml() + " " + NumberUtils.roundDouble(2,
-                    project.getTotalNonBillableHours())).setTitle(AppContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
+                    project.getTotalNonBillableHours())).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
             Div metaDiv = new Div().appendChild(activeMembersDiv, DivLessFormatter.EMPTY_SPACE(), createdTimeDiv,
                     DivLessFormatter.EMPTY_SPACE(), billableHoursDiv, DivLessFormatter.EMPTY_SPACE(),
                     nonBillableHoursDiv, DivLessFormatter.EMPTY_SPACE());
@@ -222,7 +222,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                 Div leadDiv = new Div().appendChild(new Img("", StorageFactory.getAvatarPath(project
                         .getLeadAvatarId(), 16)), DivLessFormatter.EMPTY_SPACE(), new A(ProjectLinkBuilder.generateProjectMemberFullLink(project
                         .getId(), project.getLead())).appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
-                        .setTitle(AppContext.getMessage(ProjectI18nEnum.FORM_LEADER));
+                        .setTitle(UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER));
                 metaDiv.appendChild(0, leadDiv);
                 metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE());
             }
@@ -234,11 +234,11 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             int totalAssignments = project.getNumBugs() + project.getNumTasks() + project.getNumRisks();
             ELabel progressInfoLbl;
             if (totalAssignments > 0) {
-                progressInfoLbl = new ELabel(AppContext.getMessage(ProjectI18nEnum.OPT_PROJECT_ASSIGNMENT,
+                progressInfoLbl = new ELabel(UserUIContext.getMessage(ProjectI18nEnum.OPT_PROJECT_ASSIGNMENT,
                         (totalAssignments - openAssignments), totalAssignments, (totalAssignments - openAssignments)
                                 * 100 / totalAssignments)).withStyleName(UIConstants.META_INFO);
             } else {
-                progressInfoLbl = new ELabel(AppContext.getMessage(ProjectI18nEnum.OPT_NO_ASSIGNMENT))
+                progressInfoLbl = new ELabel(UserUIContext.getMessage(ProjectI18nEnum.OPT_NO_ASSIGNMENT))
                         .withStyleName(UIConstants.META_INFO);
             }
             this.addComponent(progressInfoLbl);

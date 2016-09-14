@@ -4,7 +4,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.file.view.IFileModule;
 import com.mycollab.shell.events.ShellEvent;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ControllerRegistry;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -31,19 +31,19 @@ public class FileModule extends AbstractPageView implements IFileModule {
         if (serviceMenuContainer == null) {
             serviceMenuContainer = new MHorizontalLayout();
             serviceMenu = new ServiceMenu();
-            serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT), clickEvent -> {
+            serviceMenu.addService(UserUIContext.getMessage(GenericI18Enum.MODULE_PROJECT), clickEvent -> {
                 EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, new String[]{"dashboard"}));
                 serviceMenu.selectService(0);
             });
 
-            serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_CRM), clickEvent -> EventBusFactory.getInstance().post(
+            serviceMenu.addService(UserUIContext.getMessage(GenericI18Enum.MODULE_CRM), clickEvent -> EventBusFactory.getInstance().post(
                     new ShellEvent.GotoCrmModule(this, null)));
 
-            serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT), clickEvent -> EventBusFactory.getInstance().post(
+            serviceMenu.addService(UserUIContext.getMessage(GenericI18Enum.MODULE_DOCUMENT), clickEvent -> EventBusFactory.getInstance().post(
                     new ShellEvent.GotoFileModule(this, null)));
 
 
-            serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PEOPLE), clickEvent -> EventBusFactory.getInstance().post(
+            serviceMenu.addService(UserUIContext.getMessage(GenericI18Enum.MODULE_PEOPLE), clickEvent -> EventBusFactory.getInstance().post(
                     new ShellEvent.GotoUserAccountModule(this, new String[]{"user", "list"})));
 
             serviceMenuContainer.with(serviceMenu);

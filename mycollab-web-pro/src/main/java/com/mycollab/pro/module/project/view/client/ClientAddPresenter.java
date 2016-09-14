@@ -11,7 +11,7 @@ import com.mycollab.module.project.events.ClientEvent;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -56,13 +56,13 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
         ClientContainer clientContainer = (ClientContainer) container;
         clientContainer.removeAllComponents();
         clientContainer.addComponent(view);
-        if (AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
             SimpleAccount account = null;
             if (data.getParams() instanceof SimpleAccount) {
                 account = (SimpleAccount) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                account = accountService.findById((Integer) data.getParams(), AppContext.getAccountId());
+                account = accountService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
             }
 
             if (account == null) {
@@ -71,11 +71,11 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
 
             view.editItem(account);
             if (account.getId() == null) {
-                AppContext.addFragment("project/client/add", AppContext.getMessage(GenericI18Enum
-                        .BROWSER_ADD_ITEM_TITLE, AppContext.getMessage(ClientI18nEnum.SINGLE)));
+                UserUIContext.addFragment("project/client/add", UserUIContext.getMessage(GenericI18Enum
+                        .BROWSER_ADD_ITEM_TITLE, UserUIContext.getMessage(ClientI18nEnum.SINGLE)));
             } else {
-                AppContext.addFragment("project/client/edit/" + UrlEncodeDecoder.encode(account.getId()),
-                        AppContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE, AppContext.getMessage(ClientI18nEnum.SINGLE),
+                UserUIContext.addFragment("project/client/edit/" + UrlEncodeDecoder.encode(account.getId()),
+                        UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE, UserUIContext.getMessage(ClientI18nEnum.SINGLE),
                                 account.getAccountname()));
             }
         } else {
@@ -85,11 +85,11 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
 
     private int saveAccount(Account account) {
         AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-        account.setSaccountid(AppContext.getAccountId());
+        account.setSaccountid(UserUIContext.getAccountId());
         if (account.getId() == null) {
-            accountService.saveWithSession(account, AppContext.getUsername());
+            accountService.saveWithSession(account, UserUIContext.getUsername());
         } else {
-            accountService.updateWithSession(account, AppContext.getUsername());
+            accountService.updateWithSession(account, UserUIContext.getUsername());
         }
         return account.getId();
     }

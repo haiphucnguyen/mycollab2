@@ -17,7 +17,7 @@ import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.shell.view.AbstractMainView;
 import com.mycollab.shell.view.components.AbstractAboutWindow;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
@@ -48,24 +48,24 @@ public class MainViewImpl extends AbstractMainView {
         accountLayout.removeAllComponents();
 
         BillingSubscriptionMapperExt billingSubscriptionMapperExt = AppContextUtil.getSpringBean(BillingSubscriptionMapperExt.class);
-        SimpleBillingSubscription subscription = billingSubscriptionMapperExt.findSubscription(AppContext.getAccountId());
+        SimpleBillingSubscription subscription = billingSubscriptionMapperExt.findSubscription(UserUIContext.getAccountId());
         if (subscription != null) {
             MyCollabSession.putCurrentUIVariable("subscription", subscription);
             if (!subscription.canAccess()) {
                 TrialBlock trialBlock = new TrialBlock();
                 accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
                 trialBlock.setText(String.format("<div class='informBlock'>%s<br></div>",
-                        AppContext.getMessage(BillingI18nEnum.OPT_ACCOUNT_SUSPENDED)));
-//                AppContext.getInstance().setIsValidAccount(false);
+                        UserUIContext.getMessage(BillingI18nEnum.OPT_ACCOUNT_SUSPENDED)));
+//                UserUIContext.getInstance().setIsValidAccount(false);
             } else if (!subscription.isValid()) {
                 TrialBlock trialBlock = new TrialBlock();
                 accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
                 trialBlock.setText(String.format("<div class='informBlock'>%s<br></div>",
-                        AppContext.getMessage(BillingI18nEnum.OPT_PAYMENT_CHARGE_FAILED)));
-                AppContext.getInstance().setIsValidAccount(true);
+                        UserUIContext.getMessage(BillingI18nEnum.OPT_PAYMENT_CHARGE_FAILED)));
+                UserUIContext.getInstance().setIsValidAccount(true);
             }
         } else {
-            SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
+            SimpleBillingAccount billingAccount = UserUIContext.getBillingAccount();
             TrialBlock trialBlock = new TrialBlock();
             accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
 
@@ -74,50 +74,50 @@ public class MainViewImpl extends AbstractMainView {
             Duration dur = new Duration(new DateTime(), trialTo);
             int daysLeft = dur.toStandardDays().getDays();
             if (daysLeft < 0) {
-                trialBlock.setText(String.format("<div class='informBlock'>%s<br></div>", AppContext.getMessage(ShellI18nEnum.OPT_TRIAL)));
-//                AppContext.getInstance().setIsValidAccount(false);
+                trialBlock.setText(String.format("<div class='informBlock'>%s<br></div>", UserUIContext.getMessage(ShellI18nEnum.OPT_TRIAL)));
+//                UserUIContext.getInstance().setIsValidAccount(false);
             } else {
-                trialBlock.setText(String.format("<div class='informBlock'>%s</div><div class='informBlock'>&gt;&gt;</div>", AppContext.getMessage(ShellI18nEnum.OPT_TRIAL_LEFT, daysLeft)));
+                trialBlock.setText(String.format("<div class='informBlock'>%s</div><div class='informBlock'>&gt;&gt;</div>", UserUIContext.getMessage(ShellI18nEnum.OPT_TRIAL_LEFT, daysLeft)));
             }
         }
 
-        Label accountNameLabel = new Label(AppContext.getSubDomain());
+        Label accountNameLabel = new Label(UserUIContext.getSubDomain());
         accountNameLabel.addStyleName("subDomain");
         accountLayout.addComponent(accountNameLabel);
 
         NotificationComponent notificationComponent = new NotificationComponent();
         accountLayout.addComponent(notificationComponent);
 
-        if (StringUtils.isBlank(AppContext.getUser().getAvatarid())) {
+        if (StringUtils.isBlank(UserUIContext.getUser().getAvatarid())) {
             EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new RequestUploadAvatarNotification()));
         }
 
-        Resource userAvatarRes = UserAvatarControlFactory.createAvatarResource(AppContext.getUserAvatarId(), 24);
+        Resource userAvatarRes = UserAvatarControlFactory.createAvatarResource(UserUIContext.getUserAvatarId(), 24);
         final PopupButton accountMenu = new PopupButton("");
         accountMenu.setIcon(userAvatarRes);
-        accountMenu.setDescription(AppContext.getUserDisplayName());
+        accountMenu.setDescription(UserUIContext.getUserDisplayName());
 
         OptionPopupContent accountPopupContent = new OptionPopupContent();
 
-        MButton myProfileBtn = new MButton(AppContext.getMessage(AdminI18nEnum.VIEW_PROFILE), clickEvent -> {
+        MButton myProfileBtn = new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_PROFILE), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
         }).withIcon(SettingAssetsManager.getAsset(SettingUIConstants.PROFILE));
         accountPopupContent.addOption(myProfileBtn);
 
-        MButton userMgtBtn = new MButton(AppContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES), clickEvent -> {
+        MButton userMgtBtn = new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"user", "list"}));
         }).withIcon(SettingAssetsManager.getAsset(SettingUIConstants.USERS));
         accountPopupContent.addOption(userMgtBtn);
 
-        MButton generalSettingBtn = new MButton(AppContext.getMessage(AdminI18nEnum.VIEW_SETTING), clickEvent -> {
+        MButton generalSettingBtn = new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"setting", "general"}));
         }).withIcon(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING));
         accountPopupContent.addOption(generalSettingBtn);
 
-        MButton themeCustomizeBtn = new MButton(AppContext.getMessage(AdminI18nEnum.VIEW_THEME), clickEvent -> {
+        MButton themeCustomizeBtn = new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_THEME), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"setting", "theme"}));
         }).withIcon(SettingAssetsManager.getAsset(SettingUIConstants.THEME_CUSTOMIZE));
@@ -125,39 +125,39 @@ public class MainViewImpl extends AbstractMainView {
 
         accountPopupContent.addSeparator();
 
-        MButton helpBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_HELP)).withIcon(FontAwesome.MORTAR_BOARD);
+        MButton helpBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP)).withIcon(FontAwesome.MORTAR_BOARD);
         ExternalResource helpRes = new ExternalResource("https://community.mycollab.com/meet-mycollab/");
         BrowserWindowOpener helpOpener = new BrowserWindowOpener(helpRes);
         helpOpener.extend(helpBtn);
         accountPopupContent.addOption(helpBtn);
 
-        MButton supportBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SUPPORT)).withIcon(FontAwesome.LIFE_SAVER);
+        MButton supportBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUPPORT)).withIcon(FontAwesome.LIFE_SAVER);
         ExternalResource supportRes = new ExternalResource("http://support.mycollab.com/");
         BrowserWindowOpener supportOpener = new BrowserWindowOpener(supportRes);
         supportOpener.extend(supportBtn);
         accountPopupContent.addOption(supportBtn);
 
-        MButton translateBtn = new MButton(AppContext.getMessage(GenericI18Enum.ACTION_TRANSLATE)).withIcon(FontAwesome.PENCIL);
+        MButton translateBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_TRANSLATE)).withIcon(FontAwesome.PENCIL);
         ExternalResource translateRes = new ExternalResource("https://community.mycollab.com/docs/developing-mycollab/translating/");
         BrowserWindowOpener translateOpener = new BrowserWindowOpener(translateRes);
         translateOpener.extend(translateBtn);
         accountPopupContent.addOption(translateBtn);
 
-        MButton myAccountBtn = new MButton(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING), clickEvent -> {
+        MButton myAccountBtn = new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"billing"}));
         }).withIcon(SettingAssetsManager.getAsset(SettingUIConstants.BILLING));
         accountPopupContent.addOption(myAccountBtn);
 
         accountPopupContent.addSeparator();
-        MButton aboutBtn = new MButton(AppContext.getMessage(ShellI18nEnum.OPT_ABOUT_MYCOLLAB), clickEvent -> {
+        MButton aboutBtn = new MButton(UserUIContext.getMessage(ShellI18nEnum.OPT_ABOUT_MYCOLLAB), clickEvent -> {
             accountMenu.setPopupVisible(false);
             Window aboutWindow = ViewManager.getCacheComponent(AbstractAboutWindow.class);
             UI.getCurrent().addWindow(aboutWindow);
         }).withIcon(FontAwesome.INFO_CIRCLE);
         accountPopupContent.addOption(aboutBtn);
 
-        Button releaseNotesBtn = new Button(AppContext.getMessage(ShellI18nEnum.OPT_RELEASE_NOTES));
+        Button releaseNotesBtn = new Button(UserUIContext.getMessage(ShellI18nEnum.OPT_RELEASE_NOTES));
         ExternalResource releaseNotesRes = new ExternalResource("https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/releases/");
         BrowserWindowOpener releaseNotesOpener = new BrowserWindowOpener(releaseNotesRes);
         releaseNotesOpener.extend(releaseNotesBtn);
@@ -165,7 +165,7 @@ public class MainViewImpl extends AbstractMainView {
         releaseNotesBtn.setIcon(FontAwesome.BULLHORN);
         accountPopupContent.addOption(releaseNotesBtn);
 
-        MButton signoutBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SIGNOUT), clickEvent -> {
+        MButton signoutBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SIGNOUT), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.LogOut(this, null));
         }).withIcon(FontAwesome.SIGN_OUT);

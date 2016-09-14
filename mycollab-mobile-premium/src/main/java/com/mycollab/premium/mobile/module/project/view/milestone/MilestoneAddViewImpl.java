@@ -7,7 +7,7 @@ import com.mycollab.mobile.ui.FormSectionBuilder;
 import com.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -24,7 +24,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
 
     @Override
     protected String initFormTitle() {
-        return (beanItem.getId() == null) ? AppContext.getMessage(MilestoneI18nEnum.NEW) : beanItem.getName();
+        return (beanItem.getId() == null) ? UserUIContext.getMessage(MilestoneI18nEnum.NEW) : beanItem.getName();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
         public ComponentContainer getLayout() {
             final VerticalLayout layout = new VerticalLayout();
             layout.setMargin(false);
-            layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(MilestoneI18nEnum.SINGLE)));
+            layout.addComponent(FormSectionBuilder.build(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE)));
 
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 6);
             layout.addComponent(informationLayout.getLayout());
@@ -57,17 +57,17 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
         @Override
         protected Component onAttachField(Object propertyId, Field<?> field) {
             if (propertyId.equals("name")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
             } else if (propertyId.equals("status")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_STATUS), 0, 1);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_STATUS), 0, 1);
             } else if (propertyId.equals("owner")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 2);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 2);
             } else if (propertyId.equals("startdate")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 3);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 3);
             } else if (propertyId.equals("enddate")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_END_DATE), 0, 4);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE), 0, 4);
             } else if (propertyId.equals("description")) {
-                return informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 5);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 5);
             }
             return null;
         }

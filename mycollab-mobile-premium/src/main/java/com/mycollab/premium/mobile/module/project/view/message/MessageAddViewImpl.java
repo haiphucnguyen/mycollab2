@@ -10,7 +10,7 @@ import com.mycollab.mobile.ui.AbstractMobilePageView;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.SimpleMessage;
 import com.mycollab.module.project.i18n.MessageI18nEnum;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasEditFormHandlers;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -41,7 +41,7 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
 
     public MessageAddViewImpl() {
         this.addStyleName("message-add-view");
-        this.setCaption(AppContext.getMessage(MessageI18nEnum.NEW));
+        this.setCaption(UserUIContext.getMessage(MessageI18nEnum.NEW));
 
         CssLayout content = new CssLayout();
         content.setStyleName("content-layout");
@@ -56,7 +56,7 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         subjectField = new TextField();
         subjectField.setStyleName("title-field");
         subjectField.setWidth("100%");
-        subjectField.setInputPrompt(AppContext.getMessage(MessageI18nEnum.FORM_TITLE));
+        subjectField.setInputPrompt(UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE));
         addFormLayout.addComponent(subjectField);
 
         addFormLayout.addComponent(ELabel.hr());
@@ -64,13 +64,13 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         contentField = new TextArea();
         contentField.setStyleName("content-field");
         contentField.setWidth("100%");
-        contentField.setInputPrompt(AppContext.getMessage(MessageI18nEnum.M_FORM_CONTENT_FIELD_PROMPT));
+        contentField.setInputPrompt(UserUIContext.getMessage(MessageI18nEnum.M_FORM_CONTENT_FIELD_PROMPT));
         addFormLayout.addComponent(contentField);
 
         VerticalComponentGroup bottomRow = new VerticalComponentGroup();
         bottomRow.setStyleName("bottom-row");
         bottomRow.setWidth("100%");
-        isStickField = new Switch(AppContext.getMessage(MessageI18nEnum.FORM_IS_STICK), false);
+        isStickField = new Switch(UserUIContext.getMessage(MessageI18nEnum.FORM_IS_STICK), false);
         bottomRow.addComponent(isStickField);
 
         attachment = new MessageAttachmentField();
@@ -80,22 +80,22 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         content.addComponent(addFormLayout);
         content.addComponent(bottomRow);
 
-        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+        Button saveBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             final SimpleMessage message = new SimpleMessage();
             message.setProjectid(CurrentProjectVariables.getProjectId());
             message.setPosteddate(new GregorianCalendar().getTime());
             if (StringUtils.isNotBlank(subjectField.getValue())) {
                 message.setTitle(subjectField.getValue());
                 message.setMessage(contentField.getValue());
-                message.setPosteduser(AppContext.getUsername());
-                message.setSaccountid(AppContext.getAccountId());
+                message.setPosteduser(UserUIContext.getUsername());
+                message.setSaccountid(UserUIContext.getAccountId());
                 message.setIsstick(isStickField.getValue());
                 MessageAddViewImpl.this.fireSaveItem(message);
 
             } else {
                 subjectField.addStyleName("errorField");
-                NotificationUtil.showErrorNotification(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                        AppContext.getMessage(MessageI18nEnum.FORM_TITLE)));
+                NotificationUtil.showErrorNotification(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                        UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE)));
             }
         });
         this.setRightComponent(saveBtn);

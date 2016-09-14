@@ -16,7 +16,7 @@
  */
 package com.mycollab.module.user;
 
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 
 /**
  * @author MyCollab Ltd.
@@ -24,10 +24,10 @@ import com.mycollab.vaadin.AppContext;
  */
 public class AccountLinkBuilder {
     public static String generatePreviewFullUserLink(String username) {
-        return AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(), username);
+        return AccountLinkGenerator.generatePreviewFullUserLink(UserUIContext.getSiteUrl(), username);
     }
 
     public static String generatePreviewFullRoleLink(Integer userRoleId) {
-        return AccountLinkGenerator.generatePreviewFullRoleLink(AppContext.getSiteUrl(), userRoleId);
+        return AccountLinkGenerator.generatePreviewFullRoleLink(UserUIContext.getSiteUrl(), userRoleId);
     }
 }

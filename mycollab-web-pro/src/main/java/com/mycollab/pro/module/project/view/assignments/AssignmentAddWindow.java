@@ -13,7 +13,7 @@ import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
 import com.mycollab.module.project.view.task.TaskAddWindow;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.pro.module.project.view.risk.RiskAddWindow;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -35,70 +35,70 @@ import java.util.Date;
 public class AssignmentAddWindow extends MWindow {
 
     public AssignmentAddWindow(Date date, final Integer prjId, boolean isIncludeMilestone) {
-        super(AppContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT));
+        super(UserUIContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT));
         withModal(true).withResizable(false).withCenter().withWidth("500px");
         final PopupDateFieldExt dateSelection = new PopupDateFieldExt(date);
         final ComboBox typeSelection = new ComboBox();
         typeSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-        typeSelection.addItem(AppContext.getMessage(TaskI18nEnum.SINGLE));
-        typeSelection.setItemIcon(AppContext.getMessage(TaskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
-        typeSelection.addItem(AppContext.getMessage(BugI18nEnum.SINGLE));
-        typeSelection.setItemIcon(AppContext.getMessage(BugI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
+        typeSelection.addItem(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
+        typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
+        typeSelection.addItem(UserUIContext.getMessage(BugI18nEnum.SINGLE));
+        typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
         if (isIncludeMilestone) {
-            typeSelection.addItem(AppContext.getMessage(MilestoneI18nEnum.SINGLE));
-            typeSelection.setItemIcon(AppContext.getMessage(MilestoneI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
+            typeSelection.addItem(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
+            typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
         }
 
-        typeSelection.addItem(AppContext.getMessage(RiskI18nEnum.SINGLE));
-        typeSelection.setItemIcon(AppContext.getMessage(RiskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
-        typeSelection.select(AppContext.getMessage(TaskI18nEnum.SINGLE));
+        typeSelection.addItem(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
+        typeSelection.setItemIcon(UserUIContext.getMessage(RiskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
+        typeSelection.select(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
         typeSelection.setNullSelectionAllowed(false);
         MVerticalLayout content = new MVerticalLayout();
         this.setContent(content);
 
-        MButton okButton = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
+        MButton okButton = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
             String type = (String) typeSelection.getValue();
             Date dateValue = dateSelection.getValue();
-            if (AppContext.getMessage(TaskI18nEnum.SINGLE).equals(type)) {
+            if (UserUIContext.getMessage(TaskI18nEnum.SINGLE).equals(type)) {
                 close();
                 SimpleTask task = new SimpleTask();
                 task.setProjectid(prjId);
-                task.setSaccountid(AppContext.getAccountId());
-                task.setLogby(AppContext.getUsername());
+                task.setSaccountid(UserUIContext.getAccountId());
+                task.setLogby(UserUIContext.getUsername());
                 task.setStartdate(dateValue);
                 UI.getCurrent().addWindow(new TaskAddWindow(task));
-            } else if (AppContext.getMessage(BugI18nEnum.SINGLE).equals(type)) {
+            } else if (UserUIContext.getMessage(BugI18nEnum.SINGLE).equals(type)) {
                 close();
                 SimpleBug bug = new SimpleBug();
                 bug.setProjectid(prjId);
-                bug.setSaccountid(AppContext.getAccountId());
+                bug.setSaccountid(UserUIContext.getAccountId());
                 bug.setStartdate(dateValue);
-                bug.setLogby(AppContext.getUsername());
+                bug.setLogby(UserUIContext.getUsername());
                 UI.getCurrent().addWindow(new BugAddWindow(bug));
-            } else if (AppContext.getMessage(MilestoneI18nEnum.SINGLE).equals(type)) {
+            } else if (UserUIContext.getMessage(MilestoneI18nEnum.SINGLE).equals(type)) {
                 close();
                 SimpleMilestone milestone = new SimpleMilestone();
-                milestone.setSaccountid(AppContext.getAccountId());
+                milestone.setSaccountid(UserUIContext.getAccountId());
                 milestone.setProjectid(prjId);
                 milestone.setStartdate(dateValue);
                 UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
             } else {
                 close();
                 SimpleRisk risk = new SimpleRisk();
-                risk.setSaccountid(AppContext.getAccountId());
+                risk.setSaccountid(UserUIContext.getAccountId());
                 risk.setProjectid(prjId);
                 risk.setStartdate(dateValue);
-                risk.setRaisedbyuser(AppContext.getUsername());
+                risk.setRaisedbyuser(UserUIContext.getUsername());
                 UI.getCurrent().addWindow(new RiskAddWindow(risk));
             }
         }).withStyleName(WebUIConstants.BUTTON_ACTION);
 
-        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+        MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebUIConstants.BUTTON_OPTION);
         MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, okButton);
         GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, 1, "60px");
-        formLayoutHelper.addComponent(dateSelection, AppContext.getMessage(DayI18nEnum.OPT_DATE), 0, 0);
-        formLayoutHelper.addComponent(typeSelection, AppContext.getMessage(GenericI18Enum.FORM_TYPE), 1, 0);
+        formLayoutHelper.addComponent(dateSelection, UserUIContext.getMessage(DayI18nEnum.OPT_DATE), 0, 0);
+        formLayoutHelper.addComponent(typeSelection, UserUIContext.getMessage(GenericI18Enum.FORM_TYPE), 1, 0);
         content.with(formLayoutHelper.getLayout(), buttonControls).withAlign(buttonControls, Alignment.TOP_RIGHT);
     }
 }

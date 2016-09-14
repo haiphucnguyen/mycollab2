@@ -21,7 +21,7 @@ import com.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.mycollab.module.crm.domain.SimpleCampaign;
 import com.mycollab.module.crm.service.CampaignService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.data.Property;
 
 /**
@@ -57,7 +57,7 @@ public class CampaignSelectionField extends
 		CampaignService campaignService = AppContextUtil
 				.getSpringBean(CampaignService.class);
 		SimpleCampaign campaign = campaignService.findById(campaignId,
-				AppContext.getAccountId());
+				UserUIContext.getAccountId());
 		if (campaign != null) {
 			setInternalCampaign(campaign);
 		}

@@ -24,7 +24,7 @@ import com.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.DetailFieldInfoPanel;
 import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.IntegerDetailFieldInfoPanel;
 import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.TextDetailFieldInfoPanel;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
@@ -99,13 +99,13 @@ public class CreateCustomFieldWindow extends Window {
         content.with(body).expand(body);
 
 
-        MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+        MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             DynaSection section = fieldPanel.updateCustomField();
             viewParent.refreshSectionLayout(section);
             close();
         }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
-        MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
+        MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebUIConstants.BUTTON_OPTION);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(true);

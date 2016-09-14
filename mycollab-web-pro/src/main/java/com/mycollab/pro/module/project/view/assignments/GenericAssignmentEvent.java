@@ -15,7 +15,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.components.calendar.event.BasicEvent;
 
@@ -37,12 +37,12 @@ public class GenericAssignmentEvent extends BasicEvent {
             this.setCaption(String.format("%s %s", icon.getHtml(), assignment.getName()));
         }
 
-        this.setDescription(ProjectTooltipGenerator.generateTooltipEntity(AppContext.getUserLocale(), AppContext.getDateFormat(),
-                assignment.getType(), assignment.getTypeId(), AppContext.getAccountId(), AppContext.getSiteUrl(),
-                AppContext.getUserTimeZone(), showProject));
+        this.setDescription(ProjectTooltipGenerator.generateTooltipEntity(UserUIContext.getUserLocale(), UserUIContext.getDateFormat(),
+                assignment.getType(), assignment.getTypeId(), UserUIContext.getAccountId(), UserUIContext.getSiteUrl(),
+                UserUIContext.getUserTimeZone(), showProject));
         this.setAllDay(true);
 
-        if (AppContext.getUsername().equals(assignment.getAssignUser())) {
+        if (UserUIContext.getUsername().equals(assignment.getAssignUser())) {
             this.setStyleName("owner");
         } else if (assignment.getAssignUser() == null) {
             this.setStyleName("nonowner");
@@ -98,31 +98,31 @@ public class GenericAssignmentEvent extends BasicEvent {
         if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-            SimpleTask task = taskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+            SimpleTask task = taskService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
             task.setStartdate(getStart());
             task.setEnddate(getEnd());
-            taskService.updateWithSession(task, AppContext.getUsername());
+            taskService.updateWithSession(task, UserUIContext.getUsername());
         } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
             BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-            SimpleBug bug = bugService.findById(assignment.getTypeId(), AppContext.getAccountId());
+            SimpleBug bug = bugService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
             bug.setStartdate(getStart());
             bug.setEnddate(getEnd());
-            bugService.updateWithSession(bug, AppContext.getUsername());
+            bugService.updateWithSession(bug, UserUIContext.getUsername());
         } else if(ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
             MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-            SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppContext.getAccountId());
+            SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
             milestone.setStartdate(getStart());
             milestone.setEnddate(getEnd());
-            milestoneService.updateWithSession(milestone, AppContext.getUsername());
+            milestoneService.updateWithSession(milestone, UserUIContext.getUsername());
         } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
             RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-            SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+            SimpleRisk risk = riskService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
             risk.setStartdate(getStart());
             risk.setEnddate(getEnd());
-            riskService.updateWithSession(risk, AppContext.getUsername());
+            riskService.updateWithSession(risk, UserUIContext.getUsername());
         }
     }
 }

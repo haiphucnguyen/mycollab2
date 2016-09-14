@@ -11,7 +11,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.pro.module.project.ui.components.FeatureSelectionBox;
 import com.mycollab.module.project.i18n.*;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.BlockWidget;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
@@ -29,7 +29,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
     private static final long serialVersionUID = 1L;
 
     public CustomizeFeatureComponent() {
-        super(AppContext.getMessage(ProjectSettingI18nEnum.WIDGET_CUSTOMIZE_FEATURES));
+        super(UserUIContext.getMessage(ProjectSettingI18nEnum.WIDGET_CUSTOMIZE_FEATURES));
         constructBody();
     }
 
@@ -46,31 +46,31 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
         final FeatureSelectionBox displayMsgSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE),
-                AppContext.getMessage(MessageI18nEnum.LIST),
+                UserUIContext.getMessage(MessageI18nEnum.LIST),
                 customizeView.getDisplaymessage());
         leftColLayout.addComponent(displayMsgSelection);
 
         final FeatureSelectionBox displayPhaseSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE),
-                AppContext.getMessage(MilestoneI18nEnum.LIST),
+                UserUIContext.getMessage(MilestoneI18nEnum.LIST),
                 customizeView.getDisplaymilestone());
         leftColLayout.addComponent(displayPhaseSelection);
 
         final FeatureSelectionBox displayTaskSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK),
-                AppContext.getMessage(TaskI18nEnum.LIST),
+                UserUIContext.getMessage(TaskI18nEnum.LIST),
                 customizeView.getDisplaytask());
         leftColLayout.addComponent(displayTaskSelection);
 
         final FeatureSelectionBox displayBugSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG),
-                AppContext.getMessage(BugI18nEnum.LIST),
+                UserUIContext.getMessage(BugI18nEnum.LIST),
                 customizeView.getDisplaybug());
         leftColLayout.addComponent(displayBugSelection);
 
         final FeatureSelectionBox displayPageSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE),
-                AppContext.getMessage(PageI18nEnum.LIST),
+                UserUIContext.getMessage(PageI18nEnum.LIST),
                 customizeView.getDisplaypage());
         leftColLayout.addComponent(displayPageSelection);
 
@@ -80,38 +80,38 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
         final FeatureSelectionBox displayFileSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
                 customizeView.getDisplayfile());
         rightColLayout.addComponent(displayFileSelection);
 
         final FeatureSelectionBox displayRiskSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK),
-                AppContext.getMessage(RiskI18nEnum.LIST),
+                UserUIContext.getMessage(RiskI18nEnum.LIST),
                 customizeView.getDisplayrisk());
         rightColLayout.addComponent(displayRiskSelection);
 
         final FeatureSelectionBox displayTimeSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
                 customizeView.getDisplaytimelogging());
         rightColLayout.addComponent(displayTimeSelection);
 
         final FeatureSelectionBox displayStandupSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
                 customizeView.getDisplaystandup());
         rightColLayout.addComponent(displayStandupSelection);
 
         final FeatureSelectionBox displayInvoiceSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE),
-                AppContext.getMessage(InvoiceI18nEnum.LIST),
+                UserUIContext.getMessage(InvoiceI18nEnum.LIST),
                 customizeView.getDisplayinvoice());
         rightColLayout.addComponent(displayInvoiceSelection);
 
         layout.addComponent(rightColLayout);
         body.addComponent(layout);
 
-        MButton updateFeaturesBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
+        MButton updateFeaturesBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
             customizeView.setDisplaymessage(displayMsgSelection.getSelected());
             customizeView.setDisplaymilestone(displayPhaseSelection.getSelected());
             customizeView.setDisplaytask(displayTaskSelection.getSelected());
@@ -125,9 +125,9 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
             ProjectCustomizeViewService projectCustomizeService = AppContextUtil.getSpringBean(ProjectCustomizeViewService.class);
             if (customizeView.getId() == null) {
-                projectCustomizeService.saveWithSession(customizeView, AppContext.getUsername());
+                projectCustomizeService.saveWithSession(customizeView, UserUIContext.getUsername());
             } else {
-                projectCustomizeService.updateWithSession(customizeView, AppContext.getUsername());
+                projectCustomizeService.updateWithSession(customizeView, UserUIContext.getUsername());
             }
 
             CurrentProjectVariables.getProject().setCustomizeView(customizeView);

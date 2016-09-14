@@ -26,7 +26,7 @@ import com.mycollab.module.crm.domain.Contact;
 import com.mycollab.module.crm.domain.SimpleOpportunity;
 import com.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.mycollab.module.crm.i18n.OpportunityI18nEnum;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -44,7 +44,7 @@ public class ContactRelatedOpportunityView extends AbstractRelatedListView<Simpl
     }
 
     private void initUI() {
-        this.setCaption(AppContext.getMessage(OpportunityI18nEnum.M_TITLE_RELATED_OPPORTUNITIES));
+        this.setCaption(UserUIContext.getMessage(OpportunityI18nEnum.M_TITLE_RELATED_OPPORTUNITIES));
         itemList = new OpportunityListDisplay();
         this.setContent(itemList);
     }
@@ -56,7 +56,7 @@ public class ContactRelatedOpportunityView extends AbstractRelatedListView<Simpl
 
     private void loadOpportunities() {
         final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-        criteria.setSaccountid(NumberSearchField.equal(AppContext.getAccountId()));
+        criteria.setSaccountid(NumberSearchField.equal(UserUIContext.getAccountId()));
         criteria.setContactId(NumberSearchField.equal(contact.getId()));
         setSearchCriteria(criteria);
     }
@@ -73,13 +73,13 @@ public class ContactRelatedOpportunityView extends AbstractRelatedListView<Simpl
 
         MVerticalLayout addBtns = new MVerticalLayout().withFullWidth();
 
-        Button newOpportunityBtn = new Button(AppContext.getMessage(OpportunityI18nEnum.NEW), clickEvent -> fireNewRelatedItem(""));
+        Button newOpportunityBtn = new Button(UserUIContext.getMessage(OpportunityI18nEnum.NEW), clickEvent -> fireNewRelatedItem(""));
         addBtns.addComponent(newOpportunityBtn);
 
-        Button selectOpportunityBtn = new Button(AppContext.getMessage(OpportunityI18nEnum.M_TITLE_SELECT_OPPORTUNITIES), clickEvent -> {
+        Button selectOpportunityBtn = new Button(UserUIContext.getMessage(OpportunityI18nEnum.M_TITLE_SELECT_OPPORTUNITIES), clickEvent -> {
             ContactOpportunitySelectionView opportunitySelectionView = new ContactOpportunitySelectionView(ContactRelatedOpportunityView.this);
             OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-            criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+            criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
             opportunitySelectionView.setSearchCriteria(criteria);
             EventBusFactory.getInstance().post(new ShellEvent.PushView(ContactRelatedOpportunityView.this, opportunitySelectionView));
         });

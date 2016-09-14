@@ -12,7 +12,7 @@ import com.mycollab.module.user.domain.AccountTheme;
 import com.mycollab.module.user.ui.SettingAssetsManager;
 import com.mycollab.module.user.ui.SettingUIConstants;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AccountAssetsResolver;
@@ -61,17 +61,17 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
 
 
         ELabel viewTitle = ELabel.h2(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING).getHtml() + " " +
-                AppContext.getMessage(ThemeI18nEnum.OPT_THEME_CUSTOMIZATION));
+                UserUIContext.getMessage(ThemeI18nEnum.OPT_THEME_CUSTOMIZATION));
 
-        MButton saveBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
+        MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.SaveTheme(this, accountTheme)))
                 .withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
-        saveBtn.setVisible(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+        saveBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
-        MButton resetToDefaultBtn = new MButton(AppContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
+        MButton resetToDefaultBtn = new MButton(UserUIContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.ResetTheme(ThemeCustomizeViewImpl.this, null)))
                 .withStyleName(WebUIConstants.BUTTON_DANGER);
-        resetToDefaultBtn.setVisible(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+        resetToDefaultBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         MHorizontalLayout controlButtons = new MHorizontalLayout(viewTitle, resetToDefaultBtn, saveBtn).withFullWidth()
                 .withMargin(new MarginInfo(true, true, false, true)).expand(viewTitle);
@@ -82,7 +82,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         FormContainer blockLayout = new FormContainer();
 
         MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(true).withFullWidth();
-        blockLayout.addSection(AppContext.getMessage(SettingCommonI18nEnum.FORM_TOP_MENU), blockBody);
+        blockLayout.addSection(UserUIContext.getMessage(SettingCommonI18nEnum.FORM_TOP_MENU), blockBody);
 
         GridLayout propertyLayout = new GridLayout(2, 4);
         propertyLayout.setSpacing(true);
@@ -95,7 +95,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setTopmenubg(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label(AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)), 0, 0);
+        propertyLayout.addComponent(new Label(UserUIContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)), 0, 0);
         propertyLayout.addComponent(topMenuBg, 1, 0);
 
         CustomColorPickerArea topMenuText = new CustomColorPickerArea(accountTheme.getTopmenutext());
@@ -103,7 +103,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setTopmenutext(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label(AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU_TEXT)), 0, 1);
+        propertyLayout.addComponent(new Label(UserUIContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU_TEXT)), 0, 1);
         propertyLayout.addComponent(topMenuText, 1, 1);
 
         CustomColorPickerArea topMenuBgSelected = new CustomColorPickerArea(accountTheme.getTopmenubgselected());
@@ -111,7 +111,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setTopmenubgselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label(AppContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU)), 0, 2);
+        propertyLayout.addComponent(new Label(UserUIContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU)), 0, 2);
         propertyLayout.addComponent(topMenuBgSelected, 1, 2);
 
         CustomColorPickerArea topMenuTextSelected = new CustomColorPickerArea(accountTheme.getTopmenutextselected());
@@ -119,7 +119,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setTopmenutextselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label(AppContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU_TEXT)), 0, 3);
+        propertyLayout.addComponent(new Label(UserUIContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU_TEXT)), 0, 3);
         propertyLayout.addComponent(topMenuTextSelected, 1, 3);
 
         blockBody.addComponent(propertyLayout);
@@ -147,9 +147,9 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             }
         };
 
-        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_CRM), VaadinIcons.MONEY, clickListener);
-        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT), VaadinIcons.TASKS, clickListener);
-        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT), VaadinIcons.SUITCASE, clickListener);
+        serviceMenu.addService(UserUIContext.getMessage(GenericI18Enum.MODULE_CRM), VaadinIcons.MONEY, clickListener);
+        serviceMenu.addService(UserUIContext.getMessage(GenericI18Enum.MODULE_PROJECT), VaadinIcons.TASKS, clickListener);
+        serviceMenu.addService(UserUIContext.getMessage(GenericI18Enum.MODULE_DOCUMENT), VaadinIcons.SUITCASE, clickListener);
         serviceMenu.selectService(0);
 
         previewLayout.addComponent(serviceMenu, "serviceMenu");
@@ -161,7 +161,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         FormContainer blockLayout = new FormContainer();
         MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(true).withFullWidth();
 
-        blockLayout.addSection(AppContext.getMessage(ThemeI18nEnum.OPT_VERTICAL_MENU), blockBody);
+        blockLayout.addSection(UserUIContext.getMessage(ThemeI18nEnum.OPT_VERTICAL_MENU), blockBody);
 
         GridLayout propertyLayout = new GridLayout(2, 4);
         propertyLayout.setSpacing(true);
@@ -174,7 +174,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setVtabsheetbg(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label(AppContext.getMessage(ThemeI18nEnum.OPT_NORMAL_MENU)), 0, 0);
+        propertyLayout.addComponent(new Label(UserUIContext.getMessage(ThemeI18nEnum.OPT_NORMAL_MENU)), 0, 0);
         propertyLayout.addComponent(vTabsheetBg, 1, 0);
 
         CustomColorPickerArea vTabsheetText = new CustomColorPickerArea(accountTheme.getVtabsheettext());
@@ -182,7 +182,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setVtabsheettext(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label(AppContext.getMessage(ThemeI18nEnum.OPT_NORMAL_MENU_TEXT)), 0, 1);
+        propertyLayout.addComponent(new Label(UserUIContext.getMessage(ThemeI18nEnum.OPT_NORMAL_MENU_TEXT)), 0, 1);
         propertyLayout.addComponent(vTabsheetText, 1, 1);
 
         CustomColorPickerArea vTabsheetBgSelected = new CustomColorPickerArea(accountTheme.getVtabsheetbgselected());
@@ -190,7 +190,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setVtabsheetbgselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label(AppContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU)), 0, 2);
+        propertyLayout.addComponent(new Label(UserUIContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU)), 0, 2);
         propertyLayout.addComponent(vTabsheetBgSelected, 1, 2);
 
         CustomColorPickerArea vTabsheetTextSelected = new CustomColorPickerArea(accountTheme.getVtabsheettextselected());
@@ -198,7 +198,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
             accountTheme.setVtabsheettextselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        propertyLayout.addComponent(new Label(AppContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU_TEXT)), 0, 3);
+        propertyLayout.addComponent(new Label(UserUIContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU_TEXT)), 0, 3);
         propertyLayout.addComponent(vTabsheetTextSelected, 1, 3);
 
         blockBody.addComponent(propertyLayout);
@@ -218,9 +218,9 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         tabsheetDemo.getNavigatorWrapper().addStyleName("sidebar-menu");
         tabsheetDemo.getNavigatorWrapper().setWidth("250px");
 
-        tabsheetDemo.addTab(new VerticalLayout(), "dashboard", AppContext.getMessage(GenericI18Enum.VIEW_DASHBOARD));
-        tabsheetDemo.addTab(new VerticalLayout(), "bugs", AppContext.getMessage(BugI18nEnum.LIST));
-        tabsheetDemo.addTab(new VerticalLayout(), "components", AppContext.getMessage(ComponentI18nEnum.LIST));
+        tabsheetDemo.addTab(new VerticalLayout(), "dashboard", UserUIContext.getMessage(GenericI18Enum.VIEW_DASHBOARD));
+        tabsheetDemo.addTab(new VerticalLayout(), "bugs", UserUIContext.getMessage(BugI18nEnum.LIST));
+        tabsheetDemo.addTab(new VerticalLayout(), "components", UserUIContext.getMessage(ComponentI18nEnum.LIST));
 
         tabsheetDemo.selectTab("dashboard");
         previewLayout.addComponent(tabsheetDemo);
@@ -231,7 +231,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         FormContainer blockLayout = new FormContainer();
 
         MVerticalLayout blockBody = new MVerticalLayout();
-        blockLayout.addSection(AppContext.getMessage(ThemeI18nEnum.OPT_BUTTONS), blockBody);
+        blockLayout.addSection(UserUIContext.getMessage(ThemeI18nEnum.OPT_BUTTONS), blockBody);
 
         GridLayout propertyLayout = new GridLayout(3, 1);
         propertyLayout.setStyleName("example-block");
@@ -246,7 +246,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         actionBtnPanel.setSpacing(true);
         propertyLayout.addComponent(actionBtnPanel, 0, 0);
 
-        Button exampleActionBtn = new Button(AppContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
+        Button exampleActionBtn = new Button(UserUIContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
         exampleActionBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
         actionBtnPanel.addComponent(exampleActionBtn);
 
@@ -280,7 +280,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         optionBtnPanel.setMargin(false);
         propertyLayout.addComponent(optionBtnPanel, 1, 0);
 
-        Button exampleOptionBtn = new Button(AppContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
+        Button exampleOptionBtn = new Button(UserUIContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
         exampleOptionBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
         optionBtnPanel.addComponent(exampleOptionBtn);
 
@@ -311,7 +311,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         dangerBtnPanel.setSizeUndefined();
         propertyLayout.addComponent(dangerBtnPanel, 2, 0);
 
-        Button exampleDangerBtn = new Button(AppContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
+        Button exampleDangerBtn = new Button(UserUIContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
         exampleDangerBtn.setStyleName(WebUIConstants.BUTTON_DANGER);
         dangerBtnPanel.addComponent(exampleDangerBtn);
 

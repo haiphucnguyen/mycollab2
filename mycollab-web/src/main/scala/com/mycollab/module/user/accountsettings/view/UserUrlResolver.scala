@@ -20,9 +20,9 @@ import com.mycollab.eventmanager.EventBusFactory
 import com.mycollab.module.user.domain.SimpleUser
 import com.mycollab.module.user.events.UserEvent
 import com.mycollab.module.user.service.UserService
-import com.mycollab.vaadin.AppContext
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.spring.AppContextUtil
+import com.mycollab.vaadin.UserUIContext
 
 /**
   * @author MyCollab Ltd
@@ -50,7 +50,7 @@ class UserUrlResolver extends AccountSettingUrlResolver {
     protected override def handlePage(params: String*) {
       val username = UrlTokenizer(params(0)).getString
       val userService = AppContextUtil.getSpringBean(classOf[UserService])
-      val user = userService.findUserByUserNameInAccount(username, AppContext.getAccountId)
+      val user = userService.findUserByUserNameInAccount(username, UserUIContext.getAccountId)
       EventBusFactory.getInstance().post(new UserEvent.GotoEdit(EditUrlResolver.this, user))
     }
   }

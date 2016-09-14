@@ -23,7 +23,7 @@ import com.mycollab.module.ecm.StorageNames;
 import com.mycollab.module.ecm.domain.ExternalFolder;
 import com.mycollab.module.ecm.domain.Folder;
 import com.mycollab.module.file.domain.criteria.FileSearchCriteria;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.events.SearchHandler;
 import com.mycollab.vaadin.mvp.CacheableComponent;
@@ -68,7 +68,7 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent, Ha
         }));
 
         this.select(0);
-        Button documentBtnLink = generateBreadcrumbLink(AppContext.getMessage(FileI18nEnum.OPT_MY_DOCUMENTS), clickEvent -> {
+        Button documentBtnLink = generateBreadcrumbLink(UserUIContext.getMessage(FileI18nEnum.OPT_MY_DOCUMENTS), clickEvent -> {
             FileSearchCriteria criteria = new FileSearchCriteria();
             criteria.setBaseFolder(rootFolderPath);
             criteria.setRootFolder(rootFolderPath);

@@ -17,7 +17,13 @@
 package com.mycollab.vaadin;
 
 import com.mycollab.common.SessionIdGenerator;
+import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.db.arguments.GroupIdProvider;
+import com.mycollab.module.billing.SubDomainNotExistException;
+import com.mycollab.module.user.domain.BillingAccount;
+import com.mycollab.module.user.service.BillingAccountService;
+import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.ui.ThemeManager;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
@@ -39,12 +45,12 @@ public abstract class MyCollabUI extends UI {
         GroupIdProvider.registerAccountIdProvider(new GroupIdProvider() {
             @Override
             public Integer getGroupId() {
-                return AppContext.getAccountId();
+                return UserUIContext.getAccountId();
             }
 
             @Override
             public String getGroupRequestedUser() {
-                return AppContext.getUsername();
+                return UserUIContext.getUsername();
             }
         });
 
@@ -59,7 +65,7 @@ public abstract class MyCollabUI extends UI {
     /**
      * Context of current logged in user
      */
-    protected AppContext currentContext;
+    protected UserUIContext currentContext;
 
     protected String initialSubDomain = "1";
     private String currentFragmentUrl = "";
@@ -75,6 +81,15 @@ public abstract class MyCollabUI extends UI {
 
     final protected void postSetupApp(VaadinRequest request) {
         initialSubDomain = Utils.getSubDomain(request);
+        BillingAccountService billingService = AppContextUtil.getSpringBean(BillingAccountService.class);
+        BillingAccount account = billingService.getAccountByDomain(initialSubDomain);
+
+        if (account == null) {
+            throw new SubDomainNotExistException(UserUIContext.getMessage(ErrorI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, initialSubDomain));
+        } else {
+            Integer accountId = account.getId();
+            ThemeManager.loadDesktopTheme(accountId);
+        }
     }
 
     public void setAttribute(String key, Object value) {

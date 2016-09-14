@@ -17,7 +17,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -54,11 +54,11 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
             view.editItem(bug);
 
             if (bug.getId() == null) {
-                AppContext.addFragment("project/bug/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
-                        AppContext.getMessage(BugI18nEnum.NEW));
+                UserUIContext.addFragment("project/bug/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+                        UserUIContext.getMessage(BugI18nEnum.NEW));
             } else {
-                AppContext.addFragment(ProjectLinkGenerator.generateBugEditLink(bug.getBugkey(), bug.getProjectShortName()),
-                        AppContext.getMessage(BugI18nEnum.DETAIL));
+                UserUIContext.addFragment(ProjectLinkGenerator.generateBugEditLink(bug.getBugkey(), bug.getProjectShortName()),
+                        UserUIContext.getMessage(BugI18nEnum.DETAIL));
             }
         } else {
             throw new SecureAccessException();
@@ -68,16 +68,16 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
     private void saveBug(SimpleBug bug) {
         BugService bugService = AppContextUtil.getSpringBean(BugService.class);
         bug.setProjectid(CurrentProjectVariables.getProjectId());
-        bug.setSaccountid(AppContext.getAccountId());
+        bug.setSaccountid(UserUIContext.getAccountId());
         ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
         if (bug.getId() == null) {
             bug.setStatus(BugStatus.Open.name());
-            bug.setLogby(AppContext.getUsername());
-            bug.setSaccountid(AppContext.getAccountId());
-            int bugId = bugService.saveWithSession(bug, AppContext.getUsername());
+            bug.setLogby(UserUIContext.getUsername());
+            bug.setSaccountid(UserUIContext.getAccountId());
+            int bugId = bugService.saveWithSession(bug, UserUIContext.getUsername());
             uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.BUG, bugId);
         } else {
-            bugService.updateWithSession(bug, AppContext.getUsername());
+            bugService.updateWithSession(bug, UserUIContext.getUsername());
             uploadField.saveContentsToRepo();
         }
     }

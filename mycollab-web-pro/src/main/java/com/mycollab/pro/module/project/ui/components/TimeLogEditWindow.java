@@ -13,7 +13,7 @@ import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.DoubleField;
@@ -95,7 +95,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
 
         tableItem.addGeneratedColumn("logforday", (source, itemId, columnId) -> {
             SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
-            return new Label(AppContext.formatDate(monitorItem.getLogforday()));
+            return new Label(UserUIContext.formatDate(monitorItem.getLogforday()));
         });
 
         tableItem.addGeneratedColumn("logvalue", (source, itemId, columnId) -> {
@@ -120,13 +120,13 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         tableItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
             final SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
             MButton deleteBtn = new MButton("", clickEvent -> {
-                itemTimeLoggingService.removeWithSession(itemTimeLogging, AppContext.getUsername(), AppContext.getAccountId());
+                itemTimeLoggingService.removeWithSession(itemTimeLogging, UserUIContext.getUsername(), UserUIContext.getAccountId());
                 loadTimeValue();
                 hasTimeChange = true;
             }).withIcon(FontAwesome.TRASH_O).withStyleName(WebUIConstants.BUTTON_ICON_ONLY);
             itemTimeLogging.setExtraData(deleteBtn);
 
-            deleteBtn.setVisible(CurrentProjectVariables.isAdmin() || AppContext.getUsername().equals(itemTimeLogging.getLoguser()));
+            deleteBtn.setVisible(CurrentProjectVariables.isAdmin() || UserUIContext.getUsername().equals(itemTimeLogging.getLoguser()));
             return deleteBtn;
         });
 
@@ -140,7 +140,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
 
         final MVerticalLayout totalLayout = new MVerticalLayout().withStyleName(WebUIConstants.BOX);
         spentTimePanel.addComponent(totalLayout);
-        Label lbTimeInstructTotal = new Label(AppContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_SPENT_HOURS));
+        Label lbTimeInstructTotal = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_SPENT_HOURS));
         totalLayout.addComponent(lbTimeInstructTotal);
         totalSpentTimeLbl = new ELabel("_").withStyleName(ValoTheme.LABEL_LARGE, ValoTheme.LABEL_BOLD);
         totalLayout.addComponent(totalSpentTimeLbl);
@@ -155,10 +155,10 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         forDateField = new PopupDateFieldExt();
         forDateField.setValue(new GregorianCalendar().getTime());
 
-        isBillableField = new CheckBox(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE), true);
-        isOvertimeField = new CheckBox(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME), false);
+        isBillableField = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE), true);
+        isOvertimeField = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME), false);
 
-        addBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), clickEvent -> {
+        addBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD), clickEvent -> {
             double d = newTimeInputField.getValue();
             if (d > 0) {
                 hasTimeChange = true;
@@ -177,7 +177,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         final MVerticalLayout updateLayout = new MVerticalLayout().withStyleName(WebUIConstants.BOX);
         remainTimePanel.addComponent(updateLayout);
 
-        final Label lbTimeInstructTotal = new Label(AppContext.getMessage(TimeTrackingI18nEnum.OPT_REMAINING_WORK_HOURS));
+        final Label lbTimeInstructTotal = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_REMAINING_WORK_HOURS));
         updateLayout.addComponent(lbTimeInstructTotal);
         remainTimeLbl = new Label("_");
         remainTimeLbl.addStyleName(ValoTheme.LABEL_LARGE);
@@ -193,7 +193,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         addLayout.addComponent(remainTimeInputField);
         addLayout.setComponentAlignment(remainTimeInputField, Alignment.MIDDLE_LEFT);
 
-        addBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
+        addBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
             double d = remainTimeInputField.getValue();
             if (d >= 0) {
                 hasTimeChange = true;

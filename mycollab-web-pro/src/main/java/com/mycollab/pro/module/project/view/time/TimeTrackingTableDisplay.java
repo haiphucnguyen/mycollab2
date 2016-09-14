@@ -16,7 +16,7 @@ import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -136,7 +136,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
 
         this.addGeneratedColumn("logforday", (source, itemId, columnId) -> {
                     final SimpleItemTimeLogging timeLogging = getBeanByIndex(itemId);
-                    return new Label(AppContext.formatDate(timeLogging.getLogforday()));
+                    return new Label(UserUIContext.formatDate(timeLogging.getLogforday()));
                 }
         );
 

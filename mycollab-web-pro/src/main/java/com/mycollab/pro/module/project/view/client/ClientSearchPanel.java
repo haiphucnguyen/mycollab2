@@ -12,7 +12,7 @@ import com.mycollab.module.project.events.ClientEvent;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
 import com.mycollab.vaadin.web.ui.DynamicQueryParamLayout;
@@ -40,15 +40,15 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.ACCOUNT, AppContext.getMessage(ClientI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.ACCOUNT, UserUIContext.getMessage(ClientI18nEnum.LIST));
     }
 
     @Override
     protected Component buildExtraControls() {
-        MButton createBtn = new MButton(AppContext.getMessage(ClientI18nEnum.NEW),
+        MButton createBtn = new MButton(UserUIContext.getMessage(ClientI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
-        createBtn.setVisible(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+        createBtn.setVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
         return createBtn;
     }
 
@@ -102,20 +102,20 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
 
         @Override
         public ComponentContainer constructBody() {
-            nameField = new MTextField().withInputPrompt(AppContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
+            nameField = new MTextField().withInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
                     .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
 
-            myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
+            myItemCheckbox = new CheckBox(UserUIContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
             myItemCheckbox.addStyleName(ValoTheme.CHECKBOX_SMALL);
 
-            MButton searchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
+            MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
                     .withIcon(FontAwesome.SEARCH).withStyleName(WebUIConstants.BUTTON_ACTION)
                     .withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
-            MButton cancelBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
+            MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
                     .withStyleName(WebUIConstants.BUTTON_OPTION);
 
-            MButton advancedSearchBtn = new MButton(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
+            MButton advancedSearchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
                     clickEvent -> moveToAdvancedSearchLayout()).withStyleName(WebUIConstants.BUTTON_LINK);
 
             return new MHorizontalLayout(nameField, myItemCheckbox, searchBtn, cancelBtn, advancedSearchBtn)
@@ -130,10 +130,10 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
         @Override
         protected AccountSearchCriteria fillUpSearchCriteria() {
             AccountSearchCriteria searchCriteria = new AccountSearchCriteria();
-            searchCriteria.setSaccountid(NumberSearchField.equal(AppContext.getAccountId()));
+            searchCriteria.setSaccountid(NumberSearchField.equal(UserUIContext.getAccountId()));
             searchCriteria.setAccountname(StringSearchField.and(nameField.getValue().trim()));
             if (myItemCheckbox.getValue()) {
-                searchCriteria.setAssignUser(StringSearchField.and(AppContext.getUsername()));
+                searchCriteria.setAssignUser(StringSearchField.and(UserUIContext.getUsername()));
             } else {
                 searchCriteria.setAssignUsers(null);
             }

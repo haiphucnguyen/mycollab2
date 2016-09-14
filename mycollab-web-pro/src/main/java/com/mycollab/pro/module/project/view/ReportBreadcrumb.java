@@ -6,7 +6,7 @@ import com.mycollab.module.project.events.ReportEvent;
 import com.mycollab.module.project.i18n.BreadcrumbI18nEnum;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectReportI18nEnum;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.CacheableComponent;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.breadcrumb.Breadcrumb;
@@ -32,44 +32,44 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
 
     public void gotoReportDashboard() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS)));
-        AppContext.addFragment("project/reports", AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS)));
+        UserUIContext.addFragment("project/reports", UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS));
     }
 
     public void gotoStandupList(Date onDate) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP)));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP)));
         if (onDate == null) {
-            AppContext.addFragment("project/reports/standup/list/",
-                    AppContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP));
+            UserUIContext.addFragment("project/reports/standup/list/",
+                    UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP));
         } else {
-            AppContext.addFragment("project/reports/standup/list/" + AppContext.formatDate(onDate).replace('/', '-'),
-                    AppContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP));
+            UserUIContext.addFragment("project/reports/standup/list/" + UserUIContext.formatDate(onDate).replace('/', '-'),
+                    UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP));
         }
     }
 
     public void gotoTimesheetReport() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET)));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET)));
     }
 
     public void gotoWeeklyTimingReport() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY)));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY)));
     }
 
     public void gotoUserWorkloadReport() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD)));
-        AppContext.addFragment(ProjectLinkGenerator.generateUsersWorkloadReportLink(), AppContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
+        this.addLink(new Button(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD)));
+        UserUIContext.addFragment(ProjectLinkGenerator.generateUsersWorkloadReportLink(), UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
     }
 
     private static class GotoReportsListener implements Button.ClickListener {

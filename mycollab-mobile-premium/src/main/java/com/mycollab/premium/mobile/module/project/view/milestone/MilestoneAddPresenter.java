@@ -13,7 +13,7 @@ import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -51,10 +51,10 @@ public class MilestoneAddPresenter extends AbstractProjectPresenter<MilestoneAdd
             super.onGo(container, data);
 
             if (milestone.getId() == null) {
-                AppContext.addFragment("project/milestone/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
-                        AppContext.getMessage(MilestoneI18nEnum.NEW));
+                UserUIContext.addFragment("project/milestone/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+                        UserUIContext.getMessage(MilestoneI18nEnum.NEW));
             } else {
-                AppContext.addFragment("project/milestone/edit/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(),
+                UserUIContext.addFragment("project/milestone/edit/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(),
                         milestone.getId()), milestone.getName());
             }
         } else {
@@ -65,13 +65,13 @@ public class MilestoneAddPresenter extends AbstractProjectPresenter<MilestoneAdd
     private void saveMilestone(Milestone milestone) {
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
         milestone.setProjectid(CurrentProjectVariables.getProjectId());
-        milestone.setSaccountid(AppContext.getAccountId());
+        milestone.setSaccountid(UserUIContext.getAccountId());
 
         if (milestone.getId() == null) {
-            milestone.setCreateduser(AppContext.getUsername());
-            milestoneService.saveWithSession(milestone, AppContext.getUsername());
+            milestone.setCreateduser(UserUIContext.getUsername());
+            milestoneService.saveWithSession(milestone, UserUIContext.getUsername());
         } else {
-            milestoneService.updateWithSession(milestone, AppContext.getUsername());
+            milestoneService.updateWithSession(milestone, UserUIContext.getUsername());
         }
 
     }

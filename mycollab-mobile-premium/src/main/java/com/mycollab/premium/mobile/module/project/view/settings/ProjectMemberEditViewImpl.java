@@ -19,7 +19,7 @@ import com.mycollab.module.project.i18n.RolePermissionI18nEnum;
 import com.mycollab.module.project.service.ProjectRoleService;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppContext;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -66,20 +66,20 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         permissionGroup.removeAllComponents();
         if (roleId != null && roleId > 0) {
             ProjectRoleService roleService = AppContextUtil.getSpringBean(ProjectRoleService.class);
-            SimpleProjectRole role = roleService.findById(roleId, AppContext.getAccountId());
+            SimpleProjectRole role = roleService.findById(roleId, UserUIContext.getAccountId());
             if (role != null) {
                 final PermissionMap permissionMap = role.getPermissionMap();
                 for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
                     final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
-                    Label permissionLbl = new Label(AppContext.getPermissionCaptionValue(permissionMap, permissionPath));
-                    permissionLbl.setCaption(AppContext.getMessage(RolePermissionI18nEnum.valueOf(permissionPath)));
+                    Label permissionLbl = new Label(UserUIContext.getPermissionCaptionValue(permissionMap, permissionPath));
+                    permissionLbl.setCaption(UserUIContext.getMessage(RolePermissionI18nEnum.valueOf(permissionPath)));
                     permissionGroup.addComponent(permissionLbl);
                 }
             }
         } else {
             for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
                 final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
-                Label permissionLbl = new Label(AppContext.getMessage(SecurityI18nEnum.ACCESS));
+                Label permissionLbl = new Label(UserUIContext.getMessage(SecurityI18nEnum.ACCESS));
                 permissionLbl.setCaption(permissionPath);
                 permissionGroup.addComponent(permissionLbl);
             }
@@ -95,11 +95,11 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
             final VerticalLayout layout = new VerticalLayout();
             layout.setMargin(false);
             layout.addStyleName(MobileUIConstants.FULL_WIDTH_COMP);
-            layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(ProjectMemberI18nEnum.FORM_INFORMATION_SECTION)));
+            layout.addComponent(FormSectionBuilder.build(UserUIContext.getMessage(ProjectMemberI18nEnum.FORM_INFORMATION_SECTION)));
 
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 2);
             layout.addComponent(informationLayout.getLayout());
-            layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS)));
+            layout.addComponent(FormSectionBuilder.build(UserUIContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS)));
             layout.addComponent(permissionGroup);
 
             return layout;
@@ -108,9 +108,9 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         @Override
         protected Component onAttachField(Object propertyId, Field<?> field) {
             if (ProjectMember.Field.username.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, AppContext.getMessage(ProjectMemberI18nEnum.FORM_USER), 0, 0);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(ProjectMemberI18nEnum.FORM_USER), 0, 0);
             } else if (ProjectMember.Field.projectroleid.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, AppContext.getMessage(ProjectMemberI18nEnum.FORM_ROLE), 0, 1);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(ProjectMemberI18nEnum.FORM_ROLE), 0, 1);
             }
             return null;
         }
