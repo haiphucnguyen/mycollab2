@@ -12,6 +12,7 @@ import com.mycollab.module.project.events.ClientEvent;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.mycollab.security.RolePermissionCollections;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
@@ -130,7 +131,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
         @Override
         protected AccountSearchCriteria fillUpSearchCriteria() {
             AccountSearchCriteria searchCriteria = new AccountSearchCriteria();
-            searchCriteria.setSaccountid(NumberSearchField.equal(UserUIContext.getAccountId()));
+            searchCriteria.setSaccountid(NumberSearchField.equal(MyCollabUI.getAccountId()));
             searchCriteria.setAccountname(StringSearchField.and(nameField.getValue().trim()));
             if (myItemCheckbox.getValue()) {
                 searchCriteria.setAssignUser(StringSearchField.and(UserUIContext.getUsername()));

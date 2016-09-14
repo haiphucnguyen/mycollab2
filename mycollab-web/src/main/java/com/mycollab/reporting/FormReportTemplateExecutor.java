@@ -36,6 +36,7 @@ import com.mycollab.form.view.builder.type.AbstractDynaField;
 import com.mycollab.form.view.builder.type.DynaForm;
 import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.formatter.DefaultFieldDisplayHandler;
 import com.mycollab.vaadin.ui.formatter.FieldGroupFormatter;
@@ -239,7 +240,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
 
         AuditLogService auditLogService = AppContextUtil.getSpringBean(AuditLogService.class);
         final AuditLogSearchCriteria logCriteria = new AuditLogSearchCriteria();
-        logCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        logCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         logCriteria.setType(StringSearchField.and(formReportLayout.getModuleName()));
         logCriteria.setTypeId(StringSearchField.and(typeId + ""));
         final int logCount = auditLogService.getTotalCount(logCriteria);

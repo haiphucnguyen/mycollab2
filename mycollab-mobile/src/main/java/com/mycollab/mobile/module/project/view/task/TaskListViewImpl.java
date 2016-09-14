@@ -44,6 +44,7 @@ import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -116,7 +117,7 @@ public class TaskListViewImpl extends AbstractListPageView<TaskSearchCriteria, S
                     .formatPrettyTime((task.getLastupdatedtime())))).withStyleName(UIConstants.META_INFO);
             metaInfoLayout.addComponent(lastUpdatedTimeLbl);
 
-            A assigneeLink = new A(ProjectLinkGenerator.generateProjectMemberFullLink(UserUIContext.getSiteUrl(),
+            A assigneeLink = new A(ProjectLinkGenerator.generateProjectMemberFullLink(MyCollabUI.getSiteUrl(),
                     CurrentProjectVariables.getProjectId(), task.getAssignuser()));
             assigneeLink.appendText(StringUtils.trim(task.getAssignUserFullName(), 30, true));
             Div assigneeDiv = new Div().appendText(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))

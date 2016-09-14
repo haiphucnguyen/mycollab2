@@ -27,6 +27,7 @@ import com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunityLeadSource;
 import com.mycollab.module.crm.service.OpportunityService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.ui.chart.PieChartWrapper;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import org.jfree.data.general.DefaultPieDataset;
@@ -80,7 +81,7 @@ public class OpportunityLeadSourceDashboard extends PieChartWrapper<OpportunityS
     @Override
     public void clickLegendItem(String key) {
         OpportunitySearchCriteria searchCriteria = new OpportunitySearchCriteria();
-        searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         searchCriteria.setLeadSources(new SetSearchField<>(key));
         EventBusFactory.getInstance().post(new OpportunityEvent.GotoList(this, searchCriteria));
     }

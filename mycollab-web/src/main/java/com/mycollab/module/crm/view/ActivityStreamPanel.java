@@ -39,6 +39,7 @@ import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.ui.ELabel;
@@ -85,7 +86,7 @@ public class ActivityStreamPanel extends CssLayout {
     public void display() {
         final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
         searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.CRM));
-        searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         searchCriteria.addOrderField(new SearchCriteria.OrderField("createdTime", SearchCriteria.DESC));
         this.activityStreamList.setSearchCriteria(searchCriteria);
     }
@@ -274,7 +275,7 @@ public class ActivityStreamPanel extends CssLayout {
             Img userAvatar = new Img("", StorageFactory.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
             A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(AccountLinkGenerator.generatePreviewFullUserLink(
-                    UserUIContext.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim
+                    MyCollabUI.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim
                     (activityStream.getCreatedUserFullName(), 30, true));
 
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(activityStream.getCreateduser()));

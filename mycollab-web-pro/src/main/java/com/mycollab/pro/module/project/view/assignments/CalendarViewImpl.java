@@ -30,6 +30,7 @@ import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.pro.module.project.view.risk.RiskAddWindow;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -135,22 +136,22 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
                 if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                     ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                    SimpleTask task = taskService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
+                    SimpleTask task = taskService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
                     UI.getCurrent().addWindow(new TaskAddWindow(task));
                 } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
                     MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
+                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
                     UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
                 } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
                     BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                    SimpleBug bug = bugService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
+                    SimpleBug bug = bugService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
                     UI.getCurrent().addWindow(new BugAddWindow(bug));
                 } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
                     RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                    SimpleRisk risk = riskService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
+                    SimpleRisk risk = riskService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
                     UI.getCurrent().addWindow(new RiskAddWindow(risk));
                 }
             }

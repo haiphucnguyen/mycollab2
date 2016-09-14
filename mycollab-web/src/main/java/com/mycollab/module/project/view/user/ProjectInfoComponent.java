@@ -47,6 +47,7 @@ import com.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.ui.ELabel;
@@ -103,8 +104,8 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         Component projectIcon = ProjectAssetsUtil.buildProjectLogo(project.getShortname(), project.getId(), project.getAvatarid(), 64);
         this.with(projectIcon).withAlign(projectIcon, Alignment.TOP_LEFT);
         ELabel headerLbl = ELabel.h2(project.getName());
-        headerLbl.setDescription(ProjectTooltipGenerator.generateToolTipProject(UserUIContext.getUserLocale(), UserUIContext.getDateFormat(),
-                project, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+        headerLbl.setDescription(ProjectTooltipGenerator.generateToolTipProject(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
+                project, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         headerLbl.addStyleName(UIConstants.TEXT_ELLIPSIS);
         MVerticalLayout headerLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
 
@@ -156,7 +157,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             if (project.getClientAvatarId() == null) {
                 clientDiv.appendText(FontAwesome.INSTITUTION.getHtml() + " ");
             } else {
-                Img clientImg = new Img("", StorageFactory.getEntityLogoPath(UserUIContext.getAccountId(), project.getClientAvatarId(), 16))
+                Img clientImg = new Img("", StorageFactory.getEntityLogoPath(MyCollabUI.getAccountId(), project.getClientAvatarId(), 16))
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 clientDiv.appendChild(clientImg).appendChild(DivLessFormatter.EMPTY_SPACE());
             }
@@ -326,7 +327,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                 MButton archiveProjectBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.BUTTON_ARCHIVE_PROJECT), clickEvent -> {
                     controlsBtn.setPopupVisible(false);
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.WINDOW_WARNING_TITLE, UserUIContext.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.WINDOW_WARNING_TITLE, MyCollabUI.getSiteName()),
                             UserUIContext.getMessage(ProjectCommonI18nEnum.DIALOG_CONFIRM_PROJECT_ARCHIVE_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -349,7 +350,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                 MButton deleteProjectBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.BUTTON_DELETE_PROJECT), clickEvent -> {
                     controlsBtn.setPopupVisible(false);
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                             UserUIContext.getMessage(ProjectCommonI18nEnum.DIALOG_CONFIRM_PROJECT_DELETE_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -357,7 +358,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                                 if (confirmDialog.isConfirmed()) {
                                     ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
                                     projectService.removeWithSession(CurrentProjectVariables.getProject(),
-                                            UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                            UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                     EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
                                 }
                             });

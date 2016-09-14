@@ -30,6 +30,7 @@ import com.mycollab.module.crm.service.TaskService;
 import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -65,7 +66,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
             @Override
             public void onDelete(final SimpleTask data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -73,7 +74,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
                             if (confirmDialog.isConfirmed()) {
                                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                                 taskService.removeWithSession(data,
-                                        UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                        UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                 EventBusFactory.getInstance().post(new ActivityEvent.GotoTodoList(this, null));
                             }
                         });
@@ -95,7 +96,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
             public void gotoNext(SimpleTask data) {
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                 TodoSearchCriteria criteria = new TodoSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = taskService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -110,7 +111,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
             public void gotoPrevious(SimpleTask data) {
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                 TodoSearchCriteria criteria = new TodoSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = taskService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -128,7 +129,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
             SimpleTask task;
             if (data.getParams() instanceof Integer) {
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
-                task = taskService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                task = taskService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
                 if (task == null) {
                     NotificationUtil.showRecordNotExistNotification();
                     return;

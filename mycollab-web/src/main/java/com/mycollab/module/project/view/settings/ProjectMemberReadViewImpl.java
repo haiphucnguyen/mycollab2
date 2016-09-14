@@ -41,6 +41,7 @@ import com.mycollab.module.project.view.settings.component.NotificationSettingWi
 import com.mycollab.module.project.view.user.ProjectActivityStreamPagedList;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -136,7 +137,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.PRJ));
         searchCriteria.setCreatedUser(StringSearchField.and(previewForm.getBean().getUsername()));
         searchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         activityStreamList.setSearchCriteria(searchCriteria);
     }
 
@@ -171,7 +172,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                     .withStyleName(WebUIConstants.BUTTON_LINK);
             memberInfo.addComponent(new MHorizontalLayout(memberLink, editNotificationBtn).alignAll(Alignment.MIDDLE_LEFT));
 
-            String memberRoleLinkPrefix = String.format("<a href=\"%s%s%s\"", UserUIContext.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
+            String memberRoleLinkPrefix = String.format("<a href=\"%s%s%s\"", MyCollabUI.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
                     ProjectLinkGenerator.generateRolePreviewLink(beanItem.getProjectid(), beanItem.getProjectroleid()));
             ELabel memberRole = new ELabel(ContentMode.HTML).withStyleName(UIConstants.META_INFO).withWidthUndefined();
             if (Boolean.TRUE.equals(beanItem.getIsadmin()) || beanItem.getProjectroleid() == null) {
@@ -182,7 +183,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             }
             memberInfo.addComponent(memberRole);
 
-            if (Boolean.TRUE.equals(UserUIContext.showEmailPublicly())) {
+            if (Boolean.TRUE.equals(MyCollabUI.showEmailPublicly())) {
                 Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", beanItem.getUsername(),
                         beanItem.getUsername())).withStyleName(UIConstants.META_INFO).withFullWidth();
                 memberInfo.addComponent(memberEmailLabel);

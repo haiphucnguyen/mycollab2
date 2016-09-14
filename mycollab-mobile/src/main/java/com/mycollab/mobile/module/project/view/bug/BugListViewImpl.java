@@ -44,6 +44,7 @@ import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -119,7 +120,7 @@ public class BugListViewImpl extends AbstractListPageView<BugSearchCriteria, Sim
                     .formatPrettyTime((bug.getLastupdatedtime())))).withStyleName(UIConstants.META_INFO);
             metaInfoLayout.addComponent(lastUpdatedTimeLbl);
 
-            A assigneeLink = new A(ProjectLinkGenerator.generateProjectMemberFullLink(UserUIContext.getSiteUrl(),
+            A assigneeLink = new A(ProjectLinkGenerator.generateProjectMemberFullLink(MyCollabUI.getSiteUrl(),
                     CurrentProjectVariables.getProjectId(), bug.getAssignuser()));
             assigneeLink.appendText(StringUtils.trim(bug.getAssignuserFullName(), 30, true));
             Div assigneeDiv = new Div().appendText(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))

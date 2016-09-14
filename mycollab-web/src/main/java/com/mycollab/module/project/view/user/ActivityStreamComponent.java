@@ -37,6 +37,7 @@ import com.mycollab.module.project.service.ProjectPageService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.ProjectLocalizationTypeMap;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -77,7 +78,7 @@ public class ActivityStreamComponent extends CssLayout {
             ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
             searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.PRJ));
             searchCriteria.setExtraTypeIds(new SetSearchField<>(prjKeys.toArray(new Integer[prjKeys.size()])));
-            searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+            searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
             this.activityStreamList.setSearchCriteria(searchCriteria);
         }
     }

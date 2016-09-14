@@ -10,6 +10,7 @@ import com.mycollab.mobile.ui.AbstractMobilePageView;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.SimpleMessage;
 import com.mycollab.module.project.i18n.MessageI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasEditFormHandlers;
 import com.mycollab.vaadin.events.IEditFormHandler;
@@ -88,7 +89,7 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
                 message.setTitle(subjectField.getValue());
                 message.setMessage(contentField.getValue());
                 message.setPosteduser(UserUIContext.getUsername());
-                message.setSaccountid(UserUIContext.getAccountId());
+                message.setSaccountid(MyCollabUI.getAccountId());
                 message.setIsstick(isStickField.getValue());
                 MessageAddViewImpl.this.fireSaveItem(message);
 

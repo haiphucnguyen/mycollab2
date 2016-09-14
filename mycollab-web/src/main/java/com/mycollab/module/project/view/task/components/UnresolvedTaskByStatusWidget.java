@@ -34,6 +34,7 @@ import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.view.task.ITaskStatusChartWidget;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -101,7 +102,7 @@ public class UnresolvedTaskByStatusWidget extends DepotWithChart {
         if (!groupItems.isEmpty()) {
             OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
             List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
-                    CurrentProjectVariables.getProjectId(), UserUIContext.getAccountId());
+                    CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
 
             for (OptionVal optionVal : optionVals) {
                 if (OptionI18nEnum.StatusI18nEnum.Closed.name().equals(optionVal.getTypeval())) {

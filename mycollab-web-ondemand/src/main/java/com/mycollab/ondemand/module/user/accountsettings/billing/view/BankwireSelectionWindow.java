@@ -5,6 +5,7 @@ import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.module.user.domain.BillingPlan;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -41,7 +42,7 @@ class BankwireSelectionWindow extends MWindow {
                 "</span>&nbsp;Projects").withWidthUndefined();
         MButton chargeBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE), event -> close()).withStyleName(WebUIConstants.BUTTON_ACTION);
         BrowserWindowOpener opener = new BrowserWindowOpener(billingPlan.getBanktransferpath() +
-                "?referrer=" + EnDecryptHelper.encryptText(UserUIContext.getAccountId() + ";" + billingPlan.getId()));
+                "?referrer=" + EnDecryptHelper.encryptText(MyCollabUI.getAccountId() + ";" + billingPlan.getId()));
         opener.extend(chargeBtn);
         planLayout = new MVerticalLayout(billingType, billingPrice, billingUser, billingStorage, billingProject)
                 .withWidth("200px");

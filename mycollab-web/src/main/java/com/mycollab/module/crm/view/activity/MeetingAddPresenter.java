@@ -26,6 +26,7 @@ import com.mycollab.module.crm.service.MeetingService;
 import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -75,7 +76,7 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
                 meeting = (MeetingWithBLOBs) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 MeetingService meetingService = AppContextUtil.getSpringBean(MeetingService.class);
-                meeting = meetingService.findByPrimaryKey((Integer) data.getParams(), UserUIContext.getAccountId());
+                meeting = meetingService.findByPrimaryKey((Integer) data.getParams(), MyCollabUI.getAccountId());
             }
             if (meeting == null) {
                 NotificationUtil.showRecordNotExistNotification();
@@ -100,7 +101,7 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 
     public void save(MeetingWithBLOBs item) {
         MeetingService meetingService = AppContextUtil.getSpringBean(MeetingService.class);
-        item.setSaccountid(UserUIContext.getAccountId());
+        item.setSaccountid(MyCollabUI.getAccountId());
         if (item.getId() == null) {
             meetingService.saveWithSession(item, UserUIContext.getUsername());
         } else {

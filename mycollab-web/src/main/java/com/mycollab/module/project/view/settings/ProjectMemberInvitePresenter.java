@@ -32,6 +32,7 @@ import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.shell.view.SystemUIChecker;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageView.ViewListener;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -79,7 +80,7 @@ public class ProjectMemberInvitePresenter extends AbstractPresenter<ProjectMembe
                 if (CollectionUtils.isNotEmpty(inviteEmails)) {
                     projectMemberService.inviteProjectMembers(inviteEmails.toArray(new String[inviteEmails.size()]),
                             CurrentProjectVariables.getProjectId(), inviteMembers.getRoleId(),
-                            UserUIContext.getUsername(), inviteMembers.getInviteMessage(), UserUIContext.getAccountId());
+                            UserUIContext.getUsername(), inviteMembers.getInviteMessage(), MyCollabUI.getAccountId());
 
                     ExtMailService mailService = AppContextUtil.getSpringBean(ExtMailService.class);
                     if (mailService.isMailSetupValid()) {

@@ -44,6 +44,7 @@ import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -106,7 +107,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             @Override
             protected String generateSmallAsHtmlAfterUpdate() {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                SimpleBug newBug = bugService.findById(bug.getId(), UserUIContext.getAccountId());
+                SimpleBug newBug = bugService.findById(bug.getId(), MyCollabUI.getAccountId());
                 String avatarLink = StorageFactory.getAvatarPath(newBug.getAssignUserAvatarId(), 16);
                 Img img = new Img(newBug.getAssignuserFullName(), avatarLink).setTitle(newBug.getAssignuserFullName())
                         .setCSSClass(UIConstants.CIRCLE_BOX);
@@ -450,7 +451,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
                     timeLogging.setType(ProjectTypeConstants.BUG);
                     timeLogging.setTypeid(bug.getId());
-                    timeLogging.setSaccountid(UserUIContext.getAccountId());
+                    timeLogging.setSaccountid(MyCollabUI.getAccountId());
                     timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
                     EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(BugBillableHoursPopupField.this));
 

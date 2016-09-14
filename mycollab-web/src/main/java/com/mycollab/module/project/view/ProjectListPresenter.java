@@ -23,6 +23,7 @@ import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.web.ui.DefaultMassEditActionHandler;
@@ -76,7 +77,7 @@ public class ProjectListPresenter extends ListSelectionPresenter<ProjectListView
 
     @Override
     public void doSearch(ProjectSearchCriteria searchCriteria) {
-        Collection<Integer> prjKeys = projectService.getProjectKeysUserInvolved(UserUIContext.getUsername(), UserUIContext.getAccountId());
+        Collection<Integer> prjKeys = projectService.getProjectKeysUserInvolved(UserUIContext.getUsername(), MyCollabUI.getAccountId());
         if (CollectionUtils.isNotEmpty(prjKeys)) {
             searchCriteria.setProjectKeys(new SetSearchField<>(prjKeys));
             super.doSearch(searchCriteria);

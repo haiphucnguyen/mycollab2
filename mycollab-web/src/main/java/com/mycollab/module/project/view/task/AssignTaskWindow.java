@@ -29,6 +29,7 @@ import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -102,7 +103,7 @@ public class AssignTaskWindow extends MWindow {
                             comment.setComment(commentArea.getValue());
                             comment.setCreatedtime(new GregorianCalendar().getTime());
                             comment.setCreateduser(UserUIContext.getUsername());
-                            comment.setSaccountid(UserUIContext.getAccountId());
+                            comment.setSaccountid(MyCollabUI.getAccountId());
                             comment.setType(ProjectTypeConstants.TASK);
                             comment.setTypeid("" + task.getId());
                             comment.setExtratypeid(CurrentProjectVariables.getProjectId());

@@ -36,6 +36,7 @@ import com.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.mycollab.module.project.i18n.MessageI18nEnum;
 import com.mycollab.module.project.service.MessageService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -137,7 +138,7 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
 
             ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
             List<Content> attachments = attachmentService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(
-                    UserUIContext.getAccountId(), message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
+                    MyCollabUI.getAccountId(), message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
             if (CollectionUtils.isNotEmpty(attachments)) {
                 CssLayout attachmentPanel = new CssLayout();
                 attachmentPanel.setStyleName("attachment-panel");

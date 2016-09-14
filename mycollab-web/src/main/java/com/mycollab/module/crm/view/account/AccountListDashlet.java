@@ -21,6 +21,7 @@ import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.crm.i18n.AccountI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.Depot;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -55,7 +56,7 @@ public class AccountListDashlet extends Depot {
 
     public void display() {
         final AccountSearchCriteria criteria = new AccountSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setAssignUser(StringSearchField.and(UserUIContext.getUsername()));
         tableItem.setSearchCriteria(criteria);
     }

@@ -31,6 +31,7 @@ import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.domain.User;
 import com.mycollab.module.user.ui.components.PreviewFormControlsGenerator;
 import com.mycollab.security.RolePermissionCollections;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.AbstractPageView;
@@ -112,7 +113,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         userFormLayout.addComponent(new Label(UserUIContext.formatDate(user.getDateofbirth())),
                 UserUIContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 0, 1);
 
-        if (Boolean.TRUE.equals(UserUIContext.showEmailPublicly())) {
+        if (Boolean.TRUE.equals(MyCollabUI.showEmailPublicly())) {
             userFormLayout.addComponent(ELabel.html(new A("mailto:" + user.getEmail()).appendText(user.getEmail()).write()),
                     UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL), 0, 2);
         } else {

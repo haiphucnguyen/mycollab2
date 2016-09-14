@@ -28,6 +28,7 @@ import com.mycollab.module.tracker.domain.Version;
 import com.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.mycollab.module.tracker.service.VersionService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.mycollab.vaadin.events.HasSearchHandlers;
@@ -98,8 +99,8 @@ public class VersionListViewImpl extends AbstractPageView implements VersionList
             } else if (bugVersion.getDuedate() != null && (bugVersion.getDuedate().before(new GregorianCalendar().getTime()))) {
                 b.addStyleName(WebUIConstants.LINK_OVERDUE);
             }
-            b.setDescription(ProjectTooltipGenerator.generateToolTipVersion(UserUIContext.getUserLocale(), UserUIContext.getDateFormat(),
-                    bugVersion, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            b.setDescription(ProjectTooltipGenerator.generateToolTipVersion(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
+                    bugVersion, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
         });
 

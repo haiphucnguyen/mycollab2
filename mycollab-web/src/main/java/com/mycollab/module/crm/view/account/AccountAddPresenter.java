@@ -31,6 +31,7 @@ import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -80,7 +81,7 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
                 account = (SimpleAccount) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                account = accountService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                account = accountService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
             }
 
             if (account == null) {
@@ -106,7 +107,7 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
     private int saveAccount(Account account) {
         AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
 
-        account.setSaccountid(UserUIContext.getAccountId());
+        account.setSaccountid(MyCollabUI.getAccountId());
         if (account.getId() == null) {
             accountService.saveWithSession(account, UserUIContext.getUsername());
         } else {

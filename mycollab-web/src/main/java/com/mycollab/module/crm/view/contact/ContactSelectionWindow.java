@@ -22,6 +22,7 @@ import com.mycollab.module.crm.domain.Contact;
 import com.mycollab.module.crm.domain.SimpleContact;
 import com.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.mycollab.module.crm.i18n.ContactI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -71,8 +72,8 @@ public class ContactSelectionWindow extends Window {
             return new MButton(contact.getContactName(), clickEvent -> {
                 fieldSelection.fireValueChange(contact);
                 close();
-            }).withStyleName(WebUIConstants.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateToolTipContact(UserUIContext.getUserLocale(), UserUIContext.getDateFormat(),
-                    contact, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            }).withStyleName(WebUIConstants.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateToolTipContact(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
+                    contact, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
     }
 }

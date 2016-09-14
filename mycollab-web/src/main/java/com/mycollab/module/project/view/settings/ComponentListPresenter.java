@@ -28,6 +28,7 @@ import com.mycollab.module.tracker.domain.SimpleComponent;
 import com.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.mycollab.module.tracker.service.ComponentService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.ViewItemAction;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -116,10 +117,10 @@ public class ComponentListPresenter extends ProjectGenericListPresenter<Componen
             }
 
             if (keyList.size() > 0) {
-                componentService.massRemoveWithSession(keyList, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                componentService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
             }
         } else {
-            componentService.removeByCriteria(searchCriteria, UserUIContext.getAccountId());
+            componentService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
         }
 
         int totalCount = componentService.getTotalCount(searchCriteria);

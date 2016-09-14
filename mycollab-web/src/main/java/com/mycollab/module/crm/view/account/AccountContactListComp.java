@@ -30,6 +30,7 @@ import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
@@ -70,7 +71,7 @@ public class AccountContactListComp extends RelatedListComp2<ContactService, Con
             final MButton selectBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> {
                 final AccountContactSelectionWindow contactsWindow = new AccountContactSelectionWindow(AccountContactListComp.this);
                 final ContactSearchCriteria criteria = new ContactSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 UI.getCurrent().addWindow(contactsWindow);
                 contactsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
@@ -94,7 +95,7 @@ public class AccountContactListComp extends RelatedListComp2<ContactService, Con
 
     private void loadContacts() {
         final ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setAccountId(new NumberSearchField(account.getId()));
         setSearchCriteria(criteria);
     }
@@ -126,7 +127,7 @@ public class AccountContactListComp extends RelatedListComp2<ContactService, Con
             MButton btnDelete = new MButton("", clickEvent -> {
                 ConfirmDialogExt.show(
                         UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -143,7 +144,7 @@ public class AccountContactListComp extends RelatedListComp2<ContactService, Con
             blockContent.addComponent(btnDelete);
             blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
 
-            Label contactName = new Label(String.format("Name: <a href='%s%s'>%s</a>", UserUIContext.getSiteUrl(), CrmLinkGenerator.generateCrmItemLink(
+            Label contactName = new Label(String.format("Name: <a href='%s%s'>%s</a>", MyCollabUI.getSiteUrl(), CrmLinkGenerator.generateCrmItemLink(
                     CrmTypeConstants.CONTACT, contact.getId()), contact.getContactName()), ContentMode.HTML);
             contactInfo.addComponent(contactName);
 

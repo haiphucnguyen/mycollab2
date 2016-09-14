@@ -22,6 +22,7 @@ import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.mycollab.module.crm.i18n.LeadI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.Depot;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -57,7 +58,7 @@ public class LeadListDashlet extends Depot {
 
     public void display() {
         final LeadSearchCriteria criteria = new LeadSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setAssignUsers(new SetSearchField<>(UserUIContext.getUsername()));
         tableItem.setSearchCriteria(criteria);
     }

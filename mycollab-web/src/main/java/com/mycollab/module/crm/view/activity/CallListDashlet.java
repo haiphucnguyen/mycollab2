@@ -26,6 +26,7 @@ import com.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 import com.mycollab.module.crm.i18n.CallI18nEnum;
 import com.mycollab.module.crm.service.CallService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.Depot;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -74,7 +75,7 @@ public class CallListDashlet extends Depot {
 
     public void display() {
         final CallSearchCriteria criteria = new CallSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setAssignUsers(new SetSearchField<>(UserUIContext.getUsername()));
         criteria.setIsClosed(BitSearchField.FALSE);
         tableItem.setSearchCriteria(criteria);

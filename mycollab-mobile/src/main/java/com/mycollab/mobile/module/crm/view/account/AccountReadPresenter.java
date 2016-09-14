@@ -32,6 +32,7 @@ import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.module.crm.service.ContactService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -73,7 +74,7 @@ public class AccountReadPresenter extends AbstractCrmPresenter<AccountReadView> 
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                                accountService.removeWithSession(data, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                accountService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                 EventBusFactory.getInstance().post(new AccountEvent.GotoList(this, null));
                             }
                         });
@@ -95,7 +96,7 @@ public class AccountReadPresenter extends AbstractCrmPresenter<AccountReadView> 
             public void gotoNext(SimpleAccount data) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = accountService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -110,7 +111,7 @@ public class AccountReadPresenter extends AbstractCrmPresenter<AccountReadView> 
             public void gotoPrevious(SimpleAccount data) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = accountService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -172,7 +173,7 @@ public class AccountReadPresenter extends AbstractCrmPresenter<AccountReadView> 
                 }
 
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                accountService.saveAccountLeadRelationship(associateLeads, UserUIContext.getAccountId());
+                accountService.saveAccountLeadRelationship(associateLeads, MyCollabUI.getAccountId());
 
                 EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
             }
@@ -234,7 +235,7 @@ public class AccountReadPresenter extends AbstractCrmPresenter<AccountReadView> 
         if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
             if (data.getParams() instanceof Integer) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                SimpleAccount account = accountService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                SimpleAccount account = accountService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
                 if (account != null) {
                     view.previewItem(account);
                     super.onGo(container, data);

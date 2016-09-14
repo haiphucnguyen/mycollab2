@@ -33,6 +33,7 @@ import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
@@ -72,7 +73,7 @@ public class CampaignContactListComp extends RelatedListComp2<ContactService, Co
             final Button selectBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> {
                 final CampaignContactSelectionWindow contactsWindow = new CampaignContactSelectionWindow(CampaignContactListComp.this);
                 final ContactSearchCriteria criteria = new ContactSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 UI.getCurrent().addWindow(contactsWindow);
                 contactsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
@@ -96,7 +97,7 @@ public class CampaignContactListComp extends RelatedListComp2<ContactService, Co
 
     private void loadContacts() {
         final ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setCampaignId(new NumberSearchField(campaign.getId()));
         setSearchCriteria(criteria);
     }
@@ -127,7 +128,7 @@ public class CampaignContactListComp extends RelatedListComp2<ContactService, Co
 
             MButton btnDelete = new MButton("", clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -138,7 +139,7 @@ public class CampaignContactListComp extends RelatedListComp2<ContactService, Co
                                 associateContact.setContactid(contact.getId());
                                 associateContact.setCampaignid(campaign.getId());
                                 campaignService.removeCampaignContactRelationship(associateContact,
-                                        UserUIContext.getAccountId());
+                                        MyCollabUI.getAccountId());
                                 refresh();
                             }
                         });

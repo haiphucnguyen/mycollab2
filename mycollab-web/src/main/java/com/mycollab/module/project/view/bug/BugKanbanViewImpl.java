@@ -40,6 +40,7 @@ import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.events.HasSearchHandlers;
@@ -320,7 +321,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
                             }
                         }
                         if (indexMap.size() > 0) {
-                            bugService.massUpdateBugIndexes(indexMap, UserUIContext.getAccountId());
+                            bugService.massUpdateBugIndexes(indexMap, MyCollabUI.getAccountId());
                         }
                     }
                 }
@@ -380,7 +381,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
             Component testComp = (dragLayoutContainer.getComponentCount() > 0) ? dragLayoutContainer.getComponent(0) : null;
             if (testComp instanceof KanbanBugBlockItem || testComp == null) {
                 final SimpleBug bug = new SimpleBug();
-                bug.setSaccountid(UserUIContext.getAccountId());
+                bug.setSaccountid(MyCollabUI.getAccountId());
                 bug.setProjectid(CurrentProjectVariables.getProjectId());
                 bug.setStatus(optionVal.getTypeval());
                 bug.setProjectShortName(CurrentProjectVariables.getShortName());

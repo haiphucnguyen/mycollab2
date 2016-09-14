@@ -41,6 +41,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.TaskPriority;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -91,7 +92,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         previewForm.addComponent(taskTimeLogComp);
 
         ResourceService resourceService = AppContextUtil.getSpringBean(ResourceService.class);
-        List<Content> attachments = resourceService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(),
+        List<Content> attachments = resourceService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(),
                 beanItem.getProjectid(), ProjectTypeConstants.TASK, "" + beanItem.getId()));
         if (CollectionUtils.isNotEmpty(attachments)) {
             attachmentComp = new ProjectAttachmentDisplayComp(attachments);

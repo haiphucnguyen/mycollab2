@@ -22,6 +22,7 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.service.ProjectNotificationSettingService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -48,7 +49,7 @@ public class ProjectSettingPresenter extends AbstractPresenter<ProjectSettingVie
                 .getSpringBean(ProjectNotificationSettingService.class);
         ProjectNotificationSetting notification = projectNotificationSettingService
                 .findNotification(UserUIContext.getUsername(), CurrentProjectVariables.getProjectId(),
-                        UserUIContext.getAccountId());
+                        MyCollabUI.getAccountId());
 
         ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
         breadCrumb.gotoProjectSetting();

@@ -13,6 +13,7 @@ import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
@@ -120,7 +121,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         tableItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
             final SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
             MButton deleteBtn = new MButton("", clickEvent -> {
-                itemTimeLoggingService.removeWithSession(itemTimeLogging, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                itemTimeLoggingService.removeWithSession(itemTimeLogging, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                 loadTimeValue();
                 hasTimeChange = true;
             }).withIcon(FontAwesome.TRASH_O).withStyleName(WebUIConstants.BUTTON_ICON_ONLY);

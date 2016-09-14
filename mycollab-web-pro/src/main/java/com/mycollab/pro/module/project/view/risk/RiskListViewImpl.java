@@ -10,6 +10,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.RiskProbability;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.mycollab.vaadin.events.HasSearchHandlers;
@@ -83,8 +84,8 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
                     b.addStyleName(WebUIConstants.LINK_OVERDUE);
                 }
             }
-            b.setDescription(ProjectTooltipGenerator.generateToolTipRisk(UserUIContext.getUserLocale(), UserUIContext.getDateFormat(),
-                    risk, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
+            b.setDescription(ProjectTooltipGenerator.generateToolTipRisk(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
+                    risk, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
             return b;
         });
 

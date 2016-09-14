@@ -10,6 +10,7 @@ import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.PageActionChain;
@@ -59,7 +60,7 @@ public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView
 
     private Integer saveProject(SimpleProject project) {
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-        project.setSaccountid(UserUIContext.getAccountId());
+        project.setSaccountid(MyCollabUI.getAccountId());
         return projectService.saveWithSession(project, UserUIContext.getUsername());
     }
 }

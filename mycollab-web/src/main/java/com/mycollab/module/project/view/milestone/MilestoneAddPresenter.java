@@ -36,6 +36,7 @@ import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectGenericTaskService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -110,7 +111,7 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
     private int saveMilestone(Milestone milestone) {
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
         milestone.setProjectid(CurrentProjectVariables.getProjectId());
-        milestone.setSaccountid(UserUIContext.getAccountId());
+        milestone.setSaccountid(MyCollabUI.getAccountId());
 
         if (milestone.getId() == null) {
             milestone.setCreateduser(UserUIContext.getUsername());
@@ -119,7 +120,7 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
             milestoneService.updateWithSession(milestone, UserUIContext.getUsername());
         }
         AttachmentUploadField uploadField = view.getAttachUploadField();
-        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(), milestone.getProjectid(),
+        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), milestone.getProjectid(),
                 ProjectTypeConstants.MILESTONE, "" + milestone.getId());
         uploadField.saveContentsToRepo(attachPath);
 
@@ -134,7 +135,7 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
             int openAssignmentsCount = genericTaskService.getTotalCount(searchCriteria);
             if (openAssignmentsCount > 0) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, MyCollabUI.getSiteName()),
                         UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_CLOSE_SUB_ASSIGNMENTS),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

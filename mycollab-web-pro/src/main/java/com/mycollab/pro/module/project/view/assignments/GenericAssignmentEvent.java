@@ -15,6 +15,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.components.calendar.event.BasicEvent;
@@ -37,8 +38,8 @@ public class GenericAssignmentEvent extends BasicEvent {
             this.setCaption(String.format("%s %s", icon.getHtml(), assignment.getName()));
         }
 
-        this.setDescription(ProjectTooltipGenerator.generateTooltipEntity(UserUIContext.getUserLocale(), UserUIContext.getDateFormat(),
-                assignment.getType(), assignment.getTypeId(), UserUIContext.getAccountId(), UserUIContext.getSiteUrl(),
+        this.setDescription(ProjectTooltipGenerator.generateTooltipEntity(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
+                assignment.getType(), assignment.getTypeId(), MyCollabUI.getAccountId(), MyCollabUI.getSiteUrl(),
                 UserUIContext.getUserTimeZone(), showProject));
         this.setAllDay(true);
 
@@ -98,28 +99,28 @@ public class GenericAssignmentEvent extends BasicEvent {
         if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-            SimpleTask task = taskService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
+            SimpleTask task = taskService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
             task.setStartdate(getStart());
             task.setEnddate(getEnd());
             taskService.updateWithSession(task, UserUIContext.getUsername());
         } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
             BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-            SimpleBug bug = bugService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
+            SimpleBug bug = bugService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
             bug.setStartdate(getStart());
             bug.setEnddate(getEnd());
             bugService.updateWithSession(bug, UserUIContext.getUsername());
         } else if(ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
             MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-            SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
+            SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
             milestone.setStartdate(getStart());
             milestone.setEnddate(getEnd());
             milestoneService.updateWithSession(milestone, UserUIContext.getUsername());
         } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
             RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-            SimpleRisk risk = riskService.findById(assignment.getTypeId(), UserUIContext.getAccountId());
+            SimpleRisk risk = riskService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
             risk.setStartdate(getStart());
             risk.setEnddate(getEnd());
             riskService.updateWithSession(risk, UserUIContext.getUsername());

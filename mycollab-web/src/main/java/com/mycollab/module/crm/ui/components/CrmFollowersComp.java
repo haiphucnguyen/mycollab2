@@ -32,6 +32,7 @@ import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.ui.ELabel;
@@ -143,7 +144,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
             final Image userAvatarBtn = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(user.getAvatarid(), 32);
             userAvatarBtn.addStyleName(UIConstants.CIRCLE_BOX);
             userAvatarBtn.setDescription(CommonTooltipGenerator.generateTooltipUser(UserUIContext.getUserLocale(), user,
-                    UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             addComponent(userAvatarBtn);
             this.addStyleName("removeable-btn");
             this.setWidthUndefined();
@@ -169,7 +170,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
             criteria.setTypeId(new NumberSearchField((Integer) PropertyUtils.getProperty(bean, "id")));
             criteria.setType(StringSearchField.and(type));
             criteria.setUser(StringSearchField.and(username));
-            monitorItemService.removeByCriteria(criteria, UserUIContext.getAccountId());
+            monitorItemService.removeByCriteria(criteria, MyCollabUI.getAccountId());
             for (SimpleUser user : followers) {
                 if (username.equals(user.getUsername())) {
                     followers.remove(user);
@@ -204,7 +205,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
             for (SimpleUser member : unsavedUsers) {
                 MonitorItem item = new MonitorItem();
                 item.setMonitorDate(new GregorianCalendar().getTime());
-                item.setSaccountid(UserUIContext.getAccountId());
+                item.setSaccountid(MyCollabUI.getAccountId());
                 item.setType(type);
                 item.setTypeid(typeId);
                 item.setUser(member.getUsername());

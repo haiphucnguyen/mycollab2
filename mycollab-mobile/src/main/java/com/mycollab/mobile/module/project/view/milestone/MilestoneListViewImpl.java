@@ -43,6 +43,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -175,7 +176,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
             milestoneDatesInfo.addStyleName(UIConstants.META_INFO);
             metaLayout.addComponent(milestoneDatesInfo);
 
-            A assigneeLink = new A(ProjectLinkGenerator.generateProjectMemberFullLink(UserUIContext.getSiteUrl(),
+            A assigneeLink = new A(ProjectLinkGenerator.generateProjectMemberFullLink(MyCollabUI.getSiteUrl(),
                     CurrentProjectVariables.getProjectId(), milestone.getOwner()))
                     .appendText(StringUtils.trim(milestone.getOwnerFullName(), 30, true));
             Div assigneeDiv = new Div().appendChild(new Img("", StorageFactory.getAvatarPath(milestone

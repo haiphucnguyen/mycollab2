@@ -17,6 +17,7 @@ import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.shell.view.AbstractMainView;
 import com.mycollab.shell.view.components.AbstractAboutWindow;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -48,7 +49,7 @@ public class MainViewImpl extends AbstractMainView {
         accountLayout.removeAllComponents();
 
         BillingSubscriptionMapperExt billingSubscriptionMapperExt = AppContextUtil.getSpringBean(BillingSubscriptionMapperExt.class);
-        SimpleBillingSubscription subscription = billingSubscriptionMapperExt.findSubscription(UserUIContext.getAccountId());
+        SimpleBillingSubscription subscription = billingSubscriptionMapperExt.findSubscription(MyCollabUI.getAccountId());
         if (subscription != null) {
             MyCollabSession.putCurrentUIVariable("subscription", subscription);
             if (!subscription.canAccess()) {
@@ -65,7 +66,7 @@ public class MainViewImpl extends AbstractMainView {
                 UserUIContext.getInstance().setIsValidAccount(true);
             }
         } else {
-            SimpleBillingAccount billingAccount = UserUIContext.getBillingAccount();
+            SimpleBillingAccount billingAccount = MyCollabUI.getBillingAccount();
             TrialBlock trialBlock = new TrialBlock();
             accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
 
@@ -81,7 +82,7 @@ public class MainViewImpl extends AbstractMainView {
             }
         }
 
-        Label accountNameLabel = new Label(UserUIContext.getSubDomain());
+        Label accountNameLabel = new Label(MyCollabUI.getSubDomain());
         accountNameLabel.addStyleName("subDomain");
         accountLayout.addComponent(accountNameLabel);
 

@@ -45,6 +45,7 @@ import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.events.HasMassItemActionHandler;
@@ -108,7 +109,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         @Subscribe
         public void handle(BugEvent.NewBugAdded event) {
             final BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-            SimpleBug bug = bugService.findById((Integer) event.getData(), UserUIContext.getAccountId());
+            SimpleBug bug = bugService.findById((Integer) event.getData(), MyCollabUI.getAccountId());
             if (bug != null && bugGroupOrderComponent != null) {
                 bugGroupOrderComponent.insertBugs(Collections.singletonList(bug));
             }
@@ -169,7 +170,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         MButton newBugBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.NEW), clickEvent -> {
             SimpleBug bug = new SimpleBug();
             bug.setProjectid(CurrentProjectVariables.getProjectId());
-            bug.setSaccountid(UserUIContext.getAccountId());
+            bug.setSaccountid(MyCollabUI.getAccountId());
             bug.setLogby(UserUIContext.getUsername());
             UI.getCurrent().addWindow(new BugAddWindow(bug));
         }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION).withDescription(UserUIContext.getMessage(BugI18nEnum.NEW))

@@ -35,6 +35,7 @@ import com.mycollab.module.crm.ui.components.*;
 import com.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -114,7 +115,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
     protected String initFormTitle() {
         // check if there is converted lead associates with this account
         LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
-        SimpleLead lead = leadService.findConvertedLeadOfOpportunity(beanItem.getId(), UserUIContext.getAccountId());
+        SimpleLead lead = leadService.findConvertedLeadOfOpportunity(beanItem.getId(), MyCollabUI.getAccountId());
         if (lead != null) {
             return String.format("<h2>%s%s</h2>", beanItem.getOpportunityname(), UserUIContext
                     .getMessage(LeadI18nEnum.CONVERT_FROM_LEAD_TITLE, CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
@@ -172,7 +173,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
 
     protected void displayActivities() {
         ActivitySearchCriteria criteria = new ActivitySearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setType(StringSearchField.and(CrmTypeConstants.OPPORTUNITY));
         criteria.setTypeid(new NumberSearchField(beanItem.getId()));
         associateActivityList.setSearchCriteria(criteria);

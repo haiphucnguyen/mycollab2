@@ -33,6 +33,7 @@ import com.mycollab.module.project.events.PageEvent;
 import com.mycollab.module.project.i18n.PageI18nEnum;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -219,7 +220,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
         MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -261,7 +262,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
         MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

@@ -10,6 +10,7 @@ import com.mycollab.module.project.i18n.StandupI18nEnum;
 import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.ui.*;
@@ -41,11 +42,11 @@ class StandupAddWindow extends MWindow implements IEditFormHandler<StandupReport
         this.onDate = onDate;
         standupReportService = AppContextUtil.getSpringBean(StandupReportService.class);
         SimpleStandupReport report = standupReportService.findStandupReportByDateUser(standupReportStatistic.getProjectId(),
-                UserUIContext.getUsername(), onDate, UserUIContext.getAccountId());
+                UserUIContext.getUsername(), onDate, MyCollabUI.getAccountId());
         if (report == null) {
             report = new SimpleStandupReport();
             report.setProjectid(standupReportStatistic.getProjectId());
-            report.setSaccountid(UserUIContext.getAccountId());
+            report.setSaccountid(MyCollabUI.getAccountId());
             report.setForday(onDate);
             report.setLogby(UserUIContext.getUsername());
         }

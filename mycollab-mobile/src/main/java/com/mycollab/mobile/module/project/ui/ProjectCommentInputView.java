@@ -29,6 +29,7 @@ import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -89,7 +90,7 @@ public class ProjectCommentInputView extends AbstractMobilePageView {
             comment.setComment(commentInput.getValue());
             comment.setCreatedtime(new GregorianCalendar().getTime());
             comment.setCreateduser(UserUIContext.getUsername());
-            comment.setSaccountid(UserUIContext.getAccountId());
+            comment.setSaccountid(MyCollabUI.getAccountId());
             comment.setType(type);
             comment.setTypeid("" + typeId);
             comment.setExtratypeid(extraTypeId);
@@ -97,7 +98,7 @@ public class ProjectCommentInputView extends AbstractMobilePageView {
             final CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentId = commentService.saveWithSession(comment, UserUIContext.getUsername());
 
-            String attachmentPath = AttachmentUtils.getCommentAttachmentPath(type, UserUIContext.getAccountId(),
+            String attachmentPath = AttachmentUtils.getCommentAttachmentPath(type, MyCollabUI.getAccountId(),
                     CurrentProjectVariables.getProjectId(), typeId, commentId);
             if (!"".equals(attachmentPath)) {
                 saveContentsToRepo(attachmentPath);
@@ -165,15 +166,15 @@ public class ProjectCommentInputView extends AbstractMobilePageView {
                             ImageIO.write(scaledImage, fileExt, outStream);
 
                             resourceService.saveContent(MobileAttachmentUtils.constructContent(fileName, attachmentPath),
-                                    UserUIContext.getUsername(), new ByteArrayInputStream(outStream.toByteArray()), UserUIContext.getAccountId());
+                                    UserUIContext.getUsername(), new ByteArrayInputStream(outStream.toByteArray()), MyCollabUI.getAccountId());
                         } catch (IOException e) {
                             LOG.error("Error in upload file", e);
                             resourceService.saveContent(MobileAttachmentUtils.constructContent(fileName, attachmentPath),
-                                    UserUIContext.getUsername(), new FileInputStream(file), UserUIContext.getAccountId());
+                                    UserUIContext.getUsername(), new FileInputStream(file), MyCollabUI.getAccountId());
                         }
                     } else {
                         resourceService.saveContent(MobileAttachmentUtils.constructContent(fileName, attachmentPath),
-                                UserUIContext.getUsername(), new FileInputStream(file), UserUIContext.getAccountId());
+                                UserUIContext.getUsername(), new FileInputStream(file), MyCollabUI.getAccountId());
                     }
 
                 } catch (FileNotFoundException e) {

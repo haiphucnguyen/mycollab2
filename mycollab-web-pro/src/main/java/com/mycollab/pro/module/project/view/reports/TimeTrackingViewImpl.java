@@ -28,6 +28,7 @@ import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.pro.module.project.ui.components.*;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.mvp.AbstractPageView;
@@ -122,7 +123,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
     public void display() {
         removeAllComponents();
         projects = AppContextUtil.getSpringBean(ProjectService.class).getProjectsUserInvolved(UserUIContext.getUsername(),
-                UserUIContext.getAccountId());
+                MyCollabUI.getAccountId());
         if (CollectionUtils.isNotEmpty(projects)) {
             itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
@@ -366,7 +367,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
         private List<SimpleUser> users;
 
         UserInvolvedProjectsMemberListSelect(List<Integer> projectIds) {
-            users = AppContextUtil.getSpringBean(ProjectMemberService.class).getActiveUsersInProjects(projectIds, UserUIContext.getAccountId());
+            users = AppContextUtil.getSpringBean(ProjectMemberService.class).getActiveUsersInProjects(projectIds, MyCollabUI.getAccountId());
 
             for (SimpleUser user : users) {
                 this.addItem(user.getUsername());

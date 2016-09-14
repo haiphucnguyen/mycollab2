@@ -22,6 +22,7 @@ import com.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.mycollab.module.crm.domain.SimpleCampaign;
 import com.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.mycollab.module.crm.i18n.CampaignI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -67,7 +68,7 @@ public class CampaignSelectionWindow extends MWindow {
                 fieldSelection.fireValueChange(campaign);
                 close();
             }).withStyleName(WebUIConstants.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateTooltipCampaign(UserUIContext.getUserLocale(),
-                    UserUIContext.getDateFormat(), campaign, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    MyCollabUI.getDateFormat(), campaign, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
     }
 }

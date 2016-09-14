@@ -31,6 +31,7 @@ import com.mycollab.module.crm.i18n.CallI18nEnum;
 import com.mycollab.module.crm.service.CallService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -66,7 +67,7 @@ public class CallReadPresenter extends AbstractCrmPresenter<CallReadView> {
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 CallService callService = AppContextUtil.getSpringBean(CallService.class);
-                                callService.removeWithSession(data, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                callService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                 EventBusFactory.getInstance().post(new ActivityEvent.GotoList(this, null));
                             }
                         });
@@ -88,7 +89,7 @@ public class CallReadPresenter extends AbstractCrmPresenter<CallReadView> {
             public void gotoNext(SimpleCall data) {
                 CallService callService = AppContextUtil.getSpringBean(CallService.class);
                 CallSearchCriteria criteria = new CallSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = callService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -102,7 +103,7 @@ public class CallReadPresenter extends AbstractCrmPresenter<CallReadView> {
             public void gotoPrevious(SimpleCall data) {
                 CallService callService = AppContextUtil.getSpringBean(CallService.class);
                 CallSearchCriteria criteria = new CallSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = callService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -120,7 +121,7 @@ public class CallReadPresenter extends AbstractCrmPresenter<CallReadView> {
             SimpleCall call;
             if (data.getParams() instanceof Integer) {
                 CallService callService = AppContextUtil.getSpringBean(CallService.class);
-                call = callService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                call = callService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
                 if (call == null) {
                     NotificationUtil.showRecordNotExistNotification();
                     return;

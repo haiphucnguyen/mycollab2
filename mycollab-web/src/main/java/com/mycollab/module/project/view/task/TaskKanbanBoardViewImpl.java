@@ -43,6 +43,7 @@ import com.mycollab.module.project.view.task.components.TaskSavedFilterComboBox;
 import com.mycollab.module.project.view.task.components.TaskSearchPanel;
 import com.mycollab.module.project.view.task.components.ToggleTaskSummaryField;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.events.HasSearchHandlers;
@@ -195,7 +196,7 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
                         indexMap.add(map);
                     }
                     if (indexMap.size() > 0) {
-                        optionValService.massUpdateOptionIndexes(indexMap, UserUIContext.getAccountId());
+                        optionValService.massUpdateOptionIndexes(indexMap, MyCollabUI.getAccountId());
                     }
                 }
             }
@@ -266,7 +267,7 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
             @Override
             public void run() {
                 List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
-                        CurrentProjectVariables.getProjectId(), UserUIContext.getAccountId());
+                        CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
                 for (OptionVal optionVal : optionVals) {
                     if (!displayHiddenColumns && Boolean.FALSE.equals(optionVal.getIsshow())) {
                         continue;
@@ -403,7 +404,7 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
                             }
                         }
                         if (indexMap.size() > 0) {
-                            taskService.massUpdateTaskIndexes(indexMap, UserUIContext.getAccountId());
+                            taskService.massUpdateTaskIndexes(indexMap, MyCollabUI.getAccountId());
                         }
                     }
                 }
@@ -477,13 +478,13 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
                         NotificationUtil.showErrorNotification(UserUIContext.getMessage(TaskI18nEnum.ERROR_CAN_NOT_DELETE_COLUMN_HAS_TASK));
                     } else {
                         ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                UserUIContext.getSiteName()),
+                                MyCollabUI.getSiteName()),
                                 UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                                 confirmDialog -> {
                                     if (confirmDialog.isConfirmed()) {
-                                        optionValService.removeWithSession(stage, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                        optionValService.removeWithSession(stage, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                         ((ComponentContainer) KanbanBlock.this.getParent()).removeComponent(KanbanBlock.this);
                                     }
                                 });
@@ -556,7 +557,7 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
             Component testComp = (dragLayoutContainer.getComponentCount() > 0) ? dragLayoutContainer.getComponent(0) : null;
             if (testComp instanceof KanbanTaskBlockItem || testComp == null) {
                 final SimpleTask task = new SimpleTask();
-                task.setSaccountid(UserUIContext.getAccountId());
+                task.setSaccountid(MyCollabUI.getAccountId());
                 task.setProjectid(CurrentProjectVariables.getProjectId());
                 task.setPercentagecomplete(0d);
                 task.setStatus(optionVal.getTypeval());
@@ -617,11 +618,11 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
                     if (StringUtils.isNotBlank(columnNameField.getValue())) {
                         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
                         if (optionValService.isExistedOptionVal(ProjectTypeConstants.TASK, columnNameField
-                                .getValue(), "status", optionVal.getExtraid(), UserUIContext.getAccountId())) {
+                                .getValue(), "status", optionVal.getExtraid(), MyCollabUI.getAccountId())) {
                             NotificationUtil.showErrorNotification(UserUIContext.getMessage(TaskI18nEnum.ERROR_THERE_IS_ALREADY_COLUMN_NAME, columnNameField.getValue()));
                         } else {
                             taskService.massUpdateStatuses(optionVal.getTypeval(), columnNameField.getValue(), optionVal.getExtraid(),
-                                    UserUIContext.getAccountId());
+                                    MyCollabUI.getAccountId());
                             optionVal.setTypeval(columnNameField.getValue());
                             optionValService.updateWithSession(optionVal, UserUIContext.getUsername());
                             KanbanBlock.this.updateComponentCount();

@@ -28,6 +28,7 @@ import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.components.IGroupComponent;
 import com.mycollab.module.project.view.task.TaskPopupFieldFactory;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.UIUtils;
@@ -188,14 +189,14 @@ public class TaskRowRenderer extends MVerticalLayout {
             MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                 taskSettingPopupBtn.setPopupVisible(false);
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                                projectTaskService.removeWithSession(task, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                projectTaskService.removeWithSession(task, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                 deleteTask();
                             }
                         });

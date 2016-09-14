@@ -28,6 +28,7 @@ import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
@@ -195,7 +196,7 @@ public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<Follow
 
         UserInvolvedProjectsListSelect() {
             FollowingTicketSearchPanel.this.projects = AppContextUtil.getSpringBean(ProjectService.class)
-                    .getProjectsUserInvolved(UserUIContext.getUsername(), UserUIContext.getAccountId());
+                    .getProjectsUserInvolved(UserUIContext.getUsername(), MyCollabUI.getAccountId());
 
             for (SimpleProject project : projects) {
                 this.addItem(project.getId());

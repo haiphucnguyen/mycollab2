@@ -25,6 +25,7 @@ import com.mycollab.module.project.view.bug.BugTableFieldDef;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.mycollab.module.tracker.service.BugService;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.ui.UIUtils;
@@ -85,8 +86,8 @@ public class BugSelectionWindow extends MWindow {
                 b.addStyleName(WebUIConstants.LINK_OVERDUE);
             }
 
-            b.setDescription(ProjectTooltipGenerator.generateToolTipBug(UserUIContext.getUserLocale(), UserUIContext.getDateFormat(),
-                    bug, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
+            b.setDescription(ProjectTooltipGenerator.generateToolTipBug(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
+                    bug, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
             return b;
         });
         return tableItem;

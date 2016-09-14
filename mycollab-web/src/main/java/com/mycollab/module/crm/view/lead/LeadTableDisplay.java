@@ -27,6 +27,7 @@ import com.mycollab.module.crm.i18n.OptionI18nEnum.LeadStatus;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunityLeadSource;
 import com.mycollab.module.crm.service.LeadService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.*;
@@ -77,7 +78,7 @@ public class LeadTableDisplay extends DefaultPagedBeanTable<LeadService, LeadSea
             }
             b.setDescription(CrmTooltipGenerator.generateTooltipLead(
                     UserUIContext.getUserLocale(), lead,
-                    UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
         });
 

@@ -24,6 +24,7 @@ import com.mycollab.common.service.CustomViewStoreService;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.PageableHandler;
 import com.mycollab.vaadin.events.SelectableItemHandler;
@@ -94,7 +95,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
     public AbstractPagedBeanTable(Class<B> type, String viewId, TableViewField requiredColumn, List<TableViewField> displayColumns) {
         if (viewId != null) {
             CustomViewStoreService customViewStoreService = AppContextUtil.getSpringBean(CustomViewStoreService.class);
-            CustomViewStore viewLayoutDef = customViewStoreService.getViewLayoutDef(UserUIContext.getAccountId(),
+            CustomViewStore viewLayoutDef = customViewStoreService.getViewLayoutDef(MyCollabUI.getAccountId(),
                     UserUIContext.getUsername(), viewId);
             if (!(viewLayoutDef instanceof NullCustomViewStore)) {
                 try {

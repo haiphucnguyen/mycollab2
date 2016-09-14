@@ -46,6 +46,7 @@ import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.view.task.components.*;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.events.HasMassItemActionHandler;
@@ -114,7 +115,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
                 @Subscribe
                 public void handle(TaskEvent.NewTaskAdded event) {
                     final ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                    SimpleTask task = projectTaskService.findById((Integer) event.getData(), UserUIContext.getAccountId());
+                    SimpleTask task = projectTaskService.findById((Integer) event.getData(), MyCollabUI.getAccountId());
                     if (task != null && taskGroupOrderComponent != null) {
                         taskGroupOrderComponent.insertTasks(Collections.singletonList(task));
                     }
@@ -176,7 +177,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
             if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                 SimpleTask newTask = new SimpleTask();
                 newTask.setProjectid(CurrentProjectVariables.getProjectId());
-                newTask.setSaccountid(UserUIContext.getAccountId());
+                newTask.setSaccountid(MyCollabUI.getAccountId());
                 newTask.setLogby(UserUIContext.getUsername());
                 UI.getCurrent().addWindow(new TaskAddWindow(newTask));
             }
@@ -227,7 +228,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
 
         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
         List<OptionVal> options = optionValService.findOptionValsExcludeClosed(ProjectTypeConstants.TASK,
-                CurrentProjectVariables.getProjectId(), UserUIContext.getAccountId());
+                CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
 
         if (CollectionUtils.isNotEmpty(options)) {
             SetSearchField<String> statuses = new SetSearchField<>();

@@ -15,6 +15,7 @@ import com.mycollab.module.project.view.user.ProjectDashboardContainer;
 import com.mycollab.pro.module.project.events.GanttEvent;
 import com.mycollab.pro.module.project.view.assignments.gantt.GanttItemWrapper;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -99,7 +100,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
                     GanttItemWrapper ganttItemWrapper = (GanttItemWrapper) event.getSource();
                     List<TaskPredecessor> predecessors = (List<TaskPredecessor>) event.getData();
                     ganttItemWrapper.adjustTaskDatesByPredecessors(predecessors);
-                    ganttAssignmentService.massUpdatePredecessors(ganttItemWrapper.getId(), predecessors, UserUIContext.getAccountId());
+                    ganttAssignmentService.massUpdatePredecessors(ganttItemWrapper.getId(), predecessors, MyCollabUI.getAccountId());
                     ganttItemWrapper.getTask().setPredecessors(predecessors);
                     ((GanttChartView) view).getTaskTable().refreshRowCache();
                 }
@@ -132,7 +133,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
     private void massUpdateTasksInfoInQueue() {
         if (queueSetTasksUpdate.size() > 0) {
             try {
-                ganttAssignmentService.massUpdateGanttItems(new ArrayList<>(queueSetTasksUpdate), UserUIContext.getAccountId());
+                ganttAssignmentService.massUpdateGanttItems(new ArrayList<>(queueSetTasksUpdate), MyCollabUI.getAccountId());
             } finally {
                 queueSetTasksUpdate.clear();
             }
@@ -142,7 +143,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
     private void massDeleteTasksInQueue() {
         if (queueSetTasksDelete.size() > 0) {
             try {
-                ganttAssignmentService.massDeleteGanttItems(new ArrayList<>(queueSetTasksDelete), UserUIContext.getAccountId());
+                ganttAssignmentService.massDeleteGanttItems(new ArrayList<>(queueSetTasksDelete), MyCollabUI.getAccountId());
             } finally {
                 queueSetTasksDelete.clear();
             }

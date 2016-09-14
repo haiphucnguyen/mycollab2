@@ -26,6 +26,7 @@ import com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunitySalesStage;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunityType;
 import com.mycollab.module.crm.service.OpportunityService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.CheckBoxDecor;
@@ -79,8 +80,8 @@ public class OpportunityTableDisplay extends DefaultPagedBeanTable<OpportunitySe
                     b.addStyleName(WebUIConstants.LINK_OVERDUE);
                 }
             }
-            b.setDescription(CrmTooltipGenerator.generateTooltipOpportunity(UserUIContext.getUserLocale(), UserUIContext.getDateFormat(),
-                    opportunity, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            b.setDescription(CrmTooltipGenerator.generateTooltipOpportunity(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
+                    opportunity, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
 
             return b;
         });

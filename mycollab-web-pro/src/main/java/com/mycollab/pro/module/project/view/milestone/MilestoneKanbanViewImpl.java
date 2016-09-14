@@ -28,6 +28,7 @@ import com.mycollab.module.project.view.milestone.ToggleGenericTaskSummaryField;
 import com.mycollab.pro.module.project.view.assignments.AssignmentAddWindow;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -117,7 +118,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
         MButton newMilestoneBtn = new MButton(UserUIContext.getMessage(MilestoneI18nEnum.NEW), clickEvent -> {
             SimpleMilestone milestone = new SimpleMilestone();
-            milestone.setSaccountid(UserUIContext.getAccountId());
+            milestone.setSaccountid(MyCollabUI.getAccountId());
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
         }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
@@ -184,7 +185,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
     private void insertMilestone(Integer milestoneId) {
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-        SimpleMilestone milestone = milestoneService.findById(milestoneId, UserUIContext.getAccountId());
+        SimpleMilestone milestone = milestoneService.findById(milestoneId, MyCollabUI.getAccountId());
         if (milestone != null) {
             KanbanBlock kanbanBlock = new KanbanBlock(milestone);
             kanbanBlocks.put(milestone.getId(), kanbanBlock);
@@ -274,8 +275,8 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                         .withDescription(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED));
             } else {
                 header = new ELabel(milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS).withDescription
-                        (ProjectTooltipGenerator.generateToolTipMilestone(UserUIContext.getUserLocale(), UserUIContext.getDateFormat(),
-                                milestone, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
+                        (ProjectTooltipGenerator.generateToolTipMilestone(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
+                                milestone, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
             }
 
             headerLayout.with(header).expand(header);
@@ -295,14 +296,14 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             if (canExecute) {
                 MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                             confirmDialog -> {
                                 if (confirmDialog.isConfirmed()) {
                                     MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                                    milestoneService.removeWithSession(milestone, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                    milestoneService.removeWithSession(milestone, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                     ((ComponentContainer) KanbanBlock.this.getParent()).removeComponent(KanbanBlock.this);
                                 }
                             });

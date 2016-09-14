@@ -29,6 +29,7 @@ import com.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -119,12 +120,12 @@ public class OpportunityListPresenter extends CrmGenericListPresenter<Opportunit
             }
 
             if (keyList.size() > 0) {
-                opportunityService.massRemoveWithSession(keyList, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                opportunityService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                 doSearch(searchCriteria);
                 checkWhetherEnableTableActionControl();
             }
         } else {
-            opportunityService.removeByCriteria(searchCriteria, UserUIContext.getAccountId());
+            opportunityService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
             doSearch(searchCriteria);
         }
     }
@@ -141,7 +142,7 @@ public class OpportunityListPresenter extends CrmGenericListPresenter<Opportunit
             }
 
             if (keyList.size() > 0) {
-                opportunityService.massUpdateWithSession(value, keyList, UserUIContext.getAccountId());
+                opportunityService.massUpdateWithSession(value, keyList, MyCollabUI.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

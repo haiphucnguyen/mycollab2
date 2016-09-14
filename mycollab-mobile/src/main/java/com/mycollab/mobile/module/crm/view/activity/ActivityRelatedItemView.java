@@ -27,6 +27,7 @@ import com.mycollab.module.crm.i18n.ActivityI18nEnum;
 import com.mycollab.module.crm.i18n.CallI18nEnum;
 import com.mycollab.module.crm.i18n.MeetingI18nEnum;
 import com.mycollab.module.crm.i18n.TaskI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -54,7 +55,7 @@ public class ActivityRelatedItemView extends AbstractRelatedListView<SimpleActiv
 
     private void loadActivities() {
         ActivitySearchCriteria criteria = new ActivitySearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setType(StringSearchField.and(type));
         criteria.setTypeid(new NumberSearchField(this.beanId));
         this.itemList.search(criteria);

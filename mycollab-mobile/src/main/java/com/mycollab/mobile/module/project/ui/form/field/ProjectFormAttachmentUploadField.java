@@ -24,6 +24,7 @@ import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.server.StreamVariable;
@@ -173,7 +174,7 @@ public class ProjectFormAttachmentUploadField extends CustomField {
     }
 
     public void getAttachments(int projectId, String type, int typeId) {
-        attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(), projectId, type, "" + typeId);
+        attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), projectId, type, "" + typeId);
         List<Content> attachments = resourceService.getContents(attachmentPath);
         rowWrap.removeAllComponents();
         if (CollectionUtils.isNotEmpty(attachments)) {
@@ -193,7 +194,7 @@ public class ProjectFormAttachmentUploadField extends CustomField {
     }
 
     public void saveContentsToRepo(Integer projectId, String type, Integer typeId) {
-        attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(), projectId, type, "" + typeId);
+        attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), projectId, type, "" + typeId);
         MobileAttachmentUtils.saveContentsToRepo(attachmentPath, fileStores);
     }
 

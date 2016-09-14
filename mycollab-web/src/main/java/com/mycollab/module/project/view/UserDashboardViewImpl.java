@@ -31,6 +31,7 @@ import com.mycollab.module.project.ui.components.GenericItemRowDisplayHandler;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.PresenterResolver;
@@ -71,7 +72,7 @@ public class UserDashboardViewImpl extends AbstractPageView implements UserDashb
         this.withMargin(false).withFullWidth();
 
         prjService = AppContextUtil.getSpringBean(ProjectService.class);
-        prjKeys = prjService.getProjectKeysUserInvolved(UserUIContext.getUsername(), UserUIContext.getAccountId());
+        prjKeys = prjService.getProjectKeysUserInvolved(UserUIContext.getUsername(), MyCollabUI.getAccountId());
 
         tabSheet = new TabSheet();
         tabSheet.addTab(buildDashboardComp(), UserUIContext.getMessage(GenericI18Enum.VIEW_DASHBOARD), FontAwesome.DASHBOARD);
@@ -123,7 +124,7 @@ public class UserDashboardViewImpl extends AbstractPageView implements UserDashb
         }
 
         if (UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
-            int countActiveProjects = prjService.getTotalActiveProjectsOfInvolvedUsers(UserUIContext.getUsername(), UserUIContext.getAccountId());
+            int countActiveProjects = prjService.getTotalActiveProjectsOfInvolvedUsers(UserUIContext.getUsername(), MyCollabUI.getAccountId());
             if (countActiveProjects == 0) {
                 UI.getCurrent().addWindow(new AskCreateNewProjectWindow());
             }
@@ -216,7 +217,7 @@ public class UserDashboardViewImpl extends AbstractPageView implements UserDashb
         layout.with(headerComp);
 
         ProjectService prjService = AppContextUtil.getSpringBean(ProjectService.class);
-        prjKeys = prjService.getProjectKeysUserInvolved(UserUIContext.getUsername(), UserUIContext.getAccountId());
+        prjKeys = prjService.getProjectKeysUserInvolved(UserUIContext.getUsername(), MyCollabUI.getAccountId());
         if (CollectionUtils.isNotEmpty(prjKeys)) {
             ProjectGenericItemSearchCriteria searchCriteria = new ProjectGenericItemSearchCriteria();
             searchCriteria.setPrjKeys(new SetSearchField<>(prjKeys.toArray(new Integer[prjKeys.size()])));

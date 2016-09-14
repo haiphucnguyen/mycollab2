@@ -28,6 +28,7 @@ import com.mycollab.module.crm.i18n.CampaignI18nEnum;
 import com.mycollab.module.crm.service.CampaignService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -72,7 +73,7 @@ public class CampaignAddPresenter extends AbstractCrmPresenter<CampaignAddview> 
                 campaign = (SimpleCampaign) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-                campaign = campaignService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                campaign = campaignService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
             }
             if (campaign == null) {
                 NotificationUtil.showRecordNotExistNotification();
@@ -97,7 +98,7 @@ public class CampaignAddPresenter extends AbstractCrmPresenter<CampaignAddview> 
     private void saveCampaign(CampaignWithBLOBs campaign) {
         CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
 
-        campaign.setSaccountid(UserUIContext.getAccountId());
+        campaign.setSaccountid(MyCollabUI.getAccountId());
         if (campaign.getId() == null) {
             campaignService.saveWithSession(campaign, UserUIContext.getUsername());
         } else {

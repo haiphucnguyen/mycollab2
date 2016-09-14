@@ -9,6 +9,7 @@ import com.mycollab.module.project.events.InvoiceEvent;
 import com.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.mycollab.module.project.service.InvoiceService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
@@ -56,7 +57,7 @@ public class InvoiceAddWindow extends MWindow {
                     EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceUpdateAdded(this, invoice));
                 }
                 AttachmentUploadField uploadField = invoiceEditFormFieldFactory.getAttachmentUploadField();
-                String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(), invoice.getProjectid(),
+                String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), invoice.getProjectid(),
                         ProjectTypeConstants.INVOICE, "" + invoice.getId());
                 uploadField.saveContentsToRepo(attachPath);
                 close();

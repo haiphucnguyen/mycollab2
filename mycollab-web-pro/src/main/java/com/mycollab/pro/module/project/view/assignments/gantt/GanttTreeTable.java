@@ -21,6 +21,7 @@ import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.components.HumanTimeConverter;
 import com.mycollab.pro.module.project.events.GanttEvent;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
@@ -227,7 +228,7 @@ public class GanttTreeTable extends TreeTable {
     public void loadAssignments() {
         try {
             GanttAssignmentService ganttAssignmentService = AppContextUtil.getSpringBean(GanttAssignmentService.class);
-            final List<AssignWithPredecessors> assignments = ganttAssignmentService.getTaskWithPredecessors(Collections.singletonList(CurrentProjectVariables.getProjectId()), UserUIContext.getAccountId());
+            final List<AssignWithPredecessors> assignments = ganttAssignmentService.getTaskWithPredecessors(Collections.singletonList(CurrentProjectVariables.getProjectId()), MyCollabUI.getAccountId());
             if (assignments.size() == 1) {
                 ProjectGanttItem projectGanttItem = (ProjectGanttItem) assignments.get(0);
                 List<MilestoneGanttItem> milestoneGanttItems = projectGanttItem.getMilestones();
@@ -490,7 +491,7 @@ public class GanttTreeTable extends TreeTable {
                         newTask.setPrjId(ganttItemWrapper.getTask().getPrjId());
                         newTask.setName(UserUIContext.getMessage(TaskI18nEnum.NEW));
                         newTask.setProgress(0d);
-                        newTask.setsAccountId(UserUIContext.getAccountId());
+                        newTask.setsAccountId(MyCollabUI.getAccountId());
                         GanttItemWrapper newGanttItem = new GanttItemWrapper(gantt, newTask);
                         newGanttItem.setGanttIndex(index + 1);
                         GanttItemWrapper prevItem = beanContainer.prevItemId(ganttItemWrapper);
@@ -520,7 +521,7 @@ public class GanttTreeTable extends TreeTable {
                 newTask.setPrjId(ganttItemWrapper.getTask().getPrjId());
                 newTask.setName(UserUIContext.getMessage(TaskI18nEnum.NEW));
                 newTask.setProgress(0d);
-                newTask.setsAccountId(UserUIContext.getAccountId());
+                newTask.setsAccountId(MyCollabUI.getAccountId());
                 GanttItemWrapper newGanttItem = new GanttItemWrapper(gantt, newTask);
                 newGanttItem.setGanttIndex(index);
                 gantt.addTask(index, newGanttItem);
@@ -545,7 +546,7 @@ public class GanttTreeTable extends TreeTable {
             insertRowAfterMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
             MenuItem deleteRowMenuItem = this.addItem(UserUIContext.getMessage(GanttI18nEnum.ACTION_DELETE_ROW), menuItem -> ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

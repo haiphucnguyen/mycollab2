@@ -34,6 +34,7 @@ import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.ProjectGenericTaskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.BeanList;
 import com.mycollab.vaadin.ui.ELabel;
@@ -100,7 +101,7 @@ public class IssueListView extends AbstractMobilePageView {
             metaInfoLayout.addComponent(lastUpdatedTimeLbl);
 
             A assigneeLink = new A();
-            assigneeLink.setHref(ProjectLinkGenerator.generateProjectMemberFullLink(UserUIContext.getSiteUrl(),
+            assigneeLink.setHref(ProjectLinkGenerator.generateProjectMemberFullLink(MyCollabUI.getSiteUrl(),
                     CurrentProjectVariables.getProjectId(), issue.getAssignUser()));
             assigneeLink.appendText(issue.getAssignUserFullName());
 

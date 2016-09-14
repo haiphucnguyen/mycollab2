@@ -14,6 +14,7 @@ import com.mycollab.reporting.FormReportLayout;
 import com.mycollab.reporting.PrintButton;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -47,14 +48,14 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
             @Override
             public void onDelete(final SimpleAccount data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                                accountService.removeWithSession(data, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                accountService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                 EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
                             }
                         });
@@ -88,7 +89,7 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
             public void gotoNext(SimpleAccount data) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
-                criteria.setSaccountid(NumberSearchField.equal(UserUIContext.getAccountId()));
+                criteria.setSaccountid(NumberSearchField.equal(MyCollabUI.getAccountId()));
                 criteria.setId(NumberSearchField.greaterThan(data.getId()));
                 Integer nextId = accountService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -102,7 +103,7 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
             public void gotoPrevious(SimpleAccount data) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
-                criteria.setSaccountid(NumberSearchField.equal(UserUIContext.getAccountId()));
+                criteria.setSaccountid(NumberSearchField.equal(MyCollabUI.getAccountId()));
                 criteria.setId(NumberSearchField.lessThan(data.getId()));
                 Integer nextId = accountService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -118,7 +119,7 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
             AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-            SimpleAccount account = accountService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+            SimpleAccount account = accountService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
             if (account != null) {
                 ClientContainer clientContainer = (ClientContainer) container;
                 clientContainer.removeAllComponents();

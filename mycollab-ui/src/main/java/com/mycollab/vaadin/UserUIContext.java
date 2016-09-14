@@ -40,7 +40,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -110,7 +109,7 @@ public class UserUIContext implements Serializable {
             UserAccount userAccount = new UserAccount();
             userAccount.setLastmodulevisit(moduleName);
             UserAccountExample ex = new UserAccountExample();
-            ex.createCriteria().andAccountidEqualTo(UserUIContext.getAccountId()).andUsernameEqualTo(UserUIContext.getUsername());
+            ex.createCriteria().andAccountidEqualTo(MyCollabUI.getAccountId()).andUsernameEqualTo(UserUIContext.getUsername());
             userAccountMapper.updateByExampleSelective(userAccount, ex);
         } catch (Exception e) {
             LOG.error("There is error when try to update user preference for last module visit", e);
@@ -137,7 +136,7 @@ public class UserUIContext implements Serializable {
     }
 
     public boolean isMatchAccount(Integer sAccountId) {
-        return sAccountId.equals(getAccountId());
+        return sAccountId.equals(MyCollabUI.getAccountId());
     }
 
     public void clearSessionVariables() {
@@ -154,14 +153,6 @@ public class UserUIContext implements Serializable {
 
     public Boolean getIsValidAccount() {
         return isValidAccount;
-    }
-
-    public static String getSiteName() {
-        try {
-            return getInstance().billingAccount.getSitename();
-        } catch (Exception e) {
-            return SiteConfiguration.getDefaultSiteName();
-        }
     }
 
     public static Locale getUserLocale() {
@@ -198,41 +189,6 @@ public class UserUIContext implements Serializable {
 
 
     /**
-     * Get account id of current user
-     *
-     * @return account id of current user. Return 0 if can not get
-     */
-    public static Integer getAccountId() {
-        try {
-            return getInstance().billingAccount.getId();
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-    /**
-     * Get subDomain of current user
-     *
-     * @return subDomain of current user
-     */
-    public static String getSubDomain() {
-        return getInstance().billingAccount.getSubdomain();
-    }
-
-    private String siteUrl = null;
-
-    /**
-     * @return
-     */
-    public static String getSiteUrl() {
-        if (getInstance().siteUrl == null) {
-            getInstance().siteUrl = SiteConfiguration.getSiteUrl(getSubDomain());
-        }
-
-        return getInstance().siteUrl;
-    }
-
-    /**
      * Get username of current user
      *
      * @return username of current user
@@ -258,42 +214,8 @@ public class UserUIContext implements Serializable {
         return getInstance().session.getDisplayName();
     }
 
-
-    /**
-     * Get billing account of current logged in user
-     *
-     * @return billing account of current logged in user
-     */
-    public static SimpleBillingAccount getBillingAccount() {
-        return getInstance().billingAccount;
-    }
-
     public static final TimeZone getUserTimeZone() {
         return getInstance().userTimeZone;
-    }
-
-    public static final String getDateTimeFormat() {
-        return getInstance().billingAccount.getDateTimeFormatInstance();
-    }
-
-    public static final String getDateFormat() {
-        return getInstance().billingAccount.getDateFormatInstance();
-    }
-
-    public static final Boolean showEmailPublicly() {
-        return getInstance().billingAccount.getDisplayemailpublicly();
-    }
-
-    public static final String getShortDateFormat() {
-        return getInstance().billingAccount.getShortDateFormatInstance();
-    }
-
-    public static final String getLongDateFormat() {
-        return getInstance().billingAccount.getLongDateFormatInstance();
-    }
-
-    public static final Currency getDefaultCurrency() {
-        return getInstance().billingAccount.getCurrencyInstance();
     }
 
     /**
@@ -397,10 +319,10 @@ public class UserUIContext implements Serializable {
         } else {
             DateTime jodaDate = new DateTime(date).toDateTime(DateTimeZone.forTimeZone(UserUIContext.getUserTimeZone()));
             if (jodaDate.getHourOfDay() > 0 || jodaDate.getMinuteOfHour() > 0) {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(UserUIContext.getDateTimeFormat()).withLocale(UserUIContext.getUserLocale());
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(MyCollabUI.getDateTimeFormat()).withLocale(UserUIContext.getUserLocale());
                 return formatter.print(jodaDate);
             } else {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(UserUIContext.getDateFormat()).withLocale(UserUIContext.getUserLocale());
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(MyCollabUI.getDateFormat()).withLocale(UserUIContext.getUserLocale());
                 return formatter.print(jodaDate);
             }
         }
@@ -411,7 +333,7 @@ public class UserUIContext implements Serializable {
      * @return
      */
     public static String formatDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, UserUIContext.getDateFormat(), UserUIContext.getUserLocale(),
+        return date == null ? "" : DateTimeUtils.formatDate(date, MyCollabUI.getDateFormat(), UserUIContext.getUserLocale(),
                 UserUIContext.getUserTimeZone());
     }
 
@@ -429,7 +351,7 @@ public class UserUIContext implements Serializable {
     }
 
     public static String formatShortDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale(),
+        return date == null ? "" : DateTimeUtils.formatDate(date, MyCollabUI.getShortDateFormat(), UserUIContext.getUserLocale(),
                 UserUIContext.getUserTimeZone());
     }
 
@@ -472,6 +394,6 @@ public class UserUIContext implements Serializable {
      */
     public static void addFragment(String fragment, String windowTitle) {
         Page.getCurrent().setUriFragment(fragment, false);
-        Page.getCurrent().setTitle(String.format("%s [%s]", StringUtils.trim(windowTitle, 150), UserUIContext.getSiteName()));
+        Page.getCurrent().setTitle(String.format("%s [%s]", StringUtils.trim(windowTitle, 150), MyCollabUI.getSiteName()));
     }
 }

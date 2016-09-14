@@ -31,6 +31,7 @@ import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -80,7 +81,7 @@ public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddV
                 opportunity = (SimpleOpportunity) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 OpportunityService accountService = AppContextUtil.getSpringBean(OpportunityService.class);
-                opportunity = accountService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                opportunity = accountService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
             }
             if (opportunity == null) {
                 throw new ResourceNotFoundException();
@@ -103,7 +104,7 @@ public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddV
 
     private int saveOpportunity(Opportunity opportunity) {
         OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
-        opportunity.setSaccountid(UserUIContext.getAccountId());
+        opportunity.setSaccountid(MyCollabUI.getAccountId());
         if (opportunity.getId() == null) {
             opportunityService.saveWithSession(opportunity, UserUIContext.getUsername());
         } else {

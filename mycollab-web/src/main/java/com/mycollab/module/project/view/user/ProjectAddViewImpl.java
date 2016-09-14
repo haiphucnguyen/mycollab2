@@ -29,6 +29,7 @@ import com.mycollab.module.project.view.settings.component.ProjectMemberSelectio
 import com.mycollab.module.user.ui.components.ImagePreviewCropWindow;
 import com.mycollab.module.user.ui.components.UploadImageField;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.AbstractPageView;
@@ -127,8 +128,8 @@ public class ProjectAddViewImpl extends AbstractPageView implements ProjectAddVi
         @Override
         public void process(BufferedImage image) {
             EntityUploaderService entityUploaderService = AppContextUtil.getSpringBean(EntityUploaderService.class);
-            String newLogoId = entityUploaderService.upload(image, PathUtils.getProjectLogoPath(UserUIContext.getAccountId(),
-                    project.getId()), project.getAvatarid(), UserUIContext.getUsername(), UserUIContext.getAccountId(),
+            String newLogoId = entityUploaderService.upload(image, PathUtils.getProjectLogoPath(MyCollabUI.getAccountId(),
+                    project.getId()), project.getAvatarid(), UserUIContext.getUsername(), MyCollabUI.getAccountId(),
                     new int[]{16, 32, 48, 64, 100});
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
             project.setAvatarid(newLogoId);

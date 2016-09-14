@@ -32,6 +32,7 @@ import com.mycollab.module.project.view.settings.component.ProjectRoleComboBox;
 import com.mycollab.security.PermissionFlag;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -131,7 +132,7 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements Pro
         projectFormHelper.getLayout().removeAllComponents();
         if (roleId != null && roleId > 0) {
             ProjectRoleService roleService = AppContextUtil.getSpringBean(ProjectRoleService.class);
-            SimpleProjectRole role = roleService.findById(roleId, UserUIContext.getAccountId());
+            SimpleProjectRole role = roleService.findById(roleId, MyCollabUI.getAccountId());
             if (role != null) {
                 PermissionMap permissionMap = role.getPermissionMap();
                 for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {

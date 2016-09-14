@@ -34,6 +34,7 @@ import com.mycollab.shell.view.AbstractMainView;
 import com.mycollab.shell.view.components.AbstractAboutWindow;
 import com.mycollab.community.shell.view.components.AdRequestWindow;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -73,7 +74,7 @@ public class MainViewImpl extends AbstractMainView {
     protected MHorizontalLayout buildAccountMenuLayout() {
         accountLayout.removeAllComponents();
 
-        Label accountNameLabel = new Label(UserUIContext.getSubDomain());
+        Label accountNameLabel = new Label(MyCollabUI.getSubDomain());
         accountNameLabel.addStyleName("subDomain");
         accountLayout.addComponent(accountNameLabel);
 

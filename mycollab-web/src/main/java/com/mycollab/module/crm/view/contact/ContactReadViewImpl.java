@@ -35,6 +35,7 @@ import com.mycollab.module.crm.ui.components.*;
 import com.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -89,7 +90,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
 
     protected void displayActivities() {
         final ActivitySearchCriteria criteria = new ActivitySearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setType(StringSearchField.and(CrmTypeConstants.CONTACT));
         criteria.setTypeid(new NumberSearchField(this.beanItem.getId()));
         this.associateActivityList.setSearchCriteria(criteria);
@@ -97,7 +98,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
 
     protected void displayAssociateOpportunityList() {
         OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setContactId(new NumberSearchField(beanItem.getId()));
         this.associateOpportunityList.displayOpportunities(beanItem);
     }
@@ -119,7 +120,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
     protected String initFormTitle() {
         // check if there is converted lead associates with this contact
         LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
-        SimpleLead lead = leadService.findConvertedLeadOfContact(beanItem.getId(), UserUIContext.getAccountId());
+        SimpleLead lead = leadService.findConvertedLeadOfContact(beanItem.getId(), MyCollabUI.getAccountId());
         if (lead != null) {
             return beanItem.getContactName() + "&nbsp;" + UserUIContext.getMessage(
                     LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,

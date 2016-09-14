@@ -33,6 +33,7 @@ import com.mycollab.module.tracker.domain.Component;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.domain.Version;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.CacheableComponent;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -224,7 +225,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
     }
 
     private void buildPageBreadcrumbChain() {
-        String basePath = PathUtils.getProjectDocumentPath(UserUIContext.getAccountId(), CurrentProjectVariables.getProjectId());
+        String basePath = PathUtils.getProjectDocumentPath(MyCollabUI.getAccountId(), CurrentProjectVariables.getProjectId());
         String currentPath = CurrentProjectVariables.getCurrentPagePath();
 
         this.addLink(new Button(UserUIContext.getMessage(PageI18nEnum.LIST), new GotoPageListListener(basePath)));

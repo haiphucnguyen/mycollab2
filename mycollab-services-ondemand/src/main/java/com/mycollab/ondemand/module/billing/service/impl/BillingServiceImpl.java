@@ -3,6 +3,7 @@ package com.mycollab.ondemand.module.billing.service.impl;
 import com.google.common.eventbus.AsyncEventBus;
 import com.mycollab.common.domain.CustomerFeedbackWithBLOBs;
 import com.mycollab.common.i18n.ErrorI18nEnum;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.cache.CacheKey;
@@ -74,14 +75,14 @@ public class BillingServiceImpl implements BillingService {
 
         // check subDomain belong to keyword list
         if (ACCOUNT_BLACK_LIST.contains(subDomain)) {
-            throw new ExistedSubDomainException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
+            throw new ExistedSubDomainException(LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(),
                     ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }
 
         BillingAccountExample billingEx = new BillingAccountExample();
         billingEx.createCriteria().andSubdomainEqualTo(subDomain);
         if (this.billingAccountMapper.countByExample(billingEx) > 0) {
-            throw new ExistedSubDomainException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
+            throw new ExistedSubDomainException(LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(),
                     ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }
 
@@ -101,12 +102,12 @@ public class BillingServiceImpl implements BillingService {
         try {
             billingAccountMapper.insertAndReturnKey(billingAccount);
         } catch (DuplicateKeyException e) {
-            throw new ExistedSubDomainException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
+            throw new ExistedSubDomainException(LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(),
                     ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }
         int accountId = billingAccount.getId();
-        billingAccountService.createDefaultAccountData(username, password, timezoneId, LocalizationHelper
-                .defaultLocale.getLanguage(), isEmailVerified, true, accountId);
+        billingAccountService.createDefaultAccountData(username, password, timezoneId, SiteConfiguration.getDefaultLocale().getLanguage(),
+                isEmailVerified, true, accountId);
     }
 
     @Override

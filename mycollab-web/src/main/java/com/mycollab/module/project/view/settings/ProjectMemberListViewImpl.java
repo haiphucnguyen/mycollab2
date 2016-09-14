@@ -38,6 +38,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -178,14 +179,14 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
 
         MButton deleteBtn = new MButton("", clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                     confirmDialog -> {
                         if (confirmDialog.isConfirmed()) {
                             ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-                            prjMemberService.removeWithSession(member, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                            prjMemberService.removeWithSession(member, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                             EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(ProjectMemberListViewImpl.this, null));
                         }
                     });
@@ -203,7 +204,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
 
         blockTop.with(memberNameLbl, ELabel.hr());
 
-        String roleLink = String.format("<a href=\"%s%s%s\"", UserUIContext.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
+        String roleLink = String.format("<a href=\"%s%s%s\"", MyCollabUI.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
                 ProjectLinkGenerator.generateRolePreviewLink(member.getProjectid(), member.getProjectroleid()));
         ELabel memberRole = new ELabel("", ContentMode.HTML).withFullWidth().withStyleName(UIConstants.TEXT_ELLIPSIS);
         if (member.isProjectOwner()) {
@@ -213,7 +214,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         }
         blockTop.addComponent(memberRole);
 
-        if (Boolean.TRUE.equals(UserUIContext.showEmailPublicly())) {
+        if (Boolean.TRUE.equals(MyCollabUI.showEmailPublicly())) {
             Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(), member.getUsername()))
                     .withStyleName(UIConstants.META_INFO).withFullWidth();
             blockTop.addComponent(memberEmailLabel);

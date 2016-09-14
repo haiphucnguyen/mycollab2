@@ -19,6 +19,7 @@ package com.mycollab.module.project.view.task.components;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.SortedArrayMap;
 import com.mycollab.module.project.domain.SimpleTask;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -48,7 +49,7 @@ public class DueDateOrderComponent extends TaskGroupOrderComponent {
                     groupComponent.insertTask(task);
                 } else {
                     DateTime maxValue = monDay.dayOfWeek().withMaximumValue();
-                    DateTimeFormatter formatter = DateTimeFormat.forPattern(UserUIContext.getLongDateFormat());
+                    DateTimeFormatter formatter = DateTimeFormat.forPattern(MyCollabUI.getLongDateFormat());
                     String monDayStr = formatter.print(monDay);
                     String sundayStr = formatter.print(maxValue);
                     String titleValue = String.format("%s - %s", monDayStr, sundayStr);

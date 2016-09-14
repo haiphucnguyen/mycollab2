@@ -34,6 +34,7 @@ import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.ui.ELabel;
@@ -101,21 +102,21 @@ public class ToggleGenericTaskSummaryField extends AbstractToggleSummaryField {
                 BugWithBLOBs bug = new BugWithBLOBs();
                 bug.setId(genericTask.getTypeId());
                 bug.setSummary(genericTask.getName());
-                bug.setSaccountid(UserUIContext.getAccountId());
+                bug.setSaccountid(MyCollabUI.getAccountId());
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 bugService.updateSelectiveWithSession(bug, UserUIContext.getUsername());
             } else if (genericTask.isTask()) {
                 Task task = new Task();
                 task.setId(genericTask.getTypeId());
                 task.setTaskname(genericTask.getName());
-                task.setSaccountid(UserUIContext.getAccountId());
+                task.setSaccountid(MyCollabUI.getAccountId());
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                 taskService.updateSelectiveWithSession(task, UserUIContext.getUsername());
             } else if (genericTask.isRisk()) {
                 Risk risk = new Risk();
                 risk.setId(genericTask.getTypeId());
                 risk.setRiskname(genericTask.getName());
-                risk.setSaccountid(UserUIContext.getAccountId());
+                risk.setSaccountid(MyCollabUI.getAccountId());
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 riskService.updateSelectiveWithSession(risk, UserUIContext.getUsername());
             }

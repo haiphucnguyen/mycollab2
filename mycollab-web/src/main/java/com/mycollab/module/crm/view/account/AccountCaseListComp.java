@@ -34,6 +34,7 @@ import com.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.AbstractBeanBlockList;
@@ -143,14 +144,14 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
 
             MButton deleteBtn = new MButton("", clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
-                                caseService.removeWithSession(oneCase, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                caseService.removeWithSession(oneCase, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                 AccountCaseListComp.this.refresh();
                             }
                         });

@@ -32,6 +32,7 @@ import com.mycollab.module.user.CommonTooltipGenerator;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -138,9 +139,9 @@ public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
             }).withWidth("100%").withIcon(UserAvatarControlFactory.createAvatarResource(assigneeAvatarId, 16))
                     .withStyleName(WebUIConstants.BUTTON_LINK, UIConstants.TEXT_ELLIPSIS);
             UserService service = AppContextUtil.getSpringBean(UserService.class);
-            SimpleUser user = service.findUserByUserNameInAccount(assignee, UserUIContext.getAccountId());
+            SimpleUser user = service.findUserByUserNameInAccount(assignee, MyCollabUI.getAccountId());
             this.setDescription(CommonTooltipGenerator.generateTooltipUser(UserUIContext.getUserLocale(), user,
-                    UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         }
     }
 }

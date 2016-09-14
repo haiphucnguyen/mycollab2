@@ -49,6 +49,7 @@ import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectGenericTaskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -198,7 +199,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
     private HorizontalLayout createHeaderRight() {
         createBtn = new MButton(UserUIContext.getMessage(MilestoneI18nEnum.NEW), clickEvent -> {
             SimpleMilestone milestone = new SimpleMilestone();
-            milestone.setSaccountid(UserUIContext.getAccountId());
+            milestone.setSaccountid(MyCollabUI.getAccountId());
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
         }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION)

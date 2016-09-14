@@ -21,6 +21,7 @@ import com.mycollab.core.utils.FileUtils;
 import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.resources.file.FileAssetsUtil;
 import com.mycollab.vaadin.ui.ELabel;
@@ -97,7 +98,7 @@ public class AttachmentPanel extends MVerticalLayout {
                     String fileName = entry.getKey();
                     File file = entry.getValue();
                     resourceService.saveContent(constructContent(fileName, attachmentPath),
-                            UserUIContext.getUsername(), new FileInputStream(file), UserUIContext.getAccountId());
+                            UserUIContext.getUsername(), new FileInputStream(file), MyCollabUI.getAccountId());
                 } catch (FileNotFoundException e) {
                     LOG.error("Error when attach content in UI", e);
                 }

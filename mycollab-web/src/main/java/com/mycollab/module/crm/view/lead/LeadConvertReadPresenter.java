@@ -31,6 +31,7 @@ import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -60,7 +61,7 @@ public class LeadConvertReadPresenter extends CrmGenericPresenter<LeadConvertRea
             public void gotoNext(SimpleLead data) {
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = contactService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -74,7 +75,7 @@ public class LeadConvertReadPresenter extends CrmGenericPresenter<LeadConvertRea
             public void gotoPrevious(SimpleLead data) {
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = contactService.getPreviousItemKey(criteria);
                 if (nextId != null) {

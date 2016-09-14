@@ -31,6 +31,7 @@ import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -80,7 +81,7 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
                 campaign = (SimpleCampaign) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-                campaign = campaignService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                campaign = campaignService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
             }
             if (campaign == null) {
                 throw new ResourceNotFoundException();
@@ -104,7 +105,7 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 
     private int saveCampaign(CampaignWithBLOBs campaign) {
         CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-        campaign.setSaccountid(UserUIContext.getAccountId());
+        campaign.setSaccountid(MyCollabUI.getAccountId());
         if (campaign.getId() == null) {
             campaignService.saveWithSession(campaign, UserUIContext.getUsername());
         } else {

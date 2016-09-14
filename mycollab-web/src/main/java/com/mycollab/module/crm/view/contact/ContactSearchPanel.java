@@ -30,6 +30,7 @@ import com.mycollab.module.crm.ui.components.ComponentUtils;
 import com.mycollab.module.crm.view.account.AccountSelectionField;
 import com.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.mycollab.security.RolePermissionCollections;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
@@ -124,7 +125,7 @@ public class ContactSearchPanel extends DefaultGenericSearchPanel<ContactSearchC
         @Override
         protected ContactSearchCriteria fillUpSearchCriteria() {
             ContactSearchCriteria searchCriteria = new ContactSearchCriteria();
-            searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+            searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
             if (StringUtils.isNotBlank(nameField.getValue())) {
                 searchCriteria.setContactName(StringSearchField.and(nameField.getValue().trim()));
             }

@@ -12,7 +12,7 @@ import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.ui.CheckBox;
@@ -67,7 +67,7 @@ public class WatchersMultiSelection extends MVerticalLayout {
             MonitorItem item = new MonitorItem();
             item.setExtratypeid(CurrentProjectVariables.getProjectId());
             item.setMonitorDate(new GregorianCalendar().getTime());
-            item.setSaccountid(UserUIContext.getAccountId());
+            item.setSaccountid(MyCollabUI.getAccountId());
             item.setType(type);
             item.setTypeid(typeId);
             item.setUser(member.getUsername());
@@ -116,7 +116,7 @@ public class WatchersMultiSelection extends MVerticalLayout {
             criteria.setTypeId(new NumberSearchField(typeId));
             criteria.setType(StringSearchField.and(type));
             criteria.setUser(StringSearchField.and(username));
-            monitorItemService.removeByCriteria(criteria, UserUIContext.getAccountId());
+            monitorItemService.removeByCriteria(criteria, MyCollabUI.getAccountId());
         }
     }
 }

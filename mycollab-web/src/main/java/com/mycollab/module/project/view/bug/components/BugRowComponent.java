@@ -27,6 +27,7 @@ import com.mycollab.module.project.view.bug.BugPopupFieldFactory;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.UIUtils;
@@ -133,14 +134,14 @@ public class BugRowComponent extends MVerticalLayout {
             MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                 bugSettingPopupBtn.setPopupVisible(false);
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                                bugService.removeWithSession(bug, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                bugService.removeWithSession(bug, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                 deleteBug();
                             }
                         });

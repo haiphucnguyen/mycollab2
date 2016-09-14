@@ -13,6 +13,7 @@ import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
 import com.mycollab.module.project.view.task.TaskAddWindow;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.pro.module.project.view.risk.RiskAddWindow;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -63,7 +64,7 @@ public class AssignmentAddWindow extends MWindow {
                 close();
                 SimpleTask task = new SimpleTask();
                 task.setProjectid(prjId);
-                task.setSaccountid(UserUIContext.getAccountId());
+                task.setSaccountid(MyCollabUI.getAccountId());
                 task.setLogby(UserUIContext.getUsername());
                 task.setStartdate(dateValue);
                 UI.getCurrent().addWindow(new TaskAddWindow(task));
@@ -71,21 +72,21 @@ public class AssignmentAddWindow extends MWindow {
                 close();
                 SimpleBug bug = new SimpleBug();
                 bug.setProjectid(prjId);
-                bug.setSaccountid(UserUIContext.getAccountId());
+                bug.setSaccountid(MyCollabUI.getAccountId());
                 bug.setStartdate(dateValue);
                 bug.setLogby(UserUIContext.getUsername());
                 UI.getCurrent().addWindow(new BugAddWindow(bug));
             } else if (UserUIContext.getMessage(MilestoneI18nEnum.SINGLE).equals(type)) {
                 close();
                 SimpleMilestone milestone = new SimpleMilestone();
-                milestone.setSaccountid(UserUIContext.getAccountId());
+                milestone.setSaccountid(MyCollabUI.getAccountId());
                 milestone.setProjectid(prjId);
                 milestone.setStartdate(dateValue);
                 UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
             } else {
                 close();
                 SimpleRisk risk = new SimpleRisk();
-                risk.setSaccountid(UserUIContext.getAccountId());
+                risk.setSaccountid(MyCollabUI.getAccountId());
                 risk.setProjectid(prjId);
                 risk.setStartdate(dateValue);
                 risk.setRaisedbyuser(UserUIContext.getUsername());

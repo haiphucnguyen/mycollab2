@@ -29,6 +29,7 @@ import com.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.DefaultMassEditActionHandler;
 import com.mycollab.vaadin.events.ViewItemAction;
@@ -132,12 +133,12 @@ public class LeadListPresenter extends CrmGenericListPresenter<LeadListView, Lea
             }
 
             if (keyList.size() > 0) {
-                leadService.massRemoveWithSession(keyList, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                leadService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                 doSearch(searchCriteria);
                 checkWhetherEnableTableActionControl();
             }
         } else {
-            leadService.removeByCriteria(searchCriteria, UserUIContext.getAccountId());
+            leadService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
             doSearch(searchCriteria);
         }
     }
@@ -154,7 +155,7 @@ public class LeadListPresenter extends CrmGenericListPresenter<LeadListView, Lea
             }
 
             if (keyList.size() > 0) {
-                leadService.massUpdateWithSession(value, keyList, UserUIContext.getAccountId());
+                leadService.massUpdateWithSession(value, keyList, MyCollabUI.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

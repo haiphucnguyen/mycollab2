@@ -22,6 +22,7 @@ import com.mycollab.module.crm.domain.Lead;
 import com.mycollab.module.crm.domain.SimpleLead;
 import com.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.mycollab.module.crm.i18n.LeadI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -68,7 +69,7 @@ public class LeadSelectionWindow extends MWindow {
                 fieldSelection.fireValueChange(lead);
                 close();
             }).withStyleName(WebUIConstants.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateTooltipLead(UserUIContext.getUserLocale(),
-                    lead, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    lead, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
         tableItem.setSearchCriteria(new LeadSearchCriteria());
     }

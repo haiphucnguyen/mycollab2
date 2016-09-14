@@ -12,6 +12,7 @@ import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectGenericListPresenter;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.ViewItemAction;
 import com.mycollab.vaadin.mvp.*;
@@ -105,10 +106,10 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
             }
 
             if (keyList.size() > 0) {
-                riskService.massRemoveWithSession(keyList, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                riskService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
             }
         } else {
-            riskService.removeByCriteria(searchCriteria, UserUIContext.getAccountId());
+            riskService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
         }
 
         int totalCount = riskService.getTotalCount(searchCriteria);
@@ -127,7 +128,7 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
             List<Integer> riskKeys = risks.stream().filter(ValuedBean::isSelected).map(Risk::getId).collect(Collectors.toList());
 
             if (riskKeys.size() > 0) {
-//                riskService.massUpdateWithSession(value, riskKeys, UserUIContext.getAccountId());
+//                riskService.massUpdateWithSession(value, riskKeys, MyCollabUI.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

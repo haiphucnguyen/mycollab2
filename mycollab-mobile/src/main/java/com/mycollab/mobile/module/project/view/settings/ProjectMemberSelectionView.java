@@ -32,6 +32,7 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -72,7 +73,7 @@ public class ProjectMemberSelectionView extends AbstractSelectionView<SimpleProj
     @Override
     public void load() {
         ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();
-        searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         memberListDisplay.search(searchCriteria);
         SimpleProjectMember blankMember = new SimpleProjectMember();

@@ -30,6 +30,7 @@ import com.mycollab.module.project.view.settings.component.ProjectMemberSelectio
 import com.mycollab.module.project.view.settings.component.VersionMultiSelectField;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.SimpleBug;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
@@ -80,7 +81,7 @@ class BugEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Sim
             return field;
         } else if (propertyId.equals("id")) {
             if (beanItem.getId() != null) {
-                String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(),
+                String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(),
                         beanItem.getProjectid(), ProjectTypeConstants.BUG, "" + beanItem.getId());
                 attachmentUploadField = new AttachmentUploadField(attachmentPath);
             } else {

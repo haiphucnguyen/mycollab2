@@ -28,6 +28,7 @@ import com.mycollab.module.crm.i18n.LeadI18nEnum;
 import com.mycollab.module.crm.service.LeadService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -72,7 +73,7 @@ public class LeadAddPresenter extends AbstractCrmPresenter<LeadAddView> {
                 lead = (SimpleLead) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
-                lead = leadService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                lead = leadService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
             }
             if (lead == null) {
                 NotificationUtil.showRecordNotExistNotification();
@@ -97,7 +98,7 @@ public class LeadAddPresenter extends AbstractCrmPresenter<LeadAddView> {
 
     private void saveLead(Lead lead) {
         LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
-        lead.setSaccountid(UserUIContext.getAccountId());
+        lead.setSaccountid(MyCollabUI.getAccountId());
         if (lead.getId() == null) {
             leadService.saveWithSession(lead, UserUIContext.getUsername());
         } else {

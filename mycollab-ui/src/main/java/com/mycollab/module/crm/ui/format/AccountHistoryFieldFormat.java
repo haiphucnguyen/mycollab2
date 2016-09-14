@@ -24,6 +24,7 @@ import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.ui.formatter.HistoryFieldFormat;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.UserUIContext;
@@ -57,12 +58,12 @@ public class AccountHistoryFieldFormat implements HistoryFieldFormat {
         try {
             Integer accountId = Integer.parseInt(value);
             AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-            SimpleAccount account = accountService.findById(accountId, UserUIContext.getAccountId());
+            SimpleAccount account = accountService.findById(accountId, MyCollabUI.getAccountId());
 
             if (account != null) {
                 if (displayAsHtml) {
                     A link = new A().setId("tag" + TOOLTIP_ID);
-                    link.setHref(CrmLinkGenerator.generateAccountPreviewFullLink(UserUIContext.getSiteUrl(), accountId))
+                    link.setHref(CrmLinkGenerator.generateAccountPreviewFullLink(MyCollabUI.getSiteUrl(), accountId))
                             .appendChild(new Text(account.getAccountname()));
                     link.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(CrmTypeConstants.ACCOUNT,
                             accountId + ""));

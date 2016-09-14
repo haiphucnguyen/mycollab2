@@ -22,6 +22,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.json.FieldDefAnalyzer;
 import com.mycollab.common.service.CustomViewStoreService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.data.util.BeanItemContainer;
@@ -102,7 +103,7 @@ public abstract class CustomizedTableWindow extends MWindow {
             table.setDisplayColumns(selectedColumns);
             // Save custom table view def
             CustomViewStore viewDef = new CustomViewStore();
-            viewDef.setSaccountid(UserUIContext.getAccountId());
+            viewDef.setSaccountid(MyCollabUI.getAccountId());
             viewDef.setCreateduser(UserUIContext.getUsername());
             viewDef.setViewid(viewId);
             viewDef.setViewinfo(FieldDefAnalyzer.toJson(new ArrayList<>(selectedColumns)));

@@ -29,6 +29,7 @@ import com.mycollab.module.tracker.domain.SimpleComponent;
 import com.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.mycollab.module.tracker.service.ComponentService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.mycollab.vaadin.events.HasSearchHandlers;
@@ -101,7 +102,7 @@ public class ComponentListViewImpl extends AbstractPageView implements Component
                 b.addStyleName(WebUIConstants.LINK_COMPLETED);
             }
             b.setDescription(ProjectTooltipGenerator.generateToolTipComponent(UserUIContext.getUserLocale(),
-                    bugComponent, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    bugComponent, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
         });
 

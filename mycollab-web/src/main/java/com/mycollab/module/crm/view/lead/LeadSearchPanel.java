@@ -29,6 +29,7 @@ import com.mycollab.module.crm.i18n.LeadI18nEnum;
 import com.mycollab.module.crm.ui.components.ComponentUtils;
 import com.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.mycollab.security.RolePermissionCollections;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
@@ -127,7 +128,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
         @Override
         protected LeadSearchCriteria fillUpSearchCriteria() {
             LeadSearchCriteria searchCriteria = new LeadSearchCriteria();
-            searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+            searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
 
             if (StringUtils.isNotBlank(nameField.getValue().trim())) {
                 searchCriteria.setLeadName(StringSearchField.and(nameField.getValue()));

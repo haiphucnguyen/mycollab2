@@ -24,6 +24,7 @@ import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
 import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -105,7 +106,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
             CustomerFeedbackWithBLOBs feedback = new CustomerFeedbackWithBLOBs();
             String whyLeavingMsg = whyLeaving.getValue();
             feedback.setUsername(UserUIContext.getUsername());
-            feedback.setSaccountid(UserUIContext.getAccountId());
+            feedback.setSaccountid(MyCollabUI.getAccountId());
             feedback.setOthertool(alternativeTool.getValue());
             feedback.setReasontoback(reasonToBack.getValue());
             if (optionGroupField.getValue() != null) {
@@ -115,7 +116,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
             }
 
             BillingService billingService = AppContextUtil.getSpringBean(BillingService.class);
-            billingService.cancelAccount(UserUIContext.getAccountId(), feedback);
+            billingService.cancelAccount(MyCollabUI.getAccountId(), feedback);
             UI.getCurrent().getPage().setLocation("https://www.mycollab.com");
         }).withStyleName(WebUIConstants.BUTTON_DANGER);
 

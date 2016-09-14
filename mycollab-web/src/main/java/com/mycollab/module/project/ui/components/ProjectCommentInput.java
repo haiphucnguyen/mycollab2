@@ -23,6 +23,7 @@ import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ReloadableComponent;
 import com.mycollab.vaadin.web.ui.AttachmentPanel;
@@ -82,7 +83,7 @@ public class ProjectCommentInput extends MHorizontalLayout {
             comment.setComment(Jsoup.clean(commentArea.getValue(), Whitelist.relaxed()));
             comment.setCreatedtime(new GregorianCalendar().getTime());
             comment.setCreateduser(UserUIContext.getUsername());
-            comment.setSaccountid(UserUIContext.getAccountId());
+            comment.setSaccountid(MyCollabUI.getAccountId());
             comment.setType(type);
             comment.setTypeid("" + typeId);
             comment.setExtratypeid(extraTypeId);
@@ -90,7 +91,7 @@ public class ProjectCommentInput extends MHorizontalLayout {
             final CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentId = commentService.saveWithSession(comment, UserUIContext.getUsername());
 
-            String attachmentPath = AttachmentUtils.getCommentAttachmentPath(typeVal, UserUIContext.getAccountId(),
+            String attachmentPath = AttachmentUtils.getCommentAttachmentPath(typeVal, MyCollabUI.getAccountId(),
                     CurrentProjectVariables.getProjectId(), typeId, commentId);
 
             if (!"".equals(attachmentPath)) {

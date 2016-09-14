@@ -28,6 +28,7 @@ import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.persistence.service.ISearchableService;
 import com.mycollab.db.query.VariableInjector;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.resources.LazyStreamSource;
 import com.mycollab.vaadin.resources.OnDemandFileDownloader;
@@ -124,7 +125,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
                     // Save custom table view def
                     CustomViewStoreService customViewStoreService = AppContextUtil.getSpringBean(CustomViewStoreService.class);
                     CustomViewStore viewDef = new CustomViewStore();
-                    viewDef.setSaccountid(UserUIContext.getAccountId());
+                    viewDef.setSaccountid(MyCollabUI.getAccountId());
                     viewDef.setCreateduser(UserUIContext.getUsername());
                     viewDef.setViewid(viewId);
                     viewDef.setViewinfo(FieldDefAnalyzer.toJson(new ArrayList<>(columns)));
@@ -172,7 +173,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
 
     private Collection<TableViewField> getViewColumns() {
         CustomViewStoreService customViewStoreService = AppContextUtil.getSpringBean(CustomViewStoreService.class);
-        CustomViewStore viewLayoutDef = customViewStoreService.getViewLayoutDef(UserUIContext.getAccountId(),
+        CustomViewStore viewLayoutDef = customViewStoreService.getViewLayoutDef(MyCollabUI.getAccountId(),
                 UserUIContext.getUsername(), viewId);
         if (!(viewLayoutDef instanceof NullCustomViewStore)) {
             try {

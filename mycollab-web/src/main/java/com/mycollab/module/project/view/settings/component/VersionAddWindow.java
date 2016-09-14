@@ -24,6 +24,7 @@ import com.mycollab.module.project.view.settings.VersionDefaultFormLayoutFactory
 import com.mycollab.module.tracker.domain.Version;
 import com.mycollab.module.tracker.service.VersionService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -49,7 +50,7 @@ public class VersionAddWindow extends MWindow implements IEditFormHandler<Versio
         editForm.setBeanFormFieldFactory(new VersionEditFormFieldFactory(editForm));
         Version version = new Version();
         version.setProjectid(CurrentProjectVariables.getProjectId());
-        version.setSaccountid(UserUIContext.getAccountId());
+        version.setSaccountid(MyCollabUI.getAccountId());
         version.setStatus(OptionI18nEnum.StatusI18nEnum.Open.name());
         editForm.setBean(version);
         ComponentContainer buttonControls = generateEditFormControls(editForm, true, false, true);

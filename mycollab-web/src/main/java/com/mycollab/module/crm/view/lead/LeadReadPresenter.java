@@ -36,6 +36,7 @@ import com.mycollab.reporting.FormReportLayout;
 import com.mycollab.reporting.PrintButton;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -77,14 +78,14 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
             @Override
             public void onDelete(final SimpleLead data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 LeadService LeadService = AppContextUtil.getSpringBean(LeadService.class);
-                                LeadService.removeWithSession(data, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                LeadService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                 EventBusFactory.getInstance().post(new LeadEvent.GotoList(this, null));
                             }
                         });
@@ -113,7 +114,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
             public void gotoNext(SimpleLead data) {
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = contactService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -127,7 +128,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
             public void gotoPrevious(SimpleLead data) {
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = contactService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -188,7 +189,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
                     }
 
                     CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-                    campaignService.saveCampaignLeadRelationship(associateCampaigns, UserUIContext.getAccountId());
+                    campaignService.saveCampaignLeadRelationship(associateCampaigns, MyCollabUI.getAccountId());
                     view.getRelatedCampaignHandlers().refresh();
                 }
             }

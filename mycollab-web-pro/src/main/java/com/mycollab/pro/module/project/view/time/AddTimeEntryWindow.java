@@ -18,6 +18,7 @@ import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.DoubleField;
@@ -181,31 +182,31 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         calendar.setTime(monday);
 
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_MONDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.MONDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), MyCollabUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_TUESDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.TUESDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), MyCollabUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.WEDNESDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), MyCollabUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_THURSDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.THURSDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), MyCollabUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_FRIDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.FRIDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), MyCollabUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_SATURDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.SATURDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), MyCollabUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_SUNDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.SUNDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), UserUIContext.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), MyCollabUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
     }
 
@@ -262,7 +263,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
             timeLoggings.add(timeLogging);
         }
 
-        itemTimeLoggingService.batchSaveTimeLogging(timeLoggings, UserUIContext.getAccountId());
+        itemTimeLoggingService.batchSaveTimeLogging(timeLoggings, MyCollabUI.getAccountId());
 
         updateProjectTimeLogging();
         EventBusFactory.getInstance().post(new TimeTrackingEvent.TimeLoggingEntryChange(AddTimeEntryWindow.this));
@@ -297,7 +298,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
             timeLogging.setLogvalue(timeVal);
             timeLogging.setNote(descArea.getValue());
             timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
-            timeLogging.setSaccountid(UserUIContext.getAccountId());
+            timeLogging.setSaccountid(MyCollabUI.getAccountId());
             timeLogging.setCreatedtime(new GregorianCalendar().getTime());
             timeLogging.setLastupdatedtime(new GregorianCalendar().getTime());
 

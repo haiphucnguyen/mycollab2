@@ -36,6 +36,7 @@ import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -147,7 +148,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
 
         MButton createBtn = new MButton(UserUIContext.getMessage(MilestoneI18nEnum.NEW), clickEvent -> {
             SimpleMilestone milestone = new SimpleMilestone();
-            milestone.setSaccountid(UserUIContext.getAccountId());
+            milestone.setSaccountid(MyCollabUI.getAccountId());
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
         }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
@@ -264,14 +265,14 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
             if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MILESTONES)) {
                 MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent ->
                         ConfirmDialogExt.show(UI.getCurrent(),
-                                UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                                UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                                 UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                                 confirmDialog -> {
                                     if (confirmDialog.isConfirmed()) {
                                         MilestoneService projectTaskService = AppContextUtil.getSpringBean(MilestoneService.class);
-                                        projectTaskService.removeWithSession(milestone, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                        projectTaskService.removeWithSession(milestone, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                         displayMilestones();
                                     }
                                 })

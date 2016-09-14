@@ -31,6 +31,7 @@ import com.mycollab.module.crm.ui.components.ComponentUtils;
 import com.mycollab.module.crm.view.account.AccountSelectionField;
 import com.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.mycollab.security.RolePermissionCollections;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
@@ -158,7 +159,7 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
         @Override
         protected CaseSearchCriteria fillUpSearchCriteria() {
             CaseSearchCriteria searchCriteria = new CaseSearchCriteria();
-            searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+            searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
 
             if (StringUtils.isNotBlank(subjectField.getValue())) {
                 searchCriteria.setSubject(StringSearchField.and(subjectField.getValue().trim()));

@@ -26,6 +26,7 @@ import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.domain.SimpleCampaign;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.crm.i18n.AccountI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -53,7 +54,7 @@ public class CampaignRelatedAccountView extends AbstractRelatedListView<SimpleAc
 
     private void loadAccounts() {
         AccountSearchCriteria searchCriteria = new AccountSearchCriteria();
-        searchCriteria.setSaccountid(NumberSearchField.equal(UserUIContext.getAccountId()));
+        searchCriteria.setSaccountid(NumberSearchField.equal(MyCollabUI.getAccountId()));
         searchCriteria.setCampaignId(NumberSearchField.equal(campaign.getId()));
         this.itemList.search(searchCriteria);
     }
@@ -76,7 +77,7 @@ public class CampaignRelatedAccountView extends AbstractRelatedListView<SimpleAc
         Button selectAccount = new Button(UserUIContext.getMessage(AccountI18nEnum.M_TITLE_SELECT_ACCOUNTS), clickEvent -> {
             CampaignAccountSelectionView accountSelectionView = new CampaignAccountSelectionView(CampaignRelatedAccountView.this);
             AccountSearchCriteria criteria = new AccountSearchCriteria();
-            criteria.setSaccountid(NumberSearchField.equal(UserUIContext.getAccountId()));
+            criteria.setSaccountid(NumberSearchField.equal(MyCollabUI.getAccountId()));
             accountSelectionView.setSearchCriteria(criteria);
             EventBusFactory.getInstance().post(new ShellEvent.PushView(CampaignRelatedAccountView.this, accountSelectionView));
         });

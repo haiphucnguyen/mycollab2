@@ -13,6 +13,7 @@ import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.user.ui.components.ImagePreviewCropWindow;
 import com.mycollab.module.user.ui.components.UploadImageField;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.AbstractPageView;
@@ -68,8 +69,8 @@ public class ClientAddViewImpl extends AbstractPageView implements ClientAddView
         @Override
         public void process(BufferedImage image) {
             EntityUploaderService entityUploaderService = AppContextUtil.getSpringBean(EntityUploaderService.class);
-            String newLogoId = entityUploaderService.upload(image, PathUtils.getEntityLogoPath(UserUIContext
-                            .getAccountId()), account.getAvatarid(), UserUIContext.getUsername(), UserUIContext.getAccountId(),
+            String newLogoId = entityUploaderService.upload(image, PathUtils.getEntityLogoPath(MyCollabUI
+                            .getAccountId()), account.getAvatarid(), UserUIContext.getUsername(), MyCollabUI.getAccountId(),
                     new int[]{16, 32, 48, 64, 100});
             AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
             account.setAvatarid(newLogoId);

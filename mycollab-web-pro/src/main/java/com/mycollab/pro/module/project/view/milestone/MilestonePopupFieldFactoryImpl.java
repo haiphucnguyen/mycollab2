@@ -15,6 +15,7 @@ import com.mycollab.module.project.view.milestone.MilestonePopupFieldFactory;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -49,7 +50,7 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
             @Override
             protected String generateSmallAsHtmlAfterUpdate() {
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                SimpleMilestone newMilestone = milestoneService.findById(milestone.getId(), UserUIContext.getAccountId());
+                SimpleMilestone newMilestone = milestoneService.findById(milestone.getId(), MyCollabUI.getAccountId());
                 String avatarLink = StorageFactory.getAvatarPath(newMilestone.getOwnerAvatarId(), 16);
                 Img img = new Img(newMilestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX);
                 if (isDisplayName) {

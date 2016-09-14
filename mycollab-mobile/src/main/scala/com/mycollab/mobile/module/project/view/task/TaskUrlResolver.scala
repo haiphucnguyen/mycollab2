@@ -31,7 +31,8 @@ import com.mycollab.core.{MyCollabException, ResourceNotFoundException}
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.module.project.ProjectLinkParams
 import com.mycollab.spring.AppContextUtil
-import com.mycollab.vaadin.UserUIContext
+import com.mycollab.vaadin.MyCollabUI.getAccountId
+import com.mycollab.vaadin.{MyCollabUI, UserUIContext}
 
 /**
   * @author MyCollab Ltd
@@ -62,7 +63,7 @@ class TaskUrlResolver extends ProjectUrlResolver {
         val prjShortName = ProjectLinkParams.getProjectShortName(params(0))
         val itemKey = ProjectLinkParams.getItemKey(params(0))
         val taskService = AppContextUtil.getSpringBean(classOf[ProjectTaskService])
-        val task = taskService.findByProjectAndTaskKey(itemKey, prjShortName, UserUIContext.getAccountId)
+        val task = taskService.findByProjectAndTaskKey(itemKey, prjShortName, MyCollabUI.getAccountId)
         if (task != null) {
           projectId = task.getProjectid
           taskId = task.getId
@@ -88,7 +89,7 @@ class TaskUrlResolver extends ProjectUrlResolver {
       if (ProjectLinkParams.isValidParam(params(0))) {
         val prjShortName = ProjectLinkParams.getProjectShortName(params(0))
         val itemKey = ProjectLinkParams.getItemKey(params(0))
-        task = taskService.findByProjectAndTaskKey(itemKey, prjShortName, UserUIContext.getAccountId)
+        task = taskService.findByProjectAndTaskKey(itemKey, prjShortName, MyCollabUI.getAccountId)
       }
       else {
         throw new MyCollabException("Can not find task link " + params(0))

@@ -22,6 +22,7 @@ import com.mycollab.module.project.view.time.IInvoiceContainer;
 import com.mycollab.reporting.FormReportLayout;
 import com.mycollab.reporting.PrintButton;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -130,7 +131,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
     private HorizontalLayout createHeaderRight() {
         MButton createBtn = new MButton(UserUIContext.getMessage(InvoiceI18nEnum.BUTTON_NEW_INVOICE), clickEvent -> {
             SimpleInvoice invoice = new SimpleInvoice();
-            invoice.setSaccountid(UserUIContext.getAccountId());
+            invoice.setSaccountid(MyCollabUI.getAccountId());
             invoice.setProjectid(CurrentProjectVariables.getProjectId());
             invoice.setStatus(InvoiceStatus.Scheduled.name());
             UI.getCurrent().addWindow(new InvoiceAddWindow(invoice));
@@ -283,14 +284,14 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
 
             MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 InvoiceService invoiceService = AppContextUtil.getSpringBean(InvoiceService.class);
-                                invoiceService.removeWithSession(invoice, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                invoiceService.removeWithSession(invoice, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                 EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceDelete(this, invoice));
                             }
                         });

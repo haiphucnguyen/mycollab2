@@ -28,6 +28,7 @@ import com.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -73,7 +74,7 @@ public class AccountAddPresenter extends AbstractCrmPresenter<AccountAddView> {
                 account = (SimpleAccount) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                account = accountService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                account = accountService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
             }
             if (account == null) {
                 NotificationUtil.showRecordNotExistNotification();
@@ -97,7 +98,7 @@ public class AccountAddPresenter extends AbstractCrmPresenter<AccountAddView> {
 
     private void saveAccount(Account account) {
         AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-        account.setSaccountid(UserUIContext.getAccountId());
+        account.setSaccountid(MyCollabUI.getAccountId());
         if (account.getId() == null) {
             accountService.saveWithSession(account, UserUIContext.getUsername());
         } else {

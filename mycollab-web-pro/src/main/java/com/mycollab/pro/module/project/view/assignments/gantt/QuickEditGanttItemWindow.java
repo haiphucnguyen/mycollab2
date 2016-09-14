@@ -13,6 +13,7 @@ import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.pro.module.project.events.GanttEvent;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -65,11 +66,11 @@ public class QuickEditGanttItemWindow extends MWindow {
                 MButton updateAllBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), clickEvent -> {
                     if (bean instanceof TaskGanttItem) {
                         ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                        SimpleTask task = taskService.findById(bean.getId(), UserUIContext.getAccountId());
+                        SimpleTask task = taskService.findById(bean.getId(), MyCollabUI.getAccountId());
                         EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(QuickEditGanttItemWindow.this, task));
                     } else if (bean instanceof MilestoneGanttItem) {
                         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                        SimpleMilestone milestone = milestoneService.findById(bean.getId(), UserUIContext.getAccountId());
+                        SimpleMilestone milestone = milestoneService.findById(bean.getId(), MyCollabUI.getAccountId());
                         EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(QuickEditGanttItemWindow.this, milestone));
                     } else {
                         throw new MyCollabException("Do not support gantt item type " + bean);

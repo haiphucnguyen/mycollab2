@@ -24,6 +24,7 @@ import com.mycollab.module.project.esb.NewProjectMemberJoinEvent;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.MyCollabSession;
 import com.google.common.eventbus.AsyncEventBus;
@@ -54,7 +55,7 @@ public class CurrentProjectVariables {
 
         // get member permission
         ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-        SimpleProjectMember prjMember = prjMemberService.findMemberByUsername(UserUIContext.getUsername(), project.getId(), UserUIContext.getAccountId());
+        SimpleProjectMember prjMember = prjMemberService.findMemberByUsername(UserUIContext.getUsername(), project.getId(), MyCollabUI.getAccountId());
         if (prjMember != null) {
             if (ProjectMemberStatusConstants.INACTIVE.equals(prjMember.getStatus())) {
                 throw new UserNotBelongProjectException("You are not belong to this project");
@@ -78,7 +79,7 @@ public class CurrentProjectVariables {
                 prjMember.setStatus(ProjectMemberStatusConstants.ACTIVE);
                 prjMemberService.updateSelectiveWithSession(prjMember, UserUIContext.getUsername());
                 AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
-                asyncEventBus.post(new NewProjectMemberJoinEvent(prjMember.getUsername(), prjMember.getProjectid(), UserUIContext.getAccountId()));
+                asyncEventBus.post(new NewProjectMemberJoinEvent(prjMember.getUsername(), prjMember.getProjectid(), MyCollabUI.getAccountId()));
             }
             setProjectMember(prjMember);
             if (getProjectToggleMenu() == null) {
@@ -237,7 +238,7 @@ public class CurrentProjectVariables {
     public static String getCurrentPagePath() {
         String path = (String) MyCollabSession.getCurrentUIVariable(CURRENT_PAGE_VAR);
         if (path == null) {
-            path = PathUtils.getProjectDocumentPath(UserUIContext.getAccountId(), getProjectId());
+            path = PathUtils.getProjectDocumentPath(MyCollabUI.getAccountId(), getProjectId());
             setCurrentPagePath(path);
         }
 

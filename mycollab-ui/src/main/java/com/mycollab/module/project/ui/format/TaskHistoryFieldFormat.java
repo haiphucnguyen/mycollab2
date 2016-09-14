@@ -23,6 +23,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.formatter.HistoryFieldFormat;
 import org.apache.commons.lang3.StringUtils;
@@ -50,7 +51,7 @@ public final class TaskHistoryFieldFormat implements HistoryFieldFormat {
         try {
             Integer taskId = Integer.parseInt(value);
             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-            SimpleTask task = taskService.findById(taskId, UserUIContext.getAccountId());
+            SimpleTask task = taskService.findById(taskId, MyCollabUI.getAccountId());
 
             if (task != null) {
                 if (displayAsHtml) {

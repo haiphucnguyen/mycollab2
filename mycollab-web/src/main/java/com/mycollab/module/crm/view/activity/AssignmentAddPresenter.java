@@ -27,6 +27,7 @@ import com.mycollab.module.crm.service.TaskService;
 import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -76,7 +77,7 @@ public class AssignmentAddPresenter extends CrmGenericPresenter<AssignmentAddVie
                 task = (Task) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
-                task = taskService.findByPrimaryKey((Integer) data.getParams(), UserUIContext.getAccountId());
+                task = taskService.findByPrimaryKey((Integer) data.getParams(), MyCollabUI.getAccountId());
                 if (task == null) {
                     NotificationUtil.showRecordNotExistNotification();
                     return;
@@ -103,7 +104,7 @@ public class AssignmentAddPresenter extends CrmGenericPresenter<AssignmentAddVie
 
     public void save(Task item) {
         TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
-        item.setSaccountid(UserUIContext.getAccountId());
+        item.setSaccountid(MyCollabUI.getAccountId());
         if (item.getId() == null) {
             taskService.saveWithSession(item, UserUIContext.getUsername());
         } else {

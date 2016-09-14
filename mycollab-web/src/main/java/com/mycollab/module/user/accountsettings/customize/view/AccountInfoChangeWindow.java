@@ -25,6 +25,7 @@ import com.mycollab.module.user.domain.SimpleBillingAccount;
 import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.module.user.ui.components.LanguageSelectionField;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -58,7 +59,7 @@ class AccountInfoChangeWindow extends MWindow {
         MVerticalLayout content = new MVerticalLayout();
         this.withModal(true).withResizable(false).withWidth("700px").withContent(content).withCenter();
 
-        billingAccount = BeanUtility.deepClone(UserUIContext.getBillingAccount());
+        billingAccount = BeanUtility.deepClone(MyCollabUI.getBillingAccount());
         editForm = new AdvancedEditBeanForm<>();
         editForm.setFormLayoutFactory(new AbstractFormLayoutFactory() {
             private GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 9, "200px");

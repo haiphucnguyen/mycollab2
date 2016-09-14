@@ -15,6 +15,7 @@ import com.mycollab.module.project.i18n.RolePermissionI18nEnum;
 import com.mycollab.module.project.service.ProjectRoleService;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewEvent;
@@ -103,7 +104,7 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
         if (roleId != null && roleId > 0) {
             ProjectRoleService roleService = AppContextUtil.getSpringBean(ProjectRoleService.class);
             SimpleProjectRole role = roleService.findById(roleId,
-                    UserUIContext.getAccountId());
+                    MyCollabUI.getAccountId());
             if (role != null) {
                 final PermissionMap permissionMap = role.getPermissionMap();
                 for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {

@@ -31,6 +31,7 @@ import com.mycollab.module.tracker.service.VersionService;
 import com.mycollab.reporting.FormReportLayout;
 import com.mycollab.reporting.PrintButton;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -69,7 +70,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
             @Override
             public void onDelete(Version data) {
                 VersionService versionService = AppContextUtil.getSpringBean(VersionService.class);
-                versionService.removeWithSession(data, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                versionService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                 EventBusFactory.getInstance().post(new BugVersionEvent.GotoList(this, null));
             }
 
@@ -127,7 +128,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS)) {
             if (data.getParams() instanceof Integer) {
                 VersionService componentService = AppContextUtil.getSpringBean(VersionService.class);
-                Version version = componentService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                Version version = componentService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
                 if (version != null) {
                     VersionContainer versionContainer = (VersionContainer) container;
                     versionContainer.removeAllComponents();

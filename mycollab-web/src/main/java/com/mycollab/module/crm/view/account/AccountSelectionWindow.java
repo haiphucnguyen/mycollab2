@@ -22,6 +22,7 @@ import com.mycollab.module.crm.domain.Account;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.crm.i18n.AccountI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -74,7 +75,7 @@ public class AccountSelectionWindow extends MWindow {
                 fieldSelection.fireValueChange(account);
                 close();
             }).withStyleName(WebUIConstants.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateToolTipAccount(
-                    UserUIContext.getUserLocale(), account, UserUIContext.getSiteUrl()));
+                    UserUIContext.getUserLocale(), account, MyCollabUI.getSiteUrl()));
         });
     }
 }

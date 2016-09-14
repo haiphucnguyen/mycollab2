@@ -30,6 +30,7 @@ import com.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 import com.mycollab.module.crm.service.MeetingService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -65,7 +66,7 @@ public class MeetingReadPresenter extends AbstractCrmPresenter<MeetingReadView> 
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 MeetingService campaignService = AppContextUtil.getSpringBean(MeetingService.class);
-                                campaignService.removeWithSession(data, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                campaignService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                 EventBusFactory.getInstance().post(new ActivityEvent.GotoList(this, null));
                             }
                         });
@@ -87,7 +88,7 @@ public class MeetingReadPresenter extends AbstractCrmPresenter<MeetingReadView> 
             public void gotoNext(SimpleMeeting data) {
                 MeetingService accountService = AppContextUtil.getSpringBean(MeetingService.class);
                 MeetingSearchCriteria criteria = new MeetingSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = accountService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -102,7 +103,7 @@ public class MeetingReadPresenter extends AbstractCrmPresenter<MeetingReadView> 
             public void gotoPrevious(SimpleMeeting data) {
                 MeetingService accountService = AppContextUtil.getSpringBean(MeetingService.class);
                 MeetingSearchCriteria criteria = new MeetingSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = accountService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -123,7 +124,7 @@ public class MeetingReadPresenter extends AbstractCrmPresenter<MeetingReadView> 
                 MeetingService meetingService = AppContextUtil
                         .getSpringBean(MeetingService.class);
                 meeting = meetingService.findById((Integer) data.getParams(),
-                        UserUIContext.getAccountId());
+                        MyCollabUI.getAccountId());
                 if (meeting == null) {
                     NotificationUtil.showRecordNotExistNotification();
                     return;

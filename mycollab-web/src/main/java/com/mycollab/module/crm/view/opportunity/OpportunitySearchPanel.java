@@ -32,6 +32,7 @@ import com.mycollab.module.crm.view.account.AccountSelectionField;
 import com.mycollab.module.crm.view.campaign.CampaignSelectionField;
 import com.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.mycollab.security.RolePermissionCollections;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
@@ -130,7 +131,7 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
         @Override
         protected OpportunitySearchCriteria fillUpSearchCriteria() {
             OpportunitySearchCriteria searchCriteria = new OpportunitySearchCriteria();
-            searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+            searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
 
             if (StringUtils.isNotBlank(this.nameField.getValue().trim())) {
                 searchCriteria.setOpportunityName(StringSearchField.and(this.nameField.getValue().trim()));

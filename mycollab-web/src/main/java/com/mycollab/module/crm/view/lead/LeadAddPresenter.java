@@ -31,6 +31,7 @@ import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -81,7 +82,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
                 lead = (SimpleLead) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
-                lead = leadService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                lead = leadService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
             }
 
             if (lead == null) {
@@ -107,7 +108,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 
     private int saveLead(Lead lead) {
         LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
-        lead.setSaccountid(UserUIContext.getAccountId());
+        lead.setSaccountid(MyCollabUI.getAccountId());
         if (lead.getId() == null) {
             leadService.saveWithSession(lead, UserUIContext.getUsername());
         } else {

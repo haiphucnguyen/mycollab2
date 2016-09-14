@@ -30,6 +30,7 @@ import com.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.ViewItemAction;
 import com.mycollab.vaadin.mvp.MassUpdateCommand;
@@ -111,12 +112,12 @@ public class AccountListPresenter extends CrmGenericListPresenter<AccountListVie
             }
 
             if (keyList.size() > 0) {
-                accountService.massRemoveWithSession(keyList, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                accountService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                 doSearch(searchCriteria);
                 checkWhetherEnableTableActionControl();
             }
         } else {
-            accountService.removeByCriteria(searchCriteria, UserUIContext.getAccountId());
+            accountService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
             doSearch(searchCriteria);
         }
     }
@@ -152,7 +153,7 @@ public class AccountListPresenter extends CrmGenericListPresenter<AccountListVie
             }
 
             if (keyList.size() > 0) {
-                accountService.massUpdateWithSession(value, keyList, UserUIContext.getAccountId());
+                accountService.massUpdateWithSession(value, keyList, MyCollabUI.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

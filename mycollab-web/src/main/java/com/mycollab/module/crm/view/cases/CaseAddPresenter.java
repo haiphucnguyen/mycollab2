@@ -31,6 +31,7 @@ import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -80,7 +81,7 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
                 cases = (SimpleCase) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
-                cases = caseService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                cases = caseService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
             }
             if (cases == null) {
                 throw new ResourceNotFoundException();
@@ -103,7 +104,7 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 
     private int saveCase(CaseWithBLOBs cases) {
         CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
-        cases.setSaccountid(UserUIContext.getAccountId());
+        cases.setSaccountid(MyCollabUI.getAccountId());
 
         if (cases.getId() == null) {
             caseService.saveWithSession(cases, UserUIContext.getUsername());

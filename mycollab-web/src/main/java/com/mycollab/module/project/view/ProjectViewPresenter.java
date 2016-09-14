@@ -23,6 +23,7 @@ import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.IPresenter;
 import com.mycollab.vaadin.mvp.PageActionChain;
@@ -49,14 +50,14 @@ public class ProjectViewPresenter extends ProjectGenericPresenter<ProjectView> {
         prjContainer.with(view).withAlign(view, Alignment.TOP_CENTER);
         if (data.getParams() instanceof Integer) {
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-            SimpleProject project = projectService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+            SimpleProject project = projectService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
 
             if (project == null) {
                 throw new ResourceNotFoundException();
             } else {
                 ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
                 boolean userBelongToProject = projectMemberService.isUserBelongToProject(UserUIContext.getUsername(), project.getId(),
-                        UserUIContext.getAccountId());
+                        MyCollabUI.getAccountId());
                 if (userBelongToProject) {
                     CurrentProjectVariables.setProject(project);
                     view.initView(project);

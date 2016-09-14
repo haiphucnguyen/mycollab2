@@ -33,6 +33,7 @@ import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -77,7 +78,7 @@ class ApproveInputView extends AbstractMobilePageView {
                     comment.setComment(editForm.commentArea.getValue());
                     comment.setCreatedtime(new GregorianCalendar().getTime());
                     comment.setCreateduser(UserUIContext.getUsername());
-                    comment.setSaccountid(UserUIContext.getAccountId());
+                    comment.setSaccountid(MyCollabUI.getAccountId());
                     comment.setType(ProjectTypeConstants.BUG);
                     comment.setTypeid("" + bug.getId());
                     comment.setExtratypeid(CurrentProjectVariables.getProjectId());

@@ -16,6 +16,7 @@ import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.reporting.FormReportLayout;
 import com.mycollab.reporting.PrintButton;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -56,14 +57,14 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
             @Override
             public void onDelete(final SimpleRisk data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                                riskService.removeWithSession(data, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                riskService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                 EventBusFactory.getInstance().post(new RiskEvent.GotoList(this, null));
                             }
                         });
@@ -124,7 +125,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS)) {
             if (data.getParams() instanceof Integer) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                SimpleRisk risk = riskService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                SimpleRisk risk = riskService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
                 if (risk != null) {
                     RiskContainer riskContainer = (RiskContainer) container;
                     riskContainer.removeAllComponents();

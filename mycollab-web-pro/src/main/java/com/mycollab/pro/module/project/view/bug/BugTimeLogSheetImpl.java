@@ -34,6 +34,7 @@ import com.mycollab.module.project.view.bug.BugTimeLogSheet;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.google.common.eventbus.AllowConcurrentEvents;
@@ -145,7 +146,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
             item.setLogvalue(getInvestValue());
             item.setTypeid(bean.getId());
             item.setType(ProjectTypeConstants.BUG);
-            item.setSaccountid(UserUIContext.getAccountId());
+            item.setSaccountid(MyCollabUI.getAccountId());
             item.setProjectid(CurrentProjectVariables.getProjectId());
             item.setLogforday(forLogDate());
             item.setIsbillable(isBillableHours());

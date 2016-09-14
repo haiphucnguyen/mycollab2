@@ -24,6 +24,7 @@ import com.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunityLeadSource;
 import com.mycollab.module.crm.service.ContactService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.CheckBoxDecor;
@@ -69,8 +70,8 @@ public class ContactTableDisplay extends DefaultPagedBeanTable<ContactService, C
             final SimpleContact contact = getBeanByIndex(itemId);
 
             LabelLink b = new LabelLink(contact.getContactName(), CrmLinkBuilder.generateContactPreviewLinkFull(contact.getId()));
-            b.setDescription(CrmTooltipGenerator.generateToolTipContact(UserUIContext.getUserLocale(), UserUIContext.getDateFormat(),
-                    contact, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            b.setDescription(CrmTooltipGenerator.generateToolTipContact(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
+                    contact, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
         });
 

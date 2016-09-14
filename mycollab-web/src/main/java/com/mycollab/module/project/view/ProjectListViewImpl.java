@@ -31,6 +31,7 @@ import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.mycollab.vaadin.events.HasSearchHandlers;
@@ -102,8 +103,8 @@ public class ProjectListViewImpl extends AbstractPageView implements ProjectList
         tableItem.addGeneratedColumn(Project.Field.name.name(), (source, itemId, columnId) -> {
             SimpleProject project = tableItem.getBeanByIndex(itemId);
             LabelLink b = new LabelLink(project.getName(), ProjectLinkBuilder.generateProjectFullLink(project.getId()));
-            b.setDescription(ProjectTooltipGenerator.generateToolTipProject(UserUIContext.getUserLocale(), UserUIContext.getDateFormat(),
-                    project, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            b.setDescription(ProjectTooltipGenerator.generateToolTipProject(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
+                    project, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return new MHorizontalLayout(ProjectAssetsUtil.buildProjectLogo(project
                     .getShortname(), project.getId(), project.getAvatarid(), 32), b)
                     .expand(b).alignAll(Alignment.MIDDLE_LEFT).withMargin(false).withFullHeight();

@@ -23,6 +23,7 @@ import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.IgnoreException;
 import com.mycollab.server.ServerInstance;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -98,7 +99,7 @@ public class UpgradeConfirmWindow extends MWindow {
             if (installerFile.exists()) {
                 new Thread(() -> {
                     ServerInstance.getInstance().preUpgrade();
-                    final String locUrl = SiteConfiguration.getSiteUrl(UserUIContext.getSubDomain()) + "it/upgrade";
+                    final String locUrl = SiteConfiguration.getSiteUrl(MyCollabUI.getSubDomain()) + "it/upgrade";
                     Future<Void> access = currentUI.access(() -> {
                         LOG.info("Redirect to the upgrade page " + locUrl);
                         currentUI.getPage().setLocation(locUrl);

@@ -24,6 +24,7 @@ import com.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.*;
 import com.mycollab.module.crm.service.CaseService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.CheckBoxDecor;
@@ -68,7 +69,7 @@ public class CaseTableDisplay extends DefaultPagedBeanTable<CaseService, CaseSea
                 b.addStyleName(WebUIConstants.LINK_COMPLETED);
             }
             b.setDescription(CrmTooltipGenerator.generateTooltipCases(UserUIContext.getUserLocale(), cases,
-                    UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
         });
 

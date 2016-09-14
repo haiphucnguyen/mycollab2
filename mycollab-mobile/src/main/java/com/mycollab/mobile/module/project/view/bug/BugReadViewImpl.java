@@ -44,6 +44,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -119,7 +120,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         bugTimeLogComp.displayTime(beanItem);
 
         ResourceService resourceService = AppContextUtil.getSpringBean(ResourceService.class);
-        List<Content> attachments = resourceService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(),
+        List<Content> attachments = resourceService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(),
                 beanItem.getProjectid(), ProjectTypeConstants.BUG, "" + beanItem.getId()));
         if (CollectionUtils.isNotEmpty(attachments)) {
             attachmentComp = new ProjectAttachmentDisplayComp(attachments);

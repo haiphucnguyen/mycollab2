@@ -39,6 +39,7 @@ import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.resources.LazyStreamSource;
 import com.mycollab.vaadin.resources.OnDemandFileDownloader;
@@ -149,7 +150,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
     }
 
     private void deleteResourceAction(final Collection<Resource> deletedResources) {
-        ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+        ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                 UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -165,7 +166,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                                             (ResourcesDisplayComponent.this, res));
                                 }
                                 resourceService.removeResource(res.getPath(), UserUIContext.getUsername(),
-                                        UserUIContext.getAccountId());
+                                        MyCollabUI.getAccountId());
                             }
                         }
 
@@ -400,7 +401,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 moreInfoAboutResLayout.addComponent(usernameLbl);
             } else {
                 UserService userService = AppContextUtil.getSpringBean(UserService.class);
-                SimpleUser user = userService.findUserByUserNameInAccount(resource.getCreatedUser(), UserUIContext.getAccountId());
+                SimpleUser user = userService.findUserByUserNameInAccount(resource.getCreatedUser(), MyCollabUI.getAccountId());
                 if (user != null) {
                     UserLink userLink = new UserLink(user.getUsername(), user.getAvatarid(), user.getDisplayName());
                     userLink.addStyleName(UIConstants.META_INFO);
@@ -552,7 +553,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                                         .getExternalDrive(), content, fileInputStream);
                             } else
                                 resourceService.saveContent(content, UserUIContext.getUsername(),
-                                        fileInputStream, UserUIContext.getAccountId());
+                                        fileInputStream, MyCollabUI.getAccountId());
                         } catch (IOException e) {
                             throw new MyCollabException(e);
                         }

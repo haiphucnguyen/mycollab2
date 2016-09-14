@@ -23,6 +23,7 @@ import com.mycollab.module.file.PathUtils;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -51,7 +52,7 @@ public class ProjectAssetsUtil {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(projectAvatarId)) {
             wrapper = new Image(null, new ExternalResource(StorageFactory.getResourcePath
-                    (String.format("%s/%s_%d.png", PathUtils.getProjectLogoPath(UserUIContext.getAccountId(), projectId),
+                    (String.format("%s/%s_%d.png", PathUtils.getProjectLogoPath(MyCollabUI.getAccountId(), projectId),
                             projectAvatarId, size))));
         } else {
             ELabel projectIcon = new ELabel(projectShortname).withStyleName(UIConstants.TEXT_ELLIPSIS, "center");
@@ -69,7 +70,7 @@ public class ProjectAssetsUtil {
     public static Component buildClientLogo(SimpleAccount account, int size) {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(account.getAvatarid())) {
-            wrapper = new Image(null, new ExternalResource(StorageFactory.getEntityLogoPath(UserUIContext
+            wrapper = new Image(null, new ExternalResource(StorageFactory.getEntityLogoPath(MyCollabUI
                     .getAccountId(), account.getAvatarid(), 100)));
         } else {
             String accountName = account.getAccountname();

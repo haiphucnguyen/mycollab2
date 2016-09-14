@@ -36,6 +36,7 @@ import com.mycollab.pro.module.crm.view.setting.customlayout.CreateCustomFieldWi
 import com.mycollab.pro.module.crm.view.setting.customlayout.CreateSectionWindow;
 import com.mycollab.pro.module.crm.view.setting.customlayout.CustomLayoutDDComp;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -141,7 +142,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
             public void buttonClick(ClickEvent event) {
                 DynaForm rebuildForm = layoutComp.rebuildForm();
                 MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
-                formService.saveCustomForm(UserUIContext.getAccountId(), moduleName, rebuildForm);
+                formService.saveCustomForm(MyCollabUI.getAccountId(), moduleName, rebuildForm);
             }
         });
         saveBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
@@ -174,7 +175,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 
     private static DynaForm getDynaForm(String moduleName) {
         MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
-        DynaForm form = formService.findCustomForm(UserUIContext.getAccountId(), moduleName);
+        DynaForm form = formService.findCustomForm(MyCollabUI.getAccountId(), moduleName);
 
         if (form == null) {
             if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {

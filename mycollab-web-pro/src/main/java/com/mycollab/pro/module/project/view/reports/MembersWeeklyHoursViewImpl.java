@@ -15,6 +15,7 @@ import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.project.ui.components.ProjectMemberLink;
 import com.mycollab.pro.module.project.ui.components.ProjectMultiSelect;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -64,7 +65,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
         searchLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-        List<SimpleProject> projects = projectService.getProjectsUserInvolved(UserUIContext.getUsername(), UserUIContext.getAccountId());
+        List<SimpleProject> projects = projectService.getProjectsUserInvolved(UserUIContext.getUsername(), MyCollabUI.getAccountId());
         final ProjectMultiSelect projectsSelection = new ProjectMultiSelect(projects);
         searchLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.LIST)).withStyleName(WebUIConstants.META_COLOR), 0, 0);
         searchLayout.addComponent(projectsSelection, 1, 0);
@@ -110,7 +111,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractPageView implements Memb
             Date start = now.dayOfWeek().withMinimumValue().toDate();
             Date end = now.dayOfWeek().withMaximumValue().toDate();
             List<SimpleProjectMember> members = projectMemberService.findMembersHourlyInProject(project.getId(),
-                    UserUIContext.getAccountId(), start, end);
+                    MyCollabUI.getAccountId(), start, end);
 
             for (SimpleProjectMember member : members) {
                 MHorizontalLayout memberLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, true));

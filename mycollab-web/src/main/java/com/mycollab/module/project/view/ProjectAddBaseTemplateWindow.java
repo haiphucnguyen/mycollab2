@@ -30,6 +30,7 @@ import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.service.ProjectTemplateService;
 import com.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -91,7 +92,7 @@ public class ProjectAddBaseTemplateWindow extends Window {
                     (ProjectTemplateService.class);
             if (projectTemplateService != null) {
                 Integer newProjectId = projectTemplateService.cloneProject(templatePrj.getId(), newPrjName, newPrjKey,
-                        UserUIContext.getAccountId(), UserUIContext.getUsername());
+                        MyCollabUI.getAccountId(), UserUIContext.getUsername());
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this,
                         new PageActionChain(new ProjectScreenData.Goto(newProjectId))));
                 close();

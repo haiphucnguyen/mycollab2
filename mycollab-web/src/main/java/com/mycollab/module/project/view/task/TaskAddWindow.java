@@ -32,6 +32,7 @@ import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.components.ProjectSubscribersComp;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -104,7 +105,7 @@ public class TaskAddWindow extends MWindow {
                         TaskEditFormFieldFactory taskEditFormFieldFactory = (TaskEditFormFieldFactory) fieldFactory;
 
                         AttachmentUploadField uploadField = taskEditFormFieldFactory.getAttachmentUploadField();
-                        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(), bean.getProjectid(),
+                        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), bean.getProjectid(),
                                 ProjectTypeConstants.TASK, "" + taskId);
                         uploadField.saveContentsToRepo(attachPath);
 
@@ -115,7 +116,7 @@ public class TaskAddWindow extends MWindow {
                             for (String follower : followers) {
                                 MonitorItem monitorItem = new MonitorItem();
                                 monitorItem.setMonitorDate(new GregorianCalendar().getTime());
-                                monitorItem.setSaccountid(UserUIContext.getAccountId());
+                                monitorItem.setSaccountid(MyCollabUI.getAccountId());
                                 monitorItem.setType(ProjectTypeConstants.TASK);
                                 monitorItem.setTypeid(taskId);
                                 monitorItem.setUser(follower);

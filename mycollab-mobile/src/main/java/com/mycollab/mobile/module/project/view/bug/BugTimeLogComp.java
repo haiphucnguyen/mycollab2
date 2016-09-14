@@ -32,6 +32,7 @@ import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 
 import java.util.Date;
@@ -95,7 +96,7 @@ public class BugTimeLogComp extends TimeLogComp<SimpleBug> {
             item.setLogvalue(spentHours);
             item.setTypeid(bean.getId());
             item.setType(ProjectTypeConstants.BUG);
-            item.setSaccountid(UserUIContext.getAccountId());
+            item.setSaccountid(MyCollabUI.getAccountId());
             item.setProjectid(CurrentProjectVariables.getProjectId());
             item.setLogforday(forDate);
             item.setIsbillable(isBillable);

@@ -28,6 +28,7 @@ import com.mycollab.mobile.ui.AbstractMobileTabPageView;
 import com.mycollab.mobile.ui.IconConstants;
 import com.mycollab.module.crm.domain.criteria.*;
 import com.mycollab.module.crm.i18n.*;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -109,37 +110,37 @@ public class CrmContainerViewImpl extends AbstractMobileTabPageView implements C
                 Component currentComponent = getSelelectedTab().getComponent();
                 if (currentComponent == getAccountTab()) {
                     AccountSearchCriteria criteria = new AccountSearchCriteria();
-                    criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                    criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                     accountPresenter.getView().getPagedBeanTable().search(criteria);
                     UserUIContext.addFragment("crm/account/list", UserUIContext.getMessage(AccountI18nEnum.LIST));
                 } else if (currentComponent == getContactTab()) {
                     ContactSearchCriteria criteria = new ContactSearchCriteria();
-                    criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                    criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                     contactPresenter.getView().getPagedBeanTable().search(criteria);
                     UserUIContext.addFragment("crm/contact/list", UserUIContext.getMessage(ContactI18nEnum.LIST));
                 } else if (currentComponent == getCampaignTab()) {
                     CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-                    criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                    criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                     campaignPresenter.getView().getPagedBeanTable().search(criteria);
                     UserUIContext.addFragment("crm/campaign/list", UserUIContext.getMessage(CampaignI18nEnum.LIST));
                 } else if (currentComponent == getLeadTab()) {
                     LeadSearchCriteria criteria = new LeadSearchCriteria();
-                    criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                    criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                     leadPresenter.getView().getPagedBeanTable().search(criteria);
                     UserUIContext.addFragment("crm/lead/list", UserUIContext.getMessage(LeadI18nEnum.LIST));
                 } else if (currentComponent == getOpportunityTab()) {
                     OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-                    criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                    criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                     opportunityPresenter.getView().getPagedBeanTable().search(criteria);
                     UserUIContext.addFragment("crm/opportunity/list", UserUIContext.getMessage(OpportunityI18nEnum.LIST));
                 } else if (currentComponent == getCaseTab()) {
                     CaseSearchCriteria criteria = new CaseSearchCriteria();
-                    criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                    criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                     casePresenter.getView().getPagedBeanTable().search(criteria);
                     UserUIContext.addFragment("crm/cases/list", UserUIContext.getMessage(CaseI18nEnum.LIST));
                 } else if (currentComponent == getActivityTab()) {
                     ActivitySearchCriteria criteria = new ActivitySearchCriteria();
-                    criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+                    criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
                     activityPresenter.getView().getPagedBeanTable().search(criteria);
                     UserUIContext.addFragment("crm/activity/list", UserUIContext.getMessage(ActivityI18nEnum.M_VIEW_LIST_TITLE));
                 }

@@ -30,6 +30,7 @@ import com.mycollab.module.crm.service.EventService;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.CheckBoxDecor;
@@ -269,7 +270,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
             trRow2.appendChild(new Td().setStyle("width: 90px; vertical-align: top; text-align: right;")
                     .appendText("Contact:"))
                     .appendChild(new Td().setStyle("width:110px; vertical-align: top; text-align: left;")
-                            .appendChild(new A().setHref((event.getContactId() != null) ? UserUIContext.getSiteUrl() + "#"
+                            .appendChild(new A().setHref((event.getContactId() != null) ? MyCollabUI.getSiteUrl() + "#"
                                     + CrmLinkGenerator.generateContactPreviewLink(event.getContactId()) : "")
                                     .appendText(StringUtils.trimHtmlTags(event.getContactFullName()))));
 
@@ -283,7 +284,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
                     .appendChild(
                             new Td().setStyle("width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top;")
                                     .appendChild(new A().setHref((event.getAssignUser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(
-                                            UserUIContext.getSiteUrl(), event.getAssignUser()) : "")
+                                            MyCollabUI.getSiteUrl(), event.getAssignUser()) : "")
                                             .appendChild(new Img("", StorageFactory.getAvatarPath(event.getAssignUserAvatarId(), 16)))
                                             .appendText(StringUtils.trimHtmlTags(event.getAssignUserFullName()))));
 

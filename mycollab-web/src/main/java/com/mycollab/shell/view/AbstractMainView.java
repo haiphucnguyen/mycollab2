@@ -24,6 +24,7 @@ import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.shell.events.ShellEvent;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ControllerRegistry;
@@ -140,7 +141,7 @@ public abstract class AbstractMainView extends AbstractPageView implements MainV
         final PopupButton modulePopup = new PopupButton("");
         modulePopup.setHeightUndefined();
         modulePopup.setDirection(Alignment.BOTTOM_LEFT);
-        modulePopup.setIcon(AccountAssetsResolver.createLogoResource(UserUIContext.getBillingAccount().getLogopath(), 150));
+        modulePopup.setIcon(AccountAssetsResolver.createLogoResource(MyCollabUI.getBillingAccount().getLogopath(), 150));
         OptionPopupContent modulePopupContent = new OptionPopupContent();
         modulePopup.setContent(modulePopupContent);
 

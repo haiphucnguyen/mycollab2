@@ -8,6 +8,7 @@ import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.view.task.TaskAddWindow;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -46,7 +47,7 @@ public class EntityWithProjectAddHandler {
         if (entity instanceof SimpleTask) {
             SimpleTask newTask = (SimpleTask) entity;
             newTask.setProjectid(projectId);
-            newTask.setSaccountid(UserUIContext.getAccountId());
+            newTask.setSaccountid(MyCollabUI.getAccountId());
             newTask.setLogby(UserUIContext.getUsername());
             UI.getCurrent().addWindow(new TaskAddWindow(newTask));
         }
@@ -80,7 +81,7 @@ public class EntityWithProjectAddHandler {
         UserInvolvedProjectsSelection() {
             this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-            List<SimpleProject> projects = projectService.getProjectsUserInvolved(UserUIContext.getUsername(), UserUIContext.getAccountId());
+            List<SimpleProject> projects = projectService.getProjectsUserInvolved(UserUIContext.getUsername(), MyCollabUI.getAccountId());
             for (SimpleProject project : projects) {
                 this.addItem(project);
                 this.setItemCaption(project, project.getName());

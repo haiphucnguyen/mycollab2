@@ -25,6 +25,7 @@ import com.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.mycollab.module.crm.domain.SimpleContact;
 import com.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.mycollab.module.crm.i18n.ContactI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.ui.Button;
@@ -52,7 +53,7 @@ public class CaseRelatedContactView extends AbstractRelatedListView<SimpleContac
 
     private void loadContacts() {
         ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setCaseId(new NumberSearchField(myCase.getId()));
         this.setSearchCriteria(criteria);
     }
@@ -75,7 +76,7 @@ public class CaseRelatedContactView extends AbstractRelatedListView<SimpleContac
         Button selectContact = new Button(UserUIContext.getMessage(ContactI18nEnum.M_TITLE_SELECT_CONTACTS), clickEvent -> {
             CaseContactSelectionView contactSelectionView = new CaseContactSelectionView(CaseRelatedContactView.this);
             ContactSearchCriteria criteria = new ContactSearchCriteria();
-            criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+            criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
             contactSelectionView.setSearchCriteria(criteria);
             EventBusFactory.getInstance().post(new ShellEvent.PushView(CaseRelatedContactView.this, contactSelectionView));
         });

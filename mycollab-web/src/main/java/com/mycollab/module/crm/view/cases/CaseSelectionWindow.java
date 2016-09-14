@@ -21,6 +21,7 @@ import com.mycollab.module.crm.CrmTooltipGenerator;
 import com.mycollab.module.crm.domain.SimpleCase;
 import com.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.mycollab.module.crm.i18n.CaseI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -66,7 +67,7 @@ public class CaseSelectionWindow extends MWindow {
                 fieldSelection.fireValueChange(cases);
                 close();
             }).withStyleName(WebUIConstants.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateTooltipCases(
-                    UserUIContext.getUserLocale(), cases, UserUIContext.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    UserUIContext.getUserLocale(), cases, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
     }
 }

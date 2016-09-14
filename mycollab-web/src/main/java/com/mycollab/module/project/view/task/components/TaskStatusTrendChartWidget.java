@@ -29,6 +29,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.ui.chart.GenericChartWrapper;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.Depot;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -186,7 +187,7 @@ public class TaskStatusTrendChartWidget extends Depot {
             LocalDate startDate = endDate.minusDays(30);
             OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
             List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
-                    CurrentProjectVariables.getProjectId(), UserUIContext.getAccountId());
+                    CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
             List<String> options = optionVals.stream().map(OptionVal::getTypeval).collect(Collectors.toList());
             groupItems = timelineTrackingService.findTimelineItems("status", options, startDate.toDate(), endDate.toDate(), searchCriteria);
             displayChart();

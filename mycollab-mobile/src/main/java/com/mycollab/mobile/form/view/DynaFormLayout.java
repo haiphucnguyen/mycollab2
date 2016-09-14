@@ -22,6 +22,7 @@ import com.mycollab.form.view.builder.type.DynaForm;
 import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.ui.*;
@@ -46,7 +47,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
 
     public DynaFormLayout(String moduleName, DynaForm defaultForm) {
         MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
-        DynaForm form = formService.findCustomForm(UserUIContext.getAccountId(), moduleName);
+        DynaForm form = formService.findCustomForm(MyCollabUI.getAccountId(), moduleName);
 
         if (form != null) {
             this.dynaForm = form;

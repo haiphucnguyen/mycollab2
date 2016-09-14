@@ -34,6 +34,7 @@ import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.module.project.ui.components.ProjectMemberBlock;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.ReloadableComponent;
@@ -141,7 +142,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
         final int commentCount = commentService.getTotalCount(commentCriteria);
 
         final AuditLogSearchCriteria logCriteria = new AuditLogSearchCriteria();
-        logCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        logCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         logCriteria.setModule(StringSearchField.and(ModuleNameConstants.CRM));
         logCriteria.setType(StringSearchField.and(type));
         logCriteria.setTypeId(StringSearchField.and(typeId));
@@ -194,14 +195,14 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
         if (hasDeletePermission(comment)) {
             MButton msgDeleteBtn = new MButton("", clickEvent ->
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                             confirmDialog -> {
                                 if (confirmDialog.isConfirmed()) {
                                     CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
-                                    commentService.removeWithSession(comment, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                                    commentService.removeWithSession(comment, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                                     activityBox.removeComponent(layout);
                                 }
                             })

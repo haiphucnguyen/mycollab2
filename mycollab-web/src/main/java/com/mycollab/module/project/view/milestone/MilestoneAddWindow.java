@@ -27,6 +27,7 @@ import com.mycollab.module.project.events.MilestoneEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
@@ -79,7 +80,7 @@ public class MilestoneAddWindow extends MWindow {
                 }
 
                 AttachmentUploadField uploadField = milestoneEditFormFieldFactory.getAttachmentUploadField();
-                String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(), milestone.getProjectid(),
+                String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), milestone.getProjectid(),
                         ProjectTypeConstants.MILESTONE, "" + milestone.getId());
                 uploadField.saveContentsToRepo(attachPath);
 

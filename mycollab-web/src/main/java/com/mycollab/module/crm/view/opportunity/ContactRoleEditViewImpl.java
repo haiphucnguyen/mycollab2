@@ -38,6 +38,7 @@ import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.crm.view.contact.ContactSelectionField;
 import com.mycollab.module.user.accountsettings.localization.RoleI18nEnum;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -126,7 +127,7 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements Contact
 
         if (contactOpps.size() > 0) {
             ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
-            contactService.saveContactOpportunityRelationship(contactOpps, UserUIContext.getAccountId());
+            contactService.saveContactOpportunityRelationship(contactOpps, MyCollabUI.getAccountId());
         }
 
         // lead user to opportunity view
@@ -166,7 +167,7 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements Contact
 
             ContactOpportunityService contactOppoService = AppContextUtil.getSpringBean(ContactOpportunityService.class);
             ContactSearchCriteria criteria = new ContactSearchCriteria();
-            criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+            criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
             criteria.setOpportunityId(new NumberSearchField(opportunity.getId()));
             List<SimpleContactOpportunityRel> contactOppoRels = contactOppoService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
             boolean oddRow = true;
@@ -252,7 +253,7 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements Contact
                     ContactOpportunity associateOpportunity = new ContactOpportunity();
                     associateOpportunity.setContactid(contactOpp.getId());
                     associateOpportunity.setOpportunityid(opportunity.getId());
-                    contactService.removeContactOpportunityRelationship(associateOpportunity, UserUIContext.getAccountId());
+                    contactService.removeContactOpportunityRelationship(associateOpportunity, MyCollabUI.getAccountId());
                 }
             }).withIcon(FontAwesome.TRASH_O).withStyleName(WebUIConstants.BUTTON_ICON_ONLY);
             this.addComponent(deleteBtn);

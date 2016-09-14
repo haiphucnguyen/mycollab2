@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project.view
 
 import com.google.common.eventbus.Subscribe
@@ -43,7 +27,7 @@ import com.mycollab.module.project.view.user.ProjectDashboardPresenter
 import com.mycollab.module.project.{CurrentProjectVariables, ProjectMemberStatusConstants}
 import com.mycollab.module.tracker.domain.criteria.{ComponentSearchCriteria, VersionSearchCriteria}
 import com.mycollab.module.tracker.domain.{Component, SimpleBug, Version}
-import com.mycollab.vaadin.UserUIContext
+import com.mycollab.vaadin.MyCollabUI
 import com.mycollab.vaadin.mvp.{AbstractController, PresenterResolver}
 
 /**
@@ -61,7 +45,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
   bindFileEvents()
   bindTimeandInvoiceEvents()
   bindPageEvents()
-
+  
   private def bindProjectEvents(): Unit = {
     this.register(new ApplicationEventListener[ProjectEvent.GotoEdit] {
       @Subscribe def handle(event: ProjectEvent.GotoEdit) {
@@ -71,7 +55,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         presenter.go(projectView, new ProjectScreenData.Edit(project))
       }
     })
-
+    
     this.register(new ApplicationEventListener[ProjectEvent.GotoTagListView] {
       @Subscribe def handle(event: ProjectEvent.GotoTagListView) {
         val tag = event.getData.asInstanceOf[Tag]
@@ -79,14 +63,14 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         presenter.go(projectView, new ProjectScreenData.GotoTagList(tag))
       }
     })
-
+    
     this.register(new ApplicationEventListener[ProjectEvent.GotoFavoriteView] {
       @Subscribe def handle(event: ProjectEvent.GotoFavoriteView) {
         val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])
         presenter.go(projectView, new GotoFavorite())
       }
     })
-
+    
     this.register(new ApplicationEventListener[ProjectEvent.GotoCalendarView] {
       @Subscribe override def handle(event: ProjectEvent.GotoCalendarView): Unit = {
         val data = new ProjectScreenData.GotoCalendarView
@@ -94,7 +78,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         presenter.go(projectView, data)
       }
     })
-
+    
     this.register(new ApplicationEventListener[ProjectEvent.GotoGanttChart] {
       @Subscribe def handle(event: ProjectEvent.GotoGanttChart) {
         val data = new ProjectScreenData.GotoGanttChart
@@ -102,7 +86,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         presenter.go(projectView, data)
       }
     })
-
+    
     this.register(new ApplicationEventListener[ProjectEvent.GotoDashboard] {
       @Subscribe def handle(event: ProjectEvent.GotoDashboard) {
         val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])
@@ -110,7 +94,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
       }
     })
   }
-
+  
   private def bindTaskEvents(): Unit = {
     this.register(new ApplicationEventListener[TaskEvent.GotoRead] {
       @Subscribe def handle(event: TaskEvent.GotoRead) {
@@ -140,7 +124,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         presenter.go(projectView, data)
       }
     })
-
+    
     this.register(new ApplicationEventListener[TaskEvent.GotoKanbanView] {
       @Subscribe override def handle(event: TaskEvent.GotoKanbanView): Unit = {
         val data = new TaskScreenData.GotoKanbanView
@@ -148,7 +132,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         presenter.go(projectView, data)
       }
     })
-
+    
     this.register(new ApplicationEventListener[TaskEvent.GotoDashboard] {
       @Subscribe def handle(event: TaskEvent.GotoDashboard) {
         val data = new GotoDashboard(event.getData)
@@ -157,7 +141,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
       }
     })
   }
-
+  
   private def bindRiskEvents(): Unit = {
     this.register(new ApplicationEventListener[RiskEvent.GotoAdd] {
       @Subscribe def handle(event: RiskEvent.GotoAdd) {
@@ -196,7 +180,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
       }
     })
   }
-
+  
   private def bindBugEvents(): Unit = {
     this.register(new ApplicationEventListener[BugEvent.GotoAdd] {
       @Subscribe def handle(event: BugEvent.GotoAdd) {
@@ -219,7 +203,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         presenter.go(projectView, data)
       }
     })
-
+    
     this.register(new ApplicationEventListener[BugEvent.GotoKanbanView] {
       @Subscribe override def handle(event: BugEvent.GotoKanbanView): Unit = {
         val data = new BugScreenData.GotoKanbanView
@@ -227,7 +211,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         presenter.go(projectView, data)
       }
     })
-
+    
     this.register(new ApplicationEventListener[BugEvent.GotoList] {
       @Subscribe def handle(event: BugEvent.GotoList) {
         val params: Any = event.getData
@@ -294,7 +278,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
       }
     })
   }
-
+  
   private def bindMessageEvents(): Unit = {
     this.register(new ApplicationEventListener[MessageEvent.GotoRead] {
       @Subscribe def handle(event: MessageEvent.GotoRead) {
@@ -313,7 +297,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
       }
     })
   }
-
+  
   private def bindMilestoneEvents(): Unit = {
     this.register(new ApplicationEventListener[MilestoneEvent.GotoAdd] {
       @Subscribe def handle(event: MilestoneEvent.GotoAdd) {
@@ -322,7 +306,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         presenter.go(projectView, data)
       }
     })
-
+    
     this.register(new ApplicationEventListener[MilestoneEvent.GotoRead] {
       @Subscribe def handle(event: MilestoneEvent.GotoRead) {
         val data = new MilestoneScreenData.Read(event.getData.asInstanceOf[Integer])
@@ -330,7 +314,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         presenter.go(projectView, data)
       }
     })
-
+    
     this.register(new ApplicationEventListener[MilestoneEvent.GotoList] {
       @Subscribe def handle(event: MilestoneEvent.GotoList) {
         val criteria = new MilestoneSearchCriteria
@@ -339,21 +323,21 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         presenter.go(projectView, new MilestoneScreenData.Search(criteria))
       }
     })
-
+    
     this.register(new ApplicationEventListener[MilestoneEvent.GotoRoadmap] {
       @Subscribe def handle(event: MilestoneEvent.GotoRoadmap) {
         val presenter = PresenterResolver.getPresenter(classOf[MilestonePresenter])
         presenter.go(projectView, new Roadmap())
       }
     })
-  
+    
     this.register(new ApplicationEventListener[MilestoneEvent.GotoKanban] {
       @Subscribe def handle(event: MilestoneEvent.GotoKanban) {
         val presenter = PresenterResolver.getPresenter(classOf[MilestonePresenter])
         presenter.go(projectView, new Kanban())
       }
     })
-
+    
     this.register(new ApplicationEventListener[MilestoneEvent.GotoEdit] {
       @Subscribe def handle(event: MilestoneEvent.GotoEdit) {
         val data = new MilestoneScreenData.Edit(event.getData.asInstanceOf[Milestone])
@@ -362,7 +346,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
       }
     })
   }
-
+  
   private def bindUserGroupEvents(): Unit = {
     this.register(new ApplicationEventListener[ProjectRoleEvent.GotoList] {
       @Subscribe def handle(event: ProjectRoleEvent.GotoList) {
@@ -399,7 +383,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         val project = CurrentProjectVariables.getProject
         val criteria = new ProjectMemberSearchCriteria
         criteria.setProjectId(new NumberSearchField(project.getId))
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId))
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
         criteria.setStatuses(new SetSearchField[String](ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET))
         val presenter = PresenterResolver.getPresenter(classOf[UserSettingPresenter])
         presenter.go(projectView, new ProjectMemberScreenData.Search(criteria))
@@ -426,7 +410,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         presenter.go(projectView, data)
       }
     })
-
+    
     this.register(new ApplicationEventListener[ProjectNotificationEvent.GotoList] {
       @Subscribe def handle(event: ProjectNotificationEvent.GotoList) {
         val data = new ProjectSettingScreenData.ViewSettings()
@@ -434,14 +418,14 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         presenter.go(projectView, data)
       }
     })
-
+    
     this.register(new ApplicationEventListener[CustomizeUIEvent.UpdateFeaturesList] {
       @Subscribe def handle(event: CustomizeUIEvent.UpdateFeaturesList) {
         projectView.updateProjectFeatures()
       }
     })
   }
-
+  
   private def bindFileEvents(): Unit = {
     this.register(new ApplicationEventListener[ProjectContentEvent.GotoDashboard] {
       @Subscribe def handle(event: ProjectContentEvent.GotoDashboard) {
@@ -450,7 +434,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
       }
     })
   }
-
+  
   private def bindTimeandInvoiceEvents(): Unit = {
     this.register(new ApplicationEventListener[InvoiceEvent.GotoList] {
       override def handle(event: GotoList): Unit = {
@@ -459,7 +443,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
       }
     })
   }
-
+  
   private def bindPageEvents(): Unit = {
     this.register(new ApplicationEventListener[PageEvent.GotoAdd] {
       @Subscribe def handle(event: PageEvent.GotoAdd) {

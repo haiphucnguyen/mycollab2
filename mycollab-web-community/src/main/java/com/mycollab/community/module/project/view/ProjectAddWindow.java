@@ -25,6 +25,7 @@ import com.mycollab.module.project.view.AbstractProjectAddWindow;
 import com.mycollab.module.project.view.ProjectGeneralInfoStep;
 import com.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -56,7 +57,7 @@ public class ProjectAddWindow extends AbstractProjectAddWindow {
             boolean isValid = projectInfo.commit();
             if(isValid) {
                 ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-                project.setSaccountid(UserUIContext.getAccountId());
+                project.setSaccountid(MyCollabUI.getAccountId());
                 projectService.saveWithSession(project, UserUIContext.getUsername());
 
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this,

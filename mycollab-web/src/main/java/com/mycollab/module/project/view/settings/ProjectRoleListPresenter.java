@@ -28,6 +28,7 @@ import com.mycollab.module.project.i18n.ProjectRoleI18nEnum;
 import com.mycollab.module.project.service.ProjectRoleService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.ViewItemAction;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -99,12 +100,12 @@ public class ProjectRoleListPresenter extends ListSelectionPresenter<ProjectRole
             }
 
             if (keyList.size() > 0) {
-                projectRoleService.massRemoveWithSession(keyList, UserUIContext.getUsername(), UserUIContext.getAccountId());
+                projectRoleService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                 doSearch(searchCriteria);
                 checkWhetherEnableTableActionControl();
             }
         } else {
-            projectRoleService.removeByCriteria(searchCriteria, UserUIContext.getAccountId());
+            projectRoleService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
             doSearch(searchCriteria);
         }
 

@@ -34,6 +34,7 @@ import com.mycollab.module.crm.ui.components.*;
 import com.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -158,7 +159,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
 
     protected void displayActivities() {
         ActivitySearchCriteria criteria = new ActivitySearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setType(StringSearchField.and(CrmTypeConstants.LEAD));
         criteria.setTypeid(new NumberSearchField(beanItem.getId()));
         associateActivityList.setSearchCriteria(criteria);
@@ -195,7 +196,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
 
         AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-        final SimpleAccount account = accountService.findAccountAssoWithConvertedLead(lead.getId(), UserUIContext.getAccountId());
+        final SimpleAccount account = accountService.findAccountAssoWithConvertedLead(lead.getId(), MyCollabUI.getAccountId());
         if (account != null) {
             MButton accountLink = new MButton(account.getAccountname(),
                     clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GotoRead(this, account.getId())))
@@ -208,7 +209,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
 
         LOG.debug("Display associate contact");
         ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
-        final SimpleContact contact = contactService.findContactAssoWithConvertedLead(lead.getId(), UserUIContext.getAccountId());
+        final SimpleContact contact = contactService.findContactAssoWithConvertedLead(lead.getId(), MyCollabUI.getAccountId());
         if (contact != null) {
             MButton contactLink = new MButton(contact.getContactName(),
                     clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GotoRead(this, contact.getId())))
@@ -221,7 +222,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         LOG.debug("Display associate opportunity");
         OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
         final SimpleOpportunity opportunity = opportunityService.findOpportunityAssoWithConvertedLead(lead.getId(),
-                UserUIContext.getAccountId());
+                MyCollabUI.getAccountId());
         if (opportunity != null) {
             MButton opportunityLink = new MButton(opportunity.getOpportunityname(),
                     clickEvent -> EventBusFactory.getInstance().post(new OpportunityEvent.GotoRead(this, opportunity.getId())))

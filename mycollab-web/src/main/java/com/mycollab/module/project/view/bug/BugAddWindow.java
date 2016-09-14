@@ -34,6 +34,7 @@ import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugRelatedItemService;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -109,10 +110,10 @@ public class BugAddWindow extends MWindow {
                         BugRelatedItemService bugRelatedItemService = AppContextUtil.getSpringBean(BugRelatedItemService.class);
                         bugRelatedItemService.saveAffectedVersionsOfBug(bugId, bugEditFormFieldFactory.getAffectedVersionSelect().getSelectedItems());
                         bugRelatedItemService.saveComponentsOfBug(bugId, bugEditFormFieldFactory.getComponentSelect().getSelectedItems());
-                        asyncEventBus.post(new CleanCacheEvent(UserUIContext.getAccountId(), new Class[]{BugService.class}));
+                        asyncEventBus.post(new CleanCacheEvent(MyCollabUI.getAccountId(), new Class[]{BugService.class}));
 
                         AttachmentUploadField uploadField = bugEditFormFieldFactory.getAttachmentUploadField();
-                        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(), bean.getProjectid(),
+                        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), bean.getProjectid(),
                                 ProjectTypeConstants.BUG, "" + bugId);
                         uploadField.saveContentsToRepo(attachPath);
                         EventBusFactory.getInstance().post(new BugEvent.NewBugAdded(BugAddWindow.this, bugId));
@@ -125,7 +126,7 @@ public class BugAddWindow extends MWindow {
                             for (String follower : followers) {
                                 MonitorItem monitorItem = new MonitorItem();
                                 monitorItem.setMonitorDate(new GregorianCalendar().getTime());
-                                monitorItem.setSaccountid(UserUIContext.getAccountId());
+                                monitorItem.setSaccountid(MyCollabUI.getAccountId());
                                 monitorItem.setType(ProjectTypeConstants.BUG);
                                 monitorItem.setTypeid(bugId);
                                 monitorItem.setUser(follower);

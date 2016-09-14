@@ -160,7 +160,7 @@ public class MobileApplication extends MyCollabUI {
         setContent(manager);
 
         registerControllers(manager);
-        ThemeManager.loadMobileTheme(UserUIContext.getAccountId());
+        ThemeManager.loadMobileTheme(MyCollabUI.getAccountId());
 
         getPage().addUriFragmentChangedListener(new UriFragmentChangedListener() {
             private static final long serialVersionUID = -6410955178515535406L;
@@ -208,7 +208,7 @@ public class MobileApplication extends MyCollabUI {
     public void doLogin(String username, String password, boolean isRememberPassword) {
         try {
             UserService userService = AppContextUtil.getSpringBean(UserService.class);
-            SimpleUser user = userService.authentication(username, password, UserUIContext.getSubDomain(), false);
+            SimpleUser user = userService.authentication(username, password, MyCollabUI.getSubDomain(), false);
 
             if (isRememberPassword) {
                 rememberPassword(username, password);
@@ -216,7 +216,7 @@ public class MobileApplication extends MyCollabUI {
 
             BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
 
-            SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(UserUIContext.getAccountId());
+            SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(MyCollabUI.getAccountId());
             LOG.debug(String.format("Get billing account successfully: %s", BeanUtility.printBeanObj(billingAccount)));
             UserUIContext.getInstance().setSessionVariables(user, billingAccount);
 

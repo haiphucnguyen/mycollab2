@@ -23,6 +23,7 @@ import com.mycollab.module.crm.domain.Account;
 import com.mycollab.module.crm.domain.SimpleOpportunity;
 import com.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.mycollab.module.crm.i18n.OpportunityI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.ui.Component;
 import org.vaadin.viritin.button.MButton;
@@ -52,7 +53,7 @@ public class AccountRelatedOpportunityView extends AbstractRelatedListView<Simpl
 
     private void loadOpportunities() {
         final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setAccountId(new NumberSearchField(account.getId()));
         setSearchCriteria(criteria);
     }

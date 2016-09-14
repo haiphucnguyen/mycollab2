@@ -8,6 +8,7 @@ import com.mycollab.module.project.domain.Invoice;
 import com.mycollab.module.project.domain.SimpleInvoice;
 import com.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.CurrencyComboBoxField;
@@ -65,7 +66,7 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
         } else if (Invoice.Field.id.equalTo(propertyId)) {
             Invoice beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
-                String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(UserUIContext.getAccountId(),
+                String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(),
                         CurrentProjectVariables.getProjectId(), ProjectTypeConstants.INVOICE, "" + beanItem.getId());
                 attachmentUploadField = new AttachmentUploadField(attachmentPath);
             } else {

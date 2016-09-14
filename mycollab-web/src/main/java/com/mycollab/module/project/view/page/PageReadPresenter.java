@@ -28,6 +28,7 @@ import com.mycollab.module.project.events.PageEvent;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectGenericPresenter;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -66,7 +67,7 @@ public class PageReadPresenter extends ProjectGenericPresenter<PageReadView> {
             @Override
             public void onDelete(final Page data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, UserUIContext.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

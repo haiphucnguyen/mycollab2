@@ -29,6 +29,7 @@ import com.mycollab.module.crm.domain.*;
 import com.mycollab.module.crm.i18n.*;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -81,7 +82,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
 
     private void displayActivities() {
         ActivitySearchCriteria criteria = new ActivitySearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setType(StringSearchField.and(CrmTypeConstants.ACCOUNT));
         criteria.setTypeid(new NumberSearchField(beanItem.getId()));
         associateActivityList.setSearchCriteria(criteria);
@@ -108,7 +109,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     @Override
     protected String initFormTitle() {
         LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
-        SimpleLead lead = leadService.findConvertedLeadOfAccount(beanItem.getId(), UserUIContext.getAccountId());
+        SimpleLead lead = leadService.findConvertedLeadOfAccount(beanItem.getId(), MyCollabUI.getAccountId());
         if (lead != null) {
             return beanItem.getAccountname() + UserUIContext.getMessage(
                     LeadI18nEnum.CONVERT_FROM_LEAD_TITLE, CrmAssetsManager.getAsset(CrmTypeConstants.LEAD).getHtml(),

@@ -26,6 +26,7 @@ import com.mycollab.module.crm.domain.SimpleLead;
 import com.mycollab.module.crm.domain.SimpleOpportunity;
 import com.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.mycollab.module.crm.i18n.LeadI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -49,7 +50,7 @@ public class OpportunityRelatedLeadView extends AbstractRelatedListView<SimpleLe
 
     private void loadLeads() {
         final LeadSearchCriteria searchCriteria = new LeadSearchCriteria();
-        searchCriteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         searchCriteria.setOpportunityId(new NumberSearchField(opportunity.getId()));
         this.itemList.search(searchCriteria);
     }
@@ -77,7 +78,7 @@ public class OpportunityRelatedLeadView extends AbstractRelatedListView<SimpleLe
         Button selectLead = new Button(UserUIContext.getMessage(LeadI18nEnum.M_TITLE_SELECT_LEADS), clickEvent -> {
             final OpportunityLeadSelectionView leadSelectionView = new OpportunityLeadSelectionView(OpportunityRelatedLeadView.this);
             LeadSearchCriteria criteria = new LeadSearchCriteria();
-            criteria.setSaccountid(new NumberSearchField(UserUIContext.getAccountId()));
+            criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
             leadSelectionView.setSearchCriteria(criteria);
             EventBusFactory.getInstance().post(new ShellEvent.PushView(OpportunityRelatedLeadView.this, leadSelectionView));
         });

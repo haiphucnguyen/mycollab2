@@ -42,6 +42,7 @@ import com.mycollab.module.project.view.task.components.TaskStatusComboBox;
 import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -84,7 +85,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             @Override
             protected String generateSmallAsHtmlAfterUpdate() {
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                SimpleTask newTask = taskService.findById(task.getId(), UserUIContext.getAccountId());
+                SimpleTask newTask = taskService.findById(task.getId(), MyCollabUI.getAccountId());
                 String avatarLink = StorageFactory.getAvatarPath(newTask.getAssignUserAvatarId(), 16);
                 Img img = new Img(newTask.getAssignUserFullName(), avatarLink).setTitle(newTask.getAssignUserFullName())
                         .setCSSClass(UIConstants.CIRCLE_BOX);
@@ -419,7 +420,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                     timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
                     timeLogging.setType(ProjectTypeConstants.TASK);
                     timeLogging.setTypeid(task.getId());
-                    timeLogging.setSaccountid(UserUIContext.getAccountId());
+                    timeLogging.setSaccountid(MyCollabUI.getAccountId());
                     timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
                     EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TaskBillableHoursPopupField.this));
 

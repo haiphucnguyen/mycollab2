@@ -36,6 +36,7 @@ import com.mycollab.module.project.ui.components.AbstractPreviewItemComp;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.project.ui.components.ProjectActivityComponent;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -177,7 +178,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
 
             ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
             SimpleProjectMember member = projectMemberService.findMemberByUsername(beanItem.getCreatedUser(),
-                    CurrentProjectVariables.getProjectId(), UserUIContext.getAccountId());
+                    CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
             if (member != null) {
                 Img userAvatar = new Img("", StorageFactory.getAvatarPath(member.getMemberAvatarId(), 16))
                         .setCSSClass(UIConstants.CIRCLE_BOX);

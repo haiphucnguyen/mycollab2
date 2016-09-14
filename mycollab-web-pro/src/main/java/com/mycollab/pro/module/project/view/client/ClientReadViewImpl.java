@@ -26,6 +26,7 @@ import com.mycollab.module.project.ui.components.DateInfoComp;
 import com.mycollab.pro.module.project.view.ProjectAddWindow;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -88,7 +89,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
     @Override
     protected String initFormTitle() {
         if (beanItem.getAvatarid() != null) {
-            Img img = new Img("", StorageFactory.getEntityLogoPath(UserUIContext.getAccountId(), beanItem.getAvatarid(), 32))
+            Img img = new Img("", StorageFactory.getEntityLogoPath(MyCollabUI.getAccountId(), beanItem.getAvatarid(), 32))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
             return new Div().appendChild(img).appendChild(DivLessFormatter.EMPTY_SPACE()).appendText(beanItem.getAccountname()).write();
         } else {

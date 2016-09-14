@@ -28,6 +28,7 @@ import com.mycollab.module.crm.i18n.CaseI18nEnum;
 import com.mycollab.module.crm.service.CaseService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -73,7 +74,7 @@ public class CaseAddPresenter extends AbstractCrmPresenter<CaseAddView> {
                 cases = (SimpleCase) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
-                cases = caseService.findById((Integer) data.getParams(), UserUIContext.getAccountId());
+                cases = caseService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
             }
             if (cases == null) {
                 NotificationUtil.showRecordNotExistNotification();
@@ -97,7 +98,7 @@ public class CaseAddPresenter extends AbstractCrmPresenter<CaseAddView> {
 
     private void saveCase(CaseWithBLOBs cases) {
         CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
-        cases.setSaccountid(UserUIContext.getAccountId());
+        cases.setSaccountid(MyCollabUI.getAccountId());
         if (cases.getId() == null) {
             caseService.saveWithSession(cases, UserUIContext.getUsername());
         } else {
