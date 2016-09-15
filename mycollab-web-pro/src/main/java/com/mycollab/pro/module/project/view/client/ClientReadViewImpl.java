@@ -103,7 +103,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
     }
 
     @Override
-    protected ComponentContainer createButtonControls() {
+    protected HorizontalLayout createButtonControls() {
         return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_ACCOUNT);
     }
 

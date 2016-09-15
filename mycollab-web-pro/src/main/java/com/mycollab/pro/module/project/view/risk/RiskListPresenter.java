@@ -99,11 +99,11 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
     @Override
     protected void deleteSelectedItems() {
         if (!isSelectAll) {
-            Collection<SimpleRisk> currentDataList = view.getPagedBeanTable().getCurrentDataList();
+            Collection<SimpleRisk> risks = view.getPagedBeanTable().getCurrentDataList();
             List<Risk> keyList = new ArrayList<>();
-            for (SimpleRisk item : currentDataList) {
-                if (item.isSelected()) {
-                    keyList.add(item);
+            for (SimpleRisk risk : risks) {
+                if (risk.isSelected()) {
+                    keyList.add(risk);
                 }
             }
 

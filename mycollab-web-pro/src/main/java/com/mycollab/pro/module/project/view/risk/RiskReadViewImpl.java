@@ -24,6 +24,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
@@ -55,7 +56,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     }
 
     @Override
-    protected ComponentContainer createButtonControls() {
+    protected HorizontalLayout createButtonControls() {
         return new ProjectPreviewFormControlsGenerator<>(previewForm).createButtonControls(ProjectRolePermissionCollections.RISKS);
     }
 

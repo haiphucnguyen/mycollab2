@@ -177,33 +177,33 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
         XmlElement sqlElement = new XmlElement("sql");
         sqlElement.addAttribute(new Attribute("id", "massUpdateWithSessionSql"));
         sqlElement.addElement(new TextElement("<!--WARNING - @mbggenerated-->"));
-
-        StringBuffer sqlBuilder = new StringBuffer("update ")
+StringBuilder sqlBuilder = new StringBuilder("#set($record = $_parameter.record)");
+        sqlBuilder.append("\nupdate ")
                 .append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         sqlElement.addElement(new TextElement(sqlBuilder.toString()));
-        XmlElement setElement = new XmlElement("set");
+        StringBuilder setElement = new StringBuilder("#mset()").append("\n");
 
         // set every field of table
         List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
         for (IntrospectedColumn column : allColumns) {
             if (!isPrimaryKeyOfTable(column, introspectedTable)) {
-                XmlElement ifElement = new XmlElement("if");
-                String conditionStr = "record.%s != null";
-                ifElement.addAttribute(new Attribute("test", String.format(conditionStr, column.getJavaProperty())));
+                setElement.append("        #ifnotnull(").append(String.format("$record.%s", column
+                        .getJavaProperty())).append(")").append("\n");
 
-                String setStr = "%s = #{record.%s,jdbcType=%s},";
-                ifElement.addElement(new TextElement(String.format(setStr, column.getActualColumnName(), column.getJavaProperty(),
-                        column.getJdbcTypeName())));
+                String setStr = "            %s = @{record.%s,jdbcType=%s},";
+                setElement.append(String.format(setStr, column.getActualColumnName(), column.getJavaProperty(), column.getJdbcTypeName()));
 
-                setElement.addElement(ifElement);
+                setElement.append("\n").append("        #end").append("\n");
             }
         }
-        sqlElement.addElement(setElement);
+        setElement.append("    #end");
+        sqlElement.addElement(new TextElement(setElement.toString()));
         document.getRootElement().addElement(sqlElement);
 
         XmlElement element = new XmlElement("update");
         element.addAttribute(new Attribute("id", "massUpdateWithSession"));
         element.addAttribute(new Attribute("parameterType", "map"));
+        element.addAttribute(new Attribute("lang", "velocity"));
         TextElement commentElement = new TextElement("<!--WARNING - @mbggenerated-->");
         element.addElement(commentElement);
 
@@ -213,12 +213,12 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
         element.addElement(includeElement);
 
         // generate query statement
-        XmlElement queryElement = new XmlElement("if");
-        queryElement.addAttribute(new Attribute("test", "_parameter != null"));
-        queryElement.addElement(new TextElement(
-                " where id IN <foreach item=\"item\" index=\"index\" collection=\"primaryKeys\" open=\"(\" separator=\",\" close=\")\"> #{item} </foreach>"));
-
-        element.addElement(queryElement);
+        StringBuilder queryElement = new StringBuilder("#ifnotnull($_parameter)");
+        queryElement.append(
+                "\n    where id IN #repeat($_parameter.primaryKeys $item \",\" \"(\", \")\")").append("\n    @{item}")
+                .append("\n     #end");
+        queryElement.append("\n    #end");
+        element.addElement(new TextElement(queryElement.toString()));
         document.getRootElement().addElement(element);
     }
 
