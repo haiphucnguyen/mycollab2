@@ -1,5 +1,6 @@
 package com.mycollab.pro.module.project.view.risk;
 
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.arguments.ValuedBean;
 import com.mycollab.db.persistence.service.ISearchableService;
 import com.mycollab.module.project.CurrentProjectVariables;
@@ -54,7 +55,8 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
                     UI.getCurrent().addWindow(new MailFormWindow());
 
                 } else if (ViewItemAction.MASS_UPDATE_ACTION().equals(id)) {
-                    MassUpdateRiskWindow massUpdateWindow = new MassUpdateRiskWindow("Mass Update Risk", RiskListPresenter.this);
+                    MassUpdateRiskWindow massUpdateWindow = new MassUpdateRiskWindow(UserUIContext.getMessage(GenericI18Enum.WINDOW_MASS_UPDATE_TITLE,
+                            UserUIContext.getMessage(RiskI18nEnum.LIST)), RiskListPresenter.this);
                     UI.getCurrent().addWindow(massUpdateWindow);
                 }
             }
@@ -128,7 +130,7 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
             List<Integer> riskKeys = risks.stream().filter(ValuedBean::isSelected).map(Risk::getId).collect(Collectors.toList());
 
             if (riskKeys.size() > 0) {
-//                riskService.massUpdateWithSession(value, riskKeys, MyCollabUI.getAccountId());
+                riskService.massUpdateWithSession(value, riskKeys, MyCollabUI.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {
