@@ -43,9 +43,9 @@ import com.mycollab.module.project.view.task.components.TaskSavedFilterComboBox;
 import com.mycollab.module.project.view.task.components.TaskSearchPanel;
 import com.mycollab.module.project.view.task.components.ToggleTaskSummaryField;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -166,7 +166,7 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
         kanbanLayout.setComponentHorizontalDropRatio(0.3f);
         kanbanLayout.setDragMode(LayoutDragMode.CLONE_OTHER);
 
-//      Enable dropping components
+        // Enable dropping components
         kanbanLayout.setDropHandler(new DropHandler() {
             @Override
             public void drop(DragAndDropEvent event) {

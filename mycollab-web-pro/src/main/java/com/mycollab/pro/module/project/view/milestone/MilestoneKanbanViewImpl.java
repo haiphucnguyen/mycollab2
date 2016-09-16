@@ -49,6 +49,7 @@ import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.Not;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.dd.HorizontalDropLocation;
 import com.vaadin.shared.ui.dd.VerticalDropLocation;
 import com.vaadin.ui.*;
 import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
@@ -64,6 +65,8 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -125,6 +128,48 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         kanbanLayout.setMargin(new MarginInfo(true, false, true, false));
         kanbanLayout.setComponentHorizontalDropRatio(0.3f);
         kanbanLayout.setDragMode(LayoutDragMode.CLONE_OTHER);
+
+        kanbanLayout.setDropHandler(new DropHandler() {
+            @Override
+            public void drop(DragAndDropEvent event) {
+                LayoutBoundTransferable transferable = (LayoutBoundTransferable) event.getTransferable();
+
+                DDHorizontalLayout.HorizontalLayoutTargetDetails details = (DDHorizontalLayout.HorizontalLayoutTargetDetails) event
+                        .getTargetDetails();
+                Component dragComponent = transferable.getComponent();
+                if (dragComponent instanceof KanbanBlock) {
+                    KanbanBlock kanbanItem = (KanbanBlock) dragComponent;
+                    int newIndex = details.getOverIndex();
+                    if (details.getDropLocation() == HorizontalDropLocation.RIGHT) {
+                        kanbanLayout.addComponent(kanbanItem);
+                    } else if (newIndex == -1) {
+                        kanbanLayout.addComponent(kanbanItem, 0);
+                    } else {
+                        kanbanLayout.addComponent(kanbanItem, newIndex);
+                    }
+
+                    //Update options index for this project
+                    List<Map<String, Integer>> indexMap = new ArrayList<>();
+                    for (int i = 0; i < kanbanLayout.getComponentCount(); i++) {
+                        KanbanBlock blockItem = (KanbanBlock) kanbanLayout.getComponent(i);
+                        if (blockItem != nullBlock) {
+                            Map<String, Integer> map = new HashMap<>(2);
+                            map.put("id", blockItem.milestone.getId());
+                            map.put("index", i);
+                            indexMap.add(map);
+                        }
+                    }
+                    if (indexMap.size() > 0) {
+
+                    }
+                }
+            }
+
+            @Override
+            public AcceptCriterion getAcceptCriterion() {
+                return new Not(VerticalLocationIs.MIDDLE);
+            }
+        });
 
         this.with(searchPanel, kanbanLayout).expand(kanbanLayout);
         MButton boardBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD), clickEvent ->
