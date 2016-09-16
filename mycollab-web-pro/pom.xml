@@ -33,7 +33,7 @@
         <dependency>
             <groupId>org.tltv.gantt</groupId>
             <artifactId>gantt-addon</artifactId>
-            <version>0.9.4-SNAPSHOT</version>
+            <version>0.9.4</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.vaadin</groupId>

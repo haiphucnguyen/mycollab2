@@ -50,9 +50,11 @@ import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.Not;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.colorpicker.Color;
 import com.vaadin.shared.ui.dd.HorizontalDropLocation;
 import com.vaadin.shared.ui.dd.VerticalDropLocation;
 import com.vaadin.ui.*;
+import com.vaadin.ui.components.colorpicker.ColorPickerPopup;
 import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
@@ -215,7 +217,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             public void run() {
                 MilestoneSearchCriteria milestoneSearchCriteria = new MilestoneSearchCriteria();
                 milestoneSearchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                milestoneSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("orderIndex", SearchCriteria.DESC)));
+                milestoneSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("orderIndex", SearchCriteria.ASC)));
                 List<SimpleMilestone> milestones = milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(milestoneSearchCriteria));
                 for (SimpleMilestone milestone : milestones) {
                     KanbanBlock kanbanBlock = new KanbanBlock(milestone);
@@ -302,6 +304,15 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         KanbanBlock(SimpleMilestone milestone) {
             this.withFullHeight().withWidth("350px").withStyleName("kanban-block").withMargin(false);
             this.milestone = milestone;
+            String valId;
+            if (milestone != null) {
+                valId = UUID.randomUUID().toString() + "-" + milestone.hashCode();
+                this.setId(valId);
+                JavaScript.getCurrent().execute("$('#" + valId + "').css({'background-color':'#" + milestone.getColor() + "'});");
+            } else {
+                valId = UUID.randomUUID().toString();
+            }
+            final String optionId = valId;
             dragLayoutContainer = new DDVerticalLayout();
             dragLayoutContainer.setSpacing(true);
             dragLayoutContainer.setComponentVerticalDropRatio(0.3f);
@@ -355,9 +366,10 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 header = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)).withStyleName(UIConstants.TEXT_ELLIPSIS)
                         .withDescription(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED));
             } else {
-                header = new ELabel(milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS).withDescription
-                        (ProjectTooltipGenerator.generateToolTipMilestone(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
-                                milestone, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
+                header = ELabel.html(ProjectAssetsManager.getMilestoneStatus(milestone.getStatus()).getHtml() + " " +
+                        milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS)
+                        .withDescription(ProjectTooltipGenerator.generateToolTipMilestone(UserUIContext.getUserLocale(),
+                                MyCollabUI.getDateFormat(), milestone, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
             }
 
             headerLayout.with(header).expand(header);
@@ -373,6 +385,26 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent ->
                         EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(this, milestone))).withIcon(FontAwesome.EDIT);
                 popupContent.addOption(editBtn);
+
+                if (milestone != null) {
+                    MButton changeColorBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHANGE_COLOR), clickEvent -> {
+                        ColorPickerPopup popup = new ColorPickerPopup(Color.CYAN);
+                        popup.center();
+                        UI.getCurrent().addWindow(popup);
+                        popup.addColorChangeListener(colorChangeEvent -> {
+                            Color color = colorChangeEvent.getColor();
+                            String colorStr = color.getCSS().substring(1);
+                            MilestoneService optionValService = AppContextUtil.getSpringBean(MilestoneService.class);
+                            milestone.setColor(colorStr);
+                            optionValService.updateWithSession(milestone, UserUIContext.getUsername());
+                            JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'#"
+                                    + colorStr + "'});");
+                        });
+                        controlsBtn.setPopupVisible(false);
+                    }).withIcon(FontAwesome.PENCIL);
+                    popupContent.addOption(changeColorBtn);
+                }
+
             }
             if (canExecute) {
                 MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {

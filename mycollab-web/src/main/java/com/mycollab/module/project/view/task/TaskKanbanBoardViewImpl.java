@@ -456,7 +456,7 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
             }
 
             if (canExecute) {
-                MButton changeColorBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.ACTION_CHANGE_COLOR), clickEvent -> {
+                MButton changeColorBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHANGE_COLOR), clickEvent -> {
                     ColumnColorPickerWindow popup = new ColumnColorPickerWindow(Color.CYAN);
                     UI.getCurrent().addWindow(popup);
                     popup.addColorChangeListener(colorChangeEvent -> {
