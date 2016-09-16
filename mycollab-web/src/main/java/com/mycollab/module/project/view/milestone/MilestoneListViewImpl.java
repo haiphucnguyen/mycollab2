@@ -164,7 +164,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         }))).withIcon(FontAwesome.PRINT).withStyleName(WebUIConstants.BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
         layout.addComponent(printBtn);
 
-        MButton boardBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD)).withIcon(FontAwesome.INBOX);
+        MButton boardBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD)).withIcon(FontAwesome.SERVER);
 
         MButton roadmapBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST),
                 clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoRoadmap(MilestoneListViewImpl.this)))
@@ -177,9 +177,9 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(roadmapBtn);
         viewButtons.addButton(boardBtn);
-//        if (!SiteConfiguration.isCommunityEdition()) {
-//            viewButtons.addButton(kanbanBtn);
-//        }
+        if (!SiteConfiguration.isCommunityEdition()) {
+            viewButtons.addButton(kanbanBtn);
+        }
         viewButtons.withDefaultButton(boardBtn);
         layout.with(viewButtons);
 

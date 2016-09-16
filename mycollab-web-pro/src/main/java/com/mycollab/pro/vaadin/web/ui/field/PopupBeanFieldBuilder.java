@@ -25,11 +25,11 @@ public abstract class PopupBeanFieldBuilder<B> {
     protected String caption;
     protected String description = UserUIContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT);
     protected Field field;
-    protected boolean hasPermission = true;
+    private boolean hasPermission = true;
     protected B bean;
-    protected String bindProperty;
-    protected BeanFieldGroup fieldGroup;
-    protected ICrudService crudService;
+    private String bindProperty;
+    private BeanFieldGroup fieldGroup;
+    private ICrudService crudService;
 
     public PopupBeanFieldBuilder withValue(Object value) {
         this.value = value;
@@ -71,6 +71,16 @@ public abstract class PopupBeanFieldBuilder<B> {
         return this;
     }
 
+    public boolean isPermission() {
+        return hasPermission;
+    }
+
+    public void save() {
+        if (crudService != null) {
+            crudService.updateWithSession(bean, UserUIContext.getUsername());
+        }
+    }
+
     abstract protected String generateSmallContentAsHtml();
 
     protected String generateSmallAsHtmlAfterUpdate() {
@@ -97,7 +107,7 @@ public abstract class PopupBeanFieldBuilder<B> {
             try {
                 if (fieldGroup.isModified()) {
                     fieldGroup.commit();
-                    crudService.updateWithSession(bean, UserUIContext.getUsername());
+                    save();
                     setMinimizedValueAsHTML(generateSmallAsHtmlAfterUpdate());
                     BeanPopupView.this.setDescription(generateDescription());
                 }
@@ -123,8 +133,9 @@ public abstract class PopupBeanFieldBuilder<B> {
             fieldGroup.setBuffered(true);
             fieldGroup.setItemDataSource(item);
             fieldGroup.bind(field, bindProperty);
-            field.setVisible(hasPermission);
-            if (!hasPermission) {
+            boolean checkPermission = isPermission();
+            field.setVisible(checkPermission);
+            if (!checkPermission) {
                 layout.add(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
             }
         }

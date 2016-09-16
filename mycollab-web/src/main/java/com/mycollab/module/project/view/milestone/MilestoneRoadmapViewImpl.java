@@ -216,7 +216,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
         MButton boardBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD), clickEvent ->
-                EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null))).withIcon(FontAwesome.INBOX);
+                EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null))).withIcon(FontAwesome.SERVER);
 
         MButton roadmapBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST)).withIcon(FontAwesome.NAVICON);
 
@@ -227,9 +227,9 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(roadmapBtn);
         viewButtons.addButton(boardBtn);
-//        if (!SiteConfiguration.isCommunityEdition()) {
-//            viewButtons.addButton(kanbanBtn);
-//        }
+        if (!SiteConfiguration.isCommunityEdition()) {
+            viewButtons.addButton(kanbanBtn);
+        }
 
         viewButtons.withDefaultButton(roadmapBtn);
         return new MHorizontalLayout(createBtn, printBtn, viewButtons);

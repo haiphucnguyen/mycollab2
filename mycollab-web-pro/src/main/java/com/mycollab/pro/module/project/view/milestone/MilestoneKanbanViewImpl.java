@@ -26,12 +26,14 @@ import com.mycollab.module.project.view.milestone.IMilestoneKanbanView;
 import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
 import com.mycollab.module.project.view.milestone.ToggleGenericTaskSummaryField;
 import com.mycollab.pro.module.project.view.assignments.AssignmentAddWindow;
+import com.mycollab.pro.module.project.view.assignments.AssignmentPopupFieldFactory;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.mvp.ViewComponent;
+import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -358,6 +360,12 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(assignment
                     .getType())).withWidthUndefined(), toggleGenericTaskSummaryField);
             root.addComponent(headerLayout);
+
+            CssLayout footer = new CssLayout();
+            AssignmentPopupFieldFactory fieldFactory = ViewManager.getCacheComponent(AssignmentPopupFieldFactory.class);
+            footer.addComponent(fieldFactory.createStartDatePopupField(assignment));
+            footer.addComponent(fieldFactory.createEndDatePopupField(assignment));
+            root.addComponent(footer);
         }
     }
 }
