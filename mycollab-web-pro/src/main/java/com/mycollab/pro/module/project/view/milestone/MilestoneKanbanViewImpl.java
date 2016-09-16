@@ -97,7 +97,13 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
     @Override
     protected void displayView() {
-        searchPanel = new AssignmentSearchPanel(false);
+        searchPanel = new AssignmentSearchPanel(false) {
+            @Override
+            protected ComponentContainer buildSearchTitle() {
+                return new MHorizontalLayout(ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() +
+                        " " + UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)).withWidthUndefined());
+            }
+        };
 
         kanbanLayout = new DDHorizontalLayout();
         kanbanLayout.setHeight("100%");
@@ -318,7 +324,8 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
             MButton newAssignmentBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT),
                     clickEvent -> UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(),
-                            CurrentProjectVariables.getProjectId(), false))).withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
+                            CurrentProjectVariables.getProjectId(), milestone.getId(), false))).withIcon(FontAwesome.PLUS)
+                    .withStyleName(BUTTON_ACTION);
 
             this.with(headerLayout, dragLayoutContainer, newAssignmentBtn).withAlign(newAssignmentBtn, Alignment.MIDDLE_RIGHT);
         }
@@ -357,8 +364,8 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             this.setCompositionRoot(root);
 
             ToggleGenericTaskSummaryField toggleGenericTaskSummaryField = new ToggleGenericTaskSummaryField(assignment);
-            MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(assignment
-                    .getType())).withWidthUndefined(), toggleGenericTaskSummaryField);
+            MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(assignment.getType())).withWidthUndefined(),
+                    toggleGenericTaskSummaryField).expand(toggleGenericTaskSummaryField).withFullWidth();
             root.addComponent(headerLayout);
 
             CssLayout footer = new CssLayout();

@@ -35,7 +35,7 @@ import java.util.Date;
  */
 public class AssignmentAddWindow extends MWindow {
 
-    public AssignmentAddWindow(Date date, final Integer prjId, boolean isIncludeMilestone) {
+    public AssignmentAddWindow(Date date, final Integer prjId, final Integer milestoneId, boolean isIncludeMilestone) {
         super(UserUIContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT));
         withModal(true).withResizable(false).withCenter().withWidth("500px");
         final PopupDateFieldExt dateSelection = new PopupDateFieldExt(date);
@@ -64,6 +64,7 @@ public class AssignmentAddWindow extends MWindow {
                 close();
                 SimpleTask task = new SimpleTask();
                 task.setProjectid(prjId);
+                task.setMilestoneid(milestoneId);
                 task.setSaccountid(MyCollabUI.getAccountId());
                 task.setLogby(UserUIContext.getUsername());
                 task.setStartdate(dateValue);
@@ -74,6 +75,7 @@ public class AssignmentAddWindow extends MWindow {
                 bug.setProjectid(prjId);
                 bug.setSaccountid(MyCollabUI.getAccountId());
                 bug.setStartdate(dateValue);
+                bug.setMilestoneid(milestoneId);
                 bug.setLogby(UserUIContext.getUsername());
                 UI.getCurrent().addWindow(new BugAddWindow(bug));
             } else if (UserUIContext.getMessage(MilestoneI18nEnum.SINGLE).equals(type)) {
@@ -90,6 +92,7 @@ public class AssignmentAddWindow extends MWindow {
                 risk.setProjectid(prjId);
                 risk.setStartdate(dateValue);
                 risk.setRaisedbyuser(UserUIContext.getUsername());
+                risk.setMilestoneid(milestoneId);
                 UI.getCurrent().addWindow(new RiskAddWindow(risk));
             }
         }).withStyleName(WebUIConstants.BUTTON_ACTION);

@@ -162,7 +162,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
             public void dateClick(CalendarComponentEvents.DateClickEvent dateClickEvent) {
                 if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                     UI.getCurrent().addWindow(new AssignmentAddWindow(dateClickEvent.getDate(),
-                            CurrentProjectVariables.getProjectId(), true));
+                            CurrentProjectVariables.getProjectId(), null, true));
                 }
             }
         });
