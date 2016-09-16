@@ -19,6 +19,7 @@ import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCrite
 import com.mycollab.module.project.events.AssignmentEvent;
 import com.mycollab.module.project.events.MilestoneEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
+import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectGenericTaskService;
@@ -34,6 +35,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.events.SearchHandler;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
@@ -84,6 +86,8 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
     private Map<Integer, KanbanBlock> kanbanBlocks;
     private KanbanBlock nullBlock;
     private ProjectGenericTaskSearchCriteria baseCriteria;
+    private MButton toggleShowClosedMilestonesBtn;
+    private boolean displayClosedMilestones = false;
 
     private ApplicationEventListener<MilestoneEvent.NewMilestoneAdded> newMilestoneHandler = new
             ApplicationEventListener<MilestoneEvent.NewMilestoneAdded>() {
@@ -120,6 +124,10 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                         " " + UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)).withWidthUndefined());
             }
         };
+
+        searchPanel.addSearchHandler(criteria -> {
+            queryAssignments(criteria);
+        });
 
         kanbanLayout = new DDHorizontalLayout();
         kanbanLayout.setHeight("100%");
@@ -172,6 +180,14 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         });
 
         this.with(searchPanel, kanbanLayout).expand(kanbanLayout);
+
+        toggleShowClosedMilestonesBtn = new MButton("", clickEvent -> {
+            displayClosedMilestones = !displayClosedMilestones;
+            reload();
+            toggleShowButton();
+        }).withStyleName(WebUIConstants.BUTTON_LINK);
+
+
         MButton boardBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD), clickEvent ->
                 EventBusFactory.getInstance().post(new MilestoneEvent.GotoRoadmap(this))).withIcon(FontAwesome.NAVICON);
 
@@ -194,7 +210,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         viewButtons.addButton(advanceDisplayBtn);
         viewButtons.addButton(kanbanBtn);
         viewButtons.withDefaultButton(kanbanBtn);
-        MHorizontalLayout groupWrapLayout = new MHorizontalLayout(newMilestoneBtn, viewButtons);
+        MHorizontalLayout groupWrapLayout = new MHorizontalLayout(toggleShowClosedMilestonesBtn, newMilestoneBtn, viewButtons);
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         searchPanel.addHeaderRight(groupWrapLayout);
 
@@ -205,9 +221,22 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         queryAssignments(searchCriteria);
     }
 
+    private void reload() {
+        queryAssignments(baseCriteria);
+    }
+
+    private void toggleShowButton() {
+        if (displayClosedMilestones) {
+            toggleShowClosedMilestonesBtn.setCaption(UserUIContext.getMessage(MilestoneI18nEnum.OPT_HIDE_CLOSED_MILESTONES));
+        } else {
+            toggleShowClosedMilestonesBtn.setCaption(UserUIContext.getMessage(MilestoneI18nEnum.OPT_SHOW_CLOSED_MILESTONES));
+        }
+    }
+
     private void queryAssignments(ProjectGenericTaskSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
         kanbanLayout.removeAllComponents();
+        toggleShowButton();
         kanbanBlocks = new ConcurrentHashMap<>();
         setProjectNavigatorVisibility(false);
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
@@ -218,6 +247,11 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 MilestoneSearchCriteria milestoneSearchCriteria = new MilestoneSearchCriteria();
                 milestoneSearchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                 milestoneSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("orderIndex", SearchCriteria.ASC)));
+                if (displayClosedMilestones) {
+                    milestoneSearchCriteria.setStatuses(null);
+                } else {
+                    milestoneSearchCriteria.setStatuses(new SetSearchField<>(MilestoneStatus.Future.name(), MilestoneStatus.InProgress.name()));
+                }
                 List<SimpleMilestone> milestones = milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(milestoneSearchCriteria));
                 for (SimpleMilestone milestone : milestones) {
                     KanbanBlock kanbanBlock = new KanbanBlock(milestone);
@@ -361,18 +395,17 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 }
             });
             new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((UIUtils.getBrowserHeight() - 450) + "px");
-            MHorizontalLayout headerLayout = new MHorizontalLayout().withSpacing(false).withFullWidth().withStyleName("header");
+            MHorizontalLayout headerLayout = new MHorizontalLayout().withFullWidth().withStyleName("header");
             if (milestone == null) {
                 header = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)).withStyleName(UIConstants.TEXT_ELLIPSIS)
                         .withDescription(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED));
+                headerLayout.with(header).expand(header);
             } else {
-                header = ELabel.html(ProjectAssetsManager.getMilestoneStatus(milestone.getStatus()).getHtml() + " " +
-                        milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS)
+                header = new ELabel(milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS)
                         .withDescription(ProjectTooltipGenerator.generateToolTipMilestone(UserUIContext.getUserLocale(),
                                 MyCollabUI.getDateFormat(), milestone, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
+                headerLayout.with(ELabel.fontIcon(ProjectAssetsManager.getMilestoneStatus(milestone.getStatus())), header).expand(header);
             }
-
-            headerLayout.with(header).expand(header);
 
             final PopupButton controlsBtn = new PopupButton();
             controlsBtn.addStyleName(WebUIConstants.BUTTON_LINK);
