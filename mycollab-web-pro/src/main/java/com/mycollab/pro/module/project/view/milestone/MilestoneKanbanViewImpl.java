@@ -15,6 +15,7 @@ import com.mycollab.module.project.domain.ProjectGenericTask;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.mycollab.module.project.events.AssignmentEvent;
 import com.mycollab.module.project.events.MilestoneEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
@@ -29,9 +30,9 @@ import com.mycollab.pro.module.project.view.assignments.AssignmentAddWindow;
 import com.mycollab.pro.module.project.view.assignments.AssignmentPopupFieldFactory;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
@@ -89,6 +90,18 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                     insertMilestone((Integer) event.getData());
                 }
             };
+
+    private ApplicationEventListener<AssignmentEvent.NewAssignmentAdd> newAssignmentHandler = new ApplicationEventListener<AssignmentEvent.NewAssignmentAdd>() {
+        @Override
+        @Subscribe
+        public void handle(AssignmentEvent.NewAssignmentAdd event) {
+            ProjectGenericTaskService projectGenericTaskService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
+            ProjectGenericTask assignment = projectGenericTaskService.findAssignment(event.getTypeVal(), event.getTypeIdVal());
+            if (assignment != null) {
+                insertGenericAssignment(assignment);
+            }
+        }
+    };
 
     public MilestoneKanbanViewImpl() {
         this.setSizeFull();
@@ -201,9 +214,22 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         }
     }
 
+    private void insertGenericAssignment(ProjectGenericTask genericTask) {
+        KanbanBlock block = null;
+        if (genericTask.getMilestoneId() != null) {
+            block = kanbanBlocks.get(genericTask.getMilestoneId());
+        }
+        if (block != null) {
+            block.addBlockItem(new KanbanAssignmentBlockItem(genericTask));
+        } else {
+            nullBlock.addBlockItem(new KanbanAssignmentBlockItem(genericTask));
+        }
+    }
+
     @Override
     public void attach() {
         EventBusFactory.getInstance().register(newMilestoneHandler);
+        EventBusFactory.getInstance().register(newAssignmentHandler);
         super.attach();
     }
 
@@ -211,6 +237,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
     public void detach() {
         setProjectNavigatorVisibility(true);
         EventBusFactory.getInstance().unregister(newMilestoneHandler);
+        EventBusFactory.getInstance().unregister(newAssignmentHandler);
         super.detach();
     }
 
