@@ -46,18 +46,24 @@ public class ProjectGenericTaskServiceImpl extends AbstractProjectGenericTaskSer
     public void updateAssignmentValue(ProjectGenericTask assignment, String username) {
         if (assignment.isTask()) {
             Task task = new Task();
+            task.setTaskname(assignment.getName());
             task.setId(assignment.getTypeId());
             task.setMilestoneid(assignment.getMilestoneId());
+            task.setSaccountid(assignment.getsAccountId());
             taskService.updateSelectiveWithSession(task, username);
         } else if (assignment.isBug()) {
             BugWithBLOBs bug = new BugWithBLOBs();
+            bug.setSummary(assignment.getName());
             bug.setId(assignment.getTypeId());
             bug.setMilestoneid(assignment.getMilestoneId());
+            bug.setSaccountid(assignment.getsAccountId());
             bugService.updateSelectiveWithSession(bug, username);
         } else if (assignment.isRisk()) {
             Risk risk = new Risk();
+            risk.setRiskname(assignment.getName());
             risk.setId(assignment.getTypeId());
             risk.setMilestoneid(assignment.getMilestoneId());
+            risk.setSaccountid(assignment.getsAccountId());
             riskService.updateSelectiveWithSession(risk, username);
         } else {
             throw new MyCollabException("Not support");

@@ -84,6 +84,24 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements Proj
         DDVerticalLayout rightPanel = new DDVerticalLayout();
         rightPanel.setWidth("500px");
         rightPanel.setSpacing(true);
+        rightPanel.setMargin(new MarginInfo(true, false, true, false));
+        rightPanel.setComponentVerticalDropRatio(0.3f);
+        rightPanel.setDragMode(LayoutDragMode.CLONE_OTHER);
+        rightPanel.setDropHandler(new DropHandler() {
+            @Override
+            public void drop(DragAndDropEvent event) {
+                LayoutBoundTransferable transferable = (LayoutBoundTransferable) event.getTransferable();
+
+                DDVerticalLayout.VerticalLayoutTargetDetails details = (DDVerticalLayout.VerticalLayoutTargetDetails) event
+                        .getTargetDetails();
+                Component dragComponent = transferable.getComponent();
+            }
+
+            @Override
+            public AcceptCriterion getAcceptCriterion() {
+                return new Not(HorizontalLocationIs.CENTER);
+            }
+        });
         ProjectMembersWidget membersWidget = new ProjectMembersWidget();
         ProjectActivityStreamComponent activityPanel = new ProjectActivityStreamComponent();
         rightPanel.addComponent(membersWidget);
