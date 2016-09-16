@@ -520,14 +520,14 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
             if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS)) {
                 if (Boolean.FALSE.equals(optionVal.getIsshow())) {
                     hideColumnBtn.setCaption(UserUIContext.getMessage(TaskI18nEnum.ACTION_SHOW_COLUMN));
-                    hideColumnBtn.setIcon(FontAwesome.TOGGLE_ON);
+                    hideColumnBtn.setIcon(FontAwesome.TOGGLE_UP);
                     ELabel invisibleLbl = new ELabel("Inv").withWidthUndefined().withStyleName(WebUIConstants.FIELD_NOTE)
                             .withDescription(UserUIContext.getMessage(TaskI18nEnum.OPT_INVISIBLE_COLUMN_DESCRIPTION));
                     buttonControls.addComponent(invisibleLbl, 0);
                     buttonControls.withAlign(invisibleLbl, Alignment.MIDDLE_LEFT);
                 } else {
                     hideColumnBtn.setCaption(UserUIContext.getMessage(TaskI18nEnum.ACTION_HIDE_COLUMN));
-                    hideColumnBtn.setIcon(FontAwesome.TOGGLE_OFF);
+                    hideColumnBtn.setIcon(FontAwesome.TOGGLE_DOWN);
                     if (buttonControls.getComponentCount() > 1) {
                         buttonControls.removeComponent(buttonControls.getComponent(0));
                     }

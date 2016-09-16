@@ -55,7 +55,6 @@ Version 5.4.3
 * [Premium] Project admin can customise the project dashboard page
 * [Premium] Kanban board for phases/sprint
 * [Premium] Close phase, assignments have option to close the sub-assignments
-* Improve the auto upgrade stability
 * Other minor improvements
 
 **Bug Fixes**
