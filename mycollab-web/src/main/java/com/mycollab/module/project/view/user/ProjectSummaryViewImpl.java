@@ -17,18 +17,26 @@
 package com.mycollab.module.project.view.user;
 
 import com.mycollab.module.project.view.milestone.MilestoneTimelineWidget;
-import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
+import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
+import com.vaadin.event.dd.DragAndDropEvent;
+import com.vaadin.event.dd.DropHandler;
+import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
+import com.vaadin.event.dd.acceptcriteria.Not;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Component;
+import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
+import fi.jasoft.dragdroplayouts.DDVerticalLayout;
+import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
+import fi.jasoft.dragdroplayouts.events.HorizontalLocationIs;
+import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
+import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@SuppressWarnings("serial")
 @ViewComponent
 public class ProjectSummaryViewImpl extends AbstractLazyPageView implements ProjectSummaryView {
 
@@ -38,7 +46,10 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements Proj
 
         MHorizontalLayout layout = new MHorizontalLayout().withFullWidth();
         this.addComponent(layout);
-        MVerticalLayout leftPanel = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false));
+
+        DDVerticalLayout leftPanel = new DDVerticalLayout();
+        leftPanel.setSpacing(true);
+        leftPanel.setMargin(new MarginInfo(false, true, false, false));
 
         MilestoneTimelineWidget milestoneTimelineWidget = new MilestoneTimelineWidget();
         ProjectOverdueAssignmentsWidget taskOverdueWidget = new ProjectOverdueAssignmentsWidget();
@@ -47,13 +58,36 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements Proj
         ProjectUnresolvedAssignmentWidget unresolvedAssignmentNextWeekWidget = new ProjectUnresolvedAssignmentWidget();
 
         leftPanel.addComponent(milestoneTimelineWidget);
-        leftPanel.with(milestoneTimelineWidget, unresolvedAssignmentThisWeekWidget, unresolvedAssignmentNextWeekWidget,
-                taskOverdueWidget);
+        leftPanel.addComponent(unresolvedAssignmentThisWeekWidget);
+        leftPanel.addComponent(unresolvedAssignmentNextWeekWidget);
+        leftPanel.addComponent(taskOverdueWidget);
 
-        MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false).withWidth("500px");
+        leftPanel.setMargin(new MarginInfo(true, false, true, false));
+        leftPanel.setComponentVerticalDropRatio(0.3f);
+        leftPanel.setDragMode(LayoutDragMode.CLONE_OTHER);
+        leftPanel.setDropHandler(new DropHandler() {
+            @Override
+            public void drop(DragAndDropEvent event) {
+                LayoutBoundTransferable transferable = (LayoutBoundTransferable) event.getTransferable();
+
+                DDVerticalLayout.VerticalLayoutTargetDetails details = (DDVerticalLayout.VerticalLayoutTargetDetails) event
+                        .getTargetDetails();
+                Component dragComponent = transferable.getComponent();
+            }
+
+            @Override
+            public AcceptCriterion getAcceptCriterion() {
+                return new Not(HorizontalLocationIs.CENTER);
+            }
+        });
+
+        DDVerticalLayout rightPanel = new DDVerticalLayout();
+        rightPanel.setWidth("500px");
+        rightPanel.setSpacing(true);
         ProjectMembersWidget membersWidget = new ProjectMembersWidget();
         ProjectActivityStreamComponent activityPanel = new ProjectActivityStreamComponent();
-        rightPanel.with(membersWidget, activityPanel);
+        rightPanel.addComponent(membersWidget);
+        rightPanel.addComponent(activityPanel);
 
         milestoneTimelineWidget.display();
         unresolvedAssignmentThisWeekWidget.displayUnresolvedAssignmentsThisWeek();

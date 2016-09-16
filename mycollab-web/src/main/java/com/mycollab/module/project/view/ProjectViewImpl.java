@@ -60,6 +60,7 @@ import com.vaadin.ui.TabSheet.Tab;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 /**
  * @author MyCollab Ltd.
@@ -331,15 +332,11 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
         }
     }
 
-    private static class AskToAddMoreMembersWindow extends Window {
+    private static class AskToAddMoreMembersWindow extends MWindow {
         AskToAddMoreMembersWindow() {
             super(UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION));
-            this.setWidth("600px");
-            this.setResizable(false);
-            this.setModal(true);
-
             MVerticalLayout content = new MVerticalLayout();
-            this.setContent(content);
+            this.withWidth("600px").withResizable(false).withModal(true).withContent(content).withCenter();
 
             content.with(new Label(UserUIContext.getMessage(ProjectI18nEnum.OPT_ASK_TO_ADD_MEMBERS)));
 
