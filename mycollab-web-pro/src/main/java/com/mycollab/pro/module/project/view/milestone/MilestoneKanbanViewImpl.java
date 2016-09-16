@@ -3,6 +3,7 @@ package com.mycollab.pro.module.project.view.milestone;
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.BasicSearchRequest;
+import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
@@ -65,10 +66,7 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.mycollab.vaadin.web.ui.WebUIConstants.BUTTON_ACTION;
@@ -160,7 +158,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                         }
                     }
                     if (indexMap.size() > 0) {
-
+                        AppContextUtil.getSpringBean(MilestoneService.class).massUpdateOptionIndexes(indexMap, MyCollabUI.getAccountId());
                     }
                 }
             }
@@ -217,6 +215,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             public void run() {
                 MilestoneSearchCriteria milestoneSearchCriteria = new MilestoneSearchCriteria();
                 milestoneSearchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+                milestoneSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("orderIndex", SearchCriteria.DESC)));
                 List<SimpleMilestone> milestones = milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(milestoneSearchCriteria));
                 for (SimpleMilestone milestone : milestones) {
                     KanbanBlock kanbanBlock = new KanbanBlock(milestone);
@@ -226,6 +225,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
                 nullBlock = new KanbanBlock(null);
                 kanbanLayout.addComponent(nullBlock);
+                this.push();
 
                 int totalTasks = projectGenericTaskService.getTotalCount(searchCriteria);
                 searchPanel.setTotalCountNumber(totalTasks);
@@ -244,6 +244,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                             }
                         }
                     }
+                    this.push();
                 }
             }
         });
