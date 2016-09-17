@@ -87,9 +87,10 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
     protected void displayView() {
         removeAllComponents();
         MCssLayout layout = new MCssLayout().withStyleName("billing-setting").withFullWidth();
-        MHorizontalLayout topLayout = new MHorizontalLayout().withFullWidth().withHeight("200px");
+        MHorizontalLayout topLayout = new MHorizontalLayout().withFullWidth();
 
-        currentPlanLayout = new MVerticalLayout().withMargin(false).withStyleName("current-plan-information").withFullWidth();
+        currentPlanLayout = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false)).withStyleName
+                ("current-plan-information").withFullWidth();
         currentPlanLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         topLayout.with(currentPlanLayout).withAlign(currentPlanLayout, Alignment.MIDDLE_CENTER).expand(currentPlanLayout);
 
@@ -217,7 +218,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 } else {
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject,
                             new MButton(UserUIContext.getMessage(GenericI18Enum.OPT_SELECTED))
-                            .withStyleName(WebUIConstants.BUTTON_OPTION)).withIcon(FontAwesome.CREDIT_CARD);
+                            .withStyleName(WebUIConstants.BUTTON_OPTION).withIcon(FontAwesome.CREDIT_CARD));
                 }
             } else {
                 boolean isDowngrade = (plan.getPricing() < currentBillingPlan.getPricing());
