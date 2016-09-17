@@ -197,7 +197,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             final BillingPlan plan = availablePlans.get(i);
 
             ELabel billingType = ELabel.h3(plan.getBillingtype()).withStyleName("billing-type");
-            Label billingPrice = ELabel.html("<span class='billing-price'>$" + plan.getPricing() * 10 + "</span>/" +
+            Label billingPrice = ELabel.html("<span class='billing-price'>$" + Math.round(plan.getPricing() * 10) + "</span>/" +
                     UserUIContext.getMessage(DayI18nEnum.OPT_YEAR)).withStyleName("billing-price-lbl").withWidthUndefined();
             Label billingUser = ELabel.html("<span class='billing-user'>" + plan.getNumusers() + "</span>&nbsp;" +
                     "Users").withWidthUndefined();
