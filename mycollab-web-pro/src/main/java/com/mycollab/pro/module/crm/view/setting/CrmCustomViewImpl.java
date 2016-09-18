@@ -40,8 +40,8 @@ import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -52,6 +52,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -90,33 +91,18 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
         controlLayout.addComponent(moduleComboBox);
         controlLayout.setComponentAlignment(moduleComboBox, Alignment.MIDDLE_LEFT);
 
-        Button createCustomFieldBtn = new Button("New Custom Field", new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                CreateCustomFieldWindow createCustomFieldWindow = new CreateCustomFieldWindow(CrmCustomViewImpl.this);
-                UI.getCurrent().addWindow(createCustomFieldWindow);
-
-            }
-        });
-        createCustomFieldBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
-        createCustomFieldBtn.setIcon(FontAwesome.PLUS);
+        MButton createCustomFieldBtn = new MButton("New Custom Field", clickEvent -> {
+            CreateCustomFieldWindow createCustomFieldWindow = new CreateCustomFieldWindow(CrmCustomViewImpl.this);
+            UI.getCurrent().addWindow(createCustomFieldWindow);
+        }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
         controlLayout.addComponent(createCustomFieldBtn);
         controlLayout.setComponentAlignment(createCustomFieldBtn, Alignment.MIDDLE_LEFT);
 
-        Button createSectionBtn = new Button("New Section", new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
+        MButton createSectionBtn = new MButton("New Section", clickEvent -> {
+            CreateSectionWindow createSectionWindow = new CreateSectionWindow(CrmCustomViewImpl.this);
+            UI.getCurrent().addWindow(createSectionWindow);
+        }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
 
-            @Override
-            public void buttonClick(ClickEvent event) {
-                CreateSectionWindow createSectionWindow = new CreateSectionWindow(CrmCustomViewImpl.this);
-                UI.getCurrent().addWindow(createSectionWindow);
-
-            }
-        });
-        createSectionBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
-        createSectionBtn.setIcon(FontAwesome.PLUS);
         controlLayout.addComponent(createSectionBtn);
         controlLayout.setComponentAlignment(createSectionBtn, Alignment.MIDDLE_LEFT);
         headerTitle.addComponent(controlLayout);
@@ -133,35 +119,17 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
         layoutComp = new CustomLayoutDDComp();
         addComponent(layoutComp);
 
-        MHorizontalLayout buttonsLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false));
+        MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+            DynaForm rebuildForm = layoutComp.rebuildForm();
+            MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
+            formService.saveCustomForm(MyCollabUI.getAccountId(), moduleName, rebuildForm);
+        }).withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
 
-        Button saveBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
+        MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> display(moduleName))
+                .withStyleName(WebUIConstants.BUTTON_OPTION);
 
-            @Override
-            public void buttonClick(ClickEvent event) {
-                DynaForm rebuildForm = layoutComp.rebuildForm();
-                MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
-                formService.saveCustomForm(MyCollabUI.getAccountId(), moduleName, rebuildForm);
-            }
-        });
-        saveBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
-        saveBtn.setIcon(FontAwesome.SAVE);
-        buttonsLayout.addComponent(saveBtn);
-
-        Button cancelBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                display(moduleName);
-            }
-        });
-        cancelBtn.addStyleName(WebUIConstants.BUTTON_OPTION);
-        buttonsLayout.addComponent(cancelBtn);
-
-        headerContent.addComponent(buttonsLayout);
-        headerContent.setComponentAlignment(buttonsLayout, Alignment.MIDDLE_CENTER);
+        MHorizontalLayout buttonsLayout = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(new MarginInfo(true, false, true, false));
+        headerContent.with(buttonsLayout).withAlign(buttonsLayout, Alignment.MIDDLE_CENTER);
     }
 
     @Override
@@ -224,14 +192,9 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
                     CrmTypeConstants.TASK, CrmTypeConstants.CALL,
                     CrmTypeConstants.MEETING);
 
-            this.addValueChangeListener(new Property.ValueChangeListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void valueChange(Property.ValueChangeEvent event) {
-                    String module = (String) ModuleSelectionComboBox.this.getValue();
-                    display(module);
-                }
+            this.addValueChangeListener(valueChangeEvent -> {
+                String module = (String) ModuleSelectionComboBox.this.getValue();
+                display(module);
             });
         }
     }

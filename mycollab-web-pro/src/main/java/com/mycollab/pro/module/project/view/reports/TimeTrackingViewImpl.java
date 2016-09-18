@@ -201,15 +201,8 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
             initListSelectStyle(userField);
             selectionLayout.addComponent(userField, 7, 0, 7, 1);
 
-            Button queryBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUBMIT), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final Button.ClickEvent event) {
-                    searchTimeReporting();
-                }
-            });
-            queryBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
+            MButton queryBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUBMIT), clickEvent -> searchTimeReporting())
+                    .withStyleName(WebUIConstants.BUTTON_ACTION);
 
             selectionLayout.addComponent(queryBtn, 8, 0);
 

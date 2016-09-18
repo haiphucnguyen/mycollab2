@@ -250,9 +250,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements IThemeCu
         exampleActionBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
         actionBtnPanel.addComponent(exampleActionBtn);
 
-        HorizontalLayout actionBtnColorPane = new HorizontalLayout();
+        MHorizontalLayout actionBtnColorPane = new MHorizontalLayout();
         actionBtnColorPane.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        actionBtnColorPane.setSpacing(true);
         actionBtnPanel.addComponent(actionBtnColorPane);
 
         CustomColorPickerArea actionBtnBg = new CustomColorPickerArea(accountTheme.getActionbtn());

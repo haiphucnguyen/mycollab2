@@ -43,6 +43,7 @@ import com.vaadin.ui.UI;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.teemu.wizards.Wizard;
 import org.vaadin.teemu.wizards.event.*;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import javax.validation.ConstraintViolation;
@@ -153,12 +154,10 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
             footer.setMargin(new MarginInfo(true, true, false, false));
 
             if (!SiteConfiguration.isCommunityEdition()) {
-                Button newProjectFromTemplateBtn = new Button(UserUIContext.getMessage(ProjectI18nEnum.OPT_CREATE_PROJECT_FROM_TEMPLATE),
-                        clickEvent -> {
+                MButton newProjectFromTemplateBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.OPT_CREATE_PROJECT_FROM_TEMPLATE), clickEvent -> {
                             close();
                             UI.getCurrent().addWindow(new ProjectAddBaseTemplateWindow());
-                        });
-                newProjectFromTemplateBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
+                        }).withStyleName(WebUIConstants.BUTTON_ACTION);
                 footer.addComponent(newProjectFromTemplateBtn, 0);
             }
         }

@@ -158,12 +158,11 @@ public class MainViewImpl extends AbstractMainView {
         }).withIcon(FontAwesome.INFO_CIRCLE);
         accountPopupContent.addOption(aboutBtn);
 
-        Button releaseNotesBtn = new Button(UserUIContext.getMessage(ShellI18nEnum.OPT_RELEASE_NOTES));
+        MButton releaseNotesBtn = new MButton(UserUIContext.getMessage(ShellI18nEnum.OPT_RELEASE_NOTES)).withIcon(FontAwesome.BULLHORN);
         ExternalResource releaseNotesRes = new ExternalResource("https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/releases/");
         BrowserWindowOpener releaseNotesOpener = new BrowserWindowOpener(releaseNotesRes);
         releaseNotesOpener.extend(releaseNotesBtn);
 
-        releaseNotesBtn.setIcon(FontAwesome.BULLHORN);
         accountPopupContent.addOption(releaseNotesBtn);
 
         MButton signoutBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SIGNOUT), clickEvent -> {

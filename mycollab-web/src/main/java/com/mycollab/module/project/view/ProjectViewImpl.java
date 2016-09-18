@@ -171,9 +171,8 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.setProject(project);
 
-            Button helpBtn = new Button(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP));
-            helpBtn.setIcon(FontAwesome.MORTAR_BOARD);
-            helpBtn.addStyleName(WebUIConstants.BUTTON_LINK);
+            MButton helpBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP)).withIcon(FontAwesome.MORTAR_BOARD)
+                    .withStyleName(WebUIConstants.BUTTON_LINK);
             ExternalResource helpRes = new ExternalResource("https://community.mycollab.com/docs/project-management/");
             BrowserWindowOpener helpOpener = new BrowserWindowOpener(helpRes);
             helpOpener.extend(helpBtn);
