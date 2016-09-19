@@ -291,7 +291,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
         private String path;
 
-        public GotoPageListListener(String path) {
+        GotoPageListListener(String path) {
             this.path = path;
         }
 

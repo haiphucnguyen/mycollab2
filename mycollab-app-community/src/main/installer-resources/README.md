@@ -52,10 +52,10 @@ Version 5.4.3
 
 **Improvements & New Features**
 
-* [Premium] Project admin can customise entity fields
 * [Premium] Project admin can customise the project dashboard page
 * [Premium] Kanban board for phases/sprint
 * [Premium] Close phase, assignments have option to close the sub-assignments
+* More stable the upgrade process
 * Other minor improvements
 
 **Bug Fixes**
