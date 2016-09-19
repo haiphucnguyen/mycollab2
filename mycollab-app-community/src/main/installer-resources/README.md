@@ -61,6 +61,7 @@ Version 5.4.3
 **Bug Fixes**
 
 * [Premium] Can not mass update project risks
+* [Community] Can not preview bug, task on mobile web page because of lacking time service
 
 Version 5.4.2
 -------------

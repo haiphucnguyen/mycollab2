@@ -16,21 +16,23 @@
  */
 package com.mycollab.module.project.view.user;
 
+import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.view.milestone.MilestoneTimelineWidget;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
+import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.Not;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Component;
-import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.HorizontalLocationIs;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
-import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -44,8 +46,11 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements Proj
     protected void displayView() {
         withMargin(new MarginInfo(true, true, false, true));
 
+        MCssLayout descLayout = new MCssLayout(ELabel.html(CurrentProjectVariables.getProject().getDescription()))
+                .withStyleName(WebUIConstants.BOX).withFullWidth();
+        with(descLayout);
         MHorizontalLayout layout = new MHorizontalLayout().withFullWidth();
-        this.addComponent(layout);
+        this.with(layout);
 
         DDVerticalLayout leftPanel = new DDVerticalLayout();
         leftPanel.setSpacing(true);
