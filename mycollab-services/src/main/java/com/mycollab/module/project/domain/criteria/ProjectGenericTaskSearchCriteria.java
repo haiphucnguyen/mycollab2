@@ -16,7 +16,12 @@
  */
 package com.mycollab.module.project.domain.criteria;
 
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.*;
+import com.mycollab.db.query.CacheParamMapper;
+import com.mycollab.db.query.CompositionStringParam;
+import com.mycollab.db.query.StringParam;
+import com.mycollab.module.project.ProjectTypeConstants;
 
 /**
  * @author MyCollab Ltd.
@@ -24,6 +29,9 @@ import com.mycollab.db.arguments.*;
  */
 public class ProjectGenericTaskSearchCriteria extends SearchCriteria {
     private static final long serialVersionUID = 1L;
+
+    public static final CompositionStringParam p_name = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT,
+            GenericI18Enum.FORM_NAME, new CompositionStringParam("name", new StringParam("", "m_prj_task", "taskname")));
 
     private SetSearchField<Integer> projectIds;
 

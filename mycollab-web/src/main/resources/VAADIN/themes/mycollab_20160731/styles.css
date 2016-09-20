@@ -15828,6 +15828,13 @@ div.v-button.token-field {
 	border-style: none;
 }
 
+.tasklist .taskrow:hover {
+	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	box-shadow: inset 5px 0px 0px 0px #0083ce;
+	background-color: #f5f5f5;
+}
+
 .selected {
 	background-color: #dcdcdc;
 }

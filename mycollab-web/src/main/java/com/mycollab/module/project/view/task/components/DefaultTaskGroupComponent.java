@@ -16,6 +16,7 @@
  */
 package com.mycollab.module.project.view.task.components;
 
+import com.mycollab.db.query.CompositionStringParam;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.ui.components.IGroupComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -33,8 +34,8 @@ class DefaultTaskGroupComponent extends MVerticalLayout implements IGroupCompone
     private Label headerLbl;
     private CssLayout wrapBody;
 
-    protected String titleValue;
-    protected int numElements = 0;
+    private String titleValue;
+    private int numElements = 0;
 
     DefaultTaskGroupComponent(String titleValue) {
         this.titleValue = titleValue;
@@ -45,7 +46,7 @@ class DefaultTaskGroupComponent extends MVerticalLayout implements IGroupCompone
         this.setMargin(new MarginInfo(true, false, true, false));
         wrapBody = new CssLayout();
         wrapBody.setWidth("100%");
-        wrapBody.setStyleName(WebUIConstants.BORDER_LIST);
+        wrapBody.addStyleName(WebUIConstants.BORDER_LIST);
         headerLbl = ELabel.h3("");
         this.addComponent(headerLbl);
         this.addComponent(wrapBody);

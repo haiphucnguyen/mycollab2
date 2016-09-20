@@ -325,6 +325,9 @@
       &:last-child {
         border-style: none;
       }
+      &:hover {
+        @include hover-effect;
+      }
     }
   }
 
