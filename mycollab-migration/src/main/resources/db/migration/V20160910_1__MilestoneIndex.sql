@@ -16,3 +16,5 @@ UPDATE `m_tracker_bug` SET `priority`='High' WHERE `priority`='Critical' AND id 
 UPDATE `m_tracker_bug` SET `priority`='Medium' WHERE `priority`='Major' AND id > 0;
 UPDATE `m_tracker_bug` SET `priority`='Low' WHERE `priority`='Minor' AND id > 0;
 UPDATE `m_tracker_bug` SET `priority`='None' WHERE `priority`='Trivial' AND id > 0;
+
+DELETE FROM `s_table_customize_view` WHERE id > 0;
