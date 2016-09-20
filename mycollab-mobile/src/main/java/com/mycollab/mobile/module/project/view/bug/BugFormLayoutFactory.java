@@ -58,7 +58,7 @@ public class BugFormLayoutFactory extends AbstractFormLayoutFactory {
         } else if (propertyId.equals("status")) {
             return  informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_STATUS), 0, 3);
         } else if (propertyId.equals("priority")) {
-            return  informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_PRIORITY), 0, 4);
+            return  informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY), 0, 4);
         } else if (propertyId.equals("severity")) {
             return  informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_SEVERITY), 0, 5);
         } else if (propertyId.equals("resolution")) {

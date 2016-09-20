@@ -46,13 +46,12 @@ import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.domain.TaskExample;
 import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.mycollab.module.project.esb.DeleteProjectTaskEvent;
-import com.mycollab.module.project.i18n.OptionI18nEnum.TaskPriority;
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.project.service.*;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -123,7 +122,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         }
 
         if (record.getPriority() == null) {
-            record.setPriority(TaskPriority.Medium.name());
+            record.setPriority(Priority.Medium.name());
         }
         record.setLogby(username);
         Lock lock = DistributionLockUtil.getLock("task-" + record.getSaccountid());

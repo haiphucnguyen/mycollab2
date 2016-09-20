@@ -42,8 +42,8 @@ public final class TaskFieldFormatter extends FieldGroupFormatter {
         generateFieldDisplayHandler("startdate", GenericI18Enum.FORM_START_DATE, DATETIME_FIELD);
         generateFieldDisplayHandler("enddate", GenericI18Enum.FORM_END_DATE, DATETIME_FIELD);
         generateFieldDisplayHandler("deadline", GenericI18Enum.FORM_DUE_DATE, DATETIME_FIELD);
-        generateFieldDisplayHandler("priority", TaskI18nEnum.FORM_PRIORITY,
-                new I18nHistoryFieldFormat(OptionI18nEnum.TaskPriority.class));
+        generateFieldDisplayHandler("priority", GenericI18Enum.FORM_PRIORITY,
+                new I18nHistoryFieldFormat(OptionI18nEnum.Priority.class));
         generateFieldDisplayHandler("status", GenericI18Enum.FORM_STATUS,
                 new I18nHistoryFieldFormat(com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum.class));
         generateFieldDisplayHandler("isestimated", TaskI18nEnum.FORM_IS_ESTIMATED);

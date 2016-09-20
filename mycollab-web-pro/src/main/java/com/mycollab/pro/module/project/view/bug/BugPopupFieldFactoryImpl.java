@@ -31,11 +31,11 @@ import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.CommentDisplay;
+import com.mycollab.module.project.ui.components.PriorityComboBox;
 import com.mycollab.module.project.view.bug.ApproveInputWindow;
 import com.mycollab.module.project.view.bug.BugPopupFieldFactory;
 import com.mycollab.module.project.view.bug.ReOpenWindow;
 import com.mycollab.module.project.view.bug.ResolvedInputWindow;
-import com.mycollab.module.project.view.bug.components.BugPriorityComboBox;
 import com.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
@@ -77,7 +77,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return ProjectAssetsManager.getBugPriorityHtml(bug.getPriority());
+                return ProjectAssetsManager.getPriority(bug.getPriority()).getHtml();
             }
 
             @Override
@@ -86,8 +86,8 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             }
         };
         builder.withBean(bug).withBindProperty(BugWithBLOBs.Field.priority.name()).withDescription(bug.getPriority())
-                .withDescription(UserUIContext.getMessage(BugI18nEnum.FORM_PRIORITY_HELP))
-                .withCaption(UserUIContext.getMessage(BugI18nEnum.FORM_PRIORITY)).withField(new BugPriorityComboBox())
+                .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP))
+                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY)).withField(new PriorityComboBox())
                 .withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getPriority())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();

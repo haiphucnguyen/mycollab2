@@ -501,7 +501,7 @@
     border-radius: 5px;
     padding: 0px 5px;
     margin: 3px 3px 0px 0px;
-    color: darken($my-white-color, 5%) !important;
+    color: darken($my-meta-color, 5%) !important;
     font-size: $font-small;
     .v-icon {
       padding: 0px;
@@ -509,6 +509,7 @@
     &:hover {
       color: $my-white-color;
       text-decoration: none;
+      border: 1px solid $my-border-color;
     }
 
     .nonValue .hide {

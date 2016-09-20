@@ -23,6 +23,7 @@ import com.mycollab.core.utils.StringUtils
 import com.mycollab.html.{FormatUtils, LinkUtils}
 import com.mycollab.module.mail.MailUtils
 import com.mycollab.module.project.domain._
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority
 import com.mycollab.module.project.i18n.{OptionI18nEnum, TaskI18nEnum}
 import com.mycollab.module.project.service._
 import com.mycollab.module.project.{ProjectLinkGenerator, ProjectResources, ProjectTypeConstants}
@@ -140,7 +141,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
     put(Task.Field.enddate, new DateFieldFormat(Task.Field.enddate.name, GenericI18Enum.FORM_END_DATE))
     put(Task.Field.deadline, new DateFieldFormat(Task.Field.deadline.name, GenericI18Enum.FORM_DUE_DATE))
     put(Task.Field.percentagecomplete, TaskI18nEnum.FORM_PERCENTAGE_COMPLETE)
-    put(Task.Field.priority, new I18nFieldFormat(Task.Field.priority.name, TaskI18nEnum.FORM_PRIORITY, classOf[OptionI18nEnum.TaskPriority]))
+    put(Task.Field.priority, new I18nFieldFormat(Task.Field.priority.name, GenericI18Enum.FORM_PRIORITY, classOf[Priority]))
     put(Task.Field.assignuser, new AssigneeFieldFormat(Task.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))
     put(Task.Field.isestimated, TaskI18nEnum.FORM_IS_ESTIMATED)
     put(Task.Field.remainestimate, TaskI18nEnum.FORM_REMAIN_ESTIMATE)

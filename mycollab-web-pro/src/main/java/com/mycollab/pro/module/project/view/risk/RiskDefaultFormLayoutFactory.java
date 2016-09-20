@@ -68,8 +68,8 @@ public class RiskDefaultFormLayoutFactory {
                 .displayName(GenericI18Enum.FORM_DUE_DATE)
                 .fieldIndex(12).build());
 
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.level)
-                .displayName(RiskI18nEnum.FORM_RATING)
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.priority)
+                .displayName(GenericI18Enum.FORM_PRIORITY)
                 .fieldIndex(13).build());
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.response)

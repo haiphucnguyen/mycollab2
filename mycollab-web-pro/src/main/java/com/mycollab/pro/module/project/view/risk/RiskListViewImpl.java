@@ -7,6 +7,7 @@ import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskConsequence;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskProbability;
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.spring.AppContextUtil;
@@ -29,7 +30,6 @@ import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import org.vaadin.teemu.ratingstars.RatingStars;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -61,7 +61,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
                 SimpleRisk.class, ProjectTypeConstants.RISK,
                 RiskTableFieldDef.selected(), Arrays.asList(
                 RiskTableFieldDef.name(), RiskTableFieldDef.assignUser(),
-                RiskTableFieldDef.duedate(), RiskTableFieldDef.rating()));
+                RiskTableFieldDef.duedate(), RiskTableFieldDef.priority()));
 
         tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
             final SimpleRisk item = tableItem.getBeanByIndex(itemId);
@@ -120,13 +120,9 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
             return ELabel.i18n(item.getProbalitity(), RiskProbability.class);
         });
 
-        tableItem.addGeneratedColumn("level", (source, itemId, columnId) -> {
+        tableItem.addGeneratedColumn("priority", (source, itemId, columnId) -> {
             SimpleRisk item = tableItem.getBeanByIndex(itemId);
-            RatingStars tinyRs = new RatingStars();
-            tinyRs.setValue(item.getLevel());
-            tinyRs.addStyleName("tiny");
-            tinyRs.setReadOnly(true);
-            return tinyRs;
+            return ELabel.i18n(item.getPriority(), Priority.class);
         });
 
         tableItem.setWidth("100%");

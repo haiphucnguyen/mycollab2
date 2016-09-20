@@ -24,6 +24,7 @@ import com.mycollab.html.FormatUtils._
 import com.mycollab.html.LinkUtils
 import com.mycollab.module.mail.MailUtils
 import com.mycollab.module.project.domain._
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority
 import com.mycollab.module.project.i18n.{BugI18nEnum, OptionI18nEnum}
 import com.mycollab.module.project.service.{MilestoneService, ProjectNotificationSettingService}
 import com.mycollab.module.project.{ProjectLinkGenerator, ProjectResources, ProjectTypeConstants}
@@ -142,7 +143,8 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
     put(BugWithBLOBs.Field.status, new I18nFieldFormat(BugWithBLOBs.Field.status.name, GenericI18Enum.FORM_STATUS, classOf[OptionI18nEnum.BugStatus]))
     put(BugWithBLOBs.Field.resolution, new I18nFieldFormat(BugWithBLOBs.Field.resolution.name, BugI18nEnum.FORM_RESOLUTION, classOf[OptionI18nEnum.BugResolution]))
     put(BugWithBLOBs.Field.severity, new I18nFieldFormat(BugWithBLOBs.Field.severity.name, BugI18nEnum.FORM_SEVERITY, classOf[OptionI18nEnum.BugSeverity]))
-    put(BugWithBLOBs.Field.priority, new I18nFieldFormat(BugWithBLOBs.Field.priority.name, BugI18nEnum.FORM_PRIORITY, classOf[OptionI18nEnum.BugPriority]))
+    put(BugWithBLOBs.Field.priority, new I18nFieldFormat(BugWithBLOBs.Field.priority.name, GenericI18Enum.FORM_PRIORITY,
+      classOf[Priority]))
     put(BugWithBLOBs.Field.duedate, new DateFieldFormat(BugWithBLOBs.Field.duedate.name, GenericI18Enum.FORM_DUE_DATE))
     put(BugWithBLOBs.Field.logby, new LogUserFieldFormat(BugWithBLOBs.Field.logby.name, BugI18nEnum.FORM_LOG_BY))
   }

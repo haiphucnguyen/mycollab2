@@ -42,8 +42,8 @@ public class BugDefaultFormLayoutFactory {
 
         //Row 2
         mainSection.fields(new TextDynaFieldBuilder().fieldName(BugWithBLOBs.Field.priority)
-                .displayName(BugI18nEnum.FORM_PRIORITY)
-                .contextHelp(BugI18nEnum.FORM_PRIORITY_HELP)
+                .displayName(GenericI18Enum.FORM_PRIORITY)
+                .contextHelp(GenericI18Enum.FORM_PRIORITY_HELP)
                 .fieldIndex(1).build());
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(BugWithBLOBs.Field.assignuser)

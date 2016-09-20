@@ -9,7 +9,7 @@ import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskConsequence;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskProbability;
-import com.mycollab.module.project.i18n.RiskI18nEnum;
+import com.mycollab.module.project.ui.components.PriorityComboBox;
 import com.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.vaadin.MyCollabUI;
@@ -20,7 +20,6 @@ import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.RichTextArea;
-import org.vaadin.teemu.ratingstars.RatingStars;
 import org.vaadin.viritin.fields.MTextField;
 
 /**
@@ -78,29 +77,8 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
                 risk.setStatus(StatusI18nEnum.Open.name());
             }
             return new I18nValueComboBox(false, StatusI18nEnum.Open, StatusI18nEnum.Closed);
-        } else if (Risk.Field.level.equalTo(propertyId)) {
-            final RatingStars ratingField = new RatingStars();
-            ratingField.setMaxValue(5);
-            ratingField.setImmediate(true);
-            if (risk.getLevel() != null) {
-                ratingField.setValue(risk.getLevel());
-            }
-            ratingField.setValueCaption(RiskAddViewImpl.getValueCaptions());
-
-            ratingField.addValueChangeListener(valueChangeEvent -> {
-                final Double value = (Double) valueChangeEvent.getProperty().getValue();
-                final RatingStars changedRs = (RatingStars) valueChangeEvent.getProperty();
-
-                // reset value captions
-                changedRs.setValueCaption(RiskAddViewImpl.getValueCaptions());
-                // set "Your Rating" caption
-                if (value == null) {
-                    changedRs.setValue(3d);
-                } else {
-                    changedRs.setValueCaption((int) Math.round(value), UserUIContext.getMessage(RiskI18nEnum.FORM_RATING));
-                }
-            });
-            return ratingField;
+        } else if (Risk.Field.priority.equalTo(propertyId)) {
+            return new PriorityComboBox();
         } else if (Risk.Field.riskname.equalTo(propertyId)) {
             MTextField field = new MTextField().withNullRepresentation("");
             if (isValidateForm) {

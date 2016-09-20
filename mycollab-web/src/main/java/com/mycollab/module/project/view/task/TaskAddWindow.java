@@ -158,8 +158,8 @@ public class TaskAddWindow extends MWindow {
                 } else if (Task.Field.assignuser.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 2);
                 } else if (Task.Field.priority.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, UserUIContext.getMessage(TaskI18nEnum.FORM_PRIORITY),
-                            UserUIContext.getMessage(TaskI18nEnum.FORM_PRIORITY_HELP), 0, 3);
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY),
+                            UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP), 0, 3);
                 } else if (Task.Field.milestoneid.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(TaskI18nEnum.FORM_PHASE), 1, 3);
                 } else if (Task.Field.notes.equalTo(propertyId)) {

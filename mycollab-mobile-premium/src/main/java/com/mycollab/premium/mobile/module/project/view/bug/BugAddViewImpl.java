@@ -2,9 +2,9 @@ package com.mycollab.premium.mobile.module.project.view.bug;
 
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.mobile.module.project.ui.PriorityComboBox;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.bug.BugAddView;
-import com.mycollab.mobile.module.project.view.bug.BugPriorityComboBox;
 import com.mycollab.mobile.module.project.view.bug.BugSeverityComboBox;
 import com.mycollab.mobile.module.project.view.milestone.MilestoneComboBox;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
@@ -13,7 +13,7 @@ import com.mycollab.mobile.ui.FormSectionBuilder;
 import com.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.BugI18nEnum;
-import com.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
+import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.vaadin.UserUIContext;
@@ -83,9 +83,9 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
                 return new DatePicker();
             } else if (propertyId.equals("priority")) {
                 if (beanItem.getPriority() == null) {
-                    beanItem.setPriority(BugPriority.Major.name());
+                    beanItem.setPriority(OptionI18nEnum.Priority.Medium.name());
                 }
-                return new BugPriorityComboBox();
+                return new PriorityComboBox();
             } else if (propertyId.equals("assignuser")) {
                 return new ProjectMemberSelectionField();
             } else if (propertyId.equals("severity")) {
@@ -148,7 +148,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
             } else if (propertyId.equals("environment")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_ENVIRONMENT), 0, 2);
             } else if (propertyId.equals("priority")) {
-                return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_PRIORITY), 0, 3);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY), 0, 3);
             } else if (propertyId.equals("severity")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_SEVERITY), 0, 4);
             } else if (propertyId.equals("startdate")) {

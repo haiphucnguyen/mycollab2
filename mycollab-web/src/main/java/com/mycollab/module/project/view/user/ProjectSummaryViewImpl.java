@@ -48,7 +48,7 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements Proj
 
         MCssLayout descLayout = new MCssLayout(ELabel.html(CurrentProjectVariables.getProject().getDescription()))
                 .withStyleName(WebUIConstants.BOX).withFullWidth();
-        with(descLayout);
+//        with(descLayout);
         MHorizontalLayout layout = new MHorizontalLayout().withFullWidth();
         this.with(layout);
 

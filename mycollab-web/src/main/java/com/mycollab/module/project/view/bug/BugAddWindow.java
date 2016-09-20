@@ -157,8 +157,8 @@ public class BugAddWindow extends MWindow {
                 if (BugWithBLOBs.Field.summary.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_SUMMARY), 0, 0, 2, "100%");
                 } else if (BugWithBLOBs.Field.priority.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_PRIORITY),
-                            UserUIContext.getMessage(BugI18nEnum.FORM_PRIORITY_HELP), 0, 1);
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY),
+                            UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP), 0, 1);
                 } else if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 1);
                 } else if (BugWithBLOBs.Field.severity.equalTo(propertyId)) {

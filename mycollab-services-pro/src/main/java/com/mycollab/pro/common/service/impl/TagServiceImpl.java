@@ -40,7 +40,7 @@ public class TagServiceImpl extends DefaultCrudService<Integer, Tag> implements 
         TagExample ex = new TagExample();
         ex.createCriteria().andTypeEqualTo(record.getType()).andTypeidEqualTo(record.getTypeid()).andNameEqualTo
                 (record.getName());
-        int count = tagMapper.countByExample(ex);
+        Long count = tagMapper.countByExample(ex);
         if (count > 0) {
             return 0;
         }

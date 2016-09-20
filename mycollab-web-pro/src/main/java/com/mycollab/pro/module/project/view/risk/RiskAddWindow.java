@@ -109,8 +109,8 @@ public class RiskAddWindow extends MWindow {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE), 1, 2);
                 } else if (Risk.Field.probalitity.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(RiskI18nEnum.FORM_PROBABILITY), 0, 3);
-                } else if (Risk.Field.level.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, UserUIContext.getMessage(RiskI18nEnum.FORM_RATING), 1, 3);
+                } else if (Risk.Field.priority.equalTo(propertyId)) {
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY), 1, 3);
                 } else if (Risk.Field.description.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 4, 2, "100%");
                 }

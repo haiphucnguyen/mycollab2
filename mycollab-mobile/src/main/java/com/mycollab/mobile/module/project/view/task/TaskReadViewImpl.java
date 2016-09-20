@@ -38,7 +38,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.Task;
-import com.mycollab.module.project.i18n.OptionI18nEnum.TaskPriority;
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
@@ -200,8 +200,8 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                 return new DefaultViewField(UserUIContext.formatDate(beanItem.getDeadline()));
             } else if (propertyId.equals("priority")) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
-                    FontAwesome fontPriority = ProjectAssetsManager.getTaskPriority(beanItem.getPriority());
-                    String priorityLbl = fontPriority.getHtml() + " " + UserUIContext.getMessage(TaskPriority.class, beanItem.getPriority());
+                    FontAwesome fontPriority = ProjectAssetsManager.getPriority(beanItem.getPriority());
+                    String priorityLbl = fontPriority.getHtml() + " " + UserUIContext.getMessage(Priority.class, beanItem.getPriority());
                     DefaultViewField field = new DefaultViewField(priorityLbl, ContentMode.HTML);
                     field.addStyleName("task-" + beanItem.getPriority().toLowerCase());
                     return field;

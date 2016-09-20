@@ -73,8 +73,8 @@ public class BugTableDisplay extends DefaultPagedBeanTable<BugService, BugSearch
                     bug.getProjectShortName()));
 
             if (StringUtils.isNotBlank(bug.getPriority())) {
-                b.setIconLink(ProjectAssetsManager.getBugPriority(bug.getPriority()));
-                b.addStyleName("bug-" + bug.getPriority().toLowerCase());
+                b.setIconLink(ProjectAssetsManager.getPriority(bug.getPriority()));
+                b.addStyleName("task-" + bug.getPriority().toLowerCase());
             }
 
             b.setDescription(ProjectTooltipGenerator.generateToolTipBug(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),

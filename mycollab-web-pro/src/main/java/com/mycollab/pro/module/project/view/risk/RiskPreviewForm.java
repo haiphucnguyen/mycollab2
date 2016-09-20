@@ -4,21 +4,27 @@ import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
+import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskConsequence;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskProbability;
+import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
 import com.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.field.DateViewField;
+import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Field;
-import org.vaadin.teemu.ratingstars.RatingStars;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author MyCollab Ltd
@@ -46,11 +52,14 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
             SimpleRisk risk = attachForm.getBean();
             if (Risk.Field.description.equalTo(propertyId)) {
                 return new RichTextViewField(risk.getDescription());
-            } else if (Risk.Field.level.equalTo(propertyId)) {
-                RatingStars tinyRs = new RatingStars();
-                tinyRs.setValue(risk.getLevel());
-                tinyRs.setReadOnly(true);
-                return tinyRs;
+            } else if (Risk.Field.priority.equalTo(propertyId)) {
+                if (StringUtils.isNotBlank(risk.getPriority())) {
+                    FontAwesome fontPriority = ProjectAssetsManager.getPriority(risk.getPriority());
+                    String priorityLbl = fontPriority.getHtml() + " " + UserUIContext.getMessage(OptionI18nEnum.Priority.class, risk.getPriority());
+                    DefaultViewField field = new DefaultViewField(priorityLbl, ContentMode.HTML);
+                    field.addStyleName("task-" + risk.getPriority().toLowerCase());
+                    return field;
+                }
             } else if (Risk.Field.status.equalTo(propertyId)) {
                 return new I18nFormViewField(risk.getStatus(), StatusI18nEnum.class).withStyleName(WebUIConstants.FIELD_NOTE);
             } else if (Risk.Field.datedue.equalTo(propertyId)) {

@@ -25,7 +25,7 @@ public class RiskListCustomizeWindow extends CustomizedTableWindow {
                 RiskTableFieldDef.consequence(), RiskTableFieldDef.duedate(),
                 RiskTableFieldDef.description(), RiskTableFieldDef.name(),
                 RiskTableFieldDef.probability(), RiskTableFieldDef.raisedBy(),
-                RiskTableFieldDef.rating(), RiskTableFieldDef.response(),
+                RiskTableFieldDef.priority(), RiskTableFieldDef.response(),
                 RiskTableFieldDef.status());
     }
 }

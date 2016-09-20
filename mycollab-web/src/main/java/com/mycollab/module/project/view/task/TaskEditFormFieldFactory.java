@@ -32,7 +32,7 @@ import com.mycollab.module.project.ui.components.ProjectSubscribersComp;
 import com.mycollab.module.project.ui.components.TaskSliderField;
 import com.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
-import com.mycollab.module.project.view.task.components.TaskPriorityComboBox;
+import com.mycollab.module.project.ui.components.PriorityComboBox;
 import com.mycollab.module.project.view.task.components.TaskStatusComboBox;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
@@ -94,7 +94,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
         } else if (Task.Field.percentagecomplete.equalTo(propertyId)) {
             return new TaskSliderField();
         } else if (Task.Field.priority.equalTo(propertyId)) {
-            return new TaskPriorityComboBox();
+            return new PriorityComboBox();
         } else if (Task.Field.duration.equalTo(propertyId)) {
             final TextField field = new TextField();
             field.setConverter(new HumanTimeConverter());

@@ -1,7 +1,9 @@
 package com.mycollab.pro.vaadin.web.ui.field;
 
+import com.google.common.base.MoreObjects;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
+import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.persistence.service.ICrudService;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
@@ -23,7 +25,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public abstract class PopupBeanFieldBuilder<B> {
     protected Object value;
     protected String caption;
-    protected String description = UserUIContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT);
+    protected String description;
     protected Field field;
     private boolean hasPermission = true;
     protected B bean;
@@ -88,12 +90,12 @@ public abstract class PopupBeanFieldBuilder<B> {
     }
 
     protected String generateDescription() {
-        return description;
+        return (StringUtils.isBlank(description)) ? MoreObjects.firstNonNull(caption, UserUIContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT)) : description;
     }
 
     public PopupView build() {
         final PopupView view = new BeanPopupView(generateSmallContentAsHtml());
-        view.setDescription(description);
+        view.setDescription(generateDescription());
         return view;
     }
 

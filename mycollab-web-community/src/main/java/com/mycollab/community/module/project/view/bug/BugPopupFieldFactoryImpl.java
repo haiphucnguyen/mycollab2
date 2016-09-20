@@ -47,7 +47,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
     @Override
     public AbstractComponent createPriorityPopupField(SimpleBug bug) {
         return new MetaFieldBuilder().withCaption(ProjectAssetsManager.getTaskPriorityHtml(bug.getPriority()))
-                .withDescription(UserUIContext.getMessage(BugI18nEnum.FORM_PRIORITY)).build();
+                .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY)).build();
     }
 
     @Override

@@ -21,9 +21,10 @@ import com.mycollab.db.arguments.*;
 import com.mycollab.db.query.*;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.BugI18nEnum;
-import com.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
+import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import org.apache.ibatis.jdbc.SQL;
 
@@ -64,10 +65,10 @@ public class BugSearchCriteria extends SearchCriteria {
     public static final PropertyListParam<Integer> p_milestones = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_PHASE,
             new PropertyListParam<Integer>("milestones", "m_tracker_bug", "milestoneId"));
 
-    public static final I18nStringListParam p_priority = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_PRIORITY,
+    public static final I18nStringListParam p_priority = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_PRIORITY,
             new I18nStringListParam("priority", "m_tracker_bug", "priority",
-                    Arrays.asList(BugPriority.Blocker, BugPriority.Critical, BugPriority.Major,
-                            BugPriority.Minor, BugPriority.Trivial)));
+                    Arrays.asList(Priority.Urgent, Priority.High, Priority.Medium,
+                            Priority.Low, Priority.None)));
 
     public static final I18nStringListParam p_severity = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_SEVERITY,
             new I18nStringListParam("severity", "m_tracker_bug", "severity",

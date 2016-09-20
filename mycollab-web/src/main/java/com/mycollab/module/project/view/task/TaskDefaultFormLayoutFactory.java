@@ -56,8 +56,8 @@ public class TaskDefaultFormLayoutFactory {
                 .fieldIndex(3).build());
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Task.Field.priority)
-                .displayName(TaskI18nEnum.FORM_PRIORITY)
-                .contextHelp(TaskI18nEnum.FORM_PRIORITY_HELP)
+                .displayName(GenericI18Enum.FORM_PRIORITY)
+                .contextHelp(GenericI18Enum.FORM_PRIORITY_HELP)
                 .fieldIndex(4).build());
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Task.Field.duration)

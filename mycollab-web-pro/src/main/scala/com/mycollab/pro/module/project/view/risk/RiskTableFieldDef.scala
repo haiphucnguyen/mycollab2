@@ -21,5 +21,5 @@ object RiskTableFieldDef {
   val response = new TableViewField(RiskI18nEnum.FORM_RESPONSE, "response", WebUIConstants.TABLE_EX_LABEL_WIDTH)
   val consequence = new TableViewField(RiskI18nEnum.FORM_CONSEQUENCE, "consequence", WebUIConstants.TABLE_EX_LABEL_WIDTH)
   val probability = new TableViewField(RiskI18nEnum.FORM_PROBABILITY, "probalitity", WebUIConstants.TABLE_X_LABEL_WIDTH)
-  val rating = new TableViewField(RiskI18nEnum.FORM_RATING, "level", WebUIConstants.TABLE_M_LABEL_WIDTH)
+  val priority = new TableViewField(GenericI18Enum.FORM_PRIORITY, "priority", WebUIConstants.TABLE_M_LABEL_WIDTH)
 }

@@ -995,7 +995,7 @@
  */
 
 .v-vaadin-version:after {
-	content: "7.7.0";
+	content: "7.7.1";
 }
 
 .v-widget {
@@ -2113,7 +2113,7 @@ div.v-window {
 	border-radius: 5px;
 	padding: 0px 5px;
 	margin: 3px 3px 0px 0px;
-	color: #f2f2f2 !important;
+	color: #8c8c8c !important;
 	font-size: 13px;
 }
 
@@ -2124,6 +2124,7 @@ div.v-window {
 .block-popupedit:hover {
 	color: #ffffff;
 	text-decoration: none;
+	border: 1px solid #c5c5c5;
 }
 
 .block-popupedit .nonValue .hide {
@@ -14849,7 +14850,7 @@ div.v-window {
 	border-radius: 5px;
 	padding: 0px 5px;
 	margin: 3px 3px 0px 0px;
-	color: #f2f2f2 !important;
+	color: #8c8c8c !important;
 	font-size: 13px;
 }
 
@@ -14860,6 +14861,7 @@ div.v-window {
 .block-popupedit:hover {
 	color: #ffffff;
 	text-decoration: none;
+	border: 1px solid #c5c5c5;
 }
 
 .block-popupedit .nonValue .hide {

@@ -18,6 +18,7 @@ package com.mycollab.module.project.view;
 
 import com.mycollab.common.UrlEncodeDecoder;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.file.PathUtils;
@@ -694,10 +695,33 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
         breadcrumb.select(0);
         MyCollabUI.addFragment(ProjectLinkGenerator.generateProjectLink(project.getId()),
                 UserUIContext.getMessage(GenericI18Enum.VIEW_DASHBOARD));
-        if (CurrentProjectVariables.isAdmin()) {
-            controlsLayout.with(new MButton(UserUIContext.getMessage(GenericI18Enum.OPT_CUSTOMIZE_VIEW)).withIcon(FontAwesome.BRIEFCASE)
-                    .withStyleName(WebUIConstants.BUTTON_LINK));
+//        if (CurrentProjectVariables.isAdmin() && !SiteConfiguration.isCommunityEdition()) {
+//            buildCustomizeDashboardView();
+//        }
+    }
+
+    private void buildCustomizeDashboardView() {
+        controlsLayout.removeAllComponents();
+        if (CurrentProjectVariables.isAdmin() && !SiteConfiguration.isCommunityEdition()) {
+            MButton customizeBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.OPT_CUSTOMIZE_VIEW))
+                    .withIcon(FontAwesome.BRIEFCASE).withStyleName(WebUIConstants.BUTTON_LINK);
+            customizeBtn.addClickListener(clickEvent -> {
+                buildCustomizeActionDashboardView();
+            });
+            controlsLayout.with(customizeBtn);
         }
+    }
+
+    private void buildCustomizeActionDashboardView() {
+        controlsLayout.removeAllComponents();
+        MButton addWidgetBtn = new MButton("Add widget").withIcon(FontAwesome.PLUS).withStyleName
+                (WebUIConstants.BUTTON_ACTION);
+        MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> {
+            buildCustomizeDashboardView();
+        }).withStyleName(WebUIConstants.BUTTON_OPTION);
+        MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE)).withStyleName
+                (WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+        controlsLayout.with(addWidgetBtn, cancelBtn, saveBtn);
     }
 
     public void gotoProjectEdit() {

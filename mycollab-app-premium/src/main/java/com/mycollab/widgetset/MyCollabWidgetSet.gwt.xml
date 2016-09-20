@@ -9,8 +9,6 @@
         <when-type-assignable class="com.vaadin.client.metadata.ConnectorBundleLoader" />
     </generate-with>
 
-    <inherits name="org.vaadin.teemu.ratingstars.gwt.RatingStarsWidgetset" />
-
     <inherits name="com.vaadin.addon.contextmenu.WidgetSet" />
 
     <inherits name="fi.jasoft.dragdroplayouts.DragDropLayoutsWidgetSet" />

@@ -5,7 +5,7 @@ import com.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionFi
 import com.mycollab.mobile.module.project.view.task.TaskAddView;
 import com.mycollab.mobile.module.project.view.task.TaskFormLayoutFactory;
 import com.mycollab.mobile.module.project.view.task.TaskPercentageCompleteComboBox;
-import com.mycollab.mobile.module.project.view.task.TaskPriorityComboBox;
+import com.mycollab.mobile.module.project.ui.PriorityComboBox;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
@@ -79,7 +79,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
             } else if ("percentagecomplete".equals(propertyId)) {
                 return new TaskPercentageCompleteComboBox();
             } else if ("priority".equals(propertyId)) {
-                return new TaskPriorityComboBox();
+                return new PriorityComboBox();
             } else if (propertyId.equals("startdate") || propertyId.equals("enddate") || propertyId.equals("deadline")) {
                 return new DatePicker();
             }

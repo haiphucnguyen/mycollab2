@@ -38,7 +38,7 @@ object BugTableFieldDef {
   val endDate = new TableViewField(GenericI18Enum.FORM_END_DATE, BugWithBLOBs.Field.enddate.name(), WebUIConstants.TABLE_DATE_WIDTH)
   val dueDate = new TableViewField(GenericI18Enum.FORM_DUE_DATE, "duedate", WebUIConstants.TABLE_DATE_WIDTH)
   val logBy = new TableViewField(BugI18nEnum.FORM_LOG_BY, "loguserFullName", WebUIConstants.TABLE_X_LABEL_WIDTH)
-  val priority = new TableViewField(BugI18nEnum.FORM_PRIORITY, "priority", WebUIConstants.TABLE_S_LABEL_WIDTH)
+  val priority = new TableViewField(GenericI18Enum.FORM_PRIORITY, "priority", WebUIConstants.TABLE_S_LABEL_WIDTH)
   val resolution = new TableViewField(BugI18nEnum.FORM_RESOLUTION, "resolution", WebUIConstants.TABLE_M_LABEL_WIDTH)
   val createdTime = new TableViewField(GenericI18Enum.FORM_CREATED_TIME, "createdtime", WebUIConstants.TABLE_DATE_TIME_WIDTH)
   val assignUser = new TableViewField(GenericI18Enum.FORM_ASSIGNEE, "assignuserFullName", WebUIConstants.TABLE_X_LABEL_WIDTH)

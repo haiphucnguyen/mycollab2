@@ -37,7 +37,7 @@ import com.mycollab.module.project.ui.components.TaskSliderField;
 import com.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.module.project.view.task.TaskPopupFieldFactory;
-import com.mycollab.module.project.view.task.components.TaskPriorityComboBox;
+import com.mycollab.module.project.ui.components.PriorityComboBox;
 import com.mycollab.module.project.view.task.components.TaskStatusComboBox;
 import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
@@ -97,7 +97,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                 return task.getAssignUserFullName();
             }
         };
-        builder.withBean(task).withBindProperty("assignuser").withDescription(task.getAssignUserFullName())
+        builder.withBean(task).withBindProperty("assignuser").withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
                 .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
                 .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getAssignuser())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
@@ -118,9 +118,9 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("priority").withDescription(task.getPriority())
-                .withCaption(UserUIContext.getMessage(TaskI18nEnum.FORM_PRIORITY))
-                .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_PRIORITY_HELP))
-                .withField(new TaskPriorityComboBox())
+                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY))
+                .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP))
+                .withField(new PriorityComboBox())
                 .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPriority())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();

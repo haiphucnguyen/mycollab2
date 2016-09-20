@@ -57,7 +57,7 @@ public class TaskFormLayoutFactory extends AbstractFormLayoutFactory {
         } else if (propertyId.equals("deadline")) {
             return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 3);
         } else if (propertyId.equals("priority")) {
-            return informationLayout.addComponent(field, UserUIContext.getMessage(TaskI18nEnum.FORM_PRIORITY), 0, 4);
+            return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY), 0, 4);
         } else if (propertyId.equals("assignuser")) {
             return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 5);
         } else if (Task.Field.milestoneid.equalTo(propertyId)) {

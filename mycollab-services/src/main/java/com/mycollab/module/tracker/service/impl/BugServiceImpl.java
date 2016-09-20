@@ -105,7 +105,7 @@ public class BugServiceImpl extends DefaultService<Integer, BugWithBLOBs, BugSea
                 Integer maxKey = bugMapperExt.getMaxKey(record.getProjectid());
                 record.setBugkey((maxKey == null) ? 1 : (maxKey + 1));
                 if (record.getPriority() == null) {
-                    record.setPriority(OptionI18nEnum.BugPriority.Major.name());
+                    record.setPriority(OptionI18nEnum.Priority.Medium.name());
                 }
                 if (record.getStatus() == null) {
                     record.setStatus(OptionI18nEnum.BugStatus.Open.name());

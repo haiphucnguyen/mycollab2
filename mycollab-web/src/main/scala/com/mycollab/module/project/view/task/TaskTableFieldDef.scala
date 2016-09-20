@@ -34,7 +34,7 @@ object TaskTableFieldDef {
   val remainEstimate = new TableViewField(TaskI18nEnum.FORM_REMAIN_ESTIMATE, "remainestimate", WebUIConstants.TABLE_M_LABEL_WIDTH)
   val isEstimate = new TableViewField(TaskI18nEnum.FORM_IS_ESTIMATED, "isestimated", WebUIConstants.TABLE_M_LABEL_WIDTH)
   val status = new TableViewField(GenericI18Enum.FORM_STATUS, "status", WebUIConstants.TABLE_X_LABEL_WIDTH)
-  val priority = new TableViewField(TaskI18nEnum.FORM_PRIORITY, "priority", WebUIConstants.TABLE_M_LABEL_WIDTH)
+  val priority = new TableViewField(GenericI18Enum.FORM_PRIORITY, "priority", WebUIConstants.TABLE_M_LABEL_WIDTH)
   val startdate = new TableViewField(GenericI18Enum.FORM_START_DATE, "startdate", WebUIConstants.TABLE_DATE_WIDTH)
   val enddate = new TableViewField(GenericI18Enum.FORM_END_DATE, "enddate", WebUIConstants.TABLE_DATE_WIDTH)
   val duedate = new TableViewField(GenericI18Enum.FORM_DUE_DATE, "deadline", WebUIConstants.TABLE_DATE_WIDTH)
