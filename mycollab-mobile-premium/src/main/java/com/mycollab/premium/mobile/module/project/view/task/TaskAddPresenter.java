@@ -53,7 +53,7 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
             super.onGo(navigator, data);
             if (task.getId() == null) {
             } else {
-                MyCollabUI.addFragment(ProjectLinkGenerator.generateTaskEditLink(task.getTaskkey(), task.getProjectShortname()), task.getTaskname());
+                MyCollabUI.addFragment(ProjectLinkGenerator.generateTaskEditLink(task.getTaskkey(), task.getProjectShortname()), task.getName());
             }
         } else {
             NotificationUtil.showMessagePermissionAlert();

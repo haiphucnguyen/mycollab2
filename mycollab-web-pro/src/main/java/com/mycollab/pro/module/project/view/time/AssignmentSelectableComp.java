@@ -1,6 +1,6 @@
 package com.mycollab.pro.module.project.view.time;
 
-import com.mycollab.module.project.domain.ProjectGenericTask;
+import com.mycollab.module.project.domain.ProjectAssignment;
 
 /**
  * @author MyCollab Ltd.
@@ -8,5 +8,5 @@ import com.mycollab.module.project.domain.ProjectGenericTask;
  */
 public interface AssignmentSelectableComp {
 
-    void updateLinkTask(ProjectGenericTask task);
+    void updateLinkTask(ProjectAssignment task);
 }

@@ -35,7 +35,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
     @Override
     public void setBean(SimpleRisk bean) {
         setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.RISK,
-                RiskDefaultFormLayoutFactory.getForm(), Risk.Field.riskname.name()));
+                RiskDefaultFormLayoutFactory.getForm(), Risk.Field.name.name()));
         setBeanFormFieldFactory(new RiskReadFormFieldFactory(this));
         super.setBean(bean);
     }

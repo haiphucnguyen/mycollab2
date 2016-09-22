@@ -57,7 +57,7 @@ public class AssignTaskWindow extends MWindow {
     private final Task task;
 
     public AssignTaskWindow(Task task) {
-        super(UserUIContext.getMessage(TaskI18nEnum.DIALOG_ASSIGN_TASK_TITLE, task.getTaskname()));
+        super(UserUIContext.getMessage(TaskI18nEnum.DIALOG_ASSIGN_TASK_TITLE, task.getName()));
         this.task = task;
         MVerticalLayout contentLayout = new MVerticalLayout().withMargin(new MarginInfo(false, false, true, false));
         this.withWidth("750px").withModal(true).withResizable(false).withCenter().withContent(contentLayout);

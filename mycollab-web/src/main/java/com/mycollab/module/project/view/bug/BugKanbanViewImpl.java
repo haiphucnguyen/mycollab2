@@ -396,7 +396,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
                 MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD), clickEvent -> {
                     String summary = bugNameField.getValue();
                     if (StringUtils.isNotBlank(summary)) {
-                        bug.setSummary(summary);
+                        bug.setName(summary);
                         BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                         bugService.saveWithSession(bug, UserUIContext.getUsername());
                         dragLayoutContainer.removeComponent(layout);

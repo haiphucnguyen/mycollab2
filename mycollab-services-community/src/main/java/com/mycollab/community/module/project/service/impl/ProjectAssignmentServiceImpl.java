@@ -17,8 +17,8 @@
 package com.mycollab.community.module.project.service.impl;
 
 import com.mycollab.core.MyCollabException;
-import com.mycollab.module.project.domain.ProjectGenericTask;
-import com.mycollab.module.project.service.impl.AbstractProjectGenericTaskServiceImpl;
+import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.service.impl.AbstractProjectAssignmentServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,9 +26,9 @@ import org.springframework.stereotype.Service;
  * @since 5.4.2
  */
 @Service
-public class ProjectGenericTaskServiceImpl extends AbstractProjectGenericTaskServiceImpl {
+public class ProjectAssignmentServiceImpl extends AbstractProjectAssignmentServiceImpl {
     @Override
-    public void updateAssignmentValue(ProjectGenericTask assignment, String username) {
+    public void updateAssignmentValue(ProjectAssignment assignment, String username) {
         throw new MyCollabException("Not support this operation in the community edition");
     }
 

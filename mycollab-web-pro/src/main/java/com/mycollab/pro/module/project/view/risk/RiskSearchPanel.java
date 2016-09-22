@@ -99,7 +99,7 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
         protected RiskSearchCriteria fillUpSearchCriteria() {
             RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
             searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-            searchCriteria.setRiskname(StringSearchField.and(this.nameField.getValue().trim()));
+            searchCriteria.setName(StringSearchField.and(this.nameField.getValue().trim()));
 
             if (this.myItemCheckbox.getValue()) {
                 searchCriteria.setAssignToUser(StringSearchField.and(UserUIContext.getUsername()));

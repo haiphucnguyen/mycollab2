@@ -59,7 +59,7 @@ class AssignBugWindow extends MWindow {
     private final SimpleBug bug;
 
     AssignBugWindow(SimpleBug bug) {
-        super(UserUIContext.getMessage(BugI18nEnum.OPT_ASSIGN_BUG, bug.getSummary()));
+        super(UserUIContext.getMessage(BugI18nEnum.OPT_ASSIGN_BUG, bug.getName()));
         this.bug = bug;
 
         VerticalLayout contentLayout = new VerticalLayout();

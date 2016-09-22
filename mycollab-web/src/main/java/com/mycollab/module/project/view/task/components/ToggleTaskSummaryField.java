@@ -73,7 +73,7 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
                     ToggleTaskSummaryField.this.removeComponent(titleLinkLbl);
                     ToggleTaskSummaryField.this.removeComponent(buttonControls);
                     final TextField editField = new TextField();
-                    editField.setValue(task.getTaskname());
+                    editField.setValue(task.getName());
                     editField.setWidth("100%");
                     editField.focus();
                     ToggleTaskSummaryField.this.addComponent(editField);
@@ -95,8 +95,8 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
         addComponent(buttonControls);
         addStyleName("editable-field");
         String newValue = editField.getValue();
-        if (StringUtils.isNotBlank(newValue) && !newValue.equals(task.getTaskname())) {
-            task.setTaskname(newValue);
+        if (StringUtils.isNotBlank(newValue) && !newValue.equals(task.getName())) {
+            task.setName(newValue);
             titleLinkLbl.setValue(buildTaskLink());
             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
             taskService.updateSelectiveWithSession(BeanUtility.deepClone(task), UserUIContext.getUsername());
@@ -106,7 +106,7 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
     }
 
     private String buildTaskLink() {
-        String linkName = StringUtils.trim(task.getTaskname(), maxLength, true);
+        String linkName = StringUtils.trim(task.getName(), maxLength, true);
         A taskLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(),
                 CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
         Div resultDiv = new DivLessFormatter().appendChild(taskLink);

@@ -17,6 +17,7 @@
 package com.mycollab.module.project.domain;
 
 import com.mycollab.common.i18n.OptionI18nEnum;
+import com.mycollab.core.arguments.ValuedBean;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -28,7 +29,7 @@ import java.util.Date;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ProjectGenericTask implements Serializable {
+public class ProjectAssignment extends ValuedBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String name;
@@ -57,6 +58,10 @@ public class ProjectGenericTask implements Serializable {
 
     private String status;
 
+    private String priority;
+
+    private Date createdTime;
+
     private Date lastUpdatedTime;
 
     private Integer sAccountId;
@@ -65,11 +70,15 @@ public class ProjectGenericTask implements Serializable {
 
     private Double nonBillableHours;
 
+    private Integer numFollowers;
+
     private Date startDate;
 
     private Date endDate;
 
     private Integer milestoneId;
+
+    private Integer numComments;
 
     public String getName() {
         return name;
@@ -162,12 +171,36 @@ public class ProjectGenericTask implements Serializable {
         this.typeId = typeId;
     }
 
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
     public Date getLastUpdatedTime() {
         return lastUpdatedTime;
     }
 
     public void setLastUpdatedTime(Date lastUpdatedTime) {
         this.lastUpdatedTime = lastUpdatedTime;
+    }
+
+    public Integer getNumComments() {
+        return numComments;
+    }
+
+    public void setNumComments(Integer numComments) {
+        this.numComments = numComments;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public String getAssignUserAvatarId() {
@@ -220,6 +253,14 @@ public class ProjectGenericTask implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getNumFollowers() {
+        return numFollowers;
+    }
+
+    public void setNumFollowers(Integer numFollowers) {
+        this.numFollowers = numFollowers;
     }
 
     public Integer getsAccountId() {

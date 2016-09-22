@@ -55,7 +55,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
             return new ProjectUserLink(timeItem.getLoguser(), timeItem.getLogUserAvatarId(), timeItem.getLogUserFullName());
         });
 
-        this.addGeneratedColumn("summary", (source, itemId, columnId) -> {
+        this.addGeneratedColumn("name", (source, itemId, columnId) -> {
                     SimpleItemTimeLogging itemLogging = getBeanByIndex(itemId);
 
                     try {

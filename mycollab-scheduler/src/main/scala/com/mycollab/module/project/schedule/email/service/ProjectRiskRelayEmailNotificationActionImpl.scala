@@ -48,7 +48,7 @@ class ProjectRiskRelayEmailNotificationActionImpl extends SendMailToAllMembersAc
   @Autowired var riskService: RiskService = _
   private val mapper = new ProjectFieldNameMapper
   
-  override protected def getItemName: String = StringUtils.trim(bean.getRiskname, 100)
+  override protected def getItemName: String = StringUtils.trim(bean.getName, 100)
   
   override protected def getProjectName: String = bean.getProjectName
   
@@ -68,7 +68,7 @@ class ProjectRiskRelayEmailNotificationActionImpl extends SendMailToAllMembersAc
   
   override protected def buildExtraTemplateVariables(context: MailContext[SimpleRisk]) {
     val emailNotification = context.getEmailNotification
-    val summary = bean.getRiskname
+    val summary = bean.getName
     val summaryLink = ProjectLinkGenerator.generateRiskPreviewFullLink(siteUrl, bean.getProjectid, bean.getId)
     
     val avatarId = if (projectMember != null) projectMember.getMemberAvatarId else ""
@@ -84,12 +84,12 @@ class ProjectRiskRelayEmailNotificationActionImpl extends SendMailToAllMembersAc
     contentGenerator.putVariable("projectName", bean.getProjectName)
     contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, bean.getProjectid))
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("summary", summary)
+    contentGenerator.putVariable("name", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }
   
   class ProjectFieldNameMapper extends ItemFieldMapper {
-    put(Risk.Field.riskname, GenericI18Enum.FORM_NAME, isColSpan = true)
+    put(Risk.Field.name, GenericI18Enum.FORM_NAME, isColSpan = true)
     put(Risk.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
     put(Risk.Field.probalitity, new I18nFieldFormat(Risk.Field.probalitity.name, RiskI18nEnum.FORM_PROBABILITY,
       classOf[RiskProbability]))

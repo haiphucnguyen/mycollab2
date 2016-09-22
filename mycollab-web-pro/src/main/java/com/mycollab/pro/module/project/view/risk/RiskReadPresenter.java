@@ -80,7 +80,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
             @Override
             public void onPrint(Object source, SimpleRisk data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.RISK, Risk.Field.riskname.name(),
+                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.RISK, Risk.Field.name.name(),
                         RiskDefaultFormLayoutFactory.getForm(), Risk.Field.id.name()));
             }
 

@@ -23,9 +23,9 @@ import com.mycollab.common.TableViewField;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.ProjectGenericTask;
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
-import com.mycollab.module.project.service.ProjectGenericTaskService;
+import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
+import com.mycollab.module.project.service.ProjectAssignmentService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.TooltipHelper;
@@ -42,14 +42,14 @@ import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class GenericTaskTableDisplay extends DefaultPagedBeanTable<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> {
+public class GenericTaskTableDisplay extends DefaultPagedBeanTable<ProjectAssignmentService, ProjectAssignmentSearchCriteria, ProjectAssignment> {
     private static final long serialVersionUID = 1L;
 
     public GenericTaskTableDisplay(List<TableViewField> displayColumns) {
-        super(AppContextUtil.getSpringBean(ProjectGenericTaskService.class), ProjectGenericTask.class, displayColumns);
+        super(AppContextUtil.getSpringBean(ProjectAssignmentService.class), ProjectAssignment.class, displayColumns);
 
         addGeneratedColumn("name", (source, itemId, columnId) -> {
-            final ProjectGenericTask task = getBeanByIndex(itemId);
+            final ProjectAssignment task = getBeanByIndex(itemId);
 
             Div div = new DivLessFormatter();
             Text image = new Text(ProjectAssetsManager.getAsset(task.getType()).getHtml());
@@ -76,12 +76,12 @@ public class GenericTaskTableDisplay extends DefaultPagedBeanTable<ProjectGeneri
         });
 
         addGeneratedColumn("assignUser", (source, itemId, columnId) -> {
-            ProjectGenericTask task = getBeanByIndex(itemId);
+            ProjectAssignment task = getBeanByIndex(itemId);
             return new ProjectMemberLink(task.getAssignUser(), task.getAssignUserAvatarId(), task.getAssignUserFullName());
         });
 
         addGeneratedColumn("dueDate", (source, itemId, columnId) -> {
-            ProjectGenericTask task = getBeanByIndex(itemId);
+            ProjectAssignment task = getBeanByIndex(itemId);
             return new ELabel().prettyDate(task.getDueDate());
         });
     }

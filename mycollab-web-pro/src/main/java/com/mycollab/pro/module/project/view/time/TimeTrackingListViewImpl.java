@@ -197,7 +197,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         @Override
         public void itemClick(final TableClickEvent event) {
             final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event.getData();
-            if ("summary".equals(event.getFieldName())) {
+            if ("name".equals(event.getFieldName())) {
                 if (ProjectTypeConstants.BUG.equals(itemLogging.getType())) {
                     EventBusFactory.getInstance().post(new BugEvent.GotoRead(this, itemLogging.getTypeid()));
                 } else if (ProjectTypeConstants.TASK.equals(itemLogging.getType())) {

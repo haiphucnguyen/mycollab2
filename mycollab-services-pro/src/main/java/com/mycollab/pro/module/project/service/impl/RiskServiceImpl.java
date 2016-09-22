@@ -64,7 +64,7 @@ public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCri
     public Integer saveWithSession(Risk record, String username) {
         Integer recordId = super.saveWithSession(record, username);
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
-                ProjectGenericTaskService.class, ProjectActivityStreamService.class}));
+                ProjectAssignmentService.class, ProjectActivityStreamService.class}));
         return recordId;
     }
 
@@ -72,7 +72,7 @@ public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCri
     public Integer updateWithSession(Risk record, String username) {
         int result = super.updateWithSession(record, username);
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
-                ProjectGenericTaskService.class, ProjectActivityStreamService.class}));
+                ProjectAssignmentService.class, ProjectActivityStreamService.class}));
         return result;
     }
 
@@ -80,14 +80,14 @@ public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCri
     public void removeByCriteria(RiskSearchCriteria criteria, Integer accountId) {
         super.removeByCriteria(criteria, accountId);
         asyncEventBus.post(new CleanCacheEvent(accountId, new Class[]{ProjectService.class,
-                ProjectGenericTaskService.class, ProjectActivityStreamService.class, ItemTimeLoggingService.class}));
+                ProjectAssignmentService.class, ProjectActivityStreamService.class, ItemTimeLoggingService.class}));
     }
 
     @Override
     public void massRemoveWithSession(List<Risk> items, String username, Integer accountId) {
         super.massRemoveWithSession(items, username, accountId);
         asyncEventBus.post(new CleanCacheEvent(accountId, new Class[]{ProjectService.class,
-                ProjectGenericTaskService.class, ProjectActivityStreamService.class, ItemTimeLoggingService.class}));
+                ProjectAssignmentService.class, ProjectActivityStreamService.class, ItemTimeLoggingService.class}));
         DeleteProjectRiskEvent event = new DeleteProjectRiskEvent(items.toArray(new Risk[items.size()]),
                 username, accountId);
         asyncEventBus.post(event);

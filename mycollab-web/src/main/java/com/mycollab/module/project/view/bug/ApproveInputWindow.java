@@ -60,7 +60,7 @@ public class ApproveInputWindow extends MWindow {
     private final SimpleBug bug;
 
     public ApproveInputWindow(SimpleBug bug) {
-        super(UserUIContext.getMessage(BugI18nEnum.OPT_APPROVE_BUG, bug.getSummary()));
+        super(UserUIContext.getMessage(BugI18nEnum.OPT_APPROVE_BUG, bug.getName()));
         this.bug = bug;
 
         MVerticalLayout contentLayout = new MVerticalLayout().withMargin(new MarginInfo(false, false, true, false));

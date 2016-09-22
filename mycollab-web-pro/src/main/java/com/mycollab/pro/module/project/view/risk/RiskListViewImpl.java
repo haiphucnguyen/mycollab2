@@ -3,6 +3,7 @@ package com.mycollab.pro.module.project.view.risk;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.module.project.*;
+import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskConsequence;
@@ -72,9 +73,9 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
             return cb;
         });
 
-        tableItem.addGeneratedColumn("riskname", (source, itemId, columnId) -> {
+        tableItem.addGeneratedColumn(Risk.Field.name.name(), (source, itemId, columnId) -> {
             SimpleRisk risk = tableItem.getBeanByIndex(itemId);
-            LabelLink b = new LabelLink(risk.getRiskname(), ProjectLinkBuilder.generateRiskPreviewFullLink(risk.getProjectid(),
+            LabelLink b = new LabelLink(risk.getName(), ProjectLinkBuilder.generateRiskPreviewFullLink(risk.getProjectid(),
                     risk.getId()));
 
             if ("Closed".equals(risk.getStatus())) {

@@ -87,7 +87,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
 
         @Override
         protected Component onAttachField(Object propertyId, Field<?> field) {
-            if (Risk.Field.riskname.equalTo(propertyId)) {
+            if (Risk.Field.name.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0, 2, "100%");
             } else if (Risk.Field.assigntouser.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 1);

@@ -133,7 +133,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
                 record.setTaskkey((key == null) ? 1 : (key + 1));
 
                 int taskId = super.saveWithSession(record, username);
-                asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class, ProjectGenericTaskService.class,
+                asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class, ProjectAssignmentService.class,
                         ProjectActivityStreamService.class, ProjectMemberService.class, MilestoneService.class,
                         TimelineTrackingService.class, GanttAssignmentService.class}));
                 asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, taskId, "status",
@@ -179,7 +179,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
 
     private void cleanCacheUpdate(Task record) {
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
-                ProjectGenericTaskService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
+                ProjectAssignmentService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
                 MilestoneService.class, ItemTimeLoggingService.class, TimelineTrackingService.class,
                 GanttAssignmentService.class}));
         asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, record.getId(), "status",
@@ -190,7 +190,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
     public void massRemoveWithSession(List<Task> items, String username, Integer accountId) {
         super.massRemoveWithSession(items, username, accountId);
         asyncEventBus.post(new CleanCacheEvent(accountId, new Class[]{ProjectService.class,
-                ProjectGenericTaskService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
+                ProjectAssignmentService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
                 MilestoneService.class, ItemTimeLoggingService.class, GanttAssignmentService.class}));
         DeleteProjectTaskEvent event = new DeleteProjectTaskEvent(items.toArray(new Task[items.size()]),
                 username, accountId);

@@ -123,14 +123,4 @@ public class OptionI18nEnum {
         Marginal,
         Negligible
     }
-
-    @BaseName("project-risk-rate")
-    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
-    public enum RiskRate {
-        Epic_Fail,
-        Poor,
-        OK,
-        Good,
-        Excellent
-    }
 }

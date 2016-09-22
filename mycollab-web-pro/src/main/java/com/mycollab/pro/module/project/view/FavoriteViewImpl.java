@@ -169,10 +169,10 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
 
     private void displayFavoriteList() {
         if (isSortAsc) {
-            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("summary",
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name",
                     SearchCriteria.ASC)));
         } else {
-            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("summary", SearchCriteria.DESC)));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.DESC)));
         }
         int totalCount = favoriteListComp.setSearchCriteria(searchCriteria);
         headerLbl.setValue(String.format("%s %s (%d)", FontAwesome.STAR.getHtml(),
@@ -247,11 +247,11 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                     final SimpleBug bug = bugService.findById(Integer.parseInt(assignment.getTypeId()), MyCollabUI.getAccountId());
                     if (bug != null) {
-                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + bug.getSummary());
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + bug.getName());
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
-                                printBtn.doPrint(bug, new FormReportLayout(ProjectTypeConstants.BUG, BugWithBLOBs.Field.summary.name(),
+                                printBtn.doPrint(bug, new FormReportLayout(ProjectTypeConstants.BUG, BugWithBLOBs.Field.name.name(),
                                         BugDefaultFormLayoutFactory.getForm(), SimpleBug.Field.components.name(), SimpleBug.Field
                                         .affectedVersions.name(), SimpleBug.Field.fixedVersions.name(), BugWithBLOBs.Field.id.name(),
                                         SimpleBug.Field.selected.name()))
@@ -283,12 +283,12 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                     final SimpleTask task = taskService.findById(Integer.parseInt(assignment.getTypeId()), MyCollabUI.getAccountId());
                     if (task != null) {
-                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + task.getTaskname());
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + task.getName());
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
-                                printBtn.doPrint(task, new FormReportLayout(ProjectTypeConstants.TASK, Task.Field.taskname.name(),
-                                        TaskDefaultFormLayoutFactory.getForm(), Task.Field.taskname.name(), Task.Field.id.name(),
+                                printBtn.doPrint(task, new FormReportLayout(ProjectTypeConstants.TASK, Task.Field.name.name(),
+                                        TaskDefaultFormLayoutFactory.getForm(), Task.Field.name.name(), Task.Field.id.name(),
                                         Task.Field.parenttaskid.name()))
                         );
                         printBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
@@ -352,11 +352,11 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                     final SimpleRisk risk = riskService.findById(Integer.parseInt(assignment.getTypeId()), MyCollabUI.getAccountId());
                     if (risk != null) {
-                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + risk.getRiskname());
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + risk.getName());
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
-                                printBtn.doPrint(risk, new FormReportLayout(ProjectTypeConstants.RISK, Risk.Field.riskname.name(),
+                                printBtn.doPrint(risk, new FormReportLayout(ProjectTypeConstants.RISK, Risk.Field.name.name(),
                                         RiskDefaultFormLayoutFactory.getForm()))
                         );
                         printBtn.setStyleName(WebUIConstants.BUTTON_OPTION);

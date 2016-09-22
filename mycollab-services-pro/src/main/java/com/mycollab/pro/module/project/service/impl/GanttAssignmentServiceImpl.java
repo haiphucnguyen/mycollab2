@@ -226,7 +226,7 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                     try (Connection connection = dataSource.getConnection()) {
                         connection.setAutoCommit(false);
                         PreparedStatement batchTasksStatement = connection.prepareStatement("UPDATE `m_tracker_bug` SET " +
-                                "summary = ?, `startdate` = ?, `enddate` = ?, " +
+                                "name = ?, `startdate` = ?, `enddate` = ?, " +
                                 "`lastUpdatedTime`=?, `percentagecomplete`=?, `assignuser`=?, `ganttindex`=?, " +
                                 "`milestoneId`=? WHERE `id` = ?");
                         for (int i = 0; i < taskGanttItems.size(); i++) {

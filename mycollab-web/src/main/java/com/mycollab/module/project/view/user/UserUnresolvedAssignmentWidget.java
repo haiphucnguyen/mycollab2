@@ -22,10 +22,10 @@ import com.mycollab.db.arguments.RangeDateSearchField;
 import com.mycollab.db.arguments.SearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
-import com.mycollab.module.project.domain.ProjectGenericTask;
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
-import com.mycollab.module.project.service.ProjectGenericTaskService;
+import com.mycollab.module.project.service.ProjectAssignmentService;
 import com.mycollab.module.project.view.UserDashboardView;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
@@ -43,8 +43,8 @@ import java.util.Date;
  * @since 5.2.4
  */
 public class UserUnresolvedAssignmentWidget extends Depot {
-    private ProjectGenericTaskSearchCriteria searchCriteria;
-    private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
+    private ProjectAssignmentSearchCriteria searchCriteria;
+    private DefaultBeanPagedList<ProjectAssignmentService, ProjectAssignmentSearchCriteria, ProjectAssignment> taskList;
     private String title = "";
 
     public UserUnresolvedAssignmentWidget() {
@@ -62,8 +62,8 @@ public class UserUnresolvedAssignmentWidget extends Depot {
                 updateSearchResult();
             }
         });
-        taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>
-                (AppContextUtil.getSpringBean(ProjectGenericTaskService.class), new GenericTaskRowDisplayHandler(), 10) {
+        taskList = new DefaultBeanPagedList<ProjectAssignmentService, ProjectAssignmentSearchCriteria, ProjectAssignment>
+                (AppContextUtil.getSpringBean(ProjectAssignmentService.class), new GenericTaskRowDisplayHandler(), 10) {
             @Override
             protected String stringWhenEmptyList() {
                 return UserUIContext.getMessage(ProjectI18nEnum.OPT_NO_ASSIGNMENT);
@@ -75,7 +75,7 @@ public class UserUnresolvedAssignmentWidget extends Depot {
 
     public void displayUnresolvedAssignmentsThisWeek() {
         title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_ASSIGNMENT_THIS_WEEK);
-        searchCriteria = new ProjectGenericTaskSearchCriteria();
+        searchCriteria = new ProjectAssignmentSearchCriteria();
         searchCriteria.setIsOpenned(new SearchField());
         UserDashboardView userDashboardView = UIUtils.getRoot(this, UserDashboardView.class);
         searchCriteria.setProjectIds(new SetSearchField<>(userDashboardView.getInvolvedProjectKeys()));
@@ -93,7 +93,7 @@ public class UserUnresolvedAssignmentWidget extends Depot {
 
     public void displayUnresolvedAssignmentsNextWeek() {
         title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_ASSIGNMENT_NEXT_WEEK);
-        searchCriteria = new ProjectGenericTaskSearchCriteria();
+        searchCriteria = new ProjectAssignmentSearchCriteria();
         UserDashboardView userDashboardView = UIUtils.getRoot(this, UserDashboardView.class);
         searchCriteria.setIsOpenned(new SearchField());
         searchCriteria.setProjectIds(new SetSearchField<>(userDashboardView.getInvolvedProjectKeys()));

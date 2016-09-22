@@ -30,11 +30,11 @@ import com.mycollab.db.arguments.{NumberSearchField, RangeDateSearchField, Searc
 import com.mycollab.html.DivLessFormatter
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria
-import com.mycollab.module.project.domain.{ProjectGenericTask, ProjectNotificationSetting}
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria
+import com.mycollab.module.project.domain.{ProjectAssignment, ProjectNotificationSetting}
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum
 import com.mycollab.module.project.schedule.email.service.OverdueProjectAssignmentsNotificationJob.OverdueAssignmentFormatter
-import com.mycollab.module.project.service.{ProjectGenericTaskService, ProjectMemberService, ProjectNotificationSettingService}
+import com.mycollab.module.project.service.{ProjectAssignmentService, ProjectMemberService, ProjectNotificationSettingService}
 import com.mycollab.module.project.{ProjectLinkGenerator, ProjectTypeConstants}
 import com.mycollab.module.user.AccountLinkGenerator
 import com.mycollab.module.user.domain.SimpleUser
@@ -57,7 +57,7 @@ object OverdueProjectAssignmentsNotificationJob {
   class OverdueAssignmentFormatter {
     def formatDate(date: Date): String = DateTimeUtils.formatDate(date, "yyyy-MM-dd", Locale.US)
 
-    def formatLink(subDomain: String, assignment: ProjectGenericTask): String = {
+    def formatLink(subDomain: String, assignment: ProjectAssignment): String = {
       try {
         assignment.getType match {
           case ProjectTypeConstants.BUG => new Div().appendText(FontAwesomeUtils.toHtml(ProjectTypeConstants.BUG)).
@@ -81,7 +81,7 @@ object OverdueProjectAssignmentsNotificationJob {
       }
     }
 
-    def formatAssignUser(subDomain: String, assignment: ProjectGenericTask): String = {
+    def formatAssignUser(subDomain: String, assignment: ProjectAssignment): String = {
       new Div().appendChild(new Img("", StorageFactory.getAvatarPath(assignment.getAssignUserAvatarId, 16)),
         new A(AccountLinkGenerator.generatePreviewFullUserLink(subDomain, assignment.getAssignUser)).
           appendText(assignment.getAssignUserFullName)).write()
@@ -94,7 +94,7 @@ object OverdueProjectAssignmentsNotificationJob {
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class OverdueProjectAssignmentsNotificationJob extends GenericQuartzJobBean {
 
-  @Autowired private val projectGenericTaskService: ProjectGenericTaskService = null
+  @Autowired private val projectAssignmentService: ProjectAssignmentService = null
 
   @Autowired private val extMailService: ExtMailService = null
 
@@ -106,7 +106,7 @@ class OverdueProjectAssignmentsNotificationJob extends GenericQuartzJobBean {
 
   @throws(classOf[JobExecutionException])
   override protected def executeJob(context: JobExecutionContext): Unit = {
-    val searchCriteria = new ProjectGenericTaskSearchCriteria
+    val searchCriteria = new ProjectAssignmentSearchCriteria
     searchCriteria.setSaccountid(null)
     val now = new LocalDate()
     val past = now.minusDays(10000)
@@ -114,19 +114,19 @@ class OverdueProjectAssignmentsNotificationJob extends GenericQuartzJobBean {
     searchCriteria.setDateInRange(rangeDate)
     searchCriteria.setIsOpenned(new SearchField())
     import scala.collection.JavaConverters._
-    val accounts = projectGenericTaskService.getAccountsHasOverdueAssignments(searchCriteria).asScala.toList
+    val accounts = projectAssignmentService.getAccountsHasOverdueAssignments(searchCriteria).asScala.toList
     if (accounts != null) {
       for (account <- accounts) {
         searchCriteria.setSaccountid(new NumberSearchField(account.getId))
         import scala.collection.JavaConverters._
-        val projectIds = projectGenericTaskService.getProjectsHasOverdueAssignments(searchCriteria).asScala.toList
+        val projectIds = projectAssignmentService.getProjectsHasOverdueAssignments(searchCriteria).asScala.toList
         for (projectId <- projectIds) {
           searchCriteria.setProjectIds(new SetSearchField[Integer](projectId))
           val siteUrl = SiteConfiguration.getSiteUrl(account.getSubdomain)
           contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, projectId))
-          val assignments = projectGenericTaskService.findAbsoluteListByCriteria(searchCriteria, 0, Integer.MAX_VALUE).asScala.toList
+          val assignments = projectAssignmentService.findAbsoluteListByCriteria(searchCriteria, 0, Integer.MAX_VALUE).asScala.toList
           if (assignments.nonEmpty) {
-            val projectName = assignments.head.asInstanceOf[ProjectGenericTask].getProjectName
+            val projectName = assignments.head.asInstanceOf[ProjectAssignment].getProjectName
             val notifiers = getNotifiersOfProject(projectId, account.getId)
             contentGenerator.putVariable("assignments", assignments)
             contentGenerator.putVariable("subDomain", account.getSubdomain)

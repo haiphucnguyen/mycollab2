@@ -18,7 +18,7 @@ package com.mycollab.module.project.view.task.components;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.SortedArrayMap;
-import com.mycollab.module.project.domain.SimpleTask;
+import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import org.joda.time.DateTime;
@@ -38,10 +38,10 @@ public class StartDateOrderComponent extends TaskGroupOrderComponent {
     private DefaultTaskGroupComponent unspecifiedTasks;
 
     @Override
-    public void insertTasks(List<SimpleTask> tasks) {
-        for (SimpleTask task : tasks) {
-            if (task.getStartdate() != null) {
-                Date startDate = task.getStartdate();
+    public void insertTasks(List<ProjectAssignment> tasks) {
+        for (ProjectAssignment task : tasks) {
+            if (task.getStartDate() != null) {
+                Date startDate = task.getStartDate();
                 DateTime jodaTime = new DateTime(startDate, DateTimeZone.UTC);
                 DateTime monDay = jodaTime.dayOfWeek().withMinimumValue();
                 if (startDateAvailables.containsKey(monDay)) {

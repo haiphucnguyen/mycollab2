@@ -25,7 +25,7 @@ import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
-import com.mycollab.module.project.domain.ProjectGenericTask;
+import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
@@ -53,10 +53,10 @@ import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
  * @since 5.2.3
  */
 public class ToggleGenericTaskSummaryField extends AbstractToggleSummaryField {
-    private ProjectGenericTask genericTask;
+    private ProjectAssignment genericTask;
     private boolean isRead = true;
 
-    public ToggleGenericTaskSummaryField(final ProjectGenericTask genericTask) {
+    public ToggleGenericTaskSummaryField(final ProjectAssignment genericTask) {
         this.genericTask = genericTask;
         this.setWidth("100%");
         titleLinkLbl = ELabel.html(buildGenericTaskLink()).withStyleName(ValoTheme.LABEL_NO_MARGIN,
@@ -101,21 +101,21 @@ public class ToggleGenericTaskSummaryField extends AbstractToggleSummaryField {
             if (genericTask.isBug()) {
                 BugWithBLOBs bug = new BugWithBLOBs();
                 bug.setId(genericTask.getTypeId());
-                bug.setSummary(genericTask.getName());
+                bug.setName(genericTask.getName());
                 bug.setSaccountid(MyCollabUI.getAccountId());
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 bugService.updateSelectiveWithSession(bug, UserUIContext.getUsername());
             } else if (genericTask.isTask()) {
                 Task task = new Task();
                 task.setId(genericTask.getTypeId());
-                task.setTaskname(genericTask.getName());
+                task.setName(genericTask.getName());
                 task.setSaccountid(MyCollabUI.getAccountId());
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                 taskService.updateSelectiveWithSession(task, UserUIContext.getUsername());
             } else if (genericTask.isRisk()) {
                 Risk risk = new Risk();
                 risk.setId(genericTask.getTypeId());
-                risk.setRiskname(genericTask.getName());
+                risk.setName(genericTask.getName());
                 risk.setSaccountid(MyCollabUI.getAccountId());
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 riskService.updateSelectiveWithSession(risk, UserUIContext.getUsername());

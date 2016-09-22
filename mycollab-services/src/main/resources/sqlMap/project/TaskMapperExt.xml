@@ -25,8 +25,8 @@
         <![CDATA[
         #set($searchCriteria = $_parameter.searchCriteria)
         
-        #ifnotnull($searchCriteria.taskName)
-            ${searchCriteria.taskName.operation} m_prj_task.taskname LIKE '%${searchCriteria.taskName.value}%'
+        #ifnotnull($searchCriteria.name)
+            ${searchCriteria.name.operation} m_prj_task.name LIKE '%${searchCriteria.name.value}%'
         #end
        
         #ifnotnull($searchCriteria.projectId)
@@ -93,8 +93,8 @@
         <![CDATA[
         #set($searchCriteria = $_parameter.searchCriteria)
         
-        #ifnotnull($searchCriteria.taskName)
-            ${searchCriteria.taskName.operation} m_prj_task.taskname LIKE '%${searchCriteria.taskName.value}%'
+        #ifnotnull($searchCriteria.name)
+            ${searchCriteria.name.operation} m_prj_task.name LIKE '%${searchCriteria.name.value}%'
         #end
         
         #ifnotnull($searchCriteria.projectId)
@@ -146,7 +146,7 @@
 
     <sql id="selectTask">
         <![CDATA[
-            SELECT m_prj_task.id, m_prj_task.taskname, m_prj_task.percentagecomplete, m_prj_task.startdate, m_prj_task.enddate, m_prj_task.priority,
+            SELECT m_prj_task.id, m_prj_task.name, m_prj_task.percentagecomplete, m_prj_task.startdate, m_prj_task.enddate, m_prj_task.priority,
                  m_prj_task.duration, m_prj_task.isestimated, m_prj_task.projectId, m_prj_task.deadline, m_prj_task.notes, m_prj_task.taskindex,
                  m_prj_task.originalEstimate, m_prj_task.remainEstimate,
                  m_prj_task.milestoneId, m_prj_task.createdTime, m_prj_task.lastUpdatedTime, m_prj_task.assignUser, m_prj_task.sAccountId, m_prj_task.parentTaskId,
@@ -156,7 +156,7 @@
                  concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
                  log_user.avatarId AS logByAvatarId,
                  concat(log_user.firstname, ' ', LTRIM(concat(IFNULL(log_user.middlename, ''), ' ')), log_user.lastname) AS logByFullName,
-                 parentTask.taskname AS parentTaskName, parentTask.taskkey AS parentTaskKey,
+                 parentTask.name AS parentTaskName, parentTask.taskkey AS parentTaskKey,
                  (SELECT count(*)
                     FROM m_comment
                     WHERE m_comment.type='Project-Task' AND m_comment.typeId=m_prj_task.id) AS numComments,

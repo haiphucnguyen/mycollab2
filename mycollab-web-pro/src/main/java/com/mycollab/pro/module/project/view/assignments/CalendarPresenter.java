@@ -17,7 +17,7 @@
 package com.mycollab.pro.module.project.view.assignments;
 
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.assignments.CalendarView;
 import com.mycollab.module.project.view.assignments.ICalendarPresenter;
@@ -40,7 +40,7 @@ public class CalendarPresenter extends AbstractPresenter<CalendarView> implement
 
     @Override
     protected void postInitView() {
-        HasSearchHandlers<ProjectGenericTaskSearchCriteria> searchHandlers = view.getSearchHandlers();
+        HasSearchHandlers<ProjectAssignmentSearchCriteria> searchHandlers = view.getSearchHandlers();
         if (searchHandlers != null) {
             searchHandlers.addSearchHandler(criteria -> view.queryAssignments(criteria));
         }

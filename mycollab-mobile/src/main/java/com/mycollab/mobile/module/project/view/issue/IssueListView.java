@@ -27,11 +27,11 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.ProjectGenericTask;
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
-import com.mycollab.module.project.service.ProjectGenericTaskService;
+import com.mycollab.module.project.service.ProjectAssignmentService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
@@ -51,18 +51,18 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  */
 public class IssueListView extends AbstractMobilePageView {
     private Integer milestoneId;
-    private final BeanList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> ticketList;
+    private final BeanList<ProjectAssignmentService, ProjectAssignmentSearchCriteria, ProjectAssignment> ticketList;
 
     public IssueListView(Integer milestoneId) {
         this.milestoneId = milestoneId;
-        ticketList = new BeanList<>(AppContextUtil.getSpringBean(ProjectGenericTaskService.class), TicketRowDisplayHandler.class);
+        ticketList = new BeanList<>(AppContextUtil.getSpringBean(ProjectAssignmentService.class), TicketRowDisplayHandler.class);
         ticketList.setDisplayEmptyListText(false);
         this.setContent(ticketList);
         displayTickets();
     }
 
     private void displayTickets() {
-        ProjectGenericTaskSearchCriteria criteria = new ProjectGenericTaskSearchCriteria();
+        ProjectAssignmentSearchCriteria criteria = new ProjectAssignmentSearchCriteria();
         criteria.setMilestoneId(NumberSearchField.equal(milestoneId));
         criteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK,
                 ProjectTypeConstants.RISK));
@@ -70,11 +70,11 @@ public class IssueListView extends AbstractMobilePageView {
         this.setCaption(UserUIContext.getMessage(TicketI18nEnum.M_TICKET_NUM, numTickets));
     }
 
-    public static class TicketRowDisplayHandler extends BeanList.RowDisplayHandler<ProjectGenericTask> {
+    public static class TicketRowDisplayHandler extends BeanList.RowDisplayHandler<ProjectAssignment> {
         private static final long serialVersionUID = 7604097872938029830L;
 
         @Override
-        public Component generateRow(ProjectGenericTask issue, int rowIndex) {
+        public Component generateRow(ProjectAssignment issue, int rowIndex) {
             MVerticalLayout ticketLayout = new MVerticalLayout().withFullWidth().withStyleName("row");
             A issueLink;
             if (ProjectTypeConstants.BUG.equals(issue.getType())) {

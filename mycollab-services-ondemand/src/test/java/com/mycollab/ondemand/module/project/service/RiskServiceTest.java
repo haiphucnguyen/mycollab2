@@ -37,7 +37,7 @@ public class RiskServiceTest extends IntegrationServiceTest {
     @Test
     public void testSearchRisksByName() {
         RiskSearchCriteria criteria = new RiskSearchCriteria();
-        criteria.setRiskname(StringSearchField.and("a"));
+        criteria.setName(StringSearchField.and("a"));
         criteria.setSaccountid(new NumberSearchField(1));
         List<SimpleRisk> risks = riskService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
 
@@ -50,12 +50,12 @@ public class RiskServiceTest extends IntegrationServiceTest {
     public void testInsertAndReturnKey() {
         Risk record = new Risk();
         record.setProjectid(1);
-        record.setRiskname("New projectMember");
+        record.setName("New projectMember");
         record.setDescription("aaa");
         record.setSaccountid(1);
         int newId = riskService.saveWithSession(record, "hainguyen");
 
         Risk risk = riskService.findByPrimaryKey(newId, 1);
-        assertThat(risk.getRiskname()).isEqualTo("New projectMember");
+        assertThat(risk.getName()).isEqualTo("New projectMember");
     }
 }

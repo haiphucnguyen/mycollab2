@@ -20,9 +20,9 @@ import com.mycollab.core.SecureAccessException;
 import com.mycollab.db.persistence.service.ISearchableService;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
-import com.mycollab.module.project.domain.SimpleTask;
-import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.mycollab.module.project.service.ProjectTaskService;
+import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
+import com.mycollab.module.project.service.ProjectAssignmentService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectGenericListPresenter;
 import com.mycollab.spring.AppContextUtil;
@@ -37,18 +37,18 @@ import com.vaadin.ui.ComponentContainer;
  * @since 1.0
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-public class TaskDashboardPresenter extends ProjectGenericListPresenter<TaskDashboardView, TaskSearchCriteria, SimpleTask> {
+public class TaskDashboardPresenter extends ProjectGenericListPresenter<TaskDashboardView, ProjectAssignmentSearchCriteria, ProjectAssignment> {
     private static final long serialVersionUID = 1L;
 
-    private ProjectTaskService taskService;
+    private ProjectAssignmentService projectAssignmentService;
 
     public TaskDashboardPresenter() {
         super(TaskDashboardView.class);
-        taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+        projectAssignmentService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
     }
 
     @Override
-    public void doSearch(TaskSearchCriteria searchCriteria) {
+    public void doSearch(ProjectAssignmentSearchCriteria searchCriteria) {
         view.queryTask(searchCriteria);
     }
 
@@ -68,8 +68,8 @@ public class TaskDashboardPresenter extends ProjectGenericListPresenter<TaskDash
     }
 
     @Override
-    public ISearchableService<TaskSearchCriteria> getSearchService() {
-        return taskService;
+    public ISearchableService<ProjectAssignmentSearchCriteria> getSearchService() {
+        return projectAssignmentService;
     }
 
     @Override

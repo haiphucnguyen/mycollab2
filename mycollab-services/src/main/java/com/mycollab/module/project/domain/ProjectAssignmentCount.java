@@ -22,7 +22,7 @@ import java.io.Serializable;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ProjectGenericTaskCount implements Serializable {
+public class ProjectAssignmentCount implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String assignUser;

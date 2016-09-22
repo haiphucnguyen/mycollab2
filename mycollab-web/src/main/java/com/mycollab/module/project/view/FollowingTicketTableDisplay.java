@@ -59,9 +59,9 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
                 FollowingTicket.class, Arrays.asList(FollowingTicketFieldDef.summary,
                         FollowingTicketFieldDef.project, FollowingTicketFieldDef.assignee, FollowingTicketFieldDef.createdDate));
 
-        this.addGeneratedColumn("summary", (source, itemId, columnId) -> {
+        this.addGeneratedColumn("name", (source, itemId, columnId) -> {
             final FollowingTicket ticket = getBeanByIndex(itemId);
-            final MButton ticketLink = new MButton(ticket.getSummary()).withStyleName(WebUIConstants.BUTTON_LINK);
+            final MButton ticketLink = new MButton(ticket.getName()).withStyleName(WebUIConstants.BUTTON_LINK);
 
             if (ProjectTypeConstants.BUG.equals(ticket.getType())) {
                 ticketLink.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));

@@ -392,7 +392,7 @@
       background-color: #c6c6c6;
     }
 
-    .v-table-table .v-table-row-task {
+    .v-table-table .v-table-row-assignment {
       background-color: #E4F1FF;
     }
 
@@ -454,60 +454,60 @@
   /* END GANTT */
 
   /* TASK PRIORITY STYLES */
-  $task-urgent-color: #d32d1a;
-  $task-high-color: #e95948;
-  $task-medium-color: #f09085;
-  $task-low-color: #f7c7c1;
-  $task-none-color: #b7b9b0;
+  $assignment-urgent-color: #d32d1a;
+  $assignment-high-color: #e95948;
+  $assignment-medium-color: #f09085;
+  $assignment-low-color: #f7c7c1;
+  $assignment-none-color: #b7b9b0;
 
-  .task-urgent, .v-filterselect-item-task-urgent {
+  .assignment-urgent, .v-filterselect-item-assignment-urgent {
     .v-icon {
-      color: $task-urgent-color;
+      color: $assignment-urgent-color;
     }
   }
 
-  .task-urgent.v-icon {
-    color: $task-urgent-color;
+  .assignment-urgent.v-icon {
+    color: $assignment-urgent-color;
   }
 
-  .task-high, .v-filterselect-item-task-high {
+  .assignment-high, .v-filterselect-item-assignment-high {
     .v-icon {
-      color: $task-high-color;
+      color: $assignment-high-color;
     }
   }
 
-  .task-high.v-icon {
-      color: $task-high-color;
+  .assignment-high.v-icon {
+      color: $assignment-high-color;
   }
 
-  .task-medium, .v-filterselect-item-task-medium {
+  .assignment-medium, .v-filterselect-item-assignment-medium {
     .v-icon {
-      color: $task-medium-color;
+      color: $assignment-medium-color;
     }
   }
 
-  .task-medium.v-icon {
-    color: $task-medium-color;
+  .assignment-medium.v-icon {
+    color: $assignment-medium-color;
   }
 
-  .task-low, .v-filterselect-item-task-low {
+  .assignment-low, .v-filterselect-item-assignment-low {
     .v-icon {
-      color: $task-low-color;
+      color: $assignment-low-color;
     }
   }
 
-  .task-low.v-icon {
-    color: $task-low-color;
+  .assignment-low.v-icon {
+    color: $assignment-low-color;
   }
 
-  .task-none, .v-filterselect-item-task-none {
+  .assignment-none, .v-filterselect-item-assignment-none {
     .v-icon {
-      color: $task-none-color;
+      color: $assignment-none-color;
     }
   }
 
-  .task-none.v-icon {
-    color: $task-none-color;
+  .assignment-none.v-icon {
+    color: $assignment-none-color;
   }
   /*END TASK PRIORITY STYLES*/
 

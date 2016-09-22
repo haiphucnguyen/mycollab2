@@ -72,10 +72,10 @@ public class BugSelectionWindow extends MWindow {
                 Arrays.asList(BugTableFieldDef.summary(), BugTableFieldDef.severity(), BugTableFieldDef.resolution()));
         tableItem.setWidth("100%");
         tableItem.setDisplayNumItems(10);
-        tableItem.addGeneratedColumn("summary", (source, itemId, columnId) -> {
+        tableItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
             final SimpleBug bug = tableItem.getBeanByIndex(itemId);
 
-            MButton b = new MButton(bug.getSummary(), clickEvent -> {
+            MButton b = new MButton(bug.getName(), clickEvent -> {
                 fieldSelection.fireValueChange(bug);
                 close();
             }).withStyleName(WebUIConstants.BUTTON_LINK);

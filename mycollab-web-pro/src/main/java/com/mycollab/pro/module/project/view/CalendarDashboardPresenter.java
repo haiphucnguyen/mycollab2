@@ -1,6 +1,6 @@
 package com.mycollab.pro.module.project.view;
 
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.view.ICalendarDashboardPresenter;
 import com.mycollab.module.project.view.ICalendarDashboardView;
 import com.mycollab.vaadin.events.HasSearchHandlers;
@@ -20,11 +20,11 @@ public class CalendarDashboardPresenter extends AbstractPresenter<ICalendarDashb
 
     @Override
     protected void viewAttached() {
-        HasSearchHandlers<ProjectGenericTaskSearchCriteria> searchHandlers = view.getSearchHandlers();
+        HasSearchHandlers<ProjectAssignmentSearchCriteria> searchHandlers = view.getSearchHandlers();
         if (searchHandlers != null) {
-            searchHandlers.addSearchHandler(new SearchHandler<ProjectGenericTaskSearchCriteria>() {
+            searchHandlers.addSearchHandler(new SearchHandler<ProjectAssignmentSearchCriteria>() {
                 @Override
-                public void onSearch(ProjectGenericTaskSearchCriteria criteria) {
+                public void onSearch(ProjectAssignmentSearchCriteria criteria) {
                     view.queryAssignments(criteria);
                 }
             });

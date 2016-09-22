@@ -16,8 +16,7 @@
  */
 package com.mycollab.module.project.view.task.components;
 
-import com.mycollab.db.query.CompositionStringParam;
-import com.mycollab.module.project.domain.SimpleTask;
+import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.module.project.ui.components.IGroupComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -57,7 +56,7 @@ class DefaultTaskGroupComponent extends MVerticalLayout implements IGroupCompone
         headerLbl.setValue(String.format("%s (%d)", titleValue, numElements));
     }
 
-    void insertTask(SimpleTask task) {
+    void insertTask(ProjectAssignment task) {
         wrapBody.addComponent(new TaskRowRenderer(task));
         numElements++;
         updateHeader();

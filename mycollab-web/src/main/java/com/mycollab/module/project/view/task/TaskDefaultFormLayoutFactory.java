@@ -38,7 +38,7 @@ public class TaskDefaultFormLayoutFactory {
 
         DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).build();
 
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Task.Field.taskname)
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Task.Field.name)
                 .displayName(GenericI18Enum.FORM_NAME)
                 .fieldIndex(0).mandatory(true).required(true)
                 .colSpan(true).build());

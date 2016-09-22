@@ -113,7 +113,7 @@ import org.springframework.stereotype.Component
     val sampleMilestoneId = milestoneService.saveWithSession(milestone, initialUser)
 
     val taskA = new Task()
-    taskA.setTaskname("Task A")
+    taskA.setName("Task A")
     taskA.setProjectid(projectId)
     taskA.setLogby(initialUser)
     taskA.setPercentagecomplete(0d)
@@ -125,7 +125,7 @@ import org.springframework.stereotype.Component
     val taskAId = taskService.saveWithSession(taskA, initialUser)
 
     val taskB = BeanUtility.deepClone(taskA)
-    taskB.setTaskname("Task B")
+    taskB.setName("Task B")
     taskB.setId(null)
     taskB.setMilestoneid(sampleMilestoneId)
     taskB.setStartdate(now.plusDays(2).toLocalDate.toDate)
@@ -134,7 +134,7 @@ import org.springframework.stereotype.Component
 
     val taskC = BeanUtility.deepClone(taskA)
     taskC.setId(null)
-    taskC.setTaskname("Task C")
+    taskC.setName("Task C")
     taskC.setStartdate(now.plusDays(3).toLocalDate.toDate)
     taskC.setEnddate(now.plusDays(5).toLocalDate.toDate)
     taskC.setParenttaskid(taskAId)
@@ -142,7 +142,7 @@ import org.springframework.stereotype.Component
 
     val taskD = BeanUtility.deepClone(taskA)
     taskD.setId(null)
-    taskD.setTaskname("Task D")
+    taskD.setName("Task D")
     taskD.setStartdate(now.toLocalDate.toDate)
     taskD.setEnddate(now.plusDays(2).toLocalDate.toDate)
     taskService.saveWithSession(taskD, initialUser)
@@ -174,7 +174,7 @@ import org.springframework.stereotype.Component
     bugA.setDuedate(now.plusDays(2).toLocalDate.toDate)
     bugA.setLogby(initialUser)
     bugA.setMilestoneid(sampleMilestoneId)
-    bugA.setSummary("Bug A")
+    bugA.setName("Bug A")
     bugA.setStatus(BugStatus.Open.name())
     bugA.setPriority(Priority.Medium.name())
     bugA.setProjectid(projectId)
@@ -183,7 +183,7 @@ import org.springframework.stereotype.Component
 
     val bugB = BeanUtility.deepClone(bugA)
     bugB.setId(null)
-    bugB.setSummary("Bug B")
+    bugB.setName("Bug B")
     bugB.setStatus(BugStatus.Resolved.name())
     bugB.setResolution(BugResolution.CannotReproduce.name())
     bugB.setPriority(Priority.Low.name())

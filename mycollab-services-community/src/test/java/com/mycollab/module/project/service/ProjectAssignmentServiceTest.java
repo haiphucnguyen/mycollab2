@@ -17,7 +17,7 @@
 package com.mycollab.module.project.service;
 
 import com.mycollab.db.arguments.RangeDateSearchField;
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.user.domain.BillingAccount;
 import com.mycollab.test.DataSet;
 import com.mycollab.test.service.IntegrationServiceTest;
@@ -33,19 +33,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class ProjectGenericTaskServiceTest extends IntegrationServiceTest {
+public class ProjectAssignmentServiceTest extends IntegrationServiceTest {
     @Autowired
-    private ProjectGenericTaskService projectGenericTaskService;
+    private ProjectAssignmentService projectAssignmentService;
 
     @DataSet
     @Test
     public void testGetAccountsHasOverdueAssignments() {
-        ProjectGenericTaskSearchCriteria criteria = new ProjectGenericTaskSearchCriteria();
+        ProjectAssignmentSearchCriteria criteria = new ProjectAssignmentSearchCriteria();
         criteria.setSaccountid(null);
         LocalDate now = new LocalDate();
         RangeDateSearchField rangeDateSearchField = new RangeDateSearchField(now.minusDays(10000).toDate(), now.toDate());
         criteria.setDateInRange(rangeDateSearchField);
-        List<BillingAccount> accounts = projectGenericTaskService.getAccountsHasOverdueAssignments(criteria);
+        List<BillingAccount> accounts = projectAssignmentService.getAccountsHasOverdueAssignments(criteria);
         assertThat(accounts).isNotEmpty().hasSize(2);
         assertThat(accounts).extracting("subdomain", "id").contains(tuple("a", 1), tuple("b", 2));
     }

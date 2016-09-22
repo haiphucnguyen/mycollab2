@@ -30,7 +30,7 @@ public class BugAddWindow extends MWindow {
         if (bug.getId() == null) {
             setCaption(UserUIContext.getMessage(BugI18nEnum.NEW));
         } else {
-            setCaption(UserUIContext.getMessage(BugI18nEnum.SINGLE) + ": " + bug.getSummary());
+            setCaption(UserUIContext.getMessage(BugI18nEnum.SINGLE) + ": " + bug.getName());
         }
 
         BugEditForm editForm = new BugEditForm() {

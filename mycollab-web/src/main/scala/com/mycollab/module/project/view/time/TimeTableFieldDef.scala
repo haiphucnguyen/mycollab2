@@ -28,7 +28,7 @@ import com.mycollab.vaadin.web.ui.WebUIConstants
   */
 object TimeTableFieldDef {
   var id = new TableViewField(null, "id", 60)
-  val summary = new TableViewField(TimeTrackingI18nEnum.FORM_SUMMARY, "summary", WebUIConstants.TABLE_X_LABEL_WIDTH)
+  val summary = new TableViewField(TimeTrackingI18nEnum.FORM_SUMMARY, "name", WebUIConstants.TABLE_X_LABEL_WIDTH)
   val logUser = new TableViewField(UserI18nEnum.SINGLE, "logUserFullName", WebUIConstants.TABLE_X_LABEL_WIDTH)
   val logValue = new TableViewField(TimeTrackingI18nEnum.LOG_VALUE, "logvalue", WebUIConstants.TABLE_S_LABEL_WIDTH)
   val billable = new TableViewField(TimeTrackingI18nEnum.FORM_IS_BILLABLE, "isbillable", WebUIConstants.TABLE_S_LABEL_WIDTH)

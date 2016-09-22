@@ -12,30 +12,29 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTooltipGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Milestone;
-import com.mycollab.module.project.domain.ProjectGenericTask;
+import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.events.AssignmentEvent;
 import com.mycollab.module.project.events.MilestoneEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
-import com.mycollab.module.project.service.ProjectGenericTaskService;
+import com.mycollab.module.project.service.ProjectAssignmentService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.milestone.IMilestoneKanbanView;
 import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
 import com.mycollab.module.project.view.milestone.ToggleGenericTaskSummaryField;
 import com.mycollab.pro.module.project.view.assignments.AssignmentAddWindow;
-import com.mycollab.pro.module.project.view.assignments.AssignmentPopupFieldFactory;
+import com.mycollab.module.project.view.assignments.AssignmentPopupFieldFactory;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.events.SearchHandler;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
@@ -85,7 +84,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
     private DDHorizontalLayout kanbanLayout;
     private Map<Integer, KanbanBlock> kanbanBlocks;
     private KanbanBlock nullBlock;
-    private ProjectGenericTaskSearchCriteria baseCriteria;
+    private ProjectAssignmentSearchCriteria baseCriteria;
     private MButton toggleShowClosedMilestonesBtn;
     private boolean displayClosedMilestones = false;
 
@@ -102,8 +101,8 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         @Override
         @Subscribe
         public void handle(AssignmentEvent.NewAssignmentAdd event) {
-            ProjectGenericTaskService projectGenericTaskService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
-            ProjectGenericTask assignment = projectGenericTaskService.findAssignment(event.getTypeVal(), event.getTypeIdVal());
+            ProjectAssignmentService projectAssignmentService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
+            ProjectAssignment assignment = projectAssignmentService.findAssignment(event.getTypeVal(), event.getTypeIdVal());
             if (assignment != null) {
                 insertGenericAssignment(assignment);
             }
@@ -214,7 +213,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         searchPanel.addHeaderRight(groupWrapLayout);
 
-        ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
+        ProjectAssignmentSearchCriteria searchCriteria = new ProjectAssignmentSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK,
                 ProjectTypeConstants.RISK));
@@ -233,14 +232,14 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         }
     }
 
-    private void queryAssignments(ProjectGenericTaskSearchCriteria searchCriteria) {
+    private void queryAssignments(ProjectAssignmentSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
         kanbanLayout.removeAllComponents();
         toggleShowButton();
         kanbanBlocks = new ConcurrentHashMap<>();
         setProjectNavigatorVisibility(false);
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-        ProjectGenericTaskService projectGenericTaskService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
+        ProjectAssignmentService projectAssignmentService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
         AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
@@ -263,13 +262,13 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 kanbanLayout.addComponent(nullBlock);
                 this.push();
 
-                int totalTasks = projectGenericTaskService.getTotalCount(searchCriteria);
+                int totalTasks = projectAssignmentService.getTotalCount(searchCriteria);
                 searchPanel.setTotalCountNumber(totalTasks);
                 int pages = totalTasks / 50;
                 for (int page = 0; page < pages + 1; page++) {
-                    List<ProjectGenericTask> assignments = projectGenericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
+                    List<ProjectAssignment> assignments = projectAssignmentService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
                     if (CollectionUtils.isNotEmpty(assignments)) {
-                        for (ProjectGenericTask assignment : assignments) {
+                        for (ProjectAssignment assignment : assignments) {
                             if (assignment.getMilestoneId() != null) {
                                 KanbanBlock kanbanBlock = kanbanBlocks.get(assignment.getMilestoneId());
                                 if (kanbanBlock != null) {
@@ -296,7 +295,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         }
     }
 
-    private void insertGenericAssignment(ProjectGenericTask genericTask) {
+    private void insertGenericAssignment(ProjectAssignment genericTask) {
         KanbanBlock block = null;
         if (genericTask.getMilestoneId() != null) {
             block = kanbanBlocks.get(genericTask.getMilestoneId());
@@ -370,14 +369,14 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                         } else {
                             dragLayoutContainer.addComponent(kanbanItem, newIndex);
                         }
-                        ProjectGenericTask task = kanbanItem.assignment;
+                        ProjectAssignment task = kanbanItem.assignment;
                         if (milestone == null) {
                             task.setMilestoneId(null);
                         } else {
                             task.setMilestoneId(milestone.getId());
                         }
-                        ProjectGenericTaskService projectGenericTaskService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
-                        projectGenericTaskService.updateAssignmentValue(task, UserUIContext.getUsername());
+                        ProjectAssignmentService projectAssignmentService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
+                        projectAssignmentService.updateAssignmentValue(task, UserUIContext.getUsername());
 
                         updateComponentCount();
 
@@ -493,9 +492,9 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
     }
 
     private static class KanbanAssignmentBlockItem extends CustomComponent {
-        private ProjectGenericTask assignment;
+        private ProjectAssignment assignment;
 
-        KanbanAssignmentBlockItem(final ProjectGenericTask assignment) {
+        KanbanAssignmentBlockItem(final ProjectAssignment assignment) {
             this.assignment = assignment;
             MVerticalLayout root = new MVerticalLayout();
             root.addStyleName("kanban-item");

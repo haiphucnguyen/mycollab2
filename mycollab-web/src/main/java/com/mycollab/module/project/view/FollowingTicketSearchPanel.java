@@ -172,7 +172,7 @@ public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<Follow
             }
 
             String summary = summaryField.getValue().trim();
-            searchCriteria.setSummary(StringSearchField.and(StringUtils.isEmpty(summary) ? "" : summary));
+            searchCriteria.setName(StringSearchField.and(StringUtils.isEmpty(summary) ? "" : summary));
 
             Collection<Integer> selectedProjects = (Collection<Integer>) projectField.getValue();
             if (CollectionUtils.isNotEmpty(selectedProjects)) {

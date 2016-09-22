@@ -58,7 +58,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
   protected def buildExtraTemplateVariables(context: MailContext[SimpleTask]) {
     val emailNotification = context.getEmailNotification
 
-    val summary = "#" + bean.getTaskkey + " - " + bean.getTaskname
+    val summary = "#" + bean.getTaskkey + " - " + bean.getName
     val summaryLink = ProjectLinkGenerator.generateTaskPreviewFullLink(siteUrl, bean.getTaskkey, bean.getProjectShortname)
 
     val avatarId = if (projectMember != null) projectMember.getMemberAvatarId else ""
@@ -74,14 +74,14 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
     contentGenerator.putVariable("projectName", bean.getProjectName)
     contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, bean.getProjectid))
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("summary", summary)
+    contentGenerator.putVariable("name", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }
 
   protected def getBeanInContext(notification: ProjectRelayEmailNotification): SimpleTask =
     projectTaskService.findById(notification.getTypeid.toInt, notification.getSaccountid)
 
-  protected def getItemName: String = StringUtils.trim(bean.getTaskname, 100)
+  protected def getItemName: String = StringUtils.trim(bean.getName, 100)
   
   override protected def getProjectName: String = bean.getProjectName
   
@@ -136,7 +136,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
   }
 
   class TaskFieldNameMapper extends ItemFieldMapper {
-    put(Task.Field.taskname, GenericI18Enum.FORM_NAME, isColSpan = true)
+    put(Task.Field.name, GenericI18Enum.FORM_NAME, isColSpan = true)
     put(Task.Field.startdate, new DateFieldFormat(Task.Field.startdate.name, GenericI18Enum.FORM_START_DATE))
     put(Task.Field.enddate, new DateFieldFormat(Task.Field.enddate.name, GenericI18Enum.FORM_END_DATE))
     put(Task.Field.deadline, new DateFieldFormat(Task.Field.deadline.name, GenericI18Enum.FORM_DUE_DATE))
@@ -193,7 +193,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
         val img = new Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.TASK))
         val parentTaskLink = ProjectLinkGenerator.generateTaskPreviewFullLink(context.siteUrl, task.getParentTaskKey,
           task.getProjectShortname)
-        val link = FormatUtils.newA(parentTaskLink, task.getTaskname)
+        val link = FormatUtils.newA(parentTaskLink, task.getName)
         FormatUtils.newLink(img, link).write
       }
       else {
@@ -212,7 +212,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
         if (task != null) {
           val img = new Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.TASK));
           val taskListLink = ProjectLinkGenerator.generateTaskPreviewFullLink(context.siteUrl, task.getTaskkey, task.getProjectShortname)
-          val link = FormatUtils.newA(taskListLink, task.getTaskname)
+          val link = FormatUtils.newA(taskListLink, task.getName)
           return FormatUtils.newLink(img, link).write
         }
       }

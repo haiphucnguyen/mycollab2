@@ -572,7 +572,7 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
                 MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD), clickEvent -> {
                     String taskName = taskNameField.getValue();
                     if (StringUtils.isNotBlank(taskName)) {
-                        task.setTaskname(taskName);
+                        task.setName(taskName);
                         ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                         taskService.saveWithSession(task, UserUIContext.getUsername());
                         dragLayoutContainer.removeComponent(layout);

@@ -27,7 +27,7 @@ public class ProjectTaskServiceExtTest extends IntegrationServiceTest {
     public void testSaveWithoutSaveTheSameKey() throws ExecutionException, InterruptedException {
         final Task baseRecord = new Task();
         baseRecord.setProjectid(1);
-        baseRecord.setTaskname("Hello world");
+        baseRecord.setName("Hello world");
         baseRecord.setStatus(StatusI18nEnum.Open.name());
         baseRecord.setSaccountid(1);
         baseRecord.setPercentagecomplete(10d);

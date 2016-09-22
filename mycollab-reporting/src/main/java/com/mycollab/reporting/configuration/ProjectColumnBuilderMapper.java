@@ -195,7 +195,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
     private Map<String, ComponentBuilderGenerator> buildTaskMap() {
         LOG.debug("Build report mapper for project::task module");
         Map<String, ComponentBuilderGenerator> map = new HashMap<>();
-        DRIExpression<String> taskNameTitleExpr = new PrimaryTypeFieldExpression<>(Task.Field.taskname.name());
+        DRIExpression<String> taskNameTitleExpr = new PrimaryTypeFieldExpression<>(Task.Field.name.name());
         DRIExpression<String> taskNameHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
 
@@ -207,7 +207,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 return ProjectLinkGenerator.generateTaskPreviewFullLink(siteUrl, taskKey, projectShortName);
             }
         };
-        map.put(Task.Field.taskname.name(), new HyperlinkBuilderGenerator(taskNameTitleExpr, taskNameHrefExpr));
+        map.put(Task.Field.name.name(), new HyperlinkBuilderGenerator(taskNameTitleExpr, taskNameHrefExpr));
         map.put(Task.Field.startdate.name(), new SimpleExpressionBuilderGenerator(new DateExpression(Task.Field.startdate.name())));
         map.put(Task.Field.enddate.name(), new SimpleExpressionBuilderGenerator(new DateExpression(Task.Field.enddate.name())));
         map.put(Task.Field.deadline.name(), new SimpleExpressionBuilderGenerator(new DateExpression(Task.Field.deadline.name())));
@@ -272,7 +272,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         LOG.debug("Build report mapper for project::bug module");
 
         Map<String, ComponentBuilderGenerator> map = new HashMap<>();
-        DRIExpression<String> summaryTitleExpr = new PrimaryTypeFieldExpression<>("summary");
+        DRIExpression<String> summaryTitleExpr = new PrimaryTypeFieldExpression<>("name");
         DRIExpression<String> summaryHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
 
@@ -284,7 +284,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 return ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bugKey, projectShortName);
             }
         };
-        map.put("summary", new HyperlinkBuilderGenerator(summaryTitleExpr, summaryHrefExpr));
+        map.put("name", new HyperlinkBuilderGenerator(summaryTitleExpr, summaryHrefExpr));
 
         DRIExpression<String> assigneeTitleExpr = new PrimaryTypeFieldExpression<>("assignuserFullName");
         DRIExpression<String> assigneeHrefExpr = new AbstractSimpleExpression<String>() {
@@ -431,7 +431,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         LOG.debug("Build report mapper for project::risk module");
 
         Map<String, ComponentBuilderGenerator> map = new HashMap<>();
-        DRIExpression<String> summaryTitleExpr = new PrimaryTypeFieldExpression<>(Risk.Field.riskname.name());
+        DRIExpression<String> summaryTitleExpr = new PrimaryTypeFieldExpression<>(Risk.Field.name.name());
         DRIExpression<String> summaryHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
 
@@ -443,7 +443,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 return ProjectLinkGenerator.generateRiskPreviewFullLink(siteUrl, projectId, riskId);
             }
         };
-        map.put(Risk.Field.riskname.name(), new HyperlinkBuilderGenerator(summaryTitleExpr, summaryHrefExpr));
+        map.put(Risk.Field.name.name(), new HyperlinkBuilderGenerator(summaryTitleExpr, summaryHrefExpr));
 
         DRIExpression<String> assigneeTitleExpr = new PrimaryTypeFieldExpression<>(SimpleRisk.Field.assignedToUserFullName.name());
         DRIExpression<String> assigneeHrefExpr = new AbstractSimpleExpression<String>() {
@@ -622,7 +622,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         LOG.debug("Build report mapper for project::following ticket module");
 
         Map<String, ComponentBuilderGenerator> map = new HashMap<>();
-        DRIExpression<String> summaryTitleExpr = new PrimaryTypeFieldExpression<>("summary");
+        DRIExpression<String> summaryTitleExpr = new PrimaryTypeFieldExpression<>("name");
         DRIExpression<String> summaryHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
 
@@ -643,7 +643,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 return type;
             }
         };
-        map.put("summary", new HyperlinkBuilderGenerator(summaryTitleExpr, summaryHrefExpr));
+        map.put("name", new HyperlinkBuilderGenerator(summaryTitleExpr, summaryHrefExpr));
 
         DRIExpression<String> projectTitleExpr = new PrimaryTypeFieldExpression<>("projectName");
         DRIExpression<String> projectHrefExpr = new AbstractSimpleExpression<String>() {

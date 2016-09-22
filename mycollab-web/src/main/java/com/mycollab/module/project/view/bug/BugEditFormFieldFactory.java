@@ -99,7 +99,7 @@ class BugEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Sim
         } else if (propertyId.equals("fixedVersions")) {
             fixedVersionSelect = new VersionMultiSelectField();
             return fixedVersionSelect;
-        } else if (propertyId.equals("summary")) {
+        } else if (propertyId.equals("name")) {
             final TextField tf = new TextField();
             if (isValidateForm) {
                 tf.setNullRepresentation("");

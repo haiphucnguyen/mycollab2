@@ -76,7 +76,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
     @Override
     public void setBean(SimpleTask bean) {
         this.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getForm(),
-                Task.Field.taskname.name(), SimpleTask.Field.selected.name()));
+                Task.Field.name.name(), SimpleTask.Field.selected.name()));
         this.setBeanFormFieldFactory(new PreviewFormFieldFactory(this));
         super.setBean(bean);
     }
@@ -292,7 +292,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
         private class TaskRowRenderer implements AbstractBeanPagedList.RowDisplayHandler<SimpleTask> {
             @Override
             public Component generateRow(AbstractBeanPagedList host, final SimpleTask item, int rowIndex) {
-                MButton taskLink = new MButton(item.getTaskname(), clickEvent -> {
+                MButton taskLink = new MButton(item.getName(), clickEvent -> {
                     if (item.getId().equals(parentTask.getId())) {
                         NotificationUtil.showErrorNotification(UserUIContext.getMessage(TaskI18nEnum.ERROR_CAN_NOT_ASSIGN_PARENT_TASK_TO_ITSELF));
                     } else {

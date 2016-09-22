@@ -18,20 +18,27 @@ package com.mycollab.module.project.domain.criteria;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.*;
-import com.mycollab.db.query.CacheParamMapper;
-import com.mycollab.db.query.CompositionStringParam;
-import com.mycollab.db.query.StringParam;
+import com.mycollab.db.query.*;
 import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.i18n.OptionI18nEnum;
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ProjectGenericTaskSearchCriteria extends SearchCriteria {
+public class ProjectAssignmentSearchCriteria extends SearchCriteria {
     private static final long serialVersionUID = 1L;
 
-    public static final CompositionStringParam p_name = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT,
-            GenericI18Enum.FORM_NAME, new CompositionStringParam("name", new StringParam("", "m_prj_task", "taskname")));
+    public static final Param p_name = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT,
+            GenericI18Enum.FORM_NAME, new StringParam("name", "mainTbl", "name"));
+
+    public static final I18nStringListParam p_priority = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT, GenericI18Enum.FORM_PRIORITY,
+            new I18nStringListParam("priority", "mainTbl", "priority",
+                    Arrays.asList(Priority.Urgent, Priority.High, Priority.Medium, Priority.Low, Priority.None)));
 
     private SetSearchField<Integer> projectIds;
 

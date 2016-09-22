@@ -1,9 +1,9 @@
 package com.mycollab.pro.module.project.view.assignments;
 
 import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.module.project.domain.ProjectGenericTask;
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
-import com.mycollab.module.project.service.ProjectGenericTaskService;
+import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
+import com.mycollab.module.project.service.ProjectAssignmentService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.google.common.base.MoreObjects;
@@ -22,10 +22,10 @@ public class GenericAssignmentProvider extends BasicEventProvider {
     private int assignOthersNum = 0;
     private int notAssignNum = 0;
 
-    public void loadEvents(ProjectGenericTaskSearchCriteria searchCriteria, boolean showProject) {
-        ProjectGenericTaskService genericTaskService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
-        List<ProjectGenericTask> assignments = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
-        for (ProjectGenericTask assignment : assignments) {
+    public void loadEvents(ProjectAssignmentSearchCriteria searchCriteria, boolean showProject) {
+        ProjectAssignmentService genericTaskService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
+        List<ProjectAssignment> assignments = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        for (ProjectAssignment assignment : assignments) {
             totalBillableHours += MoreObjects.firstNonNull(assignment.getBillableHours(), 0d);
             totalNonBillableHours += MoreObjects.firstNonNull(assignment.getNonBillableHours(), 0d);
             if (UserUIContext.getUsername().equals(assignment.getAssignUser())) {

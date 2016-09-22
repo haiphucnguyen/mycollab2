@@ -17,9 +17,12 @@
 
 package com.mycollab.module.project.service;
 
+import com.mycollab.common.domain.GroupItem;
+import com.mycollab.core.cache.CacheKey;
+import com.mycollab.core.cache.Cacheable;
 import com.mycollab.db.persistence.service.ISearchableService;
-import com.mycollab.module.project.domain.ProjectGenericTask;
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.user.domain.BillingAccount;
 
 import java.util.List;
@@ -28,14 +31,17 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public interface ProjectGenericTaskService extends ISearchableService<ProjectGenericTaskSearchCriteria> {
-    List<BillingAccount> getAccountsHasOverdueAssignments(ProjectGenericTaskSearchCriteria searchCriteria);
+public interface ProjectAssignmentService extends ISearchableService<ProjectAssignmentSearchCriteria> {
+    List<BillingAccount> getAccountsHasOverdueAssignments(ProjectAssignmentSearchCriteria searchCriteria);
 
-    List<Integer> getProjectsHasOverdueAssignments(ProjectGenericTaskSearchCriteria searchCriteria);
+    List<Integer> getProjectsHasOverdueAssignments(ProjectAssignmentSearchCriteria searchCriteria);
 
-    void updateAssignmentValue(ProjectGenericTask assignment, String username);
+    void updateAssignmentValue(ProjectAssignment assignment, String username);
 
     void closeSubAssignmentOfMilestone(Integer milestoneId);
 
-    ProjectGenericTask findAssignment(String type, Integer typeId);
+    ProjectAssignment findAssignment(String type, Integer typeId);
+
+    @Cacheable
+    List<GroupItem> getAssigneeSummary(@CacheKey ProjectAssignmentSearchCriteria criteria);
 }

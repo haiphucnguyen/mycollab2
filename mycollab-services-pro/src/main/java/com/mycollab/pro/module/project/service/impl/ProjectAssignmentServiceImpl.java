@@ -5,7 +5,7 @@ import com.mycollab.cache.CleanCacheEvent;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.db.arguments.SearchField;
-import com.mycollab.module.project.domain.ProjectGenericTask;
+import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
@@ -14,7 +14,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.service.RiskService;
-import com.mycollab.module.project.service.impl.AbstractProjectGenericTaskServiceImpl;
+import com.mycollab.module.project.service.impl.AbstractProjectAssignmentServiceImpl;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.mycollab.module.tracker.service.BugService;
@@ -28,7 +28,7 @@ import java.util.Collections;
  * @since 5.4.2
  */
 @Service
-public class ProjectGenericTaskServiceImpl extends AbstractProjectGenericTaskServiceImpl {
+public class ProjectAssignmentServiceImpl extends AbstractProjectAssignmentServiceImpl {
 
     @Autowired
     private ProjectTaskService taskService;
@@ -43,24 +43,24 @@ public class ProjectGenericTaskServiceImpl extends AbstractProjectGenericTaskSer
     private AsyncEventBus asyncEventBus;
 
     @Override
-    public void updateAssignmentValue(ProjectGenericTask assignment, String username) {
+    public void updateAssignmentValue(ProjectAssignment assignment, String username) {
         if (assignment.isTask()) {
             Task task = new Task();
-            task.setTaskname(assignment.getName());
+            task.setName(assignment.getName());
             task.setId(assignment.getTypeId());
             task.setMilestoneid(assignment.getMilestoneId());
             task.setSaccountid(assignment.getsAccountId());
             taskService.updateSelectiveWithSession(task, username);
         } else if (assignment.isBug()) {
             BugWithBLOBs bug = new BugWithBLOBs();
-            bug.setSummary(assignment.getName());
+            bug.setName(assignment.getName());
             bug.setId(assignment.getTypeId());
             bug.setMilestoneid(assignment.getMilestoneId());
             bug.setSaccountid(assignment.getsAccountId());
             bugService.updateSelectiveWithSession(bug, username);
         } else if (assignment.isRisk()) {
             Risk risk = new Risk();
-            risk.setRiskname(assignment.getName());
+            risk.setName(assignment.getName());
             risk.setId(assignment.getTypeId());
             risk.setMilestoneid(assignment.getMilestoneId());
             risk.setSaccountid(assignment.getsAccountId());

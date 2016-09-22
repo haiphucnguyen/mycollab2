@@ -36,7 +36,7 @@ public class BugDefaultFormLayoutFactory {
         DynaSection mainSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
 
         //Row 1
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(BugWithBLOBs.Field.summary)
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(BugWithBLOBs.Field.name)
                 .displayName(BugI18nEnum.FORM_SUMMARY)
                 .fieldIndex(0).mandatory(true).required(true).colSpan(true).build());
 

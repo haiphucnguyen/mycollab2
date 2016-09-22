@@ -36,19 +36,19 @@ public class GenericTaskDetailMapper {
             BugService service = AppContextUtil.getSpringBean(BugService.class);
             SimpleBug bug = service.findById(typeId, sAccountId);
             if (bug != null) {
-                name = bug.getSummary();
+                name = bug.getName();
             }
         } else if (ProjectTypeConstants.TASK.equals(type)) {
             ProjectTaskService service = AppContextUtil.getSpringBean(ProjectTaskService.class);
             SimpleTask task = service.findById(typeId, sAccountId);
             if (task != null) {
-                name = task.getTaskname();
+                name = task.getName();
             }
         } else if (ProjectTypeConstants.RISK.equals(type)) {
             RiskService service = AppContextUtil.getSpringBean(RiskService.class);
             SimpleRisk risk = service.findById(typeId, sAccountId);
             if (risk != null) {
-                name = risk.getRiskname();
+                name = risk.getName();
             }
         } else if (ProjectTypeConstants.BUG_VERSION.equals(type)) {
             VersionService service = AppContextUtil

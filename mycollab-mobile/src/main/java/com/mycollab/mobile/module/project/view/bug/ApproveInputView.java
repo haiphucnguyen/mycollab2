@@ -54,7 +54,7 @@ class ApproveInputView extends AbstractMobilePageView {
     private final BugReadView callbackForm;
 
     ApproveInputView(final BugReadView callbackForm, final SimpleBug bug) {
-        this.setCaption(UserUIContext.getMessage(BugI18nEnum.OPT_APPROVE_BUG, bug.getSummary()));
+        this.setCaption(UserUIContext.getMessage(BugI18nEnum.OPT_APPROVE_BUG, bug.getName()));
         this.bug = bug;
         this.callbackForm = callbackForm;
 

@@ -21,7 +21,6 @@ import com.mycollab.db.arguments.*;
 import com.mycollab.db.query.*;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.BugI18nEnum;
-import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
@@ -40,7 +39,7 @@ public class BugSearchCriteria extends SearchCriteria {
 
     public static final CompositionStringParam p_textDesc = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_ANY_TEXT,
             new CompositionStringParam("textDesc",
-                    new StringParam("", "m_tracker_bug", "summary"),
+                    new StringParam("", "m_tracker_bug", "name"),
                     new StringParam("", "m_tracker_bug", "detail"),
                     new StringParam("", "m_tracker_bug", "environment")));
 
@@ -109,7 +108,7 @@ public class BugSearchCriteria extends SearchCriteria {
             if (values == null || values.size() == 0) {
                 return null;
             }
-            StringBuffer sqlResult = new StringBuffer();
+            StringBuilder sqlResult = new StringBuilder();
             Object[] array = values.toArray();
             for (int i = 0; i < array.length; i++) {
                 final Integer affectedVersion = Integer.parseInt(array[i].toString());
@@ -146,10 +145,10 @@ public class BugSearchCriteria extends SearchCriteria {
             if (values == null || values.size() == 0) {
                 return null;
             }
-            StringBuffer sqlResult = new StringBuffer();
+            StringBuilder sqlResult = new StringBuilder();
             Object[] array = values.toArray();
             for (int i = 0; i < array.length; i++) {
-                final Object affectedversion = Integer.parseInt(array[i].toString());
+                final Object affectedVersion = Integer.parseInt(array[i].toString());
                 String result = new SQL() {
                     {
                         SELECT("COUNT(*)");
@@ -159,7 +158,7 @@ public class BugSearchCriteria extends SearchCriteria {
                         AND();
                         WHERE(String.format(
                                 "m_tracker_bug_related_item.typeid=%d",
-                                affectedversion));
+                                affectedVersion));
                         AND();
                         WHERE("m_tracker_bug_related_item.bugid=m_tracker_bug.id");
                     }
@@ -183,7 +182,7 @@ public class BugSearchCriteria extends SearchCriteria {
     private StringSearchField loguser;
     private DateSearchField updatedDate;
 
-    private StringSearchField summary;
+    private StringSearchField name;
     private StringSearchField description;
     private StringSearchField detail;
     private StringSearchField environment;
@@ -213,12 +212,12 @@ public class BugSearchCriteria extends SearchCriteria {
         this.loguser = loguser;
     }
 
-    public StringSearchField getSummary() {
-        return summary;
+    public StringSearchField getName() {
+        return name;
     }
 
-    public void setSummary(StringSearchField summary) {
-        this.summary = summary;
+    public void setName(StringSearchField name) {
+        this.name = name;
     }
 
     public StringSearchField getDetail() {

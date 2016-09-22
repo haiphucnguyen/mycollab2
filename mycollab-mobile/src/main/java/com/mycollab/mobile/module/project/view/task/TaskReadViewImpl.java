@@ -107,7 +107,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     @Override
     protected String initFormTitle() {
-        return beanItem.getTaskname();
+        return beanItem.getName();
     }
 
     @Override

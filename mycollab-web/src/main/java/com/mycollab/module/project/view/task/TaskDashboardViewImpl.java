@@ -18,37 +18,33 @@ package com.mycollab.module.project.view.task;
 
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.UrlEncodeDecoder;
-import com.mycollab.common.domain.OptionVal;
-import com.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.common.json.QueryAnalyzer;
-import com.mycollab.common.service.OptionValService;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.query.LazyValueInjector;
-import com.mycollab.db.query.SearchFieldInfo;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
-import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.module.project.domain.SimpleTask;
-import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
+import com.mycollab.module.project.events.AssignmentEvent;
 import com.mycollab.module.project.events.TaskEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
-import com.mycollab.module.project.service.ProjectTaskService;
+import com.mycollab.module.project.service.ProjectAssignmentService;
+import com.mycollab.module.project.view.assignments.AssignmentSearchPanel;
+import com.mycollab.module.project.view.assignments.UnresolvedAssignmentByAssigneeWidget;
 import com.mycollab.module.project.view.task.components.*;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.events.HasSelectableItemHandlers;
@@ -58,13 +54,12 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.QueryParamHandler;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
@@ -89,20 +84,20 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
     private String groupByState;
     private String sortDirection;
 
-    private TaskSearchCriteria baseCriteria;
-    private TaskSearchCriteria statisticSearchCriteria;
+    private ProjectAssignmentSearchCriteria baseCriteria;
+    private ProjectAssignmentSearchCriteria statisticSearchCriteria;
 
-    private TaskSearchPanel taskSearchPanel;
+    private AssignmentSearchPanel taskSearchPanel;
     private MVerticalLayout wrapBody;
     private VerticalLayout rightColumn;
     private TaskGroupOrderComponent taskGroupOrderComponent;
 
-    private ApplicationEventListener<TaskEvent.SearchRequest> searchHandler = new
-            ApplicationEventListener<TaskEvent.SearchRequest>() {
+    private ApplicationEventListener<AssignmentEvent.SearchRequest> searchHandler = new
+            ApplicationEventListener<AssignmentEvent.SearchRequest>() {
                 @Override
                 @Subscribe
-                public void handle(TaskEvent.SearchRequest event) {
-                    TaskSearchCriteria criteria = (TaskSearchCriteria) event.getData();
+                public void handle(AssignmentEvent.SearchRequest event) {
+                    ProjectAssignmentSearchCriteria criteria = (ProjectAssignmentSearchCriteria) event.getData();
                     if (criteria != null) {
                         queryTask(criteria);
                     }
@@ -114,11 +109,11 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
                 @Override
                 @Subscribe
                 public void handle(TaskEvent.NewTaskAdded event) {
-                    final ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                    SimpleTask task = projectTaskService.findById((Integer) event.getData(), MyCollabUI.getAccountId());
-                    if (task != null && taskGroupOrderComponent != null) {
-                        taskGroupOrderComponent.insertTasks(Collections.singletonList(task));
-                    }
+                    final ProjectAssignmentService projectTaskService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
+//                    SimpleTask task = projectTaskService.findById((Integer) event.getData(), MyCollabUI.getAccountId());
+//                    if (task != null && taskGroupOrderComponent != null) {
+//                        taskGroupOrderComponent.insertTasks(Collections.singletonList(task));
+//                    }
                     displayTaskStatistic();
 
                     int totalTasks = projectTaskService.getTotalCount(baseCriteria);
@@ -130,7 +125,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
 
     public TaskDashboardViewImpl() {
         this.withMargin(new MarginInfo(false, true, true, true));
-        taskSearchPanel = new TaskSearchPanel();
+        taskSearchPanel = new AssignmentSearchPanel();
 
         MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
@@ -221,31 +216,19 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
     }
 
     public void displayView(String query) {
-        baseCriteria = new TaskSearchCriteria();
-        baseCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        baseCriteria = new ProjectAssignmentSearchCriteria();
+        baseCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
 
         statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
-
-        OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
-        List<OptionVal> options = optionValService.findOptionValsExcludeClosed(ProjectTypeConstants.TASK,
-                CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
-
-        if (CollectionUtils.isNotEmpty(options)) {
-            SetSearchField<String> statuses = new SetSearchField<>();
-            for (OptionVal option : options) {
-                statuses.addValue(option.getTypeval());
-            }
-            statisticSearchCriteria.setStatuses(statuses);
-        }
 
         if (StringUtils.isNotBlank(query)) {
             try {
                 String jsonQuery = UrlEncodeDecoder.decode(query);
-                List<SearchFieldInfo> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.TASK);
-                taskSearchPanel.displaySearchFieldInfos(searchFieldInfos);
-                TaskSearchCriteria searchCriteria = SearchFieldInfo.buildSearchCriteria(baseCriteria, searchFieldInfos);
-                searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                queryTask(searchCriteria);
+//                List<SearchFieldInfo> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.TASK);
+//                taskSearchPanel.displaySearchFieldInfos(searchFieldInfos);
+//                ProjectAssignmentSearchCriteria searchCriteria = SearchFieldInfo.buildSearchCriteria(baseCriteria, searchFieldInfos);
+//                searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+//                queryTask(searchCriteria);
             } catch (Exception e) {
                 LOG.error("Error", e);
                 taskSearchPanel.selectQueryInfo(TaskSavedFilterComboBox.OPEN_TASKS);
@@ -262,32 +245,32 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
 
     private void displayTaskStatistic() {
         rightColumn.removeAllComponents();
-        final TaskStatusTrendChartWidget taskStatusTrendChartWidget = new TaskStatusTrendChartWidget();
-        rightColumn.addComponent(taskStatusTrendChartWidget);
-        UnresolvedTaskByAssigneeWidget unresolvedTaskByAssigneeWidget = new UnresolvedTaskByAssigneeWidget();
-        unresolvedTaskByAssigneeWidget.setSearchCriteria(statisticSearchCriteria);
-        rightColumn.addComponent(unresolvedTaskByAssigneeWidget);
-
-        UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
-        unresolvedTaskByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
-        rightColumn.addComponent(unresolvedTaskByPriorityWidget);
-
-        UnresolvedTaskByStatusWidget unresolvedTaskByStatusWidget = new UnresolvedTaskByStatusWidget();
-        unresolvedTaskByStatusWidget.setSearchCriteria(statisticSearchCriteria);
-        rightColumn.addComponent(unresolvedTaskByStatusWidget);
-
-        AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
-            @Override
-            public void run() {
-                TimelineTrackingSearchCriteria timelineTrackingSearchCriteria = new TimelineTrackingSearchCriteria();
-                timelineTrackingSearchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                taskStatusTrendChartWidget.display(timelineTrackingSearchCriteria);
-            }
-        });
+//        final TaskStatusTrendChartWidget taskStatusTrendChartWidget = new TaskStatusTrendChartWidget();
+//        rightColumn.addComponent(taskStatusTrendChartWidget);
+        UnresolvedAssignmentByAssigneeWidget unresolvedAssignmentByAssigneeWidget = new UnresolvedAssignmentByAssigneeWidget();
+        unresolvedAssignmentByAssigneeWidget.setSearchCriteria(statisticSearchCriteria);
+        rightColumn.addComponent(unresolvedAssignmentByAssigneeWidget);
+//
+//        UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
+//        unresolvedTaskByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
+//        rightColumn.addComponent(unresolvedTaskByPriorityWidget);
+//
+//        UnresolvedTaskByStatusWidget unresolvedTaskByStatusWidget = new UnresolvedTaskByStatusWidget();
+//        unresolvedTaskByStatusWidget.setSearchCriteria(statisticSearchCriteria);
+//        rightColumn.addComponent(unresolvedTaskByStatusWidget);
+//
+//        AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
+//            @Override
+//            public void run() {
+//                TimelineTrackingSearchCriteria timelineTrackingSearchCriteria = new TimelineTrackingSearchCriteria();
+//                timelineTrackingSearchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+//                taskStatusTrendChartWidget.display(timelineTrackingSearchCriteria);
+//            }
+//        });
     }
 
     @Override
-    public void queryTask(final TaskSearchCriteria searchCriteria) {
+    public void queryTask(final ProjectAssignmentSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
         queryAndDisplayTasks();
         displayTaskStatistic();
@@ -297,7 +280,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         wrapBody.removeAllComponents();
 
         if (UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE).equals(groupByState)) {
-            baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("deadline", sortDirection)));
+            baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("dueDate", sortDirection)));
             taskGroupOrderComponent = new DueDateOrderComponent();
         } else if (UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE).equals(groupByState)) {
             baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("startdate", sortDirection)));
@@ -315,17 +298,18 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
             throw new MyCollabException("Do not support group view by " + groupByState);
         }
         wrapBody.addComponent(taskGroupOrderComponent);
-        final ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-        int totalTasks = projectTaskService.getTotalCount(baseCriteria);
+        final ProjectAssignmentService projectAssignmentService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
+        int totalTasks = projectAssignmentService.getTotalCount(baseCriteria);
         taskSearchPanel.setTotalCountNumber(totalTasks);
         currentPage = 0;
         int pages = totalTasks / 20;
         if (currentPage < pages) {
             Button moreBtn = new Button(UserUIContext.getMessage(GenericI18Enum.ACTION_MORE), clickEvent -> {
-                int newTotalTasks = projectTaskService.getTotalCount(baseCriteria);
+                int newTotalTasks = projectAssignmentService.getTotalCount(baseCriteria);
                 int newNumPages = newTotalTasks / 20;
                 currentPage++;
-                List<SimpleTask> otherTasks = projectTaskService.findPageableListByCriteria(new BasicSearchRequest<>(baseCriteria, currentPage + 1, 20));
+                List<ProjectAssignment> otherTasks = projectAssignmentService.findPageableListByCriteria(new
+                        BasicSearchRequest<>(baseCriteria, currentPage + 1, 20));
                 taskGroupOrderComponent.insertTasks(otherTasks);
                 if (currentPage >= newNumPages) {
                     wrapBody.removeComponent(wrapBody.getComponent(1));
@@ -334,7 +318,8 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
             moreBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
             wrapBody.addComponent(moreBtn);
         }
-        List<SimpleTask> tasks = projectTaskService.findPageableListByCriteria(new BasicSearchRequest<>(baseCriteria, currentPage + 1, 20));
+        List<ProjectAssignment> tasks = projectAssignmentService.findPageableListByCriteria(new BasicSearchRequest<>
+                (baseCriteria, currentPage + 1, 20));
         taskGroupOrderComponent.insertTasks(tasks);
     }
 
@@ -353,7 +338,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
     }
 
     @Override
-    public HasSearchHandlers<TaskSearchCriteria> getSearchHandlers() {
+    public HasSearchHandlers<ProjectAssignmentSearchCriteria> getSearchHandlers() {
         return taskSearchPanel;
     }
 
@@ -368,12 +353,12 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
     }
 
     @Override
-    public HasSelectableItemHandlers<SimpleTask> getSelectableItemHandlers() {
+    public HasSelectableItemHandlers<ProjectAssignment> getSelectableItemHandlers() {
         return null;
     }
 
     @Override
-    public AbstractPagedBeanTable<TaskSearchCriteria, SimpleTask> getPagedBeanTable() {
+    public AbstractPagedBeanTable<ProjectAssignmentSearchCriteria, ProjectAssignment> getPagedBeanTable() {
         return null;
     }
 }

@@ -14,19 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.task.components;
+package com.mycollab.module.project.view.assignments;
 
-import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.domain.GroupItem;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.StringSearchField;
-import com.mycollab.eventmanager.ApplicationEventListener;
-import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.mycollab.module.project.events.TaskEvent;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
-import com.mycollab.module.project.service.ProjectTaskService;
+import com.mycollab.module.project.service.ProjectAssignmentService;
 import com.mycollab.module.project.view.task.ITaskAssigneeChartWidget;
 import com.mycollab.module.user.CommonTooltipGenerator;
 import com.mycollab.module.user.domain.SimpleUser;
@@ -41,7 +37,7 @@ import com.mycollab.vaadin.web.ui.DepotWithChart;
 import com.mycollab.vaadin.web.ui.ProgressBarIndicator;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.UI;
+import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -52,41 +48,41 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.0
  */
-public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
+public class UnresolvedAssignmentByAssigneeWidget extends DepotWithChart {
     private static final long serialVersionUID = 1L;
 
-    private TaskSearchCriteria searchCriteria;
+    private ProjectAssignmentSearchCriteria searchCriteria;
     private int totalCountItems;
     private List<GroupItem> groupItems;
 
-    private ApplicationEventListener<TaskEvent.HasTaskChange> taskChangeHandler = new ApplicationEventListener<TaskEvent.HasTaskChange>() {
-        @Override
-        @Subscribe
-        public void handle(TaskEvent.HasTaskChange event) {
-            if (searchCriteria != null) {
-                UI.getCurrent().access(() -> setSearchCriteria(searchCriteria));
-            }
-        }
-    };
+//    private ApplicationEventListener<TaskEvent.HasTaskChange> taskChangeHandler = new ApplicationEventListener<TaskEvent.HasTaskChange>() {
+//        @Override
+//        @Subscribe
+//        public void handle(TaskEvent.HasTaskChange event) {
+//            if (searchCriteria != null) {
+//                UI.getCurrent().access(() -> setSearchCriteria(searchCriteria));
+//            }
+//        }
+//    };
 
     @Override
     public void attach() {
-        EventBusFactory.getInstance().register(taskChangeHandler);
+//        EventBusFactory.getInstance().register(taskChangeHandler);
         super.attach();
     }
 
     @Override
     public void detach() {
-        EventBusFactory.getInstance().unregister(taskChangeHandler);
+//        EventBusFactory.getInstance().unregister(taskChangeHandler);
         super.detach();
     }
 
-    public void setSearchCriteria(final TaskSearchCriteria searchCriteria) {
+    public void setSearchCriteria(final ProjectAssignmentSearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
 
-        ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-        totalCountItems = projectTaskService.getTotalCount(searchCriteria);
-        groupItems = projectTaskService.getAssignedTasksSummary(searchCriteria);
+        ProjectAssignmentService projectAssignmentService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
+        totalCountItems = projectAssignmentService.getTotalCount(searchCriteria);
+        groupItems = projectAssignmentService.getAssigneeSummary(searchCriteria);
 
         this.setTitle(String.format("%s (%d)", UserUIContext.getMessage(TaskI18nEnum.WIDGET_UNRESOLVED_BY_ASSIGNEE_TITLE), totalCountItems));
         displayPlainMode();
@@ -95,7 +91,7 @@ public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
     @Override
     protected void displayPlainMode() {
         bodyContent.removeAllComponents();
-        if (!groupItems.isEmpty()) {
+        if (CollectionUtils.isNotEmpty(groupItems)) {
             for (GroupItem item : groupItems) {
                 MHorizontalLayout assigneeLayout = new MHorizontalLayout().withFullWidth();
                 assigneeLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
@@ -109,8 +105,7 @@ public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
 
                 TaskAssigneeLink taskAssigneeLink = new TaskAssigneeLink(assignUser, item.getExtraValue(), assignUserFullName);
                 assigneeLayout.addComponent(new MCssLayout(taskAssigneeLink).withWidth("110px"));
-                ProgressBarIndicator indicator = new ProgressBarIndicator(totalCountItems, totalCountItems - item.getValue().intValue(),
-                        false);
+                ProgressBarIndicator indicator = new ProgressBarIndicator(totalCountItems, totalCountItems - item.getValue().intValue(), false);
                 indicator.setWidth("100%");
                 assigneeLayout.with(indicator).expand(indicator);
                 bodyContent.addComponent(assigneeLayout);
@@ -122,20 +117,20 @@ public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
     protected void displayChartMode() {
         bodyContent.removeAllComponents();
         ITaskAssigneeChartWidget taskAssigneeChartWidget = ViewManager.getCacheComponent(ITaskAssigneeChartWidget.class);
-        taskAssigneeChartWidget.displayChart(searchCriteria);
-        bodyContent.addComponent(taskAssigneeChartWidget);
+//        taskAssigneeChartWidget.displayChart(searchCriteria);
+//        bodyContent.addComponent(taskAssigneeChartWidget);
     }
 
     class TaskAssigneeLink extends MButton {
         private static final long serialVersionUID = 1L;
 
-        public TaskAssigneeLink(final String assignee, String assigneeAvatarId, final String assigneeFullName) {
+        TaskAssigneeLink(final String assignee, String assigneeAvatarId, final String assigneeFullName) {
             super(StringUtils.trim(assigneeFullName, 25, true));
 
             this.withListener(clickEvent -> {
-                TaskSearchCriteria criteria = BeanUtility.deepClone(searchCriteria);
+                ProjectAssignmentSearchCriteria criteria = BeanUtility.deepClone(searchCriteria);
                 criteria.setAssignUser(StringSearchField.and(assignee));
-                EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(UnresolvedTaskByAssigneeWidget.this, criteria));
+//                EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(UnresolvedAssignmentByAssigneeWidget.this, criteria));
             }).withWidth("100%").withIcon(UserAvatarControlFactory.createAvatarResource(assigneeAvatarId, 16))
                     .withStyleName(WebUIConstants.BUTTON_LINK, UIConstants.TEXT_ELLIPSIS);
             UserService service = AppContextUtil.getSpringBean(UserService.class);

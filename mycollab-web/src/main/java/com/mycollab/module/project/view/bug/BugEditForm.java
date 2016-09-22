@@ -127,7 +127,7 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
 
         @Override
         protected Component onAttachField(Object propertyId, Field<?> field) {
-            if (BugWithBLOBs.Field.summary.equalTo(propertyId)) {
+            if (BugWithBLOBs.Field.name.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_SUMMARY), 0, 0, 2, "100%");
             } else if (BugWithBLOBs.Field.priority.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY),
@@ -148,7 +148,7 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 4);
             } else if (BugWithBLOBs.Field.milestoneid.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_PHASE), 1, 4);
-            } else if (BugWithBLOBs.Field.summary.equalTo(propertyId)) {
+            } else if (BugWithBLOBs.Field.name.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_SUMMARY), 0, 5, 2, "100%");
             } else if (BugWithBLOBs.Field.description.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 6, 2, "100%");

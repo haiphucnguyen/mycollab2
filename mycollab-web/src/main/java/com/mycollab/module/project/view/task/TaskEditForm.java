@@ -125,7 +125,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
 
         @Override
         protected Component onAttachField(Object propertyId, Field<?> field) {
-            if (Task.Field.taskname.equalTo(propertyId)) {
+            if (Task.Field.name.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0, 2, "100%");
             } else if (Task.Field.startdate.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 1);

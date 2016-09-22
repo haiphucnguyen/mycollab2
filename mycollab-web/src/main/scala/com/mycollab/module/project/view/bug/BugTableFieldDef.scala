@@ -29,7 +29,7 @@ import com.mycollab.vaadin.web.ui.WebUIConstants
   */
 object BugTableFieldDef {
   val action = new TableViewField(null, "id", WebUIConstants.TABLE_CONTROL_WIDTH)
-  val summary = new TableViewField(BugI18nEnum.FORM_SUMMARY, "summary", WebUIConstants.TABLE_EX_LABEL_WIDTH)
+  val summary = new TableViewField(BugI18nEnum.FORM_SUMMARY, "name", WebUIConstants.TABLE_EX_LABEL_WIDTH)
   val description = new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", WebUIConstants.TABLE_EX_LABEL_WIDTH)
   val environment = new TableViewField(BugI18nEnum.FORM_ENVIRONMENT, "environment", WebUIConstants.TABLE_EX_LABEL_WIDTH)
   val status = new TableViewField(GenericI18Enum.FORM_STATUS, "status", WebUIConstants.TABLE_M_LABEL_WIDTH)

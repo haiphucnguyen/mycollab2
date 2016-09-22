@@ -100,7 +100,7 @@ public class ProjectTooltipGenerator {
         }
         try {
             TooltipBuilder tooltipManager = new TooltipBuilder();
-            tooltipManager.appendTitle(task.getTaskname());
+            tooltipManager.appendTitle(task.getName());
             if (showProject) {
                 tooltipManager.appendTitle(String.format("[%s] %s", task.getProjectShortname(), task.getProjectName()));
             }
@@ -165,7 +165,7 @@ public class ProjectTooltipGenerator {
 
         try {
             TooltipBuilder tooltipManager = new TooltipBuilder();
-            tooltipManager.appendTitle(bug.getSummary());
+            tooltipManager.appendTitle(bug.getName());
 
             if (showProject) {
                 tooltipManager.appendTitle(String.format("[%s] %s", bug.getProjectShortName(), bug.getProjectname()));
@@ -246,7 +246,7 @@ public class ProjectTooltipGenerator {
             return generateToolTipNull(locale);
         try {
             TooltipBuilder tooltipManager = new TooltipBuilder();
-            tooltipManager.appendTitle(risk.getRiskname());
+            tooltipManager.appendTitle(risk.getName());
 
             if (showProject) {
                 tooltipManager.appendTitle(String.format("[%s] %s", risk.getProjectShortName(), risk.getProjectName()));

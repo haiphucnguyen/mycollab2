@@ -27,14 +27,14 @@ import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.db.arguments.*;
 import com.mycollab.module.project.*;
-import com.mycollab.module.project.domain.ProjectGenericTask;
+import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.module.project.domain.SimpleProjectMember;
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.mycollab.module.project.i18n.ProjectRoleI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
-import com.mycollab.module.project.service.ProjectGenericTaskService;
+import com.mycollab.module.project.service.ProjectAssignmentService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.AbstractProjectPageView;
 import com.mycollab.module.project.view.settings.component.NotificationSettingWindow;
@@ -252,8 +252,8 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
     private class UserAssignmentWidget extends Depot {
         private static final long serialVersionUID = 1L;
 
-        private ProjectGenericTaskSearchCriteria searchCriteria;
-        private final DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
+        private ProjectAssignmentSearchCriteria searchCriteria;
+        private final DefaultBeanPagedList<ProjectAssignmentService, ProjectAssignmentSearchCriteria, ProjectAssignment> taskList;
 
         UserAssignmentWidget() {
             super(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGNMENT_VALUE, 0), new CssLayout());
@@ -284,13 +284,13 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             addHeaderElement(overdueSelection);
             addHeaderElement(isOpenSelection);
 
-            taskList = new DefaultBeanPagedList<>(AppContextUtil.getSpringBean(ProjectGenericTaskService.class),
+            taskList = new DefaultBeanPagedList<>(AppContextUtil.getSpringBean(ProjectAssignmentService.class),
                     new TaskRowDisplayHandler(), 10);
             bodyContent.addComponent(taskList);
         }
 
         private void showOpenAssignments() {
-            searchCriteria = new ProjectGenericTaskSearchCriteria();
+            searchCriteria = new ProjectAssignmentSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
             searchCriteria.setAssignUser(StringSearchField.and(beanItem.getUsername()));
             searchCriteria.setIsOpenned(new SearchField());
@@ -303,10 +303,10 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         }
     }
 
-    public static class TaskRowDisplayHandler implements DefaultBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
+    public static class TaskRowDisplayHandler implements DefaultBeanPagedList.RowDisplayHandler<ProjectAssignment> {
 
         @Override
-        public Component generateRow(AbstractBeanPagedList host, ProjectGenericTask genericTask, int rowIndex) {
+        public Component generateRow(AbstractBeanPagedList host, ProjectAssignment genericTask, int rowIndex) {
             MHorizontalLayout rowComp = new MHorizontalLayout().withStyleName("list-row").withFullWidth();
             rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
 

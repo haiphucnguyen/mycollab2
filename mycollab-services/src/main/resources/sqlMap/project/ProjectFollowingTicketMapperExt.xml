@@ -8,7 +8,7 @@
 		<result column="assignUser" jdbcType="VARCHAR" property="assignUser" />
 		<result column="assignUserAvatarId" jdbcType="VARCHAR" property="assignUserAvatarId" />
 		<result column="assignUserFullName" jdbcType="VARCHAR" property="assignUserFullName" />
-		<result column="summary" jdbcType="VARCHAR" property="summary" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
 		<result column="type" jdbcType="VARCHAR" property="type" />
 		<result column="typeId" jdbcType="INTEGER" property="typeId" />
 		<result column="monitorDate" jdbcType="TIMESTAMP" property="monitorDate" />
@@ -18,24 +18,24 @@
 
 	<sql id="extraQueryTaskSearchCriteria">
         <![CDATA[
-        #ifnotnull($searchCriteria.summary)
-            ${searchCriteria.summary.operation} m_prj_task.taskname LIKE '%${searchCriteria.summary.value}%'
+        #ifnotnull($searchCriteria.name)
+            ${searchCriteria.name.operation} m_prj_task.name LIKE '%${searchCriteria.name.value}%'
         #end
         ]]>
 	</sql>
 
 	<sql id="extraQueryBugSearchCriteria">
         <![CDATA[
-        #ifnotnull($searchCriteria.summary)
-            ${searchCriteria.summary.operation} m_tracker_bug.summary LIKE '%${searchCriteria.summary.value}%'
+        #ifnotnull($searchCriteria.name)
+            ${searchCriteria.name.operation} m_tracker_bug.name LIKE '%${searchCriteria.name.value}%'
         #end
         ]]>
 	</sql>
 
 	<sql id="extraQueryRiskSearchCriteria">
         <![CDATA[
-        #ifnotnull($searchCriteria.summary)
-            ${searchCriteria.summary.operation} m_prj_risk.riskname LIKE '%${searchCriteria.summary.value}%'
+        #ifnotnull($searchCriteria.name)
+            ${searchCriteria.name.operation} m_prj_risk.name LIKE '%${searchCriteria.name.value}%'
         #end
         ]]>
 	</sql>
@@ -43,7 +43,7 @@
 	<sql id="selectFollowingTicketOfTask">
         <![CDATA[
         SELECT 'Project-Task' as type, m_prj_project.id AS projectId, m_prj_project.name AS projectName,
-            m_prj_task.taskname AS summary, m_prj_task.assignUser AS assignUser,
+            m_prj_task.name AS name, m_prj_task.assignUser AS assignUser,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
             s_user.avatarId AS assignUserAvatarId, m_monitor_item.monitor_date AS monitorDate,
             m_prj_task.id AS typeId, m_prj_task.deadline AS dueDate, m_prj_task.status AS status
@@ -58,7 +58,7 @@
 	<sql id="selectFollowingTicketOfBug">
         <![CDATA[
         SELECT 'Project-Bug' as type, m_prj_project.id AS projectId, m_prj_project.name AS projectName,
-            m_tracker_bug.summary AS summary, s_user.username AS assignUser,
+            m_tracker_bug.name AS name, s_user.username AS assignUser,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
             s_user.avatarId AS assignUserAvatarId, m_monitor_item.monitor_date AS monitorDate,
             m_tracker_bug.id AS typeId, m_tracker_bug.duedate AS dueDate, m_tracker_bug.status AS status
@@ -73,7 +73,7 @@
 	<sql id="selectFollowingTicketOfRisk">
         <![CDATA[
         SELECT 'Project-Risk' as type, m_prj_project.id AS projectId, m_prj_project.name AS projectName,
-            m_prj_risk.riskname AS summary, s_user.username AS assignUser,
+            m_prj_risk.name AS name, s_user.username AS assignUser,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
             s_user.avatarId AS assignUserAvatarId, m_monitor_item.monitor_date AS monitorDate,
             m_prj_risk.id AS typeId, m_prj_risk.datedue AS dueDate, m_prj_risk.status AS status

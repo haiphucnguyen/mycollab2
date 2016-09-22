@@ -16,33 +16,16 @@
  */
 package com.mycollab.module.project.view.task.components;
 
-import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.common.i18n.OptionI18nEnum;
-import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.ProjectRolePermissionCollections;
-import com.mycollab.module.project.domain.SimpleTask;
-import com.mycollab.module.project.events.TaskEvent;
-import com.mycollab.module.project.service.ProjectTaskService;
-import com.mycollab.module.project.ui.components.IGroupComponent;
-import com.mycollab.module.project.view.task.TaskPopupFieldFactory;
-import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
-import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.ui.ProjectAssetsManager;
+import com.mycollab.module.project.view.assignments.AssignmentPopupFieldFactory;
+import com.mycollab.module.project.view.milestone.ToggleGenericTaskSummaryField;
 import com.mycollab.vaadin.mvp.ViewManager;
-import com.mycollab.vaadin.ui.UIUtils;
-import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
-import com.mycollab.vaadin.web.ui.OptionPopupContent;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.AbstractComponent;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.UI;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -51,159 +34,167 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 5.1.1
  */
 public class TaskRowRenderer extends MVerticalLayout {
-    private SimpleTask task;
+    private ProjectAssignment assignment;
 
     private PopupButton taskSettingPopupBtn;
-    private ToggleTaskSummaryField toggleTaskField;
+    private ToggleGenericTaskSummaryField toggleTaskField;
 
-    public TaskRowRenderer(final SimpleTask task) {
-        this.task = task;
-        withSpacing(true).withMargin(false).withFullWidth().addStyleName(WebUIConstants.BORDER_LIST_ROW);
+    public TaskRowRenderer(final ProjectAssignment assignment) {
+        this.assignment = assignment;
+        withMargin(false).withFullWidth().addStyleName(WebUIConstants.BORDER_LIST_ROW);
 
-        taskSettingPopupBtn = new PopupButton();
-        taskSettingPopupBtn.setIcon(FontAwesome.COGS);
-        taskSettingPopupBtn.addStyleName(WebUIConstants.BUTTON_ICON_ONLY);
-        OptionPopupContent filterBtnLayout = createPopupContent();
-        taskSettingPopupBtn.setContent(filterBtnLayout);
+//        taskSettingPopupBtn = new PopupButton();
+//        taskSettingPopupBtn.setIcon(FontAwesome.COGS);
+//        taskSettingPopupBtn.addStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+//        OptionPopupContent filterBtnLayout = createPopupContent();
+//        taskSettingPopupBtn.setContent(filterBtnLayout);
 
-        toggleTaskField = new ToggleTaskSummaryField(task);
-        MHorizontalLayout headerLayout = new MHorizontalLayout().withFullWidth().withMargin(new MarginInfo(false,
-                true, false, false));
+        toggleTaskField = new ToggleGenericTaskSummaryField(assignment);
+        MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset
+                (assignment.getType())).withWidthUndefined(), toggleTaskField).expand(toggleTaskField).withFullWidth()
+                .withMargin(new MarginInfo(false, true, false, false));
 
-        TaskPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(TaskPopupFieldFactory.class);
-        AbstractComponent priorityField = popupFieldFactory.createPriorityPopupField(task);
-        AbstractComponent assigneeField = popupFieldFactory.createAssigneePopupField(task);
-        headerLayout.with(taskSettingPopupBtn, priorityField, assigneeField, toggleTaskField).expand(toggleTaskField);
+        AssignmentPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(AssignmentPopupFieldFactory.class);
+//        AbstractComponent priorityField = popupFieldFactory.createPriorityPopupField(assignment);
+//        AbstractComponent assigneeField = popupFieldFactory.createAssigneePopupField(assignment);
+//        headerLayout.with(taskSettingPopupBtn, priorityField, assigneeField, toggleTaskField).expand(toggleTaskField);
 
         CssLayout footer = new CssLayout();
+        footer.addComponent(popupFieldFactory.createCommentsPopupField(assignment));
+        footer.addComponent(popupFieldFactory.createFollowersPopupField(assignment));
+        footer.addComponent(popupFieldFactory.createPriorityPopupField(assignment));
+        footer.addComponent(popupFieldFactory.createStatusPopupField(assignment));
+        footer.addComponent(popupFieldFactory.createStartDatePopupField(assignment));
+        footer.addComponent(popupFieldFactory.createEndDatePopupField(assignment));
+        footer.addComponent(popupFieldFactory.createDueDatePopupField(assignment));
 
-        AbstractComponent commentField = popupFieldFactory.createCommentsPopupField(task);
-        footer.addComponent(commentField);
-
-        AbstractComponent followerView = popupFieldFactory.createFollowersPopupField(task);
-        footer.addComponent(followerView);
-
-        AbstractComponent statusField = popupFieldFactory.createStatusPopupField(task);
-        footer.addComponent(statusField);
-
-        AbstractComponent milestoneField = popupFieldFactory.createMilestonePopupField(task);
-        footer.addComponent(milestoneField);
-
-        AbstractComponent percentageField = popupFieldFactory.createPercentagePopupField(task);
-        footer.addComponent(percentageField);
-
-        String deadlineTooltip = String.format("%s: %s", UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE),
-                UserUIContext.formatDate(task.getDeadline()));
-        AbstractComponent deadlineField = popupFieldFactory.createDeadlinePopupField(task);
-        deadlineField.setDescription(deadlineTooltip);
-        footer.addComponent(deadlineField);
-
-        AbstractComponent startDateField = popupFieldFactory.createStartDatePopupField(task);
-        footer.addComponent(startDateField);
-
-        AbstractComponent endDateField = popupFieldFactory.createEndDatePopupField(task);
-        footer.addComponent(endDateField);
-
-        if (!SiteConfiguration.isCommunityEdition()) {
-            AbstractComponent billableHoursField = popupFieldFactory.createBillableHoursPopupField(task);
-            footer.addComponent(billableHoursField);
-
-            AbstractComponent nonBillableHours = popupFieldFactory.createNonBillableHoursPopupField(task);
-            footer.addComponent(nonBillableHours);
-        }
+//        AbstractComponent commentField = popupFieldFactory.createCommentsPopupField(assignment);
+//        footer.addComponent(commentField);
+//
+//        AbstractComponent followerView = popupFieldFactory.createFollowersPopupField(assignment);
+//        footer.addComponent(followerView);
+//
+//        AbstractComponent statusField = popupFieldFactory.createStatusPopupField(assignment);
+//        footer.addComponent(statusField);
+//
+//        AbstractComponent milestoneField = popupFieldFactory.createMilestonePopupField(assignment);
+//        footer.addComponent(milestoneField);
+//
+//        AbstractComponent percentageField = popupFieldFactory.createPercentagePopupField(assignment);
+//        footer.addComponent(percentageField);
+//
+//        String deadlineTooltip = String.format("%s: %s", UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE),
+//                UserUIContext.formatDate(assignment.getDeadline()));
+//        AbstractComponent deadlineField = popupFieldFactory.createDeadlinePopupField(assignment);
+//        deadlineField.setDescription(deadlineTooltip);
+//        footer.addComponent(deadlineField);
+//
+//        AbstractComponent startDateField = popupFieldFactory.createStartDatePopupField(assignment);
+//        footer.addComponent(startDateField);
+//
+//        AbstractComponent endDateField = popupFieldFactory.createEndDatePopupField(assignment);
+//        footer.addComponent(endDateField);
+//
+//        if (!SiteConfiguration.isCommunityEdition()) {
+//            AbstractComponent billableHoursField = popupFieldFactory.createBillableHoursPopupField(assignment);
+//            footer.addComponent(billableHoursField);
+//
+//            AbstractComponent nonBillableHours = popupFieldFactory.createNonBillableHoursPopupField(assignment);
+//            footer.addComponent(nonBillableHours);
+//        }
 
         this.with(headerLayout, footer);
     }
 
 
-    private void closeTask() {
-        toggleTaskField.closeTask();
-        OptionPopupContent filterBtnLayout = createPopupContent();
-        taskSettingPopupBtn.setContent(filterBtnLayout);
-    }
+//    private void closeTask() {
+//        toggleTaskField.closeTask();
+//        OptionPopupContent filterBtnLayout = createPopupContent();
+//        taskSettingPopupBtn.setContent(filterBtnLayout);
+//    }
+//
+//    private void reOpenTask() {
+//        toggleTaskField.reOpenTask();
+//        OptionPopupContent filterBtnLayout = createPopupContent();
+//        taskSettingPopupBtn.setContent(filterBtnLayout);
+//    }
+//
+//    private void deleteTask() {
+//        IGroupComponent root = UIUtils.getRoot(this, IGroupComponent.class);
+//        ComponentContainer parent = (ComponentContainer) this.getParent();
+//        if (parent != null) {
+//            parent.removeComponent(this);
+//            if (root != null) {
+//                ComponentContainer parentRoot = (ComponentContainer) root.getParent();
+//                if (parentRoot != null && parent.getComponentCount() == 0) {
+//                    parentRoot.removeComponent(root);
+//                }
+//            }
+//        }
+//    }
 
-    private void reOpenTask() {
-        toggleTaskField.reOpenTask();
-        OptionPopupContent filterBtnLayout = createPopupContent();
-        taskSettingPopupBtn.setContent(filterBtnLayout);
-    }
-
-    private void deleteTask() {
-        IGroupComponent root = UIUtils.getRoot(this, IGroupComponent.class);
-        ComponentContainer parent = (ComponentContainer) this.getParent();
-        if (parent != null) {
-            parent.removeComponent(this);
-            if (root != null) {
-                ComponentContainer parentRoot = (ComponentContainer) root.getParent();
-                if (parentRoot != null && parent.getComponentCount() == 0) {
-                    parentRoot.removeComponent(root);
-                }
-            }
-        }
-    }
-
-    private OptionPopupContent createPopupContent() {
-        OptionPopupContent filterBtnLayout = new OptionPopupContent();
-
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-            MButton editButton = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent -> {
-                taskSettingPopupBtn.setPopupVisible(false);
-                EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(TaskRowRenderer.this, task));
-            }).withIcon(FontAwesome.EDIT);
-            filterBtnLayout.addOption(editButton);
-            filterBtnLayout.addSeparator();
-        }
-
-        if (!task.isCompleted()) {
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                MButton closeBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLOSE), clickEvent -> {
-                    task.setStatus(OptionI18nEnum.StatusI18nEnum.Closed.name());
-                    task.setPercentagecomplete(100d);
-                    ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                    projectTaskService.updateSelectiveWithSession(task, UserUIContext.getUsername());
-                    taskSettingPopupBtn.setPopupVisible(false);
-                    closeTask();
-                    EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskRowRenderer.this, null));
-                }).withIcon(FontAwesome.CHECK_CIRCLE_O);
-                filterBtnLayout.addOption(closeBtn);
-            }
-        } else {
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                MButton reOpenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
-                    taskSettingPopupBtn.setPopupVisible(false);
-                    task.setStatus(OptionI18nEnum.StatusI18nEnum.Open.name());
-                    task.setPercentagecomplete(0d);
-
-                    ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                    projectTaskService.updateSelectiveWithSession(task, UserUIContext.getUsername());
-                    reOpenTask();
-                    EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskRowRenderer.this, null));
-                }).withIcon(FontAwesome.UNLOCK);
-                filterBtnLayout.addOption(reOpenBtn);
-            }
-        }
-
-        filterBtnLayout.addSeparator();
-
-        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS)) {
-            MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
-                taskSettingPopupBtn.setPopupVisible(false);
-                ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                        UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
-                        UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
-                        confirmDialog -> {
-                            if (confirmDialog.isConfirmed()) {
-                                ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                                projectTaskService.removeWithSession(task, UserUIContext.getUsername(), MyCollabUI.getAccountId());
-                                deleteTask();
-                            }
-                        });
-            }).withIcon(FontAwesome.TRASH_O);
-            filterBtnLayout.addDangerOption(deleteBtn);
-        }
-
-        return filterBtnLayout;
-    }
+//    private OptionPopupContent createPopupContent() {
+//        OptionPopupContent filterBtnLayout = new OptionPopupContent();
+//
+//        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+//            MButton editButton = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent -> {
+//                taskSettingPopupBtn.setPopupVisible(false);
+//                EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(TaskRowRenderer.this, assignment));
+//            }).withIcon(FontAwesome.EDIT);
+//            filterBtnLayout.addOption(editButton);
+//            filterBtnLayout.addSeparator();
+//        }
+//
+//        if (!assignment.isCompleted()) {
+//            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+//                MButton closeBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLOSE), clickEvent -> {
+//                    assignment.setStatus(OptionI18nEnum.StatusI18nEnum.Closed.name());
+//                    assignment.setPercentagecomplete(100d);
+//                    ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+//                    projectTaskService.updateSelectiveWithSession(assignment, UserUIContext.getUsername());
+//                    taskSettingPopupBtn.setPopupVisible(false);
+//                    closeTask();
+//                    EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskRowRenderer.this, null));
+//                }).withIcon(FontAwesome.CHECK_CIRCLE_O);
+//                filterBtnLayout.addOption(closeBtn);
+//            }
+//        } else {
+//            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+//                MButton reOpenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
+//                    taskSettingPopupBtn.setPopupVisible(false);
+//                    assignment.setStatus(OptionI18nEnum.StatusI18nEnum.Open.name());
+//                    assignment.setPercentagecomplete(0d);
+//
+//                    ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+//                    projectTaskService.updateSelectiveWithSession(assignment, UserUIContext.getUsername());
+//                    reOpenTask();
+//                    EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskRowRenderer.this, null));
+//                }).withIcon(FontAwesome.UNLOCK);
+//                filterBtnLayout.addOption(reOpenBtn);
+//            }
+//        }
+//
+//        filterBtnLayout.addSeparator();
+//
+//        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS)) {
+//            MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
+//                taskSettingPopupBtn.setPopupVisible(false);
+//                ConfirmDialogExt.show(UI.getCurrent(),
+//                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+//                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+//                        UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+//                        UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
+//                        confirmDialog -> {
+//                            if (confirmDialog.isConfirmed()) {
+//                                ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+//                                projectTaskService.removeWithSession(assignment, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+//                                deleteTask();
+//                            }
+//                        });
+//            }).withIcon(FontAwesome.TRASH_O);
+//            filterBtnLayout.addDangerOption(deleteBtn);
+//        }
+//
+//        return filterBtnLayout;
+//    }
 }

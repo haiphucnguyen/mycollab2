@@ -40,7 +40,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
 
     @Override
     protected String initFormTitle() {
-        return beanItem.getId() == null ? UserUIContext.getMessage(BugI18nEnum.NEW) : beanItem.getSummary();
+        return beanItem.getId() == null ? UserUIContext.getMessage(BugI18nEnum.NEW) : beanItem.getName();
     }
 
     @Override
@@ -93,7 +93,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
                     beanItem.setSeverity(BugSeverity.Major.name());
                 }
                 return new BugSeverityComboBox();
-            } else if (propertyId.equals("summary")) {
+            } else if (propertyId.equals("name")) {
                 final MTextField tf = new MTextField();
                 if (isValidateForm) {
                     tf.withNullRepresentation("").withRequired(true).withRequiredError(UserUIContext.getMessage
@@ -141,7 +141,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
 
         @Override
         protected Component onAttachField(Object propertyId, Field<?> field) {
-            if (propertyId.equals("summary")) {
+            if (propertyId.equals("name")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_SUMMARY), 0, 0);
             } else if (propertyId.equals("milestoneid")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_PHASE), 0, 1);

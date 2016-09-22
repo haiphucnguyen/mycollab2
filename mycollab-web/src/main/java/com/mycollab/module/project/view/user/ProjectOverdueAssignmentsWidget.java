@@ -23,11 +23,11 @@ import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.domain.ProjectGenericTask;
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
-import com.mycollab.module.project.service.ProjectGenericTaskService;
+import com.mycollab.module.project.service.ProjectAssignmentService;
 import com.mycollab.module.project.ui.components.GenericTaskRowDisplayHandler;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
@@ -44,9 +44,9 @@ import com.vaadin.ui.CssLayout;
 public class ProjectOverdueAssignmentsWidget extends Depot {
     private static final long serialVersionUID = 1L;
 
-    private ProjectGenericTaskSearchCriteria searchCriteria;
+    private ProjectAssignmentSearchCriteria searchCriteria;
 
-    private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
+    private DefaultBeanPagedList<ProjectAssignmentService, ProjectAssignmentSearchCriteria, ProjectAssignment> taskList;
 
     public ProjectOverdueAssignmentsWidget() {
         super(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OVERDUE_ASSIGNMENTS_VALUE, 0), new CssLayout());
@@ -66,7 +66,7 @@ public class ProjectOverdueAssignmentsWidget extends Depot {
             }
         });
 
-        taskList = new DefaultBeanPagedList(AppContextUtil.getSpringBean(ProjectGenericTaskService.class),
+        taskList = new DefaultBeanPagedList(AppContextUtil.getSpringBean(ProjectAssignmentService.class),
                 new GenericTaskRowDisplayHandler(), 10) {
             @Override
             protected String stringWhenEmptyList() {
@@ -78,7 +78,7 @@ public class ProjectOverdueAssignmentsWidget extends Depot {
     }
 
     public void showOpenAssignments() {
-        searchCriteria = new ProjectGenericTaskSearchCriteria();
+        searchCriteria = new ProjectAssignmentSearchCriteria();
         searchCriteria.setIsOpenned(new SearchField());
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         searchCriteria.setDueDate(new DateSearchField(DateTimeUtils.getCurrentDateWithoutMS()));

@@ -49,7 +49,7 @@ public class BugFormLayoutFactory extends AbstractFormLayoutFactory {
 
     @Override
     public Component onAttachField(Object propertyId, Field<?> field) {
-        if (propertyId.equals("summary")) {
+        if (propertyId.equals("name")) {
             return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_SUMMARY), 0, 0);
         } else if (propertyId.equals("milestoneid")) {
             return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_PHASE), 0, 1);

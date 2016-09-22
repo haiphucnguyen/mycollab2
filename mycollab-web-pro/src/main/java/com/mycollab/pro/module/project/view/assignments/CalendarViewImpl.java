@@ -9,16 +9,16 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.ProjectGenericTask;
+import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.SimpleTask;
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.events.AssignmentEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
-import com.mycollab.module.project.service.ProjectGenericTaskService;
+import com.mycollab.module.project.service.ProjectAssignmentService;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.ProjectView;
@@ -74,13 +74,13 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         public void handle(AssignmentEvent.NewAssignmentAdd event) {
             String type = event.getTypeVal();
             Integer typeId = event.getTypeIdVal();
-            ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
+            ProjectAssignmentSearchCriteria searchCriteria = new ProjectAssignmentSearchCriteria();
             searchCriteria.setTypeIds(new SetSearchField<>(typeId));
             searchCriteria.setTypes(new SetSearchField<>(type));
-            ProjectGenericTaskService assignmentService = AppContextUtil.getSpringBean(ProjectGenericTaskService.class);
-            List<ProjectGenericTask> assignments = assignmentService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+            ProjectAssignmentService assignmentService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
+            List<ProjectAssignment> assignments = assignmentService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
             GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
-            for (ProjectGenericTask assignment : assignments) {
+            for (ProjectAssignment assignment : assignments) {
                 GenericAssignmentEvent assignmentEvent = new GenericAssignmentEvent(assignment, false);
                 if (provider.containsEvent(assignmentEvent)) {
                     provider.removeEvent(assignmentEvent);
@@ -97,7 +97,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
     private LocalDate baseDate, startDate, endDate;
     private CalendarMode mode = CalendarMode.MONTHLY;
     private AssignmentSearchPanel searchPanel;
-    private ProjectGenericTaskSearchCriteria searchCriteria;
+    private ProjectAssignmentSearchCriteria searchCriteria;
 
     public CalendarViewImpl() {
         this.withMargin(true).withSpacing(true);
@@ -120,7 +120,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
 
     @Override
     protected void displayView() {
-        searchCriteria = new ProjectGenericTaskSearchCriteria();
+        searchCriteria = new ProjectAssignmentSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         setProjectNavigatorVisibility(false);
         removeAllComponents();
@@ -132,7 +132,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
             @Override
             public void eventClick(CalendarComponentEvents.EventClick event) {
                 GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
-                ProjectGenericTask assignment = calendarEvent.getAssignment();
+                ProjectAssignment assignment = calendarEvent.getAssignment();
                 if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                     ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
@@ -278,7 +278,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
     }
 
     @Override
-    public void queryAssignments(ProjectGenericTaskSearchCriteria criteria) {
+    public void queryAssignments(ProjectAssignmentSearchCriteria criteria) {
         searchCriteria = criteria;
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         RangeDateSearchField dateRange = new RangeDateSearchField(startDate.toDate(), endDate.toDate());
@@ -348,7 +348,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
     }
 
     @Override
-    public HasSearchHandlers<ProjectGenericTaskSearchCriteria> getSearchHandlers() {
+    public HasSearchHandlers<ProjectAssignmentSearchCriteria> getSearchHandlers() {
         return searchPanel;
     }
 }

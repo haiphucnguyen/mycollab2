@@ -79,7 +79,7 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             return new I18nValueComboBox(false, StatusI18nEnum.Open, StatusI18nEnum.Closed);
         } else if (Risk.Field.priority.equalTo(propertyId)) {
             return new PriorityComboBox();
-        } else if (Risk.Field.riskname.equalTo(propertyId)) {
+        } else if (Risk.Field.name.equalTo(propertyId)) {
             MTextField field = new MTextField().withNullRepresentation("");
             if (isValidateForm) {
                 field.withRequired(true).withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,

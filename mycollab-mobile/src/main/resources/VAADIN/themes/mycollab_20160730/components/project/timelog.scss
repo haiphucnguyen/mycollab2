@@ -4,13 +4,13 @@
       display: block;
       height: 1.2rem;
     }
-    .summary-info-panel {
+    .name-info-panel {
       background-color: rgb(255, 255, 255);
       border-bottom: 0.1rem solid $light-gray-border;
       .total-time {
         border-right: 0.1rem solid $light-gray-border;
       }
-      .summary-block {
+      .name-block {
         .block-label {
           color: $gray-text;
         }

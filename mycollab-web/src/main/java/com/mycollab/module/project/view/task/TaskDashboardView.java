@@ -16,8 +16,8 @@
  */
 package com.mycollab.module.project.view.task;
 
-import com.mycollab.module.project.domain.SimpleTask;
-import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.vaadin.mvp.PageView;
 import com.mycollab.vaadin.web.ui.IListView;
 
@@ -25,8 +25,8 @@ import com.mycollab.vaadin.web.ui.IListView;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public interface TaskDashboardView extends IListView<TaskSearchCriteria, SimpleTask>, PageView {
+public interface TaskDashboardView extends IListView<ProjectAssignmentSearchCriteria, ProjectAssignment>, PageView {
     void displayView(String query);
 
-    void queryTask(TaskSearchCriteria searchCriteria);
+    void queryTask(ProjectAssignmentSearchCriteria searchCriteria);
 }

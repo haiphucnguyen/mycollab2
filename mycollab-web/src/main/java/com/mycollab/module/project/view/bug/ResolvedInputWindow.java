@@ -68,7 +68,7 @@ public class ResolvedInputWindow extends MWindow {
     private VersionMultiSelectField fixedVersionSelect;
 
     public ResolvedInputWindow(SimpleBug bugValue) {
-        super(UserUIContext.getMessage(BugI18nEnum.OPT_RESOLVE_BUG, bugValue.getSummary()));
+        super(UserUIContext.getMessage(BugI18nEnum.OPT_RESOLVE_BUG, bugValue.getName()));
         this.bug = BeanUtility.deepClone(bugValue);
         EditForm editForm = new EditForm();
         editForm.setBean(bug);

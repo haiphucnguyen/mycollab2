@@ -3,7 +3,7 @@ package com.mycollab.pro.module.project.view.time;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.module.project.domain.ProjectGenericTask;
+import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.events.TimeTrackingEvent;
@@ -34,7 +34,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
     private CheckBox isOvertimeCheckBox;
     private ProjectMemberSelectionBox projectMemberSelectionBox;
     private RichTextArea descArea;
-    private ProjectGenericTask selectionTask;
+    private ProjectAssignment selectionTask;
     private MHorizontalLayout taskLayout;
     private PopupDateFieldExt dateField;
     private DoubleField timeField;
@@ -81,7 +81,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         createLinkTaskButton();
 
         if (timeLogging.getType() != null && timeLogging.getTypeid() != null) {
-            ProjectGenericTask tempSelectionTask = new ProjectGenericTask();
+            ProjectAssignment tempSelectionTask = new ProjectAssignment();
             tempSelectionTask.setType(timeLogging.getType());
             tempSelectionTask.setTypeId(timeLogging.getTypeid());
             String name = new GenericTaskDetailMapper(tempSelectionTask.getType(), tempSelectionTask.getTypeId()).getName();
@@ -111,7 +111,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
     }
 
     @Override
-    public void updateLinkTask(ProjectGenericTask selectionTask) {
+    public void updateLinkTask(ProjectAssignment selectionTask) {
         this.selectionTask = selectionTask;
         if (selectionTask != null) {
             final String taskName = selectionTask.getName();

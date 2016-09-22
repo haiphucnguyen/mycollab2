@@ -86,7 +86,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             final RichTextArea richTextArea = new RichTextArea();
             richTextArea.setNullRepresentation("");
             return richTextArea;
-        } else if (Task.Field.taskname.equalTo(propertyId)) {
+        } else if (Task.Field.name.equalTo(propertyId)) {
             return new MTextField().withNullRepresentation("").withRequired(true).withRequiredError(UserUIContext
                     .getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL, UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
         } else if (Task.Field.status.equalTo(propertyId)) {

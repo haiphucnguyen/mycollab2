@@ -4,7 +4,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
@@ -24,7 +24,7 @@ import static com.mycollab.vaadin.web.ui.WebUIConstants.BUTTON_ACTION;
  * @author MyCollab Ltd
  * @since 5.2.8
  */
-public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectGenericTaskSearchCriteria> {
+public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssignmentSearchCriteria> {
     private boolean isCreateAssignment;
 
     public AssignmentSearchPanel(boolean isCreateAssignment) {
@@ -32,12 +32,12 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectGene
     }
 
     @Override
-    protected SearchLayout<ProjectGenericTaskSearchCriteria> createBasicSearchLayout() {
+    protected SearchLayout<ProjectAssignmentSearchCriteria> createBasicSearchLayout() {
         return new AssignmentBasicSearchLayout();
     }
 
     @Override
-    protected SearchLayout<ProjectGenericTaskSearchCriteria> createAdvancedSearchLayout() {
+    protected SearchLayout<ProjectAssignmentSearchCriteria> createAdvancedSearchLayout() {
         return null;
     }
 
@@ -58,7 +58,7 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectGene
         return null;
     }
 
-    private class AssignmentBasicSearchLayout extends BasicSearchLayout<ProjectGenericTaskSearchCriteria> {
+    private class AssignmentBasicSearchLayout extends BasicSearchLayout<ProjectAssignmentSearchCriteria> {
         private static final long serialVersionUID = 1L;
         private TextField nameField;
         private CheckBox myItemCheckbox;
@@ -93,8 +93,8 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectGene
         }
 
         @Override
-        protected ProjectGenericTaskSearchCriteria fillUpSearchCriteria() {
-            ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
+        protected ProjectAssignmentSearchCriteria fillUpSearchCriteria() {
+            ProjectAssignmentSearchCriteria searchCriteria = new ProjectAssignmentSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
             searchCriteria.setName(StringSearchField.and(nameField.getValue().trim()));
             if (myItemCheckbox.getValue()) {

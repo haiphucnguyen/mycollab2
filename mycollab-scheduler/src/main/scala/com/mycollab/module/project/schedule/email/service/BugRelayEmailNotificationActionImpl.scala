@@ -60,7 +60,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
   protected def buildExtraTemplateVariables(context: MailContext[SimpleBug]) {
     val emailNotification = context.getEmailNotification
     
-    val summary = "#" + bean.getBugkey + " - " + bean.getSummary
+    val summary = "#" + bean.getBugkey + " - " + bean.getName
     val summaryLink = ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bean.getBugkey, bean.getProjectShortName)
     
     val avatarId = if (projectMember != null) projectMember.getMemberAvatarId else ""
@@ -76,14 +76,14 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
     contentGenerator.putVariable("projectName", bean.getProjectname)
     contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, bean.getProjectid))
     contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
-    contentGenerator.putVariable("summary", summary)
+    contentGenerator.putVariable("name", summary)
     contentGenerator.putVariable("summaryLink", summaryLink)
   }
   
   protected def getBeanInContext(notification: ProjectRelayEmailNotification): SimpleBug =
     bugService.findById(notification.getTypeid.toInt, notification.getSaccountid)
   
-  protected def getItemName: String = StringUtils.trim(bean.getSummary, 100)
+  protected def getItemName: String = StringUtils.trim(bean.getName, 100)
   
   override protected def getProjectName: String = bean.getProjectname
   
@@ -135,7 +135,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
   }
   
   class BugFieldNameMapper extends ItemFieldMapper {
-    put(BugWithBLOBs.Field.summary, BugI18nEnum.FORM_SUMMARY, isColSpan = true)
+    put(BugWithBLOBs.Field.name, BugI18nEnum.FORM_SUMMARY, isColSpan = true)
     put(BugWithBLOBs.Field.environment, BugI18nEnum.FORM_ENVIRONMENT, isColSpan = true)
     put(BugWithBLOBs.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
     put(BugWithBLOBs.Field.assignuser, new AssigneeFieldFormat(BugWithBLOBs.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))

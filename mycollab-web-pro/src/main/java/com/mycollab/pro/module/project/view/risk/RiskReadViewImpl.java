@@ -62,7 +62,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected String initFormTitle() {
-        return beanItem.getRiskname();
+        return beanItem.getName();
     }
 
     @Override

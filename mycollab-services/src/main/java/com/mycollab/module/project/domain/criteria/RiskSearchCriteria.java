@@ -22,7 +22,6 @@ import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.db.query.*;
 
@@ -68,7 +67,7 @@ public class RiskSearchCriteria extends SearchCriteria {
     public static final Param p_lastupdatedtime = CacheParamMapper.register(ProjectTypeConstants.RISK, GenericI18Enum.FORM_LAST_UPDATED_TIME,
             new DateParam("lastupdatedtime", "m_prj_risk", "lastUpdatedTime"));
 
-    private StringSearchField riskname;
+    private StringSearchField name;
 
     private StringSearchField raisedByUser;
 
@@ -78,12 +77,12 @@ public class RiskSearchCriteria extends SearchCriteria {
 
     private NumberSearchField id;
 
-    public StringSearchField getRiskname() {
-        return riskname;
+    public StringSearchField getName() {
+        return name;
     }
 
-    public void setRiskname(StringSearchField riskname) {
-        this.riskname = riskname;
+    public void setName(StringSearchField name) {
+        this.name = name;
     }
 
     public NumberSearchField getProjectId() {

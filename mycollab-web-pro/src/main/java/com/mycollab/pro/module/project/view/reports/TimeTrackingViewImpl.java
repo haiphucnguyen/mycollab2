@@ -314,7 +314,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements TimeTracki
         @Override
         public void itemClick(final IPagedBeanTable.TableClickEvent event) {
             SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event.getData();
-            if ("summary".equals(event.getFieldName())) {
+            if ("name".equals(event.getFieldName())) {
                 int typeId = itemLogging.getTypeid();
                 int projectId = itemLogging.getProjectid();
 
