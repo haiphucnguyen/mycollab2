@@ -34,10 +34,7 @@ import com.mycollab.module.project.view.settings.component.ProjectMemberListSele
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
-import com.mycollab.vaadin.web.ui.DynamicQueryParamLayout;
-import com.mycollab.vaadin.web.ui.SavedFilterComboBox;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -188,11 +185,6 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
             searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
             return searchCriteria;
         }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return TaskSearchPanel.this.constructHeader();
-        }
     }
 
     private class TaskAdvancedSearchLayout extends DynamicQueryParamLayout<TaskSearchCriteria> {
@@ -200,11 +192,6 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
 
         private TaskAdvancedSearchLayout() {
             super(TaskSearchPanel.this, ProjectTypeConstants.TASK);
-        }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return TaskSearchPanel.this.constructHeader();
         }
 
         @Override

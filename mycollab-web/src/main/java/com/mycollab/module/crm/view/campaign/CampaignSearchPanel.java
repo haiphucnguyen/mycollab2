@@ -32,9 +32,7 @@ import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
-import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
-import com.mycollab.vaadin.web.ui.DynamicQueryParamLayout;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -88,13 +86,8 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
         private TextField nameField;
         private CheckBox myItemCheckbox;
 
-        public CampaignBasicSearchLayout() {
+        CampaignBasicSearchLayout() {
             super(CampaignSearchPanel.this);
-        }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return CampaignSearchPanel.this.constructHeader();
         }
 
         @Override
@@ -146,13 +139,8 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
     private class CampaignAdvancedSearchLayout extends DynamicQueryParamLayout<CampaignSearchCriteria> {
         private static final long serialVersionUID = 1L;
 
-        public CampaignAdvancedSearchLayout() {
+        CampaignAdvancedSearchLayout() {
             super(CampaignSearchPanel.this, CrmTypeConstants.CAMPAIGN);
-        }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return CampaignSearchPanel.this.constructHeader();
         }
 
         @Override

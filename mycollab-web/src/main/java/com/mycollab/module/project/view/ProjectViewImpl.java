@@ -133,14 +133,8 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
                     messagePresenter.go(ProjectViewImpl.this, null);
                 } else if (ProjectTypeConstants.MILESTONE.equals(caption)) {
                     milestonesPresenter.go(ProjectViewImpl.this, new MilestoneScreenData.Roadmap());
-                } else if (ProjectTypeConstants.TASK.equals(caption)) {
+                } else if (ProjectTypeConstants.TICKET.equals(caption)) {
                     taskPresenter.go(ProjectViewImpl.this, null);
-                } else if (ProjectTypeConstants.BUG.equals(caption)) {
-                    bugPresenter.go(ProjectViewImpl.this, null);
-                } else if (ProjectTypeConstants.RISK.equals(caption)) {
-                    RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
-                    searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                    riskPresenter.go(ProjectViewImpl.this, new RiskScreenData.Search(searchCriteria));
                 } else if (ProjectTypeConstants.FILE.equals(caption)) {
                     filePresenter.go(ProjectViewImpl.this, new FileScreenData.GotoDashboard());
                 } else if (ProjectTypeConstants.PAGE.equals(caption)) {
@@ -229,18 +223,10 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
             if (CurrentProjectVariables.hasTaskFeature()) {
                 myProjectTab.addTab(constructTaskDashboardComponent(),
-                        ProjectTypeConstants.TASK, 4, UserUIContext.getMessage(TaskI18nEnum.LIST),
+                        ProjectTypeConstants.TICKET, 4, UserUIContext.getMessage(TicketI18nEnum.LIST),
                         GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateTaskDashboardLink(prjId));
             } else {
                 myProjectTab.removeTab(ProjectTypeConstants.TASK);
-            }
-
-            if (CurrentProjectVariables.hasBugFeature()) {
-                myProjectTab.addTab(constructProjectBugComponent(), ProjectTypeConstants.BUG, 5,
-                        UserUIContext.getMessage(BugI18nEnum.LIST),
-                        GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateProjectLink(prjId));
-            } else {
-                myProjectTab.removeTab(ProjectTypeConstants.BUG);
             }
 
             if (CurrentProjectVariables.hasPageFeature()) {
@@ -259,15 +245,8 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
                 myProjectTab.removeTab(ProjectTypeConstants.FILE);
             }
 
-            if (CurrentProjectVariables.hasRiskFeature() && !SiteConfiguration.isCommunityEdition()) {
-                myProjectTab.addTab(constructProjectRiskComponent(), ProjectTypeConstants.RISK, 8,
-                        UserUIContext.getMessage(RiskI18nEnum.LIST),
-                        GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateRisksLink(prjId));
-            } else {
-                myProjectTab.removeTab(ProjectTypeConstants.RISK);
-            }
-
-            if ((CurrentProjectVariables.hasTimeFeature() || CurrentProjectVariables.hasInvoiceFeature()) && !SiteConfiguration.isCommunityEdition()) {
+            if ((CurrentProjectVariables.hasTimeFeature() || CurrentProjectVariables.hasInvoiceFeature())
+                    && !SiteConfiguration.isCommunityEdition()) {
                 myProjectTab.addTab(constructTimeTrackingComponent(), ProjectTypeConstants.FINANCE, 10,
                         UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FINANCE),
                         GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateTimeReportLink(prjId));

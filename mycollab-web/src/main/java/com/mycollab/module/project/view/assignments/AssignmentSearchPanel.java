@@ -18,10 +18,7 @@ import com.mycollab.module.project.view.settings.component.ProjectMemberListSele
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
-import com.mycollab.vaadin.web.ui.DynamicQueryParamLayout;
-import com.mycollab.vaadin.web.ui.SavedFilterComboBox;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -169,11 +166,6 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssi
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
             return searchCriteria;
         }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return AssignmentSearchPanel.this.constructHeader();
-        }
     }
 
     private class AssignmentAdvancedSearchLayout extends DynamicQueryParamLayout<ProjectAssignmentSearchCriteria> {
@@ -181,11 +173,6 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssi
 
         private AssignmentAdvancedSearchLayout() {
             super(AssignmentSearchPanel.this, ProjectTypeConstants.TICKET);
-        }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return AssignmentSearchPanel.this.constructHeader();
         }
 
         @Override

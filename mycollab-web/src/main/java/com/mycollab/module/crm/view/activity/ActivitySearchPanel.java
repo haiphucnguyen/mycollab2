@@ -30,10 +30,7 @@ import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
-import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
-import com.mycollab.vaadin.web.ui.OptionPopupContent;
-import com.mycollab.vaadin.web.ui.SplitButton;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -111,11 +108,6 @@ public class ActivitySearchPanel extends DefaultGenericSearchPanel<ActivitySearc
 
         EventBasicSearchLayout() {
             super(ActivitySearchPanel.this);
-        }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return ActivitySearchPanel.this.constructHeader();
         }
 
         @Override

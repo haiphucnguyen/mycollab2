@@ -8,7 +8,9 @@ import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriter
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.web.ui.BasicSearchLayout;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
+import com.mycollab.vaadin.web.ui.SearchLayout;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;

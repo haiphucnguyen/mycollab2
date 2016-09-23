@@ -32,9 +32,7 @@ import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
-import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
-import com.mycollab.vaadin.web.ui.DynamicQueryParamLayout;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -88,13 +86,8 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
         private TextField nameField;
         private CheckBox myItemCheckbox;
 
-        public LeadBasicSearchLayout() {
+        LeadBasicSearchLayout() {
             super(LeadSearchPanel.this);
-        }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return LeadSearchPanel.this.constructHeader();
         }
 
         @Override
@@ -145,13 +138,8 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 
     private class LeadAdvancedSearchLayout extends DynamicQueryParamLayout<LeadSearchCriteria> {
 
-        public LeadAdvancedSearchLayout() {
+        LeadAdvancedSearchLayout() {
             super(LeadSearchPanel.this, CrmTypeConstants.LEAD);
-        }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return LeadSearchPanel.this.constructHeader();
         }
 
         @Override

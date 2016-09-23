@@ -33,9 +33,7 @@ import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
-import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
-import com.mycollab.vaadin.web.ui.DynamicQueryParamLayout;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -93,11 +91,6 @@ public class ContactSearchPanel extends DefaultGenericSearchPanel<ContactSearchC
         }
 
         @Override
-        public ComponentContainer constructHeader() {
-            return ContactSearchPanel.this.constructHeader();
-        }
-
-        @Override
         public ComponentContainer constructBody() {
             MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
             nameField = new MTextField().withInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
@@ -143,11 +136,6 @@ public class ContactSearchPanel extends DefaultGenericSearchPanel<ContactSearchC
 
         ContactAdvancedSearchLayout() {
             super(ContactSearchPanel.this, CrmTypeConstants.CONTACT);
-        }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return ContactSearchPanel.this.constructHeader();
         }
 
         @Override

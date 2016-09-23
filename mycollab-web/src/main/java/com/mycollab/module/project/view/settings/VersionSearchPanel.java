@@ -29,7 +29,9 @@ import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
+import com.mycollab.vaadin.web.ui.BasicSearchLayout;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
+import com.mycollab.vaadin.web.ui.SearchLayout;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
@@ -75,11 +77,6 @@ public class VersionSearchPanel extends DefaultGenericSearchPanel<VersionSearchC
 
         VersionBasicSearchLayout() {
             super(VersionSearchPanel.this);
-        }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return VersionSearchPanel.this.constructHeader();
         }
 
         @Override

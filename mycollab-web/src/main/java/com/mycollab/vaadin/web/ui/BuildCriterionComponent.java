@@ -54,7 +54,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
     private static final Logger LOG = LoggerFactory.getLogger(BuildCriterionComponent.class);
 
-    private GenericSearchPanel.SearchLayout<S> hostSearchLayout;
+    private SearchLayout<S> hostSearchLayout;
     private Param[] paramFields;
     private String searchCategory;
     private Class<S> type;
@@ -62,7 +62,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
     private MHorizontalLayout filterBox;
     private MVerticalLayout searchContainer;
 
-    public BuildCriterionComponent(GenericSearchPanel.SearchLayout<S> searchLayout, Param[] paramFields, Class<S> type, String searchCategory) {
+    public BuildCriterionComponent(SearchLayout<S> searchLayout, Param[] paramFields, Class<S> type, String searchCategory) {
         this.hostSearchLayout = searchLayout;
         this.paramFields = paramFields;
         this.type = type;

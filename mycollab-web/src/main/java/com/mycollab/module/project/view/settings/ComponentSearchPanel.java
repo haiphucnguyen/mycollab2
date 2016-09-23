@@ -29,7 +29,9 @@ import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
+import com.mycollab.vaadin.web.ui.BasicSearchLayout;
 import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
+import com.mycollab.vaadin.web.ui.SearchLayout;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
@@ -74,13 +76,8 @@ public class ComponentSearchPanel extends DefaultGenericSearchPanel<ComponentSea
         private TextField nameField;
         private CheckBox myItemCheckbox;
 
-        public ComponentBasicSearchLayout() {
+        ComponentBasicSearchLayout() {
             super(ComponentSearchPanel.this);
-        }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return ComponentSearchPanel.this.constructHeader();
         }
 
         @Override
