@@ -103,7 +103,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 
         tableItem.addGeneratedColumn("datedue", (source, itemId, columnId) -> {
             SimpleRisk item = tableItem.getBeanByIndex(itemId);
-            return new ELabel().prettyDate(item.getDatedue());
+            return new ELabel().prettyDate(item.getDuedate());
         });
 
         tableItem.addGeneratedColumn("status", (source, itemId, columnId) -> {

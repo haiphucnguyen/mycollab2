@@ -51,7 +51,7 @@ public class TaskDefaultFormLayoutFactory {
                 .displayName(GenericI18Enum.FORM_END_DATE)
                 .fieldIndex(2).build());
 
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Task.Field.deadline)
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Task.Field.duedate)
                 .displayName(GenericI18Enum.FORM_DUE_DATE)
                 .fieldIndex(3).build());
 

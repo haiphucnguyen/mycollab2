@@ -64,7 +64,7 @@ public class RiskDefaultFormLayoutFactory {
                 .displayName(RiskI18nEnum.FORM_PROBABILITY)
                 .fieldIndex(11).build());
 
-        mainSection.fields(new DateDynaFieldBuilder().fieldName(Risk.Field.datedue)
+        mainSection.fields(new DateDynaFieldBuilder().fieldName(Risk.Field.duedate)
                 .displayName(GenericI18Enum.FORM_DUE_DATE)
                 .fieldIndex(12).build());
 

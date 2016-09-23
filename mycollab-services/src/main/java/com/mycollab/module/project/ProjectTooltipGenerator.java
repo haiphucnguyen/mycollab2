@@ -117,7 +117,8 @@ public class ProjectTooltipGenerator {
 
             Tr trRow3 = new Tr();
             Td cell31 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_DUE_DATE));
-            String deadline = DateTimeUtils.convertToStringWithUserTimeZone(task.getDeadline(), dateFormat, locale, timeZone);
+            String deadline = DateTimeUtils.convertToStringWithUserTimeZone(task.getDuedate(), dateFormat, locale,
+                    timeZone);
             Td cell32 = buildCellValue(deadline);
             Td cell33 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_PRIORITY));
             Td cell34 = buildCellValue(LocalizationHelper.getMessage(locale, Priority.class, task.getPriority()));
@@ -283,7 +284,7 @@ public class ProjectTooltipGenerator {
 
             Tr trRow3 = new Tr();
             Td cell31 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_DUE_DATE));
-            String dueDate = DateTimeUtils.convertToStringWithUserTimeZone(risk.getDatedue(), dateFormat, locale, timeZone);
+            String dueDate = DateTimeUtils.convertToStringWithUserTimeZone(risk.getDuedate(), dateFormat, locale, timeZone);
             Td cell32 = buildCellValue(dueDate);
             Td cell33 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_STATUS));
             Td cell34 = buildCellValue(LocalizationHelper.getMessage(locale, StatusI18nEnum.class, risk.getStatus()));

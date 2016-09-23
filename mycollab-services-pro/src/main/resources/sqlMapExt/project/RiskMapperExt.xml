@@ -82,7 +82,7 @@
         <![CDATA[
           SELECT m_prj_risk.id, m_prj_risk.name, m_prj_risk.description, m_prj_risk.projectId, m_prj_risk.raisedbyuser,
                  m_prj_risk.assignUser, m_prj_risk.consequence, m_prj_risk.probalitity, m_prj_risk.status, m_prj_risk.dateraised,
-                 m_prj_risk.datedue, m_prj_risk.startdate, m_prj_risk.enddate, m_prj_risk.response, m_prj_risk.resolution, m_prj_risk.priority,
+                 m_prj_risk.dueDate, m_prj_risk.startdate, m_prj_risk.enddate, m_prj_risk.response, m_prj_risk.resolution, m_prj_risk.priority,
                  m_prj_risk.source, m_prj_risk.createdTime, m_prj_risk.lastUpdatedTime,  m_prj_risk.sAccountId,
                  raisedUser.avatarId AS raisedByUserAvatarId,
                  concat(raisedUser.firstname, ' ', LTRIM(concat(IFNULL(raisedUser.middlename, ''), ' ')), raisedUser.lastname) AS raisedByUserFullName,

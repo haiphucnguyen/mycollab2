@@ -98,7 +98,7 @@ public class AssignmentPopupFieldFactoryImpl implements AssignmentPopupFieldFact
         task.setName(bean.getName());
         task.setStartdate(bean.getEndDate());
         task.setEnddate(bean.getEndDate());
-        task.setDeadline(bean.getDueDate());
+        task.setDuedate(bean.getDueDate());
         task.setStatus(bean.getStatus());
         task.setSaccountid(bean.getsAccountId());
         return task;
@@ -122,7 +122,7 @@ public class AssignmentPopupFieldFactoryImpl implements AssignmentPopupFieldFact
         risk.setName(bean.getName());
         risk.setStartdate(bean.getEndDate());
         risk.setEnddate(bean.getEndDate());
-        risk.setDatedue(bean.getDueDate());
+        risk.setDuedate(bean.getDueDate());
         risk.setStatus(bean.getStatus());
         risk.setSaccountid(bean.getsAccountId());
         return risk;

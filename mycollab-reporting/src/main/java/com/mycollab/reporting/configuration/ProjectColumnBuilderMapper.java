@@ -210,7 +210,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         map.put(Task.Field.name.name(), new HyperlinkBuilderGenerator(taskNameTitleExpr, taskNameHrefExpr));
         map.put(Task.Field.startdate.name(), new SimpleExpressionBuilderGenerator(new DateExpression(Task.Field.startdate.name())));
         map.put(Task.Field.enddate.name(), new SimpleExpressionBuilderGenerator(new DateExpression(Task.Field.enddate.name())));
-        map.put(Task.Field.deadline.name(), new SimpleExpressionBuilderGenerator(new DateExpression(Task.Field.deadline.name())));
+        map.put(Task.Field.duedate.name(), new SimpleExpressionBuilderGenerator(new DateExpression(Task.Field.duedate.name())));
         map.put(Task.Field.status.name(), new SimpleExpressionBuilderGenerator(new I18nExpression("status", StatusI18nEnum.class)));
 
         DRIExpression<String> milestoneTitleExpr = new PrimaryTypeFieldExpression<>(SimpleTask.Field.milestoneName.name());
@@ -465,7 +465,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
 
         map.put(Risk.Field.status.name(), new SimpleExpressionBuilderGenerator(new I18nExpression("status", StatusI18nEnum.class)));
         map.put(Risk.Field.priority.name(), new SimpleExpressionBuilderGenerator(new I18nExpression("priority", OptionI18nEnum.Priority.class)));
-        map.put(Risk.Field.datedue.name(), new SimpleExpressionBuilderGenerator(new DateExpression(Risk.Field.datedue.name())));
+        map.put(Risk.Field.duedate.name(), new SimpleExpressionBuilderGenerator(new DateExpression(Risk.Field.duedate.name())));
 
         return map;
     }

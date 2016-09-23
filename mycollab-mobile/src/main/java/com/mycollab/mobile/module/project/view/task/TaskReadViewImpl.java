@@ -197,7 +197,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
             } else if (propertyId.equals("enddate")) {
                 return new DefaultViewField(UserUIContext.formatDate(beanItem.getEnddate()));
             } else if (propertyId.equals("deadline")) {
-                return new DefaultViewField(UserUIContext.formatDate(beanItem.getDeadline()));
+                return new DefaultViewField(UserUIContext.formatDate(beanItem.getDuedate()));
             } else if (propertyId.equals("priority")) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
                     FontAwesome fontPriority = ProjectAssetsManager.getPriority(beanItem.getPriority());

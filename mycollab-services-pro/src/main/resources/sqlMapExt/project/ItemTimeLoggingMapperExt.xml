@@ -62,7 +62,7 @@
                  s_user.avatarId AS logUserAvatarId,
                  concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,
                  m_prj_member.billingRate AS logUserRate, m_prj_member.overtimeBillingRate AS logUserOvertimeRate,
-                 m_prj_task.name as name,  m_prj_task.status, m_prj_task.deadline AS dueDate, m_prj_task.percentagecomplete AS percentageComplete,
+                 m_prj_task.name,  m_prj_task.status, m_prj_task.dueDate, m_prj_task.percentagecomplete AS percentageComplete,
                  m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName
             FROM m_prj_time_logging
               INNER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
@@ -98,7 +98,7 @@
                 s_user.avatarId AS logUserAvatarId,
                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,
                 m_prj_member.billingRate AS logUserRate, m_prj_member.overtimeBillingRate AS logUserOvertimeRate,
-                m_prj_risk.name as name,  m_prj_risk.status, m_prj_risk.datedue AS dueDate, NULL AS percentageComplete,
+                m_prj_risk.name,  m_prj_risk.status, m_prj_risk.dueDate, NULL AS percentageComplete,
                 m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName
            FROM m_prj_time_logging
              INNER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)

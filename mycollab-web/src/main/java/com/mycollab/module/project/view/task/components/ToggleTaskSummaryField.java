@@ -113,7 +113,7 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
         if (task.isOverdue()) {
             taskLink.setCSSClass("overdue");
             resultDiv.appendChild(new Span().setCSSClass(UIConstants.META_INFO).appendText(" - " + UserUIContext
-                    .getMessage(ProjectCommonI18nEnum.OPT_DUE_IN, UserUIContext.formatDuration(task.getDeadline()))));
+                    .getMessage(ProjectCommonI18nEnum.OPT_DUE_IN, UserUIContext.formatDuration(task.getDuedate()))));
         } else if (task.isCompleted()) {
             taskLink.setCSSClass("completed");
         }

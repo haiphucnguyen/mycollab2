@@ -131,7 +131,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 1);
             } else if (Task.Field.enddate.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE), 1, 1);
-            } else if (Task.Field.deadline.equalTo(propertyId)) {
+            } else if (Task.Field.duedate.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 2);
             } else if (Task.Field.assignuser.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 2);

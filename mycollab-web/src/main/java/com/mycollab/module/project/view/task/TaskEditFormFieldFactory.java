@@ -143,7 +143,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
                 attachmentUploadField = new AttachmentUploadField();
             }
             return attachmentUploadField;
-        } else if (Task.Field.deadline.equalTo(propertyId)) {
+        } else if (Task.Field.duedate.equalTo(propertyId)) {
             return new DateTimeOptionField(true);
         } else if (propertyId.equals("selected")) {
             return subscribersComp;

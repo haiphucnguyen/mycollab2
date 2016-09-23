@@ -139,7 +139,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
     put(Task.Field.name, GenericI18Enum.FORM_NAME, isColSpan = true)
     put(Task.Field.startdate, new DateFieldFormat(Task.Field.startdate.name, GenericI18Enum.FORM_START_DATE))
     put(Task.Field.enddate, new DateFieldFormat(Task.Field.enddate.name, GenericI18Enum.FORM_END_DATE))
-    put(Task.Field.deadline, new DateFieldFormat(Task.Field.deadline.name, GenericI18Enum.FORM_DUE_DATE))
+    put(Task.Field.duedate, new DateFieldFormat(Task.Field.duedate.name, GenericI18Enum.FORM_DUE_DATE))
     put(Task.Field.percentagecomplete, TaskI18nEnum.FORM_PERCENTAGE_COMPLETE)
     put(Task.Field.priority, new I18nFieldFormat(Task.Field.priority.name, GenericI18Enum.FORM_PRIORITY, classOf[Priority]))
     put(Task.Field.assignuser, new AssigneeFieldFormat(Task.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))

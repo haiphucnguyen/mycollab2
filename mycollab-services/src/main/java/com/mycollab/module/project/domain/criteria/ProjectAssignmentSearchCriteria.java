@@ -42,8 +42,11 @@ public class ProjectAssignmentSearchCriteria extends SearchCriteria {
     public static final PropertyListParam<Integer> p_milestones = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT, BugI18nEnum.FORM_PHASE,
             new PropertyListParam<Integer>("milestone", "mainTbl", "milestoneId"));
 
-    public static final PropertyListParam<String> p_assignee = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_ASSIGNEE,
+    public static final PropertyListParam<String> p_assignee = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT, GenericI18Enum.FORM_ASSIGNEE,
             new PropertyListParam<String>("assignuser", "mainTbl", "assignUser"));
+
+    public static final DateParam p_logDates = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT,
+            GenericI18Enum.FORM_START_DATE, new DateParam("logdate", "m_prj_time_logging", "logForDay"));
 
     private SetSearchField<Integer> projectIds;
 
