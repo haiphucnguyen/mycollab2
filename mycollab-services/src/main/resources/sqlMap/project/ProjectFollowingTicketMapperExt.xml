@@ -61,7 +61,7 @@
             m_tracker_bug.name AS name, s_user.username AS assignUser,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
             s_user.avatarId AS assignUserAvatarId, m_monitor_item.monitor_date AS monitorDate,
-            m_tracker_bug.id AS typeId, m_tracker_bug.duedate AS dueDate, m_tracker_bug.status AS status
+            m_tracker_bug.id AS typeId, m_tracker_bug.dueDate, m_tracker_bug.status
                
         FROM m_monitor_item
             INNER JOIN m_tracker_bug ON (m_monitor_item.type='Project-Bug' AND m_monitor_item.typeId=m_tracker_bug.id)

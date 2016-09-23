@@ -83,8 +83,7 @@ public abstract class AbstractProjectAssignmentServiceImpl extends DefaultSearch
 
     @Override
     public List<GroupItem> getAssigneeSummary(@CacheKey ProjectAssignmentSearchCriteria criteria) {
-//        return projectAssignmentMapper.getAssigneeSummary(criteria);
-        return null;
+        return projectAssignmentMapper.getAssigneeSummary(criteria);
     }
 
     @Override

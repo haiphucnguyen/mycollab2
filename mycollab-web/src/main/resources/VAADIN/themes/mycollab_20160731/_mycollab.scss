@@ -179,6 +179,7 @@ $v-line-height--header:1.5em;
     }
     .serviceMenuContainer {
       float: left;
+      border-left: 1px solid $my-separator-color;
       .service-menu {
         padding: 8px 12px;
         background: none !important;
@@ -225,7 +226,6 @@ $v-line-height--header:1.5em;
 
     .subDomain {
       font-size: $font-normal;
-      color: $my-white-color;
       padding: 0 6px 0 3px;
       font-weight: $my-font-weight-bold;
     }
@@ -241,7 +241,6 @@ $v-line-height--header:1.5em;
           }
           .v-popup-indicator::before {
             content:'\f0dd';
-            color:$my-white-color;
             font-size: 15px;
             opacity: 1;
           }
@@ -777,6 +776,7 @@ $v-line-height--header:1.5em;
     overflow-x: hidden;
     background-color: #FFF;
     position: relative;
+    border-top: 1px solid $my-separator-color;
   }
 
   div.v-csslayout.main-body {

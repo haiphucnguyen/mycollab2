@@ -866,6 +866,7 @@
     ganttIndex CDATA #IMPLIED
     orderIndex CDATA #IMPLIED
     color CDATA #IMPLIED
+    priority CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_notifications EMPTY>
@@ -928,13 +929,13 @@
     name CDATA #REQUIRED
     description CDATA #IMPLIED
     projectId CDATA #REQUIRED
-    raisedbyuser CDATA #IMPLIED
-    assigntouser CDATA #IMPLIED
+    createdUser CDATA #IMPLIED
+    assignUser CDATA #IMPLIED
     consequence CDATA #IMPLIED
     probalitity CDATA #IMPLIED
     status CDATA #IMPLIED
     dateraised CDATA #IMPLIED
-    datedue CDATA #IMPLIED
+    dueDate CDATA #IMPLIED
     response CDATA #IMPLIED
     resolution CDATA #IMPLIED
     source CDATA #IMPLIED
@@ -986,21 +987,21 @@
     id CDATA #REQUIRED
     name CDATA #REQUIRED
     percentagecomplete CDATA #REQUIRED
-    startdate CDATA #IMPLIED
-    enddate CDATA #IMPLIED
+    startDate CDATA #IMPLIED
+    endDate CDATA #IMPLIED
     priority CDATA #IMPLIED
     duration CDATA #IMPLIED
     isestimated CDATA #IMPLIED
     projectId CDATA #REQUIRED
-    deadline CDATA #IMPLIED
-    notes CDATA #IMPLIED
+    dueDate CDATA #IMPLIED
+    description CDATA #IMPLIED
     taskindex CDATA #IMPLIED
     createdTime CDATA #IMPLIED
     lastUpdatedTime CDATA #IMPLIED
     assignUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     status CDATA #IMPLIED
-    logBy CDATA #IMPLIED
+    createdUser CDATA #IMPLIED
     taskkey CDATA #IMPLIED
     originalEstimate CDATA #IMPLIED
     remainEstimate CDATA #IMPLIED
@@ -1032,14 +1033,14 @@
     id CDATA #REQUIRED
     name CDATA #REQUIRED
     detail CDATA #IMPLIED
-    assignuser CDATA #IMPLIED
+    assignUser CDATA #IMPLIED
     createdTime CDATA #IMPLIED
-    logby CDATA #IMPLIED
+    createdUser CDATA #IMPLIED
     severity CDATA #IMPLIED
     priority CDATA #IMPLIED
     lastUpdatedTime CDATA #IMPLIED
     status CDATA #REQUIRED
-    duedate CDATA #IMPLIED
+    dueDate CDATA #IMPLIED
     environment CDATA #IMPLIED
     resolution CDATA #IMPLIED
     cus_int_01 CDATA #IMPLIED
@@ -1073,8 +1074,8 @@
     milestoneId CDATA #IMPLIED
     bugkey CDATA #IMPLIED
     bugIndex CDATA #IMPLIED
-    startdate CDATA #IMPLIED
-    enddate CDATA #IMPLIED
+    startDate CDATA #IMPLIED
+    endDate CDATA #IMPLIED
     ganttIndex CDATA #IMPLIED
     percentagecomplete CDATA #IMPLIED
 >

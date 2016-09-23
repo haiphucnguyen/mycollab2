@@ -146,7 +146,7 @@ public class ThemeManager {
         if (accountTheme.getTopmenubg() != null) {
             extraStyles.append(".topNavigation { background-color: #" + accountTheme.getTopmenubg() + "; }");
             extraStyles.append("#login-header { background-color: #" + accountTheme.getTopmenubg() + "; }");
-            extraStyles.append(".topNavigation #mainLogo { background-color: " + ColorUtils.darkerColor("#" + accountTheme.getTopmenubg()) + "; }");
+            extraStyles.append(".topNavigation #mainLogo { background-color: #" + accountTheme.getTopmenubg() + "; }");
         }
 
         if (accountTheme.getTopmenubgselected() != null) {
@@ -161,6 +161,8 @@ public class ThemeManager {
 
         if (accountTheme.getTopmenutext() != null) {
             extraStyles.append(".topNavigation .v-button { color: #" + accountTheme.getTopmenutext() + "; }");
+            extraStyles.append(".subDomain { color: #" + accountTheme.getTopmenutext() + "; }");
+            extraStyles.append(".accountMenuContainer .v-popup-indicator::before { color: #" + accountTheme.getTopmenutext() + "; }");
         }
 
         if (accountTheme.getTopmenutextselected() != null) {

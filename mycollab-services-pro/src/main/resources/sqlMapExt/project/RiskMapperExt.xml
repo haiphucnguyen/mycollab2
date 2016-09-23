@@ -31,7 +31,7 @@
         #end
         
         #ifnotnull($searchCriteria.raisedByUser)
-            ${searchCriteria.raisedByUser.operation} m_prj_risk.raisedbyuser = @{searchCriteria.raisedByUser.value}
+            ${searchCriteria.raisedByUser.operation} m_prj_risk.createdUser = @{searchCriteria.raisedByUser.value}
         #end
         
         #ifnotnull($searchCriteria.assignUser)
@@ -63,7 +63,7 @@
         #end
         
         #ifnotnull($searchCriteria.raisedByUser)
-            ${searchCriteria.raisedByUser.operation} m_prj_risk.raisedbyuser = @{searchCriteria.raisedByUser.value}
+            ${searchCriteria.raisedByUser.operation} m_prj_risk.createdUser = @{searchCriteria.raisedByUser.value}
         #end
         
         #ifnotnull($searchCriteria.assignUser)
@@ -80,7 +80,7 @@
 
     <sql id="selectRisk">
         <![CDATA[
-          SELECT m_prj_risk.id, m_prj_risk.name, m_prj_risk.description, m_prj_risk.projectId, m_prj_risk.raisedbyuser,
+          SELECT m_prj_risk.id, m_prj_risk.name, m_prj_risk.description, m_prj_risk.projectId, m_prj_risk.createdUser,
                  m_prj_risk.assignUser, m_prj_risk.consequence, m_prj_risk.probalitity, m_prj_risk.status, m_prj_risk.dateraised,
                  m_prj_risk.dueDate, m_prj_risk.startdate, m_prj_risk.enddate, m_prj_risk.response, m_prj_risk.resolution, m_prj_risk.priority,
                  m_prj_risk.source, m_prj_risk.createdTime, m_prj_risk.lastUpdatedTime,  m_prj_risk.sAccountId,
@@ -90,7 +90,7 @@
                  concat(assignedUser.firstname, ' ', LTRIM(concat(IFNULL(assignedUser.middlename, ''), ' ')), assignedUser.lastname) AS assignedToUserFullName, 
                  m_prj_project.name as projectName, m_prj_project.shortname AS projectShortName, m_prj_risk.milestoneid, m_prj_milestone.name AS milestoneName
           FROM m_prj_risk
-              LEFT OUTER JOIN s_user as raisedUser ON (m_prj_risk.raisedbyuser=raisedUser.username)
+              LEFT OUTER JOIN s_user as raisedUser ON (m_prj_risk.createdUser=raisedUser.username)
               LEFT OUTER JOIN s_user as assignedUser ON ( m_prj_risk.assignUser=assignedUser.username)
               LEFT OUTER JOIN m_prj_project ON (m_prj_risk.projectId = m_prj_project.id)
               LEFT OUTER JOIN m_prj_milestone ON (m_prj_milestone.id = m_prj_risk.milestoneid)

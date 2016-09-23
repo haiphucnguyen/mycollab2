@@ -8,13 +8,13 @@
     <m_prj_project id="3" name="Project 3" shortname="3" projectStatus="Active" sAccountId="2"/>
 
     <m_prj_task id="1" name="Task 1" percentagecomplete="10" projectId="1" sAccountId="1"
-                deadline="2013-04-10 00:00:00"/>
+                dueDate="2013-04-10 00:00:00"/>
     <m_prj_task id="2" name="Task 2" percentagecomplete="10" projectId="1" sAccountId="1"
-                deadline="2013-04-10 00:00:00"/>
+                dueDate="2013-04-10 00:00:00"/>
     <m_prj_task id="3" name="Task 3" percentagecomplete="10" projectId="2" sAccountId="1"
-                deadline="2013-04-10 00:00:00"/>
+                dueDate="2013-04-10 00:00:00"/>
     <m_prj_task id="4" name="Task 4" percentagecomplete="10" projectId="3" sAccountId="2"
-                deadline="2013-04-10 00:00:00"/>
+                dueDate="2013-04-10 00:00:00"/>
     <m_tracker_bug id="1" name="Bug 1" status="Active" projectId="3" sAccountId="2" bugkey="1"
-                   duedate="2013-04-10 00:00:00"/>
+                   dueDate="2013-04-10 00:00:00"/>
 </dataset>
