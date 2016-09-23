@@ -147,7 +147,7 @@ public class ProjectTooltipGenerator {
 
             Tr trRow6 = new Tr();
             Td cell61 = buildCellName(LocalizationHelper.getMessage(locale, TaskI18nEnum.FORM_NOTES));
-            Td cell62 = buildCellValue(trimHtmlTags(task.getNotes()));
+            Td cell62 = buildCellValue(trimHtmlTags(task.getDescription()));
             cell62.setAttribute("colspan", "3");
             trRow6.appendChild(cell61, cell62);
             tooltipManager.appendRow(trRow6);
@@ -216,7 +216,7 @@ public class ProjectTooltipGenerator {
 
             Tr trRow6 = new Tr();
             Td cell61 = buildCellName(LocalizationHelper.getMessage(locale, BugI18nEnum.FORM_LOG_BY));
-            String logbyUserLink = (bug.getLogby() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(siteURL, bug.getLogby()) : "";
+            String logbyUserLink = (bug.getCreateduser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(siteURL, bug.getCreateduser()) : "";
             String logbyAvatarLink = StorageFactory.getAvatarPath(bug.getLoguserAvatarId(), 16);
             Td cell62 = buildCellLink(logbyUserLink, logbyAvatarLink, bug.getLoguserFullName());
             Td cell63 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_ASSIGNEE));
@@ -262,7 +262,8 @@ public class ProjectTooltipGenerator {
 
             Tr trRow1 = new Tr();
             Td cell11 = buildCellName(LocalizationHelper.getMessage(locale, RiskI18nEnum.FORM_RAISED_BY));
-            String raisedUserLink = (risk.getRaisedbyuser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(siteURL, risk.getRaisedbyuser()) : "";
+            String raisedUserLink = (risk.getCreateduser() != null) ? AccountLinkGenerator
+                    .generatePreviewFullUserLink(siteURL, risk.getCreateduser()) : "";
             String raisedUserAvatarLink = StorageFactory.getAvatarPath(risk.getRaisedByUserAvatarId(), 16);
             Td cell12 = buildCellLink(raisedUserLink, raisedUserAvatarLink, risk.getRaisedByUserFullName());
             Td cell13 = buildCellName(LocalizationHelper.getMessage(locale, RiskI18nEnum.FORM_CONSEQUENCE));

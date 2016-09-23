@@ -173,7 +173,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
                 SimpleTask newTask = new SimpleTask();
                 newTask.setProjectid(CurrentProjectVariables.getProjectId());
                 newTask.setSaccountid(MyCollabUI.getAccountId());
-                newTask.setLogby(UserUIContext.getUsername());
+                newTask.setCreateduser(UserUIContext.getUsername());
                 UI.getCurrent().addWindow(new TaskAddWindow(newTask));
             }
         }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION)

@@ -146,7 +146,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
     put(BugWithBLOBs.Field.priority, new I18nFieldFormat(BugWithBLOBs.Field.priority.name, GenericI18Enum.FORM_PRIORITY,
       classOf[Priority]))
     put(BugWithBLOBs.Field.duedate, new DateFieldFormat(BugWithBLOBs.Field.duedate.name, GenericI18Enum.FORM_DUE_DATE))
-    put(BugWithBLOBs.Field.logby, new LogUserFieldFormat(BugWithBLOBs.Field.logby.name, BugI18nEnum.FORM_LOG_BY))
+    put(BugWithBLOBs.Field.createduser, new LogUserFieldFormat(BugWithBLOBs.Field.createduser.name, BugI18nEnum.FORM_LOG_BY))
   }
   
   class MilestoneFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
@@ -226,10 +226,10 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
     
     def formatField(context: MailContext[_]): String = {
       val bug = context.getWrappedBean.asInstanceOf[SimpleBug]
-      if (bug.getLogby != null) {
+      if (bug.getCreateduser != null) {
         val userAvatarLink = MailUtils.getAvatarLink(bug.getLoguserAvatarId, 16)
         val img = newImg("avatar", userAvatarLink)
-        val userLink = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(bug.getSaccountid), bug.getLogby)
+        val userLink = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(bug.getSaccountid), bug.getCreateduser)
         val link = newA(userLink, bug.getLoguserFullName)
         newLink(img, link).write
       }

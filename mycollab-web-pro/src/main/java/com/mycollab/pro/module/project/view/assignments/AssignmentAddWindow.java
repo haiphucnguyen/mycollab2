@@ -68,7 +68,7 @@ public class AssignmentAddWindow extends MWindow {
             task.setProjectid(prjId);
             task.setMilestoneid(milestoneId);
             task.setSaccountid(MyCollabUI.getAccountId());
-            task.setLogby(UserUIContext.getUsername());
+            task.setCreateduser(UserUIContext.getUsername());
             task.setStartdate(dateValue);
             TaskEditForm editForm = new TaskEditForm() {
                 @Override
@@ -84,7 +84,7 @@ public class AssignmentAddWindow extends MWindow {
             bug.setSaccountid(MyCollabUI.getAccountId());
             bug.setStartdate(dateValue);
             bug.setMilestoneid(milestoneId);
-            bug.setLogby(UserUIContext.getUsername());
+            bug.setCreateduser(UserUIContext.getUsername());
             BugEditForm editForm = new BugEditForm() {
                 @Override
                 protected void postExecution() {
@@ -98,7 +98,7 @@ public class AssignmentAddWindow extends MWindow {
             risk.setSaccountid(MyCollabUI.getAccountId());
             risk.setProjectid(prjId);
             risk.setStartdate(dateValue);
-            risk.setRaisedbyuser(UserUIContext.getUsername());
+            risk.setCreateduser(UserUIContext.getUsername());
             risk.setMilestoneid(milestoneId);
             RiskEditForm editForm = new RiskEditForm() {
                 @Override

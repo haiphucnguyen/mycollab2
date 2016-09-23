@@ -147,7 +147,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
     put(Task.Field.remainestimate, TaskI18nEnum.FORM_REMAIN_ESTIMATE)
     put(Task.Field.milestoneid, new MilestoneFieldFormat(Task.Field.milestoneid.name, TaskI18nEnum.FORM_PHASE))
     put(Task.Field.parenttaskid, new TaskFieldFormat(Task.Field.parenttaskid.name, TaskI18nEnum.FORM_PARENT_TASK))
-    put(Task.Field.notes, TaskI18nEnum.FORM_NOTES)
+    put(Task.Field.description, TaskI18nEnum.FORM_NOTES)
     put(Task.Field.status, GenericI18Enum.FORM_STATUS)
   }
 
@@ -248,7 +248,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
         val milestoneService = AppContextUtil.getSpringBean(classOf[MilestoneService])
         val milestone = milestoneService.findById(milestoneId, context.getUser.getAccountId)
         if (milestone != null) {
-          val img = new Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.MILESTONE));
+          val img = new Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.MILESTONE))
           val milestoneLink = ProjectLinkGenerator.generateMilestonePreviewFullLink(context.siteUrl,
             milestone.getProjectid, milestone.getId)
           val link = FormatUtils.newA(milestoneLink, milestone.getName)

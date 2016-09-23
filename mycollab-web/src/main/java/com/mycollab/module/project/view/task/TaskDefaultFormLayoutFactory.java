@@ -93,7 +93,7 @@ public class TaskDefaultFormLayoutFactory {
                 .displayName(TaskI18nEnum.FORM_REMAIN_ESTIMATE)
                 .contextHelp(TaskI18nEnum.FORM_REMAIN_ESTIMATE_HELP).fieldIndex(12).build());
 
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Task.Field.notes)
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Task.Field.description)
                 .displayName(TaskI18nEnum.FORM_NOTES)
                 .colSpan(true).fieldIndex(13).build());
 

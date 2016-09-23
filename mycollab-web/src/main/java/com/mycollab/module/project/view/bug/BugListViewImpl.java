@@ -171,7 +171,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
             SimpleBug bug = new SimpleBug();
             bug.setProjectid(CurrentProjectVariables.getProjectId());
             bug.setSaccountid(MyCollabUI.getAccountId());
-            bug.setLogby(UserUIContext.getUsername());
+            bug.setCreateduser(UserUIContext.getUsername());
             UI.getCurrent().addWindow(new BugAddWindow(bug));
         }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION).withDescription(UserUIContext.getMessage(BugI18nEnum.NEW))
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));

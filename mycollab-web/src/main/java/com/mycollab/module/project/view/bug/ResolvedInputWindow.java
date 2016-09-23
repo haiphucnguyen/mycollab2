@@ -196,8 +196,8 @@ public class ResolvedInputWindow extends MWindow {
                         bean.setResolution(BugResolution.Fixed.name());
                     }
                     return new ResolutionField();
-                } else if (propertyId.equals("assignuser")) {
-                    bug.setAssignuser(bug.getLogby());
+                } else if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
+                    bug.setAssignuser(bug.getCreateduser());
                     return new ProjectMemberSelectionField();
                 } else if (propertyId.equals("fixedVersions")) {
                     fixedVersionSelect = new VersionMultiSelectField();

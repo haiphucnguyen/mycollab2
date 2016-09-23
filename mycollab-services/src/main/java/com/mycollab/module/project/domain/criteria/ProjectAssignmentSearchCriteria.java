@@ -22,6 +22,7 @@ import com.mycollab.db.query.*;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
+import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 
 import java.util.Arrays;
 
@@ -45,6 +46,10 @@ public class ProjectAssignmentSearchCriteria extends SearchCriteria {
     public static final PropertyListParam<String> p_assignee = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT, GenericI18Enum.FORM_ASSIGNEE,
             new PropertyListParam<String>("assignuser", "mainTbl", "assignUser"));
 
+    public static final PropertyListParam<String> p_createdUser = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT,
+            GenericI18Enum.OPT_CREATED_BY,
+            new PropertyListParam<String>("createduser", "mainTbl", "createdUser"));
+
     public static final DateParam p_startDate = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT,
             GenericI18Enum.FORM_START_DATE, new DateParam("startdate", "mainTbl", "startDate"));
 
@@ -52,7 +57,19 @@ public class ProjectAssignmentSearchCriteria extends SearchCriteria {
             GenericI18Enum.FORM_END_DATE, new DateParam("enddate", "mainTbl", "endDate"));
 
     public static final DateParam p_dueDate = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT,
-            GenericI18Enum.FORM_DUE_DATE, new DateParam("uedate", "mainTbl", "duedate"));
+            GenericI18Enum.FORM_DUE_DATE, new DateParam("duedate", "mainTbl", "duedate"));
+
+    public static final DateParam p_createtime = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT, GenericI18Enum.FORM_CREATED_TIME,
+            new DateParam("createtime", "mainTbl", "createdTime"));
+
+    public static final DateParam p_lastupdatedtime = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT, GenericI18Enum.FORM_LAST_UPDATED_TIME,
+            new DateParam("lastupdatedtime", "mainTbl", "lastUpdatedTime"));
+
+    public static final I18nStringListParam p_status = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT,
+            GenericI18Enum.FORM_STATUS, new I18nStringListParam("status", "mainTbl", "status", null));
+
+    public static final PropertyListParam p_projectIds = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT, null,
+            new PropertyListParam("projectid", "mainTbl", "projectId"));
 
     private SetSearchField<Integer> projectIds;
 

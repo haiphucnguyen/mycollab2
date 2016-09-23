@@ -29,7 +29,7 @@
             #end
         #end
         #ifnotnull($searchCriteria.txtValue)
-            ${searchCriteria.txtValue.operation} (m_prj_task.name LIKE '%${searchCriteria.txtValue.value}%' OR m_prj_task.notes LIKE '%${searchCriteria.txtValue.value}%')
+            ${searchCriteria.txtValue.operation} (m_prj_task.name LIKE '%${searchCriteria.txtValue.value}%' OR m_prj_task.description LIKE '%${searchCriteria.txtValue.value}%')
         #end
         #ifnotnull($searchCriteria.monitorProjectIds)
             ${searchCriteria.monitorProjectIds.operation}
@@ -303,11 +303,11 @@
         SELECT 'Project-Task' AS type, m_prj_task.id AS typeId, s_user.username AS createdUser, s_user.avatarId AS
         createdUserAvatarId,
         concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS createdUserDisplayName,
-        m_prj_task.createdTime, m_prj_task.lastUpdatedTime, m_prj_task.name AS name, m_prj_task.notes
+        m_prj_task.createdTime, m_prj_task.lastUpdatedTime, m_prj_task.name, m_prj_task.description
         AS description, m_prj_project.id AS projectId, m_prj_project.name AS projectName,
         m_prj_project.shortname AS projectShortName, m_prj_task.taskkey AS extraTypeId
         FROM m_prj_task
-        LEFT OUTER JOIN s_user ON (m_prj_task.logBy = s_user.username)
+        LEFT OUTER JOIN s_user ON (m_prj_task.createdUser = s_user.username)
         INNER JOIN m_prj_project ON (m_prj_task.projectId = m_prj_project.id)
     </sql>
 
@@ -344,7 +344,7 @@
         m_tracker_bug.description, m_prj_project.id AS projectId, m_prj_project.name AS projectName,
         m_prj_project.shortname AS projectShortName, m_tracker_bug.bugkey AS extraTypeId
         FROM m_tracker_bug
-        LEFT OUTER JOIN s_user ON (m_tracker_bug.logby = s_user.username)
+        LEFT OUTER JOIN s_user ON (m_tracker_bug.createdUser = s_user.username)
         INNER JOIN m_prj_project ON (m_tracker_bug.projectId = m_prj_project.id)
     </sql>
 

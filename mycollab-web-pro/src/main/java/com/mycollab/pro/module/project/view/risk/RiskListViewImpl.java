@@ -98,7 +98,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 
         tableItem.addGeneratedColumn("raisedByUserFullName", (source, itemId, columnId) -> {
             SimpleRisk risk = tableItem.getBeanByIndex(itemId);
-            return new ProjectUserLink(risk.getRaisedbyuser(), risk.getRaisedByUserAvatarId(), risk.getRaisedByUserFullName());
+            return new ProjectUserLink(risk.getCreateduser(), risk.getRaisedByUserAvatarId(), risk.getRaisedByUserFullName());
         });
 
         tableItem.addGeneratedColumn("datedue", (source, itemId, columnId) -> {

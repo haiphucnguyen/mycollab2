@@ -81,8 +81,7 @@ public class SimpleBug extends BugWithBLOBs {
 
     public String getLoguserFullName() {
         if (isBlank(loguserFullName)) {
-            String displayName = getLogby();
-            return StringUtils.extractNameFromEmail(displayName);
+            return StringUtils.extractNameFromEmail(getCreateduser());
         }
         return loguserFullName;
     }

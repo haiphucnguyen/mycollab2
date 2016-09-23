@@ -101,7 +101,7 @@ class ProjectRiskRelayEmailNotificationActionImpl extends SendMailToAllMembersAc
       classOf[OptionI18nEnum.StatusI18nEnum]))
     put(Risk.Field.milestoneid, new MilestoneFieldFormat(Risk.Field.milestoneid.name, RiskI18nEnum.FORM_PHASE))
     put(Risk.Field.assignuser, new AssigneeFieldFormat(Risk.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))
-    put(Risk.Field.raisedbyuser, new RaisedByFieldFormat(Risk.Field.raisedbyuser.name, RiskI18nEnum.FORM_RAISED_BY))
+    put(Risk.Field.createduser, new RaisedByFieldFormat(Risk.Field.createduser.name, RiskI18nEnum.FORM_RAISED_BY))
     put(Risk.Field.response, RiskI18nEnum.FORM_RESPONSE, isColSpan = true)
   }
   
@@ -143,11 +143,11 @@ class ProjectRiskRelayEmailNotificationActionImpl extends SendMailToAllMembersAc
   class RaisedByFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
     def formatField(context: MailContext[_]): String = {
       val risk = context.getWrappedBean.asInstanceOf[SimpleRisk]
-      if (risk.getRaisedbyuser != null) {
+      if (risk.getCreateduser != null) {
         val userAvatarLink = MailUtils.getAvatarLink(risk.getRaisedByUserAvatarId, 16)
         val img = FormatUtils.newImg("avatar", userAvatarLink)
         val userLink = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(risk.getSaccountid),
-          risk.getRaisedbyuser)
+          risk.getCreateduser)
         val link = FormatUtils.newA(userLink, risk.getRaisedByUserFullName)
         FormatUtils.newLink(img, link).write
       }

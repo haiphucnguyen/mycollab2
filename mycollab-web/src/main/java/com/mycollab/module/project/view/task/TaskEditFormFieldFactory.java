@@ -82,7 +82,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             return field;
         } else if (Task.Field.milestoneid.equalTo(propertyId)) {
             return new MilestoneComboBox();
-        } else if (Task.Field.notes.equalTo(propertyId)) {
+        } else if (Task.Field.description.equalTo(propertyId)) {
             final RichTextArea richTextArea = new RichTextArea();
             richTextArea.setNullRepresentation("");
             return richTextArea;

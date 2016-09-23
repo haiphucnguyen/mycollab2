@@ -214,8 +214,8 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                             .MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
                 }
-            } else if (propertyId.equals("notes")) {
-                return new RichTextViewField(beanItem.getNotes());
+            } else if (propertyId.equals(Task.Field.description.equalTo(propertyId))) {
+                return new RichTextViewField(beanItem.getDescription());
             }
             return null;
         }

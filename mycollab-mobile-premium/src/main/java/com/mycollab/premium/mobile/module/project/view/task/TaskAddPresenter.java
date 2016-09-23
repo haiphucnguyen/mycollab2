@@ -75,7 +75,7 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
         }
 
         if (task.getId() == null) {
-            task.setLogby(UserUIContext.getUsername());
+            task.setCreateduser(UserUIContext.getUsername());
             int taskId = taskService.saveWithSession(task, UserUIContext.getUsername());
             ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
             uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.TASK, taskId);

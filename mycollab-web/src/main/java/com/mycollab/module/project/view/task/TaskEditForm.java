@@ -140,7 +140,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                         UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP), 0, 3);
             } else if (Task.Field.milestoneid.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(TaskI18nEnum.FORM_PHASE), 1, 3);
-            } else if (Task.Field.notes.equalTo(propertyId)) {
+            } else if (Task.Field.description.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 4, 2, "100%");
             } else if (Task.Field.id.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ATTACHMENTS), 0, 5, 2, "100%");

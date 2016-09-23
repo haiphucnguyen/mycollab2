@@ -48,7 +48,7 @@ public class EntityWithProjectAddHandler {
             SimpleTask newTask = (SimpleTask) entity;
             newTask.setProjectid(projectId);
             newTask.setSaccountid(MyCollabUI.getAccountId());
-            newTask.setLogby(UserUIContext.getUsername());
+            newTask.setCreateduser(UserUIContext.getUsername());
             UI.getCurrent().addWindow(new TaskAddWindow(newTask));
         }
     }

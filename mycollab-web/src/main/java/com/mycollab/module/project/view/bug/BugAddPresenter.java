@@ -112,7 +112,7 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
         AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
         if (bug.getId() == null) {
             bug.setStatus(BugStatus.Open.name());
-            bug.setLogby(UserUIContext.getUsername());
+            bug.setCreateduser(UserUIContext.getUsername());
             int bugId = bugService.saveWithSession(bug, UserUIContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
             String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), bug.getProjectid(),

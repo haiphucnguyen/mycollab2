@@ -51,9 +51,9 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
                         UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
             }
             return desc;
-        } else if (Risk.Field.raisedbyuser.equalTo(propertyId)) {
-            if (risk.getRaisedbyuser() == null) {
-                risk.setRaisedbyuser(UserUIContext.getUsername());
+        } else if (Risk.Field.createduser.equalTo(propertyId)) {
+            if (risk.getCreateduser() == null) {
+                risk.setCreateduser(UserUIContext.getUsername());
             }
             return new ProjectMemberSelectionField();
         } else if (Risk.Field.assignuser.equalTo(propertyId)) {

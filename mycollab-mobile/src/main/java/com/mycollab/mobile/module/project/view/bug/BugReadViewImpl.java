@@ -204,7 +204,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                                 beanItem.getAssignUserAvatarId(), false), ContentMode.HTML);
             } else if (propertyId.equals("loguserFullName")) {
                 return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables
-                        .getProjectId(), beanItem.getLogby(), beanItem.getLoguserFullName(), beanItem
+                        .getProjectId(), beanItem.getCreateduser(), beanItem.getLoguserFullName(), beanItem
                         .getLoguserAvatarId(), false), ContentMode.HTML);
             } else if (BugWithBLOBs.Field.milestoneid.equalTo(propertyId)) {
                 if (beanItem.getMilestoneid() != null) {

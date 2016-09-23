@@ -51,7 +51,7 @@ public class SimpleRisk extends Risk {
 
     public String getRaisedByUserFullName() {
         if (StringUtils.isBlank(raisedByUserFullName)) {
-            return StringUtils.extractNameFromEmail(getRaisedbyuser());
+            return StringUtils.extractNameFromEmail(getCreateduser());
         }
         return raisedByUserFullName;
     }

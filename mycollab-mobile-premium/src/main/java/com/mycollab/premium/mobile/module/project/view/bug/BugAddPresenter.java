@@ -73,7 +73,7 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
         ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
         if (bug.getId() == null) {
             bug.setStatus(BugStatus.Open.name());
-            bug.setLogby(UserUIContext.getUsername());
+            bug.setCreateduser(UserUIContext.getUsername());
             bug.setSaccountid(MyCollabUI.getAccountId());
             int bugId = bugService.saveWithSession(bug, UserUIContext.getUsername());
             uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.BUG, bugId);

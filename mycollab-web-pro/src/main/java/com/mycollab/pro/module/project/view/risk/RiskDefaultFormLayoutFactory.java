@@ -32,7 +32,7 @@ public class RiskDefaultFormLayoutFactory {
                 .displayName(GenericI18Enum.FORM_DESCRIPTION)
                 .fieldIndex(2).colSpan(true).required(true).build());
 
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.raisedbyuser)
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.createduser)
                 .displayName(RiskI18nEnum.FORM_RAISED_BY)
                 .fieldIndex(4).build());
 

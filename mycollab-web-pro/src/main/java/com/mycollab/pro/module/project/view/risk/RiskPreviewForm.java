@@ -68,8 +68,8 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
                 return new DateViewField(risk.getStartdate());
             } else if (Risk.Field.enddate.equalTo(propertyId)) {
                 return new DateViewField(risk.getEnddate());
-            } else if (Risk.Field.raisedbyuser.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(risk.getRaisedbyuser(), risk.getRaisedByUserAvatarId(),
+            } else if (Risk.Field.createduser.equalTo(propertyId)) {
+                return new ProjectUserFormLinkField(risk.getCreateduser(), risk.getRaisedByUserAvatarId(),
                         risk.getRaisedByUserFullName());
             } else if (Risk.Field.assignuser.equalTo(propertyId)) {
                 return new ProjectUserFormLinkField(risk.getAssignuser(), risk.getAssignToUserAvatarId(),

@@ -124,7 +124,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         if (record.getPriority() == null) {
             record.setPriority(Priority.Medium.name());
         }
-        record.setLogby(username);
+        record.setCreateduser(username);
         Lock lock = DistributionLockUtil.getLock("task-" + record.getSaccountid());
 
         try {

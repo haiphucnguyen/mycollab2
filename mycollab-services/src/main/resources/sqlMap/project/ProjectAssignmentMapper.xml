@@ -278,7 +278,7 @@
 
     <sql id="selectGenericTaskFromRisk">
     <![CDATA[
-          SELECT mainTbl.name, mainTbl.description, mainTbl.assignUser AS assignUser,
+          SELECT mainTbl.name, mainTbl.description, mainTbl.assignUser,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
             s_user.avatarId as assignUserAvatarId,
             mainTbl.dueDate, mainTbl.projectId, m_prj_project.name AS projectName,
@@ -338,7 +338,7 @@
 
     <sql id="selectGenericTaskFromTask">
         <![CDATA[
-          SELECT mainTbl.name,  mainTbl.notes AS description, mainTbl.assignUser AS assignUser,
+          SELECT mainTbl.name,  mainTbl.description, mainTbl.assignUser,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
             s_user.avatarId as assignUserAvatarId,
             mainTbl.dueDate, mainTbl.projectId, m_prj_project.name AS projectName,

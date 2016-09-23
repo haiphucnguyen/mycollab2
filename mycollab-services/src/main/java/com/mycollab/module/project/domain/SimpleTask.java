@@ -99,7 +99,7 @@ public class SimpleTask extends Task {
 
     public String getLogByFullName() {
         if (StringUtils.isBlank(logByFullName)) {
-            return StringUtils.extractNameFromEmail(getLogby());
+            return StringUtils.extractNameFromEmail(getCreateduser());
         }
         return logByFullName;
     }

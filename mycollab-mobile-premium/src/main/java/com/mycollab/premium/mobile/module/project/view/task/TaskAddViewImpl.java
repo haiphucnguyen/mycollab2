@@ -1,14 +1,15 @@
 package com.mycollab.premium.mobile.module.project.view.task;
 
+import com.mycollab.mobile.module.project.ui.PriorityComboBox;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
 import com.mycollab.mobile.module.project.view.task.TaskAddView;
 import com.mycollab.mobile.module.project.view.task.TaskFormLayoutFactory;
 import com.mycollab.mobile.module.project.view.task.TaskPercentageCompleteComboBox;
-import com.mycollab.mobile.module.project.ui.PriorityComboBox;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
+import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -64,23 +65,24 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
 
         @Override
         protected Field<?> onCreateField(Object propertyId) {
-            if (propertyId.equals("assignuser")) {
+            if (Task.Field.assignuser.equalTo(propertyId)) {
                 return new ProjectMemberSelectionField();
-            } else if (propertyId.equals("notes")) {
+            } else if (Task.Field.description.equalTo(propertyId)) {
                 final TextArea textArea = new TextArea();
                 textArea.setNullRepresentation("");
                 return textArea;
-            } else if ("name".equals(propertyId)) {
+            } else if (Task.Field.name.equalTo(propertyId)) {
                 final TextField tf = new TextField();
                 tf.setNullRepresentation("");
                 tf.setRequired(true);
                 tf.setRequiredError("Please enter a Name");
                 return tf;
-            } else if ("percentagecomplete".equals(propertyId)) {
+            } else if (Task.Field.percentagecomplete.equalTo(propertyId)) {
                 return new TaskPercentageCompleteComboBox();
-            } else if ("priority".equals(propertyId)) {
+            } else if (Task.Field.priority.equalTo(propertyId)) {
                 return new PriorityComboBox();
-            } else if (propertyId.equals("startdate") || propertyId.equals("enddate") || propertyId.equals("deadline")) {
+            } else if (Task.Field.startdate.equalTo(propertyId) || Task.Field.enddate.equalTo(propertyId) ||
+                    Task.Field.duedate.equalTo(propertyId)) {
                 return new DatePicker();
             }
             return null;

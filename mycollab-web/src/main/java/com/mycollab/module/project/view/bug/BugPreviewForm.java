@@ -150,7 +150,7 @@ public class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
                 return new ProjectUserFormLinkField(beanItem.getAssignuser(), beanItem.getAssignUserAvatarId(),
                         beanItem.getAssignuserFullName());
             } else if (SimpleBug.Field.loguserFullName.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(beanItem.getLogby(), beanItem.getLoguserAvatarId(), beanItem.getLoguserFullName());
+                return new ProjectUserFormLinkField(beanItem.getCreateduser(), beanItem.getLoguserAvatarId(), beanItem.getLoguserFullName());
             } else if (BugWithBLOBs.Field.id.equalTo(propertyId)) {
                 return new ProjectFormAttachmentDisplayField(
                         beanItem.getProjectid(), ProjectTypeConstants.BUG, beanItem.getId());

@@ -10,6 +10,7 @@ import com.mycollab.db.query.SearchFieldInfo;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.events.AssignmentEvent;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
@@ -47,7 +48,7 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssi
             ProjectAssignmentSearchCriteria.p_name, ProjectAssignmentSearchCriteria.p_priority,
             ProjectAssignmentSearchCriteria.p_milestones, ProjectAssignmentSearchCriteria.p_startDate,
             ProjectAssignmentSearchCriteria.p_endDate, ProjectAssignmentSearchCriteria.p_dueDate,
-            ProjectAssignmentSearchCriteria.p_assignee};
+            ProjectAssignmentSearchCriteria.p_assignee, ProjectAssignmentSearchCriteria.p_createdUser};
 
     public AssignmentSearchPanel(boolean canSwitchToAdvanceLayout) {
         super(canSwitchToAdvanceLayout);
@@ -201,7 +202,7 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssi
 
         @Override
         protected Component buildSelectionComp(String fieldId) {
-            if ("assignuser".equals(fieldId)) {
+            if ("assignuser".equals(fieldId) || "createduser".equals(fieldId)) {
                 return new ProjectMemberListSelect(false);
             } else if ("milestone".equals(fieldId)) {
                 return new MilestoneListSelect();

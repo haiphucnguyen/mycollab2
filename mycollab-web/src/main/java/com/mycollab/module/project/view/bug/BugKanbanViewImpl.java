@@ -385,7 +385,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
                 bug.setProjectid(CurrentProjectVariables.getProjectId());
                 bug.setStatus(optionVal.getTypeval());
                 bug.setProjectShortName(CurrentProjectVariables.getShortName());
-                bug.setLogby(UserUIContext.getUsername());
+                bug.setCreateduser(UserUIContext.getUsername());
                 final MVerticalLayout layout = new MVerticalLayout();
                 layout.addStyleName("kanban-item");
                 final TextField bugNameField = new TextField();

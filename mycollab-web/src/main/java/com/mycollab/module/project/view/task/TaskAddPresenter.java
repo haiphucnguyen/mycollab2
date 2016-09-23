@@ -119,7 +119,7 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
         }
 
         if (item.getId() == null) {
-            item.setLogby(UserUIContext.getUsername());
+            item.setCreateduser(UserUIContext.getUsername());
             int taskId = taskService.saveWithSession(item, UserUIContext.getUsername());
 
             List<String> followers = view.getFollowers();

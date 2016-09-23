@@ -120,8 +120,8 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                     HumanTime humanTime = new HumanTime(beanItem.getDuration());
                     return new DefaultViewField(humanTime.getExactly());
                 }
-            } else if (Task.Field.notes.equalTo(propertyId)) {
-                return new RichTextViewField(beanItem.getNotes());
+            } else if (Task.Field.description.equalTo(propertyId)) {
+                return new RichTextViewField(beanItem.getDescription());
             } else if (Task.Field.parenttaskid.equalTo(propertyId)) {
                 return new SubTasksComp(beanItem);
             } else if (Task.Field.status.equalTo(propertyId)) {
