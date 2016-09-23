@@ -146,7 +146,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 createdLbl.setSizeUndefined();
                 layout.addComponent(createdLbl, 0, 0);
 
-                String createdUserName = (String) PropertyUtils.getProperty(bean, "raisedbyuser");
+                String createdUserName = (String) PropertyUtils.getProperty(bean, "createduser");
                 String createdUserAvatarId = (String) PropertyUtils.getProperty(bean, "raisedByUserAvatarId");
                 String createdUserDisplayName = (String) PropertyUtils.getProperty(bean, "raisedByUserFullName");
 

@@ -19,6 +19,7 @@ package com.mycollab.module.project.view.task;
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.UrlEncodeDecoder;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.common.json.QueryAnalyzer;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.StringUtils;
@@ -26,10 +27,12 @@ import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.query.LazyValueInjector;
+import com.mycollab.db.query.SearchFieldInfo;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
+import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
@@ -99,7 +102,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
                 public void handle(AssignmentEvent.SearchRequest event) {
                     ProjectAssignmentSearchCriteria criteria = (ProjectAssignmentSearchCriteria) event.getData();
                     if (criteria != null) {
-                        queryTask(criteria);
+                        queryAssignments(criteria);
                     }
                 }
             };
@@ -224,11 +227,11 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         if (StringUtils.isNotBlank(query)) {
             try {
                 String jsonQuery = UrlEncodeDecoder.decode(query);
-//                List<SearchFieldInfo> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.TASK);
-//                taskSearchPanel.displaySearchFieldInfos(searchFieldInfos);
-//                ProjectAssignmentSearchCriteria searchCriteria = SearchFieldInfo.buildSearchCriteria(baseCriteria, searchFieldInfos);
-//                searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-//                queryTask(searchCriteria);
+                List<SearchFieldInfo> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.ASSIGNMENT);
+                taskSearchPanel.displaySearchFieldInfos(searchFieldInfos);
+                ProjectAssignmentSearchCriteria searchCriteria = SearchFieldInfo.buildSearchCriteria(baseCriteria, searchFieldInfos);
+                searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+                queryAssignments(searchCriteria);
             } catch (Exception e) {
                 LOG.error("Error", e);
                 taskSearchPanel.selectQueryInfo(TaskSavedFilterComboBox.OPEN_TASKS);
@@ -270,7 +273,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
     }
 
     @Override
-    public void queryTask(final ProjectAssignmentSearchCriteria searchCriteria) {
+    public void queryAssignments(final ProjectAssignmentSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
         queryAndDisplayTasks();
         displayTaskStatistic();

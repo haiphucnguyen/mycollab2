@@ -49,7 +49,7 @@ public class TaskDashboardPresenter extends ProjectGenericListPresenter<TaskDash
 
     @Override
     public void doSearch(ProjectAssignmentSearchCriteria searchCriteria) {
-        view.queryTask(searchCriteria);
+        view.queryAssignments(searchCriteria);
     }
 
     @Override

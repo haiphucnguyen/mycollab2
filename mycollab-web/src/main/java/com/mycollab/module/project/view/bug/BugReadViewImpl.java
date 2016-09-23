@@ -340,7 +340,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 createdLbl.setSizeUndefined();
                 layout.addComponent(createdLbl, 0, 0);
 
-                String createdUserName = (String) PropertyUtils.getProperty(bean, "logby");
+                String createdUserName = (String) PropertyUtils.getProperty(bean, "createduser");
                 String createdUserAvatarId = (String) PropertyUtils.getProperty(bean, "loguserAvatarId");
                 String createdUserDisplayName = (String) PropertyUtils.getProperty(bean, "loguserFullName");
 

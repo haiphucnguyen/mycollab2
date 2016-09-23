@@ -28,5 +28,5 @@ import com.mycollab.vaadin.web.ui.IListView;
 public interface TaskDashboardView extends IListView<ProjectAssignmentSearchCriteria, ProjectAssignment>, PageView {
     void displayView(String query);
 
-    void queryTask(ProjectAssignmentSearchCriteria searchCriteria);
+    void queryAssignments(ProjectAssignmentSearchCriteria searchCriteria);
 }
