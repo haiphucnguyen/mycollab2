@@ -45,7 +45,9 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssi
 
     private static Param[] paramFields = new Param[]{
             ProjectAssignmentSearchCriteria.p_name, ProjectAssignmentSearchCriteria.p_priority,
-            ProjectAssignmentSearchCriteria.p_milestones, ProjectAssignmentSearchCriteria.p_assignee};
+            ProjectAssignmentSearchCriteria.p_milestones, ProjectAssignmentSearchCriteria.p_startDate,
+            ProjectAssignmentSearchCriteria.p_endDate, ProjectAssignmentSearchCriteria.p_dueDate,
+            ProjectAssignmentSearchCriteria.p_assignee};
 
     public AssignmentSearchPanel(boolean canSwitchToAdvanceLayout) {
         super(canSwitchToAdvanceLayout);
