@@ -27,5 +27,8 @@ import ch.qos.cal10n.LocaleData;
 @BaseName("project-ticket")
 @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
 public enum TicketI18nEnum {
-    M_TICKET_NUM
+    LIST,
+    NEW,
+
+    OPT_TICKETS_VALUE
 }

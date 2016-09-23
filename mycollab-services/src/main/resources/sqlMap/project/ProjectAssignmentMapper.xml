@@ -558,14 +558,24 @@
 
     <select id="getAssigneeSummary" parameterType="ProjectAssignmentSearchCriteria"
             resultMap="com.mycollab.common.dao.GroupItemMapper.BaseResultMap" lang="velocity">
-        SELECT m_prj_member.username AS groupid, COUNT(
-          SELECT * FROM m_prj_task AS mainTbl
-          #trimext("WHERE" "AND|OR")
-            <include refid="queryTaskSearchCriteria" />
-          #end
-        ) AS value,
-          s_user.avatarId AS extraValue, concat(s_user.firstname, ' ',
-          LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as groupname
+        SELECT m_prj_member.username AS groupid, (SELECT COUNT(*) FROM
+          (
+            (SELECT mainTbl.name FROM m_prj_task AS mainTbl
+            #trimext("WHERE" "AND|OR")
+              <include refid="queryTaskSearchCriteria" />
+            #end)
+            UNION
+            (SELECT mainTbl.name FROM m_tracker_bug AS mainTbl
+            #trimext("WHERE" "AND|OR")
+              <include refid="queryBugSearchCriteria" />
+            #end)
+            UNION
+            (SELECT mainTbl.name FROM m_prj_risk AS mainTbl
+            #trimext("WHERE" "AND|OR")
+              <include refid="queryRiskSearchCriteria" />
+            #end)
+          ) AS tempTbl) AS value,
+          s_user.avatarId AS extraValue, concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), '')), s_user.lastname) as groupname
         FROM m_prj_member
           LEFT OUTER JOIN s_user ON (m_prj_member.username = s_user.username)
         GROUP BY m_prj_member.username

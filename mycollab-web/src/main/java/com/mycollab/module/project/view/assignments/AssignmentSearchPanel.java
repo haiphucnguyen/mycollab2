@@ -10,13 +10,11 @@ import com.mycollab.db.query.SearchFieldInfo;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.events.AssignmentEvent;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.milestone.MilestoneListSelect;
 import com.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
-import com.mycollab.module.project.view.task.components.TaskStatusListSelect;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
@@ -182,7 +180,7 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssi
         private static final long serialVersionUID = 1L;
 
         private AssignmentAdvancedSearchLayout() {
-            super(AssignmentSearchPanel.this, ProjectTypeConstants.ASSIGNMENT);
+            super(AssignmentSearchPanel.this, ProjectTypeConstants.TICKET);
         }
 
         @Override

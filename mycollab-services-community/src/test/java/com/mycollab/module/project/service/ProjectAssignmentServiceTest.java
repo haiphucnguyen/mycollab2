@@ -16,7 +16,10 @@
  */
 package com.mycollab.module.project.service;
 
+import com.mycollab.common.domain.GroupItem;
+import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.RangeDateSearchField;
+import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.user.domain.BillingAccount;
 import com.mycollab.test.DataSet;
@@ -48,5 +51,16 @@ public class ProjectAssignmentServiceTest extends IntegrationServiceTest {
         List<BillingAccount> accounts = projectAssignmentService.getAccountsHasOverdueAssignments(criteria);
         assertThat(accounts).isNotEmpty().hasSize(2);
         assertThat(accounts).extracting("subdomain", "id").contains(tuple("a", 1), tuple("b", 2));
+    }
+
+    @DataSet
+    @Test
+    public void testGetAssigneeSummary() {
+        ProjectAssignmentSearchCriteria criteria = new ProjectAssignmentSearchCriteria();
+        criteria.setSaccountid(NumberSearchField.equal(1));
+        criteria.setProjectIds(new SetSearchField<>(3));
+        List<GroupItem> groupItems = projectAssignmentService.getAssigneeSummary(criteria);
+        assertThat(groupItems).isNotEmpty();
+        assertThat(groupItems).extracting("groupid", "value").contains(tuple("hai79", 2), tuple("linhduong", 1));
     }
 }

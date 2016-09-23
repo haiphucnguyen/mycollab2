@@ -227,7 +227,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         if (StringUtils.isNotBlank(query)) {
             try {
                 String jsonQuery = UrlEncodeDecoder.decode(query);
-                List<SearchFieldInfo> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.ASSIGNMENT);
+                List<SearchFieldInfo> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.TICKET);
                 taskSearchPanel.displaySearchFieldInfos(searchFieldInfos);
                 ProjectAssignmentSearchCriteria searchCriteria = SearchFieldInfo.buildSearchCriteria(baseCriteria, searchFieldInfos);
                 searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));

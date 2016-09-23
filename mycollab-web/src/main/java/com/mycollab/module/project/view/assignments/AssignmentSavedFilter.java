@@ -5,7 +5,6 @@ import com.mycollab.db.arguments.SearchField;
 import com.mycollab.db.query.*;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
-import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.query.CurrentProjectIdInjector;
@@ -32,7 +31,7 @@ public class AssignmentSavedFilter extends SavedFilterComboBox {
     public static final String UPDATE_TASKS_LAST_WEEK = "UPDATE_TASKS_LAST_WEEK";
 
     public AssignmentSavedFilter() {
-        super(ProjectTypeConstants.ASSIGNMENT);
+        super(ProjectTypeConstants.TICKET);
 
         SearchQueryInfo allTasksQuery = new SearchQueryInfo(ALL_TASKS, UserUIContext.getMessage(TaskI18nEnum.VAL_ALL_TASKS),
                 SearchFieldInfo.inCollection(ProjectAssignmentSearchCriteria.p_projectIds, new CurrentProjectIdInjector()));

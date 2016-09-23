@@ -67,7 +67,7 @@ public class IssueListView extends AbstractMobilePageView {
         criteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK,
                 ProjectTypeConstants.RISK));
         int numTickets = ticketList.setSearchCriteria(criteria);
-        this.setCaption(UserUIContext.getMessage(TicketI18nEnum.M_TICKET_NUM, numTickets));
+        this.setCaption(UserUIContext.getMessage(TicketI18nEnum.OPT_TICKETS_VALUE, numTickets));
     }
 
     public static class TicketRowDisplayHandler extends BeanList.RowDisplayHandler<ProjectAssignment> {

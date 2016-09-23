@@ -34,7 +34,7 @@ public class IssueNavigatorButton extends NavigationButton {
     private Integer milestoneId;
 
     public IssueNavigatorButton() {
-        super(UserUIContext.getMessage(TicketI18nEnum.M_TICKET_NUM, 0));
+        super(UserUIContext.getMessage(TicketI18nEnum.OPT_TICKETS_VALUE, 0));
         this.addClickListener(navigationButtonClickEvent -> {
             if (milestoneId != null) {
                 getNavigationManager().navigateTo(new IssueListView(milestoneId));
@@ -49,6 +49,6 @@ public class IssueNavigatorButton extends NavigationButton {
         criteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK,
                 ProjectTypeConstants.RISK));
         ProjectAssignmentService ticketService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
-        this.setCaption(UserUIContext.getMessage(TicketI18nEnum.M_TICKET_NUM, ticketService.getTotalCount(criteria)));
+        this.setCaption(UserUIContext.getMessage(TicketI18nEnum.OPT_TICKETS_VALUE, ticketService.getTotalCount(criteria)));
     }
 }
