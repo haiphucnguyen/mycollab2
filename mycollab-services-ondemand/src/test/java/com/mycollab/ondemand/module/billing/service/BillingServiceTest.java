@@ -43,8 +43,7 @@ public class BillingServiceTest extends IntegrationServiceTest {
     @Test
     @DataSet
     public void registerAccountFailedBecauseDomainIsNotAsciiString() {
-        expectedEx.expect(MyCollabException.class);
-        expectedEx.expectMessage("Subdomain must be an ascii string");
+        expectedEx.expect(UserInvalidInputException.class);
 
         billingService.registerAccount("ANguyễnHai", 1, "hainguyen@esofthead.com", "123", "hainguyen@esofthead.com", "3", false);
     }
