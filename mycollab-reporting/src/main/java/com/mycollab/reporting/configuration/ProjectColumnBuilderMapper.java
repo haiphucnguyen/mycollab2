@@ -451,7 +451,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
 
             @Override
             public String evaluate(ReportParameters reportParameters) {
-                String assignUser = reportParameters.getFieldValue(Risk.Field.assigntouser.name());
+                String assignUser = reportParameters.getFieldValue(Risk.Field.assignuser.name());
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);

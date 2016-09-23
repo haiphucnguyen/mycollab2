@@ -18,6 +18,7 @@ package com.mycollab.module.project.service.impl;
 
 import com.mycollab.common.domain.GroupItem;
 import com.mycollab.core.cache.CacheKey;
+import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.persistence.ISearchableDAO;
 import com.mycollab.db.persistence.service.DefaultSearchService;
@@ -26,6 +27,7 @@ import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.service.ProjectAssignmentService;
 import com.mycollab.module.user.domain.BillingAccount;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -54,6 +56,13 @@ public abstract class AbstractProjectAssignmentServiceImpl extends DefaultSearch
     }
 
     @Override
+    public Integer getTotalAssignmentsCount(@CacheKey ProjectAssignmentSearchCriteria criteria) {
+        return projectAssignmentMapper.getTotalCountFromRisk(criteria)
+                + projectAssignmentMapper.getTotalCountFromBug(criteria)
+                + projectAssignmentMapper.getTotalCountFromTask(criteria);
+    }
+
+    @Override
     public List<BillingAccount> getAccountsHasOverdueAssignments(ProjectAssignmentSearchCriteria searchCriteria) {
         return projectAssignmentMapper.getAccountsHasOverdueAssignments(searchCriteria);
     }
@@ -76,5 +85,12 @@ public abstract class AbstractProjectAssignmentServiceImpl extends DefaultSearch
     public List<GroupItem> getAssigneeSummary(@CacheKey ProjectAssignmentSearchCriteria criteria) {
 //        return projectAssignmentMapper.getAssigneeSummary(criteria);
         return null;
+    }
+
+    @Override
+    public List findAssignmentsByCriteria(@CacheKey BasicSearchRequest<ProjectAssignmentSearchCriteria> searchRequest) {
+        return projectAssignmentMapper.findAssignmentsByCriteria(searchRequest.getSearchCriteria(),
+                new RowBounds((searchRequest.getCurrentPage() - 1) * searchRequest.getNumberOfItems(),
+                        searchRequest.getNumberOfItems()));
     }
 }

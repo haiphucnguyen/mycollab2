@@ -20,9 +20,11 @@ package com.mycollab.module.project.dao;
 import com.mycollab.common.domain.GroupItem;
 import com.mycollab.core.cache.CacheKey;
 import com.mycollab.db.persistence.ISearchableDAO;
+import com.mycollab.module.project.domain.ProjectAssignment;
 import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.user.domain.BillingAccount;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 
@@ -45,4 +47,7 @@ public interface ProjectAssignmentMapper extends ISearchableDAO<ProjectAssignmen
     List<Integer> getProjectsHasOverdueAssignments(@Param("searchCriteria") ProjectAssignmentSearchCriteria criteria);
 
     List<GroupItem> getAssigneeSummary(@Param("searchCriteria") ProjectAssignmentSearchCriteria criteria);
+
+    List<ProjectAssignment> findAssignmentsByCriteria(@Param("searchCriteria") ProjectAssignmentSearchCriteria criteria,
+                                                      RowBounds rowBounds);
 }

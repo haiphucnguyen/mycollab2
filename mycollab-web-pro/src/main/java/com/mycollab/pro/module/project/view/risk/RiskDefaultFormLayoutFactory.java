@@ -40,7 +40,7 @@ public class RiskDefaultFormLayoutFactory {
                 .displayName(RiskI18nEnum.FORM_PHASE)
                 .fieldIndex(5).build());
 
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.assigntouser)
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.assignuser)
                 .displayName(GenericI18Enum.FORM_ASSIGNEE)
                 .fieldIndex(6).build());
 

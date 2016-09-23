@@ -44,7 +44,8 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssi
     private AssignmentSavedFilter savedFilterComboBox;
 
     private static Param[] paramFields = new Param[]{
-            ProjectAssignmentSearchCriteria.p_name, ProjectAssignmentSearchCriteria.p_priority};
+            ProjectAssignmentSearchCriteria.p_name, ProjectAssignmentSearchCriteria.p_priority,
+            ProjectAssignmentSearchCriteria.p_milestones, ProjectAssignmentSearchCriteria.p_assignee};
 
     public AssignmentSearchPanel(boolean canSwitchToAdvanceLayout) {
         super(canSwitchToAdvanceLayout);
@@ -202,8 +203,6 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssi
                 return new ProjectMemberListSelect(false);
             } else if ("milestone".equals(fieldId)) {
                 return new MilestoneListSelect();
-            } else if ("status".equals(fieldId)) {
-                return new TaskStatusListSelect();
             }
             return null;
         }

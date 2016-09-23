@@ -92,7 +92,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 
         tableItem.addGeneratedColumn("assignedToUserFullName", (source, itemId, columnId) -> {
             SimpleRisk risk = tableItem.getBeanByIndex(itemId);
-            return new ProjectUserLink(risk.getAssigntouser(), risk.getAssignToUserAvatarId(),
+            return new ProjectUserLink(risk.getAssignuser(), risk.getAssignToUserAvatarId(),
                     risk.getAssignedToUserFullName());
         });
 

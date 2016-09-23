@@ -59,7 +59,7 @@
         #end
         
         #ifnotnull($searchCriteria.assignUser)
-            ${searchCriteria.assignUser.operation} mainTbl.assigntouser = @{searchCriteria.assignUser.value}
+            ${searchCriteria.assignUser.operation} mainTbl.assignUser = @{searchCriteria.assignUser.value}
         #end
         
         #ifnotnull($searchCriteria.isOpenned)
@@ -119,7 +119,7 @@
         #end
         
         #ifnotnull($searchCriteria.assignUser)
-            ${searchCriteria.assignUser.operation} mainTbl.assignuser = @{searchCriteria.assignUser.value}
+            ${searchCriteria.assignUser.operation} mainTbl.assignUser = @{searchCriteria.assignUser.value}
         #end
         
         #ifnotnull($searchCriteria.isOpenned)
@@ -278,7 +278,7 @@
 
     <sql id="selectGenericTaskFromRisk">
     <![CDATA[
-          SELECT mainTbl.name, mainTbl.description, mainTbl.assigntouser AS assignUser,
+          SELECT mainTbl.name, mainTbl.description, mainTbl.assignUser AS assignUser,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
             s_user.avatarId as assignUserAvatarId,
             mainTbl.datedue AS dueDate, mainTbl.projectId, m_prj_project.name AS projectName,
@@ -291,7 +291,7 @@
             mainTbl.priority, mainTbl.sAccountId, mainTbl.startDate, mainTbl.endDate, mainTbl.milestoneId
                  
           FROM m_prj_risk AS mainTbl
-              LEFT OUTER JOIN s_user ON (mainTbl.assigntouser=s_user.username)
+              LEFT OUTER JOIN s_user ON (mainTbl.assignUser=s_user.username)
               LEFT OUTER JOIN m_prj_project ON (mainTbl.projectId=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>
@@ -318,7 +318,7 @@
 
     <sql id="selectGenericTaskFromBug">
     <![CDATA[
-          SELECT mainTbl.name, mainTbl.description, mainTbl.assignuser AS assignUser,
+          SELECT mainTbl.name, mainTbl.description, mainTbl.assignUser,
                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
                 s_user.avatarId as assignUserAvatarId,
                 mainTbl.duedate AS dueDate, mainTbl.projectId, m_prj_project.name AS projectName,
@@ -328,11 +328,10 @@
                     FROM m_comment
                     WHERE m_comment.type='Project-Bug' AND m_comment.typeId=mainTbl.id) AS numComments,
                 (SELECT COUNT(*) FROM m_monitor_item WHERE m_monitor_item.typeId = mainTbl.id AND m_monitor_item.type = 'Project-Bug') AS numFollowers,
-                mainTbl.priority,
-                mainTbl.sAccountId, mainTbl.startdate AS startDate, mainTbl.enddate AS endDate,
+                mainTbl.priority, mainTbl.sAccountId, mainTbl.startdate AS startDate, mainTbl.enddate AS endDate,
                 mainTbl.milestoneId
           FROM m_tracker_bug AS mainTbl
-              LEFT OUTER JOIN s_user ON (mainTbl.assignuser=s_user.username)
+              LEFT OUTER JOIN s_user ON (mainTbl.assignUser=s_user.username)
               LEFT OUTER JOIN m_prj_project ON (mainTbl.projectId=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>
@@ -408,8 +407,42 @@
         lastUpdatedTime DESC
     </sql>
 
-    <select id="findPageableListByCriteria" parameterType="ProjectAssignmentSearchCriteria"
-        resultMap="BaseResultMap" lang="velocity">
+    <select id="findAssignmentsByCriteria" parameterType="ProjectAssignmentSearchCriteria" resultMap="BaseResultMap" lang="velocity">
+        (
+        <include refid="selectGenericTaskFromRisk" />
+        #ifnotnull($_parameter.searchCriteria)
+          #trimext("WHERE" "AND|OR")
+            <include refid="queryRiskSearchCriteria" />
+          #end
+        #end
+        )
+
+        UNION
+
+        (
+        <include refid="selectGenericTaskFromBug" />
+        #ifnotnull($_parameter.searchCriteria)
+          #trimext("WHERE" "AND|OR")
+            <include refid="queryBugSearchCriteria" />
+          #end
+        #end
+        )
+
+        UNION
+        (
+        <include refid="selectGenericTaskFromTask" />
+        #ifnotnull($_parameter.searchCriteria)
+          #trimext("WHERE" "AND|OR")
+            <include refid="queryTaskSearchCriteria" />
+          #end
+        #end
+        )
+        #ifnotnull($_parameter.searchCriteria)
+        <include refid="orderStatement" />
+        #end
+    </select>
+
+    <select id="findPageableListByCriteria" parameterType="ProjectAssignmentSearchCriteria" resultMap="BaseResultMap" lang="velocity">
 
         (
         <include refid="selectGenericTaskFromRisk" />

@@ -104,7 +104,7 @@
       LEFT OUTER JOIN m_prj_task AS dep_task ON (dep_predecessor.sourceId=dep_task.id)
     WHERE m_prj_task.milestoneId = @{id} AND m_prj_task.parentTaskId IS NULL)
     UNION (
-      SELECT m_tracker_bug.projectId AS prjId, m_tracker_bug.name AS name, m_tracker_bug.assignuser AS assignUser,
+      SELECT m_tracker_bug.projectId AS prjId, m_tracker_bug.name AS name, m_tracker_bug.assignUser AS assignUser,
         m_tracker_bug.startdate AS startDate, m_tracker_bug.enddate AS endDate, m_tracker_bug.status,
         m_tracker_bug.id, m_tracker_bug.duedate AS deadline,
         concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS
@@ -119,7 +119,7 @@
         dep_predecessor.predestype AS dep_predestype, dep_predecessor.lagDay AS dep_lagDay,
         dep_task.ganttindex AS dep_ganttindex
       FROM m_tracker_bug
-        LEFT OUTER JOIN s_user ON (m_tracker_bug.assignuser = s_user.username)
+        LEFT OUTER JOIN s_user ON (m_tracker_bug.assignUser = s_user.username)
         LEFT OUTER JOIN m_prj_predecessor AS pre_predecessor ON (m_tracker_bug.id=pre_predecessor.sourceId AND
            pre_predecessor.sourceType='Project-Bug')
         LEFT OUTER JOIN m_tracker_bug AS pre_task ON (pre_predecessor.descId=pre_task.id)
@@ -156,7 +156,7 @@
       LEFT OUTER JOIN m_prj_task AS dep_task ON (dep_predecessor.sourceId=dep_task.id)
     WHERE m_prj_task.milestoneId IS NULL AND m_prj_task.projectId = @{prjId} AND m_prj_task.parentTaskId IS NULL)
     UNION (
-    SELECT m_tracker_bug.projectId AS prjId, m_tracker_bug.name AS name, m_tracker_bug.assignuser AS assignUser,
+    SELECT m_tracker_bug.projectId AS prjId, m_tracker_bug.name AS name, m_tracker_bug.assignUser,
       m_tracker_bug.startdate AS startDate, m_tracker_bug.enddate AS endDate, m_tracker_bug.status,
       m_tracker_bug.id, m_tracker_bug.duedate AS deadline,
       concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS
@@ -170,7 +170,7 @@
       dep_predecessor.descId AS dep_descId, dep_predecessor.predestype AS dep_predestype, dep_predecessor.lagDay AS
       dep_lagDay,dep_task.ganttindex AS dep_ganttindex
     FROM m_tracker_bug
-      LEFT OUTER JOIN s_user ON (m_tracker_bug.assignuser = s_user.username)
+      LEFT OUTER JOIN s_user ON (m_tracker_bug.assignUser = s_user.username)
       LEFT OUTER JOIN m_prj_predecessor AS pre_predecessor ON (m_tracker_bug.id=pre_predecessor.sourceId AND
         pre_predecessor.sourceType='Project-Bug')
       LEFT OUTER JOIN m_tracker_bug AS pre_task ON (pre_predecessor.descId=pre_task.id)

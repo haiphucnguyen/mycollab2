@@ -20,11 +20,10 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.*;
 import com.mycollab.db.query.*;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.i18n.OptionI18nEnum;
+import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 
 import java.util.Arrays;
-import java.util.Collection;
 
 /**
  * @author MyCollab Ltd.
@@ -39,6 +38,12 @@ public class ProjectAssignmentSearchCriteria extends SearchCriteria {
     public static final I18nStringListParam p_priority = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT, GenericI18Enum.FORM_PRIORITY,
             new I18nStringListParam("priority", "mainTbl", "priority",
                     Arrays.asList(Priority.Urgent, Priority.High, Priority.Medium, Priority.Low, Priority.None)));
+
+    public static final PropertyListParam<Integer> p_milestones = CacheParamMapper.register(ProjectTypeConstants.ASSIGNMENT, BugI18nEnum.FORM_PHASE,
+            new PropertyListParam<Integer>("milestone", "mainTbl", "milestoneId"));
+
+    public static final PropertyListParam<String> p_assignee = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_ASSIGNEE,
+            new PropertyListParam<String>("assignuser", "mainTbl", "assignUser"));
 
     private SetSearchField<Integer> projectIds;
 

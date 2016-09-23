@@ -116,7 +116,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
 //                    }
                     displayTaskStatistic();
 
-                    int totalTasks = projectTaskService.getTotalCount(baseCriteria);
+                    int totalTasks = projectTaskService.getTotalAssignmentsCount(baseCriteria);
                     taskSearchPanel.setTotalCountNumber(totalTasks);
                 }
             };
@@ -299,16 +299,16 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         }
         wrapBody.addComponent(taskGroupOrderComponent);
         final ProjectAssignmentService projectAssignmentService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
-        int totalTasks = projectAssignmentService.getTotalCount(baseCriteria);
+        int totalTasks = projectAssignmentService.getTotalAssignmentsCount(baseCriteria);
         taskSearchPanel.setTotalCountNumber(totalTasks);
         currentPage = 0;
         int pages = totalTasks / 20;
         if (currentPage < pages) {
             Button moreBtn = new Button(UserUIContext.getMessage(GenericI18Enum.ACTION_MORE), clickEvent -> {
-                int newTotalTasks = projectAssignmentService.getTotalCount(baseCriteria);
+                int newTotalTasks = projectAssignmentService.getTotalAssignmentsCount(baseCriteria);
                 int newNumPages = newTotalTasks / 20;
                 currentPage++;
-                List<ProjectAssignment> otherTasks = projectAssignmentService.findPageableListByCriteria(new
+                List<ProjectAssignment> otherTasks = projectAssignmentService.findAssignmentsByCriteria(new
                         BasicSearchRequest<>(baseCriteria, currentPage + 1, 20));
                 taskGroupOrderComponent.insertTasks(otherTasks);
                 if (currentPage >= newNumPages) {
@@ -318,7 +318,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
             moreBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
             wrapBody.addComponent(moreBtn);
         }
-        List<ProjectAssignment> tasks = projectAssignmentService.findPageableListByCriteria(new BasicSearchRequest<>
+        List<ProjectAssignment> tasks = projectAssignmentService.findAssignmentsByCriteria(new BasicSearchRequest<>
                 (baseCriteria, currentPage + 1, 20));
         taskGroupOrderComponent.insertTasks(tasks);
     }

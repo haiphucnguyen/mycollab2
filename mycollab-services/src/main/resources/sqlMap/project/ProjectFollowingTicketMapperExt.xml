@@ -66,7 +66,7 @@
         FROM m_monitor_item
             INNER JOIN m_tracker_bug ON (m_monitor_item.type='Project-Bug' AND m_monitor_item.typeId=m_tracker_bug.id)
             INNER JOIN m_prj_project ON (m_prj_project.id=m_monitor_item.extraTypeId)
-            LEFT OUTER JOIN s_user ON (s_user.username=m_tracker_bug.assignuser)
+            LEFT OUTER JOIN s_user ON (s_user.username=m_tracker_bug.assignUser)
         ]]>
 	</sql>
 
@@ -81,7 +81,7 @@
         FROM m_monitor_item
             INNER JOIN m_prj_risk ON (m_monitor_item.type='Project-Risk' AND m_monitor_item.typeId=m_prj_risk.id)
             INNER JOIN m_prj_project ON (m_prj_project.id=m_monitor_item.extraTypeId)
-            LEFT OUTER JOIN s_user ON (s_user.username=m_prj_risk.assigntouser)
+            LEFT OUTER JOIN s_user ON (s_user.username=m_prj_risk.assignUser)
         ]]>
 	</sql>
 

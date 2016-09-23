@@ -271,8 +271,8 @@ public class ProjectTooltipGenerator {
 
             Tr trRow2 = new Tr();
             Td cell21 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_ASSIGNEE));
-            String assignUserLink = (risk.getAssigntouser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(siteURL,
-                    risk.getAssigntouser()) : "";
+            String assignUserLink = (risk.getAssignuser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(siteURL,
+                    risk.getAssignuser()) : "";
             String assignUserAvatarLink = StorageFactory.getAvatarPath(risk.getAssignToUserAvatarId(), 16);
             Td cell22 = buildCellLink(assignUserLink, assignUserAvatarLink,
                     risk.getAssignedToUserFullName());
