@@ -77,3 +77,9 @@ ADD CONSTRAINT `FK_m_prj_task_5`
   REFERENCES `s_user` (`username`)
   ON DELETE SET NULL
   ON UPDATE CASCADE;
+
+ALTER TABLE `m_prj_customize_view`
+DROP COLUMN `displayRisk`,
+DROP COLUMN `displayBug`,
+DROP COLUMN `displayTask`,
+ADD COLUMN `displayTicket` BIT(1) NULL;

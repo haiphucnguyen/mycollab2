@@ -3,11 +3,11 @@ package com.mycollab.pro.module.project.view;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.domain.ProjectCustomizeView;
+import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.service.ProjectCustomizeViewService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.AbstractProjectAddWindow;
 import com.mycollab.pro.module.project.ui.components.FeatureSelectionBox;
-import com.mycollab.module.project.i18n.*;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.ui.Component;
@@ -20,8 +20,9 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  */
 class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizardStep {
     private Project project;
-    private FeatureSelectionBox displayMsgSelection, displayPhaseSelection, displayTaskSelection,
-            displayBugSelection, displayPageSelection, displayFileSelection, displayRiskSelection, displayTimeSelection,
+    private FeatureSelectionBox displayMsgSelection, displayPhaseSelection,
+            displayTicketSelection, displayPageSelection, displayFileSelection,
+            displayTimeSelection,
             displayStandupSelection, displayInvoiceSelection;
 
     ProjectCustomizeFeatureStep(Project project) {
@@ -58,17 +59,11 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
                 true);
         leftColLayout.addComponent(displayPhaseSelection);
 
-        displayTaskSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK),
-                UserUIContext.getMessage(TaskI18nEnum.LIST),
+        displayTicketSelection = new FeatureSelectionBox(
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET),
+                UserUIContext.getMessage(TicketI18nEnum.LIST),
                 true);
-        leftColLayout.addComponent(displayTaskSelection);
-
-        displayBugSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG),
-                UserUIContext.getMessage(BugI18nEnum.LIST),
-                true);
-        leftColLayout.addComponent(displayBugSelection);
+        leftColLayout.addComponent(displayTicketSelection);
 
         displayPageSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE),
@@ -87,12 +82,6 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
                 true);
         rightColLayout.addComponent(displayFileSelection);
-
-        displayRiskSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK),
-                UserUIContext.getMessage(RiskI18nEnum.LIST),
-                true);
-        rightColLayout.addComponent(displayRiskSelection);
 
         displayTimeSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
@@ -120,14 +109,12 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
         ProjectCustomizeView features = new ProjectCustomizeView();
         features.setProjectid(project.getId());
         features.setDisplayinvoice(getFeatureSelected(displayInvoiceSelection));
-        features.setDisplaybug(getFeatureSelected(displayBugSelection));
+        features.setDisplayticket(getFeatureSelected(displayTicketSelection));
         features.setDisplayfile(getFeatureSelected(displayFileSelection));
         features.setDisplaymessage(getFeatureSelected(displayMsgSelection));
         features.setDisplaymilestone(getFeatureSelected(displayPhaseSelection));
         features.setDisplaypage(getFeatureSelected(displayPageSelection));
         features.setDisplaystandup(getFeatureSelected(displayStandupSelection));
-        features.setDisplaytask(getFeatureSelected(displayTaskSelection));
-        features.setDisplayrisk(getFeatureSelected(displayRiskSelection));
         features.setDisplaytimelogging(getFeatureSelected(displayTimeSelection));
         ProjectCustomizeViewService projectCustomizeViewService = AppContextUtil.getSpringBean(ProjectCustomizeViewService.class);
         projectCustomizeViewService.saveWithSession(features, UserUIContext.getUsername());

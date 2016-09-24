@@ -6,10 +6,10 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectCustomizeView;
 import com.mycollab.module.project.events.CustomizeUIEvent;
+import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.service.ProjectCustomizeViewService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.pro.module.project.ui.components.FeatureSelectionBox;
-import com.mycollab.module.project.i18n.*;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.BlockWidget;
@@ -56,17 +56,11 @@ public class CustomizeFeatureComponent extends BlockWidget {
                 customizeView.getDisplaymilestone());
         leftColLayout.addComponent(displayPhaseSelection);
 
-        final FeatureSelectionBox displayTaskSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK),
-                UserUIContext.getMessage(TaskI18nEnum.LIST),
-                customizeView.getDisplaytask());
-        leftColLayout.addComponent(displayTaskSelection);
-
-        final FeatureSelectionBox displayBugSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG),
-                UserUIContext.getMessage(BugI18nEnum.LIST),
-                customizeView.getDisplaybug());
-        leftColLayout.addComponent(displayBugSelection);
+        final FeatureSelectionBox displayTicketSelection = new FeatureSelectionBox(
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET),
+                UserUIContext.getMessage(TicketI18nEnum.LIST),
+                customizeView.getDisplayticket());
+        leftColLayout.addComponent(displayTicketSelection);
 
         final FeatureSelectionBox displayPageSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE),
@@ -83,12 +77,6 @@ public class CustomizeFeatureComponent extends BlockWidget {
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
                 customizeView.getDisplayfile());
         rightColLayout.addComponent(displayFileSelection);
-
-        final FeatureSelectionBox displayRiskSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK),
-                UserUIContext.getMessage(RiskI18nEnum.LIST),
-                customizeView.getDisplayrisk());
-        rightColLayout.addComponent(displayRiskSelection);
 
         final FeatureSelectionBox displayTimeSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
@@ -114,11 +102,9 @@ public class CustomizeFeatureComponent extends BlockWidget {
         MButton updateFeaturesBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
             customizeView.setDisplaymessage(displayMsgSelection.getSelected());
             customizeView.setDisplaymilestone(displayPhaseSelection.getSelected());
-            customizeView.setDisplaytask(displayTaskSelection.getSelected());
-            customizeView.setDisplaybug(displayBugSelection.getSelected());
+            customizeView.setDisplayticket(displayTicketSelection.getSelected());
             customizeView.setDisplaypage(displayPageSelection.getSelected());
             customizeView.setDisplayfile(displayFileSelection.getSelected());
-            customizeView.setDisplayrisk(displayRiskSelection.getSelected());
             customizeView.setDisplaytimelogging(displayTimeSelection.getSelected());
             customizeView.setDisplaystandup(displayStandupSelection.getSelected());
             customizeView.setDisplayinvoice(displayInvoiceSelection.getSelected());

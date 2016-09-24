@@ -111,10 +111,7 @@ public class CurrentProjectVariables {
             return true;
         }
         SimpleProjectMember member = getProjectMember();
-        if (member != null) {
-            return member.isProjectOwner();
-        }
-        return false;
+        return member != null && member.isProjectOwner();
     }
 
     public static boolean isProjectArchived() {
@@ -181,13 +178,11 @@ public class CurrentProjectVariables {
         if (customizeView == null) {
             customizeView = new ProjectCustomizeView();
             customizeView.setProjectid(CurrentProjectVariables.getProjectId());
-            customizeView.setDisplaybug(true);
+            customizeView.setDisplayticket(true);
             customizeView.setDisplaymessage(true);
             customizeView.setDisplaymilestone(true);
             customizeView.setDisplaypage(true);
-            customizeView.setDisplayrisk(true);
             customizeView.setDisplaystandup(true);
-            customizeView.setDisplaytask(true);
             customizeView.setDisplaytimelogging(true);
             customizeView.setDisplayfile(true);
             customizeView.setDisplayinvoice(true);
@@ -203,20 +198,12 @@ public class CurrentProjectVariables {
         return getFeatures().getDisplaymilestone();
     }
 
-    public static boolean hasTaskFeature() {
-        return getFeatures().getDisplaytask();
-    }
-
-    public static boolean hasBugFeature() {
-        return getFeatures().getDisplaybug();
+    public static boolean hasTicketFeature() {
+        return getFeatures().getDisplayticket();
     }
 
     public static boolean hasPageFeature() {
         return getFeatures().getDisplaypage();
-    }
-
-    public static boolean hasRiskFeature() {
-        return getFeatures().getDisplayrisk();
     }
 
     public static boolean hasFileFeature() {
