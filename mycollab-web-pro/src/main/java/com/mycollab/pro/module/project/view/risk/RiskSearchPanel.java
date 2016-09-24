@@ -106,11 +106,6 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
             }
             return searchCriteria;
         }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return RiskSearchPanel.this.constructHeader();
-        }
     }
 
     private class RiskAdvancedSearchLayout extends DynamicQueryParamLayout<RiskSearchCriteria> {
@@ -118,11 +113,6 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
 
         RiskAdvancedSearchLayout() {
             super(RiskSearchPanel.this, ProjectTypeConstants.RISK);
-        }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return RiskSearchPanel.this.constructHeader();
         }
 
         @Override

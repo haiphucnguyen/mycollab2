@@ -107,10 +107,5 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssi
             return searchCriteria;
         }
 
-        @Override
-        public ComponentContainer constructHeader() {
-            return AssignmentSearchPanel.this.constructHeader();
-        }
-
     }
 }

@@ -42,7 +42,6 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
     private static final long serialVersionUID = 1L;
 
     private TimeLoggingBasicSearchLayout layout;
-    private MButton createBtn;
 
     @Override
     protected SearchLayout<ItemTimeLoggingSearchCriteria> createBasicSearchLayout() {
@@ -70,7 +69,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
     @Override
     protected Component buildExtraControls() {
-        createBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
+        MButton createBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow();
             UI.getCurrent().addWindow(addTimeEntry);
         }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
@@ -100,13 +99,8 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         private ComboBox groupField, orderField;
         private MVerticalLayout bodyWrap;
 
-        public TimeLoggingBasicSearchLayout() {
+        TimeLoggingBasicSearchLayout() {
             super(ItemTimeLoggingSearchPanel.this);
-        }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return ItemTimeLoggingSearchPanel.this.constructHeader();
         }
 
         @Override

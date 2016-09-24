@@ -68,11 +68,6 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
         }
 
         @Override
-        public ComponentContainer constructHeader() {
-            return ClientSearchPanel.this.constructHeader();
-        }
-
-        @Override
         public Param[] getParamFields() {
             return paramFields;
         }
@@ -119,11 +114,6 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
 
             return new MHorizontalLayout(nameField, myItemCheckbox, searchBtn, cancelBtn, advancedSearchBtn)
                     .withMargin(true).alignAll(Alignment.MIDDLE_LEFT);
-        }
-
-        @Override
-        public ComponentContainer constructHeader() {
-            return ClientSearchPanel.this.constructHeader();
         }
 
         @Override
