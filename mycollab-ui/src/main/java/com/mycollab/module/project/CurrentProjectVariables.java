@@ -16,6 +16,7 @@
  */
 package com.mycollab.module.project;
 
+import com.google.common.base.MoreObjects;
 import com.mycollab.core.SecureAccessException;
 import com.mycollab.module.file.PathUtils;
 import com.mycollab.module.project.dao.ProjectRolePermissionMapper;
@@ -199,7 +200,7 @@ public class CurrentProjectVariables {
     }
 
     public static boolean hasTicketFeature() {
-        return getFeatures().getDisplayticket();
+        return MoreObjects.firstNonNull(getFeatures().getDisplayticket(), true);
     }
 
     public static boolean hasPageFeature() {

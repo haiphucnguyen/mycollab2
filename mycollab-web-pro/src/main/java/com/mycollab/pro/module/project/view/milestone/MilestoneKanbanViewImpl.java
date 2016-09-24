@@ -21,15 +21,16 @@ import com.mycollab.module.project.events.MilestoneEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectAssignmentService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.assignments.AssignmentPopupFieldFactory;
 import com.mycollab.module.project.view.milestone.IMilestoneKanbanView;
 import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
 import com.mycollab.module.project.view.milestone.ToggleGenericTaskSummaryField;
 import com.mycollab.pro.module.project.view.assignments.AssignmentAddWindow;
-import com.mycollab.module.project.view.assignments.AssignmentPopupFieldFactory;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AsyncInvoker;
@@ -125,7 +126,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         };
 
         searchPanel.addSearchHandler(criteria -> {
-            queryAssignments(criteria);
+            queryTickets(criteria);
         });
 
         kanbanLayout = new DDHorizontalLayout();
@@ -217,11 +218,11 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK,
                 ProjectTypeConstants.RISK));
-        queryAssignments(searchCriteria);
+        queryTickets(searchCriteria);
     }
 
     private void reload() {
-        queryAssignments(baseCriteria);
+        queryTickets(baseCriteria);
     }
 
     private void toggleShowButton() {
@@ -232,7 +233,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         }
     }
 
-    private void queryAssignments(ProjectAssignmentSearchCriteria searchCriteria) {
+    private void queryTickets(ProjectAssignmentSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
         kanbanLayout.removeAllComponents();
         toggleShowButton();
@@ -459,7 +460,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             controlsBtn.setContent(popupContent);
             headerLayout.with(controlsBtn);
 
-            MButton newAssignmentBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT),
+            MButton newAssignmentBtn = new MButton(UserUIContext.getMessage(TicketI18nEnum.NEW),
                     clickEvent -> UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(),
                             CurrentProjectVariables.getProjectId(), milestone.getId(), false))).withIcon(FontAwesome.PLUS)
                     .withStyleName(BUTTON_ACTION);

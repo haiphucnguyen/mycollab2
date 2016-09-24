@@ -31,7 +31,7 @@ public class AssignmentAddWindow extends MWindow {
     private CssLayout formLayout;
 
     public AssignmentAddWindow(Date date, final Integer prjId, final Integer milestoneId, boolean isIncludeMilestone) {
-        super(UserUIContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT));
+        super(UserUIContext.getMessage(TicketI18nEnum.NEW));
         MVerticalLayout content = new MVerticalLayout();
         withModal(true).withResizable(false).withCenter().withWidth("1200px").withContent(content);
 

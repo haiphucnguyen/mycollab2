@@ -6,6 +6,7 @@ import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.BasicSearchLayout;
@@ -52,10 +53,9 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssi
     @Override
     protected Component buildExtraControls() {
         if (isCreateAssignment) {
-            MButton newAssignmentBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT),
+            return new MButton(UserUIContext.getMessage(TicketI18nEnum.NEW),
                     clickEvent -> UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(),
                             CurrentProjectVariables.getProjectId(), null, true))).withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
-            return newAssignmentBtn;
         }
         return null;
     }

@@ -3,8 +3,8 @@ package com.mycollab.pro.module.project.ui.components;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.SimpleTask;
-import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
+import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.view.task.TaskAddWindow;
 import com.mycollab.spring.AppContextUtil;
@@ -13,10 +13,14 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.List;
 
@@ -31,12 +35,8 @@ public class EntityWithProjectAddHandler {
     public Window buildWindow(SimpleTask task) {
         this.entity = task;
         if (task.getProjectid() == null) {
-            prjSelectionWindow = new Window();
-            prjSelectionWindow.setResizable(false);
-            prjSelectionWindow.setModal(true);
-            prjSelectionWindow.setWidth("500px");
-            prjSelectionWindow.setCaption(UserUIContext.getMessage(ProjectCommonI18nEnum.ACTION_NEW_ASSIGNMENT));
-            prjSelectionWindow.setContent(new ProjectSelectionLayout());
+            prjSelectionWindow = new MWindow(UserUIContext.getMessage(TicketI18nEnum.NEW)).withResizable(false).withModal(true)
+                    .withWidth("500px").withContent(new ProjectSelectionLayout());
             return prjSelectionWindow;
         } else {
             return new TaskAddWindow(task);
