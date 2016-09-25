@@ -146,9 +146,10 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
 
     public void gotoRiskRead(Risk risk) {
         breadcrumb.select(0);
-        breadcrumb.addLink(new Button(UserUIContext.getMessage(RiskI18nEnum.LIST), new GotoRiskListListener()));
+        breadcrumb.addLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST), new GotoTicketDashboard()));
         breadcrumb.setLinkEnabled(true, 1);
-        breadcrumb.addLink(generateBreadcrumbLink(risk.getName()));
+        breadcrumb.addLink(generateBreadcrumbLink(UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                UserUIContext.getMessage(RiskI18nEnum.SINGLE), risk.getName())));
         MyCollabUI.addFragment(ProjectLinkGenerator.generateRiskPreviewLink(project.getId(), risk.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(RiskI18nEnum.SINGLE), risk.getName()));
@@ -156,9 +157,10 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
 
     public void gotoRiskEdit(final Risk risk) {
         breadcrumb.select(0);
-        breadcrumb.addLink(new Button(UserUIContext.getMessage(RiskI18nEnum.LIST), new GotoRiskListListener()));
+        breadcrumb.addLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST), new GotoTicketDashboard()));
         breadcrumb.setLinkEnabled(true, 1);
-        breadcrumb.addLink(generateBreadcrumbLink(risk.getName(),
+        breadcrumb.addLink(generateBreadcrumbLink(UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                UserUIContext.getMessage(RiskI18nEnum.SINGLE), risk.getName()),
                 clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoRead(this, risk.getId()))));
         breadcrumb.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
         MyCollabUI.addFragment(ProjectLinkGenerator.generateRiskEditLink(project.getId(), risk.getId()),
@@ -168,20 +170,11 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
 
     public void gotoRiskAdd() {
         breadcrumb.select(0);
-        breadcrumb.addLink(new Button(UserUIContext.getMessage(RiskI18nEnum.LIST), new GotoRiskListListener()));
+        breadcrumb.addLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST), new GotoTicketDashboard()));
         breadcrumb.setLinkEnabled(true, 1);
         breadcrumb.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD)));
         MyCollabUI.addFragment(ProjectLinkGenerator.generateRiskAddLink(project.getId()),
                 UserUIContext.getMessage(RiskI18nEnum.NEW));
-    }
-
-    private static class GotoRiskListListener implements Button.ClickListener {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void buttonClick(ClickEvent event) {
-            EventBusFactory.getInstance().post(new RiskEvent.GotoList(this, null));
-        }
     }
 
     public void gotoMilestoneList() {
@@ -398,7 +391,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
 
     public void gotoBugKanbanView() {
         breadcrumb.select(0);
-        breadcrumb.addLink(new Button(UserUIContext.getMessage(BugI18nEnum.LIST), new GotoBugListListener()));
+        breadcrumb.addLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST), new GotoTicketDashboard()));
         breadcrumb.setLinkEnabled(true, 1);
         breadcrumb.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)));
         MyCollabUI.addFragment("project/bug/kanban/" + UrlEncodeDecoder.encode(project.getId()),
@@ -416,7 +409,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
     public void gotoBugAdd() {
         breadcrumb.select(0);
 
-        breadcrumb.addLink(new Button(UserUIContext.getMessage(BugI18nEnum.LIST), new GotoBugListListener()));
+        breadcrumb.addLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST), new GotoTicketDashboard()));
         breadcrumb.setLinkEnabled(true, 1);
 
         breadcrumb.addLink(new Button(UserUIContext.getMessage(BugI18nEnum.NEW)));
@@ -427,7 +420,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
     public void gotoBugEdit(final SimpleBug bug) {
         breadcrumb.select(0);
 
-        breadcrumb.addLink(new Button(UserUIContext.getMessage(BugI18nEnum.LIST), new GotoBugListListener()));
+        breadcrumb.addLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST), new GotoTicketDashboard()));
         breadcrumb.setLinkEnabled(true, 1);
 
         breadcrumb.addLink(generateBreadcrumbLink(bug.getName(),
@@ -441,10 +434,11 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
     public void gotoBugRead(SimpleBug bug) {
         breadcrumb.select(0);
 
-        breadcrumb.addLink(new Button(UserUIContext.getMessage(BugI18nEnum.LIST), new GotoBugListListener()));
+        breadcrumb.addLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST), new GotoTicketDashboard()));
         breadcrumb.setLinkEnabled(true, 1);
 
-        breadcrumb.addLink(generateBreadcrumbLink(bug.getName()));
+        breadcrumb.addLink(generateBreadcrumbLink(UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                UserUIContext.getMessage(BugI18nEnum.SINGLE), bug.getName())));
         MyCollabUI.addFragment(ProjectLinkGenerator.generateBugPreviewLink(bug.getBugkey(), bug.getProjectShortName()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(BugI18nEnum.SINGLE), bug.getName()));
@@ -679,15 +673,6 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
         @Override
         public void buttonClick(ClickEvent event) {
             EventBusFactory.getInstance().post(new BugComponentEvent.GotoList(this, null));
-        }
-    }
-
-    private static class GotoBugListListener implements Button.ClickListener {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void buttonClick(ClickEvent event) {
-            EventBusFactory.getInstance().post(new BugEvent.GotoList(this, null));
         }
     }
 

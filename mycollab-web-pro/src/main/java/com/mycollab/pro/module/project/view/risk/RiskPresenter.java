@@ -6,6 +6,7 @@ import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.parameters.RiskScreenData;
 import com.mycollab.module.project.view.risk.IRiskContainer;
 import com.mycollab.module.project.view.risk.IRiskPresenter;
+import com.mycollab.module.project.view.ticket.TicketContainer;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
@@ -25,9 +26,10 @@ public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
-        projectViewContainer.gotoSubView(ProjectTypeConstants.RISK);
-
+        TicketContainer ticketContainer = (TicketContainer) projectViewContainer.gotoSubView(ProjectTypeConstants.TICKET);
+        ticketContainer.setContent(view);
         view.removeAllComponents();
+
         AbstractPresenter presenter;
 
         if (data instanceof RiskScreenData.Search) {
