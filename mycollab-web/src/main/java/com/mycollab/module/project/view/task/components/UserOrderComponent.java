@@ -24,6 +24,8 @@ import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.SortedArrayMap;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.module.project.domain.ProjectTicket;
+import com.mycollab.module.project.view.ticket.DefaultTaskGroupComponent;
+import com.mycollab.module.project.view.ticket.TicketGroupOrderComponent;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -35,13 +37,13 @@ import java.util.List;
  * @since 5.2.9
  */
 @ViewComponent
-public class UserOrderComponent extends TaskGroupOrderComponent {
+public class UserOrderComponent extends TicketGroupOrderComponent {
     private SortedArrayMap<String, DefaultTaskGroupComponent> userAvailables = new SortedArrayMap<>();
     private DefaultTaskGroupComponent unspecifiedTasks;
 
     @Override
-    public void insertTasks(List<ProjectTicket> tasks) {
-        for (ProjectTicket task : tasks) {
+    public void insertTickets(List<ProjectTicket> tickets) {
+        for (ProjectTicket task : tickets) {
             String assignUser = task.getAssignUser();
             if (assignUser != null) {
                 if (userAvailables.containsKey(assignUser)) {

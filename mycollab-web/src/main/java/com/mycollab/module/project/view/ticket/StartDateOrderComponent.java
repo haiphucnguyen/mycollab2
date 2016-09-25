@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.task.components;
+package com.mycollab.module.project.view.ticket;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.SortedArrayMap;
@@ -33,19 +33,19 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class DueDateOrderComponent extends TaskGroupOrderComponent {
-    private SortedArrayMap<DateTime, DefaultTaskGroupComponent> dueDateAvailables = new SortedArrayMap<>();
-    private DefaultTaskGroupComponent unspecifiedTasks;
+public class StartDateOrderComponent extends TicketGroupOrderComponent {
+    private SortedArrayMap<DateTime, DefaultTicketGroupComponent> startDateAvailables = new SortedArrayMap<>();
+    private DefaultTicketGroupComponent unspecifiedTasks;
 
     @Override
-    public void insertTasks(List<ProjectTicket> tasks) {
-        for (ProjectTicket task : tasks) {
-            if (task.getDueDate() != null) {
-                Date dueDate = task.getDueDate();
-                DateTime jodaTime = new DateTime(dueDate, DateTimeZone.UTC);
+    public void insertTickets(List<ProjectTicket> tickets) {
+        for (ProjectTicket task : tickets) {
+            if (task.getStartDate() != null) {
+                Date startDate = task.getStartDate();
+                DateTime jodaTime = new DateTime(startDate, DateTimeZone.UTC);
                 DateTime monDay = jodaTime.dayOfWeek().withMinimumValue();
-                if (dueDateAvailables.containsKey(monDay)) {
-                    DefaultTaskGroupComponent groupComponent = dueDateAvailables.get(monDay);
+                if (startDateAvailables.containsKey(monDay)) {
+                    DefaultTicketGroupComponent groupComponent = startDateAvailables.get(monDay);
                     groupComponent.insertTask(task);
                 } else {
                     DateTime maxValue = monDay.dayOfWeek().withMaximumValue();
@@ -54,9 +54,9 @@ public class DueDateOrderComponent extends TaskGroupOrderComponent {
                     String sundayStr = formatter.print(maxValue);
                     String titleValue = String.format("%s - %s", monDayStr, sundayStr);
 
-                    DefaultTaskGroupComponent groupComponent = new DefaultTaskGroupComponent(titleValue);
-                    dueDateAvailables.put(monDay, groupComponent);
-                    int index = dueDateAvailables.getKeyIndex(monDay);
+                    DefaultTicketGroupComponent groupComponent = new DefaultTicketGroupComponent(titleValue);
+                    startDateAvailables.put(monDay, groupComponent);
+                    int index = startDateAvailables.getKeyIndex(monDay);
                     if (index > -1) {
                         addComponent(groupComponent, index);
                     } else {
@@ -67,8 +67,8 @@ public class DueDateOrderComponent extends TaskGroupOrderComponent {
                 }
             } else {
                 if (unspecifiedTasks == null) {
-                    unspecifiedTasks = new DefaultTaskGroupComponent(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED));
-                    addComponent(unspecifiedTasks);
+                    unspecifiedTasks = new DefaultTicketGroupComponent(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED));
+                    addComponent(unspecifiedTasks, 0);
                 }
                 unspecifiedTasks.insertTask(task);
             }

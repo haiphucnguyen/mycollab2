@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.task.components;
+package com.mycollab.module.project.view.ticket;
 
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.ui.components.IGroupComponent;
@@ -29,14 +29,14 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd
  * @since 5.3.5
  */
-class DefaultTaskGroupComponent extends MVerticalLayout implements IGroupComponent {
+class DefaultTicketGroupComponent extends MVerticalLayout implements IGroupComponent {
     private Label headerLbl;
     private CssLayout wrapBody;
 
     private String titleValue;
     private int numElements = 0;
 
-    DefaultTaskGroupComponent(String titleValue) {
+    DefaultTicketGroupComponent(String titleValue) {
         this.titleValue = titleValue;
         initComponent();
     }
@@ -57,7 +57,7 @@ class DefaultTaskGroupComponent extends MVerticalLayout implements IGroupCompone
     }
 
     void insertTask(ProjectTicket task) {
-        wrapBody.addComponent(new TaskRowRenderer(task));
+        wrapBody.addComponent(new TicketRowRenderer(task));
         numElements++;
         updateHeader();
     }

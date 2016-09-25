@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.task.components;
+package com.mycollab.module.project.view.ticket;
 
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
@@ -33,13 +33,13 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class TaskRowRenderer extends MVerticalLayout {
+public class TicketRowRenderer extends MVerticalLayout {
     private ProjectTicket assignment;
 
     private PopupButton taskSettingPopupBtn;
     private ToggleGenericTaskSummaryField toggleTaskField;
 
-    public TaskRowRenderer(final ProjectTicket assignment) {
+    public TicketRowRenderer(final ProjectTicket assignment) {
         this.assignment = assignment;
         withMargin(false).withFullWidth().addStyleName(WebUIConstants.BORDER_LIST_ROW);
 
@@ -139,7 +139,7 @@ public class TaskRowRenderer extends MVerticalLayout {
 //        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
 //            MButton editButton = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent -> {
 //                taskSettingPopupBtn.setPopupVisible(false);
-//                EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(TaskRowRenderer.this, assignment));
+//                EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(TicketRowRenderer.this, assignment));
 //            }).withIcon(FontAwesome.EDIT);
 //            filterBtnLayout.addOption(editButton);
 //            filterBtnLayout.addSeparator();
@@ -154,7 +154,7 @@ public class TaskRowRenderer extends MVerticalLayout {
 //                    projectTaskService.updateSelectiveWithSession(assignment, UserUIContext.getUsername());
 //                    taskSettingPopupBtn.setPopupVisible(false);
 //                    closeTask();
-//                    EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskRowRenderer.this, null));
+//                    EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TicketRowRenderer.this, null));
 //                }).withIcon(FontAwesome.CHECK_CIRCLE_O);
 //                filterBtnLayout.addOption(closeBtn);
 //            }
@@ -168,7 +168,7 @@ public class TaskRowRenderer extends MVerticalLayout {
 //                    ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
 //                    projectTaskService.updateSelectiveWithSession(assignment, UserUIContext.getUsername());
 //                    reOpenTask();
-//                    EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskRowRenderer.this, null));
+//                    EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TicketRowRenderer.this, null));
 //                }).withIcon(FontAwesome.UNLOCK);
 //                filterBtnLayout.addOption(reOpenBtn);
 //            }

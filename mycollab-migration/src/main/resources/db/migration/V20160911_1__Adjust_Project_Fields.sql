@@ -83,3 +83,7 @@ DROP COLUMN `displayRisk`,
 DROP COLUMN `displayBug`,
 DROP COLUMN `displayTask`,
 ADD COLUMN `displayTicket` BIT(1) NULL;
+
+UPDATE `s_account_theme` SET `topMenuBg`='FFFFFF', `topMenuBgSelected`='4C4C4C',
+    `topMenuText`='4C4C4C', `topMenuTextSelected`='FFFFFF', `vTabsheetBg`='F9FFFF', `vTabsheetBgSelected`='4C4C4C'
+    WHERE `isDefault`='1';

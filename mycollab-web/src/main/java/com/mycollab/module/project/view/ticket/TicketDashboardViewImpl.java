@@ -92,7 +92,7 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
     private TicketSearchPanel ticketSearchPanel;
     private MVerticalLayout wrapBody;
     private VerticalLayout rightColumn;
-    private TaskGroupOrderComponent taskGroupOrderComponent;
+    private TicketGroupOrderComponent ticketGroupOrderComponent;
 
     private ApplicationEventListener<AssignmentEvent.SearchRequest> searchHandler = new
             ApplicationEventListener<AssignmentEvent.SearchRequest>() {
@@ -113,8 +113,8 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
                 public void handle(TaskEvent.NewTaskAdded event) {
                     final ProjectTicketService projectTaskService = AppContextUtil.getSpringBean(ProjectTicketService.class);
 //                    SimpleTask task = projectTaskService.findById((Integer) event.getData(), MyCollabUI.getAccountId());
-//                    if (task != null && taskGroupOrderComponent != null) {
-//                        taskGroupOrderComponent.insertTasks(Collections.singletonList(task));
+//                    if (task != null && ticketGroupOrderComponent != null) {
+//                        ticketGroupOrderComponent.insertTasks(Collections.singletonList(task));
 //                    }
                     displayTaskStatistic();
 
@@ -278,23 +278,23 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
 
         if (UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE).equals(groupByState)) {
             baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("dueDate", sortDirection)));
-            taskGroupOrderComponent = new DueDateOrderComponent();
+            ticketGroupOrderComponent = new DueDateOrderComponent();
         } else if (UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE).equals(groupByState)) {
             baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("startdate", sortDirection)));
-            taskGroupOrderComponent = new StartDateOrderComponent();
+            ticketGroupOrderComponent = new StartDateOrderComponent();
         } else if (UserUIContext.getMessage(GenericI18Enum.OPT_PLAIN).equals(groupByState)) {
             baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("lastupdatedtime", sortDirection)));
-            taskGroupOrderComponent = new SimpleListOrderComponent();
+            ticketGroupOrderComponent = new SimpleListOrderComponent();
         } else if (UserUIContext.getMessage(GenericI18Enum.FORM_CREATED_TIME).equals(groupByState)) {
             baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("createdtime", sortDirection)));
-            taskGroupOrderComponent = new CreatedDateOrderComponent();
+            ticketGroupOrderComponent = new CreatedDateOrderComponent();
         } else if (UserUIContext.getMessage(GenericI18Enum.OPT_USER).equals(groupByState)) {
             baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("createdtime", sortDirection)));
-            taskGroupOrderComponent = new UserOrderComponent();
+            ticketGroupOrderComponent = new UserOrderComponent();
         } else {
             throw new MyCollabException("Do not support group view by " + groupByState);
         }
-        wrapBody.addComponent(taskGroupOrderComponent);
+        wrapBody.addComponent(ticketGroupOrderComponent);
         final ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
         int totalTasks = projectTicketService.getTotalAssignmentsCount(baseCriteria);
         ticketSearchPanel.setTotalCountNumber(totalTasks);
@@ -307,7 +307,7 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
                 currentPage++;
                 List<ProjectTicket> otherTasks = projectTicketService.findAssignmentsByCriteria(new
                         BasicSearchRequest<>(baseCriteria, currentPage + 1, 20));
-                taskGroupOrderComponent.insertTasks(otherTasks);
+                ticketGroupOrderComponent.insertTickets(otherTasks);
                 if (currentPage >= newNumPages) {
                     wrapBody.removeComponent(wrapBody.getComponent(1));
                 }
@@ -317,7 +317,7 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
         }
         List<ProjectTicket> tasks = projectTicketService.findAssignmentsByCriteria(new BasicSearchRequest<>
                 (baseCriteria, currentPage + 1, 20));
-        taskGroupOrderComponent.insertTasks(tasks);
+        ticketGroupOrderComponent.insertTickets(tasks);
     }
 
     private void displayKanbanView() {

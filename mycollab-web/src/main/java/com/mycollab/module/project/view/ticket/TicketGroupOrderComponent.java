@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.task.components;
+package com.mycollab.module.project.view.ticket;
 
 import com.mycollab.module.project.domain.ProjectTicket;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.vaadin.ui.CssLayout;
 
 import java.util.List;
 
@@ -25,15 +25,10 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class SimpleListOrderComponent extends TaskGroupOrderComponent {
-    public SimpleListOrderComponent() {
-        this.addStyleName(WebUIConstants.BORDER_LIST);
+abstract public class TicketGroupOrderComponent extends CssLayout {
+    public TicketGroupOrderComponent() {
+        this.setWidth("100%");
     }
 
-    @Override
-    public void insertTasks(List<ProjectTicket> tasks) {
-        for (ProjectTicket task : tasks) {
-            this.addComponent(new TaskRowRenderer(task));
-        }
-    }
+    abstract public void insertTickets(List<ProjectTicket> tickets);
 }
