@@ -14,38 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.file.view
+package com.mycollab.module.project.httpmapping
 
+import com.mycollab.common.UrlTokenizer
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.module.crm.httpmapping.CrmUrlResolver
-import com.mycollab.shell.events.ShellEvent
-import com.mycollab.vaadin.mvp.UrlResolver
-import com.mycollab.vaadin.web.ui.ModuleHelper
+import com.mycollab.module.project.events.ProjectEvent
+import com.mycollab.module.project.view.parameters.InvoiceScreenData.GotoInvoiceList
+import com.mycollab.module.project.view.parameters.ProjectScreenData
+import com.mycollab.vaadin.mvp.PageActionChain
 
 /**
   * @author MyCollab Ltd
-  * @since 5.0.9
+  * @since 5.2.10
   */
-class FileUrlResolver extends UrlResolver {
-  def build: UrlResolver = {
-    this.addSubResolver("list", new FileListUrlResolver)
-    this
-  }
+class InvoiceUrlResolver extends ProjectUrlResolver {
+  this.addSubResolver("list", new ListUrlResolver)
 
-  override def handle(params: String*) {
-    if (!ModuleHelper.isCurrentFileModule) {
-      EventBusFactory.getInstance().post(new ShellEvent.GotoFileModule(this, params))
-    }
-    else {
-      super.handle(params: _*)
-    }
-  }
-
-  protected def defaultPageErrorHandler() {
-  }
-
-  class FileListUrlResolver extends CrmUrlResolver {
+  private class ListUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {
+      val projectId = UrlTokenizer(params(0)).getInt
+      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
+        new GotoInvoiceList())
+      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
 

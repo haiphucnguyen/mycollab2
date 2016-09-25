@@ -14,38 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.file.view
+package com.mycollab.module.crm.httpmapping
 
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.module.crm.httpmapping.CrmUrlResolver
-import com.mycollab.shell.events.ShellEvent
-import com.mycollab.vaadin.mvp.UrlResolver
-import com.mycollab.vaadin.web.ui.ModuleHelper
+import com.mycollab.module.crm.events.CrmSettingEvent
 
 /**
   * @author MyCollab Ltd
   * @since 5.0.9
   */
-class FileUrlResolver extends UrlResolver {
-  def build: UrlResolver = {
-    this.addSubResolver("list", new FileListUrlResolver)
-    this
-  }
+class CrmSettingUrlResolver extends CrmUrlResolver {
+  this.addSubResolver("notification", new NotificationSettingUrlResolver)
+  this.addSubResolver("customlayout", new CustomLayoutUrlResolver)
 
-  override def handle(params: String*) {
-    if (!ModuleHelper.isCurrentFileModule) {
-      EventBusFactory.getInstance().post(new ShellEvent.GotoFileModule(this, params))
-    }
-    else {
-      super.handle(params: _*)
-    }
-  }
-
-  protected def defaultPageErrorHandler() {
-  }
-
-  class FileListUrlResolver extends CrmUrlResolver {
+  class NotificationSettingUrlResolver extends CrmUrlResolver {
     protected override def handlePage(params: String*) {
+      EventBusFactory.getInstance().post(new CrmSettingEvent.GotoNotificationSetting(this, null))
+    }
+  }
+
+  class CustomLayoutUrlResolver extends CrmUrlResolver {
+    protected override def handlePage(params: String*) {
+      EventBusFactory.getInstance().post(new CrmSettingEvent.GotoCustomViewSetting(this, null))
     }
   }
 
