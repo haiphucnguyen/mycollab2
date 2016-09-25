@@ -32,7 +32,7 @@ public class MilestoneKanbanPresenter extends AbstractPresenter<IMilestoneKanban
 
             view.lazyLoadView();
             ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
-            breadcrumb.gotoKanban();
+            breadcrumb.gotoMilestoneKanban();
         }else {
             throw new SecureAccessException();
         }

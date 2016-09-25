@@ -191,7 +191,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_ROADMAP));
     }
 
-    public void gotoKanban() {
+    public void gotoMilestoneKanban() {
         breadcrumb.select(0);
         breadcrumb.addLink(new Button(UserUIContext.getMessage(MilestoneI18nEnum.LIST), new GotoMilestoneListListener()));
         breadcrumb.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)));
@@ -342,7 +342,8 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
         breadcrumb.select(0);
         breadcrumb.addLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST), new GotoTicketDashboard()));
         breadcrumb.setLinkEnabled(true, 1);
-        breadcrumb.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)));
+        breadcrumb.addLink(new Button(String.format("%s: %s", UserUIContext.getMessage(TaskI18nEnum.SINGLE),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN))));
         MyCollabUI.addFragment("project/task/kanban/" + UrlEncodeDecoder.encode(project.getId()),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN));
     }
