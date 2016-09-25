@@ -157,14 +157,14 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 Label assigneeLbl = new Label(UserUIContext.getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE));
                 assigneeLbl.setSizeUndefined();
                 layout.addComponent(assigneeLbl, 0, 1);
-                String assignUserName = (String) PropertyUtils.getProperty(bean, "assigntouser");
+                String assignUserName = (String) PropertyUtils.getProperty(bean, "assignuser");
                 String assignUserAvatarId = (String) PropertyUtils.getProperty(bean, "assignToUserAvatarId");
                 String assignUserDisplayName = (String) PropertyUtils.getProperty(bean, "assignedToUserFullName");
 
                 UserLink assignUserLink = new UserLink(assignUserName, assignUserAvatarId, assignUserDisplayName);
                 layout.addComponent(assignUserLink, 1, 1);
             } catch (Exception e) {
-                LOG.error("Can not build user link {} ", BeanUtility.printBeanObj(bean));
+                LOG.error("Can not build user link {} ", e);
             }
 
             this.addComponent(layout);

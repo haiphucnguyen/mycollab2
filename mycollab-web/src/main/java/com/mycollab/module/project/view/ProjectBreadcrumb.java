@@ -423,7 +423,8 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
         breadcrumb.addLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST), new GotoTicketDashboard()));
         breadcrumb.setLinkEnabled(true, 1);
 
-        breadcrumb.addLink(generateBreadcrumbLink(bug.getName(),
+        breadcrumb.addLink(generateBreadcrumbLink(UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                UserUIContext.getMessage(BugI18nEnum.SINGLE), bug.getName()),
                 clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoRead(this, bug.getId()))));
         breadcrumb.addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
         MyCollabUI.addFragment(ProjectLinkGenerator.generateBugEditLink(bug.getBugkey(),
