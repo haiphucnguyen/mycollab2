@@ -9,11 +9,11 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.ProjectPermissionChecker;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.SimpleTask;
-import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.events.AssignmentEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
@@ -73,7 +73,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     private LocalDate baseDate, startDate, endDate;
     private List<Integer> projectKeys;
     private boolean isMonthView = true;
-    private ProjectAssignmentSearchCriteria searchCriteria;
+    private ProjectTicketSearchCriteria searchCriteria;
     private AssignmentSearchPanel searchPanel;
 
     private ApplicationEventListener<AssignmentEvent.NewAssignmentAdd> taskChangeHandler = new ApplicationEventListener<AssignmentEvent.NewAssignmentAdd>() {
@@ -82,13 +82,13 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         public void handle(AssignmentEvent.NewAssignmentAdd event) {
             String type = event.getTypeVal();
             Integer typeId = event.getTypeIdVal();
-            ProjectAssignmentSearchCriteria searchCriteria = new ProjectAssignmentSearchCriteria();
+            ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
             searchCriteria.setTypeIds(new SetSearchField<>(typeId));
             searchCriteria.setTypes(new SetSearchField<>(type));
-            ProjectAssignmentService assignmentService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
-            List<ProjectAssignment> assignments = assignmentService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+            ProjectTicketService assignmentService = AppContextUtil.getSpringBean(ProjectTicketService.class);
+            List<ProjectTicket> assignments = assignmentService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
             GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
-            for (ProjectAssignment assignment : assignments) {
+            for (ProjectTicket assignment : assignments) {
                 GenericAssignmentEvent assignmentEvent = new GenericAssignmentEvent(assignment, true);
                 if (provider.containsEvent(assignmentEvent)) {
                     provider.removeEvent(assignmentEvent);
@@ -127,7 +127,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         this.removeAllComponents();
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         projectKeys = projectService.getProjectKeysUserInvolved(UserUIContext.getUsername(), MyCollabUI.getAccountId());
-        searchCriteria = new ProjectAssignmentSearchCriteria();
+        searchCriteria = new ProjectTicketSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(projectKeys));
         calendar = new Calendar();
         calendar.addStyleName("assignment-calendar");
@@ -156,7 +156,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             @Override
             public void eventClick(CalendarComponentEvents.EventClick event) {
                 GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
-                ProjectAssignment assignment = calendarEvent.getAssignment();
+                ProjectTicket assignment = calendarEvent.getAssignment();
                 if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
                         ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.TASKS)) {
                     ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
@@ -327,7 +327,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     }
 
     @Override
-    public void queryAssignments(ProjectAssignmentSearchCriteria criteria) {
+    public void queryAssignments(ProjectTicketSearchCriteria criteria) {
         searchCriteria = criteria;
         searchCriteria.setProjectIds(new SetSearchField<>(projectKeys));
         RangeDateSearchField dateRange = new RangeDateSearchField(startDate.toDate(), endDate.toDate());
@@ -346,7 +346,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     }
 
     @Override
-    public HasSearchHandlers<ProjectAssignmentSearchCriteria> getSearchHandlers() {
+    public HasSearchHandlers<ProjectTicketSearchCriteria> getSearchHandlers() {
         return searchPanel;
     }
 }

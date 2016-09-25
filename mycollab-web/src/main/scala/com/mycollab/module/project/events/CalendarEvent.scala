@@ -1,7 +1,7 @@
 package com.mycollab.module.project.events
 
 import com.mycollab.events.ApplicationEvent
-import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria
 
 /**
   * @author MyCollab Ltd
@@ -9,5 +9,5 @@ import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriter
   */
 object CalendarEvent {
   
-  class SearchRequest(source: AnyRef, data: ProjectAssignmentSearchCriteria) extends ApplicationEvent(source, data) {};
+  class SearchRequest(source: AnyRef, data: ProjectTicketSearchCriteria) extends ApplicationEvent(source, data) {};
 }

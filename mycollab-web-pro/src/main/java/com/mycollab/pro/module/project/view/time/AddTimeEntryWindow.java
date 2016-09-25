@@ -10,7 +10,7 @@ import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.ItemTimeLogging;
-import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.events.TimeTrackingEvent;
@@ -51,7 +51,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
     private Table timeInputTable;
     private ProjectMemberSelectionBox projectMemberSelectionBox;
     private RichTextArea descArea;
-    private ProjectAssignment selectionTask;
+    private ProjectTicket selectionTask;
     private MHorizontalLayout taskLayout;
 
     private ItemTimeLoggingService itemTimeLoggingService;
@@ -142,7 +142,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
     }
 
     @Override
-    public void updateLinkTask(ProjectAssignment task) {
+    public void updateLinkTask(ProjectTicket task) {
         selectionTask = task;
         if (selectionTask != null) {
             String taskName = this.selectionTask.getName();

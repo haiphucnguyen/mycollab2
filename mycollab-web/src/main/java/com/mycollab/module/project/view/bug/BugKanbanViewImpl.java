@@ -36,17 +36,17 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.bug.components.BugSavedFilterComboBox;
 import com.mycollab.module.project.view.bug.components.ToggleBugSummaryField;
+import com.mycollab.module.project.view.service.BugComponentFactory;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
@@ -216,7 +216,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
             root.addStyleName("kanban-item");
             this.setCompositionRoot(root);
 
-            BugPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(BugPopupFieldFactory.class);
+            BugComponentFactory popupFieldFactory = AppContextUtil.getSpringBean(BugComponentFactory.class);
             MHorizontalLayout headerLayout = new MHorizontalLayout();
             ToggleBugSummaryField bugLinkLbl = new ToggleBugSummaryField(bug, 70);
 

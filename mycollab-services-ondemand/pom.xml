@@ -44,12 +44,6 @@
 
         <dependency>
             <groupId>com.mycollab</groupId>
-            <artifactId>mycollab-migration-ondemand</artifactId>
-            <version>5.4.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-services</artifactId>
             <version>5.4.2</version>
         </dependency>

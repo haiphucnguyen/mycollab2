@@ -18,7 +18,7 @@ package com.mycollab.module.project.view.task.components;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.SortedArrayMap;
-import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import org.joda.time.DateTime;
@@ -38,8 +38,8 @@ public class CreatedDateOrderComponent extends TaskGroupOrderComponent {
     private DefaultTaskGroupComponent unspecifiedTasks;
 
     @Override
-    public void insertTasks(List<ProjectAssignment> tasks) {
-        for (ProjectAssignment task : tasks) {
+    public void insertTasks(List<ProjectTicket> tasks) {
+        for (ProjectTicket task : tasks) {
             if (task.getCreatedTime() != null) {
                 Date createdDate = task.getCreatedTime();
                 DateTime jodaTime = new DateTime(createdDate, DateTimeZone.UTC);

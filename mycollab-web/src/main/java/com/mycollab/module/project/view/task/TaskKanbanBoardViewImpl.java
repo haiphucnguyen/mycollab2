@@ -33,12 +33,14 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.mycollab.module.project.events.TaskEvent;
+import com.mycollab.module.project.events.TicketEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.kanban.AddNewColumnWindow;
 import com.mycollab.module.project.view.kanban.DeleteColumnWindow;
+import com.mycollab.module.project.view.service.TaskComponentFactory;
 import com.mycollab.module.project.view.task.components.TaskSavedFilterComboBox;
 import com.mycollab.module.project.view.task.components.TaskSearchPanel;
 import com.mycollab.module.project.view.task.components.ToggleTaskSummaryField;
@@ -49,7 +51,6 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIUtils;
@@ -146,7 +147,7 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
         deleteColumnBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
 
         MButton advanceDisplayBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST),
-                clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(this, null)))
+                clickEvent -> EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null)))
                 .withIcon(FontAwesome.NAVICON).withWidth("100px");
 
         MButton kanbanBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)).withIcon(FontAwesome.TH)
@@ -319,7 +320,7 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
             root.addStyleName("kanban-item");
             this.setCompositionRoot(root);
 
-            TaskPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(TaskPopupFieldFactory.class);
+            TaskComponentFactory popupFieldFactory = AppContextUtil.getSpringBean(TaskComponentFactory.class);
 
             MHorizontalLayout headerLayout = new MHorizontalLayout();
 

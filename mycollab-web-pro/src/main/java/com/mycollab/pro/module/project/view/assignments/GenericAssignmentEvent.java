@@ -4,7 +4,7 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTooltipGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.SimpleTask;
@@ -27,9 +27,9 @@ import java.util.Date;
  * @since 5.2.0
  */
 public class GenericAssignmentEvent extends BasicEvent {
-    private ProjectAssignment assignment;
+    private ProjectTicket assignment;
 
-    public GenericAssignmentEvent(ProjectAssignment assignment, boolean showProject) {
+    public GenericAssignmentEvent(ProjectTicket assignment, boolean showProject) {
         this.assignment = assignment;
         FontAwesome icon = ProjectAssetsManager.getAsset(assignment.getType());
         if (showProject) {
@@ -63,7 +63,7 @@ public class GenericAssignmentEvent extends BasicEvent {
         this.setEnd(assignment.getEndDate());
     }
 
-    public ProjectAssignment getAssignment() {
+    public ProjectTicket getAssignment() {
         return assignment;
     }
 

@@ -35,8 +35,6 @@ object TaskEvent {
 
   class Search(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class GotoDashboard(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
-
   class GotoAdd(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
   class GotoEdit(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}

@@ -4,9 +4,11 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
+import com.mycollab.module.project.view.service.TicketComponentFactory;
+import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.BasicSearchLayout;
@@ -27,7 +29,7 @@ import static com.mycollab.vaadin.web.ui.WebUIConstants.BUTTON_ACTION;
  * @author MyCollab Ltd
  * @since 5.2.8
  */
-public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssignmentSearchCriteria> {
+public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSearchCriteria> {
     private boolean isCreateAssignment;
 
     public AssignmentSearchPanel(boolean isCreateAssignment) {
@@ -35,12 +37,12 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssi
     }
 
     @Override
-    protected SearchLayout<ProjectAssignmentSearchCriteria> createBasicSearchLayout() {
+    protected SearchLayout<ProjectTicketSearchCriteria> createBasicSearchLayout() {
         return new AssignmentBasicSearchLayout();
     }
 
     @Override
-    protected SearchLayout<ProjectAssignmentSearchCriteria> createAdvancedSearchLayout() {
+    protected SearchLayout<ProjectTicketSearchCriteria> createAdvancedSearchLayout() {
         return null;
     }
 
@@ -54,13 +56,13 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssi
     protected Component buildExtraControls() {
         if (isCreateAssignment) {
             return new MButton(UserUIContext.getMessage(TicketI18nEnum.NEW),
-                    clickEvent -> UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(),
-                            CurrentProjectVariables.getProjectId(), null, true))).withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
+                    clickEvent -> UI.getCurrent().addWindow(AppContextUtil.getSpringBean(TicketComponentFactory.class).createNewTicketWindow(new
+                            LocalDate().toDate(), CurrentProjectVariables.getProjectId(), null, true))).withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
         }
         return null;
     }
 
-    private class AssignmentBasicSearchLayout extends BasicSearchLayout<ProjectAssignmentSearchCriteria> {
+    private class AssignmentBasicSearchLayout extends BasicSearchLayout<ProjectTicketSearchCriteria> {
         private static final long serialVersionUID = 1L;
         private TextField nameField;
         private CheckBox myItemCheckbox;
@@ -95,8 +97,8 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectAssi
         }
 
         @Override
-        protected ProjectAssignmentSearchCriteria fillUpSearchCriteria() {
-            ProjectAssignmentSearchCriteria searchCriteria = new ProjectAssignmentSearchCriteria();
+        protected ProjectTicketSearchCriteria fillUpSearchCriteria() {
+            ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
             searchCriteria.setName(StringSearchField.and(nameField.getValue().trim()));
             if (myItemCheckbox.getValue()) {

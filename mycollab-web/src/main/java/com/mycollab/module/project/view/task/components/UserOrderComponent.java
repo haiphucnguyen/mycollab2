@@ -23,7 +23,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.SortedArrayMap;
 import com.mycollab.html.DivLessFormatter;
-import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -40,8 +40,8 @@ public class UserOrderComponent extends TaskGroupOrderComponent {
     private DefaultTaskGroupComponent unspecifiedTasks;
 
     @Override
-    public void insertTasks(List<ProjectAssignment> tasks) {
-        for (ProjectAssignment task : tasks) {
+    public void insertTasks(List<ProjectTicket> tasks) {
+        for (ProjectTicket task : tasks) {
             String assignUser = task.getAssignUser();
             if (assignUser != null) {
                 if (userAvailables.containsKey(assignUser)) {

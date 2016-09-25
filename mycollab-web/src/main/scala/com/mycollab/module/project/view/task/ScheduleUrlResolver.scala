@@ -1,19 +1,19 @@
 /**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
+  * This file is part of mycollab-web.
+  *
+  * mycollab-web is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * mycollab-web is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+  */
 package com.mycollab.module.project.view.task
 
 import com.mycollab.common.UrlTokenizer
@@ -24,11 +24,9 @@ import com.mycollab.module.project.domain.SimpleTask
 import com.mycollab.module.project.events.ProjectEvent
 import com.mycollab.module.project.service.ProjectTaskService
 import com.mycollab.module.project.view.ProjectUrlResolver
-import com.mycollab.module.project.view.parameters.TaskScreenData.GotoDashboard
 import com.mycollab.module.project.view.parameters.{ProjectScreenData, TaskScreenData}
 import com.mycollab.spring.AppContextUtil
-import com.mycollab.vaadin.MyCollabUI.getAccountId
-import com.mycollab.vaadin.{MyCollabUI, UserUIContext}
+import com.mycollab.vaadin.MyCollabUI
 import com.mycollab.vaadin.mvp.PageActionChain
 
 /**
@@ -36,22 +34,10 @@ import com.mycollab.vaadin.mvp.PageActionChain
   * @since 5.0.9
   */
 class ScheduleUrlResolver extends ProjectUrlResolver {
-  this.addSubResolver("dashboard", new DashboardUrlResolver)
   this.addSubResolver("preview", new ReadUrlResolver)
   this.addSubResolver("add", new AddUrlResolver)
   this.addSubResolver("edit", new EditUrlResolver)
   this.addSubResolver("kanban", new KanbanUrlResolver)
-  this.defaultUrlResolver = new DashboardUrlResolver
-  
-  private class DashboardUrlResolver extends ProjectUrlResolver {
-    protected override def handlePage(params: String*) {
-      val tokenizer = UrlTokenizer(params(0))
-      val projectId = tokenizer.getInt
-      val query = tokenizer.getQuery
-      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new GotoDashboard(query))
-      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
-    }
-  }
   
   private class KanbanUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*): Unit = {

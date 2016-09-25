@@ -20,8 +20,8 @@ import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.DateSearchField;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
-import com.mycollab.module.project.domain.ProjectAssignment;
-import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
+import com.mycollab.module.project.domain.ProjectTicket;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.test.DataSet;
 import com.mycollab.test.service.IntegrationServiceTest;
 import org.junit.Test;
@@ -41,12 +41,12 @@ import static org.assertj.core.api.Assertions.tuple;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class GenericTaskServiceTest extends IntegrationServiceTest {
     @Autowired
-    private ProjectAssignmentService genericTaskService;
+    private ProjectTicketService genericTaskService;
 
     @DataSet
     @Test
     public void testGenericTaskListFindPageable() {
-        List<ProjectAssignment> tasks = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(null));
+        List<ProjectTicket> tasks = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(null));
         assertThat(tasks.size()).isEqualTo(2);
         assertThat(tasks).extracting("type", "name").contains(tuple("Project-Risk", "b"), tuple("Project-Bug", "name 1"));
     }
@@ -56,11 +56,11 @@ public class GenericTaskServiceTest extends IntegrationServiceTest {
     public void testCountTaskOverDue() throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date d = df.parse("2014-01-23 10:49:49");
-        ProjectAssignmentSearchCriteria criteria = new ProjectAssignmentSearchCriteria();
+        ProjectTicketSearchCriteria criteria = new ProjectTicketSearchCriteria();
         criteria.setDueDate(new DateSearchField(d));
         criteria.setProjectIds(new SetSearchField<>(1));
         criteria.setSaccountid(new NumberSearchField(1));
-        List<ProjectAssignment> tasks = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
+        List<ProjectTicket> tasks = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
         assertThat(tasks.size()).isEqualTo(1);
         assertThat(tasks).extracting("type", "name").contains(tuple("Project-Risk", "b"));
     }
@@ -72,11 +72,11 @@ public class GenericTaskServiceTest extends IntegrationServiceTest {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date d = df.parse("2014-01-23 10:49:49");
 
-        ProjectAssignmentSearchCriteria criteria = new ProjectAssignmentSearchCriteria();
+        ProjectTicketSearchCriteria criteria = new ProjectTicketSearchCriteria();
         criteria.setDueDate(new DateSearchField(d));
         criteria.setProjectIds(new SetSearchField<>(1));
         criteria.setSaccountid(new NumberSearchField(1));
-        List<ProjectAssignment> taskList = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
+        List<ProjectTicket> taskList = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
 
         assertThat(taskList.size()).isEqualTo(1);
         assertThat(taskList).extracting("type", "name").contains(tuple("Project-Risk", "b"));

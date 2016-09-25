@@ -16,7 +16,7 @@
  */
 package com.mycollab.module.project.view.task.components;
 
-import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.vaadin.ui.CssLayout;
 
 import java.util.List;
@@ -30,5 +30,5 @@ abstract public class TaskGroupOrderComponent extends CssLayout {
         this.setWidth("100%");
     }
 
-    abstract public void insertTasks(List<ProjectAssignment> tasks);
+    abstract public void insertTasks(List<ProjectTicket> tasks);
 }

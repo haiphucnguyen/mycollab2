@@ -28,12 +28,12 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleMilestone;
-import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
-import com.mycollab.module.project.service.ProjectAssignmentService;
+import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.*;
 import com.mycollab.spring.AppContextUtil;
@@ -144,13 +144,13 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 milestoneService.updateSelectiveWithSession(beanItem, UserUIContext.getUsername());
                 addLayoutStyleName(WebUIConstants.LINK_COMPLETED);
-                ProjectAssignmentSearchCriteria searchCriteria = new ProjectAssignmentSearchCriteria();
+                ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
                 searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                 searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.RISK,
                         ProjectTypeConstants.TASK));
                 searchCriteria.setMilestoneId(NumberSearchField.equal(beanItem.getId()));
                 searchCriteria.setIsOpenned(new SearchField());
-                ProjectAssignmentService genericTaskService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
+                ProjectTicketService genericTaskService = AppContextUtil.getSpringBean(ProjectTicketService.class);
                 int openAssignmentsCount = genericTaskService.getTotalCount(searchCriteria);
                 if (openAssignmentsCount > 0) {
                     ConfirmDialogExt.show(UI.getCurrent(),

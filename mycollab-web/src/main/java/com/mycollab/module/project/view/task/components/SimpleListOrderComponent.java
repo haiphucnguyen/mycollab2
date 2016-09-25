@@ -16,7 +16,7 @@
  */
 package com.mycollab.module.project.view.task.components;
 
-import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 
 import java.util.List;
@@ -31,8 +31,8 @@ public class SimpleListOrderComponent extends TaskGroupOrderComponent {
     }
 
     @Override
-    public void insertTasks(List<ProjectAssignment> tasks) {
-        for (ProjectAssignment task : tasks) {
+    public void insertTasks(List<ProjectTicket> tasks) {
+        for (ProjectTicket task : tasks) {
             this.addComponent(new TaskRowRenderer(task));
         }
     }

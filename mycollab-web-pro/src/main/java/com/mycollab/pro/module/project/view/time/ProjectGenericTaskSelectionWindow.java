@@ -4,8 +4,8 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.domain.ProjectAssignment;
-import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
+import com.mycollab.module.project.domain.ProjectTicket;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.ui.components.GenericTaskTableDisplay;
 import com.mycollab.module.project.ui.components.GenericTaskTableFieldDef;
 import com.mycollab.vaadin.UserUIContext;
@@ -30,7 +30,7 @@ class ProjectGenericTaskSelectionWindow extends MWindow {
 
     private GenericTaskTableDisplay assignmentTableDisplay;
     private TextField nameField;
-    private ProjectAssignmentSearchCriteria searchCriteria;
+    private ProjectTicketSearchCriteria searchCriteria;
 
     public ProjectGenericTaskSelectionWindow(final AssignmentSelectableComp timeEntryWindow) {
         super("Select Assignments");
@@ -40,14 +40,14 @@ class ProjectGenericTaskSelectionWindow extends MWindow {
                 GenericTaskTableFieldDef.assignUser));
         assignmentTableDisplay.setDisplayNumItems(10);
         assignmentTableDisplay.addTableListener(event -> {
-            final ProjectAssignment task = (ProjectAssignment) event.getData();
+            final ProjectTicket task = (ProjectTicket) event.getData();
             if ("name".equals(event.getFieldName())) {
                 timeEntryWindow.updateLinkTask(task);
                 close();
             }
         });
 
-        searchCriteria = new ProjectAssignmentSearchCriteria();
+        searchCriteria = new ProjectTicketSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         assignmentTableDisplay.setSearchCriteria(searchCriteria);
 

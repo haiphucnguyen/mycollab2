@@ -16,11 +16,11 @@
  */
 package com.mycollab.module.project.view.task.components;
 
-import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
-import com.mycollab.module.project.view.assignments.AssignmentPopupFieldFactory;
 import com.mycollab.module.project.view.milestone.ToggleGenericTaskSummaryField;
-import com.mycollab.vaadin.mvp.ViewManager;
+import com.mycollab.module.project.view.service.TicketComponentFactory;
+import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.shared.ui.MarginInfo;
@@ -34,12 +34,12 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 5.1.1
  */
 public class TaskRowRenderer extends MVerticalLayout {
-    private ProjectAssignment assignment;
+    private ProjectTicket assignment;
 
     private PopupButton taskSettingPopupBtn;
     private ToggleGenericTaskSummaryField toggleTaskField;
 
-    public TaskRowRenderer(final ProjectAssignment assignment) {
+    public TaskRowRenderer(final ProjectTicket assignment) {
         this.assignment = assignment;
         withMargin(false).withFullWidth().addStyleName(WebUIConstants.BORDER_LIST_ROW);
 
@@ -54,7 +54,7 @@ public class TaskRowRenderer extends MVerticalLayout {
                 (assignment.getType())).withWidthUndefined(), toggleTaskField).expand(toggleTaskField).withFullWidth()
                 .withMargin(new MarginInfo(false, true, false, false));
 
-        AssignmentPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(AssignmentPopupFieldFactory.class);
+        TicketComponentFactory popupFieldFactory = AppContextUtil.getSpringBean(TicketComponentFactory.class);
 //        AbstractComponent priorityField = popupFieldFactory.createPriorityPopupField(assignment);
 //        AbstractComponent assigneeField = popupFieldFactory.createAssigneePopupField(assignment);
 //        headerLayout.with(taskSettingPopupBtn, priorityField, assigneeField, toggleTaskField).expand(toggleTaskField);

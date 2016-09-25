@@ -62,7 +62,7 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extend
         return null;
     }
 
-    public ComponentContainer constructHeader() {
+    protected ComponentContainer constructHeader() {
         if (header == null) {
             headerText = buildSearchTitle();
             if (headerText != null) {

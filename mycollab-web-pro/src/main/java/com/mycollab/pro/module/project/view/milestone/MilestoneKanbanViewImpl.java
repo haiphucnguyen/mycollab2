@@ -12,10 +12,10 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTooltipGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Milestone;
-import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
-import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.events.AssignmentEvent;
 import com.mycollab.module.project.events.MilestoneEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
@@ -23,21 +23,19 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
-import com.mycollab.module.project.service.ProjectAssignmentService;
+import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.ProjectView;
-import com.mycollab.module.project.view.assignments.AssignmentPopupFieldFactory;
 import com.mycollab.module.project.view.milestone.IMilestoneKanbanView;
 import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
 import com.mycollab.module.project.view.milestone.ToggleGenericTaskSummaryField;
-import com.mycollab.pro.module.project.view.assignments.AssignmentAddWindow;
+import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -85,7 +83,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
     private DDHorizontalLayout kanbanLayout;
     private Map<Integer, KanbanBlock> kanbanBlocks;
     private KanbanBlock nullBlock;
-    private ProjectAssignmentSearchCriteria baseCriteria;
+    private ProjectTicketSearchCriteria baseCriteria;
     private MButton toggleShowClosedMilestonesBtn;
     private boolean displayClosedMilestones = false;
 
@@ -102,8 +100,8 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         @Override
         @Subscribe
         public void handle(AssignmentEvent.NewAssignmentAdd event) {
-            ProjectAssignmentService projectAssignmentService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
-            ProjectAssignment assignment = projectAssignmentService.findAssignment(event.getTypeVal(), event.getTypeIdVal());
+            ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
+            ProjectTicket assignment = projectTicketService.findAssignment(event.getTypeVal(), event.getTypeIdVal());
             if (assignment != null) {
                 insertGenericAssignment(assignment);
             }
@@ -214,7 +212,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         searchPanel.addHeaderRight(groupWrapLayout);
 
-        ProjectAssignmentSearchCriteria searchCriteria = new ProjectAssignmentSearchCriteria();
+        ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK,
                 ProjectTypeConstants.RISK));
@@ -233,14 +231,14 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         }
     }
 
-    private void queryTickets(ProjectAssignmentSearchCriteria searchCriteria) {
+    private void queryTickets(ProjectTicketSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
         kanbanLayout.removeAllComponents();
         toggleShowButton();
         kanbanBlocks = new ConcurrentHashMap<>();
         setProjectNavigatorVisibility(false);
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-        ProjectAssignmentService projectAssignmentService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
+        ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
         AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
@@ -263,13 +261,13 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 kanbanLayout.addComponent(nullBlock);
                 this.push();
 
-                int totalTasks = projectAssignmentService.getTotalCount(searchCriteria);
+                int totalTasks = projectTicketService.getTotalCount(searchCriteria);
                 searchPanel.setTotalCountNumber(totalTasks);
                 int pages = totalTasks / 50;
                 for (int page = 0; page < pages + 1; page++) {
-                    List<ProjectAssignment> assignments = projectAssignmentService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
+                    List<ProjectTicket> assignments = projectTicketService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
                     if (CollectionUtils.isNotEmpty(assignments)) {
-                        for (ProjectAssignment assignment : assignments) {
+                        for (ProjectTicket assignment : assignments) {
                             if (assignment.getMilestoneId() != null) {
                                 KanbanBlock kanbanBlock = kanbanBlocks.get(assignment.getMilestoneId());
                                 if (kanbanBlock != null) {
@@ -296,7 +294,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         }
     }
 
-    private void insertGenericAssignment(ProjectAssignment genericTask) {
+    private void insertGenericAssignment(ProjectTicket genericTask) {
         KanbanBlock block = null;
         if (genericTask.getMilestoneId() != null) {
             block = kanbanBlocks.get(genericTask.getMilestoneId());
@@ -370,14 +368,14 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                         } else {
                             dragLayoutContainer.addComponent(kanbanItem, newIndex);
                         }
-                        ProjectAssignment task = kanbanItem.assignment;
+                        ProjectTicket task = kanbanItem.assignment;
                         if (milestone == null) {
                             task.setMilestoneId(null);
                         } else {
                             task.setMilestoneId(milestone.getId());
                         }
-                        ProjectAssignmentService projectAssignmentService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
-                        projectAssignmentService.updateAssignmentValue(task, UserUIContext.getUsername());
+                        ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
+                        projectTicketService.updateAssignmentValue(task, UserUIContext.getUsername());
 
                         updateComponentCount();
 
@@ -461,8 +459,8 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             headerLayout.with(controlsBtn);
 
             MButton newAssignmentBtn = new MButton(UserUIContext.getMessage(TicketI18nEnum.NEW),
-                    clickEvent -> UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(),
-                            CurrentProjectVariables.getProjectId(), milestone.getId(), false))).withIcon(FontAwesome.PLUS)
+                    clickEvent -> UI.getCurrent().addWindow(AppContextUtil.getSpringBean(TicketComponentFactory.class).createNewTicketWindow(new
+                            LocalDate().toDate(), CurrentProjectVariables.getProjectId(), milestone.getId(), false))).withIcon(FontAwesome.PLUS)
                     .withStyleName(BUTTON_ACTION);
 
             this.with(headerLayout, dragLayoutContainer, newAssignmentBtn).withAlign(newAssignmentBtn, Alignment.MIDDLE_RIGHT);
@@ -493,9 +491,9 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
     }
 
     private static class KanbanAssignmentBlockItem extends CustomComponent {
-        private ProjectAssignment assignment;
+        private ProjectTicket assignment;
 
-        KanbanAssignmentBlockItem(final ProjectAssignment assignment) {
+        KanbanAssignmentBlockItem(final ProjectTicket assignment) {
             this.assignment = assignment;
             MVerticalLayout root = new MVerticalLayout();
             root.addStyleName("kanban-item");
@@ -507,7 +505,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             root.addComponent(headerLayout);
 
             CssLayout footer = new CssLayout();
-            AssignmentPopupFieldFactory fieldFactory = ViewManager.getCacheComponent(AssignmentPopupFieldFactory.class);
+            TicketComponentFactory fieldFactory = AppContextUtil.getSpringBean(TicketComponentFactory.class);
             footer.addComponent(fieldFactory.createStartDatePopupField(assignment));
             footer.addComponent(fieldFactory.createEndDatePopupField(assignment));
             root.addComponent(footer);

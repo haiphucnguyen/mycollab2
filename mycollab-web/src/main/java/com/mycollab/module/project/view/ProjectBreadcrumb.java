@@ -322,16 +322,16 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
         }
     }
 
-    public void gotoTaskDashboard(String query) {
+    public void gotoTicketDashboard(String query) {
         breadcrumb.select(0);
-        breadcrumb.addLink(new Button(UserUIContext.getMessage(TaskI18nEnum.LIST)));
-        String fragment = (StringUtils.isNotBlank(query)) ? ProjectLinkGenerator.generateTaskDashboardLink(project.getId()) + "?" + query : ProjectLinkGenerator.generateTaskDashboardLink(project.getId());
-        MyCollabUI.addFragment(fragment, UserUIContext.getMessage(BreadcrumbI18nEnum.FRA_TASK_DASHBOARD));
+        breadcrumb.addLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST)));
+        String fragment = (StringUtils.isNotBlank(query)) ? ProjectLinkGenerator.generateTicketDashboardLink(project.getId()) + "?" + query : ProjectLinkGenerator.generateTicketDashboardLink(project.getId());
+        MyCollabUI.addFragment(fragment, UserUIContext.getMessage(TicketI18nEnum.LIST));
     }
 
     public void gotoTaskAdd() {
         breadcrumb.select(0);
-        breadcrumb.addLink(new Button(UserUIContext.getMessage(TaskI18nEnum.LIST), new GotoTaskAssignmentDashboard()));
+        breadcrumb.addLink(new Button(UserUIContext.getMessage(TaskI18nEnum.LIST), new GotoTicketDashboard()));
         breadcrumb.setLinkEnabled(true, 1);
         breadcrumb.addLink(new Button(UserUIContext.getMessage(TaskI18nEnum.NEW)));
         MyCollabUI.addFragment("project/task/add/" + UrlEncodeDecoder.encode(project.getId()),
@@ -347,7 +347,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
 
     public void gotoTaskKanbanView() {
         breadcrumb.select(0);
-        breadcrumb.addLink(new Button(UserUIContext.getMessage(TaskI18nEnum.LIST), new GotoTaskAssignmentDashboard()));
+        breadcrumb.addLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST), new GotoTicketDashboard()));
         breadcrumb.setLinkEnabled(true, 1);
         breadcrumb.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)));
         MyCollabUI.addFragment("project/task/kanban/" + UrlEncodeDecoder.encode(project.getId()),
@@ -363,7 +363,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
 
     public void gotoTaskRead(SimpleTask task) {
         breadcrumb.select(0);
-        breadcrumb.addLink(new Button(UserUIContext.getMessage(TaskI18nEnum.LIST), new GotoTaskAssignmentDashboard()));
+        breadcrumb.addLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST), new GotoTicketDashboard()));
         breadcrumb.setLinkEnabled(true, 1);
         breadcrumb.addLink(generateBreadcrumbLink(UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                 UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getName())));
@@ -375,7 +375,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
     public void gotoTaskEdit(final SimpleTask task) {
         breadcrumb.select(0);
         breadcrumb.addLink(new Button(UserUIContext.getMessage(TaskI18nEnum.LIST),
-                new GotoTaskAssignmentDashboard()));
+                new GotoTicketDashboard()));
         breadcrumb.setLinkEnabled(true, 1);
         breadcrumb.addLink(generateBreadcrumbLink(UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                 UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getName()),
@@ -387,12 +387,12 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
                         UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getName()));
     }
 
-    private static class GotoTaskAssignmentDashboard implements Button.ClickListener {
+    private static class GotoTicketDashboard implements Button.ClickListener {
         private static final long serialVersionUID = 1L;
 
         @Override
         public void buttonClick(ClickEvent event) {
-            EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(this, null));
+            EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null));
         }
     }
 

@@ -35,10 +35,10 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.ProjectAssignment;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
-import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.events.MilestoneEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
@@ -46,7 +46,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
-import com.mycollab.module.project.service.ProjectAssignmentService;
+import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
@@ -186,8 +186,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
         headerText = ELabel.h2("");
 
         MHorizontalLayout header = new MHorizontalLayout().withStyleName("hdr-view").withFullWidth().withMargin(true)
-                .with(headerText, createHeaderRight())
-                .withAlign(headerText, Alignment.MIDDLE_LEFT).expand(headerText);
+                .with(headerText, createHeaderRight()).withAlign(headerText, Alignment.MIDDLE_LEFT).expand(headerText);
         this.addComponent(header);
         roadMapView = new MVerticalLayout().withSpacing(false);
         filterPanel = new MVerticalLayout().withWidth("250px").withStyleName(WebUIConstants.BOX);
@@ -291,15 +290,15 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                     if (showIssues) {
                         issueLayout.setVisible(true);
                         viewIssuesBtn.setCaption(UserUIContext.getMessage(ProjectI18nEnum.ACTION_HIDE_ASSIGNMENTS));
-                        ProjectAssignmentSearchCriteria searchCriteria = new ProjectAssignmentSearchCriteria();
+                        ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
                         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                         searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK,
                                 ProjectTypeConstants.RISK));
                         searchCriteria.setMilestoneId(new NumberSearchField(milestone.getId()));
-                        ProjectAssignmentService genericTaskService = AppContextUtil.getSpringBean
-                                (ProjectAssignmentService.class);
-                        List<ProjectAssignment> genericTasks = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
-                        for (ProjectAssignment genericTask : genericTasks) {
+                        ProjectTicketService genericTaskService = AppContextUtil.getSpringBean
+                                (ProjectTicketService.class);
+                        List<ProjectTicket> genericTasks = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+                        for (ProjectTicket genericTask : genericTasks) {
                             ToggleGenericTaskSummaryField toggleGenericTaskSummaryField = new ToggleGenericTaskSummaryField(genericTask);
                             MHorizontalLayout rowComp = new MHorizontalLayout();
                             rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);

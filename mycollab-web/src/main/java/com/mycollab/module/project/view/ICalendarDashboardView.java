@@ -16,7 +16,7 @@
  */
 package com.mycollab.module.project.view;
 
-import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.web.ui.InitializingView;
 
@@ -27,7 +27,7 @@ import com.mycollab.vaadin.web.ui.InitializingView;
 public interface ICalendarDashboardView extends InitializingView {
     void display();
 
-    void queryAssignments(ProjectAssignmentSearchCriteria criteria);
+    void queryAssignments(ProjectTicketSearchCriteria criteria);
 
-    HasSearchHandlers<ProjectAssignmentSearchCriteria> getSearchHandlers();
+    HasSearchHandlers<ProjectTicketSearchCriteria> getSearchHandlers();
 }

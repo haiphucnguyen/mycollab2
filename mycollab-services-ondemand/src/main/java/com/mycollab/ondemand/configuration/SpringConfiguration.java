@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Profile;
         "com.mycollab.pro.common.service",
         "com.mycollab.pro.module.project.service",
         "com.mycollab.pro.module.user.service",
+        "com.mycollab.pro.module.project.view.service",
         "com.mycollab.ondemand.aspect",
         "com.mycollab.ondemand.module.billing.esb",
         "com.mycollab.ondemand.module.billing.service",

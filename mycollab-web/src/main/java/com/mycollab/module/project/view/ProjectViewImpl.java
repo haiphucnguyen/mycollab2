@@ -29,29 +29,26 @@ import com.mycollab.module.project.ProjectMemberStatusConstants;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
-import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.mycollab.module.project.events.ProjectMemberEvent;
+import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.service.ProjectService;
-import com.mycollab.module.project.view.bug.BugPresenter;
 import com.mycollab.module.project.view.file.FilePresenter;
 import com.mycollab.module.project.view.message.MessagePresenter;
 import com.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.mycollab.module.project.view.page.PagePresenter;
 import com.mycollab.module.project.view.parameters.*;
-import com.mycollab.module.project.view.risk.IRiskPresenter;
 import com.mycollab.module.project.view.settings.UserSettingPresenter;
-import com.mycollab.module.project.view.task.TaskPresenter;
+import com.mycollab.module.project.view.ticket.TicketPresenter;
 import com.mycollab.module.project.view.time.IFinancePresenter;
 import com.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.mycollab.module.project.view.user.ProjectInfoComponent;
-import com.mycollab.module.project.i18n.*;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.*;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet.TabImpl;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
@@ -107,11 +104,9 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
         private ProjectDashboardPresenter dashboardPresenter;
         private MessagePresenter messagePresenter;
         private MilestonePresenter milestonesPresenter;
-        private TaskPresenter taskPresenter;
-        private BugPresenter bugPresenter;
+        private TicketPresenter ticketPresenter;
         private PagePresenter pagePresenter;
         private FilePresenter filePresenter;
-        private IRiskPresenter riskPresenter;
         private IFinancePresenter financePresenter;
         private UserSettingPresenter userPresenter;
 
@@ -134,7 +129,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
                 } else if (ProjectTypeConstants.MILESTONE.equals(caption)) {
                     milestonesPresenter.go(ProjectViewImpl.this, new MilestoneScreenData.Roadmap());
                 } else if (ProjectTypeConstants.TICKET.equals(caption)) {
-                    taskPresenter.go(ProjectViewImpl.this, null);
+                    ticketPresenter.go(ProjectViewImpl.this, null);
                 } else if (ProjectTypeConstants.FILE.equals(caption)) {
                     filePresenter.go(ProjectViewImpl.this, new FileScreenData.GotoDashboard());
                 } else if (ProjectTypeConstants.PAGE.equals(caption)) {
@@ -224,7 +219,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
             if (CurrentProjectVariables.hasTicketFeature()) {
                 myProjectTab.addTab(constructTaskDashboardComponent(),
                         ProjectTypeConstants.TICKET, 4, UserUIContext.getMessage(TicketI18nEnum.LIST),
-                        GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateTaskDashboardLink(prjId));
+                        GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateTicketDashboardLink(prjId));
             } else {
                 myProjectTab.removeTab(ProjectTypeConstants.TASK);
             }
@@ -286,24 +281,14 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
             return milestonesPresenter.getView();
         }
 
-        private Component constructProjectRiskComponent() {
-            riskPresenter = PresenterResolver.getPresenter(IRiskPresenter.class);
-            return riskPresenter.getView();
-        }
-
         private Component constructTimeTrackingComponent() {
             financePresenter = PresenterResolver.getPresenter(IFinancePresenter.class);
             return financePresenter.getView();
         }
 
         private Component constructTaskDashboardComponent() {
-            taskPresenter = PresenterResolver.getPresenter(TaskPresenter.class);
-            return taskPresenter.getView();
-        }
-
-        private Component constructProjectBugComponent() {
-            bugPresenter = PresenterResolver.getPresenter(BugPresenter.class);
-            return bugPresenter.getView();
+            ticketPresenter = PresenterResolver.getPresenter(TicketPresenter.class);
+            return ticketPresenter.getView();
         }
 
         private Component constructProjectFileComponent() {

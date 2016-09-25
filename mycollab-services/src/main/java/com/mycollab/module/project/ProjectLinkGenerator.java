@@ -35,8 +35,8 @@ public class ProjectLinkGenerator {
         return siteUrl + URL_PREFIX_PARAM + generateProjectLink(projectId);
     }
 
-    public static String generateTaskDashboardLink(Integer projectId) {
-        return "project/task/dashboard/" + UrlEncodeDecoder.encode(projectId);
+    public static String generateTicketDashboardLink(Integer projectId) {
+        return "project/ticket/dashboard/" + UrlEncodeDecoder.encode(projectId);
     }
 
     public static String generateTaskPreviewLink(Integer taskkey, String prjShortName) {

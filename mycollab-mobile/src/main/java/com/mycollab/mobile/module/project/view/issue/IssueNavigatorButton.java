@@ -19,9 +19,9 @@ package com.mycollab.mobile.module.project.view.issue;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.criteria.ProjectAssignmentSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
-import com.mycollab.module.project.service.ProjectAssignmentService;
+import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
@@ -44,11 +44,11 @@ public class IssueNavigatorButton extends NavigationButton {
 
     public void displayTotalIssues(Integer milestoneId) {
         this.milestoneId = milestoneId;
-        ProjectAssignmentSearchCriteria criteria = new ProjectAssignmentSearchCriteria();
+        ProjectTicketSearchCriteria criteria = new ProjectTicketSearchCriteria();
         criteria.setMilestoneId(NumberSearchField.equal(milestoneId));
         criteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK,
                 ProjectTypeConstants.RISK));
-        ProjectAssignmentService ticketService = AppContextUtil.getSpringBean(ProjectAssignmentService.class);
+        ProjectTicketService ticketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
         this.setCaption(UserUIContext.getMessage(TicketI18nEnum.OPT_TICKETS_VALUE, ticketService.getTotalCount(criteria)));
     }
 }

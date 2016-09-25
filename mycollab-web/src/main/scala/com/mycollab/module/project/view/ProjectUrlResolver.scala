@@ -54,6 +54,7 @@ class ProjectUrlResolver extends UrlResolver {
     this.addSubResolver("reports", new ReportUrlResolver)
     this.addSubResolver("message", new MessageUrlResolver)
     this.addSubResolver("milestone", new MilestoneUrlResolver)
+    this.addSubResolver("ticket", new TicketUrlResolver)
     this.addSubResolver("task", new ScheduleUrlResolver)
     this.addSubResolver("bug", new BugUrlResolver)
     this.addSubResolver("page", new PageUrlResolver)
@@ -69,7 +70,7 @@ class ProjectUrlResolver extends UrlResolver {
     this.addSubResolver("roadmap", new RoadmapUrlResolver)
     this.addSubResolver("calendar", new CalendarUrlResolver)
     this.addSubResolver("client", new ClientUrlResolver)
-    return this
+    this
   }
   
   override def handle(params: String*) {
