@@ -358,7 +358,7 @@ $v-line-height--header:1.5em;
   /* Login Form */
 
   .loginView {
-    background-color: rgb(234, 239, 243);
+    background-color: #EFF0F1;
     > .v-csslayout {
       overflow-y: auto !important;
     }
@@ -377,6 +377,7 @@ $v-line-height--header:1.5em;
     text-align: center;
     font-size: 27px;
     height: 60px;
+    border-bottom: 1px solid $my-separator-color;
     #logo-here {
       background: url('icons/logo.png') no-repeat 0 0 transparent;
       margin: 15px 0px 5px 100px;
@@ -405,7 +406,7 @@ $v-line-height--header:1.5em;
     width: 676px;
     margin: 0px auto;
     background-color: white;
-    border: 1px solid #c8c8c8;
+    border: 1px solid $my-separator-color;
     padding: 0px 0px 30px;
     display:table;
   }

@@ -19,7 +19,6 @@ package com.mycollab.module.project.view.ticket;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.SortedArrayMap;
 import com.mycollab.module.project.domain.ProjectTicket;
-import com.mycollab.module.project.view.task.components.DefaultTaskGroupComponent;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import org.joda.time.DateTime;
@@ -47,7 +46,7 @@ public class CreatedDateOrderComponent extends TicketGroupOrderComponent {
                 DateTime monDay = jodaTime.dayOfWeek().withMinimumValue();
                 if (createdDateAvailables.containsKey(monDay)) {
                     DefaultTicketGroupComponent groupComponent = createdDateAvailables.get(monDay);
-                    groupComponent.insertTask(task);
+                    groupComponent.insertTicket(task);
                 } else {
                     DateTime maxValue = monDay.dayOfWeek().withMaximumValue();
                     DateTimeFormatter formatter = DateTimeFormat.forPattern(MyCollabUI.getLongDateFormat());
@@ -64,14 +63,14 @@ public class CreatedDateOrderComponent extends TicketGroupOrderComponent {
                         addComponent(groupComponent);
                     }
 
-                    groupComponent.insertTask(task);
+                    groupComponent.insertTicket(task);
                 }
             } else {
                 if (unspecifiedTasks == null) {
                     unspecifiedTasks = new DefaultTicketGroupComponent(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED));
                     addComponent(unspecifiedTasks, 0);
                 }
-                unspecifiedTasks.insertTask(task);
+                unspecifiedTasks.insertTicket(task);
             }
         }
     }

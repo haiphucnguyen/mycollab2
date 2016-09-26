@@ -103,8 +103,8 @@ public class UnresolvedTicketsByAssigneeWidget extends DepotWithChart {
                     assignUserFullName = StringUtils.extractNameFromEmail(item.getGroupid());
                 }
 
-                TaskAssigneeLink taskAssigneeLink = new TaskAssigneeLink(assignUser, item.getExtraValue(), assignUserFullName);
-                assigneeLayout.addComponent(new MCssLayout(taskAssigneeLink).withWidth("110px"));
+                TicketAssigneeLink ticketAssigneeLink = new TicketAssigneeLink(assignUser, item.getExtraValue(), assignUserFullName);
+                assigneeLayout.addComponent(new MCssLayout(ticketAssigneeLink).withWidth("110px"));
                 ProgressBarIndicator indicator = new ProgressBarIndicator(totalCountItems, totalCountItems - item.getValue().intValue(), false);
                 indicator.setWidth("100%");
                 assigneeLayout.with(indicator).expand(indicator);
@@ -121,10 +121,10 @@ public class UnresolvedTicketsByAssigneeWidget extends DepotWithChart {
 //        bodyContent.addComponent(taskAssigneeChartWidget);
     }
 
-    class TaskAssigneeLink extends MButton {
+    class TicketAssigneeLink extends MButton {
         private static final long serialVersionUID = 1L;
 
-        TaskAssigneeLink(final String assignee, String assigneeAvatarId, final String assigneeFullName) {
+        TicketAssigneeLink(final String assignee, String assigneeAvatarId, final String assigneeFullName) {
             super(StringUtils.trim(assigneeFullName, 25, true));
 
             this.withListener(clickEvent -> {

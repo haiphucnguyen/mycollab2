@@ -14,17 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.milestone;
+package com.mycollab.module.project.view.service;
 
 import com.mycollab.module.project.domain.SimpleMilestone;
-import com.mycollab.vaadin.mvp.CacheableComponent;
 import com.vaadin.ui.AbstractComponent;
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.0
  */
-public interface MilestonePopupFieldFactory extends CacheableComponent {
+public interface MilestoneComponentFactory {
     AbstractComponent createMilestoneAssigneePopupField(SimpleMilestone milestone, boolean isDisplayName);
 
     AbstractComponent createStartDatePopupField(SimpleMilestone milestone);

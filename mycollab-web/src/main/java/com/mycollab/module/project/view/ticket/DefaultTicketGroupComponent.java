@@ -56,8 +56,8 @@ class DefaultTicketGroupComponent extends MVerticalLayout implements IGroupCompo
         headerLbl.setValue(String.format("%s (%d)", titleValue, numElements));
     }
 
-    void insertTask(ProjectTicket task) {
-        wrapBody.addComponent(new TicketRowRenderer(task));
+    void insertTicket(ProjectTicket ticket) {
+        wrapBody.addComponent(new TicketRowRenderer(ticket));
         numElements++;
         updateHeader();
     }

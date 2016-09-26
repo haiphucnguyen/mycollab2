@@ -32,8 +32,8 @@ public class SimpleListOrderComponent extends TicketGroupOrderComponent {
 
     @Override
     public void insertTickets(List<ProjectTicket> tickets) {
-        for (ProjectTicket task : tickets) {
-            this.addComponent(new TicketRowRenderer(task));
+        for (ProjectTicket ticket : tickets) {
+            this.addComponent(new TicketRowRenderer(ticket));
         }
     }
 }

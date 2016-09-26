@@ -305,9 +305,9 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
                 int newTotalTasks = projectTicketService.getTotalAssignmentsCount(baseCriteria);
                 int newNumPages = newTotalTasks / 20;
                 currentPage++;
-                List<ProjectTicket> otherTasks = projectTicketService.findAssignmentsByCriteria(new
+                List<ProjectTicket> otherTickets = projectTicketService.findAssignmentsByCriteria(new
                         BasicSearchRequest<>(baseCriteria, currentPage + 1, 20));
-                ticketGroupOrderComponent.insertTickets(otherTasks);
+                ticketGroupOrderComponent.insertTickets(otherTickets);
                 if (currentPage >= newNumPages) {
                     wrapBody.removeComponent(wrapBody.getComponent(1));
                 }
@@ -315,9 +315,9 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
             moreBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
             wrapBody.addComponent(moreBtn);
         }
-        List<ProjectTicket> tasks = projectTicketService.findAssignmentsByCriteria(new BasicSearchRequest<>
+        List<ProjectTicket> tickets = projectTicketService.findAssignmentsByCriteria(new BasicSearchRequest<>
                 (baseCriteria, currentPage + 1, 20));
-        ticketGroupOrderComponent.insertTickets(tasks);
+        ticketGroupOrderComponent.insertTickets(tickets);
     }
 
     private void displayKanbanView() {

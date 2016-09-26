@@ -48,11 +48,11 @@ import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
+import com.mycollab.module.project.view.service.MilestoneComponentFactory;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -248,7 +248,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             this.with(headerLayout);
 
             CssLayout metaBlock = new CssLayout();
-            MilestonePopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(MilestonePopupFieldFactory.class);
+            MilestoneComponentFactory popupFieldFactory = AppContextUtil.getSpringBean(MilestoneComponentFactory.class);
             metaBlock.addComponent(popupFieldFactory.createMilestoneAssigneePopupField(milestone, true));
             metaBlock.addComponent(popupFieldFactory.createStartDatePopupField(milestone));
             metaBlock.addComponent(popupFieldFactory.createEndDatePopupField(milestone));

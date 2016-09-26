@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.milestone;
+package com.mycollab.pro.module.project.view.service;
 
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
@@ -11,13 +11,12 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
-import com.mycollab.module.project.view.milestone.MilestonePopupFieldFactory;
+import com.mycollab.module.project.view.service.MilestoneComponentFactory;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -25,6 +24,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.PopupView;
+import org.springframework.stereotype.Service;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -32,8 +32,8 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd
  * @since 5.2.0
  */
-@ViewComponent
-public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactory {
+@Service
+public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory {
     @Override
     public PopupView createMilestoneAssigneePopupField(final SimpleMilestone milestone, final boolean isDisplayName) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {

@@ -84,7 +84,7 @@ public class TicketSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSe
                     EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, fieldInfos));
                 }
             });
-            ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml()).withWidthUndefined();
+            ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET).getHtml()).withWidthUndefined();
             return new MHorizontalLayout(taskIcon, savedFilterComboBox).expand(savedFilterComboBox).alignAll(Alignment.MIDDLE_LEFT);
         } else {
             return null;

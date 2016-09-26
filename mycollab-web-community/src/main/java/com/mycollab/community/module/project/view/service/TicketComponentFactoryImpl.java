@@ -26,7 +26,7 @@ import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
@@ -37,7 +37,7 @@ import java.util.Date;
  * @author MyCollab Ltd
  * @since 5.4.3
  */
-@Component
+@Service
 public class TicketComponentFactoryImpl implements TicketComponentFactory {
     @Override
     public AbstractComponent createStartDatePopupField(ProjectTicket assignment) {

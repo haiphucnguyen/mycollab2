@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web-community.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.community.module.project.view.milestone;
+package com.mycollab.community.module.project.view.service;
 
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
@@ -25,20 +25,20 @@ import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
-import com.mycollab.module.project.view.milestone.MilestonePopupFieldFactory;
+import com.mycollab.module.project.view.service.MilestoneComponentFactory;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.AbstractComponent;
+import org.springframework.stereotype.Service;
 import org.vaadin.teemu.VaadinIcons;
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.0
  */
-@ViewComponent
-public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactory {
+@Service
+public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory {
     @Override
     public AbstractComponent createMilestoneAssigneePopupField(SimpleMilestone milestone, boolean isDisplayName) {
         String avatarLink = StorageFactory.getAvatarPath(milestone.getOwnerAvatarId(), 16);

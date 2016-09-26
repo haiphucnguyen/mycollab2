@@ -34,14 +34,14 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.AbstractComponent;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.vaadin.teemu.VaadinIcons;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.3
  */
-@Component
+@Service
 public class BugComponentFactoryImpl implements BugComponentFactory {
 
     @Override

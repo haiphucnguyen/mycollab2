@@ -46,7 +46,7 @@ public class StartDateOrderComponent extends TicketGroupOrderComponent {
                 DateTime monDay = jodaTime.dayOfWeek().withMinimumValue();
                 if (startDateAvailables.containsKey(monDay)) {
                     DefaultTicketGroupComponent groupComponent = startDateAvailables.get(monDay);
-                    groupComponent.insertTask(task);
+                    groupComponent.insertTicket(task);
                 } else {
                     DateTime maxValue = monDay.dayOfWeek().withMaximumValue();
                     DateTimeFormatter formatter = DateTimeFormat.forPattern(MyCollabUI.getLongDateFormat());
@@ -63,14 +63,14 @@ public class StartDateOrderComponent extends TicketGroupOrderComponent {
                         addComponent(groupComponent);
                     }
 
-                    groupComponent.insertTask(task);
+                    groupComponent.insertTicket(task);
                 }
             } else {
                 if (unspecifiedTasks == null) {
                     unspecifiedTasks = new DefaultTicketGroupComponent(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED));
                     addComponent(unspecifiedTasks, 0);
                 }
-                unspecifiedTasks.insertTask(task);
+                unspecifiedTasks.insertTicket(task);
             }
         }
     }

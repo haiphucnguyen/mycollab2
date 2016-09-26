@@ -39,14 +39,14 @@ public class DueDateOrderComponent extends TicketGroupOrderComponent {
 
     @Override
     public void insertTickets(List<ProjectTicket> tickets) {
-        for (ProjectTicket task : tickets) {
-            if (task.getDueDate() != null) {
-                Date dueDate = task.getDueDate();
+        for (ProjectTicket ticket : tickets) {
+            if (ticket.getDueDate() != null) {
+                Date dueDate = ticket.getDueDate();
                 DateTime jodaTime = new DateTime(dueDate, DateTimeZone.UTC);
                 DateTime monDay = jodaTime.dayOfWeek().withMinimumValue();
                 if (dueDateAvailables.containsKey(monDay)) {
                     DefaultTicketGroupComponent groupComponent = dueDateAvailables.get(monDay);
-                    groupComponent.insertTask(task);
+                    groupComponent.insertTicket(ticket);
                 } else {
                     DateTime maxValue = monDay.dayOfWeek().withMaximumValue();
                     DateTimeFormatter formatter = DateTimeFormat.forPattern(MyCollabUI.getLongDateFormat());
@@ -63,14 +63,14 @@ public class DueDateOrderComponent extends TicketGroupOrderComponent {
                         addComponent(groupComponent);
                     }
 
-                    groupComponent.insertTask(task);
+                    groupComponent.insertTicket(ticket);
                 }
             } else {
                 if (unspecifiedTasks == null) {
                     unspecifiedTasks = new DefaultTicketGroupComponent(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED));
                     addComponent(unspecifiedTasks);
                 }
-                unspecifiedTasks.insertTask(task);
+                unspecifiedTasks.insertTicket(ticket);
             }
         }
     }

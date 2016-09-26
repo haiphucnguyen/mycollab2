@@ -35,14 +35,14 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.AbstractComponent;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.vaadin.teemu.VaadinIcons;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.2
  */
-@Component
+@Service
 public class TaskComponentFactoryImpl implements TaskComponentFactory {
 
     @Override
