@@ -17,7 +17,7 @@
 package com.mycollab.module.crm.httpmapping
 
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.module.crm.events.DocumentEvent
+import com.mycollab.module.crm.event.DocumentEvent
 
 /**
   * @author MyCollab Ltd

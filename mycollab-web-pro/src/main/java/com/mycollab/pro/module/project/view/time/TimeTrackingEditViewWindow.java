@@ -6,7 +6,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.SimpleProjectMember;
-import com.mycollab.module.project.events.TimeTrackingEvent;
+import com.mycollab.module.project.event.TimeTrackingEvent;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;

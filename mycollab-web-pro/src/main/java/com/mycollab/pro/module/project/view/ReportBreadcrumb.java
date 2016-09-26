@@ -2,7 +2,7 @@ package com.mycollab.pro.module.project.view;
 
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.ProjectLinkGenerator;
-import com.mycollab.module.project.events.ReportEvent;
+import com.mycollab.module.project.event.ReportEvent;
 import com.mycollab.module.project.i18n.BreadcrumbI18nEnum;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectReportI18nEnum;

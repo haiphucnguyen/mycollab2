@@ -20,7 +20,7 @@ import com.mycollab.common.UrlTokenizer
 import com.mycollab.db.arguments.SetSearchField
 import com.mycollab.eventmanager.EventBusFactory
 import com.mycollab.module.project.domain.criteria.MessageSearchCriteria
-import com.mycollab.module.project.events.ProjectEvent
+import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.view.parameters.{MessageScreenData, ProjectScreenData}
 import com.mycollab.vaadin.mvp.PageActionChain
 

@@ -24,7 +24,7 @@ import com.mycollab.db.query.Param;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
-import com.mycollab.module.crm.events.CampaignEvent;
+import com.mycollab.module.crm.event.CampaignEvent;
 import com.mycollab.module.crm.i18n.CampaignI18nEnum;
 import com.mycollab.module.crm.ui.components.ComponentUtils;
 import com.mycollab.module.user.ui.components.ActiveUserListSelect;

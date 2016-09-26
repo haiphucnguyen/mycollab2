@@ -22,7 +22,7 @@ import com.mycollab.core.utils.StringUtils
 import com.mycollab.eventmanager.EventBusFactory
 import com.mycollab.module.page.domain.Page
 import com.mycollab.module.page.service.PageService
-import com.mycollab.module.project.events.ProjectEvent
+import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.view.parameters.{PageScreenData, ProjectScreenData}
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.UserUIContext

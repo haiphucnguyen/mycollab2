@@ -39,7 +39,7 @@ import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
-import com.mycollab.module.project.events.MilestoneEvent;
+import com.mycollab.module.project.event.MilestoneEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;

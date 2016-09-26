@@ -7,7 +7,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.crm.domain.Account;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.service.AccountService;
-import com.mycollab.module.project.events.ClientEvent;
+import com.mycollab.module.project.event.ClientEvent;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;

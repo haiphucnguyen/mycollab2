@@ -5,7 +5,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectCustomizeView;
-import com.mycollab.module.project.events.CustomizeUIEvent;
+import com.mycollab.module.project.event.CustomizeUIEvent;
 import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.service.ProjectCustomizeViewService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;

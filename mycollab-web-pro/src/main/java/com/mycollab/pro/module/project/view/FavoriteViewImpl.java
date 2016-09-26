@@ -15,7 +15,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.domain.criteria.ProjectGenericItemSearchCriteria;
-import com.mycollab.module.project.events.*;
+import com.mycollab.module.project.event.*;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectGenericItemService;

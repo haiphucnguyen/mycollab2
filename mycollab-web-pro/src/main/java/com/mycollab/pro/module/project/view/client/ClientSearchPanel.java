@@ -8,7 +8,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.crm.ui.components.ComponentUtils;
-import com.mycollab.module.project.events.ClientEvent;
+import com.mycollab.module.project.event.ClientEvent;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.mycollab.security.RolePermissionCollections;

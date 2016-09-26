@@ -28,7 +28,7 @@ import com.mycollab.module.page.service.PageService;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.domain.*;
-import com.mycollab.module.project.events.*;
+import com.mycollab.module.project.event.*;
 import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.tracker.domain.Component;
 import com.mycollab.module.tracker.domain.SimpleBug;

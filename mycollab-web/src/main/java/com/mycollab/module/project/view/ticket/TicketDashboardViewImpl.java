@@ -35,13 +35,12 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
-import com.mycollab.module.project.events.AssignmentEvent;
-import com.mycollab.module.project.events.TaskEvent;
+import com.mycollab.module.project.event.AssignmentEvent;
+import com.mycollab.module.project.event.TaskEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
-import com.mycollab.module.project.view.task.TaskCustomizeReportOutputWindow;
 import com.mycollab.module.project.view.task.components.*;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
@@ -161,7 +160,7 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
         ticketSearchPanel.addHeaderRight(groupWrapLayout);
 
         MButton printBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(
-                new TaskCustomizeReportOutputWindow(new LazyValueInjector() {
+                new TicketCustomizeReportOutputWindow(new LazyValueInjector() {
                     @Override
                     protected Object doEval() {
                         return baseCriteria;

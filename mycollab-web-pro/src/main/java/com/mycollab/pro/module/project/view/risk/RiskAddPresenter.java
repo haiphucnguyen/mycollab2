@@ -7,7 +7,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
-import com.mycollab.module.project.events.RiskEvent;
+import com.mycollab.module.project.event.RiskEvent;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.spring.AppContextUtil;

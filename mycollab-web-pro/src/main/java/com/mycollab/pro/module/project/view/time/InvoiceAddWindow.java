@@ -5,7 +5,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleInvoice;
-import com.mycollab.module.project.events.InvoiceEvent;
+import com.mycollab.module.project.event.InvoiceEvent;
 import com.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.mycollab.module.project.service.InvoiceService;
 import com.mycollab.spring.AppContextUtil;

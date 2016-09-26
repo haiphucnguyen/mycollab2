@@ -12,7 +12,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleStandupReport;
 import com.mycollab.module.project.domain.StandupReportStatistic;
 import com.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
-import com.mycollab.module.project.events.StandUpEvent;
+import com.mycollab.module.project.event.StandUpEvent;
 import com.mycollab.module.project.i18n.StandupI18nEnum;
 import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;

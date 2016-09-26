@@ -18,8 +18,8 @@ package com.mycollab.module.project.httpmapping
 
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.module.project.events.ClientEvent
-import com.mycollab.module.project.events.ClientEvent.{GotoAdd, GotoEdit, GotoRead}
+import com.mycollab.module.project.event.ClientEvent
+import com.mycollab.module.project.event.ClientEvent.{GotoAdd, GotoEdit, GotoRead}
 
 /**
   * @author MyCollab Ltd

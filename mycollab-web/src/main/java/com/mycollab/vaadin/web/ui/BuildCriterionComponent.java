@@ -298,13 +298,15 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 valueBox.addComponent(listSelect);
 
             } else if (param instanceof I18nStringListParam) {
-                I18nValueListSelect listSelect = new I18nValueListSelect();
-                listSelect.setCaption(null);
-                listSelect.loadData(((I18nStringListParam) param).getLstValues());
-                listSelect.setValue(searchFieldInfo.eval());
-                listSelect.setWidth(width);
-                valueBox.addComponent(listSelect);
-
+                List<? extends Enum<?>> values = ((I18nStringListParam) param).getValues();
+                if (CollectionUtils.isNotEmpty(values)) {
+                    I18nValueListSelect listSelect = new I18nValueListSelect();
+                    listSelect.setCaption(null);
+                    listSelect.loadData(((I18nStringListParam) param).getValues());
+                    listSelect.setValue(searchFieldInfo.eval());
+                    listSelect.setWidth(width);
+                    valueBox.addComponent(listSelect);
+                }
             } else if (param instanceof CompositionStringParam) {
                 TextField tempTextField = new TextField();
                 tempTextField.setValue(String.valueOf(searchFieldInfo.eval()));
@@ -400,7 +402,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             } else if (field instanceof I18nStringListParam) {
                 I18nValueListSelect listSelect = new I18nValueListSelect();
                 listSelect.setCaption(null);
-                listSelect.loadData(((I18nStringListParam) field).getLstValues());
+                listSelect.loadData(((I18nStringListParam) field).getValues());
                 listSelect.setWidth(width);
                 valueBox.addComponent(listSelect);
             } else if (field instanceof CompositionStringParam) {

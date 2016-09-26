@@ -24,7 +24,7 @@ import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.FollowingTicket;
 import com.mycollab.module.project.domain.criteria.FollowingTicketSearchCriteria;
-import com.mycollab.module.project.events.ProjectEvent;
+import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.service.ProjectFollowingTicketService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;

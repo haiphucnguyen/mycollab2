@@ -32,7 +32,7 @@ public class EditionInfoResolver implements InitializingBean {
                 try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
                     loadEditionInfo(versionFile);
                     Path path = Paths.get(versionFile.getParent());
-                    // Register events
+                    // Register event
                     path.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
                     while (true) {
                         // Obtaining watch keys

@@ -15,7 +15,7 @@ import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
-import com.mycollab.module.project.events.AssignmentEvent;
+import com.mycollab.module.project.event.AssignmentEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;

@@ -37,7 +37,7 @@ import com.mycollab.core.{MyCollabException, ResourceNotFoundException}
 import com.mycollab.eventmanager.EventBusFactory
 import com.mycollab.module.project.ProjectLinkParams
 import com.mycollab.module.project.domain.SimpleTask
-import com.mycollab.module.project.events.ProjectEvent
+import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.service.ProjectTaskService
 import com.mycollab.module.project.view.parameters.{ProjectScreenData, TaskScreenData}
 import com.mycollab.spring.AppContextUtil

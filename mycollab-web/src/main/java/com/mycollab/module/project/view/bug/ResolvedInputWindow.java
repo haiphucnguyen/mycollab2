@@ -25,7 +25,7 @@ import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.events.BugEvent;
+import com.mycollab.module.project.event.BugEvent;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;

@@ -19,7 +19,7 @@ package com.mycollab.module.project.httpmapping
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.module.project.events.ProjectEvent
+import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.view.parameters.{ComponentScreenData, ProjectScreenData}
 import com.mycollab.module.tracker.domain.Component
 import com.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria

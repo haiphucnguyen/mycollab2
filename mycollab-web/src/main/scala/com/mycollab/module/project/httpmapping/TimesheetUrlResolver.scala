@@ -17,7 +17,7 @@
 package com.mycollab.module.project.httpmapping
 
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.module.project.events.ReportEvent
+import com.mycollab.module.project.event.ReportEvent
 
 /**
   * @author MyCollab Ltd

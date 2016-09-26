@@ -27,7 +27,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.mycollab.module.project.events.TaskEvent;
+import com.mycollab.module.project.event.TaskEvent;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.milestone.MilestoneListSelect;
 import com.mycollab.module.project.view.settings.component.ProjectMemberListSelect;

@@ -23,7 +23,7 @@ import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.mycollab.module.project.events.TaskEvent;
+import com.mycollab.module.project.event.TaskEvent;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.project.i18n.TaskI18nEnum;

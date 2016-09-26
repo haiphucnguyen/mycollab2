@@ -20,7 +20,7 @@ import com.mycollab.common.UrlTokenizer
 import com.mycollab.core.{MyCollabException, ResourceNotFoundException}
 import com.mycollab.eventmanager.EventBusFactory
 import com.mycollab.module.project.ProjectLinkParams
-import com.mycollab.module.project.events.ProjectEvent
+import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.view.parameters.{BugScreenData, ProjectScreenData}
 import com.mycollab.module.tracker.domain.SimpleBug
 import com.mycollab.module.tracker.service.BugService

@@ -21,7 +21,7 @@ import com.mycollab.db.arguments.{NumberSearchField, SetSearchField}
 import com.mycollab.eventmanager.EventBusFactory
 import com.mycollab.module.project.ProjectMemberStatusConstants
 import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria
-import com.mycollab.module.project.events.ProjectEvent
+import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.service.ProjectMemberService
 import com.mycollab.module.project.view.parameters.{ProjectMemberScreenData, ProjectScreenData}
 import com.mycollab.spring.AppContextUtil

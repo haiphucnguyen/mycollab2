@@ -9,7 +9,7 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
-import com.mycollab.module.project.events.RiskEvent;
+import com.mycollab.module.project.event.RiskEvent;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.project.view.milestone.MilestoneListSelect;

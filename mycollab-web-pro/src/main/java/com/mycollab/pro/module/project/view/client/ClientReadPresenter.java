@@ -9,7 +9,7 @@ import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.module.crm.view.account.AccountDefaultDynaFormLayoutFactory;
-import com.mycollab.module.project.events.ClientEvent;
+import com.mycollab.module.project.event.ClientEvent;
 import com.mycollab.reporting.FormReportLayout;
 import com.mycollab.reporting.PrintButton;
 import com.mycollab.security.RolePermissionCollections;

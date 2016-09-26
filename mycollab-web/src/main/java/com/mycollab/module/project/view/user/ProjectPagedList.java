@@ -29,7 +29,7 @@ import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectTooltipGenerator;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
-import com.mycollab.module.project.events.ProjectEvent;
+import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;

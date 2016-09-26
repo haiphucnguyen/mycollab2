@@ -21,7 +21,7 @@ import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.eventmanager.EventBusFactory
 import com.mycollab.module.project.domain.SimpleRisk
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria
-import com.mycollab.module.project.events.ProjectEvent
+import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.service.RiskService
 import com.mycollab.module.project.view.parameters.{ProjectScreenData, RiskScreenData}
 import com.mycollab.spring.AppContextUtil

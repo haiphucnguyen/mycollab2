@@ -13,7 +13,7 @@ import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.module.project.ProjectLinkBuilder;
-import com.mycollab.module.project.events.ClientEvent;
+import com.mycollab.module.project.event.ClientEvent;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.user.AccountLinkGenerator;

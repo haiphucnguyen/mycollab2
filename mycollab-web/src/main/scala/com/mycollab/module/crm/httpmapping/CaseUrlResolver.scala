@@ -19,7 +19,7 @@ package com.mycollab.module.crm.httpmapping
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.eventmanager.EventBusFactory
 import com.mycollab.module.crm.domain.Account
-import com.mycollab.module.crm.events.CaseEvent
+import com.mycollab.module.crm.event.CaseEvent
 
 /**
   * @author MyCollab Ltd

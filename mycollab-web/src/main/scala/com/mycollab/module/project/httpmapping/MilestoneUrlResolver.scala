@@ -21,7 +21,7 @@ import com.mycollab.db.arguments.SetSearchField
 import com.mycollab.eventmanager.EventBusFactory
 import com.mycollab.module.project.domain.SimpleMilestone
 import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria
-import com.mycollab.module.project.events.ProjectEvent
+import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.service.MilestoneService
 import com.mycollab.module.project.view.parameters.{MilestoneScreenData, ProjectScreenData}
 import com.mycollab.spring.AppContextUtil

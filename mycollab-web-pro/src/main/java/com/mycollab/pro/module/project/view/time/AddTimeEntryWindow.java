@@ -13,7 +13,7 @@ import com.mycollab.module.project.domain.ItemTimeLogging;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.mycollab.module.project.events.TimeTrackingEvent;
+import com.mycollab.module.project.event.TimeTrackingEvent;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;

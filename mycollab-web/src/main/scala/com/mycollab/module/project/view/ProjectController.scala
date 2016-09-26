@@ -24,8 +24,8 @@ import com.mycollab.eventmanager.ApplicationEventListener
 import com.mycollab.module.page.domain.Page
 import com.mycollab.module.project.domain._
 import com.mycollab.module.project.domain.criteria._
-import com.mycollab.module.project.events.InvoiceEvent.GotoList
-import com.mycollab.module.project.events._
+import com.mycollab.module.project.event.InvoiceEvent.GotoList
+import com.mycollab.module.project.event._
 import com.mycollab.module.project.view.bug.BugPresenter
 import com.mycollab.module.project.view.file.FilePresenter
 import com.mycollab.module.project.view.message.MessagePresenter

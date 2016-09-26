@@ -39,6 +39,7 @@ public class TicketSavedFilter extends SavedFilterComboBox {
     public static final String ALL_TASKS = "ALL_TASKS";
     public static final String OPEN_TASKS = "OPEN_TASKS";
     public static final String OVERDUE_TASKS = "OVERDUE_TASKS";
+    public static final String CLOSED_TASKS = "CLOSED_TASKS";
     public static final String MY_TASKS = "MY_TASKS";
     public static final String TASKS_CREATED_BY_ME = "TASKS_CREATED_BY_ME";
     public static final String NEW_TASKS_THIS_WEEK = "NEW_TASKS_THIS_WEEK";
@@ -103,6 +104,29 @@ public class TicketSavedFilter extends SavedFilterComboBox {
             }
         }));
 
+        SearchQueryInfo allClosedTaskQuery = new SearchQueryInfo(OPEN_TASKS, UserUIContext.getMessage(TicketI18nEnum.VAL_ALL_CLOSED_TICKETS),
+                SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_status, new VariableInjector() {
+                    @Override
+                    public Object eval() {
+                        return Arrays.asList(StatusI18nEnum.Closed, BugStatus.Verified);
+                    }
+
+                    @Override
+                    public Class getType() {
+                        return String.class;
+                    }
+
+                    @Override
+                    public boolean isArray() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean isCollection() {
+                        return true;
+                    }
+                }));
+
         SearchQueryInfo myTasksQuery = new SearchQueryInfo(MY_TASKS, UserUIContext.getMessage(TicketI18nEnum.VAL_MY_TICKETS),
                 SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_assignee,
                         ConstantValueInjector.valueOf(Collections.singletonList(UserUIContext.getUsername()))));
@@ -125,6 +149,7 @@ public class TicketSavedFilter extends SavedFilterComboBox {
         this.addSharedSearchQueryInfo(allTasksQuery);
         this.addSharedSearchQueryInfo(allOpenTaskQuery);
         this.addSharedSearchQueryInfo(overdueTaskQuery);
+        this.addSharedSearchQueryInfo(allClosedTaskQuery);
         this.addSharedSearchQueryInfo(myTasksQuery);
         this.addSharedSearchQueryInfo(tasksCreatedByMeQuery);
         this.addSharedSearchQueryInfo(newTasksThisWeekQuery);

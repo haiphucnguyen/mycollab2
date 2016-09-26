@@ -29,7 +29,7 @@ import com.mycollab.module.project.ProjectMemberStatusConstants;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
-import com.mycollab.module.project.events.ProjectMemberEvent;
+import com.mycollab.module.project.event.ProjectMemberEvent;
 import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.service.ProjectService;

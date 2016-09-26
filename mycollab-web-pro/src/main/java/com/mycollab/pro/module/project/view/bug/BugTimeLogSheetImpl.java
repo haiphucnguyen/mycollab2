@@ -27,7 +27,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.mycollab.module.project.events.ProjectEvent;
+import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.pro.module.project.ui.components.TimeLogEditWindow;
 import com.mycollab.module.project.view.bug.BugTimeLogSheet;
