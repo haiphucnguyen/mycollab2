@@ -15899,7 +15899,7 @@ div.v-button.token-field {
 	background-color: #c6c6c6;
 }
 
-.gantt_container .v-table-table .v-table-row-assignment {
+.gantt_container .v-table-table .v-table-row-ticket {
 	background-color: #E4F1FF;
 }
 
@@ -15967,43 +15967,43 @@ div.v-button.token-field {
 	cursor: pointer;
 }
 
-.assignment-urgent .v-icon, .v-filterselect-item-assignment-urgent .v-icon {
+.ticket-urgent .v-icon, .v-filterselect-item-ticket-urgent .v-icon {
 	color: #d32d1a;
 }
 
-.assignment-urgent.v-icon {
+.ticket-urgent.v-icon {
 	color: #d32d1a;
 }
 
-.assignment-high .v-icon, .v-filterselect-item-assignment-high .v-icon {
+.ticket-high .v-icon, .v-filterselect-item-ticket-high .v-icon {
 	color: #e95948;
 }
 
-.assignment-high.v-icon {
+.ticket-high.v-icon {
 	color: #e95948;
 }
 
-.assignment-medium .v-icon, .v-filterselect-item-assignment-medium .v-icon {
+.ticket-medium .v-icon, .v-filterselect-item-ticket-medium .v-icon {
 	color: #f09085;
 }
 
-.assignment-medium.v-icon {
+.ticket-medium.v-icon {
 	color: #f09085;
 }
 
-.assignment-low .v-icon, .v-filterselect-item-assignment-low .v-icon {
+.ticket-low .v-icon, .v-filterselect-item-ticket-low .v-icon {
 	color: #f7c7c1;
 }
 
-.assignment-low.v-icon {
+.ticket-low.v-icon {
 	color: #f7c7c1;
 }
 
-.assignment-none .v-icon, .v-filterselect-item-assignment-none .v-icon {
+.ticket-none .v-icon, .v-filterselect-item-ticket-none .v-icon {
 	color: #b7b9b0;
 }
 
-.assignment-none.v-icon {
+.ticket-none.v-icon {
 	color: #b7b9b0;
 }
 
@@ -16079,21 +16079,21 @@ div.v-button.token-field {
 	color: #f7c7c1;
 }
 
-.v-calendar.assignment-calendar .v-calendar-header-day {
+.v-calendar.ticket-calendar .v-calendar-header-day {
 	font-weight: 600;
 }
 
-.v-calendar.assignment-calendar .v-calendar-event.owner, .v-calendar.assignment-calendar .v-calendar-event-owner-all-day {
+.v-calendar.ticket-calendar .v-calendar-event.owner, .v-calendar.ticket-calendar .v-calendar-event-owner-all-day {
 	background-color: green;
 	color: #ffffff;
 }
 
-.v-calendar.assignment-calendar .v-calendar-event.otheruser, .v-calendar.assignment-calendar .v-calendar-event-otheruser-all-day {
+.v-calendar.ticket-calendar .v-calendar-event.otheruser, .v-calendar.ticket-calendar .v-calendar-event-otheruser-all-day {
 	background-color: cadetblue;
 	color: #ffffff;
 }
 
-.v-calendar.assignment-calendar .v-calendar-event.nonowner, .v-calendar.assignment-calendar .v-calendar-event-nonowner-all-day {
+.v-calendar.ticket-calendar .v-calendar-event.nonowner, .v-calendar.ticket-calendar .v-calendar-event-nonowner-all-day {
 	background-color: brown;
 	color: #ffffff;
 }
@@ -16846,7 +16846,7 @@ input.v-textfield-errorField {
 }
 
 .loginView {
-	background-color: #EFF0F1;
+	background-color: #F9FFFF;
 }
 
 .loginView  > .v-csslayout {
