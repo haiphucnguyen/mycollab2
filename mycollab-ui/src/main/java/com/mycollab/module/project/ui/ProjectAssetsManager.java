@@ -81,12 +81,12 @@ public class ProjectAssetsManager {
         }
     }
 
-    public static String getTaskPriorityHtml(String taskPriority) {
-        if (StringUtils.isBlank(taskPriority)) {
-            taskPriority = Priority.Medium.name();
+    public static String getPriorityHtml(String priority) {
+        if (StringUtils.isBlank(priority)) {
+            priority = Priority.Medium.name();
         }
-        FontAwesome fontAwesome = getPriority(taskPriority);
+        FontAwesome fontAwesome = getPriority(priority);
         return String.format("<span class=\"priority-%s v-icon\" style=\"font-family: FontAwesome;\">&#x%s;</span>",
-                taskPriority.toLowerCase(), Integer.toHexString(fontAwesome.getCodepoint()));
+                priority.toLowerCase(), Integer.toHexString(fontAwesome.getCodepoint()));
     }
 }

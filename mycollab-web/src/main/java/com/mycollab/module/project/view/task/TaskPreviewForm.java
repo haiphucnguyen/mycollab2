@@ -221,7 +221,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             checkBox.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             layout.with(checkBox);
 
-            Span priorityLink = new Span().appendText(ProjectAssetsManager.getTaskPriorityHtml(subTask.getPriority()))
+            Span priorityLink = new Span().appendText(ProjectAssetsManager.getPriorityHtml(subTask.getPriority()))
                     .setTitle(subTask.getPriority());
             layout.with(ELabel.html(priorityLink.write()).withWidthUndefined());
 

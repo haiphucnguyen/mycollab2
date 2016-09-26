@@ -109,7 +109,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return ProjectAssetsManager.getTaskPriorityHtml(task.getPriority());
+                return ProjectAssetsManager.getPriorityHtml(task.getPriority());
             }
 
             @Override

@@ -205,12 +205,12 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             protected String generateSmallContentAsHtml() {
                 if (ticket.getDueDate() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
-                    divHint.appendText(FontAwesome.CLOCK_O.getHtml());
+                    divHint.appendText(VaadinIcons.CLOCK.getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), UserUIContext.formatDate(ticket.getDueDate()));
+                    return String.format(" %s %s", VaadinIcons.CLOCK.getHtml(), UserUIContext.formatDate(ticket.getDueDate()));
                 }
             }
 
@@ -234,7 +234,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return ProjectAssetsManager.getTaskPriorityHtml(ticket.getPriority()) + " " + UserUIContext.getMessage(Priority.class, ticket.getPriority());
+                return ProjectAssetsManager.getPriorityHtml(ticket.getPriority()) + " " + UserUIContext.getMessage(Priority.class, ticket.getPriority());
             }
 
             @Override
@@ -510,7 +510,6 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     }
 
     private static class NewTicketWindow extends MWindow {
-
         private ComboBox typeSelection;
         private CssLayout formLayout;
 

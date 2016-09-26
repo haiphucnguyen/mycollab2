@@ -104,7 +104,7 @@ public class UnresolvedTaskByPriorityWidget extends DepotWithChart {
                         priorityLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
                         MButton priorityLink = new ButtonI18nComp(priority.name(), priority, listener)
                                 .withIcon(ProjectAssetsManager.getPriority(priority.name()))
-                                .withStyleName(WebUIConstants.BUTTON_LINK, "task-" + priority.name().toLowerCase())
+                                .withStyleName(WebUIConstants.BUTTON_LINK, "priority-" + priority.name().toLowerCase())
                                 .withWidth("110px");
 
                         priorityLayout.addComponent(priorityLink);
@@ -122,7 +122,7 @@ public class UnresolvedTaskByPriorityWidget extends DepotWithChart {
                     priorityLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
                     MButton priorityLink = new ButtonI18nComp(priority.name(), priority, listener)
                             .withIcon(ProjectAssetsManager.getPriority(priority.name()))
-                            .withStyleName(WebUIConstants.BUTTON_LINK, "task-" + priority.name().toLowerCase())
+                            .withStyleName(WebUIConstants.BUTTON_LINK, "priority-" + priority.name().toLowerCase())
                             .withWidth("100px");
                     priorityLayout.addComponent(priorityLink);
                     ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount, totalCount, false);

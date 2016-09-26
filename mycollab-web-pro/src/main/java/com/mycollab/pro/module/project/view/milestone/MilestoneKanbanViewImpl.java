@@ -187,7 +187,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
 
         MButton boardBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD), clickEvent ->
-                EventBusFactory.getInstance().post(new MilestoneEvent.GotoRoadmap(this))).withIcon(FontAwesome.NAVICON);
+                EventBusFactory.getInstance().post(new MilestoneEvent.GotoRoadmap(this))).withIcon(FontAwesome.NAVICON).withWidth("100px");
 
         MButton advanceDisplayBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST),
                 clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null)))
