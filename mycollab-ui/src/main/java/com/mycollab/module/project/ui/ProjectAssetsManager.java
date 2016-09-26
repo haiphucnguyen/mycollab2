@@ -86,7 +86,7 @@ public class ProjectAssetsManager {
             taskPriority = Priority.Medium.name();
         }
         FontAwesome fontAwesome = getPriority(taskPriority);
-        return String.format("<span class=\"task-%s v-icon\" style=\"font-family: FontAwesome;\">&#x%s;</span>",
+        return String.format("<span class=\"priority-%s v-icon\" style=\"font-family: FontAwesome;\">&#x%s;</span>",
                 taskPriority.toLowerCase(), Integer.toHexString(fontAwesome.getCodepoint()));
     }
 }

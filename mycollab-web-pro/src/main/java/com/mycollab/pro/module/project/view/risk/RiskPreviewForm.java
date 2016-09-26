@@ -57,7 +57,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
                     FontAwesome fontPriority = ProjectAssetsManager.getPriority(risk.getPriority());
                     String priorityLbl = fontPriority.getHtml() + " " + UserUIContext.getMessage(OptionI18nEnum.Priority.class, risk.getPriority());
                     DefaultViewField field = new DefaultViewField(priorityLbl, ContentMode.HTML);
-                    field.addStyleName("task-" + risk.getPriority().toLowerCase());
+                    field.addStyleName("priority-" + risk.getPriority().toLowerCase());
                     return field;
                 }
             } else if (Risk.Field.status.equalTo(propertyId)) {

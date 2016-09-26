@@ -995,7 +995,7 @@
  */
 
 .v-vaadin-version:after {
-	content: "7.7.1";
+	content: "7.7.3";
 }
 
 .v-widget {
@@ -15967,43 +15967,43 @@ div.v-button.token-field {
 	cursor: pointer;
 }
 
-.ticket-urgent .v-icon, .v-filterselect-item-ticket-urgent .v-icon {
+.priority-urgent .v-icon, .v-filterselect-item-priority-urgent .v-icon {
 	color: #d32d1a;
 }
 
-.ticket-urgent.v-icon {
+.priority-urgent.v-icon {
 	color: #d32d1a;
 }
 
-.ticket-high .v-icon, .v-filterselect-item-ticket-high .v-icon {
+.priority-high .v-icon, .v-filterselect-item-priority-high .v-icon {
 	color: #e95948;
 }
 
-.ticket-high.v-icon {
+.priority-high.v-icon {
 	color: #e95948;
 }
 
-.ticket-medium .v-icon, .v-filterselect-item-ticket-medium .v-icon {
+.priority-medium .v-icon, .v-filterselect-item-priority-medium .v-icon {
 	color: #f09085;
 }
 
-.ticket-medium.v-icon {
+.priority-medium.v-icon {
 	color: #f09085;
 }
 
-.ticket-low .v-icon, .v-filterselect-item-ticket-low .v-icon {
+.priority-low .v-icon, .v-filterselect-item-priority-low .v-icon {
 	color: #f7c7c1;
 }
 
-.ticket-low.v-icon {
+.priority-low.v-icon {
 	color: #f7c7c1;
 }
 
-.ticket-none .v-icon, .v-filterselect-item-ticket-none .v-icon {
+.priority-none .v-icon, .v-filterselect-item-priority-none .v-icon {
 	color: #b7b9b0;
 }
 
-.ticket-none.v-icon {
+.priority-none.v-icon {
 	color: #b7b9b0;
 }
 

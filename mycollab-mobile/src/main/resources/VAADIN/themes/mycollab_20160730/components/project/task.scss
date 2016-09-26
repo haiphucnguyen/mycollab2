@@ -1,60 +1,60 @@
 @mixin project-bug {
   /*Project Task*/
   /* TASK PRIORITY STYLES */
-  $ticket-urgent-color: #d32d1a;
-  $ticket-high-color: #e95948;
-  $ticket-medium-color: #f09085;
-  $ticket-low-color: #f7c7c1;
-  $ticket-none-color: #b7b9b0;
+  $priority-urgent-color: #d32d1a;
+  $priority-high-color: #e95948;
+  $priority-medium-color: #f09085;
+  $priority-low-color: #f7c7c1;
+  $priority-none-color: #b7b9b0;
 
-  .ticket-urgent, .v-filterselect-item-ticket-urgent {
+  .priority-urgent, .v-filterselect-item-priority-urgent {
     .v-icon {
-      color: $ticket-urgent-color;
+      color: $priority-urgent-color;
     }
   }
 
-  .ticket-urgent.v-icon {
-    color: $ticket-urgent-color;
+  .priority-urgent.v-icon {
+    color: $priority-urgent-color;
   }
 
-  .ticket-high, .v-filterselect-item-ticket-high {
+  .priority-high, .v-filterselect-item-priority-high {
     .v-icon {
-      color: $ticket-high-color;
+      color: $priority-high-color;
     }
   }
 
-  .ticket-high.v-icon {
-      color: $ticket-high-color;
+  .priority-high.v-icon {
+      color: $priority-high-color;
   }
 
-  .ticket-medium, .v-filterselect-item-ticket-medium {
+  .priority-medium, .v-filterselect-item-priority-medium {
     .v-icon {
-      color: $ticket-medium-color;
+      color: $priority-medium-color;
     }
   }
 
-  .ticket-medium.v-icon {
-    color: $ticket-medium-color;
+  .priority-medium.v-icon {
+    color: $priority-medium-color;
   }
 
-  .ticket-low, .v-filterselect-item-ticket-low {
+  .priority-low, .v-filterselect-item-priority-low {
     .v-icon {
-      color: $ticket-low-color;
+      color: $priority-low-color;
     }
   }
 
-  .ticket-low.v-icon {
-    color: $ticket-low-color;
+  .priority-low.v-icon {
+    color: $priority-low-color;
   }
 
-  .ticket-none, .v-filterselect-item-ticket-none {
+  .priority-none, .v-filterselect-item-priority-none {
     .v-icon {
-      color: $ticket-none-color;
+      color: $priority-none-color;
     }
   }
 
-  .ticket-none.v-icon {
-    color: $ticket-none-color;
+  .priority-none.v-icon {
+    color: $priority-none-color;
   }
   /*END TASK PRIORITY STYLES*/
 }
