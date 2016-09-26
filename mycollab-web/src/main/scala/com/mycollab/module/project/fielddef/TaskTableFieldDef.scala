@@ -29,7 +29,7 @@ import com.mycollab.vaadin.web.ui.WebUIConstants
 object TaskTableFieldDef {
   val id = new TableViewField(null, "id", WebUIConstants.TABLE_CONTROL_WIDTH)
   val taskname = new TableViewField(GenericI18Enum.FORM_NAME, Task.Field.name.name(), WebUIConstants.TABLE_X_LABEL_WIDTH)
-  val note = new TableViewField(TaskI18nEnum.FORM_NOTES, Task.Field.description.name(), WebUIConstants.TABLE_EX_LABEL_WIDTH)
+  val note = new TableViewField(GenericI18Enum.FORM_DESCRIPTION, Task.Field.description.name(), WebUIConstants.TABLE_EX_LABEL_WIDTH)
   val originalEstimate = new TableViewField(TaskI18nEnum.FORM_ORIGINAL_ESTIMATE, "originalestimate", WebUIConstants.TABLE_M_LABEL_WIDTH)
   val remainEstimate = new TableViewField(TaskI18nEnum.FORM_REMAIN_ESTIMATE, "remainestimate", WebUIConstants.TABLE_M_LABEL_WIDTH)
   val isEstimate = new TableViewField(TaskI18nEnum.FORM_IS_ESTIMATED, "isestimated", WebUIConstants.TABLE_M_LABEL_WIDTH)

@@ -21,7 +21,7 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.TableViewField;
 import com.mycollab.html.DivLessFormatter;
-import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
@@ -55,10 +55,10 @@ public class TicketTableDisplay extends DefaultPagedBeanTable<ProjectTicketServi
             Text image = new Text(ProjectAssetsManager.getAsset(task.getType()).getHtml());
             A itemLink = new A().setId("tag" + TOOLTIP_ID);
             if (ProjectTypeConstants.TASK.equals(task.getType()) || ProjectTypeConstants.BUG.equals(task.getType())) {
-                itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(task.getProjectShortName(),
+                itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(task.getProjectShortName(),
                         task.getProjectId(), task.getType(), task.getExtraTypeId() + ""));
             } else {
-                itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(task.getProjectShortName(),
+                itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(task.getProjectShortName(),
                         task.getProjectId(), task.getType(), task.getTypeId() + ""));
             }
 

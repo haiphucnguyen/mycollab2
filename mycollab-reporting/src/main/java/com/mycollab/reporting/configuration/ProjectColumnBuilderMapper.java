@@ -58,6 +58,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         ColumnBuilderClassMapper.put(SimpleProject.class, buildProjectMap());
         ColumnBuilderClassMapper.put(SimpleMilestone.class, buildMilestoneMap());
+        ColumnBuilderClassMapper.put(ProjectTicket.class, buildTicketMap());
         ColumnBuilderClassMapper.put(SimpleTask.class, buildTaskMap());
         ColumnBuilderClassMapper.put(SimpleBug.class, buildBugMap());
         ColumnBuilderClassMapper.put(SimpleComponent.class, buildComponentMap());
@@ -189,6 +190,31 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 return taskNonBillableHours + bugNonBillableHours;
             }
         }));
+        return map;
+    }
+
+    private Map<String, ComponentBuilderGenerator> buildTicketMap() {
+        LOG.debug("Build report mapper for project::ticket module");
+        Map<String, ComponentBuilderGenerator> map = new HashMap<>();
+        DRIExpression<String> ticketTitleExpr = new PrimaryTypeFieldExpression<>("name");
+        DRIExpression<String> ticketHrefExpr = new AbstractSimpleExpression<String>() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String evaluate(ReportParameters reportParameters) {
+                Integer extraTypeId = reportParameters.getFieldValue("extraTypeId");
+                Integer projectId = reportParameters.getFieldValue("projectId");
+                String type = reportParameters.getFieldValue("type");
+                Integer typeId = reportParameters.getFieldValue("typeId");
+                String projectShortName = reportParameters.getFieldValue("projectShortName");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
+                return ProjectLinkGenerator.generateProjectTicketFullLink(siteUrl, projectShortName, projectId, type, typeId);
+            }
+        };
+        map.put("name", new HyperlinkBuilderGenerator(ticketTitleExpr, ticketHrefExpr));
+        map.put("startDate", new SimpleExpressionBuilderGenerator(new DateExpression("startDate")));
+        map.put("endDate", new SimpleExpressionBuilderGenerator(new DateExpression("endDate")));
+        map.put("dueDate", new SimpleExpressionBuilderGenerator(new DateExpression("dueDate")));
         return map;
     }
 

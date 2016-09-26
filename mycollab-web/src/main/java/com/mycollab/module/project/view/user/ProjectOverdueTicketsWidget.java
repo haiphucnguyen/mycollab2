@@ -33,7 +33,6 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.Depot;
-import com.vaadin.data.Property;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CssLayout;
 
@@ -67,7 +66,7 @@ public class ProjectOverdueTicketsWidget extends Depot {
                 new GenericTaskRowDisplayHandler(), 10) {
             @Override
             protected String stringWhenEmptyList() {
-                return UserUIContext.getMessage(ProjectI18nEnum.OPT_NO_OVERDUE_ASSIGNMENT);
+                return UserUIContext.getMessage(ProjectI18nEnum.OPT_NO_OVERDUE_TICKET);
             }
         };
         this.addHeaderElement(myItemsSelection);

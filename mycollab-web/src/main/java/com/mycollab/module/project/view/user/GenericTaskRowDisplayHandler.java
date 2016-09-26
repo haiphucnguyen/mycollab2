@@ -23,7 +23,7 @@ import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.html.DivLessFormatter;
-import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
@@ -78,11 +78,11 @@ public class GenericTaskRowDisplayHandler implements AbstractBeanPagedList.RowDi
         if (ProjectTypeConstants.BUG.equals(genericTask.getType()) || ProjectTypeConstants.TASK.equals(genericTask.getType())) {
             taskLink.appendText(String.format("[%s-%d] - %s", genericTask.getProjectShortName(), genericTask.getExtraTypeId(),
                     genericTask.getName()));
-            taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
+            taskLink.setHref(ProjectLinkGenerator.generateProjectItemLink(genericTask.getProjectShortName(),
                     genericTask.getProjectId(), genericTask.getType(), genericTask.getExtraTypeId() + ""));
         } else {
             taskLink.appendText(genericTask.getName());
-            taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
+            taskLink.setHref(ProjectLinkGenerator.generateProjectItemLink(genericTask.getProjectShortName(),
                     genericTask.getProjectId(), genericTask.getType(), genericTask.getTypeId() + ""));
         }
 

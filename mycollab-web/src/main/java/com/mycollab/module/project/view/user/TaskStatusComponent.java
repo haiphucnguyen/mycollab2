@@ -90,7 +90,7 @@ public class TaskStatusComponent extends Depot {
 
         @Override
         protected String stringWhenEmptyList() {
-            return UserUIContext.getMessage(ProjectI18nEnum.OPT_NO_OVERDUE_ASSIGNMENT);
+            return UserUIContext.getMessage(ProjectI18nEnum.OPT_NO_OVERDUE_TICKET);
         }
     }
 }

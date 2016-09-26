@@ -66,7 +66,7 @@ public class UserUnresolvedAssignmentWidget extends Depot {
                 (AppContextUtil.getSpringBean(ProjectTicketService.class), new GenericTaskRowDisplayHandler(), 10) {
             @Override
             protected String stringWhenEmptyList() {
-                return UserUIContext.getMessage(ProjectI18nEnum.OPT_NO_ASSIGNMENT);
+                return UserUIContext.getMessage(ProjectI18nEnum.OPT_NO_TICKET);
             }
         };
         this.addHeaderElement(myItemsSelection);
@@ -74,7 +74,7 @@ public class UserUnresolvedAssignmentWidget extends Depot {
     }
 
     public void displayUnresolvedAssignmentsThisWeek() {
-        title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_ASSIGNMENT_THIS_WEEK);
+        title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_TICKET_THIS_WEEK);
         searchCriteria = new ProjectTicketSearchCriteria();
         searchCriteria.setIsOpenned(new SearchField());
         UserDashboardView userDashboardView = UIUtils.getRoot(this, UserDashboardView.class);
@@ -87,12 +87,12 @@ public class UserUnresolvedAssignmentWidget extends Depot {
     }
 
     public void displayNoUnresolvedAssignmentsThisWeek() {
-        title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_ASSIGNMENT_THIS_WEEK);
+        title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_TICKET_THIS_WEEK);
         this.setTitle(String.format(title, 0));
     }
 
     public void displayUnresolvedAssignmentsNextWeek() {
-        title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_ASSIGNMENT_NEXT_WEEK);
+        title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_TICKET_NEXT_WEEK);
         searchCriteria = new ProjectTicketSearchCriteria();
         UserDashboardView userDashboardView = UIUtils.getRoot(this, UserDashboardView.class);
         searchCriteria.setIsOpenned(new SearchField());
@@ -106,7 +106,7 @@ public class UserUnresolvedAssignmentWidget extends Depot {
     }
 
     public void displayNoUnresolvedAssignmentsNextWeek() {
-        title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_ASSIGNMENT_NEXT_WEEK);
+        title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_TICKET_NEXT_WEEK);
         this.setTitle(String.format(title, 0));
     }
 

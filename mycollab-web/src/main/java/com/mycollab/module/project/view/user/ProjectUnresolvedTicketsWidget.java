@@ -64,7 +64,7 @@ public class ProjectUnresolvedTicketsWidget extends Depot {
                 new GenericTaskRowDisplayHandler(), 10) {
             @Override
             protected String stringWhenEmptyList() {
-                return UserUIContext.getMessage(ProjectI18nEnum.OPT_NO_ASSIGNMENT);
+                return UserUIContext.getMessage(ProjectI18nEnum.OPT_NO_TICKET);
             }
         };
         addHeaderElement(myItemsSelection);
@@ -72,7 +72,7 @@ public class ProjectUnresolvedTicketsWidget extends Depot {
     }
 
     public void displayUnresolvedAssignmentsThisWeek() {
-        title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_ASSIGNMENT_THIS_WEEK);
+        title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_TICKET_THIS_WEEK);
         searchCriteria = new ProjectTicketSearchCriteria();
         searchCriteria.setIsOpenned(new SearchField());
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
@@ -84,7 +84,7 @@ public class ProjectUnresolvedTicketsWidget extends Depot {
     }
 
     public void displayUnresolvedAssignmentsNextWeek() {
-        title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_ASSIGNMENT_NEXT_WEEK);
+        title = UserUIContext.getMessage(ProjectI18nEnum.OPT_UNRESOLVED_TICKET_NEXT_WEEK);
         searchCriteria = new ProjectTicketSearchCriteria();
         searchCriteria.setIsOpenned(new SearchField());
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));

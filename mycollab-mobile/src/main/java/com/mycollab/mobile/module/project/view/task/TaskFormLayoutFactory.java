@@ -66,7 +66,7 @@ public class TaskFormLayoutFactory extends AbstractFormLayoutFactory {
             return informationLayout.addComponent(field, UserUIContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE), 0, 7);
         } else if (propertyId.equals(Task.Field.description.equalTo(propertyId))) {
             field.setSizeUndefined();
-            return informationLayout.addComponent(field, UserUIContext.getMessage(TaskI18nEnum.FORM_NOTES), 0, 8);
+            return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 8);
         }
         return null;
     }

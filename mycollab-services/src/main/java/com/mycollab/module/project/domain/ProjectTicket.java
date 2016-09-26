@@ -42,6 +42,12 @@ public class ProjectTicket extends ValuedBean implements Serializable {
 
     private String assignUserAvatarId;
 
+    private String createdUser;
+
+    private String createdUserFullName;
+
+    private String createdUserAvatarId;
+
     private Date dueDate;
 
     private Integer projectId;
@@ -143,7 +149,7 @@ public class ProjectTicket extends ValuedBean implements Serializable {
         return projectId;
     }
 
-    public void setProjectId(int projectId) {
+    public void setProjectId(Integer projectId) {
         this.projectId = projectId;
     }
 
@@ -163,11 +169,11 @@ public class ProjectTicket extends ValuedBean implements Serializable {
         this.type = type;
     }
 
-    public int getTypeId() {
+    public Integer getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(int typeId) {
+    public void setTypeId(Integer typeId) {
         this.typeId = typeId;
     }
 
@@ -231,11 +237,11 @@ public class ProjectTicket extends ValuedBean implements Serializable {
         this.projectShortName = projectShortName;
     }
 
-    public int getExtraTypeId() {
+    public Integer getExtraTypeId() {
         return extraTypeId;
     }
 
-    public void setExtraTypeId(int extraTypeId) {
+    public void setExtraTypeId(Integer extraTypeId) {
         this.extraTypeId = extraTypeId;
     }
 
@@ -322,5 +328,29 @@ public class ProjectTicket extends ValuedBean implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(String createdUser) {
+        this.createdUser = createdUser;
+    }
+
+    public String getCreatedUserFullName() {
+        return createdUserFullName;
+    }
+
+    public void setCreatedUserFullName(String createdUserFullName) {
+        this.createdUserFullName = createdUserFullName;
+    }
+
+    public String getCreatedUserAvatarId() {
+        return createdUserAvatarId;
+    }
+
+    public void setCreatedUserAvatarId(String createdUserAvatarId) {
+        this.createdUserAvatarId = createdUserAvatarId;
     }
 }

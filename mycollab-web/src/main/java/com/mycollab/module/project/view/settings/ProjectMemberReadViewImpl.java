@@ -315,11 +315,11 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             if (ProjectTypeConstants.BUG.equals(genericTask.getType()) || ProjectTypeConstants.TASK.equals(genericTask.getType())) {
                 taskLink.appendText(String.format("[#%d] - %s", genericTask.getExtraTypeId(), genericTask.getName()));
-                taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
+                taskLink.setHref(ProjectLinkGenerator.generateProjectItemLink(genericTask.getProjectShortName(),
                         genericTask.getProjectId(), genericTask.getType(), genericTask.getExtraTypeId() + ""));
             } else {
                 taskLink.appendText(genericTask.getName());
-                taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
+                taskLink.setHref(ProjectLinkGenerator.generateProjectItemLink(genericTask.getProjectShortName(),
                         genericTask.getProjectId(), genericTask.getType(), genericTask.getTypeId() + ""));
             }
             Label issueLbl = new Label(taskLink.write(), ContentMode.HTML);

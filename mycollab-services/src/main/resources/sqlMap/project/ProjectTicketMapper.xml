@@ -8,6 +8,9 @@
         <result column="assignUser" jdbcType="VARCHAR" property="assignUser" />
         <result column="assignUserFullName" jdbcType="VARCHAR" property="assignUserFullName" />
         <result column="assignUserAvatarId" jdbcType="VARCHAR" property="assignUserAvatarId" />
+        <result column="createdUser" jdbcType="VARCHAR" property="createdUser" />
+        <result column="createdUserFullName" jdbcType="VARCHAR" property="createdUserFullName" />
+        <result column="createdUserAvatarId" jdbcType="VARCHAR" property="createdUserAvatarId" />
         <result column="dueDate" jdbcType="TIMESTAMP" property="dueDate" />
         <result column="projectId" jdbcType="INTEGER" property="projectId" />
         <result column="projectName" jdbcType="VARCHAR" property="projectName" />
@@ -280,6 +283,8 @@
           SELECT mainTbl.name, mainTbl.description, mainTbl.assignUser,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
             s_user.avatarId as assignUserAvatarId,
+            createdUserTbl.username AS createdUser, createdUserTbl.avatarId as createdUserAvatarId,
+            concat(createdUserTbl.firstname, ' ', LTRIM(concat(IFNULL(createdUserTbl.middlename, ''), ' ')), createdUserTbl.lastname) AS createdUserFullName,
             mainTbl.dueDate, mainTbl.projectId, m_prj_project.name AS projectName,
             m_prj_project.shortname AS projectShortName, NULL AS extraTypeId, mainTbl.status,
             'Project-Risk' AS type, mainTbl.id AS typeId, mainTbl.createdTime, mainTbl.lastUpdatedTime,
@@ -291,6 +296,7 @@
                  
           FROM m_prj_risk AS mainTbl
               LEFT OUTER JOIN s_user ON (mainTbl.assignUser=s_user.username)
+              LEFT OUTER JOIN s_user createdUserTbl ON (mainTbl.createdUser=createdUserTbl.username)
               LEFT OUTER JOIN m_prj_project ON (mainTbl.projectId=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>
@@ -300,6 +306,8 @@
           SELECT mainTbl.name, mainTbl.description, mainTbl.owner AS assignUser,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
             s_user.avatarId as assignUserAvatarId,
+            createdUserTbl.username AS createdUser, createdUserTbl.avatarId as createdUserAvatarId,
+            concat(createdUserTbl.firstname, ' ', LTRIM(concat(IFNULL(createdUserTbl.middlename, ''), ' ')), createdUserTbl.lastname) AS createdUserFullName,
             mainTbl.endDate AS dueDate, mainTbl.projectId, m_prj_project.name AS projectName,
             m_prj_project.shortname AS projectShortName, NULL AS extraTypeId, mainTbl.status,
             'Project-Milestone' AS type, mainTbl.id AS typeId, mainTbl.createdTime, mainTbl.lastUpdatedTime,
@@ -311,6 +319,7 @@
             mainTbl.id AS milestoneId
           FROM m_prj_milestone AS mainTbl
             LEFT OUTER JOIN s_user ON (mainTbl.owner=s_user.username)
+            LEFT OUTER JOIN s_user createdUserTbl ON (mainTbl.createdUser=createdUserTbl.username)
             LEFT OUTER JOIN m_prj_project ON (mainTbl.projectId=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>
@@ -320,6 +329,8 @@
           SELECT mainTbl.name, mainTbl.description, mainTbl.assignUser,
                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
                 s_user.avatarId as assignUserAvatarId,
+                createdUserTbl.username AS createdUser, createdUserTbl.avatarId as createdUserAvatarId,
+                concat(createdUserTbl.firstname, ' ', LTRIM(concat(IFNULL(createdUserTbl.middlename, ''), ' ')), createdUserTbl.lastname) AS createdUserFullName,
                 mainTbl.dueDate, mainTbl.projectId, m_prj_project.name AS projectName,
                 m_prj_project.shortname AS projectShortName, mainTbl.bugkey AS extraTypeId, mainTbl.status,
                 'Project-Bug' AS type, mainTbl.id AS typeId, mainTbl.createdTime, mainTbl.lastUpdatedTime,
@@ -331,15 +342,18 @@
                 mainTbl.milestoneId
           FROM m_tracker_bug AS mainTbl
               LEFT OUTER JOIN s_user ON (mainTbl.assignUser=s_user.username)
+              LEFT OUTER JOIN s_user createdUserTbl ON (mainTbl.createdUser=createdUserTbl.username)
               LEFT OUTER JOIN m_prj_project ON (mainTbl.projectId=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>
 
     <sql id="selectGenericTaskFromTask">
         <![CDATA[
-          SELECT mainTbl.name,  mainTbl.description, mainTbl.assignUser,
-            concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
-            s_user.avatarId as assignUserAvatarId,
+          SELECT mainTbl.name,  mainTbl.description,
+            assignUserTbl.username AS assignUser, assignUserTbl.avatarId as assignUserAvatarId,
+            concat(assignUserTbl.firstname, ' ', LTRIM(concat(IFNULL(assignUserTbl.middlename, ''), ' ')), assignUserTbl.lastname) AS assignUserFullName,
+            createdUserTbl.username AS createdUser, createdUserTbl.avatarId as createdUserAvatarId,
+            concat(createdUserTbl.firstname, ' ', LTRIM(concat(IFNULL(createdUserTbl.middlename, ''), ' ')), createdUserTbl.lastname) AS createdUserFullName,
             mainTbl.dueDate, mainTbl.projectId, m_prj_project.name AS projectName,
             m_prj_project.shortname AS projectShortName, mainTbl.taskkey AS extraTypeId, mainTbl.status,
             'Project-Task' AS type, mainTbl.id AS typeId, mainTbl.createdTime, mainTbl.lastUpdatedTime,
@@ -351,7 +365,8 @@
             mainTbl.sAccountId, mainTbl.startDate, mainTbl.endDate,
             mainTbl.milestoneId
           FROM m_prj_task AS mainTbl
-            LEFT OUTER JOIN s_user ON (mainTbl.assignUser=s_user.username)
+            LEFT OUTER JOIN s_user assignUserTbl ON (mainTbl.assignUser=assignUserTbl.username)
+            LEFT OUTER JOIN s_user createdUserTbl ON (mainTbl.createdUser=createdUserTbl.username)
             LEFT OUTER JOIN m_prj_project ON (mainTbl.projectId=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
     </sql>

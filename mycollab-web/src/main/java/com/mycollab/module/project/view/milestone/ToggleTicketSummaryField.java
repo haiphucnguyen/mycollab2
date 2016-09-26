@@ -23,7 +23,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.IgnoreException;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.Risk;
@@ -130,10 +130,10 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
 
         A ticketLink = new A().setId("tag" + TOOLTIP_ID);
         if (ticket.isBug() || ticket.isTask()) {
-            ticketLink.setHref(ProjectLinkBuilder.generateProjectItemLink(ticket.getProjectShortName(),
+            ticketLink.setHref(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(),
                     ticket.getProjectId(), ticket.getType(), ticket.getExtraTypeId() + ""));
         } else if (ticket.isRisk()) {
-            ticketLink.setHref(ProjectLinkBuilder.generateProjectItemLink(ticket.getProjectShortName(),
+            ticketLink.setHref(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(),
                     ticket.getProjectId(), ticket.getType(), ticket.getTypeId() + ""));
         } else {
             throw new IgnoreException("Not support type: " + ticket.getType());

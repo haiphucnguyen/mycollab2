@@ -104,7 +104,7 @@ public class TicketSavedFilter extends SavedFilterComboBox {
             }
         }));
 
-        SearchQueryInfo allClosedTaskQuery = new SearchQueryInfo(OPEN_TASKS, UserUIContext.getMessage(TicketI18nEnum.VAL_ALL_CLOSED_TICKETS),
+        SearchQueryInfo allClosedTaskQuery = new SearchQueryInfo(CLOSED_TASKS, UserUIContext.getMessage(TicketI18nEnum.VAL_ALL_CLOSED_TICKETS),
                 SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_status, new VariableInjector() {
                     @Override
                     public Object eval() {

@@ -19,12 +19,12 @@ package com.mycollab.module.project.view.ticket;
 import com.mycollab.common.TableViewField;
 import com.mycollab.db.query.VariableInjector;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.SimpleTask;
-import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.mycollab.module.project.fielddef.TaskTableFieldDef;
+import com.mycollab.module.project.domain.ProjectTicket;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
+import com.mycollab.module.project.fielddef.TicketTableFieldDef;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
-import com.mycollab.module.project.i18n.TaskI18nEnum;
-import com.mycollab.module.project.service.ProjectTaskService;
+import com.mycollab.module.project.i18n.TicketI18nEnum;
+import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.reporting.CustomizeReportOutputWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
@@ -37,34 +37,31 @@ import java.util.Collection;
  * @author MyCollab Ltd
  * @since 5.3.4
  */
-public class TicketCustomizeReportOutputWindow extends CustomizeReportOutputWindow<TaskSearchCriteria, SimpleTask> {
-    public TicketCustomizeReportOutputWindow(VariableInjector<TaskSearchCriteria> variableInjector) {
-        super(ProjectTypeConstants.TASK, UserUIContext.getMessage(TaskI18nEnum.LIST), SimpleTask.class,
-                AppContextUtil.getSpringBean(ProjectTaskService.class), variableInjector);
+public class TicketCustomizeReportOutputWindow extends CustomizeReportOutputWindow<ProjectTicketSearchCriteria, ProjectTicket> {
+    public TicketCustomizeReportOutputWindow(VariableInjector<ProjectTicketSearchCriteria> variableInjector) {
+        super(ProjectTypeConstants.TICKET, UserUIContext.getMessage(TicketI18nEnum.LIST), ProjectTicket.class,
+                AppContextUtil.getSpringBean(ProjectTicketService.class), variableInjector);
     }
 
     @Override
     protected Object[] buildSampleData() {
-        return new Object[]{"Task A", "Note 1", UserUIContext.formatDate(new LocalDate().minusDays(2).toDate()),
+        return new Object[]{"Task A", "Description 1", UserUIContext.formatDate(new LocalDate().minusDays(2).toDate()),
                 UserUIContext.formatDate(new LocalDate().plusDays(1).toDate()), UserUIContext.formatDate(new LocalDate().plusDays(1).toDate()),
-                Priority.High.name(), "50", "Will Smith", "Jonh Adam", "3", "1", "true",
-                "Project Closing", "3", "2"};
+                Priority.High.name(), "Will Smith", "Jonh Adam", "3", "1"};
     }
 
     @Override
     protected Collection<TableViewField> getDefaultColumns() {
-        return Arrays.asList(TaskTableFieldDef.taskname(), TaskTableFieldDef.startdate(), TaskTableFieldDef.duedate(),
-                TaskTableFieldDef.priority(), TaskTableFieldDef.percentagecomplete(), TaskTableFieldDef.assignee(),
-                TaskTableFieldDef.billableHours(), TaskTableFieldDef.nonBillableHours());
+        return Arrays.asList(TicketTableFieldDef.name(), TicketTableFieldDef.startdate(), TicketTableFieldDef.duedate(),
+                TicketTableFieldDef.priority(), TicketTableFieldDef.assignee(),
+                TicketTableFieldDef.billableHours(), TicketTableFieldDef.nonBillableHours());
     }
 
     @Override
     protected Collection<TableViewField> getAvailableColumns() {
-        return Arrays.asList(TaskTableFieldDef.taskname(), TaskTableFieldDef.note(), TaskTableFieldDef.startdate(),
-                TaskTableFieldDef.enddate(), TaskTableFieldDef.duedate(),
-                TaskTableFieldDef.priority(), TaskTableFieldDef.percentagecomplete(), TaskTableFieldDef.logUser(),
-                TaskTableFieldDef.assignee(), TaskTableFieldDef.originalEstimate(), TaskTableFieldDef.remainEstimate(),
-                TaskTableFieldDef.isEstimate(), TaskTableFieldDef.milestoneName(),
-                TaskTableFieldDef.billableHours(), TaskTableFieldDef.nonBillableHours());
+        return Arrays.asList(TicketTableFieldDef.name(), TicketTableFieldDef.description(), TicketTableFieldDef.startdate(),
+                TicketTableFieldDef.enddate(), TicketTableFieldDef.duedate(),
+                TicketTableFieldDef.priority(), TicketTableFieldDef.logUser(),
+                TicketTableFieldDef.assignee(), TicketTableFieldDef.billableHours(), TicketTableFieldDef.nonBillableHours());
     }
 }

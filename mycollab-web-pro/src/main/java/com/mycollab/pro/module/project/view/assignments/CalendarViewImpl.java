@@ -136,7 +136,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
             @Override
             public void eventClick(CalendarComponentEvents.EventClick event) {
                 GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
-                ProjectTicket assignment = calendarEvent.getAssignment();
+                ProjectTicket assignment = calendarEvent.getTicket();
                 if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
                         CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                     ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);

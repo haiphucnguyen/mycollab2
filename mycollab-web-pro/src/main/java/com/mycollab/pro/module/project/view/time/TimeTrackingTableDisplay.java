@@ -8,6 +8,7 @@ import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -166,12 +167,12 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
         A itemLink = new A().setId("tag" + TOOLTIP_ID);
 
         if (ProjectTypeConstants.TASK.equals(itemLogging.getType()) || ProjectTypeConstants.BUG.equals(itemLogging.getType())) {
-            itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
+            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(
                     itemLogging.getProjectShortName(),
                     itemLogging.getProjectid(), itemLogging.getType(),
                     itemLogging.getExtraTypeId() + ""));
         } else {
-            itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
+            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(
                     itemLogging.getProjectShortName(),
                     itemLogging.getProjectid(), itemLogging.getType(),
                     itemLogging.getTypeid() + ""));

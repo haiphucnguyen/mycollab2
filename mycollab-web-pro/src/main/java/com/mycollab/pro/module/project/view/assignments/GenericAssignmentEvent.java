@@ -27,56 +27,56 @@ import java.util.Date;
  * @since 5.2.0
  */
 public class GenericAssignmentEvent extends BasicEvent {
-    private ProjectTicket assignment;
+    private ProjectTicket ticket;
 
-    public GenericAssignmentEvent(ProjectTicket assignment, boolean showProject) {
-        this.assignment = assignment;
-        FontAwesome icon = ProjectAssetsManager.getAsset(assignment.getType());
+    public GenericAssignmentEvent(ProjectTicket ticket, boolean showProject) {
+        this.ticket = ticket;
+        FontAwesome icon = ProjectAssetsManager.getAsset(ticket.getType());
         if (showProject) {
-            this.setCaption(String.format("%s [%s] %s", icon.getHtml(), assignment.getProjectShortName(), assignment.getName()));
+            this.setCaption(String.format("%s [%s] %s", icon.getHtml(), ticket.getProjectShortName(), ticket.getName()));
         } else {
-            this.setCaption(String.format("%s %s", icon.getHtml(), assignment.getName()));
+            this.setCaption(String.format("%s %s", icon.getHtml(), ticket.getName()));
         }
 
         this.setDescription(ProjectTooltipGenerator.generateTooltipEntity(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
-                assignment.getType(), assignment.getTypeId(), MyCollabUI.getAccountId(), MyCollabUI.getSiteUrl(),
+                ticket.getType(), ticket.getTypeId(), MyCollabUI.getAccountId(), MyCollabUI.getSiteUrl(),
                 UserUIContext.getUserTimeZone(), showProject));
         this.setAllDay(true);
 
-        if (UserUIContext.getUsername().equals(assignment.getAssignUser())) {
+        if (UserUIContext.getUsername().equals(ticket.getAssignUser())) {
             this.setStyleName("owner");
-        } else if (assignment.getAssignUser() == null) {
+        } else if (ticket.getAssignUser() == null) {
             this.setStyleName("nonowner");
         } else {
             this.setStyleName("otheruser");
         }
 
         // task has not start and end has both null
-        if (assignment.getStartDate() == null) {
-            assignment.setStartDate(assignment.getEndDate());
+        if (ticket.getStartDate() == null) {
+            ticket.setStartDate(ticket.getEndDate());
         }
-        if (assignment.getEndDate() == null) {
-            assignment.setEndDate(assignment.getStartDate());
+        if (ticket.getEndDate() == null) {
+            ticket.setEndDate(ticket.getStartDate());
         }
 
-        this.setStart(assignment.getStartDate());
-        this.setEnd(assignment.getEndDate());
+        this.setStart(ticket.getStartDate());
+        this.setEnd(ticket.getEndDate());
     }
 
-    public ProjectTicket getAssignment() {
-        return assignment;
+    public ProjectTicket getTicket() {
+        return ticket;
     }
 
     @Override
     public void setStart(Date start) {
         super.setStart(start);
-        assignment.setStartDate(start);
+        ticket.setStartDate(start);
     }
 
     @Override
     public void setEnd(Date end) {
         super.setEnd(end);
-        assignment.setEndDate(end);
+        ticket.setEndDate(end);
     }
 
     @Override
@@ -85,42 +85,42 @@ public class GenericAssignmentEvent extends BasicEvent {
         if (!(o instanceof GenericAssignmentEvent)) return false;
 
         GenericAssignmentEvent assignmentEvent = (GenericAssignmentEvent) o;
-        return (assignment.getType().equals(assignmentEvent.assignment.getType())) &&
-                (assignment.getTypeId() == assignmentEvent.assignment.getTypeId());
+        return (ticket.getType().equals(assignmentEvent.ticket.getType())) &&
+                (ticket.getTypeId() == assignmentEvent.ticket.getTypeId());
 
     }
 
     @Override
     public int hashCode() {
-        return assignment.hashCode();
+        return ticket.hashCode();
     }
 
     public void updateAssociateEntity() {
-        if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
+        if (ProjectTypeConstants.TASK.equals(ticket.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-            SimpleTask task = taskService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
+            SimpleTask task = taskService.findById(ticket.getTypeId(), MyCollabUI.getAccountId());
             task.setStartdate(getStart());
             task.setEnddate(getEnd());
             taskService.updateWithSession(task, UserUIContext.getUsername());
-        } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
+        } else if (ProjectTypeConstants.BUG.equals(ticket.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
             BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-            SimpleBug bug = bugService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
+            SimpleBug bug = bugService.findById(ticket.getTypeId(), MyCollabUI.getAccountId());
             bug.setStartdate(getStart());
             bug.setEnddate(getEnd());
             bugService.updateWithSession(bug, UserUIContext.getUsername());
-        } else if(ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
+        } else if(ProjectTypeConstants.MILESTONE.equals(ticket.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
             MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-            SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
+            SimpleMilestone milestone = milestoneService.findById(ticket.getTypeId(), MyCollabUI.getAccountId());
             milestone.setStartdate(getStart());
             milestone.setEnddate(getEnd());
             milestoneService.updateWithSession(milestone, UserUIContext.getUsername());
-        } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
+        } else if (ProjectTypeConstants.RISK.equals(ticket.getType()) &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
             RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-            SimpleRisk risk = riskService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
+            SimpleRisk risk = riskService.findById(ticket.getTypeId(), MyCollabUI.getAccountId());
             risk.setStartdate(getStart());
             risk.setEnddate(getEnd());
             riskService.updateWithSession(risk, UserUIContext.getUsername());

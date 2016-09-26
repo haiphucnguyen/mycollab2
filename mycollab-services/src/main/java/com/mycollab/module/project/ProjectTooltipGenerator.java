@@ -146,7 +146,7 @@ public class ProjectTooltipGenerator {
             tooltipManager.appendRow(trRow5);
 
             Tr trRow6 = new Tr();
-            Td cell61 = buildCellName(LocalizationHelper.getMessage(locale, TaskI18nEnum.FORM_NOTES));
+            Td cell61 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_DESCRIPTION));
             Td cell62 = buildCellValue(trimHtmlTags(task.getDescription()));
             cell62.setAttribute("colspan", "3");
             trRow6.appendChild(cell61, cell62);
