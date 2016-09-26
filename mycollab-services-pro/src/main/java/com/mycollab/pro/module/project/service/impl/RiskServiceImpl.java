@@ -29,7 +29,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-@Traceable(nameField = "riskname", extraFieldName = "projectid")
+@Traceable(nameField = "name", extraFieldName = "projectid")
 public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCriteria> implements RiskService {
 
     static {

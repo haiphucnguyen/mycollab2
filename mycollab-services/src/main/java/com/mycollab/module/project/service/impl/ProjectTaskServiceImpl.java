@@ -71,7 +71,7 @@ import java.util.concurrent.locks.Lock;
  */
 @Service
 @Transactional
-@Traceable(nameField = "taskname", extraFieldName = "projectid")
+@Traceable(nameField = "name", extraFieldName = "projectid")
 @Watchable(userFieldName = "assignuser", extraTypeId = "projectid")
 public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSearchCriteria> implements ProjectTaskService {
     static {

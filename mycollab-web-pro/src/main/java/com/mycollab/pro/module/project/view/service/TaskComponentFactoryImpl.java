@@ -216,7 +216,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
 
             }
         };
-        builder.withBean(task).withBindProperty("deadline").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
+        builder.withBean(task).withBindProperty("duedate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
                 .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
                 .withValue(task.getDuedate()).withHasPermission(CurrentProjectVariables.canWrite
                 (ProjectRolePermissionCollections.TASKS));
