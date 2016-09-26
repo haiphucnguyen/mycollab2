@@ -1,60 +1,60 @@
 @mixin project-bug {
   /*Project Task*/
   /* TASK PRIORITY STYLES */
-  $assignment-urgent-color: #d32d1a;
-  $assignment-high-color: #e95948;
-  $assignment-medium-color: #f09085;
-  $assignment-low-color: #f7c7c1;
-  $assignment-none-color: #b7b9b0;
+  $ticket-urgent-color: #d32d1a;
+  $ticket-high-color: #e95948;
+  $ticket-medium-color: #f09085;
+  $ticket-low-color: #f7c7c1;
+  $ticket-none-color: #b7b9b0;
 
-  .assignment-urgent, .v-filterselect-item-assignment-urgent {
+  .ticket-urgent, .v-filterselect-item-ticket-urgent {
     .v-icon {
-      color: $assignment-urgent-color;
+      color: $ticket-urgent-color;
     }
   }
 
-  .assignment-urgent.v-icon {
-    color: $assignment-urgent-color;
+  .ticket-urgent.v-icon {
+    color: $ticket-urgent-color;
   }
 
-  .assignment-high, .v-filterselect-item-assignment-high {
+  .ticket-high, .v-filterselect-item-ticket-high {
     .v-icon {
-      color: $assignment-high-color;
+      color: $ticket-high-color;
     }
   }
 
-  .assignment-high.v-icon {
-      color: $assignment-high-color;
+  .ticket-high.v-icon {
+      color: $ticket-high-color;
   }
 
-  .assignment-medium, .v-filterselect-item-assignment-medium {
+  .ticket-medium, .v-filterselect-item-ticket-medium {
     .v-icon {
-      color: $assignment-medium-color;
+      color: $ticket-medium-color;
     }
   }
 
-  .assignment-medium.v-icon {
-    color: $assignment-medium-color;
+  .ticket-medium.v-icon {
+    color: $ticket-medium-color;
   }
 
-  .assignment-low, .v-filterselect-item-assignment-low {
+  .ticket-low, .v-filterselect-item-ticket-low {
     .v-icon {
-      color: $assignment-low-color;
+      color: $ticket-low-color;
     }
   }
 
-  .assignment-low.v-icon {
-    color: $assignment-low-color;
+  .ticket-low.v-icon {
+    color: $ticket-low-color;
   }
 
-  .assignment-none, .v-filterselect-item-assignment-none {
+  .ticket-none, .v-filterselect-item-ticket-none {
     .v-icon {
-      color: $assignment-none-color;
+      color: $ticket-none-color;
     }
   }
 
-  .assignment-none.v-icon {
-    color: $assignment-none-color;
+  .ticket-none.v-icon {
+    color: $ticket-none-color;
   }
   /*END TASK PRIORITY STYLES*/
 }

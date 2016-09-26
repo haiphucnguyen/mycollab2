@@ -78,7 +78,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         HorizontalLayout footer = new HorizontalLayout();
         taskLayout = new MHorizontalLayout();
         taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        createLinkTaskButton();
+        createTicketLinkButton();
 
         if (timeLogging.getType() != null && timeLogging.getTypeid() != null) {
             ProjectTicket tempSelectionTask = new ProjectTicket();
@@ -118,7 +118,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
             taskLayout.removeAllComponents();
 
             MButton detachTaskBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), clickEvent -> {
-                createLinkTaskButton();
+                createTicketLinkButton();
                 updateLinkTask(null);
             }).withIcon(FontAwesome.UNLINK).withStyleName(WebUIConstants.BUTTON_DANGER);
             taskLayout.addComponent(detachTaskBtn);
@@ -133,10 +133,10 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         }
     }
 
-    private void createLinkTaskButton() {
+    private void createTicketLinkButton() {
         taskLayout.removeAllComponents();
         MButton attachTaskBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), clickEvent -> {
-            ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
+            ProjectTicketSelectionWindow selectionTaskWindow = new ProjectTicketSelectionWindow(
                     TimeTrackingEditViewWindow.this);
             UI.getCurrent().addWindow(selectionTaskWindow);
         }).withStyleName(WebUIConstants.BUTTON_ACTION);

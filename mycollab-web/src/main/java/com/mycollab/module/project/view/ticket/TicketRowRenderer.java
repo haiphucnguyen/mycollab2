@@ -18,14 +18,14 @@ package com.mycollab.module.project.view.ticket;
 
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
-import com.mycollab.module.project.view.milestone.ToggleGenericTaskSummaryField;
+import com.mycollab.module.project.view.milestone.ToggleTicketSummaryField;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.CssLayout;
-import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -36,11 +36,10 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public class TicketRowRenderer extends MVerticalLayout {
     private ProjectTicket assignment;
 
-    private PopupButton taskSettingPopupBtn;
-    private ToggleGenericTaskSummaryField toggleTaskField;
+    private ToggleTicketSummaryField toggleTaskField;
 
-    public TicketRowRenderer(final ProjectTicket assignment) {
-        this.assignment = assignment;
+    public TicketRowRenderer(final ProjectTicket ticket) {
+        this.assignment = ticket;
         withMargin(false).withFullWidth().addStyleName(WebUIConstants.BORDER_LIST_ROW);
 
 //        taskSettingPopupBtn = new PopupButton();
@@ -49,39 +48,26 @@ public class TicketRowRenderer extends MVerticalLayout {
 //        OptionPopupContent filterBtnLayout = createPopupContent();
 //        taskSettingPopupBtn.setContent(filterBtnLayout);
 
-        toggleTaskField = new ToggleGenericTaskSummaryField(assignment);
+        toggleTaskField = new ToggleTicketSummaryField(ticket);
         MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset
-                (assignment.getType())).withWidthUndefined(), toggleTaskField).expand(toggleTaskField).withFullWidth()
+                (ticket.getType())).withWidthUndefined(), toggleTaskField).expand(toggleTaskField).withFullWidth()
                 .withMargin(new MarginInfo(false, true, false, false));
 
         TicketComponentFactory popupFieldFactory = AppContextUtil.getSpringBean(TicketComponentFactory.class);
-//        AbstractComponent priorityField = popupFieldFactory.createPriorityPopupField(assignment);
-//        AbstractComponent assigneeField = popupFieldFactory.createAssigneePopupField(assignment);
-//        headerLayout.with(taskSettingPopupBtn, priorityField, assigneeField, toggleTaskField).expand(toggleTaskField);
+        AbstractComponent assigneeField = popupFieldFactory.createAssigneePopupField(ticket);
+        headerLayout.with(assigneeField, toggleTaskField).expand(toggleTaskField);
 
         CssLayout footer = new CssLayout();
-        footer.addComponent(popupFieldFactory.createCommentsPopupField(assignment));
-        footer.addComponent(popupFieldFactory.createFollowersPopupField(assignment));
-        footer.addComponent(popupFieldFactory.createPriorityPopupField(assignment));
-        footer.addComponent(popupFieldFactory.createStatusPopupField(assignment));
-        footer.addComponent(popupFieldFactory.createStartDatePopupField(assignment));
-        footer.addComponent(popupFieldFactory.createEndDatePopupField(assignment));
-        footer.addComponent(popupFieldFactory.createDueDatePopupField(assignment));
-
-//        AbstractComponent commentField = popupFieldFactory.createCommentsPopupField(assignment);
-//        footer.addComponent(commentField);
-//
-//        AbstractComponent followerView = popupFieldFactory.createFollowersPopupField(assignment);
-//        footer.addComponent(followerView);
-//
-//        AbstractComponent statusField = popupFieldFactory.createStatusPopupField(assignment);
-//        footer.addComponent(statusField);
+        footer.addComponent(popupFieldFactory.createCommentsPopupField(ticket));
+        footer.addComponent(popupFieldFactory.createPriorityPopupField(ticket));
+        footer.addComponent(popupFieldFactory.createFollowersPopupField(ticket));
+        footer.addComponent(popupFieldFactory.createStatusPopupField(ticket));
+        footer.addComponent(popupFieldFactory.createStartDatePopupField(ticket));
+        footer.addComponent(popupFieldFactory.createEndDatePopupField(ticket));
+        footer.addComponent(popupFieldFactory.createDueDatePopupField(ticket));
 //
 //        AbstractComponent milestoneField = popupFieldFactory.createMilestonePopupField(assignment);
 //        footer.addComponent(milestoneField);
-//
-//        AbstractComponent percentageField = popupFieldFactory.createPercentagePopupField(assignment);
-//        footer.addComponent(percentageField);
 //
 //        String deadlineTooltip = String.format("%s: %s", UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE),
 //                UserUIContext.formatDate(assignment.getDeadline()));

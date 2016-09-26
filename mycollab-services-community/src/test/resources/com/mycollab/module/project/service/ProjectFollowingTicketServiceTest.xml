@@ -17,19 +17,19 @@
 		projectStatus="Open" />
 
 	<m_prj_task sAccountId="1" projectId="1" id="1"
-		percentagecomplete="40" name="assignment 1" taskkey="1"
+		percentagecomplete="40" name="ticket 1" taskkey="1"
 		assignUser="hainguyen@esofthead.com" />
 
 	<m_prj_task sAccountId="1" projectId="1" id="2"
-		percentagecomplete="100" name="assignment 2" taskkey="2"
+		percentagecomplete="100" name="ticket 2" taskkey="2"
 		assignUser="nghiemle@esofthead.com" />
 
 	<m_prj_task sAccountId="1" projectId="2" id="3"
-		percentagecomplete="60" name="assignment 3" taskkey="3"
+		percentagecomplete="60" name="ticket 3" taskkey="3"
 		assignUser="hainguyen@esofthead.com" />
 
 	<m_prj_task sAccountId="1" projectId="2" id="4"
-		percentagecomplete="90" name="assignment 4" taskkey="4"
+		percentagecomplete="90" name="ticket 4" taskkey="4"
 		assignUser="nghiemle@esofthead.com" />
 
 	<m_tracker_bug sAccountId="1" projectId="1" id="1"

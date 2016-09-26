@@ -299,7 +299,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                                 (ProjectTicketService.class);
                         List<ProjectTicket> genericTasks = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
                         for (ProjectTicket genericTask : genericTasks) {
-                            ToggleGenericTaskSummaryField toggleGenericTaskSummaryField = new ToggleGenericTaskSummaryField(genericTask);
+                            ToggleTicketSummaryField toggleTicketSummaryField = new ToggleTicketSummaryField(genericTask);
                             MHorizontalLayout rowComp = new MHorizontalLayout();
                             rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
                             rowComp.with(ELabel.fontIcon(ProjectAssetsManager.getAsset(genericTask.getType())).withWidthUndefined());
@@ -319,7 +319,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                                     .setTitle(genericTask.getAssignUserFullName());
                             rowComp.with(ELabel.html(img.write()).withWidthUndefined());
 
-                            rowComp.with(toggleGenericTaskSummaryField).expand(toggleGenericTaskSummaryField);
+                            rowComp.with(toggleTicketSummaryField).expand(toggleTicketSummaryField);
                             issueLayout.addComponent(rowComp);
 
                         }

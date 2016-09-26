@@ -17,7 +17,6 @@
 package com.mycollab.module.project.view.service;
 
 import com.mycollab.module.project.domain.ProjectTicket;
-import com.mycollab.vaadin.mvp.CacheableComponent;
 import com.vaadin.ui.AbstractComponent;
 import org.vaadin.viritin.layouts.MWindow;
 
@@ -29,23 +28,25 @@ import java.util.Date;
  */
 public interface TicketComponentFactory {
 
-    AbstractComponent createStartDatePopupField(ProjectTicket assignment);
+    AbstractComponent createStartDatePopupField(ProjectTicket ticket);
 
-    AbstractComponent createEndDatePopupField(ProjectTicket assignment);
+    AbstractComponent createEndDatePopupField(ProjectTicket ticket);
 
-    AbstractComponent createDueDatePopupField(ProjectTicket assignment);
+    AbstractComponent createDueDatePopupField(ProjectTicket ticket);
 
-    AbstractComponent createPriorityPopupField(ProjectTicket task);
+    AbstractComponent createPriorityPopupField(ProjectTicket ticket);
 
-    AbstractComponent createBillableHoursPopupField(ProjectTicket task);
+    AbstractComponent createAssigneePopupField(ProjectTicket ticket);
 
-    AbstractComponent createNonBillableHoursPopupField(ProjectTicket task);
+    AbstractComponent createBillableHoursPopupField(ProjectTicket ticket);
 
-    AbstractComponent createFollowersPopupField(ProjectTicket task);
+    AbstractComponent createNonBillableHoursPopupField(ProjectTicket ticket);
 
-    AbstractComponent createCommentsPopupField(ProjectTicket task);
+    AbstractComponent createFollowersPopupField(ProjectTicket ticket);
 
-    AbstractComponent createStatusPopupField(ProjectTicket task);
+    AbstractComponent createCommentsPopupField(ProjectTicket ticket);
+
+    AbstractComponent createStatusPopupField(ProjectTicket ticket);
 
     MWindow createNewTicketWindow(Date date, final Integer prjId, final Integer milestoneId, boolean isIncludeMilestone);
 }

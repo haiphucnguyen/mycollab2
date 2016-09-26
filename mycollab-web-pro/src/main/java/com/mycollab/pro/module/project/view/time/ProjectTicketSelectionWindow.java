@@ -6,7 +6,7 @@ import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
-import com.mycollab.module.project.ui.components.GenericTaskTableDisplay;
+import com.mycollab.module.project.ui.components.TicketTableDisplay;
 import com.mycollab.module.project.ui.components.GenericTaskTableFieldDef;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -25,21 +25,20 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 4.0
  */
-class ProjectGenericTaskSelectionWindow extends MWindow {
+class ProjectTicketSelectionWindow extends MWindow {
     private static final long serialVersionUID = 1L;
 
-    private GenericTaskTableDisplay assignmentTableDisplay;
+    private TicketTableDisplay ticketTableDisplay;
     private TextField nameField;
     private ProjectTicketSearchCriteria searchCriteria;
 
-    public ProjectGenericTaskSelectionWindow(final AssignmentSelectableComp timeEntryWindow) {
+    ProjectTicketSelectionWindow(final AssignmentSelectableComp timeEntryWindow) {
         super("Select Assignments");
         this.withCenter().withResizable(false).withModal(true).withWidth("800px");
         MVerticalLayout content = new MVerticalLayout();
-        assignmentTableDisplay = new GenericTaskTableDisplay(Arrays.asList(GenericTaskTableFieldDef.name,
-                GenericTaskTableFieldDef.assignUser));
-        assignmentTableDisplay.setDisplayNumItems(10);
-        assignmentTableDisplay.addTableListener(event -> {
+        ticketTableDisplay = new TicketTableDisplay(Arrays.asList(GenericTaskTableFieldDef.name, GenericTaskTableFieldDef.assignUser));
+        ticketTableDisplay.setDisplayNumItems(10);
+        ticketTableDisplay.addTableListener(event -> {
             final ProjectTicket task = (ProjectTicket) event.getData();
             if ("name".equals(event.getFieldName())) {
                 timeEntryWindow.updateLinkTask(task);
@@ -49,9 +48,9 @@ class ProjectGenericTaskSelectionWindow extends MWindow {
 
         searchCriteria = new ProjectTicketSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        assignmentTableDisplay.setSearchCriteria(searchCriteria);
+        ticketTableDisplay.setSearchCriteria(searchCriteria);
 
-        content.with(constructTopPanel(), assignmentTableDisplay);
+        content.with(constructTopPanel(), ticketTableDisplay);
         this.setContent(content);
     }
 
@@ -72,6 +71,6 @@ class ProjectGenericTaskSelectionWindow extends MWindow {
 
     private void callSearchAction() {
         searchCriteria.setName(StringSearchField.and(this.nameField.getValue().trim()));
-        assignmentTableDisplay.setSearchCriteria(searchCriteria);
+        ticketTableDisplay.setSearchCriteria(searchCriteria);
     }
 }

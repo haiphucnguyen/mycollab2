@@ -205,9 +205,9 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
             Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                     .setTitle(genericTask.getAssignUserFullName());
 
-            ToggleGenericTaskSummaryField toggleGenericTaskSummaryField = new ToggleGenericTaskSummaryField(genericTask);
+            ToggleTicketSummaryField toggleTicketSummaryField = new ToggleTicketSummaryField(genericTask);
             rowComp.with(ELabel.html(img.write()).withWidthUndefined(),
-                    toggleGenericTaskSummaryField).expand(toggleGenericTaskSummaryField);
+                    toggleTicketSummaryField).expand(toggleTicketSummaryField);
             return rowComp;
         }
     }

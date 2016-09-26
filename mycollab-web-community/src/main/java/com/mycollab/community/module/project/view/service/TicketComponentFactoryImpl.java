@@ -1,10 +1,12 @@
 package com.mycollab.community.module.project.view.service;
 
 import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.FollowerI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.community.vaadin.web.ui.field.MetaFieldBuilder;
+import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
@@ -20,6 +22,7 @@ import com.mycollab.module.project.view.task.TaskEditForm;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.AbstractComponent;
@@ -116,6 +119,14 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     public AbstractComponent createStatusPopupField(ProjectTicket assignment) {
         return new MetaFieldBuilder().withCaptionAndIcon(FontAwesome.INFO_CIRCLE, assignment.getStatus()).withDescription
                 (UserUIContext.getMessage(GenericI18Enum.FORM_STATUS)).build();
+    }
+
+    @Override
+    public AbstractComponent createAssigneePopupField(ProjectTicket ticket) {
+        String avatarLink = StorageFactory.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
+        Img img = new Img(ticket.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
+                .setTitle(ticket.getAssignUserFullName());
+        return new MetaFieldBuilder().withCaption(img.write()).withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).build();
     }
 
     @Override

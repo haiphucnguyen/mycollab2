@@ -42,10 +42,10 @@ import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class GenericTaskTableDisplay extends DefaultPagedBeanTable<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> {
+public class TicketTableDisplay extends DefaultPagedBeanTable<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> {
     private static final long serialVersionUID = 1L;
 
-    public GenericTaskTableDisplay(List<TableViewField> displayColumns) {
+    public TicketTableDisplay(List<TableViewField> displayColumns) {
         super(AppContextUtil.getSpringBean(ProjectTicketService.class), ProjectTicket.class, displayColumns);
 
         addGeneratedColumn("name", (source, itemId, columnId) -> {
@@ -69,7 +69,7 @@ public class GenericTaskTableDisplay extends DefaultPagedBeanTable<ProjectTicket
             div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink);
 
             MButton assignmentLink = new MButton(div.write(),
-                    clickEvent -> fireTableEvent(new TableClickEvent(GenericTaskTableDisplay.this, task, "name")))
+                    clickEvent -> fireTableEvent(new TableClickEvent(TicketTableDisplay.this, task, "name")))
                     .withStyleName(WebUIConstants.BUTTON_LINK);
             assignmentLink.setCaptionAsHtml(true);
             return assignmentLink;

@@ -1,6 +1,7 @@
 package com.mycollab.pro.module.project.view.service;
 
 import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.domain.MonitorItem;
 import com.mycollab.common.domain.criteria.CommentSearchCriteria;
@@ -10,6 +11,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.common.service.CommentService;
 import com.mycollab.common.service.MonitorItemService;
+import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.core.utils.StringUtils;
@@ -32,6 +34,7 @@ import com.mycollab.module.project.view.bug.BugEditForm;
 import com.mycollab.module.project.view.bug.ReOpenWindow;
 import com.mycollab.module.project.view.bug.ResolvedInputWindow;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
+import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.module.project.view.task.TaskEditForm;
 import com.mycollab.module.project.view.task.components.TaskStatusComboBox;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
@@ -45,6 +48,7 @@ import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -130,18 +134,18 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     }
 
     @Override
-    public AbstractComponent createStartDatePopupField(ProjectTicket assignment) {
+    public AbstractComponent createStartDatePopupField(ProjectTicket ticket) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder<ProjectTicket>() {
             @Override
             protected String generateSmallContentAsHtml() {
-                if (assignment.getStartDate() == null) {
+                if (ticket.getStartDate() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(VaadinIcons.TIME_FORWARD.getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return String.format(" %s %s", VaadinIcons.TIME_FORWARD.getHtml(), UserUIContext.formatDate(assignment.getStartDate()));
+                    return String.format(" %s %s", VaadinIcons.TIME_FORWARD.getHtml(), UserUIContext.formatDate(ticket.getStartDate()));
                 }
 
             }
@@ -156,25 +160,25 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 TicketComponentFactoryImpl.save(bean);
             }
         };
-        builder.withBean(assignment).withBindProperty("startDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
+        builder.withBean(ticket).withBindProperty("startDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
                 .withField(new PopupDateFieldExt())
-                .withValue(assignment.getStartDate());
+                .withValue(ticket.getStartDate());
         return builder.build();
     }
 
     @Override
-    public AbstractComponent createEndDatePopupField(ProjectTicket assignment) {
+    public AbstractComponent createEndDatePopupField(ProjectTicket ticket) {
         PopupBeanFieldBuilder<ProjectTicket> builder = new PopupBeanFieldBuilder<ProjectTicket>() {
             @Override
             protected String generateSmallContentAsHtml() {
-                if (assignment.getEndDate() == null) {
+                if (ticket.getEndDate() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(VaadinIcons.TIME_BACKWARD.getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return String.format(" %s %s", VaadinIcons.TIME_BACKWARD.getHtml(), UserUIContext.formatDate(assignment.getEndDate()));
+                    return String.format(" %s %s", VaadinIcons.TIME_BACKWARD.getHtml(), UserUIContext.formatDate(ticket.getEndDate()));
                 }
             }
 
@@ -188,26 +192,25 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 TicketComponentFactoryImpl.save(bean);
             }
         };
-        builder.withBean(assignment).withBindProperty("endDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
+        builder.withBean(ticket).withBindProperty("endDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
                 .withField(new PopupDateFieldExt())
-                .withValue(assignment.getEndDate());
+                .withValue(ticket.getEndDate());
         return builder.build();
     }
 
     @Override
-    public AbstractComponent createDueDatePopupField(ProjectTicket assignment) {
+    public AbstractComponent createDueDatePopupField(ProjectTicket ticket) {
         PopupBeanFieldBuilder<ProjectTicket> builder = new PopupBeanFieldBuilder<ProjectTicket>() {
             @Override
             protected String generateSmallContentAsHtml() {
-                if (assignment.getDueDate() == null) {
+                if (ticket.getDueDate() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
                     divHint.appendText(FontAwesome.CLOCK_O.getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), UserUIContext.formatDate(assignment
-                            .getDueDate()));
+                    return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), UserUIContext.formatDate(ticket.getDueDate()));
                 }
             }
 
@@ -221,39 +224,70 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 TicketComponentFactoryImpl.save(bean);
             }
         };
-        builder.withBean(assignment).withBindProperty("dueDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new PopupDateFieldExt()).withValue(assignment.getDueDate());
+        builder.withBean(ticket).withBindProperty("dueDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
+                .withField(new PopupDateFieldExt()).withValue(ticket.getDueDate());
         return builder.build();
     }
 
     @Override
-    public AbstractComponent createPriorityPopupField(ProjectTicket assignment) {
+    public AbstractComponent createPriorityPopupField(ProjectTicket ticket) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return ProjectAssetsManager.getTaskPriorityHtml(assignment.getPriority()) + " " + UserUIContext.getMessage(Priority.class, assignment.getPriority());
+                return ProjectAssetsManager.getTaskPriorityHtml(ticket.getPriority()) + " " + UserUIContext.getMessage(Priority.class, ticket.getPriority());
             }
 
             @Override
             protected String generateDescription() {
-                return assignment.getPriority();
+                return ticket.getPriority();
             }
 
             @Override
             public boolean isPermission() {
-                return TicketComponentFactoryImpl.isPermission(assignment);
+                return TicketComponentFactoryImpl.isPermission(ticket);
             }
 
             @Override
             public void save() {
-                TicketComponentFactoryImpl.save(assignment);
+                TicketComponentFactoryImpl.save(ticket);
             }
         };
-        builder.withBean(assignment).withBindProperty("priority").withDescription(assignment.getPriority())
+        builder.withBean(ticket).withBindProperty("priority").withDescription(ticket.getPriority())
                 .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY))
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP))
-                .withField(new PriorityComboBox())
-                .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(assignment.getPriority());
+                .withField(new PriorityComboBox()).withValue(ticket.getPriority());
+        return builder.build();
+    }
+
+    @Override
+    public AbstractComponent createAssigneePopupField(ProjectTicket ticket) {
+        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+            @Override
+            protected String generateSmallContentAsHtml() {
+                String avatarLink = StorageFactory.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
+                Img img = new Img(ticket.getAssignUserFullName(), avatarLink).setTitle(ticket.getAssignUserFullName())
+                        .setCSSClass(UIConstants.CIRCLE_BOX);
+                return img.write();
+            }
+
+            @Override
+            public boolean isPermission() {
+                return TicketComponentFactoryImpl.isPermission(ticket);
+            }
+
+            @Override
+            public void save() {
+                TicketComponentFactoryImpl.save(ticket);
+            }
+
+            @Override
+            protected String generateDescription() {
+                return ticket.getAssignUserFullName();
+            }
+        };
+        builder.withBean(ticket).withBindProperty("assignuser").withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
+                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
+                .withValue(ticket.getAssignUser());
         return builder.build();
     }
 
@@ -268,52 +302,52 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     }
 
     @Override
-    public AbstractComponent createFollowersPopupField(ProjectTicket assignment) {
-        return new AssignmentFollowersPopupView(assignment);
+    public AbstractComponent createFollowersPopupField(ProjectTicket ticket) {
+        return new TicketFollowersPopupView(ticket);
     }
 
     @Override
-    public AbstractComponent createStatusPopupField(ProjectTicket assignment) {
-        if (assignment.isTask()) {
+    public AbstractComponent createStatusPopupField(ProjectTicket ticket) {
+        if (ticket.isTask()) {
             PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
                 @Override
                 protected String generateSmallContentAsHtml() {
-                    if (assignment.getStatus() == null) {
+                    if (ticket.getStatus() == null) {
                         Div divHint = new Div().setCSSClass("nonValue");
                         divHint.appendText(FontAwesome.INFO_CIRCLE.getHtml());
                         divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                                 .setCSSClass("hide"));
                         return divHint.write();
                     } else {
-                        return FontAwesome.INFO_CIRCLE.getHtml() + " " + StringUtils.trim(assignment.getStatus(), 20, true);
+                        return FontAwesome.INFO_CIRCLE.getHtml() + " " + StringUtils.trim(ticket.getStatus(), 20, true);
                     }
                 }
             };
-            builder.withBean(buildTask(assignment)).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
+            builder.withBean(buildTask(ticket)).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
                     .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP))
-                    .withField(new TaskStatusComboBox()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(assignment.getStatus())
+                    .withField(new TaskStatusComboBox()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(ticket.getStatus())
                     .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             return builder.build();
-        } else if (assignment.isBug()) {
-            return new BugStatusPopupView(buildBug(assignment));
-        } else if (assignment.isRisk()) {
+        } else if (ticket.isBug()) {
+            return new BugStatusPopupView(buildBug(ticket));
+        } else if (ticket.isRisk()) {
             PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
                 @Override
                 protected String generateSmallContentAsHtml() {
-                    if (assignment.getStatus() == null) {
+                    if (ticket.getStatus() == null) {
                         Div divHint = new Div().setCSSClass("nonValue");
                         divHint.appendText(FontAwesome.INFO_CIRCLE.getHtml());
                         divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                                 .setCSSClass("hide"));
                         return divHint.write();
                     } else {
-                        return FontAwesome.INFO_CIRCLE.getHtml() + " " + StringUtils.trim(assignment.getStatus(), 20, true);
+                        return FontAwesome.INFO_CIRCLE.getHtml() + " " + StringUtils.trim(ticket.getStatus(), 20, true);
                     }
                 }
             };
-            builder.withBean(buildRisk(assignment)).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
+            builder.withBean(buildRisk(ticket)).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
                     .withField(new I18nValueComboBox(false, OptionI18nEnum.StatusI18nEnum.Open, OptionI18nEnum.StatusI18nEnum.Closed))
-                    .withService(AppContextUtil.getSpringBean(RiskService.class)).withValue(assignment.getStatus())
+                    .withService(AppContextUtil.getSpringBean(RiskService.class)).withValue(ticket.getStatus())
                     .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
             return builder.build();
         } else {
@@ -323,28 +357,28 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
     @Override
     public AbstractComponent createCommentsPopupField(ProjectTicket task) {
-        TaskCommentsPopupView view = new TaskCommentsPopupView(task);
+        TicketCommentsPopupView view = new TicketCommentsPopupView(task);
         view.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_ADD_COMMENT));
         return view;
     }
 
-    private static class AssignmentFollowersPopupView extends LazyPopupView {
-        private ProjectTicket assignment;
+    private static class TicketFollowersPopupView extends LazyPopupView {
+        private ProjectTicket ticket;
         private WatchersMultiSelection watchersMultiSelection;
 
-        AssignmentFollowersPopupView(ProjectTicket assignment) {
+        TicketFollowersPopupView(ProjectTicket ticket) {
             super("");
-            this.assignment = assignment;
+            this.ticket = ticket;
             this.setDescription(UserUIContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP));
-            this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + NumberUtils.zeroIfNull(assignment.getNumFollowers()));
+            this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + NumberUtils.zeroIfNull(ticket.getNumFollowers()));
         }
 
         @Override
         protected void doShow() {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
-            watchersMultiSelection = new WatchersMultiSelection(assignment.getType(), assignment.getTypeId(),
-                    isPermission(assignment));
+            watchersMultiSelection = new WatchersMultiSelection(ticket.getType(), ticket.getTypeId(),
+                    isPermission(ticket));
             layout.with(new ELabel(UserUIContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS))
                     .withStyleName(ValoTheme.LABEL_H3), watchersMultiSelection);
         }
@@ -357,8 +391,8 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             monitorItemService.saveMonitorItems(items);
 
             MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
-            searchCriteria.setType(StringSearchField.and(assignment.getType()));
-            searchCriteria.setTypeId(new NumberSearchField(assignment.getTypeId()));
+            searchCriteria.setType(StringSearchField.and(ticket.getType()));
+            searchCriteria.setTypeId(new NumberSearchField(ticket.getTypeId()));
             int numFollowers = monitorItemService.getTotalCount(searchCriteria);
             this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + numFollowers);
         }
@@ -436,29 +470,29 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         }
     }
 
-    private static class TaskCommentsPopupView extends LazyPopupView {
-        private ProjectTicket assignment;
+    private static class TicketCommentsPopupView extends LazyPopupView {
+        private ProjectTicket ticket;
 
-        TaskCommentsPopupView(ProjectTicket assignment) {
+        TicketCommentsPopupView(ProjectTicket ticket) {
             super("");
-            this.assignment = assignment;
-            this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + NumberUtils.zeroIfNull(assignment.getNumComments()));
+            this.ticket = ticket;
+            this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + NumberUtils.zeroIfNull(ticket.getNumComments()));
         }
 
         @Override
         protected void doShow() {
-            CommentDisplay commentDisplay = new CommentDisplay(assignment.getType(), CurrentProjectVariables.getProjectId());
+            CommentDisplay commentDisplay = new CommentDisplay(ticket.getType(), CurrentProjectVariables.getProjectId());
             MVerticalLayout layout = getWrapContent().withStyleName(WebUIConstants.SCROLLABLE_CONTAINER);
             layout.removeAllComponents();
             layout.with(commentDisplay);
-            commentDisplay.loadComments(assignment.getTypeId() + "");
+            commentDisplay.loadComments(ticket.getTypeId() + "");
         }
 
         @Override
         protected void doHide() {
             CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
-            searchCriteria.setType(StringSearchField.and(assignment.getType()));
-            searchCriteria.setTypeId(StringSearchField.and(assignment.getTypeId() + ""));
+            searchCriteria.setType(StringSearchField.and(ticket.getType()));
+            searchCriteria.setTypeId(StringSearchField.and(ticket.getTypeId() + ""));
             CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentCount = commentService.getTotalCount(searchCriteria);
             this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);

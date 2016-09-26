@@ -52,19 +52,19 @@ import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
  * @author MyCollab Ltd
  * @since 5.2.3
  */
-public class ToggleGenericTaskSummaryField extends AbstractToggleSummaryField {
-    private ProjectTicket genericTask;
+public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
+    private ProjectTicket ticket;
     private boolean isRead = true;
 
-    public ToggleGenericTaskSummaryField(final ProjectTicket genericTask) {
-        this.genericTask = genericTask;
+    public ToggleTicketSummaryField(final ProjectTicket ticket) {
+        this.ticket = ticket;
         this.setWidth("100%");
-        titleLinkLbl = ELabel.html(buildGenericTaskLink()).withStyleName(ValoTheme.LABEL_NO_MARGIN,
+        titleLinkLbl = ELabel.html(buildTicketLink()).withStyleName(ValoTheme.LABEL_NO_MARGIN,
                 UIConstants.LABEL_WORD_WRAP).withWidthUndefined();
         this.addComponent(titleLinkLbl);
-        if ((genericTask.isTask() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) ||
-                (genericTask.isBug() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) ||
-                (genericTask.isRisk() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS))) {
+        if ((ticket.isTask() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) ||
+                (ticket.isBug() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) ||
+                (ticket.isRisk() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS))) {
             this.addStyleName("editable-field");
             buttonControls = new MHorizontalLayout().withStyleName("toggle").withSpacing(false);
             MButton instantEditBtn = new MButton("", clickEvent -> {
@@ -72,7 +72,7 @@ public class ToggleGenericTaskSummaryField extends AbstractToggleSummaryField {
                     removeComponent(titleLinkLbl);
                     removeComponent(buttonControls);
                     final TextField editField = new TextField();
-                    editField.setValue(genericTask.getName());
+                    editField.setValue(ticket.getName());
                     editField.setWidth("100%");
                     editField.focus();
                     addComponent(editField);
@@ -95,27 +95,27 @@ public class ToggleGenericTaskSummaryField extends AbstractToggleSummaryField {
         addComponent(buttonControls);
         addStyleName("editable-field");
         String newValue = editField.getValue();
-        if (StringUtils.isNotBlank(newValue) && !newValue.equals(genericTask.getName())) {
-            genericTask.setName(newValue);
-            titleLinkLbl.setValue(buildGenericTaskLink());
-            if (genericTask.isBug()) {
+        if (StringUtils.isNotBlank(newValue) && !newValue.equals(ticket.getName())) {
+            ticket.setName(newValue);
+            titleLinkLbl.setValue(buildTicketLink());
+            if (ticket.isBug()) {
                 BugWithBLOBs bug = new BugWithBLOBs();
-                bug.setId(genericTask.getTypeId());
-                bug.setName(genericTask.getName());
+                bug.setId(ticket.getTypeId());
+                bug.setName(ticket.getName());
                 bug.setSaccountid(MyCollabUI.getAccountId());
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 bugService.updateSelectiveWithSession(bug, UserUIContext.getUsername());
-            } else if (genericTask.isTask()) {
+            } else if (ticket.isTask()) {
                 Task task = new Task();
-                task.setId(genericTask.getTypeId());
-                task.setName(genericTask.getName());
+                task.setId(ticket.getTypeId());
+                task.setName(ticket.getName());
                 task.setSaccountid(MyCollabUI.getAccountId());
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                 taskService.updateSelectiveWithSession(task, UserUIContext.getUsername());
-            } else if (genericTask.isRisk()) {
+            } else if (ticket.isRisk()) {
                 Risk risk = new Risk();
-                risk.setId(genericTask.getTypeId());
-                risk.setName(genericTask.getName());
+                risk.setId(ticket.getTypeId());
+                risk.setName(ticket.getName());
                 risk.setSaccountid(MyCollabUI.getAccountId());
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 riskService.updateSelectiveWithSession(risk, UserUIContext.getUsername());
@@ -125,32 +125,32 @@ public class ToggleGenericTaskSummaryField extends AbstractToggleSummaryField {
         isRead = !isRead;
     }
 
-    private String buildGenericTaskLink() {
+    private String buildTicketLink() {
         Div issueDiv = new Div();
 
-        A taskLink = new A().setId("tag" + TOOLTIP_ID);
-        if (genericTask.isBug() || genericTask.isTask()) {
-            taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
-                    genericTask.getProjectId(), genericTask.getType(), genericTask.getExtraTypeId() + ""));
-        } else if (genericTask.isRisk()) {
-            taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
-                    genericTask.getProjectId(), genericTask.getType(), genericTask.getTypeId() + ""));
+        A ticketLink = new A().setId("tag" + TOOLTIP_ID);
+        if (ticket.isBug() || ticket.isTask()) {
+            ticketLink.setHref(ProjectLinkBuilder.generateProjectItemLink(ticket.getProjectShortName(),
+                    ticket.getProjectId(), ticket.getType(), ticket.getExtraTypeId() + ""));
+        } else if (ticket.isRisk()) {
+            ticketLink.setHref(ProjectLinkBuilder.generateProjectItemLink(ticket.getProjectShortName(),
+                    ticket.getProjectId(), ticket.getType(), ticket.getTypeId() + ""));
         } else {
-            throw new IgnoreException("Not support type: " + genericTask.getType());
+            throw new IgnoreException("Not support type: " + ticket.getType());
         }
 
-        taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(genericTask.getType(), genericTask.getTypeId() + ""));
-        taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-        taskLink.appendText(genericTask.getName());
+        ticketLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ticket.getType(), ticket.getTypeId() + ""));
+        ticketLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
+        ticketLink.appendText(ticket.getName());
 
-        issueDiv.appendChild(taskLink);
+        issueDiv.appendChild(ticketLink);
 
-        if (genericTask.isClosed()) {
-            taskLink.setCSSClass("completed");
-        } else if (genericTask.isOverdue()) {
-            taskLink.setCSSClass("overdue");
+        if (ticket.isClosed()) {
+            ticketLink.setCSSClass("completed");
+        } else if (ticket.isOverdue()) {
+            ticketLink.setCSSClass("overdue");
             issueDiv.appendChild(new Span().setCSSClass(UIConstants.META_INFO).appendText(" - " + UserUIContext
-                    .getMessage(ProjectCommonI18nEnum.OPT_DUE_IN, UserUIContext.formatDuration(genericTask.getDueDate()))));
+                    .getMessage(ProjectCommonI18nEnum.OPT_DUE_IN, UserUIContext.formatDuration(ticket.getDueDate()))));
         }
         return issueDiv.write();
     }

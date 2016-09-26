@@ -28,7 +28,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.milestone.IMilestoneKanbanView;
 import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
-import com.mycollab.module.project.view.milestone.ToggleGenericTaskSummaryField;
+import com.mycollab.module.project.view.milestone.ToggleTicketSummaryField;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
@@ -101,9 +101,9 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         @Subscribe
         public void handle(AssignmentEvent.NewAssignmentAdd event) {
             ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
-            ProjectTicket assignment = projectTicketService.findAssignment(event.getTypeVal(), event.getTypeIdVal());
-            if (assignment != null) {
-                insertGenericAssignment(assignment);
+            ProjectTicket ticket = projectTicketService.findAssignment(event.getTypeVal(), event.getTypeIdVal());
+            if (ticket != null) {
+                insertTicket(ticket);
             }
         }
     };
@@ -271,10 +271,10 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                             if (assignment.getMilestoneId() != null) {
                                 KanbanBlock kanbanBlock = kanbanBlocks.get(assignment.getMilestoneId());
                                 if (kanbanBlock != null) {
-                                    kanbanBlock.addBlockItem(new KanbanAssignmentBlockItem(assignment));
+                                    kanbanBlock.addBlockItem(new KanbanTicketBlockItem(assignment));
                                 }
                             } else {
-                                nullBlock.addBlockItem(new KanbanAssignmentBlockItem(assignment));
+                                nullBlock.addBlockItem(new KanbanTicketBlockItem(assignment));
                             }
                         }
                     }
@@ -294,15 +294,15 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         }
     }
 
-    private void insertGenericAssignment(ProjectTicket genericTask) {
+    private void insertTicket(ProjectTicket genericTask) {
         KanbanBlock block = null;
         if (genericTask.getMilestoneId() != null) {
             block = kanbanBlocks.get(genericTask.getMilestoneId());
         }
         if (block != null) {
-            block.addBlockItem(new KanbanAssignmentBlockItem(genericTask));
+            block.addBlockItem(new KanbanTicketBlockItem(genericTask));
         } else {
-            nullBlock.addBlockItem(new KanbanAssignmentBlockItem(genericTask));
+            nullBlock.addBlockItem(new KanbanTicketBlockItem(genericTask));
         }
     }
 
@@ -358,8 +358,8 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                             .getTargetDetails();
 
                     Component dragComponent = transferable.getComponent();
-                    if (dragComponent instanceof KanbanAssignmentBlockItem) {
-                        KanbanAssignmentBlockItem kanbanItem = (KanbanAssignmentBlockItem) dragComponent;
+                    if (dragComponent instanceof KanbanTicketBlockItem) {
+                        KanbanTicketBlockItem kanbanItem = (KanbanTicketBlockItem) dragComponent;
                         int newIndex = details.getOverIndex();
                         if (details.getDropLocation() == VerticalDropLocation.BOTTOM) {
                             dragLayoutContainer.addComponent(kanbanItem);
@@ -368,7 +368,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                         } else {
                             dragLayoutContainer.addComponent(kanbanItem, newIndex);
                         }
-                        ProjectTicket task = kanbanItem.assignment;
+                        ProjectTicket task = kanbanItem.ticket;
                         if (milestone == null) {
                             task.setMilestoneId(null);
                         } else {
@@ -466,7 +466,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             this.with(headerLayout, dragLayoutContainer, newAssignmentBtn).withAlign(newAssignmentBtn, Alignment.MIDDLE_RIGHT);
         }
 
-        void addBlockItem(KanbanAssignmentBlockItem comp) {
+        void addBlockItem(KanbanTicketBlockItem comp) {
             dragLayoutContainer.addComponent(comp);
             updateComponentCount();
         }
@@ -482,7 +482,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
         private int getAssignmentComponentCount() {
             Component testComp = (dragLayoutContainer.getComponentCount() > 0) ? dragLayoutContainer.getComponent(0) : null;
-            if (testComp instanceof KanbanAssignmentBlockItem || testComp == null) {
+            if (testComp instanceof KanbanTicketBlockItem || testComp == null) {
                 return dragLayoutContainer.getComponentCount();
             } else {
                 return (dragLayoutContainer.getComponentCount() - 1);
@@ -490,24 +490,24 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         }
     }
 
-    private static class KanbanAssignmentBlockItem extends CustomComponent {
-        private ProjectTicket assignment;
+    private static class KanbanTicketBlockItem extends CustomComponent {
+        private ProjectTicket ticket;
 
-        KanbanAssignmentBlockItem(final ProjectTicket assignment) {
-            this.assignment = assignment;
+        KanbanTicketBlockItem(final ProjectTicket ticket) {
+            this.ticket = ticket;
             MVerticalLayout root = new MVerticalLayout();
             root.addStyleName("kanban-item");
             this.setCompositionRoot(root);
 
-            ToggleGenericTaskSummaryField toggleGenericTaskSummaryField = new ToggleGenericTaskSummaryField(assignment);
-            MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(assignment.getType())).withWidthUndefined(),
-                    toggleGenericTaskSummaryField).expand(toggleGenericTaskSummaryField).withFullWidth();
+            ToggleTicketSummaryField toggleTicketSummaryField = new ToggleTicketSummaryField(ticket);
+            MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())).withWidthUndefined(),
+                    toggleTicketSummaryField).expand(toggleTicketSummaryField).withFullWidth();
             root.addComponent(headerLayout);
 
             CssLayout footer = new CssLayout();
             TicketComponentFactory fieldFactory = AppContextUtil.getSpringBean(TicketComponentFactory.class);
-            footer.addComponent(fieldFactory.createStartDatePopupField(assignment));
-            footer.addComponent(fieldFactory.createEndDatePopupField(assignment));
+            footer.addComponent(fieldFactory.createStartDatePopupField(ticket));
+            footer.addComponent(fieldFactory.createEndDatePopupField(ticket));
             root.addComponent(footer);
         }
     }

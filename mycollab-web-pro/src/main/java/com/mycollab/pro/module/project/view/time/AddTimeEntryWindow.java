@@ -168,12 +168,12 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
 
     private void createLinkTaskButton() {
         taskLayout.removeAllComponents();
-        MButton attachTaskBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), clickEvent -> {
-            ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(AddTimeEntryWindow.this);
+        MButton attachTicketBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), clickEvent -> {
+            ProjectTicketSelectionWindow selectionTaskWindow = new ProjectTicketSelectionWindow(AddTimeEntryWindow.this);
             getUI().addWindow(selectionTaskWindow);
         }).withStyleName(WebUIConstants.BUTTON_ACTION);
 
-        taskLayout.addComponent(attachTaskBtn);
+        taskLayout.addComponent(attachTicketBtn);
     }
 
     private void updateTimeTableHeader() {
