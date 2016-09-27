@@ -24,12 +24,12 @@ import java.util.TimeZone;
  * @author MyCollab Ltd.
  * @since 4.0.0
  */
-class ProjectGenericTaskTooltipGenerator {
+class ProjectGenericItemTooltipGenerator {
     private String html;
 
-    ProjectGenericTaskTooltipGenerator(String type, int typeId) {
+    ProjectGenericItemTooltipGenerator(String type, int typeId) {
         html = "";
-        int sAccountId = MyCollabUI.getAccountId();
+        Integer sAccountId = MyCollabUI.getAccountId();
         TimeZone timeZone = UserUIContext.getUserTimeZone();
         String siteURL = MyCollabUI.getSiteUrl();
 

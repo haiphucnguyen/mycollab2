@@ -15,10 +15,13 @@ import com.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.DoubleField;
+import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
 import org.vaadin.viritin.fields.MTextField;
+
+import java.util.Arrays;
 
 /**
  * @author MyCollab Ltd
@@ -79,5 +82,14 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
 
     public AttachmentUploadField getAttachmentUploadField() {
         return attachmentUploadField;
+    }
+
+    private static class PricingTypeField extends I18nValueComboBox {
+        PricingTypeField() {
+            super();
+            this.setNullSelectionAllowed(false);
+            this.setCaption(null);
+            this.loadData(Arrays.asList(InvoiceI18nEnum.FIX_PRICE, InvoiceI18nEnum.TIME_MATERIAL));
+        }
     }
 }

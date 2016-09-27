@@ -1,5 +1,6 @@
 package com.mycollab.pro.module.project.view.time;
 
+import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
@@ -13,6 +14,7 @@ import com.mycollab.module.project.view.settings.component.ProjectMemberSelectio
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -34,8 +36,8 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
     private CheckBox isOvertimeCheckBox;
     private ProjectMemberSelectionBox projectMemberSelectionBox;
     private RichTextArea descArea;
-    private ProjectTicket selectionTask;
-    private MHorizontalLayout taskLayout;
+    private ProjectTicket selectedTicket;
+    private MHorizontalLayout ticketLayout;
     private PopupDateFieldExt dateField;
     private DoubleField timeField;
     private SimpleItemTimeLogging timeLogging;
@@ -46,10 +48,10 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         this.withWidth("800px").withModal(true).withResizable(false).withCenter();
 
         dateField = new PopupDateFieldExt(timeLogging.getLogforday());
-        dateField.setCaption("Select date");
+        dateField.setCaption(UserUIContext.getMessage(DayI18nEnum.OPT_DATE));
 
         timeField = new DoubleField();
-        timeField.setCaption("Hours");
+        timeField.setCaption(UserUIContext.getMessage(DayI18nEnum.OPT_HOURS));
         timeField.setValue(timeLogging.getLogvalue());
 
         projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
@@ -62,13 +64,9 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         isOvertimeCheckBox = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME));
         isOvertimeCheckBox.setValue(timeLogging.getIsovertime());
 
-        MHorizontalLayout grid = new MHorizontalLayout();
-        grid.with(projectMemberSelectionBox, dateField, timeField, isBillableCheckBox, isOvertimeCheckBox);
+        MHorizontalLayout grid = new MHorizontalLayout(projectMemberSelectionBox, dateField, timeField, isBillableCheckBox, isOvertimeCheckBox);
 
-        MVerticalLayout content = new MVerticalLayout();
-        content.addComponent(grid);
-
-        content.addComponent(new Label(UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
+        MVerticalLayout content = new MVerticalLayout(grid, new Label(UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
 
         descArea = new RichTextArea();
         descArea.setValue(timeLogging.getNote());
@@ -76,21 +74,21 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         content.addComponent(descArea);
 
         HorizontalLayout footer = new HorizontalLayout();
-        taskLayout = new MHorizontalLayout();
-        taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+        ticketLayout = new MHorizontalLayout();
+        ticketLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         createTicketLinkButton();
 
         if (timeLogging.getType() != null && timeLogging.getTypeid() != null) {
-            ProjectTicket tempSelectionTask = new ProjectTicket();
-            tempSelectionTask.setType(timeLogging.getType());
-            tempSelectionTask.setTypeId(timeLogging.getTypeid());
-            String name = new GenericTaskDetailMapper(tempSelectionTask.getType(), tempSelectionTask.getTypeId()).getName();
+            ProjectTicket tmpSelectedTicket = new ProjectTicket();
+            tmpSelectedTicket.setType(timeLogging.getType());
+            tmpSelectedTicket.setTypeId(timeLogging.getTypeid());
+            String name = new GenericTaskDetailMapper(tmpSelectedTicket.getType(), tmpSelectedTicket.getTypeId()).getName();
 
-            tempSelectionTask.setName(name);
-            updateLinkTask(tempSelectionTask);
+            tmpSelectedTicket.setName(name);
+            updateTicketLink(tmpSelectedTicket);
         }
 
-        footer.addComponent(taskLayout);
+        footer.addComponent(ticketLayout);
 
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
@@ -111,37 +109,33 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
     }
 
     @Override
-    public void updateLinkTask(ProjectTicket selectionTask) {
-        this.selectionTask = selectionTask;
-        if (selectionTask != null) {
-            final String taskName = selectionTask.getName();
-            taskLayout.removeAllComponents();
+    public void updateTicketLink(ProjectTicket ticket) {
+        this.selectedTicket = ticket;
+        if (ticket != null) {
+            ticketLayout.removeAllComponents();
 
-            MButton detachTaskBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), clickEvent -> {
+            MButton detachTaskBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.ACTION_UNLINK_TICKET), clickEvent -> {
                 createTicketLinkButton();
-                updateLinkTask(null);
+                updateTicketLink(null);
             }).withIcon(FontAwesome.UNLINK).withStyleName(WebUIConstants.BUTTON_DANGER);
-            taskLayout.addComponent(detachTaskBtn);
+            ticketLayout.addComponent(detachTaskBtn);
 
-            Label attachTaskBtn = new Label(StringUtils.trim(taskName, 40, true));
-
-            attachTaskBtn.addStyleName("task-attached");
-            attachTaskBtn.setWidth("300px");
-            attachTaskBtn.setDescription(new ProjectGenericTaskTooltipGenerator(selectionTask.getType(),
-                    selectionTask.getTypeId()).getContent());
-            taskLayout.addComponent(attachTaskBtn);
+            ELabel linkTicketBtn = new ELabel(StringUtils.trim(ticket.getName(), 60, true))
+                    .withDescription(new ProjectGenericItemTooltipGenerator(ticket.getType(),
+                            ticket.getTypeId()).getContent());
+            ticketLayout.addComponent(linkTicketBtn);
         }
     }
 
     private void createTicketLinkButton() {
-        taskLayout.removeAllComponents();
-        MButton attachTaskBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), clickEvent -> {
-            ProjectTicketSelectionWindow selectionTaskWindow = new ProjectTicketSelectionWindow(
+        ticketLayout.removeAllComponents();
+        MButton linkTicketBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.ACTION_LINK_TICKET), clickEvent -> {
+            ProjectTicketSelectionWindow selectionTicketWindow = new ProjectTicketSelectionWindow(
                     TimeTrackingEditViewWindow.this);
-            UI.getCurrent().addWindow(selectionTaskWindow);
-        }).withStyleName(WebUIConstants.BUTTON_ACTION);
+            UI.getCurrent().addWindow(selectionTicketWindow);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.LINK);
 
-        taskLayout.addComponent(attachTaskBtn);
+        ticketLayout.addComponent(linkTicketBtn);
     }
 
     private void saveTimeLoggingItems() {
@@ -158,10 +152,10 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         timeLogging.setIsovertime(isOvertimeCheckBox.getValue());
         timeLogging.setNote(descArea.getValue());
         timeLogging.setSaccountid(MyCollabUI.getAccountId());
-        if (selectionTask != null) {
-            timeLogging.setType(selectionTask.getType());
-            timeLogging.setTypeid(selectionTask.getTypeId());
-            timeLogging.setSummary(selectionTask.getName());
+        if (selectedTicket != null) {
+            timeLogging.setType(selectedTicket.getType());
+            timeLogging.setTypeid(selectedTicket.getTypeId());
+            timeLogging.setSummary(selectedTicket.getName());
         } else {
             timeLogging.setType(null);
             timeLogging.setTypeid(null);

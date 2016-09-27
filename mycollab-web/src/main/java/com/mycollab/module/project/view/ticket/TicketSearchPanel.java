@@ -43,6 +43,7 @@ import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,8 +52,8 @@ import java.util.List;
  */
 public class TicketSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSearchCriteria> {
     private static final long serialVersionUID = 1L;
-    private ProjectTicketSearchCriteria searchCriteria;
 
+    private ProjectTicketSearchCriteria searchCriteria;
     private TicketSavedFilter savedFilterComboBox;
 
     private static Param[] paramFields = new Param[]{
@@ -92,7 +93,7 @@ public class TicketSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSe
     }
 
     @Override
-    public void setTotalCountNumber(int countNumber) {
+    public void setTotalCountNumber(Integer countNumber) {
         savedFilterComboBox.setTotalCountNumber(countNumber);
     }
 
@@ -173,10 +174,11 @@ public class TicketSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSe
             searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, ProjectTicketSearchCriteria.p_name,
                     QueryI18nEnum.StringI18nEnum.CONTAINS.name(),
                     ConstantValueInjector.valueOf(nameField.getValue().trim())));
-//            if (myItemCheckbox.getValue()) {
-//                searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, TaskSearchCriteria.p_assignee, QueryI18nEnum.CollectionI18nEnum.IN.name(),
-//                        ConstantValueInjector.valueOf(Arrays.asList(UserUIContext.getUsername()))));
-//            }
+            if (myItemCheckbox.getValue()) {
+                searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, ProjectTicketSearchCriteria.p_assignee,
+                        QueryI18nEnum.CollectionI18nEnum.IN.name(),
+                        ConstantValueInjector.valueOf(Collections.singletonList(UserUIContext.getUsername()))));
+            }
             EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, searchFieldInfos));
             searchCriteria = SearchFieldInfo.buildSearchCriteria(ProjectTicketSearchCriteria.class, searchFieldInfos);
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));

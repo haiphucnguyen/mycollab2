@@ -3,10 +3,10 @@ package com.mycollab.pro.module.project.view.time;
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.UserInvalidInputException;
-import com.mycollab.db.arguments.BooleanSearchField;
-import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.StringUtils;
+import com.mycollab.db.arguments.BooleanSearchField;
+import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.ItemTimeLogging;
@@ -27,6 +27,7 @@ import com.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -51,14 +52,14 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
     private Table timeInputTable;
     private ProjectMemberSelectionBox projectMemberSelectionBox;
     private RichTextArea descArea;
-    private ProjectTicket selectionTask;
-    private MHorizontalLayout taskLayout;
+    private ProjectTicket selectedTicket;
+    private MHorizontalLayout ticketLayout;
 
     private ItemTimeLoggingService itemTimeLoggingService;
 
     public AddTimeEntryWindow() {
         super(UserUIContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
-        this.withModal(true).withResizable(false);
+        this.withModal(true).withResizable(false).withCenter();
 
         itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
         selectedDate = new GregorianCalendar().getTime();
@@ -119,10 +120,10 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         descArea.setWidth("100%");
         content.addComponent(descArea);
         MHorizontalLayout footer = new MHorizontalLayout().withFullWidth();
-        taskLayout = new MHorizontalLayout();
-        taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        createLinkTaskButton();
-        footer.addComponent(taskLayout);
+        ticketLayout = new MHorizontalLayout();
+        ticketLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+        createTicketLinkButton();
+        footer.addComponent(ticketLayout);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebUIConstants.BUTTON_OPTION);
@@ -130,50 +131,44 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         MButton saveBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             saveTimeLoggingItems();
             close();
-        }).withStyleName(WebUIConstants.BUTTON_ACTION);
-        saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE)
+                .withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);
         footer.with(controlsLayout).withAlign(controlsLayout, Alignment.TOP_RIGHT);
 
         content.addComponent(footer);
         this.setContent(content);
-        this.center();
     }
 
     @Override
-    public void updateLinkTask(ProjectTicket task) {
-        selectionTask = task;
-        if (selectionTask != null) {
-            String taskName = this.selectionTask.getName();
-            taskLayout.removeAllComponents();
+    public void updateTicketLink(ProjectTicket ticket) {
+        selectedTicket = ticket;
+        if (selectedTicket != null) {
+            ticketLayout.removeAllComponents();
 
-            MButton detachTaskBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), clickEvent -> {
-                createLinkTaskButton();
-                updateLinkTask(null);
-            }).withStyleName(WebUIConstants.BUTTON_DANGER);
-            taskLayout.addComponent(detachTaskBtn);
+            MButton unlinkTicketBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.ACTION_UNLINK_TICKET), clickEvent -> {
+                createTicketLinkButton();
+                updateTicketLink(null);
+            }).withStyleName(WebUIConstants.BUTTON_DANGER).withIcon(FontAwesome.UNLINK);
+            ticketLayout.addComponent(unlinkTicketBtn);
 
-            Label attachTaskBtn = new Label(StringUtils.trim(taskName, 60, true));
-            attachTaskBtn.addStyleName("task-attached");
-            attachTaskBtn.setWidth("500px");
-
-            attachTaskBtn.setDescription(new ProjectGenericTaskTooltipGenerator(this.selectionTask.getType(),
-                    this.selectionTask.getTypeId()).getContent());
-            taskLayout.addComponent(attachTaskBtn);
-            this.selectionTask.getTypeId();
+            ELabel linkTicketBtn = new ELabel(StringUtils.trim(selectedTicket.getName(), 60, true))
+                    .withDescription(new ProjectGenericItemTooltipGenerator(selectedTicket.getType(),
+                            selectedTicket.getTypeId()).getContent());
+            ticketLayout.addComponent(linkTicketBtn);
         }
 
     }
 
-    private void createLinkTaskButton() {
-        taskLayout.removeAllComponents();
-        MButton attachTicketBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), clickEvent -> {
+    private void createTicketLinkButton() {
+        ticketLayout.removeAllComponents();
+        MButton attachTicketBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.ACTION_LINK_TICKET), clickEvent -> {
             ProjectTicketSelectionWindow selectionTaskWindow = new ProjectTicketSelectionWindow(AddTimeEntryWindow.this);
             getUI().addWindow(selectionTaskWindow);
-        }).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.LINK);
 
-        taskLayout.addComponent(attachTicketBtn);
+        ticketLayout.addComponent(attachTicketBtn);
     }
 
     private void updateTimeTableHeader() {
@@ -302,9 +297,9 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
             timeLogging.setCreatedtime(new GregorianCalendar().getTime());
             timeLogging.setLastupdatedtime(new GregorianCalendar().getTime());
 
-            if (selectionTask != null) {
-                timeLogging.setType(selectionTask.getType());
-                timeLogging.setTypeid(selectionTask.getTypeId());
+            if (selectedTicket != null) {
+                timeLogging.setType(selectedTicket.getType());
+                timeLogging.setTypeid(selectedTicket.getTypeId());
             }
             return timeLogging;
         }

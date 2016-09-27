@@ -61,7 +61,6 @@ import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 import org.apache.commons.collections.CollectionUtils;
-import org.joda.time.LocalDate;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.button.MButton;
@@ -459,9 +458,9 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             headerLayout.with(controlsBtn);
 
             MButton newAssignmentBtn = new MButton(UserUIContext.getMessage(TicketI18nEnum.NEW),
-                    clickEvent -> UI.getCurrent().addWindow(AppContextUtil.getSpringBean(TicketComponentFactory.class).createNewTicketWindow(new
-                            LocalDate().toDate(), CurrentProjectVariables.getProjectId(), milestone.getId(), false))).withIcon(FontAwesome.PLUS)
-                    .withStyleName(BUTTON_ACTION);
+                    clickEvent -> UI.getCurrent().addWindow(AppContextUtil.getSpringBean(TicketComponentFactory.class)
+                            .createNewTicketWindow(null, CurrentProjectVariables.getProjectId(), milestone.getId(), false)))
+                    .withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
 
             this.with(headerLayout, dragLayoutContainer, newAssignmentBtn).withAlign(newAssignmentBtn, Alignment.MIDDLE_RIGHT);
         }

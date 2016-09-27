@@ -576,16 +576,19 @@
           (
             (SELECT mainTbl.name FROM m_prj_task AS mainTbl
             #trimext("WHERE" "AND|OR")
+              mainTbl.assignUser=m_prj_member.username
               <include refid="queryTaskSearchCriteria" />
             #end)
             UNION
             (SELECT mainTbl.name FROM m_tracker_bug AS mainTbl
             #trimext("WHERE" "AND|OR")
+              mainTbl.assignUser=m_prj_member.username
               <include refid="queryBugSearchCriteria" />
             #end)
             UNION
             (SELECT mainTbl.name FROM m_prj_risk AS mainTbl
             #trimext("WHERE" "AND|OR")
+              mainTbl.assignUser=m_prj_member.username
               <include refid="queryRiskSearchCriteria" />
             #end)
           ) AS tempTbl) AS value,

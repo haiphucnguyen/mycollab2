@@ -6,8 +6,9 @@ import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
-import com.mycollab.module.project.ui.components.TicketTableDisplay;
+import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.ui.components.GenericTaskTableFieldDef;
+import com.mycollab.module.project.ui.components.TicketTableDisplay;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
@@ -33,7 +34,7 @@ class ProjectTicketSelectionWindow extends MWindow {
     private ProjectTicketSearchCriteria searchCriteria;
 
     ProjectTicketSelectionWindow(final AssignmentSelectableComp timeEntryWindow) {
-        super("Select Assignments");
+        super(UserUIContext.getMessage(TicketI18nEnum.OPT_SELECT_TICKET));
         this.withCenter().withResizable(false).withModal(true).withWidth("800px");
         MVerticalLayout content = new MVerticalLayout();
         ticketTableDisplay = new TicketTableDisplay(Arrays.asList(GenericTaskTableFieldDef.name, GenericTaskTableFieldDef.assignUser));
@@ -41,7 +42,7 @@ class ProjectTicketSelectionWindow extends MWindow {
         ticketTableDisplay.addTableListener(event -> {
             final ProjectTicket task = (ProjectTicket) event.getData();
             if ("name".equals(event.getFieldName())) {
-                timeEntryWindow.updateLinkTask(task);
+                timeEntryWindow.updateTicketLink(task);
                 close();
             }
         });
@@ -57,8 +58,8 @@ class ProjectTicketSelectionWindow extends MWindow {
     private ComponentContainer constructTopPanel() {
         Label nameLbl = new Label(UserUIContext.getMessage(GenericI18Enum.FORM_NAME) + ": ");
 
-        this.nameField = new TextField();
-        this.nameField.setWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
+        nameField = new TextField();
+        nameField.setWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
 
         final MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
                 .withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
@@ -70,7 +71,7 @@ class ProjectTicketSelectionWindow extends MWindow {
     }
 
     private void callSearchAction() {
-        searchCriteria.setName(StringSearchField.and(this.nameField.getValue().trim()));
+        searchCriteria.setName(StringSearchField.and(nameField.getValue().trim()));
         ticketTableDisplay.setSearchCriteria(searchCriteria);
     }
 }

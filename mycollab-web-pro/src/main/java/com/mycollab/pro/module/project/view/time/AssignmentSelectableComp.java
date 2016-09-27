@@ -8,5 +8,5 @@ import com.mycollab.module.project.domain.ProjectTicket;
  */
 public interface AssignmentSelectableComp {
 
-    void updateLinkTask(ProjectTicket task);
+    void updateTicketLink(ProjectTicket task);
 }
