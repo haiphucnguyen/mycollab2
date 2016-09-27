@@ -294,15 +294,15 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         }
     }
 
-    private void insertTicket(ProjectTicket genericTask) {
+    private void insertTicket(ProjectTicket ticket) {
         KanbanBlock block = null;
-        if (genericTask.getMilestoneId() != null) {
-            block = kanbanBlocks.get(genericTask.getMilestoneId());
+        if (ticket.getMilestoneId() != null) {
+            block = kanbanBlocks.get(ticket.getMilestoneId());
         }
         if (block != null) {
-            block.addBlockItem(new KanbanTicketBlockItem(genericTask));
+            block.addBlockItem(new KanbanTicketBlockItem(ticket));
         } else {
-            nullBlock.addBlockItem(new KanbanTicketBlockItem(genericTask));
+            nullBlock.addBlockItem(new KanbanTicketBlockItem(ticket));
         }
     }
 
@@ -506,8 +506,13 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
             CssLayout footer = new CssLayout();
             TicketComponentFactory fieldFactory = AppContextUtil.getSpringBean(TicketComponentFactory.class);
+            footer.addComponent(fieldFactory.createCommentsPopupField(ticket));
+            footer.addComponent(fieldFactory.createPriorityPopupField(ticket));
+            footer.addComponent(fieldFactory.createFollowersPopupField(ticket));
+            footer.addComponent(fieldFactory.createStatusPopupField(ticket));
             footer.addComponent(fieldFactory.createStartDatePopupField(ticket));
             footer.addComponent(fieldFactory.createEndDatePopupField(ticket));
+            footer.addComponent(fieldFactory.createDueDatePopupField(ticket));
             root.addComponent(footer);
         }
     }
