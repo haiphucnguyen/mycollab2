@@ -59,18 +59,21 @@ public class ProjectTicketServiceTest extends IntegrationServiceTest {
     @Test
     public void testGetAssignments() {
         ProjectTicketSearchCriteria criteria = new ProjectTicketSearchCriteria();
-        criteria.setSaccountid(NumberSearchField.equal(1));
+        criteria.setSaccountid(NumberSearchField.equal(2));
         criteria.setProjectIds(new SetSearchField<>(3));
         List<ProjectTicket> tickets = projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>(criteria));
         assertThat(tickets).hasSize(3);
-        assertThat(tickets).extracting("name", "assignUserFullName").contains(tuple("Task 4", "Linh Duong"));
+        assertThat(tickets).extracting("name", "assignUser", "assignUserFullName", "assignUserAvatarId", "type")
+                .contains(tuple("Task 4", "linhduong", "Duong Linh", null, "Project-Task"),
+                        tuple("Bug 1", "hai79", "Nguyen Hai", null, "Project-Bug"),
+                        tuple("Risk 1", "hai79", "Nguyen Hai", null, "Project-Risk"));
     }
 
     @DataSet
     @Test
     public void testGetAssigneeSummary() {
         ProjectTicketSearchCriteria criteria = new ProjectTicketSearchCriteria();
-        criteria.setSaccountid(NumberSearchField.equal(1));
+        criteria.setSaccountid(NumberSearchField.equal(2));
         criteria.setProjectIds(new SetSearchField<>(3));
         List<GroupItem> groupItems = projectTicketService.getAssigneeSummary(criteria);
         assertThat(groupItems).hasSize(2);

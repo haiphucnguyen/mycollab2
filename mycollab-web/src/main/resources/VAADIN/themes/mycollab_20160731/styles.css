@@ -1612,6 +1612,10 @@ a.pending {
 	font-size: 35px;
 }
 
+.v-window-header {
+	font-size: 24px !important;
+}
+
 .v-tabsheet-tabitemcell .v-tabsheet-tabitem-selected .v-caption.v-caption, .v-tabsheet-tabitemcell .v-caption:hover {
 	color: #0083ce;
 }
@@ -14351,6 +14355,10 @@ a.pending {
 
 .v-window-closebox:before {
 	font-size: 35px;
+}
+
+.v-window-header {
+	font-size: 24px !important;
 }
 
 .v-tabsheet-tabitemcell .v-tabsheet-tabitem-selected .v-caption.v-caption, .v-tabsheet-tabitemcell .v-caption:hover {
