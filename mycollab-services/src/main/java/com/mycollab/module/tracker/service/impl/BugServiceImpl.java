@@ -139,7 +139,7 @@ public class BugServiceImpl extends DefaultService<Integer, BugWithBLOBs, BugSea
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
                 ProjectTicketService.class, ProjectMemberService.class, ProjectActivityStreamService.class,
                 ItemTimeLoggingService.class, TimelineTrackingService.class, ProjectTicketService.class}));
-        asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.TICKET, record.getId(), "status", record
+        asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, record.getId(), "status", record
                 .getStatus(),
                 record.getProjectid(), record.getSaccountid()));
     }

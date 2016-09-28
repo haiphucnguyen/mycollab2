@@ -84,7 +84,7 @@ public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCri
     private void cleanAfterUpdate(Risk record) {
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
                 ProjectTicketService.class, ProjectActivityStreamService.class, ProjectTicketService.class}));
-        asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.TICKET, record.getId(), "status",
+        asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.RISK, record.getId(), "status",
                 record.getStatus(), record.getProjectid(), record.getSaccountid()));
     }
 

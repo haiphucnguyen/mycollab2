@@ -295,7 +295,7 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
             baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("createdtime", sortDirection)));
             ticketGroupOrderComponent = new CreatedDateOrderComponent();
         } else if (UserUIContext.getMessage(GenericI18Enum.OPT_USER).equals(groupByState)) {
-            baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("createdtime", sortDirection)));
+            baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("assignUser", sortDirection)));
             ticketGroupOrderComponent = new UserOrderComponent();
         } else {
             throw new MyCollabException("Do not support group view by " + groupByState);

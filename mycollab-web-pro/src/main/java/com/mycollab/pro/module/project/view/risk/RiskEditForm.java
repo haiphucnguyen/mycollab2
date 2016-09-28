@@ -46,7 +46,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
         @Override
         public ComponentContainer getLayout() {
             VerticalLayout layout = new VerticalLayout();
-            informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 5);
+            informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 6);
             layout.addComponent(informationLayout.getLayout());
 
             MButton updateAllBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), clickEvent -> {
@@ -103,6 +103,8 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY), 1, 3);
             } else if (Risk.Field.description.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 4, 2, "100%");
+            } else if (Risk.Field.id.equalTo(propertyId)) {
+                return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ATTACHMENTS), 0, 5, 2, "100%");
             }
             return null;
         }

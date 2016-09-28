@@ -283,7 +283,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 return ticket.getAssignUserFullName();
             }
         };
-        builder.withBean(ticket).withBindProperty("assignuser").withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
+        builder.withBean(ticket).withBindProperty("assignUser").withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
                 .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
                 .withValue(ticket.getAssignUser());
         return builder.build();

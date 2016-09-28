@@ -182,7 +182,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
                 ProjectTicketService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
                 MilestoneService.class, ItemTimeLoggingService.class, TimelineTrackingService.class,
                 GanttAssignmentService.class, ProjectTicketService.class}));
-        asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.TICKET, record.getId(), "status",
+        asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, record.getId(), "status",
                 record.getStatus(), record.getProjectid(), record.getSaccountid()));
     }
 
