@@ -17,9 +17,11 @@
 package com.mycollab.module.project.service;
 
 import com.mycollab.common.domain.GroupItem;
+import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.RangeDateSearchField;
 import com.mycollab.db.arguments.SetSearchField;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.user.domain.BillingAccount;
 import com.mycollab.test.DataSet;
@@ -55,12 +57,23 @@ public class ProjectTicketServiceTest extends IntegrationServiceTest {
 
     @DataSet
     @Test
+    public void testGetAssignments() {
+        ProjectTicketSearchCriteria criteria = new ProjectTicketSearchCriteria();
+        criteria.setSaccountid(NumberSearchField.equal(1));
+        criteria.setProjectIds(new SetSearchField<>(3));
+        List<ProjectTicket> tickets = projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>(criteria));
+        assertThat(tickets).hasSize(3);
+        assertThat(tickets).extracting("name", "assignUserFullName").contains(tuple("Task 4", "Linh Duong"));
+    }
+
+    @DataSet
+    @Test
     public void testGetAssigneeSummary() {
         ProjectTicketSearchCriteria criteria = new ProjectTicketSearchCriteria();
         criteria.setSaccountid(NumberSearchField.equal(1));
         criteria.setProjectIds(new SetSearchField<>(3));
         List<GroupItem> groupItems = projectTicketService.getAssigneeSummary(criteria);
-        assertThat(groupItems).isNotEmpty();
+        assertThat(groupItems).hasSize(2);
         assertThat(groupItems).extracting("groupid", "value").contains(tuple("hai79", 2d), tuple("linhduong", 1d));
     }
 }

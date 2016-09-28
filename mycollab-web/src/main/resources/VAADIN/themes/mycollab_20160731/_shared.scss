@@ -19,6 +19,10 @@
     }
   }
 
+  .v-window-closebox:before {
+    font-size: 35px;
+  }
+
   .v-tabsheet-tabitemcell .v-tabsheet-tabitem-selected .v-caption.v-caption, .v-tabsheet-tabitemcell .v-caption:hover {
     color: $my-link-color;
   }

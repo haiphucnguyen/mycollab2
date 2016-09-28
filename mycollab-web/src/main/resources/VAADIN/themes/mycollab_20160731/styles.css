@@ -1608,6 +1608,10 @@ a.pending {
 	color: #108e2a;
 }
 
+.v-window-closebox:before {
+	font-size: 35px;
+}
+
 .v-tabsheet-tabitemcell .v-tabsheet-tabitem-selected .v-caption.v-caption, .v-tabsheet-tabitemcell .v-caption:hover {
 	color: #0083ce;
 }
@@ -14343,6 +14347,10 @@ a.overdue {
 
 a.pending {
 	color: #108e2a;
+}
+
+.v-window-closebox:before {
+	font-size: 35px;
 }
 
 .v-tabsheet-tabitemcell .v-tabsheet-tabitem-selected .v-caption.v-caption, .v-tabsheet-tabitemcell .v-caption:hover {

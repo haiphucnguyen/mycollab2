@@ -311,7 +311,7 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
                 int newTotalTickets = projectTicketService.getTotalAssignmentsCount(baseCriteria);
                 int newNumPages = newTotalTickets / 20;
                 currentPage++;
-                List<ProjectTicket> otherTickets = projectTicketService.findAssignmentsByCriteria(new
+                List<ProjectTicket> otherTickets = projectTicketService.findTicketsByCriteria(new
                         BasicSearchRequest<>(baseCriteria, currentPage + 1, 20));
                 ticketGroupOrderComponent.insertTickets(otherTickets);
                 if (currentPage >= newNumPages) {
@@ -320,7 +320,7 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
             }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.ANGLE_DOUBLE_DOWN);
             wrapBody.addComponent(moreBtn);
         }
-        List<ProjectTicket> tickets = projectTicketService.findAssignmentsByCriteria(new BasicSearchRequest<>
+        List<ProjectTicket> tickets = projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>
                 (baseCriteria, currentPage + 1, 20));
         ticketGroupOrderComponent.insertTickets(tickets);
     }

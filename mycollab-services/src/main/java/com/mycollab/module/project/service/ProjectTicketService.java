@@ -44,7 +44,7 @@ public interface ProjectTicketService extends ISearchableService<ProjectTicketSe
     ProjectTicket findAssignment(String type, Integer typeId);
 
     @Cacheable
-    List findAssignmentsByCriteria(@CacheKey BasicSearchRequest<ProjectTicketSearchCriteria> searchRequest);
+    List findTicketsByCriteria(@CacheKey BasicSearchRequest<ProjectTicketSearchCriteria> searchRequest);
 
     @Cacheable
     Integer getTotalAssignmentsCount(@CacheKey ProjectTicketSearchCriteria criteria);
