@@ -1,10 +1,12 @@
 package com.mycollab.pro.module.project.service.impl;
 
-import com.mycollab.cache.CleanCacheEvent;
-import com.mycollab.common.ModuleNameConstants;
+import com.google.common.eventbus.AsyncEventBus;
 import com.mycollab.aspect.ClassInfo;
 import com.mycollab.aspect.ClassInfoMap;
 import com.mycollab.aspect.Traceable;
+import com.mycollab.cache.CleanCacheEvent;
+import com.mycollab.common.ModuleNameConstants;
+import com.mycollab.common.event.TimelineTrackingUpdateEvent;
 import com.mycollab.db.persistence.ICrudGenericDAO;
 import com.mycollab.db.persistence.ISearchableDAO;
 import com.mycollab.db.persistence.service.DefaultService;
@@ -16,7 +18,6 @@ import com.mycollab.module.project.esb.DeleteProjectRiskEvent;
 import com.mycollab.module.project.service.*;
 import com.mycollab.pro.module.project.dao.RiskMapper;
 import com.mycollab.pro.module.project.dao.RiskMapperExt;
-import com.google.common.eventbus.AsyncEventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,11 +70,22 @@ public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCri
     }
 
     @Override
+    public Integer updateSelectiveWithSession(Risk record, String username) {
+        cleanAfterUpdate(record);
+        return super.updateSelectiveWithSession(record, username);
+    }
+
+    @Override
     public Integer updateWithSession(Risk record, String username) {
-        int result = super.updateWithSession(record, username);
+        cleanAfterUpdate(record);
+        return super.updateWithSession(record, username);
+    }
+
+    private void cleanAfterUpdate(Risk record) {
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
-                ProjectTicketService.class, ProjectActivityStreamService.class}));
-        return result;
+                ProjectTicketService.class, ProjectActivityStreamService.class, ProjectTicketService.class}));
+        asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.TICKET, record.getId(), "status",
+                record.getStatus(), record.getProjectid(), record.getSaccountid()));
     }
 
     @Override

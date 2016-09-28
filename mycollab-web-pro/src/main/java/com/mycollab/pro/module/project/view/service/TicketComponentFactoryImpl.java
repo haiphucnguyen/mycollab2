@@ -9,6 +9,7 @@ import com.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.mycollab.common.i18n.FollowerI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum;
+import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.common.service.CommentService;
 import com.mycollab.common.service.MonitorItemService;
 import com.mycollab.configuration.StorageFactory;
@@ -101,7 +102,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         Task task = new Task();
         task.setId(bean.getTypeId());
         task.setName(bean.getName());
-        task.setStartdate(bean.getEndDate());
+        task.setStartdate(bean.getStartDate());
         task.setEnddate(bean.getEndDate());
         task.setDuedate(bean.getDueDate());
         task.setStatus(bean.getStatus());
@@ -113,7 +114,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         SimpleBug bug = new SimpleBug();
         bug.setId(bean.getTypeId());
         bug.setName(bean.getName());
-        bug.setStartdate(bean.getEndDate());
+        bug.setStartdate(bean.getStartDate());
         bug.setEnddate(bean.getEndDate());
         bug.setDuedate(bean.getDueDate());
         bug.setStatus(bean.getStatus());
@@ -125,7 +126,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         Risk risk = new Risk();
         risk.setId(bean.getTypeId());
         risk.setName(bean.getName());
-        risk.setStartdate(bean.getEndDate());
+        risk.setStartdate(bean.getStartDate());
         risk.setEnddate(bean.getEndDate());
         risk.setDuedate(bean.getDueDate());
         risk.setStatus(bean.getStatus());
@@ -135,7 +136,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
     @Override
     public AbstractComponent createStartDatePopupField(ProjectTicket ticket) {
-        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder<ProjectTicket>() {
+        PopupBeanFieldBuilder<ProjectTicket> builder = new PopupBeanFieldBuilder<ProjectTicket>() {
             @Override
             protected String generateSmallContentAsHtml() {
                 if (ticket.getStartDate() == null) {
@@ -147,7 +148,6 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 } else {
                     return String.format(" %s %s", VaadinIcons.TIME_FORWARD.getHtml(), UserUIContext.formatDate(ticket.getStartDate()));
                 }
-
             }
 
             @Override
@@ -161,8 +161,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             }
         };
         builder.withBean(ticket).withBindProperty("startDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new PopupDateFieldExt())
-                .withValue(ticket.getStartDate());
+                .withField(new PopupDateFieldExt()).withValue(ticket.getStartDate());
         return builder.build();
     }
 
@@ -193,8 +192,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             }
         };
         builder.withBean(ticket).withBindProperty("endDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new PopupDateFieldExt())
-                .withValue(ticket.getEndDate());
+                .withField(new PopupDateFieldExt()).withValue(ticket.getEndDate());
         return builder.build();
     }
 
@@ -231,7 +229,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
     @Override
     public AbstractComponent createPriorityPopupField(ProjectTicket ticket) {
-        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+        PopupBeanFieldBuilder<ProjectTicket> builder = new PopupBeanFieldBuilder<ProjectTicket>() {
             @Override
             protected String generateSmallContentAsHtml() {
                 return ProjectAssetsManager.getPriorityHtml(ticket.getPriority()) + " " + UserUIContext.getMessage(Priority.class, ticket.getPriority());
@@ -261,7 +259,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
     @Override
     public AbstractComponent createAssigneePopupField(ProjectTicket ticket) {
-        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+        PopupBeanFieldBuilder<ProjectTicket> builder = new PopupBeanFieldBuilder<ProjectTicket>() {
             @Override
             protected String generateSmallContentAsHtml() {
                 String avatarLink = StorageFactory.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
@@ -309,21 +307,22 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     @Override
     public AbstractComponent createStatusPopupField(ProjectTicket ticket) {
         if (ticket.isTask()) {
-            PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+            Task task = buildTask(ticket);
+            PopupBeanFieldBuilder<Task> builder = new PopupBeanFieldBuilder<Task>() {
                 @Override
                 protected String generateSmallContentAsHtml() {
-                    if (ticket.getStatus() == null) {
+                    if (task.getStatus() == null) {
                         Div divHint = new Div().setCSSClass("nonValue");
                         divHint.appendText(FontAwesome.INFO_CIRCLE.getHtml());
                         divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                                 .setCSSClass("hide"));
                         return divHint.write();
                     } else {
-                        return FontAwesome.INFO_CIRCLE.getHtml() + " " + StringUtils.trim(ticket.getStatus(), 20, true);
+                        return FontAwesome.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, task.getStatus());
                     }
                 }
             };
-            builder.withBean(buildTask(ticket)).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
+            builder.withBean(task).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
                     .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP))
                     .withField(new TaskStatusComboBox()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(ticket.getStatus())
                     .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
@@ -331,22 +330,23 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         } else if (ticket.isBug()) {
             return new BugStatusPopupView(buildBug(ticket));
         } else if (ticket.isRisk()) {
-            PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+            Risk risk = buildRisk(ticket);
+            PopupBeanFieldBuilder<Risk> builder = new PopupBeanFieldBuilder<Risk>() {
                 @Override
                 protected String generateSmallContentAsHtml() {
-                    if (ticket.getStatus() == null) {
+                    if (risk.getStatus() == null) {
                         Div divHint = new Div().setCSSClass("nonValue");
                         divHint.appendText(FontAwesome.INFO_CIRCLE.getHtml());
                         divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                                 .setCSSClass("hide"));
                         return divHint.write();
                     } else {
-                        return FontAwesome.INFO_CIRCLE.getHtml() + " " + StringUtils.trim(ticket.getStatus(), 20, true);
+                        return FontAwesome.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, risk.getStatus());
                     }
                 }
             };
-            builder.withBean(buildRisk(ticket)).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
-                    .withField(new I18nValueComboBox(false, OptionI18nEnum.StatusI18nEnum.Open, OptionI18nEnum.StatusI18nEnum.Closed))
+            builder.withBean(risk).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
+                    .withField(new I18nValueComboBox(false, StatusI18nEnum.Open, StatusI18nEnum.Closed))
                     .withService(AppContextUtil.getSpringBean(RiskService.class)).withValue(ticket.getStatus())
                     .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
             return builder.build();

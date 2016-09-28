@@ -79,7 +79,7 @@ public abstract class PopupBeanFieldBuilder<B> {
 
     public void save() {
         if (crudService != null) {
-            crudService.updateWithSession(bean, UserUIContext.getUsername());
+            crudService.updateSelectiveWithSession(bean, UserUIContext.getUsername());
         }
     }
 
