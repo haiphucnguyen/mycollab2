@@ -27,7 +27,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
-import com.mycollab.module.project.event.AssignmentEvent;
+import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.milestone.MilestoneListSelect;
 import com.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
@@ -81,7 +81,7 @@ public class TicketSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSe
                     ProjectTicketSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(ProjectTicketSearchCriteria.class,
                             fieldInfos);
                     criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                    EventBusFactory.getInstance().post(new AssignmentEvent.SearchRequest(TicketSearchPanel.this, criteria));
+                    EventBusFactory.getInstance().post(new TicketEvent.SearchRequest(TicketSearchPanel.this, criteria));
                     EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, fieldInfos));
                 }
             });

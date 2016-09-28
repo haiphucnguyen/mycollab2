@@ -35,8 +35,8 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
-import com.mycollab.module.project.event.AssignmentEvent;
 import com.mycollab.module.project.event.TaskEvent;
+import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.ProjectTicketService;
@@ -67,7 +67,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -93,11 +92,11 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
     private VerticalLayout rightColumn;
     private TicketGroupOrderComponent ticketGroupOrderComponent;
 
-    private ApplicationEventListener<AssignmentEvent.SearchRequest> searchHandler = new
-            ApplicationEventListener<AssignmentEvent.SearchRequest>() {
+    private ApplicationEventListener<TicketEvent.SearchRequest> searchHandler = new
+            ApplicationEventListener<TicketEvent.SearchRequest>() {
                 @Override
                 @Subscribe
-                public void handle(AssignmentEvent.SearchRequest event) {
+                public void handle(TicketEvent.SearchRequest event) {
                     ProjectTicketSearchCriteria criteria = (ProjectTicketSearchCriteria) event.getData();
                     if (criteria != null) {
                         criteria.setTypes(new SetSearchField(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK,
@@ -247,15 +246,15 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
 
     private void displayTicketsStatistic() {
         rightColumn.removeAllComponents();
-//        final TaskStatusTrendChartWidget taskStatusTrendChartWidget = new TaskStatusTrendChartWidget();
-//        rightColumn.addComponent(taskStatusTrendChartWidget);
+        final TicketCloseTrendChartWidget taskStatusTrendChartWidget = new TicketCloseTrendChartWidget();
+        rightColumn.addComponent(taskStatusTrendChartWidget);
         UnresolvedTicketsByAssigneeWidget unresolvedTicketsByAssigneeWidget = new UnresolvedTicketsByAssigneeWidget();
         unresolvedTicketsByAssigneeWidget.setSearchCriteria(statisticSearchCriteria);
         rightColumn.addComponent(unresolvedTicketsByAssigneeWidget);
 //
-//        UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
-//        unresolvedTaskByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
-//        rightColumn.addComponent(unresolvedTaskByPriorityWidget);
+        UnresolvedTicketByPriorityWidget unresolvedTicketByPriorityWidget = new UnresolvedTicketByPriorityWidget();
+        unresolvedTicketByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
+        rightColumn.addComponent(unresolvedTicketByPriorityWidget);
 //
 //        UnresolvedTaskByStatusWidget unresolvedTaskByStatusWidget = new UnresolvedTaskByStatusWidget();
 //        unresolvedTaskByStatusWidget.setSearchCriteria(statisticSearchCriteria);
@@ -306,7 +305,7 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
         currentPage = 0;
         int pages = totalTasks / 20;
         if (currentPage < pages) {
-            Button moreBtn = new Button(UserUIContext.getMessage(GenericI18Enum.ACTION_MORE), clickEvent -> {
+            MButton moreBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_MORE), clickEvent -> {
                 int newTotalTickets = projectTicketService.getTotalAssignmentsCount(baseCriteria);
                 int newNumPages = newTotalTickets / 20;
                 currentPage++;
@@ -316,8 +315,7 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
                 if (currentPage >= newNumPages) {
                     wrapBody.removeComponent(wrapBody.getComponent(1));
                 }
-            });
-            moreBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
+            }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.ANGLE_DOUBLE_DOWN);
             wrapBody.addComponent(moreBtn);
         }
         List<ProjectTicket> tickets = projectTicketService.findAssignmentsByCriteria(new BasicSearchRequest<>

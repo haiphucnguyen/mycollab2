@@ -61,6 +61,6 @@ public class ProjectTicketServiceTest extends IntegrationServiceTest {
         criteria.setProjectIds(new SetSearchField<>(3));
         List<GroupItem> groupItems = projectTicketService.getAssigneeSummary(criteria);
         assertThat(groupItems).isNotEmpty();
-        assertThat(groupItems).extracting("groupid", "value").contains(tuple("hai79", 2), tuple("linhduong", 1));
+        assertThat(groupItems).extracting("groupid", "value").contains(tuple("hai79", 2d), tuple("linhduong", 1d));
     }
 }
