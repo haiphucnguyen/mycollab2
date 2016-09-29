@@ -24,6 +24,7 @@ import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * @author MyCollab Ltd.
@@ -31,6 +32,21 @@ import java.util.Arrays;
  */
 public class ProjectTicketSearchCriteria extends SearchCriteria {
     private static final long serialVersionUID = 1L;
+
+    public static final Param p_type = CacheParamMapper.register(ProjectTypeConstants.TICKET,
+            GenericI18Enum.FORM_TYPE, new SearchCriteriaBridgeParam<ProjectTicketSearchCriteria>("type") {
+                @Override
+                public ProjectTicketSearchCriteria injectCriteriaInList(ProjectTicketSearchCriteria searchCriteria, String oper, Collection<?> value) {
+                    searchCriteria.setTypes(new SetSearchField(oper, value));
+                    return searchCriteria;
+                }
+
+                @Override
+                public ProjectTicketSearchCriteria injectCriteriaNotInList(ProjectTicketSearchCriteria searchCriteria, String oper, Collection<?> value) {
+                    searchCriteria.setTypes(new SetSearchField(oper, value));
+                    return searchCriteria;
+                }
+            });
 
     public static final Param p_name = CacheParamMapper.register(ProjectTypeConstants.TICKET,
             GenericI18Enum.FORM_NAME, new StringParam("name", "mainTbl", "name"));
@@ -46,8 +62,7 @@ public class ProjectTicketSearchCriteria extends SearchCriteria {
             new PropertyListParam<String>("assignuser", "mainTbl", "assignUser"));
 
     public static final PropertyListParam<String> p_createdUser = CacheParamMapper.register(ProjectTypeConstants.TICKET,
-            GenericI18Enum.OPT_CREATED_BY,
-            new PropertyListParam<String>("createduser", "mainTbl", "createdUser"));
+            GenericI18Enum.OPT_CREATED_BY, new PropertyListParam<String>("createduser", "mainTbl", "createdUser"));
 
     public static final DateParam p_startDate = CacheParamMapper.register(ProjectTypeConstants.TICKET,
             GenericI18Enum.FORM_START_DATE, new DateParam("startdate", "mainTbl", "startDate"));

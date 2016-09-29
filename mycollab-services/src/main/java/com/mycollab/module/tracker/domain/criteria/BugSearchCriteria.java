@@ -116,12 +116,9 @@ public class BugSearchCriteria extends SearchCriteria {
                     {
                         SELECT("COUNT(*)");
                         FROM("m_tracker_bug_related_item");
-                        WHERE(String.format(
-                                "m_tracker_bug_related_item.type='%s'", type));
+                        WHERE(String.format("m_tracker_bug_related_item.type='%s'", type));
                         AND();
-                        WHERE(String.format(
-                                "m_tracker_bug_related_item.typeid=%d",
-                                affectedVersion));
+                        WHERE(String.format("m_tracker_bug_related_item.typeid=%d", affectedVersion));
                         AND();
                         WHERE("m_tracker_bug_related_item.bugid=m_tracker_bug.id");
                     }
@@ -153,12 +150,9 @@ public class BugSearchCriteria extends SearchCriteria {
                     {
                         SELECT("COUNT(*)");
                         FROM("m_tracker_bug_related_item");
-                        WHERE(String.format(
-                                "m_tracker_bug_related_item.type='%s'", type));
+                        WHERE(String.format("m_tracker_bug_related_item.type='%s'", type));
                         AND();
-                        WHERE(String.format(
-                                "m_tracker_bug_related_item.typeid=%d",
-                                affectedVersion));
+                        WHERE(String.format("m_tracker_bug_related_item.typeid=%d", affectedVersion));
                         AND();
                         WHERE("m_tracker_bug_related_item.bugid=m_tracker_bug.id");
                     }
