@@ -271,7 +271,8 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                     field.setWidth(width);
                     valueBox.addComponent(field);
                 }
-            } else if (param instanceof PropertyParam || param instanceof PropertyListParam || param instanceof CustomSqlParam) {
+            } else if (param instanceof PropertyParam || param instanceof PropertyListParam || param instanceof CustomSqlParam
+                    || param instanceof SearchCriteriaBridgeParam) {
                 Component comp = buildPropertySearchComp(param.getId());
                 if (comp != null) {
                     comp.setWidth(width);
@@ -343,8 +344,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                     } else if (field instanceof ConcatStringParam) {
                         compareSelectionBox.loadData(Arrays.asList(ConcatStringParam.OPTIONS));
                     }
-
-                    displayAssociateInputField((Param) fieldSelectionBox.getValue());
                 }
             });
 
@@ -369,15 +368,11 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 valueBox.addComponent(tempTextField);
             } else if (field instanceof DateParam) {
                 if (DateParam.BETWEEN.equals(compareItem) || DateParam.NOT_BETWEEN.equals(compareItem)) {
-                    PopupDateFieldExt field1 = new PopupDateFieldExt();
-                    PopupDateFieldExt field2 = new PopupDateFieldExt();
-                    field1.setWidth(width);
-                    field2.setWidth(width);
-                    valueBox.addComponent(field1);
-                    valueBox.addComponent(field2);
+                    PopupDateFieldExt field1 = new PopupDateFieldExt().withWidth(width);
+                    PopupDateFieldExt field2 = new PopupDateFieldExt().withWidth(width);
+                    valueBox.with(field1, field2);
                 } else {
-                    PopupDateFieldExt tempDateField = new PopupDateFieldExt();
-                    tempDateField.setWidth(width);
+                    PopupDateFieldExt tempDateField = new PopupDateFieldExt().withWidth(width);
                     valueBox.addComponent(tempDateField);
                 }
             } else if (field instanceof PropertyParam || field instanceof PropertyListParam || field instanceof CustomSqlParam
@@ -492,6 +487,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 } else {
                     searchContainer.removeAllComponents();
                     if (filterBox.getComponentCount() > 3) {
+                        filterBox.removeComponent(filterBox.getComponent(1));
                         filterBox.removeComponent(filterBox.getComponent(1));
                     }
                 }

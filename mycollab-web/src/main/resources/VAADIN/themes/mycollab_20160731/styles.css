@@ -2120,7 +2120,7 @@ div.v-window {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	padding: 0px 5px 0px 0px;
-	margin: 3px 3px 0px 0px;
+	margin: 0px 3px 0px 0px;
 	color: #8c8c8c !important;
 	font-size: 13px;
 }
@@ -14864,7 +14864,7 @@ div.v-window {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	padding: 0px 5px 0px 0px;
-	margin: 3px 3px 0px 0px;
+	margin: 0px 3px 0px 0px;
 	color: #8c8c8c !important;
 	font-size: 13px;
 }

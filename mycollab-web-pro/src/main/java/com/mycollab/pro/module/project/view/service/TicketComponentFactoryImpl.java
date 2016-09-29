@@ -107,6 +107,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         task.setDuedate(bean.getDueDate());
         task.setStatus(bean.getStatus());
         task.setSaccountid(bean.getsAccountId());
+        task.setPriority(bean.getPriority());
         return task;
     }
 
@@ -118,6 +119,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         bug.setEnddate(bean.getEndDate());
         bug.setDuedate(bean.getDueDate());
         bug.setStatus(bean.getStatus());
+        bug.setPriority(bean.getPriority());
         bug.setSaccountid(bean.getsAccountId());
         return bug;
     }
@@ -131,6 +133,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         risk.setDuedate(bean.getDueDate());
         risk.setStatus(bean.getStatus());
         risk.setSaccountid(bean.getsAccountId());
+        risk.setPriority(bean.getPriority());
         return risk;
     }
 

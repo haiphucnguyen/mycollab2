@@ -179,8 +179,10 @@ public class SearchFieldInfo<S extends SearchCriteria> implements Serializable {
             switch (compareValue) {
                 case IN:
                     wrapParam.injectCriteriaInList(searchCriteria, prefixOper, (Collection<?>) this.eval());
+                    return null;
                 case NOT_IN:
                     wrapParam.injectCriteriaNotInList(searchCriteria, prefixOper, (Collection<?>) this.eval());
+                    return null;
                 default:
                     throw new MyCollabException("Not support yet");
             }
