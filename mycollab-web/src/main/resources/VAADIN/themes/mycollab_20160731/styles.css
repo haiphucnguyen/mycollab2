@@ -13989,7 +13989,6 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 }
 
 .accountViewContainer .container-wrap.main-content .top-panel {
-	background-color: #FFF;
 	border-bottom: 1px solid #e9e9e9;
 	padding: 10px 30px;
 }
@@ -15496,7 +15495,6 @@ div .addview-layout-body {
 }
 
 .projectDashboardView .container-wrap.main-content .top-panel {
-	background-color: #FFF;
 	border-top: 1px solid #e9e9e9;
 	border-bottom: 1px solid #e9e9e9;
 	padding: 10px 30px;

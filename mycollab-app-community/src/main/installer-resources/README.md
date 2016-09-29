@@ -47,7 +47,7 @@ Version 5.4.3
 
 * Hiraki CP 4.5.1
 * Jackson 2.8.3
-* Vaadin 7.7.2
+* Vaadin 7.7.3
 * Jackrabbit 2.13.3
 * Other libraries
 
