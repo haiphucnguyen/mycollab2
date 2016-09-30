@@ -26,10 +26,9 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.Task;
-import com.mycollab.module.project.event.AssignmentEvent;
 import com.mycollab.module.project.event.TaskEvent;
+import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
-import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.components.ProjectSubscribersComp;
 import com.mycollab.spring.AppContextUtil;
@@ -124,7 +123,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
 
                     postExecution();
                     EventBusFactory.getInstance().post(new TaskEvent.NewTaskAdded(TaskEditForm.this, taskId));
-                    EventBusFactory.getInstance().post(new AssignmentEvent.NewAssignmentAdd(TaskEditForm.this,
+                    EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(TaskEditForm.this,
                             ProjectTypeConstants.TASK, taskId));
                 }
             }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);

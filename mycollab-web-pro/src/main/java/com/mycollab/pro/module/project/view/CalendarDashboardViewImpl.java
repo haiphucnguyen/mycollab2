@@ -1,8 +1,9 @@
 package com.mycollab.pro.module.project.view;
 
+import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.DayI18nEnum;
-import com.mycollab.db.arguments.RangeDateSearchField;
 import com.mycollab.db.arguments.BasicSearchRequest;
+import com.mycollab.db.arguments.RangeDateSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
@@ -14,7 +15,7 @@ import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
-import com.mycollab.module.project.event.AssignmentEvent;
+import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
@@ -39,7 +40,6 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -76,10 +76,10 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     private ProjectTicketSearchCriteria searchCriteria;
     private AssignmentSearchPanel searchPanel;
 
-    private ApplicationEventListener<AssignmentEvent.NewAssignmentAdd> taskChangeHandler = new ApplicationEventListener<AssignmentEvent.NewAssignmentAdd>() {
+    private ApplicationEventListener<TicketEvent.NewTicketAdded> taskChangeHandler = new ApplicationEventListener<TicketEvent.NewTicketAdded>() {
         @Override
         @Subscribe
-        public void handle(AssignmentEvent.NewAssignmentAdd event) {
+        public void handle(TicketEvent.NewTicketAdded event) {
             String type = event.getTypeVal();
             Integer typeId = event.getTypeIdVal();
             ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();

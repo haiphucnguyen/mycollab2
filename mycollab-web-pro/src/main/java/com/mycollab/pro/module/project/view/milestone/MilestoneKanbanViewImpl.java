@@ -16,8 +16,8 @@ import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
-import com.mycollab.module.project.event.AssignmentEvent;
 import com.mycollab.module.project.event.MilestoneEvent;
+import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
@@ -95,10 +95,10 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 }
             };
 
-    private ApplicationEventListener<AssignmentEvent.NewAssignmentAdd> newAssignmentHandler = new ApplicationEventListener<AssignmentEvent.NewAssignmentAdd>() {
+    private ApplicationEventListener<TicketEvent.NewTicketAdded> newAssignmentHandler = new ApplicationEventListener<TicketEvent.NewTicketAdded>() {
         @Override
         @Subscribe
-        public void handle(AssignmentEvent.NewAssignmentAdd event) {
+        public void handle(TicketEvent.NewTicketAdded event) {
             ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
             ProjectTicket ticket = projectTicketService.findAssignment(event.getTypeVal(), event.getTypeIdVal());
             if (ticket != null) {

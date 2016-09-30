@@ -15,7 +15,7 @@ import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
-import com.mycollab.module.project.event.AssignmentEvent;
+import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
@@ -72,10 +72,10 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
     private static final DateTimeFormatter WEEK_FORMATTER = DateTimeFormat.forPattern("dd MMMM, yyyy");
     private static final DateTimeFormatter MONTH_FORMATTER = DateTimeFormat.forPattern("MMMM, yyyy");
 
-    private ApplicationEventListener<AssignmentEvent.NewAssignmentAdd> assignmentChangeHandler = new ApplicationEventListener<AssignmentEvent.NewAssignmentAdd>() {
+    private ApplicationEventListener<TicketEvent.NewTicketAdded> assignmentChangeHandler = new ApplicationEventListener<TicketEvent.NewTicketAdded>() {
         @Override
         @Subscribe
-        public void handle(AssignmentEvent.NewAssignmentAdd event) {
+        public void handle(TicketEvent.NewTicketAdded event) {
             String type = event.getTypeVal();
             Integer typeId = event.getTypeIdVal();
             ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();

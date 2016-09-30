@@ -6,8 +6,8 @@ import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
-import com.mycollab.module.project.event.AssignmentEvent;
 import com.mycollab.module.project.event.RiskEvent;
+import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.service.RiskService;
@@ -71,7 +71,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
                     uploadField.saveContentsToRepo(attachPath);
 
                     postExecution();
-                    EventBusFactory.getInstance().post(new AssignmentEvent.NewAssignmentAdd(this,
+                    EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(this,
                             ProjectTypeConstants.RISK, riskId));
                 }
             }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
