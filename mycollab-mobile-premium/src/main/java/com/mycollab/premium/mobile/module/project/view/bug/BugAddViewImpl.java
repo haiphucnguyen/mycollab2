@@ -13,6 +13,7 @@ import com.mycollab.mobile.ui.FormSectionBuilder;
 import com.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.BugI18nEnum;
+import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.mycollab.module.tracker.domain.SimpleBug;
@@ -144,7 +145,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
             if (propertyId.equals("name")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_SUMMARY), 0, 0);
             } else if (propertyId.equals("milestoneid")) {
-                return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_PHASE), 0, 1);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), 0, 1);
             } else if (propertyId.equals("environment")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_ENVIRONMENT), 0, 2);
             } else if (propertyId.equals("priority")) {

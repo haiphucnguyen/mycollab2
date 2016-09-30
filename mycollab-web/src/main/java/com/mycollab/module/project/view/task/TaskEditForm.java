@@ -28,6 +28,7 @@ import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.event.AssignmentEvent;
 import com.mycollab.module.project.event.TaskEvent;
+import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.components.ProjectSubscribersComp;
@@ -155,7 +156,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY),
                         UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP), 0, 3);
             } else if (Task.Field.milestoneid.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, UserUIContext.getMessage(TaskI18nEnum.FORM_PHASE), 1, 3);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), 1, 3);
             } else if (Task.Field.description.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 4, 2, "100%");
             } else if (Task.Field.id.equalTo(propertyId)) {

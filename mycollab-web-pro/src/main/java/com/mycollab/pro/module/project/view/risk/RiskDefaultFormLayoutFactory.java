@@ -8,6 +8,7 @@ import com.mycollab.form.view.builder.type.DynaForm;
 import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.mycollab.module.project.domain.Risk;
+import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 
 /**
@@ -37,7 +38,7 @@ public class RiskDefaultFormLayoutFactory {
                 .fieldIndex(4).build());
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.milestoneid)
-                .displayName(RiskI18nEnum.FORM_PHASE)
+                .displayName(MilestoneI18nEnum.SINGLE)
                 .fieldIndex(5).build());
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.assignuser)

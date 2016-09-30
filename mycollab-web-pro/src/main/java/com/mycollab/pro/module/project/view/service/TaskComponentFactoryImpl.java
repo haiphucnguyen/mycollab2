@@ -27,6 +27,7 @@ import com.mycollab.module.project.domain.ItemTimeLogging;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.event.ProjectEvent;
+import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
@@ -169,7 +170,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         };
         MilestoneComboBox milestoneComboBox = new MilestoneComboBox();
         milestoneComboBox.setWidth("300px");
-        builder.withBean(task).withBindProperty("milestoneid").withCaption(UserUIContext.getMessage(TaskI18nEnum.FORM_PHASE))
+        builder.withBean(task).withBindProperty("milestoneid").withCaption(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE))
                 .withField(milestoneComboBox).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
                 .withValue(task.getMilestoneid()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();

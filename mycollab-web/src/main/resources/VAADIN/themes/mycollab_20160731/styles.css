@@ -1613,7 +1613,7 @@ a.pending {
 }
 
 .v-window-header {
-	font-size: 24px !important;
+	font-size: 18px !important;
 }
 
 .v-tabsheet-tabitemcell .v-tabsheet-tabitem-selected .v-caption.v-caption, .v-tabsheet-tabitemcell .v-caption:hover {
@@ -14357,7 +14357,7 @@ a.pending {
 }
 
 .v-window-header {
-	font-size: 24px !important;
+	font-size: 18px !important;
 }
 
 .v-tabsheet-tabitemcell .v-tabsheet-tabitem-selected .v-caption.v-caption, .v-tabsheet-tabitemcell .v-caption:hover {

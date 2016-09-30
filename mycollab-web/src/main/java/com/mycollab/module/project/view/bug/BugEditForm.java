@@ -28,6 +28,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.event.AssignmentEvent;
 import com.mycollab.module.project.event.BugEvent;
 import com.mycollab.module.project.i18n.BugI18nEnum;
+import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.ui.components.ProjectSubscribersComp;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.SimpleBug;
@@ -163,7 +164,7 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
             } else if (BugWithBLOBs.Field.duedate.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 4);
             } else if (BugWithBLOBs.Field.milestoneid.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_PHASE), 1, 4);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), 1, 4);
             } else if (BugWithBLOBs.Field.name.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_SUMMARY), 0, 5, 2, "100%");
             } else if (BugWithBLOBs.Field.description.equalTo(propertyId)) {

@@ -18,17 +18,11 @@ public class SyncFiles {
         File parentFolder = new File("target/staging/i18n");
         File[] files = parentFolder.listFiles();
         for (File file : files) {
-            System.out.println("File: " + file.getName());
             if (file.getName().endsWith("_en-US.properties")) {
                 GLMasterFile masterFile = new GLMasterFile(project, file.getAbsolutePath(), FileFormat
                         .javaproperties);
 
                 masterFile.push();
-            } else if (file.getName().endsWith("html")) {
-//                GLMasterFile masterFile = new GLMasterFile(project, file.getAbsolutePath(), FileFormat.html);
-//                masterFile.push();
-            } else {
-//                throw new Exception("Not valid file " + file.getName());
             }
         }
     }

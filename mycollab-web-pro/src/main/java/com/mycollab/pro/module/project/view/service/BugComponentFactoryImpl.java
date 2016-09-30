@@ -26,6 +26,7 @@ import com.mycollab.module.project.domain.ItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.module.project.i18n.BugI18nEnum;
+import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
@@ -315,7 +316,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         };
         MilestoneComboBox milestoneComboBox = new MilestoneComboBox();
         milestoneComboBox.setWidth("300px");
-        builder.withBean(bug).withBindProperty("milestoneid").withCaption(UserUIContext.getMessage(BugI18nEnum.FORM_PHASE))
+        builder.withBean(bug).withBindProperty("milestoneid").withCaption(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE))
                 .withField(milestoneComboBox).withService(AppContextUtil.getSpringBean(BugService.class))
                 .withValue(bug.getMilestoneid()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();

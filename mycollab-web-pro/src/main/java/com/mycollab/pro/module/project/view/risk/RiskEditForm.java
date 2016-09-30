@@ -8,6 +8,7 @@ import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.event.AssignmentEvent;
 import com.mycollab.module.project.event.RiskEvent;
+import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.spring.AppContextUtil;
@@ -92,7 +93,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
             } else if (Risk.Field.assignuser.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 1);
             } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
-                return informationLayout.addComponent(field, UserUIContext.getMessage(RiskI18nEnum.FORM_PHASE), 1, 1);
+                return informationLayout.addComponent(field, UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), 1, 1);
             } else if (Risk.Field.duedate.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE), 0, 2);
             } else if (Risk.Field.consequence.equalTo(propertyId)) {

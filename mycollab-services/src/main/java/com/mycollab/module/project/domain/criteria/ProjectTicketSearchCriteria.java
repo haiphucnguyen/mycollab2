@@ -21,6 +21,7 @@ import com.mycollab.db.arguments.*;
 import com.mycollab.db.query.*;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.BugI18nEnum;
+import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 
 import java.util.Arrays;
@@ -55,7 +56,7 @@ public class ProjectTicketSearchCriteria extends SearchCriteria {
             new I18nStringListParam("priority", "mainTbl", "priority",
                     Arrays.asList(Priority.Urgent, Priority.High, Priority.Medium, Priority.Low, Priority.None)));
 
-    public static final PropertyListParam<Integer> p_milestones = CacheParamMapper.register(ProjectTypeConstants.TICKET, BugI18nEnum.FORM_PHASE,
+    public static final PropertyListParam<Integer> p_milestones = CacheParamMapper.register(ProjectTypeConstants.TICKET, MilestoneI18nEnum.SINGLE,
             new PropertyListParam<Integer>("milestone", "mainTbl", "milestoneId"));
 
     public static final PropertyListParam<String> p_assignee = CacheParamMapper.register(ProjectTypeConstants.TICKET, GenericI18Enum.FORM_ASSIGNEE,
