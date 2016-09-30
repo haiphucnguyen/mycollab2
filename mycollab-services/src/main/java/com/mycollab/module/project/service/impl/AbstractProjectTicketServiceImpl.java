@@ -56,7 +56,7 @@ public abstract class AbstractProjectTicketServiceImpl extends DefaultSearchServ
     }
 
     @Override
-    public Integer getTotalAssignmentsCount(@CacheKey ProjectTicketSearchCriteria criteria) {
+    public Integer getTotalTicketsCount(@CacheKey ProjectTicketSearchCriteria criteria) {
         return projectTicketMapper.getTotalCountFromRisk(criteria)
                 + projectTicketMapper.getTotalCountFromBug(criteria)
                 + projectTicketMapper.getTotalCountFromTask(criteria);
@@ -73,7 +73,7 @@ public abstract class AbstractProjectTicketServiceImpl extends DefaultSearchServ
     }
 
     @Override
-    public ProjectTicket findAssignment(String type, Integer typeId) {
+    public ProjectTicket findTicket(String type, Integer typeId) {
         ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
         searchCriteria.setTypes(new SetSearchField<>(type));
         searchCriteria.setTypeIds(new SetSearchField<>(typeId));
