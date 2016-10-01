@@ -149,6 +149,8 @@ public class ThemeManager {
                     + accountTheme.getTopmenubgselected() + "; }");
 
             extraStyles.append(".v-button.add-btn-popup:hover { background-color: #" + accountTheme.getTopmenubgselected() + "; }");
+
+            extraStyles.append(".topNavigation .v-button.ad { background-color: #" + accountTheme.getTopmenubgselected() + "; }");
         }
 
         if (accountTheme.getTopmenutext() != null) {
@@ -164,6 +166,10 @@ public class ThemeManager {
             extraStyles.append(".topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button:hover { color: #" + accountTheme.getTopmenutextselected() + "; }");
 
             extraStyles.append(".v-button.add-btn-popup:hover { color: #" + accountTheme.getTopmenutextselected() + "; }");
+
+            extraStyles.append(".topNavigation .v-button.ad { color: #" + accountTheme.getTopmenutextselected() + "; }");
+
+            extraStyles.append(".topNavigation .v-button.ad .v-icon { color: #" + accountTheme.getTopmenutextselected() + "; }");
         }
 
 		/* Vertical Tabsheet */

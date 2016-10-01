@@ -66,7 +66,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
         };
         builder.withBean(milestone).withBindProperty("owner").withDescription(milestone.getOwnerFullName())
                 .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
-                .withService(AppContextUtil.getSpringBean(MilestoneService.class)).withValue(milestone.getOwner())
+                .withService(AppContextUtil.getSpringBean(MilestoneService.class)).withValue(milestone.getAssignuser())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
     }

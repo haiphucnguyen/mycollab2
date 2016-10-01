@@ -96,6 +96,7 @@ public class UnresolvedTicketsByAssigneeWidget extends Depot {
 
     private void displayPlainMode() {
         bodyContent.removeAllComponents();
+        int totalAssignTicketCounts = 0;
         if (CollectionUtils.isNotEmpty(groupItems)) {
             for (GroupItem item : groupItems) {
                 MHorizontalLayout assigneeLayout = new MHorizontalLayout().withFullWidth();
@@ -114,7 +115,24 @@ public class UnresolvedTicketsByAssigneeWidget extends Depot {
                 indicator.setWidth("100%");
                 assigneeLayout.with(indicator).expand(indicator);
                 bodyContent.addComponent(assigneeLayout);
+                totalAssignTicketCounts += item.getValue().intValue();
             }
+        }
+        int totalUnassignTicketsCount = totalCountItems - totalAssignTicketCounts;
+        if (totalUnassignTicketsCount > 0) {
+            MButton unassignLink = new MButton("No assignee").withStyleName(WebUIConstants.BUTTON_LINK)
+                    .withIcon(UserAvatarControlFactory.createAvatarResource(null, 16)).withListener(clickEvent -> {
+                        ProjectTicketSearchCriteria criteria = BeanUtility.deepClone(searchCriteria);
+                        EventBusFactory.getInstance().post(new TicketEvent.SearchRequest(UnresolvedTicketsByAssigneeWidget.this,
+                                criteria));
+                    });
+            MHorizontalLayout assigneeLayout = new MHorizontalLayout().withFullWidth();
+            assigneeLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+            assigneeLayout.addComponent(new MCssLayout(unassignLink).withWidth("110px"));
+            ProgressBarIndicator indicator = new ProgressBarIndicator(totalCountItems, totalUnassignTicketsCount, false);
+            indicator.setWidth("100%");
+            assigneeLayout.with(indicator).expand(indicator);
+            bodyContent.addComponent(assigneeLayout);
         }
     }
 

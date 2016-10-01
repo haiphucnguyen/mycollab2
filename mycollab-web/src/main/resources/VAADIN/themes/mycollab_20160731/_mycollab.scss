@@ -247,11 +247,6 @@ $v-line-height--header:1.5em;
         }
       }
       .v-button.notification-button, .v-button.notification-button.v-pressed {
-        background-color: $my-white-color;
-        border-radius: 5px;
-        .v-button-caption {
-          color: #c31616;
-        }
         .v-popup-indicator {
           display: none;
         }
@@ -261,7 +256,6 @@ $v-line-height--header:1.5em;
         }
         .v-button-wrap, .v-button-wrap:hover {
           padding: 4px 6px;
-          background:none;
         }
       }
     }

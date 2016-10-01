@@ -16738,15 +16738,6 @@ input.v-textfield-pagedtable-pagefield {
 	opacity: 1;
 }
 
-.topNavigation .accountMenuContainer .v-button.notification-button, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed {
-	background-color: #ffffff;
-	border-radius: 5px;
-}
-
-.topNavigation .accountMenuContainer .v-button.notification-button .v-button-caption, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed .v-button-caption {
-	color: #c31616;
-}
-
 .topNavigation .accountMenuContainer .v-button.notification-button .v-popup-indicator, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed .v-popup-indicator {
 	display: none;
 }
@@ -16758,7 +16749,6 @@ input.v-textfield-pagedtable-pagefield {
 
 .topNavigation .accountMenuContainer .v-button.notification-button .v-button-wrap, .topNavigation .accountMenuContainer .v-button.notification-button .v-button-wrap:hover, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed .v-button-wrap, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed .v-button-wrap:hover {
 	padding: 4px 6px;
-	background: none;
 }
 
 .v-popupbutton-popup-notification-button .popupContent {

@@ -68,15 +68,16 @@
   </select>
 
   <select id="selectMilestones" resultMap="MilestoneGanttItem" parameterType="Integer" lang="velocity">
-    SELECT m_prj_milestone.projectId AS prjId, m_prj_milestone.name, m_prj_milestone.owner AS assignUser,
-      m_prj_milestone.startdate AS startDate, m_prj_milestone.enddate AS endDate, m_prj_milestone.status,
-      m_prj_milestone.id, m_prj_milestone.deadline, m_prj_milestone.ganttindex,
+    SELECT m_prj_milestone.projectId AS prjId, m_prj_milestone.name, m_prj_milestone.assignUser,
+      m_prj_milestone.startDate, m_prj_milestone.endDate, m_prj_milestone.status,
+      m_prj_milestone.id, m_prj_milestone.dueDate AS deadline, m_prj_milestone.ganttindex,
       concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS
       assignUserFullName, s_user.avatarId AS assignUserAvatarId, 'Project-Milestone' AS type
     FROM m_prj_milestone
-    LEFT OUTER JOIN s_user ON (m_prj_milestone.owner = s_user.username)
+    LEFT OUTER JOIN s_user ON (m_prj_milestone.assignUser = s_user.username)
     WHERE m_prj_milestone.projectId = @{prjId}
-    ORDER BY ISNULL(m_prj_milestone.ganttindex), m_prj_milestone.ganttindex ASC, m_prj_milestone.startdate ASC, m_prj_milestone.enddate ASC
+    ORDER BY ISNULL(m_prj_milestone.ganttindex), m_prj_milestone.ganttindex ASC, m_prj_milestone.startDate ASC,
+    m_prj_milestone.endDate ASC
   </select>
 
   <select id="selectTasksWithMilestone" resultMap="TaskGanttItem" parameterType="Integer" lang="velocity">
