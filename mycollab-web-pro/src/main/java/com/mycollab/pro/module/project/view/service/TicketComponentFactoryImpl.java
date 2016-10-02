@@ -6,26 +6,34 @@ import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.domain.MonitorItem;
 import com.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.mycollab.common.domain.criteria.MonitorSearchCriteria;
+import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.FollowerI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.common.service.CommentService;
 import com.mycollab.common.service.MonitorItemService;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.MyCollabException;
+import com.mycollab.core.utils.HumanTime;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.core.utils.StringUtils;
+import com.mycollab.db.arguments.BooleanSearchField;
 import com.mycollab.db.arguments.NumberSearchField;
+import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
+import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.*;
+import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
+import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.service.ProjectTaskService;
+import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.CommentDisplay;
@@ -48,6 +56,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
@@ -64,6 +73,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -86,56 +96,9 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     }
 
     private static void save(ProjectTicket bean) {
-        if (bean.isTask()) {
-            Task task = buildTask(bean);
-            AppContextUtil.getSpringBean(ProjectTaskService.class).updateSelectiveWithSession(task, UserUIContext.getUsername());
-        } else if (bean.isBug()) {
-            BugWithBLOBs bug = buildBug(bean);
-            AppContextUtil.getSpringBean(BugService.class).updateSelectiveWithSession(bug, UserUIContext.getUsername());
-        } else if (bean.isRisk()) {
-            Risk risk = buildRisk(bean);
-            AppContextUtil.getSpringBean(RiskService.class).updateSelectiveWithSession(risk, UserUIContext.getUsername());
-        }
+        AppContextUtil.getSpringBean(ProjectTicketService.class).updateTicket(bean, UserUIContext.getUsername());
     }
 
-    private static Task buildTask(ProjectTicket bean) {
-        Task task = new Task();
-        task.setId(bean.getTypeId());
-        task.setName(bean.getName());
-        task.setStartdate(bean.getStartDate());
-        task.setEnddate(bean.getEndDate());
-        task.setDuedate(bean.getDueDate());
-        task.setStatus(bean.getStatus());
-        task.setSaccountid(bean.getsAccountId());
-        task.setPriority(bean.getPriority());
-        return task;
-    }
-
-    private static SimpleBug buildBug(ProjectTicket bean) {
-        SimpleBug bug = new SimpleBug();
-        bug.setId(bean.getTypeId());
-        bug.setName(bean.getName());
-        bug.setStartdate(bean.getStartDate());
-        bug.setEnddate(bean.getEndDate());
-        bug.setDuedate(bean.getDueDate());
-        bug.setStatus(bean.getStatus());
-        bug.setPriority(bean.getPriority());
-        bug.setSaccountid(bean.getsAccountId());
-        return bug;
-    }
-
-    private static Risk buildRisk(ProjectTicket bean) {
-        Risk risk = new Risk();
-        risk.setId(bean.getTypeId());
-        risk.setName(bean.getName());
-        risk.setStartdate(bean.getStartDate());
-        risk.setEnddate(bean.getEndDate());
-        risk.setDuedate(bean.getDueDate());
-        risk.setStatus(bean.getStatus());
-        risk.setSaccountid(bean.getsAccountId());
-        risk.setPriority(bean.getPriority());
-        return risk;
-    }
 
     @Override
     public AbstractComponent createStartDatePopupField(ProjectTicket ticket) {
@@ -235,7 +198,8 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         PopupBeanFieldBuilder<ProjectTicket> builder = new PopupBeanFieldBuilder<ProjectTicket>() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return ProjectAssetsManager.getPriorityHtml(ticket.getPriority()) + " " + UserUIContext.getMessage(Priority.class, ticket.getPriority());
+                return ProjectAssetsManager.getPriorityHtml(ticket.getPriority()) + " " + UserUIContext.getMessage(Priority.class,
+                        ticket.getPriority());
             }
 
             @Override
@@ -293,13 +257,17 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     }
 
     @Override
-    public AbstractComponent createBillableHoursPopupField(ProjectTicket task) {
-        return null;
+    public AbstractComponent createBillableHoursPopupField(ProjectTicket ticket) {
+        TicketBillableHoursPopupField view = new TicketBillableHoursPopupField(ticket, true);
+        view.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
+        return view;
     }
 
     @Override
-    public AbstractComponent createNonBillableHoursPopupField(ProjectTicket task) {
-        return null;
+    public AbstractComponent createNonBillableHoursPopupField(ProjectTicket ticket) {
+        TicketBillableHoursPopupField view = new TicketBillableHoursPopupField(ticket, false);
+        view.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
+        return view;
     }
 
     @Override
@@ -310,7 +278,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     @Override
     public AbstractComponent createStatusPopupField(ProjectTicket ticket) {
         if (ticket.isTask()) {
-            Task task = buildTask(ticket);
+            Task task = ProjectTicket.buildTask(ticket);
             PopupBeanFieldBuilder<Task> builder = new PopupBeanFieldBuilder<Task>() {
                 @Override
                 protected String generateSmallContentAsHtml() {
@@ -331,9 +299,9 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                     .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             return builder.build();
         } else if (ticket.isBug()) {
-            return new BugStatusPopupView(buildBug(ticket));
+            return new BugStatusPopupView(ProjectTicket.buildBug(ticket));
         } else if (ticket.isRisk()) {
-            Risk risk = buildRisk(ticket);
+            Risk risk = ProjectTicket.buildRisk(ticket);
             PopupBeanFieldBuilder<Risk> builder = new PopupBeanFieldBuilder<Risk>() {
                 @Override
                 protected String generateSmallContentAsHtml() {
@@ -402,9 +370,9 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     }
 
     private static class BugStatusPopupView extends LazyPopupView {
-        private SimpleBug beanItem;
+        private BugWithBLOBs beanItem;
 
-        BugStatusPopupView(SimpleBug bug) {
+        BugStatusPopupView(BugWithBLOBs bug) {
             super(FontAwesome.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(BugStatus.class, bug.getStatus()));
             this.beanItem = bug;
             this.setDescription(UserUIContext.getMessage(BugI18nEnum.FORM_STATUS_HELP));
@@ -415,42 +383,42 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             MVerticalLayout content = getWrapContent();
             content.removeAllComponents();
             boolean hasPermission = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
-            if (BugStatus.Open.name().equals(beanItem.getStatus()) ||
-                    BugStatus.ReOpen.name().equals(beanItem.getStatus())) {
-                MButton resolveBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), clickEvent -> {
-                    setPopupVisible(false);
-                    UI.getCurrent().addWindow(bindCloseWindow(new ResolvedInputWindow(beanItem)));
-                }).withStyleName(WebUIConstants.BUTTON_ACTION);
-                resolveBtn.setVisible(hasPermission);
-                content.with(resolveBtn);
-            } else if (BugStatus.Verified.name().equals(beanItem.getStatus())) {
-                MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
-                    setPopupVisible(false);
-                    UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem)));
-                }).withStyleName(WebUIConstants.BUTTON_ACTION);
-                reopenBtn.setVisible(hasPermission);
-                content.with(reopenBtn);
-            } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
-                MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
-                    setPopupVisible(false);
-                    UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem)));
-                }).withStyleName(WebUIConstants.BUTTON_ACTION);
-                reopenBtn.setVisible(hasPermission);
+            if (hasPermission) {
+                BugService bugService = AppContextUtil.getSpringBean(BugService.class);
+                SimpleBug bug = bugService.findById(beanItem.getId(), MyCollabUI.getAccountId());
+                if (bug != null) {
+                    if (BugStatus.Open.name().equals(beanItem.getStatus()) ||
+                            BugStatus.ReOpen.name().equals(beanItem.getStatus())) {
+                        MButton resolveBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), clickEvent -> {
+                            setPopupVisible(false);
+                            UI.getCurrent().addWindow(bindCloseWindow(new ResolvedInputWindow(bug)));
+                        }).withStyleName(WebUIConstants.BUTTON_ACTION);
+                        content.with(resolveBtn);
+                    } else if (BugStatus.Verified.name().equals(beanItem.getStatus())) {
+                        MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
+                            setPopupVisible(false);
+                            UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(bug)));
+                        }).withStyleName(WebUIConstants.BUTTON_ACTION);
+                        content.with(reopenBtn);
+                    } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
+                        MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
+                            setPopupVisible(false);
+                            UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(bug)));
+                        }).withStyleName(WebUIConstants.BUTTON_ACTION);
 
-                MButton approveNCloseBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.BUTTON_APPROVE_CLOSE), clickEvent -> {
-                    setPopupVisible(false);
-                    UI.getCurrent().addWindow(bindCloseWindow(new ApproveInputWindow(beanItem)));
-                }).withStyleName(WebUIConstants.BUTTON_ACTION);
-                approveNCloseBtn.setVisible(hasPermission);
-                content.with(reopenBtn, approveNCloseBtn);
-            } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
-                MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
-                        clickEvent -> UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem))))
-                        .withStyleName(WebUIConstants.BUTTON_ACTION);
-                reopenBtn.setVisible(hasPermission);
-                content.with(reopenBtn);
-            }
-            if (!hasPermission) {
+                        MButton approveNCloseBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.BUTTON_APPROVE_CLOSE), clickEvent -> {
+                            setPopupVisible(false);
+                            UI.getCurrent().addWindow(bindCloseWindow(new ApproveInputWindow(bug)));
+                        }).withStyleName(WebUIConstants.BUTTON_ACTION);
+                        content.with(reopenBtn, approveNCloseBtn);
+                    } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
+                        MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
+                                clickEvent -> UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(bug))))
+                                .withStyleName(WebUIConstants.BUTTON_ACTION);
+                        content.with(reopenBtn);
+                    }
+                }
+            } else {
                 content.addComponent(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
             }
         }
@@ -594,6 +562,83 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 };
                 editForm.setBean(risk);
                 formLayout.addComponent(editForm);
+            }
+        }
+    }
+
+    private static class TicketBillableHoursPopupField extends LazyPopupView {
+        private TextField timeInput = new TextField();
+        private PopupDateFieldExt dateField;
+        private ProjectTicket ticket;
+        private boolean isBillable;
+
+        TicketBillableHoursPopupField(ProjectTicket ticket, boolean isBillable) {
+            super("");
+            this.ticket = ticket;
+            this.isBillable = isBillable;
+            if (isBillable) {
+                this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + ticket.getBillableHours());
+            } else {
+                this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + ticket.getNonBillableHours());
+            }
+        }
+
+        @Override
+        protected void doShow() {
+            MVerticalLayout layout = getWrapContent();
+            layout.removeAllComponents();
+            if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
+                timeInput.setValue("");
+                timeInput.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TIME_FORMAT));
+                String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
+                        UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
+                Label headerLbl = ELabel.h3(title);
+                dateField = new PopupDateFieldExt();
+                dateField.setValue(new GregorianCalendar().getTime());
+                layout.with(headerLbl, timeInput);
+                layout.with(ELabel.h3(UserUIContext.getMessage(DayI18nEnum.OPT_DATE)), dateField);
+            } else {
+                layout.add(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
+            }
+        }
+
+        @Override
+        protected void doHide() {
+            String timeVal = timeInput.getValue();
+            if (StringUtils.isNotBlank(timeVal)) {
+                Long delta = HumanTime.eval(timeVal).getDelta();
+                Date date = dateField.getValue();
+                if (delta > 0) {
+                    ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                    Double hours = delta.doubleValue() / (1000 * 60 * 60);
+                    ItemTimeLogging timeLogging = new ItemTimeLogging();
+                    timeLogging.setCreateduser(UserUIContext.getUsername());
+                    timeLogging.setIsbillable(isBillable);
+                    timeLogging.setLoguser(UserUIContext.getUsername());
+                    timeLogging.setLogforday(date);
+                    timeLogging.setLogvalue(hours);
+                    timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
+                    timeLogging.setType(ticket.getType());
+                    timeLogging.setTypeid(ticket.getTypeId());
+                    timeLogging.setSaccountid(MyCollabUI.getAccountId());
+                    timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
+                    EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TicketBillableHoursPopupField.this));
+
+                    // load hours again
+                    ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+                    searchCriteria.setIsBillable(new BooleanSearchField(isBillable));
+                    searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+                    searchCriteria.setType(StringSearchField.and(ticket.getType()));
+                    searchCriteria.setTypeId(new NumberSearchField(ticket.getTypeId()));
+                    Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
+                    if (isBillable) {
+                        this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + calculatedHours);
+                    } else {
+                        this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + calculatedHours);
+                    }
+                } else {
+                    NotificationUtil.showWarningNotification(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_TIME_FORMAT));
+                }
             }
         }
     }

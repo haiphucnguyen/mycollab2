@@ -2172,7 +2172,7 @@ div.v-window {
 
 .block {
 	border-radius: 5px;
-	padding: 3px 5px;
+	padding: 0px 5px;
 	margin-right: 5px;
 	color: #ffffff;
 	background-color: #76B38A;
@@ -2211,6 +2211,52 @@ div.v-window {
 
 .wizard .v-panel .v-panel-deco {
 	display: none;
+}
+
+.v-csscheckbox-label {
+	border: 1px solid #c5c5c5 !important;
+	width: 14px;
+	height: 14px;
+	border-radius: 14px !important;
+}
+
+.v-csscheckbox-label:hover {
+	width: 20px;
+	height: 20px;
+	border: 2px solid #c5c5c5 !important;
+}
+
+.v-csscheckbox-inner::before {
+	background-color: white !important;
+	color: #76B38A !important;
+	height: 16px !important;
+	font-size: 12px !important;
+	line-height: 16px !important;
+}
+
+.v-csscheckbox-inner::after {
+	content: "\f00c";
+	background-color: white !important;
+	color: gray !important;
+	height: 16px !important;
+	font-size: 12px !important;
+	line-height: 16px !important;
+}
+
+.v-csscheckbox-inner:hover::before {
+	background-color: white !important;
+	color: #76B38A !important;
+	height: 20px !important;
+	font-size: 16px !important;
+	line-height: 20px !important;
+}
+
+.v-csscheckbox-inner:hover::after {
+	background-color: white !important;
+	color: gray !important;
+	height: 20px !important;
+	font-size: 16px !important;
+	line-height: 20px !important;
 }
 
 .sk-cube-grid > div {
@@ -14916,7 +14962,7 @@ div.v-window {
 
 .block {
 	border-radius: 5px;
-	padding: 3px 5px;
+	padding: 0px 5px;
 	margin-right: 5px;
 	color: #ffffff;
 	background-color: #76B38A;
@@ -14955,6 +15001,52 @@ div.v-window {
 
 .wizard .v-panel .v-panel-deco {
 	display: none;
+}
+
+.v-csscheckbox-label {
+	border: 1px solid #c5c5c5 !important;
+	width: 14px;
+	height: 14px;
+	border-radius: 14px !important;
+}
+
+.v-csscheckbox-label:hover {
+	width: 20px;
+	height: 20px;
+	border: 2px solid #c5c5c5 !important;
+}
+
+.v-csscheckbox-inner::before {
+	background-color: white !important;
+	color: #76B38A !important;
+	height: 16px !important;
+	font-size: 12px !important;
+	line-height: 16px !important;
+}
+
+.v-csscheckbox-inner::after {
+	content: "\f00c";
+	background-color: white !important;
+	color: gray !important;
+	height: 16px !important;
+	font-size: 12px !important;
+	line-height: 16px !important;
+}
+
+.v-csscheckbox-inner:hover::before {
+	background-color: white !important;
+	color: #76B38A !important;
+	height: 20px !important;
+	font-size: 16px !important;
+	line-height: 20px !important;
+}
+
+.v-csscheckbox-inner:hover::after {
+	background-color: white !important;
+	color: gray !important;
+	height: 20px !important;
+	font-size: 16px !important;
+	line-height: 20px !important;
 }
 
 .sk-cube-grid > div {

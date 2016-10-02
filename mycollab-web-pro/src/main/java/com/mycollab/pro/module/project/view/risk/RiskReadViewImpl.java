@@ -12,9 +12,11 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.*;
+import com.mycollab.module.project.view.ticket.RiskTimeLogSheet;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
+import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -42,6 +44,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     private TagViewComponent tagViewComponent;
     private ProjectActivityComponent activityComponent;
+    private RiskTimeLogSheet timeLogComp;
     private DateInfoComp dateInfoComp;
     private PeopleInfoComp peopleInfoComp;
     private ProjectFollowersComp<SimpleRisk> followerSheet;
@@ -71,7 +74,12 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
         followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.RISK, ProjectRolePermissionCollections.RISKS);
-        addToSideBar(dateInfoComp, peopleInfoComp, followerSheet);
+        if (SiteConfiguration.isCommunityEdition()) {
+            addToSideBar(dateInfoComp, peopleInfoComp, followerSheet);
+        } else {
+            timeLogComp = ViewManager.getCacheComponent(RiskTimeLogSheet.class);
+            addToSideBar(dateInfoComp, peopleInfoComp, timeLogComp, followerSheet);
+        }
     }
 
     @Override
@@ -88,6 +96,9 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             tagViewComponent.display(ProjectTypeConstants.RISK, beanItem.getId());
         }
 
+        if (timeLogComp != null) {
+            timeLogComp.displayTime(beanItem);
+        }
         activityComponent.loadActivities("" + beanItem.getId());
         dateInfoComp.displayEntryDateTime(beanItem);
         peopleInfoComp.displayEntryPeople(beanItem);

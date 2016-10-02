@@ -155,11 +155,11 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         if (selectedTicket != null) {
             timeLogging.setType(selectedTicket.getType());
             timeLogging.setTypeid(selectedTicket.getTypeId());
-            timeLogging.setSummary(selectedTicket.getName());
+            timeLogging.setName(selectedTicket.getName());
         } else {
             timeLogging.setType(null);
             timeLogging.setTypeid(null);
-            timeLogging.setSummary(null);
+            timeLogging.setName(null);
         }
 
         ItemTimeLoggingService itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);

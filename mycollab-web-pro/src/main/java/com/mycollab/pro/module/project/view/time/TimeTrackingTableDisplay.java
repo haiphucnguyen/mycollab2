@@ -17,15 +17,14 @@ import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.LabelLink;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.commons.lang3.StringUtils;
@@ -64,10 +63,10 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
                         String type = itemLogging.getType();
 
                         if (type == null) {
-                            return new Label(itemLogging.getNote(), ContentMode.HTML);
+                            return ELabel.html(itemLogging.getNote());
                         } else {
                             Label timeTrackingLink = ELabel.html(buildItemValue(itemLogging)).withStyleName
-                                    (WebUIConstants.BUTTON_LINK, UIConstants.LABEL_WORD_WRAP).withFullWidth();
+                                    (UIConstants.LABEL_WORD_WRAP).withFullWidth();
 
                             if (ProjectTypeConstants.BUG.equals(type)) {
                                 if (BugStatus.Verified.name().equals(itemLogging.getStatus())) {
@@ -99,7 +98,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
                             summaryWrapper.addComponent(timeTrackingLink);
 
                             if (StringUtils.isNotBlank(itemLogging.getNote())) {
-                                summaryWrapper.addComponent(new Label(itemLogging.getNote(), ContentMode.HTML));
+                                summaryWrapper.addComponent(ELabel.html(itemLogging.getNote()));
                             }
 
                             return summaryWrapper;
@@ -180,7 +179,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
 
         itemLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(itemLogging.getType(), itemLogging.getTypeid() + ""));
         itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-        itemLink.appendText(itemLogging.getSummary());
+        itemLink.appendText(itemLogging.getName());
 
         div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink);
         return div.write();

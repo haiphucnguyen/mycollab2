@@ -561,7 +561,7 @@
   /* Block  - applied in history*/
   .block {
     border-radius: 5px;
-    padding: 3px 5px;
+    padding: 0px 5px;
     margin-right: 5px;
     color: $my-white-color;
     background-color: $my-note-color;
@@ -597,6 +597,53 @@
       }
     }
   }
+
+  .v-csscheckbox-label {
+    border: 1px solid $my-border-color !important;
+    width: 14px;
+    height: 14px;
+    border-radius: 14px !important;
+    &:hover {
+      width: 20px;
+      height: 20px;
+      border: 2px solid $my-border-color !important;
+    }
+  }
+
+  .v-csscheckbox-inner {
+    &::before {
+      background-color: white !important;
+      color: $my-note-color !important;
+      height: 16px !important;
+      font-size: 12px !important;
+      line-height: 16px !important;
+    }
+    &::after {
+      content: "\f00c";
+      background-color: white !important;
+      color: gray !important;
+      height: 16px !important;
+      font-size: 12px !important;
+      line-height: 16px !important;
+    }
+  }
+
+  .v-csscheckbox-inner:hover {
+      &::before {
+        background-color: white !important;
+        color: $my-note-color !important;
+        height: 20px !important;
+        font-size: 16px !important;
+        line-height: 20px !important;
+      }
+      &::after {
+        background-color: white !important;
+        color: gray !important;
+        height: 20px !important;
+        font-size: 16px !important;
+        line-height: 20px !important;
+      }
+    }
 
   /*Loading progress label*/
   .sk-cube-grid > div {

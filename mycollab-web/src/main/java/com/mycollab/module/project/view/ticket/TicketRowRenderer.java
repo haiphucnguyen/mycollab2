@@ -42,16 +42,10 @@ public class TicketRowRenderer extends MVerticalLayout {
         this.assignment = ticket;
         withMargin(false).withFullWidth().addStyleName(WebUIConstants.BORDER_LIST_ROW);
 
-//        taskSettingPopupBtn = new PopupButton();
-//        taskSettingPopupBtn.setIcon(FontAwesome.COGS);
-//        taskSettingPopupBtn.addStyleName(WebUIConstants.BUTTON_ICON_ONLY);
-//        OptionPopupContent filterBtnLayout = createPopupContent();
-//        taskSettingPopupBtn.setContent(filterBtnLayout);
-
+        MHorizontalLayout headerLayout = new MHorizontalLayout();
         toggleTaskField = new ToggleTicketSummaryField(ticket);
-        MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset
-                (ticket.getType())).withWidthUndefined(), toggleTaskField).expand(toggleTaskField).withFullWidth()
-                .withMargin(new MarginInfo(false, true, false, false));
+        headerLayout.with(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())).withWidthUndefined(),
+                toggleTaskField).expand(toggleTaskField).withFullWidth().withMargin(new MarginInfo(false, true, false, false));
 
         TicketComponentFactory popupFieldFactory = AppContextUtil.getSpringBean(TicketComponentFactory.class);
         AbstractComponent assigneeField = popupFieldFactory.createAssigneePopupField(ticket);
@@ -65,6 +59,8 @@ public class TicketRowRenderer extends MVerticalLayout {
         footer.addComponent(popupFieldFactory.createStartDatePopupField(ticket));
         footer.addComponent(popupFieldFactory.createEndDatePopupField(ticket));
         footer.addComponent(popupFieldFactory.createDueDatePopupField(ticket));
+        footer.addComponent(popupFieldFactory.createBillableHoursPopupField(ticket));
+        footer.addComponent(popupFieldFactory.createNonBillableHoursPopupField(ticket));
 //
 //        AbstractComponent milestoneField = popupFieldFactory.createMilestonePopupField(assignment);
 //        footer.addComponent(milestoneField);

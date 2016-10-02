@@ -24,9 +24,16 @@ import com.mycollab.db.persistence.ISearchableDAO;
 import com.mycollab.db.persistence.service.DefaultSearchService;
 import com.mycollab.module.project.dao.ProjectTicketMapper;
 import com.mycollab.module.project.domain.ProjectTicket;
+import com.mycollab.module.project.domain.Risk;
+import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
+import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.service.ProjectTicketService;
+import com.mycollab.module.project.service.RiskService;
+import com.mycollab.module.tracker.domain.BugWithBLOBs;
+import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.module.user.domain.BillingAccount;
+import com.mycollab.spring.AppContextUtil;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -96,5 +103,19 @@ public abstract class AbstractProjectTicketServiceImpl extends DefaultSearchServ
         return projectTicketMapper.findTicketsByCriteria(searchRequest.getSearchCriteria(),
                 new RowBounds((searchRequest.getCurrentPage() - 1) * searchRequest.getNumberOfItems(),
                         searchRequest.getNumberOfItems()));
+    }
+
+    @Override
+    public void updateTicket(ProjectTicket ticket, String username) {
+        if (ticket.isTask()) {
+            Task task = ProjectTicket.buildTask(ticket);
+            AppContextUtil.getSpringBean(ProjectTaskService.class).updateSelectiveWithSession(task, username);
+        } else if (ticket.isBug()) {
+            BugWithBLOBs bug = ProjectTicket.buildBug(ticket);
+            AppContextUtil.getSpringBean(BugService.class).updateSelectiveWithSession(bug, username);
+        } else if (ticket.isRisk()) {
+            Risk risk = ProjectTicket.buildRisk(ticket);
+            AppContextUtil.getSpringBean(RiskService.class).updateSelectiveWithSession(risk, username);
+        }
     }
 }

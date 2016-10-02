@@ -12,6 +12,8 @@
         <result column="projectName" property="projectName" jdbcType="VARCHAR" />
         <result column="projectShortName" property="projectShortName" jdbcType="VARCHAR" />
         <result column="milestoneName" property="milestoneName" jdbcType="VARCHAR" />
+        <result column="billableHours" property="billableHours" jdbcType="DOUBLE"/>
+        <result column="nonBillableHours" property="nonBillableHours" jdbcType="DOUBLE"/>
     </resultMap>
 
     <sql id="querySearchCriteria">
@@ -88,7 +90,11 @@
                  concat(raisedUser.firstname, ' ', LTRIM(concat(IFNULL(raisedUser.middlename, ''), ' ')), raisedUser.lastname) AS raisedByUserFullName,
                  assignedUser.avatarId AS assignToUserAvatarId,
                  concat(assignedUser.firstname, ' ', LTRIM(concat(IFNULL(assignedUser.middlename, ''), ' ')), assignedUser.lastname) AS assignedToUserFullName, 
-                 m_prj_project.name as projectName, m_prj_project.shortname AS projectShortName, m_prj_risk.milestoneid, m_prj_milestone.name AS milestoneName
+                 m_prj_project.name as projectName, m_prj_project.shortname AS projectShortName, m_prj_risk.milestoneid, m_prj_milestone.name AS milestoneName,
+                 (SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = m_prj_risk.projectId
+                     AND m_prj_time_logging.type='Project-Risk' AND m_prj_time_logging.typeId=m_prj_risk.id AND m_prj_time_logging.isBillable = 1) AS billableHours,
+                 (SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = m_prj_risk.projectId
+                     AND m_prj_time_logging.type='Project-Risk' AND m_prj_time_logging.typeId=m_prj_risk.id AND m_prj_time_logging.isBillable = 0) AS nonBillableHours
           FROM m_prj_risk
               LEFT OUTER JOIN s_user as raisedUser ON (m_prj_risk.createdUser=raisedUser.username)
               LEFT OUTER JOIN s_user as assignedUser ON ( m_prj_risk.assignUser=assignedUser.username)

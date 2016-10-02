@@ -48,7 +48,6 @@ public class DueDateOrderComponent extends TicketGroupOrderComponent {
                 DateTime monDay = jodaTime.dayOfWeek().withMinimumValue();
                 String monDayStr = formatter.print(monDay);
                 Long time = new LocalDate(monDay).toDate().getTime();
-                System.out.println("Date: " + monDayStr + "---" + ticket.getName());
                 if (dueDateAvailables.containsKey(time)) {
                     DefaultTicketGroupComponent groupComponent = dueDateAvailables.get(time);
                     groupComponent.insertTicket(ticket);

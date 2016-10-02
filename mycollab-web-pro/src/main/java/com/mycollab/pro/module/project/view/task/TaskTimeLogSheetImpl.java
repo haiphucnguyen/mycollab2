@@ -127,7 +127,7 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
     }
 
     private class TaskTimeLogEditWindow extends TimeLogEditWindow<SimpleTask> {
-        public TaskTimeLogEditWindow(SimpleTask bean) {
+        TaskTimeLogEditWindow(SimpleTask bean) {
             super(bean);
             this.setCaption(UserUIContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
             this.addCloseListener(closeEvent -> displayTime(bean));

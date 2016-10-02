@@ -112,3 +112,6 @@ ADD CONSTRAINT `PK_m_prj_milestone_4`
   REFERENCES `s_user` (`username`)
   ON DELETE SET NULL
   ON UPDATE CASCADE;
+
+ALTER TABLE `m_prj_risk`
+  ADD COLUMN `remainEstimate` DOUBLE NULL;
