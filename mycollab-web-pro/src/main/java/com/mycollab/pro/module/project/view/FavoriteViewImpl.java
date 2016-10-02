@@ -226,8 +226,8 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                 host.removeRow(layout);
             }).withStyleName("favorite-btn-selected", WebUIConstants.BUTTON_ICON_ONLY);
 
-            ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(item.getType()).getHtml() + " " + item
-                    .getSummary(), ContentMode.HTML).withFullWidth().withStyleName(UIConstants.TEXT_ELLIPSIS);
+            ELabel headerLbl = ELabel.html(ProjectAssetsManager.getAsset(item.getType()).getHtml() + " " + item.getName())
+                    .withFullWidth().withStyleName(UIConstants.TEXT_ELLIPSIS);
             layout.with(favoriteBtn, headerLbl).expand(headerLbl);
             layout.addLayoutClickListener(layoutClickEvent -> {
                 EventBusFactory.getInstance().post(new ProjectEvent.SelectFavoriteItem(this, item));
