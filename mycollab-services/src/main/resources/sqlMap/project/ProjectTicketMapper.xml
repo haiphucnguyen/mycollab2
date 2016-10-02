@@ -70,7 +70,8 @@
         #end
 
         #ifnotnull($searchCriteria.unAssignee)
-            ${searchCriteria.unAssignee.operation} (mainTbl.assignUser IS NULL OR (SELECT COUNT(*) FROM m_prj_member AS tmpMember WHERE mainTbl.assignUser=tmpMember.username AND tmpMember.status='Active') = 0)
+            ${searchCriteria.unAssignee.operation} (mainTbl.assignUser IS NULL OR
+            (SELECT COUNT(*) FROM m_prj_member AS tmpMember WHERE mainTbl.assignUser=tmpMember.username AND tmpMember.status='Active') = 0)
         #end
 
         #ifnotnull($searchCriteria.dateInRange)
@@ -133,6 +134,11 @@
             ${searchCriteria.isOpenned.operation} mainTbl.status NOT IN ('Verified')
         #end
 
+        #ifnotnull($searchCriteria.unAssignee)
+            ${searchCriteria.unAssignee.operation} (mainTbl.assignUser IS NULL OR
+            (SELECT COUNT(*) FROM m_prj_member AS tmpMember WHERE mainTbl.assignUser=tmpMember.username AND tmpMember.status='Active') = 0)
+        #end
+
         #ifnotnull($searchCriteria.dateInRange)
             ${searchCriteria.dateInRange.operation} ((mainTbl.dueDate BETWEEN @{searchCriteria.dateInRange.from} AND @{searchCriteria.dateInRange.to})
             OR (mainTbl.startDate BETWEEN @{searchCriteria.dateInRange.from} AND @{searchCriteria.dateInRange.to})
@@ -190,6 +196,11 @@
         
         #ifnotnull($searchCriteria.isOpenned)
             ${searchCriteria.isOpenned.operation} mainTbl.status NOT IN ('Closed')
+        #end
+
+        #ifnotnull($searchCriteria.unAssignee)
+            ${searchCriteria.unAssignee.operation} (mainTbl.assignUser IS NULL OR
+            (SELECT COUNT(*) FROM m_prj_member AS tmpMember WHERE mainTbl.assignUser=tmpMember.username AND tmpMember.status='Active') = 0)
         #end
 
         #ifnotnull($searchCriteria.dateInRange)
@@ -251,8 +262,13 @@
             ${searchCriteria.isOpenned.operation} mainTbl.status NOT IN ('Closed')
         #end
 
+        #ifnotnull($searchCriteria.unAssignee)
+            ${searchCriteria.unAssignee.operation} (mainTbl.assignUser IS NULL OR
+            (SELECT COUNT(*) FROM m_prj_member AS tmpMember WHERE mainTbl.assignUser=tmpMember.username AND tmpMember.status='Active') = 0)
+        #end
+
         #ifnotnull($searchCriteria.dateInRange)
-            ${searchCriteria.dateInRange.operation} ((mainTbl.deadline BETWEEN @{searchCriteria.dateInRange.from} AND @{searchCriteria.dateInRange.to})
+            ${searchCriteria.dateInRange.operation} ((mainTbl.dueDate BETWEEN @{searchCriteria.dateInRange.from} AND @{searchCriteria.dateInRange.to})
             OR (mainTbl.startdate BETWEEN @{searchCriteria.dateInRange.from} AND @{searchCriteria.dateInRange.to})
             OR (mainTbl.enddate BETWEEN @{searchCriteria.dateInRange.from} AND @{searchCriteria.dateInRange.to}))
         #end
@@ -296,6 +312,10 @@
             (SELECT count(*)
                     FROM m_comment
                     WHERE m_comment.type='Project-Risk' AND m_comment.typeId=mainTbl.id) AS numComments,
+            (SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = mainTbl.projectId
+                     AND m_prj_time_logging.type='Project-Risk' AND m_prj_time_logging.typeId=mainTbl.id AND m_prj_time_logging.isBillable = 1) AS billableHours,
+            (SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = mainTbl.projectId
+                     AND m_prj_time_logging.type='Project-Risk' AND m_prj_time_logging.typeId=mainTbl.id AND m_prj_time_logging.isBillable = 0) AS nonBillableHours,
             (SELECT COUNT(*) FROM m_monitor_item WHERE m_monitor_item.typeId = mainTbl.id AND m_monitor_item.type = 'Project-Risk') AS numFollowers,
             mainTbl.priority, mainTbl.sAccountId, mainTbl.startDate, mainTbl.endDate, mainTbl.milestoneId,
             m_prj_milestone.name AS milestoneName
@@ -320,6 +340,8 @@
             (SELECT count(*)
                     FROM m_comment
                     WHERE m_comment.type='Project-Milestone' AND m_comment.typeId=mainTbl.id) AS numComments,
+            0 AS billableHours,
+            0 AS nonBillableHours,
             0 AS numFollowers, "" AS priority,
             mainTbl.sAccountId, mainTbl.startDate, mainTbl.endDate,
             mainTbl.id AS milestoneId, mainTbl.name AS milestoneName
@@ -344,6 +366,10 @@
                     FROM m_comment
                     WHERE m_comment.type='Project-Bug' AND m_comment.typeId=mainTbl.id) AS numComments,
                 (SELECT COUNT(*) FROM m_monitor_item WHERE m_monitor_item.typeId = mainTbl.id AND m_monitor_item.type = 'Project-Bug') AS numFollowers,
+            (SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = mainTbl.projectId
+                     AND m_prj_time_logging.type='Project-Bug' AND m_prj_time_logging.typeId=mainTbl.id AND m_prj_time_logging.isBillable = 1) AS billableHours,
+            (SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = mainTbl.projectId
+                     AND m_prj_time_logging.type='Project-Bug' AND m_prj_time_logging.typeId=mainTbl.id AND m_prj_time_logging.isBillable = 0) AS nonBillableHours,
                 mainTbl.priority, mainTbl.sAccountId, mainTbl.startDate, mainTbl.endDate,
                 mainTbl.milestoneId, m_prj_milestone.name AS milestoneName
           FROM m_tracker_bug AS mainTbl
@@ -368,6 +394,10 @@
             (SELECT count(*)
                     FROM m_comment
                     WHERE m_comment.type='Project-Task' AND m_comment.typeId=mainTbl.id) AS numComments,
+            (SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = mainTbl.projectId
+                     AND m_prj_time_logging.type='Project-Task' AND m_prj_time_logging.typeId=mainTbl.id AND m_prj_time_logging.isBillable = 1) AS billableHours,
+            (SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = mainTbl.projectId
+                     AND m_prj_time_logging.type='Project-Task' AND m_prj_time_logging.typeId=mainTbl.id AND m_prj_time_logging.isBillable = 0) AS nonBillableHours,
             (SELECT COUNT(*) FROM m_monitor_item WHERE m_monitor_item.typeId = mainTbl.id AND m_monitor_item.type = 'Project-Task') AS numFollowers,
             mainTbl.priority, mainTbl.sAccountId, mainTbl.startDate, mainTbl.endDate, mainTbl.milestoneId,
             m_prj_milestone.name AS milestoneName
