@@ -2583,10 +2583,6 @@ div.v-window {
 	transition: all 200ms ease-in;
 }
 
-.v-sliderpanel-tab {
-	font-size: 0.9em !important;
-}
-
 .stylecalendarfield {
 	border: 1px solid #e9e9e9 !important;
 	height: 30px;
@@ -15373,10 +15369,6 @@ div.v-window {
 	transition: all 200ms ease-in;
 }
 
-.v-sliderpanel-tab {
-	font-size: 0.9em !important;
-}
-
 .stylecalendarfield {
 	border: 1px solid #e9e9e9 !important;
 	height: 30px;
@@ -18452,12 +18444,4 @@ div.v-csslayout.rightsidebar-layout .content-wrap {
 
 .v-sliderpanel-content .community .desc {
 	font-size: 0.9em;
-}
-
-.v-sliderpanel-tab {
-	color: black !important;
-}
-
-.v-sliderpanel-icon::before {
-	color: black !important;
 }

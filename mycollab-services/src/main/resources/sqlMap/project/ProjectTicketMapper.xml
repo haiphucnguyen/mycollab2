@@ -653,7 +653,7 @@
             resultMap="com.mycollab.common.dao.GroupItemMapper.BaseResultMap" lang="velocity">
         SELECT tmpTbl.priority AS groupid, COUNT(tmpTbl.priority) AS value, '' AS groupname
         FROM
-        ((SELECT mainTbl.priority AS priority, mainTbl.id AS typeId
+        ((SELECT mainTbl.priority AS priority, mainTbl.id AS typeId, 'Project-Task' AS type
           FROM m_prj_task AS mainTbl
           #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")
@@ -661,7 +661,7 @@
             #end
           #end)
         UNION
-        (SELECT mainTbl.priority AS priority, mainTbl.id AS typeId
+        (SELECT mainTbl.priority AS priority, mainTbl.id AS typeId, 'Project-Bug' AS type
           FROM m_tracker_bug AS mainTbl
           #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")
@@ -669,7 +669,7 @@
             #end
           #end)
         UNION
-        (SELECT mainTbl.priority AS priority, mainTbl.id AS typeId
+        (SELECT mainTbl.priority AS priority, mainTbl.id AS typeId, 'Project-Risk' AS type
           FROM m_prj_risk AS mainTbl
           #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")

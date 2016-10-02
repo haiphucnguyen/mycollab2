@@ -183,9 +183,6 @@ public class ThemeManager {
 
             extraStyles.append("div.v-csslayout.rightsidebar-layout .sidebar-wrap { background-color: " + ColorUtils
                     .brighterColor("#" + accountTheme.getVtabsheetbg()) + ";}");
-
-            extraStyles.append(".v-sliderpanel-content, .v-sliderpanel-tab { background-color: " + ColorUtils
-                    .darkerColor("#" + accountTheme.getVtabsheetbg()) + "; }");
         }
 
         if (accountTheme.getVtabsheettext() != null) {
@@ -207,6 +204,9 @@ public class ThemeManager {
 
             extraStyles.append(".vertical-tabsheet .v-button-tab:hover {background-color: #" + accountTheme
                     .getVtabsheetbgselected() + ";}");
+
+            extraStyles.append(".v-sliderpanel-content, .v-sliderpanel-tab { background-color: #" + accountTheme
+                    .getVtabsheetbgselected() + "; }");
         }
 
         if (accountTheme.getVtabsheettextselected() != null) {
