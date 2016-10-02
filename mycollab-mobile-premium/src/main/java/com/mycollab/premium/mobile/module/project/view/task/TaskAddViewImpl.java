@@ -56,7 +56,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
         return new TaskEditFormFieldFactory(this.editForm);
     }
 
-    static class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleTask> {
+    private static class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleTask> {
         private static final long serialVersionUID = -1508613237858970400L;
 
         TaskEditFormFieldFactory(GenericBeanForm<SimpleTask> form) {

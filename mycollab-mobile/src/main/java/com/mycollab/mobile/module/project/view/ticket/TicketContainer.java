@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.mobile.module.project.view.task;
+package com.mycollab.mobile.module.project.view.ticket;
 
 import com.mycollab.mobile.ui.AbstractMobileMainView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -24,6 +24,6 @@ import com.mycollab.vaadin.mvp.ViewComponent;
  * @since 4.5.0
  */
 @ViewComponent
-public class TaskContainer extends AbstractMobileMainView {
+public class TicketContainer extends AbstractMobileMainView {
     private static final long serialVersionUID = -9011057045375634646L;
 }

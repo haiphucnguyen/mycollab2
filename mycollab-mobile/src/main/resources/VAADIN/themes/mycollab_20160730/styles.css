@@ -184,6 +184,7 @@ a {
 .v-gridlayout.colored-gridlayout .gridform-caption .v-label {
 	text-align: right;
 	color: #999;
+	font-size: 14px;
 }
 
 .v-gridlayout.colored-gridlayout .v-required-field-indicator {
@@ -209,6 +210,19 @@ a {
 	background-color: white;
 }
 
+.v-touchkit-navbar {
+	background-color: #f9f9f9 !important;
+}
+
+.v-touchkit-navbar .v-navbar-quickmenu-button {
+	font-size: 20px !important;
+	color: black !important;
+}
+
+.v-touchkit-navbar .v-button {
+	color: black !important;
+}
+
 .v-touchkit-navbar-caption {
 	font-size: smaller;
 }
@@ -228,12 +242,16 @@ a {
 	text-align: left;
 }
 
-.v-touchkit-navbar .v-navbar-quickmenu-button {
-	font-size: 20px !important;
-}
-
 .navigation-button-wrap .v-icon {
 	padding-right: 10px;
+}
+
+.v-touchkit-datepicker {
+	width: 140px !important;
+}
+
+.v-touchkit-datepicker:after, .v-select:after {
+	color: #000 !important;
 }
 
 .confirm-dialog .v-window-outerheader {

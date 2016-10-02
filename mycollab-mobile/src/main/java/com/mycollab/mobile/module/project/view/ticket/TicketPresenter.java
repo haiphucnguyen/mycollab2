@@ -14,10 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.mobile.module.project.view.task;
+package com.mycollab.mobile.module.project.view.ticket;
 
 import com.mycollab.core.MyCollabException;
 import com.mycollab.mobile.module.project.view.parameters.TaskScreenData;
+import com.mycollab.mobile.module.project.view.task.ITaskAddPresenter;
+import com.mycollab.mobile.module.project.view.task.TaskListPresenter;
+import com.mycollab.mobile.module.project.view.task.TaskReadPresenter;
 import com.mycollab.mobile.mvp.AbstractPresenter;
 import com.mycollab.mobile.mvp.view.PresenterOptionUtil;
 import com.mycollab.module.project.CurrentProjectVariables;
@@ -32,11 +35,11 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 4.5.0
  */
-public class TaskPresenter extends AbstractPresenter<TaskContainer> {
+public class TicketPresenter extends AbstractPresenter<TicketContainer> {
     private static final long serialVersionUID = 7999611450505328038L;
 
-    public TaskPresenter() {
-        super(TaskContainer.class);
+    public TicketPresenter() {
+        super(TicketContainer.class);
     }
 
     @Override

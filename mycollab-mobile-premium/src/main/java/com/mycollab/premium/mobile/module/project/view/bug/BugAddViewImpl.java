@@ -16,6 +16,7 @@ import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -84,7 +85,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
                 return new DatePicker();
             } else if (propertyId.equals("priority")) {
                 if (beanItem.getPriority() == null) {
-                    beanItem.setPriority(OptionI18nEnum.Priority.Medium.name());
+                    beanItem.setPriority(Priority.Medium.name());
                 }
                 return new PriorityComboBox();
             } else if (propertyId.equals("assignuser")) {
@@ -104,14 +105,9 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
                 return tf;
             } else if (propertyId.equals("milestoneid")) {
                 final MilestoneComboBox milestoneBox = new MilestoneComboBox();
-                milestoneBox.addValueChangeListener(new Property.ValueChangeListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void valueChange(Property.ValueChangeEvent event) {
-                        String milestoneName = milestoneBox.getItemCaption(milestoneBox.getValue());
-                        beanItem.setMilestoneName(milestoneName);
-                    }
+                milestoneBox.addValueChangeListener(valueChangeEvent -> {
+                    String milestoneName = milestoneBox.getItemCaption(milestoneBox.getValue());
+                    beanItem.setMilestoneName(milestoneName);
                 });
                 return milestoneBox;
             } else if (propertyId.equals("estimatetime") || (propertyId.equals("estimateremaintime"))) {
@@ -122,7 +118,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
         }
     }
 
-    class EditFormLayoutFactory extends AbstractFormLayoutFactory {
+    private class EditFormLayoutFactory extends AbstractFormLayoutFactory {
         private static final long serialVersionUID = -9159483523170247666L;
 
         private GridFormLayoutHelper informationLayout;

@@ -32,7 +32,7 @@ import com.mycollab.mobile.module.project.view.parameters.ProjectScreenData.{Add
 import com.mycollab.mobile.module.project.view.parameters._
 import com.mycollab.mobile.module.project.view.risk.IRiskPresenter
 import com.mycollab.mobile.module.project.view.settings.ProjectUserPresenter
-import com.mycollab.mobile.module.project.view.task.TaskPresenter
+import com.mycollab.mobile.module.project.view.ticket.TicketPresenter
 import com.mycollab.mobile.mvp.view.PresenterOptionUtil
 import com.mycollab.module.project.domain._
 import com.mycollab.module.project.domain.criteria._
@@ -218,28 +218,28 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
         val criteria = new TaskSearchCriteria
         criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId))
         val data = new TaskScreenData.Search(criteria)
-        val presenter = PresenterResolver.getPresenter(classOf[TaskPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[TicketPresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[TaskEvent.GotoRead]() {
       @Subscribe def handle(event: TaskEvent.GotoRead) {
         val data = new TaskScreenData.Read(event.getData.asInstanceOf[Integer])
-        val presenter = PresenterResolver.getPresenter(classOf[TaskPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[TicketPresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[TaskEvent.GotoEdit]() {
       @Subscribe def handle(event: TaskEvent.GotoEdit) {
         val data = new TaskScreenData.Edit(event.getData.asInstanceOf[SimpleTask])
-        val presenter = PresenterResolver.getPresenter(classOf[TaskPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[TicketPresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[TaskEvent.GotoAdd]() {
       @Subscribe def handle(event: TaskEvent.GotoAdd) {
         val data = new TaskScreenData.Add(new SimpleTask)
-        val presenter = PresenterResolver.getPresenter(classOf[TaskPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[TicketPresenter])
         presenter.go(navManager, data)
       }
     })

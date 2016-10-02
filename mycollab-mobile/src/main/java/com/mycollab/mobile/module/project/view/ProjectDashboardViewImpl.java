@@ -148,7 +148,7 @@ public class ProjectDashboardViewImpl extends ProjectMobileMenuPageView implemen
         milestoneBtn.addClickListener(navigationButtonClickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null)));
         btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE), milestoneBtn));
 
-        NavigationButton taskBtn = new NavigationButton(UserUIContext.getMessage(TaskI18nEnum.LIST));
+        NavigationButton taskBtn = new NavigationButton(UserUIContext.getMessage(TicketI18nEnum.LIST));
         taskBtn.addClickListener(navigationButtonClickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoList(this, null)));
         btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK), taskBtn));
 

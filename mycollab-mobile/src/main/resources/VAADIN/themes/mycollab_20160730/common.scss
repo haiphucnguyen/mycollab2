@@ -130,6 +130,7 @@
       .v-label {
         text-align: right;
         color: $my-meta-color;
+        font-size: 14px;
       }
     }
     .v-required-field-indicator {
@@ -155,6 +156,17 @@
     background-color: white;
   }
 
+  .v-touchkit-navbar {
+    background-color: #f9f9f9 !important;
+    .v-navbar-quickmenu-button {
+      font-size: 20px !important;
+      color: black !important;
+    }
+    .v-button {
+      color: black !important;
+    }
+  }
+
   .v-touchkit-navbar-caption {
     font-size: smaller;
     span {
@@ -171,14 +183,18 @@
     text-align: left;
   }
 
-  .v-touchkit-navbar .v-navbar-quickmenu-button {
-    font-size: 20px !important;
-  }
-
   .navigation-button-wrap {
     .v-icon {
       padding-right: 10px;
     }
+  }
+
+  .v-touchkit-datepicker {
+    width: 140px !important;
+  }
+
+  .v-touchkit-datepicker:after, .v-select:after {
+    color: $my-dark-color !important;
   }
 
   .confirm-dialog {
