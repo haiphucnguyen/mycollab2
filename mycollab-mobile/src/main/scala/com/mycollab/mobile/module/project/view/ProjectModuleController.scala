@@ -51,6 +51,7 @@ import com.vaadin.addon.touchkit.ui.NavigationManager
   */
 class ProjectModuleController(val navManager: NavigationManager) extends AbstractController {
   bindProjectEvents()
+  bindTicketEvents()
   bindBugEvents()
   bindMessageEvents()
   bindMilestoneEvents()
@@ -100,6 +101,16 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
         searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
         searchCriteria.setExtraTypeIds(new SetSearchField(event.getData.asInstanceOf[Integer]))
         presenter.go(navManager, new ProjectActivities(searchCriteria))
+      }
+    })
+  }
+  
+  private def bindTicketEvents(): Unit = {
+    this.register(new ApplicationEventListener[TicketEvent.GotoDashboard]() {
+      @Subscribe def handle(event: TicketEvent.GotoDashboard) {
+        val data = new TicketScreenData.GotoDashboard(event.getData)
+        val presenter = PresenterResolver.getPresenter(classOf[TicketPresenter])
+        presenter.go(navManager, data)
       }
     })
   }

@@ -18,6 +18,7 @@ package com.mycollab.mobile.module.project.view.ticket;
 
 import com.mycollab.core.MyCollabException;
 import com.mycollab.mobile.module.project.view.parameters.TaskScreenData;
+import com.mycollab.mobile.module.project.view.parameters.TicketScreenData;
 import com.mycollab.mobile.module.project.view.task.ITaskAddPresenter;
 import com.mycollab.mobile.module.project.view.task.TaskListPresenter;
 import com.mycollab.mobile.module.project.view.task.TaskReadPresenter;
@@ -47,8 +48,8 @@ public class TicketPresenter extends AbstractPresenter<TicketContainer> {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
             IPresenter<?> presenter;
 
-            if (data instanceof TaskScreenData.Search) {
-                presenter = PresenterResolver.getPresenter(TaskListPresenter.class);
+            if (data == null || data instanceof TicketScreenData.GotoDashboard) {
+                presenter = PresenterResolver.getPresenter(TicketListPresenter.class);
             } else if (data instanceof TaskScreenData.Read) {
                 presenter = PresenterResolver.getPresenter(TaskReadPresenter.class);
             } else if (data instanceof TaskScreenData.Add || data instanceof TaskScreenData.Edit) {
