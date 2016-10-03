@@ -213,8 +213,6 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
         ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK,
-                ProjectTypeConstants.RISK));
         queryTickets(searchCriteria);
     }
 
@@ -232,6 +230,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
     private void queryTickets(ProjectTicketSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
+        baseCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
         kanbanLayout.removeAllComponents();
         toggleShowButton();
         kanbanBlocks = new ConcurrentHashMap<>();

@@ -83,22 +83,9 @@ import java.util.List;
 @Service
 public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
-    private static boolean isPermission(ProjectTicket bean) {
-        if (bean.isTask()) {
-            return CurrentProjectVariables.canWrite(ProjectTypeConstants.TASK);
-        } else if (bean.isBug()) {
-            return CurrentProjectVariables.canWrite(ProjectTypeConstants.BUG);
-        } else if (bean.isRisk()) {
-            return CurrentProjectVariables.canWrite(ProjectTypeConstants.RISK);
-        } else {
-            return false;
-        }
-    }
-
     private static void save(ProjectTicket bean) {
         AppContextUtil.getSpringBean(ProjectTicketService.class).updateTicket(bean, UserUIContext.getUsername());
     }
-
 
     @Override
     public AbstractComponent createStartDatePopupField(ProjectTicket ticket) {
@@ -118,7 +105,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
             @Override
             public boolean isPermission() {
-                return TicketComponentFactoryImpl.isPermission(bean);
+                return CurrentProjectVariables.canWriteTicket(bean);
             }
 
             @Override
@@ -149,7 +136,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
             @Override
             public boolean isPermission() {
-                return TicketComponentFactoryImpl.isPermission(bean);
+                return CurrentProjectVariables.canWriteTicket(bean);
             }
 
             @Override
@@ -180,7 +167,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
             @Override
             public boolean isPermission() {
-                return TicketComponentFactoryImpl.isPermission(bean);
+                return CurrentProjectVariables.canWriteTicket(bean);
             }
 
             @Override
@@ -209,7 +196,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
             @Override
             public boolean isPermission() {
-                return TicketComponentFactoryImpl.isPermission(ticket);
+                return CurrentProjectVariables.canWriteTicket(ticket);
             }
 
             @Override
@@ -237,7 +224,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
             @Override
             public boolean isPermission() {
-                return TicketComponentFactoryImpl.isPermission(ticket);
+                return CurrentProjectVariables.canWriteTicket(ticket);
             }
 
             @Override
@@ -349,7 +336,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
             watchersMultiSelection = new WatchersMultiSelection(ticket.getType(), ticket.getTypeId(),
-                    isPermission(ticket));
+                    CurrentProjectVariables.canWriteTicket(ticket));
             layout.with(new ELabel(UserUIContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS))
                     .withStyleName(ValoTheme.LABEL_H3), watchersMultiSelection);
         }

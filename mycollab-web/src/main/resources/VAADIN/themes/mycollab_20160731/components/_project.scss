@@ -222,9 +222,10 @@
   }
 
   div.v-button.token-field {
-    height: 32px;
-    margin-right: 5px;
     margin-bottom: 5px;
+    .v-button-wrap {
+      padding: 3px 5px;
+    }
   }
 
   /* StandUp Report List */

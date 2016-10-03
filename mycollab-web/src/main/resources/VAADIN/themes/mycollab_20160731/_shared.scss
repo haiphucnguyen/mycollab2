@@ -69,8 +69,18 @@
     cursor: pointer;
   }
 
-  .v-filterselect-suggestmenu table {
-    width:100%;
+  .v-filterselect-suggestpopup [class$="suggestmenu"] {
+    box-shadow: none;
+    padding: 0px;
+  }
+
+  .v-filterselect-suggestmenu {
+    margin-top: 0px;
+    table {
+      width:100%;
+      border: 1px solid $my-separator-color;
+      background-color: $my-panel-background-color;
+    }
   }
 
   .list-row {
@@ -561,7 +571,7 @@
   /* Block  - applied in history*/
   .block {
     border-radius: 5px;
-    padding: 0px 5px;
+    padding: 2px 5px;
     margin-right: 5px;
     color: $my-white-color;
     background-color: $my-note-color;

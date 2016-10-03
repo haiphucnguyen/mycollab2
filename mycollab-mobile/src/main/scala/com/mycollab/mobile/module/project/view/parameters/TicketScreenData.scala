@@ -1,5 +1,6 @@
 package com.mycollab.mobile.module.project.view.parameters
 
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria
 import com.mycollab.vaadin.mvp.ScreenData
 
 /**
@@ -7,5 +8,5 @@ import com.mycollab.vaadin.mvp.ScreenData
   * @since 5.4.3
   */
 object TicketScreenData {
-  class GotoDashboard(query: Any) extends ScreenData[Any](query) {}
+  class GotoDashboard(param: ProjectTicketSearchCriteria) extends ScreenData[Any](param) {}
 }

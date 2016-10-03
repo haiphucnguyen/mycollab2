@@ -108,7 +108,10 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
   private def bindTicketEvents(): Unit = {
     this.register(new ApplicationEventListener[TicketEvent.GotoDashboard]() {
       @Subscribe def handle(event: TicketEvent.GotoDashboard) {
-        val data = new TicketScreenData.GotoDashboard(event.getData)
+        val searchCriteria = new ProjectTicketSearchCriteria
+        searchCriteria.setProjectIds(new SetSearchField[Integer](CurrentProjectVariables.getProjectId))
+        
+        val data = new TicketScreenData.GotoDashboard(searchCriteria)
         val presenter = PresenterResolver.getPresenter(classOf[TicketPresenter])
         presenter.go(navManager, data)
       }

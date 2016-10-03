@@ -40,8 +40,8 @@ public class TicketListPresenter extends ProjectListPresenter<TicketListView, Pr
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
         MyCollabUI.addFragment("project/ticket/dashboard/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                 UserUIContext.getMessage(TaskI18nEnum.M_VIEW_LIST_TITLE));
+        super.onGo(container, data);
     }
 }
