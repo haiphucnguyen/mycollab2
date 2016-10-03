@@ -14,6 +14,7 @@ import com.mycollab.common.service.CommentService;
 import com.mycollab.common.service.MonitorItemService;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.MyCollabException;
+import com.mycollab.core.SecureAccessException;
 import com.mycollab.core.utils.HumanTime;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.core.utils.StringUtils;
@@ -66,6 +67,7 @@ import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.button.MButton;
@@ -498,7 +500,12 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 typeSelection.setItemIcon(UserUIContext.getMessage(RiskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
             }
 
-            typeSelection.select(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
+            typeSelection.setNullSelectionAllowed(false);
+            if (CollectionUtils.isNotEmpty(typeSelection.getItemIds())) {
+                typeSelection.select(typeSelection.getItemIds().iterator().next());
+            } else {
+                throw new SecureAccessException();
+            }
             typeSelection.setNullSelectionAllowed(false);
             typeSelection.addValueChangeListener(valueChangeEvent -> doChange(date, prjId, milestoneId));
 
