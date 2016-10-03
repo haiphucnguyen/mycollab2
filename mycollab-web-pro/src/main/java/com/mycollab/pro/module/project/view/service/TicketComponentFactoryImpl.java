@@ -478,17 +478,26 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
             typeSelection = new ComboBox();
             typeSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-            typeSelection.addItem(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
-            typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
-            typeSelection.addItem(UserUIContext.getMessage(BugI18nEnum.SINGLE));
-            typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
-            if (isIncludeMilestone) {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                typeSelection.addItem(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
+                typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
+            }
+
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                typeSelection.addItem(UserUIContext.getMessage(BugI18nEnum.SINGLE));
+                typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
+            }
+
+            if (isIncludeMilestone && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
                 typeSelection.addItem(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
                 typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
             }
 
-            typeSelection.addItem(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
-            typeSelection.setItemIcon(UserUIContext.getMessage(RiskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
+                typeSelection.addItem(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
+                typeSelection.setItemIcon(UserUIContext.getMessage(RiskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
+            }
+
             typeSelection.select(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
             typeSelection.setNullSelectionAllowed(false);
             typeSelection.addValueChangeListener(valueChangeEvent -> doChange(date, prjId, milestoneId));
