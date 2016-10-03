@@ -69,18 +69,9 @@
     cursor: pointer;
   }
 
-  .v-filterselect-suggestpopup [class$="suggestmenu"] {
-    box-shadow: none;
-    padding: 0px;
-  }
-
   .v-filterselect-suggestmenu {
-    margin-top: 0px;
-    table {
-      width:100%;
-      border: 1px solid $my-separator-color;
-      background-color: $my-panel-background-color;
-    }
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .list-row {
