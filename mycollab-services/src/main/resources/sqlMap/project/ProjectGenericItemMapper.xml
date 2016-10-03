@@ -53,6 +53,12 @@
                 #end
                 LIMIT 1)
         #end
+        #ifnotnull($searchCriteria.types)
+            ${searchCriteria.types.operation} "Project-Task" IN
+            #repeat(${searchCriteria.types.values} $type "," "(" ")")
+                @{type}
+            #end
+        #end
         ]]>
     </sql>
 
@@ -91,6 +97,12 @@
                 #end
                 LIMIT 1)
         #end
+        #ifnotnull($searchCriteria.types)
+            ${searchCriteria.types.operation} "Project-Message" IN
+            #repeat(${searchCriteria.types.values} $type "," "(" ")")
+                @{type}
+            #end
+        #end
         ]]>
     </sql>
     <sql id="queryMilestoneSearchCriteria">
@@ -127,6 +139,12 @@
                     @{tagName}
                 #end
                 LIMIT 1)
+        #end
+        #ifnotnull($searchCriteria.types)
+            ${searchCriteria.types.operation} "Project-Milestone" IN
+            #repeat(${searchCriteria.types.values} $type "," "(" ")")
+                @{type}
+            #end
         #end
         ]]>
     </sql>
@@ -168,6 +186,12 @@
                 #end
                 LIMIT 1)
         #end
+        #ifnotnull($searchCriteria.types)
+            ${searchCriteria.types.operation} "Project-Bug" IN
+            #repeat(${searchCriteria.types.values} $type "," "(" ")")
+                @{type}
+            #end
+        #end
         ]]>
     </sql>
 
@@ -206,6 +230,12 @@
                     @{tagName}
                 #end
                 LIMIT 1)
+        #end
+        #ifnotnull($searchCriteria.types)
+            ${searchCriteria.types.operation} "Project-Component" IN
+            #repeat(${searchCriteria.types.values} $type "," "(" ")")
+                @{type}
+            #end
         #end
         ]]>
     </sql>
@@ -246,6 +276,12 @@
                 #end
                 LIMIT 1)
         #end
+        #ifnotnull($searchCriteria.types)
+            ${searchCriteria.types.operation} "Project-Version" IN
+            #repeat(${searchCriteria.types.values} $type "," "(" ")")
+                @{type}
+            #end
+        #end
         ]]>
     </sql>
 
@@ -285,6 +321,12 @@
                     @{tagName}
                 #end
                 LIMIT 1)
+        #end
+        #ifnotnull($searchCriteria.types)
+            ${searchCriteria.types.operation} "Project-Risk" IN
+            #repeat(${searchCriteria.types.values} $type "," "(" ")")
+                @{type}
+            #end
         #end
         ]]>
     </sql>

@@ -88,6 +88,7 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         if (CollectionUtils.isNotEmpty(selectedTags)) {
             ProjectGenericItemSearchCriteria searchCriteria = new ProjectGenericItemSearchCriteria();
             searchCriteria.setTagNames(new SetSearchField<>(selectedTags));
+            searchCriteria.setTypes(CurrentProjectVariables.getRestrictedItemTypes());
             assignmentList.setSearchCriteria(searchCriteria);
         } else {
             assignmentList.setCurrentDataList(new ArrayList<>());

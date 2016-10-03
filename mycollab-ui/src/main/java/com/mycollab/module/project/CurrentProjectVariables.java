@@ -265,6 +265,32 @@ public class CurrentProjectVariables {
                 || canRead(ProjectRolePermissionCollections.RISKS);
     }
 
+    public static SetSearchField<String> getRestrictedItemTypes() {
+        SetSearchField<String> types = new SetSearchField<>();
+        if (canRead(ProjectRolePermissionCollections.MESSAGES)) {
+            types.addValue(ProjectTypeConstants.MESSAGE);
+        }
+        if (canRead(ProjectRolePermissionCollections.MILESTONES)) {
+            types.addValue(ProjectTypeConstants.MILESTONE);
+        }
+        if (canRead(ProjectRolePermissionCollections.TASKS)) {
+            types.addValue(ProjectTypeConstants.TASK);
+        }
+        if (canRead(ProjectRolePermissionCollections.BUGS)) {
+            types.addValue(ProjectTypeConstants.BUG);
+        }
+        if (canRead(ProjectRolePermissionCollections.RISKS)) {
+            types.addValue(ProjectTypeConstants.RISK);
+        }
+        if (canRead(ProjectRolePermissionCollections.COMPONENTS)) {
+            types.addValue(ProjectTypeConstants.BUG_COMPONENT);
+        }
+        if (canRead(ProjectRolePermissionCollections.VERSIONS)) {
+            types.addValue(ProjectTypeConstants.BUG_VERSION);
+        }
+        return types;
+    }
+
     public static SetSearchField<String> getRestrictedTicketTypes() {
         SetSearchField<String> types = new SetSearchField<>();
         if (canRead(ProjectRolePermissionCollections.TASKS)) {
