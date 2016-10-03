@@ -68,10 +68,10 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
                 new GenericItemRowDisplayHandler());
         assignmentList.addStyleName("border-top");
 
-        MVerticalLayout rightSideBar = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false,
-                true, true, true)).withWidth("450px");
-        MHorizontalLayout panelHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
-                false, true)).withFullWidth();
+        MVerticalLayout rightSideBar = new MVerticalLayout().withSpacing(false)
+                .withMargin(new MarginInfo(false, true, true, true)).withWidth("450px");
+        MHorizontalLayout panelHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))
+                .withFullWidth();
         panelHeader.addStyleName(WebUIConstants.PANEL_HEADER);
 
         panelHeader.with(ELabel.h3(UserUIContext.getMessage(TagI18nEnum.OPT_TAG_CLOUD))).alignAll(Alignment.MIDDLE_LEFT);

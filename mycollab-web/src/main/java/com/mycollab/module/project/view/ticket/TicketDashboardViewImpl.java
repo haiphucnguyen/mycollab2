@@ -218,7 +218,6 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
     public void displayView(String query) {
         baseCriteria = new ProjectTicketSearchCriteria();
         baseCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-
         baseCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
 
         statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
@@ -272,6 +271,7 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
     @Override
     public void queryTickets(final ProjectTicketSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
+        baseCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
         queryAndDisplayTickets();
         displayTicketsStatistic();
     }

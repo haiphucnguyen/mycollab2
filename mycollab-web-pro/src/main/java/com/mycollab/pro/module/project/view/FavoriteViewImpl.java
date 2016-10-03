@@ -387,12 +387,12 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     final SimpleComponent component = componentService.findById(Integer.parseInt(assignment.getTypeId()),
                             MyCollabUI.getAccountId());
                     if (component != null) {
-                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + component.getComponentname());
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + component.getName());
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
                                 printBtn.doPrint(component, new FormReportLayout(ProjectTypeConstants.BUG_COMPONENT,
-                                        com.mycollab.module.tracker.domain.Component.Field.componentname.name(),
+                                        com.mycollab.module.tracker.domain.Component.Field.name.name(),
                                         ComponentDefaultFormLayoutFactory.getForm(), com.mycollab.module.tracker.domain.Component.Field.id.name()))
                         );
                         printBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
@@ -424,10 +424,10 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     final SimpleVersion version = versionService.findById(Integer.parseInt(assignment.getTypeId()),
                             MyCollabUI.getAccountId());
                     if (version != null) {
-                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + version.getVersionname());
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + version.getName());
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
-                                printBtn.doPrint(version, new FormReportLayout(ProjectTypeConstants.BUG_VERSION, Version.Field.versionname.name(),
+                                printBtn.doPrint(version, new FormReportLayout(ProjectTypeConstants.BUG_VERSION, Version.Field.name.name(),
                                         VersionDefaultFormLayoutFactory.getForm(), Version.Field.id.name()))
                         );
                         printBtn.setStyleName(WebUIConstants.BUTTON_OPTION);

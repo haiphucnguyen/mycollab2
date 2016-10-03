@@ -55,13 +55,13 @@ public class GenericTaskDetailMapper {
                     .getSpringBean(VersionService.class);
             SimpleVersion version = service.findById(typeId, sAccountId);
             if (version != null) {
-                name = version.getVersionname();
+                name = version.getName();
             }
         } else if (ProjectTypeConstants.BUG_COMPONENT.equals(type)) {
             ComponentService service = AppContextUtil.getSpringBean(ComponentService.class);
             SimpleComponent component = service.findById(typeId, sAccountId);
             if (component != null) {
-                name = component.getComponentname();
+                name = component.getName();
             }
         } else if (ProjectTypeConstants.STANDUP.equals(type)) {
             StandupReportService service = AppContextUtil.getSpringBean(StandupReportService.class);
