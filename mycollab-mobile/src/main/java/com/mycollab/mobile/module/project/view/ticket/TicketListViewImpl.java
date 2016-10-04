@@ -16,6 +16,7 @@
  */
 package com.mycollab.mobile.module.project.view.ticket;
 
+import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
@@ -26,7 +27,11 @@ import com.mycollab.core.IgnoreException;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
+import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.html.DivLessFormatter;
+import com.mycollab.mobile.module.project.events.BugEvent;
+import com.mycollab.mobile.module.project.events.RiskEvent;
+import com.mycollab.mobile.module.project.events.TaskEvent;
 import com.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
@@ -35,7 +40,10 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
+import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
+import com.mycollab.module.project.i18n.RiskI18nEnum;
+import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
@@ -44,6 +52,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -73,6 +82,21 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
                 return searchCriteria;
             }
         };
+    }
+
+    @Override
+    protected Component buildRightComponent() {
+        NavigationBarQuickMenu menu = new NavigationBarQuickMenu();
+        menu.setButtonCaption("...");
+        MVerticalLayout content = new MVerticalLayout();
+        content.with(new Button(UserUIContext.getMessage(TaskI18nEnum.NEW),
+                clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(TicketListViewImpl.this, null))));
+        content.with(new Button(UserUIContext.getMessage(BugI18nEnum.NEW),
+                clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoAdd(TicketListViewImpl.this, null))));
+        content.with(new Button(UserUIContext.getMessage(RiskI18nEnum.NEW),
+                clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(TicketListViewImpl.this, null))));
+        menu.setContent(content);
+        return menu;
     }
 
     private static class TicketRowDisplayHandler implements AbstractPagedBeanList.RowDisplayHandler<ProjectTicket> {

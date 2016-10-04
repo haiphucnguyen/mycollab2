@@ -1,9 +1,8 @@
-package com.mycollab.mobile.module.project.view.bug
+package com.mycollab.mobile.module.project.httpmapping
 
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.core.{MyCollabException, ResourceNotFoundException}
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.mobile.module.project.ProjectUrlResolver
 import com.mycollab.mobile.module.project.events.ProjectEvent
 import com.mycollab.mobile.module.project.view.parameters.{BugScreenData, ProjectScreenData}
 import com.mycollab.module.project.ProjectLinkParams

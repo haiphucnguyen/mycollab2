@@ -14,12 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.mobile.module.project.view.risk
+package com.mycollab.mobile.module.project.httpmapping
 
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.mobile.module.project.ProjectUrlResolver
 import com.mycollab.mobile.module.project.events.ProjectEvent
 import com.mycollab.mobile.module.project.view.parameters.{ProjectScreenData, RiskScreenData}
 import com.mycollab.module.project.domain.SimpleRisk
