@@ -176,6 +176,10 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables
                         .getProjectId(), beanItem.getAssignuser(), beanItem.getAssignedToUserFullName(), beanItem
                         .getAssignToUserAvatarId(), false), ContentMode.HTML);
+            } else if (Risk.Field.createduser.equalTo(propertyId)) {
+                return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
+                        beanItem.getCreateduser(), beanItem.getRaisedByUserFullName(), beanItem.getRaisedByUserAvatarId(), false),
+                        ContentMode.HTML);
             } else if (propertyId.equals("startdate")) {
                 return new DefaultViewField(UserUIContext.formatDate(beanItem.getStartdate()));
             } else if (propertyId.equals("enddate")) {

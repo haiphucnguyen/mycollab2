@@ -100,7 +100,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
                 }
 
                 return tf;
-            } else if (propertyId.equals("milestoneid")) {
+            } else if (BugWithBLOBs.Field.milestoneid.equalTo(propertyId)) {
                 final MilestoneComboBox milestoneBox = new MilestoneComboBox();
                 milestoneBox.addValueChangeListener(valueChangeEvent -> {
                     String milestoneName = milestoneBox.getItemCaption(milestoneBox.getValue());

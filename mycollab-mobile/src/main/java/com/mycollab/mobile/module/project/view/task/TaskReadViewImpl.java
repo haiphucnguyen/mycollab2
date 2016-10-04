@@ -37,7 +37,6 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
@@ -193,9 +192,6 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
             if (propertyId.equals("assignuser")) {
                 return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
                         beanItem.getAssignuser(), beanItem.getAssignUserFullName(), beanItem.getAssignUserAvatarId(), false), ContentMode.HTML);
-            } else if (Risk.Field.createduser.equalTo(propertyId)) {
-                return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
-                        beanItem.getCreateduser(), beanItem.getLogByFullName(), beanItem.getLogByAvatarId(), false), ContentMode.HTML);
             } else if (propertyId.equals("startdate")) {
                 return new DefaultViewField(UserUIContext.formatDate(beanItem.getStartdate()));
             } else if (propertyId.equals("enddate")) {

@@ -85,5 +85,4 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
             uploadField.saveContentsToRepo();
         }
     }
-
 }

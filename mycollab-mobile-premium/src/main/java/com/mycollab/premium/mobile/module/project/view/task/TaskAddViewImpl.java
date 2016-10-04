@@ -3,6 +3,7 @@ package com.mycollab.premium.mobile.module.project.view.task;
 import com.mycollab.mobile.form.view.DynaFormLayout;
 import com.mycollab.mobile.module.project.ui.PriorityComboBox;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
+import com.mycollab.mobile.module.project.view.milestone.MilestoneComboBox;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
 import com.mycollab.mobile.module.project.view.task.TaskAddView;
 import com.mycollab.mobile.module.project.view.task.TaskDefaultFormLayoutFactory;
@@ -57,7 +58,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
         return new TaskEditFormFieldFactory(this.editForm);
     }
 
-    private static class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleTask> {
+    private class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleTask> {
         private static final long serialVersionUID = -1508613237858970400L;
 
         TaskEditFormFieldFactory(GenericBeanForm<SimpleTask> form) {
@@ -85,6 +86,13 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
             } else if (Task.Field.startdate.equalTo(propertyId) || Task.Field.enddate.equalTo(propertyId) ||
                     Task.Field.duedate.equalTo(propertyId)) {
                 return new DatePicker();
+            } else if (Task.Field.milestoneid.equalTo(propertyId)) {
+                final MilestoneComboBox milestoneBox = new MilestoneComboBox();
+                milestoneBox.addValueChangeListener(valueChangeEvent -> {
+                    String milestoneName = milestoneBox.getItemCaption(milestoneBox.getValue());
+                    beanItem.setMilestoneName(milestoneName);
+                });
+                return milestoneBox;
             }
             return null;
         }
