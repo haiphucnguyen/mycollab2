@@ -76,7 +76,8 @@ public class ProjectViewPresenter extends ProjectGenericPresenter<ProjectView> {
             presenter = PresenterResolver.getPresenter(MessagePresenter.class);
         } else if (ClassUtils.instanceOf(pageAction, TaskScreenData.Read.class,
                 TaskScreenData.Add.class, TaskScreenData.Edit.class, BugScreenData.Add.class,
-                BugScreenData.Read.class, BugScreenData.Edit.class, TicketScreenData.GotoDashboard.class)) {
+                BugScreenData.Read.class, BugScreenData.Edit.class, TicketScreenData.GotoDashboard.class,
+                RiskScreenData.Add.class, RiskScreenData.Edit.class, RiskScreenData.Read.class)) {
             presenter = PresenterResolver.getPresenter(TicketPresenter.class);
         } else if (ClassUtils.instanceOf(pageAction, MilestoneScreenData.Search.class,
                 MilestoneScreenData.Read.class, MilestoneScreenData.Add.class, MilestoneScreenData.Edit.class)) {

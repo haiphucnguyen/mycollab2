@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-mobile.
+ *
+ * mycollab-mobile is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-mobile is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.mycollab.mobile.module.project.view
 
 import com.google.common.eventbus.Subscribe
@@ -216,23 +232,6 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
   }
   
   private def bindRiskEvents() {
-    this.register(new ApplicationEventListener[RiskEvent.GotoList]() {
-      @Subscribe def handle(event: RiskEvent.GotoList) {
-        val params: Any = event.getData
-        val presenter = PresenterOptionUtil.getPresenter(classOf[IRiskPresenter])
-        if (params == null) {
-          val criteria = new RiskSearchCriteria
-          criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId))
-          presenter.go(navManager, new RiskScreenData.Search(criteria))
-        }
-        else if (params.isInstanceOf[RiskScreenData.Search]) {
-          presenter.go(navManager, params.asInstanceOf[RiskScreenData.Search])
-        }
-        else {
-          throw new MyCollabException("Invalid search parameter: " + BeanUtility.printBeanObj(params))
-        }
-      }
-    })
     this.register(new ApplicationEventListener[RiskEvent.GotoRead]() {
       @Subscribe def handle(event: RiskEvent.GotoRead) {
         val data = new RiskScreenData.Read(event.getData.asInstanceOf[Integer])

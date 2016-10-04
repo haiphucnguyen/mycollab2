@@ -9,6 +9,10 @@
 	font-weight: 500;
 }
 
+.section .v-label {
+	margin-left: 5px;
+}
+
 .v-touchkit-navbutton {
 	width: 100% !important;
 }
@@ -62,6 +66,10 @@
 .section .v-label {
 	font-size: 1.5em;
 	font-weight: 500;
+}
+
+.section .v-label {
+	margin-left: 5px;
 }
 
 .v-touchkit-navbutton {

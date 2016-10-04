@@ -25,6 +25,9 @@
 .section {
   width: 100%;
   @include section-header();
+  .v-label {
+    margin-left: 5px;
+  }
 }
 
 .v-touchkit-navbutton {
