@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.mobile.module.project.view
 
 import com.google.common.eventbus.Subscribe
@@ -25,7 +9,6 @@ import com.mycollab.core.utils.BeanUtility
 import com.mycollab.db.arguments.{NumberSearchField, SetSearchField, StringSearchField}
 import com.mycollab.eventmanager.ApplicationEventListener
 import com.mycollab.mobile.module.project.events._
-import com.mycollab.mobile.module.project.view.bug.BugPresenter
 import com.mycollab.mobile.module.project.view.message.MessagePresenter
 import com.mycollab.mobile.module.project.view.milestone.MilestonePresenter
 import com.mycollab.mobile.module.project.view.parameters.ProjectScreenData.{Add, ProjectActivities}
@@ -39,7 +22,6 @@ import com.mycollab.module.project.domain.criteria._
 import com.mycollab.module.project.service.ProjectService
 import com.mycollab.module.project.{CurrentProjectVariables, ProjectMemberStatusConstants}
 import com.mycollab.module.tracker.domain.SimpleBug
-import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.mvp.{AbstractController, PageActionChain, PresenterResolver, ScreenData}
 import com.mycollab.vaadin.{MyCollabUI, UserUIContext}
@@ -119,41 +101,24 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
   }
   
   private def bindBugEvents() {
-    this.register(new ApplicationEventListener[BugEvent.GotoList]() {
-      @Subscribe def handle(event: BugEvent.GotoList) {
-        val params: Any = event.getData
-        val presenter = PresenterResolver.getPresenter(classOf[BugPresenter])
-        if (params == null) {
-          val criteria = new BugSearchCriteria
-          criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId))
-          presenter.go(navManager, new BugScreenData.Search(criteria))
-        }
-        else if (params.isInstanceOf[BugScreenData.Search]) {
-          presenter.go(navManager, params.asInstanceOf[BugScreenData.Search])
-        }
-        else {
-          throw new MyCollabException("Invalid search parameter: " + BeanUtility.printBeanObj(params))
-        }
-      }
-    })
     this.register(new ApplicationEventListener[BugEvent.GotoRead]() {
       @Subscribe def handle(event: BugEvent.GotoRead) {
         val data = new BugScreenData.Read(event.getData.asInstanceOf[Integer])
-        val presenter = PresenterResolver.getPresenter(classOf[BugPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[TicketPresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[BugEvent.GotoAdd]() {
       @Subscribe def handle(event: BugEvent.GotoAdd) {
         val data = new BugScreenData.Add(new SimpleBug)
-        val presenter = PresenterResolver.getPresenter(classOf[BugPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[TicketPresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[BugEvent.GotoEdit]() {
       @Subscribe def handle(event: BugEvent.GotoEdit) {
         val data = new BugScreenData.Edit(event.getData.asInstanceOf[SimpleBug])
-        val presenter = PresenterResolver.getPresenter(classOf[BugPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[TicketPresenter])
         presenter.go(navManager, data)
       }
     })
@@ -227,15 +192,6 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
   }
   
   private def bindTaskEvents() {
-    this.register(new ApplicationEventListener[TaskEvent.GotoList]() {
-      @Subscribe def handle(event: TaskEvent.GotoList) {
-        val criteria = new TaskSearchCriteria
-        criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId))
-        val data = new TaskScreenData.Search(criteria)
-        val presenter = PresenterResolver.getPresenter(classOf[TicketPresenter])
-        presenter.go(navManager, data)
-      }
-    })
     this.register(new ApplicationEventListener[TaskEvent.GotoRead]() {
       @Subscribe def handle(event: TaskEvent.GotoRead) {
         val data = new TaskScreenData.Read(event.getData.asInstanceOf[Integer])

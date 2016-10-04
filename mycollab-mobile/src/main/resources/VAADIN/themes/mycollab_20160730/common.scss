@@ -29,9 +29,8 @@
 
 .v-touchkit-navbutton {
     width: 100% !important;
-    color: #43423d !important;
     &::after {
-      color: #43423d !important;
+      color: $my-dark-color !important;
     }
   }
 
@@ -160,10 +159,13 @@
     background-color: #f9f9f9 !important;
     .v-navbar-quickmenu-button {
       font-size: 20px !important;
-      color: black !important;
+      color: $my-dark-color !important;
     }
     .v-button {
-      color: black !important;
+      color: $my-dark-color !important;
+    }
+    .v-touchkit-navbutton {
+      color: $my-dark-color !important;
     }
   }
 
