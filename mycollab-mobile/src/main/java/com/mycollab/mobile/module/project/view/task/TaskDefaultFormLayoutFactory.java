@@ -14,7 +14,7 @@ import com.mycollab.module.project.i18n.TaskI18nEnum;
  * @author MyCollab Ltd
  * @since 5.4.3
  */
-public class TaskDefaultDynaFormLayoutFactory {
+public class TaskDefaultFormLayoutFactory {
     public static DynaForm getForm() {
         DynaForm defaultForm = new DynaForm();
         DynaSection taskSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.ONE_COLUMN).orderIndex(0)

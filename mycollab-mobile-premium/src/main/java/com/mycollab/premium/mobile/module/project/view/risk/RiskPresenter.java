@@ -2,6 +2,8 @@ package com.mycollab.premium.mobile.module.project.view.risk;
 
 import com.mycollab.core.MyCollabException;
 import com.mycollab.mobile.module.project.view.parameters.RiskScreenData;
+import com.mycollab.mobile.module.project.view.risk.IRiskContainer;
+import com.mycollab.mobile.module.project.view.risk.IRiskPresenter;
 import com.mycollab.mobile.mvp.AbstractPresenter;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
@@ -15,9 +17,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd
  * @since 5.4.3
  */
-public class RiskPresenter extends AbstractPresenter<RiskContainer> {
+public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements IRiskPresenter {
     public RiskPresenter() {
-        super(RiskContainer.class);
+        super(IRiskContainer.class);
     }
 
     @Override

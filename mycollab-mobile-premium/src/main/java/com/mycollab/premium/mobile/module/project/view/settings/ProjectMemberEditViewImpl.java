@@ -32,6 +32,7 @@ import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -93,9 +94,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
 
         @Override
         public ComponentContainer getLayout() {
-            final VerticalLayout layout = new VerticalLayout();
-            layout.setMargin(false);
-            layout.addStyleName(MobileUIConstants.FULL_WIDTH_COMP);
+            final MVerticalLayout layout = new MVerticalLayout().withMargin(false).withSpacing(false).withFullWidth();
             layout.addComponent(FormSectionBuilder.build(UserUIContext.getMessage(ProjectMemberI18nEnum.FORM_INFORMATION_SECTION)));
 
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 2);
