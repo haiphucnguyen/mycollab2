@@ -1,10 +1,11 @@
 package com.mycollab.premium.mobile.module.project.view.task;
 
+import com.mycollab.mobile.form.view.DynaFormLayout;
 import com.mycollab.mobile.module.project.ui.PriorityComboBox;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
 import com.mycollab.mobile.module.project.view.task.TaskAddView;
-import com.mycollab.mobile.module.project.view.task.TaskFormLayoutFactory;
+import com.mycollab.mobile.module.project.view.task.TaskDefaultDynaFormLayoutFactory;
 import com.mycollab.mobile.module.project.view.task.TaskPercentageCompleteComboBox;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -48,7 +49,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new TaskFormLayoutFactory();
+        return new DynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override

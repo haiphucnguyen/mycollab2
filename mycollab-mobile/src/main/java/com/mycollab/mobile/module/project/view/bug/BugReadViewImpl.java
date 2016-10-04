@@ -74,7 +74,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     private static final long serialVersionUID = 579279560838174387L;
 
     private CommentNavigationButton relatedComments;
-    private VerticalLayout bugWorkFlowControl;
+    private MVerticalLayout bugWorkFlowControl;
     private BugTimeLogComp bugTimeLogComp;
     private ProjectAttachmentDisplayComp attachmentComp;
 
@@ -159,9 +159,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     @Override
     protected ComponentContainer createButtonControls() {
         ProjectPreviewFormControlsGenerator<SimpleBug> formControlsGenerator = new ProjectPreviewFormControlsGenerator<>(previewForm);
-        bugWorkFlowControl = new VerticalLayout();
-        bugWorkFlowControl.setWidth("100%");
-        bugWorkFlowControl.setSpacing(true);
+        bugWorkFlowControl = new MVerticalLayout().withMargin(false).withFullWidth();
         formControlsGenerator.insertToControlBlock(bugWorkFlowControl);
         return formControlsGenerator.createButtonControls(ProjectRolePermissionCollections.BUGS);
     }
