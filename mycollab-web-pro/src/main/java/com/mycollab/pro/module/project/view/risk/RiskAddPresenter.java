@@ -8,6 +8,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.event.RiskEvent;
+import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.spring.AppContextUtil;
@@ -48,7 +49,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 
             @Override
             public void onCancel() {
-                EventBusFactory.getInstance().post(new RiskEvent.GotoList(this, null));
+                EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null));
             }
 
             @Override

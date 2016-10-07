@@ -11,6 +11,7 @@ import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.mycollab.module.project.event.RiskEvent;
+import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.reporting.FormReportLayout;
@@ -65,7 +66,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
                             if (confirmDialog.isConfirmed()) {
                                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                                 riskService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
-                                EventBusFactory.getInstance().post(new RiskEvent.GotoList(this, null));
+                                EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null));
                             }
                         });
             }
@@ -86,7 +87,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 
             @Override
             public void onCancel() {
-                EventBusFactory.getInstance().post(new RiskEvent.GotoList(this, null));
+                EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null));
             }
 
             @Override

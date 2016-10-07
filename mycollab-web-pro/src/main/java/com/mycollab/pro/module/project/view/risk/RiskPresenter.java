@@ -32,9 +32,7 @@ public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements 
 
         AbstractPresenter presenter;
 
-        if (data instanceof RiskScreenData.Search) {
-            presenter = PresenterResolver.getPresenter(RiskListPresenter.class);
-        } else if (data instanceof RiskScreenData.Add || data instanceof RiskScreenData.Edit) {
+        if (data instanceof RiskScreenData.Add || data instanceof RiskScreenData.Edit) {
             presenter = PresenterResolver.getPresenter(RiskAddPresenter.class);
         } else if (data instanceof RiskScreenData.Read) {
             presenter = PresenterResolver.getPresenter(RiskReadPresenter.class);
