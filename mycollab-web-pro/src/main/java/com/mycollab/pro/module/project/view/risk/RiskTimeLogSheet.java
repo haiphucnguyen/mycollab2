@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.ticket;
+package com.mycollab.pro.module.project.view.risk;
 
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.ui.components.TimeLogComp;
