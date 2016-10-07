@@ -126,6 +126,15 @@
       padding-top: 8px;
       padding-bottom: 8px;
       display: flex;
+      .v-select {
+        width: 100%;
+        &::after {
+          right: 16px;
+        }
+      }
+      .v-select-select {
+        width:100%;
+      }
     }
     .gridform-caption {
       min-height: 43px;

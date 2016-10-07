@@ -3,7 +3,6 @@ package com.mycollab.pro.module.project.view.risk;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.arguments.ValuedBean;
-import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -17,13 +16,13 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.UserLink;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -143,9 +142,8 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             this.removeAllComponents();
             this.withMargin(false);
 
-            Label peopleInfoHeader = new Label(FontAwesome.USER.getHtml() + " " +
-                    UserUIContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
-            peopleInfoHeader.setStyleName("info-hdr");
+            Label peopleInfoHeader = ELabel.html(FontAwesome.USER.getHtml() + " " +
+                    UserUIContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE)).withStyleName("info-hdr");
             this.addComponent(peopleInfoHeader);
 
             GridLayout layout = new GridLayout(2, 2);

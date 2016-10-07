@@ -183,6 +183,18 @@ a {
 	display: flex;
 }
 
+.v-gridlayout.colored-gridlayout .gridform-field .v-select {
+	width: 100%;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-field .v-select::after {
+	right: 16px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-field .v-select-select {
+	width: 100%;
+}
+
 .v-gridlayout.colored-gridlayout .gridform-caption {
 	min-height: 43px;
 }
@@ -296,10 +308,6 @@ a {
 
 .slidemenu .modalcurtain {
 	width: 100% !important;
-}
-
-.full-width-comp {
-	width: 100%;
 }
 
 .comment-input  > div > .v-horizontallayout {
