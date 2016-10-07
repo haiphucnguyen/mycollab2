@@ -39,7 +39,7 @@ import com.mycollab.module.project.ui.components.TaskSliderField;
 import com.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.mycollab.module.project.view.service.TaskComponentFactory;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
-import com.mycollab.module.project.view.task.components.TaskStatusComboBox;
+import com.mycollab.module.project.view.task.TaskStatusComboBox;
 import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;

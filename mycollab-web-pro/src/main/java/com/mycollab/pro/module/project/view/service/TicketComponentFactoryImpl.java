@@ -46,7 +46,7 @@ import com.mycollab.module.project.view.bug.ResolvedInputWindow;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.module.project.view.task.TaskEditForm;
-import com.mycollab.module.project.view.task.components.TaskStatusComboBox;
+import com.mycollab.module.project.view.task.TaskStatusComboBox;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;

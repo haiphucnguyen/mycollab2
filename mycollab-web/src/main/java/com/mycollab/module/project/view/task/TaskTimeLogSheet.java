@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.bug;
+package com.mycollab.module.project.view.task;
 
-import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.mycollab.vaadin.mvp.PageView;
+import com.mycollab.module.project.domain.SimpleTask;
+import com.mycollab.module.project.ui.components.TimeLogComp;
+import com.mycollab.vaadin.mvp.CacheableComponent;
 
 /**
- * @author MyCollab Ltd.
- * @since 1.0
+ * @author MyCollab Ltd
+ * @since 5.1.4
  */
-public interface IStatusSummaryChartWidget extends PageView {
-    void displayChart(BugSearchCriteria searchCriteria);
+public abstract class TaskTimeLogSheet extends TimeLogComp<SimpleTask> implements CacheableComponent {
 }
