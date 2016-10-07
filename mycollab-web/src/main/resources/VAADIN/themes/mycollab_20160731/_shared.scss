@@ -601,50 +601,28 @@
 
   .v-csscheckbox-label {
     border: 1px solid $my-border-color !important;
-    width: 14px;
-    height: 14px;
-    border-radius: 14px !important;
-    &:hover {
-      width: 20px;
-      height: 20px;
-      border: 2px solid $my-border-color !important;
-    }
+    width: 20px;
+    height: 20px;
+    border-radius: 20px !important;
   }
 
   .v-csscheckbox-inner {
     &::before {
       background-color: white !important;
       color: $my-note-color !important;
-      height: 16px !important;
-      font-size: 12px !important;
-      line-height: 16px !important;
+      height: 20px !important;
+      font-size: 16px !important;
+      line-height: 20px !important;
     }
     &::after {
-      content: "\f00c";
+      content: "\f00c" !important;
       background-color: white !important;
       color: gray !important;
-      height: 16px !important;
-      font-size: 12px !important;
-      line-height: 16px !important;
+      height: 20px !important;
+      font-size: 16px !important;
+      line-height: 20px !important;
     }
   }
-
-  .v-csscheckbox-inner:hover {
-      &::before {
-        background-color: white !important;
-        color: $my-note-color !important;
-        height: 20px !important;
-        font-size: 16px !important;
-        line-height: 20px !important;
-      }
-      &::after {
-        background-color: white !important;
-        color: gray !important;
-        height: 20px !important;
-        font-size: 16px !important;
-        line-height: 20px !important;
-      }
-    }
 
   /*Loading progress label*/
   .sk-cube-grid > div {

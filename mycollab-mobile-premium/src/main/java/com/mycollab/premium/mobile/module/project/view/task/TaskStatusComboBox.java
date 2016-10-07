@@ -24,9 +24,7 @@ public class TaskStatusComboBox extends OptionValComboBox {
         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
         List<OptionVal> options = optionValService.findOptionVals(ProjectTypeConstants.TASK, CurrentProjectVariables.getProjectId(),
                 MyCollabUI.getAccountId());
-        for (OptionVal option : options) {
-            addEntry(option);
-        }
+        options.forEach(this::addEntry);
     }
 
     @Override

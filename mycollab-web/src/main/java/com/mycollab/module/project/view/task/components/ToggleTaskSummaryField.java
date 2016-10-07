@@ -19,6 +19,8 @@ package com.mycollab.module.project.view.task.components;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Span;
+import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.html.DivLessFormatter;
@@ -31,14 +33,19 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.TooltipHelper;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.AbstractToggleSummaryField;
+import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
+import org.vaadin.addons.CssCheckBox;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -50,19 +57,62 @@ import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
  */
 public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
     private boolean isRead = true;
+    private boolean toggleStatusSupport;
     private SimpleTask task;
     private int maxLength;
+    private CssCheckBox toggleStatusSelect;
 
-    public ToggleTaskSummaryField(final SimpleTask task) {
-        this(task, Integer.MAX_VALUE);
+    public ToggleTaskSummaryField(final SimpleTask task, boolean toggleStatusSupport) {
+        this(task, Integer.MAX_VALUE, toggleStatusSupport);
     }
 
-    public ToggleTaskSummaryField(final SimpleTask task, int maxLength) {
+    public ToggleTaskSummaryField(final SimpleTask task, int maxLength, boolean toggleStatusSupport) {
         this.setWidth("100%");
         this.maxLength = maxLength;
+        this.toggleStatusSupport = toggleStatusSupport;
         this.task = task;
         titleLinkLbl = ELabel.html(buildTaskLink()).withWidthUndefined().withStyleName(UIConstants.LABEL_WORD_WRAP);
 
+        if (toggleStatusSupport) {
+            toggleStatusSelect = new CssCheckBox();
+            toggleStatusSelect.setSimpleMode(true);
+            toggleStatusSelect.setValue(task.isCompleted());
+            displayTooltip();
+            toggleStatusSelect.addValueChangeListener(valueChangeEvent -> {
+                if (task.isCompleted()) {
+                    task.setStatus(StatusI18nEnum.Open.name());
+                    task.setPercentagecomplete(0d);
+                    titleLinkLbl.removeStyleName(WebUIConstants.LINK_COMPLETED);
+                } else {
+                    task.setStatus(StatusI18nEnum.Closed.name());
+                    task.setPercentagecomplete(100d);
+                    titleLinkLbl.addStyleName(WebUIConstants.LINK_COMPLETED);
+                }
+                displayTooltip();
+                ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+                projectTaskService.updateWithSession(task, UserUIContext.getUsername());
+
+                if (StatusI18nEnum.Closed.name().equals(task.getStatus())) {
+                    Integer countOfOpenSubTasks = projectTaskService.getCountOfOpenSubTasks(task.getId());
+                    if (countOfOpenSubTasks > 0) {
+                        ConfirmDialogExt.show(UI.getCurrent(),
+                                UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, MyCollabUI.getSiteName()),
+                                UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_CLOSE_SUB_ASSIGNMENTS),
+                                UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                                UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
+                                confirmDialog -> {
+                                    if (confirmDialog.isConfirmed()) {
+                                        projectTaskService.massUpdateTaskStatuses(task.getId(), StatusI18nEnum.Closed.name(),
+                                                MyCollabUI.getAccountId());
+                                    }
+                                });
+                    }
+                }
+            });
+            this.addComponent(toggleStatusSelect);
+        }
+
+        this.addComponent(ELabel.EMPTY_SPACE());
         this.addComponent(titleLinkLbl);
         buttonControls = new MHorizontalLayout().withStyleName("toggle").withSpacing(false);
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
@@ -86,6 +136,14 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
             instantEditBtn.setDescription(UserUIContext.getMessage(TaskI18nEnum.OPT_EDIT_TASK_NAME));
             buttonControls.with(instantEditBtn);
             this.addComponent(buttonControls);
+        }
+    }
+
+    private void displayTooltip() {
+        if (task.isCompleted()) {
+            toggleStatusSelect.setDescription("Mark completed. Click to mark incomplete");
+        } else {
+            toggleStatusSelect.setDescription("Mark complete");
         }
     }
 

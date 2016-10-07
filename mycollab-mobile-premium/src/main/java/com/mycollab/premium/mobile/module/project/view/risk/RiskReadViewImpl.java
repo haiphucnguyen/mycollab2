@@ -24,6 +24,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
+import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
@@ -90,7 +91,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected String initFormTitle() {
-        return beanItem.getName();
+        return UserUIContext.getMessage(RiskI18nEnum.SINGLE);
     }
 
     @Override

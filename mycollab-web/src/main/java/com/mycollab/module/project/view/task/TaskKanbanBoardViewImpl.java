@@ -324,7 +324,7 @@ public class TaskKanbanBoardViewImpl extends AbstractPageView implements TaskKan
 
             MHorizontalLayout headerLayout = new MHorizontalLayout();
 
-            ToggleTaskSummaryField toggleTaskSummaryField = new ToggleTaskSummaryField(task, 70);
+            ToggleTaskSummaryField toggleTaskSummaryField = new ToggleTaskSummaryField(task, 70, false);
             AbstractComponent priorityField = popupFieldFactory.createPriorityPopupField(task);
             headerLayout.with(priorityField, toggleTaskSummaryField).expand(toggleTaskSummaryField);
 

@@ -21,7 +21,7 @@
         }
       }
     }
-    
+
     .data-list-view {
       border-top: 0.1rem solid $light-gray-border;
       .log-day {
@@ -61,8 +61,8 @@
         text-align: center;
         padding-bottom: 0.5rem;
       }
-    }    
-    
+    }
+
     &.new-time-entry-window {
       .input-wrapper {
         margin: 0px;
@@ -84,7 +84,7 @@
         }
       }
     }
-    
+
     &.update-remain-time-window {
       .input-wrapper {
         padding: 0.5rem 1rem;
@@ -97,7 +97,7 @@
         }
       }
     }
-    
+
     .button-layout {
       border-top: 0.1rem solid $light-gray-border;
       .v-button {
@@ -112,7 +112,7 @@
         &.add-btn {
           border-left: 0.1rem solid $light-gray-border;
         }
-      }      
+      }
     }
   }
   

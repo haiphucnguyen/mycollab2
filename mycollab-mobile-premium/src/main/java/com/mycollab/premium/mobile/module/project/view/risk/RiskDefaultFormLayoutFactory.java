@@ -16,8 +16,7 @@ import com.mycollab.module.project.i18n.RiskI18nEnum;
 public class RiskDefaultFormLayoutFactory {
     public static DynaForm getForm() {
         DynaForm defaultForm = new DynaForm();
-        DynaSection riskSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.ONE_COLUMN).orderIndex(0)
-                .header(RiskI18nEnum.SINGLE).build();
+        DynaSection riskSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.ONE_COLUMN).orderIndex(0).build();
 
         riskSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.name.name())
                 .displayName(GenericI18Enum.FORM_NAME)

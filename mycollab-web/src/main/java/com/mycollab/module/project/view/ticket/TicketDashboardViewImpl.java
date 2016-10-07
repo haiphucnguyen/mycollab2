@@ -247,8 +247,8 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
 
     private void displayTicketsStatistic() {
         rightColumn.removeAllComponents();
-        final TicketCloseTrendChartWidget taskStatusTrendChartWidget = new TicketCloseTrendChartWidget();
-        rightColumn.addComponent(taskStatusTrendChartWidget);
+//        final TicketCloseTrendChartWidget taskStatusTrendChartWidget = new TicketCloseTrendChartWidget();
+//        rightColumn.addComponent(taskStatusTrendChartWidget);
         UnresolvedTicketsByAssigneeWidget unresolvedTicketsByAssigneeWidget = new UnresolvedTicketsByAssigneeWidget();
         unresolvedTicketsByAssigneeWidget.setSearchCriteria(statisticSearchCriteria);
         rightColumn.addComponent(unresolvedTicketsByAssigneeWidget);
@@ -257,14 +257,14 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
         unresolvedTicketByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
         rightColumn.addComponent(unresolvedTicketByPriorityWidget);
 
-        AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
-            @Override
-            public void run() {
-                TimelineTrackingSearchCriteria timelineTrackingSearchCriteria = new TimelineTrackingSearchCriteria();
-                timelineTrackingSearchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                taskStatusTrendChartWidget.display(timelineTrackingSearchCriteria);
-            }
-        });
+//        AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
+//            @Override
+//            public void run() {
+//                TimelineTrackingSearchCriteria timelineTrackingSearchCriteria = new TimelineTrackingSearchCriteria();
+//                timelineTrackingSearchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+//                taskStatusTrendChartWidget.display(timelineTrackingSearchCriteria);
+//            }
+//        });
     }
 
     @Override

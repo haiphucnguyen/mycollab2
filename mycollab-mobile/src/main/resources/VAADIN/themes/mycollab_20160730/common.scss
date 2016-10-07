@@ -27,6 +27,7 @@
   @include section-header();
   .v-label {
     margin-left: 5px;
+    font-size: 16px;
   }
 }
 
@@ -115,6 +116,11 @@
     text-decoration: none !important;
   }
 
+  .v-button-link .v-button-caption {
+    color: $my-link-color !important;
+    font-size: 14px !important;
+  }
+
   .v-gridlayout.colored-gridlayout {
     width: 100%;
     .gridform-caption, .gridform-field {
@@ -156,6 +162,7 @@
     .v-button {
       background: transparent !important;
       box-shadow: none !important;
+      font-size: 14px;
     }
   }
 
@@ -169,6 +176,7 @@
 
   .v-touchkit-navbar {
     background-color: #f9f9f9 !important;
+    border-bottom: 1px solid $my-separator-color !important;
     .v-navbar-quickmenu-button {
       font-size: 20px !important;
       color: $my-dark-color !important;
@@ -215,12 +223,12 @@
     .v-window-outerheader {
       display: none;
     }
-    .v-window-closebox {
-      background-color: transparent !important;
-    }
     .v-horizontallayout .v-button {
       font-size: 14px;
     }
+  }
+  .v-window-closebox {
+    background-color: transparent !important;
   }
     
   .attachment-panel {
