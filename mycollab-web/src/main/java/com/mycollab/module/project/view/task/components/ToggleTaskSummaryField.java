@@ -57,7 +57,6 @@ import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
  */
 public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
     private boolean isRead = true;
-    private boolean toggleStatusSupport;
     private SimpleTask task;
     private int maxLength;
     private CssCheckBox toggleStatusSelect;
@@ -69,11 +68,10 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
     public ToggleTaskSummaryField(final SimpleTask task, int maxLength, boolean toggleStatusSupport) {
         this.setWidth("100%");
         this.maxLength = maxLength;
-        this.toggleStatusSupport = toggleStatusSupport;
         this.task = task;
         titleLinkLbl = ELabel.html(buildTaskLink()).withWidthUndefined().withStyleName(UIConstants.LABEL_WORD_WRAP);
 
-        if (toggleStatusSupport) {
+        if (toggleStatusSupport && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             toggleStatusSelect = new CssCheckBox();
             toggleStatusSelect.setSimpleMode(true);
             toggleStatusSelect.setValue(task.isCompleted());
@@ -110,9 +108,9 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
                 }
             });
             this.addComponent(toggleStatusSelect);
+            this.addComponent(ELabel.EMPTY_SPACE());
         }
 
-        this.addComponent(ELabel.EMPTY_SPACE());
         this.addComponent(titleLinkLbl);
         buttonControls = new MHorizontalLayout().withStyleName("toggle").withSpacing(false);
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
@@ -141,9 +139,9 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
 
     private void displayTooltip() {
         if (task.isCompleted()) {
-            toggleStatusSelect.setDescription("Mark completed. Click to mark incomplete");
+            toggleStatusSelect.setDescription(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_MARK_INCOMPLETE));
         } else {
-            toggleStatusSelect.setDescription("Mark complete");
+            toggleStatusSelect.setDescription(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_MARK_COMPLETE));
         }
     }
 
