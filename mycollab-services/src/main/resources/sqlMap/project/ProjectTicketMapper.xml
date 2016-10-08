@@ -340,10 +340,7 @@
             (SELECT count(*)
                     FROM m_comment
                     WHERE m_comment.type='Project-Milestone' AND m_comment.typeId=mainTbl.id) AS numComments,
-            0 AS numFollowers
-            0 AS billableHours,
-            0 AS nonBillableHours,
-            "" AS priority,
+            0 AS numFollowers, 0 AS billableHours, 0 AS nonBillableHours, "" AS priority,
             mainTbl.sAccountId, mainTbl.startDate, mainTbl.endDate,
             mainTbl.id AS milestoneId, mainTbl.name AS milestoneName
           FROM m_prj_milestone AS mainTbl
