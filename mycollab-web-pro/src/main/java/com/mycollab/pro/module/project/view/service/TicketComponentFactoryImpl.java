@@ -317,8 +317,8 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     }
 
     @Override
-    public AbstractComponent createCommentsPopupField(ProjectTicket task) {
-        TicketCommentsPopupView view = new TicketCommentsPopupView(task);
+    public AbstractComponent createCommentsPopupField(ProjectTicket ticket) {
+        TicketCommentsPopupView view = new TicketCommentsPopupView(ticket);
         view.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_ADD_COMMENT));
         return view;
     }
