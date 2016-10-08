@@ -72,7 +72,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
 
     @Override
     protected String initFormTitle() {
-        return this.beanItem.getDisplayName();
+        return beanItem.getDisplayName();
     }
 
     @Override
@@ -140,7 +140,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
         EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null));
     }
 
-    class ProjectMemberFormLayoutFactory extends AbstractFormLayoutFactory {
+    private class ProjectMemberFormLayoutFactory extends AbstractFormLayoutFactory {
         private static final long serialVersionUID = 8920529536882351151L;
 
         private GridFormLayoutHelper informationLayout;
