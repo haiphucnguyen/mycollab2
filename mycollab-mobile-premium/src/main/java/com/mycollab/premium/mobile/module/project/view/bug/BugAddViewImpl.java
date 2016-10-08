@@ -2,12 +2,12 @@ package com.mycollab.premium.mobile.module.project.view.bug;
 
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.mobile.form.view.DynaFormLayout;
-import com.mycollab.mobile.module.project.ui.PriorityComboBox;
+import com.mycollab.mobile.module.project.ui.PriorityListSelect;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.bug.BugAddView;
 import com.mycollab.mobile.module.project.view.bug.BugDefaultFormLayoutFactory;
-import com.mycollab.mobile.module.project.view.bug.BugSeverityComboBox;
-import com.mycollab.mobile.module.project.view.milestone.MilestoneComboBox;
+import com.mycollab.mobile.module.project.view.bug.BugSeverityListSelect;
+import com.mycollab.mobile.module.project.view.milestone.MilestoneListSelect;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -84,14 +84,14 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
                 if (beanItem.getPriority() == null) {
                     beanItem.setPriority(Priority.Medium.name());
                 }
-                return new PriorityComboBox();
+                return new PriorityListSelect();
             } else if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
                 return new ProjectMemberSelectionField();
             } else if (propertyId.equals("severity")) {
                 if (beanItem.getSeverity() == null) {
                     beanItem.setSeverity(BugSeverity.Major.name());
                 }
-                return new BugSeverityComboBox();
+                return new BugSeverityListSelect();
             } else if (BugWithBLOBs.Field.name.equalTo(propertyId)) {
                 final MTextField tf = new MTextField();
                 if (isValidateForm) {
@@ -101,7 +101,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
 
                 return tf;
             } else if (BugWithBLOBs.Field.milestoneid.equalTo(propertyId)) {
-                final MilestoneComboBox milestoneBox = new MilestoneComboBox();
+                final MilestoneListSelect milestoneBox = new MilestoneListSelect();
                 milestoneBox.addValueChangeListener(valueChangeEvent -> {
                     String milestoneName = milestoneBox.getItemCaption(milestoneBox.getValue());
                     beanItem.setMilestoneName(milestoneName);

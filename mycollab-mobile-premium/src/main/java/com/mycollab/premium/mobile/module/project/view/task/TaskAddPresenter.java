@@ -51,10 +51,7 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
             SimpleTask task = (SimpleTask) data.getParams();
             view.editItem(task);
             super.onGo(navigator, data);
-            if (task.getId() == null) {
-            } else {
-                MyCollabUI.addFragment(ProjectLinkGenerator.generateTaskEditLink(task.getTaskkey(), task.getProjectShortname()), task.getName());
-            }
+            MyCollabUI.addFragment(ProjectLinkGenerator.generateTaskEditLink(task.getTaskkey(), task.getProjectShortname()), task.getName());
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }
@@ -66,12 +63,9 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
         task.setSaccountid(MyCollabUI.getAccountId());
         task.setProjectid(CurrentProjectVariables.getProjectId());
         if (task.getPercentagecomplete() == null) {
-            task.setPercentagecomplete(new Double(0));
-            task.setStatus(StatusI18nEnum.Open.name());
-        } else if (task.getPercentagecomplete().doubleValue() == 100d) {
+            task.setPercentagecomplete(0d);
+        } else if (task.getPercentagecomplete() == 100d) {
             task.setStatus(StatusI18nEnum.Closed.name());
-        } else {
-            task.setStatus(StatusI18nEnum.Open.name());
         }
 
         if (task.getId() == null) {

@@ -4,7 +4,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.SecurityI18nEnum;
 import com.mycollab.mobile.module.project.events.ProjectMemberEvent;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberInviteView;
-import com.mycollab.mobile.module.project.view.settings.ProjectRoleComboBox;
+import com.mycollab.mobile.module.project.view.settings.ProjectRoleListSelect;
 import com.mycollab.mobile.ui.AbstractMobilePageView;
 import com.mycollab.mobile.ui.FormSectionBuilder;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
@@ -40,7 +40,7 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
     private Integer roleId = 0;
 
     private EmailField inviteEmailField;
-    private ProjectRoleComboBox roleComboBox;
+    private ProjectRoleListSelect roleComboBox;
     private TextArea messageArea;
     private VerticalComponentGroup permissionsPanel;
 
@@ -51,7 +51,7 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
     }
 
     private void constructUI() {
-        this.roleComboBox = new ProjectRoleComboBox();
+        this.roleComboBox = new ProjectRoleListSelect();
         this.roleComboBox.addValueChangeListener(new ValueChangeListener() {
             private static final long serialVersionUID = 1L;
 

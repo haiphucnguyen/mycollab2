@@ -2,10 +2,9 @@ package com.mycollab.premium.mobile.module.project.view.settings;
 
 import com.mycollab.common.i18n.SecurityI18nEnum;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberEditView;
-import com.mycollab.mobile.module.project.view.settings.ProjectRoleComboBox;
+import com.mycollab.mobile.module.project.view.settings.ProjectRoleListSelect;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
 import com.mycollab.mobile.ui.FormSectionBuilder;
-import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
@@ -139,10 +138,10 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
 
     private class ProjectRoleSelectionField extends CustomField<Integer> {
         private static final long serialVersionUID = 1L;
-        private ProjectRoleComboBox roleComboBox;
+        private ProjectRoleListSelect roleComboBox;
 
         public ProjectRoleSelectionField() {
-            roleComboBox = new ProjectRoleComboBox();
+            roleComboBox = new ProjectRoleListSelect();
             roleComboBox.addValueChangeListener(new Property.ValueChangeListener() {
                 private static final long serialVersionUID = 1L;
 

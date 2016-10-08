@@ -5,7 +5,7 @@ import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.mobile.module.project.view.ProjectAddView;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
 import com.mycollab.mobile.ui.FormSectionBuilder;
-import com.mycollab.mobile.ui.I18nValueComboBox;
+import com.mycollab.mobile.ui.I18NValueListSelect;
 import com.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.domain.SimpleProject;
@@ -61,7 +61,7 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
             } else if (Project.Field.homepage.equalTo(propertyId)) {
                 return new UrlField();
             } else if (Project.Field.projectstatus.equalTo(propertyId)) {
-                return new ProjectStatusComboBox();
+                return new ProjectStatusListSelect();
             } else if (Project.Field.planstartdate.equalTo(propertyId) || Project.Field.planenddate.equalTo(propertyId)) {
                 return new DatePicker();
             } else if (Project.Field.description.equalTo(propertyId)) {
@@ -111,10 +111,10 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
         }
     }
 
-    private static class ProjectStatusComboBox extends I18nValueComboBox {
+    private static class ProjectStatusListSelect extends I18NValueListSelect {
         private static final long serialVersionUID = 1L;
 
-        ProjectStatusComboBox() {
+        ProjectStatusListSelect() {
             super(false, OptionI18nEnum.StatusI18nEnum.Open, OptionI18nEnum.StatusI18nEnum.Closed);
         }
     }

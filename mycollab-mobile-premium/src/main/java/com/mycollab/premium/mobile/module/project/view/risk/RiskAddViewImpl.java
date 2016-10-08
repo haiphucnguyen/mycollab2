@@ -2,12 +2,12 @@ package com.mycollab.premium.mobile.module.project.view.risk;
 
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.mobile.form.view.DynaFormLayout;
-import com.mycollab.mobile.module.project.ui.PriorityComboBox;
+import com.mycollab.mobile.module.project.ui.PriorityListSelect;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
-import com.mycollab.mobile.module.project.view.milestone.MilestoneComboBox;
+import com.mycollab.mobile.module.project.view.milestone.MilestoneListSelect;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
-import com.mycollab.mobile.ui.I18nValueComboBox;
+import com.mycollab.mobile.ui.I18NValueListSelect;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
@@ -79,22 +79,22 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
                     Risk.Field.duedate.equalTo(propertyId)) {
                 return new DatePicker();
             } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
-                final MilestoneComboBox milestoneBox = new MilestoneComboBox();
+                final MilestoneListSelect milestoneBox = new MilestoneListSelect();
                 milestoneBox.addValueChangeListener(valueChangeEvent -> {
                     String milestoneName = milestoneBox.getItemCaption(milestoneBox.getValue());
                     beanItem.setMilestoneName(milestoneName);
                 });
                 return milestoneBox;
             } else if (Risk.Field.consequence.equalTo(propertyId)) {
-                return new I18nValueComboBox(false, RiskConsequence.Catastrophic, RiskConsequence.Critical,
+                return new I18NValueListSelect(false, RiskConsequence.Catastrophic, RiskConsequence.Critical,
                         RiskConsequence.Marginal, RiskConsequence.Negligible);
             } else if (Risk.Field.probalitity.equalTo(propertyId)) {
-                return new I18nValueComboBox(false, RiskProbability.Certain, RiskProbability.Likely,
+                return new I18NValueListSelect(false, RiskProbability.Certain, RiskProbability.Likely,
                         RiskProbability.Possible, RiskProbability.Unlikely, RiskProbability.Rare);
             } else if (Risk.Field.priority.equalTo(propertyId)) {
-                return new PriorityComboBox();
+                return new PriorityListSelect();
             } else if (Risk.Field.status.equalTo(propertyId)) {
-                return new I18nValueComboBox(false, StatusI18nEnum.Open, StatusI18nEnum.Closed);
+                return new I18NValueListSelect(false, StatusI18nEnum.Open, StatusI18nEnum.Closed);
             }
             return null;
         }

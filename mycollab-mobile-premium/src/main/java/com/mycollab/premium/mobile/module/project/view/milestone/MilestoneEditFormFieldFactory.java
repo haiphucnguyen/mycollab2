@@ -1,7 +1,7 @@
 package com.mycollab.premium.mobile.module.project.view.milestone;
 
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
-import com.mycollab.mobile.ui.I18nValueComboBox;
+import com.mycollab.mobile.ui.I18NValueListSelect;
 import com.mycollab.module.project.domain.Milestone;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -36,7 +36,7 @@ public class MilestoneEditFormFieldFactory<B extends Milestone> extends Abstract
             if (attachForm.getBean().getStatus() == null) {
                 attachForm.getBean().setStatus(MilestoneStatus.InProgress.toString());
             }
-            return new ProgressStatusComboBox();
+            return new ProgressStatusListSelect();
         } else if (propertyId.equals("name")) {
             final TextField tf = new TextField();
             if (isValidateForm) {
@@ -56,10 +56,10 @@ public class MilestoneEditFormFieldFactory<B extends Milestone> extends Abstract
         return null;
     }
 
-    private static class ProgressStatusComboBox extends I18nValueComboBox {
+    private static class ProgressStatusListSelect extends I18NValueListSelect {
         private static final long serialVersionUID = 1L;
 
-        public ProgressStatusComboBox() {
+        public ProgressStatusListSelect() {
             super();
             setCaption(null);
             this.setNullSelectionAllowed(false);

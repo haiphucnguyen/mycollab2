@@ -3,13 +3,13 @@ package com.mycollab.premium.mobile.module.project.view.task;
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.mobile.form.view.DynaFormLayout;
-import com.mycollab.mobile.module.project.ui.PriorityComboBox;
+import com.mycollab.mobile.module.project.ui.PriorityListSelect;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
-import com.mycollab.mobile.module.project.view.milestone.MilestoneComboBox;
+import com.mycollab.mobile.module.project.view.milestone.MilestoneListSelect;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
 import com.mycollab.mobile.module.project.view.task.TaskAddView;
 import com.mycollab.mobile.module.project.view.task.TaskDefaultFormLayoutFactory;
-import com.mycollab.mobile.module.project.view.task.TaskPercentageCompleteComboBox;
+import com.mycollab.mobile.module.project.view.task.TaskPercentageCompleteListSelect;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
@@ -23,7 +23,7 @@ import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.addon.touchkit.ui.DatePicker;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextArea;
-import com.vaadin.ui.TextField;
+import org.vaadin.viritin.fields.MTextField;
 
 /**
  * @author MyCollab Ltd.
@@ -76,23 +76,20 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
                 textArea.setNullRepresentation("");
                 return textArea;
             } else if (Task.Field.name.equalTo(propertyId)) {
-                final TextField tf = new TextField();
-                tf.setNullRepresentation("");
-                tf.setRequired(true);
-                tf.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                        UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
-                return tf;
+                return new MTextField().withNullRepresentation("").withRequired(true)
+                        .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+                                UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
             } else if (Task.Field.percentagecomplete.equalTo(propertyId)) {
-                return new TaskPercentageCompleteComboBox();
+                return new TaskPercentageCompleteListSelect();
             } else if (Task.Field.priority.equalTo(propertyId)) {
-                return new PriorityComboBox();
+                return new PriorityListSelect();
             } else if (Task.Field.startdate.equalTo(propertyId) || Task.Field.enddate.equalTo(propertyId) ||
                     Task.Field.duedate.equalTo(propertyId)) {
                 return new DatePicker();
             } else if (Task.Field.status.equalTo(propertyId)) {
-                return new TaskStatusComboBox();
+                return new TaskStatusListSelect();
             } else if (Task.Field.milestoneid.equalTo(propertyId)) {
-                final MilestoneComboBox milestoneBox = new MilestoneComboBox();
+                final MilestoneListSelect milestoneBox = new MilestoneListSelect();
                 milestoneBox.addValueChangeListener(valueChangeEvent -> {
                     String milestoneName = milestoneBox.getItemCaption(milestoneBox.getValue());
                     beanItem.setMilestoneName(milestoneName);
