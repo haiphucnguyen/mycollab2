@@ -7,6 +7,7 @@ import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.persistence.service.ICrudService;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.PropertyChangedEvent;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
@@ -90,7 +91,8 @@ public abstract class PopupBeanFieldBuilder<B> {
     }
 
     protected String generateDescription() {
-        return (StringUtils.isBlank(description)) ? MoreObjects.firstNonNull(caption, UserUIContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT)) : description;
+        return (StringUtils.isBlank(description)) ? MoreObjects.firstNonNull(caption,
+                UserUIContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT)) : description;
     }
 
     public PopupView build() {
@@ -110,6 +112,7 @@ public abstract class PopupBeanFieldBuilder<B> {
                 if (fieldGroup.isModified()) {
                     fieldGroup.commit();
                     save();
+                    this.fireEvent(new PropertyChangedEvent(this, bindProperty));
                     setMinimizedValueAsHTML(generateSmallAsHtmlAfterUpdate());
                     BeanPopupView.this.setDescription(generateDescription());
                 }

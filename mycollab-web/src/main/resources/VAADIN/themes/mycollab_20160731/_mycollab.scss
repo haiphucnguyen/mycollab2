@@ -1398,6 +1398,7 @@ $v-line-height--header:1.5em;
     .navigator-wrap {
       display: inline-block;
       border-right: 1px solid $my-separator-color;
+      border-left: 1px solid $my-separator-color;
     }
     .container-wrap {
       -webkit-box-flex: 1;

@@ -8,7 +8,6 @@ ALTER TABLE `m_prj_risk`
 CHANGE COLUMN `riskname` `name` VARCHAR(400) CHARACTER SET 'utf8mb4' COLLATE utf8mb4_unicode_ci NOT NULL ;
 
 ALTER TABLE `m_prj_milestone` ADD COLUMN `priority` VARCHAR(45) NULL;
-ALTER TABLE `m_prj_risk` ADD COLUMN `priority` VARCHAR(45) NULL;
 UPDATE m_prj_risk SET priority='Medium' WHERE priority IS NULL AND id > 0;
 
 ALTER TABLE `m_tracker_bug`

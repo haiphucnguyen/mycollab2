@@ -23,6 +23,9 @@ import com.mycollab.module.project.view.milestone.ToggleTicketSummaryField;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.PropertyChangedEvent;
+import com.mycollab.vaadin.ui.PropertyChangedListener;
+import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractComponent;
@@ -34,7 +37,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class TicketRowRenderer extends MVerticalLayout {
+public class TicketRowRenderer extends MVerticalLayout implements PropertyChangedListener {
     private ProjectTicket assignment;
 
     private ToggleTicketSummaryField toggleTaskField;
@@ -54,9 +57,9 @@ public class TicketRowRenderer extends MVerticalLayout {
 
         CssLayout footer = new CssLayout();
         footer.addComponent(popupFieldFactory.createCommentsPopupField(ticket));
-        footer.addComponent(popupFieldFactory.createPriorityPopupField(ticket));
+        footer.addComponent(wrapListenerComponent(popupFieldFactory.createPriorityPopupField(ticket)));
         footer.addComponent(popupFieldFactory.createFollowersPopupField(ticket));
-        footer.addComponent(popupFieldFactory.createStatusPopupField(ticket));
+        footer.addComponent(wrapListenerComponent(popupFieldFactory.createStatusPopupField(ticket)));
         footer.addComponent(popupFieldFactory.createStartDatePopupField(ticket));
         footer.addComponent(popupFieldFactory.createEndDatePopupField(ticket));
         footer.addComponent(popupFieldFactory.createDueDatePopupField(ticket));
@@ -66,5 +69,17 @@ public class TicketRowRenderer extends MVerticalLayout {
         }
 
         this.with(headerLayout, footer);
+    }
+
+    private AbstractComponent wrapListenerComponent(AbstractComponent component) {
+        if (component instanceof LazyPopupView) {
+            ((LazyPopupView) component).addPropertyChangeListener(this);
+        }
+        return component;
+    }
+
+    @Override
+    public void propertyChanged(PropertyChangedEvent event) {
+        System.out.println("Event: " + event);
     }
 }
