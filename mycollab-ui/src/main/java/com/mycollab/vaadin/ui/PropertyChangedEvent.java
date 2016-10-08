@@ -11,6 +11,7 @@ public class PropertyChangedEvent  extends EventObject {
 
     public PropertyChangedEvent(Object source, String bindProperty) {
         super(source);
+        this.bindProperty = bindProperty;
     }
 
     public String getBindProperty() {

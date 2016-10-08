@@ -17,7 +17,9 @@
 package com.mycollab.module.project.view.ticket;
 
 import com.mycollab.configuration.SiteConfiguration;
+import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.domain.ProjectTicket;
+import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.milestone.ToggleTicketSummaryField;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
@@ -52,7 +54,7 @@ public class TicketRowRenderer extends MVerticalLayout implements PropertyChange
                 toggleTaskField).expand(toggleTaskField).withFullWidth().withMargin(new MarginInfo(false, true, false, false));
 
         TicketComponentFactory popupFieldFactory = AppContextUtil.getSpringBean(TicketComponentFactory.class);
-        AbstractComponent assigneeField = popupFieldFactory.createAssigneePopupField(ticket);
+        AbstractComponent assigneeField = wrapListenerComponent(popupFieldFactory.createAssigneePopupField(ticket));
         headerLayout.with(assigneeField, toggleTaskField).expand(toggleTaskField);
 
         CssLayout footer = new CssLayout();
@@ -80,6 +82,6 @@ public class TicketRowRenderer extends MVerticalLayout implements PropertyChange
 
     @Override
     public void propertyChanged(PropertyChangedEvent event) {
-        System.out.println("Event: " + event);
+        EventBusFactory.getInstance().post(new TicketEvent.HasTicketPropertyChanged(this, event.getBindProperty()));
     }
 }

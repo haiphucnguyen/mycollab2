@@ -112,7 +112,7 @@ public abstract class PopupBeanFieldBuilder<B> {
                 if (fieldGroup.isModified()) {
                     fieldGroup.commit();
                     save();
-                    this.fireEvent(new PropertyChangedEvent(this, bindProperty));
+                    this.fireEvent(new PropertyChangedEvent(bean, bindProperty));
                     setMinimizedValueAsHTML(generateSmallAsHtmlAfterUpdate());
                     BeanPopupView.this.setDescription(generateDescription());
                 }
