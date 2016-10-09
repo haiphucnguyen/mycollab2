@@ -144,8 +144,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
     protected ComponentContainer createButtonControls() {
         ProjectPreviewFormControlsGenerator<SimpleTask> taskPreviewForm = new ProjectPreviewFormControlsGenerator<>(previewForm);
         final VerticalLayout topPanel = taskPreviewForm.createButtonControls(
-                ProjectPreviewFormControlsGenerator.ASSIGN_BTN_PRESENTED
-                        | ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
+                ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED,
                 ProjectRolePermissionCollections.TASKS);
