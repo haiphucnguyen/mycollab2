@@ -18,6 +18,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
@@ -137,9 +138,9 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         public void setSelected(boolean isSelected) {
             if (isSelected) {
                 removeStyleName(WebUIConstants.BUTTON_OPTION);
-                addStyleName(WebUIConstants.BLOCK);
+                addStyleName(UIConstants.BLOCK);
             } else {
-                removeStyleName(WebUIConstants.BLOCK);
+                removeStyleName(UIConstants.BLOCK);
                 addStyleName(WebUIConstants.BUTTON_OPTION);
             }
         }

@@ -32,11 +32,32 @@
 }
 
 .v-touchkit-navbutton {
-    width: 100% !important;
-    &::after {
-      color: $my-dark-color !important;
-    }
+  width: 100% !important;
+  color: $my-dark-color !important;
+  &::after {
+    color: $my-dark-color !important;
   }
+}
+
+.field-note {
+  border-radius: 5px;
+  padding: 3px 5px;
+  margin-right: 5px;
+  color: $my-white-color;
+  background-color: $my-note-color;
+}
+
+.block {
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin-right: 5px;
+  color: $my-white-color;
+  background-color: $my-note-color;
+  font-size: $my-font-small !important;
+  a {
+    color: $my-white-color;
+  }
+}
 
 @mixin flex-compatible {
   display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
@@ -182,9 +203,6 @@
       color: $my-dark-color !important;
     }
     .v-button {
-      color: $my-dark-color !important;
-    }
-    .v-touchkit-navbutton {
       color: $my-dark-color !important;
     }
   }

@@ -39,8 +39,10 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.field.DateViewField;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
+import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -134,17 +136,17 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
 
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
-            if (propertyId.equals("startdate")) {
+            if (Milestone.Field.startdate.equalTo(propertyId)) {
                 return new DateViewField(beanItem.getStartdate());
-            } else if (propertyId.equals("enddate")) {
+            } else if (Milestone.Field.enddate.equalTo(propertyId)) {
                 return new DateViewField(beanItem.getEnddate());
             } else if (Milestone.Field.assignuser.equalTo(propertyId)) {
                 return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
                         beanItem.getAssignuser(), beanItem.getOwnerFullName(), beanItem.getOwnerAvatarId(), false), ContentMode.HTML);
-            } else if (propertyId.equals("description")) {
+            } else if (Milestone.Field.description.equalTo(propertyId)) {
                 return new RichTextViewField(beanItem.getDescription());
-            } else if (propertyId.equals("status")) {
-                return new DefaultViewField(UserUIContext.getMessage(MilestoneStatus.class, beanItem.getStatus()));
+            } else if (Milestone.Field.status.equalTo(propertyId)) {
+                return new I18nFormViewField(beanItem.getStatus(), MilestoneStatus.class).withStyleName(UIConstants.FIELD_NOTE);
             }
             return null;
         }
