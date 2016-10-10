@@ -17,6 +17,7 @@
 package com.mycollab.mobile.module.project.view.milestone;
 
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.mobile.form.view.DynaFormLayout;
 import com.mycollab.mobile.module.project.events.MilestoneEvent;
 import com.mycollab.mobile.module.project.ui.CommentNavigationButton;
 import com.mycollab.mobile.module.project.ui.ProjectPreviewFormControlsGenerator;
@@ -28,6 +29,7 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.domain.Milestone;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
@@ -87,7 +89,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new MilestoneFormLayoutFactory();
+        return new DynaFormLayout(ProjectTypeConstants.MILESTONE, MilestoneDefaultFormLayoutFactory.getForm());
     }
 
     @Override
@@ -136,7 +138,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
                 return new DateViewField(beanItem.getStartdate());
             } else if (propertyId.equals("enddate")) {
                 return new DateViewField(beanItem.getEnddate());
-            } else if (propertyId.equals("owner")) {
+            } else if (Milestone.Field.assignuser.equalTo(propertyId)) {
                 return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
                         beanItem.getAssignuser(), beanItem.getOwnerFullName(), beanItem.getOwnerAvatarId(), false), ContentMode.HTML);
             } else if (propertyId.equals("description")) {

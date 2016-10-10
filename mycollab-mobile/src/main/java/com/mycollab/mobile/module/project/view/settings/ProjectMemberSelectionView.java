@@ -16,8 +16,8 @@
  */
 package com.mycollab.mobile.module.project.view.settings;
 
-import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Span;
+import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.db.arguments.NumberSearchField;
@@ -99,8 +99,7 @@ public class ProjectMemberSelectionView extends AbstractSelectionView<SimpleProj
             VerticalLayout memberInfoLayout = new VerticalLayout();
             mainLayout.with(memberAvatar, memberInfoLayout).expand(memberInfoLayout);
 
-            A memberLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables
-                    .getProjectId(), member.getUsername())).appendText(member.getDisplayName());
+            Text memberLink = new Text(member.getDisplayName());
             Label memberLbl = ELabel.html(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
             memberInfoLayout.addComponent(memberLbl);
 

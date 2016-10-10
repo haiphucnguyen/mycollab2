@@ -27,7 +27,7 @@ public class MilestoneEditFormFieldFactory<B extends Milestone> extends Abstract
 
     @Override
     protected Field<?> onCreateField(Object propertyId) {
-        if (propertyId.equals("owner")) {
+        if (Milestone.Field.assignuser.equalTo(propertyId)) {
             final ProjectMemberSelectionField userbox = new ProjectMemberSelectionField();
             userbox.setRequired(true);
             userbox.setRequiredError("Please select an assignee");
@@ -59,7 +59,7 @@ public class MilestoneEditFormFieldFactory<B extends Milestone> extends Abstract
     private static class ProgressStatusListSelect extends I18NValueListSelect {
         private static final long serialVersionUID = 1L;
 
-        public ProgressStatusListSelect() {
+        private ProgressStatusListSelect() {
             super();
             setCaption(null);
             this.setNullSelectionAllowed(false);
