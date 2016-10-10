@@ -10,7 +10,7 @@ import com.mycollab.mobile.module.project.view.bug.BugAddView;
 import com.mycollab.mobile.module.project.view.bug.BugDefaultFormLayoutFactory;
 import com.mycollab.mobile.module.project.view.bug.BugSeverityListSelect;
 import com.mycollab.mobile.module.project.view.milestone.MilestoneListSelect;
-import com.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
+import com.mycollab.mobile.module.project.view.settings.ProjectMemberListSelect;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.BugI18nEnum;
@@ -96,7 +96,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
                 }
                 return new PriorityListSelect();
             } else if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
-                return new ProjectMemberSelectionField();
+                return new ProjectMemberListSelect();
             } else if (BugWithBLOBs.Field.severity.equalTo(propertyId)) {
                 if (beanItem.getSeverity() == null) {
                     beanItem.setSeverity(BugSeverity.Major.name());

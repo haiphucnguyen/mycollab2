@@ -29,6 +29,7 @@ import com.vaadin.data.Property;
  * @author MyCollab Ltd.
  * @since 4.5.0
  */
+@Deprecated
 public class ProjectMemberSelectionField extends AbstractSelectionCustomField<String, SimpleProjectMember>
         implements FieldSelection<SimpleProjectMember> {
     private static final long serialVersionUID = 1L;

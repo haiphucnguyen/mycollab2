@@ -7,7 +7,7 @@ import com.mycollab.mobile.module.project.events.TicketEvent;
 import com.mycollab.mobile.module.project.ui.PriorityListSelect;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.milestone.MilestoneListSelect;
-import com.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
+import com.mycollab.mobile.module.project.view.settings.ProjectMemberListSelect;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
 import com.mycollab.mobile.ui.I18NValueListSelect;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -80,10 +80,8 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
 
         @Override
         protected Field<?> onCreateField(Object propertyId) {
-            if (Risk.Field.assignuser.equalTo(propertyId)) {
-                return new ProjectMemberSelectionField();
-            } else if (Risk.Field.createduser.equalTo(propertyId)) {
-                return new ProjectMemberSelectionField();
+            if (Risk.Field.assignuser.equalTo(propertyId) || Risk.Field.createduser.equalTo(propertyId)) {
+                return new ProjectMemberListSelect();
             } else if (Risk.Field.description.equalTo(propertyId) || Risk.Field.response.equalTo(propertyId)) {
                 final TextArea textArea = new TextArea();
                 textArea.setNullRepresentation("");

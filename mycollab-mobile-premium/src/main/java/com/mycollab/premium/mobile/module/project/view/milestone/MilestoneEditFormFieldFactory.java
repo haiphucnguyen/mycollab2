@@ -1,6 +1,6 @@
 package com.mycollab.premium.mobile.module.project.view.milestone;
 
-import com.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
+import com.mycollab.mobile.module.project.view.settings.ProjectMemberListSelect;
 import com.mycollab.mobile.ui.I18NValueListSelect;
 import com.mycollab.module.project.domain.Milestone;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
@@ -28,16 +28,16 @@ public class MilestoneEditFormFieldFactory<B extends Milestone> extends Abstract
     @Override
     protected Field<?> onCreateField(Object propertyId) {
         if (Milestone.Field.assignuser.equalTo(propertyId)) {
-            final ProjectMemberSelectionField userbox = new ProjectMemberSelectionField();
+            final ProjectMemberListSelect userbox = new ProjectMemberListSelect();
             userbox.setRequired(true);
             userbox.setRequiredError("Please select an assignee");
             return userbox;
-        } else if (propertyId.equals("status")) {
+        } else if (Milestone.Field.status.equalTo(propertyId)) {
             if (attachForm.getBean().getStatus() == null) {
                 attachForm.getBean().setStatus(MilestoneStatus.InProgress.toString());
             }
             return new ProgressStatusListSelect();
-        } else if (propertyId.equals("name")) {
+        } else if (Milestone.Field.name.equalTo(propertyId)) {
             final TextField tf = new TextField();
             if (isValidateForm) {
                 tf.setNullRepresentation("");
@@ -45,9 +45,9 @@ public class MilestoneEditFormFieldFactory<B extends Milestone> extends Abstract
                 tf.setRequiredError("Please enter name");
             }
             return tf;
-        } else if (propertyId.equals("startdate") || propertyId.equals("enddate")) {
+        } else if (Milestone.Field.startdate.equalTo(propertyId) || Milestone.Field.enddate.equalTo(propertyId)) {
             return new DatePicker();
-        } else if (propertyId.equals("description")) {
+        } else if (Milestone.Field.description.equalTo(propertyId)) {
             final TextArea descArea = new TextArea();
             descArea.setNullRepresentation("");
             return descArea;

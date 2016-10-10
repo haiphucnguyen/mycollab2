@@ -8,7 +8,7 @@ import com.mycollab.mobile.module.project.events.TicketEvent;
 import com.mycollab.mobile.module.project.ui.PriorityListSelect;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.milestone.MilestoneListSelect;
-import com.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
+import com.mycollab.mobile.module.project.view.settings.ProjectMemberListSelect;
 import com.mycollab.mobile.module.project.view.task.TaskAddView;
 import com.mycollab.mobile.module.project.view.task.TaskDefaultFormLayoutFactory;
 import com.mycollab.mobile.module.project.view.task.TaskPercentageCompleteListSelect;
@@ -83,7 +83,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
         @Override
         protected Field<?> onCreateField(Object propertyId) {
             if (Task.Field.assignuser.equalTo(propertyId)) {
-                return new ProjectMemberSelectionField();
+                return new ProjectMemberListSelect();
             } else if (Task.Field.description.equalTo(propertyId)) {
                 final TextArea textArea = new TextArea();
                 textArea.setNullRepresentation("");
