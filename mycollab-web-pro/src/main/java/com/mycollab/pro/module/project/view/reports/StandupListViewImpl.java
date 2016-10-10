@@ -18,12 +18,11 @@ import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
-import com.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
@@ -163,9 +162,9 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         }
     }
 
-    private class ProjectRowHandler implements AbstractBeanPagedList.RowDisplayHandler<StandupReportStatistic> {
+    private class ProjectRowHandler implements IBeanList.RowDisplayHandler<StandupReportStatistic> {
         @Override
-        public Component generateRow(final AbstractBeanPagedList host, final StandupReportStatistic project, int rowIndex) {
+        public Component generateRow(final IBeanList<StandupReportStatistic> host, final StandupReportStatistic project, int rowIndex) {
             ELabel projectLbl = new ELabel(project.getProjectName()).withStyleName(UIConstants.TEXT_ELLIPSIS);
             final MHorizontalLayout layout = new MHorizontalLayout(ProjectAssetsUtil.buildProjectLogo(project
                     .getProjectKey(), project.getProjectId(), project.getProjectAvatarId(), 32),
@@ -175,7 +174,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
             layout.addLayoutClickListener(layoutClickEvent -> {
                 selectedProject = project;
                 EventBusFactory.getInstance().post(new StandUpEvent.DisplayStandupInProject(this, project.getProjectId()));
-                host.setSelectedRow(layout);
+                ((AbstractBeanPagedList) host).setSelectedRow(layout);
             });
             return layout;
         }
@@ -211,7 +210,8 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
         void displayReports(Integer projectId, Date onDate) {
             removeAllComponents();
-            reportInDay = new BeanList<>(AppContextUtil.getSpringBean(StandupReportService.class), StandupReportRowDisplay.class);
+            reportInDay = new BeanList<>(AppContextUtil.getSpringBean(StandupReportService.class),
+                    new StandupReportRowDisplay());
             standupMissingComp = new StandupMissingComp();
             standupMissingComp.setWidth("300px");
             this.with(reportInDay, standupMissingComp).expand(reportInDay);
@@ -224,11 +224,11 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         }
     }
 
-    public static class StandupReportRowDisplay extends RowDisplayHandler<SimpleStandupReport> {
+    private static class StandupReportRowDisplay implements IBeanList.RowDisplayHandler<SimpleStandupReport> {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public Component generateRow(SimpleStandupReport report, int rowIndex) {
+        public Component generateRow(IBeanList<SimpleStandupReport> host, SimpleStandupReport report, int rowIndex) {
             HorizontalLayout rowLayout = new HorizontalLayout();
             rowLayout.setStyleName("standup-block");
 

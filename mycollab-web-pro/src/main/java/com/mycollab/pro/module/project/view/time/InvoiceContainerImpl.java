@@ -27,6 +27,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.IBeanList;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
@@ -40,7 +41,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static com.mycollab.module.project.i18n.OptionI18nEnum.*;
+import static com.mycollab.module.project.i18n.OptionI18nEnum.InvoiceStatus;
 
 /**
  * @author MyCollab Ltd
@@ -193,9 +194,9 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
         }
     }
 
-    private static class InvoiceRowDisplayHandler implements AbstractBeanPagedList.RowDisplayHandler<SimpleInvoice> {
+    private static class InvoiceRowDisplayHandler implements IBeanList.RowDisplayHandler<SimpleInvoice> {
         @Override
-        public Component generateRow(final AbstractBeanPagedList host, final SimpleInvoice invoice, int rowIndex) {
+        public Component generateRow(final IBeanList<SimpleInvoice> host, final SimpleInvoice invoice, int rowIndex) {
             final MVerticalLayout layout = new MVerticalLayout().withStyleName(WebUIConstants.BORDER_LIST_ROW)
                     .withStyleName(WebUIConstants.CURSOR_POINTER);
             InvoiceStatus invoiceStatus = InvoiceStatus.valueOf(invoice.getStatus());
@@ -215,7 +216,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
             }
             layout.addLayoutClickListener(layoutClickEvent -> {
                 EventBusFactory.getInstance().post(new InvoiceEvent.DisplayInvoiceView(this, invoice));
-                host.setSelectedRow(layout);
+                ((AbstractBeanPagedList) host).setSelectedRow(layout);
             });
             return layout;
         }

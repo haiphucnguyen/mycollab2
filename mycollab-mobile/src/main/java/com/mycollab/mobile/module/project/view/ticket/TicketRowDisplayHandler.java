@@ -29,8 +29,8 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.ui.BeanList;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.IBeanList;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
@@ -42,11 +42,10 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd
  * @since 5.4.3
  */
-public class TicketRowDisplayHandler  extends BeanList.RowDisplayHandler<ProjectTicket> {
-    private static final long serialVersionUID = 7604097872938029830L;
+public class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<ProjectTicket> {
 
     @Override
-    public Component generateRow(ProjectTicket issue, int rowIndex) {
+    public Component generateRow(IBeanList<ProjectTicket> host, ProjectTicket issue, int rowIndex) {
         MVerticalLayout ticketLayout = new MVerticalLayout().withFullWidth().withStyleName("row");
         A issueLink;
         if (ProjectTypeConstants.BUG.equals(issue.getType())) {

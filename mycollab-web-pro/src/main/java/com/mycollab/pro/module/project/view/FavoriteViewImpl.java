@@ -48,16 +48,13 @@ import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
-import com.mycollab.vaadin.ui.UIUtils;
+import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.SearchTextField;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -209,9 +206,9 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
         }
     }
 
-    private static class AssignmentRowHandler implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericItem> {
+    private static class AssignmentRowHandler implements IBeanList.RowDisplayHandler<ProjectGenericItem> {
         @Override
-        public Component generateRow(final AbstractBeanPagedList host, final ProjectGenericItem item, int rowIndex) {
+        public Component generateRow(final IBeanList<ProjectGenericItem> host, final ProjectGenericItem item, int rowIndex) {
             final MHorizontalLayout layout = new MHorizontalLayout().withStyleName(WebUIConstants.BORDER_LIST_ROW,
                     WebUIConstants.CURSOR_POINTER).withFullWidth();
             MButton favoriteBtn = new MButton(FontAwesome.STAR, clickEvent -> {
@@ -223,7 +220,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                 favoriteItem.setCreateduser(UserUIContext.getUsername());
                 FavoriteItemService favoriteItemService = AppContextUtil.getSpringBean(FavoriteItemService.class);
                 favoriteItemService.saveOrDelete(favoriteItem);
-                host.removeRow(layout);
+                ((BeanList) host).removeRow(layout);
             }).withStyleName("favorite-btn-selected", WebUIConstants.BUTTON_ICON_ONLY);
 
             ELabel headerLbl = ELabel.html(ProjectAssetsManager.getAsset(item.getType()).getHtml() + " " + item.getName())
@@ -231,7 +228,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
             layout.with(favoriteBtn, headerLbl).expand(headerLbl);
             layout.addLayoutClickListener(layoutClickEvent -> {
                 EventBusFactory.getInstance().post(new ProjectEvent.SelectFavoriteItem(this, item));
-                host.setSelectedRow(layout);
+                ((AbstractBeanPagedList) host).setSelectedRow(layout);
             });
             return layout;
         }
