@@ -125,8 +125,10 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
             ticketLink.appendText(ticket.getName());
 
             CssLayout ticketLbl = new CssLayout(ELabel.html(ticketLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS));
-            rowLayout.with(new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())), ticketLbl)
-                    .expand(ticketLbl).withFullWidth());
+            String priorityValue = ProjectAssetsManager.getPriority(ticket.getPriority()).getHtml();
+            ELabel priorityLbl = ELabel.html(priorityValue).withWidthUndefined().withStyleName("priority-" + ticket.getPriority().toLowerCase());
+            rowLayout.with(new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())), priorityLbl,
+                    ticketLbl).expand(ticketLbl).withFullWidth());
 
             CssLayout metaInfoLayout = new CssLayout();
             rowLayout.with(metaInfoLayout);

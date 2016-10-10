@@ -298,4 +298,42 @@
   :placeholder-shown { /* Standard one last! */
     color: $my-meta-color;
   }
+
+  /*PRIORITY STYLES*/
+    $priority-urgent-color: #d32d1a;
+    $priority-high-color: #e95948;
+    $priority-medium-color: #f09085;
+    $priority-low-color: #f7c7c1;
+    $priority-none-color: #b7b9b0;
+
+    .priority-urgent, .v-filterselect-item-priority-urgent {
+      .v-icon, &.v-icon {
+        color: $priority-urgent-color;
+      }
+    }
+
+    .priority-high, .v-filterselect-item-priority-high {
+      .v-icon, &.v-icon {
+        color: $priority-high-color;
+      }
+    }
+
+    .priority-medium, .v-filterselect-item-priority-medium {
+      .v-icon, &.v-icon {
+        color: $priority-medium-color;
+      }
+    }
+
+    .priority-low-color, .v-filterselect-item-priority-low-color {
+      .v-icon, &.v-icon {
+        color: $priority-low-color-color;
+      }
+    }
+
+    .priority-none, .v-filterselect-item-priority-none {
+      .v-icon, &.v-icon {
+        color: $priority-none-color;
+      }
+    }
+    /*END PRIORITY STYLES*/
 }

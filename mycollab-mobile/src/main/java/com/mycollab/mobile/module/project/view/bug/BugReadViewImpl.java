@@ -39,10 +39,10 @@ import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.BugI18nEnum;
-import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
@@ -201,14 +201,12 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
         @Override
         protected Field<?> onCreateField(Object propertyId) {
-            if (propertyId.equals("duedate")) {
+            if (BugWithBLOBs.Field.duedate.equalTo(propertyId)) {
                 return new DateViewField(beanItem.getDuedate());
-            } else if (propertyId.equals("startdate")) {
+            } else if (BugWithBLOBs.Field.startdate.equalTo(propertyId)) {
                 return new DateViewField(beanItem.getStartdate());
-            } else if (propertyId.equals("enddate")) {
+            } else if (BugWithBLOBs.Field.enddate.equalTo(propertyId)) {
                 return new DateViewField(beanItem.getEnddate());
-            } else if (propertyId.equals("createdtime")) {
-                return new DateViewField(beanItem.getCreatedtime());
             } else if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
                 return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink
                         (CurrentProjectVariables.getProjectId(), beanItem.getAssignuser(), beanItem.getAssignuserFullName(),
@@ -224,16 +222,16 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     return new DefaultViewField("", ContentMode.HTML);
                 }
 
-            } else if (propertyId.equals("environment")) {
+            } else if (BugWithBLOBs.Field.environment.equalTo(propertyId)) {
                 return new RichTextViewField(beanItem.getEnvironment());
-            } else if (propertyId.equals("description")) {
+            } else if (BugWithBLOBs.Field.description.equalTo(propertyId)) {
                 return new RichTextViewField(beanItem.getDescription());
-            } else if (propertyId.equals("status")) {
+            } else if (BugWithBLOBs.Field.status.equalTo(propertyId)) {
                 return new I18nFormViewField(beanItem.getStatus(), BugStatus.class);
             } else if (BugWithBLOBs.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
                     String priorityLink = ProjectAssetsManager.getPriority(beanItem.getPriority()).getHtml() + " "
-                            + UserUIContext.getMessage(OptionI18nEnum.Priority.class, beanItem.getPriority());
+                            + UserUIContext.getMessage(Priority.class, beanItem.getPriority());
                     DefaultViewField field = new DefaultViewField(priorityLink, ContentMode.HTML);
                     field.addStyleName("priority-" + beanItem.getPriority().toLowerCase());
                     return field;

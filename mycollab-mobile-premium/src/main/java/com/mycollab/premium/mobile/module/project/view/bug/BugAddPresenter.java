@@ -3,6 +3,7 @@ package com.mycollab.premium.mobile.module.project.view.bug;
 import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.core.SecureAccessException;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.mobile.module.project.events.BugEvent;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.mycollab.mobile.module.project.view.bug.BugAddView;
@@ -41,8 +42,8 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
 
             @Override
             public void onSave(final SimpleBug bug) {
-                saveBug(bug);
-                EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
+                Integer bugId = saveBug(bug);
+                EventBusFactory.getInstance().post(new BugEvent.GotoRead(this, bugId));
             }
         });
     }
@@ -66,7 +67,7 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
         }
     }
 
-    private void saveBug(SimpleBug bug) {
+    private Integer saveBug(SimpleBug bug) {
         BugService bugService = AppContextUtil.getSpringBean(BugService.class);
         bug.setProjectid(CurrentProjectVariables.getProjectId());
         bug.setSaccountid(MyCollabUI.getAccountId());
@@ -81,5 +82,6 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
             bugService.updateWithSession(bug, UserUIContext.getUsername());
             uploadField.saveContentsToRepo();
         }
+        return bug.getId();
     }
 }
