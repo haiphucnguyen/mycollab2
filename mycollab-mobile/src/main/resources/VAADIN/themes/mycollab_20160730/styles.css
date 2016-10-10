@@ -470,6 +470,10 @@ body {
 	margin-bottom: 0 !important;
 }
 
+.v-touchkit-verticalcomponentgroup .v-touchkit-navbutton:active {
+	background-color: transparent !important;
+}
+
 .v-touchkit-componentgroup-row:before {
 	border-top: 1px solid #e5e5e5 !important;
 	left: 0px !important;

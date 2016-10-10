@@ -39,6 +39,9 @@
     border-bottom: 1px solid $my-separator-color !important;
     box-shadow: none !important;
     margin-bottom: 0 !important;
+    .v-touchkit-navbutton:active {
+      background-color: transparent !important;
+    }
   }
 
   .v-touchkit-componentgroup-row:before {

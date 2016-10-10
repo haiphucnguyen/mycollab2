@@ -38,7 +38,9 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
+import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -194,13 +196,13 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
                         beanItem.getCreateduser(), beanItem.getRaisedByUserFullName(), beanItem.getRaisedByUserAvatarId(), false),
                         ContentMode.HTML);
-            } else if (propertyId.equals("startdate")) {
+            } else if (Risk.Field.startdate.equalTo(propertyId)) {
                 return new DefaultViewField(UserUIContext.formatDate(beanItem.getStartdate()));
-            } else if (propertyId.equals("enddate")) {
+            } else if (Risk.Field.enddate.equalTo(propertyId)) {
                 return new DefaultViewField(UserUIContext.formatDate(beanItem.getEnddate()));
-            } else if (propertyId.equals("duedate")) {
+            } else if (Risk.Field.duedate.equalTo(propertyId)) {
                 return new DefaultViewField(UserUIContext.formatDate(beanItem.getDuedate()));
-            } else if (propertyId.equals("priority")) {
+            } else if (Risk.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
                     FontAwesome fontPriority = ProjectAssetsManager.getPriority(beanItem.getPriority());
                     String priorityLbl = fontPriority.getHtml() + " " + UserUIContext.getMessage(Priority.class, beanItem.getPriority());
@@ -216,8 +218,10 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                             .MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
                 }
-            } else if (propertyId.equals(Risk.Field.description.equalTo(propertyId))) {
+            } else if (Risk.Field.description.equalTo(propertyId)) {
                 return new RichTextViewField(beanItem.getDescription());
+            } else if (Risk.Field.status.equalTo(propertyId)) {
+                return new I18nFormViewField(beanItem.getStatus(), StatusI18nEnum.class).withStyleName(UIConstants.FIELD_NOTE);
             }
             return null;
         }
