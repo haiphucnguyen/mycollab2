@@ -91,5 +91,4 @@ public class DriveInfoServiceImpl extends DefaultCrudService<Integer, DriveInfo>
         DriveInfo driveInfo = getDriveInfo(sAccountId);
         return (driveInfo.getUsedvolume() == null) ? Long.valueOf(0L) : driveInfo.getUsedvolume();
     }
-
 }

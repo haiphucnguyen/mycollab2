@@ -202,16 +202,16 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
-            if (propertyId.equals("assignuser")) {
+            if (Task.Field.assignuser.equalTo(propertyId)) {
                 return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
                         beanItem.getAssignuser(), beanItem.getAssignUserFullName(), beanItem.getAssignUserAvatarId(), false), ContentMode.HTML);
-            } else if (propertyId.equals("startdate")) {
+            } else if (Task.Field.startdate.equalTo(propertyId)) {
                 return new DefaultViewField(UserUIContext.formatDate(beanItem.getStartdate()));
-            } else if (propertyId.equals("enddate")) {
+            } else if (Task.Field.enddate.equalTo(propertyId)) {
                 return new DefaultViewField(UserUIContext.formatDate(beanItem.getEnddate()));
-            } else if (propertyId.equals("duedate")) {
+            } else if (Task.Field.duedate.equalTo(propertyId)) {
                 return new DefaultViewField(UserUIContext.formatDate(beanItem.getDuedate()));
-            } else if (propertyId.equals("priority")) {
+            } else if (Task.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
                     FontAwesome fontPriority = ProjectAssetsManager.getPriority(beanItem.getPriority());
                     String priorityLbl = fontPriority.getHtml() + " " + UserUIContext.getMessage(Priority.class, beanItem.getPriority());
@@ -227,7 +227,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                             .MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
                 }
-            } else if (propertyId.equals(Task.Field.description.equalTo(propertyId))) {
+            } else if (Task.Field.description.equalTo(propertyId)) {
                 return new RichTextViewField(beanItem.getDescription());
             }
             return null;
