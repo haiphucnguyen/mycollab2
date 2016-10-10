@@ -47,6 +47,7 @@ import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.IBeanList;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.addon.touchkit.ui.Toolbar;
 import com.vaadin.server.FontAwesome;
@@ -152,10 +153,10 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
         return toolbar;
     }
 
-    private static class MilestoneRowDisplayHandler implements AbstractPagedBeanList.RowDisplayHandler<SimpleMilestone> {
+    private static class MilestoneRowDisplayHandler implements IBeanList.RowDisplayHandler<SimpleMilestone> {
 
         @Override
-        public Component generateRow(final SimpleMilestone milestone, int rowIndex) {
+        public Component generateRow(IBeanList<SimpleMilestone> host, final SimpleMilestone milestone, int rowIndex) {
             MVerticalLayout milestoneInfoLayout = new MVerticalLayout().withSpacing(false).withFullWidth();
 
             A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink(CurrentProjectVariables

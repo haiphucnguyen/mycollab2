@@ -54,6 +54,7 @@ import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.IBeanList;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -111,10 +112,10 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
         return menu;
     }
 
-    private static class TicketRowDisplayHandler implements AbstractPagedBeanList.RowDisplayHandler<ProjectTicket> {
+    private static class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<ProjectTicket> {
 
         @Override
-        public Component generateRow(final ProjectTicket ticket, int rowIndex) {
+        public Component generateRow(IBeanList<ProjectTicket> host, final ProjectTicket ticket, int rowIndex) {
             MVerticalLayout rowLayout = new MVerticalLayout().withSpacing(false).withFullWidth();
 
             A ticketLink = new A();
