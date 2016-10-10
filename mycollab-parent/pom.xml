@@ -420,11 +420,6 @@
         </repository>
 
         <repository>
-            <id>scalaz-repo</id>
-            <url>http://dl.bintray.com/scalaz/releases/</url>
-        </repository>
-
-        <repository>
             <id>repository.springsource.milestone</id>
             <name>SpringSource Milestone Repository</name>
             <url>http://repo.springsource.org/milestone</url>

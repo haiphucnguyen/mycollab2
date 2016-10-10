@@ -50,7 +50,6 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.addon.touchkit.ui.Toolbar;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -161,10 +160,9 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
 
             A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink(CurrentProjectVariables
                     .getProjectId(), milestone.getId())).appendChild(new Span().appendText(milestone.getName()));
-            MCssLayout milestoneWrap = new MCssLayout(new ELabel(milestoneLink.write(), ContentMode.HTML));
-            milestoneInfoLayout.addComponent(new MHorizontalLayout(new ELabel(ProjectAssetsManager.getAsset
-                    (ProjectTypeConstants.MILESTONE).getHtml(), ContentMode.HTML).withWidthUndefined(), milestoneWrap)
-                    .expand(milestoneWrap).withFullWidth());
+            MCssLayout milestoneWrap = new MCssLayout(ELabel.html(milestoneLink.write()));
+            milestoneInfoLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset
+                    (ProjectTypeConstants.MILESTONE)), milestoneWrap).expand(milestoneWrap).withFullWidth());
 
             CssLayout metaLayout = new CssLayout();
             milestoneInfoLayout.addComponent(metaLayout);
@@ -180,7 +178,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
                     CurrentProjectVariables.getProjectId(), milestone.getAssignuser()))
                     .appendText(StringUtils.trim(milestone.getOwnerFullName(), 30, true));
             Div assigneeDiv = new Div().appendChild(new Img("", StorageFactory.getAvatarPath(milestone
-                    .getOwnerAvatarId(), 16))).appendChild(assigneeLink);
+                    .getOwnerAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX)).appendChild(assigneeLink);
 
             ELabel assigneeLbl = ELabel.html(assigneeDiv.write()).withStyleName(UIConstants.META_INFO)
                     .withWidthUndefined();

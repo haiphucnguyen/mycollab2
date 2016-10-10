@@ -147,8 +147,8 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
             assigneeLink.appendText(StringUtils.trim(ticket.getAssignUserFullName(), 30, true));
             Div assigneeDiv = new Div().appendText(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
                     .appendChild(DivLessFormatter.EMPTY_SPACE(), new Img("", StorageFactory
-                                    .getAvatarPath(ticket.getAssignUserAvatarId(), 16)), DivLessFormatter.EMPTY_SPACE(),
-                            assigneeLink);
+                                    .getAvatarPath(ticket.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
+                            DivLessFormatter.EMPTY_SPACE(), assigneeLink);
 
             ELabel assigneeLbl = ELabel.html(assigneeDiv.write()).withStyleName(UIConstants.META_INFO).withWidthUndefined();
             metaInfoLayout.addComponent(assigneeLbl);
