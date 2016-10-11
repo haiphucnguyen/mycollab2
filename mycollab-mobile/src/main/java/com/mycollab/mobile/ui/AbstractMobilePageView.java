@@ -40,11 +40,6 @@ public abstract class AbstractMobilePageView extends NavigationView implements P
         super();
         if (this.getLeftComponent() != null && this.getLeftComponent() instanceof NavigationButton) {
             this.getLeftComponent().setCaption(getBackTitle());
-            getNavigationManager().addNavigationListener(navigationEvent -> {
-                if (navigationEvent.getDirection() == NavigationManager.NavigationEvent.Direction.BACK) {
-                    doBackAction1();
-                }
-            });
         }
 
         if (this.getLeftComponent() == null) {
@@ -58,10 +53,6 @@ public abstract class AbstractMobilePageView extends NavigationView implements P
 
     protected void doBackAction() {
 
-    }
-
-    private void doBackAction1() {
-        System.out.println("BACK: " + this + "---" + getNavigationManager());
     }
 
     @Override

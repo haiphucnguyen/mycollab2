@@ -153,6 +153,11 @@ public class MobileApplication extends MyCollabUI {
         postSetupApp(request);
 
         final NavigationManager manager = new NavigationManager();
+        manager.addNavigationListener(navigationEvent -> {
+            if (navigationEvent.getDirection() == NavigationManager.NavigationEvent.Direction.BACK) {
+                System.out.println("A: " + ((NavigationManager)navigationEvent.getSource()).getCurrentComponent());
+            }
+        });
         setContent(manager);
 
         registerControllers(manager);

@@ -282,6 +282,7 @@ a {
 
 .v-touchkit-navpanel-wrapper .v-touchkit-navpanel-placeholder > div {
 	background-color: #f9f9f9 !important;
+	color: #000 !important;
 }
 
 .v-touchkit-navbar {
