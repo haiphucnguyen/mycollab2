@@ -35,6 +35,10 @@
     box-shadow: none !important;
   }
 
+  .v-touchkit-navview-toolbar {
+    border-top: 1px solid $my-separator-color !important;
+  }
+
   .v-touchkit-verticalcomponentgroup {
     border-bottom: 1px solid $my-separator-color !important;
     box-shadow: none !important;

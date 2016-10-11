@@ -464,6 +464,10 @@ body {
 	box-shadow: none !important;
 }
 
+.v-touchkit-navview-toolbar {
+	border-top: 1px solid #e5e5e5 !important;
+}
+
 .v-touchkit-verticalcomponentgroup {
 	border-bottom: 1px solid #e5e5e5 !important;
 	box-shadow: none !important;
