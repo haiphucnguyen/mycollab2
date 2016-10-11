@@ -48,7 +48,7 @@ public class UserProjectListViewImpl extends AbstractListPageView<ProjectSearchC
     private static final long serialVersionUID = 664947871255886622L;
 
     public UserProjectListViewImpl() {
-        this.setCaption(UserUIContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_LIST));
+        this.setCaption(UserUIContext.getMessage(ProjectI18nEnum.LIST));
     }
 
     @Override

@@ -193,6 +193,9 @@
 
   .v-touchkit-navpanel-wrapper {
     background-color: white;
+    .v-touchkit-navpanel-placeholder > div {
+      background-color: #f9f9f9 !important;
+    }
   }
 
   .v-touchkit-navbar {

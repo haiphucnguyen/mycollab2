@@ -280,6 +280,10 @@ a {
 	background-color: white;
 }
 
+.v-touchkit-navpanel-wrapper .v-touchkit-navpanel-placeholder > div {
+	background-color: #f9f9f9 !important;
+}
+
 .v-touchkit-navbar {
 	background-color: #f9f9f9 !important;
 	border-bottom: 1px solid #e5e5e5 !important;
@@ -466,6 +470,7 @@ body {
 
 .v-touchkit-navview-toolbar {
 	border-top: 1px solid #e5e5e5 !important;
+	background-color: white;
 }
 
 .v-touchkit-verticalcomponentgroup {
