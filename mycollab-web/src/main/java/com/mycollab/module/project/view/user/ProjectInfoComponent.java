@@ -183,11 +183,11 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                     .withIcon(FontAwesome.CALENDAR).withStyleName(WebUIConstants.BUTTON_SMALL_PADDING, WebUIConstants.BUTTON_LINK);
             footer.addComponents(eventBtn);
 
-            MButton ganttChartBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_GANTT_CHART),
-                    clickEvent -> EventBusFactory.getInstance().post(new ProjectEvent.GotoGanttChart(this, null)))
-                    .withIcon(FontAwesome.BAR_CHART_O).withStyleName(WebUIConstants.BUTTON_SMALL_PADDING,
-                            WebUIConstants.BUTTON_LINK);
-            footer.addComponents(ganttChartBtn);
+//            MButton ganttChartBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_GANTT_CHART),
+//                    clickEvent -> EventBusFactory.getInstance().post(new ProjectEvent.GotoGanttChart(this, null)))
+//                    .withIcon(FontAwesome.BAR_CHART_O).withStyleName(WebUIConstants.BUTTON_SMALL_PADDING,
+//                            WebUIConstants.BUTTON_LINK);
+//            footer.addComponents(ganttChartBtn);
         }
 
         headerLayout.with(headerLbl, footer);
