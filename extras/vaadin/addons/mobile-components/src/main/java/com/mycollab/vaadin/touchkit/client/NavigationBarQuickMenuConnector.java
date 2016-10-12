@@ -10,8 +10,7 @@ import com.vaadin.client.ui.AbstractSingleComponentContainerConnector;
 import com.vaadin.shared.ui.Connect;
 
 @Connect(NavigationBarQuickMenu.class)
-public class NavigationBarQuickMenuConnector extends
-		AbstractSingleComponentContainerConnector {
+public class NavigationBarQuickMenuConnector extends AbstractSingleComponentContainerConnector {
 	private static final long serialVersionUID = 7685952756391226734L;
 
 	public NavigationBarQuickMenuConnector() {

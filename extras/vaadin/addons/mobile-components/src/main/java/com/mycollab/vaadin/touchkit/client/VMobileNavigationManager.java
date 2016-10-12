@@ -14,11 +14,8 @@ import com.vaadin.addon.touchkit.gwt.client.ui.VNavigationManager;
 public class VMobileNavigationManager extends VNavigationManager {
 
 	private final SimplePanel navigationMenu;
-
 	private boolean menuVisibility = false;
-
 	private int currentOffset = 0;
-
 	private final SimplePanel wrapper;
 	private final DivElement content;
 

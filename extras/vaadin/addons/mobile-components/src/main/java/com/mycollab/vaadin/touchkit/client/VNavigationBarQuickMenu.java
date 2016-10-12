@@ -29,7 +29,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.addon.touchkit.gwt.client.ui.Css3Propertynames;
 import com.vaadin.addon.touchkit.gwt.client.ui.VNavigationView;
 
-@SuppressWarnings("deprecation")
 public class VNavigationBarQuickMenu extends SimplePanel implements
 		TouchStartHandler, TouchMoveHandler, TouchEndHandler,
 		TouchCancelHandler, ClickHandler {
