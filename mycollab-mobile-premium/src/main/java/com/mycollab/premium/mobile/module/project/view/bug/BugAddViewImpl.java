@@ -1,9 +1,7 @@
 package com.mycollab.premium.mobile.module.project.view.bug;
 
 import com.mycollab.common.i18n.ErrorI18nEnum;
-import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.form.view.DynaFormLayout;
-import com.mycollab.mobile.module.project.events.TicketEvent;
 import com.mycollab.mobile.module.project.ui.PriorityListSelect;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.bug.BugAddView;
@@ -16,7 +14,6 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
-import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.vaadin.UserUIContext;
@@ -62,16 +59,6 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
     @Override
     protected AbstractBeanFieldGroupEditFieldFactory<SimpleBug> initBeanFormFieldFactory() {
         return new EditFormFieldFactory(this.editForm);
-    }
-
-    @Override
-    protected String getBackTitle() {
-        return UserUIContext.getMessage(TicketI18nEnum.LIST);
-    }
-
-    @Override
-    protected void doBackAction() {
-        EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null));
     }
 
     private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleBug> {

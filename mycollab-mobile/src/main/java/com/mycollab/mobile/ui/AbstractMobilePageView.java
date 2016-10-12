@@ -47,12 +47,8 @@ public abstract class AbstractMobilePageView extends NavigationView implements P
         }
     }
 
-    protected String getBackTitle() {
+    private String getBackTitle() {
         return UserUIContext.getMessage(GenericI18Enum.M_BUTTON_BACK);
-    }
-
-    protected void doBackAction() {
-
     }
 
     @Override

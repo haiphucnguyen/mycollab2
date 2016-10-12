@@ -2,9 +2,7 @@ package com.mycollab.premium.mobile.module.project.view.task;
 
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.form.view.DynaFormLayout;
-import com.mycollab.mobile.module.project.events.TicketEvent;
 import com.mycollab.mobile.module.project.ui.PriorityListSelect;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.milestone.MilestoneListSelect;
@@ -17,7 +15,6 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
-import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -51,16 +48,6 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
         }
         super.editItem(item);
         editForm.addComponent(attachmentUploadField);
-    }
-
-    @Override
-    protected String getBackTitle() {
-        return UserUIContext.getMessage(TicketI18nEnum.LIST);
-    }
-
-    @Override
-    protected void doBackAction() {
-        EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null));
     }
 
     @Override

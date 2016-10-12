@@ -1,9 +1,7 @@
 package com.mycollab.premium.mobile.module.project.view.risk;
 
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
-import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.form.view.DynaFormLayout;
-import com.mycollab.mobile.module.project.events.TicketEvent;
 import com.mycollab.mobile.module.project.ui.PriorityListSelect;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.milestone.MilestoneListSelect;
@@ -16,7 +14,6 @@ import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskConsequence;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskProbability;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
-import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -59,16 +56,6 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
     @Override
     protected AbstractBeanFieldGroupEditFieldFactory<SimpleRisk> initBeanFormFieldFactory() {
         return new RiskEditFormFieldFactory(this.editForm);
-    }
-
-    @Override
-    protected String getBackTitle() {
-        return UserUIContext.getMessage(TicketI18nEnum.LIST);
-    }
-
-    @Override
-    protected void doBackAction() {
-        EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null));
     }
 
     private class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleRisk> {
