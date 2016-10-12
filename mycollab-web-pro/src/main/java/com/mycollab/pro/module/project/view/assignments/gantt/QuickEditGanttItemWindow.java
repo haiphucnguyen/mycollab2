@@ -4,13 +4,17 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.domain.*;
+import com.mycollab.module.project.event.BugEvent;
 import com.mycollab.module.project.event.MilestoneEvent;
 import com.mycollab.module.project.event.TaskEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
+import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
+import com.mycollab.module.tracker.domain.SimpleBug;
+import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.pro.module.project.events.GanttEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
@@ -21,6 +25,7 @@ import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -36,7 +41,7 @@ public class QuickEditGanttItemWindow extends MWindow {
     private GanttItemWrapper ganttItem;
 
     public QuickEditGanttItemWindow(GanttExt gantt, GanttItemWrapper ganttItem) {
-        super(UserUIContext.getMessage(TaskI18nEnum.EDIT));
+        super(UserUIContext.getMessage(TicketI18nEnum.EDIT));
         this.gantt = gantt;
         this.ganttItem = ganttItem;
 
@@ -72,6 +77,10 @@ public class QuickEditGanttItemWindow extends MWindow {
                         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                         SimpleMilestone milestone = milestoneService.findById(bean.getId(), MyCollabUI.getAccountId());
                         EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(QuickEditGanttItemWindow.this, milestone));
+                    } else if (bean instanceof BugGanttItem) {
+                        BugService bugService = AppContextUtil.getSpringBean(BugService.class);
+                        SimpleBug bug = bugService.findById(bean.getId(), MyCollabUI.getAccountId());
+                        EventBusFactory.getInstance().post(new BugEvent.GotoEdit(QuickEditGanttItemWindow.this, bug));
                     } else {
                         throw new MyCollabException("Do not support gantt item type " + bean);
                     }
@@ -87,7 +96,7 @@ public class QuickEditGanttItemWindow extends MWindow {
                         EventBusFactory.getInstance().post(new GanttEvent.UpdateGanttItem(QuickEditGanttItemWindow.this, ganttItem));
                         close();
                     }
-                }).withStyleName(WebUIConstants.BUTTON_ACTION);
+                }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
                 MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                         .withStyleName(WebUIConstants.BUTTON_OPTION);

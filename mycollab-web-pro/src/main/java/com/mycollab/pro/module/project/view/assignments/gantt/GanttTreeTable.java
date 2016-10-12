@@ -16,6 +16,7 @@ import com.mycollab.module.project.event.TaskEvent;
 import com.mycollab.module.project.i18n.GanttI18nEnum;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
+import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.GanttAssignmentService;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.components.HumanTimeConverter;
@@ -77,7 +78,7 @@ public class GanttTreeTable extends TreeTable {
                 "predecessors", "assignUser");
         this.setColumnHeader("ganttIndex", "");
         this.setColumnWidth("ganttIndex", 25);
-        this.setColumnHeader("name", UserUIContext.getMessage(TaskI18nEnum.SINGLE));
+        this.setColumnHeader("name", UserUIContext.getMessage(TicketI18nEnum.SINGLE));
         this.setColumnExpandRatio("name", 1.0f);
         this.setHierarchyColumn("name");
         this.setColumnHeader("startDate", UserUIContext.getMessage(GanttI18nEnum.OPT_START));
