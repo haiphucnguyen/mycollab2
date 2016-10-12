@@ -9,7 +9,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.6.3</vaadin.version>
+        <vaadin.version>7.7.3</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 
         <!-- ZIP Manifest fields -->
@@ -86,7 +86,7 @@
                             <!-- Package format version - do not change -->
                             <Vaadin-Package-Version>1</Vaadin-Package-Version>
                             <Vaadin-License-Title>${Vaadin-License-Title}</Vaadin-License-Title>
-                            <Vaadin-Widgetsets>com.mycollab.vaadin.addon.mobilecomponents.WidgetSet</Vaadin-Widgetsets>
+                            <Vaadin-Widgetsets>com.mycollab.vaadin.touchkit.WidgetSet</Vaadin-Widgetsets>
                         </manifestEntries>
                     </archive>
                 </configuration>

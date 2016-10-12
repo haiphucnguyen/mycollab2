@@ -16,9 +16,9 @@
  */
 package com.mycollab.mobile.ui;
 
-import com.esofthead.vaadin.mobilecomponent.InfiniteScrollLayout;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
+import com.mycollab.vaadin.touchkit.InfiniteScrollLayout;
 import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
