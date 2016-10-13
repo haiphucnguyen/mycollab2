@@ -1,10 +1,10 @@
 package com.mycollab.vaadin.touchkit.client.ui;
 
-import com.mycollab.vaadin.touchkit.InfiniteScrollLayout;
-import com.mycollab.vaadin.touchkit.client.shared.ScrollReachBottomRpc;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent;
+import com.mycollab.vaadin.touchkit.InfiniteScrollLayout;
+import com.mycollab.vaadin.touchkit.client.shared.ScrollReachBottomRpc;
 import com.vaadin.client.ComponentConnector;
 import com.vaadin.client.ServerConnector;
 import com.vaadin.client.communication.RpcProxy;
@@ -15,60 +15,60 @@ import com.vaadin.shared.ui.Connect;
 
 @Connect(InfiniteScrollLayout.class)
 public class InfiniteScrollLayoutConnector extends AbstractExtensionConnector implements AttachEvent.Handler {
-	private static final long serialVersionUID = -6280613841079001933L;
+    private static final long serialVersionUID = -6280613841079001933L;
 
-	private static final String CLASSNAME = "v-scrolllayout";
+    private static final String CLASSNAME = "v-scrolllayout";
 
-	private ScrollReachBottomRpc scrollReachBottomRpc = RpcProxy.create(ScrollReachBottomRpc.class, this);
-	public JavaScriptObject scrollHandler;
-	private Element contentEl;
+    private ScrollReachBottomRpc scrollReachBottomRpc = RpcProxy.create(ScrollReachBottomRpc.class, this);
+    public JavaScriptObject scrollHandler;
+    private Element contentEl;
 
-	@Override
-	protected void init() {
-		super.init();
+    @Override
+    protected void init() {
+        super.init();
 
-		initHandler();
-	}
+        initHandler();
+    }
 
-	private native void initHandler() /*-{
-		var self = this;
+    private native void initHandler() /*-{
+        var self = this;
 		this.@com.mycollab.vaadin.touchkit.client.ui.InfiniteScrollLayoutConnector::scrollHandler = function() {
 			self.@com.mycollab.vaadin.touchkit.client.ui.InfiniteScrollLayoutConnector::callRpc()();
 		};
 	}-*/;
 
-	@Override
-	protected void extend(ServerConnector target) {
-		VCssLayout layout = (VCssLayout) ((ComponentConnector) target).getWidget();
-		layout.addStyleName(CLASSNAME);
-		contentEl = layout.getElement();
-		TouchScrollDelegate.enableTouchScrolling(layout, contentEl);
-		layout.addAttachHandler(this);
-	}
+    @Override
+    protected void extend(ServerConnector target) {
+        VCssLayout layout = (VCssLayout) ((ComponentConnector) target).getWidget();
+        layout.addStyleName(CLASSNAME);
+        contentEl = layout.getElement();
+        TouchScrollDelegate.enableTouchScrolling(layout, contentEl);
+        layout.addAttachHandler(this);
+    }
 
-	@Override
-	public void onAttachOrDetach(AttachEvent event) {
-		if (event.isAttached()) {
-			addScrollHandler(contentEl);
-		} else {
-			removeScrollHandler(contentEl);
-		}
-	}
+    @Override
+    public void onAttachOrDetach(AttachEvent event) {
+        if (event.isAttached()) {
+            addScrollHandler(contentEl);
+        } else {
+            removeScrollHandler(contentEl);
+        }
+    }
 
-	private native void removeScrollHandler(Element element) /*-{
+    private native void removeScrollHandler(Element element) /*-{
 		var self = this;
 		element.removeEventListener('scroll', self.@com.mycollab.vaadin.touchkit.client.ui.InfiniteScrollLayoutConnector::scrollHandler);
 	}-*/;
 
-	private native void addScrollHandler(Element element) /*-{
+    private native void addScrollHandler(Element element) /*-{
 		var self = this;
 		element.addEventListener('scroll', self.@com.mycollab.vaadin.touchkit.client.ui.InfiniteScrollLayoutConnector::scrollHandler);
 	}-*/;
 
-	public void callRpc() {
-		int scrollTop = contentEl.getScrollTop();
-		if (scrollTop == contentEl.getScrollHeight() - contentEl.getOffsetHeight())
-			scrollReachBottomRpc.onReachBottom();
-	}
+    public void callRpc() {
+        int scrollTop = contentEl.getScrollTop();
+        if (scrollTop == contentEl.getScrollHeight() - contentEl.getOffsetHeight())
+            scrollReachBottomRpc.onReachBottom();
+    }
 
 }

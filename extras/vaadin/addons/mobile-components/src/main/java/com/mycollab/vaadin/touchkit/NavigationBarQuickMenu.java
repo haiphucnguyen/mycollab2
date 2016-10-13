@@ -20,7 +20,6 @@ import com.mycollab.vaadin.touchkit.client.NavigationBarQuickMenuState;
 import com.vaadin.ui.AbstractSingleComponentContainer;
 
 public class NavigationBarQuickMenu extends AbstractSingleComponentContainer {
-
 	private static final long serialVersionUID = 4214096999617161353L;
 
 	public NavigationBarQuickMenu() {

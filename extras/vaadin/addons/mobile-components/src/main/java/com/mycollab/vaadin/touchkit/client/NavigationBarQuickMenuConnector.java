@@ -35,7 +35,7 @@ public class NavigationBarQuickMenuConnector extends AbstractSingleComponentCont
 	@Override
 	public void onStateChanged(StateChangeEvent stateChangeEvent) {
 		super.onStateChanged(stateChangeEvent);
-		getWidget().updateButtonCaption(getState().buttonCaption);
+		getWidget().updateCaption(getState().buttonCaption);
 		getWidget().setEnabled(getState().enabled);
 	}
 

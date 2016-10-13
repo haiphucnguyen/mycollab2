@@ -111,7 +111,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     @Override
     protected String initFormTitle() {
-        return UserUIContext.getMessage(TaskI18nEnum.SINGLE);
+        return beanItem.getName();
     }
 
     @Override
@@ -121,7 +121,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getForm(), Task.Field.name.name());
     }
 
     @Override

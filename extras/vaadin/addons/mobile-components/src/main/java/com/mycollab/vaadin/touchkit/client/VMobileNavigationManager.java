@@ -13,115 +13,115 @@ import com.vaadin.addon.touchkit.gwt.client.ui.VNavigationManager;
 
 public class VMobileNavigationManager extends VNavigationManager {
 
-	private final SimplePanel navigationMenu;
-	private boolean menuVisibility = false;
-	private int currentOffset = 0;
-	private final SimplePanel wrapper;
-	private final DivElement content;
+    private final SimplePanel navigationMenu;
+    private boolean menuVisibility = false;
+    private int currentOffset = 0;
+    private final SimplePanel wrapper;
+    private final DivElement content;
 
-	public static int TABLET_WIDTH_THRESHOLD = 768;
-	public static boolean IS_TABLET = Window.getClientWidth() >= TABLET_WIDTH_THRESHOLD;
+    public static int TABLET_WIDTH_THRESHOLD = 768;
+    public static boolean IS_TABLET = Window.getClientWidth() >= TABLET_WIDTH_THRESHOLD;
 
-	public VMobileNavigationManager() {
-		super();
+    public VMobileNavigationManager() {
+        super();
 
-		content = getElement().cast();
+        content = getElement().cast();
 
-		wrapper = new SimplePanel();
-		wrapper.setStylePrimaryName("v-mobilecomponent");
+        wrapper = new SimplePanel();
+        wrapper.setStylePrimaryName("v-mobilecomponent");
 
-		navigationMenu = new SimplePanel();
-		navigationMenu.setStyleName(getStyleName() + "-navigation");
+        navigationMenu = new SimplePanel();
+        navigationMenu.setStyleName(getStyleName() + "-navigation");
 
-		wrapper.getElement().appendChild(content);
+        wrapper.getElement().appendChild(content);
 
-		setElement(wrapper.getElement());
-	}
+        setElement(wrapper.getElement());
+    }
 
-	public Element getViewContainer() {
-		return content;
-	}
+    public Element getViewContainer() {
+        return content;
+    }
 
-	public void setNavigationMenu(Widget widget) {
-		if (!navigationMenu.isAttached()) {
-			add(navigationMenu, wrapper.getElement());
-		}
+    public void setNavigationMenu(Widget widget) {
+        if (!navigationMenu.isAttached()) {
+            add(navigationMenu, wrapper.getElement());
+        }
 
-		navigationMenu.setWidget(widget);
-	}
+        navigationMenu.setWidget(widget);
+    }
 
-	public boolean getMenuVisibility() {
-		if (IS_TABLET)
-			return true;
-		return menuVisibility;
-	}
+    public boolean getMenuVisibility() {
+        if (IS_TABLET)
+            return true;
+        return menuVisibility;
+    }
 
-	public void toggleMenu() {
-		toggleMenu(!menuVisibility);
-	}
+    public void toggleMenu() {
+        toggleMenu(!menuVisibility);
+    }
 
-	public void toggleMenu(boolean visibility) {
-		if (IS_TABLET)
-			return;
+    public void toggleMenu(boolean visibility) {
+        if (IS_TABLET)
+            return;
 
-		menuVisibility = visibility;
+        menuVisibility = visibility;
 
-		Style style = content.getStyle();
-		style.setProperty(Css3Propertynames.transition(), "");
+        Style style = content.getStyle();
+        style.setProperty(Css3Propertynames.transition(), "");
 
-		if (menuVisibility) {
-			int menuWidth = getNavigationMenuWidth();
-			if (menuWidth == 0) {
-				menuVisibility = false;
-			} else {
-				moveLeft(menuWidth, true);
-				currentOffset = menuWidth;
-			}
-		} else {
-			moveLeft(0, true);
-			currentOffset = 0;
-		}
-	}
+        if (menuVisibility) {
+            int menuWidth = getNavigationMenuWidth();
+            if (menuWidth == 0) {
+                menuVisibility = false;
+            } else {
+                moveLeft(menuWidth, true);
+                currentOffset = menuWidth;
+            }
+        } else {
+            moveLeft(0, true);
+            currentOffset = 0;
+        }
+    }
 
-	public int getNavigationMenuWidth() {
-		return navigationMenu.getOffsetWidth();
-	}
+    public int getNavigationMenuWidth() {
+        return navigationMenu.getOffsetWidth();
+    }
 
-	public void beResponsive() {
-		Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+    public void beResponsive() {
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
 
-			@Override
-			public void execute() {
-				Style style = content.getStyle();
-				if (IS_TABLET) {
-					style.setMarginLeft(getNavigationMenuWidth(), Unit.PX);
-				} else {
-					style.clearMarginLeft();
-				}
-			}
-		});
+            @Override
+            public void execute() {
+                Style style = content.getStyle();
+                if (IS_TABLET) {
+                    style.setMarginLeft(getNavigationMenuWidth(), Unit.PX);
+                } else {
+                    style.clearMarginLeft();
+                }
+            }
+        });
 
-	}
+    }
 
-	public void setHorizontalOffsetExt(int deltaX, boolean animate) {
-		int tmpOffset = currentOffset + deltaX;
-		if (tmpOffset >= getNavigationMenuWidth()) {
-			tmpOffset = getNavigationMenuWidth();
-			menuVisibility = true;
-		} else if (tmpOffset <= 0) {
-			tmpOffset = 0;
-			menuVisibility = false;
-		}
+    public void setHorizontalOffsetExt(int deltaX, boolean animate) {
+        int tmpOffset = currentOffset + deltaX;
+        if (tmpOffset >= getNavigationMenuWidth()) {
+            tmpOffset = getNavigationMenuWidth();
+            menuVisibility = true;
+        } else if (tmpOffset <= 0) {
+            tmpOffset = 0;
+            menuVisibility = false;
+        }
 
-		moveLeft(tmpOffset, animate);
-	}
+        moveLeft(tmpOffset, animate);
+    }
 
-	public void moveLeft(int pos, boolean animate) {
-		final Style style = content.getStyle();
-		if (!animate)
-			style.setProperty(Css3Propertynames.transition(), "none");
+    public void moveLeft(int pos, boolean animate) {
+        final Style style = content.getStyle();
+        if (!animate)
+            style.setProperty(Css3Propertynames.transition(), "none");
 
-		style.setProperty(Css3Propertynames.transform(), "translateX(" + pos
-				+ "px)");
-	}
+        style.setProperty(Css3Propertynames.transform(), "translateX(" + pos
+                + "px)");
+    }
 }

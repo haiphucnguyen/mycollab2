@@ -193,6 +193,10 @@ hr {
 	text-align: center !important;
 }
 
+.border-bottom {
+	border-bottom: 1px solid #e5e5e5;
+}
+
 a {
 	color: #0083ce !important;
 	text-decoration: none !important;
@@ -291,7 +295,6 @@ a {
 }
 
 .v-touchkit-navbar .v-navbar-quickmenu-button {
-	font-size: 20px !important;
 	color: #5e5d55 !important;
 }
 

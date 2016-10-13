@@ -19,9 +19,11 @@ package com.mycollab.mobile.ui;
 import com.mycollab.vaadin.mvp.IPreviewView;
 import com.mycollab.vaadin.touchkit.NavigationBarQuickMenu;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
  * @param <B>
@@ -40,9 +42,10 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractMobilePageView 
 
     public void previewItem(final B item) {
         this.beanItem = item;
-        this.setCaption(initFormTitle());
+//        this.setCaption(initFormTitle());
 
         CssLayout content = new CssLayout();
+        content.addComponent(new MHorizontalLayout(ELabel.h2(initFormTitle())).withMargin(true).withStyleName("border-bottom").withFullWidth());
         content.addComponent(previewForm);
 
         NavigationBarQuickMenu editBtn = new NavigationBarQuickMenu();

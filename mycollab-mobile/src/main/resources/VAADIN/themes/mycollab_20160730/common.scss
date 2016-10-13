@@ -132,6 +132,10 @@
     text-align: center !important;
   }
 
+  .border-bottom {
+    border-bottom: 1px solid $my-separator-color;
+  }
+
   a {
     color: $my-link-color !important;
     text-decoration: none !important;
@@ -203,7 +207,6 @@
     background-color: #f9f9f9 !important;
     border-bottom: 1px solid $my-separator-color !important;
     .v-navbar-quickmenu-button {
-      font-size: 20px !important;
       color: $my-dark-color !important;
     }
     .v-button {
