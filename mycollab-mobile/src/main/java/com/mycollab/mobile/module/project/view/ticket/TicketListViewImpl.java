@@ -89,7 +89,6 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
     @Override
     protected Component buildRightComponent() {
         NavigationBarQuickMenu actionMenu = new NavigationBarQuickMenu();
-        actionMenu.setButtonCaption("...");
         MVerticalLayout content = new MVerticalLayout();
         content.with(new Button(UserUIContext.getMessage(TaskI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(TicketListViewImpl.this, null))));

@@ -91,7 +91,6 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
     @Override
     protected Component buildRightComponent() {
         NavigationBarQuickMenu menu = new NavigationBarQuickMenu();
-        menu.setButtonCaption("...");
         MVerticalLayout content = new MVerticalLayout();
         content.with(new Button(UserUIContext.getMessage(MilestoneI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoAdd(MilestoneListViewImpl.this, null))));

@@ -69,7 +69,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
     }
 
     @Override
-    protected String initFormTitle() {
+    protected String initFormHeader() {
         return beanItem.getDisplayName();
     }
 

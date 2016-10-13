@@ -73,8 +73,8 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
     }
 
     @Override
-    protected String initFormTitle() {
-        return UserUIContext.getMessage(MilestoneI18nEnum.SINGLE);
+    protected String initFormHeader() {
+        return beanItem.getName();
     }
 
     @Override

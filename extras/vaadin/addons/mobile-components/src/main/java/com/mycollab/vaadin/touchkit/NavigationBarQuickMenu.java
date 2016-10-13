@@ -18,21 +18,32 @@ package com.mycollab.vaadin.touchkit;
 
 import com.mycollab.vaadin.touchkit.client.NavigationBarQuickMenuState;
 import com.vaadin.ui.AbstractSingleComponentContainer;
+import com.vaadin.ui.Component;
 
 public class NavigationBarQuickMenu extends AbstractSingleComponentContainer {
-	private static final long serialVersionUID = 4214096999617161353L;
+    private static final long serialVersionUID = 4214096999617161353L;
 
-	public NavigationBarQuickMenu() {
+    public NavigationBarQuickMenu() {
+        this("...", null);
+    }
 
-	}
+    public NavigationBarQuickMenu(Component content) {
+        this("...", content);
+        addStyleName("circle-box");
+    }
 
-	@Override
-	public NavigationBarQuickMenuState getState() {
-		return (NavigationBarQuickMenuState) super.getState();
-	}
+    public NavigationBarQuickMenu(String caption, Component content) {
+        setButtonCaption(caption);
+        this.setContent(content);
+    }
 
-	public void setButtonCaption(String captionString) {
-		getState().buttonCaption = captionString;
-	}
+    @Override
+    public NavigationBarQuickMenuState getState() {
+        return (NavigationBarQuickMenuState) super.getState();
+    }
+
+    public void setButtonCaption(String captionString) {
+        getState().buttonCaption = captionString;
+    }
 
 }

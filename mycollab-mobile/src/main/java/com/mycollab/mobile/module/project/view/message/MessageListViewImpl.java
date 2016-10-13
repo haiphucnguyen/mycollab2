@@ -88,7 +88,6 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
     @Override
     protected Component buildRightComponent() {
         NavigationBarQuickMenu menu = new NavigationBarQuickMenu();
-        menu.setButtonCaption("...");
         MVerticalLayout content = new MVerticalLayout();
         content.with(new Button(UserUIContext.getMessage(MessageI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new MessageEvent.GotoAdd(this, null))));

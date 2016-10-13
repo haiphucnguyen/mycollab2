@@ -116,6 +116,15 @@
     text-align: center;
   }
 
+  .v-button-circle-box {
+    line-height: 1.5 !important;
+    border-radius: 50% !important;
+    border: 1px solid darken($my-separator-color, 30%) !important;
+    .v-button-wrap {
+      padding: 0 5px !important;
+    }
+  }
+
   .meta-info {
     color: $my-meta-color;
     font-size: smaller !important;
@@ -130,6 +139,11 @@
     font-weight: 600 !important;
     font-size: 20px !important;
     text-align: center !important;
+  }
+
+  .h2 {
+    font-weight: 600 !important;
+    font-size: 18px !important;
   }
 
   .border-bottom {
@@ -208,6 +222,13 @@
     border-bottom: 1px solid $my-separator-color !important;
     .v-navbar-quickmenu-button {
       color: $my-dark-color !important;
+      min-height: 30px;
+      padding: 0 7px;
+      &.circle-box {
+        border-radius: 50%;
+        border: 1px solid darken($my-separator-color, 30%);
+        background-color: transparent;
+      }
     }
     .v-button {
       color: $my-dark-color !important;
