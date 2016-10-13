@@ -127,8 +127,8 @@ public class MobileApplication extends MyCollabUI {
                                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                                     dialog -> {
                                         if (dialog.isConfirmed()) {
-                                            Collection<Window> windowsList = UI.getCurrent().getWindows();
-                                            for (Window window : windowsList) {
+                                            Collection<Window> windows = UI.getCurrent().getWindows();
+                                            for (Window window : windows) {
                                                 window.close();
                                             }
                                             EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"billing"}));
