@@ -478,6 +478,31 @@ input.searchinputfield:-moz-placeholder::before {
 	color: #b7b9b0;
 }
 
+.v-button.favorite-btn {
+	background-color: transparent;
+}
+
+.v-button.favorite-btn .v-icon {
+	font-size: $font-large;
+}
+
+.v-button.favorite-btn .v-button-wrap:hover {
+	background-color: transparent;
+}
+
+.v-button.favorite-btn-selected {
+	background-color: transparent;
+}
+
+.v-button.favorite-btn-selected .v-icon {
+	font-size: $font-large;
+	color: coral;
+}
+
+.v-button.favorite-btn-selected .v-button-wrap:hover {
+	background-color: transparent;
+}
+
 * {
 	-webkit-tap-highlight-color: transparent;
 	-webkit-tap-highlight-color: transparent;

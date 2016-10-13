@@ -155,6 +155,11 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     }
 
     @Override
+    protected String getType() {
+        return ProjectTypeConstants.RISK;
+    }
+
+    @Override
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
         toolbarLayout.setDefaultComponentAlignment(Alignment.TOP_LEFT);

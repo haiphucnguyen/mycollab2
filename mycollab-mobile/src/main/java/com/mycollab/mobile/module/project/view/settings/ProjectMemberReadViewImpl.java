@@ -27,6 +27,7 @@ import com.mycollab.mobile.ui.FormSectionBuilder;
 import com.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
+import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.SimpleProjectRole;
 import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;
@@ -81,6 +82,11 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
 
     @Override
     protected void initRelatedComponents() {
+    }
+
+    @Override
+    protected String getType() {
+        return null;
     }
 
     @Override
