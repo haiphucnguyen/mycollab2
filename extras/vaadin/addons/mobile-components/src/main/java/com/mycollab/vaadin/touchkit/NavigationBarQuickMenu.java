@@ -29,12 +29,12 @@ public class NavigationBarQuickMenu extends AbstractSingleComponentContainer {
 
     public NavigationBarQuickMenu(Component content) {
         this("...", content);
-        addStyleName("circle-box");
     }
 
     public NavigationBarQuickMenu(String caption, Component content) {
         setButtonCaption(caption);
         this.setContent(content);
+        addStyleName("circle-box");
     }
 
     @Override

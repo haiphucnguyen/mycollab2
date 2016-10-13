@@ -154,7 +154,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.BUG, BugDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(ProjectTypeConstants.BUG, BugDefaultFormLayoutFactory.getForm(), BugWithBLOBs.Field.name.name());
     }
 
     @Override
@@ -170,7 +170,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         VerticalLayout formControls = formControlsGenerator.createButtonControls(ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
                 | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED, ProjectRolePermissionCollections.BUGS);
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoEdit(this,
-                beanItem))).withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX);
+                beanItem))).withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(formControls));
     }
 

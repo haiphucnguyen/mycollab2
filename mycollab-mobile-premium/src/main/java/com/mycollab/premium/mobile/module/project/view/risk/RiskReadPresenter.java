@@ -32,12 +32,7 @@ public class RiskReadPresenter extends AbstractProjectPresenter<RiskReadView> {
 
     @Override
     protected void postInitView() {
-        this.view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleRisk>() {
-
-            @Override
-            public void onEdit(final SimpleRisk data) {
-                EventBusFactory.getInstance().post(new RiskEvent.GotoEdit(this, data));
-            }
+        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleRisk>() {
 
             @Override
             public void onDelete(final SimpleRisk data) {

@@ -167,7 +167,8 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         }
 
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(this, beanItem)))
-                .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX);
+                .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(formControls));
     }
 

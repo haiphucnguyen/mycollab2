@@ -5,8 +5,11 @@ import com.hp.gagawa.java.elements.Div;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
+import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.mobile.form.view.DynaFormLayout;
+import com.mycollab.mobile.module.project.events.BugEvent;
+import com.mycollab.mobile.module.project.events.RiskEvent;
 import com.mycollab.mobile.module.project.ui.CommentNavigationButton;
 import com.mycollab.mobile.module.project.ui.ProjectAttachmentDisplayComp;
 import com.mycollab.mobile.module.project.ui.ProjectPreviewFormControlsGenerator;
@@ -31,6 +34,7 @@ import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
+import com.mycollab.vaadin.touchkit.NavigationBarQuickMenu;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -43,6 +47,8 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
@@ -92,7 +98,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected String initFormHeader() {
-        return beanItem.getName();
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK).getHtml() + " " + beanItem.getName();
     }
 
     @Override
@@ -102,7 +108,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm(), Risk.Field.name.name());
     }
 
     @Override
@@ -113,11 +119,9 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     @Override
     protected ComponentContainer createButtonControls() {
         ProjectPreviewFormControlsGenerator<SimpleRisk> previewForm = new ProjectPreviewFormControlsGenerator<>(this.previewForm);
-        final VerticalLayout topPanel = previewForm.createButtonControls(
-                ProjectPreviewFormControlsGenerator.ASSIGN_BTN_PRESENTED
-                        | ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
-                        | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED
-                        | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED,
+        final VerticalLayout formControls = previewForm.createButtonControls(
+                ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
+                        | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED,
                 ProjectRolePermissionCollections.RISKS);
 
         quickActionStatusBtn = new Button("", clickEvent -> {
@@ -144,7 +148,10 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             quickActionStatusBtn.setEnabled(false);
         }
 
-        return topPanel;
+        MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoEdit(this, beanItem)))
+                .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
+        return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(formControls));
     }
 
     @Override

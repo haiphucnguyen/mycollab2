@@ -101,8 +101,7 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
 
         actionMenu.setContent(content);
 
-        NavigationBarQuickMenu searchMenu = new NavigationBarQuickMenu();
-        searchMenu.setButtonCaption(FontAwesome.SEARCH.getHtml());
+        MButton searchBtn = new MButton("").withIcon(FontAwesome.SEARCH).withStyleName(UIConstants.CIRCLE_BOX);
 
         MVerticalLayout searchContent = new MVerticalLayout();
         searchContent.with(new SearchInputField<ProjectTicketSearchCriteria>() {
@@ -115,8 +114,7 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
                 return searchCriteria;
             }
         });
-        searchMenu.setContent(searchContent);
-        return new MHorizontalLayout(searchMenu, actionMenu).alignAll(Alignment.TOP_RIGHT);
+        return new MHorizontalLayout(searchBtn, actionMenu).alignAll(Alignment.TOP_RIGHT);
     }
 
     private static class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<ProjectTicket> {
