@@ -71,6 +71,61 @@
 	text-overflow: ellipsis;
 }
 
+.v-label {
+	word-wrap: break-word;
+}
+
+.v-label.overdue {
+	color: $my-alert-color !important;
+}
+
+.v-label.overdue a {
+	color: $my-alert-color !important;
+}
+
+.v-label.completed {
+	text-decoration: line-through !important;
+	color: $my-black-color !important;
+}
+
+.v-label.completed a {
+	text-decoration: line-through !important;
+	color: $my-black-color !important;
+}
+
+.v-multifileupload-uploads .v-upload .v-button:before {
+	font-family: FontAwesome;
+	content: "\f0c6";
+	font-size: $font-larger;
+}
+
+.v-multifileupload-uploads .v-upload .v-button {
+	border: none;
+	background: transparent;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	padding: 0px;
+	margin: 0px;
+}
+
+.v-multifileupload-dropzone {
+	background: #e4e4e4 !important;
+	cursor: pointer;
+	width: 100% !important;
+	height: 30px !important;
+}
+
+.v-multifileupload-dropzone .v-label {
+	margin-top: 5px;
+}
+
+.v-multifileupload-uploads {
+	display: none !important;
+}
+
 .row {
 	padding: 10px;
 	border-bottom: 1px solid $my-separator-color;
@@ -151,6 +206,61 @@
 	white-space: nowrap !important;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.v-label {
+	word-wrap: break-word;
+}
+
+.v-label.overdue {
+	color: #B0470B !important;
+}
+
+.v-label.overdue a {
+	color: #B0470B !important;
+}
+
+.v-label.completed {
+	text-decoration: line-through !important;
+	color: #5e5d55 !important;
+}
+
+.v-label.completed a {
+	text-decoration: line-through !important;
+	color: #5e5d55 !important;
+}
+
+.v-multifileupload-uploads .v-upload .v-button:before {
+	font-family: FontAwesome;
+	content: "\f0c6";
+	font-size: $font-larger;
+}
+
+.v-multifileupload-uploads .v-upload .v-button {
+	border: none;
+	background: transparent;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	padding: 0px;
+	margin: 0px;
+}
+
+.v-multifileupload-dropzone {
+	background: #e4e4e4 !important;
+	cursor: pointer;
+	width: 100% !important;
+	height: 30px !important;
+}
+
+.v-multifileupload-dropzone .v-label {
+	margin-top: 5px;
+}
+
+.v-multifileupload-uploads {
+	display: none !important;
 }
 
 .row {
@@ -615,7 +725,7 @@ body {
 }
 
 .attachment-field .v-upload .v-button {
-	font-size: 1.5rem;
+	font-size: 15px;
 	min-height: inherit;
 	line-height: normal;
 	vertical-align: middle;

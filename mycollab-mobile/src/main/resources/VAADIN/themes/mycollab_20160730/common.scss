@@ -92,6 +92,53 @@
   @include text-ellipsis;
 }
 
+.v-label {
+  word-wrap: break-word;
+  &.overdue {
+    color: $my-alert-color !important;
+    a {
+      color: $my-alert-color !important;
+    }
+  }
+  &.completed {
+    text-decoration: line-through !important;
+    color: $my-black-color !important;
+    a {
+      text-decoration: line-through !important;
+      color: $my-black-color !important;
+    }
+  }
+}
+
+.v-multifileupload-uploads {
+    .v-upload .v-button:before {
+      font-family: FontAwesome;
+      content:'\f0c6';
+      font-size: $font-larger;
+    }
+    .v-upload .v-button {
+      border: none;
+      background: transparent;
+      @include flex-compatible;
+      padding: 0px;
+      margin: 0px;
+    }
+  }
+
+  .v-multifileupload-dropzone {
+    background: #e4e4e4 !important;
+    cursor: pointer;
+    width: 100% !important;
+    height: 30px !important;
+    .v-label {
+      margin-top: 5px;
+    }
+  }
+
+  .v-multifileupload-uploads {
+    display: none !important;
+  }
+
 .row {
   padding: 10px;
   border-bottom: 1px solid $my-separator-color;

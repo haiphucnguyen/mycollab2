@@ -35,10 +35,6 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
         super(form);
     }
 
-    RiskEditFormFieldFactory(GenericBeanForm<SimpleRisk> form, boolean isValidateForm) {
-        super(form, isValidateForm);
-    }
-
     @Override
     protected Field<?> onCreateField(Object propertyId) {
         Risk risk = attachForm.getBean();

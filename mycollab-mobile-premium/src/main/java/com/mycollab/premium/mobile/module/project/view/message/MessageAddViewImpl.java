@@ -5,7 +5,6 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.message.MessageAddView;
-import com.mycollab.mobile.module.project.view.message.MessageAttachmentField;
 import com.mycollab.mobile.ui.AbstractMobilePageView;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.SimpleMessage;
@@ -37,7 +36,7 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
     private final TextArea contentField;
     private final Switch isStickField;
 
-    private MessageAttachmentField attachment;
+    private ProjectFormAttachmentUploadField attachmentPanel;
     private Set<IEditFormHandler<SimpleMessage>> handlers = new HashSet<>();
 
     public MessageAddViewImpl() {
@@ -74,9 +73,8 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         isStickField = new Switch(UserUIContext.getMessage(MessageI18nEnum.FORM_IS_STICK), false);
         bottomRow.addComponent(isStickField);
 
-        attachment = new MessageAttachmentField();
-        attachment.setCaption(null);
-        bottomRow.addComponent(attachment);
+        attachmentPanel = new ProjectFormAttachmentUploadField();
+        bottomRow.addComponent(attachmentPanel);
 
         content.addComponent(addFormLayout);
         content.addComponent(bottomRow);
@@ -135,7 +133,7 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
 
     @Override
     public ProjectFormAttachmentUploadField getUploadField() {
-        return attachment;
+        return attachmentPanel;
     }
 
 }

@@ -36,6 +36,7 @@ import com.mycollab.mobile.module.project.events.TaskEvent;
 import com.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
+import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.mobile.ui.SearchInputField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkGenerator;
@@ -135,11 +136,17 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
             }
             ticketLink.appendText(ticket.getName());
 
-            CssLayout ticketLbl = new CssLayout(ELabel.html(ticketLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS));
+            ELabel ticketLbl = ELabel.html(ticketLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
+            if (ticket.isClosed()) {
+                ticketLbl.addStyleName(MobileUIConstants.LINK_COMPLETED);
+            } else if (ticket.isOverdue()) {
+                ticketLbl.addStyleName(MobileUIConstants.LINK_OVERDUE);
+            }
+            CssLayout ticketLayout = new CssLayout(ticketLbl);
             String priorityValue = ProjectAssetsManager.getPriority(ticket.getPriority()).getHtml();
             ELabel priorityLbl = ELabel.html(priorityValue).withWidthUndefined().withStyleName("priority-" + ticket.getPriority().toLowerCase());
             rowLayout.with(new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())), priorityLbl,
-                    ticketLbl).expand(ticketLbl).withFullWidth());
+                    ticketLayout).expand(ticketLayout).withFullWidth());
 
             MVerticalLayout metaInfoLayout = new MVerticalLayout().withMargin(false);
             rowLayout.with(metaInfoLayout);
