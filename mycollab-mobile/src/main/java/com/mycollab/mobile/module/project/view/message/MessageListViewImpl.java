@@ -75,22 +75,16 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
 
     @Override
     protected SearchInputField<MessageSearchCriteria> createSearchField() {
-        return new SearchInputField<MessageSearchCriteria>() {
-            @Override
-            protected MessageSearchCriteria fillUpSearchCriteria(String value) {
-                MessageSearchCriteria searchCriteria = new MessageSearchCriteria();
-                searchCriteria.setProjectids(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                searchCriteria.setTitle(StringSearchField.and(value));
-                return searchCriteria;
-            }
-        };
+        return null;
     }
 
     @Override
     protected Component buildRightComponent() {
-        return new MButton("", clickEvent -> EventBusFactory.getInstance().post(new MessageEvent.GotoAdd(this, null)))
+        MButton searchBtn = new MButton("").withIcon(FontAwesome.SEARCH).withStyleName(UIConstants.CIRCLE_BOX);
+        MButton newMessageBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new MessageEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
+        return new MHorizontalLayout(searchBtn, newMessageBtn).alignAll(Alignment.TOP_RIGHT);
     }
 
     private static class MessageRowDisplayHandler implements IBeanList.RowDisplayHandler<SimpleMessage> {
