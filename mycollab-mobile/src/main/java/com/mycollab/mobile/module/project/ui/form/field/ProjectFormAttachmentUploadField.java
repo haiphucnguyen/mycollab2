@@ -74,7 +74,7 @@ public class ProjectFormAttachmentUploadField extends MVerticalLayout {
         rowWrap.setWidth("100%");
         rowWrap.setStyleName("attachment-row-wrap");
 
-        this.addComponent(FormSectionBuilder.build(UserUIContext.getMessage(GenericI18Enum.FORM_ATTACHMENTS)));
+        this.addComponent(FormSectionBuilder.build(FontAwesome.FILE, GenericI18Enum.FORM_ATTACHMENTS));
         MCssLayout btnWrap = new MCssLayout(multiFileUpload).withFullWidth();
         this.addComponent(btnWrap);
         this.addComponent(rowWrap);
