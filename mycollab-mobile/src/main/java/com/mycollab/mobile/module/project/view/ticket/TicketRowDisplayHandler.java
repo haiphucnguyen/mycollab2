@@ -50,7 +50,7 @@ public class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<Proj
 
     @Override
     public Component generateRow(IBeanList<ProjectTicket> host, final ProjectTicket ticket, int rowIndex) {
-        MVerticalLayout rowLayout = new MVerticalLayout().withSpacing(false).withFullWidth();
+        MVerticalLayout rowLayout = new MVerticalLayout().withSpacing(false).withFullWidth().withStyleName("row");
 
         A ticketLink = new A();
         if (ticket.isBug() || ticket.isTask()) {
