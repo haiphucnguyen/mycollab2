@@ -163,6 +163,19 @@
     text-align: center;
   }
 
+  .v-touchkit-navbutton-circle-box {
+    padding: 0px 7px !important;
+    border-radius: 50% !important;
+    border: 1px solid darken($my-separator-color, 30%);
+    height: 30px;
+    &::after {
+      display: none;
+    }
+    .v-icon {
+      margin: 0px !important;
+    }
+  }
+
   .v-button-circle-box {
     line-height: 1.5 !important;
     border-radius: 50% !important;

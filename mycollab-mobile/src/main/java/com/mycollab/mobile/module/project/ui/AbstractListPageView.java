@@ -48,10 +48,6 @@ public abstract class AbstractListPageView<S extends SearchCriteria, B> extends 
         }
     }
 
-    private void loadMore() {
-        System.out.println("More: ");
-    }
-
     @Override
     public AbstractPagedBeanList<S, B> getPagedBeanTable() {
         return itemList;

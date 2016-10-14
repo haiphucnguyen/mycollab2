@@ -17,17 +17,16 @@
 package com.mycollab.mobile.module.project.view.ticket;
 
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.db.arguments.SetSearchField;
-import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.project.events.BugEvent;
 import com.mycollab.mobile.module.project.events.RiskEvent;
 import com.mycollab.mobile.module.project.events.TaskEvent;
 import com.mycollab.mobile.module.project.ui.AbstractListPageView;
+import com.mycollab.mobile.module.project.ui.SearchInputView;
+import com.mycollab.mobile.module.project.ui.SearchNavigationButton;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
 import com.mycollab.mobile.ui.SearchInputField;
-import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.i18n.BugI18nEnum;
@@ -40,11 +39,9 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.touchkit.NavigationBarQuickMenu;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -84,19 +81,13 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
 
         actionMenu.setContent(content);
 
-        MButton searchBtn = new MButton("").withIcon(FontAwesome.SEARCH).withStyleName(UIConstants.CIRCLE_BOX);
-
-        MVerticalLayout searchContent = new MVerticalLayout();
-        searchContent.with(new SearchInputField<ProjectTicketSearchCriteria>() {
+        SearchNavigationButton searchBtn = new SearchNavigationButton() {
             @Override
-            protected ProjectTicketSearchCriteria fillUpSearchCriteria(String value) {
-                ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
-                searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                searchCriteria.setName(StringSearchField.and(value));
-                searchCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
-                return searchCriteria;
+            protected SearchInputView getSearchInputView() {
+                return new TicketSearchInputView();
             }
-        });
+        };
+        searchBtn.addStyleName(UIConstants.CIRCLE_BOX);
         return new MHorizontalLayout(searchBtn, actionMenu).alignAll(Alignment.TOP_RIGHT);
     }
 }
