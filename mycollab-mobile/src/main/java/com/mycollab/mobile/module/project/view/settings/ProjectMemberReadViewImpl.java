@@ -115,8 +115,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
                         projectMemberService.removeWithSession(beanItem, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                         EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null));
                     }
-                }))
-                .withIcon(FontAwesome.TRASH).withStyleName(UIConstants.CIRCLE_BOX)
+                })).withIcon(FontAwesome.TRASH).withStyleName(UIConstants.CIRCLE_BOX)
                 .withVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.USERS));
 
         return new MHorizontalLayout(editBtn, deleteBtn);

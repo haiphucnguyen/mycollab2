@@ -99,10 +99,12 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         @Override
         @Subscribe
         public void handle(TicketEvent.NewTicketAdded event) {
-            ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
-            ProjectTicket ticket = projectTicketService.findTicket(event.getTypeVal(), event.getTypeIdVal());
-            if (ticket != null) {
-                insertTicket(ticket);
+            if (!ProjectTypeConstants.TICKET.equals(event.getTypeVal())) {
+                ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
+                ProjectTicket ticket = projectTicketService.findTicket(event.getTypeVal(), event.getTypeIdVal());
+                if (ticket != null) {
+                    insertTicket(ticket);
+                }
             }
         }
     };
@@ -437,6 +439,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             }
             if (canExecute) {
                 MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
+                    controlsBtn.setPopupVisible(false);
                     ConfirmDialogExt.show(UI.getCurrent(),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
