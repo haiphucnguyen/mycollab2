@@ -136,7 +136,8 @@ public abstract class AbstractMainView extends AbstractPageView implements MainV
         }).withIcon(VaadinIcons.USERS);
         modulePopupContent.addOption(peopleBtn);
 
-        headerLayout.addComponent(new MHorizontalLayout().with(modulePopup).withAlign(modulePopup, Alignment.MIDDLE_LEFT), "mainLogo");
+        headerLayout.addComponent(new MHorizontalLayout(modulePopup).expand(modulePopup).withAlign(modulePopup, Alignment
+                .MIDDLE_LEFT).withFullWidth(), "mainLogo");
 
         accountLayout = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false)).withHeight("45px");
         accountLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);

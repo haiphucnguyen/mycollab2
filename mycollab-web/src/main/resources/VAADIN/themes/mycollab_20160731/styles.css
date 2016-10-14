@@ -16770,6 +16770,7 @@ input.v-textfield-pagedtable-pagefield {
 .topNavigation .accountMenuContainer .v-button.v-popupbutton .v-button-wrap, .topNavigation .accountMenuContainer .v-button.v-popupbutton.v-pressed .v-button-wrap {
 	background: none;
 	border: none;
+	width: 100%;
 }
 
 .topNavigation .accountMenuContainer .v-button.v-popupbutton .v-button-wrap .v-button-caption, .topNavigation .accountMenuContainer .v-button.v-popupbutton.v-pressed .v-button-wrap .v-button-caption {
