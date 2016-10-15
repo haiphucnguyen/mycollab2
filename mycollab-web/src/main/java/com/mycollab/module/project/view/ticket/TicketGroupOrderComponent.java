@@ -31,4 +31,7 @@ abstract public class TicketGroupOrderComponent extends CssLayout {
     }
 
     abstract public void insertTickets(List<ProjectTicket> tickets);
+
+    interface ITicketRowRenderer {
+    }
 }

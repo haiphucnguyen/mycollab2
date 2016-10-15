@@ -28,7 +28,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.milestone.IMilestoneKanbanView;
 import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
-import com.mycollab.module.project.view.milestone.ToggleTicketSummaryField;
+import com.mycollab.module.project.view.ticket.ToggleTicketSummaryField;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;

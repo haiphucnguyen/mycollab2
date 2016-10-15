@@ -1,5 +1,6 @@
 package com.mycollab.mobile.module.project.ui;
 
+import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.server.FontAwesome;
 
@@ -11,6 +12,7 @@ public abstract class SearchNavigationButton extends NavigationButton {
     public SearchNavigationButton() {
         super();
         setIcon(FontAwesome.SEARCH);
+        addStyleName(UIConstants.CIRCLE_BOX);
         this.addClickListener(navigationButtonClickEvent -> getNavigationManager().navigateTo(getSearchInputView()));
     }
 

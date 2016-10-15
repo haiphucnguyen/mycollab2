@@ -23,8 +23,8 @@ import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
-import com.mycollab.module.project.view.milestone.ToggleTicketSummaryField;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
+import com.mycollab.module.project.view.ticket.TicketGroupOrderComponent.ITicketRowRenderer;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PropertyChangedEvent;
@@ -44,7 +44,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class TicketRowRenderer extends MVerticalLayout implements PropertyChangedListener {
+public class TicketRowRenderer extends MVerticalLayout implements PropertyChangedListener, ITicketRowRenderer {
     private static Logger LOG = LoggerFactory.getLogger(TicketRowRenderer.class);
 
     private ToggleTicketSummaryField toggleTicketField;

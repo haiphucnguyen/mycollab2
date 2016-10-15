@@ -38,7 +38,6 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.touchkit.NavigationBarQuickMenu;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -87,7 +86,6 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
                 return new TicketSearchInputView();
             }
         };
-        searchBtn.addStyleName(UIConstants.CIRCLE_BOX);
         return new MHorizontalLayout(searchBtn, actionMenu).alignAll(Alignment.TOP_RIGHT);
     }
 }

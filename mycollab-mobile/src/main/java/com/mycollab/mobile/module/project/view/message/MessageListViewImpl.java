@@ -18,11 +18,11 @@ package com.mycollab.mobile.module.project.view.message;
 
 import com.hp.gagawa.java.elements.A;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.db.arguments.SetSearchField;
-import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.project.events.MessageEvent;
 import com.mycollab.mobile.module.project.ui.AbstractListPageView;
+import com.mycollab.mobile.module.project.ui.SearchInputView;
+import com.mycollab.mobile.module.project.ui.SearchNavigationButton;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
 import com.mycollab.mobile.ui.MobileAttachmentUtils;
@@ -80,7 +80,12 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
 
     @Override
     protected Component buildRightComponent() {
-        MButton searchBtn = new MButton("").withIcon(FontAwesome.SEARCH).withStyleName(UIConstants.CIRCLE_BOX);
+        SearchNavigationButton searchBtn = new SearchNavigationButton() {
+            @Override
+            protected SearchInputView getSearchInputView() {
+                return new MessageSearchInputView();
+            }
+        };
         MButton newMessageBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new MessageEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));

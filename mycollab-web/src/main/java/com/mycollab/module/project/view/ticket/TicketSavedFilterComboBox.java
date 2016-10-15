@@ -47,104 +47,104 @@ public class TicketSavedFilterComboBox extends SavedFilterComboBox {
     public static final String NEW_TICKETS_LAST_WEEK = "NEW_TICKETS_LAST_WEEK";
     public static final String UPDATE_TICKETS_LAST_WEEK = "UPDATE_TICKETS_LAST_WEEK";
 
+    SearchQueryInfo allTasksQuery = new SearchQueryInfo(ALL_TICKETS, UserUIContext.getMessage(TicketI18nEnum.VAL_ALL_TICKETS),
+            SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_projectIds, new CurrentProjectIdInjector()));
+
+    SearchQueryInfo allOpenTaskQuery = new SearchQueryInfo(OPEN_TICKETS, UserUIContext.getMessage(TicketI18nEnum.VAL_ALL_OPEN_TICKETS),
+            SearchFieldInfo.notInCollection(ProjectTicketSearchCriteria.p_status, new VariableInjector() {
+                @Override
+                public Object eval() {
+                    return Arrays.asList(StatusI18nEnum.Closed, BugStatus.Verified);
+                }
+
+                @Override
+                public Class getType() {
+                    return String.class;
+                }
+
+                @Override
+                public boolean isArray() {
+                    return false;
+                }
+
+                @Override
+                public boolean isCollection() {
+                    return true;
+                }
+            }));
+
+    SearchQueryInfo overdueTaskQuery = new SearchQueryInfo(OVERDUE_TICKETS, UserUIContext.getMessage(TicketI18nEnum.VAL_OVERDUE_TICKETS),
+            new SearchFieldInfo(SearchField.AND, ProjectTicketSearchCriteria.p_dueDate, DateParam.BEFORE, new LazyValueInjector() {
+                @Override
+                protected Object doEval() {
+                    return new LocalDate().toDate();
+                }
+            }), SearchFieldInfo.notInCollection(ProjectTicketSearchCriteria.p_status, new VariableInjector() {
+        @Override
+        public Object eval() {
+            return Arrays.asList(StatusI18nEnum.Closed, BugStatus.Verified);
+        }
+
+        @Override
+        public Class getType() {
+            return String.class;
+        }
+
+        @Override
+        public boolean isArray() {
+            return false;
+        }
+
+        @Override
+        public boolean isCollection() {
+            return true;
+        }
+    }));
+
+    public static final SearchQueryInfo allClosedTaskQuery = new SearchQueryInfo(CLOSED_TICKETS, UserUIContext.getMessage(TicketI18nEnum.VAL_ALL_CLOSED_TICKETS),
+            SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_status, new VariableInjector() {
+                @Override
+                public Object eval() {
+                    return Arrays.asList(StatusI18nEnum.Closed, BugStatus.Verified);
+                }
+
+                @Override
+                public Class getType() {
+                    return String.class;
+                }
+
+                @Override
+                public boolean isArray() {
+                    return false;
+                }
+
+                @Override
+                public boolean isCollection() {
+                    return true;
+                }
+            }));
+
+    public static final SearchQueryInfo myTasksQuery = new SearchQueryInfo(MY_TICKETS, UserUIContext.getMessage(TicketI18nEnum.VAL_MY_TICKETS),
+            SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_assignee,
+                    ConstantValueInjector.valueOf(Collections.singletonList(UserUIContext.getUsername()))));
+
+    public static final SearchQueryInfo tasksCreatedByMeQuery = new SearchQueryInfo(TICKETS_CREATED_BY_ME, UserUIContext.getMessage(TicketI18nEnum.VAL_TICKETS_CREATED_BY_ME),
+            SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_createdUser, ConstantValueInjector.valueOf(Collections.singletonList(UserUIContext.getUsername()))));
+
+    public static final SearchQueryInfo newTasksThisWeekQuery = new SearchQueryInfo(NEW_TICKETS_THIS_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_NEW_THIS_WEEK),
+            SearchFieldInfo.inDateRange(ProjectTicketSearchCriteria.p_createtime, VariableInjector.THIS_WEEK));
+
+    public static final SearchQueryInfo updateTasksThisWeekQuery = new SearchQueryInfo(UPDATE_TICKETS_THIS_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_UPDATE_THIS_WEEK),
+            SearchFieldInfo.inDateRange(ProjectTicketSearchCriteria.p_lastupdatedtime, VariableInjector.THIS_WEEK));
+
+    public static final SearchQueryInfo newTasksLastWeekQuery = new SearchQueryInfo(NEW_TICKETS_LAST_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_NEW_LAST_WEEK),
+            SearchFieldInfo.inDateRange(ProjectTicketSearchCriteria.p_createtime, VariableInjector.LAST_WEEK));
+
+    public static final SearchQueryInfo updateTasksLastWeekQuery = new SearchQueryInfo(UPDATE_TICKETS_LAST_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_UPDATE_LAST_WEEK),
+            SearchFieldInfo.inDateRange(ProjectTicketSearchCriteria.p_lastupdatedtime, VariableInjector.LAST_WEEK));
+
     public TicketSavedFilterComboBox() {
         super(ProjectTypeConstants.TICKET);
-
-        SearchQueryInfo allTasksQuery = new SearchQueryInfo(ALL_TICKETS, UserUIContext.getMessage(TicketI18nEnum.VAL_ALL_TICKETS),
-                SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_projectIds, new CurrentProjectIdInjector()));
-
-        SearchQueryInfo allOpenTaskQuery = new SearchQueryInfo(OPEN_TICKETS, UserUIContext.getMessage(TicketI18nEnum.VAL_ALL_OPEN_TICKETS),
-                SearchFieldInfo.notInCollection(ProjectTicketSearchCriteria.p_status, new VariableInjector() {
-                    @Override
-                    public Object eval() {
-                        return Arrays.asList(StatusI18nEnum.Closed, BugStatus.Verified);
-                    }
-
-                    @Override
-                    public Class getType() {
-                        return String.class;
-                    }
-
-                    @Override
-                    public boolean isArray() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean isCollection() {
-                        return true;
-                    }
-                }));
-
-        SearchQueryInfo overdueTaskQuery = new SearchQueryInfo(OVERDUE_TICKETS, UserUIContext.getMessage(TicketI18nEnum.VAL_OVERDUE_TICKETS),
-                new SearchFieldInfo(SearchField.AND, ProjectTicketSearchCriteria.p_dueDate, DateParam.BEFORE, new LazyValueInjector() {
-                    @Override
-                    protected Object doEval() {
-                        return new LocalDate().toDate();
-                    }
-                }), SearchFieldInfo.notInCollection(ProjectTicketSearchCriteria.p_status, new VariableInjector() {
-            @Override
-            public Object eval() {
-                return Arrays.asList(StatusI18nEnum.Closed, BugStatus.Verified);
-            }
-
-            @Override
-            public Class getType() {
-                return String.class;
-            }
-
-            @Override
-            public boolean isArray() {
-                return false;
-            }
-
-            @Override
-            public boolean isCollection() {
-                return true;
-            }
-        }));
-
-        SearchQueryInfo allClosedTaskQuery = new SearchQueryInfo(CLOSED_TICKETS, UserUIContext.getMessage(TicketI18nEnum.VAL_ALL_CLOSED_TICKETS),
-                SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_status, new VariableInjector() {
-                    @Override
-                    public Object eval() {
-                        return Arrays.asList(StatusI18nEnum.Closed, BugStatus.Verified);
-                    }
-
-                    @Override
-                    public Class getType() {
-                        return String.class;
-                    }
-
-                    @Override
-                    public boolean isArray() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean isCollection() {
-                        return true;
-                    }
-                }));
-
-        SearchQueryInfo myTasksQuery = new SearchQueryInfo(MY_TICKETS, UserUIContext.getMessage(TicketI18nEnum.VAL_MY_TICKETS),
-                SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_assignee,
-                        ConstantValueInjector.valueOf(Collections.singletonList(UserUIContext.getUsername()))));
-
-        SearchQueryInfo tasksCreatedByMeQuery = new SearchQueryInfo(TICKETS_CREATED_BY_ME, UserUIContext.getMessage(TicketI18nEnum.VAL_TICKETS_CREATED_BY_ME),
-                SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_createdUser, ConstantValueInjector.valueOf(Collections.singletonList(UserUIContext.getUsername()))));
-
-        SearchQueryInfo newTasksThisWeekQuery = new SearchQueryInfo(NEW_TICKETS_THIS_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_NEW_THIS_WEEK),
-                SearchFieldInfo.inDateRange(ProjectTicketSearchCriteria.p_createtime, VariableInjector.THIS_WEEK));
-
-        SearchQueryInfo updateTasksThisWeekQuery = new SearchQueryInfo(UPDATE_TICKETS_THIS_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_UPDATE_THIS_WEEK),
-                SearchFieldInfo.inDateRange(ProjectTicketSearchCriteria.p_lastupdatedtime, VariableInjector.THIS_WEEK));
-
-        SearchQueryInfo newTasksLastWeekQuery = new SearchQueryInfo(NEW_TICKETS_LAST_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_NEW_LAST_WEEK),
-                SearchFieldInfo.inDateRange(ProjectTicketSearchCriteria.p_createtime, VariableInjector.LAST_WEEK));
-
-        SearchQueryInfo updateTasksLastWeekQuery = new SearchQueryInfo(UPDATE_TICKETS_LAST_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_UPDATE_LAST_WEEK),
-                SearchFieldInfo.inDateRange(ProjectTicketSearchCriteria.p_lastupdatedtime, VariableInjector.LAST_WEEK));
 
         this.addSharedSearchQueryInfo(allTasksQuery);
         this.addSharedSearchQueryInfo(allOpenTaskQuery);
