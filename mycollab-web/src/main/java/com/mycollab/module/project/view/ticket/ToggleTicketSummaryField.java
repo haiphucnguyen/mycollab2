@@ -22,12 +22,14 @@ import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.IgnoreException;
 import com.mycollab.core.utils.StringUtils;
+import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.Task;
+import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.service.ProjectTicketService;
@@ -114,6 +116,7 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
                                     if (rowRenderer != null) {
                                         rowRenderer.selfRemoved();
                                     }
+                                    EventBusFactory.getInstance().post(new TicketEvent.HasTicketPropertyChanged(this, "all"));
                                 }
                             });
                 }).withIcon(FontAwesome.TRASH).withStyleName(ValoTheme.BUTTON_ICON_ALIGN_TOP);
