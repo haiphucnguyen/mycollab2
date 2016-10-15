@@ -65,7 +65,6 @@ public abstract class EntityImportWindow<E> extends Window {
         center();
         this.setWidth("1000px");
         this.setResizable(false);
-        this.setStyleName("entity-import-window");
         this.setModal(true);
         this.isSupportVCard = isSupportVCard;
         ICrudService services = service;
