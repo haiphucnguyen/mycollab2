@@ -23,14 +23,13 @@ import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
+import com.mycollab.module.project.ui.components.BlockRowRender;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
-import com.mycollab.module.project.view.ticket.TicketGroupOrderComponent.ITicketRowRenderer;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PropertyChangedEvent;
 import com.mycollab.vaadin.ui.PropertyChangedListener;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.CssLayout;
@@ -38,19 +37,18 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class TicketRowRenderer extends MVerticalLayout implements PropertyChangedListener, ITicketRowRenderer {
+public class TicketRowRenderer extends BlockRowRender implements PropertyChangedListener {
     private static Logger LOG = LoggerFactory.getLogger(TicketRowRenderer.class);
 
     private ToggleTicketSummaryField toggleTicketField;
 
     public TicketRowRenderer(final ProjectTicket ticket) {
-        withMargin(false).withFullWidth().addStyleName(WebUIConstants.BORDER_LIST_ROW);
+        super();
 
         MHorizontalLayout headerLayout = new MHorizontalLayout();
         toggleTicketField = new ToggleTicketSummaryField(ticket);

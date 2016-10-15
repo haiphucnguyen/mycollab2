@@ -32,7 +32,7 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.service.RiskService;
-import com.mycollab.module.project.view.ticket.TicketGroupOrderComponent.ITicketRowRenderer;
+import com.mycollab.module.project.ui.components.BlockRowRender;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
@@ -109,9 +109,10 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
                             confirmDialog -> {
                                 if (confirmDialog.isConfirmed()) {
                                     AppContextUtil.getSpringBean(ProjectTicketService.class).removeTicket(ticket, UserUIContext.getUsername());
-                                    ITicketRowRenderer rowRenderer = UIUtils.getRoot(ToggleTicketSummaryField.this, ITicketRowRenderer.class);
+                                    BlockRowRender rowRenderer = UIUtils.getRoot(ToggleTicketSummaryField.this,
+                                            BlockRowRender.class);
                                     if (rowRenderer != null) {
-
+                                        rowRenderer.selfRemoved();
                                     }
                                 }
                             });

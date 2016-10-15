@@ -2,7 +2,7 @@ package com.mycollab.ondemand.module.billing.esb
 
 import java.util.Arrays
 
-import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
+import com.google.common.eventbus.Subscribe
 import com.mycollab.common.dao.OptionValMapper
 import com.mycollab.common.domain.{MailRecipientField, OptionValExample}
 import com.mycollab.configuration.SiteConfiguration
@@ -29,17 +29,16 @@ import org.springframework.stereotype.Component
     val rootPath = event.accountId + ""
     resourceService.removeResource(rootPath, "", false, event.accountId)
     pageService.removeResource(rootPath)
-
+    
     //delete all options of this account
     val optionEx = new OptionValExample
     optionEx.createCriteria().andSaccountidEqualTo(event.accountId)
     optionValMapper.deleteByExample(optionEx)
-
+    
     val feedback = event.feedback
-    if (feedback != null) {
-      mailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
-        Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")),
-        "User cancelled account", BeanUtility.printBeanObj(feedback))
-    }
+    val feedbackValue = if (feedback == null) "" else BeanUtility.printBeanObj(feedback)
+    mailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
+      Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")),
+      "User cancelled account", feedbackValue)
   }
 }
