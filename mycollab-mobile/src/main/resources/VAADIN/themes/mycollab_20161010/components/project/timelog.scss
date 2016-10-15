@@ -7,58 +7,5 @@
         padding-bottom: 0.5rem;
       }
     }
-
-    &.new-time-entry-window {
-      .input-wrapper {
-        margin: 0px;
-        border-bottom: none;
-        box-shadow: none;
-        border-color: $light-gray-border;
-        font-size: 1.4rem;
-        .v-textfield {
-          border: none;
-          &:focus {
-            box-shadow: none;
-          }
-        }
-        .v-touchkit-componentgroup-row > .v-caption {
-          font-size: 1.4rem;
-        }
-        .v-select-select {
-          font-size: inherit;
-        }
-      }
-    }
-
-    &.update-remain-time-window {
-      .input-wrapper {
-        padding: 0.5rem 1rem;
-        .v-textfield {
-          font-size: 1.5rem;
-          color: $gray-text;
-          line-height: 2rem;
-          border-radius: 0px;
-          border-color: $light-gray-border;
-        }
-      }
-    }
-
-    .button-layout {
-      border-top: 0.1rem solid $light-gray-border;
-      .v-button {
-        background-color: transparent;
-        .v-button-wrap {
-          padding: 1rem;
-          .v-button-caption {
-            color: $primary-blue;
-            font-size: 1.4rem;
-          }
-        }
-        &.add-btn {
-          border-left: 0.1rem solid $light-gray-border;
-        }
-      }
-    }
   }
-  
 }
