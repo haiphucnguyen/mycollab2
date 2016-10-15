@@ -30,6 +30,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PropertyChangedEvent;
 import com.mycollab.vaadin.ui.PropertyChangedListener;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.CssLayout;
@@ -48,7 +49,7 @@ public class TicketRowRenderer extends BlockRowRender implements PropertyChanged
     private ToggleTicketSummaryField toggleTicketField;
 
     public TicketRowRenderer(final ProjectTicket ticket) {
-        super();
+        withMargin(false).withFullWidth().addStyleName(WebUIConstants.BORDER_LIST_ROW);
 
         MHorizontalLayout headerLayout = new MHorizontalLayout();
         toggleTicketField = new ToggleTicketSummaryField(ticket);

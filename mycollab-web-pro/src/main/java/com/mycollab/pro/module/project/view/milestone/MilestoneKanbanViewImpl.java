@@ -25,6 +25,8 @@ import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
+import com.mycollab.module.project.ui.components.BlockRowRender;
+import com.mycollab.module.project.ui.components.IBlockContainer;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.milestone.IMilestoneKanbanView;
 import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
@@ -124,9 +126,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             }
         };
 
-        searchPanel.addSearchHandler(criteria -> {
-            queryTickets(criteria);
-        });
+        searchPanel.addSearchHandler(this::queryTickets);
 
         kanbanLayout = new DDHorizontalLayout();
         kanbanLayout.setHeight("100%");
@@ -328,7 +328,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         }
     }
 
-    private class KanbanBlock extends MVerticalLayout {
+    private class KanbanBlock extends MVerticalLayout implements IBlockContainer {
         private Milestone milestone;
         private DDVerticalLayout dragLayoutContainer;
         private Label header;
@@ -472,6 +472,11 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             updateComponentCount();
         }
 
+        @Override
+        public void updateTitle() {
+            header.setValue(String.format("%s (%d)", milestone.getName(), getAssignmentComponentCount()));
+        }
+
         private void updateComponentCount() {
             if (milestone != null) {
                 header.setValue(String.format("%s (%d)", milestone.getName(), getAssignmentComponentCount()));
@@ -491,19 +496,18 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         }
     }
 
-    private static class KanbanTicketBlockItem extends CustomComponent {
+    private static class KanbanTicketBlockItem extends BlockRowRender {
         private ProjectTicket ticket;
 
         KanbanTicketBlockItem(final ProjectTicket ticket) {
             this.ticket = ticket;
-            MVerticalLayout root = new MVerticalLayout();
-            root.addStyleName("kanban-item");
-            this.setCompositionRoot(root);
+
+            this.addStyleName("kanban-item");
 
             ToggleTicketSummaryField toggleTicketSummaryField = new ToggleTicketSummaryField(ticket);
             MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())).withWidthUndefined(),
                     toggleTicketSummaryField).expand(toggleTicketSummaryField).withFullWidth();
-            root.addComponent(headerLayout);
+            this.addComponent(headerLayout);
 
             CssLayout footer = new CssLayout();
             TicketComponentFactory fieldFactory = AppContextUtil.getSpringBean(TicketComponentFactory.class);
@@ -514,7 +518,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             footer.addComponent(fieldFactory.createStartDatePopupField(ticket));
             footer.addComponent(fieldFactory.createEndDatePopupField(ticket));
             footer.addComponent(fieldFactory.createDueDatePopupField(ticket));
-            root.addComponent(footer);
+            this.addComponent(footer);
         }
     }
 }
