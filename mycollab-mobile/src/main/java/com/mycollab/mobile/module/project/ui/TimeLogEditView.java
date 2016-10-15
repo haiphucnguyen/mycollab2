@@ -16,13 +16,19 @@
  */
 package com.mycollab.mobile.module.project.ui;
 
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.arguments.ValuedBean;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
+import com.mycollab.html.DivLessFormatter;
 import com.mycollab.mobile.ui.AbstractMobilePageView;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
-import com.mycollab.mobile.ui.IconConstants;
+import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
@@ -33,15 +39,17 @@ import com.mycollab.vaadin.touchkit.NavigationBarQuickMenu;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.mycollab.vaadin.ui.NotificationUtil;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.addon.touchkit.ui.DatePicker;
 import com.vaadin.addon.touchkit.ui.NumberField;
 import com.vaadin.addon.touchkit.ui.Switch;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.time.DateUtils;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
@@ -86,7 +94,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
         constructSpentTimeEntryPanel();
         constructRemainTimeEntryPanel();
 
-        this.tableItem = new DefaultPagedBeanList<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
+        tableItem = new DefaultPagedBeanList<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
                 AppContextUtil.getSpringBean(ItemTimeLoggingService.class), new TimeLogRowHandler()) {
             private static final long serialVersionUID = -4549910960891655297L;
 
@@ -96,9 +104,8 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
                 Date currentDate = new GregorianCalendar(2100, 1, 1).getTime();
                 for (final SimpleItemTimeLogging item : currentListData) {
                     if (!DateUtils.isSameDay(item.getLogforday(), currentDate)) {
-                        Label dateLbl = new Label(UserUIContext.formatDate(item.getLogforday()));
-                        dateLbl.setStyleName("log-day");
-                        listContainer.addComponent(dateLbl);
+                        listContainer.addComponent(new ELabel(UserUIContext.formatDate(item.getLogforday()))
+                                .withStyleName(UIConstants.FIELD_NOTE).withWidthUndefined());
                         currentDate = item.getLogforday();
                     }
                     final Component row = getRowDisplayHandler().generateRow(tableItem, item, i);
@@ -194,41 +201,17 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
     private class TimeLogRowHandler implements IBeanList.RowDisplayHandler<SimpleItemTimeLogging> {
 
         @Override
-        public Component generateRow(IBeanList<SimpleItemTimeLogging> host, SimpleItemTimeLogging obj, int rowIndex) {
-            HorizontalLayout layout = new HorizontalLayout();
-            layout.setWidth("100%");
-            layout.addStyleName("time-log-item");
-
-            VerticalLayout leftCol = new VerticalLayout();
-            leftCol.setWidth("100%");
-
-            Label valueLbl = new Label(UserUIContext.formatTime(obj.getLogvalue()));
-            valueLbl.setStyleName("log-value");
-            leftCol.addComponent(valueLbl);
-
-            Label logUserLbl = new Label(obj.getLogUserFullName());
-            logUserLbl.setStyleName("log-user");
-            logUserLbl.setWidthUndefined();
-            leftCol.addComponent(logUserLbl);
-
-            layout.addComponent(leftCol);
-            layout.setExpandRatio(leftCol, 1.0f);
-
-            if (obj.getIsbillable()) {
-                Label billableLbl = new Label(
-                        "<span aria-hidden=\"true\" data-icon=\""
-                                + IconConstants.CIRCLE_CHECK
-                                + "\"></span><div class=\"screen-reader-text\">"
-                                + UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE)
-                                + "</div>");
-                billableLbl.setContentMode(ContentMode.HTML);
-                billableLbl.setWidthUndefined();
-                billableLbl.setStyleName("is-billable");
-                layout.addComponent(billableLbl);
-                layout.setComponentAlignment(billableLbl, Alignment.MIDDLE_LEFT);
-            }
-
-            return layout;
+        public Component generateRow(IBeanList<SimpleItemTimeLogging> host, SimpleItemTimeLogging itemLogging, int rowIndex) {
+            Img avatar = new Img("", StorageFactory.getAvatarPath(itemLogging.getLogUserAvatarId(), 16)).setCSSClass
+                    (UIConstants.CIRCLE_BOX);
+            Div memberLink = new DivLessFormatter().appendChild(avatar, DivLessFormatter.EMPTY_SPACE(),
+                    new A(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables.getProjectId(),
+                            itemLogging.getLoguser())).appendText(itemLogging.getLogUserFullName()));
+            MCssLayout memberLbl = new MCssLayout(ELabel.html(memberLink.write()).withStyleName(UIConstants
+                    .TEXT_ELLIPSIS).withFullWidth());
+            FontAwesome icon = (Boolean.TRUE.equals(itemLogging.getIsbillable())) ? FontAwesome.MONEY : FontAwesome.GIFT;
+            Label timeValueLbl = ELabel.html(icon.getHtml() + " " + UserUIContext.formatTime(itemLogging.getLogvalue()));
+            return new MHorizontalLayout(timeValueLbl, memberLbl).withStyleName("row");
         }
 
     }
@@ -242,8 +225,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
 
         NewTimeLogEntryWindow() {
             super(UserUIContext.getMessage(TimeTrackingI18nEnum.M_DIALOG_ADD_TIME_LOG_ENTRY));
-            withModal(true).withResizable(false).withClosable(false).withDraggable(false)
-                    .withStyleName("time-log-window", "new-time-entry-window").withWidth("95%").withCenter();
+            withModal(true).withResizable(false).withClosable(false).withDraggable(false).withWidth("95%").withCenter();
             constructUI();
         }
 
@@ -299,8 +281,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
 
         UpdateRemainTimeWindow() {
             super(UserUIContext.getMessage(TimeTrackingI18nEnum.M_DIALOG_UPDATE_REMAIN_HOURS));
-            withModal(true).withResizable(false).withClosable(false).withDraggable(false)
-                    .withStyleName("time-log-window", "update-remain-time-window").withWidth("95%").withCenter();
+            withModal(true).withResizable(false).withClosable(false).withDraggable(false).withWidth("95%").withCenter();
             constructUI();
         }
 
