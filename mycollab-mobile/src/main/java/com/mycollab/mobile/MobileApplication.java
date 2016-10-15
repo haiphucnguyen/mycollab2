@@ -21,7 +21,7 @@ import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.IgnoreException;
-import com.mycollab.core.MyCollabVersion;
+import com.mycollab.core.Version;
 import com.mycollab.core.SessionExpireException;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.StringUtils;
@@ -72,7 +72,7 @@ import java.util.GregorianCalendar;
  * @author MyCollab Ltd.
  * @since 3.0
  */
-@Theme(MyCollabVersion.THEME_MOBILE_VERSION)
+@Theme(Version.THEME_MOBILE_VERSION)
 @Viewport("width=device-width, initial-scale=1")
 @Widgetset("com.mycollab.widgetset.MyCollabMobileWidgetSet")
 public class MobileApplication extends MyCollabUI {

@@ -4,7 +4,7 @@ import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.BroadcastMessage;
 import com.mycollab.core.Broadcaster;
-import com.mycollab.core.MyCollabVersion;
+import com.mycollab.core.Version;
 import com.mycollab.core.NewUpdateAvailableNotification;
 import com.mycollab.core.utils.JsonDeSerializer;
 import com.mycollab.premium.license.service.LicenseResolver;
@@ -50,10 +50,10 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
         LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
         String customerId = EnDecryptHelper.encryptText(licenseInfo.getCustomerId());
         String result = restTemplate.getForObject(SiteConfiguration.getApiUrl("checkpremiumupdate?version=" +
-                MyCollabVersion.getVersion() + "&customerId=" + customerId), String.class);
+                Version.getVersion() + "&customerId=" + customerId), String.class);
         final Properties props = JsonDeSerializer.fromJson(result, Properties.class);
         String version = props.getProperty("version");
-        if (MyCollabVersion.isEditionNewer(version)) {
+        if (Version.isEditionNewer(version)) {
             if (!isDownloading) {
                 if (latestFileDownloadedPath != null) {
                     File installerFile = new File(latestFileDownloadedPath);

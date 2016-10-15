@@ -3,7 +3,7 @@ package com.mycollab.premium.license.service;
 import com.mycollab.common.service.AppPropertiesService;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.MyCollabException;
-import com.mycollab.core.MyCollabVersion;
+import com.mycollab.core.Version;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.FileUtils;
@@ -122,7 +122,7 @@ public class LicenseResolverImpl implements LicenseResolver, AppPropertiesServic
             byte[] bytes = outputStream.toByteArray();
             prop.load(new ByteArrayInputStream(bytes));
             DateTime expireDate = new DateTime(DateTimeUtils.parseDateByW3C(prop.getProperty("expireDate")));
-            if (MyCollabVersion.getReleasedDate() != null && MyCollabVersion.getReleasedDate().isAfter(expireDate)) {
+            if (Version.getReleasedDate() != null && Version.getReleasedDate().isAfter(expireDate)) {
                 return createInvalidLicense();
             }
             LicenseInfo newLicenseInfo = new LicenseInfo();

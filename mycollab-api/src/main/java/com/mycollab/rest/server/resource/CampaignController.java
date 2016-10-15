@@ -2,7 +2,7 @@ package com.mycollab.rest.server.resource;
 
 import com.mycollab.common.domain.MailRecipientField;
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.core.MyCollabVersion;
+import com.mycollab.core.Version;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.module.mail.service.IContentGenerator;
@@ -71,12 +71,12 @@ public class CampaignController {
                 communityLead.setPhone(phone);
                 communityLead.setCountry(country);
                 communityLead.setRegisterdate(new LocalDate().toDate());
-                communityLead.setVersion(MyCollabVersion.getVersion());
+                communityLead.setVersion(Version.getVersion());
                 communityLead.setEdition(edition);
 
                 CommunityLeadExample ex = new CommunityLeadExample();
                 ex.createCriteria().andFirstnameEqualTo(firstname).andLastnameEqualTo(lastname).andEmailEqualTo(email)
-                        .andVersionEqualTo(MyCollabVersion.getVersion());
+                        .andVersionEqualTo(Version.getVersion());
                 if (communityLeadMapper.countByExample(ex) == 0) {
                     communityLeadMapper.insert(communityLead);
                 }

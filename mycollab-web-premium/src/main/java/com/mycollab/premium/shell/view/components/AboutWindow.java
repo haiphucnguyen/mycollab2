@@ -5,7 +5,7 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.i18n.LicenseI18nEnum;
 import com.mycollab.configuration.StorageFactory;
-import com.mycollab.core.MyCollabVersion;
+import com.mycollab.core.Version;
 import com.mycollab.premium.license.service.LicenseResolver;
 import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.shell.view.components.AbstractAboutWindow;
@@ -44,7 +44,7 @@ public class AboutWindow extends AbstractAboutWindow {
 
         Image about = new Image("", new ExternalResource(StorageFactory.generateAssetRelativeLink(WebResourceIds._about)));
         MVerticalLayout rightPanel = new MVerticalLayout();
-        ELabel versionLbl = ELabel.h2(String.format("MyCollab Enterprise Edition %s", MyCollabVersion.getVersion()));
+        ELabel versionLbl = ELabel.h2(String.format("MyCollab Enterprise Edition %s", Version.getVersion()));
         Label javaNameLbl = new Label(String.format("%s, %s", System.getProperty("java.vm.name"),
                 System.getProperty("java.runtime.version")));
         WebBrowser browser = Page.getCurrent().getWebBrowser();

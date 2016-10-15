@@ -1,7 +1,7 @@
 package com.mycollab.rest.server.resource;
 
 import com.mycollab.configuration.EnDecryptHelper;
-import com.mycollab.core.MyCollabVersion;
+import com.mycollab.core.Version;
 import com.mycollab.ondemand.module.billing.dao.ProEditionInfoMapper;
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfoExample;
 import com.mycollab.ondemand.module.support.service.EditionInfoResolver;
@@ -32,10 +32,10 @@ public class CheckVersionController {
         props.put("version", liveVersion);
         props.put("downloadLink", "https://www.mycollab.com/ce-registration/");
         props.put("releaseNotes", String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
-                MyCollabVersion.getVersion().replace('.', '-')));
+                Version.getVersion().replace('.', '-')));
 
-        if (version != null && MyCollabVersion.isEditionNewer(liveVersion, version) &&
-                MyCollabVersion.isEditionNewer(version, "5.3.4")) {
+        if (version != null && Version.isEditionNewer(liveVersion, version) &&
+                Version.isEditionNewer(version, "5.3.4")) {
             props.put("autoDownload", editionInfoResolver.getEditionInfo().getCommunityUpgradeLink());
         }
 
@@ -52,11 +52,11 @@ public class CheckVersionController {
         props.put("version", liveVersion);
         props.put("downloadLink", "https://www.mycollab.com/ee-registration/");
         props.put("releaseNotes", String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
-                MyCollabVersion.getVersion().replace('.', '-')));
+                Version.getVersion().replace('.', '-')));
         ProEditionInfoExample ex = new ProEditionInfoExample();
         ex.createCriteria().andIdEqualTo(Integer.parseInt(EnDecryptHelper.decryptText(customerId)));
         boolean isExistCustomer = proEditionInfoMapper.countByExample(ex) > 0;
-        if (isExistCustomer && version != null && MyCollabVersion.isEditionNewer(liveVersion, version)) {
+        if (isExistCustomer && version != null && Version.isEditionNewer(liveVersion, version)) {
             props.put("autoDownload", editionInfoResolver.getEditionInfo().getPremiumUpgradeLink());
         }
 

@@ -4,7 +4,7 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
 import com.mycollab.configuration.StorageFactory;
-import com.mycollab.core.MyCollabVersion;
+import com.mycollab.core.Version;
 import com.mycollab.shell.view.components.AbstractAboutWindow;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -36,7 +36,7 @@ public class AboutWindow extends AbstractAboutWindow {
 
         Image about = new Image("", new ExternalResource(StorageFactory.generateAssetRelativeLink(WebResourceIds._about)));
         MVerticalLayout rightPanel = new MVerticalLayout();
-        ELabel versionLbl = ELabel.h2(String.format("MyCollab Cloud Edition %s", MyCollabVersion.getVersion()));
+        ELabel versionLbl = ELabel.h2(String.format("MyCollab Cloud Edition %s", Version.getVersion()));
         WebBrowser browser = Page.getCurrent().getWebBrowser();
         Label osLbl = new Label(String.format("%s, %s", System.getProperty("os.name"), browser.getBrowserApplication()));
         osLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);

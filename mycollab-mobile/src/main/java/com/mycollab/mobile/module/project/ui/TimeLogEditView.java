@@ -30,9 +30,11 @@ import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.touchkit.NavigationBarQuickMenu;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.addon.touchkit.ui.DatePicker;
+import com.vaadin.addon.touchkit.ui.NumberField;
 import com.vaadin.addon.touchkit.ui.Switch;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.shared.ui.MarginInfo;
@@ -40,6 +42,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.time.DateUtils;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
@@ -59,19 +62,16 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
 
     private DefaultPagedBeanList<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> tableItem;
 
-    private VerticalLayout content;
+    private MVerticalLayout content;
     private HorizontalLayout headerPanel;
     private Label totalSpentTimeLbl;
     private Label remainTimeLbl;
 
     protected TimeLogEditView(final V bean) {
         this.bean = bean;
-        content = new VerticalLayout();
-        content.setSpacing(true);
-        content.setSizeFull();
+        content = new MVerticalLayout();
         this.setContent(content);
         this.setCaption(UserUIContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
-        this.addStyleName("timelog-edit-view");
 
         this.itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
@@ -80,18 +80,14 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
     }
 
     private void initUI() {
-        headerPanel = new HorizontalLayout();
-        headerPanel.setWidth("100%");
-        headerPanel.setStyleName("name-info-panel");
-        headerPanel.setMargin(new MarginInfo(true, false, true, false));
-        headerPanel.setHeightUndefined();
+        headerPanel = new MHorizontalLayout().withFullWidth().withMargin(new MarginInfo(true, false, true, false));
         content.addComponent(headerPanel);
+
         constructSpentTimeEntryPanel();
         constructRemainTimeEntryPanel();
 
         this.tableItem = new DefaultPagedBeanList<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(
                 AppContextUtil.getSpringBean(ItemTimeLoggingService.class), new TimeLogRowHandler()) {
-
             private static final long serialVersionUID = -4549910960891655297L;
 
             @Override
@@ -112,9 +108,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
             }
         };
 
-        this.tableItem.setWidth("100%");
-        content.addComponent(tableItem);
-        content.setExpandRatio(tableItem, 1.0f);
+        content.with(tableItem).expand(tableItem);
 
         MVerticalLayout controlBtns = new MVerticalLayout().withFullWidth();
         controlBtns.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
@@ -135,14 +129,10 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
     private void constructSpentTimeEntryPanel() {
         final VerticalLayout totalLayout = new VerticalLayout();
         totalLayout.setMargin(new MarginInfo(false, true, false, true));
-        totalLayout.setStyleName("name-block");
-        totalLayout.addStyleName("total-time");
         totalLayout.setWidth("100%");
         final Label lbTimeInstructTotal = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_SPENT_HOURS));
-        lbTimeInstructTotal.setStyleName("block-label");
         totalLayout.addComponent(lbTimeInstructTotal);
-        this.totalSpentTimeLbl = new Label("_");
-        this.totalSpentTimeLbl.setStyleName("block-value");
+        this.totalSpentTimeLbl = new ELabel("_").withStyleName("h2");
         totalLayout.addComponent(this.totalSpentTimeLbl);
 
         headerPanel.addComponent(totalLayout);
@@ -151,18 +141,14 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
     private void constructRemainTimeEntryPanel() {
         final VerticalLayout updateLayout = new VerticalLayout();
         updateLayout.setMargin(new MarginInfo(false, true, false, true));
-        updateLayout.setStyleName("name-block");
-        updateLayout.addStyleName("remain-time");
         updateLayout.setWidth("100%");
 
         final Label lbTimeInstructTotal = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_REMAINING_WORK_HOURS));
-        lbTimeInstructTotal.setStyleName("block-label");
         updateLayout.addComponent(lbTimeInstructTotal);
-        this.remainTimeLbl = new Label("_");
-        this.remainTimeLbl.setStyleName("block-value");
+        remainTimeLbl = new ELabel("_").withStyleName("h2");
         updateLayout.addComponent(this.remainTimeLbl);
 
-        this.headerPanel.addComponent(updateLayout);
+        headerPanel.addComponent(updateLayout);
     }
 
     private void loadTimeValue() {
@@ -185,13 +171,13 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
 
     private void setUpdateTimeValue() {
         if (this.getEstimateRemainTime() > -1) {
-            this.remainTimeLbl.setValue(this.getEstimateRemainTime() + "");
+            remainTimeLbl.setValue(this.getEstimateRemainTime() + "");
         }
     }
 
     private void setTotalTimeValue() {
         if (this.getTotalInvest() > 0) {
-            this.totalSpentTimeLbl.setValue(this.getTotalInvest() + "");
+            totalSpentTimeLbl.setValue(this.getTotalInvest() + "");
         }
     }
 
@@ -204,20 +190,6 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
     protected abstract double getEstimateRemainTime();
 
     protected abstract boolean isEnableAdd();
-
-    private class NumericTextField extends TextField {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        protected void setValue(final String newValue, final boolean repaintIsNotNeeded) {
-            try {
-                final String d = Double.parseDouble(newValue) + "";
-                super.setValue(d, repaintIsNotNeeded);
-            } catch (final Exception e) {
-                super.setValue("0.0", repaintIsNotNeeded);
-            }
-        }
-    }
 
     private class TimeLogRowHandler implements IBeanList.RowDisplayHandler<SimpleItemTimeLogging> {
 
@@ -264,7 +236,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
     private class NewTimeLogEntryWindow extends MWindow {
         private static final long serialVersionUID = 1285267216691339362L;
 
-        private NumericTextField newTimeInputField;
+        private NumberField newTimeInputField;
         private Switch isBillableField;
         private DatePicker forDate;
         private MButton createBtn;
@@ -285,7 +257,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
             inputWrapper.setWidth("100%");
             inputWrapper.setStyleName("input-wrapper");
 
-            this.newTimeInputField = new NumericTextField();
+            this.newTimeInputField = new NumberField();
             this.newTimeInputField.setCaption(UserUIContext.getMessage(TimeTrackingI18nEnum.M_FORM_SPENT_HOURS));
 
             this.newTimeInputField.setWidth("100%");
@@ -332,7 +304,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
     private class UpdateRemainTimeWindow extends MWindow {
         private static final long serialVersionUID = -8992497645142044633L;
 
-        private NumericTextField remainTimeInputField;
+        private NumberField remainTimeInputField;
         private MButton createBtn;
 
         UpdateRemainTimeWindow() {
@@ -351,7 +323,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
             inputWrapper.setStyleName("input-wrapper");
             inputWrapper.setWidth("100%");
 
-            this.remainTimeInputField = new NumericTextField();
+            this.remainTimeInputField = new NumberField();
             this.remainTimeInputField.setWidth("100%");
             inputWrapper.addComponent(this.remainTimeInputField);
             addLayout.addComponent(inputWrapper);

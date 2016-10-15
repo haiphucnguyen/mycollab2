@@ -965,67 +965,6 @@ body {
 	color: #f7c7c1;
 }
 
-.timelog-edit-view div.v-vertical > .v-expand > .v-spacing {
-	display: block;
-	height: 1.2rem;
-}
-
-.timelog-edit-view .name-info-panel {
-	background-color: white;
-	border-bottom: 0.1rem solid #dddddd;
-}
-
-.timelog-edit-view .name-info-panel .total-time {
-	border-right: 0.1rem solid #dddddd;
-}
-
-.timelog-edit-view .name-info-panel .name-block .block-label {
-	color: #959595;
-}
-
-.timelog-edit-view .name-info-panel .name-block .block-value {
-	color: #414141;
-	font-size: 1.5rem;
-	font-weight: bold;
-}
-
-.timelog-edit-view .data-list-view {
-	border-top: 0.1rem solid #dddddd;
-}
-
-.timelog-edit-view .data-list-view .log-day {
-	border-bottom: 2px solid #f59330;
-	padding: 1rem 0.5rem 0.5rem;
-	font-size: 1.1rem;
-	font-weight: bold;
-	color: #959595;
-}
-
-.timelog-edit-view .data-list-view .time-log-item {
-	padding: 0.5rem 2.5rem 0.8rem 1.4rem;
-	border-bottom: 0.1rem solid #dddddd;
-	color: #959595;
-}
-
-.timelog-edit-view .data-list-view .time-log-item .log-value {
-	font-size: 1.4rem;
-	font-weight: bold;
-	color: #414141;
-}
-
-.timelog-edit-view .data-list-view .time-log-item .v-caption-on-top > .v-caption {
-	display: inline-block;
-}
-
-.timelog-edit-view .data-list-view .time-log-item .log-user {
-	font-size: 1.1rem;
-}
-
-.timelog-edit-view .data-list-view .time-log-item .is-billable {
-	text-align: center;
-	color: #49a3e1;
-}
-
 .time-log-window .v-window-outerheader {
 	height: inherit;
 }

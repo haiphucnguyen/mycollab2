@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public class MyCollabVersion {
+public class Version {
     public static final String THEME_VERSION = "mycollab_20161011";
     public static final String THEME_MOBILE_VERSION = "mycollab_20161010";
 
