@@ -780,6 +780,10 @@
         display: block;
         .v-button-wrap {
           padding: 0px;
+          color: $my-meta-color;
+          &:hover {
+            color: black;
+          }
         }
       }
     }

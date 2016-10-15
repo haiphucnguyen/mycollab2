@@ -2416,6 +2416,11 @@ div.v-window {
 
 .editable-field:hover .toggle .v-button-wrap {
 	padding: 0px;
+	color: #999;
+}
+
+.editable-field:hover .toggle .v-button-wrap:hover {
+	color: black;
 }
 
 .editable-field .toggle {
@@ -15181,6 +15186,11 @@ div.v-window {
 
 .editable-field:hover .toggle .v-button-wrap {
 	padding: 0px;
+	color: #999;
+}
+
+.editable-field:hover .toggle .v-button-wrap:hover {
+	color: black;
 }
 
 .editable-field .toggle {

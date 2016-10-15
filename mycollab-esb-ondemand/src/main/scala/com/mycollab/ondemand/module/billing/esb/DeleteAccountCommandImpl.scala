@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component
   @Subscribe
   def deleteAccount(event: DeleteAccountEvent): Unit = {
     val rootPath = event.accountId + ""
-    resourceService.removeResource(rootPath, "", event.accountId)
+    resourceService.removeResource(rootPath, "", false, event.accountId)
     pageService.removeResource(rootPath)
 
     //delete all options of this account
