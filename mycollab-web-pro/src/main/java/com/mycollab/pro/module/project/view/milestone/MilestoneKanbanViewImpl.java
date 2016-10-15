@@ -413,11 +413,11 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             OptionPopupContent popupContent = new OptionPopupContent();
 
             if (canWrite) {
-                MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent ->
-                        EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(this, milestone))).withIcon(FontAwesome.EDIT);
-                popupContent.addOption(editBtn);
-
                 if (milestone != null) {
+                    MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent ->
+                            EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(this, milestone))).withIcon(FontAwesome.EDIT);
+                    popupContent.addOption(editBtn);
+
                     MButton changeColorBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHANGE_COLOR), clickEvent -> {
                         ColorPickerPopup popup = new ColorPickerPopup(Color.CYAN);
                         popup.center();
@@ -437,7 +437,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 }
 
             }
-            if (canExecute) {
+            if (canExecute && (milestone != null)) {
                 MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                     controlsBtn.setPopupVisible(false);
                     ConfirmDialogExt.show(UI.getCurrent(),
