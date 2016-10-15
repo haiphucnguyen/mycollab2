@@ -30,8 +30,8 @@ import com.mycollab.module.project.ui.components.IBlockContainer;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.milestone.IMilestoneKanbanView;
 import com.mycollab.module.project.view.milestone.MilestoneAddWindow;
-import com.mycollab.module.project.view.ticket.ToggleTicketSummaryField;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
+import com.mycollab.module.project.view.ticket.ToggleTicketSummaryField;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AsyncInvoker;
@@ -459,9 +459,10 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             controlsBtn.setContent(popupContent);
             headerLayout.with(controlsBtn);
 
+            Integer milestoneId = (milestone != null) ? milestone.getId() : null;
             MButton newAssignmentBtn = new MButton(UserUIContext.getMessage(TicketI18nEnum.NEW),
                     clickEvent -> UI.getCurrent().addWindow(AppContextUtil.getSpringBean(TicketComponentFactory.class)
-                            .createNewTicketWindow(null, CurrentProjectVariables.getProjectId(), milestone.getId(), false)))
+                            .createNewTicketWindow(null, CurrentProjectVariables.getProjectId(), milestoneId, false)))
                     .withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
 
             this.with(headerLayout, dragLayoutContainer, newAssignmentBtn).withAlign(newAssignmentBtn, Alignment.MIDDLE_RIGHT);
