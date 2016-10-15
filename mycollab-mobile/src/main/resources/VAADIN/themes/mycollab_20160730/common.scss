@@ -210,6 +210,10 @@
     border-bottom: 1px solid $my-separator-color;
   }
 
+  .border-top {
+    border-top: 1px solid $my-separator-color;
+  }
+
   a {
     color: $my-link-color !important;
     text-decoration: none !important;

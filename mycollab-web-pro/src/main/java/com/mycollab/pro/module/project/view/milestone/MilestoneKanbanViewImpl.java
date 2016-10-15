@@ -101,7 +101,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         @Override
         @Subscribe
         public void handle(TicketEvent.NewTicketAdded event) {
-            if (!ProjectTypeConstants.TICKET.equals(event.getTypeVal())) {
+            if (!ProjectTypeConstants.MILESTONE.equals(event.getTypeVal())) {
                 ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
                 ProjectTicket ticket = projectTicketService.findTicket(event.getTypeVal(), event.getTypeIdVal());
                 if (ticket != null) {
