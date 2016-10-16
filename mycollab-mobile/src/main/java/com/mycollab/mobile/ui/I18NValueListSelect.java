@@ -46,7 +46,7 @@ public class I18NValueListSelect extends ValueListSelect {
             this.setItemCaption(entry.name(), UserUIContext.getMessage(entry));
         }
 
-        if (!this.isNullSelectionAllowed()) {
+        if (!this.isNullSelectionAllowed() && getItemIds().size() > 0) {
             this.select(this.getItemIds().iterator().next());
         }
     }

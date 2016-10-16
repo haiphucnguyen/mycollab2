@@ -2,13 +2,13 @@ package com.mycollab.premium.mobile.module.project.view.risk;
 
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.mobile.form.view.DynaFormLayout;
-import com.mycollab.mobile.module.project.events.BugEvent;
 import com.mycollab.mobile.module.project.events.RiskEvent;
 import com.mycollab.mobile.module.project.ui.CommentNavigationButton;
 import com.mycollab.mobile.module.project.ui.ProjectAttachmentDisplayComp;
@@ -98,7 +98,13 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected String initFormHeader() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK).getHtml() + " " + beanItem.getName();
+        Span beanTitle = new Span().appendText(beanItem.getName());
+        if (beanItem.isCompleted()) {
+            beanTitle.setCSSClass(MobileUIConstants.LINK_COMPLETED);
+        } else if (beanItem.isOverdue()) {
+            beanTitle.setCSSClass(MobileUIConstants.LINK_OVERDUE);
+        }
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK).getHtml() + " " + beanTitle.write();
     }
 
     @Override

@@ -154,6 +154,11 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
 
             A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink(CurrentProjectVariables
                     .getProjectId(), milestone.getId())).appendChild(new Span().appendText(milestone.getName()));
+            if (milestone.isCompleted()) {
+                milestoneLink.setCSSClass(MobileUIConstants.LINK_COMPLETED);
+            } else if (milestone.isOverdue()) {
+                milestoneLink.setCSSClass(MobileUIConstants.LINK_OVERDUE);
+            }
             MCssLayout milestoneWrap = new MCssLayout(ELabel.html(milestoneLink.write()));
             milestoneInfoLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset
                     (ProjectTypeConstants.MILESTONE)), milestoneWrap).expand(milestoneWrap).withFullWidth());

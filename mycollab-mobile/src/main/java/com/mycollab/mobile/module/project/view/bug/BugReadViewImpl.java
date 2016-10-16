@@ -18,6 +18,7 @@ package com.mycollab.mobile.module.project.view.bug;
 
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.utils.StringUtils;
@@ -32,6 +33,7 @@ import com.mycollab.mobile.shell.events.ShellEvent;
 import com.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.mycollab.mobile.ui.AdvancedPreviewBeanForm;
 import com.mycollab.mobile.ui.FormSectionBuilder;
+import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.module.file.AttachmentUtils;
@@ -143,7 +145,13 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     @Override
     protected String initFormHeader() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + " " + beanItem.getName();
+        Span beanTitle = new Span().appendText(beanItem.getName());
+        if (beanItem.isCompleted()) {
+            beanTitle.setCSSClass(MobileUIConstants.LINK_COMPLETED);
+        } else if (beanItem.isOverdue()) {
+            beanTitle.setCSSClass(MobileUIConstants.LINK_OVERDUE);
+        }
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + " " + beanTitle.write();
     }
 
     @Override

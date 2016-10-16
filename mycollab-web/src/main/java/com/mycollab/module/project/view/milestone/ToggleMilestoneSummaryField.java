@@ -20,7 +20,6 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.NumberSearchField;
@@ -74,13 +73,13 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
         if (toggleStatusSupport && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
             toggleStatusSelect = new CssCheckBox();
             toggleStatusSelect.setSimpleMode(true);
-            toggleStatusSelect.setValue(milestone.isClosed());
+            toggleStatusSelect.setValue(milestone.isCompleted());
             this.addComponent(toggleStatusSelect);
             this.addComponent(ELabel.EMPTY_SPACE());
             displayTooltip();
 
             toggleStatusSelect.addValueChangeListener(valueChangeEvent -> {
-                if (milestone.isClosed()) {
+                if (milestone.isCompleted()) {
                     milestone.setStatus(MilestoneStatus.InProgress.name());
                     titleLinkLbl.removeStyleName(WebUIConstants.LINK_COMPLETED);
                 } else {
@@ -140,7 +139,7 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
     }
 
     private void displayTooltip() {
-        if (milestone.isClosed()) {
+        if (milestone.isCompleted()) {
             toggleStatusSelect.setDescription(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_MARK_INCOMPLETE));
         } else {
             toggleStatusSelect.setDescription(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_MARK_COMPLETE));

@@ -75,20 +75,20 @@
 	word-wrap: break-word;
 }
 
-.v-label.overdue {
+.v-label.overdue, .v-label .overdue {
 	color: $my-alert-color !important;
 }
 
-.v-label.overdue a {
+.v-label.overdue a, .v-label .overdue a {
 	color: $my-alert-color !important;
 }
 
-.v-label.completed {
+.v-label.completed, .v-label .completed {
 	text-decoration: line-through !important;
 	color: $my-black-color !important;
 }
 
-.v-label.completed a {
+.v-label.completed a, .v-label .completed a {
 	text-decoration: line-through !important;
 	color: $my-black-color !important;
 }
@@ -212,20 +212,20 @@
 	word-wrap: break-word;
 }
 
-.v-label.overdue {
+.v-label.overdue, .v-label .overdue {
 	color: #B0470B !important;
 }
 
-.v-label.overdue a {
+.v-label.overdue a, .v-label .overdue a {
 	color: #B0470B !important;
 }
 
-.v-label.completed {
+.v-label.completed, .v-label .completed {
 	text-decoration: line-through !important;
 	color: #5e5d55 !important;
 }
 
-.v-label.completed a {
+.v-label.completed a, .v-label .completed a {
 	text-decoration: line-through !important;
 	color: #5e5d55 !important;
 }

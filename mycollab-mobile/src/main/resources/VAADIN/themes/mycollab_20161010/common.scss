@@ -94,13 +94,13 @@
 
 .v-label {
   word-wrap: break-word;
-  &.overdue {
+  &.overdue, .overdue {
     color: $my-alert-color !important;
     a {
       color: $my-alert-color !important;
     }
   }
-  &.completed {
+  &.completed, .completed {
     text-decoration: line-through !important;
     color: $my-black-color !important;
     a {

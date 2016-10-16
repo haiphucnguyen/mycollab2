@@ -18,6 +18,7 @@ package com.mycollab.mobile.module.project.view.task;
 
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
@@ -43,7 +44,6 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
-import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
@@ -116,7 +116,13 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     @Override
     protected String initFormHeader() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + " " + beanItem.getName();
+        Span beanTitle = new Span().appendText(beanItem.getName());
+        if (beanItem.isCompleted()) {
+            beanTitle.setCSSClass(MobileUIConstants.LINK_COMPLETED);
+        } else if (beanItem.isOverdue()) {
+            beanTitle.setCSSClass(MobileUIConstants.LINK_OVERDUE);
+        }
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + " " + beanTitle.write();
     }
 
     @Override
