@@ -8,7 +8,6 @@ import com.mycollab.mobile.module.project.view.task.ITaskAddPresenter;
 import com.mycollab.mobile.module.project.view.task.TaskAddView;
 import com.mycollab.mobile.shell.events.ShellEvent;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
@@ -51,7 +50,6 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
             SimpleTask task = (SimpleTask) data.getParams();
             view.editItem(task);
             super.onGo(navigator, data);
-            MyCollabUI.addFragment(ProjectLinkGenerator.generateTaskEditLink(task.getTaskkey(), task.getProjectShortname()), task.getName());
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }

@@ -20,6 +20,7 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
+import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.SetSearchField;
@@ -108,6 +109,8 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
         super.onBecomingVisible();
         setCaption(UserUIContext.getMessage(MilestoneI18nEnum.LIST));
         updateTabStatus();
+        MyCollabUI.addFragment("project/milestone/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+                UserUIContext.getMessage(MilestoneI18nEnum.LIST));
     }
 
     private void updateTabStatus() {
@@ -199,4 +202,6 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
             return milestoneInfoLayout;
         }
     }
+
+
 }
