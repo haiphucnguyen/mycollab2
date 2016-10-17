@@ -62,8 +62,7 @@ public class InvoiceAddWindow extends MWindow {
                 uploadField.saveContentsToRepo(attachPath);
                 close();
             }
-        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
-        saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE).withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebUIConstants.BUTTON_OPTION);

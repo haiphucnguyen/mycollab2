@@ -18,6 +18,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -48,12 +49,11 @@ public class CloudDriveSettingWindow extends MWindow {
         externalDriveService = AppContextUtil.getSpringBean(ExternalDriveService.class);
         externalResourceService = AppContextUtil.getSpringBean(ExternalResourceService.class);
 
-        Button connectAccountBtn = new Button("Connect account", clickEvent -> {
+        MButton connectAccountBtn = new MButton("Connect account", clickEvent -> {
             OauthWindowFactory oauthWindowFactory = ViewManager.getCacheComponent(OauthWindowFactory.class);
             Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
             UI.getCurrent().addWindow(dropboxWindow);
-        });
-        connectAccountBtn.addStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION).withClickShortcut(ShortcutAction.KeyCode.ENTER);
         mainLayout.addComponent(connectAccountBtn);
 
         bodyLayout = new MVerticalLayout().withSpacing(false).withMargin(false).withFullWidth();
