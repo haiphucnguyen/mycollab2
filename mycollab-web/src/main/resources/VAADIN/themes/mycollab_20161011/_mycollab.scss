@@ -412,18 +412,15 @@ $v-line-height--header:1.5em;
 
   #loginFormContainer #form-header {
     font-size: 38px;
-    line-height: 23px;
-    color: rgb(34, 85, 128);
-    padding: 40px 0px 20px;
+    padding: 20px 0px;
     text-transform: uppercase;
     text-align: center;
   }
 
   .forgotPwdForm #loginFormContainer {
     #form-header {
-      font-size: 34px;
+      font-size: 38px;
       line-height: normal;
-      color: rgb(80, 127, 140);
       padding: 0px 0px 5px;
       border-bottom: 1px solid $my-separator-color;
       text-align: left;
