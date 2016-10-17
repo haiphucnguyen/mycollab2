@@ -285,7 +285,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                 metaBlock.addComponent(popupFieldFactory.createNonBillableHoursPopupField(milestone));
             }
 
-            this.add(metaBlock);
+            this.with(metaBlock);
 
             if (StringUtils.isNotBlank(milestone.getDescription())) {
                 this.addComponent(ELabel.html(StringUtils.formatRichText(milestone.getDescription())));
