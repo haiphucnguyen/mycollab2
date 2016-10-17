@@ -68,31 +68,4 @@
        }
      }
    }
-
-   .message-add-view {
-     .content-layout{
-       .bottom-row {
-         margin: 1.2rem auto 0rem;
-         box-shadow: none;
-         .v-caption {
-           font-size: 1.4rem;
-         }
-         .attachment-field {
-           .attachment-field-header {
-             padding-bottom: 0.5rem;
-           }
-           .attachment-row-wrap {
-             display: block;
-             .attachment-row {
-               border-top: 0.1rem solid $light-gray-border;
-               border-bottom: none;
-               .v-button {
-                 display: inline-block;
-               }
-             }
-           }
-         }
-       }
-     }
-  }
 }

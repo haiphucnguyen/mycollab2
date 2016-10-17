@@ -40,21 +40,17 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
     private Set<IEditFormHandler<SimpleMessage>> handlers = new HashSet<>();
 
     public MessageAddViewImpl() {
-        this.addStyleName("message-add-view");
         this.setCaption(UserUIContext.getMessage(MessageI18nEnum.NEW));
 
         CssLayout content = new CssLayout();
-        content.setStyleName("content-layout");
         content.setSizeFull();
         this.setContent(content);
 
         VerticalLayout addFormLayout = new VerticalLayout();
         addFormLayout.setMargin(true);
-        addFormLayout.setStyleName("addform-layout");
         addFormLayout.setWidth("100%");
 
         subjectField = new TextField();
-        subjectField.setStyleName("title-field");
         subjectField.setWidth("100%");
         subjectField.setInputPrompt(UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE));
         addFormLayout.addComponent(subjectField);
@@ -62,13 +58,12 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         addFormLayout.addComponent(ELabel.hr());
 
         contentField = new TextArea();
-        contentField.setStyleName("content-field");
         contentField.setWidth("100%");
         contentField.setInputPrompt(UserUIContext.getMessage(MessageI18nEnum.M_FORM_CONTENT_FIELD_PROMPT));
         addFormLayout.addComponent(contentField);
+        content.addComponent(addFormLayout);
 
         VerticalComponentGroup bottomRow = new VerticalComponentGroup();
-        bottomRow.setStyleName("bottom-row");
         bottomRow.setWidth("100%");
         isStickField = new Switch(UserUIContext.getMessage(MessageI18nEnum.FORM_IS_STICK), false);
         bottomRow.addComponent(isStickField);
@@ -76,7 +71,6 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         attachmentPanel = new ProjectFormAttachmentUploadField();
         bottomRow.addComponent(attachmentPanel);
 
-        content.addComponent(addFormLayout);
         content.addComponent(bottomRow);
 
         Button saveBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {

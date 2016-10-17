@@ -7,7 +7,6 @@ import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.mycollab.mobile.shell.events.ShellEvent;
 import com.mycollab.mobile.ui.ConfirmDialog;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
@@ -68,9 +67,6 @@ public class RiskReadPresenter extends AbstractProjectPresenter<RiskReadView> {
                 if (risk != null) {
                     this.view.previewItem(risk);
                     super.onGo(container, data);
-
-                    MyCollabUI.addFragment(ProjectLinkGenerator.generateRiskPreviewLink(risk.getProjectid(),
-                            risk.getId()), risk.getName());
                 } else {
                     NotificationUtil.showRecordNotExistNotification();
                 }

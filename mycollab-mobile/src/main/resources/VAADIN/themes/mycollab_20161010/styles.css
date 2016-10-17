@@ -907,32 +907,6 @@ body {
 	padding: 0.3rem 0.5rem 0.4rem;
 }
 
-.message-add-view .content-layout .bottom-row {
-	margin: 1.2rem auto 0rem;
-	box-shadow: none;
-}
-
-.message-add-view .content-layout .bottom-row .v-caption {
-	font-size: 1.4rem;
-}
-
-.message-add-view .content-layout .bottom-row .attachment-field .attachment-field-header {
-	padding-bottom: 0.5rem;
-}
-
-.message-add-view .content-layout .bottom-row .attachment-field .attachment-row-wrap {
-	display: block;
-}
-
-.message-add-view .content-layout .bottom-row .attachment-field .attachment-row-wrap .attachment-row {
-	border-top: 0.1rem solid #dddddd;
-	border-bottom: none;
-}
-
-.message-add-view .content-layout .bottom-row .attachment-field .attachment-row-wrap .attachment-row .v-button {
-	display: inline-block;
-}
-
 .bug-severity-critical .v-icon, .v-filterselect-item-bug-severity-critical .v-icon {
 	color: #d32d1a;
 }
