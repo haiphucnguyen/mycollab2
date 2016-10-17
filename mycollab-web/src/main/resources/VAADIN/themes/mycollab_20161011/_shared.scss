@@ -320,6 +320,9 @@
     border-radius: 50%;
     background-color: #b9ecfb;
     text-align: center;
+    &:hover {
+      background-color: darken(#b9ecfb, 10%);
+    }
   }
 
   .optionPopupContent {
