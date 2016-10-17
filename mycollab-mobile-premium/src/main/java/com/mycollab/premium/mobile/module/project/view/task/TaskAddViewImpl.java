@@ -1,5 +1,6 @@
 package com.mycollab.premium.mobile.module.project.view.task;
 
+import com.mycollab.common.UrlEncodeDecoder;
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.mobile.form.view.DynaFormLayout;
@@ -11,10 +12,12 @@ import com.mycollab.mobile.module.project.view.task.TaskAddView;
 import com.mycollab.mobile.module.project.view.task.TaskDefaultFormLayoutFactory;
 import com.mycollab.mobile.module.project.view.task.TaskPercentageCompleteListSelect;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
+import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.Task;
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
@@ -65,8 +68,14 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment(ProjectLinkGenerator.generateTaskEditLink(beanItem.getTaskkey(),
-                beanItem.getProjectShortname()), beanItem.getName());
+
+        if (beanItem.getId() == null) {
+            MyCollabUI.addFragment("project/task/add/" + UrlEncodeDecoder.encode(CurrentProjectVariables.getProjectId()),
+                    UserUIContext.getMessage(TaskI18nEnum.NEW));
+        } else {
+            MyCollabUI.addFragment(ProjectLinkGenerator.generateTaskEditLink(beanItem.getTaskkey(),
+                    beanItem.getProjectShortname()), beanItem.getName());
+        }
     }
 
     private class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleTask> {
@@ -91,6 +100,9 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
             } else if (Task.Field.percentagecomplete.equalTo(propertyId)) {
                 return new TaskPercentageCompleteListSelect();
             } else if (Task.Field.priority.equalTo(propertyId)) {
+                if (beanItem.getPriority() == null) {
+                    beanItem.setPriority(Priority.Medium.name());
+                }
                 return new PriorityListSelect();
             } else if (Task.Field.startdate.equalTo(propertyId) || Task.Field.enddate.equalTo(propertyId) ||
                     Task.Field.duedate.equalTo(propertyId)) {

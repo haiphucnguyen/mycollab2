@@ -88,7 +88,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         if (CollectionUtils.isNotEmpty(attachments)) {
             attachmentComp = new ProjectAttachmentDisplayComp(attachments);
             previewForm.addComponent(attachmentComp);
-        } else if (attachmentComp != null && attachmentComp.getParent().equals(previewForm)) {
+        } else if (attachmentComp != null) {
             previewForm.removeComponent(attachmentComp);
         }
     }

@@ -1,12 +1,10 @@
 package com.mycollab.premium.mobile.module.project.view.risk;
 
-import com.mycollab.core.ResourceNotFoundException;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.mycollab.mobile.shell.events.ShellEvent;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleRisk;
@@ -37,7 +35,7 @@ public class RiskAddPresenter extends AbstractProjectPresenter<RiskAddView> {
 
             @Override
             public void onSave(SimpleRisk bean) {
-                savRisk(bean);
+                saveRisk(bean);
                 EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
             }
         });
@@ -49,17 +47,12 @@ public class RiskAddPresenter extends AbstractProjectPresenter<RiskAddView> {
             SimpleRisk risk = (SimpleRisk) data.getParams();
             view.editItem(risk);
             super.onGo(navigator, data);
-            if (risk.getId() == null) {
-                throw new ResourceNotFoundException();
-            } else {
-                MyCollabUI.addFragment(ProjectLinkGenerator.generateRiskEditLink(risk.getProjectid(), risk.getId()), risk.getName());
-            }
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }
     }
 
-    private void savRisk(SimpleRisk risk) {
+    private void saveRisk(SimpleRisk risk) {
         RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
 
         risk.setSaccountid(MyCollabUI.getAccountId());

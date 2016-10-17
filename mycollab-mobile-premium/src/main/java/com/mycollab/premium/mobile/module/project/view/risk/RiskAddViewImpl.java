@@ -1,5 +1,6 @@
 package com.mycollab.premium.mobile.module.project.view.risk;
 
+import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.mobile.form.view.DynaFormLayout;
 import com.mycollab.mobile.module.project.ui.PriorityListSelect;
@@ -8,12 +9,16 @@ import com.mycollab.mobile.module.project.view.milestone.MilestoneListSelect;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberListSelect;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
 import com.mycollab.mobile.ui.I18NValueListSelect;
+import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskConsequence;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskProbability;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -58,6 +63,17 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
         return new RiskEditFormFieldFactory(this.editForm);
     }
 
+    @Override
+    protected void onBecomingVisible() {
+        super.onBecomingVisible();
+        if (beanItem.getId() == null) {
+            MyCollabUI.addFragment("project/risk/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+                    UserUIContext.getMessage(RiskI18nEnum.NEW));
+        } else {
+            MyCollabUI.addFragment(ProjectLinkGenerator.generateRiskEditLink(beanItem.getProjectid(), beanItem.getId()), beanItem.getName());
+        }
+    }
+
     private class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleRisk> {
         private static final long serialVersionUID = -1508613237858970400L;
 
@@ -90,6 +106,9 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
                 return new I18NValueListSelect(false, RiskProbability.Certain, RiskProbability.Likely,
                         RiskProbability.Possible, RiskProbability.Unlikely, RiskProbability.Rare);
             } else if (Risk.Field.priority.equalTo(propertyId)) {
+                if (beanItem.getPriority() == null) {
+                    beanItem.setPriority(Priority.Medium.name());
+                }
                 return new PriorityListSelect();
             } else if (Risk.Field.status.equalTo(propertyId)) {
                 return new I18NValueListSelect(false, StatusI18nEnum.Open, StatusI18nEnum.Closed);

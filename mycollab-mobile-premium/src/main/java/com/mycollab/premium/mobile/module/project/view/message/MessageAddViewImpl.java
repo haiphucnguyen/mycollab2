@@ -19,6 +19,7 @@ import com.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.addon.touchkit.ui.Switch;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -42,26 +43,20 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
     public MessageAddViewImpl() {
         this.setCaption(UserUIContext.getMessage(MessageI18nEnum.NEW));
 
-        CssLayout content = new CssLayout();
-        content.setSizeFull();
-        this.setContent(content);
-
-        VerticalLayout addFormLayout = new VerticalLayout();
-        addFormLayout.setMargin(true);
-        addFormLayout.setWidth("100%");
+        MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
+        this.setContent(contentLayout);
 
         subjectField = new TextField();
         subjectField.setWidth("100%");
         subjectField.setInputPrompt(UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE));
-        addFormLayout.addComponent(subjectField);
+        contentLayout.addComponent(subjectField);
 
-        addFormLayout.addComponent(ELabel.hr());
+        contentLayout.addComponent(ELabel.hr());
 
         contentField = new TextArea();
         contentField.setWidth("100%");
         contentField.setInputPrompt(UserUIContext.getMessage(MessageI18nEnum.M_FORM_CONTENT_FIELD_PROMPT));
-        addFormLayout.addComponent(contentField);
-        content.addComponent(addFormLayout);
+        contentLayout.addComponent(contentField);
 
         VerticalComponentGroup bottomRow = new VerticalComponentGroup();
         bottomRow.setWidth("100%");
@@ -71,7 +66,7 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         attachmentPanel = new ProjectFormAttachmentUploadField();
         bottomRow.addComponent(attachmentPanel);
 
-        content.addComponent(bottomRow);
+        contentLayout.addComponent(bottomRow);
 
         Button saveBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             final SimpleMessage message = new SimpleMessage();

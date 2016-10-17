@@ -134,7 +134,7 @@ public class ProjectDashboardViewImpl extends ProjectMobileMenuPageView implemen
         metaInfo.addComponent(nonBillableHoursLbl);
         projectInfo.addComponent(metaInfo);
 
-        int openAssignments = currentProject.getNumOpenBugs() + currentProject.getNumOpenTasks() + currentProject.getNumOpenRisks() + currentProject.getNumOpenRisks();
+        int openAssignments = currentProject.getNumOpenBugs() + currentProject.getNumOpenTasks() + currentProject.getNumOpenRisks();
         int totalAssignments = currentProject.getNumBugs() + currentProject.getNumTasks() + currentProject.getNumRisks();
         ELabel progressInfoLbl;
         if (totalAssignments > 0) {

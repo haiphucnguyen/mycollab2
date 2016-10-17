@@ -167,18 +167,20 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
             milestoneInfoLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset
                     (ProjectTypeConstants.MILESTONE)), milestoneWrap).expand(milestoneWrap).withFullWidth());
 
-            CssLayout metaLayout = new CssLayout();
+            MCssLayout metaLayout = new MCssLayout();
             milestoneInfoLayout.addComponent(metaLayout);
 
             ELabel startDateInfo = new ELabel(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE) + ": " +
                     UserUIContext.formatDate(milestone.getStartdate(), UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)))
                     .withWidthUndefined().withStyleName(UIConstants.META_INFO);
             metaLayout.addComponent(startDateInfo);
+            metaLayout.addComponent(ELabel.EMPTY_SPACE());
 
             ELabel endDateInfo = new ELabel(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE) + ": " +
                     UserUIContext.formatDate(milestone.getEnddate(), UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)))
                     .withWidthUndefined().withStyleName(UIConstants.META_INFO);
             metaLayout.addComponent(endDateInfo);
+            metaLayout.addComponent(ELabel.EMPTY_SPACE());
 
             A assigneeLink = new A(ProjectLinkGenerator.generateProjectMemberFullLink(MyCollabUI.getSiteUrl(),
                     CurrentProjectVariables.getProjectId(), milestone.getAssignuser()))

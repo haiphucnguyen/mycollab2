@@ -1,5 +1,6 @@
 package com.mycollab.premium.mobile.module.project.view.bug;
 
+import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.mobile.form.view.DynaFormLayout;
 import com.mycollab.mobile.module.project.ui.PriorityListSelect;
@@ -10,12 +11,15 @@ import com.mycollab.mobile.module.project.view.bug.BugSeverityListSelect;
 import com.mycollab.mobile.module.project.view.milestone.MilestoneListSelect;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberListSelect;
 import com.mycollab.mobile.ui.AbstractEditItemComp;
+import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.SimpleBug;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -49,6 +53,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
             attachmentUploadField.getAttachments(item.getProjectid(), ProjectTypeConstants.BUG, item.getId());
         }
         super.editItem(item);
+        editForm.addComponent(attachmentUploadField);
     }
 
     @Override
@@ -59,6 +64,18 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
     @Override
     protected AbstractBeanFieldGroupEditFieldFactory<SimpleBug> initBeanFormFieldFactory() {
         return new EditFormFieldFactory(this.editForm);
+    }
+
+    @Override
+    protected void onBecomingVisible() {
+        super.onBecomingVisible();
+        if (beanItem.getId() == null) {
+            MyCollabUI.addFragment("project/bug/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+                    UserUIContext.getMessage(BugI18nEnum.NEW));
+        } else {
+            MyCollabUI.addFragment(ProjectLinkGenerator.generateBugEditLink(beanItem.getBugkey(), beanItem.getProjectShortName()),
+                    UserUIContext.getMessage(BugI18nEnum.DETAIL));
+        }
     }
 
     private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleBug> {

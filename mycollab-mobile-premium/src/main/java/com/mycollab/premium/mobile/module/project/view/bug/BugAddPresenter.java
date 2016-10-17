@@ -1,6 +1,5 @@
 package com.mycollab.premium.mobile.module.project.view.bug;
 
-import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.core.SecureAccessException;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.project.events.BugEvent;
@@ -8,12 +7,9 @@ import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUpl
 import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.mycollab.mobile.module.project.view.bug.BugAddView;
 import com.mycollab.mobile.module.project.view.bug.IBugAddPresenter;
-import com.mycollab.mobile.shell.events.ShellEvent;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
@@ -54,14 +50,6 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
             super.onGo(container, data);
             SimpleBug bug = (SimpleBug) data.getParams();
             view.editItem(bug);
-
-            if (bug.getId() == null) {
-                MyCollabUI.addFragment("project/bug/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
-                        UserUIContext.getMessage(BugI18nEnum.NEW));
-            } else {
-                MyCollabUI.addFragment(ProjectLinkGenerator.generateBugEditLink(bug.getBugkey(), bug.getProjectShortName()),
-                        UserUIContext.getMessage(BugI18nEnum.DETAIL));
-            }
         } else {
             throw new SecureAccessException();
         }
