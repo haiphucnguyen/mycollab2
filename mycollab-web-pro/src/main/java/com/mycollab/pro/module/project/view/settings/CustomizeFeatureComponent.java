@@ -33,7 +33,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
         constructBody();
     }
 
-    public void constructBody() {
+    private void constructBody() {
         final ProjectCustomizeView customizeView = CurrentProjectVariables.getFeatures();
 
         MVerticalLayout body = new MVerticalLayout().withFullWidth();
@@ -99,7 +99,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
         layout.addComponent(rightColLayout);
         body.addComponent(layout);
 
-        MButton updateFeaturesBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
+        MButton updateFeaturesBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             customizeView.setDisplaymessage(displayMsgSelection.getSelected());
             customizeView.setDisplaymilestone(displayPhaseSelection.getSelected());
             customizeView.setDisplayticket(displayTicketSelection.getSelected());
@@ -118,7 +118,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
             CurrentProjectVariables.getProject().setCustomizeView(customizeView);
             EventBusFactory.getInstance().post(new CustomizeUIEvent.UpdateFeaturesList(CustomizeFeatureComponent.this));
-        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.REFRESH).withVisible(CurrentProjectVariables.isAdmin());
+        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE).withVisible(CurrentProjectVariables.isAdmin());
 
         body.addComponent(updateFeaturesBtn);
         this.addToBody(body);
