@@ -59,6 +59,30 @@ public class RoleServiceDBImpl extends DefaultService<Integer, Role, RoleSearchC
     }
 
     @Override
+    public Integer saveWithSession(Role record, String username) {
+        if (Boolean.TRUE.equals(record.getIsdefault())) {
+            setAllRoleNotDefault(record.getSaccountid());
+        }
+        return super.saveWithSession(record, username);
+    }
+
+    private void setAllRoleNotDefault(Integer sAccountId) {
+        Role updateRecord = new Role();
+        updateRecord.setIsdefault(Boolean.FALSE);
+        RoleExample ex = new RoleExample();
+        ex.createCriteria().andSaccountidEqualTo(sAccountId);
+        roleMapper.updateByExampleSelective(updateRecord, ex);
+    }
+
+    @Override
+    public Integer updateWithSession(Role record, String username) {
+        if (Boolean.TRUE.equals(record.getIsdefault())) {
+            setAllRoleNotDefault(record.getSaccountid());
+        }
+        return super.updateWithSession(record, username);
+    }
+
+    @Override
     public void savePermission(Integer roleId, PermissionMap permissionMap, Integer accountid) {
         String perVal = permissionMap.toJsonString();
 

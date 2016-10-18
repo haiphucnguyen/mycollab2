@@ -77,7 +77,7 @@ public class ProjectNotificationSettingViewComponent extends BlockWidget {
             optionGroup.select(levelVal);
         }
 
-        MButton updateBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+        MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             try {
                 bean.setLevel((String) optionGroup.getValue());
                 ProjectNotificationSettingService projectNotificationSettingService = AppContextUtil.getSpringBean(ProjectNotificationSettingService.class);
@@ -93,7 +93,7 @@ public class ProjectNotificationSettingViewComponent extends BlockWidget {
                 throw new MyCollabException(e);
             }
         }).withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
-        body.addComponent(updateBtn);
+        body.addComponent(saveBtn);
 
         this.addComponent(body);
     }
