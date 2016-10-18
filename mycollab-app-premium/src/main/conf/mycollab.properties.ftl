@@ -28,7 +28,7 @@ mail.port=${smtpPort}
 mail.username=${smtpUserName}
 mail.password=${smtpPassword}
 mail.isTLS=${smtpTLSEnable}
-mail.notify=notify@mycollab.com
+mail.notify=${mailNotify}
 
 #=====================================================
 #    ERROR REPORTING
