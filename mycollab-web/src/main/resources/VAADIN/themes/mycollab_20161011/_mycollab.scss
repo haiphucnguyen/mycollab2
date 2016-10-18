@@ -1500,9 +1500,108 @@ $v-line-height--header:1.5em;
   }
 
   /* Project Feed Block */
-  .crm-activity-list, .project-activity-list {
+  .activity-list {
     padding-top: 5px;
     padding-right: 20px;
+    .feed-block-wrap {
+      &.v-margin-bottom {
+        padding-bottom: 18px;
+      }
+      .date-lbl  {
+        padding: 6px;
+      	position: static;
+      	width: 55px;
+      	text-align:center;
+      	border-radius: 3px;
+      	&::after {
+      	  left: 100%;
+          top: 50%;
+          border: solid transparent;
+          content: " ";
+          height: 0;
+          width: 0;
+          position: absolute;
+          pointer-events: none;
+          border-width: 8px;
+          margin-top: -8px;
+      	}
+      }
+      .v-slot-feed-block {
+        padding-left: 20px;
+        &::before {
+          content: "";
+          position: absolute;
+          top: -5px;
+          bottom: -7px;
+          left: 8px;
+          border-left: 1px solid $my-separator-color;
+        }
+      }
+      .feed-block {
+        background-color: $my-white-color;
+        padding: 3px 10px;
+        border: 1px solid $my-separator-color;
+        border-radius: 3px;
+        position: relative;
+        overflow: visible;
+        &:hover {
+          background-color: $my-hover-background-color;
+          &::after {
+            border-color: transparent $my-hover-background-color;
+          }
+        }
+        &::before {
+          content: "";
+          position: absolute;
+          border-style: solid;
+          display: block;
+          width: 0;
+          top: 4px;
+          left: -12px;
+          border-width: 11px 11px 11px 0;
+          border-color: transparent $my-separator-color;
+          border-radius: 0px;
+        }
+        &::after {
+          content: "";
+          position: absolute;
+          border-style: solid;
+          display: block;
+          width: 0;
+          top: 4px;
+          left: -10px;
+          border-width: 11px 11px 11px 0;
+          border-color: transparent $my-white-color;
+          border-radius: 0px;
+        }
+        .stream-wrapper {
+          border-width: 1px 0px 0px;
+          border-color: $my-separator-color;
+          padding-bottom: 8px;
+          &:first-child {
+            border-width: 0px;
+          }
+        }
+      }
+    }
+
+    .v-label.year-lbl {
+      height: 40px;
+      width: 40px;
+      left: 35px;
+      position:relative;
+      margin:10px;
+      border-radius: 50%;
+      div {
+        float:left;
+        width:100%;
+        padding-top:50%;
+        line-height:1em;
+        margin-top:-0.5em;
+        text-align:center;
+        color: black;
+      }
+    }
   }
 
   .page-controls {
