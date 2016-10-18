@@ -8,8 +8,8 @@ import com.mycollab.core.utils.StringUtils
 import com.mycollab.html.{FormatUtils, LinkUtils}
 import com.mycollab.module.crm.CrmLinkGenerator
 import com.mycollab.module.crm.domain.{Lead, SimpleLead}
-import com.mycollab.module.crm.i18n.LeadI18nEnum
-import com.mycollab.module.crm.i18n.OptionI18nEnum.{LeadStatus, OpportunityLeadSource}
+import com.mycollab.module.crm.i18n.{AccountI18nEnum, LeadI18nEnum}
+import com.mycollab.module.crm.i18n.OptionI18nEnum.{AccountIndustry, LeadStatus, OpportunityLeadSource}
 import com.mycollab.module.crm.service.LeadService
 import com.mycollab.module.mail.MailUtils
 import com.mycollab.module.user.AccountLinkGenerator
@@ -81,7 +81,7 @@ class LeadRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAc
     put(Lead.Field.leadsourcedesc, new I18nFieldFormat(Lead.Field.leadsourcedesc.name, LeadI18nEnum.FORM_LEAD_SOURCE,
       classOf[OpportunityLeadSource]))
     put(Lead.Field.website, LeadI18nEnum.FORM_WEBSITE)
-    put(Lead.Field.industry, LeadI18nEnum.FORM_INDUSTRY)
+    put(Lead.Field.industry, new I18nFieldFormat(Lead.Field.industry.name, AccountI18nEnum.FORM_INDUSTRY, classOf[AccountIndustry]))
     put(Lead.Field.status, new I18nFieldFormat(Lead.Field.status.name, GenericI18Enum.FORM_STATUS, classOf[LeadStatus]))
     put(Lead.Field.noemployees, LeadI18nEnum.FORM_NO_EMPLOYEES)
     put(Lead.Field.assignuser, new LeadAssigneeFieldFormat(Lead.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))
