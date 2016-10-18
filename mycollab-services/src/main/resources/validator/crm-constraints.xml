@@ -166,14 +166,13 @@
             </constraint>
         </field>
         <field name="phonenumber">
-            <constraint
-                annotation="com.mycollab.validator.constraints.PhoneNumber">
+            <constraint annotation="com.mycollab.validator.constraints.PhoneNumber">
                 <message>Please enter a valid phone number</message>
             </constraint>
         </field>
     </bean>
 
-    <bean class="Task" ignore-annotations="false">
+    <bean class="CrmTask" ignore-annotations="false">
      	<class>
             <constraint annotation="com.mycollab.validator.constraints.DateComparison">
                 <message>Start date must be less than due date</message>
@@ -188,12 +187,12 @@
         </field>
         <field name="startdate">
         	<constraint annotation="javax.validation.constraints.NotNull">
-        		<message>StartDate must not be null</message>
+        		<message>Start date must not be null</message>
         	</constraint>
         </field>
         <field name="duedate">
         	<constraint annotation="javax.validation.constraints.NotNull">
-        		<message>DueDate must not be null</message>
+        		<message>Due date must not be null</message>
         	</constraint>
         </field>
     </bean>
@@ -212,12 +211,12 @@
         </field>
         <field name="startdate">
         	<constraint annotation="javax.validation.constraints.NotNull">
-        		<message>StartDate must not be null</message>
+        		<message>Start date must not be null</message>
         	</constraint>
         </field>
         <field name="enddate">
         	<constraint annotation="javax.validation.constraints.NotNull">
-        		<message>EndDate must not be null</message>
+        		<message>End date must not be null</message>
         	</constraint>
         </field>
     </bean>

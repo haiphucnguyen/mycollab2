@@ -184,7 +184,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         calendar.setHandler(new CalendarComponentEvents.DateClickHandler() {
             @Override
             public void dateClick(CalendarComponentEvents.DateClickEvent event) {
-//                SimpleTask task = new SimpleTask();
+//                SimpleCrmTask task = new SimpleCrmTask();
 //                task.setStartdate(dateClickEvent.getDate());
 //                task.setEnddate(dateClickEvent.getDate());
 //                UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(task));

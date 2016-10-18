@@ -17,8 +17,11 @@
 package com.mycollab.module.crm.ui.format;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.module.crm.i18n.OptionI18nEnum.TaskPriority;
+import com.mycollab.module.crm.i18n.OptionI18nEnum.TaskStatus;
 import com.mycollab.module.crm.i18n.TaskI18nEnum;
 import com.mycollab.vaadin.ui.formatter.FieldGroupFormatter;
+import com.mycollab.vaadin.ui.formatter.I18nHistoryFieldFormat;
 
 /**
  * @author MyCollab Ltd
@@ -29,11 +32,11 @@ public final class AssignmentFieldFormatter extends FieldGroupFormatter {
 
     private AssignmentFieldFormatter() {
         generateFieldDisplayHandler("subject", TaskI18nEnum.FORM_SUBJECT);
-        generateFieldDisplayHandler("startdate", GenericI18Enum.FORM_START_DATE);
-        generateFieldDisplayHandler("duedate", GenericI18Enum.FORM_DUE_DATE);
-        generateFieldDisplayHandler("status", GenericI18Enum.FORM_STATUS);
+        generateFieldDisplayHandler("startdate", GenericI18Enum.FORM_START_DATE, DATETIME_FIELD);
+        generateFieldDisplayHandler("duedate", GenericI18Enum.FORM_DUE_DATE, DATETIME_FIELD);
+        generateFieldDisplayHandler("status", GenericI18Enum.FORM_STATUS, new I18nHistoryFieldFormat(TaskStatus.class));
         generateFieldDisplayHandler("assignuser", GenericI18Enum.FORM_ASSIGNEE);
-        generateFieldDisplayHandler("priority", TaskI18nEnum.FORM_PRIORITY);
+        generateFieldDisplayHandler("priority", TaskI18nEnum.FORM_PRIORITY, new I18nHistoryFieldFormat(TaskPriority.class));
         generateFieldDisplayHandler("description", GenericI18Enum.FORM_DESCRIPTION);
     }
 
