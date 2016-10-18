@@ -6,6 +6,7 @@ import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.test.DataSet;
 import com.mycollab.test.service.IntegrationServiceTest;
@@ -53,6 +54,7 @@ public class RiskServiceTest extends IntegrationServiceTest {
         record.setName("New projectMember");
         record.setDescription("aaa");
         record.setSaccountid(1);
+        record.setPriority(Priority.High.name());
         int newId = riskService.saveWithSession(record, "hainguyen");
 
         Risk risk = riskService.findByPrimaryKey(newId, 1);
