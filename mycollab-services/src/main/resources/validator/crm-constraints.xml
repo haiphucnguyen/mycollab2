@@ -46,20 +46,17 @@
             </constraint>
         </field>
         <field name="assistantphone">
-            <constraint
-                annotation="com.mycollab.validator.constraints.PhoneNumber">
+            <constraint annotation="com.mycollab.validator.constraints.PhoneNumber">
                 <message>Please enter a valid phone number</message>
             </constraint>
         </field>
         <field name="officephone">
-            <constraint
-                annotation="com.mycollab.validator.constraints.PhoneNumber">
+            <constraint annotation="com.mycollab.validator.constraints.PhoneNumber">
                 <message>Please enter a valid phone number</message>
             </constraint>
         </field>
         <field name="mobile">
-            <constraint
-                annotation="com.mycollab.validator.constraints.PhoneNumber">
+            <constraint annotation="com.mycollab.validator.constraints.PhoneNumber">
                 <message>Please enter a valid phone number</message>
             </constraint>
         </field>
@@ -70,14 +67,12 @@
             </constraint>
         </field>
         <field name="otherphone">
-            <constraint
-                annotation="com.mycollab.validator.constraints.PhoneNumber">
+            <constraint annotation="com.mycollab.validator.constraints.PhoneNumber">
                 <message>Please enter a valid phone number</message>
             </constraint>
         </field>
         <field name="fax">
-            <constraint
-                annotation="com.mycollab.validator.constraints.PhoneNumber">
+            <constraint annotation="com.mycollab.validator.constraints.PhoneNumber">
                 <message>Please enter a valid fax number</message>
             </constraint>
         </field>
@@ -117,14 +112,12 @@
             </constraint>
         </field>
         <field name="fax">
-            <constraint
-                annotation="com.mycollab.validator.constraints.PhoneNumber">
+            <constraint annotation="com.mycollab.validator.constraints.PhoneNumber">
                 <message>Please enter a valid fax number</message>
             </constraint>
         </field>
         <field name="otherphone">
-            <constraint
-                annotation="com.mycollab.validator.constraints.PhoneNumber">
+            <constraint annotation="com.mycollab.validator.constraints.PhoneNumber">
                 <message>Please enter a valid phone number</message>
             </constraint>
         </field>

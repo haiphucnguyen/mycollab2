@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.crm.schedule.email.service
 
 import com.hp.gagawa.java.elements.Span
@@ -25,7 +9,7 @@ import com.mycollab.html.{FormatUtils, LinkUtils}
 import com.mycollab.module.crm.CrmLinkGenerator
 import com.mycollab.module.crm.domain.{Lead, SimpleLead}
 import com.mycollab.module.crm.i18n.LeadI18nEnum
-import com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunityLeadSource
+import com.mycollab.module.crm.i18n.OptionI18nEnum.{LeadStatus, OpportunityLeadSource}
 import com.mycollab.module.crm.service.LeadService
 import com.mycollab.module.mail.MailUtils
 import com.mycollab.module.user.AccountLinkGenerator
@@ -94,10 +78,11 @@ class LeadRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAc
     put(Lead.Field.otherphone, LeadI18nEnum.FORM_OTHER_PHONE)
     put(Lead.Field.accountname, LeadI18nEnum.FORM_ACCOUNT_NAME)
     put(Lead.Field.fax, LeadI18nEnum.FORM_FAX)
-    put(Lead.Field.leadsourcedesc, new I18nFieldFormat(Lead.Field.leadsourcedesc.name, LeadI18nEnum.FORM_LEAD_SOURCE, classOf[OpportunityLeadSource]))
+    put(Lead.Field.leadsourcedesc, new I18nFieldFormat(Lead.Field.leadsourcedesc.name, LeadI18nEnum.FORM_LEAD_SOURCE,
+      classOf[OpportunityLeadSource]))
     put(Lead.Field.website, LeadI18nEnum.FORM_WEBSITE)
     put(Lead.Field.industry, LeadI18nEnum.FORM_INDUSTRY)
-    put(Lead.Field.status, GenericI18Enum.FORM_STATUS)
+    put(Lead.Field.status, new I18nFieldFormat(Lead.Field.status.name, GenericI18Enum.FORM_STATUS, classOf[LeadStatus]))
     put(Lead.Field.noemployees, LeadI18nEnum.FORM_NO_EMPLOYEES)
     put(Lead.Field.assignuser, new LeadAssigneeFieldFormat(Lead.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))
     put(Lead.Field.primaddress, LeadI18nEnum.FORM_PRIMARY_ADDRESS)
