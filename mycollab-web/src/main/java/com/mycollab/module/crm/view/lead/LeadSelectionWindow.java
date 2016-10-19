@@ -51,7 +51,7 @@ public class LeadSelectionWindow extends MWindow {
     public void show() {
         createLeadList();
 
-        LeadSearchPanel searchPanel = new LeadSearchPanel();
+        LeadSearchPanel searchPanel = new LeadSearchPanel(false);
         searchPanel.addSearchHandler(criteria -> tableItem.setSearchCriteria(criteria));
 
         this.setContent(new MVerticalLayout(searchPanel, tableItem));
@@ -65,12 +65,12 @@ public class LeadSelectionWindow extends MWindow {
 
         tableItem.addGeneratedColumn("leadName", (source, itemId, columnId) -> {
             final SimpleLead lead = tableItem.getBeanByIndex(itemId);
-
             return new MButton(lead.getLeadName(), clickEvent -> {
                 fieldSelection.fireValueChange(lead);
                 close();
-            }).withStyleName(WebUIConstants.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateTooltipLead(UserUIContext.getUserLocale(),
-                    lead, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            }).withStyleName(WebUIConstants.BUTTON_LINK)
+                    .withDescription(CrmTooltipGenerator.generateTooltipLead(UserUIContext.getUserLocale(), lead,
+                            MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
         tableItem.setSearchCriteria(new LeadSearchCriteria());
     }

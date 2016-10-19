@@ -26,7 +26,7 @@ import com.mycollab.module.crm.view.lead.LeadSearchPanel;
 import com.mycollab.module.crm.view.lead.LeadTableDisplay;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.vaadin.ui.Button;
+import org.vaadin.viritin.button.MButton;
 
 import java.util.Arrays;
 
@@ -34,10 +34,11 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class AccountLeadSelectionWindow extends RelatedItemSelectionWindow<SimpleLead, LeadSearchCriteria> {
+class AccountLeadSelectionWindow extends RelatedItemSelectionWindow<SimpleLead, LeadSearchCriteria> {
 
-    public AccountLeadSelectionWindow(AccountLeadListComp associateLeadList) {
-        super(UserUIContext.getMessage(GenericI18Enum.ACTION_SELECT_VALUE, UserUIContext.getMessage(LeadI18nEnum.LIST)), associateLeadList);
+    AccountLeadSelectionWindow(AccountLeadListComp associateLeadList) {
+        super(UserUIContext.getMessage(GenericI18Enum.ACTION_SELECT_VALUE, UserUIContext.getMessage(LeadI18nEnum.LIST)),
+                associateLeadList);
         this.setWidth("1000px");
     }
 
@@ -47,13 +48,13 @@ public class AccountLeadSelectionWindow extends RelatedItemSelectionWindow<Simpl
                 Arrays.asList(LeadTableFieldDef.name(), LeadTableFieldDef.title(),
                         LeadTableFieldDef.email(), LeadTableFieldDef.phoneoffice()));
 
-        Button selectBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> close());
-        selectBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
+        MButton selectBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> close())
+                .withStyleName(WebUIConstants.BUTTON_ACTION);
 
-        LeadSearchPanel leadSimpleSearchPanel = new LeadSearchPanel();
-        leadSimpleSearchPanel.addSearchHandler(criteria -> tableItem.setSearchCriteria(criteria));
+        LeadSearchPanel searchPanel = new LeadSearchPanel(false);
+        searchPanel.addSearchHandler(criteria -> tableItem.setSearchCriteria(criteria));
 
-        this.bodyContent.with(leadSimpleSearchPanel, selectBtn, tableItem);
+        bodyContent.with(searchPanel, selectBtn, tableItem);
     }
 
 }

@@ -51,7 +51,7 @@ public class ContactOpportunitySelectionWindow extends RelatedItemSelectionWindo
         Button selectBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> close());
         selectBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
 
-        OpportunitySearchPanel searchPanel = new OpportunitySearchPanel();
+        OpportunitySearchPanel searchPanel = new OpportunitySearchPanel(false);
         searchPanel.addSearchHandler(criteria -> tableItem.setSearchCriteria(criteria));
 
         this.bodyContent.with(searchPanel, selectBtn, tableItem);

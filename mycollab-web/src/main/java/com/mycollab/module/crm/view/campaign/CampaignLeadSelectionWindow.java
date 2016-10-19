@@ -50,7 +50,7 @@ public class CampaignLeadSelectionWindow extends RelatedItemSelectionWindow<Simp
         Button selectBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> close());
         selectBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
 
-        LeadSearchPanel searchPanel = new LeadSearchPanel();
+        LeadSearchPanel searchPanel = new LeadSearchPanel(false);
         searchPanel.addSearchHandler(criteria -> tableItem.setSearchCriteria(criteria));
 
         bodyContent.with(searchPanel, selectBtn, tableItem);

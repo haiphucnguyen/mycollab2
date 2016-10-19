@@ -51,7 +51,7 @@ public class CampaignAccountSelectionWindow extends RelatedItemSelectionWindow<S
         MButton selectBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> close())
                 .withStyleName(WebUIConstants.BUTTON_ACTION);
 
-        AccountSearchPanel accountSimpleSearchPanel = new AccountSearchPanel();
+        AccountSearchPanel accountSimpleSearchPanel = new AccountSearchPanel(false);
         accountSimpleSearchPanel.addSearchHandler(criteria -> tableItem.setSearchCriteria(criteria));
 
         bodyContent.with(accountSimpleSearchPanel, selectBtn, tableItem);

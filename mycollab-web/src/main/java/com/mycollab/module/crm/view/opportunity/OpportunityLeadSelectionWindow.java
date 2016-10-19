@@ -26,7 +26,7 @@ import com.mycollab.module.crm.view.lead.LeadSearchPanel;
 import com.mycollab.module.crm.view.lead.LeadTableDisplay;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.vaadin.ui.Button;
+import org.vaadin.viritin.button.MButton;
 
 import java.util.Arrays;
 
@@ -47,10 +47,10 @@ public class OpportunityLeadSelectionWindow extends RelatedItemSelectionWindow<S
                 Arrays.asList(LeadTableFieldDef.name(), LeadTableFieldDef.status(),
                         LeadTableFieldDef.email(), LeadTableFieldDef.phoneoffice()));
 
-        Button selectBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> close());
-        selectBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
+        MButton selectBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> close())
+                .withStyleName(WebUIConstants.BUTTON_ACTION);
 
-        LeadSearchPanel searchPanel = new LeadSearchPanel();
+        LeadSearchPanel searchPanel = new LeadSearchPanel(false);
         searchPanel.addSearchHandler(criteria -> tableItem.setSearchCriteria(criteria));
 
         bodyContent.with(searchPanel, selectBtn, tableItem);
