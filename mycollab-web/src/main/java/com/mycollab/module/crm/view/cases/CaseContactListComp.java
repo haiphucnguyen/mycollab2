@@ -57,7 +57,7 @@ public class CaseContactListComp extends RelatedListComp2<ContactService, Contac
         this.setBlockDisplayHandler(new CaseContactBlockDisplay());
     }
 
-    public void displayContacts(CaseWithBLOBs cases) {
+    void displayContacts(CaseWithBLOBs cases) {
         this.cases = cases;
         loadContacts();
     }
