@@ -333,6 +333,8 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
             Object value = newDataSource.getValue();
             if (value instanceof Integer) {
                 roleBox.setValue(value);
+            } else if (value == null && Boolean.TRUE.equals(user.getIsAccountOwner())) {
+                roleBox.setValue(-1);
             }
             super.setPropertyDataSource(newDataSource);
         }
