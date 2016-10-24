@@ -46,6 +46,8 @@
 
     <inherits name="org.vaadin.alump.distributionbar.gwt.DistributionBarWidgetset" />
 
+    <inherits name="org.vaadin.sliderpanel.WidgetSet" />
+
     <inherits name="org.vaadin.addons.comboboxmultiselect.WidgetSet" />
 
     <inherits name="org.vaadin.addons.CssCheckBoxWidgetSet" />

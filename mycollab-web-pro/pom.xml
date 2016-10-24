@@ -59,12 +59,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.vaadin</groupId>
-            <artifactId>viritin</artifactId>
-            <version>1.57</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.vaadin.alump.distributionbar</groupId>
             <artifactId>dbar-addon</artifactId>
             <version>2.0.0</version>

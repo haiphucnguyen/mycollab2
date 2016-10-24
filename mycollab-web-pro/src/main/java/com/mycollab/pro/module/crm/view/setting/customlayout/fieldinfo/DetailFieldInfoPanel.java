@@ -27,7 +27,7 @@ import com.vaadin.ui.VerticalLayout;
 public abstract class DetailFieldInfoPanel<F extends AbstractDynaField> extends VerticalLayout {
     private static final long serialVersionUID = 1L;
 
-    protected DynaSection[] activeSections;
+    private DynaSection[] activeSections;
     protected String candidateFieldName;
     protected F field;
 

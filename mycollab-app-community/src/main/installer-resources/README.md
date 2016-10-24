@@ -40,6 +40,24 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.4.4
+-------------
+
+**Library Upgrades**
+
+
+**Improvements & New Features**
+
+* [Premium] Add generic search across projects
+* [Premium] Support quick edit ticket in ticket dashboard
+* [Premium] Support group of users as team 
+* Revise the menu navigator
+* Support components and versions in bug views
+* Other minor improvements
+
+**Bug Fixes**
+
+
 Version 5.4.3
 -------------
 

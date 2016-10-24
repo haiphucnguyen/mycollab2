@@ -25,12 +25,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>vaadin-sliderpanel</artifactId>
-            <version>1.4.2</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.rometools</groupId>
             <artifactId>rome</artifactId>
             <version>1.6.1</version>
