@@ -50,7 +50,7 @@ Version 5.4.4
 
 * [Premium] Add generic search across projects
 * [Premium] Support quick edit ticket in ticket dashboard
-* [Premium] Support group of users as team 
+* Add my tasks of user projects
 * Revise the menu navigator
 * Support components and versions in bug views
 * Other minor improvements
