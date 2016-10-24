@@ -147,7 +147,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
         private ToggleMilestoneSummaryField toggleMilestoneSummaryField;
 
         void displayHeader(SimpleMilestone milestone) {
-            toggleMilestoneSummaryField = new ToggleMilestoneSummaryField(milestone, true);
+            toggleMilestoneSummaryField = new ToggleMilestoneSummaryField(milestone, true, false);
             toggleMilestoneSummaryField.addLabelStyleName(ValoTheme.LABEL_H3);
             toggleMilestoneSummaryField.addLabelStyleName(ValoTheme.LABEL_NO_MARGIN);
             if (StatusI18nEnum.Closed.name().equals(milestone.getStatus())) {

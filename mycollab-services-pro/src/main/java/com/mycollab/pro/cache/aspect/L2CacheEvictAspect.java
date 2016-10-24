@@ -4,7 +4,9 @@ import com.mycollab.cache.service.CacheService;
 import com.mycollab.core.cache.CacheArgs;
 import com.mycollab.core.cache.CacheEvict;
 import com.mycollab.core.cache.CacheKey;
+import com.mycollab.core.cache.CleanCache;
 import com.mycollab.core.utils.BeanUtility;
+import com.mycollab.core.utils.ClassUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -57,13 +59,13 @@ public class L2CacheEvictAspect {
                 for (Annotation paramAnnotation : annotations) {
                     if (paramAnnotation instanceof CacheKey) {
                         Object arg = args[i];
-                        Integer groupId;
+                        Integer sAccountId;
 
                         if (arg instanceof Integer) {
-                            groupId = (Integer) arg;
+                            sAccountId = (Integer) arg;
                         } else {
                             try {
-                                groupId = (Integer) PropertyUtils.getProperty(arg, "saccountid");
+                                sAccountId = (Integer) PropertyUtils.getProperty(arg, "saccountid");
                             } catch (Exception e) {
                                 LOG.error("Can not define cache key of class {}, method {} with argument {}",
                                         cls.getName(), method.getName(), BeanUtility.printBeanObj(arg));
@@ -73,24 +75,26 @@ public class L2CacheEvictAspect {
 
                         String prefixKey = CacheUtils.getEnclosingServiceInterfaceName(cls);
 
-                        if (groupId != null) {
-                            cacheService.removeCacheItem(groupId.toString(), prefixKey);
+                        if (sAccountId != null) {
+                            cacheService.removeCacheItem(sAccountId.toString(), prefixKey);
 
                             try {
-                                method = cls.getDeclaredMethod(method.getName(), method.getParameterTypes());
-                            } catch (Exception e) {
-
-                            }
-
-                            CacheArgs cacheable = method.getAnnotation(CacheArgs.class);
-                            if (cacheable != null) {
-                                if (cacheable.values().length > 0) {
-                                    for (Class prefKey : cacheable.values()) {
-                                        cacheService.removeCacheItem(groupId.toString(), prefKey.getName());
+                                CacheArgs cacheArgs = method.getAnnotation(CacheArgs.class);
+                                if (cacheArgs != null) {
+                                    if (cacheArgs.values().length > 0) {
+                                        for (Class prefKey : cacheArgs.values()) {
+                                            cacheService.removeCacheItem(sAccountId.toString(), prefKey.getName());
+                                        }
+                                    }
+                                } else {
+                                    Method cleanCacheMethod = ClassUtils.findAnnotatedMethod(cls, CleanCache.class);
+                                    if (cleanCacheMethod != null) {
+                                        cleanCacheMethod.invoke(advised.getTargetSource().getTarget(), sAccountId);
                                     }
                                 }
+                            } catch (Exception e) {
+                                LOG.error("Error while cleaning cache", e);
                             }
-
                         }
                     }
                 }
