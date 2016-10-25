@@ -40,9 +40,9 @@ import com.mycollab.shell.view.LoginView;
 import com.mycollab.shell.view.MainWindowContainer;
 import com.mycollab.shell.view.ShellUrlResolver;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.Utils;
 import com.mycollab.vaadin.mvp.ControllerRegistry;
 import com.mycollab.vaadin.mvp.PresenterResolver;
@@ -62,7 +62,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.UncategorizedSQLException;
 import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.teemusa.sidemenu.SideMenuUI;
 import org.vaadin.viritin.util.BrowserCookie;
 
 import java.util.*;
@@ -75,7 +74,6 @@ import static com.mycollab.core.utils.ExceptionUtils.getExceptionType;
  */
 @Theme(Version.THEME_VERSION)
 @Widgetset("com.mycollab.widgetset.MyCollabWidgetSet")
-@SideMenuUI
 public class DesktopApplication extends MyCollabUI {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(DesktopApplication.class);
