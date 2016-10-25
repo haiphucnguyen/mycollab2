@@ -17,7 +17,7 @@
 package com.mycollab.pro.module.project.view;
 
 import com.mycollab.module.project.view.SettingView;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.Label;
 
@@ -26,7 +26,7 @@ import com.vaadin.ui.Label;
  * @since 5.2.4
  */
 @ViewComponent
-public class SettingViewImpl extends AbstractPageView implements SettingView {
+public class SettingViewImpl extends AbstractVerticalPageView implements SettingView {
     @Override
     public void display() {
         removeAllComponents();

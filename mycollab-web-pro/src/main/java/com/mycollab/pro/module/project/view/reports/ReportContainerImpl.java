@@ -6,7 +6,7 @@ import com.mycollab.module.project.i18n.ProjectReportI18nEnum;
 import com.mycollab.module.project.view.reports.IReportContainer;
 import com.mycollab.pro.module.project.view.ReportBreadcrumb;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.PageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -24,7 +24,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 5.2.10
  */
 @ViewComponent
-public class ReportContainerImpl extends AbstractPageView implements IReportContainer {
+public class ReportContainerImpl extends AbstractVerticalPageView implements IReportContainer {
     private MVerticalLayout body;
 
     public ReportContainerImpl() {

@@ -65,7 +65,7 @@ import org.vaadin.viritin.layouts.MWindow;
  * @since 1.0
  */
 @ViewComponent
-public class ProjectViewImpl extends AbstractPageView implements ProjectView {
+public class ProjectViewImpl extends AbstractVerticalPageView implements ProjectView {
     private ProjectViewWrap viewWrap;
 
     @Override

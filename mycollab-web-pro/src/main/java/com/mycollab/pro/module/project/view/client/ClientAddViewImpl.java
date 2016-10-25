@@ -16,7 +16,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasEditFormHandlers;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.ELabel;
@@ -41,7 +41,7 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @since 5.2.9
  */
 @ViewComponent
-public class ClientAddViewImpl extends AbstractPageView implements ClientAddView {
+public class ClientAddViewImpl extends AbstractVerticalPageView implements ClientAddView {
     private final AdvancedEditBeanForm<SimpleAccount> editForm;
     private SimpleAccount account;
 

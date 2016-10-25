@@ -18266,10 +18266,13 @@ div.v-csslayout.rightsidebar-layout .content-wrap {
 	display: inline-block;
 }
 
-.v-sliderpanel-content .community {
-	color: black;
+.v-sliderpanel-navigator {
+	display: none;
 }
 
-.v-sliderpanel-content .community .desc {
-	font-size: 0.9em;
+.v-sliderpanel-content {
+	background-color: white !important;
+	border-left: 1px solid #e9e9e9;
+	border-bottom: 1px solid #e9e9e9;
+	border-top: 1px solid #e9e9e9;
 }

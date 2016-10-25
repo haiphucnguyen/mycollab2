@@ -26,7 +26,7 @@ import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -45,7 +45,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 1.0
  */
 @ViewComponent
-public class CancelAccountViewImpl extends AbstractPageView implements CancelAccountView {
+public class CancelAccountViewImpl extends AbstractVerticalPageView implements CancelAccountView {
     private static final long serialVersionUID = 1L;
 
     public CancelAccountViewImpl() {

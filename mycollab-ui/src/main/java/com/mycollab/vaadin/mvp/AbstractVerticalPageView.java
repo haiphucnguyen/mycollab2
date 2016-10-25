@@ -24,13 +24,12 @@ import java.io.Serializable;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public abstract class AbstractPageView extends MVerticalLayout implements PageView, Serializable {
+public abstract class AbstractVerticalPageView extends MVerticalLayout implements PageView, Serializable {
 
-    public AbstractPageView() {
+    public AbstractVerticalPageView() {
         this.withStyleName("page-view").withSpacing(false).withMargin(false);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public void addViewListener(ViewListener listener) {
         addListener(ViewEvent.VIEW_IDENTIFIER(), ViewEvent.class, listener, ViewListener.viewInitMethod);

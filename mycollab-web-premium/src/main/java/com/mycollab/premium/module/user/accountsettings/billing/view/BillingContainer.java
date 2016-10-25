@@ -24,7 +24,7 @@ import com.mycollab.premium.shell.view.components.LicenseActivationWindow;
 import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -42,7 +42,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @since 1.0
  */
 @ViewComponent
-public class BillingContainer extends AbstractPageView implements IBillingContainer {
+public class BillingContainer extends AbstractVerticalPageView implements IBillingContainer {
     private static final long serialVersionUID = 1L;
 
     public BillingContainer() {

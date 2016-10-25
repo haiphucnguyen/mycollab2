@@ -17,7 +17,7 @@ import com.mycollab.pro.module.project.ui.components.ProjectMultiSelect;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -46,7 +46,7 @@ import java.util.List;
  * @since 5.3.0
  */
 @ViewComponent
-public class MembersWeeklyHoursViewImpl extends AbstractPageView implements MembersWeeklyHoursView {
+public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView implements MembersWeeklyHoursView {
     private MVerticalLayout searchResultLayout;
 
     public MembersWeeklyHoursViewImpl() {

@@ -15,7 +15,7 @@ import com.mycollab.module.project.view.ITagListView;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -39,7 +39,7 @@ import java.util.List;
  * @since 5.0.1
  */
 @ViewComponent
-public class TagListViewImpl extends AbstractPageView implements ITagListView {
+public class TagListViewImpl extends AbstractVerticalPageView implements ITagListView {
     private TagService tagService;
 
     private DefaultBeanPagedList<ProjectGenericItemService, ProjectGenericItemSearchCriteria, ProjectGenericItem> assignmentList;

@@ -20,7 +20,7 @@ import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
@@ -45,7 +45,7 @@ import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
  * @since 1.0
  */
 @ViewComponent
-public class StandupListViewImpl extends AbstractPageView implements StandupListView {
+public class StandupListViewImpl extends AbstractVerticalPageView implements StandupListView {
     private static final long serialVersionUID = 1L;
 
     private PopupDateFieldExt standupCalendar = new PopupDateFieldExt();

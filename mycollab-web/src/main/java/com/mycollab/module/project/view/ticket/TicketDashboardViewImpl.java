@@ -42,15 +42,17 @@ import com.mycollab.module.project.query.TicketQueryInfo;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.shell.events.ShellEvent;
+import com.mycollab.shell.view.AbstractMainView;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.mycollab.vaadin.events.HasSelectionOptionHandlers;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.QueryParamHandler;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
@@ -76,7 +78,7 @@ import java.util.List;
  * @since 1.0
  */
 @ViewComponent
-public class TicketDashboardViewImpl extends AbstractPageView implements TicketDashboardView {
+public class TicketDashboardViewImpl extends AbstractVerticalPageView implements TicketDashboardView {
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOG = LoggerFactory.getLogger(TicketDashboardViewImpl.class);
@@ -201,6 +203,11 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
         EventBusFactory.getInstance().register(searchHandler);
         EventBusFactory.getInstance().register(newTicketAddedHandler);
         EventBusFactory.getInstance().register(addQueryHandler);
+
+        AbstractMainView mainView = UIUtils.getRoot(this, AbstractMainView.class);
+        TicketSliderPanel sliderPanel = new TicketSliderPanel();
+        mainView.addSlidePanel(sliderPanel);
+
         super.attach();
     }
 
@@ -209,6 +216,9 @@ public class TicketDashboardViewImpl extends AbstractPageView implements TicketD
         EventBusFactory.getInstance().unregister(searchHandler);
         EventBusFactory.getInstance().unregister(newTicketAddedHandler);
         EventBusFactory.getInstance().unregister(addQueryHandler);
+
+        AbstractMainView mainView = UIUtils.getRoot(this, AbstractMainView.class);
+        mainView.removeSlidePanels();
         super.detach();
     }
 

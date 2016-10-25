@@ -17,7 +17,7 @@
 package com.mycollab.module.project.ui.components;
 
 import com.mycollab.vaadin.events.HasEditFormHandlers;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.IFormAddView;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -32,7 +32,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 3.0
  */
-public abstract class AbstractEditItemComp<B> extends AbstractPageView implements IFormAddView<B> {
+public abstract class AbstractEditItemComp<B> extends AbstractVerticalPageView implements IFormAddView<B> {
     private static final long serialVersionUID = 1L;
 
     protected B beanItem;

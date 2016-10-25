@@ -103,22 +103,24 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
                     || (ticket.isBug() && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.BUGS))
                     || (ticket.isTask() && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS))) {
                 MButton removeBtn = new MButton("", clickEvent -> {
-                    ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                            UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
-                            UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
-                            confirmDialog -> {
-                                if (confirmDialog.isConfirmed()) {
-                                    AppContextUtil.getSpringBean(ProjectTicketService.class).removeTicket(ticket, UserUIContext.getUsername());
-                                    BlockRowRender rowRenderer = UIUtils.getRoot(ToggleTicketSummaryField.this,
-                                            BlockRowRender.class);
-                                    if (rowRenderer != null) {
-                                        rowRenderer.selfRemoved();
-                                    }
-                                    EventBusFactory.getInstance().post(new TicketEvent.HasTicketPropertyChanged(this, "all"));
-                                }
-                            });
+//                    ConfirmDialogExt.show(UI.getCurrent(),
+//                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+//                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+//                            UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+//                            UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
+//                            confirmDialog -> {
+//                                if (confirmDialog.isConfirmed()) {
+//                                    AppContextUtil.getSpringBean(ProjectTicketService.class).removeTicket(ticket, UserUIContext.getUsername());
+//                                    BlockRowRender rowRenderer = UIUtils.getRoot(ToggleTicketSummaryField.this,
+//                                            BlockRowRender.class);
+//                                    if (rowRenderer != null) {
+//                                        rowRenderer.selfRemoved();
+//                                    }
+//                                    EventBusFactory.getInstance().post(new TicketEvent.HasTicketPropertyChanged(this, "all"));
+//                                }
+//                            });
+                    EventBusFactory.getInstance().post(new TicketEvent.EditTicketInstantly(ToggleTicketSummaryField
+                            .class, ticket.getType(), ticket.getTypeId()));
                 }).withIcon(FontAwesome.TRASH).withStyleName(ValoTheme.BUTTON_ICON_ALIGN_TOP);
                 buttonControls.with(removeBtn);
             }

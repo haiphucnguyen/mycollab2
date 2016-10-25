@@ -40,7 +40,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasEditFormHandlers;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.*;
@@ -66,7 +66,7 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @since 1.0
  */
 @ViewComponent
-public class UserAddViewImpl extends AbstractPageView implements UserAddView {
+public class UserAddViewImpl extends AbstractVerticalPageView implements UserAddView {
     private static final long serialVersionUID = 1L;
 
     private EditUserForm editUserForm;

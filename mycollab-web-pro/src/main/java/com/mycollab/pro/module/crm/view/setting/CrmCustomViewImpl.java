@@ -38,17 +38,14 @@ import com.mycollab.pro.module.crm.view.setting.customlayout.CustomLayoutDDComp;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
@@ -61,7 +58,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 3.0
  */
 @ViewComponent
-public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomView {
+public class CrmCustomViewImpl extends AbstractVerticalPageView implements ICrmCustomView {
     private static final long serialVersionUID = 1L;
 
     private Label headerLbl;

@@ -1925,10 +1925,14 @@ $v-line-height--header:1.5em;
     }
   }
 
-  .v-sliderpanel-content .community {
-    color: black;
-    .desc {
-      font-size: 0.9em;
-    }
+  .v-sliderpanel-navigator {
+    display: none;
+  }
+
+  .v-sliderpanel-content {
+    background-color: white !important;
+    border-left: 1px solid $my-separator-color;
+    border-bottom: 1px solid $my-separator-color;
+    border-top: 1px solid $my-separator-color;
   }
 }

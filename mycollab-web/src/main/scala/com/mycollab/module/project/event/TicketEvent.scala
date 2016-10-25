@@ -32,6 +32,9 @@ object TicketEvent {
   class NewTicketAdded(source: AnyRef, @BeanProperty val typeVal: String, @BeanProperty val typeIdVal: Integer) extends
     ApplicationEvent(source, null) {}
   
+  class EditTicketInstantly(source: AnyRef, @BeanProperty val typeVal: String, @BeanProperty val typeIdVal: Integer) extends
+    ApplicationEvent(source, null) {}
+  
   class SearchRequest(source: AnyRef, data: ProjectTicketSearchCriteria) extends ApplicationEvent(source, data) {}
   
   class HasTicketPropertyChanged(source: AnyRef, data: String) extends ApplicationEvent(source, data) {}

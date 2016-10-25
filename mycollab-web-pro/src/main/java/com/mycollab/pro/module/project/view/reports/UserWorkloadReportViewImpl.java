@@ -1,6 +1,6 @@
 package com.mycollab.pro.module.project.view.reports;
 
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 
 /**
@@ -8,7 +8,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
  * @since 5.3.0
  */
 @ViewComponent
-public class UserWorkloadReportViewImpl extends AbstractPageView implements UserWorkloadReportView {
+public class UserWorkloadReportViewImpl extends AbstractVerticalPageView implements UserWorkloadReportView {
     @Override
     public void display() {
         removeAllComponents();

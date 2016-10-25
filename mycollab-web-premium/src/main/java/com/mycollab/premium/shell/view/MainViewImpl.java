@@ -30,7 +30,6 @@ import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
@@ -46,6 +45,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  */
 @ViewComponent
 public class MainViewImpl extends AbstractMainView {
+
     @Override
     protected MHorizontalLayout buildAccountMenuLayout() {
         accountLayout.removeAllComponents();

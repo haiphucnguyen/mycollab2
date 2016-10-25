@@ -1,7 +1,7 @@
 package com.mycollab.pro.module.project.view.client;
 
 import com.mycollab.module.project.view.client.IClientContainer;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 
 /**
@@ -9,6 +9,6 @@ import com.mycollab.vaadin.mvp.ViewComponent;
  * @since 5.2.9
  */
 @ViewComponent
-public class ClientContainer extends AbstractPageView implements IClientContainer {
+public class ClientContainer extends AbstractVerticalPageView implements IClientContainer {
 
 }

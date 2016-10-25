@@ -30,7 +30,6 @@ public abstract class AbstractCssPageView extends VerticalLayout implements Page
         this.setSizeFull();
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public void addViewListener(ViewListener listener) {
         addListener(ViewEvent.VIEW_IDENTIFIER(), ViewEvent.class, listener, ViewListener.viewInitMethod);

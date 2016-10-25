@@ -27,7 +27,7 @@ import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.mycollab.servlet.InstallUtils;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.AddViewLayout;
@@ -52,7 +52,7 @@ import java.io.File;
  * @since 5.0.5
  */
 @ViewComponent
-public class SetupViewImpl extends AbstractPageView implements SetupView {
+public class SetupViewImpl extends AbstractVerticalPageView implements SetupView {
     private static Logger LOG = LoggerFactory.getLogger(SetupViewImpl.class);
 
     private SmtpEditForm editForm;

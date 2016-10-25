@@ -193,9 +193,6 @@ public class ThemeManager {
 
             extraStyles.append(".vertical-tabsheet .v-button-tab:hover {background-color: #" + accountTheme
                     .getVtabsheetbgselected() + ";}");
-
-            extraStyles.append(".v-sliderpanel-content, .v-sliderpanel-tab { background-color: #" + accountTheme
-                    .getVtabsheetbgselected() + "; }");
         }
 
         if (accountTheme.getVtabsheettextselected() != null) {
