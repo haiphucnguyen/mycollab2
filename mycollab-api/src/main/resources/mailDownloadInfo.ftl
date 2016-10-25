@@ -21,6 +21,9 @@
           </div>
         </div>
         <div style="padding: 0px 25px;">
+          If the above link doesn't work, get the MyCollab at <a href="${downloadLink}"/>here</a>
+        </div>
+        <div style="padding: 0px 25px;">
         As you get started with MyCollab, we recommend that you:
           <ul>
             <li style="padding: 5px 0px">Install MyCollab on your server <a href="https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/installing-mycollab/">Installation</a>
