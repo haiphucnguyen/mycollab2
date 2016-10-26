@@ -2,26 +2,27 @@ package com.mycollab.pro.module.project.view.time;
 
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.db.arguments.Order;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.query.ConstantValueInjector;
 import com.mycollab.db.query.DateParam;
-import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
-import com.mycollab.pro.module.project.ui.components.ItemOrderComboBox;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.web.ui.*;
+import com.mycollab.vaadin.web.ui.BasicSearchLayout;
+import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
+import com.mycollab.vaadin.web.ui.SearchLayout;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
@@ -42,6 +43,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
     private static final long serialVersionUID = 1L;
 
     private TimeLoggingBasicSearchLayout layout;
+    private ComboBox groupField, orderField;
 
     @Override
     protected SearchLayout<ItemTimeLoggingSearchCriteria> createBasicSearchLayout() {
@@ -49,11 +51,11 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         return layout;
     }
 
-    public Date getFromDate() {
+    Date getFromDate() {
         return layout.startDateField.getValue();
     }
 
-    public Date getToDate() {
+    Date getToDate() {
         return layout.endDateField.getValue();
     }
 
@@ -67,36 +69,24 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         return ComponentUtils.headerH2(ProjectTypeConstants.TIME, UserUIContext.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
     }
 
-    @Override
-    protected Component buildExtraControls() {
-        MButton createBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
-            AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow();
-            UI.getCurrent().addWindow(addTimeEntry);
-        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
-        createBtn.setVisible(!CurrentProjectVariables.isProjectArchived() &&
-                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TIME));
-        return createBtn;
-    }
-
     public void addComponent(Component c, int index) {
         layout.bodyWrap.addComponent(c, index);
     }
 
 
-    public String getGroupBy() {
-        String groupBy = (String) layout.groupField.getValue();
+    String getGroupBy() {
+        String groupBy = (String) groupField.getValue();
         return groupBy == null ? UserUIContext.getMessage(DayI18nEnum.OPT_DATE) : groupBy;
     }
 
     public Order getOrderBy() {
-        return (Order) layout.orderField.getValue();
+        return (Order) orderField.getValue();
     }
 
     private class TimeLoggingBasicSearchLayout extends BasicSearchLayout<ItemTimeLoggingSearchCriteria> {
         private PopupDateFieldExt startDateField, endDateField;
 
         private ProjectMemberListSelect userField;
-        private ComboBox groupField, orderField;
         private MVerticalLayout bodyWrap;
 
         TimeLoggingBasicSearchLayout() {
@@ -119,13 +109,6 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             endDateField.setResolution(Resolution.DAY);
             endDateField.setValue(boundWeekDays[1]);
 
-            groupField = new ValueComboBox(false, UserUIContext.getMessage(DayI18nEnum.OPT_DATE),
-                    UserUIContext.getMessage(UserI18nEnum.SINGLE));
-            groupField.addValueChangeListener(valueChangeEvent -> callSearchAction());
-
-            orderField = new ItemOrderComboBox();
-            orderField.addValueChangeListener(valueChangeEvent -> callSearchAction());
-
             Label dateStartLb = new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(WebUIConstants
                     .META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT);
             Label dateEndLb = new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebUIConstants.META_COLOR,
@@ -142,11 +125,6 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             gridLayout.addComponent(endDateField, 3, 0);
             gridLayout.addComponent(new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(WebUIConstants.META_COLOR,
                     WebUIConstants.TEXT_ALIGN_RIGHT), 4, 0);
-
-            gridLayout.addComponent(groupLb, 0, 1);
-            gridLayout.addComponent(groupField, 1, 1);
-            gridLayout.addComponent(sortLb, 2, 1);
-            gridLayout.addComponent(orderField, 3, 1);
 
             userField = new ProjectMemberListSelect();
             gridLayout.addComponent(userField, 5, 0, 5, 1);

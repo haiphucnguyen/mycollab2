@@ -50,13 +50,11 @@ import java.util.*;
  */
 public class BuildCriterionComponent<S extends SearchCriteria> extends MVerticalLayout {
     private static final long serialVersionUID = 1L;
-
     private static final Logger LOG = LoggerFactory.getLogger(BuildCriterionComponent.class);
 
     private SearchLayout<S> hostSearchLayout;
     private Param[] paramFields;
     private String searchCategory;
-    private Class<S> type;
 
     private MHorizontalLayout filterBox;
     private MVerticalLayout searchContainer;
@@ -64,7 +62,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
     public BuildCriterionComponent(SearchLayout<S> searchLayout, Param[] paramFields, Class<S> type, String searchCategory) {
         this.hostSearchLayout = searchLayout;
         this.paramFields = paramFields;
-        this.type = type;
         this.searchCategory = searchCategory;
 
         MHorizontalLayout headerBox = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, true));
