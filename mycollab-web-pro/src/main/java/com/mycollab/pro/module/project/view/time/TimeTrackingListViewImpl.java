@@ -6,6 +6,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.BooleanSearchField;
+import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.query.LazyValueInjector;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
@@ -34,11 +35,14 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
+import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickEvent;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.button.MButton;
@@ -62,6 +66,9 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
     private VerticalLayout timeTrackingWrapper;
     private final ELabel lbTimeRange;
 
+    private String groupByState;
+    private String sortDirection;
+
     private ApplicationEventListener<TimeTrackingEvent.TimeLoggingEntryChange> timeEntryChangeHandler = new
             ApplicationEventListener<TimeTrackingEvent.TimeLoggingEntryChange>() {
                 @Subscribe
@@ -79,12 +86,29 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         searchPanel = new ItemTimeLoggingSearchPanel();
         searchPanel.addSearchHandler(criteria -> setSearchCriteria(criteria));
 
-        this.addComponent(searchPanel);
+        MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
+        groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        final MHorizontalLayout headerLayout = new MHorizontalLayout().withFullWidth();
-        headerWrapper.addComponent(headerLayout);
+        groupWrapLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)));
+        final ComboBox sortCombo = new ValueComboBox(false, UserUIContext.getMessage(GenericI18Enum.OPT_SORT_DESCENDING),
+                UserUIContext.getMessage(GenericI18Enum.OPT_SORT_ASCENDING));
+        sortCombo.addValueChangeListener(valueChangeEvent -> {
+            String sortValue = (String) sortCombo.getValue();
+            if (UserUIContext.getMessage(GenericI18Enum.OPT_SORT_ASCENDING).equals(sortValue)) {
+                sortDirection = SearchCriteria.ASC;
+            } else {
+                sortDirection = SearchCriteria.DESC;
+            }
+            displayTimeEntries();
+        });
+        sortDirection = SearchCriteria.DESC;
+        groupWrapLayout.addComponent(sortCombo);
 
-        lbTimeRange = ELabel.h3("");
+        groupWrapLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)));
+        ValueComboBox groupField = new ValueComboBox(false, UserUIContext.getMessage(DayI18nEnum.OPT_DATE),
+                UserUIContext.getMessage(UserI18nEnum.SINGLE));
+        groupByState = UserUIContext.getMessage(DayI18nEnum.OPT_DATE);
+        groupWrapLayout.addComponent(groupField);
 
         MButton printBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new TimesheetCustomizeReportOutputWindow(new LazyValueInjector() {
             @Override
@@ -92,8 +116,24 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
                 return searchCriteria;
             }
         }))).withIcon(FontAwesome.PRINT).withStyleName(WebUIConstants.BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
+        groupWrapLayout.addComponent(printBtn);
 
-        headerLayout.with(lbTimeRange, printBtn).expand(lbTimeRange);
+        MButton createBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
+            AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow();
+            UI.getCurrent().addWindow(addTimeEntry);
+        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
+        createBtn.setVisible(!CurrentProjectVariables.isProjectArchived() &&
+                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TIME));
+        groupWrapLayout.addComponent(createBtn);
+        searchPanel.addHeaderRight(groupWrapLayout);
+
+        this.addComponent(searchPanel);
+
+        final MHorizontalLayout headerLayout = new MHorizontalLayout().withFullWidth();
+        headerWrapper.addComponent(headerLayout);
+
+        lbTimeRange = ELabel.h3("");
+        headerLayout.with(lbTimeRange).expand(lbTimeRange);
         this.addComponent(headerWrapper);
 
         timeTrackingWrapper = new VerticalLayout();
