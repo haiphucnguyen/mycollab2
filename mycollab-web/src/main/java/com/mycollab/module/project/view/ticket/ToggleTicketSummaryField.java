@@ -55,6 +55,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
 
@@ -83,17 +84,17 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
             buttonControls.setDefaultComponentAlignment(Alignment.TOP_LEFT);
             MButton instantEditBtn = new MButton("", clickEvent -> {
                 if (isRead) {
-                    removeComponent(titleLinkLbl);
-                    removeComponent(buttonControls);
-                    final TextField editField = new TextField();
-                    editField.setValue(ticket.getName());
-                    editField.setWidth("100%");
-                    editField.focus();
-                    addComponent(editField);
-                    removeStyleName("editable-field");
-                    editField.addValueChangeListener(valueChangeEvent -> updateFieldValue(editField));
-                    editField.addBlurListener(blurEvent -> updateFieldValue(editField));
-                    isRead = !isRead;
+//                    removeComponent(titleLinkLbl);
+//                    removeComponent(buttonControls);
+//                    final TextField editField = new TextField();
+//                    editField.setValue(ticket.getName());
+//                    editField.setWidth("100%");
+//                    editField.focus();
+//                    addComponent(editField);
+//                    removeStyleName("editable-field");
+//                    editField.addValueChangeListener(valueChangeEvent -> updateFieldValue(editField));
+//                    editField.addBlurListener(blurEvent -> updateFieldValue(editField));
+//                    isRead = !isRead;
                 }
             }).withIcon(FontAwesome.EDIT).withStyleName(ValoTheme.BUTTON_ICON_ALIGN_TOP);
             instantEditBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT));
@@ -103,24 +104,22 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
                     || (ticket.isBug() && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.BUGS))
                     || (ticket.isTask() && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS))) {
                 MButton removeBtn = new MButton("", clickEvent -> {
-//                    ConfirmDialogExt.show(UI.getCurrent(),
-//                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
-//                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-//                            UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
-//                            UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
-//                            confirmDialog -> {
-//                                if (confirmDialog.isConfirmed()) {
-//                                    AppContextUtil.getSpringBean(ProjectTicketService.class).removeTicket(ticket, UserUIContext.getUsername());
-//                                    BlockRowRender rowRenderer = UIUtils.getRoot(ToggleTicketSummaryField.this,
-//                                            BlockRowRender.class);
-//                                    if (rowRenderer != null) {
-//                                        rowRenderer.selfRemoved();
-//                                    }
-//                                    EventBusFactory.getInstance().post(new TicketEvent.HasTicketPropertyChanged(this, "all"));
-//                                }
-//                            });
-                    EventBusFactory.getInstance().post(new TicketEvent.EditTicketInstantly(ToggleTicketSummaryField
-                            .class, ticket.getType(), ticket.getTypeId()));
+                    ConfirmDialogExt.show(UI.getCurrent(),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                            UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                            UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
+                            confirmDialog -> {
+                                if (confirmDialog.isConfirmed()) {
+                                    AppContextUtil.getSpringBean(ProjectTicketService.class).removeTicket(ticket, UserUIContext.getUsername());
+                                    BlockRowRender rowRenderer = UIUtils.getRoot(ToggleTicketSummaryField.this,
+                                            BlockRowRender.class);
+                                    if (rowRenderer != null) {
+                                        rowRenderer.selfRemoved();
+                                    }
+                                    EventBusFactory.getInstance().post(new TicketEvent.HasTicketPropertyChanged(this, "all"));
+                                }
+                            });
                 }).withIcon(FontAwesome.TRASH).withStyleName(ValoTheme.BUTTON_ICON_ALIGN_TOP);
                 buttonControls.with(removeBtn);
             }

@@ -42,7 +42,6 @@ import com.mycollab.module.project.query.TicketQueryInfo;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.shell.events.ShellEvent;
-import com.mycollab.shell.view.AbstractMainView;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasMassItemActionHandler;
@@ -52,7 +51,6 @@ import com.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.QueryParamHandler;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
@@ -203,11 +201,6 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         EventBusFactory.getInstance().register(searchHandler);
         EventBusFactory.getInstance().register(newTicketAddedHandler);
         EventBusFactory.getInstance().register(addQueryHandler);
-
-        AbstractMainView mainView = UIUtils.getRoot(this, AbstractMainView.class);
-        TicketSliderPanel sliderPanel = new TicketSliderPanel();
-        mainView.addSlidePanel(sliderPanel);
-
         super.attach();
     }
 
@@ -216,9 +209,6 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         EventBusFactory.getInstance().unregister(searchHandler);
         EventBusFactory.getInstance().unregister(newTicketAddedHandler);
         EventBusFactory.getInstance().unregister(addQueryHandler);
-
-        AbstractMainView mainView = UIUtils.getRoot(this, AbstractMainView.class);
-        mainView.removeSlidePanels();
         super.detach();
     }
 

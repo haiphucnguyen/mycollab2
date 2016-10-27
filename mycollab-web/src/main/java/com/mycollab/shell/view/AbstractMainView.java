@@ -32,15 +32,11 @@ import com.mycollab.web.CustomLayoutExt;
 import com.mycollab.web.IDesktopModule;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomLayout;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.sliderpanel.SliderPanel;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
-
-import java.util.function.Consumer;
 
 /**
  * @author MyCollab Ltd.
@@ -98,21 +94,6 @@ public abstract class AbstractMainView extends AbstractVerticalPageView implemen
             headerLayout.addComponent(serviceMenu, "serviceMenu");
         }
         postAddModule(module);
-    }
-
-    public void addSlidePanel(SliderPanel sliderPanel) {
-        bodyLayout.with(sliderPanel);
-    }
-
-    public void removeSlidePanels() {
-        bodyLayout.forEach(new Consumer<Component>() {
-            @Override
-            public void accept(Component component) {
-                if (component instanceof SliderPanel) {
-                    bodyLayout.removeComponent(component);
-                }
-            }
-        });
     }
 
     protected void postAddModule(IDesktopModule module) {

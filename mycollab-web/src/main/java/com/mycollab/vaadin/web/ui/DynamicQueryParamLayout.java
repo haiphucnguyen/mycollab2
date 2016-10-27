@@ -49,7 +49,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
         super(parent, "advancedSearch");
         this.type = type;
         header = constructHeader();
-        buildCriterionComp = new BuildCriterionComponent<S>(this, getParamFields(), getType(), type) {
+        buildCriterionComp = new BuildCriterionComponent<S>(this, getParamFields(), type) {
             private static final long serialVersionUID = 1L;
 
             @Override
