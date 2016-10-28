@@ -84,10 +84,6 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
     private InvoiceListComp invoiceListComp;
     private InvoiceStatusComboBox statusComboBox;
 
-    public InvoiceContainerImpl() {
-        addStyleName("project-page");
-    }
-
     @Override
     public void attach() {
         EventBusFactory.getInstance().register(newInvoiceAddedHandler);

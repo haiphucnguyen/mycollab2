@@ -44,7 +44,7 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements Proj
 
     @Override
     protected void displayView() {
-        withMargin(new MarginInfo(true, true, false, true));
+        withMargin(true);
 
         MHorizontalLayout layout = new MHorizontalLayout().withFullWidth();
         this.with(layout);

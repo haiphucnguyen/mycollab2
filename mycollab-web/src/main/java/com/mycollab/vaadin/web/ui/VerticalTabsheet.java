@@ -47,7 +47,7 @@ public class VerticalTabsheet extends CustomComponent {
     protected VerticalLayout navigatorContainer;
     protected CssLayout navigatorWrapper;
 
-    protected CssLayout tabContainer;
+    protected VerticalLayout tabContainer;
     protected VerticalLayout contentWrapper;
 
     private Map<String, Tab> compMap = new HashMap<>();
@@ -72,7 +72,7 @@ public class VerticalTabsheet extends CustomComponent {
         contentWrapper.setStyleName("container-wrap");
         contentWrapper.setSizeFull();
 
-        tabContainer = new CssLayout();
+        tabContainer = new VerticalLayout();
         tabContainer.setSizeFull();
         contentWrapper.addComponent(tabContainer);
         contentWrapper.setExpandRatio(tabContainer, 1.0f);

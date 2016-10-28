@@ -41,6 +41,7 @@ import com.mycollab.vaadin.web.ui.CommonUIFactory;
 import com.mycollab.vaadin.web.ui.utils.LabelStringGenerator;
 import com.vaadin.breadcrumb.Breadcrumb;
 import com.vaadin.breadcrumb.BreadcrumbLayout;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -98,7 +99,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
         breadcrumb.setUseDefaultClickBehaviour(false);
         breadcrumb.addLink(homeBtn);
 
-        with(breadcrumb).expand(breadcrumb).alignAll(Alignment.MIDDLE_RIGHT);
+        withMargin(new MarginInfo(true, false, false, false)).with(breadcrumb).expand(breadcrumb).alignAll(Alignment.MIDDLE_RIGHT);
     }
 
     public void gotoSearchProjectItems() {

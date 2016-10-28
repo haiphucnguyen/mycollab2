@@ -16,6 +16,7 @@
       .top-panel {
         border-bottom: 1px solid $my-separator-color;
         padding: 10px 20px;
+        background-color: #fff;
       }
     }
     .sidebar-menu {
@@ -137,10 +138,13 @@
   }
 
   .project-page {
-    margin: 20px;
-    border: 1px solid $my-separator-color;
-    background-color: white;
+    padding: 20px;
     width: 100%;
+    background-color: $my-separator-color;
+    > .v-slot {
+      border: 1px solid $my-separator-color;
+      background-color: white;
+    }
   }
 
   div.v-csslayout.followers-container {
