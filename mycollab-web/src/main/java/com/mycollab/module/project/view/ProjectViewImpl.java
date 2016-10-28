@@ -47,7 +47,6 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.*;
-import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet.TabImpl;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.shared.ui.MarginInfo;
@@ -157,9 +156,8 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             this.addComponent(myProjectTab);
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
-            ProjectInfoComponent infoComp = new ProjectInfoComponent(project);
-            topPanel.with(infoComp);
-            topPanel.with(breadCrumb).alignAll(Alignment.MIDDLE_LEFT);
+            breadCrumb.setProject(project);
+            topPanel.with(new ProjectInfoComponent(project), breadCrumb).alignAll(Alignment.MIDDLE_LEFT);
 
             if (project.getContextask() == null || project.getContextask()) {
                 ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();

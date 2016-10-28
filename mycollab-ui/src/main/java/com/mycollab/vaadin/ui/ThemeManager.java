@@ -55,9 +55,16 @@ public class ThemeManager {
         }
 
         if (accountTheme.getVtabsheettext() != null) {
+            extraStyles.append(".project-dashboard .project-info-layout .v-icon { color: #" + accountTheme.getVtabsheettext() + "; }");
+            extraStyles.append(".project-dashboard .project-info-layout .project-name { color: #" + accountTheme.getVtabsheettext() + "; }");
+            extraStyles.append(".project-dashboard .project-info-layout .meta-info { color: " + ColorUtils
+                    .darkerColor("#" + accountTheme.getVtabsheettext()) + "; }");
             extraStyles.append(".v-navbar-quickmenu-content .v-button { color: #" + accountTheme.getVtabsheettext() + "; }");
             extraStyles.append(".slidemenu .v-window-contents .v-button { color: #" + accountTheme.getVtabsheettext() + " !important; }");
             extraStyles.append(".section { color: #" + accountTheme.getVtabsheettext() + "; }");
+            extraStyles.append(".section .v-touchkit-navbutton { color: #" + accountTheme.getVtabsheettext() + " !important; }");
+            extraStyles.append(".section .v-touchkit-navbutton::after { color: #" + accountTheme.getVtabsheettext() + " !important; }");
+            extraStyles.append(".slidemenu .v-window-contents .menulabel { color: " + ColorUtils.brighterColor("#" + accountTheme.getVtabsheettext()) + "; }");
         }
 
         /* Action Buttons */

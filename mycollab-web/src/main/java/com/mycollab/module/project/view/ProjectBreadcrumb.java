@@ -62,7 +62,6 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
     private Button homeBtn;
 
     public ProjectBreadcrumb() {
-        project = CurrentProjectVariables.getProject();
         homeBtn = new Button(null, clickEvent -> EventBusFactory.getInstance().post(new ProjectEvent.GotoDashboard(this, null)));
         breadcrumb = new Breadcrumb() {
             @Override
@@ -100,6 +99,10 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
         breadcrumb.addLink(homeBtn);
 
         withMargin(new MarginInfo(true, false, false, false)).with(breadcrumb).expand(breadcrumb).alignAll(Alignment.MIDDLE_RIGHT);
+    }
+
+    public void setProject(SimpleProject project) {
+        this.project = project;
     }
 
     public void gotoSearchProjectItems() {
