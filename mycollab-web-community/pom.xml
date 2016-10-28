@@ -23,11 +23,5 @@
             <artifactId>mycollab-web</artifactId>
             <version>5.4.3</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.rometools</groupId>
-            <artifactId>rome</artifactId>
-            <version>1.6.1</version>
-        </dependency>
     </dependencies>
 </project>

@@ -48,12 +48,9 @@ Version 5.4.4
 
 **Improvements & New Features**
 
-* Add my tasks of user projects
 * Revise the menu navigator
-* Support components and versions in bug views
+* The project UI is more intuitive
 * Other minor improvements
-
-**Bug Fixes**
 
 
 Version 5.4.3
