@@ -84,17 +84,17 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
             buttonControls.setDefaultComponentAlignment(Alignment.TOP_LEFT);
             MButton instantEditBtn = new MButton("", clickEvent -> {
                 if (isRead) {
-//                    removeComponent(titleLinkLbl);
-//                    removeComponent(buttonControls);
-//                    final TextField editField = new TextField();
-//                    editField.setValue(ticket.getName());
-//                    editField.setWidth("100%");
-//                    editField.focus();
-//                    addComponent(editField);
-//                    removeStyleName("editable-field");
-//                    editField.addValueChangeListener(valueChangeEvent -> updateFieldValue(editField));
-//                    editField.addBlurListener(blurEvent -> updateFieldValue(editField));
-//                    isRead = !isRead;
+                    removeComponent(titleLinkLbl);
+                    removeComponent(buttonControls);
+                    final TextField editField = new TextField();
+                    editField.setValue(ticket.getName());
+                    editField.setWidth("100%");
+                    editField.focus();
+                    addComponent(editField);
+                    removeStyleName("editable-field");
+                    editField.addValueChangeListener(valueChangeEvent -> updateFieldValue(editField));
+                    editField.addBlurListener(blurEvent -> updateFieldValue(editField));
+                    isRead = !isRead;
                 }
             }).withIcon(FontAwesome.EDIT).withStyleName(ValoTheme.BUTTON_ICON_ALIGN_TOP);
             instantEditBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT));
