@@ -46,9 +46,6 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements Proj
     protected void displayView() {
         withMargin(new MarginInfo(true, true, false, true));
 
-        MCssLayout descLayout = new MCssLayout(ELabel.html(CurrentProjectVariables.getProject().getDescription()))
-                .withStyleName(WebUIConstants.BOX).withFullWidth();
-//        with(descLayout);
         MHorizontalLayout layout = new MHorizontalLayout().withFullWidth();
         this.with(layout);
 

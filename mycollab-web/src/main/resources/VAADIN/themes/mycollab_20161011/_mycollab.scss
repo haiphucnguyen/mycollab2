@@ -1354,9 +1354,12 @@ $v-line-height--header:1.5em;
   }
 
   /* VerticalTabsheet */
+  .v-slot-tab-content {
+    width: 100%;
+  }
   .v-csslayout.tab-content {
-    background-color: #fff;
     height: 100%;
+    background-color: #f9f9f9;
   }
 
   .vertical-tabsheet {
@@ -1365,8 +1368,6 @@ $v-line-height--header:1.5em;
     }
     .navigator-wrap {
       display: inline-block;
-      border-right: 1px solid $my-separator-color;
-      border-left: 1px solid $my-separator-color;
     }
     .container-wrap {
       -webkit-box-flex: 1;
@@ -1495,7 +1496,7 @@ $v-line-height--header:1.5em;
   /* search content */
 
   .content-wrapper {
-    padding: 0px 30px;
+    padding: 0px 20px;
     width: 100%;
   }
 

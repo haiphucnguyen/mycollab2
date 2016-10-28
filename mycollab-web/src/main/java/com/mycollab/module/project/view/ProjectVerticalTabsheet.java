@@ -21,8 +21,10 @@ import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 
@@ -47,11 +49,13 @@ public class ProjectVerticalTabsheet extends VerticalTabsheet {
     @Override
     public void setNavigatorVisibility(boolean visibility) {
         if (!visibility) {
-            navigatorWrapper.setWidth("70px");
-            navigatorContainer.setWidth("70px");
+            navigatorWrapper.setWidth("65px");
+            navigatorContainer.setWidth("65px");
             this.hideTabsCaption();
 
-            toggleBtn.setIcon(FontAwesome.CARET_SQUARE_O_RIGHT);
+            navigatorContainer.setComponentAlignment(toggleBtn, Alignment.MIDDLE_CENTER);
+            toggleBtn.setIcon(FontAwesome.ANGLE_DOUBLE_RIGHT);
+            toggleBtn.setStyleName(WebUIConstants.BUTTON_ICON_ONLY + " expand-button");
             toggleBtn.setDescription(UserUIContext.getMessage(ProjectI18nEnum.ACTION_EXPAND_MENU));
             toggleBtn.setCaption("");
         } else {
@@ -59,23 +63,25 @@ public class ProjectVerticalTabsheet extends VerticalTabsheet {
             navigatorContainer.setWidth("200px");
             this.showTabsCaption();
 
-            toggleBtn.setIcon(FontAwesome.CARET_SQUARE_O_LEFT);
+            toggleBtn.setStyleName(WebUIConstants.BUTTON_ICON_ONLY + " closed-button");
+            navigatorContainer.setComponentAlignment(toggleBtn, Alignment.TOP_RIGHT);
+            toggleBtn.setIcon(FontAwesome.TIMES);
             toggleBtn.setDescription("");
-            toggleBtn.setCaption(UserUIContext.getMessage(ProjectI18nEnum.ACTION_COLLAPSE_MENU));
         }
 
         CurrentProjectVariables.setProjectToggleMenu(visibility);
     }
 
     public void addToggleNavigatorControl() {
-        Button btn = this.addButtonOnNavigatorContainer("button", UserUIContext.getMessage(ProjectI18nEnum.ACTION_COLLAPSE_MENU),
-                FontAwesome.CARET_SQUARE_O_LEFT);
-        if (btn != null) {
-            toggleBtn = btn;
+        if (getButtonById("button") == null) {
+            toggleBtn = new ButtonTabImpl("button", 0, "", "");
+            toggleBtn.setStyleName(WebUIConstants.BUTTON_ICON_ONLY + " closed-button");
             toggleBtn.addClickListener(clickEvent -> {
                 boolean visibility = CurrentProjectVariables.getProjectToggleMenu();
                 setNavigatorVisibility(!visibility);
             });
+            navigatorContainer.addComponent(toggleBtn, 0);
+            navigatorContainer.setComponentAlignment(toggleBtn, Alignment.TOP_RIGHT);
         }
 
         boolean visibility = CurrentProjectVariables.getProjectToggleMenu();

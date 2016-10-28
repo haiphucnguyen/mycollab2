@@ -165,22 +165,19 @@ public class ThemeManager {
 
         if (accountTheme.getVtabsheetbg() != null) {
             extraStyles.append(".vertical-tabsheet .navigator-wrap { background-color: #" + accountTheme.getVtabsheetbg() + "; }");
-
-            extraStyles.append(".projectfeed-hdr-wrapper { background-color: #" + accountTheme.getVtabsheetbg() + "; }");
-
-            extraStyles.append(".project-info { background-color: #" + accountTheme.getVtabsheetbg() + "; }");
-
-            extraStyles.append("div.v-csslayout.rightsidebar-layout .sidebar-wrap { background-color: " + ColorUtils
-                    .brighterColor("#" + accountTheme.getVtabsheetbg()) + ";}");
         }
 
         if (accountTheme.getVtabsheettext() != null) {
             extraStyles.append(".vertical-tabsheet .v-button-tab > .v-button-wrap { color: #"
                     + accountTheme.getVtabsheettext() + "; }");
 
-            extraStyles.append(".project-info .header { color: #" + accountTheme.getVtabsheettext() + "; }");
+            extraStyles.append(".closed-button .v-button-wrap .v-icon { color: #"
+                    + accountTheme.getVtabsheettext() + "; }");
 
-            extraStyles.append("div.v-csslayout.rightsidebar-layout .sidebar-wrap { color: #" + accountTheme.getVtabsheettext() + "; }");
+            extraStyles.append(".expand-button .v-button-wrap .v-icon { color: #"
+                    + accountTheme.getVtabsheettext() + "; }");
+
+            extraStyles.append(".project-info .header { color: #" + accountTheme.getVtabsheettext() + "; }");
 
             extraStyles.append(".crmContainer .navigator-wrap .basic-info { color: #" + accountTheme.getVtabsheettext() + "; }");
 

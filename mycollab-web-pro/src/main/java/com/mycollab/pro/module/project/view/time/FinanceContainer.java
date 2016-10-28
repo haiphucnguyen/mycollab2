@@ -31,6 +31,7 @@ public class FinanceContainer extends AbstractVerticalPageView implements IFinan
 
     public FinanceContainer() {
         this.setWidth("100%");
+        addStyleName("project-page");
     }
 
     @Override

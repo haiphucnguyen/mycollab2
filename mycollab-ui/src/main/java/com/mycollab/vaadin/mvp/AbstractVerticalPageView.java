@@ -27,7 +27,7 @@ import java.io.Serializable;
 public abstract class AbstractVerticalPageView extends MVerticalLayout implements PageView, Serializable {
 
     public AbstractVerticalPageView() {
-        this.withStyleName("page-view").withSpacing(false).withMargin(false);
+        this.withSpacing(false).withMargin(false);
     }
 
     @Override

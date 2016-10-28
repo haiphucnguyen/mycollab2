@@ -27,4 +27,8 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 @ViewComponent
 public class MessageContainer extends TransparentContainer {
     private static final long serialVersionUID = 1L;
+
+    public MessageContainer() {
+        addStyleName("project-page");
+    }
 }

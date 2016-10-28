@@ -15,15 +15,6 @@
     .main-view.v-margin-right {
       padding-right: 30px;
     }
-    .page-view {
-      &.v-margin-left {
-        padding-left: 30px;
-      }
-      &.v-margin-right {
-        padding-right: 30px;
-      }
-      display:inline-block;
-    }
     .navigator-wrap .basic-info {
       font-size: $v-font-size--small;
       &:after {

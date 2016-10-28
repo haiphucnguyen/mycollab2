@@ -70,7 +70,7 @@ public abstract class AbstractLazyPageView extends AbstractVerticalPageView impl
     private static class ProgressIndicator extends MWindow {
         private static final long serialVersionUID = -6157950150738214354L;
 
-        public ProgressIndicator() {
+        ProgressIndicator() {
             super();
             this.withDraggable(false).withClosable(false).withModal(true).withCenter().withStyleName("lazyload-progress");
 

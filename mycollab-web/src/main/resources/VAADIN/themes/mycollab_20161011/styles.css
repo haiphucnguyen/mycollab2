@@ -13897,13 +13897,6 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 	display: block;
 }
 
-.accountViewContainer .v-label-h1, .accountViewContainer .v-label h1 {
-	padding: 0px;
-	font-weight: normal;
-	font-size: 18px;
-	line-height: 24px;
-}
-
 .accountViewContainer .addview-layout-body {
 	border: 1px solid #e9e9e9;
 }
@@ -15224,18 +15217,6 @@ div.v-window {
 	padding-right: 30px;
 }
 
-.crmContainer .page-view {
-	display: inline-block;
-}
-
-.crmContainer .page-view.v-margin-left {
-	padding-left: 30px;
-}
-
-.crmContainer .page-view.v-margin-right {
-	padding-right: 30px;
-}
-
 .crmContainer .navigator-wrap .basic-info {
 	font-size: 13px;
 }
@@ -15322,22 +15303,13 @@ div .addview-layout-body {
 	min-height: 100%;
 }
 
-.project-module .page-view.v-margin-left, .accountViewContainer .page-view.v-margin-left {
-	padding-left: 30px;
-}
-
-.project-module .page-view.v-margin-right, .accountViewContainer .page-view.v-margin-right {
-	padding-right: 30px;
-}
-
 .projectDashboardView {
 	display: block;
 }
 
 .projectDashboardView .container-wrap.main-content .top-panel {
-	border-top: 1px solid #e9e9e9;
 	border-bottom: 1px solid #e9e9e9;
-	padding: 10px 30px;
+	padding: 10px 20px;
 }
 
 .projectDashboardView .sidebar-menu {
@@ -15447,6 +15419,27 @@ div .addview-layout-body {
 .projectfeed-hdr-wrapper {
 	padding: 15px 30px;
 	border-bottom: 1px solid #e9e9e9;
+}
+
+.closed-button .v-button-wrap {
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
+.closed-button .v-button-wrap .v-icon {
+	font-size: 14px !important;
+	color: white;
+}
+
+.expand-button .v-button-wrap {
+	margin: 10px;
+}
+
+.project-page {
+	margin: 20px;
+	border: 1px solid #e9e9e9;
+	background-color: white;
+	width: 100%;
 }
 
 div.v-csslayout.followers-container {
@@ -17680,9 +17673,13 @@ div.v-stylecalendar .weekdays TD {
 	width: 4px;
 }
 
+.v-slot-tab-content {
+	width: 100%;
+}
+
 .v-csslayout.tab-content {
-	background-color: #fff;
 	height: 100%;
+	background-color: #f9f9f9;
 }
 
 .vertical-tabsheet  > .v-csslayout {
@@ -17695,8 +17692,6 @@ div.v-stylecalendar .weekdays TD {
 
 .vertical-tabsheet .navigator-wrap {
 	display: inline-block;
-	border-right: 1px solid #e9e9e9;
-	border-left: 1px solid #e9e9e9;
 }
 
 .vertical-tabsheet .container-wrap {
@@ -17808,7 +17803,7 @@ img.icon-btn {
 }
 
 .content-wrapper {
-	padding: 0px 30px;
+	padding: 0px 20px;
 	width: 100%;
 }
 

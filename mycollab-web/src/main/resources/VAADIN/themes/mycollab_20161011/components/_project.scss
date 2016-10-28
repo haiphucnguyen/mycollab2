@@ -9,21 +9,13 @@
   }
 
   /* Project Page View */
-  .project-module .page-view.v-margin-left, .accountViewContainer .page-view.v-margin-left {
-    padding-left: 30px;
-  }
-
-  .project-module .page-view.v-margin-right, .accountViewContainer .page-view.v-margin-right {
-    padding-right: 30px;
-  }
 
   .projectDashboardView {
     display: block;
     .container-wrap.main-content {
       .top-panel {
-        border-top: 1px solid $my-separator-color;
         border-bottom: 1px solid $my-separator-color;
-        padding: 10px 30px;
+        padding: 10px 20px;
       }
     }
     .sidebar-menu {
@@ -125,6 +117,30 @@
   .projectfeed-hdr-wrapper {
     padding: 15px 30px;
     border-bottom: 1px solid $my-separator-color;
+  }
+
+  .closed-button {
+    .v-button-wrap {
+      margin-right: 10px;
+      margin-top: 10px;
+      .v-icon {
+        font-size: 14px !important;
+        color: white;
+      }
+    }
+  }
+
+  .expand-button {
+    .v-button-wrap {
+      margin: 10px;
+    }
+  }
+
+  .project-page {
+    margin: 20px;
+    border: 1px solid $my-separator-color;
+    background-color: white;
+    width: 100%;
   }
 
   div.v-csslayout.followers-container {

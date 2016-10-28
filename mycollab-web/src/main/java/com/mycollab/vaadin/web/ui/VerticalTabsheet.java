@@ -70,11 +70,12 @@ public class VerticalTabsheet extends CustomComponent {
 
         contentWrapper = new VerticalLayout();
         contentWrapper.setStyleName("container-wrap");
-        contentWrapper.setWidth("100%");
+        contentWrapper.setSizeFull();
 
         tabContainer = new CssLayout();
-        tabContainer.setWidth("100%");
+        tabContainer.setSizeFull();
         contentWrapper.addComponent(tabContainer);
+        contentWrapper.setExpandRatio(tabContainer, 1.0f);
 
         if (isLeft) {
             contentLayout.addComponent(navigatorWrapper);
@@ -167,17 +168,6 @@ public class VerticalTabsheet extends CustomComponent {
         }
     }
 
-    public Button addButtonOnNavigatorContainer(String id, String caption, Resource icon) {
-        if (getButtonById(id) == null) {
-            final ButtonTabImpl button = new ButtonTabImpl(id, 0, caption, "");
-            button.withStyleName(TAB_STYLENAME, UIConstants.TEXT_ELLIPSIS).withWidth("90%").withIcon(icon);
-            navigatorContainer.addComponent(button);
-            navigatorContainer.setComponentAlignment(button, Alignment.MIDDLE_CENTER);
-            return button;
-        }
-        return null;
-    }
-
     public boolean hasTab(String viewId) {
         return compMap.containsKey(viewId);
     }
@@ -193,7 +183,7 @@ public class VerticalTabsheet extends CustomComponent {
         }
     }
 
-    private ButtonTabImpl getButtonById(String viewId) {
+    public ButtonTabImpl getButtonById(String viewId) {
         for (int i = 0; i < navigatorContainer.getComponentCount(); i++) {
             ButtonTabImpl button = (ButtonTabImpl) navigatorContainer.getComponent(i);
             if (viewId.equals(button.getTabId())) {
@@ -318,7 +308,7 @@ public class VerticalTabsheet extends CustomComponent {
         String link;
         private String caption;
 
-        ButtonTabImpl(String id, int level, String caption, String link) {
+        public ButtonTabImpl(String id, int level, String caption, String link) {
             super(caption);
             this.tabId = id;
             this.link = link;

@@ -28,4 +28,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 public class MilestoneContainer extends TransparentContainer {
     private static final long serialVersionUID = 1L;
 
+    public MilestoneContainer() {
+        addStyleName("project-page");
+    }
 }

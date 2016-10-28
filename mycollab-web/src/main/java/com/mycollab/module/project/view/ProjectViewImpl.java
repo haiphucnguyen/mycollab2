@@ -47,11 +47,9 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.*;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet.TabImpl;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.vaadin.server.BrowserWindowOpener;
-import com.vaadin.server.ExternalResource;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.TabSheet.Tab;
@@ -74,8 +72,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         this.removeAllComponents();
         viewWrap = new ProjectViewWrap(project);
         ControllerRegistry.addController(new ProjectController(this));
-        ProjectInfoComponent infoComp = new ProjectInfoComponent(project);
-        this.with(infoComp, viewWrap).expand(viewWrap);
+        this.with(viewWrap).expand(viewWrap);
     }
 
     @Override
@@ -110,7 +107,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         private IFinancePresenter financePresenter;
         private UserSettingPresenter userPresenter;
 
-        ProjectViewWrap(final SimpleProject project) {
+        ProjectViewWrap(SimpleProject project) {
             super();
             this.setWidth("100%");
             this.addStyleName("projectDashboardView");
@@ -149,8 +146,8 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
 
             VerticalLayout contentWrapper = myProjectTab.getContentWrapper();
             contentWrapper.addStyleName("main-content");
-            MHorizontalLayout topPanel = new MHorizontalLayout().withMargin(new MarginInfo(false, true, true, true))
-                    .withFullWidth().withStyleName("top-panel");
+            MVerticalLayout topPanel = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, true, false, true))
+                    .withFullWidth().withStyleName("top-panel").withHeightUndefined().withFullWidth();
             contentWrapper.addComponentAsFirst(topPanel);
 
             CssLayout navigatorWrapper = myProjectTab.getNavigatorWrapper();
@@ -160,14 +157,9 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             this.addComponent(myProjectTab);
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
-            breadCrumb.setProject(project);
-
-            MButton helpBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP)).withIcon(FontAwesome.MORTAR_BOARD)
-                    .withStyleName(WebUIConstants.BUTTON_LINK);
-            ExternalResource helpRes = new ExternalResource("https://community.mycollab.com/docs/project-management/");
-            BrowserWindowOpener helpOpener = new BrowserWindowOpener(helpRes);
-            helpOpener.extend(helpBtn);
-            topPanel.with(breadCrumb, helpBtn).alignAll(Alignment.MIDDLE_LEFT).expand(breadCrumb);
+            ProjectInfoComponent infoComp = new ProjectInfoComponent(project);
+            topPanel.with(infoComp);
+            topPanel.with(breadCrumb).alignAll(Alignment.MIDDLE_LEFT);
 
             if (project.getContextask() == null || project.getContextask()) {
                 ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();
