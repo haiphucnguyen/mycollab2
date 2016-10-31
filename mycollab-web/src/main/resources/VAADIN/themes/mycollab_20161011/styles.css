@@ -18210,19 +18210,20 @@ div.v-csslayout.rightsidebar-layout {
 	-webkit-flex-direction: row;
 	-ms-flex-direction: row;
 	flex-direction: row;
+	margin-top: 12px;
 	-webkit-box-orient: horizontal;
-	margin-top: 10px;
-	border-top: 1px solid #ededed;
 }
 
 div.v-csslayout.rightsidebar-layout .sidebar-wrap {
 	display: inline-block;
 	font-size: 13px;
+	border-top: 1px solid #ededed;
 	border-left: 1px solid #ededed;
 	border-right: 1px solid #ededed;
 }
 
 div.v-csslayout.rightsidebar-layout .content-wrap {
+	border-top: 1px solid #ededed;
 	-webkit-box-flex: 1;
 	-moz-box-flex: 1;
 	height: 100%;

@@ -115,7 +115,6 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         if (isDisplaySideBar) {
             RightSidebarLayout bodyContainer = new RightSidebarLayout();
             bodyContainer.setSizeFull();
-            bodyContainer.addStyleName("readview-body-wrap");
 
             bodyContent = new MVerticalLayout(previewForm).withSpacing(false).withMargin(false).withFullWidth();
             bodyContainer.setContent(bodyContent);

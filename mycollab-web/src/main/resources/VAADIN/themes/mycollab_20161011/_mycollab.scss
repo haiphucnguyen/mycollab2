@@ -1884,16 +1884,17 @@ $v-line-height--header:1.5em;
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
+    margin-top: $my-space;
     -webkit-box-orient: horizontal;
-    margin-top: 10px;
-    border-top: 1px solid $my-separator-color;
     .sidebar-wrap {
       display: inline-block;
       font-size: $font-small;
+      border-top: 1px solid $my-separator-color;
       border-left: 1px solid $my-separator-color;
       border-right: 1px solid $my-separator-color;
     }
     .content-wrap {
+      border-top: 1px solid $my-separator-color;
       -webkit-box-flex: 1;
       /* OLD - iOS 6-, Safari 3.1-6 */
       -moz-box-flex: 1;
