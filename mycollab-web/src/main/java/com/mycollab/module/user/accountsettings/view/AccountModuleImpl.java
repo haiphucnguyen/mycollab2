@@ -27,6 +27,7 @@ import com.mycollab.module.user.accountsettings.setup.view.SetupPresenter;
 import com.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
 import com.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.mycollab.module.user.accountsettings.view.parameters.BillingScreenData;
+import com.mycollab.module.user.ui.SettingAssetsManager;
 import com.mycollab.module.user.ui.SettingUIConstants;
 import com.mycollab.premium.module.user.accountsettings.view.UserAccountController;
 import com.mycollab.shell.events.ShellEvent;
@@ -99,23 +100,23 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
     }
 
     private void buildComponents() {
-        tabSheet.addTab(constructUserInformationComponent(),
-                SettingUIConstants.PROFILE, UserUIContext.getMessage(AdminI18nEnum.VIEW_PROFILE));
+        tabSheet.addTab(constructUserInformationComponent(), SettingUIConstants.PROFILE,
+                UserUIContext.getMessage(AdminI18nEnum.VIEW_PROFILE), SettingAssetsManager.getAsset(SettingUIConstants.PROFILE));
 
         if (!SiteConfiguration.isCommunityEdition()) {
-            tabSheet.addTab(constructAccountSettingsComponent(),
-                    SettingUIConstants.BILLING, UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING));
+            tabSheet.addTab(constructAccountSettingsComponent(), SettingUIConstants.BILLING,
+                    UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING), SettingAssetsManager.getAsset(SettingUIConstants.BILLING));
         }
 
         tabSheet.addTab(constructUserRoleComponent(), SettingUIConstants.USERS,
-                UserUIContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES));
+                UserUIContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES), SettingAssetsManager.getAsset(SettingUIConstants.USERS));
 
         tabSheet.addTab(constructThemeComponent(), SettingUIConstants.GENERAL_SETTING,
-                UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING));
+                UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING), SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING));
 
         if (!SiteConfiguration.isDemandEdition()) {
             tabSheet.addTab(constructSetupComponent(), SettingUIConstants.SETUP,
-                    UserUIContext.getMessage(AdminI18nEnum.VIEW_SETUP));
+                    UserUIContext.getMessage(AdminI18nEnum.VIEW_SETUP), SettingAssetsManager.getAsset(SettingUIConstants.SETUP));
         }
 
         tabSheet.addSelectedTabChangeListener(new SelectedTabChangeListener() {

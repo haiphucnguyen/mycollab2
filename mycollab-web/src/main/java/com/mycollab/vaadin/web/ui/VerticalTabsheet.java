@@ -17,7 +17,6 @@
 package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.core.MyCollabException;
-import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.ErrorMessage;
 import com.vaadin.server.Page;
@@ -139,11 +138,7 @@ public class VerticalTabsheet extends CustomComponent {
                 }
             });
 
-            if (resource == null) {
-                setDefaultButtonIcon(button, false);
-            } else {
-                button.setIcon(resource);
-            }
+            button.setIcon(resource);
             button.withStyleName(TAB_STYLENAME, UIConstants.TEXT_ELLIPSIS).withWidth("90%");
 
             if (button.getLevel() > 0) {
@@ -220,7 +215,6 @@ public class VerticalTabsheet extends CustomComponent {
             selectedButton = btn;
             clearTabSelection(true);
             selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
-            setDefaultButtonIcon(selectedButton, true);
             selectedComp = tab;
             tabContainer.removeAllComponents();
             Component tabComponent = tab.getComponent();
@@ -266,7 +260,6 @@ public class VerticalTabsheet extends CustomComponent {
                 Component btn = iterator.next();
                 if (btn.getStyleName().contains(TAB_SELECTED_STYLENAME)) {
                     btn.removeStyleName(TAB_SELECTED_STYLENAME);
-                    setDefaultButtonIcon(btn, false);
                 }
             }
         } else {
@@ -285,14 +278,6 @@ public class VerticalTabsheet extends CustomComponent {
 
     public CssLayout getNavigatorWrapper() {
         return this.navigatorWrapper;
-    }
-
-    final protected void setDefaultButtonIcon(Component btn, Boolean selected) {
-        ButtonTabImpl btnTabImpl = (ButtonTabImpl) btn;
-        String tabId = btnTabImpl.getTabId();
-
-        Resource resource = ProjectAssetsManager.getAsset(tabId);
-        btn.setIcon(resource);
     }
 
     public static class ButtonTabImpl extends MButton {
