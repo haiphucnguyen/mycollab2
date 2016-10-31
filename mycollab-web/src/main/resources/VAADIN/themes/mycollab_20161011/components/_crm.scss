@@ -12,20 +12,6 @@
       background-color: #FFF;
       min-height: 100%;
     }
-    .main-view.v-margin-right {
-      padding-right: 30px;
-    }
-    .navigator-wrap .basic-info {
-      font-size: $v-font-size--small;
-      &:after {
-        content: "";
-        border-bottom: 1px solid $my-separator-color;
-        width: 221px;
-        position: relative;
-        height: 15px;
-        display: block;
-      }
-    }
     &.preview-comp {
       min-height: 100%;
     }
@@ -33,23 +19,11 @@
 
   /* New ReadViewLayout */
   .readViewLayout {
-    background-color: #FFF;
     border-radius: 0px;
     .readViewHeader {
       padding: 0px 0px 5px 5px;
       border-radius: 0px;
       border-bottom: 1px solid $my-separator-color;
-    }
-  }
-
-  .readview-layout {
-    background-color: #FFF;
-    padding: 0px;
-    &.v-margin-left {
-      padding-left: 30px;
-    }
-    &.v-margin-right {
-      padding-right: 30px;
     }
   }
 

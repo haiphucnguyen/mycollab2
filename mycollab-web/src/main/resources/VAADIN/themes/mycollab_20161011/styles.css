@@ -2876,7 +2876,7 @@ a.v-disabled {
 }
 
 .v-margin-right {
-	padding-right: 12px;
+	padding-right: 24px;
 }
 
 .v-margin-bottom {
@@ -2884,7 +2884,7 @@ a.v-disabled {
 }
 
 .v-margin-left {
-	padding-left: 12px;
+	padding-left: 24px;
 }
 
 .v-spacing {
@@ -4915,19 +4915,19 @@ a.v-disabled {
 }
 
 [class*="margin-left"] > tbody > [class*="row"] > [class*="captioncell"] {
-	padding-left: 12px;
+	padding-left: 24px;
 }
 
 [class*="margin-left"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h2, [class*="margin-left"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h3, [class*="margin-left"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h4 {
-	left: 12px;
+	left: 24px;
 }
 
 [class*="margin-right"] > tbody > [class*="row"] > [class*="contentcell"] {
-	padding-right: 12px;
+	padding-right: 24px;
 }
 
 [class*="margin-right"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h2, [class*="margin-right"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h3, [class*="margin-right"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h4 {
-	right: 12px;
+	right: 24px;
 }
 
 .v-formlayout > table {
@@ -8002,11 +8002,11 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-gridlayout-margin-left {
-	padding-left: 12px;
+	padding-left: 24px;
 }
 
 .v-gridlayout-margin-right {
-	padding-right: 12px;
+	padding-right: 24px;
 }
 
 .v-gridlayout-spacing-on {
@@ -14166,6 +14166,22 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 	border: none;
 }
 
+.v-tabsheet-content  > div > .v-scrollable > .v-margin-top {
+	padding-top: 12px;
+}
+
+.v-tabsheet-content  > div > .v-scrollable > .v-margin-right {
+	padding-right: 24px;
+}
+
+.v-tabsheet-content  > div > .v-scrollable > .v-margin-bottom {
+	padding-bottom: 12px;
+}
+
+.v-tabsheet-content  > div > .v-scrollable > .v-margin-left {
+	padding-left: 24px;
+}
+
 td.v-tabsheet-spacertd div {
 	border-color: my-separator-color;
 }
@@ -15218,29 +15234,11 @@ div.v-window {
 	min-height: 100%;
 }
 
-.crmContainer .main-view.v-margin-right {
-	padding-right: 30px;
-}
-
-.crmContainer .navigator-wrap .basic-info {
-	font-size: 13px;
-}
-
-.crmContainer .navigator-wrap .basic-info:after {
-	content: "";
-	border-bottom: 1px solid #ededed;
-	width: 221px;
-	position: relative;
-	height: 15px;
-	display: block;
-}
-
 .crmContainer.preview-comp {
 	min-height: 100%;
 }
 
 .readViewLayout {
-	background-color: #FFF;
 	border-radius: 0px;
 }
 
@@ -15248,19 +15246,6 @@ div.v-window {
 	padding: 0px 0px 5px 5px;
 	border-radius: 0px;
 	border-bottom: 1px solid #ededed;
-}
-
-.readview-layout {
-	background-color: #FFF;
-	padding: 0px;
-}
-
-.readview-layout.v-margin-left {
-	padding-left: 30px;
-}
-
-.readview-layout.v-margin-right {
-	padding-right: 30px;
 }
 
 .lead-convert-window {
@@ -15314,8 +15299,8 @@ div .addview-layout-body {
 
 .projectDashboardView .container-wrap.main-content .top-panel {
 	border-bottom: 1px solid #ededed;
-	padding: 10px 20px;
-	background-color: #fff;
+	padding: 12px 24px;
+	background-color: #efefef;
 }
 
 .projectDashboardView .sidebar-menu {
@@ -15423,8 +15408,9 @@ div .addview-layout-body {
 }
 
 .projectfeed-hdr-wrapper {
-	padding: 15px 30px;
+	padding: 12px 24px;
 	border-bottom: 1px solid #ededed;
+	background-color: #efefef;
 }
 
 .closed-button .v-button-wrap {
@@ -15439,17 +15425,6 @@ div .addview-layout-body {
 
 .expand-button .v-button-wrap {
 	margin: 10px;
-}
-
-.project-page {
-	padding: 20px;
-	width: 100%;
-	background-color: #ededed;
-}
-
-.project-page  > .v-slot {
-	border: 1px solid #ededed;
-	background-color: white;
 }
 
 div.v-csslayout.followers-container {
@@ -15476,7 +15451,7 @@ div.v-csslayout.followers-container .v-checkbox {
 	-webkit-flex-wrap: wrap;
 	flex-wrap: wrap;
 	-ms-writing-mode: lr-tb;
-	padding: 0px 30px 10px 30px;
+	padding: 0px 24px;
 }
 
 .v-csslayout.tag-block {
@@ -16974,11 +16949,6 @@ input.v-textfield-errorField {
 	border-bottom: 1px solid #ededed;
 }
 
-.crmContainer .container-wrap .tab-content {
-	border-width: 1px 0px 0px 1px;
-	padding: 0px;
-}
-
 .depotComp.v-margin-top {
 	padding-top: 20px;
 }
@@ -17685,14 +17655,6 @@ div.v-stylecalendar .weekdays TD {
 	width: 4px;
 }
 
-.v-csslayout.tab-content {
-	height: 100%;
-}
-
-.vertical-tabsheet {
-	background-color: #ededed;
-}
-
 .vertical-tabsheet  > .v-csslayout {
 	display: -webkit-box;
 	display: -moz-box;
@@ -17805,7 +17767,7 @@ div.v-stylecalendar .weekdays TD {
 }
 
 .hdr-view {
-	padding: 12px 30px;
+	padding: 12px 24px;
 }
 
 img.icon-btn {
@@ -17814,7 +17776,7 @@ img.icon-btn {
 }
 
 .content-wrapper {
-	padding: 0px 20px;
+	padding: 0px 24px;
 	width: 100%;
 }
 

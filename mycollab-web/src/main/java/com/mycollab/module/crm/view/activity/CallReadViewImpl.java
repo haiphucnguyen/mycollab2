@@ -90,7 +90,7 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
         basicInfo.addComponent(followersComp);
         navigatorWrapper.addComponentAsFirst(basicInfo);
 
-        previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
+        previewItemContainer.addTab(tabContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
         previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
     }
 
@@ -112,5 +112,10 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
     @Override
     public HasPreviewFormHandlers<SimpleCall> getPreviewFormHandlers() {
         return previewForm;
+    }
+
+    @Override
+    protected String getType() {
+        return CrmTypeConstants.CALL;
     }
 }

@@ -28,7 +28,6 @@ import com.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.mycollab.module.crm.i18n.LeadI18nEnum;
-import com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunitySalesStage;
 import com.mycollab.module.crm.service.LeadService;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.crm.ui.components.*;
@@ -48,9 +47,6 @@ import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
-
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * @author MyCollab Ltd.
@@ -102,11 +98,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
 
         previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
 
-        String saleState = this.beanItem.getSalesstage();
-        Date closeDate = this.beanItem.getExpectedcloseddate();
-        if ((!OpportunitySalesStage.Closed_Won.name().equals(saleState) &&
-                !OpportunitySalesStage.Closed_Lost.name().equals(saleState))
-                && closeDate != null && (closeDate.before(new GregorianCalendar().getTime()))) {
+        if (beanItem.isOverdue()) {
             previewLayout.addTitleStyleName(WebUIConstants.LABEL_OVERDUE);
         }
     }
@@ -147,7 +139,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
 
         navigatorWrapper.addComponentAsFirst(basicInfo);
 
-        previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL,
+        previewItemContainer.addTab(tabContent, CrmTypeConstants.DETAIL,
                 UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
         previewItemContainer.addTab(associateContactList, CrmTypeConstants.CONTACT,
                 UserUIContext.getMessage(ContactI18nEnum.LIST));
@@ -171,7 +163,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
         return beanItem;
     }
 
-    protected void displayActivities() {
+    private void displayActivities() {
         ActivitySearchCriteria criteria = new ActivitySearchCriteria();
         criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setType(StringSearchField.and(CrmTypeConstants.OPPORTUNITY));
@@ -210,5 +202,10 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
     @Override
     public IRelatedListHandlers<SimpleLead> getRelatedLeadHandlers() {
         return associateLeadList;
+    }
+
+    @Override
+    protected String getType() {
+        return CrmTypeConstants.OPPORTUNITY;
     }
 }

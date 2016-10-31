@@ -152,7 +152,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
 
         navigatorWrapper.addComponentAsFirst(basicInfo);
 
-        previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL,
+        previewItemContainer.addTab(tabContent, CrmTypeConstants.DETAIL,
                 UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
         previewItemContainer.addTab(associateOpportunityList, CrmTypeConstants.OPPORTUNITY,
                 UserUIContext.getMessage(OpportunityI18nEnum.LIST));
@@ -188,5 +188,10 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
     @Override
     public IRelatedListHandlers<SimpleOpportunity> getRelatedOpportunityHandlers() {
         return associateOpportunityList;
+    }
+
+    @Override
+    protected String getType() {
+        return CrmTypeConstants.CONTACT;
     }
 }

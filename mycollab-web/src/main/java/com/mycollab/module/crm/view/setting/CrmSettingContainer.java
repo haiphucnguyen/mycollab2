@@ -56,7 +56,6 @@ public class CrmSettingContainer extends AbstractCssPageView implements PageView
         settingTab.setSizeFull();
         settingTab.setNavigatorWidth("250px");
         settingTab.setNavigatorStyleName("sidebar-menu");
-        settingTab.setContainerStyleName("tab-content");
         settingTab.setHeight(null);
 
         buildComponents();

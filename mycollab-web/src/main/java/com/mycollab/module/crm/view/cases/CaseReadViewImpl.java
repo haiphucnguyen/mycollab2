@@ -69,8 +69,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(previewForm)
-                .createButtonControls(RolePermissionCollections.CRM_CASE);
+        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_CASE);
     }
 
     @Override
@@ -117,7 +116,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
 
         navigatorWrapper.addComponentAsFirst(basicInfo);
 
-        previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
+        previewItemContainer.addTab(tabContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
         previewItemContainer.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST));
         previewItemContainer.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY));
     }
@@ -162,5 +161,10 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
     @Override
     public IRelatedListHandlers<SimpleContact> getRelatedContactHandlers() {
         return associateContactList;
+    }
+
+    @Override
+    protected String getType() {
+        return CrmTypeConstants.CASE;
     }
 }

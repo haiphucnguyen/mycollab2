@@ -34,19 +34,20 @@ import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.*;
 import com.mycollab.vaadin.web.ui.ServiceMenu;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet.TabImpl;
+import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -74,23 +75,20 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
         this.setWidth("100%");
         this.addStyleName("accountViewContainer");
 
-        MHorizontalLayout topPanel = new MHorizontalLayout().withFullWidth().withStyleName("top-panel")
-                .withMargin(new MarginInfo(true, true, true, false));
+        MHorizontalLayout topPanel = new MHorizontalLayout().withFullWidth().withMargin(true).withStyleName("border-bottom");
         AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
 
-        Button helpBtn = new Button(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP));
-        helpBtn.setIcon(FontAwesome.MORTAR_BOARD);
-        helpBtn.addStyleName(WebUIConstants.BUTTON_LINK);
+        MButton helpBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP))
+                .withIcon(FontAwesome.MORTAR_BOARD).withStyleName(WebUIConstants.BUTTON_LINK);
         ExternalResource helpRes = new ExternalResource("https://community.mycollab.com/docs/account-management/");
         BrowserWindowOpener helpOpener = new BrowserWindowOpener(helpRes);
         helpOpener.extend(helpBtn);
 
-        topPanel.with(breadcrumb, helpBtn).expand(breadcrumb);
+        topPanel.with(breadcrumb, helpBtn).expand(breadcrumb).alignAll(Alignment.MIDDLE_LEFT);
 
         accountTab = new UserVerticalTabsheet();
         accountTab.setSizeFull();
         accountTab.setNavigatorStyleName("sidebar-menu");
-        accountTab.setContainerStyleName("tab-content");
         VerticalLayout contentWrapper = accountTab.getContentWrapper();
         contentWrapper.addStyleName("main-content");
         contentWrapper.addComponentAsFirst(topPanel);

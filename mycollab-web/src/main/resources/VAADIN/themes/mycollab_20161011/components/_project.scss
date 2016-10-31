@@ -15,8 +15,8 @@
     .container-wrap.main-content {
       .top-panel {
         border-bottom: 1px solid $my-separator-color;
-        padding: 10px 20px;
-        background-color: #fff;
+        padding: $my-space 2*$my-space;
+        background-color: #efefef;
       }
     }
     .sidebar-menu {
@@ -116,8 +116,9 @@
   /* End Messages */
 
   .projectfeed-hdr-wrapper {
-    padding: 15px 30px;
+    padding: $my-space 2*$my-space;
     border-bottom: 1px solid $my-separator-color;
+    background-color: #efefef;
   }
 
   .closed-button {
@@ -137,16 +138,6 @@
     }
   }
 
-  .project-page {
-    padding: 20px;
-    width: 100%;
-    background-color: $my-separator-color;
-    > .v-slot {
-      border: 1px solid $my-separator-color;
-      background-color: white;
-    }
-  }
-
   div.v-csslayout.followers-container {
     @include flex-compatible;
     -webkit-flex-wrap: wrap; /* Safari 6.1+ */
@@ -162,7 +153,7 @@
     -webkit-flex-wrap: wrap; /* Safari 6.1+ */
     flex-wrap: wrap;
     -ms-writing-mode:lr-tb;
-    padding: 0px 30px 10px 30px;
+    padding: 0px 2*$my-space;
   }
 
   .v-csslayout.tag-block {

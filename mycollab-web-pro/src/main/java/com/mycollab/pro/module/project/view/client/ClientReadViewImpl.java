@@ -21,7 +21,7 @@ import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.service.ProjectService;
-import com.mycollab.module.project.ui.components.AbstractPreviewItemComp;
+import com.mycollab.vaadin.web.ui.AbstractPreviewItemComp;
 import com.mycollab.module.project.ui.components.DateInfoComp;
 import com.mycollab.pro.module.project.view.ProjectAddWindow;
 import com.mycollab.security.RolePermissionCollections;

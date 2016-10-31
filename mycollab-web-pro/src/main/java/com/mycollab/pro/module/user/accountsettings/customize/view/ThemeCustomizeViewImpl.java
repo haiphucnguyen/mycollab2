@@ -54,7 +54,7 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         accountTheme = theme;
         ThemeManager.loadDemoTheme(accountTheme);
 
-        MVerticalLayout mainBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, true));
+        MVerticalLayout mainBody = new MVerticalLayout().withMargin(false);
 
         // Add customizable blocks
         mainBody.with(constructTopMenuCustomizeBlock(), constructVTabsheetCustomizeBlock(), constructButtonCustomizeBlock());
@@ -74,7 +74,7 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         resetToDefaultBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         MHorizontalLayout controlButtons = new MHorizontalLayout(viewTitle, resetToDefaultBtn, saveBtn).withFullWidth()
-                .withMargin(new MarginInfo(true, true, false, true)).expand(viewTitle);
+                .expand(viewTitle);
         this.with(controlButtons, mainBody);
     }
 

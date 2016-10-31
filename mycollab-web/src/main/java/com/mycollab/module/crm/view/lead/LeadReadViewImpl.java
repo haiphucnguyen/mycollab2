@@ -130,7 +130,7 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
 
         navigatorWrapper.addComponentAsFirst(basicInfo);
 
-        previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL,
+        previewItemContainer.addTab(tabContent, CrmTypeConstants.DETAIL,
                 UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
         previewItemContainer.addTab(associateCampaignList, CrmTypeConstants.CAMPAIGN,
                 UserUIContext.getMessage(CampaignI18nEnum.LIST));
@@ -178,5 +178,10 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
     @Override
     public IRelatedListHandlers<SimpleCampaign> getRelatedCampaignHandlers() {
         return associateCampaignList;
+    }
+
+    @Override
+    protected String getType() {
+        return CrmTypeConstants.LEAD;
     }
 }

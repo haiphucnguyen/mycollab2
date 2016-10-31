@@ -20,13 +20,13 @@ import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.CrmTypeConstants;
+import com.mycollab.module.crm.domain.*;
 import com.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
+import com.mycollab.module.crm.i18n.*;
 import com.mycollab.module.crm.service.LeadService;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.crm.ui.components.*;
 import com.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
-import com.mycollab.module.crm.domain.*;
-import com.mycollab.module.crm.i18n.*;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
@@ -129,7 +129,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
         activityComponent = new CrmActivityComponent(CrmTypeConstants.ACCOUNT);
 
         CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
-        MVerticalLayout basicInfo = new MVerticalLayout().withFullWidth().withStyleName("basic-info");
+        MVerticalLayout basicInfo = new MVerticalLayout().withFullWidth();
 
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
@@ -138,11 +138,11 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
         basicInfo.with(dateInfoComp, peopleInfoComp, compFollowers);
         navigatorWrapper.addComponentAsFirst(basicInfo);
 
-        previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
+        previewItemContainer.addTab(previewForm, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
         previewItemContainer.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST));
         previewItemContainer.addTab(associateLeadList, CrmTypeConstants.LEAD, UserUIContext.getMessage(LeadI18nEnum.LIST));
         previewItemContainer.addTab(associateOpportunityList, CrmTypeConstants.OPPORTUNITY,
-                UserUIContext.getMessage(OpportunityI18nEnum.LIST.LIST));
+                UserUIContext.getMessage(OpportunityI18nEnum.LIST));
         previewItemContainer.addTab(associateCaseList, CrmTypeConstants.CASE, UserUIContext.getMessage(CaseI18nEnum.LIST));
         previewItemContainer.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY));
         previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
@@ -207,5 +207,10 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     @Override
     public IRelatedListHandlers<SimpleActivity> getRelatedActivityHandlers() {
         return associateActivityList;
+    }
+
+    @Override
+    protected String getType() {
+        return CrmTypeConstants.ACCOUNT;
     }
 }

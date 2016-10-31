@@ -29,11 +29,6 @@ public class FinanceContainer extends AbstractVerticalPageView implements IFinan
 
     private TabSheetDecorator myProjectTab;
 
-    public FinanceContainer() {
-        this.setWidth("100%");
-        addStyleName("project-page");
-    }
-
     @Override
     public void initContent() {
         removeAllComponents();

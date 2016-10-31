@@ -124,7 +124,7 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
                 }
             }).withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION).withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
-            return new MHorizontalLayout(closeBtn, saveBtn).withMargin(true);
+            return new MHorizontalLayout(closeBtn, saveBtn);
         }
 
         private void saveEmailConfiguration() {

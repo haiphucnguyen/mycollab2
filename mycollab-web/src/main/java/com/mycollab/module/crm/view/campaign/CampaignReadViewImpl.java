@@ -75,8 +75,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(previewForm)
-                .createButtonControls(RolePermissionCollections.CRM_CAMPAIGN);
+        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_CAMPAIGN);
     }
 
     @Override
@@ -107,7 +106,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
 
         navigatorWrapper.addComponentAsFirst(basicInfo);
 
-        previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL,
+        previewItemContainer.addTab(tabContent, CrmTypeConstants.DETAIL,
                 UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
         previewItemContainer.addTab(associateAccountList, CrmTypeConstants.ACCOUNT,
                 UserUIContext.getMessage(AccountI18nEnum.LIST));
@@ -208,5 +207,10 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
     @Override
     public IRelatedListHandlers<SimpleLead> getRelatedLeadHandlers() {
         return associateLeadList;
+    }
+
+    @Override
+    protected String getType() {
+        return CrmTypeConstants.CAMPAIGN;
     }
 }

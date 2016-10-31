@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.mycollab.module.project.view.ticket;
 
 import com.mycollab.module.project.ui.components.TransparentContainer;
@@ -27,8 +26,4 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 @ViewComponent
 public class TicketContainer extends TransparentContainer {
     private static final long serialVersionUID = 1L;
-
-    public TicketContainer() {
-        addStyleName("project-page");
-    }
 }

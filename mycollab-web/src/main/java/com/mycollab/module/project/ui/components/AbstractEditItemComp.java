@@ -24,6 +24,7 @@ import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.mycollab.vaadin.ui.WrappedFormLayoutFactory;
 import com.mycollab.vaadin.web.ui.AddViewLayout;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
 
@@ -58,15 +59,14 @@ public abstract class AbstractEditItemComp<B> extends AbstractVerticalPageView i
     }
 
     private class FormLayoutFactory extends WrappedFormLayoutFactory {
-        private static final long serialVersionUID = 1L;
 
         @Override
         public ComponentContainer getLayout() {
             final AddViewLayout formAddLayout = new AddViewLayout(initFormHeader(), initFormIconResource());
 
-            final ComponentContainer topLayout = createButtonControls();
-            if (topLayout != null) {
-                formAddLayout.addHeaderRight(topLayout);
+            final ComponentContainer buttonControls = createButtonControls();
+            if (buttonControls != null) {
+                formAddLayout.addHeaderRight(buttonControls);
             }
 
             formAddLayout.setTitle(initFormTitle());
@@ -90,7 +90,7 @@ public abstract class AbstractEditItemComp<B> extends AbstractVerticalPageView i
 
     abstract protected String initFormTitle();
 
-    abstract protected Resource initFormIconResource();
+    abstract protected FontAwesome initFormIconResource();
 
     abstract protected ComponentContainer createButtonControls();
 

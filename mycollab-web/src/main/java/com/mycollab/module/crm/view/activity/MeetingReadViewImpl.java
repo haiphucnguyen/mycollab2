@@ -91,7 +91,7 @@ public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting> 
 
         navigatorWrapper.addComponentAsFirst(basicInfo);
 
-        previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
+        previewItemContainer.addTab(tabContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
         previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
     }
 
@@ -113,5 +113,10 @@ public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting> 
     @Override
     public HasPreviewFormHandlers<SimpleMeeting> getPreviewFormHandlers() {
         return previewForm;
+    }
+
+    @Override
+    protected String getType() {
+        return CrmTypeConstants.MEETING;
     }
 }

@@ -27,8 +27,4 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 @ViewComponent
 public class ProjectDashboardContainer extends AbstractVerticalPageView {
     private static final long serialVersionUID = 1L;
-
-    public ProjectDashboardContainer() {
-        addStyleName("project-page");
-    }
 }

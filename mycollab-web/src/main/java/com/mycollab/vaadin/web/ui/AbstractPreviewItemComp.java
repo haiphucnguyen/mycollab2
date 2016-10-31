@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.ui.components;
+package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.common.domain.FavoriteItem;
 import com.mycollab.common.service.FavoriteItemService;
@@ -25,7 +25,6 @@ import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageView;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -51,7 +50,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
     protected AdvancedPreviewBeanForm<B> previewForm;
     protected ReadViewLayout previewLayout;
     protected MHorizontalLayout header;
-    protected HorizontalLayout actionControls;
+    private HorizontalLayout actionControls;
     private MVerticalLayout sidebarContent;
     private MVerticalLayout bodyContent;
     private MButton favoriteBtn;
@@ -72,7 +71,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         ELabel headerLbl = ELabel.h2("").withWidthUndefined();
         this.previewLayout = layout;
 
-        header = new MHorizontalLayout().withStyleName("hdr-view").withFullWidth().withMargin(new MarginInfo(true, false, true, false));
+        header = new MHorizontalLayout().withStyleName("hdr-view").withFullWidth();
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         if (iconResource != null) {
@@ -103,7 +102,6 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         previewForm = initPreviewForm();
         actionControls = createButtonControls();
         if (actionControls != null) {
-            actionControls.setWidthUndefined();
             header.with(actionControls).withAlign(actionControls, Alignment.TOP_RIGHT);
         }
 
@@ -233,7 +231,6 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         previewLayout.removeTitleStyleName(styleName);
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     final public void addViewListener(ViewListener listener) {
 

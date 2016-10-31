@@ -70,12 +70,11 @@ public class VerticalTabsheet extends CustomComponent {
 
         contentWrapper = new VerticalLayout();
         contentWrapper.setStyleName("container-wrap");
-        contentWrapper.setSizeFull();
+        new Restrain(contentWrapper).setMinHeight("100%");
 
         tabContainer = new VerticalLayout();
-        tabContainer.setSizeFull();
         contentWrapper.addComponent(tabContainer);
-        contentWrapper.setExpandRatio(tabContainer, 1.0f);
+        new Restrain(tabContainer).setMinHeight("100%");
 
         if (isLeft) {
             contentLayout.addComponent(navigatorWrapper);
@@ -223,8 +222,10 @@ public class VerticalTabsheet extends CustomComponent {
             setDefaultButtonIcon(selectedButton, true);
             selectedComp = tab;
             tabContainer.removeAllComponents();
-            tabContainer.addComponent(tab.getComponent());
-            return tab.getComponent();
+            Component tabComponent = tab.getComponent();
+            tabContainer.addComponent(tabComponent);
+            tabContainer.setExpandRatio(tabComponent, 1.0f);
+            return tabComponent;
         } else {
             return null;
         }
@@ -287,17 +288,6 @@ public class VerticalTabsheet extends CustomComponent {
 
     protected void setDefaultButtonIcon(Component btn, Boolean selected) {
 
-    }
-
-    public void replaceContainer(ComponentContainer newContainer, ComponentContainer newPosition) {
-        ComponentContainer containerParent = (ComponentContainer) tabContainer.getParent();
-        if (containerParent != null) {
-            containerParent.removeComponent(tabContainer);
-        }
-        if (newPosition == null)
-            newPosition = newContainer;
-        newPosition.addComponent(tabContainer);
-        contentWrapper.addComponent(newContainer);
     }
 
     public static class ButtonTabImpl extends MButton {

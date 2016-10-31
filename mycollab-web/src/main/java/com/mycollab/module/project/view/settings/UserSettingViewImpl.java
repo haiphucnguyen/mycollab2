@@ -56,8 +56,6 @@ public class UserSettingViewImpl extends AbstractVerticalPageView implements Use
     private final TabSheetDecorator myProjectTab;
 
     public UserSettingViewImpl() {
-        this.setSizeFull();
-        addStyleName("project-page");
         this.myProjectTab = new TabSheetDecorator();
         this.addComponent(myProjectTab);
         this.buildComponents();

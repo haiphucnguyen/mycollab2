@@ -633,12 +633,6 @@ $v-line-height--header:1.5em;
 
   /* End Add View Styles */
 
-  /* End Account Settings */
-  .crmContainer .container-wrap .tab-content {
-    border-width: 1px 0px 0px 1px;
-    padding: 0px;
-  }
-
   /* Depot */
 
   .depotComp {
@@ -1356,12 +1350,8 @@ $v-line-height--header:1.5em;
   }
 
   /* VerticalTabsheet */
-  .v-csslayout.tab-content {
-    height: 100%;
-  }
 
   .vertical-tabsheet {
-    background-color: $my-separator-color;
     > .v-csslayout {
       @include flex-compatible;
     }
@@ -1474,15 +1464,11 @@ $v-line-height--header:1.5em;
     }
   }
 
-  /* Message List fix */
-
-  /* case list no item */
-
 
   /* New View's Styles */
 
   .hdr-view {
-    padding: 12px 30px;
+    padding: $my-space 2*$my-space;
   }
 
   /* Icon only button */
@@ -1495,7 +1481,7 @@ $v-line-height--header:1.5em;
   /* search content */
 
   .content-wrapper {
-    padding: 0px 20px;
+    padding: 0px 2*$my-space;
     width: 100%;
   }
 

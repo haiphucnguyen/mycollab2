@@ -6,6 +6,18 @@
   .v-tabsheet-content {
     background-color: #FFF;
     border: none;
+    > div > .v-scrollable  > .v-margin-top {
+      padding-top: $my-space;
+    }
+    > div > .v-scrollable  > .v-margin-right {
+      padding-right: 2*$my-space;
+    }
+    > div > .v-scrollable  > .v-margin-bottom {
+      padding-bottom: $my-space;
+    }
+    > div > .v-scrollable  > .v-margin-left {
+      padding-left: 2*$my-space;
+    }
   }
 
   td.v-tabsheet-spacertd div {

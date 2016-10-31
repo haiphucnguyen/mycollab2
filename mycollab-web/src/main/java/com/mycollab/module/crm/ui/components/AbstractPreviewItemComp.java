@@ -16,50 +16,72 @@
  */
 package com.mycollab.module.crm.ui.components;
 
+import com.mycollab.common.domain.FavoriteItem;
+import com.mycollab.common.service.FavoriteItemService;
 import com.mycollab.module.crm.view.CrmVerticalTabsheet;
-import com.mycollab.vaadin.mvp.AbstractCssPageView;
+import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.mycollab.vaadin.web.ui.AddViewLayout2;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
+import com.mycollab.vaadin.web.ui.ReadViewLayout;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet.TabImpl;
-import com.vaadin.server.Resource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.*;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.TabSheet.Tab;
-import com.vaadin.ui.VerticalLayout;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @param <B>
  * @author MyCollab Ltd.
  * @since 3.0
  */
-public abstract class AbstractPreviewItemComp<B> extends AbstractCssPageView {
+public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageView {
     private static final long serialVersionUID = 1L;
+    private static Logger LOG = LoggerFactory.getLogger(AbstractPreviewItemComp.class);
 
     protected B beanItem;
-    protected AddViewLayout2 previewLayout;
-    protected VerticalLayout previewContent;
-    protected AdvancedPreviewBeanForm<B> previewForm;
+    private FontAwesome iconResource;
+    private ELabel headerTitle;
+    protected MHorizontalLayout header;
+    protected VerticalLayout tabContent;
     protected VerticalTabsheet previewItemContainer;
+    protected ReadViewLayout previewLayout;
+    protected AdvancedPreviewBeanForm<B> previewForm;
+    private MVerticalLayout sidebarContent;
+    private boolean isDisplaySideBar = true;
+    private MButton favoriteBtn;
 
-    public AbstractPreviewItemComp(Resource iconResource) {
+    public AbstractPreviewItemComp(FontAwesome iconResource) {
         super();
-        previewItemContainer = new CrmVerticalTabsheet(false);
-
-        addComponent(previewItemContainer);
+        this.iconResource = iconResource;
+        previewItemContainer = new CrmVerticalTabsheet(true);
         previewItemContainer.setSizeFull();
         previewItemContainer.setNavigatorWidth("100%");
         previewItemContainer.setNavigatorStyleName("sidebar-menu");
-        previewItemContainer.setContainerStyleName("tab-content");
+
+        headerTitle = ELabel.h2("");
+        header = new MHorizontalLayout(headerTitle).withStyleName("hdr-view").withFullWidth().withMargin(new
+                MarginInfo(true, false, true, false)).expand(headerTitle);
+        header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+
+        addComponent(previewItemContainer);
 
         CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
-        navigatorWrapper.setWidth("250px");
+        navigatorWrapper.setWidth("200px");
 
         previewItemContainer.addSelectedTabChangeListener(new SelectedTabChangeListener() {
             private static final long serialVersionUID = 1L;
@@ -71,26 +93,20 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractCssPageView {
             }
         });
 
-        previewLayout = new AddViewLayout2("", iconResource);
-        previewLayout.setStyleName("readview-layout");
-        previewLayout.setMargin(new MarginInfo(false, true, true, true));
-
-        previewContent = new VerticalLayout();
-        previewContent.setWidth("100%");
+        tabContent = previewItemContainer.getContentWrapper();
+        tabContent.addComponent(header, 0);
 
         previewForm = initPreviewForm();
 
         ComponentContainer actionControls = createButtonControls();
         if (actionControls != null) {
-            previewLayout.addHeaderRight(actionControls);
+            header.with(actionControls).withAlign(actionControls, Alignment.TOP_RIGHT);
         }
-
-        previewItemContainer.replaceContainer(previewLayout, previewLayout.getBody());
 
         initRelatedComponents();
 
-        previewContent.addComponent(previewForm);
-        previewContent.addComponent(createBottomPanel());
+        tabContent.addComponent(previewForm);
+        tabContent.addComponent(createBottomPanel());
     }
 
     @Override
@@ -104,12 +120,19 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractCssPageView {
 
     public void previewItem(final B item) {
         this.beanItem = item;
-        previewLayout.setTitle(initFormTitle());
+        if (favoriteBtn != null) {
+            if (isFavorite()) {
+                favoriteBtn.addStyleName("favorite-btn-selected");
+            } else {
+                favoriteBtn.addStyleName("favorite-btn");
+            }
+        }
 
         previewForm.setFormLayoutFactory(initFormLayoutFactory());
         previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
         previewForm.setBean(item);
 
+        headerTitle.setValue(iconResource.getHtml() + " " + initFormTitle());
         onPreviewItem();
     }
 
@@ -136,5 +159,40 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractCssPageView {
     abstract protected ComponentContainer createButtonControls();
 
     abstract protected ComponentContainer createBottomPanel();
+
+    private void toggleFavorite() {
+        try {
+            if (isFavorite()) {
+                favoriteBtn.removeStyleName("favorite-btn-selected");
+                favoriteBtn.addStyleName("favorite-btn");
+            } else {
+                favoriteBtn.addStyleName("favorite-btn-selected");
+                favoriteBtn.removeStyleName("favorite-btn");
+            }
+            FavoriteItem favoriteItem = new FavoriteItem();
+            favoriteItem.setExtratypeid(CurrentProjectVariables.getProjectId());
+            favoriteItem.setType(getType());
+            favoriteItem.setTypeid(PropertyUtils.getProperty(beanItem, "id").toString());
+            favoriteItem.setSaccountid(MyCollabUI.getAccountId());
+            favoriteItem.setCreateduser(UserUIContext.getUsername());
+            FavoriteItemService favoriteItemService = AppContextUtil.getSpringBean(FavoriteItemService.class);
+            favoriteItemService.saveOrDelete(favoriteItem);
+        } catch (Exception e) {
+            LOG.error("Error while set favorite flag to bean", e);
+        }
+    }
+
+    private boolean isFavorite() {
+        try {
+            FavoriteItemService favoriteItemService = AppContextUtil.getSpringBean(FavoriteItemService.class);
+            return favoriteItemService.isUserFavorite(UserUIContext.getUsername(), getType(),
+                    PropertyUtils.getProperty(beanItem, "id").toString());
+        } catch (Exception e) {
+            LOG.error("Error while check favorite", e);
+            return false;
+        }
+    }
+
+    abstract protected String getType();
 
 }

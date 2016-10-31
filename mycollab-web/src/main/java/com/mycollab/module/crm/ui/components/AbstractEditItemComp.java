@@ -60,7 +60,6 @@ public abstract class AbstractEditItemComp<B> extends AbstractVerticalPageView i
     }
 
     class FormLayoutFactory extends WrappedFormLayoutFactory {
-        private static final long serialVersionUID = 1L;
 
         @Override
         public ComponentContainer getLayout() {

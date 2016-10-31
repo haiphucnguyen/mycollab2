@@ -63,7 +63,6 @@ public class ActivityRootView extends AbstractVerticalPageView {
         activityTabs.setSizeFull();
         activityTabs.setNavigatorWidth("170px");
         activityTabs.setNavigatorStyleName("sidebar-menu");
-        activityTabs.setContainerStyleName("tab-content");
         activityTabs.setHeight(null);
 
         root.addComponent(activityTabs);
