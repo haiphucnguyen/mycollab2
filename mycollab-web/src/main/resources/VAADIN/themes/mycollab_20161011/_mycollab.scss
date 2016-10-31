@@ -647,7 +647,7 @@ $v-line-height--header:1.5em;
       border-color: $my-separator-color;
       border-radius: 0px;
       .depot-title {
-        padding: 0px 10px;
+        padding: 0px $my-space;
         display: inline-flex;
         font-weight: $my-font-weight-bold;
         font-size: 16px;

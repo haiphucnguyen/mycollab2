@@ -1687,25 +1687,28 @@ a.pending {
 }
 
 .panel-header {
-	border: 1px solid #ededed;
-	background-color: #f9f9f9;
+	border-width: 1px 1px 0px 1px;
+	border-style: solid;
+	border-color: #ededed;
 	height: 40px !important;
+	padding: 0px 12px;
 }
 
 .panel-header .v-label {
 	font-weight: 600;
+	font-size: 16px;
 }
 
 .margin-top {
-	margin-top: 10px;
+	margin-top: 12px;
 }
 
 .margin-bottom {
-	margin-bottom: 10px;
+	margin-bottom: 12px;
 }
 
 .margin-left {
-	margin-left: 10px;
+	margin-left: 24px;
 }
 
 .border-bottom {
@@ -13902,11 +13905,6 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 	border: 1px solid #ededed;
 }
 
-.accountViewContainer .container-wrap.main-content .top-panel {
-	border-bottom: 1px solid #ededed;
-	padding: 10px 20px;
-}
-
 .accountViewContainer .vertical-tabsheet {
 	background-color: #fff;
 }
@@ -14365,25 +14363,28 @@ a.pending {
 }
 
 .panel-header {
-	border: 1px solid #ededed;
-	background-color: #f9f9f9;
+	border-width: 1px 1px 0px 1px;
+	border-style: solid;
+	border-color: #ededed;
 	height: 40px !important;
+	padding: 0px 12px;
 }
 
 .panel-header .v-label {
 	font-weight: 600;
+	font-size: 16px;
 }
 
 .margin-top {
-	margin-top: 10px;
+	margin-top: 12px;
 }
 
 .margin-bottom {
-	margin-bottom: 10px;
+	margin-bottom: 12px;
 }
 
 .margin-left {
-	margin-left: 10px;
+	margin-left: 24px;
 }
 
 .border-bottom {
@@ -15152,7 +15153,7 @@ div.v-window {
 }
 
 .form .section {
-	padding: 25px 5px 5px 5px;
+	padding: 12px 0px;
 	color: #006DAC;
 	border-bottom: 1px solid #ededed;
 }
@@ -15199,7 +15200,7 @@ div.v-window {
 }
 
 .activity-comp .section {
-	padding: 25px 5px 5px 5px;
+	padding: 12px 0px;
 	color: #006DAC;
 	border-bottom: 1px solid #ededed;
 }
@@ -16963,7 +16964,7 @@ input.v-textfield-errorField {
 }
 
 .depotComp .depotHeader .depot-title {
-	padding: 0px 10px;
+	padding: 0px 12px;
 	display: inline-flex;
 	font-weight: 600;
 	font-size: 16px;

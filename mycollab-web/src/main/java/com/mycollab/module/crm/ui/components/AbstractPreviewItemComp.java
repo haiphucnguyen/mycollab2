@@ -29,6 +29,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.ReadViewLayout;
+import com.mycollab.vaadin.web.ui.RightSidebarLayout;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet.TabImpl;
 import com.vaadin.server.FontAwesome;
@@ -59,10 +60,10 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
     protected MHorizontalLayout header;
     protected VerticalLayout tabContent;
     protected VerticalTabsheet previewItemContainer;
-    protected ReadViewLayout previewLayout;
+
     protected AdvancedPreviewBeanForm<B> previewForm;
+    protected ReadViewLayout previewLayout;
     private MVerticalLayout sidebarContent;
-    private boolean isDisplaySideBar = true;
     private MButton favoriteBtn;
 
     public AbstractPreviewItemComp(FontAwesome iconResource) {
@@ -133,6 +134,17 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
         previewForm.setBean(item);
 
         headerTitle.setValue(iconResource.getHtml() + " " + initFormTitle());
+
+        RightSidebarLayout bodyContainer = new RightSidebarLayout();
+        bodyContainer.setSizeFull();
+        bodyContainer.addStyleName("readview-body-wrap");
+
+        MVerticalLayout bodyContent = new MVerticalLayout(previewForm).withSpacing(false).withMargin(false).withFullWidth();
+        bodyContainer.setContent(bodyContent);
+        sidebarContent = new MVerticalLayout().withWidth("250px").withStyleName("readview-sidebar");
+        bodyContainer.setSidebar(sidebarContent);
+        previewLayout.addBody(bodyContainer);
+
         onPreviewItem();
     }
 

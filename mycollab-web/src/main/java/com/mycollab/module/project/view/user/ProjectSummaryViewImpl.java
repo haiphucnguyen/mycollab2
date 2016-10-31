@@ -64,7 +64,7 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements Proj
         leftPanel.addComponent(unresolvedAssignmentNextWeekWidget);
         leftPanel.addComponent(taskOverdueWidget);
 
-        leftPanel.setMargin(new MarginInfo(true, false, true, false));
+        leftPanel.setMargin(new MarginInfo(true, true, true, false));
         leftPanel.setComponentVerticalDropRatio(0.3f);
         leftPanel.setDragMode(LayoutDragMode.CLONE_OTHER);
         leftPanel.setDropHandler(new DropHandler() {

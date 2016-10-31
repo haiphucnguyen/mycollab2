@@ -91,24 +91,27 @@
   }
 
   .panel-header {
-    border: 1px solid $my-separator-color;
-    background-color: $my-panel-background-color;
+    border-width: 1px 1px 0px 1px;
+    border-style: solid;
+    border-color: $my-separator-color;
     height: 40px !important;
+    padding: 0px $my-space;
     .v-label {
       font-weight: $my-font-weight-bold;
+      font-size: 16px;
     }
   }
 
   .margin-top {
-    margin-top: 10px;
+    margin-top: $my-space;
   }
 
   .margin-bottom {
-    margin-bottom: 10px;
+    margin-bottom: $my-space;
   }
 
   .margin-left {
-    margin-left: 10px;
+    margin-left: 2*$my-space;
   }
 
   .border-bottom {
