@@ -16,9 +16,12 @@
  */
 package com.mycollab.vaadin.web.ui;
 
+import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.core.MyCollabException;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.ErrorMessage;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
@@ -54,6 +57,8 @@ public class VerticalTabsheet extends CustomComponent {
 
     private Component selectedButton = null;
     private Tab selectedComp = null;
+    private Button toggleBtn;
+    private Boolean retainVisibility = true;
 
     public VerticalTabsheet() {
         this(true);
@@ -101,11 +106,6 @@ public class VerticalTabsheet extends CustomComponent {
             ButtonTabImpl comp = (ButtonTabImpl) aNavigatorContainer;
             comp.showCaption();
         }
-    }
-
-    public void setNavigatorVisibility(boolean visibility) {
-        navigatorContainer.setVisible(visibility);
-        navigatorWrapper.setVisible(visibility);
     }
 
     public void addTab(Component component, String id, String caption) {
@@ -187,6 +187,44 @@ public class VerticalTabsheet extends CustomComponent {
         }
 
         return null;
+    }
+
+    public void setNavigatorVisibility(boolean visibility) {
+        if (!visibility) {
+            navigatorWrapper.setWidth("65px");
+            navigatorContainer.setWidth("65px");
+            this.hideTabsCaption();
+
+            navigatorContainer.setComponentAlignment(toggleBtn, Alignment.MIDDLE_CENTER);
+            toggleBtn.setIcon(FontAwesome.ANGLE_DOUBLE_RIGHT);
+            toggleBtn.setStyleName(WebUIConstants.BUTTON_ICON_ONLY + " expand-button");
+            toggleBtn.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_EXPAND_MENU));
+            toggleBtn.setCaption("");
+        } else {
+            navigatorWrapper.setWidth("200px");
+            navigatorContainer.setWidth("200px");
+            this.showTabsCaption();
+
+            toggleBtn.setStyleName(WebUIConstants.BUTTON_ICON_ONLY + " closed-button");
+            navigatorContainer.setComponentAlignment(toggleBtn, Alignment.TOP_RIGHT);
+            toggleBtn.setIcon(FontAwesome.TIMES);
+            toggleBtn.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_COLLAPSE_MENU));
+        }
+    }
+
+    public void addToggleNavigatorControl() {
+        if (getButtonById("button") == null) {
+            toggleBtn = new ButtonTabImpl("button", 0, "", "");
+            toggleBtn.setStyleName(WebUIConstants.BUTTON_ICON_ONLY + " closed-button");
+            toggleBtn.addClickListener(clickEvent -> {
+                retainVisibility = !retainVisibility;
+                setNavigatorVisibility(retainVisibility);
+            });
+            navigatorContainer.addComponent(toggleBtn, 0);
+            navigatorContainer.setComponentAlignment(toggleBtn, Alignment.TOP_RIGHT);
+        }
+
+        setNavigatorVisibility(retainVisibility);
     }
 
     private void fireTabChangeEvent(SelectedTabChangeEvent event) {

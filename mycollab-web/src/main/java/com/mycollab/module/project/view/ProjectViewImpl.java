@@ -48,6 +48,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.*;
+import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet.TabImpl;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.shared.ui.MarginInfo;
@@ -96,7 +97,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
     }
 
     private class ProjectViewWrap extends AbstractCssPageView {
-        private ProjectVerticalTabsheet myProjectTab;
+        private VerticalTabsheet myProjectTab;
 
         private ProjectDashboardPresenter dashboardPresenter;
         private MessagePresenter messagePresenter;
@@ -112,13 +113,13 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             this.setWidth("100%");
             this.addStyleName("projectDashboardView");
 
-            myProjectTab = new ProjectVerticalTabsheet();
+            myProjectTab = new VerticalTabsheet();
             myProjectTab.setSizeFull();
             myProjectTab.setNavigatorWidth("100%");
             myProjectTab.setNavigatorStyleName("sidebar-menu");
 
             myProjectTab.addSelectedTabChangeListener(selectedTabChangeEvent -> {
-                Tab tab = ((ProjectVerticalTabsheet) selectedTabChangeEvent.getSource()).getSelectedTab();
+                Tab tab = ((VerticalTabsheet) selectedTabChangeEvent.getSource()).getSelectedTab();
                 String caption = ((TabImpl) tab).getTabId();
                 if (ProjectTypeConstants.MESSAGE.equals(caption)) {
                     messagePresenter.go(ProjectViewImpl.this, null);

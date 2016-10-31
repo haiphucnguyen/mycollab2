@@ -69,6 +69,7 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
         tabSheet.setSizeFull();
         tabSheet.setNavigatorWidth("100%");
         tabSheet.setNavigatorStyleName("sidebar-menu");
+        tabSheet.addToggleNavigatorControl();
 
         headerTitle = ELabel.h2("");
         header = new MHorizontalLayout(headerTitle).withStyleName("hdr-view").withFullWidth()
