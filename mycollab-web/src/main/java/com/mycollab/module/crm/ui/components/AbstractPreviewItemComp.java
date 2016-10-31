@@ -26,10 +26,7 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
-import com.mycollab.vaadin.web.ui.DefaultReadViewLayout;
-import com.mycollab.vaadin.web.ui.RightSidebarLayout;
-import com.mycollab.vaadin.web.ui.VerticalTabsheet;
+import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet.TabImpl;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -74,8 +71,8 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
         tabSheet.setNavigatorStyleName("sidebar-menu");
 
         headerTitle = ELabel.h2("");
-        header = new MHorizontalLayout(headerTitle).withStyleName("hdr-view").withFullWidth().withMargin(new
-                MarginInfo(true, false, true, false)).expand(headerTitle);
+        header = new MHorizontalLayout(headerTitle).withStyleName("hdr-view").withFullWidth()
+                .withMargin(new MarginInfo(true, false, true, false)).expand(headerTitle);
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         addComponent(tabSheet);

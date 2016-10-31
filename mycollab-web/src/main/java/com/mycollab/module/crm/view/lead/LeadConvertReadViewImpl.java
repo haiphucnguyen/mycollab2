@@ -25,10 +25,7 @@ import com.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.mycollab.module.crm.event.AccountEvent;
 import com.mycollab.module.crm.event.ContactEvent;
 import com.mycollab.module.crm.event.OpportunityEvent;
-import com.mycollab.module.crm.i18n.AccountI18nEnum;
-import com.mycollab.module.crm.i18n.ContactI18nEnum;
-import com.mycollab.module.crm.i18n.LeadI18nEnum;
-import com.mycollab.module.crm.i18n.OpportunityI18nEnum;
+import com.mycollab.module.crm.i18n.*;
 import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.module.crm.service.ContactService;
 import com.mycollab.module.crm.service.OpportunityService;
@@ -42,6 +39,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.mycollab.vaadin.ui.IRelatedListHandlers;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
@@ -49,13 +47,11 @@ import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import static com.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator.BACK_BTN_PRESENTED;
 import static com.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator.NAVIGATOR_BTN_PRESENTED;
@@ -128,20 +124,16 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         activityComponent = new CrmActivityComponent(CrmTypeConstants.LEAD);
         associateActivityList = new ActivityRelatedItemListComp(false);
 
-        CssLayout navigatorWrapper = tabSheet.getNavigatorWrapper();
-        MVerticalLayout basicInfo = new MVerticalLayout().withFullWidth().withStyleName("basic-info");
-
         dateInfoComp = new DateInfoComp();
-        basicInfo.addComponent(dateInfoComp);
-
         peopleInfoComp = new PeopleInfoComp();
-        basicInfo.addComponent(peopleInfoComp);
+        addToSideBar(dateInfoComp, peopleInfoComp);
 
-        navigatorWrapper.addComponentAsFirst(basicInfo);
-
-        tabSheet.addTab(tabContent, CrmTypeConstants.DETAIL, "About");
-        tabSheet.addTab(associateCampaignList, CrmTypeConstants.CAMPAIGN, "Campaigns");
-        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, "Activities");
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+        tabSheet.addTab(associateCampaignList, CrmTypeConstants.CAMPAIGN, UserUIContext.getMessage(CampaignI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
+        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
+                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
     }
 
     @Override
@@ -154,12 +146,12 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         return new LeadReadFormFieldFactory(previewForm);
     }
 
-    protected void displayCampaigns() {
+    private void displayCampaigns() {
         associateCampaignList.displayCampaigns(beanItem);
     }
 
 
-    protected void displayActivities() {
+    private void displayActivities() {
         ActivitySearchCriteria criteria = new ActivitySearchCriteria();
         criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         criteria.setType(StringSearchField.and(CrmTypeConstants.LEAD));
@@ -190,10 +182,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
     @Override
     public void displayConvertLeadInfo(final SimpleLead lead) {
         previewForm.removeAllComponents();
-
-        Label header = new Label("Conversion Details");
-        header.addStyleName(ValoTheme.LABEL_H2);
-        previewForm.addComponent(header);
+        previewForm.addComponent(ELabel.h2("Conversion Details"));
 
         GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
 
@@ -235,8 +224,6 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         }
 
         previewForm.addComponent(layoutHelper.getLayout());
-        previewLayout.addBody(tabContent);
-
         this.addComponent(tabSheet);
     }
 
