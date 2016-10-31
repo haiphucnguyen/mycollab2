@@ -94,16 +94,16 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
         compFollowers = new CrmFollowersComp<>(CrmTypeConstants.CAMPAIGN, RolePermissionCollections.CRM_CAMPAIGN);
         addToSideBar(dateInfoComp, peopleInfoComp, compFollowers);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL,
-                UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
-        tabSheet.addTab(associateAccountList, CrmTypeConstants.ACCOUNT,
-                UserUIContext.getMessage(AccountI18nEnum.LIST));
-        tabSheet.addTab(associateContactList, CrmTypeConstants.CONTACT,
-                UserUIContext.getMessage(ContactI18nEnum.LIST));
-        tabSheet.addTab(associateLeadList, CrmTypeConstants.LEAD,
-                UserUIContext.getMessage(LeadI18nEnum.LIST));
-        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY,
-                UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY));
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+        tabSheet.addTab(associateAccountList, CrmTypeConstants.ACCOUNT, UserUIContext.getMessage(AccountI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
+        tabSheet.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
+        tabSheet.addTab(associateLeadList, CrmTypeConstants.LEAD, UserUIContext.getMessage(LeadI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
+        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
+                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
     }
 
     protected void displayActivities() {

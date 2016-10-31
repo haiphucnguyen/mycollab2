@@ -105,9 +105,12 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
         followersComp = new CrmFollowersComp<>(CrmTypeConstants.CASE, RolePermissionCollections.CRM_CASE);
         addToSideBar(dateInfoComp, peopleInfoComp, followersComp);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
-        tabSheet.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST));
-        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY));
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+        tabSheet.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
+        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
+                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
     }
 
     @Override

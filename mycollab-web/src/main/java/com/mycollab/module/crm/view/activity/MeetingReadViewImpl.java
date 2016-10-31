@@ -82,7 +82,8 @@ public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting> 
         followersComp = new CrmFollowersComp<>(CrmTypeConstants.MEETING, RolePermissionCollections.CRM_MEETING);
         addToSideBar(dateInfoComp, followersComp);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
         tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 

@@ -82,7 +82,8 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
         followersComp = new CrmFollowersComp<>(CrmTypeConstants.CALL, RolePermissionCollections.CRM_CALL);
         addToSideBar(dateInfoComp, followersComp);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
         tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 

@@ -83,7 +83,8 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleCrmTas
         followersComp = new CrmFollowersComp<>(CrmTypeConstants.TASK, RolePermissionCollections.CRM_TASK);
         addToSideBar(dateInfoComp, followersComp);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
         tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 

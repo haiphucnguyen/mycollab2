@@ -141,12 +141,12 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
         compFollowers = new CrmFollowersComp<>(CrmTypeConstants.CONTACT, RolePermissionCollections.CRM_CONTACT);
         addToSideBar(dateInfoComp, peopleInfoComp, compFollowers);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL,
-                UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
-        tabSheet.addTab(associateOpportunityList, CrmTypeConstants.OPPORTUNITY,
-                UserUIContext.getMessage(OpportunityI18nEnum.LIST));
-        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY,
-                UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY));
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+        tabSheet.addTab(associateOpportunityList, CrmTypeConstants.OPPORTUNITY, UserUIContext.getMessage(OpportunityI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
+        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
+                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
     }
 
     @Override
