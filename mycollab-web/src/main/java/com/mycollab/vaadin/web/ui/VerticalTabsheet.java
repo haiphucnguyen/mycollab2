@@ -17,6 +17,7 @@
 package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.core.MyCollabException;
+import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.ErrorMessage;
 import com.vaadin.server.Page;
@@ -286,8 +287,12 @@ public class VerticalTabsheet extends CustomComponent {
         return this.navigatorWrapper;
     }
 
-    protected void setDefaultButtonIcon(Component btn, Boolean selected) {
+    final protected void setDefaultButtonIcon(Component btn, Boolean selected) {
+        ButtonTabImpl btnTabImpl = (ButtonTabImpl) btn;
+        String tabId = btnTabImpl.getTabId();
 
+        Resource resource = ProjectAssetsManager.getAsset(tabId);
+        btn.setIcon(resource);
     }
 
     public static class ButtonTabImpl extends MButton {

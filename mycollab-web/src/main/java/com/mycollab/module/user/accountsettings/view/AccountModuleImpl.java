@@ -28,7 +28,6 @@ import com.mycollab.module.user.accountsettings.team.view.UserPermissionManageme
 import com.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.mycollab.module.user.accountsettings.view.parameters.BillingScreenData;
 import com.mycollab.module.user.ui.SettingUIConstants;
-import com.mycollab.module.user.ui.components.UserVerticalTabsheet;
 import com.mycollab.premium.module.user.accountsettings.view.UserAccountController;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.vaadin.UserUIContext;
@@ -61,7 +60,7 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
     private MHorizontalLayout serviceMenuContainer;
     private ServiceMenu serviceMenu;
 
-    private UserVerticalTabsheet accountTab;
+    private VerticalTabsheet tabSheet;
 
     private ProfilePresenter profilePresenter;
     private UserPermissionManagementPresenter userPermissionPresenter;
@@ -86,40 +85,40 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
 
         topPanel.with(breadcrumb, helpBtn).expand(breadcrumb).alignAll(Alignment.MIDDLE_LEFT);
 
-        accountTab = new UserVerticalTabsheet();
-        accountTab.setSizeFull();
-        accountTab.setNavigatorStyleName("sidebar-menu");
-        VerticalLayout contentWrapper = accountTab.getContentWrapper();
+        tabSheet = new VerticalTabsheet();
+        tabSheet.setSizeFull();
+        tabSheet.setNavigatorStyleName("sidebar-menu");
+        VerticalLayout contentWrapper = tabSheet.getContentWrapper();
         contentWrapper.addStyleName("main-content");
         contentWrapper.addComponentAsFirst(topPanel);
-        accountTab.setNavigatorWidth("200px");
-        accountTab.getNavigatorWrapper().setWidth("200px");
+        tabSheet.setNavigatorWidth("200px");
+        tabSheet.getNavigatorWrapper().setWidth("200px");
 
         this.buildComponents();
-        this.addComponent(accountTab);
+        this.addComponent(tabSheet);
     }
 
     private void buildComponents() {
-        accountTab.addTab(constructUserInformationComponent(),
+        tabSheet.addTab(constructUserInformationComponent(),
                 SettingUIConstants.PROFILE, UserUIContext.getMessage(AdminI18nEnum.VIEW_PROFILE));
 
         if (!SiteConfiguration.isCommunityEdition()) {
-            accountTab.addTab(constructAccountSettingsComponent(),
+            tabSheet.addTab(constructAccountSettingsComponent(),
                     SettingUIConstants.BILLING, UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING));
         }
 
-        accountTab.addTab(constructUserRoleComponent(), SettingUIConstants.USERS,
+        tabSheet.addTab(constructUserRoleComponent(), SettingUIConstants.USERS,
                 UserUIContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES));
 
-        accountTab.addTab(constructThemeComponent(), SettingUIConstants.GENERAL_SETTING,
+        tabSheet.addTab(constructThemeComponent(), SettingUIConstants.GENERAL_SETTING,
                 UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING));
 
         if (!SiteConfiguration.isDemandEdition()) {
-            accountTab.addTab(constructSetupComponent(), SettingUIConstants.SETUP,
+            tabSheet.addTab(constructSetupComponent(), SettingUIConstants.SETUP,
                     UserUIContext.getMessage(AdminI18nEnum.VIEW_SETUP));
         }
 
-        accountTab.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+        tabSheet.addSelectedTabChangeListener(new SelectedTabChangeListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -168,7 +167,7 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
 
     @Override
     public void gotoSubView(String viewId) {
-        accountTab.selectTab(viewId);
+        tabSheet.selectTab(viewId);
     }
 
     @Override

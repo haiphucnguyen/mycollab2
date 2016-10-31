@@ -38,15 +38,6 @@ public class ProjectVerticalTabsheet extends VerticalTabsheet {
     private Button toggleBtn;
 
     @Override
-    protected void setDefaultButtonIcon(Component btn, Boolean selected) {
-        ButtonTabImpl btnTabImpl = (ButtonTabImpl) btn;
-        String tabId = btnTabImpl.getTabId();
-
-        Resource resource = ProjectAssetsManager.getAsset(tabId);
-        btn.setIcon(resource);
-    }
-
-    @Override
     public void setNavigatorVisibility(boolean visibility) {
         if (!visibility) {
             navigatorWrapper.setWidth("65px");
