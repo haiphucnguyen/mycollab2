@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent-ondemand</artifactId>
-        <version>5.4.3</version>
+        <version>5.4.4</version>
         <relativePath>../mycollab-parent-ondemand/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.mycollab</groupId>
@@ -33,55 +33,55 @@
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-servlet</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-simple-monitoring</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-esb-ondemand</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-servlet-ondemand</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-services-pro</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-services-ondemand</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-caching-premium</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-web-ondemand</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-api</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
         </dependency>
 
         <dependency>
@@ -93,25 +93,25 @@
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-migration-ondemand</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-mobile</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-mobile-premium</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-scheduler-ondemand</artifactId>
-            <version>5.4.3</version>
+            <version>5.4.4</version>
         </dependency>
 
         <dependency>
@@ -230,7 +230,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-esb</artifactId>
-                                    <version>5.4.3</version>
+                                    <version>5.4.4</version>
                                     <type>jar</type>
                                     <includes>*.ftl</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
@@ -238,7 +238,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-esb-ondemand</artifactId>
-                                    <version>5.4.3</version>
+                                    <version>5.4.4</version>
                                     <type>jar</type>
                                     <includes>*.ftl</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
@@ -246,7 +246,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-localization</artifactId>
-                                    <version>5.4.3</version>
+                                    <version>5.4.4</version>
                                     <type>jar</type>
                                     <includes>*.properties</includes>
                                     <excludes>**/pom.properties</excludes>
@@ -255,7 +255,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-scheduler</artifactId>
-                                    <version>5.4.3</version>
+                                    <version>5.4.4</version>
                                     <type>jar</type>
                                     <includes>*.ftl</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
@@ -263,7 +263,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-scheduler-ondemand</artifactId>
-                                    <version>5.4.3</version>
+                                    <version>5.4.4</version>
                                     <type>jar</type>
                                     <includes>*.ftl</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
@@ -271,7 +271,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-servlet</artifactId>
-                                    <version>5.4.3</version>
+                                    <version>5.4.4</version>
                                     <type>jar</type>
                                     <includes>*.ftl</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
@@ -279,7 +279,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-servlet-ondemand</artifactId>
-                                    <version>5.4.3</version>
+                                    <version>5.4.4</version>
                                     <type>jar</type>
                                     <includes>*.ftl</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>

@@ -8,7 +8,7 @@
     <parent>
         <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent</artifactId>
-        <version>5.4.3</version>
+        <version>5.4.4</version>
         <relativePath>../mycollab-parent/pom.xml</relativePath>
     </parent>
 </project>

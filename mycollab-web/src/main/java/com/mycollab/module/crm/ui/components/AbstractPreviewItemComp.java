@@ -150,6 +150,10 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
         onPreviewItem();
     }
 
+    public void updateTitle(String title) {
+        headerTitle.setValue(iconResource.getHtml() + " " + title);
+    }
+
     public B getBeanItem() {
         return beanItem;
     }
