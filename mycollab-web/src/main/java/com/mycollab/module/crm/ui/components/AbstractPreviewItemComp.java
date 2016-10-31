@@ -27,10 +27,7 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
-import com.mycollab.vaadin.web.ui.ReadViewLayout;
-import com.mycollab.vaadin.web.ui.RightSidebarLayout;
-import com.mycollab.vaadin.web.ui.VerticalTabsheet;
+import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet.TabImpl;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -59,55 +56,72 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
     private ELabel headerTitle;
     protected MHorizontalLayout header;
     protected VerticalLayout tabContent;
-    protected VerticalTabsheet previewItemContainer;
+    protected VerticalTabsheet tabSheet;
 
     protected AdvancedPreviewBeanForm<B> previewForm;
-    protected ReadViewLayout previewLayout;
+    protected DefaultReadViewLayout previewLayout;
     private MVerticalLayout sidebarContent;
     private MButton favoriteBtn;
 
     public AbstractPreviewItemComp(FontAwesome iconResource) {
         super();
         this.iconResource = iconResource;
-        previewItemContainer = new CrmVerticalTabsheet(true);
-        previewItemContainer.setSizeFull();
-        previewItemContainer.setNavigatorWidth("100%");
-        previewItemContainer.setNavigatorStyleName("sidebar-menu");
+        tabSheet = new CrmVerticalTabsheet(true);
+        tabSheet.setSizeFull();
+        tabSheet.setNavigatorWidth("100%");
+        tabSheet.setNavigatorStyleName("sidebar-menu");
 
         headerTitle = ELabel.h2("");
         header = new MHorizontalLayout(headerTitle).withStyleName("hdr-view").withFullWidth().withMargin(new
                 MarginInfo(true, false, true, false)).expand(headerTitle);
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        addComponent(previewItemContainer);
+        addComponent(tabSheet);
 
-        CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
+        CssLayout navigatorWrapper = tabSheet.getNavigatorWrapper();
         navigatorWrapper.setWidth("200px");
 
-        previewItemContainer.addSelectedTabChangeListener(new SelectedTabChangeListener() {
+        tabSheet.addSelectedTabChangeListener(new SelectedTabChangeListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void selectedTabChange(SelectedTabChangeEvent event) {
                 Tab tab = ((VerticalTabsheet) event.getSource()).getSelectedTab();
-                previewItemContainer.selectTab(((TabImpl) tab).getTabId());
+                tabSheet.selectTab(((TabImpl) tab).getTabId());
             }
         });
 
-        tabContent = previewItemContainer.getContentWrapper();
+        tabContent = tabSheet.getContentWrapper();
         tabContent.addComponent(header, 0);
 
         previewForm = initPreviewForm();
-
         ComponentContainer actionControls = createButtonControls();
         if (actionControls != null) {
             header.with(actionControls).withAlign(actionControls, Alignment.TOP_RIGHT);
         }
 
-        initRelatedComponents();
+        previewLayout = new DefaultReadViewLayout("");
+        RightSidebarLayout bodyContainer = new RightSidebarLayout();
+        bodyContainer.setSizeFull();
+        bodyContainer.addStyleName("readview-body-wrap");
 
-        tabContent.addComponent(previewForm);
-        tabContent.addComponent(createBottomPanel());
+        MVerticalLayout bodyContent = new MVerticalLayout(previewForm).withSpacing(false).withMargin(false).withFullWidth();
+        bodyContainer.setContent(bodyContent);
+        sidebarContent = new MVerticalLayout().withWidth("250px").withStyleName("readview-sidebar");
+        bodyContainer.setSidebar(sidebarContent);
+        previewLayout.addBody(bodyContainer);
+
+        tabContent.addComponent(previewLayout);
+
+        initRelatedComponents();
+        ComponentContainer bottomPanel = createBottomPanel();
+        if (bottomPanel != null) {
+            if (bodyContent.getComponentCount() >= 2) {
+                bodyContent.replaceComponent(bodyContent.getComponent(bodyContent.getComponentCount() - 1), bottomPanel);
+            } else {
+                bodyContent.addComponent(bottomPanel);
+            }
+        }
     }
 
     @Override
@@ -134,17 +148,6 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
         previewForm.setBean(item);
 
         headerTitle.setValue(iconResource.getHtml() + " " + initFormTitle());
-
-        RightSidebarLayout bodyContainer = new RightSidebarLayout();
-        bodyContainer.setSizeFull();
-        bodyContainer.addStyleName("readview-body-wrap");
-
-        MVerticalLayout bodyContent = new MVerticalLayout(previewForm).withSpacing(false).withMargin(false).withFullWidth();
-        bodyContainer.setContent(bodyContent);
-        sidebarContent = new MVerticalLayout().withWidth("250px").withStyleName("readview-sidebar");
-        bodyContainer.setSidebar(sidebarContent);
-        previewLayout.addBody(bodyContainer);
-
         onPreviewItem();
     }
 
@@ -171,6 +174,12 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
     abstract protected ComponentContainer createButtonControls();
 
     abstract protected ComponentContainer createBottomPanel();
+
+    public void addToSideBar(Component... components) {
+        for (Component component : components) {
+            sidebarContent.addComponent(component);
+        }
+    }
 
     private void toggleFavorite() {
         try {

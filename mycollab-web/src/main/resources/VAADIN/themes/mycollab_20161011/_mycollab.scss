@@ -649,7 +649,6 @@ $v-line-height--header:1.5em;
       .depot-title {
         padding: 0px $my-space;
         display: inline-flex;
-        font-weight: $my-font-weight-bold;
         font-size: 16px;
       }
     }
@@ -695,6 +694,10 @@ $v-line-height--header:1.5em;
         @include margin-container(5px, 5px, 5px, 5px);
       }
     }
+  }
+
+  .readViewBody {
+    padding: 0px 2*$my-space;
   }
 
   /* End Depot */

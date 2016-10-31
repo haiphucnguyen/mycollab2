@@ -39,8 +39,6 @@ import com.mycollab.vaadin.ui.IRelatedListHandlers;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CssLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -87,7 +85,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
         dateInfoComp.displayEntryDateTime(beanItem);
         followersComp.displayFollowers(beanItem);
 
-        previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
+        tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 
     @Override
@@ -102,23 +100,14 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
 
         activityComponent = new CrmActivityComponent(CrmTypeConstants.CASE);
 
-        CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
-        MVerticalLayout basicInfo = new MVerticalLayout().withFullWidth().withStyleName("basic-info");
-
         dateInfoComp = new DateInfoComp();
-        basicInfo.addComponent(dateInfoComp);
-
         peopleInfoComp = new PeopleInfoComp();
-        basicInfo.addComponent(peopleInfoComp);
-
         followersComp = new CrmFollowersComp<>(CrmTypeConstants.CASE, RolePermissionCollections.CRM_CASE);
-        basicInfo.addComponent(followersComp);
+        addToSideBar(dateInfoComp, peopleInfoComp, followersComp);
 
-        navigatorWrapper.addComponentAsFirst(basicInfo);
-
-        previewItemContainer.addTab(tabContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
-        previewItemContainer.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST));
-        previewItemContainer.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY));
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
+        tabSheet.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST));
+        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY));
     }
 
     @Override

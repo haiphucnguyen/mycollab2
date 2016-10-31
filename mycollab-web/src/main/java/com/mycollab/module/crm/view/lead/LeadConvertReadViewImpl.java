@@ -113,7 +113,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         dateInfoComp.displayEntryDateTime(beanItem);
         peopleInfoComp.displayEntryPeople(beanItem);
 
-        previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
+        tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         activityComponent = new CrmActivityComponent(CrmTypeConstants.LEAD);
         associateActivityList = new ActivityRelatedItemListComp(false);
 
-        CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
+        CssLayout navigatorWrapper = tabSheet.getNavigatorWrapper();
         MVerticalLayout basicInfo = new MVerticalLayout().withFullWidth().withStyleName("basic-info");
 
         dateInfoComp = new DateInfoComp();
@@ -139,9 +139,9 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
 
         navigatorWrapper.addComponentAsFirst(basicInfo);
 
-        previewItemContainer.addTab(tabContent, CrmTypeConstants.DETAIL, "About");
-        previewItemContainer.addTab(associateCampaignList, CrmTypeConstants.CAMPAIGN, "Campaigns");
-        previewItemContainer.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, "Activities");
+        tabSheet.addTab(tabContent, CrmTypeConstants.DETAIL, "About");
+        tabSheet.addTab(associateCampaignList, CrmTypeConstants.CAMPAIGN, "Campaigns");
+        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, "Activities");
     }
 
     @Override
@@ -237,7 +237,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         previewForm.addComponent(layoutHelper.getLayout());
         previewLayout.addBody(tabContent);
 
-        this.addComponent(previewItemContainer);
+        this.addComponent(tabSheet);
     }
 
     @Override

@@ -45,8 +45,6 @@ import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CssLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -96,7 +94,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
         peopleInfoComp.displayEntryPeople(beanItem);
         followersComp.displayFollowers(beanItem);
 
-        previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
+        tabSheet.selectTab(CrmTypeConstants.DETAIL);
 
         if (beanItem.isOverdue()) {
             previewLayout.addTitleStyleName(WebUIConstants.LABEL_OVERDUE);
@@ -125,28 +123,15 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
 
         activityComponent = new CrmActivityComponent(CrmTypeConstants.OPPORTUNITY);
 
-        CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
-        MVerticalLayout basicInfo = new MVerticalLayout().withFullWidth().withStyleName("basic-info");
-
         dateInfoComp = new DateInfoComp();
-        basicInfo.addComponent(dateInfoComp);
-
         peopleInfoComp = new PeopleInfoComp();
-        basicInfo.addComponent(peopleInfoComp);
-
         followersComp = new CrmFollowersComp<>(CrmTypeConstants.OPPORTUNITY, RolePermissionCollections.CRM_OPPORTUNITY);
-        basicInfo.addComponent(followersComp);
+        addToSideBar(dateInfoComp, peopleInfoComp, followersComp);
 
-        navigatorWrapper.addComponentAsFirst(basicInfo);
-
-        previewItemContainer.addTab(tabContent, CrmTypeConstants.DETAIL,
-                UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
-        previewItemContainer.addTab(associateContactList, CrmTypeConstants.CONTACT,
-                UserUIContext.getMessage(ContactI18nEnum.LIST));
-        previewItemContainer.addTab(associateLeadList, CrmTypeConstants.LEAD,
-                UserUIContext.getMessage(LeadI18nEnum.LIST));
-        previewItemContainer.addTab(associateActivityList, CrmTypeConstants.ACTIVITY,
-                UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY));
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
+        tabSheet.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST));
+        tabSheet.addTab(associateLeadList, CrmTypeConstants.LEAD, UserUIContext.getMessage(LeadI18nEnum.LIST));
+        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY));
     }
 
     @Override

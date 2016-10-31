@@ -1695,7 +1695,6 @@ a.pending {
 }
 
 .panel-header .v-label {
-	font-weight: 600;
 	font-size: 16px;
 }
 
@@ -14371,7 +14370,6 @@ a.pending {
 }
 
 .panel-header .v-label {
-	font-weight: 600;
 	font-size: 16px;
 }
 
@@ -16966,7 +16964,6 @@ input.v-textfield-errorField {
 .depotComp .depotHeader .depot-title {
 	padding: 0px 12px;
 	display: inline-flex;
-	font-weight: 600;
 	font-size: 16px;
 }
 
@@ -17040,6 +17037,10 @@ input.v-textfield-errorField {
 
 .depotComp .depotContent.bordered.v-margin-left {
 	padding-left: 5px;
+}
+
+.readViewBody {
+	padding: 0px 24px;
 }
 
 .activityTabs {

@@ -82,7 +82,7 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleCrmTas
         activityComponent = new CrmActivityComponent(CrmTypeConstants.TASK);
 
         MVerticalLayout basicInfo = new MVerticalLayout().withFullWidth().withStyleName("basic-info");
-        CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
+        CssLayout navigatorWrapper = tabSheet.getNavigatorWrapper();
         dateInfoComp = new DateInfoComp();
         basicInfo.addComponent(dateInfoComp);
         followersComp = new CrmFollowersComp<>(CrmTypeConstants.TASK, RolePermissionCollections.CRM_TASK);
@@ -90,8 +90,8 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleCrmTas
 
         navigatorWrapper.addComponentAsFirst(basicInfo);
 
-        previewItemContainer.addTab(tabContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
-        previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
+        tabSheet.addTab(tabContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
+        tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 
     @Override

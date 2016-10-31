@@ -81,7 +81,7 @@ public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting> 
         activityComponent = new CrmActivityComponent(CrmTypeConstants.MEETING);
 
         MVerticalLayout basicInfo = new MVerticalLayout().withFullWidth().withStyleName("basic-info");
-        CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
+        CssLayout navigatorWrapper = tabSheet.getNavigatorWrapper();
 
         dateInfoComp = new DateInfoComp();
         basicInfo.addComponent(dateInfoComp);
@@ -91,8 +91,8 @@ public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting> 
 
         navigatorWrapper.addComponentAsFirst(basicInfo);
 
-        previewItemContainer.addTab(tabContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
-        previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
+        tabSheet.addTab(tabContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
+        tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 
     @Override

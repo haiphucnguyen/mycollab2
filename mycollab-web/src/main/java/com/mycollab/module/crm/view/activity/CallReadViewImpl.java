@@ -81,7 +81,7 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
         activityComponent = new CrmActivityComponent(CrmTypeConstants.CALL);
 
         MVerticalLayout basicInfo = new MVerticalLayout().withFullWidth().withStyleName("basic-info");
-        CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
+        CssLayout navigatorWrapper = tabSheet.getNavigatorWrapper();
 
         dateInfoComp = new DateInfoComp();
         basicInfo.addComponent(dateInfoComp);
@@ -90,8 +90,8 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
         basicInfo.addComponent(followersComp);
         navigatorWrapper.addComponentAsFirst(basicInfo);
 
-        previewItemContainer.addTab(tabContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
-        previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
+        tabSheet.addTab(tabContent, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
+        tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 
     @Override
