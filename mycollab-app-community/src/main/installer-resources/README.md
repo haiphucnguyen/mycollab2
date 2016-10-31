@@ -50,6 +50,7 @@ Version 5.4.4
 
 * Revise the menu navigator
 * The project UI is more intuitive
+* Update Spanish language
 * Other minor improvements
 
 
