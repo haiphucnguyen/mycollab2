@@ -1,0 +1,54 @@
+@mixin section-header() {
+  padding: $my-space 0px;
+  color: $my-title-color;
+  border-bottom: 1px solid $my-separator-color;
+  .v-label {
+    font-size: $v-font-size--h3;
+  }
+}
+
+@mixin mycollab-form {
+  .form {
+    .section {
+      @include section-header();
+    }
+  }
+
+  .v-gridlayout.colored-gridlayout {
+    .gridform-caption, .gridform-field {
+      @include margin-container(8px, 8px, 4px, 0px);
+    }
+    .v-gridlayout-slot {
+      border-bottom: 1px solid $my-separator-color;
+    }
+    .gridform-field {
+      min-height: 43px;
+    }
+    .gridform-caption {
+      min-height: 39px;
+      .v-label {
+        text-align: right;
+        color: $my-meta-color;
+      }
+    }
+  }
+  .borderless .v-gridlayout-slot {
+    border: none !important;
+  }
+
+  /* Activity component style */
+  .activity-comp {
+    .section {
+      @include section-header();
+    }
+  }
+
+  .v-select-optiongroup-sortDirection .v-select-option {
+    display: inline-block;
+    &.v-radiobutton {
+      padding-right: 10px;
+      font-size: $font-normal;
+      color: black;
+    }
+  }
+}

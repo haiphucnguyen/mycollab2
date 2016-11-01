@@ -10,7 +10,7 @@ import com.mycollab.module.file.view.ResourcesDisplayComponent;
 import com.mycollab.module.user.domain.BillingPlan;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
@@ -32,7 +32,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 1.0
  */
 @ViewComponent
-public class FileMainViewImpl extends AbstractPageView implements FileMainView {
+public class FileMainViewImpl extends AbstractVerticalPageView implements FileMainView {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(FileMainViewImpl.class);
 

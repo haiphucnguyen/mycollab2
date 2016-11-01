@@ -3,8 +3,6 @@ package com.mycollab.pro.module.project.view.time;
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.DateTimeUtils;
-import com.mycollab.db.arguments.Order;
-import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.query.ConstantValueInjector;
 import com.mycollab.db.query.DateParam;
@@ -32,7 +30,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -73,16 +70,6 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         layout.bodyWrap.addComponent(c, index);
     }
 
-
-    String getGroupBy() {
-        String groupBy = (String) groupField.getValue();
-        return groupBy == null ? UserUIContext.getMessage(DayI18nEnum.OPT_DATE) : groupBy;
-    }
-
-    public Order getOrderBy() {
-        return (Order) orderField.getValue();
-    }
-
     private class TimeLoggingBasicSearchLayout extends BasicSearchLayout<ItemTimeLoggingSearchCriteria> {
         private PopupDateFieldExt startDateField, endDateField;
 
@@ -97,7 +84,6 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         public ComponentContainer constructBody() {
             bodyWrap = new MVerticalLayout();
             GridLayout gridLayout = new GridLayout(6, 2);
-            gridLayout.setWidth("100%");
             gridLayout.setSpacing(true);
             gridLayout.setMargin(true);
 
@@ -109,24 +95,21 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             endDateField.setResolution(Resolution.DAY);
             endDateField.setValue(boundWeekDays[1]);
 
-            Label dateStartLb = new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(WebUIConstants
-                    .META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT);
-            Label dateEndLb = new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebUIConstants.META_COLOR,
-                    WebUIConstants.TEXT_ALIGN_RIGHT);
+            Label dateStartLb = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.LOG_FOR_DATE)).withStyleName
+                    (WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("90px");
 
-            Label groupLb = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName(WebUIConstants.META_COLOR,
-                    WebUIConstants.TEXT_ALIGN_RIGHT);
-            Label sortLb = new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(WebUIConstants.META_COLOR,
-                    WebUIConstants.TEXT_ALIGN_RIGHT);
+            Label dateEndLb = new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebUIConstants.META_COLOR,
+                    WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("90px");
 
             gridLayout.addComponent(dateStartLb, 0, 0);
             gridLayout.addComponent(startDateField, 1, 0);
             gridLayout.addComponent(dateEndLb, 2, 0);
             gridLayout.addComponent(endDateField, 3, 0);
             gridLayout.addComponent(new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(WebUIConstants.META_COLOR,
-                    WebUIConstants.TEXT_ALIGN_RIGHT), 4, 0);
+                    WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("90px"), 4, 0);
 
             userField = new ProjectMemberListSelect();
+            userField.setWidth("250px");
             gridLayout.addComponent(userField, 5, 0, 5, 1);
 
             MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
@@ -153,19 +136,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             if (CollectionUtils.isNotEmpty(selectedUsers)) {
                 searchCriteria.setLogUsers(new SetSearchField(selectedUsers));
             }
-            Order order = (Order) orderField.getValue();
-            String sortDirection;
-            if (Order.ASCENDING == order) {
-                sortDirection = SearchCriteria.ASC;
-            } else {
-                sortDirection = SearchCriteria.DESC;
-            }
 
-            if (UserUIContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupField.getValue())) {
-                searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("logForDay", sortDirection)));
-            } else if (UserUIContext.getMessage(UserI18nEnum.SINGLE).equals(groupField.getValue())) {
-                searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("loguser", sortDirection)));
-            }
             return searchCriteria;
         }
     }

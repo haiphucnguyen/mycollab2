@@ -48,14 +48,10 @@ Version 5.4.4
 
 **Improvements & New Features**
 
-* [Premium] Add generic search across projects
-* [Premium] Support quick edit ticket in ticket dashboard
-* Add my tasks of user projects
 * Revise the menu navigator
-* Support components and versions in bug views
+* The project UI is more intuitive
+* Update Spanish language
 * Other minor improvements
-
-**Bug Fixes**
 
 
 Version 5.4.3

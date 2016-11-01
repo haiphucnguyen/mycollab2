@@ -28,10 +28,10 @@ import com.mycollab.pro.module.project.ui.components.TimeTrackingDateOrderCompon
 import com.mycollab.pro.module.project.ui.components.TimeTrackingUserOrderComponent;
 import com.mycollab.pro.module.project.view.reports.TimesheetCustomizeReportOutputWindow;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.AsyncInvoker;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
@@ -49,6 +49,7 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -56,7 +57,7 @@ import java.util.List;
  * @since 2.0
  */
 @ViewComponent
-public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTrackingListView {
+public class TimeTrackingListViewImpl extends AbstractVerticalPageView implements TimeTrackingListView {
     private static final long serialVersionUID = 3742030333599796165L;
 
     private ItemTimeLoggingService itemTimeLoggingService;
@@ -107,6 +108,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         groupWrapLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)));
         ValueComboBox groupField = new ValueComboBox(false, UserUIContext.getMessage(DayI18nEnum.OPT_DATE),
                 UserUIContext.getMessage(UserI18nEnum.SINGLE));
+        groupField.addValueChangeListener(valueChangeEvent -> groupByState = (String) groupField.getValue());
         groupByState = UserUIContext.getMessage(DayI18nEnum.OPT_DATE);
         groupWrapLayout.addComponent(groupField);
 
@@ -193,7 +195,13 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         timeTrackingWrapper.removeAllComponents();
         setTimeRange();
 
-        final AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp(searchPanel.getGroupBy());
+        if (UserUIContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupByState)) {
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("logForDay", sortDirection)));
+        } else if (UserUIContext.getMessage(UserI18nEnum.SINGLE).equals(groupByState)) {
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("logUserFullName", sortDirection)));
+        }
+
+        final AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp();
         timeTrackingWrapper.addComponent(timeDisplayComp);
 
         AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
@@ -214,20 +222,20 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         });
     }
 
-    private AbstractTimeTrackingDisplayComp buildTimeTrackingComp(String groupBy) {
-        if (UserUIContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupBy)) {
+    private AbstractTimeTrackingDisplayComp buildTimeTrackingComp() {
+        if (UserUIContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupByState)) {
             return new TimeTrackingDateOrderComponent(Arrays.asList(
                     TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(),
                     TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(),
                     TimeTableFieldDef.id()), this.tableClickListener);
 
-        } else if (UserUIContext.getMessage(UserI18nEnum.SINGLE).equals(groupBy)) {
+        } else if (UserUIContext.getMessage(UserI18nEnum.SINGLE).equals(groupByState)) {
             return new TimeTrackingUserOrderComponent(Arrays.asList(
                     TimeTableFieldDef.summary(), TimeTableFieldDef.logForDate(),
                     TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(),
                     TimeTableFieldDef.id()), this.tableClickListener);
         } else {
-            throw new MyCollabException("Do not support view type: " + groupBy);
+            throw new MyCollabException("Do not support view type: " + groupByState);
         }
     }
 

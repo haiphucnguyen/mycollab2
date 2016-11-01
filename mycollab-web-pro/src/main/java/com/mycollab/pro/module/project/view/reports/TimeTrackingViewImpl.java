@@ -31,7 +31,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -56,7 +56,7 @@ import java.util.Calendar;
  * @since 5.1.2
  */
 @ViewComponent
-public class TimeTrackingViewImpl extends AbstractPageView implements TimeTrackingView {
+public class TimeTrackingViewImpl extends AbstractVerticalPageView implements TimeTrackingView {
     private static final long serialVersionUID = 1L;
 
     private List<SimpleProject> projects;

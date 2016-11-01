@@ -3,10 +3,12 @@ package com.mycollab.pro.module.project.ui.components;
 import com.mycollab.common.TableViewField;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
-import org.apache.commons.lang3.time.FastDateFormat;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 
@@ -16,8 +18,8 @@ import java.util.List;
  */
 public class TimeTrackingDateOrderComponent extends AbstractTimeTrackingDisplayComp {
     private static final long serialVersionUID = 1L;
-
-    private static final FastDateFormat DATE_FORMAT = FastDateFormat.getInstance("EEEE, dd MMMM yyyy");
+    private DateTimeFormatter formatter = DateTimeFormat.forPattern(MyCollabUI.getLongDateFormat()).withLocale
+            (UserUIContext.getUserLocale());
 
     public TimeTrackingDateOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {
         super(fields, tableClickListener);
@@ -27,7 +29,7 @@ public class TimeTrackingDateOrderComponent extends AbstractTimeTrackingDisplayC
     @Override
     protected void displayGroupItems(List<SimpleItemTimeLogging> timeLoggingEntries) {
         if (timeLoggingEntries.size() > 0) {
-            ELabel label = ELabel.h3(DATE_FORMAT.format(timeLoggingEntries.get(0).getLogforday()));
+            ELabel label = ELabel.h3(formatter.print(timeLoggingEntries.get(0).getLogforday().getTime()));
             addComponent(label);
             addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }

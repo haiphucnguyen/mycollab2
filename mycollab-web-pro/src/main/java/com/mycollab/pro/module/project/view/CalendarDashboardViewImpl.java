@@ -35,7 +35,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasSearchHandlers;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
@@ -64,7 +64,7 @@ import java.util.List;
  * @since 5.2.1
  */
 @ViewComponent
-public class CalendarDashboardViewImpl extends AbstractPageView implements ICalendarDashboardView {
+public class CalendarDashboardViewImpl extends AbstractVerticalPageView implements ICalendarDashboardView {
     private static final DateTimeFormatter MY_FORMATTER = DateTimeFormat.forPattern("MMMM, yyyy");
     private static final DateTimeFormatter DMY_FORMATTER = DateTimeFormat.forPattern("dd MMMM, yyyy");
 

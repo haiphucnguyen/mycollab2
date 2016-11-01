@@ -46,7 +46,7 @@ import com.mycollab.reporting.PrintButton;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
@@ -71,7 +71,7 @@ import java.util.Collections;
  * @since 5.2.10
  */
 @ViewComponent
-public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView {
+public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavoriteView {
     private ProjectGenericItemSearchCriteria searchCriteria;
 
     private boolean isSortAsc = true;

@@ -24,7 +24,7 @@ import com.mycollab.reporting.PrintButton;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
@@ -48,7 +48,7 @@ import static com.mycollab.module.project.i18n.OptionI18nEnum.InvoiceStatus;
  * @since 5.2.10
  */
 @ViewComponent
-public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceContainer {
+public class InvoiceContainerImpl extends AbstractVerticalPageView implements IInvoiceContainer {
 
     private ApplicationEventListener<InvoiceEvent.NewInvoiceAdded> newInvoiceAddedHandler = new
             ApplicationEventListener<InvoiceEvent.NewInvoiceAdded>() {

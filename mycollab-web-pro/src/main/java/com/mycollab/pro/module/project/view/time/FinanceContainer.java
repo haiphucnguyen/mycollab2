@@ -12,7 +12,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.parameters.TimeTrackingScreenData;
 import com.mycollab.module.project.view.time.IFinanceContainer;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.AbstractPageView;
+import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.TabSheetDecorator;
@@ -24,14 +24,10 @@ import com.vaadin.ui.TabSheet;
  * @since 2.0
  */
 @ViewComponent
-public class FinanceContainer extends AbstractPageView implements IFinanceContainer {
+public class FinanceContainer extends AbstractVerticalPageView implements IFinanceContainer {
     private static final long serialVersionUID = 1L;
 
     private TabSheetDecorator myProjectTab;
-
-    public FinanceContainer() {
-        this.setWidth("100%");
-    }
 
     @Override
     public void initContent() {
