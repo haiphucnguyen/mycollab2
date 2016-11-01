@@ -1,9 +1,7 @@
 package com.mycollab.rest.server.resource;
 
-import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.core.Version;
 import com.mycollab.ondemand.module.billing.dao.ProEditionInfoMapper;
-import com.mycollab.ondemand.module.billing.domain.ProEditionInfoExample;
 import com.mycollab.ondemand.module.support.service.EditionInfoResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -53,12 +51,13 @@ public class CheckVersionController {
         props.put("downloadLink", "https://www.mycollab.com/ee-registration/");
         props.put("releaseNotes", String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
                 Version.getVersion().replace('.', '-')));
-        ProEditionInfoExample ex = new ProEditionInfoExample();
-        ex.createCriteria().andIdEqualTo(Integer.parseInt(EnDecryptHelper.decryptText(customerId)));
-        boolean isExistCustomer = proEditionInfoMapper.countByExample(ex) > 0;
-        if (isExistCustomer && version != null && Version.isEditionNewer(liveVersion, version)) {
-            props.put("autoDownload", editionInfoResolver.getEditionInfo().getPremiumUpgradeLink());
-        }
+        props.put("autoDownload", editionInfoResolver.getEditionInfo().getPremiumUpgradeLink());
+//        ProEditionInfoExample ex = new ProEditionInfoExample();
+//        ex.createCriteria().andIdEqualTo(Integer.parseInt(EnDecryptHelper.decryptText(customerId)));
+//        boolean isExistCustomer = proEditionInfoMapper.countByExample(ex) > 0;
+//        if (isExistCustomer && version != null && Version.isEditionNewer(liveVersion, version)) {
+//            props.put("autoDownload", editionInfoResolver.getEditionInfo().getPremiumUpgradeLink());
+//        }
 
         return props;
     }
