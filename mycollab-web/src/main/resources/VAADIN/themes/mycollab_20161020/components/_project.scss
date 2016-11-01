@@ -216,6 +216,8 @@
 
   div.v-csslayout.member-token {
     cursor: text;
+    border:1px solid $my-separator-color;
+    border-radius: 6px;
     .v-textfield {
       border-width: 0px;
       box-shadow: none;
@@ -234,6 +236,9 @@
 
   div.v-button.token-field {
     margin-bottom: 5px;
+    margin-right:5px;
+    color: #fff;
+    background-color: $my-note-color;
     .v-button-wrap {
       padding: 3px 5px;
     }
