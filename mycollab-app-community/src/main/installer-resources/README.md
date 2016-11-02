@@ -40,11 +40,25 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
-Version 5.4.4
+Version 5.4.5
 -------------
 
 **Library Upgrades**
 
+**Improvements & New Features**
+
+* Support Docker installation
+* Mention users in comments, descriptions
+* [Premium] Customize project dashboard
+* [Premium] Real-time notification of new tickets
+* [Premium] Support burn-down chart of tickets
+* Other minor improvements
+
+**Bug Fixes**
+
+
+Version 5.4.4
+-------------
 
 **Improvements & New Features**
 
@@ -52,7 +66,6 @@ Version 5.4.4
 * The project UI is more intuitive
 * Update Spanish language
 * Other minor improvements
-
 
 Version 5.4.3
 -------------

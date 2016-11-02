@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component
     optionValMapper.deleteByExample(optionEx)
     
     val feedback = event.feedback
-    val feedbackValue = if (feedback == null) "" else BeanUtility.printBeanObj(feedback)
+    val feedbackValue = if (feedback == null) "None" else BeanUtility.printBeanObj(feedback)
     mailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
       Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")),
       "User cancelled account", feedbackValue)
