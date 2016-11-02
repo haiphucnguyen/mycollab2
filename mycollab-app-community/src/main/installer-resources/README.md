@@ -48,10 +48,12 @@ Version 5.4.5
 **Improvements & New Features**
 
 * Support Docker installation
-* Mention users in comments, descriptions
+* [Premium] Mention users in comments, descriptions
 * [Premium] Customize project dashboard
 * [Premium] Real-time notification of new tickets
 * [Premium] Support burn-down chart of tickets
+* [Premium] Support LDAP integration
+* [Premium] Github and Bitbucket integration
 * Other minor improvements
 
 **Bug Fixes**
@@ -82,7 +84,6 @@ Version 5.4.3
 
 **Improvements & New Features**
 
-* [Premium] Project admin can customise the project dashboard page
 * [Premium] Kanban board for phases/sprint
 * [Premium] Close phase, assignments have option to close the sub-assignments
 * Fix UI issues on Firefox, Safari
