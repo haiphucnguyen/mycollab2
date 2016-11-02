@@ -45,19 +45,17 @@ Version 5.4.5
 
 **Library Upgrades**
 
+* Guava 20.0
+
 **Improvements & New Features**
 
 * Support Docker installation
-* [Premium] Mention users in comments, descriptions
-* [Premium] Customize project dashboard
-* [Premium] Real-time notification of new tickets
-* [Premium] Support burn-down chart of tickets
-* [Premium] Support LDAP integration
-* [Premium] Github and Bitbucket integration
 * Other minor improvements
 
 **Bug Fixes**
 
+* Go to previous entry of task, bug go to the first entry
+* Unresolved tickets display wrong entries
 
 Version 5.4.4
 -------------

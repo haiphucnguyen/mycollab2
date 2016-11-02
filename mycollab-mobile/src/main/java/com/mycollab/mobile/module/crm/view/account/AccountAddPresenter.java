@@ -104,7 +104,5 @@ public class AccountAddPresenter extends AbstractCrmPresenter<AccountAddView> {
         } else {
             accountService.updateWithSession(account, UserUIContext.getUsername());
         }
-
     }
-
 }
