@@ -128,7 +128,7 @@ public class BugReadPresenter extends ProjectGenericPresenter<BugReadView> {
                 searchCriteria.setProjectId(NumberSearchField.equal(data.getProjectid()));
                 searchCriteria.addExtraField(BugSearchCriteria.p_bugkey.buildSearchField(SearchField.AND, NumberI18nEnum.LESS_THAN.name(),
                         data.getBugkey()));
-                Integer previousId = bugService.getNextItemKey(searchCriteria);
+                Integer previousId = bugService.getPreviousItemKey(searchCriteria);
                 if (previousId != null) {
                     EventBusFactory.getInstance().post(new BugEvent.GotoRead(this, previousId));
                 } else {

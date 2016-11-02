@@ -113,8 +113,8 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             }
 
             if (selectedFolder == null) {
-                throw new DebugException(String.format("Can not find folder with path %s--%s", criteria.getBaseFolder(),
-                        criteria.getRootFolder()));
+                throw new DebugException(String.format("Can not find folder with path %s--%s in account", criteria.getBaseFolder(),
+                        criteria.getRootFolder(), MyCollabUI.getAccountId()));
             } else if (!(selectedFolder instanceof Folder)) {
                 LOG.error(String.format("Expect folder but the result is file %s--%s", criteria.getBaseFolder(),
                         criteria.getRootFolder()));

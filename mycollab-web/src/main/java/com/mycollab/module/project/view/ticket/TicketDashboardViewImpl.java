@@ -25,6 +25,7 @@ import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
+import com.mycollab.db.arguments.SearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.query.LazyValueInjector;
 import com.mycollab.db.query.SearchFieldInfo;
@@ -218,6 +219,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         baseCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
 
         statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
+        statisticSearchCriteria.setIsOpenned(new SearchField());
         statisticSearchCriteria.setTypes(new SetSearchField(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK, ProjectTypeConstants.RISK));
 
         if (StringUtils.isNotBlank(query)) {
