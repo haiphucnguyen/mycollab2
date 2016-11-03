@@ -55,6 +55,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author MyCollab Ltd.
@@ -251,6 +252,10 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         MilestoneBox(final SimpleMilestone milestone) {
             this.addStyleName(WebUIConstants.MILESTONE_BOX);
             this.setWidth("100%");
+
+            String valId = UUID.randomUUID().toString() + "-" + milestone.hashCode();
+            this.setId(valId);
+            JavaScript.getCurrent().execute("$('#" + valId + "').css({'background-color':'#" + milestone.getColor() + "'});");
 
             ToggleMilestoneSummaryField toggleMilestoneSummaryField = new ToggleMilestoneSummaryField(milestone, 50, false, true);
 

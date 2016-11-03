@@ -49,7 +49,9 @@ Version 5.4.5
 
 **Improvements & New Features**
 
-* Support Docker installation
+* Check ticket satisfy the current query criteria to display or hide
+* Display order of show more tickets
+* Display color of milestone and task in associated views 
 * Other minor improvements
 
 **Bug Fixes**
