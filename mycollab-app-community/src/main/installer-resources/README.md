@@ -46,6 +46,7 @@ Version 5.4.5
 **Library Upgrades**
 
 * Guava 20.0
+* Other libraries
 
 **Improvements & New Features**
 

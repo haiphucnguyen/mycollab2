@@ -44,13 +44,12 @@ public class LoginViewImpl extends AbstractMobileMainView implements LoginView {
 
     public LoginViewImpl() {
         super();
+        this.setStyleName("login-view");
+        this.setSizeFull();
         initUI();
     }
 
     private void initUI() {
-        this.setStyleName("login-view");
-        this.setSizeFull();
-
         MVerticalLayout contentLayout = new MVerticalLayout().withStyleName("content-wrapper").withFullWidth();
         contentLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
