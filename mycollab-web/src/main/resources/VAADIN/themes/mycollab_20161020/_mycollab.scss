@@ -374,7 +374,6 @@ $v-line-height--header:1.5em;
     height: 60px;
     border-bottom: 1px solid $my-separator-color;
     #logo-here {
-      background: url('icons/logo.png') no-repeat 0 0 transparent;
       margin: 15px 0px 5px 100px;
       height: 50px;
       width: 218px;
@@ -411,9 +410,7 @@ $v-line-height--header:1.5em;
   }
 
   #loginFormContainer #form-header {
-    font-size: 28px;
-    padding: 20px 0px 0px 0px;
-    text-transform: uppercase;
+    margin-top: $my-space;
     text-align: center;
   }
 
@@ -427,27 +424,14 @@ $v-line-height--header:1.5em;
     }
     #form-intro-text {
       float: left;
+      margin-top: $my-space;
     }
-  }
-
-  #loginFormContainer #form-intro-text #intro-text {
-    float: left;
-    padding-top: 10px;
-    color: #9696b0;
-    text-align: center;
   }
 
   .forgotPwdForm #loginFormContainer #form-intro-text #intro-text {
     text-align: left;
     color: rgb(109, 118, 122);
     font-size: $font-large;
-  }
-
-  #loginFormContainer #form-intro-text #intro-image {
-    width: 356px;
-    height: 331px;
-    float: left;
-    background: url('icons/image.png') no-repeat 0 0 transparent;
   }
 
   .forgotPwdForm #loginFormContainer #intro-image {
@@ -1626,73 +1610,6 @@ $v-line-height--header:1.5em;
 
   /* End Bean Block List */
 
-  /* Activity Calendar */
-
-  .activityCalendar {
-    .switcher-wrap {
-      padding-bottom: 20px;
-    }
-    .calendar-view-switcher {
-      &.v-button {
-        background: none no-repeat left top rgb(233, 233, 233);
-        &:active, &:focus {
-          background: none no-repeat left top rgb(233, 233, 233);
-        }
-      }
-      .v-button-wrap {
-        text-align: left;
-        position: relative;
-      }
-      .v-popup-indicator {
-        position: absolute;
-        right: 10px;
-      }
-    }
-    .stylecalendar-ext {
-      border-top: 1px solid $my-separator-color;
-      &.v-margin-top {
-        padding-top: 10px;
-      }
-    }
-    .calendarHeader {
-      background-color: transparent;
-      .calendarDateLabel {
-        font-size: $font-large;
-        font-weight: $my-font-weight-bold;
-        text-align: center;
-      }
-    }
-    .stylecalendar {
-      border: none;
-      background-color: transparent;
-      .week {
-        background-color: transparent;
-      }
-      .weekdays {
-        border: none;
-        TD {
-          color: #FFF;
-        }
-      }
-      .day {
-        color: #FFF;
-        &.othermonth {
-          color: rgb(173, 173, 173);
-        }
-        &.today {
-          color: #525252;
-        }
-        &.selected, &.selected-ext {
-          background-color: rgb(198, 198, 198);
-          color: #525252;
-        }
-      }
-      .week .selected .gwt-Label {
-        border: none;
-      }
-    }
-  }
-
 
   /* Opportunity Contact Role Edit */
   .oppcontact-role-edit .addview-layout-body {
@@ -1767,10 +1684,6 @@ $v-line-height--header:1.5em;
     }
     padding: 3px 8px;
     margin: 0px 10px 5px 0px;
-  }
-
-  .list-note-lbl {
-    padding: 3px 8px 3px 0px;
   }
 
   .v-colorpicker {
@@ -1909,16 +1822,5 @@ $v-line-height--header:1.5em;
       /* NEW, Spec - Opera 12.1, Firefox 20+ */
       display: inline-block;
     }
-  }
-
-  .v-sliderpanel-navigator {
-    display: none;
-  }
-
-  .v-sliderpanel-content {
-    background-color: white !important;
-    border-left: 1px solid $my-separator-color;
-    border-bottom: 1px solid $my-separator-color;
-    border-top: 1px solid $my-separator-color;
   }
 }

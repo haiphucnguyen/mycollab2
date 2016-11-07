@@ -44,11 +44,7 @@ public class MyCollabUIProvider extends UIProvider {
             return null;
         }
 
-        if (userAgent.contains("ipad")) {
-            uiClass = DESKTOP_APP;
-        } else {
-            uiClass = userAgent.contains("mobile") ? MOBILE_APP : DESKTOP_APP;
-        }
+        uiClass = userAgent.contains("mobile") ? MOBILE_APP : DESKTOP_APP;
 
         try {
             return (Class<? extends UI>) Class.forName(uiClass);

@@ -54,7 +54,6 @@ Version 5.4.5
 * Check ticket satisfy the current query criteria to display or hide
 * Display order of show more tickets
 * Display color of milestone and task in associated views
-* Support Tablet views to be different than the mobile views
 * Remove redundant javascript libraries in mobile browser
 * Other minor improvements
 
