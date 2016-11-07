@@ -37,6 +37,7 @@ public class MyCollabUIProvider extends UIProvider {
         VaadinRequest request = event.getRequest();
         String uiClass;
         String userAgent;
+
         try {
             userAgent = request.getHeader("user-agent").toLowerCase();
         } catch (Exception e) {
