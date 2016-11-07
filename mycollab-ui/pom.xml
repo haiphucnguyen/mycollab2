@@ -89,12 +89,6 @@
             <groupId>org.vaadin</groupId>
             <artifactId>viritin</artifactId>
             <version>1.58</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.el</groupId>
-                    <artifactId>javax.el-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>

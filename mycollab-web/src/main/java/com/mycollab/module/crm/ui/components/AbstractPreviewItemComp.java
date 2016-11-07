@@ -65,7 +65,7 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
     public AbstractPreviewItemComp(FontAwesome iconResource) {
         super();
         this.iconResource = iconResource;
-        tabSheet = new VerticalTabsheet(true);
+        tabSheet = new VerticalTabsheet();
         tabSheet.setSizeFull();
         tabSheet.setNavigatorWidth("100%");
         tabSheet.setNavigatorStyleName("sidebar-menu");

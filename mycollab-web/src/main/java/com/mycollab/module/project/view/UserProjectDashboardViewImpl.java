@@ -16,10 +16,13 @@
  */
 package com.mycollab.module.project.view;
 
+import com.jarektoro.responsivelayout.ResponsiveColumn;
+import com.jarektoro.responsivelayout.ResponsiveLayout;
+import com.jarektoro.responsivelayout.ResponsiveRow;
 import com.mycollab.module.project.view.milestone.AllMilestoneTimelineWidget;
+import com.mycollab.module.project.view.ticket.TicketOverdueWidget;
 import com.mycollab.module.project.view.user.ActivityStreamComponent;
 import com.mycollab.module.project.view.user.MyProjectListComponent;
-import com.mycollab.module.project.view.ticket.TicketOverdueWidget;
 import com.mycollab.module.project.view.user.UserUnresolvedAssignmentWidget;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -27,8 +30,6 @@ import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import org.apache.commons.collections.CollectionUtils;
-import org.vaadin.viritin.layouts.MCssLayout;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
@@ -39,29 +40,49 @@ import java.util.List;
  */
 @ViewComponent
 public class UserProjectDashboardViewImpl extends AbstractVerticalPageView implements UserProjectDashboardView {
+
+    public UserProjectDashboardViewImpl() {
+        addStyleName(WebUIConstants.CONTENT_WRAPPER);
+    }
+
     @Override
-    public void display() {
-        removeAllComponents();
-        MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false)).withFullWidth();
+    public void lazyLoadView() {
+        ResponsiveLayout contentWrapper = new ResponsiveLayout();
+        contentWrapper.setSizeFull();
+        addComponent(contentWrapper);
+
+        ResponsiveRow row = new ResponsiveRow();
 
         AllMilestoneTimelineWidget milestoneTimelineWidget = new AllMilestoneTimelineWidget();
         TicketOverdueWidget ticketOverdueWidget = new TicketOverdueWidget();
         ActivityStreamComponent activityStreamComponent = new ActivityStreamComponent();
         UserUnresolvedAssignmentWidget unresolvedAssignmentThisWeekWidget = new UserUnresolvedAssignmentWidget();
         UserUnresolvedAssignmentWidget unresolvedAssignmentNextWeekWidget = new UserUnresolvedAssignmentWidget();
+
+        ResponsiveColumn column1 = new ResponsiveColumn();
+        column1.addRule(ResponsiveColumn.DisplaySize.LG, 7);
+        column1.addRule(ResponsiveColumn.DisplaySize.MD, 7);
+        column1.addRule(ResponsiveColumn.DisplaySize.SM, 12);
+        column1.addRule(ResponsiveColumn.DisplaySize.XS, 12);
         MVerticalLayout leftPanel = new MVerticalLayout(milestoneTimelineWidget,
                 unresolvedAssignmentThisWeekWidget, unresolvedAssignmentNextWeekWidget, ticketOverdueWidget)
                 .withMargin(new MarginInfo(true, true, false, false)).withFullWidth();
+        column1.setComponent(leftPanel);
 
-        MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false).withWidth("550px");
+        MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false);
         MyProjectListComponent myProjectListComponent = new MyProjectListComponent();
-
         rightPanel.with(myProjectListComponent, activityStreamComponent);
-        layout.with(leftPanel, rightPanel).expand(leftPanel);
 
-        MCssLayout contentWrapper = new MCssLayout().withStyleName(WebUIConstants.CONTENT_WRAPPER);
-        addComponent(contentWrapper);
-        contentWrapper.addComponent(layout);
+        ResponsiveColumn column2 = new ResponsiveColumn();
+        column2.addRule(ResponsiveColumn.DisplaySize.LG, 5);
+        column2.addRule(ResponsiveColumn.DisplaySize.MD, 5);
+        column1.addRule(ResponsiveColumn.DisplaySize.SM, 12);
+        column1.addRule(ResponsiveColumn.DisplaySize.XS, 12);
+        column2.setComponent(rightPanel);
+
+        row.addColumn(column1);
+        row.addColumn(column2);
+        contentWrapper.addRow(row);
 
         UserDashboardView userDashboardView = UIUtils.getRoot(this, UserDashboardView.class);
         List<Integer> prjKeys = userDashboardView.getInvolvedProjectKeys();

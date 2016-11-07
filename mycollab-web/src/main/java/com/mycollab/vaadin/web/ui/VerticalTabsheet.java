@@ -47,11 +47,11 @@ public class VerticalTabsheet extends CustomComponent {
     private static final String TAB_STYLENAME = "tab";
     private static final String TAB_SELECTED_STYLENAME = "tab-selected";
 
-    protected VerticalLayout navigatorContainer;
-    protected CssLayout navigatorWrapper;
+    private VerticalLayout navigatorContainer;
+    private CssLayout navigatorWrapper;
 
-    protected VerticalLayout tabContainer;
-    protected VerticalLayout contentWrapper;
+    private VerticalLayout tabContainer;
+    private VerticalLayout contentWrapper;
 
     private Map<String, Tab> compMap = new HashMap<>();
 
@@ -61,10 +61,6 @@ public class VerticalTabsheet extends CustomComponent {
     private Boolean retainVisibility = true;
 
     public VerticalTabsheet() {
-        this(true);
-    }
-
-    public VerticalTabsheet(boolean isLeft) {
         CssLayout contentLayout = new CssLayout();
         new Restrain(contentLayout).setMinHeight("100%");
 
@@ -81,27 +77,21 @@ public class VerticalTabsheet extends CustomComponent {
         contentWrapper.addComponent(tabContainer);
         new Restrain(tabContainer).setMinHeight("100%");
 
-        if (isLeft) {
-            contentLayout.addComponent(navigatorWrapper);
-            contentLayout.addComponent(contentWrapper);
-
-        } else {
-            contentLayout.addComponent(contentWrapper);
-            contentLayout.addComponent(navigatorWrapper);
-        }
+        contentLayout.addComponent(navigatorWrapper);
+        contentLayout.addComponent(contentWrapper);
 
         this.setCompositionRoot(contentLayout);
         this.setStyleName(TABSHEET_STYLENAME);
     }
 
-    public void hideTabsCaption() {
+    private void hideTabsCaption() {
         for (Component aNavigatorContainer : navigatorContainer) {
             ButtonTabImpl comp = (ButtonTabImpl) aNavigatorContainer;
             comp.hideCaption();
         }
     }
 
-    public void showTabsCaption() {
+    private void showTabsCaption() {
         for (Component aNavigatorContainer : navigatorContainer) {
             ButtonTabImpl comp = (ButtonTabImpl) aNavigatorContainer;
             comp.showCaption();
@@ -163,7 +153,7 @@ public class VerticalTabsheet extends CustomComponent {
         }
     }
 
-    public boolean hasTab(String viewId) {
+    private boolean hasTab(String viewId) {
         return compMap.containsKey(viewId);
     }
 
@@ -178,7 +168,7 @@ public class VerticalTabsheet extends CustomComponent {
         }
     }
 
-    public ButtonTabImpl getButtonById(String viewId) {
+    private ButtonTabImpl getButtonById(String viewId) {
         for (int i = 0; i < navigatorContainer.getComponentCount(); i++) {
             ButtonTabImpl button = (ButtonTabImpl) navigatorContainer.getComponent(i);
             if (viewId.equals(button.getTabId())) {
@@ -287,10 +277,6 @@ public class VerticalTabsheet extends CustomComponent {
         navigatorContainer.setStyleName(styleName);
     }
 
-    public void setContainerStyleName(String styleName) {
-        tabContainer.setStyleName(styleName);
-    }
-
     private void clearTabSelection(boolean setDefaultIcon) {
         Iterator<Component> iterator = navigatorContainer.iterator();
         if (setDefaultIcon) {
@@ -318,7 +304,7 @@ public class VerticalTabsheet extends CustomComponent {
         return this.navigatorWrapper;
     }
 
-    public static class ButtonTabImpl extends MButton {
+    private static class ButtonTabImpl extends MButton {
         private static final long serialVersionUID = 1L;
 
         private String tabId;
@@ -326,7 +312,7 @@ public class VerticalTabsheet extends CustomComponent {
         String link;
         private String caption;
 
-        public ButtonTabImpl(String id, int level, String caption, String link) {
+        ButtonTabImpl(String id, int level, String caption, String link) {
             super(caption);
             this.tabId = id;
             this.link = link;
@@ -334,17 +320,17 @@ public class VerticalTabsheet extends CustomComponent {
             this.caption = caption;
         }
 
-        public void hideCaption() {
+        void hideCaption() {
             this.setCaption("");
             this.setDescription(caption);
         }
 
-        public void showCaption() {
+        void showCaption() {
             this.setCaption(caption);
             this.setDescription("");
         }
 
-        public String getTabId() {
+        String getTabId() {
             return tabId;
         }
 
