@@ -500,7 +500,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                     .withStyleName(WebUIConstants.BUTTON_OPTION);
-            MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(true);
+            MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);
             contentLayout.with(controlsLayout).withAlign(controlsLayout, Alignment.MIDDLE_RIGHT);
         }
     }
@@ -512,11 +512,8 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
         MultiUploadContentWindow() {
             super(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPLOAD));
-            this.withWidth("600px").withResizable(false).withModal(true).withCenter();
-
-            VerticalLayout contentLayout = new VerticalLayout();
-            contentLayout.setMargin(new MarginInfo(false, false, true, false));
-            this.setContent(contentLayout);
+            MVerticalLayout contentLayout = new MVerticalLayout();
+            this.withWidth("600px").withResizable(false).withModal(true).withContent(contentLayout).withCenter();
 
             layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);
 
@@ -559,9 +556,8 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                     .withStyleName(WebUIConstants.BUTTON_OPTION);
-            MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, uploadBtn).withMargin(true);
-            contentLayout.addComponent(controlsLayout);
-            contentLayout.setComponentAlignment(controlsLayout, Alignment.MIDDLE_RIGHT);
+            MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, uploadBtn);
+            contentLayout.with(controlsLayout).withAlign(controlsLayout, Alignment.MIDDLE_RIGHT);
         }
     }
 

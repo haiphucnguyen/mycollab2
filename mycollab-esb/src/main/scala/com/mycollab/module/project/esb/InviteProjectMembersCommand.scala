@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-esb.
- *
- * mycollab-esb is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-esb is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-esb.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project.esb
 
 import java.util
@@ -24,6 +8,7 @@ import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.utils.{DateTimeUtils, RandomPasswordGenerator}
+import com.mycollab.html.LinkUtils
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.billing.RegisterStatusConstants
 import com.mycollab.module.esb.GenericCommand
@@ -32,7 +17,7 @@ import com.mycollab.module.project.domain.ProjectMember
 import com.mycollab.module.project.i18n.ProjectMemberI18nEnum
 import com.mycollab.module.project.service.{ProjectMemberService, ProjectService}
 import com.mycollab.module.project.{ProjectLinkGenerator, ProjectMemberStatusConstants}
-import com.mycollab.module.user.domain.{SimpleRole, User}
+import com.mycollab.module.user.domain.User
 import com.mycollab.module.user.service.{RoleService, UserService}
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -50,17 +35,20 @@ import org.springframework.stereotype.Component
   @Autowired private val projectService: ProjectService = null
   @Autowired private val projectMemberService: ProjectMemberService = null
   @Autowired private val contentGenerator: IContentGenerator = null
-
+  
   @AllowConcurrentEvents
   @Subscribe
   def inviteUsers(event: InviteProjectMembersEvent): Unit = {
     val project = projectService.findById(event.projectId, event.sAccountId)
     val user = userService.findUserInAccount(event.inviteUser, event.sAccountId)
+    val billingAccount = projectService.getAccountInfoOfProject(event.projectId)
+    
     contentGenerator.putVariable("inviteUser", user.getDisplayName)
     contentGenerator.putVariable("inviteMessage", event.inviteMessage)
     contentGenerator.putVariable("project", project)
     contentGenerator.putVariable("password", null)
-    val subDomain = projectService.getSubdomainOfProject(event.projectId)
+    contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(billingAccount.getId, billingAccount.getLogopath))
+    
     for (inviteeEmail <- event.emails) {
       val invitee = userService.findUserInAccount(inviteeEmail, event.sAccountId)
       contentGenerator.putVariable("inviteeEmail", inviteeEmail)
@@ -73,13 +61,13 @@ import org.springframework.stereotype.Component
         if (systemGuestRoleId == null) {
           LOG.error("Can not find the guess role of account ", event.sAccountId)
         }
-
+        
         val newUser = new User
         newUser.setEmail(inviteeEmail)
         val password = RandomPasswordGenerator.generateRandomPassword()
         contentGenerator.putVariable("password", password)
         newUser.setPassword(password)
-        userService.saveUserAccount(newUser, systemGuestRoleId, subDomain, event.sAccountId, event.inviteUser, false)
+        userService.saveUserAccount(newUser, systemGuestRoleId, billingAccount.getSubdomain, event.sAccountId, event.inviteUser, false)
       }
       val projectMember = projectMemberService.findMemberByUsername(inviteeEmail, event.projectId, event.sAccountId)
       if (projectMember != null) {
@@ -117,7 +105,7 @@ import org.springframework.stereotype.Component
       }
       contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
         DateTimeUtils.getCurrentYear))
-      contentGenerator.putVariable("urlAccept", ProjectLinkGenerator.generateProjectFullLink(SiteConfiguration.getSiteUrl(subDomain),
+      contentGenerator.putVariable("urlAccept", ProjectLinkGenerator.generateProjectFullLink(SiteConfiguration.getSiteUrl(billingAccount.getSubdomain),
         event.projectId))
       val subject = LocalizationHelper.getMessage(Locale.US, ProjectMemberI18nEnum.MAIL_INVITE_USERS_SUBJECT,
         project.getName, SiteConfiguration.getDefaultSiteName)

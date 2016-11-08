@@ -114,8 +114,8 @@ class FileDownloadWindow extends MWindow {
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebUIConstants.BUTTON_OPTION);
-        final MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, downloadBtn).withMargin(true);
-        layout.with(buttonControls).withAlign(buttonControls, Alignment.TOP_RIGHT);
+        final MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, downloadBtn);
+        layout.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
         this.setContent(layout);
     }
 }

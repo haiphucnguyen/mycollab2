@@ -29,13 +29,16 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
+import com.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.web.CustomLayoutExt;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
 import org.vaadin.viritin.button.MButton;
 
@@ -58,6 +61,9 @@ public class ForgotPasswordViewImpl extends AbstractVerticalPageView implements 
         ForgotPwdForm() {
             CustomLayout customLayout = CustomLayoutExt.createLayout("forgotPassword");
             customLayout.setStyleName("forgotPwdForm");
+
+            Resource logoResource = AccountAssetsResolver.createLogoResource(MyCollabUI.getBillingAccount().getLogopath(), 150);
+            customLayout.addComponent(new Image(null, logoResource), "logo-here");
 
             customLayout.addComponent(new ELabel(LocalizationHelper.getMessage(MyCollabUI.getDefaultLocale(),
                     ShellI18nEnum.BUTTON_FORGOT_PASSWORD)), "formHeader");

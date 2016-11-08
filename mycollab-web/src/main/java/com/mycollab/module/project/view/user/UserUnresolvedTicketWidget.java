@@ -43,12 +43,12 @@ import java.util.Date;
  * @author MyCollab Ltd
  * @since 5.2.4
  */
-public class UserUnresolvedAssignmentWidget extends Depot {
+public class UserUnresolvedTicketWidget extends Depot {
     private ProjectTicketSearchCriteria searchCriteria;
     private DefaultBeanPagedList<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> taskList;
     private String title = "";
 
-    public UserUnresolvedAssignmentWidget() {
+    public UserUnresolvedTicketWidget() {
         super("", new CssLayout());
         this.setWidth("100%");
         final CheckBox myItemsSelection = new CheckBox(UserUIContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));

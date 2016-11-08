@@ -23,7 +23,7 @@ import com.mycollab.module.project.view.milestone.AllMilestoneTimelineWidget;
 import com.mycollab.module.project.view.ticket.TicketOverdueWidget;
 import com.mycollab.module.project.view.user.ActivityStreamComponent;
 import com.mycollab.module.project.view.user.MyProjectListComponent;
-import com.mycollab.module.project.view.user.UserUnresolvedAssignmentWidget;
+import com.mycollab.module.project.view.user.UserUnresolvedTicketWidget;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.UIUtils;
@@ -47,7 +47,7 @@ public class UserProjectDashboardViewImpl extends AbstractVerticalPageView imple
 
     @Override
     public void lazyLoadView() {
-        ResponsiveLayout contentWrapper = new ResponsiveLayout();
+        ResponsiveLayout contentWrapper = new ResponsiveLayout(ResponsiveLayout.ContainerType.FIXED);
         contentWrapper.setSizeFull();
         addComponent(contentWrapper);
 
@@ -56,8 +56,8 @@ public class UserProjectDashboardViewImpl extends AbstractVerticalPageView imple
         AllMilestoneTimelineWidget milestoneTimelineWidget = new AllMilestoneTimelineWidget();
         TicketOverdueWidget ticketOverdueWidget = new TicketOverdueWidget();
         ActivityStreamComponent activityStreamComponent = new ActivityStreamComponent();
-        UserUnresolvedAssignmentWidget unresolvedAssignmentThisWeekWidget = new UserUnresolvedAssignmentWidget();
-        UserUnresolvedAssignmentWidget unresolvedAssignmentNextWeekWidget = new UserUnresolvedAssignmentWidget();
+        UserUnresolvedTicketWidget unresolvedAssignmentThisWeekWidget = new UserUnresolvedTicketWidget();
+        UserUnresolvedTicketWidget unresolvedAssignmentNextWeekWidget = new UserUnresolvedTicketWidget();
 
         ResponsiveColumn column1 = new ResponsiveColumn();
         column1.addRule(ResponsiveColumn.DisplaySize.LG, 7);
@@ -90,7 +90,7 @@ public class UserProjectDashboardViewImpl extends AbstractVerticalPageView imple
             activityStreamComponent.showFeeds(prjKeys);
             milestoneTimelineWidget.display();
             myProjectListComponent.displayDefaultProjectsList();
-            ticketOverdueWidget.showProjectTasksByStatus(prjKeys);
+            ticketOverdueWidget.showTicketsByStatus(prjKeys);
             unresolvedAssignmentThisWeekWidget.displayUnresolvedAssignmentsThisWeek();
             unresolvedAssignmentNextWeekWidget.displayUnresolvedAssignmentsNextWeek();
         } else {
