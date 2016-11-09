@@ -47,7 +47,7 @@ public abstract class ProjectListNoItemView extends VerticalLayout {
     protected MHorizontalLayout createControlButtons() {
         MButton createItemBtn = new MButton(actionMessage(), actionListener()).withStyleName(WebUIConstants.BUTTON_ACTION)
                 .withVisible(hasPermission());
-        return new MHorizontalLayout().with(createItemBtn);
+        return new MHorizontalLayout(createItemBtn);
     }
 
     abstract protected FontAwesome viewIcon();
