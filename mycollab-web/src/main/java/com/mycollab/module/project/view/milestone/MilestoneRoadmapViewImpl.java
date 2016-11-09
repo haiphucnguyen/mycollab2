@@ -206,7 +206,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
     }
 
     @Override
-    public void updateTitle() {
+    public void refresh() {
         headerText.setValue(String.format("%s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml(),
                 UserUIContext.getMessage(MilestoneI18nEnum.OPT_ROADMAP_VALUE, roadMapView.getComponentCount())));
     }

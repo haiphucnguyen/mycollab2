@@ -79,7 +79,6 @@ import java.util.List;
 @ViewComponent
 public class TicketDashboardViewImpl extends AbstractVerticalPageView implements TicketDashboardView {
     private static final long serialVersionUID = 1L;
-
     private static final Logger LOG = LoggerFactory.getLogger(TicketDashboardViewImpl.class);
 
     private int currentPage = 0;
@@ -243,6 +242,11 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
     @Override
     public void showNoItemView() {
 
+    }
+
+    @Override
+    public ProjectTicketSearchCriteria getCriteria() {
+        return baseCriteria;
     }
 
     private void displayTicketsStatistic() {

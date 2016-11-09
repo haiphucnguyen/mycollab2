@@ -22,6 +22,7 @@ import com.mycollab.module.project.ui.components.IGroupComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -38,27 +39,33 @@ class DefaultTicketGroupComponent extends MVerticalLayout implements IGroupCompo
 
     DefaultTicketGroupComponent(String titleValue) {
         this.titleValue = titleValue;
-        initComponent();
-    }
-
-    private void initComponent() {
         this.setMargin(new MarginInfo(true, false, true, false));
         wrapBody = new CssLayout();
         wrapBody.setWidth("100%");
         wrapBody.addStyleName(WebUIConstants.BORDER_LIST);
         headerLbl = ELabel.h3("");
-        this.addComponent(headerLbl);
-        this.addComponent(wrapBody);
-        updateTitle();
+        this.with(headerLbl, wrapBody);
+        refresh();
     }
 
     @Override
-    public void updateTitle() {
-        headerLbl.setValue(String.format("%s (%d)", titleValue, wrapBody.getComponentCount()));
+    public void refresh() {
+        if (wrapBody.getComponentCount() > 0) {
+            updateTitle();
+        } else {
+            ComponentContainer parent = (ComponentContainer) getParent();
+            if (parent != null) {
+                parent.removeComponent(this);
+            }
+        }
     }
 
     void insertTicket(ProjectTicket ticket) {
         wrapBody.addComponent(new TicketRowRenderer(ticket));
         updateTitle();
+    }
+
+    private void updateTitle() {
+        headerLbl.setValue(String.format("%s (%d)", titleValue, wrapBody.getComponentCount()));
     }
 }

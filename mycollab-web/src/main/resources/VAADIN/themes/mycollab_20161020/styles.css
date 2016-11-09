@@ -17080,7 +17080,6 @@ input.v-textfield-errorField {
 .main-view {
 	overflow-y: auto;
 	overflow-x: hidden;
-	background-color: #FFF;
 	position: relative;
 	border-top: 1px solid #ededed;
 }

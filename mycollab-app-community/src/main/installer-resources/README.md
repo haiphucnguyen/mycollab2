@@ -52,7 +52,7 @@ Version 5.4.5
 
 * [Premium] Replace the own customer logo in front pages
 * [Premium] Replace the own customer logo in emails
-* Check ticket satisfy the current query criteria to display or hide
+* [Premium] Check ticket satisfy the current query criteria to display or hide
 * Display order of show more tickets
 * Display color of milestone and task in associated views
 * Remove redundant javascript libraries in mobile browser

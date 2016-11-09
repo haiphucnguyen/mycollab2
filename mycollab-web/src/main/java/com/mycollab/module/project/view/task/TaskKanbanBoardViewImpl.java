@@ -383,12 +383,12 @@ public class TaskKanbanBoardViewImpl extends AbstractVerticalPageView implements
                         task.setStatus(optionVal.getTypeval());
                         ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                         taskService.updateSelectiveWithSession(task, UserUIContext.getUsername());
-                        updateTitle();
+                        refresh();
 
                         Component sourceComponent = transferable.getSourceComponent();
                         KanbanBlock sourceKanban = UIUtils.getRoot(sourceComponent, KanbanBlock.class);
                         if (sourceKanban != null && sourceKanban != KanbanBlock.this) {
-                            sourceKanban.updateTitle();
+                            sourceKanban.refresh();
                         }
 
                         //Update task index
@@ -537,7 +537,7 @@ public class TaskKanbanBoardViewImpl extends AbstractVerticalPageView implements
 
         void addBlockItem(KanbanTaskBlockItem comp) {
             dragLayoutContainer.addComponent(comp);
-            updateTitle();
+            refresh();
         }
 
         private int getTaskComponentCount() {
@@ -550,7 +550,7 @@ public class TaskKanbanBoardViewImpl extends AbstractVerticalPageView implements
         }
 
         @Override
-        public void updateTitle() {
+        public void refresh() {
             header.setValue(String.format("%s (%d)", optionVal.getTypeval(), getTaskComponentCount()));
         }
 
@@ -579,7 +579,7 @@ public class TaskKanbanBoardViewImpl extends AbstractVerticalPageView implements
                         dragLayoutContainer.removeComponent(layout);
                         KanbanTaskBlockItem kanbanTaskBlockItem = new KanbanTaskBlockItem(task);
                         dragLayoutContainer.addComponent(kanbanTaskBlockItem, 0);
-                        updateTitle();
+                        refresh();
                     }
                 }).withStyleName(WebUIConstants.BUTTON_ACTION);
 
@@ -626,7 +626,7 @@ public class TaskKanbanBoardViewImpl extends AbstractVerticalPageView implements
                                     MyCollabUI.getAccountId());
                             optionVal.setTypeval(columnNameField.getValue());
                             optionValService.updateWithSession(optionVal, UserUIContext.getUsername());
-                            KanbanBlock.this.updateTitle();
+                            KanbanBlock.this.refresh();
                         }
                     } else {
                         NotificationUtil.showErrorNotification(UserUIContext.getMessage(TaskI18nEnum.ERROR_COLUMN_NAME_NOT_NULL));

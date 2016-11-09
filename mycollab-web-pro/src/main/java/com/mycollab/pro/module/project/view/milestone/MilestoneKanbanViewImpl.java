@@ -474,7 +474,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         }
 
         @Override
-        public void updateTitle() {
+        public void refresh() {
             header.setValue(String.format("%s (%d)", milestone.getName(), getAssignmentComponentCount()));
         }
 

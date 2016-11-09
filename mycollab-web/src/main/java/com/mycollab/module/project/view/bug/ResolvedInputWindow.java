@@ -88,7 +88,6 @@ public class ResolvedInputWindow extends MWindow {
         }
 
         class FormLayoutFactory extends AbstractFormLayoutFactory {
-            private static final long serialVersionUID = 1L;
             private GridFormLayoutHelper informationLayout;
 
             @Override

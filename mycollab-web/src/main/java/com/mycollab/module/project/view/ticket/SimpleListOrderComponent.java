@@ -25,8 +25,8 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class SimpleListOrderComponent extends TicketGroupOrderComponent {
-    public SimpleListOrderComponent() {
+class SimpleListOrderComponent extends TicketGroupOrderComponent {
+    SimpleListOrderComponent() {
         this.addStyleName(WebUIConstants.BORDER_LIST);
     }
 
