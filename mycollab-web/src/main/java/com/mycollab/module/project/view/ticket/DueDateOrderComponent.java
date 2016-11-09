@@ -42,6 +42,7 @@ public class DueDateOrderComponent extends TicketGroupOrderComponent {
     public void insertTickets(List<ProjectTicket> tickets) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(MyCollabUI.getLongDateFormat()).withLocale(UserUIContext.getUserLocale());
         for (ProjectTicket ticket : tickets) {
+            System.out.println("DUE: " + ticket.getDueDate());
             if (ticket.getDueDate() != null) {
                 Date dueDate = ticket.getDueDate();
                 DateTime jodaTime = new DateTime(dueDate, DateTimeZone.UTC);
@@ -58,13 +59,7 @@ public class DueDateOrderComponent extends TicketGroupOrderComponent {
 
                     DefaultTicketGroupComponent groupComponent = new DefaultTicketGroupComponent(titleValue);
                     dueDateAvailables.put(time, groupComponent);
-                    int index = dueDateAvailables.getKeyIndex(time);
-                    if (index > -1) {
-                        addComponent(groupComponent, index);
-                    } else {
-                        addComponent(groupComponent);
-                    }
-
+                    addComponent(groupComponent);
                     groupComponent.insertTicket(ticket);
                 }
             } else {

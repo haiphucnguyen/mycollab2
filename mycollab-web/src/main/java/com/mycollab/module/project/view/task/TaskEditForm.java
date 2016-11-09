@@ -41,7 +41,6 @@ import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.button.MButton;
@@ -69,7 +68,6 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
     }
 
     class FormLayoutFactory extends AbstractFormLayoutFactory {
-        private static final long serialVersionUID = 1L;
         private GridFormLayoutHelper informationLayout;
 
         @Override
@@ -77,9 +75,6 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
             VerticalLayout layout = new VerticalLayout();
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 7);
             layout.addComponent(informationLayout.getLayout());
-
-            MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
-            buttonControls.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
 
             MButton updateAllBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), clickEvent -> {
                 EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(TaskEditForm.this, bean));
@@ -131,7 +126,9 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> postExecution())
                     .withStyleName(WebUIConstants.BUTTON_OPTION);
-            buttonControls.with(updateAllBtn, cancelBtn, saveBtn);
+
+            MHorizontalLayout buttonControls = new MHorizontalLayout(updateAllBtn, cancelBtn, saveBtn).withMargin(true)
+                    .alignAll(Alignment.MIDDLE_RIGHT);
 
             layout.addComponent(buttonControls);
             layout.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);

@@ -483,22 +483,26 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             typeSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
             if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                 typeSelection.addItem(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
+                typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE),
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
             }
 
             if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
                 typeSelection.addItem(UserUIContext.getMessage(BugI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
+                typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE),
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
             }
 
             if (isIncludeMilestone && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
                 typeSelection.addItem(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
+                typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE),
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
             }
 
             if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
                 typeSelection.addItem(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(RiskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
+                typeSelection.setItemIcon(UserUIContext.getMessage(RiskI18nEnum.SINGLE),
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
             }
 
             typeSelection.setNullSelectionAllowed(false);

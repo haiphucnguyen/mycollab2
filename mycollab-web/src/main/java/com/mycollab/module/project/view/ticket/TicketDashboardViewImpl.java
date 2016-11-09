@@ -220,7 +220,8 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
 
         statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
         statisticSearchCriteria.setIsOpenned(new SearchField());
-        statisticSearchCriteria.setTypes(new SetSearchField(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK, ProjectTypeConstants.RISK));
+        statisticSearchCriteria.setTypes(new SetSearchField(ProjectTypeConstants.BUG,
+                ProjectTypeConstants.TASK, ProjectTypeConstants.RISK));
 
         if (StringUtils.isNotBlank(query)) {
             try {
