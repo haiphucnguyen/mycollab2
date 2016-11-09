@@ -371,6 +371,7 @@ public class ProjectTicket extends ValuedBean implements Serializable {
     public static Task buildTask(ProjectTicket bean) {
         Task task = new Task();
         task.setId(bean.getTypeId());
+        task.setProjectid(bean.getProjectId());
         task.setName(bean.getName());
         task.setStartdate(bean.getStartDate());
         task.setEnddate(bean.getEndDate());
@@ -385,6 +386,7 @@ public class ProjectTicket extends ValuedBean implements Serializable {
     public static BugWithBLOBs buildBug(ProjectTicket bean) {
         BugWithBLOBs bug = new BugWithBLOBs();
         bug.setId(bean.getTypeId());
+        bug.setProjectid(bean.getProjectId());
         bug.setName(bean.getName());
         bug.setStartdate(bean.getStartDate());
         bug.setEnddate(bean.getEndDate());
@@ -399,6 +401,7 @@ public class ProjectTicket extends ValuedBean implements Serializable {
     public static Risk buildRisk(ProjectTicket bean) {
         Risk risk = new Risk();
         risk.setId(bean.getTypeId());
+        risk.setProjectid(bean.getProjectId());
         risk.setName(bean.getName());
         risk.setStartdate(bean.getStartDate());
         risk.setEnddate(bean.getEndDate());
