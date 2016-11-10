@@ -99,8 +99,8 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                             ProjectTypeConstants.TASK, "" + taskId);
                     uploadField.saveContentsToRepo(attachPath);
 
-                    ProjectSubscribersComp subcribersComp = taskEditFormFieldFactory.getSubscribersComp();
-                    List<String> followers = subcribersComp.getFollowers();
+                    ProjectSubscribersComp subscribersComp = taskEditFormFieldFactory.getSubscribersComp();
+                    List<String> followers = subscribersComp.getFollowers();
                     if (followers.size() > 0) {
                         List<MonitorItem> monitorItems = new ArrayList<>();
                         for (String follower : followers) {

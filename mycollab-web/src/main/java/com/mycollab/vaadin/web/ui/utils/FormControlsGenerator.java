@@ -40,7 +40,7 @@ public class FormControlsGenerator {
 
         if (isCancelBtnVisible) {
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> editForm.fireCancelForm())
-                    .withIcon(FontAwesome.MINUS).withStyleName(WebUIConstants.BUTTON_OPTION);
+                    .withStyleName(WebUIConstants.BUTTON_OPTION);
             layout.addComponent(cancelBtn);
         }
 
