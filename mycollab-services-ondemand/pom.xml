@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent-ondemand</artifactId>
-        <version>5.4.4</version>
+        <version>5.4.5</version>
         <relativePath>../mycollab-parent-ondemand/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
@@ -21,55 +21,55 @@
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-caching-premium</artifactId>
-            <version>5.4.4</version>
+            <version>5.4.5</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-config</artifactId>
-            <version>5.4.4</version>
+            <version>5.4.5</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-core</artifactId>
-            <version>5.4.4</version>
+            <version>5.4.5</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-dao</artifactId>
-            <version>5.4.4</version>
+            <version>5.4.5</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-services</artifactId>
-            <version>5.4.4</version>
+            <version>5.4.5</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-services-pro</artifactId>
-            <version>5.4.4</version>
+            <version>5.4.5</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-localization</artifactId>
-            <version>5.4.4</version>
+            <version>5.4.5</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-migration</artifactId>
-            <version>5.4.4</version>
+            <version>5.4.5</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-test</artifactId>
-            <version>5.4.4</version>
+            <version>5.4.5</version>
             <scope>test</scope>
         </dependency>
 
