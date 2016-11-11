@@ -77,8 +77,7 @@ public class PageAddPresenter extends ProjectGenericPresenter<PageAddView> {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES)) {
             PageContainer pageContainer = (PageContainer) container;
             pageContainer.navigateToContainer(ProjectTypeConstants.PAGE);
-            pageContainer.removeAllComponents();
-            pageContainer.addComponent(view);
+            pageContainer.setContent(view);
 
             Page page = (Page) data.getParams();
             view.editItem(page);

@@ -51,8 +51,7 @@ public class TaskKanbanBoardPresenter extends ProjectGenericPresenter<TaskKanban
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
             TicketContainer ticketContainer = (TicketContainer) container;
             ticketContainer.navigateToContainer(ProjectTypeConstants.TASK);
-            ticketContainer.removeAllComponents();
-            ticketContainer.addComponent(view);
+            ticketContainer.setContent(view);
             view.display();
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

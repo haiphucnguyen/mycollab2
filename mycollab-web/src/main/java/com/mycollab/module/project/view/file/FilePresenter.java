@@ -41,7 +41,6 @@ public class FilePresenter extends AbstractPresenter<FileContainer> {
         ProjectView projectViewContainer = (ProjectView) container;
         projectViewContainer.gotoSubView(ProjectTypeConstants.FILE);
 
-        view.removeAllComponents();
         AbstractPresenter<?> presenter;
 
         if (data instanceof FileScreenData.GotoDashboard) {
@@ -52,5 +51,4 @@ public class FilePresenter extends AbstractPresenter<FileContainer> {
 
         presenter.go(view, data);
     }
-
 }

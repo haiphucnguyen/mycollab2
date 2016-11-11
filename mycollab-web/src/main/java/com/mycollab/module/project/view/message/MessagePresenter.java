@@ -47,8 +47,6 @@ public class MessagePresenter extends AbstractPresenter<MessageContainer> {
             ProjectView projectViewContainer = (ProjectView) container;
             projectViewContainer.gotoSubView(ProjectTypeConstants.MESSAGE);
 
-            view.removeAllComponents();
-
             if (data instanceof MessageScreenData.Read) {
                 MessageReadPresenter presenter = PresenterResolver.getPresenter(MessageReadPresenter.class);
                 presenter.go(view, data);

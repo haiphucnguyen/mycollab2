@@ -46,7 +46,6 @@ public class TicketPresenter extends AbstractPresenter<TicketContainer> {
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
         projectViewContainer.gotoSubView(ProjectTypeConstants.TICKET);
-        view.removeAllComponents();
 
         AbstractPresenter<?> presenter;
 

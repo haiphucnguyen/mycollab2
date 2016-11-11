@@ -89,8 +89,7 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             TicketContainer ticketContainer = (TicketContainer) container;
             ticketContainer.navigateToContainer(ProjectTypeConstants.TASK);
-            ticketContainer.removeAllComponents();
-            ticketContainer.addComponent(view);
+            ticketContainer.setContent(view);
             SimpleTask task = (SimpleTask) data.getParams();
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

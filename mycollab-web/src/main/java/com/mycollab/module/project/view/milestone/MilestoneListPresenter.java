@@ -45,8 +45,7 @@ public class MilestoneListPresenter extends ProjectGenericPresenter<MilestoneLis
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
             MilestoneContainer milestoneContainer = (MilestoneContainer) container;
             milestoneContainer.navigateToContainer(ProjectTypeConstants.MILESTONE);
-            milestoneContainer.removeAllComponents();
-            milestoneContainer.addComponent(view);
+            milestoneContainer.setContent(view);
 
             view.lazyLoadView();
 

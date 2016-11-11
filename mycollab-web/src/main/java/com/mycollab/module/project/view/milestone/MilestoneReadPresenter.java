@@ -150,8 +150,7 @@ public class MilestoneReadPresenter extends ProjectGenericPresenter<MilestoneRea
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 SimpleMilestone milestone = milestoneService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
                 if (milestone != null) {
-                    milestoneContainer.removeAllComponents();
-                    milestoneContainer.addComponent(view);
+                    milestoneContainer.setContent(view);
                     view.previewItem(milestone);
 
                     ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

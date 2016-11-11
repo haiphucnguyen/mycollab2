@@ -153,9 +153,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
             TicketContainer ticketContainer = (TicketContainer) container;
-            ticketContainer.removeAllComponents();
-
-            ticketContainer.addComponent(view);
+            ticketContainer.setContent(view);
             if (data.getParams() instanceof Integer) {
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                 SimpleTask task = taskService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());

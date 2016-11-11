@@ -65,8 +65,7 @@ public class MessageReadPresenter extends ProjectGenericPresenter<MessageReadVie
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MESSAGES)) {
             MessageContainer messageContainer = (MessageContainer) container;
             messageContainer.navigateToContainer(ProjectTypeConstants.MESSAGE);
-            messageContainer.removeAllComponents();
-            messageContainer.addComponent(view);
+            messageContainer.setContent(view);
 
             if (data.getParams() instanceof Integer) {
                 MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);

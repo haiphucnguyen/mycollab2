@@ -91,8 +91,7 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
             MilestoneContainer milestoneContainer = (MilestoneContainer) container;
             milestoneContainer.navigateToContainer(ProjectTypeConstants.MILESTONE);
-            milestoneContainer.removeAllComponents();
-            milestoneContainer.addComponent(view);
+            milestoneContainer.setContent(view);
 
             SimpleMilestone milestone = (SimpleMilestone) data.getParams();
             view.editItem(milestone);
