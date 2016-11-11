@@ -525,6 +525,18 @@
     }
   }
 
+  .single-container.module > .v-panel-content {
+    margin: 0px !important;
+  }
+  .v-panel.single-container {
+    border-style: none;
+    box-shadow: none;
+    .v-panel-content {
+      border-style: none;
+      margin: $my-space 2*$my-space;
+    }
+  }
+
   /*Loading progress label*/
   .sk-cube-grid > div {
     width: 40px;

@@ -49,7 +49,7 @@ public class SalesDashboardView extends Depot {
         this.setContentBorder(true);
     }
 
-    public void displayReport() {
+    void displayReport() {
         final String reportName = this.reportDashboard[this.currentReportIndex];
 
         final VerticalLayout bodyContent = (VerticalLayout) this.bodyContent;

@@ -52,7 +52,7 @@ public class LeadListDashlet extends Depot {
         bodyContent.addComponent(tableItem);
 
         MButton customizeViewBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new LeadListCustomizeWindow(tableItem)))
-                .withIcon(FontAwesome.ADJUST).withStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+                .withIcon(FontAwesome.ADJUST).withStyleName(WebUIConstants.BUTTON_SMALL_PADDING);
         customizeViewBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.OPT_LAYOUT_OPTIONS));
         this.addHeaderElement(customizeViewBtn);
     }

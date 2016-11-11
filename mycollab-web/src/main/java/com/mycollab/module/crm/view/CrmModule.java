@@ -51,6 +51,7 @@ public class CrmModule extends AbstractSingleContainerPageView implements IDeskt
     private ServiceMenu serviceMenu;
 
     public CrmModule() {
+        addStyleName("module");
         ControllerRegistry.addController(new CrmController(this));
     }
 

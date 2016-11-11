@@ -614,9 +614,6 @@ $v-line-height--header:1.5em;
   /* Depot */
 
   .depotComp {
-    &.v-margin-top {
-      padding-top: 20px;
-    }
     .depotHeader {
       cursor: pointer;
       width: 100%;
@@ -624,37 +621,18 @@ $v-line-height--header:1.5em;
       border-style: solid;
       border-color: $my-separator-color;
       border-radius: 0px;
+      padding-right: $my-space;
       .depot-title {
         padding: 0px $my-space;
         display: inline-flex;
         font-size: 16px;
+        &::before {
+          content:'\f0d7';
+          font-family:FontAwesome;
+          font-size:16px;
+          padding-right: 5px;
+        }
       }
-    }
-  }
-
-  .depot-title::before {
-    content:'\f0d7';
-    font-family:FontAwesome;
-    font-size:16px;
-    padding-right: 5px;
-  }
-
-  .collapsed .depot-title::before {
-    content:'\f0da';
-    font-family:FontAwesome;
-    font-size:16px;
-    padding-right: 5px;
-  }
-
-  .depotComp {
-    .header-elements {
-      @include margin-container(3px, 8px, 3px, 8px);
-    }
-    .v-customcomponent, .v-verticallayout {
-      display: block;
-    }
-    &.collapsed .depotContent {
-      padding: 0px;
     }
     .depotContent {
       padding: 0px;
@@ -671,6 +649,19 @@ $v-line-height--header:1.5em;
         border-width: 0px 1px 1px 1px;
         @include margin-container(5px, 5px, 5px, 5px);
       }
+    }
+  }
+
+  .collapsed .depot-title::before {
+    content:'\f0da';
+    font-family:FontAwesome;
+    font-size:16px;
+    padding-right: 5px;
+  }
+
+  .depotComp {
+    &.collapsed .depotContent {
+      padding: 0px;
     }
   }
 
@@ -914,10 +905,6 @@ $v-line-height--header:1.5em;
     div.v-panel-content-light, .v-panel-nocaption, .v-panel-deco {
       border: none;
     }
-  }
-
-  .separator {
-    border-right: 1px solid $my-separator-color;
   }
 
   .v-label-hr {

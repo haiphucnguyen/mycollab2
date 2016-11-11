@@ -23,6 +23,7 @@ public class FileModule extends AbstractSingleContainerPageView implements IFile
     private ServiceMenu serviceMenu;
 
     public FileModule() {
+        addStyleName("module");
         ControllerRegistry.addController(new FileController(this));
     }
 

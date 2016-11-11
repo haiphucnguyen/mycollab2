@@ -68,7 +68,7 @@ public class CallListDashlet extends Depot {
         bodyContent.addComponent(tableItem);
 
         MButton customizeViewBtn = new MButton("", clickEvent -> {
-        }).withIcon(FontAwesome.ADJUST).withStyleName(WebUIConstants.BUTTON_ICON_ONLY)
+        }).withIcon(FontAwesome.ADJUST).withStyleName(WebUIConstants.BUTTON_SMALL_PADDING)
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.OPT_LAYOUT_OPTIONS));
         this.addHeaderElement(customizeViewBtn);
     }

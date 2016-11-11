@@ -2130,6 +2130,20 @@ div.v-window {
 	line-height: 20px !important;
 }
 
+.single-container.module > .v-panel-content {
+	margin: 0px !important;
+}
+
+.v-panel.single-container {
+	border-style: none;
+	box-shadow: none;
+}
+
+.v-panel.single-container .v-panel-content {
+	border-style: none;
+	margin: 12px 24px;
+}
+
 .sk-cube-grid > div {
 	width: 40px;
 	height: 40px;
@@ -14042,6 +14056,10 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	display: none;
 }
 
+.v-button.small-padding {
+	background: transparent;
+}
+
 .v-button.small-padding.v-pressed .v-button-wrap, .v-button.small-padding .v-button-wrap {
 	padding: 4px 4px;
 }
@@ -14782,6 +14800,20 @@ div.v-window {
 	height: 20px !important;
 	font-size: 16px !important;
 	line-height: 20px !important;
+}
+
+.single-container.module > .v-panel-content {
+	margin: 0px !important;
+}
+
+.v-panel.single-container {
+	border-style: none;
+	box-shadow: none;
+}
+
+.v-panel.single-container .v-panel-content {
+	border-style: none;
+	margin: 12px 24px;
 }
 
 .sk-cube-grid > div {
@@ -16865,10 +16897,6 @@ input.v-textfield-errorField {
 	border-bottom: 1px solid #ededed;
 }
 
-.depotComp.v-margin-top {
-	padding-top: 20px;
-}
-
 .depotComp .depotHeader {
 	cursor: pointer;
 	width: 100%;
@@ -16876,6 +16904,7 @@ input.v-textfield-errorField {
 	border-style: solid;
 	border-color: #ededed;
 	border-radius: 0px;
+	padding-right: 12px;
 }
 
 .depotComp .depotHeader .depot-title {
@@ -16884,42 +16913,11 @@ input.v-textfield-errorField {
 	font-size: 16px;
 }
 
-.depot-title::before {
+.depotComp .depotHeader .depot-title::before {
 	content: "\f0d7";
 	font-family: FontAwesome;
 	font-size: 16px;
 	padding-right: 5px;
-}
-
-.collapsed .depot-title::before {
-	content: "\f0da";
-	font-family: FontAwesome;
-	font-size: 16px;
-	padding-right: 5px;
-}
-
-.depotComp .header-elements.v-margin-top {
-	padding-top: 3px;
-}
-
-.depotComp .header-elements.v-margin-right {
-	padding-right: 8px;
-}
-
-.depotComp .header-elements.v-margin-bottom {
-	padding-bottom: 3px;
-}
-
-.depotComp .header-elements.v-margin-left {
-	padding-left: 8px;
-}
-
-.depotComp .v-customcomponent, .depotComp .v-verticallayout {
-	display: block;
-}
-
-.depotComp.collapsed .depotContent {
-	padding: 0px;
 }
 
 .depotComp .depotContent {
@@ -16954,6 +16952,17 @@ input.v-textfield-errorField {
 
 .depotComp .depotContent.bordered.v-margin-left {
 	padding-left: 5px;
+}
+
+.collapsed .depot-title::before {
+	content: "\f0da";
+	font-family: FontAwesome;
+	font-size: 16px;
+	padding-right: 5px;
+}
+
+.depotComp.collapsed .depotContent {
+	padding: 0px;
 }
 
 .activityTabs {
@@ -17171,10 +17180,6 @@ div.v-stylecalendar .weekdays TD {
 
 .custom-dialog div.v-panel-content-light, .custom-dialog .v-panel-nocaption, .custom-dialog .v-panel-deco {
 	border: none;
-}
-
-.separator {
-	border-right: 1px solid #ededed;
 }
 
 .v-label-hr {
