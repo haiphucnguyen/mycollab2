@@ -69,8 +69,6 @@ public class AccountModuleImpl extends AbstractSingleContainerPageView implement
     public AccountModuleImpl() {
         super();
         ControllerRegistry.addController(new UserAccountController(this));
-        this.setWidth("100%");
-        this.addStyleName("accountViewContainer");
 
         MHorizontalLayout topPanel = new MHorizontalLayout().withFullWidth().withMargin(true).withStyleName("border-bottom");
         AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);

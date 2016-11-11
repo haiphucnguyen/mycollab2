@@ -49,6 +49,7 @@ public class BillingContainer extends AbstractSingleContainerPageView implements
     private MVerticalLayout bodyLayout = new MVerticalLayout();
 
     public BillingContainer() {
+        bodyLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         setContent(bodyLayout);
     }
 

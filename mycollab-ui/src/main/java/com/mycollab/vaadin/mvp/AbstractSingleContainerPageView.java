@@ -10,7 +10,7 @@ public class AbstractSingleContainerPageView extends Panel implements PageView {
 
     public AbstractSingleContainerPageView() {
         super("");
-        addStyleName("");
+        setSizeFull();
     }
 
     @Override

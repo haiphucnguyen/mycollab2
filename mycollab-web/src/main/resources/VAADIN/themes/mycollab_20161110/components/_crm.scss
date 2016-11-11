@@ -1,21 +1,4 @@
 @mixin mycollab-crm {
-  .crm-module {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-height: 100%;
-  }
-
-  .crmContainer {
-    width: 100%;
-    .main-view {
-      background-color: #FFF;
-      min-height: 100%;
-    }
-    &.preview-comp {
-      min-height: 100%;
-    }
-  }
 
   /* New ReadViewLayout */
   .readViewLayout {
@@ -39,7 +22,6 @@
   /* AddViewLayout2 */
 
   .addview-layout {
-    background-color: #FFFFFF;
     padding: 0px;
     border-radius: 0;
   }

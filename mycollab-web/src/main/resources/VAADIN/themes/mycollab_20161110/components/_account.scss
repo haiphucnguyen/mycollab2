@@ -1,16 +1,3 @@
 @mixin mycollab-account {
-  .accountViewContainer {
-    min-height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    background-color: white;
-    .addview-layout-body {
-      border: 1px solid $my-separator-color;
-    }
-    .vertical-tabsheet {
-      background-color: #fff;
-    }
-  }
+
 }

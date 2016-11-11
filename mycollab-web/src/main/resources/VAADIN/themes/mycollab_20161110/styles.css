@@ -13887,23 +13887,6 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 	overflow: hidden;
 }
 
-.accountViewContainer {
-	min-height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	display: block;
-	background-color: white;
-}
-
-.accountViewContainer .addview-layout-body {
-	border: 1px solid #ededed;
-}
-
-.accountViewContainer .vertical-tabsheet {
-	background-color: #fff;
-}
-
 .xbreadcrumbs {
 	background-color: transparent !important;
 }
@@ -15209,26 +15192,6 @@ div.v-window {
 	color: black;
 }
 
-.crm-module {
-	position: absolute;
-	top: 0;
-	left: 0;
-	min-height: 100%;
-}
-
-.crmContainer {
-	width: 100%;
-}
-
-.crmContainer .main-view {
-	background-color: #FFF;
-	min-height: 100%;
-}
-
-.crmContainer.preview-comp {
-	min-height: 100%;
-}
-
 .readViewLayout {
 	border-radius: 0px;
 }
@@ -15248,7 +15211,6 @@ div.v-window {
 }
 
 .addview-layout {
-	background-color: #FFFFFF;
 	padding: 0px;
 	border-radius: 0;
 }
@@ -15275,13 +15237,6 @@ div .addview-layout-body {
 	position: relative;
 	margin-top: -20px;
 	text-align: center;
-}
-
-.v-csslayout.project-module {
-	position: absolute;
-	top: 0;
-	left: 0;
-	min-height: 100%;
 }
 
 .project-view {

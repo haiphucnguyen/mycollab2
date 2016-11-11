@@ -23,7 +23,10 @@ import com.mycollab.module.crm.i18n.*;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.*;
+import com.mycollab.vaadin.mvp.AbstractSingleContainerPageView;
+import com.mycollab.vaadin.mvp.ControllerRegistry;
+import com.mycollab.vaadin.mvp.IModule;
+import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.ModuleHelper;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.ServiceMenu;
@@ -48,8 +51,6 @@ public class CrmModule extends AbstractSingleContainerPageView implements IDeskt
     private ServiceMenu serviceMenu;
 
     public CrmModule() {
-        this.setStyleName("crm-module");
-        this.addStyleName("crmContainer");
         ControllerRegistry.addController(new CrmController(this));
     }
 
