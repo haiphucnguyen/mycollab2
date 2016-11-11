@@ -24,7 +24,7 @@ import com.mycollab.premium.shell.view.components.LicenseActivationWindow;
 import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
+import com.mycollab.vaadin.mvp.AbstractSingleContainerPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -36,34 +36,36 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
 @ViewComponent
-public class BillingContainer extends AbstractVerticalPageView implements IBillingContainer {
+public class BillingContainer extends AbstractSingleContainerPageView implements IBillingContainer {
     private static final long serialVersionUID = 1L;
 
+    private MVerticalLayout bodyLayout = new MVerticalLayout();
+
     public BillingContainer() {
-        withMargin(true).withSpacing(true);
-        setDefaultComponentAlignment(Alignment.TOP_CENTER);
+        setContent(bodyLayout);
     }
 
     public void display() {
-        removeAllComponents();
+        bodyLayout.removeAllComponents();
 
         LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
         try {
             LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
             if (licenseInfo.isExpired()) {
-                with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_DATE, UserUIContext.formatDate
+                bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_DATE, UserUIContext.formatDate
                         (licenseInfo.getExpireDate()))).withStyleName(WebUIConstants.LABEL_OVERDUE).withWidthUndefined());
             } else if (licenseInfo.isTrial()) {
-                with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_SOON_DATE, UserUIContext.formatDate(licenseInfo.getExpireDate())))
+                bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_SOON_DATE, UserUIContext.formatDate(licenseInfo.getExpireDate())))
                         .withWidthUndefined());
             } else {
-                with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_VALID_TO_DATE, UserUIContext.formatDate(licenseInfo.getExpireDate())))
+                bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_VALID_TO_DATE, UserUIContext.formatDate(licenseInfo.getExpireDate())))
                         .withWidthUndefined());
             }
             GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
@@ -76,7 +78,7 @@ public class BillingContainer extends AbstractVerticalPageView implements IBilli
             layoutHelper.addComponent(new Label(licenseInfo.getMaxUsers() + ""), UserUIContext.getMessage
                     (LicenseI18nEnum.FORM_MAX_USERS), 0, 3);
             layoutHelper.getLayout().setWidth("600px");
-            with(layoutHelper.getLayout()).withAlign(layoutHelper.getLayout(), Alignment.TOP_CENTER);
+            bodyLayout.with(layoutHelper.getLayout()).withAlign(layoutHelper.getLayout(), Alignment.TOP_CENTER);
 
             if (licenseInfo.isTrial() || licenseInfo.isExpired() || licenseInfo.isInvalid()) {
                 MButton checkoutBtn = new MButton(UserUIContext.getMessage(LicenseI18nEnum.OPT_BUY_LICENSE),
@@ -84,11 +86,11 @@ public class BillingContainer extends AbstractVerticalPageView implements IBilli
                 MButton licenseBtn = new MButton(UserUIContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE),
                         clickEvent -> UI.getCurrent().addWindow(new LicenseActivationWindow())).withStyleName(WebUIConstants.BUTTON_ACTION);
 
-                with(new Image("", new ExternalResource("http://fastspring.info/dev/sb_buttons/images/bn/fs_button05.gif")),
+                bodyLayout.with(new Image("", new ExternalResource("http://fastspring.info/dev/sb_buttons/images/bn/fs_button05.gif")),
                         new MHorizontalLayout(checkoutBtn, licenseBtn).alignAll(Alignment.MIDDLE_CENTER));
             }
         } catch (Exception e) {
-            with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID)).withWidthUndefined());
+            bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID)).withWidthUndefined());
         }
     }
 }

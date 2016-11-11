@@ -30,7 +30,7 @@ import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.ViewScope;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class PageListPresenter extends ProjectGenericPresenter<PageListView> {
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PAGES)) {
             PageContainer pageContainer = (PageContainer) container;
             pageContainer.navigateToContainer(ProjectTypeConstants.PAGE);

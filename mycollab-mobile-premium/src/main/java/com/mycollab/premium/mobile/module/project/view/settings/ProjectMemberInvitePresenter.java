@@ -18,7 +18,7 @@ import com.mycollab.vaadin.mvp.PageView.ViewListener;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewEvent;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class ProjectMemberInvitePresenter extends AbstractProjectPresenter<Proje
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
             super.onGo(container, data);
             view.display();

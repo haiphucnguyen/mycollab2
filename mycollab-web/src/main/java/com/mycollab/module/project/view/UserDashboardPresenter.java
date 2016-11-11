@@ -25,7 +25,7 @@ import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewScope;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 
 /**
  * @author MyCollab Ltd.
@@ -40,7 +40,7 @@ public class UserDashboardPresenter extends AbstractPresenter<UserDashboardView>
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectModule prjContainer = (ProjectModule) container;
         prjContainer.removeAllComponents();
         prjContainer.addComponent(view);

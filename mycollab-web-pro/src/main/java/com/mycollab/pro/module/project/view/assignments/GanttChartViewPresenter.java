@@ -1,5 +1,6 @@
 package com.mycollab.pro.module.project.view.assignments;
 
+import com.google.common.eventbus.Subscribe;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
@@ -23,8 +24,7 @@ import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.ViewScope;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
-import com.google.common.eventbus.Subscribe;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -151,7 +151,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canReadAssignments()) {
             ProjectDashboardContainer projectDashboardContainer = (ProjectDashboardContainer) container;
             projectDashboardContainer.removeAllComponents();

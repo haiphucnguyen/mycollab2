@@ -11,7 +11,7 @@ import com.mycollab.module.project.view.milestone.MilestoneContainer;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 
 /**
  * @author MyCollab Ltd
@@ -23,7 +23,7 @@ public class MilestoneKanbanPresenter extends AbstractPresenter<IMilestoneKanban
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
             MilestoneContainer milestoneContainer = (MilestoneContainer) container;
             milestoneContainer.navigateToContainer(ProjectTypeConstants.MILESTONE);
@@ -33,7 +33,7 @@ public class MilestoneKanbanPresenter extends AbstractPresenter<IMilestoneKanban
             view.lazyLoadView();
             ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadcrumb.gotoMilestoneKanban();
-        }else {
+        } else {
             throw new SecureAccessException();
         }
     }

@@ -155,8 +155,7 @@ public class ProjectModule extends AbstractVerticalPageView implements IDesktopM
 
             MHorizontalLayout popupHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))
                     .withFullWidth().withStyleName("border-bottom");
-            MHorizontalLayout searchPanel = new MHorizontalLayout().withMargin(true);
-            searchPanel.with(searchField, searchBtn);
+            MHorizontalLayout searchPanel = new MHorizontalLayout(searchField, searchBtn).withMargin(true);
             popupHeader.with(titleLbl, sortBtn, searchPanel).expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);
             contentLayout.addBlankOption(popupHeader);
             contentLayout.addBlankOption(projectList);

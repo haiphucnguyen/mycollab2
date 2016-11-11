@@ -44,7 +44,7 @@ import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import org.apache.commons.collections.CollectionUtils;
@@ -97,11 +97,10 @@ public class ProjectMemberInvitePresenter extends AbstractPresenter<ProjectMembe
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
             ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
-            userGroupContainer.removeAllComponents();
-            userGroupContainer.addComponent(view);
+            userGroupContainer.setContent(view);
 
             view.display();
 

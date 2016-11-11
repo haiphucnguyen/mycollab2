@@ -42,7 +42,7 @@ import com.mycollab.module.project.ui.components.PriorityComboBox;
 import com.mycollab.module.project.view.bug.ApproveInputWindow;
 import com.mycollab.module.project.view.bug.BugEditForm;
 import com.mycollab.module.project.view.bug.ReOpenWindow;
-import com.mycollab.module.project.view.bug.ResolvedInputWindow;
+import com.mycollab.module.project.view.bug.ResolvedInputForm;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.module.project.view.task.TaskEditForm;
@@ -369,9 +369,20 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         }
 
         @Override
+        protected String getConstraintWidth() {
+            return "900px";
+        }
+
+        @Override
+        protected String getConstraintHeight() {
+            return "900px";
+        }
+
+        @Override
         protected void doShow() {
             MVerticalLayout content = getWrapContent();
             content.removeAllComponents();
+            content.setWidthUndefined();
             boolean hasPermission = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
             if (hasPermission) {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
@@ -379,11 +390,15 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 if (bug != null) {
                     if (BugStatus.Open.name().equals(beanItem.getStatus()) ||
                             BugStatus.ReOpen.name().equals(beanItem.getStatus())) {
-                        MButton resolveBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), clickEvent -> {
-                            setPopupVisible(false);
-                            UI.getCurrent().addWindow(bindCloseWindow(new ResolvedInputWindow(bug)));
-                        }).withStyleName(WebUIConstants.BUTTON_ACTION);
-                        content.with(resolveBtn);
+                        ResolvedInputForm resolvedInputForm = new ResolvedInputForm(bug) {
+                            @Override
+                            protected void postExecution() {
+                                refresh();
+                                setPopupVisible(false);
+                            }
+                        };
+                        content.setWidth("900px");
+                        content.with(resolvedInputForm).expand(resolvedInputForm);
                     } else if (BugStatus.Verified.name().equals(beanItem.getStatus())) {
                         MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
                             setPopupVisible(false);
@@ -443,7 +458,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         @Override
         protected void doShow() {
             CommentDisplay commentDisplay = new CommentDisplay(ticket.getType(), CurrentProjectVariables.getProjectId());
-            MVerticalLayout layout = getWrapContent().withStyleName(WebUIConstants.SCROLLABLE_CONTAINER);
+            MVerticalLayout layout = getWrapContent().withStyleName(WebUIConstants.SCROLLABLE_CONTAINER).withWidth("800px");
             layout.removeAllComponents();
             layout.with(commentDisplay);
             commentDisplay.loadComments(ticket.getTypeId() + "");

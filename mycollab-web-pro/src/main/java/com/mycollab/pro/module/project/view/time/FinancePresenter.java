@@ -11,7 +11,7 @@ import com.mycollab.module.project.view.time.IFinancePresenter;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 
 /**
  * @author MyCollab Ltd
@@ -25,7 +25,7 @@ public class FinancePresenter extends AbstractPresenter<IFinanceContainer> imple
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
         projectViewContainer.gotoSubView(ProjectTypeConstants.FINANCE);
         AbstractPresenter presenter;

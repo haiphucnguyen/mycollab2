@@ -45,7 +45,7 @@ import com.mycollab.vaadin.mvp.ViewScope;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 
 /**
@@ -150,7 +150,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
     }
 
     @Override
-    protected void onGo(final ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
             TicketContainer ticketContainer = (TicketContainer) container;
             ticketContainer.removeAllComponents();

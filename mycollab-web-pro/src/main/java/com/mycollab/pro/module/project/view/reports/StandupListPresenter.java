@@ -11,7 +11,7 @@ import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.ViewScope;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.Date;
@@ -30,7 +30,7 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView> {
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         IReportContainer projectModule = (IReportContainer) container;
         projectModule.addView(view);
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);

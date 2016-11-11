@@ -6,6 +6,7 @@ import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 
 /**
  * @author MyCollab Ltd
@@ -17,7 +18,7 @@ public class MembersWeeklyHoursPresenter extends AbstractPresenter<MembersWeekly
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         IReportContainer reportContainer = (IReportContainer) container;
         reportContainer.addView(view);
         view.display();

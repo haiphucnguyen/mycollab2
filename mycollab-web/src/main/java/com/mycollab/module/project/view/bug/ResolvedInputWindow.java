@@ -30,16 +30,14 @@ import org.vaadin.viritin.layouts.MWindow;
 public class ResolvedInputWindow extends MWindow {
     private static final long serialVersionUID = 1L;
 
-
     public ResolvedInputWindow(SimpleBug bugValue) {
         super(UserUIContext.getMessage(BugI18nEnum.OPT_RESOLVE_BUG, bugValue.getName()));
-        ResolvedInputForm editForm = new ResolvedInputForm(){
+        ResolvedInputForm editForm = new ResolvedInputForm(bugValue) {
             @Override
             protected void postExecution() {
                 close();
             }
         };
-        editForm.setBean(bugValue);
         VerticalLayout contentLayout = new VerticalLayout();
         contentLayout.setMargin(new MarginInfo(false, false, true, false));
         contentLayout.addComponent(editForm);

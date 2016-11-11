@@ -16,7 +16,7 @@ import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 
 /**
  * @author MyCollab Ltd
@@ -41,7 +41,7 @@ public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         if (UserUIContext.canAccess(RolePermissionCollections.CREATE_NEW_PROJECT)) {
             super.onGo(container, data);
             SimpleProject project = (SimpleProject) data.getParams();

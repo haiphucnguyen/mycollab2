@@ -24,7 +24,7 @@ import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.ViewPermission;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 
 /**
  * @author MyCollab Ltd.
@@ -39,10 +39,9 @@ public class CancelAccountPresenter extends AbstractPresenter<CancelAccountView>
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         IBillingContainer accountContainer = (IBillingContainer) container;
-        accountContainer.removeAllComponents();
-        accountContainer.addComponent(view);
+        accountContainer.setContent(view);
 
         AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
         breadcrumb.gotoCancelAccountPage();

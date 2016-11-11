@@ -40,13 +40,10 @@ import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.*;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.TabSheet.Tab;
-import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -140,7 +137,7 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
         });
     }
 
-    private ComponentContainer constructAccountSettingsComponent() {
+    private HasComponents constructAccountSettingsComponent() {
         billingPresenter = PresenterResolver.getPresenter(IBillingPresenter.class);
         return billingPresenter.getView();
     }
@@ -150,12 +147,12 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
         return profilePresenter.getView();
     }
 
-    private ComponentContainer constructUserRoleComponent() {
+    private HasComponents constructUserRoleComponent() {
         userPermissionPresenter = PresenterResolver.getPresenter(UserPermissionManagementPresenter.class);
         return userPermissionPresenter.getView();
     }
 
-    private ComponentContainer constructSetupComponent() {
+    private HasComponents constructSetupComponent() {
         setupPresenter = PresenterResolver.getPresenter(SetupPresenter.class);
         return setupPresenter.getView();
     }

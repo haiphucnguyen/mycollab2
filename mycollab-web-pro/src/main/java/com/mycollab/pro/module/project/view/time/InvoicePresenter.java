@@ -9,7 +9,7 @@ import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.mycollab.vaadin.web.ui.TabSheetDecorator;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 
 /**
  * @author MyCollab Ltd
@@ -21,7 +21,7 @@ public class InvoicePresenter extends AbstractPresenter<IInvoiceContainer> imple
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         FinanceContainer timeContainer = (FinanceContainer) container;
         TabSheetDecorator.WrappedTab contentLayout = (TabSheetDecorator.WrappedTab) timeContainer.gotoSubView(
                 UserUIContext.getMessage(InvoiceI18nEnum.LIST));

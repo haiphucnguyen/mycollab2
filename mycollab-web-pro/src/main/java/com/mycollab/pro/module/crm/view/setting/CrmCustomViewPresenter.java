@@ -23,30 +23,27 @@ import com.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.mycollab.module.crm.view.setting.ICrmCustomViewPresenter;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.mvp.ScreenData;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 3.0
- * 
  */
-public class CrmCustomViewPresenter extends CrmGenericPresenter<ICrmCustomView>
-		implements ICrmCustomViewPresenter {
-	private static final long serialVersionUID = 1L;
+public class CrmCustomViewPresenter extends CrmGenericPresenter<ICrmCustomView> implements ICrmCustomViewPresenter {
+    private static final long serialVersionUID = 1L;
 
-	public CrmCustomViewPresenter() {
-		super(ICrmCustomView.class);
-	}
+    public CrmCustomViewPresenter() {
+        super(ICrmCustomView.class);
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		CrmSettingContainer settingContainer = (CrmSettingContainer) container;
-		settingContainer.gotoSubView("customlayout");
+    @Override
+    protected void onGo(HasComponents container, ScreenData<?> data) {
+        CrmSettingContainer settingContainer = (CrmSettingContainer) container;
+        settingContainer.gotoSubView("customlayout");
 
-		MyCollabUI.addFragment("crm/setting/customlayout", "Custom Layouts");
+        MyCollabUI.addFragment("crm/setting/customlayout", "Custom Layouts");
 
-		view.display(CrmTypeConstants.ACCOUNT);
-	}
+        view.display(CrmTypeConstants.ACCOUNT);
+    }
 
 }

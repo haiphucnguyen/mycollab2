@@ -1761,10 +1761,6 @@ a.pending {
 	border-color: transparent transparent transparent #76B38A;
 }
 
-.attachment-panel .v-verticallayout {
-	display: block;
-}
-
 .v-multifileupload-uploads .v-upload .v-button:before {
 	font-family: FontAwesome;
 	content: "\f0c6";
@@ -14436,10 +14432,6 @@ a.pending {
 	border-color: transparent transparent transparent #76B38A;
 }
 
-.attachment-panel .v-verticallayout {
-	display: block;
-}
-
 .v-multifileupload-uploads .v-upload .v-button:before {
 	font-family: FontAwesome;
 	content: "\f0c6";
@@ -15584,11 +15576,6 @@ div.v-button.token-field .v-button-wrap {
 
 .milestone-view {
 	padding: 0px 0px 30px;
-}
-
-.milestone-view-table {
-	width: 100%;
-	height: 100%;
 }
 
 .milestone-view-header {

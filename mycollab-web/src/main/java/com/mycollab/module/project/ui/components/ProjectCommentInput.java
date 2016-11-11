@@ -44,7 +44,7 @@ import java.util.GregorianCalendar;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ProjectCommentInput extends MHorizontalLayout {
+class ProjectCommentInput extends MHorizontalLayout {
     private static final long serialVersionUID = 1L;
 
     private RichTextArea commentArea;
@@ -73,7 +73,6 @@ public class ProjectCommentInput extends MHorizontalLayout {
         final AttachmentPanel attachments = new AttachmentPanel();
 
         final MHorizontalLayout controlsLayout = new MHorizontalLayout().withFullWidth();
-        controlsLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
 
         final MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> commentArea.setValue(""))
                 .withStyleName(WebUIConstants.BUTTON_OPTION);
@@ -104,8 +103,7 @@ public class ProjectCommentInput extends MHorizontalLayout {
             component.reload();
         }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEND);
 
-        controlsLayout.with(attachments, new MHorizontalLayout(cancelBtn, newCommentBtn)).expand(attachments)
-                .withAlign(attachments, Alignment.TOP_LEFT);
+        controlsLayout.with(attachments, cancelBtn, newCommentBtn).expand(attachments);
         textAreaWrap.with(commentArea, controlsLayout);
     }
 

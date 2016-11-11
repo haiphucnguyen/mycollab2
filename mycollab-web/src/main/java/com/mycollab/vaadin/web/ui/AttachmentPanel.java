@@ -28,6 +28,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.CssLayout;
 import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +50,7 @@ import java.util.Map;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class AttachmentPanel extends MVerticalLayout {
+public class AttachmentPanel extends CssLayout {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(AttachmentPanel.class);
     private Map<String, File> fileStores;
@@ -58,12 +59,10 @@ public class AttachmentPanel extends MVerticalLayout {
     private ResourceService resourceService;
 
     public AttachmentPanel() {
-        this.withStyleName("attachment-panel");
-        withMargin(false).withSpacing(false);
         resourceService = AppContextUtil.getSpringBean(ResourceService.class);
         multiFileUpload = new MultiFileUploadExt();
         multiFileUpload.setWidth("100%");
-        this.with(multiFileUpload);
+        addComponent(multiFileUpload);
     }
 
     private void displayFileName(File file, final String fileName) {

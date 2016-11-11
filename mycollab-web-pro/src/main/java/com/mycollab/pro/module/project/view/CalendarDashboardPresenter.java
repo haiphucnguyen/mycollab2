@@ -4,10 +4,10 @@ import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.view.ICalendarDashboardPresenter;
 import com.mycollab.module.project.view.ICalendarDashboardView;
 import com.mycollab.vaadin.events.HasSearchHandlers;
-import com.mycollab.vaadin.events.SearchHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 
 /**
  * @author MyCollab Ltd
@@ -22,18 +22,15 @@ public class CalendarDashboardPresenter extends AbstractPresenter<ICalendarDashb
     protected void viewAttached() {
         HasSearchHandlers<ProjectTicketSearchCriteria> searchHandlers = view.getSearchHandlers();
         if (searchHandlers != null) {
-            searchHandlers.addSearchHandler(new SearchHandler<ProjectTicketSearchCriteria>() {
-                @Override
-                public void onSearch(ProjectTicketSearchCriteria criteria) {
-                    view.queryAssignments(criteria);
-                }
-            });
+            searchHandlers.addSearchHandler(criteria -> view.queryAssignments(criteria));
         }
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        container.addComponent(view);
+    protected void onGo(HasComponents container, ScreenData<?> data) {
+        ComponentContainer componentContainer = (ComponentContainer) container;
+        componentContainer.removeAllComponents();
+        componentContainer.addComponent(view);
         view.display();
     }
 }

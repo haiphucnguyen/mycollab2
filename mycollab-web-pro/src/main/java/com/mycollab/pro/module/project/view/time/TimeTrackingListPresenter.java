@@ -8,7 +8,7 @@ import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.mycollab.vaadin.web.ui.TabSheetDecorator;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 
 /**
  * @author MyCollab Ltd
@@ -22,9 +22,9 @@ public class TimeTrackingListPresenter extends AbstractPresenter<TimeTrackingLis
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         FinanceContainer timeContainer = (FinanceContainer) container;
-        TabSheetDecorator.WrappedTab wrappedTab = (TabSheetDecorator.WrappedTab)timeContainer.gotoSubView(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME));
+        TabSheetDecorator.WrappedTab wrappedTab = (TabSheetDecorator.WrappedTab) timeContainer.gotoSubView(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME));
         wrappedTab.addView(view);
         view.setSearchCriteria((ItemTimeLoggingSearchCriteria) data.getParams());
 

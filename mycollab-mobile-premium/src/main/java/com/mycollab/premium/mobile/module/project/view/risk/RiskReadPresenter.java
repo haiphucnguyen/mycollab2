@@ -17,7 +17,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 
 /**
@@ -58,7 +58,7 @@ public class RiskReadPresenter extends AbstractProjectPresenter<RiskReadView> {
     }
 
     @Override
-    protected void onGo(final ComponentContainer container, final ScreenData<?> data) {
+    protected void onGo(final HasComponents container, final ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS)) {
             if (data.getParams() instanceof Integer) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);

@@ -41,7 +41,7 @@ import com.mycollab.vaadin.mvp.ViewPermission;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.vaadin.server.Page;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 
 /**
@@ -94,7 +94,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    protected void onGo(HasComponents container, ScreenData<?> data) {
         AccountSettingContainer customizeContainer = (AccountSettingContainer) container;
         customizeContainer.gotoSubView(UserUIContext.getMessage(AdminI18nEnum.OPT_THEME));
 
