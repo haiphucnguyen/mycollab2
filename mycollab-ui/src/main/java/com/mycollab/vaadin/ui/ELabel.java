@@ -16,6 +16,8 @@
  */
 package com.mycollab.vaadin.ui;
 
+import com.google.common.base.MoreObjects;
+import com.hp.gagawa.java.elements.A;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.server.FontAwesome;
@@ -96,6 +98,10 @@ public class ELabel extends Label {
 
     public static ELabel html(String value) {
         return new ELabel(value, ContentMode.HTML);
+    }
+
+    public static ELabel email(String email) {
+        return new ELabel(new A("mailto:" + email).appendText(MoreObjects.firstNonNull(email, "")).write(), ContentMode.HTML);
     }
 
     public static ELabel richText(String value) {

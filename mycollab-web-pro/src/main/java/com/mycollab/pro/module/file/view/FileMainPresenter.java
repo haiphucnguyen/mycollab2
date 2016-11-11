@@ -27,12 +27,9 @@ public class FileMainPresenter extends AbstractPresenter<FileMainView> {
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         FileModule fileModule = (FileModule) container;
-        fileModule.removeAllComponents();
-
-        fileModule.addComponent(view);
-        view.display();
+        fileModule.setContent(view);
+        view.lazyLoadView();
 
         MyCollabUI.addFragment("document/list", "Documents");
     }
-
 }

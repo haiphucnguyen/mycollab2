@@ -8,7 +8,6 @@ import com.mycollab.module.project.view.parameters.ClientScreenData;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HasComponents;
 
 /**
@@ -23,8 +22,7 @@ public class ClientPresenter extends AbstractPresenter<IClientContainer> impleme
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectModule prjContainer = (ProjectModule) container;
-        prjContainer.removeAllComponents();
-        prjContainer.with(view).withAlign(view, Alignment.TOP_CENTER);
+        prjContainer.setContent(view);
 
         AbstractPresenter presenter;
         if (data instanceof ClientScreenData.Search) {

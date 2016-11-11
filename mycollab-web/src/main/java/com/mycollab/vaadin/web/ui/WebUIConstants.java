@@ -21,10 +21,20 @@ package com.mycollab.vaadin.web.ui;
  * @since 1.0
  */
 public class WebUIConstants {
-    public static final String BOX = "box";
     public static final String DEFAULT_CONTROL_WIDTH = "250px";
     public static final String DEFAULT_ATTACHMENT_THUMBNAIL_WIDTH = "180px";
     public static final String DEFAULT_ATTACHMENT_THUMBNAIL_HEIGHT = "180px";
+    public static final int TABLE_CONTROL_WIDTH = 30;
+    public static final int TABLE_ACTION_CONTROL_WIDTH = 40;
+    public static final int TABLE_S_LABEL_WIDTH = 80;
+    public static final int TABLE_M_LABEL_WIDTH = 120;
+    public static final int TABLE_X_LABEL_WIDTH = 160;
+    public static final int TABLE_EX_LABEL_WIDTH = 200;
+    public static final int TABLE_EMAIL_WIDTH = 200;
+    public static final int TABLE_DATE_WIDTH = 130;
+    public static final int TABLE_DATE_TIME_WIDTH = 160;
+
+    public static final String BOX = "box";
     public static final String HEADER_VIEW = "hdr-view";
     public static final String CUSTOM_FIELD_COMPONENT = "customFieldComponent";
     public static final String CUSTOM_FIELD_SECTION = "customFieldSection";
@@ -34,7 +44,6 @@ public class WebUIConstants {
     public static final String BUTTON_OPTION = "graybtn";
     public static final String BUTTON_DANGER = "redbtn";
     public static final String BUTTON_LINK = "link";
-    public static final String THEME_NO_BORDER = "no-border";
     public static final String LINK_COMPLETED = "completed";
     public static final String LINK_OVERDUE = "overdue";
     public static final String LINK_PENDING = "pending";
@@ -67,16 +76,6 @@ public class WebUIConstants {
     public static final String PANEL_HEADER = "panel-header";
     public static final String SCROLLABLE_CONTAINER = "scrollable-container";
 
-    public static final String BORDER_LIST = "tasklist";
-    public static final String BORDER_LIST_ROW = "taskrow";
-
-    public static final int TABLE_CONTROL_WIDTH = 30;
-    public static final int TABLE_ACTION_CONTROL_WIDTH = 40;
-    public static final int TABLE_S_LABEL_WIDTH = 80;
-    public static final int TABLE_M_LABEL_WIDTH = 120;
-    public static final int TABLE_X_LABEL_WIDTH = 160;
-    public static final int TABLE_EX_LABEL_WIDTH = 200;
-    public static final int TABLE_EMAIL_WIDTH = 200;
-    public static final int TABLE_DATE_WIDTH = 130;
-    public static final int TABLE_DATE_TIME_WIDTH = 160;
+    public static final String BORDER_LIST = "border-list";
+    public static final String BORDER_LIST_ROW = "row";
 }

@@ -143,7 +143,6 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
         }
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public final void handleChain(HasComponents container, PageActionChain pageActionChain) {
         ScreenData pageAction = pageActionChain.pop();

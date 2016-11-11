@@ -45,8 +45,7 @@ public class ProjectViewPresenter extends ProjectGenericPresenter<ProjectView> {
     @Override
     public void onGo(HasComponents container, ScreenData<?> data) {
         ProjectModule prjContainer = (ProjectModule) container;
-        prjContainer.removeAllComponents();
-        prjContainer.with(view);
+        prjContainer.setContent(view);
         if (data.getParams() instanceof Integer) {
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
             SimpleProject project = projectService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());

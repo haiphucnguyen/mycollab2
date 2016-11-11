@@ -1,12 +1,17 @@
 package com.mycollab.vaadin.mvp;
 
-import com.vaadin.ui.AbstractSingleComponentContainer;
+import com.vaadin.ui.Panel;
 
 /**
  * @author MyCollab Ltd
  * @since 5.4.5
  */
-public class AbstractSingleContainerPageView extends AbstractSingleComponentContainer implements PageView {
+public class AbstractSingleContainerPageView extends Panel implements PageView {
+
+    public AbstractSingleContainerPageView() {
+        super("");
+        addStyleName("");
+    }
 
     @Override
     public void addViewListener(ViewListener listener) {

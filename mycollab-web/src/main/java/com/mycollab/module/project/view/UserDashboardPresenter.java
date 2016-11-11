@@ -42,8 +42,7 @@ public class UserDashboardPresenter extends AbstractPresenter<UserDashboardView>
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectModule prjContainer = (ProjectModule) container;
-        prjContainer.removeAllComponents();
-        prjContainer.addComponent(view);
+        prjContainer.setContent(view);
         if (data instanceof ProjectScreenData.GotoList) {
             view.showProjectList();
         } else {

@@ -24,8 +24,7 @@ public class ReportPresenter extends AbstractPresenter<IReportContainer> impleme
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectModule projectModule = (ProjectModule) container;
-        projectModule.removeAllComponents();
-        projectModule.addComponent(view);
+        projectModule.setContent(view);
 
         if (data instanceof StandupScreenData.Search) {
             StandupListPresenter presenter = PresenterResolver.getPresenter(StandupListPresenter.class);
@@ -40,8 +39,6 @@ public class ReportPresenter extends AbstractPresenter<IReportContainer> impleme
             UserWorkloadReportPresenter userWorkloadReportPresenter = PresenterResolver.getPresenter(UserWorkloadReportPresenter.class);
             userWorkloadReportPresenter.go(view, data);
         } else {
-            projectModule.removeAllComponents();
-            projectModule.addComponent(view);
             view.showDashboard();
 
             ReportBreadcrumb breadcrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);

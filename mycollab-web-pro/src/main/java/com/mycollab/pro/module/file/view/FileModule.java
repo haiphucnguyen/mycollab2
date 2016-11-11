@@ -5,7 +5,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.file.view.IFileModule;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
+import com.mycollab.vaadin.mvp.AbstractSingleContainerPageView;
 import com.mycollab.vaadin.mvp.ControllerRegistry;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.ServiceMenu;
@@ -16,7 +16,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @since 1.0
  */
 @ViewComponent
-public class FileModule extends AbstractVerticalPageView implements IFileModule {
+public class FileModule extends AbstractSingleContainerPageView implements IFileModule {
     private static final long serialVersionUID = 1L;
 
     private MHorizontalLayout serviceMenuContainer;

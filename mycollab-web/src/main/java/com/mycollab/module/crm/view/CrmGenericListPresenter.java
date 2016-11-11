@@ -70,7 +70,7 @@ public abstract class CrmGenericListPresenter<V extends IListView<S, B>, S exten
 
     private void displayView(HasComponents container) {
         CrmModule crmModule = (CrmModule) container;
-        crmModule.addView(candidateView);
+        crmModule.setContent(candidateView);
     }
 
     @Override

@@ -10,9 +10,9 @@
 
   /* Project Page View */
 
-  .projectDashboardView {
+  .project-view {
     display: block;
-    .container-wrap.main-content {
+    .main-content {
       .top-panel {
         border-bottom: 1px solid $my-separator-color;
         padding: $my-space 2*$my-space;
@@ -32,13 +32,11 @@
 
   /* My Project List */
   .v-popupbutton-popup-myprojectlist, .myprojectlist {
-    background-color: white;
     .contentWrapper {
       border-top: 1px solid $my-separator-color;
     }
     .projectblock {
       padding: 10px;
-      background-color: #FFF;
       border-bottom: 1px solid $my-separator-color;
       border-right: 1px solid $my-separator-color;
       border-left: 1px solid $my-separator-color;
@@ -316,13 +314,12 @@
 
   /* End Milestone View */
 
-  .tasklist {
+  .border-list {
     border: 1px solid $my-separator-color;
-    background-color:#FFF;
     width: 100%;
 
-    .taskrow {
-      padding: 10px;
+    .row {
+      padding: $my-space;
       border-bottom: 1px solid $my-separator-color;
       &:last-child {
         border-style: none;

@@ -52,7 +52,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @since 2.0
  */
 @ViewComponent
-public class AccountModuleImpl extends AbstractCssPageView implements AccountModule {
+public class AccountModuleImpl extends AbstractSingleContainerPageView implements AccountModule {
     private static final long serialVersionUID = 1L;
 
     private MHorizontalLayout serviceMenuContainer;
@@ -92,7 +92,7 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
         contentWrapper.addComponentAsFirst(topPanel);
 
         this.buildComponents();
-        this.addComponent(tabSheet);
+        this.setContent(tabSheet);
     }
 
     private void buildComponents() {

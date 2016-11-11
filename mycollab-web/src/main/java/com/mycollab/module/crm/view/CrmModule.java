@@ -40,7 +40,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @since 1.0
  */
 @ViewComponent
-public class CrmModule extends AbstractVerticalPageView implements IDesktopModule {
+public class CrmModule extends AbstractSingleContainerPageView implements IDesktopModule {
     private static final long serialVersionUID = 1L;
 
     private PopupButton addPopupMenu;
@@ -55,11 +55,6 @@ public class CrmModule extends AbstractVerticalPageView implements IDesktopModul
 
     public void gotoCrmDashboard() {
         EventBusFactory.getInstance().post(new CrmEvent.GotoHome(this, null));
-    }
-
-    public void addView(PageView view) {
-        this.removeAllComponents();
-        this.with(view).expand(view);
     }
 
     @Override

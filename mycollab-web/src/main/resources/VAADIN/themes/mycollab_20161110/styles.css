@@ -15284,30 +15284,26 @@ div .addview-layout-body {
 	min-height: 100%;
 }
 
-.projectDashboardView {
+.project-view {
 	display: block;
 }
 
-.projectDashboardView .container-wrap.main-content .top-panel {
+.project-view .main-content .top-panel {
 	border-bottom: 1px solid #ededed;
 	padding: 12px 24px;
 	background-color: #efefef;
 }
 
-.projectDashboardView .sidebar-menu {
+.project-view .sidebar-menu {
 	padding: 0px;
 }
 
-.projectDashboardView .sidebar-menu .v-button-wrap .v-icon {
+.project-view .sidebar-menu .v-button-wrap .v-icon {
 	font-size: 18px;
 }
 
-.projectDashboardView .addViewLayout {
+.project-view .addViewLayout {
 	padding: 0px 30px 10px;
-}
-
-.v-popupbutton-popup-myprojectlist, .myprojectlist {
-	background-color: white;
 }
 
 .v-popupbutton-popup-myprojectlist .contentWrapper, .myprojectlist .contentWrapper {
@@ -15316,7 +15312,6 @@ div .addview-layout-body {
 
 .v-popupbutton-popup-myprojectlist .projectblock, .myprojectlist .projectblock {
 	padding: 10px;
-	background-color: #FFF;
 	border-bottom: 1px solid #ededed;
 	border-right: 1px solid #ededed;
 	border-left: 1px solid #ededed;
@@ -15627,22 +15622,21 @@ div.v-button.token-field .v-button-wrap {
 	background-color: #f5f5f5;
 }
 
-.tasklist {
+.border-list {
 	border: 1px solid #ededed;
-	background-color: #FFF;
 	width: 100%;
 }
 
-.tasklist .taskrow {
-	padding: 10px;
+.border-list .row {
+	padding: 12px;
 	border-bottom: 1px solid #ededed;
 }
 
-.tasklist .taskrow:last-child {
+.border-list .row:last-child {
 	border-style: none;
 }
 
-.tasklist .taskrow:hover {
+.border-list .row:hover {
 	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	box-shadow: inset 5px 0px 0px 0px #0083ce;
@@ -16636,14 +16630,6 @@ input.v-textfield-pagedtable-pagefield {
 
 .basicSearch .basicSearchBody .v-horizontallayout-search-comp .v-horizontallayout-margin {
 	padding: 0px;
-}
-
-.basicSearch .basicSearchBody .v-label {
-	line-height: 24px;
-}
-
-.basicSearch .basicSearchBody .v-label.separator {
-	line-height: 16px;
 }
 
 input.v-textfield-errorField {
