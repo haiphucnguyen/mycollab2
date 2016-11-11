@@ -35,8 +35,7 @@ public class ProjectSearchItemPresenter extends AbstractPresenter<ProjectSearchI
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectDashboardContainer projectViewContainer = (ProjectDashboardContainer) container;
-        projectViewContainer.removeAllComponents();
-        projectViewContainer.addComponent(view);
+        projectViewContainer.setContent(view);
         String params = (String) data.getParams();
         view.displayResults(params);
 

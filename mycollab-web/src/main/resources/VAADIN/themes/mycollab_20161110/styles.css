@@ -2130,20 +2130,6 @@ div.v-window {
 	line-height: 20px !important;
 }
 
-.single-container.module > .v-panel-content {
-	margin: 0px !important;
-}
-
-.v-panel.single-container {
-	border-style: none;
-	box-shadow: none;
-}
-
-.v-panel.single-container .v-panel-content {
-	border-style: none;
-	margin: 12px 24px;
-}
-
 .sk-cube-grid > div {
 	width: 40px;
 	height: 40px;
@@ -14800,20 +14786,6 @@ div.v-window {
 	height: 20px !important;
 	font-size: 16px !important;
 	line-height: 20px !important;
-}
-
-.single-container.module > .v-panel-content {
-	margin: 0px !important;
-}
-
-.v-panel.single-container {
-	border-style: none;
-	box-shadow: none;
-}
-
-.v-panel.single-container .v-panel-content {
-	border-style: none;
-	margin: 12px 24px;
 }
 
 .sk-cube-grid > div {

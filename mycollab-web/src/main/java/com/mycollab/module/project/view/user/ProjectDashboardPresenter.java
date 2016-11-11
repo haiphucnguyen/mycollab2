@@ -45,7 +45,6 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
         projectViewContainer.gotoSubView(ProjectTypeConstants.DASHBOARD);
-        view.removeAllComponents();
 
         ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
 

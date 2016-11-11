@@ -28,8 +28,7 @@ public class TagListPresenter extends AbstractPresenter<ITagListView> implements
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectDashboardContainer projectViewContainer = (ProjectDashboardContainer) container;
-        projectViewContainer.removeAllComponents();
-        projectViewContainer.addComponent(view);
+        projectViewContainer.setContent(view);
         Object params = data.getParams();
         if (params instanceof Tag || params == null) {
             ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

@@ -21,8 +21,7 @@ public class FavoritePresenter extends AbstractPresenter<IFavoriteView> implemen
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectDashboardContainer projectViewContainer = (ProjectDashboardContainer) container;
-        projectViewContainer.removeAllComponents();
-        projectViewContainer.addComponent(view);
+        projectViewContainer.setContent(view);
 
         ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
         breadcrumb.gotoFavoriteList();

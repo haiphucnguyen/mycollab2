@@ -37,8 +37,7 @@ public class ProjectSummaryPresenter extends AbstractPresenter<ProjectSummaryVie
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectDashboardContainer projectViewContainer = (ProjectDashboardContainer) container;
-        projectViewContainer.removeAllComponents();
-        projectViewContainer.addComponent(view);
+        projectViewContainer.setContent(view);
         view.lazyLoadView();
     }
 }
