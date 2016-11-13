@@ -22,7 +22,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.LabelLink;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Label;
@@ -70,29 +70,29 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
 
                             if (ProjectTypeConstants.BUG.equals(type)) {
                                 if (BugStatus.Verified.name().equals(itemLogging.getStatus())) {
-                                    timeTrackingLink.addStyleName(WebUIConstants.LINK_COMPLETED);
+                                    timeTrackingLink.addStyleName(WebThemes.LINK_COMPLETED);
                                 } else if (itemLogging.getDueDate() != null && (itemLogging.getDueDate()
                                         .before(DateTimeUtils.getCurrentDateWithoutMS()))) {
-                                    timeTrackingLink.addStyleName(WebUIConstants.LINK_OVERDUE);
+                                    timeTrackingLink.addStyleName(WebThemes.LINK_OVERDUE);
                                 }
                             } else if (type.equals(ProjectTypeConstants.TASK)) {
                                 if (itemLogging.getPercentageComplete() != null
                                         && 100d == itemLogging.getPercentageComplete()) {
-                                    timeTrackingLink.addStyleName(WebUIConstants.LINK_COMPLETED);
+                                    timeTrackingLink.addStyleName(WebThemes.LINK_COMPLETED);
                                 } else {
                                     if (OptionI18nEnum.StatusI18nEnum.Pending.name().equals(itemLogging.getStatus())) {
-                                        timeTrackingLink.addStyleName(WebUIConstants.LINK_PENDING);
+                                        timeTrackingLink.addStyleName(WebThemes.LINK_PENDING);
                                     } else if (itemLogging.getDueDate() != null
                                             && (itemLogging.getDueDate().before(DateTimeUtils.getCurrentDateWithoutMS()))) {
-                                        timeTrackingLink.addStyleName(WebUIConstants.LINK_OVERDUE);
+                                        timeTrackingLink.addStyleName(WebThemes.LINK_OVERDUE);
                                     }
                                 }
                             } else {
                                 if (OptionI18nEnum.StatusI18nEnum.Closed.name().equals(itemLogging.getStatus())) {
-                                    timeTrackingLink.addStyleName(WebUIConstants.LINK_COMPLETED);
+                                    timeTrackingLink.addStyleName(WebThemes.LINK_COMPLETED);
                                 } else if (itemLogging.getDueDate() != null &&
                                         (itemLogging.getDueDate().before(DateTimeUtils.getCurrentDateWithoutMS()))) {
-                                    timeTrackingLink.addStyleName(WebUIConstants.LINK_OVERDUE);
+                                    timeTrackingLink.addStyleName(WebThemes.LINK_OVERDUE);
                                 }
                             }
                             summaryWrapper.addComponent(timeTrackingLink);
@@ -144,10 +144,10 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
             final SimpleItemTimeLogging itemLogging = getBeanByIndex(itemId);
 
             MButton editBtn = new MButton("", clickEvent -> fireTableEvent(new TableClickEvent(TimeTrackingTableDisplay.this, itemLogging, "edit")))
-                    .withIcon(FontAwesome.EDIT).withStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+                    .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 
             MButton deleteBtn = new MButton("", clickEvent -> fireTableEvent(new TableClickEvent(TimeTrackingTableDisplay.this, itemLogging, "delete")))
-                    .withIcon(FontAwesome.TRASH_O).withStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+                    .withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 
             return new MHorizontalLayout(editBtn, deleteBtn);
         });

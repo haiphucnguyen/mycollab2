@@ -27,7 +27,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractSingleContainerPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Alignment;
@@ -61,7 +61,7 @@ public class BillingContainer extends AbstractSingleContainerPageView implements
             LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
             if (licenseInfo.isExpired()) {
                 bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_DATE, UserUIContext.formatDate
-                        (licenseInfo.getExpireDate()))).withStyleName(WebUIConstants.LABEL_OVERDUE).withWidthUndefined());
+                        (licenseInfo.getExpireDate()))).withStyleName(WebThemes.LABEL_OVERDUE).withWidthUndefined());
             } else if (licenseInfo.isTrial()) {
                 bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_SOON_DATE, UserUIContext.formatDate(licenseInfo.getExpireDate())))
                         .withWidthUndefined());
@@ -83,9 +83,9 @@ public class BillingContainer extends AbstractSingleContainerPageView implements
 
             if (licenseInfo.isTrial() || licenseInfo.isExpired() || licenseInfo.isInvalid()) {
                 MButton checkoutBtn = new MButton(UserUIContext.getMessage(LicenseI18nEnum.OPT_BUY_LICENSE),
-                        clickEvent -> UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow())).withStyleName(WebUIConstants.BUTTON_ACTION);
+                        clickEvent -> UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow())).withStyleName(WebThemes.BUTTON_ACTION);
                 MButton licenseBtn = new MButton(UserUIContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE),
-                        clickEvent -> UI.getCurrent().addWindow(new LicenseActivationWindow())).withStyleName(WebUIConstants.BUTTON_ACTION);
+                        clickEvent -> UI.getCurrent().addWindow(new LicenseActivationWindow())).withStyleName(WebThemes.BUTTON_ACTION);
 
                 bodyLayout.with(new Image("", new ExternalResource("http://fastspring.info/dev/sb_buttons/images/bn/fs_button05.gif")),
                         new MHorizontalLayout(checkoutBtn, licenseBtn).alignAll(Alignment.MIDDLE_CENTER));

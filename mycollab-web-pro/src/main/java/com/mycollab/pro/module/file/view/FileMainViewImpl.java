@@ -13,7 +13,7 @@ import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -76,7 +76,7 @@ public class FileMainViewImpl extends AbstractLazyPageView implements FileMainVi
         MVerticalLayout topControlMenuWrapper = new MVerticalLayout().withSpacing(false).withWidth("250px");
 
         MHorizontalLayout topControlMenu = new MHorizontalLayout().withFullWidth();
-        topControlMenu.addStyleName(WebUIConstants.PANEL_HEADER);
+        topControlMenu.addStyleName(WebThemes.PANEL_HEADER);
 
         topControlMenuWrapper.addComponent(topControlMenu);
 
@@ -86,13 +86,13 @@ public class FileMainViewImpl extends AbstractLazyPageView implements FileMainVi
         MButton settingBtn = new MButton("", clickEvent -> {
             CloudDriveSettingWindow cloudDriveSettingWindow = new CloudDriveSettingWindow();
             UI.getCurrent().addWindow(cloudDriveSettingWindow);
-        }).withIcon(FontAwesome.COG).withStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+        }).withIcon(FontAwesome.COG).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 
         navButton.with(settingBtn);
 
         final PopupButton linkBtn = new PopupButton();
         linkBtn.setIcon(FontAwesome.LINK);
-        linkBtn.addStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+        linkBtn.addStyleName(WebThemes.BUTTON_ICON_ONLY);
 
         final OptionPopupContent filterBtnLayout = new OptionPopupContent();
 

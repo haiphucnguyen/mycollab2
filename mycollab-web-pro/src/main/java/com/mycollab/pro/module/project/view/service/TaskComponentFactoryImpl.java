@@ -50,7 +50,7 @@ import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Label;
@@ -346,7 +346,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         @Override
         protected void doShow() {
             CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.TASK, CurrentProjectVariables.getProjectId());
-            MVerticalLayout layout = getWrapContent().withStyleName(WebUIConstants.SCROLLABLE_CONTAINER);
+            MVerticalLayout layout = getWrapContent().withStyleName(WebThemes.SCROLLABLE_CONTAINER);
             layout.removeAllComponents();
             layout.with(commentDisplay);
             commentDisplay.loadComments(task.getId() + "");

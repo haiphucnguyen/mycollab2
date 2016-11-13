@@ -102,7 +102,7 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
 
         previewLayout = new DefaultReadViewLayout("");
         RightSidebarLayout bodyContainer = new RightSidebarLayout();
-        bodyContainer.addStyleName(WebUIConstants.CONTENT_WRAPPER);
+        bodyContainer.addStyleName(WebThemes.CONTENT_WRAPPER);
 
         MVerticalLayout bodyContent = new MVerticalLayout(previewForm).withSpacing(false).withMargin(false).withFullWidth();
         bodyContainer.setContent(bodyContent);

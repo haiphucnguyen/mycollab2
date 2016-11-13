@@ -17,10 +17,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.web.ui.BasicSearchLayout;
-import com.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
-import com.mycollab.vaadin.web.ui.SearchLayout;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
@@ -96,27 +93,27 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             endDateField.setValue(boundWeekDays[1]);
 
             Label dateStartLb = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.LOG_FOR_DATE)).withStyleName
-                    (WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("90px");
+                    (WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("90px");
 
-            Label dateEndLb = new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebUIConstants.META_COLOR,
-                    WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("90px");
+            Label dateEndLb = new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebThemes.META_COLOR,
+                    WebThemes.TEXT_ALIGN_RIGHT).withWidth("90px");
 
             gridLayout.addComponent(dateStartLb, 0, 0);
             gridLayout.addComponent(startDateField, 1, 0);
             gridLayout.addComponent(dateEndLb, 2, 0);
             gridLayout.addComponent(endDateField, 3, 0);
-            gridLayout.addComponent(new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(WebUIConstants.META_COLOR,
-                    WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("90px"), 4, 0);
+            gridLayout.addComponent(new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(WebThemes.META_COLOR,
+                    WebThemes.TEXT_ALIGN_RIGHT).withWidth("90px"), 4, 0);
 
             userField = new ProjectMemberListSelect();
             userField.setWidth("250px");
             gridLayout.addComponent(userField, 5, 0, 5, 1);
 
             MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                    .withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
+                    .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
 
             MButton clearBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> userField.setValue(null))
-                    .withStyleName(WebUIConstants.BUTTON_OPTION);
+                    .withStyleName(WebThemes.BUTTON_OPTION);
 
             MHorizontalLayout buttonControls = new MHorizontalLayout(searchBtn, clearBtn);
             bodyWrap.with(gridLayout, buttonControls).withAlign(buttonControls, Alignment.MIDDLE_CENTER);

@@ -23,7 +23,7 @@
         <junitVersion>4.12</junitVersion>
         <jackrabbitVersion>2.13.4</jackrabbitVersion>
         <jacksonVersion>2.8.4</jacksonVersion>
-        <jodaVersion>2.9.5</jodaVersion>
+        <jodaVersion>2.9.6</jodaVersion>
         <scala.binary.version>2.11</scala.binary.version>
         <scala.version>2.11.8</scala.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

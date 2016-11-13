@@ -18,6 +18,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.DoubleField;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.server.FontAwesome;
@@ -107,14 +108,14 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         tableItem.addGeneratedColumn("isbillable", (source, itemId, columnId) -> {
             SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
             ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
-            icon.setStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
             return icon;
         });
 
         tableItem.addGeneratedColumn("isovertime", (source, itemId, columnId) -> {
             SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
             ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
-            icon.setStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
             return icon;
         });
 
@@ -124,7 +125,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
                 itemTimeLoggingService.removeWithSession(itemTimeLogging, UserUIContext.getUsername(), MyCollabUI.getAccountId());
                 loadTimeValue();
                 hasTimeChange = true;
-            }).withIcon(FontAwesome.TRASH_O).withStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+            }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
             itemTimeLogging.setExtraData(deleteBtn);
 
             deleteBtn.setVisible(CurrentProjectVariables.isAdmin() || UserUIContext.getUsername().equals(itemTimeLogging.getLoguser()));
@@ -139,7 +140,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         MVerticalLayout spentTimePanel = new MVerticalLayout().withMargin(false);
         headerPanel.addComponent(spentTimePanel);
 
-        final MVerticalLayout totalLayout = new MVerticalLayout().withStyleName(WebUIConstants.BOX);
+        final MVerticalLayout totalLayout = new MVerticalLayout().withStyleName(WebThemes.BOX);
         spentTimePanel.addComponent(totalLayout);
         Label lbTimeInstructTotal = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_SPENT_HOURS));
         totalLayout.addComponent(lbTimeInstructTotal);
@@ -167,7 +168,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
                 loadTimeValue();
                 newTimeInputField.setValue(0d);
             }
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION).withVisible(isEnableAdd());
+        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION).withVisible(isEnableAdd());
         addLayout.with(newTimeInputField, forDateField, isBillableField, isOvertimeField, addBtn);
     }
 
@@ -175,7 +176,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         MVerticalLayout remainTimePanel = new MVerticalLayout().withMargin(false);
         headerPanel.addComponent(remainTimePanel);
 
-        final MVerticalLayout updateLayout = new MVerticalLayout().withStyleName(WebUIConstants.BOX);
+        final MVerticalLayout updateLayout = new MVerticalLayout().withStyleName(WebThemes.BOX);
         remainTimePanel.addComponent(updateLayout);
 
         final Label lbTimeInstructTotal = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_REMAINING_WORK_HOURS));
@@ -202,7 +203,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
                 remainTimeLbl.setValue(remainTimeInputField.getValue() + "");
                 remainTimeInputField.setValue(0d);
             }
-        }).withStyleName(WebUIConstants.BUTTON_ACTION).withVisible(isEnableAdd());
+        }).withStyleName(WebThemes.BUTTON_ACTION).withVisible(isEnableAdd());
         addLayout.with(addBtn).withAlign(addBtn, Alignment.MIDDLE_LEFT);
     }
 

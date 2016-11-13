@@ -41,7 +41,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
@@ -100,7 +100,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         if (UserUIContext.isAdmin()) {
             MButton cancelBtn = new MButton(UserUIContext.getMessage(BillingI18nEnum.BUTTON_CANCEL_ACCOUNT),
                     clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.CancelAccount(this, null)))
-                    .withStyleName(WebUIConstants.BUTTON_DANGER);
+                    .withStyleName(WebThemes.BUTTON_DANGER);
             faqLayout.with(cancelBtn);
         }
 
@@ -116,7 +116,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         BillingPlan currentBillingPlan = MyCollabUI.getBillingAccount().getBillingPlan();
         MButton bankwireBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT),
                 event -> UI.getCurrent().addWindow(new BankwireSelectionWindow(currentBillingPlan)))
-                .withIcon(FontAwesome.BANK).withStyleName(WebUIConstants.BUTTON_LINK);
+                .withIcon(FontAwesome.BANK).withStyleName(WebThemes.BUTTON_LINK);
         ELabel conditionLbl = ELabel.html(UserUIContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE_DESC));
         this.with(layout, new MHorizontalLayout(bankWireTransfer, bankwireBtn).alignAll(Alignment.MIDDLE_CENTER)
                 .withMargin(new MarginInfo(true, false, false, false)), conditionLbl, ELabel.html(UserUIContext.getMessage(OPTION_BILLING_FAQ)));
@@ -154,7 +154,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             if (currentBillingPlan.getId().equals(plan.getId())) {
                 if (billingAccount.isNotActive()) {
                     MButton selectPlanBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE))
-                            .withStyleName(WebUIConstants.BUTTON_DANGER)
+                            .withStyleName(WebThemes.BUTTON_DANGER)
                             .withIcon(FontAwesome.CREDIT_CARD);
                     BrowserWindowOpener opener = new BrowserWindowOpener(plan.getShoppingurl() +
                             "?referrer=" + EnDecryptHelper.encryptText(MyCollabUI.getAccountId() + ";" + currentBillingPlan.getId()));
@@ -163,12 +163,12 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 } else {
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject,
                             new MButton(UserUIContext.getMessage(GenericI18Enum.OPT_SELECTED))
-                                    .withStyleName(WebUIConstants.BUTTON_OPTION).withIcon(FontAwesome.CREDIT_CARD));
+                                    .withStyleName(WebThemes.BUTTON_OPTION).withIcon(FontAwesome.CREDIT_CARD));
                 }
             } else {
                 boolean isDowngrade = (plan.getPricing() < currentBillingPlan.getPricing());
                 String actionTxt = isDowngrade ? UserUIContext.getMessage(BillingI18nEnum.ACTION_DOWNGRADE) : UserUIContext.getMessage(BillingI18nEnum.ACTION_UPGRADE);
-                String style = isDowngrade ? WebUIConstants.BUTTON_OPTION : WebUIConstants.BUTTON_ACTION;
+                String style = isDowngrade ? WebThemes.BUTTON_OPTION : WebThemes.BUTTON_ACTION;
                 MButton selectPlanBtn = new MButton(actionTxt,
                         clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan)))
                         .withStyleName(style).withIcon(FontAwesome.CREDIT_CARD);
@@ -210,7 +210,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             if (currentBillingPlan.getId().equals(plan.getId())) {
                 if (billingAccount.isNotActive()) {
                     MButton selectPlanBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE))
-                            .withStyleName(WebUIConstants.BUTTON_DANGER)
+                            .withStyleName(WebThemes.BUTTON_DANGER)
                             .withIcon(FontAwesome.CREDIT_CARD);
                     BrowserWindowOpener opener = new BrowserWindowOpener(plan.getYearlyshoppingurl() +
                             "?referrer=" + EnDecryptHelper.encryptText(MyCollabUI.getAccountId() + ";" + currentBillingPlan.getId()));
@@ -219,12 +219,12 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 } else {
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject,
                             new MButton(UserUIContext.getMessage(GenericI18Enum.OPT_SELECTED))
-                            .withStyleName(WebUIConstants.BUTTON_OPTION).withIcon(FontAwesome.CREDIT_CARD));
+                            .withStyleName(WebThemes.BUTTON_OPTION).withIcon(FontAwesome.CREDIT_CARD));
                 }
             } else {
                 boolean isDowngrade = (plan.getPricing() < currentBillingPlan.getPricing());
                 String actionTxt = isDowngrade ? UserUIContext.getMessage(BillingI18nEnum.ACTION_DOWNGRADE) : UserUIContext.getMessage(BillingI18nEnum.ACTION_UPGRADE);
-                String style = isDowngrade ? WebUIConstants.BUTTON_OPTION : WebUIConstants.BUTTON_ACTION;
+                String style = isDowngrade ? WebThemes.BUTTON_OPTION : WebThemes.BUTTON_ACTION;
                 MButton selectPlanBtn = new MButton(actionTxt,
                         clickEvent -> UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan)))
                         .withStyleName(style).withIcon(FontAwesome.CREDIT_CARD);
@@ -244,7 +244,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         ELabel introText = ELabel.h2(UserUIContext.getMessage(BillingI18nEnum.OPT_CURRENT_PLAN, currentBillingPlan.getBillingtype()));
         SimpleBillingSubscription subscription = (SimpleBillingSubscription) MyCollabSession.getCurrentUIVariable("subscription");
         if (subscription == null) {
-            MButton selectPlanBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(WebUIConstants.BUTTON_DANGER)
+            MButton selectPlanBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(WebThemes.BUTTON_DANGER)
                     .withIcon(FontAwesome.CREDIT_CARD);
             BrowserWindowOpener opener = new BrowserWindowOpener(currentBillingPlan.getShoppingurl() + "?referrer=" +
                     EnDecryptHelper.encryptText(MyCollabUI.getAccountId() + ";" + currentBillingPlan.getId()));
@@ -253,12 +253,12 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         } else {
             MButton historyBtn = new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY),
                     clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoHistory(this, null)))
-                    .withStyleName(WebUIConstants.BUTTON_ACTION, ValoTheme.BUTTON_TINY);
+                    .withStyleName(WebThemes.BUTTON_ACTION, ValoTheme.BUTTON_TINY);
             MHorizontalLayout buttonControls = new MHorizontalLayout(introText, historyBtn);
             currentPlanLayout.addComponent(buttonControls);
             if (!subscription.isValid()) {
                 MButton retryChargeBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE))
-                        .withStyleName(WebUIConstants.BUTTON_DANGER, ValoTheme.BUTTON_TINY).withIcon(FontAwesome.CREDIT_CARD);
+                        .withStyleName(WebThemes.BUTTON_DANGER, ValoTheme.BUTTON_TINY).withIcon(FontAwesome.CREDIT_CARD);
                 BrowserWindowOpener paymentOpener = new BrowserWindowOpener(subscription.getSubscriptioncustomerurl());
                 paymentOpener.extend(retryChargeBtn);
                 buttonControls.with(retryChargeBtn);
@@ -269,7 +269,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             ELabel expiredDateLbl = ELabel.h3(" | " + UserUIContext.getMessage(BillingI18nEnum.OPT_EXPIRED_DATE) + ": " +
                     UserUIContext.formatDate(subscription.getExpireDate()));
             if (!subscription.isValid()) {
-                expiredDateLbl.withStyleName(WebUIConstants.LABEL_OVERDUE);
+                expiredDateLbl.withStyleName(WebThemes.LABEL_OVERDUE);
             }
             currentPlanLayout.addComponent(expiredDateLbl);
         }
@@ -304,13 +304,13 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                     new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHANGE), event -> {
                         isMonthlyView = false;
                         displayBillingYearly();
-                    }).withStyleName(WebUIConstants.BUTTON_LINK));
+                    }).withStyleName(WebThemes.BUTTON_LINK));
         } else {
             switchBillingModeLayout.with(ELabel.h3(UserUIContext.getMessage(BillingI18nEnum.OPT_SWITCH_MONTHLY_SUBSCRIPTION)),
                     new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHANGE), event -> {
                         isMonthlyView = true;
                         displayBillingMonthly();
-                    }).withStyleName(WebUIConstants.BUTTON_LINK));
+                    }).withStyleName(WebThemes.BUTTON_LINK));
         }
     }
 
@@ -342,7 +342,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
 
             final MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                    .withStyleName(WebUIConstants.BUTTON_OPTION);
+                    .withStyleName(WebThemes.BUTTON_OPTION);
 
             final MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
                 if (chosenPlan.getNumprojects() < numOfActiveProjects
@@ -362,7 +362,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 billingService.updateBillingPlan(MyCollabUI.getAccountId(), MyCollabUI.getBillingAccount().getBillingPlan(), chosenPlan);
                 updateBillingPlan();
                 close();
-            }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
             SimpleBillingAccount billingAccount = MyCollabUI.getBillingAccount();
             if (billingAccount.isNotActive()) {

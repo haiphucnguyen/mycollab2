@@ -20,7 +20,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -73,7 +73,7 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
                 .withMargin(new MarginInfo(false, true, true, true)).withWidth("450px");
         MHorizontalLayout panelHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))
                 .withFullWidth();
-        panelHeader.addStyleName(WebUIConstants.PANEL_HEADER);
+        panelHeader.addStyleName(WebThemes.PANEL_HEADER);
 
         panelHeader.with(ELabel.h3(UserUIContext.getMessage(TagI18nEnum.OPT_TAG_CLOUD))).alignAll(Alignment.MIDDLE_LEFT);
 
@@ -137,11 +137,11 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
 
         public void setSelected(boolean isSelected) {
             if (isSelected) {
-                removeStyleName(WebUIConstants.BUTTON_OPTION);
+                removeStyleName(WebThemes.BUTTON_OPTION);
                 addStyleName(UIConstants.BLOCK);
             } else {
                 removeStyleName(UIConstants.BLOCK);
-                addStyleName(WebUIConstants.BUTTON_OPTION);
+                addStyleName(WebThemes.BUTTON_OPTION);
             }
         }
     }

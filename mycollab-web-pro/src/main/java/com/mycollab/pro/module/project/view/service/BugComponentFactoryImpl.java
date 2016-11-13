@@ -52,7 +52,7 @@ import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -200,7 +200,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         @Override
         protected void doShow() {
             CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.BUG, CurrentProjectVariables.getProjectId());
-            MVerticalLayout layout = getWrapContent().withStyleName(WebUIConstants.SCROLLABLE_CONTAINER);
+            MVerticalLayout layout = getWrapContent().withStyleName(WebThemes.SCROLLABLE_CONTAINER);
             layout.removeAllComponents();
             layout.with(commentDisplay);
             commentDisplay.loadComments(bug.getId() + "");
@@ -243,33 +243,33 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                 MButton resolveBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), clickEvent -> {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ResolvedInputWindow(beanItem)));
-                }).withStyleName(WebUIConstants.BUTTON_ACTION);
+                }).withStyleName(WebThemes.BUTTON_ACTION);
                 resolveBtn.setVisible(hasPermission);
                 content.with(resolveBtn);
             } else if (BugStatus.Verified.name().equals(beanItem.getStatus())) {
                 MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem)));
-                }).withStyleName(WebUIConstants.BUTTON_ACTION);
+                }).withStyleName(WebThemes.BUTTON_ACTION);
                 reopenBtn.setVisible(hasPermission);
                 content.with(reopenBtn);
             } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
                 MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem)));
-                }).withStyleName(WebUIConstants.BUTTON_ACTION);
+                }).withStyleName(WebThemes.BUTTON_ACTION);
                 reopenBtn.setVisible(hasPermission);
 
                 MButton approveNCloseBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.BUTTON_APPROVE_CLOSE), clickEvent -> {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ApproveInputWindow(beanItem)));
-                }).withStyleName(WebUIConstants.BUTTON_ACTION);
+                }).withStyleName(WebThemes.BUTTON_ACTION);
                 approveNCloseBtn.setVisible(hasPermission);
                 content.with(reopenBtn, approveNCloseBtn);
             } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
                 MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
                         clickEvent -> UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem))))
-                        .withStyleName(WebUIConstants.BUTTON_ACTION);
+                        .withStyleName(WebThemes.BUTTON_ACTION);
                 reopenBtn.setVisible(hasPermission);
                 content.with(reopenBtn);
             }

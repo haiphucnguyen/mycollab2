@@ -21,7 +21,7 @@ import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.service.ProjectService;
-import com.mycollab.vaadin.web.ui.AbstractPreviewItemComp;
+import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.module.project.ui.components.DateInfoComp;
 import com.mycollab.pro.module.project.view.ProjectAddWindow;
 import com.mycollab.security.RolePermissionCollections;
@@ -32,9 +32,6 @@ import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
-import com.mycollab.vaadin.web.ui.UserLink;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -183,15 +180,15 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                 Project project = new Project();
                 project.setAccountid(accountId);
                 UI.getCurrent().addWindow(new ProjectAddWindow(project));
-            }).withStyleName(WebUIConstants.BUTTON_ACTION).withVisible(UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
+            }).withStyleName(WebThemes.BUTTON_ACTION).withVisible(UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
 
-            MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(WebUIConstants.FORM_SECTION)
+            MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(WebThemes.FORM_SECTION)
                     .withFullWidth().with(headerLbl, newProjectBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
                     .withAlign(newProjectBtn, Alignment.MIDDLE_RIGHT);
             this.addComponent(headerPanel);
             List<SimpleProject> projects = projectService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
             CssLayout content = new CssLayout();
-            content.setStyleName(WebUIConstants.FLEX_DISPLAY);
+            content.setStyleName(WebThemes.FLEX_DISPLAY);
             this.addComponent(content);
             for (SimpleProject project : projects) {
                 content.addComponent(new ProjectBlock(project));
@@ -227,7 +224,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                 metaDiv.appendChild(0, leadDiv);
                 metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE());
             }
-            metaDiv.setCSSClass(WebUIConstants.FLEX_DISPLAY);
+            metaDiv.setCSSClass(WebThemes.FLEX_DISPLAY);
             ELabel prjInfo = new ELabel(metaDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO).withWidthUndefined();
             this.addComponent(prjInfo);
 

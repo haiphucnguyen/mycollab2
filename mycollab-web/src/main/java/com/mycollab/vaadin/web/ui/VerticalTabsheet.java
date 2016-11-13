@@ -187,7 +187,7 @@ public class VerticalTabsheet extends CustomComponent {
 
             navigatorContainer.setComponentAlignment(toggleBtn, Alignment.MIDDLE_CENTER);
             toggleBtn.setIcon(FontAwesome.ANGLE_DOUBLE_RIGHT);
-            toggleBtn.setStyleName(WebUIConstants.BUTTON_ICON_ONLY + " expand-button");
+            toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " expand-button");
             toggleBtn.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_EXPAND_MENU));
             toggleBtn.setCaption("");
         } else {
@@ -195,7 +195,7 @@ public class VerticalTabsheet extends CustomComponent {
             navigatorContainer.setWidth("200px");
             this.showTabsCaption();
 
-            toggleBtn.setStyleName(WebUIConstants.BUTTON_ICON_ONLY + " closed-button");
+            toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " closed-button");
             navigatorContainer.setComponentAlignment(toggleBtn, Alignment.TOP_RIGHT);
             toggleBtn.setIcon(FontAwesome.TIMES);
             toggleBtn.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_COLLAPSE_MENU));
@@ -205,7 +205,7 @@ public class VerticalTabsheet extends CustomComponent {
     public void addToggleNavigatorControl() {
         if (getButtonById("button") == null) {
             toggleBtn = new ButtonTabImpl("button", 0, "", "");
-            toggleBtn.setStyleName(WebUIConstants.BUTTON_ICON_ONLY + " closed-button");
+            toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " closed-button");
             toggleBtn.addClickListener(clickEvent -> {
                 retainVisibility = !retainVisibility;
                 setNavigatorVisibility(retainVisibility);

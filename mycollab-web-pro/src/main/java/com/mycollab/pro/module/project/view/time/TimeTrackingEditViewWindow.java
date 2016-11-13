@@ -17,7 +17,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.DoubleField;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -92,12 +92,12 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
 
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                .withStyleName(WebUIConstants.BUTTON_OPTION);
+                .withStyleName(WebThemes.BUTTON_OPTION);
 
         MButton saveBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             saveTimeLoggingItems();
             close();
-        }).withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
 
         MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);
 
@@ -117,7 +117,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
             MButton detachTaskBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.ACTION_UNLINK_TICKET), clickEvent -> {
                 createTicketLinkButton();
                 updateTicketLink(null);
-            }).withIcon(FontAwesome.UNLINK).withStyleName(WebUIConstants.BUTTON_DANGER);
+            }).withIcon(FontAwesome.UNLINK).withStyleName(WebThemes.BUTTON_DANGER);
             ticketLayout.addComponent(detachTaskBtn);
 
             ELabel linkTicketBtn = new ELabel(StringUtils.trim(ticket.getName(), 60, true))
@@ -133,7 +133,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
             ProjectTicketSelectionWindow selectionTicketWindow = new ProjectTicketSelectionWindow(
                     TimeTrackingEditViewWindow.this);
             UI.getCurrent().addWindow(selectionTicketWindow);
-        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.LINK);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.LINK);
 
         ticketLayout.addComponent(linkTicketBtn);
     }

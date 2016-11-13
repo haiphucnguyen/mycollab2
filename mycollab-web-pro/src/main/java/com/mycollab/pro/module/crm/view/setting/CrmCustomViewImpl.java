@@ -41,7 +41,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -74,7 +74,7 @@ public class CrmCustomViewImpl extends AbstractVerticalPageView implements ICrmC
 
         MHorizontalLayout headerTitle = new MHorizontalLayout().withFullWidth().withSpacing(false)
                 .withMargin(new MarginInfo(true, false, true, false));
-        headerTitle.addStyleName(WebUIConstants.HEADER_VIEW);
+        headerTitle.addStyleName(WebThemes.HEADER_VIEW);
         headerTitle.with(headerLbl).withAlign(headerLbl, Alignment.MIDDLE_LEFT).expand(headerLbl);
 
         headerBox.addComponent(headerTitle);
@@ -91,14 +91,14 @@ public class CrmCustomViewImpl extends AbstractVerticalPageView implements ICrmC
         MButton createCustomFieldBtn = new MButton("New Custom Field", clickEvent -> {
             CreateCustomFieldWindow createCustomFieldWindow = new CreateCustomFieldWindow(CrmCustomViewImpl.this);
             UI.getCurrent().addWindow(createCustomFieldWindow);
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
         controlLayout.addComponent(createCustomFieldBtn);
         controlLayout.setComponentAlignment(createCustomFieldBtn, Alignment.MIDDLE_LEFT);
 
         MButton createSectionBtn = new MButton("New Section", clickEvent -> {
             CreateSectionWindow createSectionWindow = new CreateSectionWindow(CrmCustomViewImpl.this);
             UI.getCurrent().addWindow(createSectionWindow);
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
 
         controlLayout.addComponent(createSectionBtn);
         controlLayout.setComponentAlignment(createSectionBtn, Alignment.MIDDLE_LEFT);
@@ -120,10 +120,10 @@ public class CrmCustomViewImpl extends AbstractVerticalPageView implements ICrmC
             DynaForm rebuildForm = layoutComp.rebuildForm();
             MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
             formService.saveCustomForm(MyCollabUI.getAccountId(), moduleName, rebuildForm);
-        }).withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> display(moduleName))
-                .withStyleName(WebUIConstants.BUTTON_OPTION);
+                .withStyleName(WebThemes.BUTTON_OPTION);
 
         MHorizontalLayout buttonsLayout = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(new MarginInfo(true, false, true, false));
         headerContent.with(buttonsLayout).withAlign(buttonsLayout, Alignment.MIDDLE_CENTER);

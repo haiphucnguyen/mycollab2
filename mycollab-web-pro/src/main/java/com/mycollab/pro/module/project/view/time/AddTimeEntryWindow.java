@@ -22,7 +22,7 @@ import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.DoubleField;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -70,8 +70,8 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         grid.setSpacing(true);
         content.addComponent(grid);
 
-        grid.addComponent(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)).withStyleName(WebUIConstants.META_COLOR), 0, 0);
-        grid.addComponent(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)).withStyleName(WebUIConstants.META_COLOR), 1, 0);
+        grid.addComponent(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)).withStyleName(WebThemes.META_COLOR), 0, 0);
+        grid.addComponent(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)).withStyleName(WebThemes.META_COLOR), 1, 0);
 
         projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
         grid.addComponent(projectMemberSelectionBox, 0, 1);
@@ -91,9 +91,9 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         isBillableCheckBox = new CheckBox();
         isOvertimeCheckBox = new CheckBox();
         attrContainer.with(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE)).withStyleName
-                        (WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("100px"),
+                        (WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("100px"),
                 isBillableCheckBox, new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME))
-                        .withStyleName(WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("100px"), isOvertimeCheckBox)
+                        .withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("100px"), isOvertimeCheckBox)
                 .alignAll(Alignment.MIDDLE_LEFT);
         grid.addComponent(attrContainer, 2, 1);
 
@@ -114,7 +114,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         updateTimeTableHeader();
         content.addComponent(timeInputTable);
 
-        content.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)).withStyleName(WebUIConstants.META_COLOR));
+        content.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)).withStyleName(WebThemes.META_COLOR));
 
         descArea = new RichTextArea();
         descArea.setWidth("100%");
@@ -126,12 +126,12 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         footer.addComponent(ticketLayout);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                .withStyleName(WebUIConstants.BUTTON_OPTION);
+                .withStyleName(WebThemes.BUTTON_OPTION);
 
         MButton saveBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             saveTimeLoggingItems();
             close();
-        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE)
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE)
                 .withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);
@@ -150,7 +150,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
             MButton unlinkTicketBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.ACTION_UNLINK_TICKET), clickEvent -> {
                 createTicketLinkButton();
                 updateTicketLink(null);
-            }).withStyleName(WebUIConstants.BUTTON_DANGER).withIcon(FontAwesome.UNLINK);
+            }).withStyleName(WebThemes.BUTTON_DANGER).withIcon(FontAwesome.UNLINK);
             ticketLayout.addComponent(unlinkTicketBtn);
 
             ELabel linkTicketBtn = new ELabel(StringUtils.trim(selectedTicket.getName(), 60, true))
@@ -166,7 +166,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         MButton attachTicketBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.ACTION_LINK_TICKET), clickEvent -> {
             ProjectTicketSelectionWindow selectionTaskWindow = new ProjectTicketSelectionWindow(AddTimeEntryWindow.this);
             getUI().addWindow(selectionTaskWindow);
-        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.LINK);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.LINK);
 
         ticketLayout.addComponent(attachTicketBtn);
     }

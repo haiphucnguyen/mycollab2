@@ -33,7 +33,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIUtils;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -53,7 +53,7 @@ import java.util.List;
 public class UserProjectDashboardViewImpl extends AbstractVerticalPageView implements UserProjectDashboardView {
 
     public UserProjectDashboardViewImpl() {
-        addStyleName(WebUIConstants.CONTENT_WRAPPER);
+        addStyleName(WebThemes.CONTENT_WRAPPER);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class UserProjectDashboardViewImpl extends AbstractVerticalPageView imple
             if (UserUIContext.canWrite(RolePermissionCollections.CREATE_NEW_PROJECT)) {
                 MButton newProjectBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.NEW),
                         clickEvent -> UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class)))
-                        .withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
+                        .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
                 with(newProjectBtn);
             }
             alignAll(Alignment.TOP_CENTER);

@@ -20,7 +20,7 @@ import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.ui.components.IBlockContainer;
 import com.mycollab.module.project.ui.components.IGroupComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -42,7 +42,7 @@ class DefaultTicketGroupComponent extends MVerticalLayout implements IGroupCompo
         this.setMargin(new MarginInfo(true, false, true, false));
         wrapBody = new CssLayout();
         wrapBody.setWidth("100%");
-        wrapBody.addStyleName(WebUIConstants.BORDER_LIST);
+        wrapBody.addStyleName(WebThemes.BORDER_LIST);
         headerLbl = ELabel.h3("");
         this.with(headerLbl, wrapBody);
         refresh();

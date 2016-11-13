@@ -40,7 +40,7 @@ import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -219,8 +219,8 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         MButton todayBtn = new MButton(UserUIContext.getMessage(DayI18nEnum.OPT_TODAY), clickEvent -> {
             baseDate = new LocalDate();
             displayCalendarView();
-        }).withStyleName(WebUIConstants.BUTTON_ACTION);
-        todayBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withStyleName(WebThemes.BUTTON_ACTION);
+        todayBtn.setStyleName(WebThemes.BUTTON_ACTION);
         ButtonGroup navigationBtns = new ButtonGroup();
         MButton previousBtn = new MButton("", clickEvent -> {
             if (mode == CalendarMode.DAILY) {
@@ -231,7 +231,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
                 baseDate = baseDate.minusMonths(1);
             }
             displayCalendarView();
-        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.CHEVRON_LEFT);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.CHEVRON_LEFT);
         navigationBtns.addButton(previousBtn);
 
         MButton nextBtn = new MButton("", clickEvent -> {
@@ -243,7 +243,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
                 baseDate = baseDate.plusMonths(1);
             }
             displayCalendarView();
-        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.CHEVRON_RIGHT);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.CHEVRON_RIGHT);
         navigationBtns.addButton(nextBtn);
 
         headerLeftContainer.with(todayBtn, navigationBtns);

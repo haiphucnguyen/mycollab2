@@ -15,7 +15,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebResourceIds;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;
 import com.vaadin.server.WebBrowser;
@@ -84,11 +84,11 @@ public class AboutWindow extends AbstractAboutWindow {
             MButton buyBtn = new MButton(UserUIContext.getMessage(LicenseI18nEnum.ACTION_BUY_LICENSE), clickEvent -> {
                 UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow());
                 close();
-            }).withStyleName(WebUIConstants.BUTTON_ACTION);
+            }).withStyleName(WebThemes.BUTTON_ACTION);
             MButton editLicenseBtn = new MButton(UserUIContext.getMessage(LicenseI18nEnum.ACTION_ENTER_LICENSE), clickEvent -> {
                 UI.getCurrent().addWindow(new LicenseActivationWindow());
                 close();
-            }).withStyleName(WebUIConstants.BUTTON_ACTION);
+            }).withStyleName(WebThemes.BUTTON_ACTION);
             rightPanel.addComponent(new MHorizontalLayout(buyBtn, editLicenseBtn));
         }
 

@@ -80,11 +80,11 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     @Override
     protected void onPreviewItem() {
         if (StatusI18nEnum.Closed.name().equals(beanItem.getStatus())) {
-            addLayoutStyleName(WebUIConstants.LINK_COMPLETED);
+            addLayoutStyleName(WebThemes.LINK_COMPLETED);
         }
 
         if (beanItem.isOverdue()) {
-            previewLayout.addTitleStyleName(WebUIConstants.LABEL_OVERDUE);
+            previewLayout.addTitleStyleName(WebThemes.LABEL_OVERDUE);
         }
 
         if (!SiteConfiguration.isCommunityEdition()) {

@@ -16,7 +16,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -97,7 +97,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends MWindow {
         BrowserWindowOpener windowOpener = oauthWindowOpener();
         windowOpener.extend(btnLogin);
 
-        btnLogin.addStyleName(WebUIConstants.BUTTON_ACTION);
+        btnLogin.addStyleName(WebThemes.BUTTON_ACTION);
         messageBox.addComponent(btnLogin);
         messageBox.setComponentAlignment(btnLogin, Alignment.MIDDLE_CENTER);
 
@@ -147,11 +147,11 @@ public abstract class DefaultCloudDriveOAuthWindow extends MWindow {
                 throw new MyCollabException(e);
             }
             close();
-        }).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withStyleName(WebThemes.BUTTON_ACTION);
         controllGroupBtn.addComponent(doneBtn);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                .withStyleName(WebUIConstants.BUTTON_OPTION);
+                .withStyleName(WebThemes.BUTTON_OPTION);
         controllGroupBtn.addComponent(cancelBtn);
 
         mainLayout.addComponent(controllGroupBtn);

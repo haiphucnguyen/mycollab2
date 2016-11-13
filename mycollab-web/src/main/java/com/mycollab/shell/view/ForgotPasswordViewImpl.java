@@ -32,7 +32,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.web.CustomLayoutExt;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.Resource;
@@ -89,12 +89,12 @@ public class ForgotPasswordViewImpl extends AbstractVerticalPageView implements 
                 } else {
                     NotificationUtil.showErrorNotification(LocalizationHelper.getMessage(MyCollabUI.getDefaultLocale(), ErrorI18nEnum.NOT_VALID_EMAIL, username));
                 }
-            }).withStyleName(WebUIConstants.BUTTON_ACTION).withClickShortcut(ShortcutAction.KeyCode.ENTER);
+            }).withStyleName(WebThemes.BUTTON_ACTION).withClickShortcut(ShortcutAction.KeyCode.ENTER);
             customLayout.addComponent(sendEmail, "loginButton");
 
             MButton memoBackBtn = new MButton(LocalizationHelper.getMessage(MyCollabUI.getDefaultLocale(), ShellI18nEnum.BUTTON_IGNORE_RESET_PASSWORD),
                     clickEvent -> EventBusFactory.getInstance().post(new ShellEvent.LogOut(this, null)))
-                    .withStyleName(WebUIConstants.BUTTON_LINK);
+                    .withStyleName(WebThemes.BUTTON_LINK);
             customLayout.addComponent(memoBackBtn, "forgotLink");
 
             this.setCompositionRoot(customLayout);

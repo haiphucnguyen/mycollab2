@@ -33,7 +33,7 @@ import com.mycollab.vaadin.ui.PropertyChangedEvent;
 import com.mycollab.vaadin.ui.PropertyChangedListener;
 import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.CssLayout;
@@ -54,7 +54,7 @@ class TicketRowRenderer extends BlockRowRender implements PropertyChangedListene
 
     public TicketRowRenderer(final ProjectTicket ticket) {
         this.ticket = ticket;
-        withMargin(false).withFullWidth().addStyleName(WebUIConstants.BORDER_LIST_ROW);
+        withMargin(false).withFullWidth().addStyleName(WebThemes.BORDER_LIST_ROW);
 
         toggleTicketField = new ToggleTicketSummaryField(ticket);
         MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType()))

@@ -25,7 +25,7 @@ import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.DetailFie
 import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.IntegerDetailFieldInfoPanel;
 import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.TextDetailFieldInfoPanel;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
@@ -103,10 +103,10 @@ public class CreateCustomFieldWindow extends Window {
             DynaSection section = fieldPanel.updateCustomField();
             viewParent.refreshSectionLayout(section);
             close();
-        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                .withStyleName(WebUIConstants.BUTTON_OPTION);
+                .withStyleName(WebThemes.BUTTON_OPTION);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(true);
         content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
@@ -116,7 +116,7 @@ public class CreateCustomFieldWindow extends Window {
         MVerticalLayout panel = new MVerticalLayout().withSpacing(false).withMargin(false);
         Label title = new Label("Select Field Type");
         MHorizontalLayout header = new MHorizontalLayout().withSpacing(false).with(title).
-                expand(title).withStyleName(WebUIConstants.PANEL_HEADER);
+                expand(title).withStyleName(WebThemes.PANEL_HEADER);
         header.setWidthUndefined();
 
         Table fieldSelectionTable = new Table();
@@ -129,7 +129,7 @@ public class CreateCustomFieldWindow extends Window {
 
         for (final Object[] rowItems : fieldsTable) {
             final Button typeLink = new Button((String) rowItems[1], clickEvent -> constructFieldPanel((String) rowItems[1]));
-            typeLink.addStyleName(WebUIConstants.BUTTON_LINK);
+            typeLink.addStyleName(WebThemes.BUTTON_LINK);
             fieldSelectionTable.addItem(new Object[]{new Embedded("", (Resource) rowItems[0]), typeLink}, rowItems[1]);
         }
 
@@ -141,7 +141,7 @@ public class CreateCustomFieldWindow extends Window {
         MVerticalLayout panel = new MVerticalLayout().withMargin(false).withWidth("300px");
         Label title = new Label("Provide Field Detail");
         MHorizontalLayout header = new MHorizontalLayout().withFullWidth().withSpacing(false).with(title).expand(title)
-                .withStyleName(WebUIConstants.PANEL_HEADER);
+                .withStyleName(WebThemes.PANEL_HEADER);
 
         fieldLayoutWrapper = new CssLayout();
         fieldLayoutWrapper.setWidth("100%");

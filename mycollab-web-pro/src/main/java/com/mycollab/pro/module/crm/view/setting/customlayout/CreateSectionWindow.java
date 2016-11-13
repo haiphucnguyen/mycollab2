@@ -5,7 +5,7 @@ import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -51,12 +51,12 @@ public class CreateSectionWindow extends Window {
             customView.addActiveSection(section);
             close();
         });
-        saveBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
+        saveBtn.setStyleName(WebThemes.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
 
 
         Button cancelBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), event -> close());
-        cancelBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
+        cancelBtn.setStyleName(WebThemes.BUTTON_OPTION);
 
         controlLayout.with(saveBtn, cancelBtn);
         contentLayout.with(controlLayout).withAlign(controlLayout, Alignment.MIDDLE_RIGHT);

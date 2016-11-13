@@ -36,7 +36,7 @@ import com.mycollab.vaadin.mvp.*;
 import com.mycollab.vaadin.web.ui.ServiceMenu;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet.TabImpl;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
@@ -74,7 +74,7 @@ public class AccountModuleImpl extends AbstractSingleContainerPageView implement
         AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
 
         MButton helpBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP))
-                .withIcon(FontAwesome.MORTAR_BOARD).withStyleName(WebUIConstants.BUTTON_LINK);
+                .withIcon(FontAwesome.MORTAR_BOARD).withStyleName(WebThemes.BUTTON_LINK);
         ExternalResource helpRes = new ExternalResource("https://community.mycollab.com/docs/account-management/");
         BrowserWindowOpener helpOpener = new BrowserWindowOpener(helpRes);
         helpOpener.extend(helpBtn);

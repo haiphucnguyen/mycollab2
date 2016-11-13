@@ -50,6 +50,4 @@
     <inherits name="org.vaadin.addons.comboboxmultiselect.WidgetSet" />
 
     <inherits name="org.vaadin.addons.CssCheckBoxWidgetSet" />
-
-    <inherits name="org.vaadin.sliderpanel.WidgetSet" />
 </module>

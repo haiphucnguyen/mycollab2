@@ -39,7 +39,7 @@ import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.ServiceMenu;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.web.IDesktopModule;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -66,6 +66,7 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
 
     public ProjectModule() {
         addStyleName("module");
+        setSizeFull();
         ControllerRegistry.addController(new ProjectModuleController(this));
     }
 
@@ -142,7 +143,7 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
                     }
                     displayResults();
                 }
-            }).withStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+            }).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 
             final TextField searchField = new TextField();
             searchField.setInputPrompt(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
@@ -150,7 +151,7 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
             MButton searchBtn = new MButton("", clickEvent -> {
                 searchCriteria.setProjectName(StringSearchField.and(searchField.getValue()));
                 displayResults();
-            }).withIcon(FontAwesome.SEARCH).withStyleName(WebUIConstants.BUTTON_ACTION);
+            }).withIcon(FontAwesome.SEARCH).withStyleName(WebThemes.BUTTON_ACTION);
 
             MHorizontalLayout popupHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))
                     .withFullWidth().withStyleName("border-bottom");

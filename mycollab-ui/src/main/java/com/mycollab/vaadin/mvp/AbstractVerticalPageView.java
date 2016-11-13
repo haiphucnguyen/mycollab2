@@ -26,6 +26,7 @@ public abstract class AbstractVerticalPageView extends MVerticalLayout implement
 
     public AbstractVerticalPageView() {
         this.withSpacing(false).withMargin(false);
+        setSizeFull();
     }
 
     @Override

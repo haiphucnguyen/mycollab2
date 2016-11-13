@@ -65,6 +65,13 @@
     }
   }
 
+  .v-sliderpanel-content {
+  	background-color: green !important;
+  	border-left: 1px solid #ededed;
+  	border-bottom: 1px solid #ededed;
+  	border-top: 1px solid #ededed;
+  }
+
   .cursor_pointer {
     cursor: pointer;
   }

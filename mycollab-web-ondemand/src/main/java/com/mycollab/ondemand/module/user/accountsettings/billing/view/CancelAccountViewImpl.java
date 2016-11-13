@@ -31,7 +31,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebResourceIds;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -118,11 +118,11 @@ public class CancelAccountViewImpl extends AbstractVerticalPageView implements C
             BillingService billingService = AppContextUtil.getSpringBean(BillingService.class);
             billingService.cancelAccount(MyCollabUI.getAccountId(), feedback);
             UI.getCurrent().getPage().setLocation("https://www.mycollab.com");
-        }).withStyleName(WebUIConstants.BUTTON_DANGER);
+        }).withStyleName(WebThemes.BUTTON_DANGER);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(BillingI18nEnum.ACTION_NOT_CANCEL_ACCOUNT),
                 clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(this, null)))
-                .withStyleName(WebUIConstants.BUTTON_ACTION);
+                .withStyleName(WebThemes.BUTTON_ACTION);
 
         innerLayout.with(new MHorizontalLayout(submitBtn, cancelBtn).withMargin(new MarginInfo(false, true, false, true)));
         innerLayout.with(ELabel.html(UserUIContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_CONFIRM_NOTE)).withWidth("600px"));

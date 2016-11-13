@@ -27,7 +27,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -53,11 +53,9 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
     public ClientListViewImpl() {
         this.withSpacing(true).withMargin(true);
         accountSearchPanel = new ClientSearchPanel();
-        this.addComponent(accountSearchPanel);
         content = new CssLayout();
-        content.setSizeFull();
-        content.addStyleName(WebUIConstants.FLEX_DISPLAY);
-        this.addComponent(content);
+        content.addStyleName(WebThemes.FLEX_DISPLAY);
+        this.with(accountSearchPanel, content).expand(content);
     }
 
     @Override
@@ -69,18 +67,18 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
     public void display(AccountSearchCriteria searchCriteria) {
         content.removeAllComponents();
         AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-        List<SimpleAccount> clients = accountService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
+        List<SimpleAccount> clients = accountService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         for (SimpleAccount client : clients) {
             content.addComponent(generateClientBlock(client));
         }
     }
 
     private Component generateClientBlock(final SimpleAccount client) {
-        MVerticalLayout blockContent = new MVerticalLayout().withStyleName("member-block").withWidth("350px")
+        MVerticalLayout blockContent = new MVerticalLayout().withStyleName("member-block").withWidth("350px").withHeightUndefined()
                 .withMargin(false).withSpacing(false);
 
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, client)))
-                .withIcon(FontAwesome.EDIT).withStyleName(WebUIConstants.BUTTON_ICON_ONLY)
+                .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ICON_ONLY)
                 .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
 
         MButton deleteBtn = new MButton("", clickEvent -> {
@@ -96,7 +94,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
                             EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
                         }
                     });
-        }).withIcon(FontAwesome.TRASH_O).withStyleName(WebUIConstants.BUTTON_ICON_ONLY)
+        }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY)
                 .withVisible(UserUIContext.canAccess(RolePermissionCollections.CRM_ACCOUNT));
         deleteBtn.setDescription(UserUIContext.getMessage(ClientI18nEnum.OPT_REMOVE_CLIENT, client.getAccountname()));
 

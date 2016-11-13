@@ -10,6 +10,7 @@ import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.ui.components.GenericTaskTableFieldDef;
 import com.mycollab.module.project.ui.components.TicketTableDisplay;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.ComponentContainer;
@@ -62,10 +63,10 @@ class ProjectTicketSelectionWindow extends MWindow {
         nameField.setWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
 
         final MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                .withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
+                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
 
         final MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
-                .withStyleName(WebUIConstants.BUTTON_OPTION);
+                .withStyleName(WebThemes.BUTTON_OPTION);
 
         return new MHorizontalLayout(nameLbl, nameField, searchBtn, cancelBtn).withMargin(true);
     }

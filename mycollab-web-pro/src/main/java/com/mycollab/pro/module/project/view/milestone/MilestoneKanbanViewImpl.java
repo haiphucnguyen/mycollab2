@@ -42,10 +42,7 @@ import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UIUtils;
-import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
-import com.mycollab.vaadin.web.ui.OptionPopupContent;
-import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
@@ -72,7 +69,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.mycollab.vaadin.web.ui.WebUIConstants.BUTTON_ACTION;
+import static com.mycollab.vaadin.web.ui.WebThemes.BUTTON_ACTION;
 
 /**
  * @author MyCollab Ltd
@@ -184,7 +181,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             displayClosedMilestones = !displayClosedMilestones;
             reload();
             toggleShowButton();
-        }).withStyleName(WebUIConstants.BUTTON_LINK);
+        }).withStyleName(WebThemes.BUTTON_LINK);
 
 
         MButton boardBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD), clickEvent ->
@@ -202,7 +199,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             milestone.setSaccountid(MyCollabUI.getAccountId());
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
 
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(boardBtn);
@@ -406,7 +403,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             }
 
             final PopupButton controlsBtn = new PopupButton();
-            controlsBtn.addStyleName(WebUIConstants.BUTTON_LINK);
+            controlsBtn.addStyleName(WebThemes.BUTTON_LINK);
 
             boolean canWrite = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES);
             boolean canExecute = CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MILESTONES);

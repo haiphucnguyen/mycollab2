@@ -24,7 +24,7 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -101,7 +101,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
 
             ELabel listLnl = ELabel.h3("Projects (" + projectIds.size() + ")");
             MHorizontalLayout favoriteListHeaderPanel = new MHorizontalLayout(listLnl).expand(listLnl).withMargin(new
-                    MarginInfo(false, true, false, true)).withStyleName(WebUIConstants.PANEL_HEADER).withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
+                    MarginInfo(false, true, false, true)).withStyleName(WebThemes.PANEL_HEADER).withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
             projectListComp = new ProjectListComp();
             MVerticalLayout projectListPanel = new MVerticalLayout(favoriteListHeaderPanel, projectListComp).withMargin(false).withSpacing(false).withWidth("300px");
 
@@ -134,7 +134,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
 
         ProjectListComp() {
             super(new ProjectRowHandler(), 10);
-            addStyleName(WebUIConstants.BORDER_LIST);
+            addStyleName(WebThemes.BORDER_LIST);
             setControlStyle("borderlessControl");
             standupReportService = AppContextUtil.getSpringBean(StandupReportService.class);
         }
@@ -169,8 +169,8 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
             final MHorizontalLayout layout = new MHorizontalLayout(ProjectAssetsUtil.buildProjectLogo(project
                     .getProjectKey(), project.getProjectId(), project.getProjectAvatarId(), 32),
                     projectLbl, new ELabel(" (" + project.getTotalWrittenReports() + " / "
-                    + project.getTotalReports() + ")").withWidthUndefined()).expand(projectLbl).withStyleName(WebUIConstants
-                    .BORDER_LIST_ROW).withStyleName(WebUIConstants.CURSOR_POINTER).withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
+                    + project.getTotalReports() + ")").withWidthUndefined()).expand(projectLbl).withStyleName(WebThemes
+                    .BORDER_LIST_ROW).withStyleName(WebThemes.CURSOR_POINTER).withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
             layout.addLayoutClickListener(layoutClickEvent -> {
                 selectedProject = project;
                 EventBusFactory.getInstance().post(new StandUpEvent.DisplayStandupInProject(this, project.getProjectId()));
@@ -198,7 +198,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
             } else {
                 NotificationUtil.showErrorNotification("You do not select any project");
             }
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
 
         header.with(newReportBtn).withAlign(newReportBtn, Alignment.TOP_RIGHT);
         this.addComponent(header);
@@ -232,7 +232,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
             HorizontalLayout rowLayout = new HorizontalLayout();
             rowLayout.setStyleName("standup-block");
 
-            MVerticalLayout userInfo = new MVerticalLayout().withWidth("200px").withFullHeight().withStyleName(WebUIConstants
+            MVerticalLayout userInfo = new MVerticalLayout().withWidth("200px").withFullHeight().withStyleName(WebThemes
                     .HOVER_EFFECT_NOT_BOX);
             userInfo.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
@@ -243,27 +243,27 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
             userInfo.with(memberLink).expand(memberLink).withAlign(memberLink, Alignment.TOP_CENTER);
             rowLayout.addComponent(userInfo);
 
-            MVerticalLayout reportContent = new MVerticalLayout().withStyleName("report-content", WebUIConstants.HOVER_EFFECT_NOT_BOX);
+            MVerticalLayout reportContent = new MVerticalLayout().withStyleName("report-content", WebThemes.HOVER_EFFECT_NOT_BOX);
 
             ELabel whatYesterdayLbl = ELabel.h3(UserUIContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
             reportContent.addComponent(whatYesterdayLbl);
             Label whatYesterdayField = new SafeHtmlLabel(report.getWhatlastday());
             whatYesterdayField.setSizeUndefined();
-            whatYesterdayField.addStyleName(WebUIConstants.STANDUP_ROW_CONTENT);
+            whatYesterdayField.addStyleName(WebThemes.STANDUP_ROW_CONTENT);
             reportContent.addComponent(whatYesterdayField);
 
             ELabel whatTodayLbl = ELabel.h3(UserUIContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
             reportContent.addComponent(whatTodayLbl);
             Label whatTodayField = new SafeHtmlLabel(report.getWhattoday());
             whatTodayField.setSizeUndefined();
-            whatTodayField.addStyleName(WebUIConstants.STANDUP_ROW_CONTENT);
+            whatTodayField.addStyleName(WebThemes.STANDUP_ROW_CONTENT);
             reportContent.addComponent(whatTodayField);
 
             ELabel roadblockLbl = ELabel.h3(UserUIContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
             reportContent.addComponent(roadblockLbl);
             Label whatProblemField = new SafeHtmlLabel(report.getWhatproblem());
             whatProblemField.setSizeUndefined();
-            whatProblemField.addStyleName(WebUIConstants.STANDUP_ROW_CONTENT);
+            whatProblemField.addStyleName(WebThemes.STANDUP_ROW_CONTENT);
             reportContent.addComponent(whatProblemField);
 
             rowLayout.addComponent(reportContent);

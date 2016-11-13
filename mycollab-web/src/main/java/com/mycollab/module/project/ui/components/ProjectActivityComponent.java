@@ -44,7 +44,7 @@ import com.mycollab.vaadin.ui.formatter.FieldGroupFormatter;
 import com.mycollab.vaadin.ui.registry.AuditLogRegistry;
 import com.mycollab.vaadin.web.ui.AttachmentDisplayComponent;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -110,7 +110,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
             displayActivities();
         });
 
-        MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(WebUIConstants.FORM_SECTION)
+        MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(WebThemes.FORM_SECTION)
                 .withFullWidth().with(headerLbl, sortDirection).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
                 .withAlign(sortDirection, Alignment.MIDDLE_RIGHT);
 
@@ -182,7 +182,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
                 comment.getOwnerFullName());
         layout.addComponent(memberBlock);
 
-        MVerticalLayout rowLayout = new MVerticalLayout().withFullWidth().withStyleName(WebUIConstants.MESSAGE_CONTAINER);
+        MVerticalLayout rowLayout = new MVerticalLayout().withFullWidth().withStyleName(WebThemes.MESSAGE_CONTAINER);
 
         MHorizontalLayout messageHeader = new MHorizontalLayout().withFullWidth();
         messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
@@ -206,7 +206,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
                                 activityBox.removeComponent(layout);
                             }
                         });
-            }).withStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+            }).withStyleName(WebThemes.BUTTON_ICON_ONLY);
             messageHeader.with(timePostLbl, msgDeleteBtn).expand(timePostLbl);
         } else {
             messageHeader.with(timePostLbl).expand(timePostLbl);
@@ -244,7 +244,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
                     auditLog.getPostedUserFullName());
             layout.addComponent(memberBlock);
 
-            MVerticalLayout rowLayout = new MVerticalLayout().withFullWidth().withStyleName(WebUIConstants.MESSAGE_CONTAINER);
+            MVerticalLayout rowLayout = new MVerticalLayout().withFullWidth().withStyleName(WebThemes.MESSAGE_CONTAINER);
 
             MHorizontalLayout messageHeader = new MHorizontalLayout().withFullWidth();
             messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);

@@ -30,7 +30,7 @@ import com.mycollab.vaadin.resources.StreamDownloadResourceUtil;
 import com.mycollab.vaadin.resources.file.FileAssetsUtil;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.UserLink;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
@@ -103,7 +103,7 @@ class FileDownloadWindow extends MWindow {
         layout.addComponent(inforLayout.getLayout());
 
         MButton downloadBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DOWNLOAD))
-                .withIcon(FontAwesome.DOWNLOAD).withStyleName(WebUIConstants.BUTTON_ACTION);
+                .withIcon(FontAwesome.DOWNLOAD).withStyleName(WebThemes.BUTTON_ACTION);
         List<Resource> resources = new ArrayList<>();
         resources.add(content);
 
@@ -113,7 +113,7 @@ class FileDownloadWindow extends MWindow {
         fileDownloader.extend(downloadBtn);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                .withStyleName(WebUIConstants.BUTTON_OPTION);
+                .withStyleName(WebThemes.BUTTON_OPTION);
         final MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, downloadBtn);
         layout.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
         this.setContent(layout);

@@ -39,7 +39,7 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -230,7 +230,7 @@ public class CalendarDashboardViewImpl extends AbstractVerticalPageView implemen
         MButton todayBtn = new MButton(UserUIContext.getMessage(DayI18nEnum.OPT_TODAY), clickEvent -> {
             baseDate = new LocalDate();
             displayCalendar();
-        }).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withStyleName(WebThemes.BUTTON_ACTION);
         ButtonGroup navigationBtns = new ButtonGroup();
         MButton previousBtn = new MButton("", clickEvent -> {
             if (isMonthView) {
@@ -239,7 +239,7 @@ public class CalendarDashboardViewImpl extends AbstractVerticalPageView implemen
                 baseDate = baseDate.minusWeeks(1);
             }
             displayCalendar();
-        }).withIcon(FontAwesome.CHEVRON_LEFT).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.CHEVRON_LEFT).withStyleName(WebThemes.BUTTON_ACTION);
         navigationBtns.addButton(previousBtn);
 
         MButton nextBtn = new MButton("", clickEvent -> {
@@ -249,7 +249,7 @@ public class CalendarDashboardViewImpl extends AbstractVerticalPageView implemen
                 baseDate = baseDate.plusWeeks(1);
             }
             displayCalendar();
-        }).withIcon(FontAwesome.CHEVRON_RIGHT).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.CHEVRON_RIGHT).withStyleName(WebThemes.BUTTON_ACTION);
         navigationBtns.addButton(nextBtn);
 
         MHorizontalLayout headerLeftContainer = new MHorizontalLayout(todayBtn, navigationBtns);
@@ -262,7 +262,7 @@ public class CalendarDashboardViewImpl extends AbstractVerticalPageView implemen
 
         MButton newTaskBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.NEW),
                 clickEvent -> UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(new SimpleTask())))
-                .withStyleName(WebUIConstants.BUTTON_ACTION);
+                .withStyleName(WebThemes.BUTTON_ACTION);
         final ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         final Button weekViewBtn = new Button(UserUIContext.getMessage(DayI18nEnum.OPT_WEEK));
         weekViewBtn.addClickListener(clickEvent -> {

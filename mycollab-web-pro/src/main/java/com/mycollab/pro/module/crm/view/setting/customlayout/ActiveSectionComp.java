@@ -22,7 +22,7 @@ import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
@@ -72,13 +72,13 @@ class ActiveSectionComp extends GenericSectionComp {
         Button editTitleBtn = new Button();
         editTitleBtn.setDescription("Edit Section's Title");
         editTitleBtn.setIcon(FontAwesome.EDIT);
-        editTitleBtn.addStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+        editTitleBtn.addStyleName(WebThemes.BUTTON_ICON_ONLY);
         header.addComponent(editTitleBtn);
 
         Button deleteSectionBtn = new Button();
         deleteSectionBtn.setDescription("Remove this Section");
         deleteSectionBtn.setIcon(FontAwesome.TRASH_O);
-        deleteSectionBtn.addStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+        deleteSectionBtn.addStyleName(WebThemes.BUTTON_ICON_ONLY);
         header.addComponent(deleteSectionBtn);
 
         headerWrapper.addComponent(header);

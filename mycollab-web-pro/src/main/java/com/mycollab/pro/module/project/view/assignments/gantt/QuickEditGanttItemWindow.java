@@ -8,7 +8,6 @@ import com.mycollab.module.project.event.BugEvent;
 import com.mycollab.module.project.event.MilestoneEvent;
 import com.mycollab.module.project.event.TaskEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
-import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectTaskService;
@@ -23,7 +22,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -85,7 +84,7 @@ public class QuickEditGanttItemWindow extends MWindow {
                         throw new MyCollabException("Do not support gantt item type " + bean);
                     }
                     close();
-                }).withStyleName(WebUIConstants.BUTTON_LINK);
+                }).withStyleName(WebThemes.BUTTON_LINK);
 
                 MButton updateBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
                     if (EditForm.this.validateForm()) {
@@ -96,10 +95,10 @@ public class QuickEditGanttItemWindow extends MWindow {
                         EventBusFactory.getInstance().post(new GanttEvent.UpdateGanttItem(QuickEditGanttItemWindow.this, ganttItem));
                         close();
                     }
-                }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+                }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
                 MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                        .withStyleName(WebUIConstants.BUTTON_OPTION);
+                        .withStyleName(WebThemes.BUTTON_OPTION);
 
                 MHorizontalLayout buttonControls = new MHorizontalLayout(updateAllBtn, cancelBtn, updateBtn).withMargin(new MarginInfo(true, true, true, false));
 

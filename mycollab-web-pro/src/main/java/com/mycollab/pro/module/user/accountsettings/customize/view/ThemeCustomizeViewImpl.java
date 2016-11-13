@@ -21,7 +21,7 @@ import com.mycollab.vaadin.ui.FormContainer;
 import com.mycollab.vaadin.ui.ThemeManager;
 import com.mycollab.vaadin.web.ui.ServiceMenu;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.web.CustomLayoutExt;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
@@ -64,12 +64,12 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
 
         MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.SaveTheme(this, accountTheme)))
-                .withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
+                .withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
         saveBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         MButton resetToDefaultBtn = new MButton(UserUIContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.ResetTheme(ThemeCustomizeViewImpl.this, null)))
-                .withStyleName(WebUIConstants.BUTTON_DANGER);
+                .withStyleName(WebThemes.BUTTON_DANGER);
         resetToDefaultBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         MHorizontalLayout controlButtons = new MHorizontalLayout(viewTitle, resetToDefaultBtn, saveBtn).withFullWidth()
@@ -245,7 +245,7 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         propertyLayout.addComponent(actionBtnPanel, 0, 0);
 
         Button exampleActionBtn = new Button(UserUIContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
-        exampleActionBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
+        exampleActionBtn.setStyleName(WebThemes.BUTTON_ACTION);
         actionBtnPanel.addComponent(exampleActionBtn);
 
         MHorizontalLayout actionBtnColorPane = new MHorizontalLayout();
@@ -278,7 +278,7 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         propertyLayout.addComponent(optionBtnPanel, 1, 0);
 
         Button exampleOptionBtn = new Button(UserUIContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
-        exampleOptionBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
+        exampleOptionBtn.setStyleName(WebThemes.BUTTON_OPTION);
         optionBtnPanel.addComponent(exampleOptionBtn);
 
         HorizontalLayout optionBtnColorPane = new HorizontalLayout();
@@ -309,7 +309,7 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         propertyLayout.addComponent(dangerBtnPanel, 2, 0);
 
         Button exampleDangerBtn = new Button(UserUIContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
-        exampleDangerBtn.setStyleName(WebUIConstants.BUTTON_DANGER);
+        exampleDangerBtn.setStyleName(WebThemes.BUTTON_DANGER);
         dangerBtnPanel.addComponent(exampleDangerBtn);
 
         MHorizontalLayout dangerBtnColorPane = new MHorizontalLayout();

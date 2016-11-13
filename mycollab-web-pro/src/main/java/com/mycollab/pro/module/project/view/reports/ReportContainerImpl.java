@@ -11,7 +11,7 @@ import com.mycollab.vaadin.mvp.PageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.hp.gagawa.java.elements.A;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -31,7 +31,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         this.addStyleName("hdr-view");
         ReportBreadcrumb breadcrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
         body = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
-        with(breadcrumb, ELabel.hr(), body);
+        with(breadcrumb, ELabel.hr(), body).expand(body);
     }
 
     @Override
@@ -39,8 +39,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         body.removeAllComponents();
         body.with(ELabel.h2(FontAwesome.PIE_CHART.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS)));
         CssLayout content = new CssLayout();
-        content.setStyleName(WebUIConstants.FLEX_DISPLAY);
-        this.addComponent(content);
+        content.setStyleName(WebThemes.FLEX_DISPLAY);
 
         MVerticalLayout standupConsole = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         standupConsole.setDefaultComponentAlignment(Alignment.TOP_CENTER);
@@ -79,12 +78,13 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         timesheetReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET_HELP))
                 .withFullWidth());
         content.addComponent(timesheetReport);
-        body.addComponent(content);
+
+        body.with(content);
     }
 
     @Override
     public void addView(PageView view) {
         body.removeAllComponents();
-        body.addComponent(view);
+        body.with(view).expand(view);
     }
 }

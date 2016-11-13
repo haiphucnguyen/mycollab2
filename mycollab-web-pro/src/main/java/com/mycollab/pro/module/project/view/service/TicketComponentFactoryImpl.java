@@ -62,7 +62,7 @@ import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -403,23 +403,23 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                         MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
                             setPopupVisible(false);
                             UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(bug)));
-                        }).withStyleName(WebUIConstants.BUTTON_ACTION);
+                        }).withStyleName(WebThemes.BUTTON_ACTION);
                         content.with(reopenBtn);
                     } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
                         MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
                             setPopupVisible(false);
                             UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(bug)));
-                        }).withStyleName(WebUIConstants.BUTTON_ACTION);
+                        }).withStyleName(WebThemes.BUTTON_ACTION);
 
                         MButton approveNCloseBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.BUTTON_APPROVE_CLOSE), clickEvent -> {
                             setPopupVisible(false);
                             UI.getCurrent().addWindow(bindCloseWindow(new ApproveInputWindow(bug)));
-                        }).withStyleName(WebUIConstants.BUTTON_ACTION);
+                        }).withStyleName(WebThemes.BUTTON_ACTION);
                         content.with(reopenBtn, approveNCloseBtn);
                     } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
                         MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
                                 clickEvent -> UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(bug))))
-                                .withStyleName(WebUIConstants.BUTTON_ACTION);
+                                .withStyleName(WebThemes.BUTTON_ACTION);
                         content.with(reopenBtn);
                     }
                 }
@@ -458,7 +458,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         @Override
         protected void doShow() {
             CommentDisplay commentDisplay = new CommentDisplay(ticket.getType(), CurrentProjectVariables.getProjectId());
-            MVerticalLayout layout = getWrapContent().withStyleName(WebUIConstants.SCROLLABLE_CONTAINER).withWidth("800px");
+            MVerticalLayout layout = getWrapContent().withStyleName(WebThemes.SCROLLABLE_CONTAINER).withWidth("800px");
             layout.removeAllComponents();
             layout.with(commentDisplay);
             commentDisplay.loadComments(ticket.getTypeId() + "");

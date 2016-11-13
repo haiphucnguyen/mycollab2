@@ -33,7 +33,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewEvent;
 import com.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.web.CustomLayoutExt;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ShortcutAction;
@@ -84,13 +84,13 @@ public class LoginViewImpl extends AbstractVerticalPageView implements LoginView
                     false);
             custom.addComponent(rememberMe, "rememberMe");
 
-            loginBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
+            loginBtn.setStyleName(WebThemes.BUTTON_ACTION);
             loginBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
             custom.addComponent(loginBtn, "loginButton");
 
             MButton forgotPasswordBtn = new MButton(LocalizationHelper.getMessage(MyCollabUI.getDefaultLocale(),
                     ShellI18nEnum.BUTTON_FORGOT_PASSWORD), clickEvent -> EventBusFactory.getInstance().post(new ShellEvent.GotoForgotPasswordPage(this, null)))
-                    .withStyleName(WebUIConstants.BUTTON_LINK);
+                    .withStyleName(WebThemes.BUTTON_LINK);
             custom.addComponent(forgotPasswordBtn, "forgotLink");
 
             custom.addComponent(ELabel.html(LocalizationHelper.getMessage(MyCollabUI.getDefaultLocale(), ShellI18nEnum.OPT_REMEMBER_PASSWORD,

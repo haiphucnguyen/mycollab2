@@ -46,7 +46,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
     protected Component buildExtraControls() {
         MButton createBtn = new MButton(UserUIContext.getMessage(ClientI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null)))
-                .withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
+                .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
         createBtn.setVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
         return createBtn;
     }
@@ -103,14 +103,14 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
             myItemCheckbox.addStyleName(ValoTheme.CHECKBOX_SMALL);
 
             MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                    .withIcon(FontAwesome.SEARCH).withStyleName(WebUIConstants.BUTTON_ACTION)
+                    .withIcon(FontAwesome.SEARCH).withStyleName(WebThemes.BUTTON_ACTION)
                     .withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
-                    .withStyleName(WebUIConstants.BUTTON_OPTION);
+                    .withStyleName(WebThemes.BUTTON_OPTION);
 
             MButton advancedSearchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
-                    clickEvent -> moveToAdvancedSearchLayout()).withStyleName(WebUIConstants.BUTTON_LINK);
+                    clickEvent -> moveToAdvancedSearchLayout()).withStyleName(WebThemes.BUTTON_LINK);
 
             return new MHorizontalLayout(nameField, myItemCheckbox, searchBtn, cancelBtn, advancedSearchBtn)
                     .withMargin(true).alignAll(Alignment.MIDDLE_LEFT);

@@ -37,7 +37,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -139,7 +139,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
                 protected Object doEval() {
                     return searchCriteria;
                 }
-            }))).withIcon(FontAwesome.PRINT).withStyleName(WebUIConstants.BUTTON_OPTION)
+            }))).withIcon(FontAwesome.PRINT).withStyleName(WebThemes.BUTTON_OPTION)
                     .withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
             headerWrapper.with(titleLbl, printBtn).expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);
@@ -149,7 +149,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             CssLayout contentWrapper = new CssLayout();
             contentWrapper.setWidth("100%");
 
-            MHorizontalLayout controlsPanel = new MHorizontalLayout().withFullWidth().withStyleName(WebUIConstants.BOX);
+            MHorizontalLayout controlsPanel = new MHorizontalLayout().withFullWidth().withStyleName(WebThemes.BOX);
             contentWrapper.addComponent(controlsPanel);
 
             GridLayout selectionLayout = new GridLayout(9, 2);
@@ -158,51 +158,51 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             selectionLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
             controlsPanel.addComponent(selectionLayout);
 
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(WebUIConstants
-                    .META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 0);
+            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(WebThemes
+                    .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 0);
 
             fromDateField = new PopupDateFieldExt();
             fromDateField.setResolution(Resolution.DAY);
             selectionLayout.addComponent(fromDateField, 1, 0);
 
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebUIConstants
-                    .META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 0);
+            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebThemes
+                    .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 0);
 
             toDateField = new PopupDateFieldExt();
             toDateField.setResolution(Resolution.DAY);
             selectionLayout.addComponent(toDateField, 3, 0);
 
             selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName
-                    (WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 1);
+                    (WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 1);
 
             groupField = new ValueComboBox(false, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), UserUIContext
                     .getMessage(DayI18nEnum.OPT_DATE), UserUIContext.getMessage(UserI18nEnum.SINGLE));
             groupField.addValueChangeListener(valueChangeEvent -> searchTimeReporting());
             selectionLayout.addComponent(groupField, 1, 1);
 
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(WebUIConstants
-                    .META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 1);
+            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(WebThemes
+                    .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 1);
 
             orderField = new ItemOrderComboBox();
             orderField.addValueChangeListener(valueChangeEvent -> searchTimeReporting());
             selectionLayout.addComponent(orderField, 3, 1);
 
             selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.SINGLE))
-                    .withStyleName(WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 4, 0);
+                    .withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 4, 0);
 
             projectField = new UserInvolvedProjectsListSelect();
             initListSelectStyle(projectField);
             selectionLayout.addComponent(projectField, 5, 0, 5, 1);
 
             selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE))
-                    .withStyleName(WebUIConstants.META_COLOR, WebUIConstants.TEXT_ALIGN_RIGHT).withWidth("60px"), 6, 0);
+                    .withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 6, 0);
 
             userField = new UserInvolvedProjectsMemberListSelect(getProjectIds());
             initListSelectStyle(userField);
             selectionLayout.addComponent(userField, 7, 0, 7, 1);
 
             MButton queryBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUBMIT), clickEvent -> searchTimeReporting())
-                    .withStyleName(WebUIConstants.BUTTON_ACTION);
+                    .withStyleName(WebThemes.BUTTON_ACTION);
 
             selectionLayout.addComponent(queryBtn, 8, 0);
 

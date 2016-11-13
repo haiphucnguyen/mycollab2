@@ -22,7 +22,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -57,7 +57,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
     public void display() {
         removeAllComponents();
         with(ELabel.h2(FontAwesome.BALANCE_SCALE.getHtml() + " " + UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY)));
-        MVerticalLayout container = new MVerticalLayout().withStyleName(WebUIConstants.BOX);
+        MVerticalLayout container = new MVerticalLayout().withStyleName(WebThemes.BOX);
         with(container);
 
         GridLayout searchLayout = new GridLayout(5, 1);
@@ -67,9 +67,9 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         List<SimpleProject> projects = projectService.getProjectsUserInvolved(UserUIContext.getUsername(), MyCollabUI.getAccountId());
         final ProjectMultiSelect projectsSelection = new ProjectMultiSelect(projects);
-        searchLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.LIST)).withStyleName(WebUIConstants.META_COLOR), 0, 0);
+        searchLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.LIST)).withStyleName(WebThemes.META_COLOR), 0, 0);
         searchLayout.addComponent(projectsSelection, 1, 0);
-        searchLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_WEEK)).withStyleName(WebUIConstants.META_COLOR), 2,
+        searchLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_WEEK)).withStyleName(WebThemes.META_COLOR), 2,
                 0);
         final WeeklyCalendarFieldExp dateFieldExt = new WeeklyCalendarFieldExp();
         dateFieldExt.setValue(new DateTime().toDate());
@@ -83,7 +83,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
             } else {
                 buildHourlyProjectsReport(selectedProjects, dateFieldExt.getValue());
             }
-        }).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withStyleName(WebThemes.BUTTON_ACTION);
         searchLayout.addComponent(searchBtn, 4, 0);
         with(new MCssLayout(new MHorizontalLayout(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)))
                 .withWidth("150px").withMargin(new MarginInfo(false, true, false, true))

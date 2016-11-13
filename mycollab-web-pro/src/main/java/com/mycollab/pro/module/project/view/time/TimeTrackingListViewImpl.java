@@ -36,7 +36,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickEvent;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.server.FontAwesome;
@@ -117,13 +117,13 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
             protected Object doEval() {
                 return searchCriteria;
             }
-        }))).withIcon(FontAwesome.PRINT).withStyleName(WebUIConstants.BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
+        }))).withIcon(FontAwesome.PRINT).withStyleName(WebThemes.BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
         groupWrapLayout.addComponent(printBtn);
 
         MButton createBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow();
             UI.getCurrent().addWindow(addTimeEntry);
-        }).withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
         createBtn.setVisible(!CurrentProjectVariables.isProjectArchived() &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TIME));
         groupWrapLayout.addComponent(createBtn);

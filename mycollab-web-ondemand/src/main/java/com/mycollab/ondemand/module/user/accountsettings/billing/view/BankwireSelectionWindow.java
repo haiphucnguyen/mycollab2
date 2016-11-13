@@ -8,7 +8,7 @@ import com.mycollab.module.user.domain.BillingPlan;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
@@ -40,7 +40,7 @@ class BankwireSelectionWindow extends MWindow {
         Label billingStorage = ELabel.html("<span class='billing-storage'>" + planVolume + "</span>&nbsp;Storage").withWidthUndefined();
         Label billingProject = ELabel.html("<span class='billing-project'>" + billingPlan.getNumprojects() +
                 "</span>&nbsp;Projects").withWidthUndefined();
-        MButton chargeBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE), event -> close()).withStyleName(WebUIConstants.BUTTON_ACTION);
+        MButton chargeBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE), event -> close()).withStyleName(WebThemes.BUTTON_ACTION);
         BrowserWindowOpener opener = new BrowserWindowOpener(billingPlan.getBanktransferpath() +
                 "?referrer=" + EnDecryptHelper.encryptText(MyCollabUI.getAccountId() + ";" + billingPlan.getId()));
         opener.extend(chargeBtn);

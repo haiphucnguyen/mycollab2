@@ -136,7 +136,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
             invoice.setProjectid(CurrentProjectVariables.getProjectId());
             invoice.setStatus(InvoiceStatus.Scheduled.name());
             UI.getCurrent().addWindow(new InvoiceAddWindow(invoice));
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
         createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
         return new MHorizontalLayout(createBtn);
     }
@@ -185,7 +185,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
             setWidth("300px");
             new Restrain(this).setMinHeight("50px").setMaxHeight((Page.getCurrent()
                     .getBrowserWindowHeight() - 320) + "px");
-            addStyleName(WebUIConstants.BORDER_LIST);
+            addStyleName(WebThemes.BORDER_LIST);
         }
 
         @Override
@@ -197,8 +197,8 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
     private static class InvoiceRowDisplayHandler implements IBeanList.RowDisplayHandler<SimpleInvoice> {
         @Override
         public Component generateRow(final IBeanList<SimpleInvoice> host, final SimpleInvoice invoice, int rowIndex) {
-            final MVerticalLayout layout = new MVerticalLayout().withStyleName(WebUIConstants.BORDER_LIST_ROW)
-                    .withStyleName(WebUIConstants.CURSOR_POINTER);
+            final MVerticalLayout layout = new MVerticalLayout().withStyleName(WebThemes.BORDER_LIST_ROW)
+                    .withStyleName(WebThemes.CURSOR_POINTER);
             InvoiceStatus invoiceStatus = InvoiceStatus.valueOf(invoice.getStatus());
             ELabel statusLbl = new ELabel(UserUIContext.getMessage(invoiceStatus)).withWidthUndefined();
             if (invoiceStatus == InvoiceStatus.Paid) {
@@ -273,14 +273,14 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
             headerLbl = ELabel.h2("");
 
             PrintButton printBtn = new PrintButton();
-            printBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
+            printBtn.setStyleName(WebThemes.BUTTON_OPTION);
             printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE));
             printBtn.doPrint(invoice, new FormReportLayout(ProjectTypeConstants.INVOICE, Invoice.Field.noid.name(),
                     InvoiceDefaultFormLayoutFactory.getForm(), Invoice.Field.id.name()));
 
             MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                     clickEvent -> UI.getCurrent().addWindow(new InvoiceAddWindow(invoice)))
-                    .withStyleName(WebUIConstants.BUTTON_ACTION).withIcon(FontAwesome.EDIT);
+                    .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.EDIT);
             editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
 
             MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
@@ -296,7 +296,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
                                 EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceDelete(this, invoice));
                             }
                         });
-            }).withStyleName(WebUIConstants.BUTTON_DANGER).withIcon(FontAwesome.TRASH_O);
+            }).withStyleName(WebThemes.BUTTON_DANGER).withIcon(FontAwesome.TRASH_O);
             deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INVOICE));
 
             MHorizontalLayout buttonControls = new MHorizontalLayout(printBtn, editBtn, deleteBtn);

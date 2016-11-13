@@ -35,7 +35,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.UI;
@@ -146,17 +146,17 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
 
     private class ProjectAddWizard extends Wizard {
         ProjectAddWizard() {
-            this.getCancelButton().setStyleName(WebUIConstants.BUTTON_OPTION);
-            this.getBackButton().setStyleName(WebUIConstants.BUTTON_OPTION);
-            this.getNextButton().setStyleName(WebUIConstants.BUTTON_ACTION);
-            this.getFinishButton().setStyleName(WebUIConstants.BUTTON_ACTION);
+            this.getCancelButton().setStyleName(WebThemes.BUTTON_OPTION);
+            this.getBackButton().setStyleName(WebThemes.BUTTON_OPTION);
+            this.getNextButton().setStyleName(WebThemes.BUTTON_ACTION);
+            this.getFinishButton().setStyleName(WebThemes.BUTTON_ACTION);
             footer.setMargin(new MarginInfo(true, true, false, false));
 
             if (!SiteConfiguration.isCommunityEdition()) {
                 MButton newProjectFromTemplateBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.OPT_CREATE_PROJECT_FROM_TEMPLATE), clickEvent -> {
                             close();
                             UI.getCurrent().addWindow(new ProjectAddBaseTemplateWindow());
-                        }).withStyleName(WebUIConstants.BUTTON_ACTION);
+                        }).withStyleName(WebThemes.BUTTON_ACTION);
                 footer.addComponent(newProjectFromTemplateBtn, 0);
             }
         }

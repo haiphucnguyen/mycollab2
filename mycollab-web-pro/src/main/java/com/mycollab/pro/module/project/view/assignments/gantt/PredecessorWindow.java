@@ -12,7 +12,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.*;
@@ -69,13 +69,13 @@ class PredecessorWindow extends MWindow {
         preWrapper.addComponent(predecessorsLayout);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                .withStyleName(WebUIConstants.BUTTON_OPTION);
+                .withStyleName(WebThemes.BUTTON_OPTION);
 
         MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             List<TaskPredecessor> predecessors = predecessorsLayout.buildPredecessors();
             EventBusFactory.getInstance().post(new GanttEvent.ModifyPredecessors(ganttItemWrapper, predecessors));
             close();
-        }).withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
+        }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn);
         content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
@@ -205,7 +205,7 @@ class PredecessorWindow extends MWindow {
                     }
                 });
                 deleteBtn.setIcon(FontAwesome.TRASH_O);
-                deleteBtn.addStyleName(WebUIConstants.BUTTON_ICON_ONLY);
+                deleteBtn.addStyleName(WebThemes.BUTTON_ICON_ONLY);
                 this.addComponent(deleteBtn);
 
                 if (taskPredecessor != null) {

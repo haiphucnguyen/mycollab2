@@ -17,7 +17,7 @@ import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -53,7 +53,7 @@ public class CloudDriveSettingWindow extends MWindow {
             OauthWindowFactory oauthWindowFactory = ViewManager.getCacheComponent(OauthWindowFactory.class);
             Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
             UI.getCurrent().addWindow(dropboxWindow);
-        }).withStyleName(WebUIConstants.BUTTON_ACTION).withClickShortcut(ShortcutAction.KeyCode.ENTER);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withClickShortcut(ShortcutAction.KeyCode.ENTER);
         mainLayout.addComponent(connectAccountBtn);
 
         bodyLayout = new MVerticalLayout().withSpacing(false).withMargin(false).withFullWidth();
@@ -68,7 +68,7 @@ public class CloudDriveSettingWindow extends MWindow {
 
         mainLayout.addComponent(bodyLayout);
         Button closeBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLOSE), clickEvent -> close());
-        closeBtn.setStyleName(WebUIConstants.BUTTON_OPTION);
+        closeBtn.setStyleName(WebThemes.BUTTON_OPTION);
         mainLayout.with(closeBtn).withAlign(closeBtn, Alignment.MIDDLE_RIGHT);
 
         this.setContent(mainLayout);
@@ -109,7 +109,7 @@ public class CloudDriveSettingWindow extends MWindow {
                 titleLayout.with(foldernameLbl).expand(foldernameLbl);
 
                 final PopupButton popupBtn = new PopupButton();
-                popupBtn.setStyleName(WebUIConstants.BUTTON_ACTION);
+                popupBtn.setStyleName(WebThemes.BUTTON_ACTION);
 
                 final OptionPopupContent popupOptionActionLayout = new OptionPopupContent();
 
@@ -183,10 +183,10 @@ public class CloudDriveSettingWindow extends MWindow {
                 } catch (Exception e) {
                     throw new MyCollabException(e);
                 }
-            }).withIcon(FontAwesome.SAVE).withStyleName(WebUIConstants.BUTTON_ACTION);
+            }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                    .withStyleName(WebUIConstants.BUTTON_OPTION);
+                    .withStyleName(WebThemes.BUTTON_OPTION);
             layout.with(saveBtn, cancelBtn);
             return layout;
         }
