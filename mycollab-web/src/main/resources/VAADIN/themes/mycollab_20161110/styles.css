@@ -1655,13 +1655,6 @@ a.pending {
 	color: #24a2e3 !important;
 }
 
-.v-sliderpanel-content {
-	background-color: green !important;
-	border-left: 1px solid #ededed;
-	border-bottom: 1px solid #ededed;
-	border-top: 1px solid #ededed;
-}
-
 .cursor_pointer {
 	cursor: pointer;
 }
@@ -1766,6 +1759,10 @@ a.pending {
 	border-style: solid;
 	border-width: 10px 0 10px 10px;
 	border-color: transparent transparent transparent #76B38A;
+}
+
+.comment-attachment {
+	border-radius: 4px 4px 0px 0px;
 }
 
 .v-multifileupload-uploads .v-upload .v-button:before {
@@ -14320,13 +14317,6 @@ a.pending {
 	color: #24a2e3 !important;
 }
 
-.v-sliderpanel-content {
-	background-color: green !important;
-	border-left: 1px solid #ededed;
-	border-bottom: 1px solid #ededed;
-	border-top: 1px solid #ededed;
-}
-
 .cursor_pointer {
 	cursor: pointer;
 }
@@ -14431,6 +14421,10 @@ a.pending {
 	border-style: solid;
 	border-width: 10px 0 10px 10px;
 	border-color: transparent transparent transparent #76B38A;
+}
+
+.comment-attachment {
+	border-radius: 4px 4px 0px 0px;
 }
 
 .v-multifileupload-uploads .v-upload .v-button:before {

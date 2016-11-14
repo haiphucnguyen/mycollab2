@@ -65,13 +65,6 @@
     }
   }
 
-  .v-sliderpanel-content {
-  	background-color: green !important;
-  	border-left: 1px solid #ededed;
-  	border-bottom: 1px solid #ededed;
-  	border-top: 1px solid #ededed;
-  }
-
   .cursor_pointer {
     cursor: pointer;
   }
@@ -170,6 +163,10 @@
   }
 
   /* Multifiles Upload */
+
+  .comment-attachment {
+    border-radius: 4px 4px 0px 0px;
+  }
 
   .v-multifileupload-uploads {
     .v-upload .v-button:before {

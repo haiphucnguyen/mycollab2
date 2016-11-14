@@ -69,8 +69,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
         final ProjectMultiSelect projectsSelection = new ProjectMultiSelect(projects);
         searchLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.LIST)).withStyleName(WebThemes.META_COLOR), 0, 0);
         searchLayout.addComponent(projectsSelection, 1, 0);
-        searchLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_WEEK)).withStyleName(WebThemes.META_COLOR), 2,
-                0);
+        searchLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_WEEK)).withStyleName(WebThemes.META_COLOR), 2, 0);
         final WeeklyCalendarFieldExp dateFieldExt = new WeeklyCalendarFieldExp();
         dateFieldExt.setValue(new DateTime().toDate());
 
@@ -86,13 +85,13 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
         }).withStyleName(WebThemes.BUTTON_ACTION);
         searchLayout.addComponent(searchBtn, 4, 0);
         with(new MCssLayout(new MHorizontalLayout(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)))
-                .withWidth("150px").withMargin(new MarginInfo(false, true, false, true))
+                .withWidth("180px").withMargin(new MarginInfo(false, true, false, true))
                 .withStyleName("alump-dbar-part-1")).withStyleName("alump-dbar"));
         with(new MCssLayout(new MHorizontalLayout(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS)))
-                .withWidth("150px").withMargin(new MarginInfo(false, true, false, true))
+                .withWidth("180px").withMargin(new MarginInfo(false, true, false, true))
                 .withStyleName("alump-dbar-part-2")).withStyleName("alump-dbar"));
         with(new MCssLayout(new MHorizontalLayout(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_REMAIN_HOURS)))
-                .withWidth("150px").withMargin(new MarginInfo(false, true, false, true))
+                .withWidth("180px").withMargin(new MarginInfo(false, true, false, true))
                 .withStyleName("alump-dbar-part-3")).withStyleName("alump-dbar"));
         searchResultLayout = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
         with(searchResultLayout);

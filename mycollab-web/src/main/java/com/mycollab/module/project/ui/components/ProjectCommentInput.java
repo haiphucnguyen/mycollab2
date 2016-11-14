@@ -30,10 +30,12 @@ import com.mycollab.vaadin.web.ui.AttachmentPanel;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.RichTextArea;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -68,13 +70,10 @@ class ProjectCommentInput extends MHorizontalLayout {
         commentArea = new RichTextArea();
         commentArea.setWidth("100%");
         commentArea.setHeight("200px");
+        commentArea.addStyleName("comment-attachment");
 
         final AttachmentPanel attachments = new AttachmentPanel();
-
-        final MHorizontalLayout controlsLayout = new MHorizontalLayout().withFullWidth();
-
-        final MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> commentArea.setValue(""))
-                .withStyleName(WebThemes.BUTTON_OPTION);
+        attachments.setWidth("100%");
 
         final MButton newCommentBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_POST), clickEvent -> {
             CommentWithBLOBs comment = new CommentWithBLOBs();
@@ -102,8 +101,7 @@ class ProjectCommentInput extends MHorizontalLayout {
             component.reload();
         }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SEND);
 
-        controlsLayout.with(attachments, cancelBtn, newCommentBtn).expand(attachments);
-        textAreaWrap.with(commentArea, controlsLayout);
+        textAreaWrap.with(new MCssLayout(commentArea, attachments), newCommentBtn).withAlign(newCommentBtn, Alignment.TOP_RIGHT);
     }
 
     void setTypeAndId(final String typeId) {

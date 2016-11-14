@@ -397,7 +397,6 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                                 setPopupVisible(false);
                             }
                         };
-                        content.setWidth("900px");
                         content.with(resolvedInputForm).expand(resolvedInputForm);
                     } else if (BugStatus.Verified.name().equals(beanItem.getStatus())) {
                         MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {

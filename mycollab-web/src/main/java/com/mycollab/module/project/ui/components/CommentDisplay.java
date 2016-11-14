@@ -45,6 +45,7 @@ public class CommentDisplay extends MVerticalLayout implements ReloadableCompone
         withMargin(new MarginInfo(true, false, true, false)).withFullWidth();
         this.type = type;
         commentBox = new ProjectCommentInput(this, type, extraTypeId);
+        commentBox.setWidth("100%");
         this.addComponent(commentBox);
 
         commentList = new BeanList<>(AppContextUtil.getSpringBean(CommentService.class), new CommentRowDisplayHandler());

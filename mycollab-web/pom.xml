@@ -241,6 +241,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>tuning-datefield</artifactId>
+            <version>0.17.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.squareup</groupId>
             <artifactId>javawriter</artifactId>
             <version>2.5.1</version>

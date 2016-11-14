@@ -63,7 +63,7 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
     private MButton favoriteBtn;
 
     public AbstractPreviewItemComp(FontAwesome iconResource) {
-        super();
+        setSizeFull();
         this.iconResource = iconResource;
         tabSheet = new VerticalTabsheet();
         tabSheet.setSizeFull();

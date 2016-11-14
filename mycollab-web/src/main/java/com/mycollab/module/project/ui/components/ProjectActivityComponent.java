@@ -149,8 +149,8 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
         final int logCount = auditLogService.getTotalCount(logCriteria);
         setTotalNums(commentCount + logCount);
 
-        List<SimpleComment> comments = commentService.findPageableListByCriteria(new BasicSearchRequest<>(commentCriteria, 0, Integer.MAX_VALUE));
-        List<SimpleAuditLog> auditLogs = auditLogService.findPageableListByCriteria(new BasicSearchRequest<>(logCriteria, 0, Integer.MAX_VALUE));
+        List<SimpleComment> comments = commentService.findPageableListByCriteria(new BasicSearchRequest<>(commentCriteria));
+        List<SimpleAuditLog> auditLogs = auditLogService.findPageableListByCriteria(new BasicSearchRequest<>(logCriteria));
         List activities = new ArrayList(commentCount + logCount);
         activities.addAll(comments);
         activities.addAll(auditLogs);
@@ -257,8 +257,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
 
             rowLayout.addComponent(messageHeader);
 
-            for (int i = 0; i < changeItems.size(); i++) {
-                AuditChangeItem item = changeItems.get(i);
+            for (AuditChangeItem item : changeItems) {
                 String fieldName = item.getField();
 
                 DefaultFieldDisplayHandler fieldDisplayHandler = groupFormatter.getFieldDisplayHandler(fieldName);

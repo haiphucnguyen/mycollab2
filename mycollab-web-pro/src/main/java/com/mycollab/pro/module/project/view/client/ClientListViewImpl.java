@@ -32,9 +32,9 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -48,14 +48,13 @@ import java.util.List;
 public class ClientListViewImpl extends AbstractVerticalPageView implements ClientListView {
 
     private ClientSearchPanel accountSearchPanel;
-    private CssLayout content;
+    private MCssLayout content;
 
     public ClientListViewImpl() {
         this.withSpacing(true).withMargin(true);
         accountSearchPanel = new ClientSearchPanel();
-        content = new CssLayout();
-        content.addStyleName(WebThemes.FLEX_DISPLAY);
-        this.with(accountSearchPanel, content).expand(content);
+        content = new MCssLayout().withStyleName(WebThemes.FLEX_DISPLAY);
+        this.with(accountSearchPanel, content);
     }
 
     @Override
