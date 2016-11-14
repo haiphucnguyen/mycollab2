@@ -14,6 +14,10 @@
 	font-size: 16px;
 }
 
+.section .v-button-link .v-button-caption {
+	color: #F1F1F1 !important;
+}
+
 .v-touchkit-navbutton {
 	width: 100% !important;
 	color: $my-dark-color !important;
@@ -149,6 +153,10 @@
 .section .v-label {
 	margin-left: 5px;
 	font-size: 16px;
+}
+
+.section .v-button-link .v-button-caption {
+	color: #F1F1F1 !important;
 }
 
 .v-touchkit-navbutton {
@@ -334,7 +342,7 @@ hr {
 }
 
 .border-bottom {
-	border-bottom: 1px solid #e5e5e5;
+	border-bottom: 1px solid #e5e5e5 !important;
 }
 
 .border-top {
