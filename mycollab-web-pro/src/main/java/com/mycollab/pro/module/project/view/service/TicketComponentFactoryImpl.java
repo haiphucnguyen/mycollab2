@@ -42,7 +42,7 @@ import com.mycollab.module.project.ui.components.PriorityComboBox;
 import com.mycollab.module.project.view.bug.ApproveInputWindow;
 import com.mycollab.module.project.view.bug.BugEditForm;
 import com.mycollab.module.project.view.bug.ReOpenWindow;
-import com.mycollab.module.project.view.bug.ResolvedInputForm;
+import com.mycollab.module.project.view.bug.ResolvedInputWindow;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.module.project.view.task.TaskEditForm;
@@ -56,10 +56,7 @@ import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.ui.UIConstants;
+import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -360,22 +357,12 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     }
 
     private static class BugStatusPopupView extends LazyPopupView {
-        private BugWithBLOBs beanItem;
+        private SimpleBug beanItem;
 
-        BugStatusPopupView(BugWithBLOBs bug) {
+        BugStatusPopupView(SimpleBug bug) {
             super(FontAwesome.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(BugStatus.class, bug.getStatus()));
             this.beanItem = bug;
             this.setDescription(UserUIContext.getMessage(BugI18nEnum.FORM_STATUS_HELP));
-        }
-
-        @Override
-        protected String getConstraintWidth() {
-            return "900px";
-        }
-
-        @Override
-        protected String getConstraintHeight() {
-            return "900px";
         }
 
         @Override
@@ -386,38 +373,35 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             boolean hasPermission = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
             if (hasPermission) {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                SimpleBug bug = bugService.findById(beanItem.getId(), MyCollabUI.getAccountId());
-                if (bug != null) {
+                beanItem = bugService.findById(beanItem.getId(), MyCollabUI.getAccountId());
+                if (beanItem != null) {
                     if (BugStatus.Open.name().equals(beanItem.getStatus()) ||
                             BugStatus.ReOpen.name().equals(beanItem.getStatus())) {
-                        ResolvedInputForm resolvedInputForm = new ResolvedInputForm(bug) {
-                            @Override
-                            protected void postExecution() {
-                                refresh();
-                                setPopupVisible(false);
-                            }
-                        };
-                        content.with(resolvedInputForm).expand(resolvedInputForm);
+                        MButton resolveBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), clickEvent -> {
+                            setPopupVisible(false);
+                            UI.getCurrent().addWindow(bindCloseWindow(new ResolvedInputWindow(beanItem)));
+                        }).withStyleName(WebThemes.BUTTON_ACTION);
+                        content.with(resolveBtn);
                     } else if (BugStatus.Verified.name().equals(beanItem.getStatus())) {
                         MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
                             setPopupVisible(false);
-                            UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(bug)));
+                            UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem)));
                         }).withStyleName(WebThemes.BUTTON_ACTION);
                         content.with(reopenBtn);
                     } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
                         MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
                             setPopupVisible(false);
-                            UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(bug)));
+                            UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem)));
                         }).withStyleName(WebThemes.BUTTON_ACTION);
 
                         MButton approveNCloseBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.BUTTON_APPROVE_CLOSE), clickEvent -> {
                             setPopupVisible(false);
-                            UI.getCurrent().addWindow(bindCloseWindow(new ApproveInputWindow(bug)));
+                            UI.getCurrent().addWindow(bindCloseWindow(new ApproveInputWindow(beanItem)));
                         }).withStyleName(WebThemes.BUTTON_ACTION);
                         content.with(reopenBtn, approveNCloseBtn);
                     } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
                         MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
-                                clickEvent -> UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(bug))))
+                                clickEvent -> UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem))))
                                 .withStyleName(WebThemes.BUTTON_ACTION);
                         content.with(reopenBtn);
                     }
@@ -439,6 +423,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         }
 
         private void refresh() {
+            this.fireEvent(new PropertyChangedEvent(beanItem, "status"));
             setMinimizedValueAsHTML(FontAwesome.INFO_CIRCLE.getHtml() + " " +
                     UserUIContext.getMessage(BugStatus.class, beanItem.getStatus()));
             markAsDirty();

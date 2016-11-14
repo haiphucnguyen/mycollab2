@@ -58,6 +58,7 @@ public class AttachmentPanel extends CssLayout {
     private ResourceService resourceService;
 
     public AttachmentPanel() {
+        setWidth("100%");
         resourceService = AppContextUtil.getSpringBean(ResourceService.class);
         multiFileUpload = new MultiFileUploadExt();
         multiFileUpload.setWidth("100%");

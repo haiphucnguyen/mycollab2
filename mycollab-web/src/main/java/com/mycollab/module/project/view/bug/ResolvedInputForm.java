@@ -27,6 +27,8 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.event.BugEvent;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
+import com.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
+import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.module.project.view.settings.component.VersionMultiSelectField;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
@@ -41,7 +43,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
-import com.vaadin.event.ShortcutAction;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
@@ -89,11 +91,11 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
             MButton resolveBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), clickEvent -> {
                 if (ResolvedInputForm.this.validateForm()) {
                     String commentValue = commentArea.getValue();
-                    if (OptionI18nEnum.BugResolution.Duplicate.name().equals(bug.getResolution())) {
+                    if (BugResolution.Duplicate.name().equals(bug.getResolution())) {
                         if (bugSelectionField != null && bugSelectionField.getSelectedBug() != null) {
                             SimpleBug selectedBug = bugSelectionField.getSelectedBug();
                             if (selectedBug.getId().equals(bug.getId())) {
-                                throw new UserInvalidInputException("The relation is invalid since the both entries are " + "the same");
+                                throw new UserInvalidInputException("The relation is invalid since the both entries are the same");
                             }
                             BugRelationService relatedBugService = AppContextUtil.getSpringBean(BugRelationService.class);
                             RelatedBug relatedBug = new RelatedBug();
@@ -105,15 +107,15 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
                             NotificationUtil.showErrorNotification(UserUIContext.getMessage(BugI18nEnum.ERROR_DUPLICATE_BUG_SELECT));
                             return;
                         }
-                    } else if (OptionI18nEnum.BugResolution.InComplete.name().equals(bug.getResolution()) ||
-                            OptionI18nEnum.BugResolution.CannotReproduce.name().equals(bug.getResolution()) ||
-                            OptionI18nEnum.BugResolution.Invalid.name().equals(bug.getResolution())) {
+                    } else if (BugResolution.InComplete.name().equals(bug.getResolution()) ||
+                            BugResolution.CannotReproduce.name().equals(bug.getResolution()) ||
+                            BugResolution.Invalid.name().equals(bug.getResolution())) {
                         if (StringUtils.isBlank(commentValue)) {
                             NotificationUtil.showErrorNotification(UserUIContext.getMessage(BugI18nEnum.ERROR_COMMENT_NOT_BLANK_FOR_RESOLUTION, bug.getResolution()));
                             return;
                         }
                     }
-                    bug.setStatus(OptionI18nEnum.BugStatus.Resolved.name());
+                    bug.setStatus(BugStatus.Resolved.name());
 
                     BugRelatedItemService bugRelatedItemService = AppContextUtil.getSpringBean(BugRelatedItemService.class);
                     bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), fixedVersionSelect.getSelectedItems());
@@ -140,7 +142,7 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
                     postExecution();
                     EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, bug.getId()));
                 }
-            }).withStyleName(WebThemes.BUTTON_ACTION).withClickShortcut(ShortcutAction.KeyCode.ENTER);
+            }).withStyleName(WebThemes.BUTTON_ACTION).withClickShortcut(KeyCode.ENTER);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> postExecution())
                     .withStyleName(WebThemes.BUTTON_OPTION);
@@ -179,8 +181,8 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
             if (propertyId.equals("resolution")) {
-                if (StringUtils.isBlank(bean.getResolution()) || UserUIContext.getMessage(OptionI18nEnum.BugResolution.None).equals(bug.getResolution())) {
-                    bean.setResolution(OptionI18nEnum.BugResolution.Fixed.name());
+                if (StringUtils.isBlank(bean.getResolution()) || UserUIContext.getMessage(BugResolution.None).equals(bug.getResolution())) {
+                    bean.setResolution(BugResolution.Fixed.name());
                 }
                 return new ResolutionField();
             } else if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
@@ -215,7 +217,7 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
                 fieldGroup.bind(resolutionComboBox, BugWithBLOBs.Field.resolution.name());
                 resolutionComboBox.addValueChangeListener(valueChangeEvent -> {
                     String value = (String) resolutionComboBox.getValue();
-                    if (OptionI18nEnum.BugResolution.Duplicate.name().equals(value)) {
+                    if (BugResolution.Duplicate.name().equals(value)) {
                         bugSelectionField = new BugSelectionField();
                         layout.with(new Label(" with "), bugSelectionField);
                     } else {

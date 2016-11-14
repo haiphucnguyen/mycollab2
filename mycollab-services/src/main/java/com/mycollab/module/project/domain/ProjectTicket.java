@@ -16,14 +16,12 @@
  */
 package com.mycollab.module.project.domain;
 
-import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.core.arguments.ValuedBean;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
-import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.SimpleBug;
 
 import java.io.Serializable;
@@ -383,8 +381,8 @@ public class ProjectTicket extends ValuedBean implements Serializable {
         return task;
     }
 
-    public static BugWithBLOBs buildBug(ProjectTicket bean) {
-        BugWithBLOBs bug = new BugWithBLOBs();
+    public static SimpleBug buildBug(ProjectTicket bean) {
+        SimpleBug bug = new SimpleBug();
         bug.setId(bean.getTypeId());
         bug.setProjectid(bean.getProjectId());
         bug.setName(bean.getName());
