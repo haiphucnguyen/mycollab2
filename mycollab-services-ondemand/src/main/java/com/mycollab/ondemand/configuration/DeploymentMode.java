@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class DeploymentMode implements IDeploymentMode {
     @Override
     public boolean isDemandEdition() {
-        return false;
+        return true;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class DeploymentMode implements IDeploymentMode {
 
     @Override
     public boolean isPremiumEdition() {
-        return true;
+        return false;
     }
 
     @Override
