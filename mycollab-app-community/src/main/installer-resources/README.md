@@ -40,6 +40,20 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.4.6
+-------------
+
+**Library Upgrades**
+
+* Vaadin 7.7.4
+
+**Improvements & New Features**
+
+
+**Bug Fixes**
+
+
+
 Version 5.4.5
 -------------
 
