@@ -46,9 +46,19 @@ Version 5.4.6
 **Library Upgrades**
 
 * Vaadin 7.7.4
+* Other libraries
 
 **Improvements & New Features**
 
+* Support recurrence of tasks
+* Release notes of phase
+* Docker images for MyCollab
+* The test case type of ticket
+* [Premium] Group support
+* [Premium] Custom display fields of ticket dashboard
+* [Premium] Burndown chart of tickets
+* [Premium] The new epic, user stories types of ticket
+* Other minor improvements
 
 **Bug Fixes**
 

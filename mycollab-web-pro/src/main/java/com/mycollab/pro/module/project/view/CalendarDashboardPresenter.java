@@ -29,7 +29,6 @@ public class CalendarDashboardPresenter extends AbstractPresenter<ICalendarDashb
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ComponentContainer componentContainer = (ComponentContainer) container;
-        componentContainer.removeAllComponents();
         componentContainer.addComponent(view);
         view.display();
     }

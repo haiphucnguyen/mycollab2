@@ -184,10 +184,6 @@ public class CalendarDashboardViewImpl extends AbstractVerticalPageView implemen
         calendar.setHandler(new CalendarComponentEvents.DateClickHandler() {
             @Override
             public void dateClick(CalendarComponentEvents.DateClickEvent event) {
-//                SimpleCrmTask task = new SimpleCrmTask();
-//                task.setStartdate(dateClickEvent.getDate());
-//                task.setEnddate(dateClickEvent.getDate());
-//                UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(task));
             }
         });
 
