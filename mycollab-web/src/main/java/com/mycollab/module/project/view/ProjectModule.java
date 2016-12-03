@@ -23,12 +23,14 @@ import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.mycollab.module.project.event.ClientEvent;
 import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.module.project.event.ReportEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
+import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.user.ProjectPagedList;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.UserUIContext;
@@ -101,7 +103,7 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
             MButton newPrjButton = new MButton(UserUIContext.getMessage(ProjectI18nEnum.SINGLE), clickEvent -> {
                 UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class));
                 newBtn.setPopupVisible(false);
-            });
+            }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
             contentLayout.addOption(newPrjButton);
             newBtn.setContent(contentLayout);
             newBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
