@@ -2061,10 +2061,12 @@ div.v-window {
 	background: none;
 }
 
-.v-button.add-btn-popup .v-popup-indicator:before {
-	content: "\f0dd";
-	font-size: 15px;
-	opacity: 1;
+.v-button.add-btn-popup .v-popup-indicator {
+	display: none;
+}
+
+.v-popupbutton-popup-add-btn-popup .popupContent {
+	padding-top: 10px;
 }
 
 .block {
@@ -14740,10 +14742,12 @@ div.v-window {
 	background: none;
 }
 
-.v-button.add-btn-popup .v-popup-indicator:before {
-	content: "\f0dd";
-	font-size: 15px;
-	opacity: 1;
+.v-button.add-btn-popup .v-popup-indicator {
+	display: none;
+}
+
+.v-popupbutton-popup-add-btn-popup .popupContent {
+	padding-top: 10px;
 }
 
 .block {
@@ -15296,6 +15300,10 @@ div .addview-layout-body {
 
 .bug {
 	box-shadow: inset 5px 0px 0px 0px #e20a71;
+}
+
+.milestone {
+	box-shadow: inset 5px 0px 0px 0px #649be2;
 }
 
 .risk {
@@ -16908,6 +16916,7 @@ input.v-textfield-errorField {
 	border-width: 1px 1px 0px 1px;
 	border-style: solid;
 	border-color: #ededed;
+	background-color: #ededed;
 	border-radius: 0px;
 	padding-right: 12px;
 }

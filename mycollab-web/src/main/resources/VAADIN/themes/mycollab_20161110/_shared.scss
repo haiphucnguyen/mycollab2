@@ -456,11 +456,13 @@
     }
 
     .v-popup-indicator {
-      &:before {
-        content: "\f0dd";
-        font-size: 15px;
-        opacity: 1;
-      }
+      display: none;
+    }
+  }
+
+  .v-popupbutton-popup-add-btn-popup {
+    .popupContent {
+      padding-top: 10px;
     }
   }
 
