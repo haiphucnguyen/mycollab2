@@ -38,7 +38,6 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
-import com.mycollab.vaadin.web.ui.ServiceMenu;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.web.IDesktopModule;
 import com.vaadin.server.FontAwesome;
@@ -73,32 +72,42 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
     @Override
     public MHorizontalLayout buildMenu() {
         if (serviceMenuContainer == null) {
-            serviceMenuContainer = new MHorizontalLayout();
-            final ServiceMenu serviceMenu = new ServiceMenu();
-            serviceMenu.addService(UserUIContext.getMessage(ProjectI18nEnum.LIST), clickEvent -> {
+            serviceMenuContainer = new MHorizontalLayout().withHeight("45px").withMargin(new MarginInfo(false, true,
+                    false, true)).withStyleName("service-menu");
+            serviceMenuContainer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+
+            MButton boardBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD), clickEvent -> {
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoUserDashboard(this, null));
             });
+            serviceMenuContainer.with(boardBtn);
+
+            Button switchPrjBtn = new SwitchProjectPopupButton();
+            serviceMenuContainer.with(switchPrjBtn);
 
             if (!SiteConfiguration.isCommunityEdition()) {
-                serviceMenu.addService(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_CLIENTS), clickEvent -> {
+                MButton clientBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_CLIENTS), clickEvent -> {
                     EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
                 });
 
-                serviceMenu.addService(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), clickEvent -> {
+                MButton reportBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), clickEvent -> {
                     EventBusFactory.getInstance().post(new ReportEvent.GotoConsole(this));
                 });
+                serviceMenuContainer.with(clientBtn, reportBtn);
             }
 
-            serviceMenuContainer.with(serviceMenu);
+            PopupButton newBtn = new PopupButton(UserUIContext.getMessage(GenericI18Enum.ACTION_NEW));
+            newBtn.addStyleName("add-btn-popup");
+            newBtn.setIcon(FontAwesome.PLUS_CIRCLE);
+            OptionPopupContent contentLayout = new OptionPopupContent();
+            MButton newPrjButton = new MButton(UserUIContext.getMessage(ProjectI18nEnum.SINGLE), clickEvent -> {
+                UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class));
+                newBtn.setPopupVisible(false);
+            });
+            contentLayout.addOption(newPrjButton);
+            newBtn.setContent(contentLayout);
+            newBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
 
-            MButton newPrjBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.NEW),
-                    clickEvent -> UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class)))
-                    .withStyleName("add-btn-popup").withIcon(FontAwesome.PLUS_CIRCLE);
-            newPrjBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
-            serviceMenuContainer.with(newPrjBtn).withAlign(newPrjBtn, Alignment.MIDDLE_LEFT);
-
-            Button switchPrjBtn = new SwitchProjectPopupButton();
-            serviceMenuContainer.with(switchPrjBtn).withAlign(switchPrjBtn, Alignment.MIDDLE_LEFT);
+            serviceMenuContainer.with(newBtn).withAlign(newBtn, Alignment.MIDDLE_LEFT);
         }
 
         return serviceMenuContainer;
@@ -112,9 +121,8 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
         private ProjectPagedList projectList;
 
         SwitchProjectPopupButton() {
-            super(UserUIContext.getMessage(ProjectCommonI18nEnum.BUTTON_SWITCH_PROJECT));
-            setStyleName("myprojectlist");
-            addStyleName("add-btn-popup");
+            super(UserUIContext.getMessage(ProjectI18nEnum.LIST));
+            addStyleName("myprojectlist add-btn-popup");
             setIcon(VaadinIcons.ARROW_CIRCLE_RIGHT_O);
             projectList = new ProjectPagedList();
 

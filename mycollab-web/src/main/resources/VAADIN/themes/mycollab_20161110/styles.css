@@ -16444,16 +16444,11 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .topNavigation .serviceMenuContainer .service-menu .v-button-wrap {
-	padding: 0px;
+	padding: 0px 10px;
 }
 
 .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button {
 	padding: 3px 12px;
-}
-
-.topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.v-button-left, .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.v-button-middle, .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.v-button-right {
-	background: none;
-	border: none;
 }
 
 .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button:focus {
@@ -16467,6 +16462,7 @@ input.v-textfield-pagedtable-pagefield {
 .topNavigation .v-button {
 	border-radius: 4px;
 	font-weight: 600;
+	background-color: #fff;
 }
 
 .topNavigation .v-button .v-button-wrap {

@@ -186,14 +186,10 @@ $v-line-height--header:1.5em;
         border: none;
         text-shadow: none;
         .v-button-wrap {
-          padding: 0px;
+          padding: 0px 10px;
         }
         &.v-buttongroup .v-button {
           padding: 3px 12px;
-          &.v-button-left, &.v-button-middle, &.v-button-right {
-            background: none;
-            border: none;
-          }
           &:focus {
             background: none;
           }
@@ -207,6 +203,7 @@ $v-line-height--header:1.5em;
     .v-button {
       border-radius: $v-border-radius;
       font-weight: $my-font-weight-bold;
+      background-color: #fff;
       .v-button-wrap {
         padding: 2px 5px 2px 0px;
         .v-icon {
