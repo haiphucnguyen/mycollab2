@@ -112,10 +112,6 @@ public class ProjectInfoComponent extends MHorizontalLayout {
 
         ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
         breadCrumb.setProject(project);
-//        ELabel headerLbl = ELabel.h2(project.getName());
-//        headerLbl.setDescription(ProjectTooltipGenerator.generateToolTipProject(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
-//                project, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
-//        headerLbl.addStyleName(UIConstants.TEXT_ELLIPSIS);
         MVerticalLayout headerLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, true, false, true));
 
         MHorizontalLayout footer = new MHorizontalLayout().withStyleName(UIConstants.META_INFO, WebThemes.FLEX_DISPLAY);
@@ -169,7 +165,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                 clientDiv.appendChild(clientImg).appendChild(DivLessFormatter.EMPTY_SPACE());
             }
             clientDiv.appendChild(new A(ProjectLinkBuilder.generateClientPreviewFullLink(project.getAccountid()))
-                    .appendText(project.getClientName()));
+                    .appendText(StringUtils.trim(project.getClientName(), 30, true)));
             ELabel accountBtn = ELabel.html(clientDiv.write()).withStyleName(WebThemes.BUTTON_LINK)
                     .withWidthUndefined();
             footer.addComponents(accountBtn);

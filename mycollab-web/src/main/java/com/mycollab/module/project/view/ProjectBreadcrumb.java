@@ -27,6 +27,7 @@ import com.mycollab.module.page.domain.Page;
 import com.mycollab.module.page.service.PageService;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkGenerator;
+import com.mycollab.module.project.ProjectTooltipGenerator;
 import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.event.*;
 import com.mycollab.module.project.i18n.*;
@@ -69,7 +70,8 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
     private void addSummaryLink() {
         removeAllComponents();
         with(ELabel.h3(new A("#" + ProjectLinkGenerator.generateProjectLink(project.getId())).appendText(StringUtils
-                .trim(project.getName(), 30, true)).write()));
+                .trim(project.getName(), 30, true)).write())).withDescription(ProjectTooltipGenerator.generateToolTipProject(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
+                project, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
     }
 
     private void addLink(Button button) {
