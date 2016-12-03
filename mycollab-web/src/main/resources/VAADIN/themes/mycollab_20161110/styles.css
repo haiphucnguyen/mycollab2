@@ -1690,6 +1690,7 @@ a.pending {
 	border-width: 1px 1px 0px 1px;
 	border-style: solid;
 	border-color: #ededed;
+	background-color: #ededed;
 	height: 40px !important;
 	padding: 0px 12px;
 }
@@ -14371,6 +14372,7 @@ a.pending {
 	border-width: 1px 1px 0px 1px;
 	border-style: solid;
 	border-color: #ededed;
+	background-color: #ededed;
 	height: 40px !important;
 	padding: 0px 12px;
 }
@@ -15279,7 +15281,7 @@ div .addview-layout-body {
 .project-view .main-content .top-panel {
 	border-bottom: 1px solid #ededed;
 	padding: 12px 24px;
-	background-color: #f9f9f9;
+	background-color: #F4D9FF;
 }
 
 .project-view .sidebar-menu {
@@ -15400,7 +15402,7 @@ div .addview-layout-body {
 .projectfeed-hdr-wrapper {
 	padding: 12px 24px;
 	border-bottom: 1px solid #ededed;
-	background-color: #efefef;
+	background-color: #F4D9FF;
 }
 
 .closed-button .v-button-wrap {
