@@ -49,6 +49,7 @@ import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
+import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.mycollab.security.RolePermissionCollections;
@@ -57,6 +58,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageActionChain;
+import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UIUtils;
@@ -107,10 +109,13 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         this.withMargin(false).withFullWidth();
         Component projectIcon = ProjectAssetsUtil.buildProjectLogo(project.getShortname(), project.getId(), project.getAvatarid(), 64);
         this.with(projectIcon).withAlign(projectIcon, Alignment.TOP_LEFT);
-        ELabel headerLbl = ELabel.h2(project.getName());
-        headerLbl.setDescription(ProjectTooltipGenerator.generateToolTipProject(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
-                project, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
-        headerLbl.addStyleName(UIConstants.TEXT_ELLIPSIS);
+
+        ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+        breadCrumb.setProject(project);
+//        ELabel headerLbl = ELabel.h2(project.getName());
+//        headerLbl.setDescription(ProjectTooltipGenerator.generateToolTipProject(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
+//                project, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+//        headerLbl.addStyleName(UIConstants.TEXT_ELLIPSIS);
         MVerticalLayout headerLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, true, false, true));
 
         MHorizontalLayout footer = new MHorizontalLayout().withStyleName(UIConstants.META_INFO, WebThemes.FLEX_DISPLAY);
@@ -192,7 +197,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             footer.addComponents(ganttChartBtn);
         }
 
-        headerLayout.with(headerLbl, footer);
+        headerLayout.with(breadCrumb, footer);
 
         MHorizontalLayout topPanel = new MHorizontalLayout().withMargin(false);
         this.with(headerLayout, topPanel).expand(headerLayout).withAlign(topPanel, Alignment.TOP_RIGHT);

@@ -77,19 +77,15 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
             final ServiceMenu serviceMenu = new ServiceMenu();
             serviceMenu.addService(UserUIContext.getMessage(ProjectI18nEnum.LIST), clickEvent -> {
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoUserDashboard(this, null));
-                serviceMenu.selectService(0);
             });
-            serviceMenu.selectService(0);
 
             if (!SiteConfiguration.isCommunityEdition()) {
                 serviceMenu.addService(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_CLIENTS), clickEvent -> {
                     EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
-                    serviceMenu.selectService(1);
                 });
 
                 serviceMenu.addService(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), clickEvent -> {
                     EventBusFactory.getInstance().post(new ReportEvent.GotoConsole(this));
-                    serviceMenu.selectService(2);
                 });
             }
 

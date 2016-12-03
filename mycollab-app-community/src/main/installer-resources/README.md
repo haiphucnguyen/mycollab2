@@ -45,13 +45,13 @@ Version 5.4.6
 
 **Library Upgrades**
 
-* Vaadin 7.7.4
+* Vaadin 7.7.5
 * Other libraries
 
 **Improvements & New Features**
 
 * Support recurrence of tasks
-* Release notes of phase
+* Release notes of version, phase
 * Docker images for MyCollab
 * The test case type of ticket
 * [Premium] Group support
@@ -84,7 +84,7 @@ Version 5.4.5
 
 **Bug Fixes**
 
-* Go to previous entry of task, bug go to the first entry
+* Go to previous entry of task, bug go to the fifirst entry
 * Unresolved tickets display wrong entries
 * Throw error when user enter the empty page view without having the write permission
 
