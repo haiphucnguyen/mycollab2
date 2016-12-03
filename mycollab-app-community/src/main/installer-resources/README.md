@@ -50,7 +50,6 @@ Version 5.4.6
 
 **Improvements & New Features**
 
-* Support recurrence of tasks
 * Release notes of version, phase
 * Docker images for MyCollab
 * The test case type of ticket

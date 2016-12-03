@@ -17,7 +17,7 @@
 package com.mycollab.module.project.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.common.i18n.OptionI18nEnum;
+import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
@@ -47,7 +47,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -123,12 +122,11 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
         SwitchProjectPopupButton() {
             super(UserUIContext.getMessage(ProjectI18nEnum.LIST));
             addStyleName("myprojectlist add-btn-popup");
-            setIcon(VaadinIcons.ARROW_CIRCLE_RIGHT_O);
             projectList = new ProjectPagedList();
 
             searchCriteria = new ProjectSearchCriteria();
             searchCriteria.setInvolvedMember(StringSearchField.and(UserUIContext.getUsername()));
-            searchCriteria.setProjectStatuses(new SetSearchField<>(OptionI18nEnum.StatusI18nEnum.Open.name()));
+            searchCriteria.setProjectStatuses(new SetSearchField<>(StatusI18nEnum.Open.name()));
 
             titleLbl = ELabel.h2(UserUIContext.getMessage(ProjectCommonI18nEnum.WIDGET_ACTIVE_PROJECTS_TITLE, 0));
             OptionPopupContent contentLayout = new OptionPopupContent();

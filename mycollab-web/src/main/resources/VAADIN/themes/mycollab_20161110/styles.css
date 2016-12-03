@@ -15290,6 +15290,18 @@ div .addview-layout-body {
 	padding: 0px 30px 10px;
 }
 
+.task {
+	box-shadow: inset 5px 0px 0px 0px #52de0f;
+}
+
+.bug {
+	box-shadow: inset 5px 0px 0px 0px #e20a71;
+}
+
+.risk {
+	box-shadow: inset 5px 0px 0px 0px #47bbdd;
+}
+
 .v-popupbutton-popup-myprojectlist .contentWrapper, .myprojectlist .contentWrapper {
 	border-top: 1px solid #ededed;
 }
@@ -17679,7 +17691,7 @@ div.v-stylecalendar .weekdays TD {
 }
 
 .hdr-view {
-	padding: 12px 24px 0px 24px;
+	padding: 12px 24px;
 }
 
 img.icon-btn {
