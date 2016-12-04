@@ -389,7 +389,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                     return new Not(VerticalLocationIs.MIDDLE);
                 }
             });
-            new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((UIUtils.getBrowserHeight() - 450) + "px");
+            new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((UIUtils.getBrowserHeight() - 390) + "px");
             MHorizontalLayout headerLayout = new MHorizontalLayout().withFullWidth().withStyleName("header");
             if (milestone == null) {
                 header = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)).withStyleName(UIConstants.TEXT_ELLIPSIS)
@@ -501,6 +501,14 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             this.ticket = ticket;
 
             this.addStyleName("kanban-item");
+
+            if (ticket.isTask()) {
+                addStyleName("task");
+            } else if (ticket.isBug()) {
+                addStyleName("bug");
+            } else if (ticket.isRisk()) {
+                addStyleName("risk");
+            }
 
             ToggleTicketSummaryField toggleTicketSummaryField = new ToggleTicketSummaryField(ticket);
             MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())).withWidthUndefined(),

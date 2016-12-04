@@ -399,7 +399,7 @@
       .kanban-item {
         background-color: white;
         cursor: move;
-        padding: 5px;
+        padding: 5px 5px 5px 10px;
         margin: 0px 0px 2px 0px;
         &:hover {
           background-color: $my-hover-background-color;

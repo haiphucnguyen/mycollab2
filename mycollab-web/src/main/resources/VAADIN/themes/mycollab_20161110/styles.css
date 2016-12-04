@@ -2004,7 +2004,7 @@ div.v-window {
 .kanban-layout .kanban-block .kanban-item {
 	background-color: white;
 	cursor: move;
-	padding: 5px;
+	padding: 5px 5px 5px 10px;
 	margin: 0px 0px 2px 0px;
 }
 
@@ -14686,7 +14686,7 @@ div.v-window {
 .kanban-layout .kanban-block .kanban-item {
 	background-color: white;
 	cursor: move;
-	padding: 5px;
+	padding: 5px 5px 5px 10px;
 	margin: 0px 0px 2px 0px;
 }
 
