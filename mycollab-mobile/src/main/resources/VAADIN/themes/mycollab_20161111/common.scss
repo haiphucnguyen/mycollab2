@@ -145,9 +145,6 @@
 .row {
   padding: 10px;
   border-bottom: 1px solid $my-separator-color;
-  &:last-child {
-    border-style: none;
-  }
 }
 
 @mixin common {

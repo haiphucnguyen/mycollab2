@@ -21,11 +21,11 @@
         <jettyVersion>9.3.12.v20160915</jettyVersion>
         <mysqlVersion>5.1.40</mysqlVersion>
         <junitVersion>4.12</junitVersion>
-        <jackrabbitVersion>2.13.4</jackrabbitVersion>
+        <jackrabbitVersion>2.13.5</jackrabbitVersion>
         <jacksonVersion>2.8.5</jacksonVersion>
         <jodaVersion>2.9.6</jodaVersion>
         <scala.binary.version>2.12</scala.binary.version>
-        <scala.version>2.12.0</scala.version>
+        <scala.version>2.12.1</scala.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.inceptionYear>2011</project.inceptionYear>
         <sonar.language>java</sonar.language>
