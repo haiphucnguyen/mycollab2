@@ -40,7 +40,7 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
-Version 5.4.6
+Version 5.4.7
 -------------
 
 **Library Upgrades**
@@ -53,10 +53,26 @@ Version 5.4.6
 * Release notes of version, phase
 * Docker images for MyCollab
 * The test case type of ticket
+* Inline edit form field
 * [Premium] Group support
 * [Premium] Custom display fields of ticket dashboard
 * [Premium] Burndown chart of tickets
 * [Premium] The new epic, user stories types of ticket
+* Other minor improvements
+
+**Bug Fixes**
+
+Version 5.4.6
+-------------
+
+**Library Upgrades**
+
+* Vaadin 7.7.5
+* Other libraries
+
+**Improvements & New Features**
+
+* Easy to navigate project tickets
 * Other minor improvements
 
 **Bug Fixes**
