@@ -99,7 +99,7 @@ Version 5.4.5
 
 **Bug Fixes**
 
-* Go to previous entry of task, bug go to the fifirst entry
+* Go to previous entry of task, bug go to the first entry
 * Unresolved tickets display wrong entries
 * Throw error when user enter the empty page view without having the write permission
 
