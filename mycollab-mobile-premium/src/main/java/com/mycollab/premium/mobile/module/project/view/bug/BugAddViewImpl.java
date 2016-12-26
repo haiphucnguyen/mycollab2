@@ -121,7 +121,8 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
                     beanItem.setMilestoneName(milestoneName);
                 });
                 return milestoneBox;
-            } else if (BugWithBLOBs.Field.estimatetime.equalTo(propertyId) || BugWithBLOBs.Field.estimateremaintime.equalTo(propertyId)) {
+            } else if (BugWithBLOBs.Field.originalestimate.equalTo(propertyId) ||
+                    BugWithBLOBs.Field.remainestimate.equalTo(propertyId)) {
                 return new NumberField();
             }
 

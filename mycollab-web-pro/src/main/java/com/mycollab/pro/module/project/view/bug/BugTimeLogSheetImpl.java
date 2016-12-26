@@ -16,6 +16,9 @@
  */
 package com.mycollab.pro.module.project.view.bug;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
 import com.mycollab.db.arguments.BooleanSearchField;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
@@ -29,16 +32,14 @@ import com.mycollab.module.project.domain.ItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
-import com.mycollab.pro.module.project.ui.components.TimeLogEditWindow;
 import com.mycollab.module.project.view.bug.BugTimeLogSheet;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
+import com.mycollab.pro.module.project.ui.components.TimeLogEditWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.google.common.eventbus.AllowConcurrentEvents;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.ui.UI;
 
 /**
@@ -95,10 +96,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
 
     @Override
     protected Double getRemainedHours(SimpleBug bean) {
-        if (bean.getEstimateremaintime() != null) {
-            return bean.getEstimateremaintime();
-        }
-        return 0d;
+        return MoreObjects.firstNonNull(bean.getRemainestimate(), 0d);
     }
 
     private Double loadTotalBillableHours() {
@@ -157,7 +155,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
         @Override
         protected void updateTimeRemain() {
             BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-            bean.setEstimateremaintime(getUpdateRemainTime());
+            bean.setRemainestimate(getUpdateRemainTime());
             bugService.updateWithSession(bean, UserUIContext.getUsername());
         }
 
@@ -171,11 +169,13 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
         }
 
         @Override
+        protected double getInvestValue() {
+            return super.getInvestValue();
+        }
+
+        @Override
         protected double getEstimateRemainTime() {
-            if (bean.getEstimateremaintime() != null) {
-                return bean.getEstimateremaintime();
-            }
-            return 0;
+            return MoreObjects.firstNonNull(bean.getRemainestimate(), 0d);
         }
 
         @Override
