@@ -337,6 +337,12 @@
         @include hover-effect;
       }
     }
+    .v-slot-row {
+      border-bottom: 1px solid $my-separator-color;
+      &:last-child {
+        border-style: none;
+      }
+    }
   }
 
   .selected {
