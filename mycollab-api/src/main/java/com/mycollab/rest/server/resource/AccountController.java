@@ -34,9 +34,9 @@ public class AccountController {
         if (isEmailVerified == null) {
             isEmailVerified = Boolean.FALSE;
         }
-//        billingService.registerAccount(subdomain, planId, email, password, email, timezoneId, isEmailVerified);
+        billingService.registerAccount(subdomain, planId, email, password, email, timezoneId, isEmailVerified);
 
-//        emailReferenceService.save(email);
+        emailReferenceService.save(email);
         return SiteConfiguration.getSiteUrl(subdomain);
     }
 }
