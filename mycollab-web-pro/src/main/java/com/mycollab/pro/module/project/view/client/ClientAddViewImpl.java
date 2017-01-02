@@ -25,10 +25,7 @@ import com.mycollab.vaadin.web.ui.AddViewLayout;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
+import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -108,7 +105,7 @@ public class ClientAddViewImpl extends AbstractVerticalPageView implements Clien
         }
 
         @Override
-        public ComponentContainer getLayout() {
+        public AbstractComponent getLayout() {
             wrappedLayoutFactory = new DefaultDynaFormLayout(CrmTypeConstants.ACCOUNT, AccountDefaultDynaFormLayoutFactory.getForm());
             MHorizontalLayout header = new MHorizontalLayout().withFullWidth().withMargin(new MarginInfo(true, false, true, false));
             header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);

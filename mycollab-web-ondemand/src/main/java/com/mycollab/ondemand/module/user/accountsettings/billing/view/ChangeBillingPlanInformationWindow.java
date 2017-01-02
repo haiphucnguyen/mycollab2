@@ -48,7 +48,7 @@ class ChangeBillingPlanInformationWindow extends MWindow {
             private GridFormLayoutHelper informationLayout;
 
             @Override
-            public ComponentContainer getLayout() {
+            public AbstractComponent getLayout() {
                 VerticalLayout layout = new VerticalLayout();
                 informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
                 layout.addComponent(informationLayout.getLayout());

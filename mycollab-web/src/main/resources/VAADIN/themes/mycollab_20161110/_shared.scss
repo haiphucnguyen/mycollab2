@@ -742,6 +742,13 @@
     overflow-y: auto;
   }
 
+  .noscrollable-container {
+    overflow-y: hidden;
+    .v-window-contents > div {
+      overflow-y: hidden;
+    }
+  }
+
   .tm-container {
     border: 1px solid $my-separator-color;
     .tm-wrapper {

@@ -475,6 +475,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
         NewTicketWindow(Date date, final Integer prjId, final Integer milestoneId, boolean isIncludeMilestone) {
             super(UserUIContext.getMessage(TicketI18nEnum.NEW));
+            this.addStyleName("noscrollable-container");
             MVerticalLayout content = new MVerticalLayout();
             withModal(true).withResizable(false).withCenter().withWidth("1200px").withContent(content);
 

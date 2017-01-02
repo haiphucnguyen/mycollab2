@@ -31,7 +31,7 @@ public abstract class StandupReportFormLayoutFactory extends AbstractFormLayoutF
     }
 
     @Override
-    public ComponentContainer getLayout() {
+    public AbstractComponent getLayout() {
         AddViewLayout reportAddLayout = new AddViewLayout(title, ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP));
         reportAddLayout.addHeaderRight(this.createTopPanel());
 

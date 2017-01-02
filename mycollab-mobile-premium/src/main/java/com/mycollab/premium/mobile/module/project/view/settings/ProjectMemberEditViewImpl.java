@@ -92,7 +92,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         private GridFormLayoutHelper informationLayout;
 
         @Override
-        public ComponentContainer getLayout() {
+        public AbstractComponent getLayout() {
             final MVerticalLayout layout = new MVerticalLayout().withMargin(false).withSpacing(false).withFullWidth();
             layout.addComponent(FormSectionBuilder.build(UserUIContext.getMessage(ProjectMemberI18nEnum.FORM_INFORMATION_SECTION)));
 

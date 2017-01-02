@@ -79,7 +79,7 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
         private GridFormLayoutHelper informationLayout;
 
         @Override
-        public ComponentContainer getLayout() {
+        public AbstractComponent getLayout() {
             final VerticalLayout layout = new VerticalLayout();
             layout.setMargin(false);
             layout.addComponent(FormSectionBuilder.build("Information"));
