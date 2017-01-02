@@ -70,8 +70,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
                     uploadField.saveContentsToRepo(attachPath);
 
                     postExecution();
-                    EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(this,
-                            ProjectTypeConstants.RISK, riskId));
+                    EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(this, ProjectTypeConstants.RISK, riskId));
                 }
             }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE).withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
