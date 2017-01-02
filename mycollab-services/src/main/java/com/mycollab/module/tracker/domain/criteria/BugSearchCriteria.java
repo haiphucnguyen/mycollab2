@@ -88,13 +88,13 @@ public class BugSearchCriteria extends SearchCriteria {
             new BugTypeCustomSqlParam("components", "Component"));
 
     public static final PropertyListParam<String> p_assignee = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_ASSIGNEE,
-            new PropertyListParam<String>("assignuser", "m_tracker_bug", "assignuser"));
+            new PropertyListParam<String>("assignUser", "m_tracker_bug", "assignUser"));
 
     public static final PropertyListParam<String> p_createdUser = CacheParamMapper.register(ProjectTypeConstants.BUG, ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE,
-            new PropertyListParam<String>("logby", "m_tracker_bug", "logby"));
+            new PropertyListParam<String>("createdUser", "m_tracker_bug", "createdUser"));
 
     public static final PropertyListParam p_projectIds = CacheParamMapper.register(ProjectTypeConstants.BUG, null,
-            new PropertyListParam("projectid", "m_tracker_bug", "projectid"));
+            new PropertyListParam("projectId", "m_tracker_bug", "projectId"));
 
     private static class BugTypeCustomSqlParam extends CustomSqlParam {
         private String type;

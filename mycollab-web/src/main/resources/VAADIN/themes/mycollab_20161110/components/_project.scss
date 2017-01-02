@@ -9,7 +9,7 @@
       .top-panel {
         border-bottom: 1px solid $my-separator-color;
         padding: $my-space 2*$my-space;
-        background-color: #f0f0f0;
+        background-color: $my-separator-color;
       }
     }
     .sidebar-menu {
@@ -125,7 +125,7 @@
   .projectfeed-hdr-wrapper {
     padding: $my-space 2*$my-space;
     border-bottom: 1px solid $my-separator-color;
-    background-color: #f0f0f0;
+    background-color: $my-separator-color;
   }
 
   .closed-button {
