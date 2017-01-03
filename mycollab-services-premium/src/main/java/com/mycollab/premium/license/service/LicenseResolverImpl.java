@@ -122,7 +122,7 @@ public class LicenseResolverImpl implements LicenseResolver, AppPropertiesServic
             byte[] bytes = outputStream.toByteArray();
             prop.load(new ByteArrayInputStream(bytes));
             DateTime expireDate = new DateTime(DateTimeUtils.parseDateByW3C(prop.getProperty("expireDate")));
-            if (Version.getReleasedDate() != null && Version.getReleasedDate().isAfter(expireDate)) {
+            if (Version.getReleasedDate().isAfter(expireDate)) {
                 return createInvalidLicense();
             }
             LicenseInfo newLicenseInfo = new LicenseInfo();

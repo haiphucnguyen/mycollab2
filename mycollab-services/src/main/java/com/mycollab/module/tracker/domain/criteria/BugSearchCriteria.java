@@ -54,10 +54,10 @@ public class BugSearchCriteria extends SearchCriteria {
             new DateParam("resolveddate", "m_tracker_bug", "resolveddate"));
 
     public static final DateParam p_createddate = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_CREATED_TIME,
-            new DateParam("createddate", "m_tracker_bug", "createdTime"));
+            new DateParam("createdTime", "m_tracker_bug", "createdTime"));
 
     public static final DateParam p_duedate = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_DUE_DATE,
-            new DateParam("duedate", "m_tracker_bug", "duedate"));
+            new DateParam("dueDate", "m_tracker_bug", "dueDate"));
 
     public static final NumberParam p_bugkey = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_BUG_KEY,
             new NumberParam("key", "m_tracker_bug", "bugkey"));

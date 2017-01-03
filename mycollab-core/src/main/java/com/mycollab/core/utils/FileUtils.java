@@ -16,12 +16,15 @@
  */
 package com.mycollab.core.utils;
 
+import com.google.common.base.MoreObjects;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.UserInvalidInputException;
-import com.google.common.base.MoreObjects;
 import org.apache.commons.io.IOUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -33,11 +36,25 @@ import java.util.regex.Pattern;
  */
 public class FileUtils {
 
-    public static File getHomeFolder() {
-        String userFolder = System.getProperty("user.home");
+    private static File homeFolder;
+
+    static {
+        String userFolder = System.getProperty("user.dir");
         File homeDir = new File(userFolder + "/.mycollab");
+        if (homeDir.exists()) {
+            homeFolder = homeDir;
+        } else {
+            File userHomeDir = new File(System.getProperty("user.home") + "/.mycollab");
+            if (userHomeDir.exists()) {
+                homeFolder = userHomeDir;
+            }
+        }
         FileUtils.mkdirs(homeDir);
-        return homeDir;
+        homeFolder = homeDir;
+    }
+
+    public static File getHomeFolder() {
+        return homeFolder;
     }
 
     public static File getUserFolder() {
