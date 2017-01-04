@@ -49,8 +49,8 @@ public class ProjectLinkGenerator {
         return siteUrl + URL_PREFIX_PARAM + generateTaskPreviewLink(taskKey, prjShortName);
     }
 
-    public static String generateTaskEditLink(Integer taskkey, String prjShortName) {
-        return String.format("project/task/edit/%s-%d", prjShortName, taskkey);
+    public static String generateTaskEditLink(Integer taskKey, String prjShortName) {
+        return String.format("project/task/edit/%s-%d", prjShortName, taskKey);
     }
 
     public static String generateMilestonesLink(Integer projectId) {

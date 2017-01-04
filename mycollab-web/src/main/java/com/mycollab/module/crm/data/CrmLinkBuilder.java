@@ -16,9 +16,10 @@
  */
 package com.mycollab.module.crm.data;
 
-import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.vaadin.MyCollabUI;
+
+import static com.mycollab.common.GenericLinkUtils.URL_PREFIX_PARAM;
 
 /**
  * @author MyCollab Ltd.
@@ -27,69 +28,38 @@ import com.mycollab.vaadin.MyCollabUI;
 public class CrmLinkBuilder {
 
     public static String generateAccountPreviewLinkFull(Integer accountId) {
-        if (accountId == null) {
-            return "";
-        }
-        return CrmLinkGenerator.generateAccountPreviewFullLink(MyCollabUI.getSiteUrl(), accountId);
+        return URL_PREFIX_PARAM + CrmLinkGenerator.generateAccountPreviewLink(accountId);
     }
 
     public static String generateCampaignPreviewLinkFull(Integer campaignId) {
-        if (campaignId == null) {
-            return "";
-        }
-        return CrmLinkGenerator.generateCampaignPreviewFullLink(MyCollabUI.getSiteUrl(), campaignId);
+        return URL_PREFIX_PARAM + CrmLinkGenerator.generateCallPreviewLink(campaignId);
     }
 
     public static String generateCasePreviewLinkFull(Integer caseId) {
-        if (caseId == null) {
-            return "";
-        }
-        return CrmLinkGenerator.generateCasePreviewFullLink(MyCollabUI.getSiteUrl(), caseId);
+        return URL_PREFIX_PARAM + CrmLinkGenerator.generateCasePreviewLink(caseId);
     }
 
     public static String generateContactPreviewLinkFull(Integer contactId) {
-        if (contactId == null) {
-            return "";
-        }
-        return CrmLinkGenerator.generateContactPreviewFullLink(
-                MyCollabUI.getSiteUrl(), contactId);
+        return URL_PREFIX_PARAM + CrmLinkGenerator.generateContactPreviewLink(contactId);
     }
 
     public static String generateLeadPreviewLinkFull(Integer leadId) {
-        if (leadId == null) {
-            return "";
-        }
-        return MyCollabUI.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + CrmLinkGenerator.generateLeadPreviewLink(leadId);
+        return URL_PREFIX_PARAM + CrmLinkGenerator.generateLeadPreviewLink(leadId);
     }
 
-    public static String generateOpportunityPreviewLinkFull(
-            Integer opportunityId) {
-        if (opportunityId == null) {
-            return "";
-        }
-        return CrmLinkGenerator.generateOpportunityPreviewFullLink(MyCollabUI.getSiteUrl(), opportunityId);
+    public static String generateOpportunityPreviewLinkFull(Integer opportunityId) {
+        return URL_PREFIX_PARAM + CrmLinkGenerator.generateOpportunityPreviewLink(opportunityId);
     }
 
     public static String generateActivityPreviewLinkFull(String type, Integer typeId) {
-        if (type == null || typeId == null) {
-            return "";
-        }
-
         return CrmLinkGenerator.generateCrmItemFullLink(MyCollabUI.getSiteUrl(), type, typeId);
-
     }
 
     public static String generateMeetingPreviewLinkFull(Integer meetingId) {
-        if (meetingId == null) {
-            return "";
-        }
-        return CrmLinkGenerator.generateMeetingPreviewFullLink(MyCollabUI.getSiteUrl(), meetingId);
+        return URL_PREFIX_PARAM + CrmLinkGenerator.generateMeetingPreviewLink(meetingId);
     }
 
     public static String generateCallPreviewLinkFul(Integer callId) {
-        if (callId == null) {
-            return "";
-        }
-        return CrmLinkGenerator.generateCallPreviewFullLink(MyCollabUI.getSiteUrl(), callId);
+        return URL_PREFIX_PARAM + CrmLinkGenerator.generateCallPreviewLink(callId);
     }
 }

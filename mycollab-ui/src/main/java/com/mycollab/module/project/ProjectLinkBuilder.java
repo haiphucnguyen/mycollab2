@@ -141,7 +141,8 @@ public class ProjectLinkBuilder {
     public static String generateProjectItemHtmlLinkAndTooltip(String prjShortName, Integer projectId, String summary, String type, String typeId) {
         Text image = new Text(ProjectAssetsManager.getAsset(type).getHtml());
         A link = new A().setId("tag" + TOOLTIP_ID);
-        link.setHref(MyCollabUI.getSiteUrl() + ProjectLinkGenerator.generateProjectItemLink(prjShortName, projectId, type, typeId)).appendChild(new Text(summary));
+        link.setHref(URL_PREFIX_PARAM + ProjectLinkGenerator.generateProjectItemLink(prjShortName, projectId, type, typeId))
+                .appendChild(new Text(summary));
         link.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(type, typeId));
         link.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
         Div div = new DivLessFormatter().appendChild(image, DivLessFormatter.EMPTY_SPACE(), link);
