@@ -30,6 +30,8 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 /**
  * @author MyCollab Ltd.
  * @since 5.0.4
@@ -41,16 +43,23 @@ public class FileUtils {
     static {
         String userFolder = System.getProperty("user.dir");
         File homeDir = new File(userFolder + "/.mycollab");
-        if (homeDir.exists()) {
-            homeFolder = homeDir;
-        } else {
-            File userHomeDir = new File(System.getProperty("user.home") + "/.mycollab");
-            if (userHomeDir.exists()) {
+        File userHomeDir = new File(System.getProperty("user.home") + "/.mycollab");
+        if (userHomeDir.exists()) {
+            try {
+                Files.move(userHomeDir.toPath(), homeDir.toPath(), REPLACE_EXISTING);
+                homeFolder = homeDir;
+            } catch (Exception e) {
+                e.printStackTrace();
                 homeFolder = userHomeDir;
             }
+        } else {
+            if (homeDir.exists()) {
+                homeFolder = homeDir;
+            } else {
+                FileUtils.mkdirs(homeDir);
+                homeFolder = homeDir;
+            }
         }
-        FileUtils.mkdirs(homeDir);
-        homeFolder = homeDir;
     }
 
     public static File getHomeFolder() {
