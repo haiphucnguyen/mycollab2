@@ -96,6 +96,10 @@ public class ProjectLinkGenerator {
         return siteUrl + URL_PREFIX_PARAM + "project/user/preview/" + GenericLinkUtils.encodeParam(projectId, memberName);
     }
 
+    public static String generateProjectMemberLink(Integer projectId, String memberName) {
+        return "project/user/preview/" + GenericLinkUtils.encodeParam(projectId, memberName);
+    }
+
     public static String generateRisksLink(Integer projectId) {
         return "project/risk/list/" + UrlEncodeDecoder.encode(projectId);
     }
@@ -181,11 +185,7 @@ public class ProjectLinkGenerator {
     }
 
     public static String generateRolePreviewFullLink(String siteUrl, Integer projectId, Integer roleId) {
-        return siteUrl + URL_PREFIX_PARAM + "project/role/preview/" + GenericLinkUtils.encodeParam(projectId, roleId);
-    }
-
-    public static String generateTimeTrackingPreviewLink(Integer projectId, Integer timeId) {
-        return "project/time/list/" + GenericLinkUtils.encodeParam(projectId, timeId);
+        return siteUrl + URL_PREFIX_PARAM + generateRolePreviewLink(projectId, roleId);
     }
 
     public static String generateStandupDashboardLink() {
