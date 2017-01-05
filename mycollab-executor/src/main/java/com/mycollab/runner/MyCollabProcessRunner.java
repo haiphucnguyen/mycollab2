@@ -1,5 +1,6 @@
 package com.mycollab.runner;
 
+import org.apache.commons.lang.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zeroturnaround.exec.ProcessExecutor;
@@ -43,7 +44,21 @@ class MyCollabProcessRunner {
                 try {
                     File workingDir = new File(System.getProperty("MYCOLLAB_APP_HOME"));
                     List<String> javaOptions = new ArrayList<>();
-                    javaOptions.add("java");
+                    String javaHomePath = System.getProperty("java.home");
+                    String javaPath;
+                    if (SystemUtils.IS_OS_WINDOWS) {
+                        javaPath = javaHomePath + "/bin/javaw.exe";
+                    } else {
+                        javaPath = javaHomePath + "/bin/java";
+                    }
+                    File javaExecutableFile = new File(javaPath);
+                    if (javaExecutableFile.exists()) {
+                        javaOptions.add(javaExecutableFile.getAbsolutePath());
+                    } else {
+                        javaOptions.add("java");
+                    }
+
+
                     if (!"".equals(initialOptions)) {
                         String[] optArr = initialOptions.split(" ");
                         javaOptions.addAll(Arrays.asList(optArr));
@@ -60,8 +75,7 @@ class MyCollabProcessRunner {
                             return pathname.isFile() && pathname.getName().endsWith("jar");
                         }
                     });
-                    for (int i = 0; i < jarFiles.length; i++) {
-                        File subFile = jarFiles[i];
+                    for (File subFile : jarFiles) {
                         classPaths.append(System.getProperty("path.separator"));
                         classPaths.append("./lib/" + subFile.getName());
                     }
