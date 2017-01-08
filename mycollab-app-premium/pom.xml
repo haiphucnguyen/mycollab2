@@ -234,7 +234,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-esb</artifactId>
-                                    <version>5.4.5</version>
+                                    <version>${project.version}</version>
                                     <type>jar</type>
                                     <includes>*.ftl</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
@@ -242,7 +242,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-localization</artifactId>
-                                    <version>5.4.5</version>
+                                    <version>${project.version}</version>
                                     <type>jar</type>
                                     <includes>*.properties</includes>
                                     <excludes>**/pom.properties</excludes>
@@ -251,7 +251,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-scheduler</artifactId>
-                                    <version>5.4.5</version>
+                                    <version>${project.version}</version>
                                     <type>jar</type>
                                     <includes>*.ftl</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
@@ -259,7 +259,7 @@
                                 <artifactItem>
                                     <groupId>com.mycollab</groupId>
                                     <artifactId>mycollab-servlet</artifactId>
-                                    <version>5.4.5</version>
+                                    <version>${project.version}</version>
                                     <type>jar</type>
                                     <includes>*.ftl</includes>
                                     <outputDirectory>${project.build.directory}/staging/i18n</outputDirectory>
