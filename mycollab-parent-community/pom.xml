@@ -9,7 +9,7 @@
     <version>5.4.5</version>
     <packaging>pom</packaging>
     <prerequisites>
-        <maven>3.0.4</maven>
+        <maven>3.3.0</maven>
     </prerequisites>
     <properties>
         <springVersion>4.3.2.RELEASE</springVersion>
