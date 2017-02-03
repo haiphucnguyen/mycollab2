@@ -56,9 +56,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 -->
-    <listener>
-        <listener-class>com.mycollab.servlet.MyCollabHttpSessionListener</listener-class>
-    </listener>
 
     <filter>
         <filter-name>ExpiresFilter</filter-name>
@@ -104,7 +101,7 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>com.mycollab.ondemand.configuration.RestConfiguration</param-value>
+            <param-value>com.mycollab.spring.RestConfiguration</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -113,11 +110,6 @@
         <servlet-name>restApi</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
-
-    <mime-mapping>
-        <extension>manifest</extension>
-        <mime-type>text/cache-manifest</mime-type>
-    </mime-mapping>
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

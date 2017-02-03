@@ -37,6 +37,7 @@
         <module>../mycollab-servlet</module>
         <module>../mycollab-simple-monitoring</module>
         <module>../mycollab-servlet-ondemand</module>
+        <module>../mycollab-client-api</module>
         <module>../mycollab-ui</module>
         <module>../mycollab-mobile</module>
         <module>../mycollab-mobile-premium</module>

@@ -1,4 +1,4 @@
-package com.mycollab.ondemand.configuration;
+package com.mycollab.spring;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  * @since 5.4.0
  */
 @Configuration
-@ComponentScan(basePackages = "com.mycollab.rest.server.resource",
+@ComponentScan(basePackages = {"com.mycollab.rest.server.resource", "com.mycollab.module.project.rest"},
         includeFilters = {@ComponentScan.Filter(classes = {RestController.class})})
 @EnableWebMvc
 @Profile("production")

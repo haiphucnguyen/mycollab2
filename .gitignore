@@ -7,3 +7,5 @@ target/
 bin/
 mycollab.out
 mycollab-app-premium/.mycollab
+mycollab-services-premium/.mycollab
+dependency-reduced-pom.xml

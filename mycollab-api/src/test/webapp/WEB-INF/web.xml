@@ -5,10 +5,6 @@
     id="WebApp_ID" version="3.0">
     <display-name>mycollab-web</display-name>
 
-    <listener>
-        <listener-class>com.mycollab.servlet.MyCollabHttpSessionListener</listener-class>
-    </listener>
-
     <context-param>
         <param-name>contextClass</param-name>
         <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
