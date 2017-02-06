@@ -3,9 +3,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>mycollab-app-premium</name>
-    <modules>
-        <module>../mycollab-client-api</module>
-    </modules>
     <artifactId>mycollab-app-premium</artifactId>
     <parent>
         <groupId>com.mycollab</groupId>
@@ -13,7 +10,7 @@
         <version>5.4.5</version>
         <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
     </parent>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <properties>
         <installer.izpackVersion>5.0.6</installer.izpackVersion>
         <installer.staging.dir>${project.build.directory}/staging</installer.staging.dir>
