@@ -78,7 +78,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
     public ProjectInfoComponent(SimpleProject project) {
         this.withMargin(false).withFullWidth();
         Component projectIcon = ProjectAssetsUtil.buildProjectLogo(project.getShortname(), project.getId(), project.getAvatarid(), 64);
-        this.with(projectIcon).withAlign(projectIcon, Alignment.TOP_LEFT);
+        this.with(projectIcon).withAlign(projectIcon, Alignment.MIDDLE_LEFT);
 
         ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
         breadCrumb.setProject(project);
