@@ -1,7 +1,5 @@
 package com.mycollab.server;
 
-//import org.eclipse.jetty.server.handler.gzip.GzipHandler;
-
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 
