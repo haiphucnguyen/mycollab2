@@ -78,14 +78,14 @@ public class ProjectInfoComponent extends MHorizontalLayout {
     public ProjectInfoComponent(SimpleProject project) {
         this.withMargin(false).withFullWidth();
         Component projectIcon = ProjectAssetsUtil.buildProjectLogo(project.getShortname(), project.getId(), project.getAvatarid(), 64);
-        this.with(projectIcon).withAlign(projectIcon, Alignment.MIDDLE_LEFT);
+        this.with(projectIcon).withAlign(projectIcon, Alignment.TOP_LEFT);
 
         ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
         breadCrumb.setProject(project);
         MVerticalLayout headerLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, true, false, true));
 
         MHorizontalLayout footer = new MHorizontalLayout().withStyleName(UIConstants.META_INFO, WebThemes.FLEX_DISPLAY);
-        footer.setDefaultComponentAlignment(Alignment.TOP_LEFT);
+        footer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         headerLayout.with(breadCrumb, footer);
 
         if (project.getLead() != null) {
