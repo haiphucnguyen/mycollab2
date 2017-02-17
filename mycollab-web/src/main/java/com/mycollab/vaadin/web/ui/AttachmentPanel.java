@@ -87,6 +87,7 @@ public class AttachmentPanel extends CssLayout {
         if (fileStores != null) {
             fileStores.clear();
         }
+        removeAllComponents();
     }
 
     public void saveContentsToRepo(String attachmentPath) {
