@@ -18,6 +18,7 @@
             <excludes>
                 <exclude>bin/*.sh</exclude>
             </excludes>
+            <lineEnding>unix</lineEnding>
         </fileSet>
         <fileSet>
             <directory>${project.build.directory}/staging/bin</directory>
