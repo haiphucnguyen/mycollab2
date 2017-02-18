@@ -67,18 +67,20 @@ public class MainViewImpl extends AbstractMainView {
             }
         } else {
             SimpleBillingAccount billingAccount = MyCollabUI.getBillingAccount();
-            TrialBlock trialBlock = new TrialBlock();
-            accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
+            if (billingAccount.isNotActive()) {
+                TrialBlock trialBlock = new TrialBlock();
+                accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
 
-            DateTime trialFrom = new DateTime(MoreObjects.firstNonNull(billingAccount.getTrialfrom(), billingAccount.getCreatedtime()));
-            DateTime trialTo = new DateTime(MoreObjects.firstNonNull(billingAccount.getTrialto(), trialFrom.plusDays(30)));
-            Duration dur = new Duration(new DateTime(), trialTo);
-            int daysLeft = dur.toStandardDays().getDays();
-            if (daysLeft < 0) {
-                trialBlock.setText(String.format("<div class='informBlock'>%s<br></div>", UserUIContext.getMessage(ShellI18nEnum.OPT_TRIAL)));
-                UserUIContext.getInstance().setIsValidAccount(false);
-            } else {
-                trialBlock.setText(String.format("<div class='informBlock'>%s</div><div class='informBlock'>&gt;&gt;</div>", UserUIContext.getMessage(ShellI18nEnum.OPT_TRIAL_LEFT, daysLeft)));
+                DateTime trialFrom = new DateTime(MoreObjects.firstNonNull(billingAccount.getTrialfrom(), billingAccount.getCreatedtime()));
+                DateTime trialTo = new DateTime(MoreObjects.firstNonNull(billingAccount.getTrialto(), trialFrom.plusDays(30)));
+                Duration dur = new Duration(new DateTime(), trialTo);
+                int daysLeft = dur.toStandardDays().getDays();
+                if (daysLeft < 0) {
+                    trialBlock.setText(String.format("<div class='informBlock'>%s<br></div>", UserUIContext.getMessage(ShellI18nEnum.OPT_TRIAL)));
+                    UserUIContext.getInstance().setIsValidAccount(false);
+                } else {
+                    trialBlock.setText(String.format("<div class='informBlock'>%s</div><div class='informBlock'>&gt;&gt;</div>", UserUIContext.getMessage(ShellI18nEnum.OPT_TRIAL_LEFT, daysLeft)));
+                }
             }
         }
 
