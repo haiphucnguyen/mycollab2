@@ -191,9 +191,9 @@ public class OrderManagerController {
     public static void main(String[] args) {
         LicenseInfo licenseInfo = new LicenseInfo();
         licenseInfo.setCustomerId("8");
-        licenseInfo.setExpireDate(new DateTime().plusDays(30).toDate());
+        licenseInfo.setExpireDate(new DateTime().plusDays(36500).toDate());
         licenseInfo.setIssueDate(new DateTime().toDate());
-        licenseInfo.setMaxUsers(10);
+        licenseInfo.setMaxUsers(9999);
         licenseInfo.setLicenseType(LicenseType.PRO);
         licenseInfo.setLicenseOrg("MCSI");
         System.out.println(encode(licenseInfo));
