@@ -90,6 +90,7 @@ public class MilestoneTimelineWidget extends DDVerticalLayout {
         timelineContainer = new CssLayout();
         timelineContainer.setWidth("100%");
         this.addComponent(timelineContainer);
+        timelineContainer.addStyleName("tm-wrapper");
         displayTimelines(false, false);
     }
 
