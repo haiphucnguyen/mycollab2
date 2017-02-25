@@ -65,7 +65,7 @@ public class MilestoneTimelineWidget extends DDVerticalLayout {
         this.setSpacing(true);
         this.setMargin(new MarginInfo(false, false, true, false));
 
-        MHorizontalLayout headerLayout = new MHorizontalLayout().withStyleName(WebThemes.PANEL_HEADER);
+        MHorizontalLayout headerLayout = new MHorizontalLayout().withStyleName(WebThemes.PANEL_HEADER, "wrapped");
         headerLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         ELabel titleLbl = ELabel.h3(UserUIContext.getMessage(MilestoneI18nEnum.OPT_TIMELINE));
 
@@ -90,7 +90,6 @@ public class MilestoneTimelineWidget extends DDVerticalLayout {
         timelineContainer = new CssLayout();
         timelineContainer.setWidth("100%");
         this.addComponent(timelineContainer);
-        timelineContainer.addStyleName("tm-wrapper");
         displayTimelines(false, false);
     }
 

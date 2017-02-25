@@ -614,10 +614,10 @@ $v-line-height--header:1.5em;
     .depotHeader {
       cursor: pointer;
       width: 100%;
-      border-width: 1px 1px 0px 1px;
+      border-width: 1px 1px 1px 1px;
       border-style: solid;
       border-color: $my-separator-color;
-      background-color: $my-separator-color;
+      background-color: $my-block-background-color;
       border-radius: 0px;
       padding-right: $my-space;
       .depot-title {
@@ -650,7 +650,7 @@ $v-line-height--header:1.5em;
     }
   }
 
-  .collapsed .depot-title::before {
+  .depotComp.collapsed .depotHeader .depot-title::before {
     content:'\f0da';
     font-family:FontAwesome;
     font-size:16px;
