@@ -8,7 +8,7 @@
     <parent>
         <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent-ondemand</artifactId>
-        <version>5.4.7</version>
+        <version>5.4.8</version>
         <relativePath>../mycollab-parent-ondemand/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>

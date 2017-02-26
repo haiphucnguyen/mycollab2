@@ -5,7 +5,7 @@
     <name>mycollab-parent</name>
     <groupId>com.mycollab</groupId>
     <artifactId>mycollab-parent</artifactId>
-    <version>5.4.7</version>
+    <version>5.4.8</version>
     <packaging>pom</packaging>
     <prerequisites>
         <maven>3.3.0</maven>

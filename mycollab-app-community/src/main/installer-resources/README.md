@@ -50,7 +50,7 @@ Version 5.4.8
 **Bug Fixes**
 
 * [Premium] Can not edit bug in the mobile application
-* Can not send the invitation user in some special cases
+* Export files may fail to export wrong file type
 
 
 Version 5.4.7
