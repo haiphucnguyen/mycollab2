@@ -47,9 +47,9 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
-            super.onGo(container, data);
             SimpleBug bug = (SimpleBug) data.getParams();
             view.editItem(bug);
+            super.onGo(container, data);
         } else {
             throw new SecureAccessException();
         }

@@ -40,6 +40,19 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.4.8
+-------------
+
+**Improvements & New Features**
+
+* Theme modification
+
+**Bug Fixes**
+
+* [Premium] Can not edit bug in the mobile application
+* Can not send the invitation user in some special cases
+
+
 Version 5.4.7
 -------------
 
