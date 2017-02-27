@@ -16,6 +16,7 @@
  */
 package com.mycollab.reporting;
 
+import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.persistence.service.ISearchableService;
 import com.mycollab.vaadin.UserUIContext;
@@ -83,7 +84,7 @@ public abstract class SimpleReportTemplateExecutor<T> extends ReportTemplateExec
             totalItems = searchService.getTotalCount(searchCriteria);
             reportBuilder.setTitle(reportTitle + "(" + totalItems + ")");
             reportBuilder.setDataSource(new GroupIteratorDataSource(searchService, searchCriteria, totalItems));
-            LOG.info(String.format("Fill report %d items", totalItems));
+            LOG.info(String.format("Fill report %d items and criteria %s", totalItems, BeanUtility.printBeanObj(searchCriteria)));
         }
     }
 
