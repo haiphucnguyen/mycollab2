@@ -78,7 +78,6 @@ public class ProjectAddViewImpl extends AbstractVerticalPageView implements Proj
     }
 
     class FormLayoutFactory extends AbstractFormLayoutFactory implements ImagePreviewCropWindow.ImageSelectionCommand {
-        private static final long serialVersionUID = 1L;
 
         private ProjectInformationLayout projectInformationLayout;
 
@@ -139,7 +138,6 @@ public class ProjectAddViewImpl extends AbstractVerticalPageView implements Proj
     }
 
     private static class ProjectInformationLayout extends AbstractFormLayoutFactory {
-        private static final long serialVersionUID = 1L;
         private GridFormLayoutHelper informationLayout;
         private GridFormLayoutHelper financialLayout;
         private GridFormLayoutHelper descriptionLayout;

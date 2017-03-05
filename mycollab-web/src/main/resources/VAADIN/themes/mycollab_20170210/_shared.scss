@@ -42,6 +42,9 @@
   .v-table-cell-wrapper {
     height: 100%;
     white-space: initial;
+    > .v-widget {
+      margin-top: 0px;
+    }
   }
 
   .meta-color {
@@ -53,7 +56,7 @@
   }
 
   .meta-info {
-    color: $my-meta-color;
+    color: $my-meta-color !important;
     font-size: $font-small;
   }
 

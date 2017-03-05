@@ -1633,6 +1633,10 @@ a.pending {
 	white-space: initial;
 }
 
+.v-table-cell-wrapper  > .v-widget {
+	margin-top: 0px;
+}
+
 .meta-color {
 	color: #999;
 }
@@ -1642,7 +1646,7 @@ a.pending {
 }
 
 .meta-info {
-	color: #999;
+	color: #999 !important;
 	font-size: 13px;
 }
 
@@ -14314,6 +14318,10 @@ a.pending {
 	white-space: initial;
 }
 
+.v-table-cell-wrapper  > .v-widget {
+	margin-top: 0px;
+}
+
 .meta-color {
 	color: #999;
 }
@@ -14323,7 +14331,7 @@ a.pending {
 }
 
 .meta-info {
-	color: #999;
+	color: #999 !important;
 	font-size: 13px;
 }
 
