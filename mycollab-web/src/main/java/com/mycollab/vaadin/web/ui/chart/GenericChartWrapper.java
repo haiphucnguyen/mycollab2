@@ -61,7 +61,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web-community.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.ui.chart;
+package com.mycollab.vaadin.web.ui.chart;
 
 import com.mycollab.vaadin.mvp.PageView;
 import com.google.common.collect.ImmutableList;

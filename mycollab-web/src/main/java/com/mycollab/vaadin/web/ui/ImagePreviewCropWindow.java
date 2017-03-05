@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.user.ui.components;
+package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
@@ -25,8 +25,6 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.addon.webcomponents.CropField;
 import com.mycollab.vaadin.addon.webcomponents.client.VCropSelection;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.ByteArrayImageResource;
-import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;

@@ -10,8 +10,8 @@ import com.mycollab.module.file.PathUtils;
 import com.mycollab.module.file.service.EntityUploaderService;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
-import com.mycollab.module.user.ui.components.ImagePreviewCropWindow;
-import com.mycollab.module.user.ui.components.UploadImageField;
+import com.mycollab.vaadin.web.ui.ImagePreviewCropWindow;
+import com.mycollab.vaadin.web.ui.UploadImageField;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
@@ -117,4 +117,3 @@ public class ClientAddViewImpl extends AbstractVerticalPageView implements Clien
         }
     }
 }
-
