@@ -18,7 +18,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 1.0
  */
 public abstract class StandupReportFormLayoutFactory extends AbstractFormLayoutFactory {
-    private static final long serialVersionUID = 1L;
 
     private StandupCustomField whatTodayField;
     private StandupCustomField whatYesterdayField;
@@ -26,7 +25,7 @@ public abstract class StandupReportFormLayoutFactory extends AbstractFormLayoutF
 
     private final String title;
 
-    public StandupReportFormLayoutFactory(final String title) {
+    StandupReportFormLayoutFactory(final String title) {
         this.title = title;
     }
 
@@ -95,7 +94,7 @@ public abstract class StandupReportFormLayoutFactory extends AbstractFormLayoutF
     private static class StandupCustomField extends CustomComponent {
         private static final long serialVersionUID = 1L;
 
-        public void setContentComp(Component comp) {
+        void setContentComp(Component comp) {
             setCompositionRoot(comp);
         }
     }

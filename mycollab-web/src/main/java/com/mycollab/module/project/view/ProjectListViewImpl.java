@@ -123,7 +123,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
 
             Div projectDiv = new Div().appendChild(projectLink, new Br(), url);
             ELabel b = ELabel.html(projectDiv.write());
-            return new MHorizontalLayout(ProjectAssetsUtil.buildProjectLogo(project
+            return new MHorizontalLayout(ProjectAssetsUtil.projectLogoComp(project
                     .getShortname(), project.getId(), project.getAvatarid(), 32), b)
                     .expand(b).alignAll(Alignment.MIDDLE_LEFT).withMargin(false);
         });

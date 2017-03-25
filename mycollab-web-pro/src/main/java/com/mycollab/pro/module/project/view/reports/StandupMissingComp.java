@@ -38,7 +38,7 @@ public class StandupMissingComp extends MVerticalLayout {
 
     private VerticalLayout bodyWrap;
 
-    public StandupMissingComp() {
+    StandupMissingComp() {
         this.withSpacing(false).withMargin(false);
         Label headerLbl = new Label(UserUIContext.getMessage(StandupI18nEnum.STANDUP_MEMBER_NOT_REPORT));
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true)).

@@ -20,6 +20,8 @@ import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.file.PathUtils;
+import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
@@ -27,6 +29,7 @@ import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable;
@@ -49,7 +52,7 @@ public class ProjectAssetsUtil {
         }
     }
 
-    public static Component buildProjectLogo(String projectShortname, Integer projectId, String projectAvatarId, int size) {
+    public static Component projectLogoComp(String projectShortname, Integer projectId, String projectAvatarId, int size) {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(projectAvatarId)) {
             wrapper = new Image(null, new ExternalResource(StorageFactory.getResourcePath
@@ -65,6 +68,34 @@ public class ProjectAssetsUtil {
         wrapper.setHeight(size, Sizeable.Unit.PIXELS);
         wrapper.addStyleName(UIConstants.CIRCLE_BOX);
         wrapper.setDescription(UserUIContext.getMessage(ProjectI18nEnum.OPT_CHANGE_LOGO_HELP, UserUIContext.getMessage(ProjectI18nEnum.EDIT)));
+        return wrapper;
+    }
+
+    public static Component editableProjectLogoComp(String projectShortname, Integer projectId, String projectAvatarId, int size) {
+        VerticalLayout wrapper = new VerticalLayout();
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROJECT)) {
+            wrapper.addStyleName("cursor_pointer");
+            wrapper.setDescription(UserUIContext.getMessage(ProjectI18nEnum.OPT_CHANGE_LOGO_HELP,
+                    UserUIContext.getMessage(ProjectI18nEnum.EDIT)));
+            wrapper.addLayoutClickListener((LayoutEvents.LayoutClickListener) layoutClickEvent -> {
+                System.out.println("AAA");
+            });
+        }
+
+        if (!StringUtils.isBlank(projectAvatarId)) {
+            Image image = new Image(null, new ExternalResource(StorageFactory.getResourcePath
+                    (String.format("%s/%s_%d.png", PathUtils.getProjectLogoPath(MyCollabUI.getAccountId(), projectId),
+                            projectAvatarId, size))));
+            image.addStyleName(UIConstants.CIRCLE_BOX);
+            wrapper.addComponent(image);
+        } else {
+            ELabel projectIcon = new ELabel(projectShortname).withStyleName(UIConstants.TEXT_ELLIPSIS, ValoTheme.LABEL_LARGE, "center");
+            projectIcon.addStyleName(UIConstants.CIRCLE_BOX);
+            wrapper.addComponent(projectIcon);
+            wrapper.setComponentAlignment(projectIcon, Alignment.MIDDLE_CENTER);
+        }
+        wrapper.setWidth(size, Sizeable.Unit.PIXELS);
+        wrapper.setHeight(size, Sizeable.Unit.PIXELS);
         return wrapper;
     }
 

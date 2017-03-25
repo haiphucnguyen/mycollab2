@@ -166,7 +166,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
         @Override
         public Component generateRow(final IBeanList<StandupReportStatistic> host, final StandupReportStatistic project, int rowIndex) {
             ELabel projectLbl = new ELabel(project.getProjectName()).withStyleName(UIConstants.TEXT_ELLIPSIS);
-            final MHorizontalLayout layout = new MHorizontalLayout(ProjectAssetsUtil.buildProjectLogo(project
+            final MHorizontalLayout layout = new MHorizontalLayout(ProjectAssetsUtil.projectLogoComp(project
                     .getProjectKey(), project.getProjectId(), project.getProjectAvatarId(), 32),
                     projectLbl, new ELabel(" (" + project.getTotalWrittenReports() + " / "
                     + project.getTotalReports() + ")").withWidthUndefined()).expand(projectLbl).withStyleName(WebThemes

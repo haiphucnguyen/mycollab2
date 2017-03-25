@@ -22,12 +22,15 @@ import com.mycollab.module.mail.FileAttachmentSource;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
 import java.io.File;
@@ -55,14 +58,14 @@ public class MailFormWindow extends MWindow {
     private boolean isAddCc = false;
     private boolean isAddBcc = false;
 
-    private List<String> lstMail;
+    private List<String> mails;
 
     public MailFormWindow() {
         initLayout();
     }
 
-    public MailFormWindow(List<String> lstMail) {
-        this.lstMail = lstMail;
+    public MailFormWindow(List<String> mails) {
+        this.mails = mails;
         initLayout();
     }
 
@@ -87,44 +90,25 @@ public class MailFormWindow extends MWindow {
     }
 
     private Layout createTextFieldMail(String title, Component component) {
-        HorizontalLayout layout = new HorizontalLayout();
-        Label lbTitle = new Label(title);
-        lbTitle.setWidth("60px");
-        lbTitle.setStyleName("lbmail");
-        layout.addComponent(lbTitle);
-        layout.setComponentAlignment(lbTitle, Alignment.MIDDLE_RIGHT);
-        layout.addComponent(component);
-        layout.setComponentAlignment(component, Alignment.MIDDLE_LEFT);
-        layout.setWidth("100%");
-        layout.setExpandRatio(component, 1.0f);
-        return layout;
+        return new MHorizontalLayout(new ELabel(title).withWidth("60px"), component).expand(component).withFullWidth()
+                .withDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
     }
 
     private void initUI() {
-        GridLayout mainLayout = new GridLayout(1, 5);
-        mainLayout.setWidth("100%");
-        mainLayout.setMargin(true);
-        mainLayout.setSpacing(true);
-
-        CssLayout inputPanel = new CssLayout();
-        inputPanel.setWidth("100%");
-        inputPanel.setStyleName("mail-panel");
+        MVerticalLayout mainLayout = new MVerticalLayout().withFullWidth();
 
         inputLayout = new GridLayout(3, 4);
         inputLayout.setSpacing(true);
         inputLayout.setWidth("100%");
         inputLayout.setColumnExpandRatio(0, 1.0f);
 
-        inputPanel.addComponent(inputLayout);
-
-        mainLayout.addComponent(inputPanel);
+        mainLayout.addComponent(inputLayout);
 
         tokenFieldMailTo = new EmailTokenField();
-
         inputLayout.addComponent(createTextFieldMail("To:", tokenFieldMailTo), 0, 0);
 
-        if (lstMail != null) {
-            for (String mail : lstMail) {
+        if (mails != null) {
+            for (String mail : mails) {
                 if (StringUtils.isNotBlank(mail)) {
                     if (mail.indexOf("<") > -1) {
                         String strMail = mail.substring(mail.indexOf("<") + 1, mail.lastIndexOf(">"));
@@ -152,7 +136,7 @@ public class MailFormWindow extends MWindow {
         final RichTextArea noteArea = new RichTextArea();
         noteArea.setWidth("100%");
         noteArea.setHeight("200px");
-        mainLayout.addComponent(noteArea, 0, 1);
+        mainLayout.addComponent(noteArea);
         mainLayout.setComponentAlignment(noteArea, Alignment.MIDDLE_CENTER);
 
         final AttachmentPanel attachments = new AttachmentPanel();
@@ -162,25 +146,25 @@ public class MailFormWindow extends MWindow {
                 .withStyleName(WebThemes.BUTTON_OPTION);
 
         MButton sendBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_SEND_EMAIL), clickEvent -> {
-            if (tokenFieldMailTo.getListRecipient().size() <= 0 || subject.getValue().equals("")) {
+            if (tokenFieldMailTo.getListRecipients().size() <= 0 || subject.getValue().equals("")) {
                 NotificationUtil.showErrorNotification("To Email field and Subject field must be not empty! Please fulfil them before sending email.");
                 return;
             }
             if (UserUIContext.getUser().getEmail() != null && UserUIContext.getUser().getEmail().length() > 0) {
                 ExtMailService systemMailService = AppContextUtil.getSpringBean(ExtMailService.class);
 
-                List<File> listFile = attachments.files();
+                List<File> files = attachments.files();
                 List<AttachmentSource> attachmentSource = null;
-                if (listFile != null && listFile.size() > 0) {
+                if (CollectionUtils.isNotEmpty(files)) {
                     attachmentSource = new ArrayList<>();
-                    for (File file : listFile) {
+                    for (File file : files) {
                         attachmentSource.add(new FileAttachmentSource(file));
                     }
                 }
 
                 systemMailService.sendHTMLMail(UserUIContext.getUser().getEmail(), UserUIContext.getUser().getDisplayName(),
-                        tokenFieldMailTo.getListRecipient(), tokenFieldMailCc.getListRecipient(),
-                        tokenFieldMailBcc.getListRecipient(), subject.getValue(),
+                        tokenFieldMailTo.getListRecipients(), tokenFieldMailCc.getListRecipients(),
+                        tokenFieldMailBcc.getListRecipients(), subject.getValue(),
                         noteArea.getValue(), attachmentSource, true);
                 close();
             } else {
@@ -189,7 +173,7 @@ public class MailFormWindow extends MWindow {
         }).withIcon(FontAwesome.SEND).withStyleName(WebThemes.BUTTON_ACTION);
 
         MHorizontalLayout controlsLayout = new MHorizontalLayout(attachments, cancelBtn, sendBtn).expand(attachments).withFullWidth();
-        mainLayout.addComponent(controlsLayout, 0, 2);
+        mainLayout.addComponent(controlsLayout);
         this.setContent(mainLayout);
     }
 

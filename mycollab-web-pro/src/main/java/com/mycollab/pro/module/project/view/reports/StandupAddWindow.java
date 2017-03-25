@@ -55,7 +55,7 @@ class StandupAddWindow extends MWindow implements IEditFormHandler<StandupReport
         editForm.setFormLayoutFactory(new FormLayoutFactory());
         editForm.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
         editForm.setBean(report);
-        Component projectLogo = ProjectAssetsUtil.buildProjectLogo(standupReportStatistic.getProjectKey(), standupReportStatistic.getProjectId(),
+        Component projectLogo = ProjectAssetsUtil.projectLogoComp(standupReportStatistic.getProjectKey(), standupReportStatistic.getProjectId(),
                 standupReportStatistic.getProjectAvatarId(), 32);
         ELabel projectLbl = ELabel.h2(standupReportStatistic.getProjectName()).withStyleName(UIConstants.TEXT_ELLIPSIS);
         setContent(new MVerticalLayout(new MHorizontalLayout(projectLogo, projectLbl).expand(projectLbl), editForm));
@@ -102,9 +102,8 @@ class StandupAddWindow extends MWindow implements IEditFormHandler<StandupReport
     }
 
     class FormLayoutFactory extends StandupReportFormLayoutFactory {
-        private static final long serialVersionUID = 1L;
 
-        public FormLayoutFactory() {
+        FormLayoutFactory() {
             super(UserUIContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE, UserUIContext.formatDate(onDate)));
         }
 

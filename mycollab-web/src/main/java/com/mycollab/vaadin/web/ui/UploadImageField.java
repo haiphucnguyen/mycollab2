@@ -18,6 +18,7 @@ package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.ImageUtil;
+import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.vaadin.ui.UI;
 import org.vaadin.easyuploads.UploadField;
 

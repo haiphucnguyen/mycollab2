@@ -42,9 +42,6 @@ import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.Table;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.vaadin.tepi.listbuilder.ListBuilder;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -60,7 +57,6 @@ import java.util.Map;
  * @since 5.3.4
  */
 public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B extends ValuedBean> extends MWindow {
-    private static Logger LOG = LoggerFactory.getLogger(CustomizeReportOutputWindow.class);
 
     private VariableInjector<S> variableInjector;
     private ListBuilder listBuilder;
@@ -80,8 +76,8 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         optionGroup.addItems(UserUIContext.getMessage(FileI18nEnum.CSV), UserUIContext.getMessage(FileI18nEnum.PDF),
                 UserUIContext.getMessage(FileI18nEnum.EXCEL));
         optionGroup.setValue(UserUIContext.getMessage(FileI18nEnum.CSV));
-        contentLayout.with(new MHorizontalLayout(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT)), optionGroup)
-                .alignAll(Alignment.MIDDLE_LEFT));
+        contentLayout.with(new MHorizontalLayout(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT)),
+                optionGroup).alignAll(Alignment.MIDDLE_LEFT));
 
         contentLayout.with(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.ACTION_SELECT_COLUMNS)));
         listBuilder = new ListBuilder();
@@ -91,7 +87,8 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         listBuilder.setRightColumnCaption(UserUIContext.getMessage(GenericI18Enum.OPT_VIEW_COLUMNS));
         listBuilder.setWidth(100, Sizeable.Unit.PERCENTAGE);
         listBuilder.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT);
-        final BeanItemContainer<TableViewField> container = new BeanItemContainer<>(TableViewField.class, this.getAvailableColumns());
+        final BeanItemContainer<TableViewField> container = new BeanItemContainer<>(TableViewField.class,
+                this.getAvailableColumns());
         listBuilder.setContainerDataSource(container);
         for (TableViewField field : getAvailableColumns()) {
             listBuilder.setItemCaption(field, UserUIContext.getMessage(field.getDescKey()));
@@ -103,7 +100,8 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         contentLayout.with(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.ACTION_PREVIEW)));
         sampleTableDisplay = new Table();
         for (TableViewField field : getAvailableColumns()) {
-            sampleTableDisplay.addContainerProperty(field.getField(), String.class, "", UserUIContext.getMessage(field.getDescKey()), null, Table.Align.LEFT);
+            sampleTableDisplay.addContainerProperty(field.getField(), String.class, "",
+                    UserUIContext.getMessage(field.getDescKey()), null, Table.Align.LEFT);
             sampleTableDisplay.setColumnWidth(field.getField(), field.getDefaultWidth());
         }
         sampleTableDisplay.setWidth("100%");
@@ -124,7 +122,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
 
         final MButton exportBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT))
                 .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.DOWNLOAD);
-        OnDemandFileDownloader pdfFileDownloader = new OnDemandFileDownloader(new LazyStreamSource() {
+        OnDemandFileDownloader fileDownloader = new OnDemandFileDownloader(new LazyStreamSource() {
 
             @Override
             protected StreamResource.StreamSource buildStreamSource() {
@@ -167,9 +165,14 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
                 return getExportType().getDefaultFileName();
             }
         });
-        pdfFileDownloader.extend(exportBtn);
+        fileDownloader.extend(exportBtn);
 
-        MHorizontalLayout buttonControls = new MHorizontalLayout(resetBtn, cancelBtn, exportBtn);
+        final MButton exportMailBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT_MAIL))
+                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.MAIL_REPLY_ALL);
+        exportMailBtn.addClickListener(clickEvent -> {
+        });
+
+        MHorizontalLayout buttonControls = new MHorizontalLayout(resetBtn, cancelBtn, exportBtn, exportMailBtn);
         contentLayout.with(buttonControls).withAlign(buttonControls, Alignment.TOP_RIGHT);
     }
 

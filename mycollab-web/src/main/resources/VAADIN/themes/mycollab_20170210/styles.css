@@ -17056,11 +17056,6 @@ input.v-textfield-errorField {
 	background-image: url("icons/star_12x11.png");
 }
 
-.mail-panel .v-gridlayout-margin {
-	max-height: 150px;
-	overflow-y: auto;
-}
-
 .main-view {
 	overflow-y: auto;
 	overflow-x: hidden;
