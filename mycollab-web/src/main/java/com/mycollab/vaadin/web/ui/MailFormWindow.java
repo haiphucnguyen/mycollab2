@@ -25,9 +25,11 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -108,18 +110,14 @@ public class MailFormWindow extends MWindow {
         inputLayout.addComponent(createTextFieldMail("To:", tokenFieldMailTo), 0, 0);
 
         if (mails != null) {
-            for (String mail : mails) {
-                if (StringUtils.isNotBlank(mail)) {
-                    if (mail.indexOf("<") > -1) {
-                        String strMail = mail.substring(mail.indexOf("<") + 1, mail.lastIndexOf(">"));
-                        if (strMail != null && !strMail.equalsIgnoreCase("null")) {
-
-                        }
-                    } else {
-
-                    }
+            mails.stream().filter(mail -> mail.indexOf("<") > 0).map(mail -> {
+                String strMail = mail.substring(mail.indexOf("<") + 1, mail.lastIndexOf(">"));
+                if (strMail != null && !strMail.equalsIgnoreCase("null")) {
+                    return strMail;
+                } else {
+                    return "";
                 }
-            }
+            });
         }
 
         final TextField subject = new TextField();
@@ -140,7 +138,6 @@ public class MailFormWindow extends MWindow {
         mainLayout.setComponentAlignment(noteArea, Alignment.MIDDLE_CENTER);
 
         final AttachmentPanel attachments = new AttachmentPanel();
-        attachments.setWidth("500px");
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebThemes.BUTTON_OPTION);
@@ -172,9 +169,12 @@ public class MailFormWindow extends MWindow {
             }
         }).withIcon(FontAwesome.SEND).withStyleName(WebThemes.BUTTON_ACTION);
 
-        MHorizontalLayout controlsLayout = new MHorizontalLayout(attachments, cancelBtn, sendBtn).expand(attachments).withFullWidth();
-        mainLayout.addComponent(controlsLayout);
-        this.setContent(mainLayout);
+        MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, sendBtn)
+                .withMargin(new MarginInfo(false, true, true, false));
+        mainLayout.with(attachments);
+        new Restrain(mainLayout).setMaxHeight("500px");
+        this.setContent(new MVerticalLayout(mainLayout, controlsLayout).withMargin(false)
+                .withSpacing(false).withAlign(controlsLayout, Alignment.TOP_RIGHT));
     }
 
     private void checkToReInitCcBcc() {
