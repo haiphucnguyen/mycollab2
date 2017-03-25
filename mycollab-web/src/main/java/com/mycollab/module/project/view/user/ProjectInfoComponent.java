@@ -23,6 +23,7 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum;
+import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
@@ -148,7 +149,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         if (project.isProjectArchived()) {
             MButton activeProjectBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.BUTTON_ACTIVE_PROJECT), clickEvent -> {
                 ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-                project.setProjectstatus(OptionI18nEnum.StatusI18nEnum.Open.name());
+                project.setProjectstatus(StatusI18nEnum.Open.name());
                 projectService.updateSelectiveWithSession(project, UserUIContext.getUsername());
 
                 PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(CurrentProjectVariables.getProjectId()));
@@ -234,7 +235,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                             confirmDialog -> {
                                 if (confirmDialog.isConfirmed()) {
                                     ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-                                    project.setProjectstatus(OptionI18nEnum.StatusI18nEnum.Archived.name());
+                                    project.setProjectstatus(StatusI18nEnum.Archived.name());
                                     projectService.updateSelectiveWithSession(project, UserUIContext.getUsername());
 
                                     PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(CurrentProjectVariables.getProjectId()));
