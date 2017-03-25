@@ -43,6 +43,11 @@ Last changelog
 Version 5.4.8
 -------------
 
+**Library Upgrades**
+
+* Jackrabbit 2.15.1
+* HikariCP 2.6.1, Cglib 3.2.5
+
 **Improvements & New Features**
 
 * Theme modification
