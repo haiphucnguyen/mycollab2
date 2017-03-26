@@ -18,7 +18,7 @@ import com.vaadin.ui.*;
  */
 public class CrmAssetsUtil {
 
-    public static Component buildAccountLogo(SimpleAccount account, int size) {
+    public static Component accountLogoComp(SimpleAccount account, int size) {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(account.getAvatarid())) {
             wrapper = new Image(null, new ExternalResource(StorageFactory.getEntityLogoPath(MyCollabUI

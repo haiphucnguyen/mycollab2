@@ -101,7 +101,7 @@ public class ProjectAssetsUtil {
         return wrapper;
     }
 
-    public static Component buildClientLogo(SimpleAccount account, int size) {
+    public static Component clientLogoComp(SimpleAccount account, int size) {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(account.getAvatarid())) {
             wrapper = new Image(null, new ExternalResource(StorageFactory.getEntityLogoPath(MyCollabUI

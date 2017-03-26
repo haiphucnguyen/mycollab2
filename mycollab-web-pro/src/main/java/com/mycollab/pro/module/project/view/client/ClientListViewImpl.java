@@ -102,7 +102,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
         blockContent.setComponentAlignment(buttonControls, Alignment.TOP_RIGHT);
 
         MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
-        Component clientAvatar = ProjectAssetsUtil.buildClientLogo(client, 100);
+        Component clientAvatar = ProjectAssetsUtil.clientLogoComp(client, 100);
         blockTop.addComponent(clientAvatar);
 
         A clientLink = new A(ProjectLinkBuilder.generateClientPreviewFullLink(client.getId())).appendText(client

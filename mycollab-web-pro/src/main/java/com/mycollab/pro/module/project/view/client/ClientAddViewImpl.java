@@ -98,7 +98,7 @@ public class ClientAddViewImpl extends AbstractVerticalPageView implements Clien
                 UploadImageField uploadImageField = new UploadImageField(this);
                 uploadImageField.setButtonCaption(UserUIContext.getMessage(FileI18nEnum.ACTION_CHANGE_LOGO));
 
-                MVerticalLayout logoLayout = new MVerticalLayout(ProjectAssetsUtil.buildClientLogo(account, 100),
+                MVerticalLayout logoLayout = new MVerticalLayout(ProjectAssetsUtil.clientLogoComp(account, 100),
                         uploadImageField).withMargin(false).withWidth("-1px").alignAll(Alignment.TOP_CENTER);
                 return new MHorizontalLayout(logoLayout, titleLbl).expand(titleLbl);
             }
