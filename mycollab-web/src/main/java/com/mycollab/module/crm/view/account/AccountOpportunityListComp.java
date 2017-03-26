@@ -43,9 +43,7 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunitySalesStage;
 
@@ -55,9 +53,10 @@ import static com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunitySalesStage;
  */
 public class AccountOpportunityListComp extends RelatedListComp2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> {
     private static final long serialVersionUID = -2414709814283942446L;
-
-    private Account account;
     static final Map<String, String> colormap;
+
+    private Set<String> selectedSalesStage = new HashSet<>();
+    private Account account;
 
     static {
         Map<String, String> tmpMap = new HashMap<>();
@@ -70,7 +69,7 @@ public class AccountOpportunityListComp extends RelatedListComp2<OpportunityServ
         colormap = Collections.unmodifiableMap(tmpMap);
     }
 
-    public AccountOpportunityListComp() {
+    AccountOpportunityListComp() {
         super(AppContextUtil.getSpringBean(OpportunityService.class), 20);
         setMargin(true);
         this.setBlockDisplayHandler(new AccountOpportunityBlockDisplay());
@@ -87,7 +86,8 @@ public class AccountOpportunityListComp extends RelatedListComp2<OpportunityServ
 
         MCssLayout noteBlock = new MCssLayout().withFullWidth().withStyleName("list-note-block");
         for (OpportunitySalesStage stage : CrmDataTypeFactory.getOpportunitySalesStageList()) {
-            MHorizontalLayout note = new MHorizontalLayout(new CheckBox(), new ELabel(UserUIContext.getMessage(stage)))
+            CheckBox salesStageSelection = new CheckBox(null, true);
+            MHorizontalLayout note = new MHorizontalLayout(salesStageSelection, new ELabel(UserUIContext.getMessage(stage)))
                     .withStyleName("note-label", colormap.get(stage.name()));
             noteBlock.addComponent(note);
         }

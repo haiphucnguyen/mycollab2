@@ -86,7 +86,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
     @Override
     protected String initFormTitle() {
         if (beanItem.getAvatarid() != null) {
-            Img img = new Img("", StorageFactory.getEntityLogoPath(MyCollabUI.getAccountId(), beanItem.getAvatarid(), 32))
+            Img img = new Img("", StorageFactory.getEntityLogoPath(MyCollabUI.getAccountId(), beanItem.getAvatarid(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
             return new Div().appendChild(img).appendChild(DivLessFormatter.EMPTY_SPACE()).appendText(beanItem.getAccountname()).write();
         } else {

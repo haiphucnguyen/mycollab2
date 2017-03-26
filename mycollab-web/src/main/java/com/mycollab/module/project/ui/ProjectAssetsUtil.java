@@ -25,6 +25,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
+import com.mycollab.module.project.ui.components.ProjectLogoUploadWindow;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
@@ -73,12 +74,13 @@ public class ProjectAssetsUtil {
 
     public static Component editableProjectLogoComp(String projectShortname, Integer projectId, String projectAvatarId, int size) {
         VerticalLayout wrapper = new VerticalLayout();
+
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROJECT)) {
             wrapper.addStyleName("cursor_pointer");
             wrapper.setDescription(UserUIContext.getMessage(ProjectI18nEnum.OPT_CHANGE_LOGO_HELP,
                     UserUIContext.getMessage(ProjectI18nEnum.EDIT)));
             wrapper.addLayoutClickListener((LayoutEvents.LayoutClickListener) layoutClickEvent -> {
-                System.out.println("AAA");
+                UI.getCurrent().addWindow(new ProjectLogoUploadWindow(projectShortname, projectId, projectAvatarId));
             });
         }
 

@@ -68,7 +68,6 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
         tabSheet = new VerticalTabsheet();
         tabSheet.setSizeFull();
         tabSheet.setNavigatorWidth("100%");
-        tabSheet.setNavigatorStyleName("sidebar-menu");
         tabSheet.addToggleNavigatorControl();
 
         headerTitle = ELabel.h2("");
@@ -81,14 +80,9 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
         CssLayout navigatorWrapper = tabSheet.getNavigatorWrapper();
         navigatorWrapper.setWidth("200px");
 
-        tabSheet.addSelectedTabChangeListener(new SelectedTabChangeListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void selectedTabChange(SelectedTabChangeEvent event) {
-                Tab tab = ((VerticalTabsheet) event.getSource()).getSelectedTab();
-                tabSheet.selectTab(((TabImpl) tab).getTabId());
-            }
+        tabSheet.addSelectedTabChangeListener(selectedTabChangeEvent -> {
+            Tab tab = ((VerticalTabsheet) selectedTabChangeEvent.getSource()).getSelectedTab();
+            tabSheet.selectTab(((TabImpl) tab).getTabId());
         });
 
         tabContent = tabSheet.getContentWrapper();
