@@ -90,7 +90,7 @@ public class AccountTableDisplay extends DefaultPagedBeanTable<AccountService, A
             if (StringUtils.isNotBlank(account.getWebsite())) {
                 url = new A(account.getWebsite(), "_blank").appendText(account.getWebsite()).setCSSClass(UIConstants.META_INFO);
             } else {
-                url = new A("").appendText(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED));
+                url = new A("").appendText("").setCSSClass(UIConstants.META_INFO);
             }
             Div accountDiv = new Div().appendChild(accountLink, new Br(), url);
             ELabel b = ELabel.html(accountDiv.write());

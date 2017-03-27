@@ -34,6 +34,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.mycollab.vaadin.ui.IRelatedListHandlers;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
@@ -54,7 +55,6 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     private AccountCaseListComp associateCaseList;
     private ActivityRelatedItemListComp associateActivityList;
     private CrmActivityComponent activityComponent;
-    private EntityIconComp accountIconComp;
 
     private DateInfoComp dateInfoComp;
     private PeopleInfoComp peopleInfoComp;
@@ -119,8 +119,14 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     }
 
     @Override
+    protected void updateHeader(String title) {
+        headerTitle.removeAllComponents();
+        ELabel formTitle = ELabel.h2(title);
+        headerTitle.with(CrmAssetsUtil.accountLogoComp(beanItem, 32), formTitle).expand(formTitle);
+    }
+
+    @Override
     protected final void initRelatedComponents() {
-        accountIconComp = new EntityIconComp(CrmTypeConstants.ACCOUNT);
         associateContactList = new AccountContactListComp();
         associateActivityList = new ActivityRelatedItemListComp(true);
         associateOpportunityList = new AccountOpportunityListComp();
@@ -133,7 +139,6 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
         compFollowers = new CrmFollowersComp<>(CrmTypeConstants.ACCOUNT, RolePermissionCollections.CRM_ACCOUNT);
         addToSideBar(dateInfoComp, peopleInfoComp, compFollowers);
 
-        tabSheet.getNavigatorWrapper().addComponent(accountIconComp);
         tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
                 CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
         tabSheet.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST),
@@ -172,7 +177,6 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
         dateInfoComp.displayEntryDateTime(beanItem);
         compFollowers.displayFollowers(beanItem);
 
-        accountIconComp.displayIcon("");
         tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 
