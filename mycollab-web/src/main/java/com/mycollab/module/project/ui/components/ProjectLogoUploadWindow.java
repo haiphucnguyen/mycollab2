@@ -1,5 +1,6 @@
 package com.mycollab.module.project.ui.components;
 
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.file.PathUtils;
 import com.mycollab.module.file.service.EntityUploaderService;
 import com.mycollab.module.project.CurrentProjectVariables;
@@ -25,7 +26,7 @@ import java.awt.image.BufferedImage;
  */
 public class ProjectLogoUploadWindow extends MWindow implements ImagePreviewCropWindow.ImageSelectionCommand {
     public ProjectLogoUploadWindow(String shortName, Integer projectId, String projectAvatar) {
-        super("Upload an image");
+        super(UserUIContext.getMessage(GenericI18Enum.OPT_UPLOAD_IMAGE));
         withModal(true).withResizable(false).withWidth("200px").withCenter();
         Component projectIcon = ProjectAssetsUtil.projectLogoComp(shortName, projectId, projectAvatar, 100);
         projectIcon.setWidthUndefined();

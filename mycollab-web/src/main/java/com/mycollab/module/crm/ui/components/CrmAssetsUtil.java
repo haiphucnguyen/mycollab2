@@ -30,6 +30,8 @@ public class CrmAssetsUtil {
             String accountName = account.getAccountname();
             accountName = (accountName.length() > 3) ? accountName.substring(0, 3) : accountName;
             ELabel accountIcon = new ELabel(accountName).withStyleName(UIConstants.TEXT_ELLIPSIS, "center");
+            accountIcon.setWidth(size, Sizeable.Unit.PIXELS);
+            accountIcon.setHeight(size, Sizeable.Unit.PIXELS);
             wrapper = new VerticalLayout();
             ((VerticalLayout) wrapper).addComponent(accountIcon);
             ((VerticalLayout) wrapper).setComponentAlignment(accountIcon, Alignment.MIDDLE_CENTER);
