@@ -122,7 +122,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     protected void updateHeader(String title) {
         headerTitle.removeAllComponents();
         ELabel formTitle = ELabel.h2(title);
-        headerTitle.with(CrmAssetsUtil.accountLogoComp(beanItem, 32), formTitle).expand(formTitle);
+        headerTitle.with(CrmAssetsUtil.editableAccountLogoComp(beanItem, 32), formTitle).expand(formTitle);
     }
 
     @Override

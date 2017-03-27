@@ -207,6 +207,7 @@ public enum GenericI18Enum {
     OPT_SIMPLE_MODE,
     OPT_CHART_MODE,
     OPT_SHARED_TO_ME,
+    OPT_CHANGE_IMAGE,
 
     M_BUTTON_BACK,
     M_BUTTON_SEND

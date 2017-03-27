@@ -16,15 +16,14 @@
  */
 package com.mycollab.module.project.ui;
 
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.file.PathUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
-import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
-import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.ui.components.ProjectLogoUploadWindow;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
@@ -61,6 +60,8 @@ public class ProjectAssetsUtil {
                             projectAvatarId, size))));
         } else {
             ELabel projectIcon = new ELabel(projectShortname).withStyleName(UIConstants.TEXT_ELLIPSIS, ValoTheme.LABEL_LARGE, "center");
+            projectIcon.setWidth(size, Sizeable.Unit.PIXELS);
+            projectIcon.setHeight(size, Sizeable.Unit.PIXELS);
             wrapper = new VerticalLayout();
             ((VerticalLayout) wrapper).addComponent(projectIcon);
             ((VerticalLayout) wrapper).setComponentAlignment(projectIcon, Alignment.MIDDLE_CENTER);
@@ -68,7 +69,7 @@ public class ProjectAssetsUtil {
         wrapper.setWidth(size, Sizeable.Unit.PIXELS);
         wrapper.setHeight(size, Sizeable.Unit.PIXELS);
         wrapper.addStyleName(UIConstants.CIRCLE_BOX);
-        wrapper.setDescription(UserUIContext.getMessage(ProjectI18nEnum.OPT_CHANGE_LOGO_HELP, UserUIContext.getMessage(ProjectI18nEnum.EDIT)));
+        wrapper.setDescription(UserUIContext.getMessage(GenericI18Enum.OPT_CHANGE_IMAGE));
         return wrapper;
     }
 
@@ -77,11 +78,10 @@ public class ProjectAssetsUtil {
 
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROJECT)) {
             wrapper.addStyleName("cursor_pointer");
-            wrapper.setDescription(UserUIContext.getMessage(ProjectI18nEnum.OPT_CHANGE_LOGO_HELP,
-                    UserUIContext.getMessage(ProjectI18nEnum.EDIT)));
-            wrapper.addLayoutClickListener((LayoutEvents.LayoutClickListener) layoutClickEvent -> {
-                UI.getCurrent().addWindow(new ProjectLogoUploadWindow(projectShortname, projectId, projectAvatarId));
-            });
+            wrapper.setDescription(UserUIContext.getMessage(GenericI18Enum.OPT_CHANGE_IMAGE));
+            wrapper.addLayoutClickListener((LayoutEvents.LayoutClickListener) layoutClickEvent ->
+                    UI.getCurrent().addWindow(new ProjectLogoUploadWindow(projectShortname, projectId, projectAvatarId))
+            );
         }
 
         if (!StringUtils.isBlank(projectAvatarId)) {
@@ -93,6 +93,8 @@ public class ProjectAssetsUtil {
         } else {
             ELabel projectIcon = new ELabel(projectShortname).withStyleName(UIConstants.TEXT_ELLIPSIS, ValoTheme.LABEL_LARGE, "center");
             projectIcon.addStyleName(UIConstants.CIRCLE_BOX);
+            projectIcon.setWidth(size, Sizeable.Unit.PIXELS);
+            projectIcon.setHeight(size, Sizeable.Unit.PIXELS);
             wrapper.addComponent(projectIcon);
             wrapper.setComponentAlignment(projectIcon, Alignment.MIDDLE_CENTER);
         }
@@ -117,7 +119,7 @@ public class ProjectAssetsUtil {
         wrapper.setWidth(size, Sizeable.Unit.PIXELS);
         wrapper.setHeight(size, Sizeable.Unit.PIXELS);
         wrapper.addStyleName(UIConstants.CIRCLE_BOX);
-        wrapper.setDescription(UserUIContext.getMessage(ClientI18nEnum.OPT_CHANGE_LOGO_HELP, UserUIContext.getMessage(ClientI18nEnum.EDIT)));
+        wrapper.setDescription(UserUIContext.getMessage(GenericI18Enum.OPT_CHANGE_IMAGE));
         return wrapper;
     }
 }
