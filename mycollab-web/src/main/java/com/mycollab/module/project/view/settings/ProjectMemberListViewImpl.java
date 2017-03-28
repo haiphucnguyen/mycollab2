@@ -112,14 +112,12 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
         searchTextField.addStyleName(ValoTheme.TEXTFIELD_SMALL);
         viewHeader.addComponent(searchTextField);
 
-        MButton printBtn = new MButton("", clickEvent -> {
-            UI.getCurrent().addWindow(new ProjectMemberCustomizeReportOutputWindow(new LazyValueInjector() {
-                @Override
-                protected Object doEval() {
-                    return searchCriteria;
-                }
-            }));
-        }).withIcon(FontAwesome.PRINT).withStyleName(WebThemes.BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
+        MButton printBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new ProjectMemberCustomizeReportOutputWindow(new LazyValueInjector() {
+            @Override
+            protected Object doEval() {
+                return searchCriteria;
+            }
+        }))).withIcon(FontAwesome.PRINT).withStyleName(WebThemes.BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
         viewHeader.addComponent(printBtn);
 
         MButton createBtn = new MButton(UserUIContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEES),

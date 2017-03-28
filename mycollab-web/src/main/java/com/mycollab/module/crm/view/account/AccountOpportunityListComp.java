@@ -43,7 +43,9 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunitySalesStage;
 
@@ -55,7 +57,6 @@ public class AccountOpportunityListComp extends RelatedListComp2<OpportunityServ
     private static final long serialVersionUID = -2414709814283942446L;
     static final Map<String, String> colormap;
 
-    private Set<String> selectedSalesStage = new HashSet<>();
     private Account account;
 
     static {
@@ -86,8 +87,7 @@ public class AccountOpportunityListComp extends RelatedListComp2<OpportunityServ
 
         MCssLayout noteBlock = new MCssLayout().withFullWidth().withStyleName("list-note-block");
         for (OpportunitySalesStage stage : CrmDataTypeFactory.getOpportunitySalesStageList()) {
-            CheckBox salesStageSelection = new CheckBox(null, true);
-            MHorizontalLayout note = new MHorizontalLayout(salesStageSelection, new ELabel(UserUIContext.getMessage(stage)))
+            MHorizontalLayout note = new MHorizontalLayout(new ELabel(UserUIContext.getMessage(stage)))
                     .withStyleName("note-label", colormap.get(stage.name()));
             noteBlock.addComponent(note);
         }

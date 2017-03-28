@@ -63,8 +63,8 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
     private String viewId;
     private Table sampleTableDisplay;
 
-    public CustomizeReportOutputWindow(final String viewId, final String reportTitle, final Class<B> beanCls,
-                                       final ISearchableService<S> searchableService, final VariableInjector<S> variableInjector) {
+    public CustomizeReportOutputWindow(String viewId, String reportTitle, Class<B> beanCls,
+                                       ISearchableService<S> searchableService, VariableInjector<S> variableInjector) {
         super(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
         MVerticalLayout contentLayout = new MVerticalLayout();
         this.withModal(true).withResizable(false).withWidth("1000px").withCenter().withContent(contentLayout);
