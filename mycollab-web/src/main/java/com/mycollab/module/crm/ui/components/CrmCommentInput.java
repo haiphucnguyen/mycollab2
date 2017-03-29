@@ -51,7 +51,7 @@ class CrmCommentInput extends MHorizontalLayout {
     private String type;
     private String typeId;
 
-    CrmCommentInput(final ReloadableComponent component, final String typeVal) {
+    CrmCommentInput(ReloadableComponent component, String typeVal) {
         super();
         this.withMargin(new MarginInfo(true, true, false, false)).withFullWidth();
 
