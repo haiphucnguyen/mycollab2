@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.reporting;
+package com.mycollab.vaadin.reporting;
 
 import com.google.common.collect.Ordering;
 import com.mycollab.common.domain.AuditChangeItem;
@@ -35,6 +35,8 @@ import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.form.view.builder.type.AbstractDynaField;
 import com.mycollab.form.view.builder.type.DynaForm;
 import com.mycollab.form.view.builder.type.DynaSection;
+import com.mycollab.reporting.ReportExportType;
+import com.mycollab.reporting.ReportTemplateExecutor;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
@@ -82,11 +84,11 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     private MultiPageListBuilder titleContent;
 
     public FormReportTemplateExecutor(String reportTitle) {
-        super(UserUIContext.getUser(), UserUIContext.getUserTimeZone(), UserUIContext.getUserLocale(), reportTitle, ReportExportType.PDF);
+        super(UserUIContext.getUserTimeZone(), UserUIContext.getUserLocale(), reportTitle, ReportExportType.PDF);
     }
 
     @Override
-    protected void initReport() throws Exception {
+    public void initReport() throws Exception {
         reportBuilder = report();
         titleContent = cmp.multiPageList();
         titleContent.add(defaultTitleComponent());
@@ -98,7 +100,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     }
 
     @Override
-    protected void fillReport() throws DRException {
+    public void fillReport() throws DRException {
         printForm();
         printActivities();
     }
@@ -307,7 +309,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     }
 
     @Override
-    protected void outputReport(OutputStream outputStream) throws IOException, DRException {
+    public void outputReport(OutputStream outputStream) throws IOException, DRException {
         reportBuilder.toPdf(outputStream);
     }
 }

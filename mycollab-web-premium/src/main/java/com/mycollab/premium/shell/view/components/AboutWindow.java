@@ -8,7 +8,7 @@ import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.Version;
 import com.mycollab.premium.license.service.LicenseResolver;
 import com.mycollab.pro.license.LicenseInfo;
-import com.mycollab.shell.view.components.AbstractAboutWindow;
+import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;

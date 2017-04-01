@@ -16,11 +16,15 @@
  */
 package com.mycollab.reporting;
 
+import com.mycollab.reporting.AbstractReportBuilder;
+import com.mycollab.reporting.ReportStyles;
+import com.mycollab.reporting.RpFieldsBuilder;
 import net.sf.dynamicreports.jasper.builder.export.JasperXlsxExporterBuilder;
 import net.sf.dynamicreports.jasper.constant.JasperProperty;
 import net.sf.dynamicreports.report.exception.DRException;
 
 import java.io.OutputStream;
+import java.util.Locale;
 import java.util.Map;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.export;
@@ -31,8 +35,8 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.export;
  */
 public class XlsReportBuilder extends AbstractReportBuilder {
 
-    XlsReportBuilder(String reportTitle, RpFieldsBuilder fieldBuilder, Class classType, Map parameters) {
-        super(reportTitle, fieldBuilder, classType, parameters);
+    XlsReportBuilder(String reportTitle, Locale locale, RpFieldsBuilder fieldBuilder, Class classType, Map parameters) {
+        super(reportTitle, locale, fieldBuilder, classType, parameters);
     }
 
     @Override

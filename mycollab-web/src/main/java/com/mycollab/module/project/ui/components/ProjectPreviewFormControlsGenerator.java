@@ -14,12 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.web.ui;
+package com.mycollab.module.project.ui.components;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.reporting.PrintButton;
+import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
+import com.mycollab.vaadin.web.ui.OptionPopupContent;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;

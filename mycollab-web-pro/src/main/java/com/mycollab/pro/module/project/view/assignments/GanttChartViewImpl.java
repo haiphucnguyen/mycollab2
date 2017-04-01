@@ -20,7 +20,7 @@ import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.pro.module.project.view.assignments.gantt.GanttExt;
 import com.mycollab.pro.module.project.view.assignments.gantt.GanttTreeTable;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
+import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.ValueComboBox;

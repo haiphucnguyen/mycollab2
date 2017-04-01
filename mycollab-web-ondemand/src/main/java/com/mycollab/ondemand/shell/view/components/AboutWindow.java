@@ -5,7 +5,7 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.Version;
-import com.mycollab.shell.view.components.AbstractAboutWindow;
+import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;

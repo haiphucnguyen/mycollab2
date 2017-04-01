@@ -14,10 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.reporting;
+package com.mycollab.vaadin.reporting;
 
 import com.mycollab.core.MyCollabException;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.reporting.ReportTemplateExecutor;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.reporting;
+package com.mycollab.vaadin.reporting;
 
 import com.mycollab.common.TableViewField;
 import com.mycollab.common.domain.CustomViewStore;
@@ -27,6 +27,9 @@ import com.mycollab.core.arguments.ValuedBean;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.persistence.service.ISearchableService;
 import com.mycollab.db.query.VariableInjector;
+import com.mycollab.reporting.ReportExportType;
+import com.mycollab.reporting.RpFieldsBuilder;
+import com.mycollab.reporting.SimpleReportTemplateExecutor;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
@@ -90,9 +93,8 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         final BeanItemContainer<TableViewField> container = new BeanItemContainer<>(TableViewField.class,
                 this.getAvailableColumns());
         listBuilder.setContainerDataSource(container);
-        for (TableViewField field : getAvailableColumns()) {
-            listBuilder.setItemCaption(field, UserUIContext.getMessage(field.getDescKey()));
-        }
+        getAvailableColumns().forEach(field -> listBuilder.setItemCaption(field, UserUIContext.getMessage(field.getDescKey())));
+
         final Collection<TableViewField> viewColumnIds = this.getViewColumns();
         listBuilder.setValue(viewColumnIds);
         contentLayout.with(listBuilder).withAlign(listBuilder, Alignment.TOP_CENTER);
@@ -137,7 +139,8 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
                     viewDef.setViewinfo(FieldDefAnalyzer.toJson(new ArrayList<>(columns)));
                     customViewStoreService.saveOrUpdateViewLayoutDef(viewDef);
 
-                    SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>(reportTitle,
+                    SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>(
+                            UserUIContext.getUserTimeZone(), UserUIContext.getUserLocale(), reportTitle,
                             new RpFieldsBuilder(columns), getExportType(), beanCls, searchableService);
                     ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
                         @Override

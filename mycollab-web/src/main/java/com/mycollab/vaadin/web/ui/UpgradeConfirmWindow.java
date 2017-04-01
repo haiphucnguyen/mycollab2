@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.shell.view.components;
+package com.mycollab.vaadin.web.ui;
 
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
@@ -25,7 +25,6 @@ import com.mycollab.server.ServerInstance;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;

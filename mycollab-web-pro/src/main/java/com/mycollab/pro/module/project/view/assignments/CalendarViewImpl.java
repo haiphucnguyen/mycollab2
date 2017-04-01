@@ -36,7 +36,7 @@ import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.mvp.view.AbstractLazyPageView;
+import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;

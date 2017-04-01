@@ -1,23 +1,6 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.reporting;
 
 import com.mycollab.core.utils.DateTimeUtils;
-import com.mycollab.module.user.domain.SimpleUser;
 import net.sf.dynamicreports.report.builder.HyperLinkBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
@@ -39,16 +22,14 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.hyperLink;
  */
 public abstract class ReportTemplateExecutor {
     protected Map<String, Object> parameters;
-    protected SimpleUser user;
     protected ReportStyles reportStyles;
     protected String reportTitle;
     protected ReportExportType outputForm;
     protected Locale locale;
     protected TimeZone timeZone;
 
-    public ReportTemplateExecutor(SimpleUser user, TimeZone timezone, Locale languageSupport, String reportTitle,
+    public ReportTemplateExecutor(TimeZone timezone, Locale languageSupport, String reportTitle,
                                   ReportExportType outputForm) {
-        this.user = user;
         this.locale = languageSupport;
         this.timeZone = timezone;
         this.reportStyles = ReportStyles.instance();
@@ -56,7 +37,7 @@ public abstract class ReportTemplateExecutor {
         this.outputForm = outputForm;
     }
 
-    void setParameters(Map<String, Object> parameters) {
+    public void setParameters(Map<String, Object> parameters) {
         this.parameters = parameters;
     }
 
@@ -64,11 +45,11 @@ public abstract class ReportTemplateExecutor {
         return parameters;
     }
 
-    abstract protected void initReport() throws Exception;
+    abstract public void initReport() throws Exception;
 
-    abstract protected void fillReport() throws DRException;
+    abstract public void fillReport() throws DRException;
 
-    abstract protected void outputReport(OutputStream outputStream) throws IOException, DRException;
+    abstract public void outputReport(OutputStream outputStream) throws IOException, DRException;
 
     protected ComponentBuilder<?, ?> defaultTitleComponent() {
         HyperLinkBuilder link = hyperLink("https://www.mycollab.com");

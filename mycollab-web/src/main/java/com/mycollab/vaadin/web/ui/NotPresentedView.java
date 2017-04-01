@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.mvp.view;
+package com.mycollab.vaadin.web.ui;
 
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;

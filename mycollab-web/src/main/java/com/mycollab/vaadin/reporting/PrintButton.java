@@ -14,12 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.reporting;
+package com.mycollab.vaadin.reporting;
 
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
-import com.vaadin.ui.Button;
 import org.vaadin.viritin.button.MButton;
 
 import java.util.UUID;
