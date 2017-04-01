@@ -1,17 +1,36 @@
+/**
+ * This file is part of mycollab-reporting.
+ *
+ * mycollab-reporting is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-reporting is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-reporting.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.mycollab.reporting;
 
+import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.DateTimeUtils;
 import net.sf.dynamicreports.report.builder.HyperLinkBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
 import net.sf.dynamicreports.report.exception.DRException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.CountDownLatch;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.hyperLink;
@@ -21,6 +40,8 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.hyperLink;
  * @since 5.1.4
  */
 public abstract class ReportTemplateExecutor {
+    private static Logger LOG = LoggerFactory.getLogger(ReportTemplateExecutor.class);
+
     protected Map<String, Object> parameters;
     protected ReportStyles reportStyles;
     protected String reportTitle;
@@ -65,5 +86,77 @@ public abstract class ReportTemplateExecutor {
         );
 
         return cmp.horizontalList().add(dynamicReportsComponent).newRow().add(reportStyles.line()).newRow().add(cmp.verticalGap(10));
+    }
+
+    public InputStream exportStream(Map<String, Object> parameters) {
+        final CountDownLatch latch = new CountDownLatch(1);
+        final PipedInputStream inStream = new PipedInputStream();
+
+        InputStream in = new InputStream() {
+
+            @Override
+            public int read(byte[] b) throws IOException {
+                return inStream.read(b);
+            }
+
+            @Override
+            public int read() throws IOException {
+                return inStream.read();
+            }
+
+            @Override
+            public void close() throws IOException {
+                super.close();
+                latch.countDown();
+            }
+        };
+
+        final PipedOutputStream outputStream = new PipedOutputStream();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final OutputStream out = new OutputStream() {
+                    @Override
+                    public void write(int b) throws IOException {
+                        outputStream.write(b);
+                    }
+
+                    @Override
+                    public void close() throws IOException {
+                        while (latch.getCount() != 0) {
+                            try {
+                                latch.await();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                                break;
+                            }
+                        }
+                        super.close();
+                    }
+                };
+
+                try {
+                    setParameters(parameters);
+                    initReport();
+                    fillReport();
+                    outputReport(out);
+                } catch (Exception e) {
+                    LOG.error("Error report", e);
+                } finally {
+                    try {
+                        outputStream.close();
+                        out.close();
+                    } catch (IOException e) {
+                        LOG.error("Try to close reporting stream error", e);
+                    }
+                }
+            }
+        }).start();
+        try {
+            outputStream.connect(inStream);
+        } catch (IOException e) {
+            throw new MyCollabException(e);
+        }
+        return in;
     }
 }
