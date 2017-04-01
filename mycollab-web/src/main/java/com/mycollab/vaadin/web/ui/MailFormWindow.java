@@ -24,13 +24,14 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
+import com.mycollab.vaadin.ui.UIUtils;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
@@ -120,9 +121,7 @@ public class MailFormWindow extends MWindow {
             });
         }
 
-        final TextField subject = new TextField();
-        subject.setRequired(true);
-        subject.setWidth("100%");
+        final MTextField subject = new MTextField().withRequired(true).withFullWidth();
         subjectField = createTextFieldMail("Subject:", subject);
         inputLayout.addComponent(subjectField, 0, 1);
 
@@ -172,7 +171,8 @@ public class MailFormWindow extends MWindow {
         MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, sendBtn)
                 .withMargin(new MarginInfo(false, true, true, false));
         mainLayout.with(attachments);
-        new Restrain(mainLayout).setMaxHeight("500px");
+        mainLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
+        new Restrain(mainLayout).setMaxHeight((UIUtils.getBrowserHeight() - 180) + "px");
         this.setContent(new MVerticalLayout(mainLayout, controlsLayout).withMargin(false)
                 .withSpacing(false).withAlign(controlsLayout, Alignment.TOP_RIGHT));
     }
