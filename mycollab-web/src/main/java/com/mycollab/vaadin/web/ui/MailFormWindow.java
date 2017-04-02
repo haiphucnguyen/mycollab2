@@ -96,7 +96,14 @@ public class MailFormWindow extends MWindow {
     }
 
     private Layout createTextFieldMail(String title, Component component) {
-        return new MHorizontalLayout(new ELabel(title).withWidth("60px"), component).expand(component).withFullWidth()
+        return new MHorizontalLayout(new ELabel(title).withWidth("80px"), component).expand(component).withFullWidth()
+                .withDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+    }
+
+    private Layout createTextFieldMailWithHelp(String title, Component component) {
+        return new MHorizontalLayout(ELabel.html(title + "&nbsp;" + FontAwesome.QUESTION_CIRCLE.getHtml())
+                .withStyleName(WebThemes.INLINE_HELP).withDescription("Enter the user name or email, then press the enter button to finish the entry")
+                .withWidth("80px"), component).expand(component).withFullWidth()
                 .withDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
     }
 
@@ -111,7 +118,7 @@ public class MailFormWindow extends MWindow {
         mainLayout.addComponent(inputLayout);
 
         tokenFieldMailTo = new EmailTokenField();
-        inputLayout.addComponent(createTextFieldMail("To:", tokenFieldMailTo), 0, 0);
+        inputLayout.addComponent(createTextFieldMailWithHelp("To:", tokenFieldMailTo), 0, 0);
 
         if (mails != null) {
             mails.stream().filter(mail -> mail.indexOf("<") > 0).map(mail -> {
@@ -130,8 +137,8 @@ public class MailFormWindow extends MWindow {
 
         initButtonLinkCcBcc();
 
-        ccField = createTextFieldMail("Cc:", tokenFieldMailCc);
-        bccField = createTextFieldMail("Bcc:", tokenFieldMailBcc);
+        ccField = createTextFieldMailWithHelp("Cc:", tokenFieldMailCc);
+        bccField = createTextFieldMailWithHelp("Bcc:", tokenFieldMailBcc);
 
         final RichTextArea noteArea = new RichTextArea();
         noteArea.setWidth("100%");
