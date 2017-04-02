@@ -20,8 +20,6 @@ import com.mycollab.reporting.ReportTemplateExecutor;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.server.StreamResource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -32,7 +30,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 5.1.4
  */
 public abstract class ReportStreamSource implements StreamResource.StreamSource {
-    private static Logger LOG = LoggerFactory.getLogger(ReportStreamSource.class);
 
     private ReportTemplateExecutor templateExecutor;
 
@@ -42,7 +39,8 @@ public abstract class ReportStreamSource implements StreamResource.StreamSource 
 
     @Override
     public InputStream getStream() {
-        return templateExecutor.exportStream(initReportParameters());
+        templateExecutor.setParameters(initReportParameters());
+        return templateExecutor.exportStream();
     }
 
     private Map<String, Object> initReportParameters() {

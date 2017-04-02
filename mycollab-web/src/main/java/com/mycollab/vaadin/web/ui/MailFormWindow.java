@@ -20,6 +20,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.mail.AttachmentSource;
 import com.mycollab.module.mail.FileAttachmentSource;
 import com.mycollab.module.mail.service.ExtMailService;
+import com.mycollab.reporting.ReportTemplateExecutor;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
@@ -50,18 +51,20 @@ public class MailFormWindow extends MWindow {
     private EmailTokenField tokenFieldMailTo;
     private EmailTokenField tokenFieldMailCc = new EmailTokenField();
     private EmailTokenField tokenFieldMailBcc = new EmailTokenField();
+
     private GridLayout inputLayout;
     private Layout subjectField;
     private Layout ccField;
     private Layout bccField;
 
-    private Button btnLinkCc;
-    private Button btnLinkBcc;
+    private MButton btnLinkCc, btnLinkBcc;
 
     private boolean isAddCc = false;
     private boolean isAddBcc = false;
 
     private List<String> mails;
+
+    private ReportTemplateExecutor reportTemplateExecutor;
 
     public MailFormWindow() {
         initLayout();
@@ -72,24 +75,24 @@ public class MailFormWindow extends MWindow {
         initLayout();
     }
 
+    public MailFormWindow(ReportTemplateExecutor reportTemplateExecutor) {
+        this.reportTemplateExecutor = reportTemplateExecutor;
+        initLayout();
+    }
+
     private void initLayout() {
         withModal(true).withResizable(false).withWidth("830px").withCenter();
         initUI();
     }
 
     private void initButtonLinkCcBcc() {
-        btnLinkCc = new Button("Add Cc");
-        btnLinkCc.setStyleName(WebThemes.BUTTON_LINK);
+        btnLinkCc = new MButton("Add Cc", clickEvent -> toggleCcLink()).withStyleName(WebThemes.BUTTON_LINK);
         inputLayout.addComponent(btnLinkCc, 1, 0);
         inputLayout.setComponentAlignment(btnLinkCc, Alignment.MIDDLE_CENTER);
 
-        btnLinkBcc = new Button("Add Bcc");
-        btnLinkBcc.setStyleName(WebThemes.BUTTON_LINK);
+        btnLinkBcc = new MButton("Add Bcc", clickEvent -> toggleBccLink()).withStyleName(WebThemes.BUTTON_LINK);
         inputLayout.addComponent(btnLinkBcc, 2, 0);
         inputLayout.setComponentAlignment(btnLinkBcc, Alignment.MIDDLE_CENTER);
-
-        btnLinkCc.addClickListener(clickEvent -> toggleCcLink());
-        btnLinkBcc.addClickListener(clickEvent -> toggleBccLink());
     }
 
     private Layout createTextFieldMail(String title, Component component) {
@@ -150,12 +153,14 @@ public class MailFormWindow extends MWindow {
                 ExtMailService systemMailService = AppContextUtil.getSpringBean(ExtMailService.class);
 
                 List<File> files = attachments.files();
-                List<AttachmentSource> attachmentSource = null;
+                List<AttachmentSource> attachmentSource = new ArrayList<>();
                 if (CollectionUtils.isNotEmpty(files)) {
-                    attachmentSource = new ArrayList<>();
-                    for (File file : files) {
-                        attachmentSource.add(new FileAttachmentSource(file));
-                    }
+                    files.forEach(file -> attachmentSource.add(new FileAttachmentSource(file)));
+                }
+
+                if (reportTemplateExecutor != null) {
+                    attachmentSource.add(new FileAttachmentSource(reportTemplateExecutor.getDefaultExportFileName(),
+                            reportTemplateExecutor.exportStream()));
                 }
 
                 systemMailService.sendHTMLMail(UserUIContext.getUser().getEmail(), UserUIContext.getUser().getDisplayName(),

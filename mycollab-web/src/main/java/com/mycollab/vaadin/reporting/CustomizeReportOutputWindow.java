@@ -36,15 +36,13 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.resources.LazyStreamSource;
 import com.mycollab.vaadin.resources.OnDemandFileDownloader;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.web.ui.MailFormWindow;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable;
 import com.vaadin.server.StreamResource;
-import com.vaadin.ui.AbstractSelect;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.OptionGroup;
-import com.vaadin.ui.Table;
+import com.vaadin.ui.*;
 import org.vaadin.tepi.listbuilder.ListBuilder;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -54,6 +52,7 @@ import org.vaadin.viritin.layouts.MWindow;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author MyCollab Ltd
@@ -64,6 +63,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
     private VariableInjector<S> variableInjector;
     private ListBuilder listBuilder;
     private String viewId;
+    private OptionGroup optionGroup;
     private Table sampleTableDisplay;
 
     public CustomizeReportOutputWindow(String viewId, String reportTitle, Class<B> beanCls,
@@ -74,7 +74,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         this.viewId = viewId;
         this.variableInjector = variableInjector;
 
-        final OptionGroup optionGroup = new OptionGroup();
+        optionGroup = new OptionGroup();
         optionGroup.addStyleName("sortDirection");
         optionGroup.addItems(UserUIContext.getMessage(FileI18nEnum.CSV), UserUIContext.getMessage(FileI18nEnum.PDF),
                 UserUIContext.getMessage(FileI18nEnum.EXCEL));
@@ -152,17 +152,6 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
                 };
             }
 
-            private ReportExportType getExportType() {
-                String exportTypeVal = (String) optionGroup.getValue();
-                if (UserUIContext.getMessage(FileI18nEnum.CSV).equals(exportTypeVal)) {
-                    return ReportExportType.CSV;
-                } else if (UserUIContext.getMessage(FileI18nEnum.EXCEL).equals(exportTypeVal)) {
-                    return ReportExportType.EXCEL;
-                } else {
-                    return ReportExportType.PDF;
-                }
-            }
-
             @Override
             public String getFilename() {
                 return getExportType().getDefaultFileName();
@@ -173,10 +162,33 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         final MButton exportMailBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT_MAIL))
                 .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.MAIL_REPLY_ALL);
         exportMailBtn.addClickListener(clickEvent -> {
+            Collection<TableViewField> columns = (Collection<TableViewField>) listBuilder.getValue();
+            SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>(
+                    UserUIContext.getUserTimeZone(), UserUIContext.getUserLocale(), reportTitle,
+                    new RpFieldsBuilder(columns), getExportType(), beanCls, searchableService);
+            Map<String, Object> parameters = new ConcurrentHashMap<>();
+            parameters.put("siteUrl", MyCollabUI.getSiteUrl());
+            parameters.put("user", UserUIContext.getUser());
+            parameters.put(SimpleReportTemplateExecutor.CRITERIA, variableInjector.eval());
+            reportTemplateExecutor.setParameters(parameters);
+            MailFormWindow mailFormWindow = new MailFormWindow(reportTemplateExecutor);
+            UI.getCurrent().addWindow(mailFormWindow);
+            CustomizeReportOutputWindow.this.close();
         });
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(resetBtn, cancelBtn, exportBtn, exportMailBtn);
         contentLayout.with(buttonControls).withAlign(buttonControls, Alignment.TOP_RIGHT);
+    }
+
+    private ReportExportType getExportType() {
+        String exportTypeVal = (String) optionGroup.getValue();
+        if (UserUIContext.getMessage(FileI18nEnum.CSV).equals(exportTypeVal)) {
+            return ReportExportType.CSV;
+        } else if (UserUIContext.getMessage(FileI18nEnum.EXCEL).equals(exportTypeVal)) {
+            return ReportExportType.EXCEL;
+        } else {
+            return ReportExportType.PDF;
+        }
     }
 
     private void filterColumns() {

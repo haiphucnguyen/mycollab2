@@ -62,6 +62,10 @@ public abstract class ReportTemplateExecutor {
         this.parameters = parameters;
     }
 
+    public String getDefaultExportFileName() {
+        return outputForm.getDefaultFileName();
+    }
+
     public Map<String, Object> getParameters() {
         return parameters;
     }
@@ -88,7 +92,7 @@ public abstract class ReportTemplateExecutor {
         return cmp.horizontalList().add(dynamicReportsComponent).newRow().add(reportStyles.line()).newRow().add(cmp.verticalGap(10));
     }
 
-    public InputStream exportStream(Map<String, Object> parameters) {
+    public InputStream exportStream() {
         final CountDownLatch latch = new CountDownLatch(1);
         final PipedInputStream inStream = new PipedInputStream();
 
