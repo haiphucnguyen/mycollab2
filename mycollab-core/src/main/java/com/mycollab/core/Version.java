@@ -34,7 +34,7 @@ public class Version {
     }
 
     public static DateTime getReleasedDate() {
-        return new DateTime(2017, 2, 26, 0, 0, 0);
+        return new DateTime(2017, 4, 2, 0, 0, 0);
     }
 
     static int[] getVersionNumbers(String ver) {

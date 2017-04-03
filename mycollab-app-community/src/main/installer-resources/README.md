@@ -51,8 +51,8 @@ Version 5.4.8
 **Improvements & New Features**
 
 * Theme modification
-* Filter related crm items
-* Allow upload icons for CRM account, contact, lead
+* Allow upload icons for CRM account
+* Several minor bug fixes
 
 **Bug Fixes**
 
