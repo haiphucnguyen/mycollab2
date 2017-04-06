@@ -185,11 +185,6 @@ public class ContactReadPresenter extends AbstractCrmPresenter<ContactReadView> 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (UserUIContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
-            /*
-             * CrmNavigationMenu crmToolbar = (CrmNavigationMenu) container
-			 * .getNavigationMenu(); crmToolbar.selectButton(UserUIContext
-			 * .getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER));
-			 */
 
             if (data.getParams() instanceof Integer) {
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);

@@ -1,6 +1,7 @@
 package com.mycollab.mobile.module.crm
 
 import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.mobile.module.crm.events.CrmEvent
 import com.mycollab.mobile.module.crm.view.account.AccountUrlResolver
 import com.mycollab.mobile.module.crm.view.activity.ActivityUrlResolver
 import com.mycollab.mobile.module.crm.view.campaign.CampaignUrlResolver
@@ -49,7 +50,7 @@ class CrmUrlResolver extends UrlResolver {
 
   class DashboardUrlResolver extends CrmUrlResolver {
     protected override def handlePage(params: String*) {
-      EventBusFactory.getInstance().post(new ShellEvent.GotoCrmModule(this, null))
+      EventBusFactory.getInstance().post(new CrmEvent.GotoContainer(this, null))
     }
   }
 
