@@ -74,7 +74,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
                         + UserUIContext.getMessage(OpportunityI18nEnum.LIST)
                         + "</div>");
         relatedOpportunities.setHtmlContentAllowed(true);
-        relatedOpportunities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GoToRelatedItems(this,
+        relatedOpportunities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GotoRelatedItems(this,
                 new CrmRelatedItemsScreenData(associateOpportunityList))));
 
         toolbarLayout.addComponent(relatedOpportunities);
@@ -86,7 +86,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
                 + UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY)
                 + "</div>");
         relatedActivities.setHtmlContentAllowed(true);
-        relatedActivities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GoToRelatedItems(this,
+        relatedActivities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GotoRelatedItems(this,
                 new CrmRelatedItemsScreenData(associateActivityList))));
         toolbarLayout.addComponent(relatedActivities);
 

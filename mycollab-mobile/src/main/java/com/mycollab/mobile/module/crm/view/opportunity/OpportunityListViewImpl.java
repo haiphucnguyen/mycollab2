@@ -37,14 +37,12 @@ public class OpportunityListViewImpl extends AbstractListViewComp<OpportunitySea
     private static final long serialVersionUID = 8959720143847140837L;
 
     public OpportunityListViewImpl() {
-        super();
         setCaption(UserUIContext.getMessage(OpportunityI18nEnum.LIST));
     }
 
     @Override
     protected AbstractPagedBeanList<OpportunitySearchCriteria, SimpleOpportunity> createBeanTable() {
-        OpportunityListDisplay opportunityListDisplay = new OpportunityListDisplay();
-        return opportunityListDisplay;
+        return new OpportunityListDisplay();
     }
 
     @Override

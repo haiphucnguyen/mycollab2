@@ -133,12 +133,12 @@ public class CrmModuleController extends AbstractController {
             }
         });
 
-        this.register(new ApplicationEventListener<AccountEvent.GoToRelatedItems>() {
+        this.register(new ApplicationEventListener<AccountEvent.GotoRelatedItems>() {
             private static final long serialVersionUID = 259904372741221966L;
 
             @Subscribe
             @Override
-            public void handle(AccountEvent.GoToRelatedItems event) {
+            public void handle(AccountEvent.GotoRelatedItems event) {
                 if (event.getData() instanceof CrmRelatedItemsScreenData)
                     crmViewNavigation.navigateTo(((CrmRelatedItemsScreenData) event.getData()).getParams());
             }
@@ -258,12 +258,12 @@ public class CrmModuleController extends AbstractController {
             }
         });
 
-        this.register(new ApplicationEventListener<ActivityEvent.GoToRelatedItems>() {
+        this.register(new ApplicationEventListener<ActivityEvent.GotoRelatedItems>() {
             private static final long serialVersionUID = -2245568910777045010L;
 
             @Subscribe
             @Override
-            public void handle(ActivityEvent.GoToRelatedItems event) {
+            public void handle(ActivityEvent.GotoRelatedItems event) {
                 if (event.getData() instanceof CrmRelatedItemsScreenData) {
                     crmViewNavigation.navigateTo(((CrmRelatedItemsScreenData) event.getData()).getParams());
                 }
@@ -319,12 +319,12 @@ public class CrmModuleController extends AbstractController {
             }
         });
 
-        this.register(new ApplicationEventListener<ContactEvent.GoToRelatedItems>() {
+        this.register(new ApplicationEventListener<ContactEvent.GotoRelatedItems>() {
             private static final long serialVersionUID = -8341031306697617759L;
 
             @Subscribe
             @Override
-            public void handle(ContactEvent.GoToRelatedItems event) {
+            public void handle(ContactEvent.GotoRelatedItems event) {
                 if (event.getData() instanceof CrmRelatedItemsScreenData)
                     crmViewNavigation.navigateTo(((CrmRelatedItemsScreenData) event.getData()).getParams());
             }
@@ -379,12 +379,12 @@ public class CrmModuleController extends AbstractController {
             }
         });
 
-        this.register(new ApplicationEventListener<CampaignEvent.GoToRelatedItems>() {
+        this.register(new ApplicationEventListener<CampaignEvent.GotoRelatedItems>() {
             private static final long serialVersionUID = -1867638793934682142L;
 
             @Subscribe
             @Override
-            public void handle(CampaignEvent.GoToRelatedItems event) {
+            public void handle(CampaignEvent.GotoRelatedItems event) {
                 if (event.getData() instanceof CrmRelatedItemsScreenData)
                     crmViewNavigation.navigateTo(((CrmRelatedItemsScreenData) event.getData()).getParams());
             }
@@ -439,12 +439,12 @@ public class CrmModuleController extends AbstractController {
             }
         });
 
-        this.register(new ApplicationEventListener<CaseEvent.GoToRelatedItems>() {
+        this.register(new ApplicationEventListener<CaseEvent.GotoRelatedItems>() {
             private static final long serialVersionUID = 1019540906038925888L;
 
             @Subscribe
             @Override
-            public void handle(CaseEvent.GoToRelatedItems event) {
+            public void handle(CaseEvent.GotoRelatedItems event) {
                 if (event.getData() instanceof CrmRelatedItemsScreenData)
                     crmViewNavigation.navigateTo(((CrmRelatedItemsScreenData) event.getData()).getParams());
             }
@@ -498,12 +498,12 @@ public class CrmModuleController extends AbstractController {
             }
         });
 
-        this.register(new ApplicationEventListener<LeadEvent.GoToRelatedItems>() {
+        this.register(new ApplicationEventListener<LeadEvent.GotoRelatedItems>() {
             private static final long serialVersionUID = -1655170606113750709L;
 
             @Subscribe
             @Override
-            public void handle(LeadEvent.GoToRelatedItems event) {
+            public void handle(LeadEvent.GotoRelatedItems event) {
                 if (event.getData() instanceof CrmRelatedItemsScreenData)
                     crmViewNavigation.navigateTo(((CrmRelatedItemsScreenData) event.getData()).getParams());
             }
@@ -554,16 +554,16 @@ public class CrmModuleController extends AbstractController {
             @Override
             public void handle(OpportunityEvent.GotoEdit event) {
                 OpportunityAddPresenter presenter = PresenterResolver.getPresenter(OpportunityAddPresenter.class);
-                presenter.go(crmViewNavigation, new ScreenData.Edit<Object>(event.getData()));
+                presenter.go(crmViewNavigation, new ScreenData.Edit<>(event.getData()));
             }
         });
 
-        this.register(new ApplicationEventListener<OpportunityEvent.GoToRelatedItems>() {
+        this.register(new ApplicationEventListener<OpportunityEvent.GotoRelatedItems>() {
             private static final long serialVersionUID = 2389909957063829985L;
 
             @Subscribe
             @Override
-            public void handle(OpportunityEvent.GoToRelatedItems event) {
+            public void handle(OpportunityEvent.GotoRelatedItems event) {
                 if (event.getData() instanceof CrmRelatedItemsScreenData)
                     crmViewNavigation.navigateTo(((CrmRelatedItemsScreenData) event.getData()).getParams());
             }

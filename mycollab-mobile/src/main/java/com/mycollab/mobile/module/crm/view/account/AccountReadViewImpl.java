@@ -118,7 +118,7 @@ public class AccountReadViewImpl extends CrmAbstractPreviewItemComp<SimpleAccoun
                 + UserUIContext.getMessage(ContactI18nEnum.LIST)
                 + "</div>");
         relatedContacts.setHtmlContentAllowed(true);
-        relatedContacts.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GoToRelatedItems(
+        relatedContacts.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GotoRelatedItems(
                 this, new CrmRelatedItemsScreenData(associateContacts))));
         toolbarLayout.addComponent(relatedContacts);
 
@@ -130,7 +130,7 @@ public class AccountReadViewImpl extends CrmAbstractPreviewItemComp<SimpleAccoun
                         + UserUIContext.getMessage(OpportunityI18nEnum.LIST)
                         + "</div>");
         relatedOpportunities.setHtmlContentAllowed(true);
-        relatedOpportunities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GoToRelatedItems(this,
+        relatedOpportunities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GotoRelatedItems(this,
                 new CrmRelatedItemsScreenData(associateOpportunities))));
         toolbarLayout.addComponent(relatedOpportunities);
 
@@ -140,7 +140,7 @@ public class AccountReadViewImpl extends CrmAbstractPreviewItemComp<SimpleAccoun
                 + "\"></span><div class=\"screen-reader-text\">"
                 + UserUIContext.getMessage(LeadI18nEnum.LIST) + "</div>");
         relatedLeads.setHtmlContentAllowed(true);
-        relatedLeads.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GoToRelatedItems(this,
+        relatedLeads.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GotoRelatedItems(this,
                 new CrmRelatedItemsScreenData(associateLeads))));
         toolbarLayout.addComponent(relatedLeads);
 
@@ -151,7 +151,7 @@ public class AccountReadViewImpl extends CrmAbstractPreviewItemComp<SimpleAccoun
                 + UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY)
                 + "</div>");
         relatedActivities.setHtmlContentAllowed(true);
-        relatedActivities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GoToRelatedItems(this,
+        relatedActivities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GotoRelatedItems(this,
                 new CrmRelatedItemsScreenData(associateActivities))));
         toolbarLayout.addComponent(relatedActivities);
 

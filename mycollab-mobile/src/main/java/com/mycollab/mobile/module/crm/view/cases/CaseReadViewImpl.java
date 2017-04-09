@@ -108,7 +108,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
                 + UserUIContext.getMessage(ContactI18nEnum.LIST)
                 + "</div>");
         relatedContacts.setHtmlContentAllowed(true);
-        relatedContacts.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new CaseEvent.GoToRelatedItems(this,
+        relatedContacts.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new CaseEvent.GotoRelatedItems(this,
                 new CrmRelatedItemsScreenData(associateContacts))));
         toolbarLayout.addComponent(relatedContacts);
 
@@ -119,7 +119,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
                 + UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY)
                 + "</div>");
         relatedActivities.setHtmlContentAllowed(true);
-        relatedActivities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new CaseEvent.GoToRelatedItems(this,
+        relatedActivities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new CaseEvent.GotoRelatedItems(this,
                 new CrmRelatedItemsScreenData(associateActivities))));
         toolbarLayout.addComponent(relatedActivities);
 

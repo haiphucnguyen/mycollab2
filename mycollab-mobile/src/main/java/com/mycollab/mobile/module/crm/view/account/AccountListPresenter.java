@@ -41,5 +41,4 @@ public class AccountListPresenter extends CrmListPresenter<AccountListView, Acco
         super.onGo(container, data);
         MyCollabUI.addFragment("crm/account/list", UserUIContext.getMessage(AccountI18nEnum.LIST));
     }
-
 }

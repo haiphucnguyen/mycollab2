@@ -184,7 +184,6 @@ public class OpportunityReadPresenter extends AbstractCrmPresenter<OpportunityRe
             @Override
             public void selectAssociateItems(Set<SimpleActivity> items) {
                 // TODO Auto-generated method stub
-
             }
 
             @Override

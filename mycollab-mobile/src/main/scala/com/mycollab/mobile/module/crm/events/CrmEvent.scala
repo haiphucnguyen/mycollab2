@@ -14,22 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.mobile.module.crm.events;
+package com.mycollab.mobile.module.crm.events
 
-import com.mycollab.events.ApplicationEvent;
+import com.mycollab.events.ApplicationEvent
 
 /**
- * @author MyCollab Ltd.
- * @since 3.0
- */
-public class CrmEvent {
+  * @author MyCollab Ltd
+  * @since 5.4.9
+  */
+object CrmEvent {
 
-    public static class GotoContainer extends ApplicationEvent {
+  class GotoContainer(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-        private static final long serialVersionUID = 4746588959410782216L;
-
-        public GotoContainer(Object source, Object data) {
-            super(source, data);
-        }
-    }
 }

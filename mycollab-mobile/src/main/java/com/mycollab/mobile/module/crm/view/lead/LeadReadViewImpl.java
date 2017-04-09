@@ -109,7 +109,7 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
                 + UserUIContext.getMessage(CampaignI18nEnum.LIST)
                 + "</div>");
         relatedCampaigns.setHtmlContentAllowed(true);
-        relatedCampaigns.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new LeadEvent.GoToRelatedItems(
+        relatedCampaigns.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new LeadEvent.GotoRelatedItems(
                 LeadReadViewImpl.this, new CrmRelatedItemsScreenData(associateCampaigns))));
         toolbarLayout.addComponent(relatedCampaigns);
 
@@ -120,7 +120,7 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
                 + UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY)
                 + "</div>");
         relatedActivities.setHtmlContentAllowed(true);
-        relatedActivities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new LeadEvent.GoToRelatedItems(this,
+        relatedActivities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new LeadEvent.GotoRelatedItems(this,
                 new CrmRelatedItemsScreenData(associateActivities))));
         toolbarLayout.addComponent(relatedActivities);
 

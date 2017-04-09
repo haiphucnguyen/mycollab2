@@ -115,7 +115,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
                 + UserUIContext.getMessage(AccountI18nEnum.LIST)
                 + "</div>");
         relatedAccounts.setHtmlContentAllowed(true);
-        relatedAccounts.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GoToRelatedItems(this,
+        relatedAccounts.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GotoRelatedItems(this,
                 new CrmRelatedItemsScreenData(associateAccounts))));
         toolbarLayout.addComponent(relatedAccounts);
 
@@ -126,7 +126,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
                 + UserUIContext.getMessage(ContactI18nEnum.LIST)
                 + "</div>");
         relatedContacts.setHtmlContentAllowed(true);
-        relatedContacts.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GoToRelatedItems(this,
+        relatedContacts.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GotoRelatedItems(this,
                 new CrmRelatedItemsScreenData(associateContacts))));
         toolbarLayout.addComponent(relatedContacts);
 
@@ -136,7 +136,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
                 + "\"></span><div class=\"screen-reader-text\">"
                 + UserUIContext.getMessage(LeadI18nEnum.LIST) + "</div>");
         relatedLeads.setHtmlContentAllowed(true);
-        relatedLeads.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GoToRelatedItems(this,
+        relatedLeads.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GotoRelatedItems(this,
                 new CrmRelatedItemsScreenData(associateLeads))));
         toolbarLayout.addComponent(relatedLeads);
 
@@ -147,7 +147,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
                 + UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY)
                 + "</div>");
         relatedActivities.setHtmlContentAllowed(true);
-        relatedActivities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GoToRelatedItems(this,
+        relatedActivities.addClickListener(clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GotoRelatedItems(this,
                 new CrmRelatedItemsScreenData(associateActivities))));
         toolbarLayout.addComponent(relatedActivities);
 
