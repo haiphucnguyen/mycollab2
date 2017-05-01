@@ -22,6 +22,7 @@ import com.mycollab.mobile.ui.SearchInputField;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.crm.i18n.AccountI18nEnum;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 
@@ -40,6 +41,12 @@ public class AccountListViewImpl extends AbstractListPageView<AccountSearchCrite
     @Override
     protected AbstractPagedBeanList<AccountSearchCriteria, SimpleAccount> createBeanList() {
         return new AccountListDisplay();
+    }
+
+    @Override
+    public void onBecomingVisible() {
+        super.onBecomingVisible();
+        MyCollabUI.addFragment("crm/account/list", UserUIContext.getMessage(AccountI18nEnum.LIST));
     }
 
     @Override
