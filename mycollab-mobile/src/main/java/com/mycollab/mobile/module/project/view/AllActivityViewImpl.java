@@ -51,6 +51,8 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import org.vaadin.teemu.VaadinIcons;
+import org.vaadin.viritin.button.MButton;
 
 /**
  * @author MyCollab Ltd.
@@ -78,7 +80,7 @@ public class AllActivityViewImpl extends AbstractListPageView<ActivityStreamSear
 
     @Override
     protected void buildNavigateMenu() {
-        addSection("Views:");
+        addSection("Views");
 
         // Buttons with styling (slightly smaller with left-aligned text)
         Button activityBtn = new Button("Activities", clickEvent -> {
@@ -95,7 +97,14 @@ public class AllActivityViewImpl extends AbstractListPageView<ActivityStreamSear
         prjBtn.setIcon(FontAwesome.BUILDING);
         addMenuItem(prjBtn);
 
-        addSection("Settings:");
+        addSection("Modules");
+        MButton crmModuleBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.MODULE_CRM), clickEvent -> {
+            closeMenu();
+            EventBusFactory.getInstance().post(new ShellEvent.GotoCrmModule(this, null));
+        }).withIcon(VaadinIcons.MONEY);
+        addMenuItem(crmModuleBtn);
+
+        addSection(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_SETTINGS));
 
         Button logoutBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SIGNOUT), clickEvent -> {
             closeMenu();
