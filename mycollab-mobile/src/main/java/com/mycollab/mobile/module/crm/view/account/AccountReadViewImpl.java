@@ -21,10 +21,15 @@ import com.mycollab.mobile.form.view.DynaFormLayout;
 import com.mycollab.mobile.module.crm.events.AccountEvent;
 import com.mycollab.mobile.module.crm.ui.CrmPreviewFormControlsGenerator;
 import com.mycollab.mobile.module.crm.view.activity.ActivityRelatedItemView;
+import com.mycollab.mobile.module.crm.view.contact.RelatedContactNavigatorButton;
+import com.mycollab.mobile.module.crm.view.lead.RelatedLeadNavigatorButton;
+import com.mycollab.mobile.module.crm.view.opportunity.RelatedOpportunityNavigationButton;
 import com.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.mycollab.mobile.ui.AdvancedPreviewBeanForm;
+import com.mycollab.mobile.ui.FormSectionBuilder;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.SimpleAccount;
+import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -34,6 +39,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.button.MButton;
@@ -54,16 +60,16 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     private RelatedContactNavigatorButton associateContacts;
     private AccountRelatedCaseView associateCases;
     private ActivityRelatedItemView associateActivities;
-    private AccountRelatedLeadView associateLeads;
-    private AccountRelatedOpportunityView associateOpportunities;
+    private RelatedLeadNavigatorButton associateLeads;
+    private RelatedOpportunityNavigationButton associateOpportunities;
 
     @Override
     protected void afterPreviewItem() {
-        associateContacts.displayTotalContacts(beanItem.getId());
+        associateContacts.displayRelatedByAccount(beanItem.getId());
         associateCases.displayCases(beanItem);
         associateActivities.displayActivity(beanItem.getId());
-        associateLeads.displayLeads(beanItem);
-        associateOpportunities.displayOpportunities(beanItem);
+        associateLeads.displayRelatedByAccount(beanItem.getId());
+        associateOpportunities.displayRelatedByAccount(beanItem.getId());
     }
 
     @Override
@@ -71,8 +77,8 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
         associateContacts = new RelatedContactNavigatorButton();
         associateCases = new AccountRelatedCaseView();
         associateActivities = new ActivityRelatedItemView(CrmTypeConstants.ACCOUNT);
-        associateLeads = new AccountRelatedLeadView();
-        associateOpportunities = new AccountRelatedOpportunityView();
+        associateLeads = new RelatedLeadNavigatorButton();
+        associateOpportunities = new RelatedOpportunityNavigationButton();
     }
 
     @Override
@@ -114,7 +120,17 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     @Override
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withFullWidth().withSpacing(false).withMargin(false);
-        toolbarLayout.addComponent(associateContacts);
+        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT),
+                associateContacts);
+        toolbarLayout.addComponent(contactSection);
+
+        Component leadSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
+                associateLeads);
+        toolbarLayout.addComponent(leadSection);
+
+        Component opportunitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY),
+                associateOpportunities);
+        toolbarLayout.addComponent(opportunitySection);
         return toolbarLayout;
     }
 

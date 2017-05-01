@@ -17,34 +17,29 @@
 package com.mycollab.mobile.module.crm.view.contact;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.db.arguments.StringSearchField;
-import com.mycollab.mobile.ui.SearchInputView;
+import com.mycollab.mobile.ui.AbstractMobilePageView;
 import com.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
-import org.vaadin.viritin.fields.MTextField;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd
  * @since 5.4.9
  */
-public class ContactSearchInputView extends SearchInputView<ContactSearchCriteria> {
-    private MTextField nameField;
+class ContactListDisplayView extends AbstractMobilePageView {
+    private ContactSearchCriteria criteria;
+    private final ContactListDisplay itemList;
 
-    @Override
-    protected void onBecomingVisible() {
-        super.onBecomingVisible();
-        MVerticalLayout content = new MVerticalLayout();
-        nameField = new MTextField().withFullWidth().withInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT));
-        content.with(nameField);
-
-        setContent(content);
+    ContactListDisplayView(ContactSearchCriteria criteria) {
+        this.criteria = criteria;
+        itemList = new ContactListDisplay();
+        this.setContent(itemList);
+        displayItems();
     }
 
-    @Override
-    protected ContactSearchCriteria buildSearchCriteria() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setContactName(StringSearchField.and(nameField.getValue()));
-        return criteria;
+    private void displayItems() {
+        Integer numItems = itemList.search(criteria);
+        this.setCaption(UserUIContext.getMessage(GenericI18Enum.OPT_ITEM_VALUE,
+                UserUIContext.getMessage(ContactI18nEnum.SINGLE), numItems));
     }
 }
