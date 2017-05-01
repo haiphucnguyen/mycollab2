@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.mobile.module.project.ui;
+package com.mycollab.mobile.ui;
 
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
@@ -26,7 +26,6 @@ import com.vaadin.server.FontAwesome;
  */
 public abstract class SearchNavigationButton extends NavigationButton {
     public SearchNavigationButton() {
-        super();
         setIcon(FontAwesome.SEARCH);
         addStyleName(UIConstants.CIRCLE_BOX);
         this.addClickListener(navigationButtonClickEvent -> getNavigationManager().navigateTo(getSearchInputView()));
