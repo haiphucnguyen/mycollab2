@@ -40,6 +40,19 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.4.9
+-------------
+
+**Library Upgrades**
+
+* Mybatis 3.4.4
+* Other libraries
+
+**Improvements & New Features**
+
+* Support CRM mobile
+* Add report module in project view
+
 Version 5.4.8
 -------------
 
