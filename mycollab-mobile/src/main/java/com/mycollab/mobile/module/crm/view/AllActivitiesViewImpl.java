@@ -16,7 +16,11 @@
  */
 package com.mycollab.mobile.module.crm.view;
 
-import com.mycollab.mobile.ui.AbstractMobileTabPageView;
+import com.mycollab.common.domain.ActivityStreamWithBLOBs;
+import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
+import com.mycollab.mobile.module.crm.ui.AbstractListPageView;
+import com.mycollab.mobile.ui.AbstractPagedBeanList;
+import com.mycollab.mobile.ui.SearchInputField;
 import com.mycollab.vaadin.mvp.ViewComponent;
 
 /**
@@ -24,7 +28,16 @@ import com.mycollab.vaadin.mvp.ViewComponent;
  * @since 4.4.0
  */
 @ViewComponent
-public class AllActivitiesViewImpl extends AbstractMobileTabPageView implements AllActivitiesView {
+public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSearchCriteria, ActivityStreamWithBLOBs> implements AllActivitiesView {
     private static final long serialVersionUID = 5251742381187041492L;
 
+    @Override
+    protected AbstractPagedBeanList<ActivityStreamSearchCriteria, ActivityStreamWithBLOBs> createBeanList() {
+        return null;
+    }
+
+    @Override
+    protected SearchInputField<ActivityStreamSearchCriteria> createSearchField() {
+        return null;
+    }
 }

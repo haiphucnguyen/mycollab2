@@ -24,5 +24,5 @@ import com.mycollab.module.project.domain.ProjectActivityStream;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-public interface AllActivityView extends IListView<ActivityStreamSearchCriteria, ProjectActivityStream> {
+public interface AllActivitiesView extends IListView<ActivityStreamSearchCriteria, ProjectActivityStream> {
 }

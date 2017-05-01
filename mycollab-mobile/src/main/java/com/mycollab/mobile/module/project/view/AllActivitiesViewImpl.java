@@ -59,16 +59,16 @@ import org.vaadin.viritin.button.MButton;
  * @since 4.5.2
  */
 @ViewComponent
-public class AllActivityViewImpl extends AbstractListPageView<ActivityStreamSearchCriteria, ProjectActivityStream> implements AllActivityView {
+public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSearchCriteria, ProjectActivityStream> implements AllActivitiesView {
     private static final long serialVersionUID = -7722214412998470562L;
 
-    public AllActivityViewImpl() {
+    public AllActivitiesViewImpl() {
         this.setCaption(UserUIContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES));
     }
 
     @Override
     protected AbstractPagedBeanList<ActivityStreamSearchCriteria, ProjectActivityStream> createBeanList() {
-        ProjectActivityStreamListDisplay beanList = new ProjectActivityStreamListDisplay();
+        ProjectActivitiesStreamListDisplay beanList = new ProjectActivitiesStreamListDisplay();
         beanList.setRowDisplayHandler(new ActivityStreamRowHandler());
         return beanList;
     }
