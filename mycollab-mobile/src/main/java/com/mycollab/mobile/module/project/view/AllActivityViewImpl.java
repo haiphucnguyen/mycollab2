@@ -85,7 +85,7 @@ public class AllActivityViewImpl extends AbstractListPageView<ActivityStreamSear
         // Buttons with styling (slightly smaller with left-aligned text)
         Button activityBtn = new Button("Activities", clickEvent -> {
             closeMenu();
-            EventBusFactory.getInstance().post(new ProjectEvent.AllActivities(this));
+            EventBusFactory.getInstance().post(new ProjectEvent.GotoAllActivitiesView(this));
         });
         activityBtn.setIcon(FontAwesome.INBOX);
         addMenuItem(activityBtn);

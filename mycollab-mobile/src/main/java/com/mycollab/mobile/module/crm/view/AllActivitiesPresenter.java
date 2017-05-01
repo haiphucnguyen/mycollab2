@@ -14,16 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.mobile.module.crm.events
+package com.mycollab.mobile.module.crm.view;
 
-import com.mycollab.events.ApplicationEvent
+import com.mycollab.vaadin.mvp.ScreenData;
+import com.vaadin.ui.HasComponents;
 
 /**
-  * @author MyCollab Ltd
-  * @since 5.4.9
-  */
-object CrmEvent {
+ * @author MyCollab Ltd.
+ * @since 4.4.0
+ */
+public class AllActivitiesPresenter extends AbstractCrmPresenter<AllActivitiesView> {
+    private static final long serialVersionUID = -2422488836026839744L;
 
-  class GotoActivitiesView(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    public AllActivitiesPresenter() {
+        super(AllActivitiesView.class);
+    }
+
+    @Override
+    protected void onGo(HasComponents navigator, ScreenData<?> data) {
+        super.onGo(navigator, data);
+    }
 
 }

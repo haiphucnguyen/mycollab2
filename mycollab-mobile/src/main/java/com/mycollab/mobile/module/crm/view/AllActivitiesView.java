@@ -14,16 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.mobile.module.crm.events
+package com.mycollab.mobile.module.crm.view;
 
-import com.mycollab.events.ApplicationEvent
+import com.mycollab.vaadin.mvp.IModule;
 
 /**
-  * @author MyCollab Ltd
-  * @since 5.4.9
-  */
-object CrmEvent {
-
-  class GotoActivitiesView(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
-
+ * @author MyCollab Ltd.
+ * @since 4.4.0
+ */
+public interface AllActivitiesView extends IModule {
 }

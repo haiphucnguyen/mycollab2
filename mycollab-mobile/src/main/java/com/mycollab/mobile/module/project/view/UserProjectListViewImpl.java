@@ -79,7 +79,7 @@ public class UserProjectListViewImpl extends AbstractListPageView<ProjectSearchC
         // Buttons with styling (slightly smaller with left-aligned text)
         MButton activityBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES), clickEvent -> {
             closeMenu();
-            EventBusFactory.getInstance().post(new ProjectEvent.AllActivities(this));
+            EventBusFactory.getInstance().post(new ProjectEvent.GotoAllActivitiesView(this));
         }).withIcon(FontAwesome.INBOX);
         addMenuItem(activityBtn);
 
