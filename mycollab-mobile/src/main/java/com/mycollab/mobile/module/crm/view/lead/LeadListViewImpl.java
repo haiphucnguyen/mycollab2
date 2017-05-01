@@ -66,10 +66,9 @@ public class LeadListViewImpl extends AbstractListPageView<LeadSearchCriteria, S
                 return new LeadSearchInputView();
             }
         };
-        MButton newCampaignBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new LeadEvent.GotoAdd(this, null)))
+        MButton newLeadBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new LeadEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
                 .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_LEAD));
-        return new MHorizontalLayout(searchBtn, newCampaignBtn).alignAll(Alignment.TOP_RIGHT);
+        return new MHorizontalLayout(searchBtn, newLeadBtn).alignAll(Alignment.TOP_RIGHT);
     }
-
 }

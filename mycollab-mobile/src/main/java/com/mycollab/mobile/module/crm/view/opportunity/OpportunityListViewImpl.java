@@ -66,10 +66,10 @@ public class OpportunityListViewImpl extends AbstractListPageView<OpportunitySea
                 return new OpportunitySearchInputView();
             }
         };
-        MButton newCampaignBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new OpportunityEvent.GotoAdd(this, null)))
+        MButton newOpportunityBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new OpportunityEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
                 .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
-        return new MHorizontalLayout(searchBtn, newCampaignBtn).alignAll(Alignment.TOP_RIGHT);
+        return new MHorizontalLayout(searchBtn, newOpportunityBtn).alignAll(Alignment.TOP_RIGHT);
     }
 
 }
