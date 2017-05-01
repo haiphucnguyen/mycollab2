@@ -58,7 +58,7 @@ public class CaseListDisplay extends DefaultPagedBeanList<CaseService, CaseSearc
             }
             MCssLayout itemWrap = new MCssLayout(ELabel.html(itemLink.write()));
             rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.getAsset
-                    (CrmTypeConstants.OPPORTUNITY)), itemWrap).expand(itemWrap).withFullWidth());
+                    (CrmTypeConstants.CASE)), itemWrap).expand(itemWrap).withFullWidth());
             return rowLayout;
         }
     }
