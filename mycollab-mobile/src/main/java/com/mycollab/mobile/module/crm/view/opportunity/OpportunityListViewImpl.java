@@ -18,8 +18,9 @@ package com.mycollab.mobile.module.crm.view.opportunity;
 
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.crm.events.OpportunityEvent;
-import com.mycollab.mobile.module.crm.ui.AbstractListViewComp;
+import com.mycollab.mobile.module.crm.ui.AbstractListPageView;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;
+import com.mycollab.mobile.ui.SearchInputField;
 import com.mycollab.module.crm.domain.SimpleOpportunity;
 import com.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.mycollab.module.crm.i18n.OpportunityI18nEnum;
@@ -33,7 +34,7 @@ import org.vaadin.viritin.button.MButton;
  * @since 4.1
  */
 @ViewComponent
-public class OpportunityListViewImpl extends AbstractListViewComp<OpportunitySearchCriteria, SimpleOpportunity> implements OpportunityListView {
+public class OpportunityListViewImpl extends AbstractListPageView<OpportunitySearchCriteria, SimpleOpportunity> implements OpportunityListView {
     private static final long serialVersionUID = 8959720143847140837L;
 
     public OpportunityListViewImpl() {
@@ -41,12 +42,17 @@ public class OpportunityListViewImpl extends AbstractListViewComp<OpportunitySea
     }
 
     @Override
-    protected AbstractPagedBeanList<OpportunitySearchCriteria, SimpleOpportunity> createBeanTable() {
+    protected AbstractPagedBeanList<OpportunitySearchCriteria, SimpleOpportunity> createBeanList() {
         return new OpportunityListDisplay();
     }
 
     @Override
-    protected Component createRightComponent() {
+    protected SearchInputField<OpportunitySearchCriteria> createSearchField() {
+        return null;
+    }
+
+    @Override
+    protected Component buildRightComponent() {
         return new MButton("", clickEvent -> EventBusFactory.getInstance().post(new OpportunityEvent.GotoAdd(this, null)))
                 .withStyleName("add-btn");
     }
