@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.mobile.module.crm.view;
 
 import com.google.common.eventbus.Subscribe;
@@ -23,29 +7,31 @@ import com.mycollab.mobile.module.crm.CrmModuleScreenData;
 import com.mycollab.mobile.module.crm.events.*;
 import com.mycollab.mobile.module.crm.events.ActivityEvent.CallEdit;
 import com.mycollab.mobile.module.crm.ui.CrmRelatedItemsScreenData;
-import com.mycollab.mobile.module.crm.view.account.AccountAddPresenter;
 import com.mycollab.mobile.module.crm.view.account.AccountListPresenter;
 import com.mycollab.mobile.module.crm.view.account.AccountReadPresenter;
+import com.mycollab.mobile.module.crm.view.account.IAccountAddPresenter;
 import com.mycollab.mobile.module.crm.view.activity.*;
-import com.mycollab.mobile.module.crm.view.campaign.CampaignAddPresenter;
 import com.mycollab.mobile.module.crm.view.campaign.CampaignListPresenter;
 import com.mycollab.mobile.module.crm.view.campaign.CampaignReadPresenter;
-import com.mycollab.mobile.module.crm.view.cases.CaseAddPresenter;
+import com.mycollab.mobile.module.crm.view.campaign.ICampaignAddPresenter;
 import com.mycollab.mobile.module.crm.view.cases.CaseListPresenter;
 import com.mycollab.mobile.module.crm.view.cases.CaseReadPresenter;
-import com.mycollab.mobile.module.crm.view.contact.ContactAddPresenter;
+import com.mycollab.mobile.module.crm.view.cases.ICaseAddPresenter;
 import com.mycollab.mobile.module.crm.view.contact.ContactListPresenter;
 import com.mycollab.mobile.module.crm.view.contact.ContactReadPresenter;
-import com.mycollab.mobile.module.crm.view.lead.LeadAddPresenter;
+import com.mycollab.mobile.module.crm.view.contact.IContactAddPresenter;
+import com.mycollab.mobile.module.crm.view.lead.ILeadAddPresenter;
 import com.mycollab.mobile.module.crm.view.lead.LeadListPresenter;
 import com.mycollab.mobile.module.crm.view.lead.LeadReadPresenter;
-import com.mycollab.mobile.module.crm.view.opportunity.OpportunityAddPresenter;
+import com.mycollab.mobile.module.crm.view.opportunity.IOpportunityAddPresenter;
 import com.mycollab.mobile.module.crm.view.opportunity.OpportunityListPresenter;
 import com.mycollab.mobile.module.crm.view.opportunity.OpportunityReadPresenter;
+import com.mycollab.mobile.mvp.view.PresenterOptionUtil;
 import com.mycollab.module.crm.domain.*;
 import com.mycollab.module.crm.domain.criteria.*;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.mvp.AbstractController;
+import com.mycollab.vaadin.mvp.IPresenter;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
@@ -106,7 +92,7 @@ public class CrmModuleController extends AbstractController {
             @Subscribe
             @Override
             public void handle(AccountEvent.GotoAdd event) {
-                AccountAddPresenter presenter = PresenterResolver.getPresenter(AccountAddPresenter.class);
+                IPresenter presenter = PresenterOptionUtil.getPresenter(IAccountAddPresenter.class);
                 presenter.go(crmViewNavigation, new ScreenData.Add<>(new SimpleAccount()));
             }
         });
@@ -117,7 +103,7 @@ public class CrmModuleController extends AbstractController {
             @Subscribe
             @Override
             public void handle(AccountEvent.GotoEdit event) {
-                AccountAddPresenter presenter = PresenterResolver.getPresenter(AccountAddPresenter.class);
+                IPresenter presenter = PresenterOptionUtil.getPresenter(IAccountAddPresenter.class);
                 presenter.go(crmViewNavigation, new ScreenData.Edit<>(event.getData()));
             }
         });
@@ -292,7 +278,7 @@ public class CrmModuleController extends AbstractController {
             @Subscribe
             @Override
             public void handle(ContactEvent.GotoAdd event) {
-                ContactAddPresenter presenter = PresenterResolver.getPresenter(ContactAddPresenter.class);
+                IPresenter presenter = PresenterOptionUtil.getPresenter(IContactAddPresenter.class);
                 presenter.go(crmViewNavigation, new ScreenData.Add<>(new SimpleContact()));
             }
         });
@@ -303,7 +289,7 @@ public class CrmModuleController extends AbstractController {
             @Subscribe
             @Override
             public void handle(ContactEvent.GotoEdit event) {
-                ContactAddPresenter presenter = PresenterResolver.getPresenter(ContactAddPresenter.class);
+                IPresenter presenter = PresenterOptionUtil.getPresenter(IContactAddPresenter.class);
                 presenter.go(crmViewNavigation, new ScreenData.Edit<>(event.getData()));
             }
         });
@@ -352,7 +338,7 @@ public class CrmModuleController extends AbstractController {
             @Subscribe
             @Override
             public void handle(CampaignEvent.GotoAdd event) {
-                CampaignAddPresenter presenter = PresenterResolver.getPresenter(CampaignAddPresenter.class);
+                IPresenter presenter = PresenterOptionUtil.getPresenter(ICampaignAddPresenter.class);
                 presenter.go(crmViewNavigation, new ScreenData.Add<>(new SimpleCampaign()));
             }
         });
@@ -363,7 +349,7 @@ public class CrmModuleController extends AbstractController {
             @Subscribe
             @Override
             public void handle(CampaignEvent.GotoEdit event) {
-                CampaignAddPresenter presenter = PresenterResolver.getPresenter(CampaignAddPresenter.class);
+                IPresenter presenter = PresenterOptionUtil.getPresenter(ICampaignAddPresenter.class);
                 presenter.go(crmViewNavigation, new ScreenData.Edit<>(event.getData()));
             }
         });
@@ -412,7 +398,7 @@ public class CrmModuleController extends AbstractController {
             @Subscribe
             @Override
             public void handle(CaseEvent.GotoAdd event) {
-                CaseAddPresenter presenter = PresenterResolver.getPresenter(CaseAddPresenter.class);
+                IPresenter presenter = PresenterResolver.getPresenter(ICaseAddPresenter.class);
                 presenter.go(crmViewNavigation, new ScreenData.Add<>(new SimpleCase()));
             }
         });
@@ -423,7 +409,7 @@ public class CrmModuleController extends AbstractController {
             @Subscribe
             @Override
             public void handle(CaseEvent.GotoEdit event) {
-                CaseAddPresenter presenter = PresenterResolver.getPresenter(CaseAddPresenter.class);
+                IPresenter presenter = PresenterResolver.getPresenter(ICaseAddPresenter.class);
                 presenter.go(crmViewNavigation, new ScreenData.Edit<>(event.getData()));
             }
         });
@@ -482,7 +468,7 @@ public class CrmModuleController extends AbstractController {
             @Subscribe
             @Override
             public void handle(LeadEvent.GotoAdd event) {
-                LeadAddPresenter presenter = PresenterResolver.getPresenter(LeadAddPresenter.class);
+                IPresenter presenter = PresenterOptionUtil.getPresenter(ILeadAddPresenter.class);
                 presenter.go(crmViewNavigation, new ScreenData.Add<>(new SimpleLead()));
             }
         });
@@ -493,7 +479,7 @@ public class CrmModuleController extends AbstractController {
             @Subscribe
             @Override
             public void handle(LeadEvent.GotoEdit event) {
-                LeadAddPresenter presenter = PresenterResolver.getPresenter(LeadAddPresenter.class);
+                IPresenter presenter = PresenterOptionUtil.getPresenter(ILeadAddPresenter.class);
                 presenter.go(crmViewNavigation, new ScreenData.Edit<>(event.getData()));
             }
         });
@@ -542,7 +528,7 @@ public class CrmModuleController extends AbstractController {
             @Subscribe
             @Override
             public void handle(OpportunityEvent.GotoAdd event) {
-                OpportunityAddPresenter presenter = PresenterResolver.getPresenter(OpportunityAddPresenter.class);
+                IPresenter presenter = PresenterResolver.getPresenter(IOpportunityAddPresenter.class);
                 presenter.go(crmViewNavigation, new ScreenData.Add<>(new SimpleOpportunity()));
             }
         });
@@ -553,7 +539,7 @@ public class CrmModuleController extends AbstractController {
             @Subscribe
             @Override
             public void handle(OpportunityEvent.GotoEdit event) {
-                OpportunityAddPresenter presenter = PresenterResolver.getPresenter(OpportunityAddPresenter.class);
+                IPresenter presenter = PresenterResolver.getPresenter(IOpportunityAddPresenter.class);
                 presenter.go(crmViewNavigation, new ScreenData.Edit<>(event.getData()));
             }
         });
