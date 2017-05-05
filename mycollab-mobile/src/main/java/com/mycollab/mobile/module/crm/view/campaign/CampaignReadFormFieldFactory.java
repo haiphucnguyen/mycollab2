@@ -34,7 +34,7 @@ import com.vaadin.ui.Field;
 class CampaignReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<SimpleCampaign> {
     private static final long serialVersionUID = 1L;
 
-    public CampaignReadFormFieldFactory(GenericBeanForm<SimpleCampaign> form) {
+    CampaignReadFormFieldFactory(GenericBeanForm<SimpleCampaign> form) {
         super(form);
     }
 
