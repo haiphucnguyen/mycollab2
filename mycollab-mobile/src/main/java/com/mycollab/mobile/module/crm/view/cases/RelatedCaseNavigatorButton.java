@@ -20,7 +20,6 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.mycollab.module.crm.i18n.CaseI18nEnum;
-import com.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.mycollab.module.crm.service.CaseService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
@@ -47,7 +46,7 @@ public class RelatedCaseNavigatorButton extends NavigationButton {
         this.criteria = criteria;
         CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
         this.setCaption(UserUIContext.getMessage(GenericI18Enum.OPT_ITEM_VALUE,
-                UserUIContext.getMessage(ContactI18nEnum.SINGLE), caseService.getTotalCount(criteria)));
+                UserUIContext.getMessage(CaseI18nEnum.SINGLE), caseService.getTotalCount(criteria)));
     }
 
     public void displayRelatedByAccount(Integer accountId) {

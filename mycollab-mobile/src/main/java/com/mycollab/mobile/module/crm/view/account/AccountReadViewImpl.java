@@ -21,7 +21,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.form.view.DynaFormLayout;
 import com.mycollab.mobile.module.crm.events.AccountEvent;
 import com.mycollab.mobile.module.crm.ui.CrmPreviewFormControlsGenerator;
-import com.mycollab.mobile.module.crm.view.activity.ActivityRelatedItemView;
+import com.mycollab.mobile.module.crm.view.activity.RelatedActivityNavigatorButton;
 import com.mycollab.mobile.module.crm.view.cases.RelatedCaseNavigatorButton;
 import com.mycollab.mobile.module.crm.view.contact.RelatedContactNavigatorButton;
 import com.mycollab.mobile.module.crm.view.lead.RelatedLeadNavigatorButton;
@@ -64,7 +64,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
 
     private RelatedContactNavigatorButton associateContacts;
     private RelatedCaseNavigatorButton associateCases;
-    private ActivityRelatedItemView associateActivities;
+    private RelatedActivityNavigatorButton associateActivities;
     private RelatedLeadNavigatorButton associateLeads;
     private RelatedOpportunityNavigationButton associateOpportunities;
 
@@ -72,7 +72,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     protected void afterPreviewItem() {
         associateContacts.displayRelatedByAccount(beanItem.getId());
         associateCases.displayRelatedByAccount(beanItem.getId());
-        associateActivities.displayActivity(beanItem.getId());
+        associateActivities.displayRelatedByAccount(beanItem.getId());
         associateLeads.displayRelatedByAccount(beanItem.getId());
         associateOpportunities.displayRelatedByAccount(beanItem.getId());
     }
@@ -81,7 +81,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     protected void initRelatedComponents() {
         associateContacts = new RelatedContactNavigatorButton();
         associateCases = new RelatedCaseNavigatorButton();
-        associateActivities = new ActivityRelatedItemView(CrmTypeConstants.ACCOUNT);
+        associateActivities = new RelatedActivityNavigatorButton();
         associateLeads = new RelatedLeadNavigatorButton();
         associateOpportunities = new RelatedOpportunityNavigationButton();
     }
@@ -148,6 +148,10 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
         Component caseSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CASE),
                 associateCases);
         toolbarLayout.addComponent(caseSection);
+
+        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY),
+                associateActivities);
+        toolbarLayout.addComponent(activitySection);
         return toolbarLayout;
     }
 
