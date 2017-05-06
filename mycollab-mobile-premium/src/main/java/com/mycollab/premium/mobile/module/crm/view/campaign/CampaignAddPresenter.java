@@ -38,13 +38,13 @@ public class CampaignAddPresenter extends AbstractCrmPresenter<CampaignAddView> 
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void onSave(final SimpleCampaign campaign) {
+            public void onSave(SimpleCampaign campaign) {
                 saveCampaign(campaign);
                 EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
             }
 
             @Override
-            public void onSaveAndNew(final SimpleCampaign campaign) {
+            public void onSaveAndNew(SimpleCampaign campaign) {
                 saveCampaign(campaign);
                 EventBusFactory.getInstance().post(new CampaignEvent.GotoAdd(this, null));
             }

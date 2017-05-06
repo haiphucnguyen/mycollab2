@@ -1,7 +1,5 @@
 package com.mycollab.premium.mobile.module.crm.view.account;
 
-import com.mycollab.common.UrlEncodeDecoder;
-import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.crm.events.AccountEvent;
 import com.mycollab.mobile.module.crm.view.AbstractCrmPresenter;
@@ -10,7 +8,6 @@ import com.mycollab.mobile.module.crm.view.account.IAccountAddPresenter;
 import com.mycollab.mobile.shell.events.ShellEvent;
 import com.mycollab.module.crm.domain.Account;
 import com.mycollab.module.crm.domain.SimpleAccount;
-import com.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
@@ -66,17 +63,8 @@ public class AccountAddPresenter extends AbstractCrmPresenter<AccountAddView> im
                 NotificationUtil.showRecordNotExistNotification();
                 return;
             }
-            super.onGo(container, data);
             view.editItem(account);
-            if (account.getId() == null) {
-                MyCollabUI.addFragment("crm/account/add", UserUIContext.getMessage(GenericI18Enum
-                        .BROWSER_ADD_ITEM_TITLE, UserUIContext.getMessage(AccountI18nEnum.SINGLE)));
-
-            } else {
-                MyCollabUI.addFragment("crm/account/edit/" + UrlEncodeDecoder.encode(account.getId()),
-                        UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
-                                UserUIContext.getMessage(AccountI18nEnum.SINGLE), account.getAccountname()));
-            }
+            super.onGo(container, data);
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }
