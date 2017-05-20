@@ -85,4 +85,11 @@ public class RelatedActivityNavigatorButton extends NavigationButton {
         searchCriteria.setTypeid(NumberSearchField.equal(opportunityId));
         displayTotalActivities(searchCriteria);
     }
+
+    public void displayRelatedByCase(Integer caseId) {
+        ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
+        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.CASE));
+        searchCriteria.setTypeid(NumberSearchField.equal(caseId));
+        displayTotalActivities(searchCriteria);
+    }
 }
