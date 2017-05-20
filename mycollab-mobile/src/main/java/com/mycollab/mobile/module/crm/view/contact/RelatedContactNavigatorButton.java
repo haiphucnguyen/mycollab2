@@ -60,4 +60,10 @@ public class RelatedContactNavigatorButton extends NavigationButton {
         searchCriteria.setCampaignId(NumberSearchField.equal(campaignId));
         displayTotalContacts(searchCriteria);
     }
+
+    public void displayRelatedByOpportunity(Integer opportunityId) {
+        ContactSearchCriteria searchCriteria = new ContactSearchCriteria();
+        searchCriteria.setOpportunityId(NumberSearchField.equal(opportunityId));
+        displayTotalContacts(searchCriteria);
+    }
 }
