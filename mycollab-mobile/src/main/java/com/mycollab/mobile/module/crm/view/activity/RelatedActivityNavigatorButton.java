@@ -57,4 +57,11 @@ public class RelatedActivityNavigatorButton extends NavigationButton {
         searchCriteria.setTypeid(NumberSearchField.equal(accountId));
         displayTotalActivities(searchCriteria);
     }
+
+    public void displayRelatedByContact(Integer contactId) {
+        ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
+        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.CONTACT));
+        searchCriteria.setTypeid(NumberSearchField.equal(contactId));
+        displayTotalActivities(searchCriteria);
+    }
 }
