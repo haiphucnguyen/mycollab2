@@ -62,7 +62,7 @@ public class CaseListViewImpl extends AbstractListPageView<CaseSearchCriteria, S
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment("crm/case/list", UserUIContext.getMessage(CaseI18nEnum.LIST));
+        MyCollabUI.addFragment("crm/cases/list", UserUIContext.getMessage(CaseI18nEnum.LIST));
     }
 
     @Override
