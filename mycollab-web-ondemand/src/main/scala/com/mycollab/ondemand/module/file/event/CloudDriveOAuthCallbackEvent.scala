@@ -10,8 +10,8 @@ import com.mycollab.module.file.CloudDriveInfo
   *
   */
 object CloudDriveOAuthCallbackEvent {
-  
+
   @SerialVersionUID(1L)
   class ReceiveCloudDriveInfo(source: AnyRef, data: CloudDriveInfo) extends ApplicationEvent(source, data) {}
-  
+
 }
