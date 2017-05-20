@@ -16,6 +16,7 @@
  */
 package com.mycollab.mobile.module.crm.view.lead;
 
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.form.view.DynaFormLayout;
 import com.mycollab.mobile.module.crm.events.LeadEvent;
@@ -25,10 +26,13 @@ import com.mycollab.mobile.module.crm.view.campaign.RelatedCampaignNavigatorButt
 import com.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.mycollab.mobile.ui.AdvancedPreviewBeanForm;
 import com.mycollab.mobile.ui.FormSectionBuilder;
+import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.SimpleLead;
+import com.mycollab.module.crm.i18n.LeadI18nEnum;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.security.RolePermissionCollections;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -93,6 +97,14 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
     @Override
     protected AbstractBeanFieldGroupViewFieldFactory<SimpleLead> initBeanFormFieldFactory() {
         return new LeadReadFormFieldFactory(previewForm);
+    }
+
+    @Override
+    protected void onBecomingVisible() {
+        super.onBecomingVisible();
+        MyCollabUI.addFragment(CrmLinkGenerator.generateLeadPreviewLink(beanItem.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                        UserUIContext.getMessage(LeadI18nEnum.SINGLE), beanItem.getLeadName()));
     }
 
     @Override

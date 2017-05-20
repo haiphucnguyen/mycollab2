@@ -16,6 +16,7 @@
  */
 package com.mycollab.mobile.module.crm.view.cases;
 
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.form.view.DynaFormLayout;
 import com.mycollab.mobile.module.crm.events.CaseEvent;
@@ -25,10 +26,13 @@ import com.mycollab.mobile.module.crm.view.contact.RelatedContactNavigatorButton
 import com.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.mycollab.mobile.ui.AdvancedPreviewBeanForm;
 import com.mycollab.mobile.ui.FormSectionBuilder;
+import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.SimpleCase;
+import com.mycollab.module.crm.i18n.CaseI18nEnum;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.security.RolePermissionCollections;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -93,6 +97,14 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
     @Override
     protected AbstractBeanFieldGroupViewFieldFactory<SimpleCase> initBeanFormFieldFactory() {
         return new CaseReadFormFieldFactory(previewForm);
+    }
+
+    @Override
+    protected void onBecomingVisible() {
+        super.onBecomingVisible();
+        MyCollabUI.addFragment(CrmLinkGenerator.generateCasePreviewLink(beanItem.getId()),
+                UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+                        UserUIContext.getMessage(CaseI18nEnum.SINGLE), beanItem.getSubject()));
     }
 
     @Override
