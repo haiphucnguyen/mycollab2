@@ -5,7 +5,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.crm.events.CampaignEvent;
 import com.mycollab.mobile.module.crm.view.AbstractCrmPresenter;
-import com.mycollab.mobile.module.crm.view.campaign.CampaignAddView;
+import com.mycollab.mobile.module.crm.view.campaign.CampaignAddView2;
 import com.mycollab.mobile.module.crm.view.campaign.ICampaignAddPresenter;
 import com.mycollab.mobile.shell.events.ShellEvent;
 import com.mycollab.module.crm.domain.CampaignWithBLOBs;
@@ -25,11 +25,11 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-public class CampaignAddPresenter extends AbstractCrmPresenter<CampaignAddView> implements ICampaignAddPresenter {
+public class CampaignAddPresenter extends AbstractCrmPresenter<CampaignAddView2> implements ICampaignAddPresenter {
     private static final long serialVersionUID = 1L;
 
     public CampaignAddPresenter() {
-        super(CampaignAddView.class);
+        super(CampaignAddView2.class);
     }
 
     @Override
