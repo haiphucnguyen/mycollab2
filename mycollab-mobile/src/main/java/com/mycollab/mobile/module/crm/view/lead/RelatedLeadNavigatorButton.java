@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-mobile.
- *
+ * <p>
  * mycollab-mobile is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-mobile is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -52,6 +52,12 @@ public class RelatedLeadNavigatorButton extends NavigationButton {
     public void displayRelatedByAccount(Integer accountId) {
         LeadSearchCriteria searchCriteria = new LeadSearchCriteria();
         searchCriteria.setAccountId(NumberSearchField.equal(accountId));
+        displayTotalLeads(searchCriteria);
+    }
+
+    public void displayRelatedByCampaign(Integer campaignId) {
+        LeadSearchCriteria searchCriteria = new LeadSearchCriteria();
+        searchCriteria.setCampaignId(NumberSearchField.equal(campaignId));
         displayTotalLeads(searchCriteria);
     }
 }
