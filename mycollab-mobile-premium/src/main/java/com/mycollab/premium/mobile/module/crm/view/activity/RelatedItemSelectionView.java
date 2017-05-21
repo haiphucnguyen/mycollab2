@@ -1,11 +1,11 @@
 package com.mycollab.premium.mobile.module.crm.view.activity;
 
-import com.mycollab.mobile.module.crm.view.account.AccountSelectionView;
-import com.mycollab.mobile.module.crm.view.campaign.CampaignSelectionView;
-import com.mycollab.mobile.module.crm.view.cases.CaseSelectionView;
-import com.mycollab.mobile.module.crm.view.contact.ContactSelectionView;
-import com.mycollab.mobile.module.crm.view.lead.LeadSelectionView;
-import com.mycollab.mobile.module.crm.view.opportunity.OpportunitySelectionView;
+import com.mycollab.premium.mobile.module.crm.view.account.AccountSelectionView;
+import com.mycollab.premium.mobile.module.crm.view.campaign.CampaignSelectionView;
+import com.mycollab.premium.mobile.module.crm.view.cases.CaseSelectionView;
+import com.mycollab.premium.mobile.module.crm.view.contact.ContactSelectionView;
+import com.mycollab.premium.mobile.module.crm.view.lead.LeadSelectionView;
+import com.mycollab.premium.mobile.module.crm.view.opportunity.OpportunitySelectionView;
 import com.mycollab.mobile.ui.AbstractMobileTabPageView;
 import com.mycollab.mobile.ui.IconConstants;
 import com.mycollab.module.crm.CrmTypeConstants;

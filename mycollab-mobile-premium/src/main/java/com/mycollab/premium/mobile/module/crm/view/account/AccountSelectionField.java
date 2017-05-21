@@ -1,6 +1,5 @@
 package com.mycollab.premium.mobile.module.crm.view.account;
 
-import com.mycollab.mobile.module.crm.view.account.AccountSelectionView;
 import com.mycollab.mobile.ui.AbstractSelectionCustomField;
 import com.mycollab.module.crm.domain.Account;
 import com.mycollab.module.crm.domain.SimpleAccount;

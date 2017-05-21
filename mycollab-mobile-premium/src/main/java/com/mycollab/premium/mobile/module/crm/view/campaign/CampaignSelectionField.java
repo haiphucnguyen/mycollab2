@@ -1,6 +1,5 @@
 package com.mycollab.premium.mobile.module.crm.view.campaign;
 
-import com.mycollab.mobile.module.crm.view.campaign.CampaignSelectionView;
 import com.mycollab.mobile.ui.AbstractSelectionCustomField;
 import com.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.mycollab.module.crm.domain.SimpleCampaign;

@@ -1,6 +1,6 @@
 package com.mycollab.premium.mobile.module.crm.view.activity;
 
-import com.mycollab.mobile.module.crm.view.contact.ContactSelectionField;
+import com.mycollab.premium.mobile.module.crm.view.contact.ContactSelectionField;
 import com.mycollab.mobile.module.user.ui.components.ActiveUserComboBox;
 import com.mycollab.mobile.ui.I18NValueListSelect;
 import com.mycollab.module.crm.CrmDataTypeFactory;
