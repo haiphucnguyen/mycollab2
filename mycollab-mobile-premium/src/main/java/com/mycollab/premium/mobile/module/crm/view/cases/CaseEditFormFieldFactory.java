@@ -1,7 +1,6 @@
 package com.mycollab.premium.mobile.module.crm.view.cases;
 
-import com.mycollab.mobile.module.crm.view.account.AccountSelectionField;
-import com.mycollab.mobile.module.crm.view.cases.*;
+import com.mycollab.premium.mobile.module.crm.view.account.AccountSelectionField;
 import com.mycollab.mobile.module.user.ui.components.ActiveUserComboBox;
 import com.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;

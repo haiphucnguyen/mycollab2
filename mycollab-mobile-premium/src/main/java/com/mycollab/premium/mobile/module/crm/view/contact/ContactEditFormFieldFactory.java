@@ -1,6 +1,6 @@
 package com.mycollab.premium.mobile.module.crm.view.contact;
 
-import com.mycollab.mobile.module.crm.view.account.AccountSelectionField;
+import com.mycollab.premium.mobile.module.crm.view.account.AccountSelectionField;
 import com.mycollab.premium.mobile.module.crm.view.lead.LeadSourceListSelect;
 import com.mycollab.mobile.module.user.ui.components.ActiveUserComboBox;
 import com.mycollab.mobile.ui.BirthdayPickerField;

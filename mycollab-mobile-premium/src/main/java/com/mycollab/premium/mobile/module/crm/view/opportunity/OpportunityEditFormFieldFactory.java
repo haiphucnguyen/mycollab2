@@ -1,7 +1,7 @@
 package com.mycollab.premium.mobile.module.crm.view.opportunity;
 
-import com.mycollab.mobile.module.crm.view.account.AccountSelectionField;
-import com.mycollab.mobile.module.crm.view.campaign.CampaignSelectionField;
+import com.mycollab.premium.mobile.module.crm.view.account.AccountSelectionField;
+import com.mycollab.premium.mobile.module.crm.view.campaign.CampaignSelectionField;
 import com.mycollab.mobile.module.user.ui.components.ActiveUserComboBox;
 import com.mycollab.mobile.ui.CurrencyComboBoxField;
 import com.mycollab.module.crm.domain.Opportunity;
