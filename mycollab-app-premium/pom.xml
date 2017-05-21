@@ -7,12 +7,12 @@
     <parent>
         <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent-premium</artifactId>
-        <version>5.4.8</version>
+        <version>5.4.9</version>
         <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
     <properties>
-        <installer.izpackVersion>5.0.6</installer.izpackVersion>
+        <proguardVersion>5.2.1</proguardVersion>
         <installer.staging.dir>${project.build.directory}/staging</installer.staging.dir>
         <installer.resource.dir.app>${basedir}/src/main/installer-resources</installer.resource.dir.app>
         <staging.dir.app>${installer.staging.dir}</staging.dir.app>
@@ -176,11 +176,11 @@
                     </execution>
                 </executions>
             </plugin>
-<!--
+
             <plugin>
                 <groupId>com.github.wvengen</groupId>
                 <artifactId>proguard-maven-plugin</artifactId>
-                <version>2.0.13</version>
+                <version>2.0.14</version>
                 <dependencies>
                     <dependency>
                         <groupId>net.sf.proguard</groupId>
@@ -214,7 +214,7 @@
                     </exclusions>
                 </configuration>
             </plugin>
--->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
