@@ -19,7 +19,6 @@ package com.mycollab.mobile.ui;
 import com.mycollab.common.CountryValueFactory;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.1
  */
