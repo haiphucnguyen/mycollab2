@@ -69,8 +69,8 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
   }
   
   private def sendingEmailInformAccountIsInvalid(account: BillingAccountWithOwners) {
-    import scala.collection.JavaConversions._
-    for (user <- account.getOwners) {
+    import scala.collection.JavaConverters._
+    for (user <- account.getOwners.asScala) {
       LOG.info("Send mail after 32 days for username {} , mail {}", Array(user.getUsername, user.getEmail))
       contentGenerator.putVariable("account", account)
       contentGenerator.putVariable("userName", user.getLastname)
@@ -84,8 +84,8 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
   
   private def sendRemindEmailAskUpdateBillingAccount(account: BillingAccountWithOwners, afterDay: Integer) {
     val df = DateTimeFormat.forPattern("MM/dd/yyyy")
-    import scala.collection.JavaConversions._
-    for (user <- account.getOwners) {
+    import scala.collection.JavaConverters._
+    for (user <- account.getOwners.asScala) {
       LOG.info("Send mail after " + afterDay + " days for username {} , mail {}", Array(user.getUsername, user.getEmail))
       contentGenerator.putVariable("account", account)
       val link = deploymentMode.getSiteUrl(account.getSubdomain) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
