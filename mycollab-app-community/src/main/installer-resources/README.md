@@ -40,6 +40,16 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.4.10
+--------------
+
+**Library Upgrades**
+
+**Improvements & New Features**
+
+* Update CRM links mobile
+
+
 Version 5.4.9
 -------------
 
