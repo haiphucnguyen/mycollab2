@@ -51,10 +51,6 @@ Version 5.4.10
 **Improvements & New Features**
 
 * Update CRM links mobile
-* Support project teams
-* DevOps can install MyCollab by Docker
-* [Premium] The new Kanban board for the project tickets
-* [Premium] 
 
 **Bug Fixes**
 
