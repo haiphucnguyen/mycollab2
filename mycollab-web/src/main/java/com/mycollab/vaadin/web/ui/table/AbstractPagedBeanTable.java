@@ -124,8 +124,8 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
     }
 
     private void displayTableColumns() {
-        Set<String> visibleColumnsCol = new HashSet<>();
-        Set<String> columnHeadersCol = new HashSet<>();
+        Set<String> visibleColumnsCol = new LinkedHashSet<>();
+        Set<String> columnHeadersCol = new LinkedHashSet<>();
 
         if (requiredColumn != null) {
             visibleColumnsCol.add(requiredColumn.getField());

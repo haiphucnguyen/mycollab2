@@ -33,11 +33,11 @@ public class AmazonServiceConfiguration {
         }
     }
 
-    public static final String getBucket() {
+    public static String getBucket() {
         return instance.bucket;
     }
 
-    public static final AWSCredentials amazonCredentials() {
+    public static AWSCredentials amazonCredentials() {
         return new BasicAWSCredentials(instance.awsKey, instance.awsSecretKey);
     }
 }
