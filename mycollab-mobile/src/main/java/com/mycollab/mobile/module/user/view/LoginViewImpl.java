@@ -43,7 +43,6 @@ public class LoginViewImpl extends AbstractMobileMainView implements LoginView {
     private static final long serialVersionUID = 1L;
 
     public LoginViewImpl() {
-        super();
         this.setStyleName("login-view");
         this.setSizeFull();
         initUI();
