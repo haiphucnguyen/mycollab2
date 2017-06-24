@@ -40,6 +40,18 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.5.0
+-------------
+
+**Library Upgrades**
+
+**Improvements & New Features**
+
+* Support docker image
+
+**Bug Fixes**
+
+
 Version 5.4.10
 --------------
 
