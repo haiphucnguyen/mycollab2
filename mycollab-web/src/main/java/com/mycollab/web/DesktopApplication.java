@@ -57,7 +57,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
-import org.eclipse.jetty.io.EofException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.UncategorizedSQLException;
@@ -258,10 +257,6 @@ public class DesktopApplication extends MyCollabUI {
             return;
         }
 
-        EofException eofException = getExceptionType(e, EofException.class);
-        if (eofException != null) {
-            return;
-        }
         LOG.error("Error", e);
         ConfirmDialog dialog = ConfirmDialogExt.show(DesktopApplication.this,
                 UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, MyCollabUI.getSiteName()),

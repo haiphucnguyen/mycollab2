@@ -24,8 +24,6 @@ import com.mycollab.i18n.LocalizationHelper;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import org.eclipse.jetty.http.HttpURI;
-import org.eclipse.jetty.server.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,10 +64,6 @@ public class AppExceptionHandler extends GenericHttpServlet {
 
         try {
             if ((status_code != null && status_code == 404) || ("404".equals(request.getParameter("param")))) {
-                HttpURI uri = ((Request) request).getHttpURI();
-                if (uri != null && (uri.getPath().startsWith("/HEARTBEAT") || uri.getPath().startsWith("/APP/global"))) {
-                    return;
-                }
                 responsePage404(response);
             } else {
                 // Analyze the servlet exception

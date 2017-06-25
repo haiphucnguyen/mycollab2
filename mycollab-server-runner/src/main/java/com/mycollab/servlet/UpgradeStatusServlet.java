@@ -16,8 +16,6 @@
  */
 package com.mycollab.servlet;
 
-import com.mycollab.server.ServerInstance;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,10 +33,10 @@ public class UpgradeStatusServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Cache-Control", "no-cache,no-store");
         PrintWriter out = response.getWriter();
-        if (ServerInstance.getInstance().isUpgrading()) {
-            out.write("Still upgrading");
-        } else {
-            out.write("Finish");
-        }
+//        if (ServerInstance.getInstance().isUpgrading()) {
+//            out.write("Still upgrading");
+//        } else {
+//            out.write("Finish");
+//        }
     }
 }

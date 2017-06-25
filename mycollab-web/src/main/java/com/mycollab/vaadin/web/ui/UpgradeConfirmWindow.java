@@ -21,7 +21,6 @@ import com.hp.gagawa.java.elements.Div;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.core.IgnoreException;
-import com.mycollab.server.ServerInstance;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
@@ -96,7 +95,7 @@ public class UpgradeConfirmWindow extends MWindow {
             final File installerFile = new File(installerFilePath);
             if (installerFile.exists()) {
                 new Thread(() -> {
-                    ServerInstance.getInstance().preUpgrade();
+//                    ServerInstance.getInstance().preUpgrade();
                     final String locUrl = MyCollabUI.getSiteUrl() + "it/upgrade";
                     Future<Void> access = currentUI.access(() -> {
                         LOG.info("Redirect to the upgrade page " + locUrl);
@@ -107,7 +106,7 @@ public class UpgradeConfirmWindow extends MWindow {
                     try {
                         access.get();
                         TimeUnit.SECONDS.sleep(5);
-                        ServerInstance.getInstance().upgrade(installerFile);
+//                        ServerInstance.getInstance().upgrade(installerFile);
                     } catch (Exception e) {
                         LOG.error("Error while upgrade", e);
                     }

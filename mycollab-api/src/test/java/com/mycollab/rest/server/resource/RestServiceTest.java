@@ -1,10 +1,9 @@
 package com.mycollab.rest.server.resource;
 
+import com.jayway.restassured.RestAssured;
 import com.mycollab.spring.test.service.RootConfigurationTest;
 import com.mycollab.test.rule.DbUnitInitializerRule;
 import com.mycollab.test.rule.EssentialInitRule;
-import com.mycollab.test.rule.ServerLifecycleRule;
-import com.jayway.restassured.RestAssured;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.springframework.test.context.ActiveProfiles;
@@ -25,9 +24,6 @@ public class RestServiceTest {
 
     @ClassRule
     public static EssentialInitRule essentialRule = new EssentialInitRule();
-
-    @Rule
-    public ServerLifecycleRule serverRule = new ServerLifecycleRule();
 
     @Rule
     public DbUnitInitializerRule dbRule = new DbUnitInitializerRule();

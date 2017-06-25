@@ -12,11 +12,9 @@
         <maven>3.3.0</maven>
     </prerequisites>
     <properties>
-        <aspectjVersion>1.8.9</aspectjVersion>
         <java.version>1.8</java.version>
         <slf4jVersion>1.7.25</slf4jVersion>
         <vaadin.version>7.7.10</vaadin.version>
-        <jettyVersion>9.3.12.v20160915</jettyVersion>
         <mysqlVersion>5.1.42</mysqlVersion>
         <junitVersion>4.12</junitVersion>
         <jackrabbitVersion>2.15.3</jackrabbitVersion>
@@ -118,11 +116,6 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
         </dependency>
 
@@ -158,38 +151,17 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jetty</artifactId>
-        </dependency>
-        -->
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aspects</artifactId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>1.0.2</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectjVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>${aspectjVersion}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
