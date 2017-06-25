@@ -77,7 +77,6 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-themes</artifactId>
-            <version>${vaadinVersion}</version>
         </dependency>
 
         <!-- VAADIN ADDONS -->

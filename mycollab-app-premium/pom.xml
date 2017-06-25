@@ -93,20 +93,17 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiled</artifactId>
-            <version>${vaadinVersion}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client</artifactId>
-            <version>${vaadinVersion}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiler</artifactId>
-            <version>${vaadinVersion}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -132,7 +129,6 @@
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
-                <version>${vaadinVersion}</version>
                 <executions>
                     <execution>
                         <goals>

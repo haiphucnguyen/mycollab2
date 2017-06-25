@@ -17,7 +17,6 @@
 package com.mycollab.module.crm.service;
 
 import com.mycollab.db.arguments.*;
-import com.mycollab.module.crm.dao.AccountMapper;
 import com.mycollab.module.crm.domain.Account;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;

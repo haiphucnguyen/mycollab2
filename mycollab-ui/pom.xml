@@ -100,7 +100,6 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-server</artifactId>
-            <version>${vaadinVersion}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.vaadin</groupId>
@@ -116,7 +115,6 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-push</artifactId>
-            <version>${vaadinVersion}</version>
         </dependency>
 
         <dependency>

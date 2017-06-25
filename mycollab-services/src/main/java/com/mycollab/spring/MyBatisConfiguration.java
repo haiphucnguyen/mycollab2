@@ -24,7 +24,10 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -38,7 +41,6 @@ import java.util.ArrayList;
  * @since 4.6.0
  */
 @Configuration
-@Profile("production")
 @Import(DataSourceConfiguration.class)
 @DependsOn("dbMigration")
 @MapperScan(basePackages = {"com.mycollab.common.dao", "com.mycollab.form.dao", "com.mycollab.module.crm.dao",

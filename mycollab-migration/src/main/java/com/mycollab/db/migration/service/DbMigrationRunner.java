@@ -50,7 +50,12 @@ public class DbMigrationRunner {
             flyway.setBaselineOnMigrate(true);
             flyway.setDataSource(dataSource);
             flyway.setValidateOnMigrate(false);
-            flyway.setLocations("db/migration", "db/migration2");
+            if (deploymentMode.isDemandEdition()) {
+                flyway.setLocations("db/migration", "db/migration2");
+            } else {
+                flyway.setLocations("db/migration");
+            }
+
             boolean doMigrateLoop = true;
             while (doMigrateLoop) {
                 try {

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 5.5.0
  */
 @Configuration
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 @ComponentScan(basePackages = {"com.mycollab"})
 public class DefaultServerRunner {
     public static void main(String[] args) {

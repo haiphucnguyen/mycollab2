@@ -74,7 +74,7 @@ public class InnerEnumEx extends InnerEnum {
 		while (fldIter.hasNext()) {
 			OutputUtilities.newLine(sb);
 			Field field = fldIter.next();
-			sb.append(field.getFormattedContent(indentLevel));
+			sb.append(field.getFormattedContent(indentLevel, null));
 			if (fldIter.hasNext()) {
 				OutputUtilities.newLine(sb);
 			}
@@ -88,7 +88,7 @@ public class InnerEnumEx extends InnerEnum {
 		while (mtdIter.hasNext()) {
 			OutputUtilities.newLine(sb);
 			Method method = mtdIter.next();
-			sb.append(method.getFormattedContent(indentLevel, false));
+			sb.append(method.getFormattedContent(indentLevel, false, null));
 			if (mtdIter.hasNext()) {
 				OutputUtilities.newLine(sb);
 			}
@@ -102,7 +102,7 @@ public class InnerEnumEx extends InnerEnum {
 		while (icIter.hasNext()) {
 			OutputUtilities.newLine(sb);
 			InnerClass innerClass = icIter.next();
-			sb.append(innerClass.getFormattedContent(indentLevel));
+			sb.append(innerClass.getFormattedContent(indentLevel, null));
 			if (icIter.hasNext()) {
 				OutputUtilities.newLine(sb);
 			}
@@ -116,7 +116,7 @@ public class InnerEnumEx extends InnerEnum {
 		while (ieIter.hasNext()) {
 			OutputUtilities.newLine(sb);
 			InnerEnum innerEnum = ieIter.next();
-			sb.append(innerEnum.getFormattedContent(indentLevel));
+			sb.append(innerEnum.getFormattedContent(indentLevel, null));
 			if (ieIter.hasNext()) {
 				OutputUtilities.newLine(sb);
 			}

@@ -19,7 +19,6 @@ package com.mycollab.spring;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.stereotype.Controller;
 
@@ -61,6 +60,5 @@ import org.springframework.stereotype.Controller;
         "com.mycollab.premium.configuration",
         "com.mycollab.ondemand.configuration"},
         excludeFilters = {@ComponentScan.Filter(classes = {Controller.class})})
-@Profile("production")
 public class RootConfiguration {
 }
