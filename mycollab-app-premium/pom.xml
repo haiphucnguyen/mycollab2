@@ -24,16 +24,11 @@
             <artifactId>mycollab-client-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.mycollab</groupId>
-                    <artifactId>mycollab-test</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -101,6 +96,7 @@
             <artifactId>vaadin-client</artifactId>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiler</artifactId>
@@ -129,6 +125,7 @@
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
+                <version>${vaadin.version}</version>
                 <executions>
                     <execution>
                         <goals>

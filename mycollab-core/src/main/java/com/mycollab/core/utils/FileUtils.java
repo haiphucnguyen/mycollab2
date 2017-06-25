@@ -19,12 +19,10 @@ package com.mycollab.core.utils;
 import com.google.common.base.MoreObjects;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.UserInvalidInputException;
-import org.apache.commons.io.IOUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -73,14 +71,10 @@ public class FileUtils {
     public static String readFileAsPlainString(String fileName) {
         try {
             File pricingFile = FileUtils.getDesireFile(FileUtils.getUserFolder(), fileName, "src/main/conf/" + fileName);
-            InputStream pricingStream;
             if (pricingFile != null) {
-                pricingStream = new FileInputStream(pricingFile);
-            } else {
-                pricingStream = FileUtils.class.getClassLoader().getResourceAsStream(fileName);
+                return new String(Files.readAllBytes(pricingFile.toPath()), Charset.forName("UTF-8"));
             }
-
-            return IOUtils.toString(pricingStream, "UTF-8");
+            return "";
         } catch (IOException e) {
             throw new MyCollabException(e);
         }

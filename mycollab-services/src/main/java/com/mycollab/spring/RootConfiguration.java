@@ -19,7 +19,6 @@ package com.mycollab.spring;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -27,7 +26,6 @@ import org.springframework.stereotype.Controller;
  * @since 4.6.0
  */
 @Configuration
-@EnableSpringConfigured
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = {
         "com.mycollab.aspect",

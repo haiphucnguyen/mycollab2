@@ -135,7 +135,7 @@
                     <dependency>
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
-                        <version>${mysqlVersion}</version>
+                        <version>${mysql.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>com.mycollab</groupId>
