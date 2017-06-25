@@ -1,29 +1,20 @@
 package com.mycollab.server;
 
-import org.eclipse.jetty.server.handler.gzip.GzipHandler;
-import org.eclipse.jetty.webapp.WebAppContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * @author MyCollab Ltd.
- * @since 1.0
+ * @author MyCollab Ltd
+ * @since 5.5.0
  */
-public class DefaultServerRunner extends JettyServerBasedRunner {
-
-    @Override
-    public WebAppContext buildContext(String baseDir) {
-        WebAppContext webAppContext = new WebAppContext();
-        webAppContext.setContextPath("/");
-        webAppContext.setWar(baseDir);
-        webAppContext.setResourceBase(baseDir);
-        GzipHandler gzipHandler = new GzipHandler();
-        gzipHandler.addIncludedMimeTypes("text/html,text/plain,text/xml,application/xhtml+xml,text/css," +
-                "application/javascript, image/svg+xml");
-        webAppContext.setGzipHandler(gzipHandler);
-        return webAppContext;
+@Configuration
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+@ComponentScan(basePackages = {"com.mycollab"})
+public class DefaultServerRunner {
+    public static void main(String[] args) {
+        SpringApplication.run(DefaultServerRunner.class, args);
     }
-
-    public static void main(String[] args) throws Exception {
-        new DefaultServerRunner().run(args);
-    }
-
 }

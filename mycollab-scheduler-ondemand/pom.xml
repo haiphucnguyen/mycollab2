@@ -12,11 +12,6 @@
     </parent>
     <packaging>jar</packaging>
     <dependencies>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${jodaVersion}</version>
-        </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>

@@ -210,7 +210,7 @@
                                 <manifest>
                                     <addClasspath>true</addClasspath>
                                     <classpathPrefix>lib/</classpathPrefix>
-                                    <mainClass>com.mycollab.server.DefaultServerRunner</mainClass>
+                                    <mainClass>com.mycollab.server.DefaultServerRunnerLegacy</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>

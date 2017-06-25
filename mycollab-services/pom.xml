@@ -76,18 +76,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.3.0.Final</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.1.0.Final</version>
-        </dependency>
-
-        <dependency>
             <groupId>image4j</groupId>
             <artifactId>image4j</artifactId>
             <version>0.7.2</version>
@@ -101,7 +89,7 @@
     </dependencies>
     <build>
         <plugins>
-<!--
+
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -115,7 +103,7 @@
                     <dependency>
                         <groupId>com.mycollab</groupId>
                         <artifactId>mycollab-tool</artifactId>
-                        <version>1.0.3</version>
+                        <version>1.0.4</version>
                     </dependency>
                 </dependencies>
                 <executions>
@@ -221,7 +209,6 @@
                     </execution>
                 </executions>
             </plugin>
-            -->
         </plugins>
     </build>
 
