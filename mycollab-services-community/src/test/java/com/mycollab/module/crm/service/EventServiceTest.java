@@ -41,7 +41,7 @@ import static org.assertj.core.api.Assertions.tuple;
 public class EventServiceTest extends IntegrationServiceTest {
 
     @Autowired
-    protected EventService eventService;
+    private EventService eventService;
 
     @DataSet
     @Test

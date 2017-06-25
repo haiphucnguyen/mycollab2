@@ -40,7 +40,7 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
-Version 5.5.0
+Version 6.0.0
 -------------
 
 **Library Upgrades**

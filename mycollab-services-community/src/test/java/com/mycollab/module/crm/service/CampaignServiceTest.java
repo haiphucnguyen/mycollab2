@@ -38,7 +38,7 @@ import static org.assertj.core.api.Assertions.tuple;
 public class CampaignServiceTest extends IntegrationServiceTest {
 
     @Autowired
-    protected CampaignService campaignService;
+    private CampaignService campaignService;
 
     @DataSet
     @Test

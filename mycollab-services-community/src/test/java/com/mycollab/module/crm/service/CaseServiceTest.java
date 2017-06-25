@@ -38,7 +38,7 @@ import static org.assertj.core.api.Assertions.tuple;
 public class CaseServiceTest extends IntegrationServiceTest {
 
     @Autowired
-    protected CaseService caseService;
+    private CaseService caseService;
 
     @DataSet
     @Test

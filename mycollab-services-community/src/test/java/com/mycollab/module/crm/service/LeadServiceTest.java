@@ -39,7 +39,7 @@ import static org.assertj.core.api.Assertions.tuple;
 public class LeadServiceTest extends IntegrationServiceTest {
 
     @Autowired
-    protected LeadService leadService;
+    private LeadService leadService;
 
     @DataSet
     @Test

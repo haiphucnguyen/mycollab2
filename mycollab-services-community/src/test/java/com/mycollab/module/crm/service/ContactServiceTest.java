@@ -38,7 +38,7 @@ import static org.assertj.core.api.Assertions.tuple;
 public class ContactServiceTest extends IntegrationServiceTest {
 
     @Autowired
-    protected ContactService contactService;
+    private ContactService contactService;
 
     @DataSet
     @Test
