@@ -40,8 +40,8 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @author MyCollab Ltd
  * @since 5.3.0
  */
-public class ComponentAddWindow extends MWindow implements IEditFormHandler<Component> {
-    public ComponentAddWindow() {
+class ComponentAddWindow extends MWindow implements IEditFormHandler<Component> {
+    ComponentAddWindow() {
         super(UserUIContext.getMessage(ComponentI18nEnum.NEW));
         AdvancedEditBeanForm<Component> editForm = new AdvancedEditBeanForm<>();
         editForm.addFormHandler(this);

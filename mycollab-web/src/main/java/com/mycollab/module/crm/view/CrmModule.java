@@ -164,41 +164,41 @@ public class CrmModule extends AbstractSingleContainerPageView implements IDeskt
             String selectedBtnCaption = "";
             String caption = event.getButton().getCaption();
 
-            if (UserUIContext.getMessage(AccountI18nEnum.NEW).equals(caption)) {
+            if (UserUIContext.getMessage(AccountI18nEnum.SINGLE).equals(caption)) {
                 EventBusFactory.getInstance().post(new AccountEvent.GotoAdd(this, null));
                 selectedBtnCaption = UserUIContext.getMessage(AccountI18nEnum.LIST);
-            } else if (UserUIContext.getMessage(CampaignI18nEnum.NEW).equals(caption)) {
+            } else if (UserUIContext.getMessage(CampaignI18nEnum.SINGLE).equals(caption)) {
                 EventBusFactory.getInstance().post(new CampaignEvent.GotoAdd(this, null));
                 selectedBtnCaption = UserUIContext.getMessage(CampaignI18nEnum.LIST);
-            } else if (UserUIContext.getMessage(CaseI18nEnum.NEW).equals(caption)) {
+            } else if (UserUIContext.getMessage(CaseI18nEnum.SINGLE).equals(caption)) {
                 EventBusFactory.getInstance().post(new CaseEvent.GotoAdd(this, null));
                 selectedBtnCaption = UserUIContext.getMessage(CaseI18nEnum.LIST);
-            } else if (UserUIContext.getMessage(ContactI18nEnum.LIST).equals(caption)) {
+            } else if (UserUIContext.getMessage(ContactI18nEnum.SINGLE).equals(caption)) {
                 EventBusFactory.getInstance().post(new ContactEvent.GotoList(this, null));
                 selectedBtnCaption = caption;
-            } else if (UserUIContext.getMessage(ContactI18nEnum.NEW).equals(caption)) {
+            } else if (UserUIContext.getMessage(ContactI18nEnum.SINGLE).equals(caption)) {
                 EventBusFactory.getInstance().post(new ContactEvent.GotoAdd(this, null));
                 selectedBtnCaption = UserUIContext.getMessage(ContactI18nEnum.LIST);
-            } else if (UserUIContext.getMessage(LeadI18nEnum.NEW).equals(caption)) {
+            } else if (UserUIContext.getMessage(LeadI18nEnum.SINGLE).equals(caption)) {
                 EventBusFactory.getInstance().post(new LeadEvent.GotoAdd(this, null));
                 selectedBtnCaption = UserUIContext.getMessage(LeadI18nEnum.LIST);
-            } else if (UserUIContext.getMessage(LeadI18nEnum.LIST).equals(caption)) {
+            } else if (UserUIContext.getMessage(LeadI18nEnum.SINGLE).equals(caption)) {
                 EventBusFactory.getInstance().post(new LeadEvent.GotoList(this, null));
                 selectedBtnCaption = caption;
-            } else if (UserUIContext.getMessage(OpportunityI18nEnum.NEW).equals(caption)) {
+            } else if (UserUIContext.getMessage(OpportunityI18nEnum.SINGLE).equals(caption)) {
                 EventBusFactory.getInstance().post(new OpportunityEvent.GotoAdd(this, null));
                 selectedBtnCaption = UserUIContext.getMessage(OpportunityI18nEnum.LIST);
-            } else if (UserUIContext.getMessage(OpportunityI18nEnum.LIST).equals(caption)) {
+            } else if (UserUIContext.getMessage(OpportunityI18nEnum.SINGLE).equals(caption)) {
                 EventBusFactory.getInstance().post(new OpportunityEvent.GotoList(this, null));
                 selectedBtnCaption = caption;
             } else if (UserUIContext.getMessage(CrmCommonI18nEnum.TOOLBAR_ACTIVITIES_HEADER).equals(caption)) {
                 EventBusFactory.getInstance().post(new ActivityEvent.GotoCalendar(this, null));
                 selectedBtnCaption = caption;
-            } else if (UserUIContext.getMessage(TaskI18nEnum.NEW).equals(caption)) {
+            } else if (UserUIContext.getMessage(TaskI18nEnum.SINGLE).equals(caption)) {
                 EventBusFactory.getInstance().post(new ActivityEvent.TaskAdd(this, null));
-            } else if (UserUIContext.getMessage(CallI18nEnum.NEW).equals(caption)) {
+            } else if (UserUIContext.getMessage(CallI18nEnum.SINGLE).equals(caption)) {
                 EventBusFactory.getInstance().post(new ActivityEvent.CallAdd(this, null));
-            } else if (UserUIContext.getMessage(MeetingI18nEnum.NEW).equals(caption)) {
+            } else if (UserUIContext.getMessage(MeetingI18nEnum.SINGLE).equals(caption)) {
                 EventBusFactory.getInstance().post(new ActivityEvent.MeetingAdd(this, null));
             } else if (UserUIContext.getMessage(CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER).equals(caption)) {
                 EventBusFactory.getInstance().post(new DocumentEvent.GotoDashboard(this, null));
