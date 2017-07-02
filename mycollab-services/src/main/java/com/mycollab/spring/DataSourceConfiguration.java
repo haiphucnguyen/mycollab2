@@ -41,9 +41,9 @@ public class DataSourceConfiguration {
     @Bean(name = "dataSource")
     public DataSource dataSource() {
         HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setDriverClassName(dbConf.getDriverClass());
-        dataSource.setJdbcUrl(dbConf.getDbUrl());
-        dataSource.setUsername(dbConf.getUser());
+        dataSource.setDriverClassName(dbConf.getDriverClassName());
+        dataSource.setJdbcUrl(dbConf.getUrl());
+        dataSource.setUsername(dbConf.getUsername());
         dataSource.setPassword(dbConf.getPassword());
 
         Properties dsProperties = new Properties();

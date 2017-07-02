@@ -22,7 +22,7 @@ import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.hp.gagawa.java.elements.A
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
-import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.configuration.{EmailConfiguration, SiteConfiguration}
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.db.arguments._
 import com.mycollab.html.LinkUtils
@@ -62,6 +62,7 @@ object NewUserJoinCommand {
 
 @Component class NewUserJoinCommand extends GenericCommand {
   @Autowired private val billingAccountService: BillingAccountService = null
+  @Autowired private val emailConfiguration: EmailConfiguration = null;
   @Autowired private val extMailService: ExtMailService = null
   @Autowired private val contentGenerator: IContentGenerator = null
   @Autowired private val userService: UserService = null
@@ -90,7 +91,7 @@ object NewUserJoinCommand {
     contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
       DateTimeUtils.getCurrentYear))
     contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(account.getId, account.getLogopath))
-    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
+    extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
       String.format("%s has just joined on MyCollab workspace", newUser.getDisplayName),
       contentGenerator.parseFile("mailNewUserJoinAccountNotifier.ftl", Locale.US))
   }

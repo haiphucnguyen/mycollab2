@@ -26,6 +26,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.mycollab.servlet.InstallUtils;
+import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -68,7 +69,7 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
 
     @Override
     public void displaySetup() {
-        emailConf = SiteConfiguration.getEmailConfiguration().clone();
+        emailConf = AppContextUtil.getSpringBean(EmailConfiguration.class).clone();
         editForm.display(emailConf);
     }
 
@@ -125,7 +126,6 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
         }
 
         private void saveEmailConfiguration() {
-            SiteConfiguration.setEmailConfiguration(emailConf);
             File configFile = ApplicationProperties.getAppConfigFile();
             if (configFile != null) {
                 try {

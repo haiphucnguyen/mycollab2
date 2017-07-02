@@ -23,7 +23,7 @@ import com.hp.gagawa.java.elements.{A, Div, Img}
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.common.{FontAwesomeUtils, NotificationType}
-import com.mycollab.configuration.{SiteConfiguration, StorageFactory}
+import com.mycollab.configuration.{EmailConfiguration, SiteConfiguration, StorageFactory}
 import com.mycollab.core.MyCollabException
 import com.mycollab.core.utils.{BeanUtility, DateTimeUtils}
 import com.mycollab.db.arguments.{NumberSearchField, RangeDateSearchField, SearchField, SetSearchField}
@@ -96,6 +96,8 @@ class OverdueProjectTicketsNotificationJob extends GenericQuartzJobBean {
 
   @Autowired private val projectAssignmentService: ProjectTicketService = null
 
+  @Autowired private val emailConfiguration: EmailConfiguration = null
+
   @Autowired private val extMailService: ExtMailService = null
 
   @Autowired private val contentGenerator: IContentGenerator = null
@@ -145,7 +147,7 @@ class OverdueProjectTicketsNotificationJob extends GenericQuartzJobBean {
               val content = contentGenerator.parseFile("mailProjectOverdueAssignmentsNotifier.ftl", Locale.US)
               val overdueAssignments = LocalizationHelper.getMessage(userLocale, TicketI18nEnum.VAL_OVERDUE_TICKETS) + "(" + assignments.length + ")"
               contentGenerator.putVariable("overdueAssignments", overdueAssignments)
-              extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
+              extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
                 "[%s] %s".format(projectName, overdueAssignments), content)
             }
           }

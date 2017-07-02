@@ -35,10 +35,10 @@ public class BundleDbPersistenceManagerExt extends BundleDbPersistenceManager {
      */
     public void init(PMContext context) throws Exception {
         DatabaseConfiguration dbConf = AppContextUtil.getSpringBean(DatabaseConfiguration.class);
-        setDriver(dbConf.getDriverClass());
-        setUser(dbConf.getUser());
+        setDriver(dbConf.getDriverClassName());
+        setUser(dbConf.getUsername());
         setPassword(dbConf.getPassword());
-        setUrl(dbConf.getDbUrl());
+        setUrl(dbConf.getUrl());
 
         if (getSchemaObjectPrefix() == null) {
             setSchemaObjectPrefix("ecm_p_workspace");

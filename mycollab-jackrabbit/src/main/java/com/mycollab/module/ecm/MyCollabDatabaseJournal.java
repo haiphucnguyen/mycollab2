@@ -28,10 +28,10 @@ public class MyCollabDatabaseJournal extends DatabaseJournal {
 
     public MyCollabDatabaseJournal() {
         DatabaseConfiguration dbConf = AppContextUtil.getSpringBean(DatabaseConfiguration.class);
-        setDriver(dbConf.getDriverClass());
-        setUser(dbConf.getUser());
+        setDriver(dbConf.getDriverClassName());
+        setUser(dbConf.getUsername());
         setPassword(dbConf.getPassword());
-        setUrl(dbConf.getDbUrl());
+        setUrl(dbConf.getUrl());
         this.setDatabaseType("mysql");
     }
 }

@@ -21,7 +21,7 @@ import com.mycollab.common.domain.criteria.CommentSearchCriteria
 import com.mycollab.common.domain.{MailRecipientField, SimpleRelayEmailNotification}
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.common.service.{AuditLogService, CommentService}
-import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.configuration.{EmailConfiguration, SiteConfiguration}
 import com.mycollab.core.utils.{BeanUtility, DateTimeUtils, StringUtils}
 import com.mycollab.db.arguments.{BasicSearchRequest, StringSearchField}
 import com.mycollab.html.LinkUtils
@@ -44,7 +44,8 @@ import scala.util.control.Breaks._
   */
 abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNotificationAction {
   private val LOG = LoggerFactory.getLogger(classOf[CrmDefaultSendingRelayEmailAction[_]])
-  
+
+  @Autowired val emailConfiguration: EmailConfiguration = null
   @Autowired val extMailService: ExtMailService = null
   @Autowired val auditLogService: AuditLogService = null
   @Autowired val userService: UserService = null
@@ -82,7 +83,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
           buildExtraTemplateVariables(context)
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List(userMail)
-          extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
+          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
             subject, contentGenerator.parseFile("mailCrmItemCreatedNotifier.ftl", context.getLocale))
         }
       }
@@ -132,7 +133,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
           contentGenerator.putVariable("mapper", getItemFieldMapper)
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List(userMail)
-          extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
+          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
             subject, contentGenerator.parseFile("mailCrmItemUpdatedNotifier.ftl", context.getLocale))
         }
       }
@@ -175,7 +176,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
         val subject = context.getMessage(getCommentSubjectKey, context.getChangeByUserFullName, getItemName)
         val userMail = new MailRecipientField(user.getEmail, user.getUsername)
         val recipients = List(userMail)
-        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, seqAsJavaList(recipients),
+        extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, seqAsJavaList(recipients),
           subject, contentGenerator.parseFile("mailCrmItemAddNoteNotifier.ftl", context.getLocale))
       }
     }

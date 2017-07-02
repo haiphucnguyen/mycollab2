@@ -23,7 +23,7 @@ import com.hp.gagawa.java.elements.A
 import com.mycollab.common.FontAwesomeUtils
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
-import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.configuration.{EmailConfiguration, SiteConfiguration}
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.html.{DivLessFormatter, LinkUtils}
 import com.mycollab.i18n.LocalizationHelper
@@ -69,6 +69,7 @@ object NewProjectMemberJoinCommand {
 @Component class NewProjectMemberJoinCommand extends GenericCommand {
   @Autowired private val billingAccountService: BillingAccountService = null
   @Autowired private val projectMemberService: ProjectMemberService = null
+  @Autowired private val emailConfiguration: EmailConfiguration = null
   @Autowired private val extMailService: ExtMailService = null
   @Autowired private val contentGenerator: IContentGenerator = null
 
@@ -92,7 +93,7 @@ object NewProjectMemberJoinCommand {
       if (event.username != user.getUsername)
         recipients.append(new MailRecipientField(user.getUsername, user.getDisplayName))
     })
-    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
+    extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
       String.format("%s has just joined on project %s", newMember.getDisplayName, newMember.getProjectName),
       contentGenerator.parseFile("mailProjectNewMemberJoinProjectNotifier.ftl", Locale.US))
   }

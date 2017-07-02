@@ -3,4 +3,20 @@ app:
   description: The world-class collaboration software
 
 server:
-  port: 7070
+  port: 8080
+
+db:
+  driverClassName: com.mysql.jdbc.Driver
+  url: jdbc:mysql://localhost/mycollab_test?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&rewriteBatchedStatements=true&useCompression=true&useServerPrepStmts=false&verifyServerCertificate=false&useSSL=false
+  username: root
+  password: esofthead321
+
+mail:
+  smtphost:
+  port:
+  username:
+  password:
+  isTLS: false
+  isSSL: false
+  notify:
+  errorReport:

@@ -1,28 +1,10 @@
-/**
- * This file is part of mycollab-esb.
- *
- * mycollab-esb is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-esb is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-esb.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.user.esb
-
-import java.util.Locale
 
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.mycollab.common.UrlEncodeDecoder
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
-import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.configuration.{EmailConfiguration, SiteConfiguration}
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.esb.GenericCommand
@@ -37,9 +19,10 @@ import org.springframework.stereotype.Component
   * @version 5.2.5
   */
 @Component class ResetUserPasswordCommand extends GenericCommand {
-  @Autowired var extMailService: ExtMailService = _
-  @Autowired var userService: UserService = _
-  @Autowired var contentGenerator: IContentGenerator = _
+  @Autowired private val emailConfiguration: EmailConfiguration = null
+  @Autowired private val extMailService: ExtMailService = null
+  @Autowired private val userService: UserService = null
+  @Autowired private val contentGenerator: IContentGenerator = null
 
   @AllowConcurrentEvents
   @Subscribe
@@ -58,7 +41,7 @@ import org.springframework.stereotype.Component
       val recipient = new MailRecipientField(user.getEmail, user.getUsername)
       val recipientFields = List[MailRecipientField](recipient)
       import collection.JavaConverters._
-      extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
+      extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         recipientFields.asJava,
         LocalizationHelper.getMessage(locale, UserI18nEnum.MAIL_RECOVERY_PASSWORD_SUBJECT,
           SiteConfiguration.getDefaultSiteName),

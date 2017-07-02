@@ -41,12 +41,10 @@ public class SiteConfiguration {
 
     private static SiteConfiguration instance;
 
-    private String sentErrorEmail;
     private String siteName;
     private String serverAddress;
     private int serverPort;
     private Locale defaultLocale;
-    private EmailConfiguration emailConfiguration;
     private String cdnUrl;
     private String endecryptPassword;
     private String dropboxCallbackUrl;
@@ -70,7 +68,6 @@ public class SiteConfiguration {
         ApplicationProperties.loadProps();
         instance = new SiteConfiguration();
 
-        instance.sentErrorEmail = ApplicationProperties.getString(ERROR_SENDTO, "support@mycollab.com");
         instance.siteName = ApplicationProperties.getString(SITE_NAME, "MyCollab");
         instance.serverAddress = ApplicationProperties.getString(SERVER_ADDRESS, "localhost");
         instance.serverPort = serverPort;
@@ -93,16 +90,6 @@ public class SiteConfiguration {
 
         instance.apiUrl = ApplicationProperties.getString(API_URL, "https://api.mycollab.com/api/");
         instance.endecryptPassword = ApplicationProperties.getString(BI_ENDECRYPT_PASSWORD, "esofthead321");
-
-        // load email
-        String host = ApplicationProperties.getString(MAIL_SMTPHOST);
-        String user = ApplicationProperties.getString(MAIL_USERNAME);
-        String password = ApplicationProperties.getString(MAIL_PASSWORD);
-        Integer port = Integer.parseInt(ApplicationProperties.getString(MAIL_PORT, "25"));
-        Boolean isTls = Boolean.parseBoolean(ApplicationProperties.getString(MAIL_IS_TLS, "false"));
-        Boolean isSsl = Boolean.parseBoolean(ApplicationProperties.getString(MAIL_IS_SSL, "false"));
-        String noreplyEmail = ApplicationProperties.getString(MAIL_NOTIFY, "");
-        instance.emailConfiguration = new EmailConfiguration(host, user, password, port, isTls, isSsl, noreplyEmail);
 
         instance.resourceDownloadUrl = ApplicationProperties.getString(RESOURCE_DOWNLOAD_URL);
         if (!"".equals(instance.resourceDownloadUrl)) {
@@ -180,28 +167,12 @@ public class SiteConfiguration {
         return getInstance().resourceDownloadUrl;
     }
 
-    public static EmailConfiguration getEmailConfiguration() {
-        return getInstance().emailConfiguration;
-    }
-
-    public static void setEmailConfiguration(EmailConfiguration conf) {
-        getInstance().emailConfiguration = conf;
-    }
-
-    public static String getNotifyEmail() {
-        return getInstance().emailConfiguration.getNotifyEmail();
-    }
-
     public static String getDefaultSiteName() {
         return getInstance().siteName;
     }
 
     public static PullMethod getPullMethod() {
         return getInstance().pullMethod;
-    }
-
-    public static String getSendErrorEmail() {
-        return getInstance().sentErrorEmail;
     }
 
     public static String getSiteUrl(String subDomain) {
