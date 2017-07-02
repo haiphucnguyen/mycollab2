@@ -1,4 +1,4 @@
-package com.mycollab.pro.license;
+package com.mycollab.license;
 
 /**
  * @author MyCollab Ltd

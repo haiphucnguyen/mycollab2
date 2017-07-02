@@ -42,7 +42,7 @@ abstract class UrlResolver {
 
   @varargs def handle(params: String*): Unit = {
     try {
-      if (params.length > 0) {
+      if (params.nonEmpty) {
         var key = params(0)
         val index = key.indexOf('?')
         if (index > -1) {

@@ -17,11 +17,11 @@
 package com.mycollab.premium.module.user.accountsettings.billing.view;
 
 import com.mycollab.common.i18n.LicenseI18nEnum;
+import com.mycollab.license.LicenseInfo;
+import com.mycollab.license.service.LicenseResolver;
 import com.mycollab.module.user.accountsettings.billing.view.IBillingContainer;
-import com.mycollab.premium.license.service.LicenseResolver;
 import com.mycollab.premium.shell.view.components.BuyPremiumSoftwareWindow;
 import com.mycollab.premium.shell.view.components.LicenseActivationWindow;
-import com.mycollab.pro.license.LicenseInfo;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractSingleContainerPageView;
@@ -53,7 +53,7 @@ public class BillingContainer extends AbstractSingleContainerPageView implements
         setContent(bodyLayout);
     }
 
-    public void display() {
+    void display() {
         bodyLayout.removeAllComponents();
 
         LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);

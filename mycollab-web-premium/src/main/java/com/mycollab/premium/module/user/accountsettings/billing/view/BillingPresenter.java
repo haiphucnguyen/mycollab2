@@ -26,10 +26,13 @@ import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.HasComponents;
 
+import javax.annotation.Priority;
+
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
+@Priority(1)
 public class BillingPresenter extends AbstractPresenter<IBillingContainer> implements IBillingPresenter {
     private static final long serialVersionUID = 1L;
 

@@ -6,8 +6,8 @@ import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.i18n.LicenseI18nEnum;
 import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.Version;
-import com.mycollab.premium.license.service.LicenseResolver;
-import com.mycollab.pro.license.LicenseInfo;
+import com.mycollab.license.LicenseInfo;
+import com.mycollab.license.service.LicenseResolver;
 import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
@@ -37,8 +37,6 @@ import java.util.GregorianCalendar;
 @ViewComponent
 public class AboutWindow extends AbstractAboutWindow {
     public AboutWindow() {
-        super();
-
         MHorizontalLayout content = new MHorizontalLayout().withMargin(true).withFullWidth();
         this.setContent(content);
 
