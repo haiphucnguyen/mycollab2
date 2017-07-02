@@ -36,7 +36,7 @@ import java.io.*;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@WebServlet(urlPatterns = "file/avatar/*", name = "userAvatarFSServlet")
+@WebServlet(urlPatterns = "/file/avatar/*", name = "userAvatarFSServlet")
 public class UserAvatarHttpServletRequestHandler extends GenericHttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(UserAvatarHttpServletRequestHandler.class);
 

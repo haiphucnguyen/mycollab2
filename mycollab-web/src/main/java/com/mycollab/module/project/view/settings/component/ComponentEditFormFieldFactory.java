@@ -31,7 +31,7 @@ import com.vaadin.ui.TextField;
  * @author MyCollab Ltd
  * @since 5.3.0
  */
-class ComponentEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Component> {
+public class ComponentEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Component> {
     private static final long serialVersionUID = 1L;
 
     public ComponentEditFormFieldFactory(GenericBeanForm<Component> form) {

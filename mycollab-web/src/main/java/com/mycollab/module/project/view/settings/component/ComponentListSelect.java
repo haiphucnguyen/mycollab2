@@ -33,7 +33,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.5.0
  */
-class ComponentListSelect extends IntegerKeyListSelect {
+public class ComponentListSelect extends IntegerKeyListSelect {
     private static final long serialVersionUID = 1L;
 
     public ComponentListSelect() {

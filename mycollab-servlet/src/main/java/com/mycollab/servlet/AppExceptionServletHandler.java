@@ -45,8 +45,8 @@ import java.util.Map;
  * @since 1.0
  */
 @WebServlet(urlPatterns = "/error", name = "appExceptionHandlerServlet")
-public class AppExceptionHandler extends GenericHttpServlet {
-    private static final Logger LOG = LoggerFactory.getLogger(AppExceptionHandler.class);
+public class AppExceptionServletHandler extends GenericHttpServlet {
+    private static final Logger LOG = LoggerFactory.getLogger(AppExceptionServletHandler.class);
 
     @Autowired
     private Configuration templateEngine;

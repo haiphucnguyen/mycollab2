@@ -1,0 +1,27 @@
+package com.mycollab.module.file.servlet;
+
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * @author MyCollab Ltd
+ * @since 5.5.0
+ */
+@Configuration
+public class FileSpringServletRegistrator {
+    @Bean
+    public ServletRegistrationBean assetServlet() {
+        return new ServletRegistrationBean(new AssetHandler(), "/assets/*");
+    }
+
+    @Bean
+    public ServletRegistrationBean resourceGetServlet() {
+        return new ServletRegistrationBean(new ResourceGetHandler(), "/file/*");
+    }
+
+    @Bean
+    public ServletRegistrationBean userAvatarServlet() {
+        return new ServletRegistrationBean(new UserAvatarHttpServletRequestHandler(), "/file/avatar/*");
+    }
+}

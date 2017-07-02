@@ -36,10 +36,10 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-class ComponentMultiSelectField extends MultiSelectComp {
+public class ComponentMultiSelectField extends MultiSelectComp {
     private static final long serialVersionUID = 1L;
 
-    ComponentMultiSelectField() {
+    public ComponentMultiSelectField() {
         super("name", true);
     }
 
