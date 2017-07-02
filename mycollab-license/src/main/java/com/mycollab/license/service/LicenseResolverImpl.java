@@ -1,14 +1,14 @@
-package com.mycollab.premium.license.service;
+package com.mycollab.license.service;
 
 import com.mycollab.common.service.AppPropertiesService;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.MyCollabException;
-import com.mycollab.core.Version;
 import com.mycollab.core.UserInvalidInputException;
+import com.mycollab.core.Version;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.FileUtils;
-import com.mycollab.pro.license.LicenseInfo;
-import com.mycollab.pro.license.LicenseType;
+import com.mycollab.license.LicenseInfo;
+import com.mycollab.license.LicenseType;
 import com.verhas.licensor.License;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;

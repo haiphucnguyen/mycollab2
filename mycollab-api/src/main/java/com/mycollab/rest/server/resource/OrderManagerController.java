@@ -9,8 +9,6 @@ import com.mycollab.module.mail.service.IContentGenerator;
 import com.mycollab.ondemand.module.billing.dao.ProEditionInfoMapper;
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfo;
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfoExample;
-import com.mycollab.pro.license.LicenseInfo;
-import com.mycollab.pro.license.LicenseType;
 import com.verhas.licensor.License;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
