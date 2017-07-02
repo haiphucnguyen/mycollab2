@@ -43,8 +43,8 @@ public class MyCollabContentSessionFactory extends JcrSessionFactory {
         Session session = getSession();
         final String[] jcrNamespaces = session.getWorkspace().getNamespaceRegistry().getPrefixes();
         boolean createNamespace = true;
-        for (int i = 0; i < jcrNamespaces.length; i++) {
-            if (jcrNamespaces[i].equals("mycollab")) {
+        for (String jcrNamespace : jcrNamespaces) {
+            if (jcrNamespace.equals("mycollab")) {
                 createNamespace = false;
                 LOG.debug("Jackrabbit OCM namespace exists.");
             }

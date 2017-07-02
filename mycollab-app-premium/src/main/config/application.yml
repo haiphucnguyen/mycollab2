@@ -1,0 +1,6 @@
+app:
+  name: MyCollab
+  description: The world-class collaboration software
+
+server:
+  port: 7070

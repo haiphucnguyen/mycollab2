@@ -24,8 +24,6 @@ import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import org.joda.time.DateTimeZone;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +38,6 @@ import static com.mycollab.configuration.ApplicationProperties.*;
  * @since 1.0
  */
 public class SiteConfiguration {
-    private static final Logger LOG = LoggerFactory.getLogger(SiteConfiguration.class);
 
     private static SiteConfiguration instance;
 
@@ -50,7 +47,6 @@ public class SiteConfiguration {
     private int serverPort;
     private Locale defaultLocale;
     private EmailConfiguration emailConfiguration;
-    private DatabaseConfiguration databaseConfiguration;
     private String cdnUrl;
     private String endecryptPassword;
     private String dropboxCallbackUrl;
@@ -107,13 +103,6 @@ public class SiteConfiguration {
         Boolean isSsl = Boolean.parseBoolean(ApplicationProperties.getString(MAIL_IS_SSL, "false"));
         String noreplyEmail = ApplicationProperties.getString(MAIL_NOTIFY, "");
         instance.emailConfiguration = new EmailConfiguration(host, user, password, port, isTls, isSsl, noreplyEmail);
-
-        // load database configuration
-        String driverClass = ApplicationProperties.getString(DB_DRIVER_CLASS);
-        String dbUrl = ApplicationProperties.getString(DB_URL);
-        String dbUser = ApplicationProperties.getString(DB_USERNAME);
-        String dbPassword = ApplicationProperties.getString(DB_PASSWORD);
-        instance.databaseConfiguration = new DatabaseConfiguration(driverClass, dbUrl, dbUser, dbPassword);
 
         instance.resourceDownloadUrl = ApplicationProperties.getString(RESOURCE_DOWNLOAD_URL);
         if (!"".equals(instance.resourceDownloadUrl)) {
@@ -189,10 +178,6 @@ public class SiteConfiguration {
 
     public static String getResourceDownloadUrl() {
         return getInstance().resourceDownloadUrl;
-    }
-
-    public static DatabaseConfiguration getDatabaseConfiguration() {
-        return getInstance().databaseConfiguration;
     }
 
     public static EmailConfiguration getEmailConfiguration() {

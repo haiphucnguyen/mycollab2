@@ -42,11 +42,6 @@ public class ApplicationProperties {
 
     public static final String MYCOLLAB_PORT = "mycollab.port";
 
-    public static final String DB_USERNAME = "db.username";
-    public static final String DB_PASSWORD = "db.password";
-    public static final String DB_DRIVER_CLASS = "db.driverClassName";
-    public static final String DB_URL = "db.url";
-
     public static final String CDN_URL = "cdn.url";
     public static final String APP_URL = "app.url";
 

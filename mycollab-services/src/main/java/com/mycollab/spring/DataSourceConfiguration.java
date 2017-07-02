@@ -17,8 +17,8 @@
 package com.mycollab.spring;
 
 import com.mycollab.configuration.DatabaseConfiguration;
-import com.mycollab.configuration.SiteConfiguration;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -35,9 +35,11 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class DataSourceConfiguration {
 
+    @Autowired
+    private DatabaseConfiguration dbConf;
+
     @Bean(name = "dataSource")
     public DataSource dataSource() {
-        DatabaseConfiguration dbConf = SiteConfiguration.getDatabaseConfiguration();
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setDriverClassName(dbConf.getDriverClass());
         dataSource.setJdbcUrl(dbConf.getDbUrl());

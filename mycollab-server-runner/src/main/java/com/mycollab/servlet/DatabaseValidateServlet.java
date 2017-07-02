@@ -32,9 +32,9 @@ import java.sql.DriverManager;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-public class DatabaseValidate extends HttpServlet {
+public class DatabaseValidateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private static final Logger LOG = LoggerFactory.getLogger(DatabaseValidate.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DatabaseValidateServlet.class);
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String databaseName = request.getParameter("databaseName");

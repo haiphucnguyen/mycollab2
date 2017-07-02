@@ -19,6 +19,7 @@ package com.mycollab.servlet;
 import com.mycollab.core.utils.MimeTypesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

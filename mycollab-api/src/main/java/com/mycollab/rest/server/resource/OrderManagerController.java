@@ -4,6 +4,8 @@ import com.google.common.base.MoreObjects;
 import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.DateTimeUtils;
+import com.mycollab.license.LicenseInfo;
+import com.mycollab.license.LicenseType;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.module.mail.service.IContentGenerator;
 import com.mycollab.ondemand.module.billing.dao.ProEditionInfoMapper;

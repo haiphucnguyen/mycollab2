@@ -19,4 +19,14 @@ public class GenericSpringServletRegistor {
     public ServletRegistrationBean tooltipServlet(){
         return new ServletRegistrationBean(new TooltipGeneratorServletRequestHandler(), "/tooltip/*");
     }
+
+    @Bean
+    public ServletRegistrationBean upgradeServlet() {
+        return new ServletRegistrationBean(new UpgradeServlet(), "/upgrade");
+    }
+
+    @Bean
+    public ServletRegistrationBean upgradeStatus() {
+        return new ServletRegistrationBean(new UpgradeStatusServlet(), "/upgrade_status");
+    }
 }
