@@ -43,15 +43,11 @@ public class SiteConfiguration {
 
     private String siteName;
     private String serverAddress;
-    private int serverPort;
     private Locale defaultLocale;
-    private String cdnUrl;
     private String endecryptPassword;
     private String dropboxCallbackUrl;
     private String ggDriveCallbackUrl;
     private String appUrl;
-    private String apiUrl;
-    private String resourceDownloadUrl;
 
     private String facebookUrl;
     private String twitterUrl;
@@ -70,7 +66,6 @@ public class SiteConfiguration {
 
         instance.siteName = ApplicationProperties.getString(SITE_NAME, "MyCollab");
         instance.serverAddress = ApplicationProperties.getString(SERVER_ADDRESS, "localhost");
-        instance.serverPort = serverPort;
         String propLocale = ApplicationProperties.getString(DEFAULT_LOCALE, "en_US");
         try {
             instance.defaultLocale = Locale.forLanguageTag(propLocale);
@@ -81,23 +76,7 @@ public class SiteConfiguration {
         String pullMethodValue = ApplicationProperties.getString(ApplicationProperties.PULL_METHOD, "push");
         instance.pullMethod = PullMethod.valueOf(pullMethodValue);
 
-        instance.cdnUrl = String.format(ApplicationProperties.getString(CDN_URL), instance.serverAddress, instance.serverPort);
-
-        instance.appUrl = String.format(ApplicationProperties.getString(APP_URL), instance.serverAddress, instance.serverPort);
-        if (!instance.appUrl.endsWith("/")) {
-            instance.appUrl += "/";
-        }
-
-        instance.apiUrl = ApplicationProperties.getString(API_URL, "https://api.mycollab.com/api/");
         instance.endecryptPassword = ApplicationProperties.getString(BI_ENDECRYPT_PASSWORD, "esofthead321");
-
-        instance.resourceDownloadUrl = ApplicationProperties.getString(RESOURCE_DOWNLOAD_URL);
-        if (!"".equals(instance.resourceDownloadUrl)) {
-            instance.resourceDownloadUrl = String.format(instance.resourceDownloadUrl,
-                    instance.serverAddress, instance.serverPort);
-        } else {
-            instance.resourceDownloadUrl = instance.appUrl + "file/";
-        }
 
         instance.dropboxCallbackUrl = ApplicationProperties.getString(DROPBOX_AUTH_LINK);
         instance.ggDriveCallbackUrl = ApplicationProperties.getString(GOOGLE_DRIVE_LINK);
@@ -139,10 +118,6 @@ public class SiteConfiguration {
         return instance;
     }
 
-    public static String getCdnUrl() {
-        return getInstance().cdnUrl;
-    }
-
     public static String getAppUrl() {
         return getInstance().appUrl;
     }
@@ -161,10 +136,6 @@ public class SiteConfiguration {
 
     public static String getLinkedinUrl() {
         return getInstance().linkedinUrl;
-    }
-
-    public static String getResourceDownloadUrl() {
-        return getInstance().resourceDownloadUrl;
     }
 
     public static String getDefaultSiteName() {
@@ -194,10 +165,6 @@ public class SiteConfiguration {
         return instance.defaultLocale;
     }
 
-    public static String getApiUrl(String path) {
-        return String.format("%s%s", instance.apiUrl, path);
-    }
-
     public static String getDropboxCallbackUrl() {
         return getInstance().dropboxCallbackUrl;
     }
@@ -212,10 +179,6 @@ public class SiteConfiguration {
 
     public static String getServerAddress() {
         return getInstance().serverAddress;
-    }
-
-    public static int getServerPort() {
-        return getInstance().serverPort;
     }
 
     public static Configuration freemarkerConfiguration() {

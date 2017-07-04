@@ -4,6 +4,11 @@ app:
 
 server:
   port: 8080
+  address: 127.0.0.1
+  url: http://${server.address}:${server.port}/
+  cdnUrl: http://${server.url}/assets/
+  downloadUrl: http://${server.url}/file/
+  apiUrl: https://api.mycollab.com/api/
 
 db:
   driverClassName: com.mysql.jdbc.Driver
@@ -12,11 +17,11 @@ db:
   password: esofthead321
 
 mail:
-  smtphost:
-  port:
-  username:
-  password:
-  isTLS: false
-  isSSL: false
-  notify:
-  errorReport:
+  #smtphost:
+  #port:
+  #username:
+  #password:
+  #isTLS: false
+  #isSSL: false
+  #notify:
+  #errorReport:

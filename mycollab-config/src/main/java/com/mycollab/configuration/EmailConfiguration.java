@@ -18,12 +18,8 @@ package com.mycollab.configuration;
 
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.arguments.ValuedBean;
-import com.mycollab.core.utils.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
 
 /**
  * Email configuration of MyCollab
@@ -34,30 +30,19 @@ import javax.validation.constraints.NotNull;
 @Component
 @ConfigurationProperties(prefix = "mail")
 public class EmailConfiguration extends ValuedBean implements Cloneable {
-    @NotNull
+
     private String host;
-    @NotNull
+
     private String user;
-    @NotNull
+
     private String password;
 
-    @Digits(integer = 6, fraction = 0)
     private Integer port = 25;
 
     private boolean isStartTls = false;
     private boolean isSsl = false;
     private String notifyEmail;
     private String errorReportEmail;
-
-    EmailConfiguration(String host, String username, String password, int port, boolean isStartTls, boolean isSsl, String notifyEmail) {
-        this.host = host;
-        this.user = username;
-        this.password = password;
-        this.port = port;
-        this.isStartTls = isStartTls;
-        this.isSsl = isSsl;
-        this.notifyEmail = StringUtils.isBlank(notifyEmail) ? user: notifyEmail;
-    }
 
     public String getHost() {
         return host;
