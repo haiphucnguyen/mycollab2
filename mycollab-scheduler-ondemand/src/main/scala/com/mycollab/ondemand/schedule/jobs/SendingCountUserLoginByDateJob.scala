@@ -3,7 +3,7 @@ package com.mycollab.ondemand.schedule.jobs
 import java.util.Arrays
 
 import com.mycollab.common.domain.MailRecipientField
-import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.configuration.EmailConfiguration
 import com.mycollab.db.arguments.SearchCriteria.OrderField
 import com.mycollab.db.arguments.{BasicSearchRequest, SearchCriteria}
 import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
@@ -30,9 +30,10 @@ class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[SendingCountUserLoginByDateJob])
   private val COUNT_USER_LOGIN_TEMPLATE: String = "mailCountUserLoginByDate.ftl"
 
-  @Autowired var userService: UserService = _
-  @Autowired var extMailService: ExtMailService = _
-  @Autowired var contentGenerator: IContentGenerator = _
+  @Autowired private val userService: UserService = null
+  @Autowired private val extMailService: ExtMailService = null
+  @Autowired private val emailConfiguration: EmailConfiguration = null
+  @Autowired private val contentGenerator: IContentGenerator = null
 
   @SuppressWarnings(Array("unchecked"))
   @throws(classOf[JobExecutionException])
@@ -50,7 +51,7 @@ class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("lstUser", accessedUsers)
       contentGenerator.putVariable("count", accessedUsers.size)
       try {
-        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getNotifyEmail,
+        extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, emailConfiguration.getNotifyEmail,
           Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")),
           "Today system-logins count", contentGenerator.parseFile(COUNT_USER_LOGIN_TEMPLATE))
       }

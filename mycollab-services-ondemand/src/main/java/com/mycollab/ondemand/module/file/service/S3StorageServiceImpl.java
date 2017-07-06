@@ -14,11 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-config.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.ondemand.configuration;
+package com.mycollab.ondemand.module.file.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.mycollab.configuration.SiteConfiguration;
+import com.mycollab.module.file.service.AbstractStorageService;
+import com.mycollab.ondemand.configuration.AmazonServiceConfiguration;
+import org.springframework.stereotype.Service;
 
 /**
  * Amazon S3 Configuration
@@ -26,7 +28,9 @@ import com.mycollab.configuration.SiteConfiguration;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class S3Storage implements Storage {
+@Service
+public class S3StorageServiceImpl extends AbstractStorageService {
+
     public final AmazonS3 newS3Client() {
         return new AmazonS3Client(AmazonServiceConfiguration.amazonCredentials());
     }
@@ -36,7 +40,7 @@ public class S3Storage implements Storage {
     }
 
     @Override
-    public String generateAssetLink(String resourceId) {
-        return SiteConfiguration.getCdnUrl() + resourceId;
+    public String generateAssetRelativeLink(String resourceId) {
+        return serverConfiguration.getCdnUrl() + resourceId;
     }
 }

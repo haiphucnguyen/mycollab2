@@ -2,11 +2,9 @@ package com.mycollab.ondemand.schedule.jobs
 
 import java.util.Arrays
 
-import com.mycollab.common.domain.LiveInstanceExample
-import com.mycollab.module.mail.service.IContentGenerator
 import com.mycollab.common.domain.{LiveInstanceExample, MailRecipientField}
-import com.mycollab.configuration.SiteConfiguration
-import com.mycollab.module.mail.service.ExtMailService
+import com.mycollab.configuration.EmailConfiguration
+import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
 import com.mycollab.pro.common.dao.LiveInstanceMapper
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.quartz.{JobExecutionContext, JobExecutionException}
@@ -23,8 +21,9 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class CountLiveInstancesJob extends GenericQuartzJobBean {
   @Autowired private val liveInstanceMapper: LiveInstanceMapper = null
-  @Autowired var extMailService: ExtMailService = _
-  @Autowired var contentGenerator: IContentGenerator = _
+  @Autowired private val extMailService: ExtMailService = null
+  @Autowired private val emailConfiguration: EmailConfiguration = null
+  @Autowired private val contentGenerator: IContentGenerator = null
 
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext): Unit = {
@@ -34,7 +33,7 @@ class CountLiveInstancesJob extends GenericQuartzJobBean {
     val liveInstances = liveInstanceMapper.selectByExample(ex).asScala.toList
     contentGenerator.putVariable("instances", liveInstances)
     contentGenerator.putVariable("count", liveInstances.size)
-    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getNotifyEmail,
+    extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, emailConfiguration.getNotifyEmail,
       Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")),
       "Today live instances count", contentGenerator.parseFile("mailCountLiveInstances.ftl"))
   }

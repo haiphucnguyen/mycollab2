@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.mycollab.core.MyCollabException;
-import com.mycollab.ondemand.configuration.S3Storage;
+import com.mycollab.ondemand.module.file.service.S3StorageServiceImpl;
 import com.mycollab.vaadin.resources.VaadinResource;
 import com.vaadin.server.DownloadStream;
 import com.vaadin.server.Resource;
@@ -53,14 +53,15 @@ public class VaadinS3Resource implements VaadinResource {
         private static final long serialVersionUID = 1L;
         private String documentPath;
 
-        public S3StreamSource(String documentPath) {
+        S3StreamSource(String documentPath) {
             this.documentPath = documentPath;
         }
 
         @Override
         public InputStream getStream() {
             String fileName = extractFileName(documentPath);
-            S3Storage storageConfiguration = (S3Storage) StorageFactory.getInstance();
+            //TODO : Work with S3
+            S3StorageServiceImpl storageConfiguration = null;// = (S3StorageServiceImpl) StorageFactory.getInstance();
             fileName = fileName.replaceAll(" ", "_").replaceAll("-", "_");
             AmazonS3 s3Client = storageConfiguration.newS3Client();
             try {

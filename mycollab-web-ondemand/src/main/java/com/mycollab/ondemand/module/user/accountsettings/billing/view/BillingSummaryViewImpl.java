@@ -22,6 +22,7 @@ import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.ecm.service.DriveInfoService;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
@@ -78,7 +79,6 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
     private Long usedStorageVolume = 0L;
 
     public BillingSummaryViewImpl() {
-        super();
         this.withMargin(true).withSpacing(true);
         this.billingService = AppContextUtil.getSpringBean(BillingService.class);
     }
@@ -237,7 +237,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
     private void loadCurrentPlan() {
         currentPlanLayout.removeAllComponents();
-        currentPlanLayout.with(new Image(null, new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/fs_button05.gif"))));
+        AbstractStorageService storageService = AppContextUtil.getSpringBean(AbstractStorageService.class);
+        currentPlanLayout.with(new Image(null, new ExternalResource(storageService.generateAssetRelativeLink("icons/fs_button05.gif"))));
         BillingPlan currentBillingPlan = MyCollabUI.getBillingAccount().getBillingPlan();
 
         ELabel introText = ELabel.h2(UserUIContext.getMessage(BillingI18nEnum.OPT_CURRENT_PLAN, currentBillingPlan.getBillingtype()));

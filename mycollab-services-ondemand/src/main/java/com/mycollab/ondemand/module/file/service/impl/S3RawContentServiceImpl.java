@@ -20,7 +20,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.module.file.service.RawContentService;
-import com.mycollab.ondemand.configuration.S3Storage;
+import com.mycollab.ondemand.module.file.service.S3StorageServiceImpl;
 
 import java.io.InputStream;
 
@@ -30,10 +30,11 @@ import java.io.InputStream;
  */
 public class S3RawContentServiceImpl implements RawContentService {
 
-    private S3Storage storageConfiguration;
+    private S3StorageServiceImpl storageConfiguration;
 
     public S3RawContentServiceImpl() {
-        storageConfiguration = (S3Storage) StorageFactory.getInstance();
+        //TODO : configure with s3
+//        storageConfiguration = (S3StorageServiceImpl) StorageFactory.getInstance();
     }
 
     @Override

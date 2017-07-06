@@ -18,6 +18,7 @@ package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 
 import com.mycollab.common.domain.CustomerFeedbackWithBLOBs;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
@@ -64,7 +65,8 @@ public class CancelAccountViewImpl extends AbstractVerticalPageView implements C
         ELabel headerNote = new ELabel(UserUIContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE))
                 .withStyleName(UIConstants.META_INFO).withWidthUndefined();
 
-        header.with(new Image(null, new ExternalResource(StorageFactory.generateAssetRelativeLink(WebResourceIds._sad_face))),
+        AbstractStorageService storageService = AppContextUtil.getSpringBean(AbstractStorageService.class);
+        header.with(new Image(null, new ExternalResource(storageService.generateAssetRelativeLink(WebResourceIds._sad_face))),
                 headerTopLine, headerMsg, headerNote);
         return header;
     }

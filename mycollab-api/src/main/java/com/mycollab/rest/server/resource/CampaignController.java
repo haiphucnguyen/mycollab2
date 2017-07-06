@@ -1,6 +1,7 @@
 package com.mycollab.rest.server.resource;
 
 import com.mycollab.common.domain.MailRecipientField;
+import com.mycollab.configuration.EmailConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.Version;
 import com.mycollab.core.utils.FileUtils;
@@ -51,6 +52,9 @@ public class CampaignController {
     @Autowired
     private ExtMailService extMailService;
 
+    @Autowired
+    private EmailConfiguration emailConfiguration;
+
     @RequestMapping(path = "/register-ce", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
     public Map registerCE(@RequestParam("firstname") final String firstname, @RequestParam("lastname") final String lastname,
@@ -89,7 +93,7 @@ public class CampaignController {
                     contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab.com/download/verify?email=%s", email));
                 }
 
-                extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
+                extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
                         Collections.singletonList(new MailRecipientField(email, firstname + " " + lastname)),
                         "MyCollab is ready for download", contentGenerator.parseFile("mailDownloadInfo.ftl"));
             }

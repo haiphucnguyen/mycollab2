@@ -5,7 +5,7 @@ import java.util.{Arrays, Locale}
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
-import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.configuration.{EmailConfiguration, SiteConfiguration}
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.billing.UserStatusConstants
@@ -26,6 +26,7 @@ import org.springframework.stereotype.Component
   @Autowired private val userService: UserService = null
   @Autowired private val extMailService: ExtMailService = null
   @Autowired private val contentGenerator: IContentGenerator = null
+  @Autowired private val emailConfiguration: EmailConfiguration = null
   
   @AllowConcurrentEvents
   @Subscribe
@@ -43,7 +44,7 @@ import org.springframework.stereotype.Component
 //    contentGenerator.putVariable("linkConfirm", confirmLink)
     contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
       DateTimeUtils.getCurrentYear))
-    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
+    extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
       Arrays.asList(new MailRecipientField(user.getEmail, user.getFirstname + " " + user.getLastname)),
       LocalizationHelper.getMessage(Locale.US, UserI18nEnum.MAIL_CONFIRM_PASSWORD_SUBJECT),
       contentGenerator.parseFile("src/main/resources/mailConfirmUserSignUpNotification.ftl", Locale.US))
