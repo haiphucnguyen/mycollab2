@@ -22,11 +22,11 @@ import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
 import com.mycollab.common.TooltipBuilder;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.module.crm.domain.*;
 import com.mycollab.module.crm.i18n.*;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.user.AccountLinkGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +44,7 @@ import static com.mycollab.core.utils.StringUtils.trimHtmlTags;
 public class CrmTooltipGenerator {
     private static final Logger LOG = LoggerFactory.getLogger(CrmTooltipGenerator.class);
 
-    private static String generateTolltipNull(Locale locale) {
+    private static String generateTooltipNull(Locale locale) {
         Div div = new Div();
         Table table = new Table();
         table.setStyle("padding-left:10px;  color: #5a5a5a; font-size:11px;");
@@ -66,7 +66,7 @@ public class CrmTooltipGenerator {
 
     public static String generateToolTipAccount(Locale locale, SimpleAccount account, String siteURL) {
         if (account == null) {
-            return generateTolltipNull(locale);
+            return generateTooltipNull(locale);
         }
 
         try {
@@ -105,7 +105,7 @@ public class CrmTooltipGenerator {
             Td cell31 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_ASSIGNEE));
 
             String userLink = (account.getAssignuser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(siteURL, account.getAssignuser()) : "";
-            String userAvatarLink = StorageFactory.getAvatarPath(account.getAssignUserAvatarId(), 16);
+            String userAvatarLink = StorageUtils.getAvatarPath(account.getAssignUserAvatarId(), 16);
             Td cell32 = buildCellLink(userLink, userAvatarLink, account.getAssignUserFullName());
 
             Td cell33 = buildCellName(LocalizationHelper.getMessage(locale,
@@ -132,7 +132,7 @@ public class CrmTooltipGenerator {
     public static String generateToolTipContact(Locale locale, String dateFormat, SimpleContact contact, String siteURL,
                                                 TimeZone userTimeZone) {
         if (contact == null) {
-            return generateTolltipNull(locale);
+            return generateTooltipNull(locale);
         }
 
         try {
@@ -173,10 +173,8 @@ public class CrmTooltipGenerator {
             Td cell42 = buildCellValue(contact.getDepartment());
             Td cell43 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_ASSIGNEE));
             String assignUserLink = (contact.getAssignuser() != null) ? AccountLinkGenerator
-                    .generatePreviewFullUserLink(siteURL,
-                            contact.getAssignuser()) : "";
-            String assignAvatarLink = StorageFactory.getAvatarPath(
-                    contact.getAssignUserAvatarId(), 16);
+                    .generatePreviewFullUserLink(siteURL, contact.getAssignuser()) : "";
+            String assignAvatarLink = StorageUtils.getAvatarPath(contact.getAssignUserAvatarId(), 16);
             Td cell44 = buildCellLink(assignUserLink, assignAvatarLink, contact.getAssignUserFullName());
             trRow4.appendChild(cell41, cell42, cell43, cell44);
             tooltipBuilder.appendRow(trRow4);
@@ -205,7 +203,7 @@ public class CrmTooltipGenerator {
 
     public static String generateTooltipCampaign(Locale locale, String dateFormat, SimpleCampaign campaign, String siteURl, TimeZone userTimeZone) {
         if (campaign == null)
-            return generateTolltipNull(locale);
+            return generateTooltipNull(locale);
 
         try {
             TooltipBuilder tooltipBuilder = new TooltipBuilder();
@@ -238,7 +236,7 @@ public class CrmTooltipGenerator {
 
             String assignUserLink = (campaign.getAssignuser() != null) ? AccountLinkGenerator
                     .generatePreviewFullUserLink(siteURl, campaign.getAssignuser()) : "";
-            String assignUserAvatarLink = StorageFactory.getAvatarPath(campaign.getAssignUserAvatarId(), 16);
+            String assignUserAvatarLink = StorageUtils.getAvatarPath(campaign.getAssignUserAvatarId(), 16);
             Td cell34 = buildCellLink(assignUserLink, assignUserAvatarLink, campaign.getAssignUserFullName());
             trRow3.appendChild(cell31, cell32, cell33, cell34);
             tooltipBuilder.appendRow(trRow3);
@@ -275,7 +273,7 @@ public class CrmTooltipGenerator {
 
     public static String generateTooltipLead(Locale locale, SimpleLead lead, String siteURl, TimeZone userTimeZone) {
         if (lead == null)
-            return generateTolltipNull(locale);
+            return generateTooltipNull(locale);
 
         try {
             TooltipBuilder tooltipManager = new TooltipBuilder();
@@ -330,7 +328,7 @@ public class CrmTooltipGenerator {
             String assignUserLink = (lead.getAssignuser() != null) ? AccountLinkGenerator
                     .generatePreviewFullUserLink(siteURl, lead.getAssignuser())
                     : "";
-            String assignUserAvatarLink = StorageFactory.getAvatarPath(lead.getAssignUserAvatarId(), 16);
+            String assignUserAvatarLink = StorageUtils.getAvatarPath(lead.getAssignUserAvatarId(), 16);
             Td cell64 = buildCellLink(assignUserLink, assignUserAvatarLink, lead.getAssignUserFullName());
             trRow6.appendChild(cell61, cell62, cell63, cell64);
             tooltipManager.appendRow(trRow6);
@@ -366,7 +364,7 @@ public class CrmTooltipGenerator {
 
     public static String generateTooltipOpportunity(Locale locale, String dateFormat, SimpleOpportunity opportunity, String siteURl, TimeZone userTimeZone) {
         if (opportunity == null)
-            return generateTolltipNull(locale);
+            return generateTooltipNull(locale);
 
         try {
             TooltipBuilder tooltipManager = new TooltipBuilder();
@@ -417,7 +415,7 @@ public class CrmTooltipGenerator {
             Td cell53 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_ASSIGNEE));
             String assignUserLink = (opportunity.getAssignuser() != null) ? AccountLinkGenerator
                     .generatePreviewFullUserLink(siteURl, opportunity.getAssignuser()) : "";
-            String assignUserAvatarLink = StorageFactory.getAvatarPath(opportunity.getAssignUserAvatarId(), 16);
+            String assignUserAvatarLink = StorageUtils.getAvatarPath(opportunity.getAssignUserAvatarId(), 16);
             Td cell54 = buildCellLink(assignUserLink, assignUserAvatarLink,
                     opportunity.getAssignUserFullName());
             trRow5.appendChild(cell51, cell52, cell53, cell54);
@@ -439,7 +437,7 @@ public class CrmTooltipGenerator {
 
     public static String generateTooltipCases(Locale locale, SimpleCase cases, String siteURL, TimeZone userTimeZone) {
         if (cases == null)
-            return generateTolltipNull(locale);
+            return generateTooltipNull(locale);
 
         try {
             TooltipBuilder tooltipManager = new TooltipBuilder();
@@ -479,7 +477,7 @@ public class CrmTooltipGenerator {
             Td cell43 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_ASSIGNEE));
             String assignUserLink = (cases.getAssignuser() != null) ? AccountLinkGenerator
                     .generatePreviewFullUserLink(siteURL, cases.getAssignuser()) : "";
-            String assignUserAvatarLink = StorageFactory.getAvatarPath(cases.getAssignUserAvatarId(), 16);
+            String assignUserAvatarLink = StorageUtils.getAvatarPath(cases.getAssignUserAvatarId(), 16);
             Td cell44 = buildCellLink(assignUserLink, assignUserAvatarLink, cases.getAssignUserFullName());
             trRow4.appendChild(cell41, cell42, cell43, cell44);
             tooltipManager.appendRow(trRow4);
@@ -507,7 +505,7 @@ public class CrmTooltipGenerator {
 
     public static String generateToolTipMeeting(Locale locale, String dateTimeFormat, SimpleMeeting meeting, String siteUrl, TimeZone userTimeZone) {
         if (meeting == null)
-            return generateTolltipNull(locale);
+            return generateTooltipNull(locale);
         try {
             TooltipBuilder tooltipManager = new TooltipBuilder();
             tooltipManager.appendTitle(meeting.getSubject());
@@ -548,7 +546,7 @@ public class CrmTooltipGenerator {
 
     public static String generateToolTipCall(Locale locale, String dateFormat, SimpleCall call, String siteURL, TimeZone userTimeZone) {
         if (call == null)
-            return generateTolltipNull(locale);
+            return generateTooltipNull(locale);
         try {
             TooltipBuilder tooltipManager = new TooltipBuilder();
             tooltipManager.appendTitle(call.getSubject());
@@ -596,7 +594,7 @@ public class CrmTooltipGenerator {
     public static String generateToolTipCrmTask(Locale locale, String dateFormat, SimpleCrmTask task, String siteURL,
                                                 TimeZone userTimeZone) {
         if (task == null)
-            return generateTolltipNull(locale);
+            return generateTooltipNull(locale);
 
         try {
             TooltipBuilder tooltipManager = new TooltipBuilder();
@@ -626,7 +624,7 @@ public class CrmTooltipGenerator {
             Td cell32 = buildCellValue(task.getPriority());
             Td cell33 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_ASSIGNEE));
             String assignUserLink = (task.getAssignuser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(siteURL, task.getAssignuser()) : "";
-            String assignUserAvatarLink = StorageFactory.getAvatarPath(task.getAssignUserAvatarId(), 16);
+            String assignUserAvatarLink = StorageUtils.getAvatarPath(task.getAssignUserAvatarId(), 16);
             Td cell34 = buildCellLink(assignUserLink, assignUserAvatarLink, task.getAssignUserFullName());
             trRow3.appendChild(cell31, cell32, cell33, cell34);
             tooltipManager.appendRow(trRow3);
@@ -644,4 +642,5 @@ public class CrmTooltipGenerator {
             return null;
         }
     }
+
 }

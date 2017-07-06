@@ -22,10 +22,10 @@ import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.db.arguments.*;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.*;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleProjectMember;
@@ -49,7 +49,10 @@ import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
-import com.mycollab.vaadin.web.ui.*;
+import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
+import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
+import com.mycollab.vaadin.web.ui.Depot;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.LinkViewField;
 import com.mycollab.vaadin.web.ui.field.UserLinkViewField;
 import com.vaadin.server.FontAwesome;
@@ -331,7 +334,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                 issueLbl.addStyleName("overdue");
             }
 
-            String avatarLink = StorageFactory.getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
+            String avatarLink = StorageUtils.getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
             Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                     .setTitle(genericTask.getAssignUserFullName());
 

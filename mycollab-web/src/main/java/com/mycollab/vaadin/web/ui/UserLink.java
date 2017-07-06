@@ -16,9 +16,9 @@
  */
 package com.mycollab.vaadin.web.ui;
 
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.html.DivLessFormatter;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.TooltipHelper;
@@ -44,7 +44,7 @@ public class UserLink extends Label {
         this.setContentMode(ContentMode.HTML);
 
         DivLessFormatter div = new DivLessFormatter();
-        Img userAvatar = new Img("", StorageFactory.getAvatarPath(userAvatarId, 16)).setCSSClass(UIConstants.CIRCLE_BOX);
+        Img userAvatar = new Img("", StorageUtils.getAvatarPath(userAvatarId, 16)).setCSSClass(UIConstants.CIRCLE_BOX);
         A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(AccountLinkGenerator.generatePreviewFullUserLink(MyCollabUI.getSiteUrl(),
                 username)).appendText(StringUtils.trim(displayName, 30, true));
         userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(username));

@@ -22,7 +22,7 @@ import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.FollowerI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.community.vaadin.web.ui.field.MetaFieldBuilder;
-import com.mycollab.configuration.StorageFactory;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
@@ -52,7 +52,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
 
     @Override
     public AbstractComponent createAssigneePopupField(SimpleBug bug) {
-        String avatarLink = StorageFactory.getAvatarPath(bug.getAssignUserAvatarId(), 16);
+        String avatarLink = StorageUtils.getAvatarPath(bug.getAssignUserAvatarId(), 16);
         Img img = new Img(bug.getAssignuserFullName(), avatarLink).setTitle(bug.getAssignuserFullName())
                 .setCSSClass(UIConstants.CIRCLE_BOX);
         return new MetaFieldBuilder().withCaption(img.write())

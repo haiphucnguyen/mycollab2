@@ -24,10 +24,10 @@ import com.hp.gagawa.java.elements.Img;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.html.DivLessFormatter;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
@@ -89,7 +89,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         headerLayout.with(breadCrumb, footer);
 
         if (project.getLead() != null) {
-            Div leadAvatar = new DivLessFormatter().appendChild(new Img("", StorageFactory.getAvatarPath
+            Div leadAvatar = new DivLessFormatter().appendChild(new Img("", StorageUtils.getAvatarPath
                             (project.getLeadAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX), DivLessFormatter.EMPTY_SPACE(),
                     new A(ProjectLinkBuilder.generateProjectMemberFullLink(project.getId(), project.getLead()))
                             .appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
@@ -109,7 +109,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             if (project.getClientAvatarId() == null) {
                 clientDiv.appendText(FontAwesome.INSTITUTION.getHtml() + " ");
             } else {
-                Img clientImg = new Img("", StorageFactory.getEntityLogoPath(MyCollabUI.getAccountId(), project.getClientAvatarId(), 16))
+                Img clientImg = new Img("", StorageUtils.getEntityLogoPath(MyCollabUI.getAccountId(), project.getClientAvatarId(), 16))
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 clientDiv.appendChild(clientImg).appendChild(DivLessFormatter.EMPTY_SPACE());
             }

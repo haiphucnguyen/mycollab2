@@ -16,7 +16,8 @@
  */
 package com.mycollab.vaadin.ui;
 
-import com.mycollab.configuration.StorageFactory;
+import com.mycollab.module.file.service.AbstractStorageService;
+import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.resources.VaadinResourceFactory;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
@@ -37,7 +38,8 @@ public class AccountAssetsResolver {
 
     public static Resource createLogoResource(String logoId, int size) {
         if (logoId == null) {
-            return new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/logo.png"));
+            return new ExternalResource(AppContextUtil.getSpringBean(AbstractStorageService.class)
+                    .generateAssetRelativeLink("icons/logo.png"));
         }
 
         return VaadinResourceFactory.getLogoResource(logoId, size);

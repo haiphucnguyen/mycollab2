@@ -17,9 +17,9 @@
 package com.mycollab.module.project.view.settings.component;
 
 import com.hp.gagawa.java.elements.Img;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.StringUtils;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.user.domain.SimpleUser;
@@ -169,7 +169,7 @@ public class InviteUserTokenField extends CssLayout implements SuggestField.NewI
     private Component generateToken(final SimpleUser user) {
         final Button btn = new Button("", FontAwesome.TIMES);
         btn.setCaptionAsHtml(true);
-        btn.setCaption((new Img("", StorageFactory.getAvatarPath(user.getAvatarid(), 16))).write() + " " + user.getDisplayName());
+        btn.setCaption((new Img("", StorageUtils.getAvatarPath(user.getAvatarid(), 16))).write() + " " + user.getDisplayName());
         btn.addClickListener(clickEvent -> {
             InviteUserTokenField.this.removeComponent(btn);
             inviteEmails.remove(user.getEmail());

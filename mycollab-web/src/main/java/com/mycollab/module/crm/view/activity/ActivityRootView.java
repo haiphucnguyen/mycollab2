@@ -16,11 +16,11 @@
  */
 package com.mycollab.module.crm.view.activity;
 
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.mycollab.module.crm.i18n.ActivityI18nEnum;
 import com.mycollab.module.crm.view.parameters.ActivityScreenData;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
@@ -71,11 +71,11 @@ public class ActivityRootView extends AbstractVerticalPageView {
     private void buildComponents() {
         activityTabs.addTab(constructCalendarView(), "calendar",
                 UserUIContext.getMessage(ActivityI18nEnum.TAB_CALENDAR_TITLE),
-                new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/22/crm/calendar.png")));
+                new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/22/crm/calendar.png")));
 
         activityTabs.addTab(constructActivityListView(), "activities",
                 UserUIContext.getMessage(ActivityI18nEnum.TAB_ACTIVITY_TITLE),
-                new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/22/crm/activitylist.png")));
+                new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/22/crm/activitylist.png")));
 
         activityTabs.addSelectedTabChangeListener(selectedTabChangeEvent -> {
             Tab tab = ((VerticalTabsheet) selectedTabChangeEvent.getSource()).getSelectedTab();

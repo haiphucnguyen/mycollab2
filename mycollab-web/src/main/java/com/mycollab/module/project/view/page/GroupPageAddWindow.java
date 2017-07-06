@@ -52,7 +52,6 @@ class GroupPageAddWindow extends MWindow {
     private Folder folder;
 
     GroupPageAddWindow(Folder editFolder) {
-        super();
         MVerticalLayout content = new MVerticalLayout().withMargin(new MarginInfo(false, false, true, false));
         this.withModal(true).withResizable(false).withWidth("700px").withCenter().withContent(content);
         EditForm editForm = new EditForm();

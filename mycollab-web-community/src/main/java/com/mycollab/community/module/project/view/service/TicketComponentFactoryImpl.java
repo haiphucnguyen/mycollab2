@@ -23,9 +23,9 @@ import com.mycollab.common.i18n.FollowerI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.community.vaadin.web.ui.field.MetaFieldBuilder;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.SecureAccessException;
 import com.mycollab.core.utils.NumberUtils;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -151,7 +151,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
     @Override
     public AbstractComponent createAssigneePopupField(ProjectTicket ticket) {
-        String avatarLink = StorageFactory.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
+        String avatarLink = StorageUtils.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
         Img img = new Img(ticket.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                 .setTitle(ticket.getAssignUserFullName());
         return new MetaFieldBuilder().withCaption(img.write())

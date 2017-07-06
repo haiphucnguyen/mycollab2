@@ -20,7 +20,6 @@ import com.google.common.collect.Collections2;
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.FileI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.DebugException;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.FileUtils;
@@ -31,6 +30,7 @@ import com.mycollab.module.ecm.domain.*;
 import com.mycollab.module.ecm.service.ExternalDriveService;
 import com.mycollab.module.ecm.service.ExternalResourceService;
 import com.mycollab.module.ecm.service.ResourceService;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.file.events.FileEvent;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
@@ -48,7 +48,10 @@ import com.mycollab.vaadin.resources.file.FileAssetsUtil;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.*;
+import com.mycollab.vaadin.web.ui.AttachmentPanel;
+import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
+import com.mycollab.vaadin.web.ui.UserLink;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
@@ -312,7 +315,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             } else if (resource instanceof Content) {
                 Content content = (Content) resource;
                 if (StringUtils.isNotBlank(content.getThumbnail())) {
-                    resourceIcon = new Embedded(null, new ExternalResource(StorageFactory.getResourcePath(content.getThumbnail())));
+                    resourceIcon = new Embedded(null, new ExternalResource(StorageUtils.getResourcePath(content.getThumbnail())));
                     resourceIcon.setWidth("38px");
                     resourceIcon.setHeight("38px");
                 } else {

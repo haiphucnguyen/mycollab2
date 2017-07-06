@@ -22,16 +22,17 @@ import com.hp.gagawa.java.elements.Img;
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.IgnoreException;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.mobile.ui.MobileUIConstants;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
+import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
@@ -93,7 +94,7 @@ public class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<Proj
                 ticket.getAssignUser()));
         assigneeLink.appendText(StringUtils.trim(ticket.getAssignUserFullName(), 30, true));
         Div assigneeDiv = new Div().appendText(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
-                .appendChild(DivLessFormatter.EMPTY_SPACE(), new Img("", StorageFactory
+                .appendChild(DivLessFormatter.EMPTY_SPACE(), new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
                                 .getAvatarPath(ticket.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
                         DivLessFormatter.EMPTY_SPACE(), assigneeLink);
 

@@ -19,6 +19,7 @@ package com.mycollab.servlet;
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.IDeploymentMode;
+import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.i18n.LocalizationHelper;
 import freemarker.template.Configuration;
@@ -54,6 +55,9 @@ public class AppExceptionServletHandler extends GenericHttpServlet {
     @Autowired
     private IDeploymentMode deploymentMode;
 
+    @Autowired
+    private ServerConfiguration serverConfiguration;
+
     @Override
     protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer status_code = (Integer) request.getAttribute("javax.servlet.error.status_code");
@@ -79,7 +83,7 @@ public class AppExceptionServletHandler extends GenericHttpServlet {
     private void responsePage404(HttpServletResponse response) throws IOException, TemplateException {
         Map<String, Object> context = new HashMap<>();
         Map<String, String> defaultUrls = SiteConfiguration.defaultUrls();
-        defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+        defaultUrls.put("cdn_url", serverConfiguration.getCdnUrl());
         defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
         context.put("defaultUrls", defaultUrls);
 
@@ -114,7 +118,7 @@ public class AppExceptionServletHandler extends GenericHttpServlet {
         Map<String, Object> context = new HashMap<>();
         Map<String, String> defaultUrls = SiteConfiguration.defaultUrls();
 
-        defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+        defaultUrls.put("cdn_url", serverConfiguration.getCdnUrl());
         defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
         context.put("defaultUrls", defaultUrls);
 

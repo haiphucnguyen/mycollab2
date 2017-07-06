@@ -11,7 +11,6 @@ import com.mycollab.common.i18n.FollowerI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.service.CommentService;
 import com.mycollab.common.service.MonitorItemService;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.HumanTime;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.core.utils.StringUtils;
@@ -20,6 +19,7 @@ import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -77,7 +77,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String avatarLink = StorageFactory.getAvatarPath(task.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageUtils.getAvatarPath(task.getAssignUserAvatarId(), 16);
                 Img img = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName())
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 return img.write();
@@ -87,7 +87,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             protected String generateSmallAsHtmlAfterUpdate() {
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                 SimpleTask newTask = taskService.findById(task.getId(), MyCollabUI.getAccountId());
-                String avatarLink = StorageFactory.getAvatarPath(newTask.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageUtils.getAvatarPath(newTask.getAssignUserAvatarId(), 16);
                 Img img = new Img(newTask.getAssignUserFullName(), avatarLink).setTitle(newTask.getAssignUserFullName())
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 return img.write();

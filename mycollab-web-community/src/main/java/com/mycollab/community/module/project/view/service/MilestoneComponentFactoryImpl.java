@@ -22,8 +22,8 @@ import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.community.vaadin.web.ui.field.MetaFieldBuilder;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.view.service.MilestoneComponentFactory;
@@ -42,7 +42,7 @@ import org.vaadin.teemu.VaadinIcons;
 public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory {
     @Override
     public AbstractComponent createMilestoneAssigneePopupField(SimpleMilestone milestone, boolean isDisplayName) {
-        String avatarLink = StorageFactory.getAvatarPath(milestone.getOwnerAvatarId(), 16);
+        String avatarLink = StorageUtils.getAvatarPath(milestone.getOwnerAvatarId(), 16);
         Img img = new Img(milestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                 .setTitle(milestone.getOwnerFullName());
         if (isDisplayName) {

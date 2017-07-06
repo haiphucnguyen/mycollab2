@@ -40,7 +40,6 @@ public class PagePreviewForm extends AdvancedPreviewBeanForm<Page> {
     }
 
     private static class PageReadFormLayout extends AbstractFormLayoutFactory {
-        private static final long serialVersionUID = 1L;
 
         private MVerticalLayout layout;
 

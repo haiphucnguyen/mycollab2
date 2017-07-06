@@ -10,11 +10,18 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "server")
 public class ServerConfiguration {
+
+    public static final String STORAGE_FILE = "file";
+
+    public static final String STORAGE_S3 = "s3";
+
     private Integer port;
 
     private String address;
 
     private String url;
+
+    private String storageSystem = STORAGE_FILE;
 
     private String cdnUrl;
 
@@ -68,5 +75,17 @@ public class ServerConfiguration {
 
     public void setApiUrl(String apiUrl) {
         this.apiUrl = apiUrl;
+    }
+
+    public String getApiUrl(String path) {
+        return String.format("%s%s", apiUrl, path);
+    }
+
+    public String getStorageSystem() {
+        return storageSystem;
+    }
+
+    public void setStorageSystem(String storageSystem) {
+        this.storageSystem = storageSystem;
     }
 }

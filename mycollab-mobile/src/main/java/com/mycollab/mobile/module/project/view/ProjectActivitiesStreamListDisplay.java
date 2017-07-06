@@ -21,11 +21,11 @@ import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.ActivityStreamConstants;
 import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.mycollab.mobile.ui.FormSectionBuilder;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -128,8 +128,9 @@ class ProjectActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityS
     }
 
     private static String buildAssigneeValue(ProjectActivityStream activity) {
-        Img userAvatar = new Img("", StorageFactory.getAvatarPath(activity.getCreatedUserAvatarId(), 16)).setCSSClass
-                (UIConstants.CIRCLE_BOX);
+        Img userAvatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
+                .getAvatarPath(activity.getCreatedUserAvatarId(), 16))
+                .setCSSClass(UIConstants.CIRCLE_BOX);
         A userLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(activity.getExtratypeid(), activity
                 .getCreateduser())).appendText(StringUtils.trim(activity.getCreatedUserFullName(), 30, true));
         return new DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink).write();

@@ -21,9 +21,9 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.UrlEncodeDecoder;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.html.DivLessFormatter;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
@@ -66,7 +66,8 @@ public class ProjectLinkBuilder {
 
     public static String generateProjectMemberHtmlLink(Integer projectId, String username, String displayName, String avatarId,
                                                        Boolean isDisplayTooltip) {
-        Img userAvatar = new Img("", StorageFactory.getAvatarPath(avatarId, 16)).setCSSClass(UIConstants.CIRCLE_BOX);
+        Img userAvatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
+                .getAvatarPath(avatarId, 16)).setCSSClass(UIConstants.CIRCLE_BOX);
         A link = new A().setId("tag" + TOOLTIP_ID).setHref(generateProjectMemberFullLink(projectId,
                 username)).appendText(StringUtils.trim(displayName, 30, true));
         if (isDisplayTooltip) {

@@ -23,8 +23,6 @@ import com.mycollab.module.file.service.EntityUploaderService;
 import com.mycollab.module.file.service.UserAvatarService;
 import com.mycollab.module.user.dao.UserMapper;
 import com.mycollab.module.user.domain.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +37,6 @@ import java.io.InputStream;
  */
 @Service(value = "userAvatarService")
 public class UserAvatarServiceImpl implements UserAvatarService {
-    private static final Logger LOG = LoggerFactory.getLogger(UserAvatarServiceImpl.class);
 
     @Autowired
     private ResourceService resourceService;
@@ -50,7 +47,7 @@ public class UserAvatarServiceImpl implements UserAvatarService {
     @Autowired
     private UserMapper userMapper;
 
-    private static final int[] SUPPORT_SIZES = {100, 64, 48, 32, 24, 16};
+    private static final Integer[] SUPPORT_SIZES = {100, 64, 48, 32, 24, 16};
 
     @Override
     public String uploadDefaultAvatar(String username) {

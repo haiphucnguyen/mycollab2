@@ -21,13 +21,13 @@ import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.HumanTime;
 import com.mycollab.db.arguments.BooleanSearchField;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -227,7 +227,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             final ELabel statusLbl = new ELabel(taskStatus).withStyleName(UIConstants.FIELD_NOTE).withWidthUndefined();
             layout.with(statusLbl);
 
-            String avatarLink = StorageFactory.getAvatarPath(subTask.getAssignUserAvatarId(), 16);
+            String avatarLink = StorageUtils.getAvatarPath(subTask.getAssignUserAvatarId(), 16);
             Img avatarImg = new Img(subTask.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                     .setTitle(subTask.getAssignUserFullName());
             layout.with(ELabel.html(avatarImg.write()).withWidthUndefined());

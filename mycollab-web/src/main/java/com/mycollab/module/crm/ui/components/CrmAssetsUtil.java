@@ -17,10 +17,10 @@
 package com.mycollab.module.crm.ui.components;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.view.account.AccountLogoUpdateWindow;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
@@ -40,7 +40,7 @@ public class CrmAssetsUtil {
     public static Component accountLogoComp(SimpleAccount account, int size) {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(account.getAvatarid())) {
-            wrapper = new Image(null, new ExternalResource(StorageFactory.getEntityLogoPath(MyCollabUI
+            wrapper = new Image(null, new ExternalResource(StorageUtils.getEntityLogoPath(MyCollabUI
                     .getAccountId(), account.getAvatarid(), 100)));
         } else {
             String accountName = account.getAccountname();
@@ -70,7 +70,7 @@ public class CrmAssetsUtil {
         }
 
         if (!StringUtils.isBlank(account.getAvatarid())) {
-            Image image = new Image(null, new ExternalResource(StorageFactory.getEntityLogoPath(MyCollabUI
+            Image image = new Image(null, new ExternalResource(StorageUtils.getEntityLogoPath(MyCollabUI
                     .getAccountId(), account.getAvatarid(), size)));
             image.addStyleName(UIConstants.CIRCLE_BOX);
             wrapper.addComponent(image);

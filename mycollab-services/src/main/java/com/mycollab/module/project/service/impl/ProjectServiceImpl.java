@@ -23,7 +23,6 @@ import com.mycollab.aspect.ClassInfo;
 import com.mycollab.aspect.ClassInfoMap;
 import com.mycollab.aspect.Traceable;
 import com.mycollab.configuration.IDeploymentMode;
-import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;

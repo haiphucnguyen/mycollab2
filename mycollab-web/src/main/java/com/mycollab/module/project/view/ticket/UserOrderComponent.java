@@ -20,9 +20,9 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.SortedArrayMap;
 import com.mycollab.html.DivLessFormatter;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -48,7 +48,7 @@ public class UserOrderComponent extends TicketGroupOrderComponent {
                     DefaultTicketGroupComponent groupComponent = userAvailables.get(assignUser);
                     groupComponent.insertTicket(ticket);
                 } else {
-                    Img img = new Img("", StorageFactory.getAvatarPath(ticket.getAssignUserAvatarId(), 32))
+                    Img img = new Img("", StorageUtils.getAvatarPath(ticket.getAssignUserAvatarId(), 32))
                             .setCSSClass((UIConstants.CIRCLE_BOX));
                     Div userDiv = new DivLessFormatter().appendChild(img, new Text(" " + ticket.getAssignUserFullName()));
 

@@ -46,10 +46,6 @@ public class EnDecryptHelper {
         return strongEncryptor.encryptPassword(password);
     }
 
-    public static void main(String[] args) {
-        System.out.println(encryptSaltPassword("test123"));
-    }
-
 
     public static String encryptText(String text) {
         return basicTextEncryptor.encrypt(text);

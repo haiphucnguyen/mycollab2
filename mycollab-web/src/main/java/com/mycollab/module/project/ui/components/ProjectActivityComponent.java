@@ -47,7 +47,6 @@ import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -189,8 +188,8 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
 
         ELabel timePostLbl = ELabel.html(UserUIContext.getMessage(GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
                 UserUIContext.formatPrettyTime(comment.getCreatedtime())))
-                .withDescription(UserUIContext.formatDateTime(comment.getCreatedtime()));
-        timePostLbl.setStyleName(UIConstants.META_INFO);
+                .withDescription(UserUIContext.formatDateTime(comment.getCreatedtime()))
+                .withStyleName(UIConstants.META_INFO);
 
         if (hasDeletePermission(comment)) {
             MButton msgDeleteBtn = new MButton(FontAwesome.TRASH_O).withListener(clickEvent -> {
@@ -267,7 +266,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
                     Div historyDiv = new Div().appendChild(fieldBlock).appendText(fieldDisplayHandler.getFormat()
                             .toString(item.getOldvalue())).appendText(" " + FontAwesome.LONG_ARROW_RIGHT.getHtml() +
                             " ").appendText(fieldDisplayHandler.getFormat().toString(item.getNewvalue()));
-                    rowLayout.addComponent(new Label(historyDiv.write(), ContentMode.HTML));
+                    rowLayout.addComponent(ELabel.html(historyDiv.write()));
                 }
             }
 
@@ -278,7 +277,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
         }
     }
 
-    private void setTotalNums(int nums) {
+    private void setTotalNums(Integer nums) {
         headerLbl.setValue(UserUIContext.getMessage(GenericI18Enum.OPT_CHANGE_HISTORY, nums));
     }
 

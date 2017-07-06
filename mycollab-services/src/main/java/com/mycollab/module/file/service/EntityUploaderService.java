@@ -32,5 +32,6 @@ public interface EntityUploaderService {
      * @param preferSizes
      * @return
      */
-    String upload(BufferedImage logo, String basePath, String oldId, String uploadedUser, Integer sAccountId, int[] preferSizes);
+    String upload(BufferedImage logo, String basePath, String oldId, String uploadedUser,
+                  Integer sAccountId, Integer[] preferSizes);
 }

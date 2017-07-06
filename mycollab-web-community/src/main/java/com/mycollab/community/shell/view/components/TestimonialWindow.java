@@ -33,8 +33,10 @@
 package com.mycollab.community.shell.view.components;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.MyCollabException;
+import com.mycollab.spring.AppContextUtil;
 import com.mycollab.support.domain.TestimonialForm;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -122,7 +124,8 @@ class TestimonialWindow extends MWindow {
                     values.add("jobrole", entity.getJobrole());
                     values.add("testimonial", entity.getTestimonial());
                     values.add("website", entity.getWebsite());
-                    restTemplate.postForObject(SiteConfiguration.getApiUrl("testimonial"), values, String.class);
+                    ServerConfiguration serverConfiguration = AppContextUtil.getSpringBean(ServerConfiguration.class);
+                    restTemplate.postForObject(serverConfiguration.getApiUrl("testimonial"), values, String.class);
                     NotificationUtil.showNotification("We appreciate your kindness action. We will contact you soon " +
                             "to verify your information and provide the MyCollab growing license (for 10 users) to " +
                             "you after that", "Thank you for your time");

@@ -19,9 +19,9 @@ package com.mycollab.module.project.view.page;
 import com.hp.gagawa.java.elements.*;
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.html.DivLessFormatter;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.page.domain.Page;
 import com.mycollab.module.page.domain.PageVersion;
 import com.mycollab.module.page.service.PageService;
@@ -177,7 +177,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
             SimpleProjectMember member = projectMemberService.findMemberByUsername(beanItem.getCreatedUser(),
                     CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
             if (member != null) {
-                Img userAvatar = new Img("", StorageFactory.getAvatarPath(member.getMemberAvatarId(), 16))
+                Img userAvatar = new Img("", StorageUtils.getAvatarPath(member.getMemberAvatarId(), 16))
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(member
                         .getProjectid(), member.getUsername())).appendText(StringUtils.trim(member.getMemberFullName(), 30, true));

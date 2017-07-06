@@ -16,6 +16,7 @@
  */
 package com.mycollab.servlet;
 
+import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -37,6 +38,9 @@ public abstract class TemplateWebServletRequestHandler extends GenericHttpServle
     @Autowired
     private Configuration templateEngine;
 
+    @Autowired
+    private ServerConfiguration serverConfiguration;
+
     public String generatePageByTemplate(Locale locale, String templatePath, Map<String, Object> params) throws IOException, TemplateException {
         Map<String, Object> pageContext = new HashMap<>();
         if (params != null) {
@@ -47,7 +51,7 @@ public abstract class TemplateWebServletRequestHandler extends GenericHttpServle
 
         Map<String, String> defaultUrls = SiteConfiguration.defaultUrls();
 
-        defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+        defaultUrls.put("cdn_url", serverConfiguration.getCdnUrl());
         defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
         pageContext.put("defaultUrls", defaultUrls);
 

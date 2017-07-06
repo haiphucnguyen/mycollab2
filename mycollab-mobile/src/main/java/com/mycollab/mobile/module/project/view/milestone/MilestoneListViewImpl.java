@@ -22,7 +22,6 @@ import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.eventmanager.EventBusFactory;
@@ -34,6 +33,7 @@ import com.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
 import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.mobile.ui.SearchInputField;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.project.*;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
@@ -183,7 +183,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
 
             A assigneeLink = new A(ProjectLinkGenerator.generateProjectMemberLink(CurrentProjectVariables.getProjectId(),
                     milestone.getAssignuser())).appendText(StringUtils.trim(milestone.getOwnerFullName(), 30, true));
-            Div assigneeDiv = new Div().appendChild(new Img("", StorageFactory.getAvatarPath(milestone
+            Div assigneeDiv = new Div().appendChild(new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class).getAvatarPath(milestone
                     .getOwnerAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX)).appendChild(assigneeLink);
 
             ELabel assigneeLbl = ELabel.html(assigneeDiv.write()).withStyleName(UIConstants.META_INFO)

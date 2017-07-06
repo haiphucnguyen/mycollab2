@@ -16,7 +16,6 @@
  */
 package com.mycollab.mobile.module.crm.view;
 
-import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SearchCriteria;
@@ -44,7 +43,7 @@ public class AllActivitiesPresenter extends AbstractCrmPresenter<AllActivitiesVi
     protected void onGo(HasComponents navigator, ScreenData<?> data) {
         NavigationManager currentNav = (NavigationManager) navigator;
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-        searchCriteria.setModuleSet(new SetSearchField(ModuleNameConstants.CRM));
+        searchCriteria.setModuleSet(new SetSearchField(CrmModule.TYPE));
         searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
         searchCriteria.setTypes(getRestrictedItemTypes());
         searchCriteria.addOrderField(new SearchCriteria.OrderField("createdTime", SearchCriteria.DESC));

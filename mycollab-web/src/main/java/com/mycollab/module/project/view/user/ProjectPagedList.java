@@ -20,11 +20,11 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.html.DivLessFormatter;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectTooltipGenerator;
 import com.mycollab.module.project.domain.SimpleProject;
@@ -108,7 +108,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
                     DivLessFormatter.EMPTY_SPACE(), billableHoursDiv, DivLessFormatter.EMPTY_SPACE(),
                     nonBillableHoursDiv, DivLessFormatter.EMPTY_SPACE());
             if (project.getLead() != null) {
-                Div leadDiv = new Div().appendChild(new Img("", StorageFactory.getAvatarPath(project
+                Div leadDiv = new Div().appendChild(new Img("", StorageUtils.getAvatarPath(project
                                 .getLeadAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX), DivLessFormatter.EMPTY_SPACE(),
                         new A(ProjectLinkBuilder.generateProjectMemberFullLink(project.getId(), project.getLead()))
                                 .appendText(StringUtils.trim(project.getLeadFullName(), 30, true))).setTitle
@@ -122,7 +122,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
                 if (project.getClientAvatarId() == null) {
                     accountDiv.appendText(FontAwesome.INSTITUTION.getHtml() + " ");
                 } else {
-                    Img clientImg = new Img("", StorageFactory.getEntityLogoPath(MyCollabUI
+                    Img clientImg = new Img("", StorageUtils.getEntityLogoPath(MyCollabUI
                             .getAccountId(), project.getClientAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX);
                     accountDiv.appendChild(clientImg).appendChild(DivLessFormatter.EMPTY_SPACE());
                 }

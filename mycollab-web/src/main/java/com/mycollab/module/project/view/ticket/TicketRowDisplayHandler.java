@@ -21,8 +21,8 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.html.DivLessFormatter;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
@@ -77,7 +77,7 @@ public class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<Proj
         }
         issueDiv.appendChild(new Span().appendText(status).setCSSClass(UIConstants.BLOCK));
 
-        String avatarLink = StorageFactory.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
+        String avatarLink = StorageUtils.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
         Img img = new Img(ticket.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                 .setTitle(ticket.getAssignUserFullName());
         issueDiv.appendChild(img, DivLessFormatter.EMPTY_SPACE());

@@ -31,6 +31,8 @@ import com.vaadin.ui.UI;
 public class CrmModule extends AbstractMobileMenuPageView implements IModule {
     private static final long serialVersionUID = 1741055981807436733L;
 
+    public static final String TYPE = "Crm";
+
     public CrmModule() {
         ControllerRegistry.addController(new CrmModuleController((NavigationManager) UI.getCurrent().getContent()));
     }

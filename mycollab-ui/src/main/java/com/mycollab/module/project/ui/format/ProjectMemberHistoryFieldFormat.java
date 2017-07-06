@@ -16,9 +16,9 @@
  */
 package com.mycollab.module.project.ui.format;
 
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.html.DivLessFormatter;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.user.domain.SimpleUser;
@@ -58,7 +58,8 @@ public final class ProjectMemberHistoryFieldFormat implements HistoryFieldFormat
             SimpleUser user = userService.findUserByUserNameInAccount(value, MyCollabUI.getAccountId());
             if (user != null) {
                 if (displayAsHtml) {
-                    Img userAvatar = new Img("", StorageFactory.getAvatarPath(user.getAvatarid(), 16)).setCSSClass(UIConstants.CIRCLE_BOX);
+                    Img userAvatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
+                            .getAvatarPath(user.getAvatarid(), 16)).setCSSClass(UIConstants.CIRCLE_BOX);
                     A link = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink
                             (CurrentProjectVariables.getProjectId(),
                                     user.getUsername())).appendText(StringUtils.trim(user.getDisplayName(), 30, true));

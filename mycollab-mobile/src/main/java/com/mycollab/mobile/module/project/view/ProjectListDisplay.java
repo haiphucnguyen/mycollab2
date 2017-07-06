@@ -20,11 +20,11 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
 import com.mycollab.mobile.ui.MobileUIConstants;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
@@ -81,7 +81,9 @@ public class ProjectListDisplay extends DefaultPagedBeanList<ProjectService, Pro
             Div metaDiv = new Div().appendChild(activeMembersDiv, DivLessFormatter.EMPTY_SPACE(), createdTimeDiv, DivLessFormatter.EMPTY_SPACE(),
                     billableHoursDiv, DivLessFormatter.EMPTY_SPACE(), nonBillableHoursDiv);
             if (project.getLead() != null) {
-                Div leadDiv = new Div().appendChild(new Img("", StorageFactory.getAvatarPath(project.getLeadAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
+                Div leadDiv = new Div().appendChild(new Img("",
+                                AppContextUtil.getSpringBean(AbstractStorageService.class)
+                                        .getAvatarPath(project.getLeadAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
                         new A(ProjectLinkBuilder.generateProjectMemberFullLink(project.getId(), project.getLead()))
                                 .appendText(project.getLeadFullName())).setTitle(UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER));
                 metaDiv.appendChild(0, leadDiv);

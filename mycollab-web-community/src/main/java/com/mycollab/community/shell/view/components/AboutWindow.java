@@ -19,9 +19,9 @@ package com.mycollab.community.shell.view.components;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.Version;
 import com.mycollab.core.utils.FileUtils;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -51,7 +51,7 @@ public class AboutWindow extends AbstractAboutWindow {
         MHorizontalLayout content = new MHorizontalLayout().withMargin(true).withFullWidth();
         this.setContent(content);
 
-        Image about = new Image("", new ExternalResource(StorageFactory.generateAssetRelativeLink(WebResourceIds._about)));
+        Image about = new Image("", new ExternalResource(StorageUtils.generateAssetRelativeLink(WebResourceIds._about)));
         MVerticalLayout rightPanel = new MVerticalLayout();
         ELabel versionLbl = ELabel.h2(String.format("MyCollab Community Edition %s", Version.getVersion()));
         Label javaNameLbl = new Label(String.format("%s, %s", System.getProperty("java.vm.name"),

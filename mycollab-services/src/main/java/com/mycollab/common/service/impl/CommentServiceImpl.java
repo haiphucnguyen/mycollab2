@@ -54,10 +54,10 @@ public class CommentServiceImpl extends DefaultService<Integer, CommentWithBLOBs
     private static final Logger LOG = LoggerFactory.getLogger(CommentServiceImpl.class);
 
     @Autowired
-    protected CommentMapper commentMapper;
+    private CommentMapper commentMapper;
 
     @Autowired
-    protected CommentMapperExt commentMapperExt;
+    private CommentMapperExt commentMapperExt;
 
     @Autowired
     private RelayEmailNotificationService relayEmailNotificationService;

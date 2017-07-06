@@ -16,7 +16,6 @@
  */
 package com.mycollab.module.file.service.impl;
 
-import com.mycollab.configuration.FileStorage;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.ResourceNotFoundException;
 import com.mycollab.module.file.service.RawContentService;
@@ -38,7 +37,7 @@ public class FileRawContentServiceImpl implements RawContentService {
     private File baseFolder;
 
     public FileRawContentServiceImpl() {
-        baseFolder = FileStorage.getInstance().getBaseContentFolder();
+        baseFolder = com.mycollab.core.utils.FileUtils.getHomeFolder();
     }
 
     @Override

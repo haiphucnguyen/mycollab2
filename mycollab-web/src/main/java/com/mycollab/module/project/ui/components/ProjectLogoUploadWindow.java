@@ -57,7 +57,7 @@ public class ProjectLogoUploadWindow extends MWindow implements ImagePreviewCrop
         EntityUploaderService entityUploaderService = AppContextUtil.getSpringBean(EntityUploaderService.class);
         String newLogoId = entityUploaderService.upload(image, PathUtils.getProjectLogoPath(MyCollabUI.getAccountId(),
                 project.getId()), project.getAvatarid(), UserUIContext.getUsername(), MyCollabUI.getAccountId(),
-                new int[]{16, 32, 48, 64, 100});
+                new Integer[]{16, 32, 48, 64, 100});
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         project.setAvatarid(newLogoId);
         projectService.updateSelectiveWithSession(project, UserUIContext.getUsername());

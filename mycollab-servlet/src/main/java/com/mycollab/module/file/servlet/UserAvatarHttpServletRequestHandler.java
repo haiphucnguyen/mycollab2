@@ -16,11 +16,10 @@
  */
 package com.mycollab.module.file.servlet;
 
-import com.mycollab.configuration.FileStorage;
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.ResourceNotFoundException;
+import com.mycollab.core.utils.FileUtils;
 import com.mycollab.servlet.GenericHttpServlet;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -54,11 +53,11 @@ public class UserAvatarHttpServletRequestHandler extends GenericHttpServlet {
             if (lastIndex > 0) {
                 String username = path.substring(0, lastIndex);
                 int size = Integer.valueOf(path.substring(lastIndex + 1, path.length()));
-                FileStorage fileStorage = (FileStorage) StorageFactory.getInstance();
-                File avatarFile = fileStorage.getAvatarFile(username, size);
+
+                File userAvatarFile = new File(FileUtils.getHomeFolder(), String.format("/avatar/%s_%d.png", username, size));
                 InputStream avatarInputStream;
-                if (avatarFile != null) {
-                    avatarInputStream = new FileInputStream(avatarFile);
+                if (userAvatarFile != null) {
+                    avatarInputStream = new FileInputStream(userAvatarFile);
                 } else {
                     String userAvatarPath = String.format("assets/icons/default_user_avatar_%d.png", size);
                     avatarInputStream = UserAvatarHttpServletRequestHandler.class.getClassLoader().getResourceAsStream(userAvatarPath);

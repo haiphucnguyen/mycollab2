@@ -59,7 +59,6 @@ public class ApplicationProperties {
     public static final String MAIL_NOTIFY = "mail.notify";
 
     public static final String ERROR_SENDTO = "error.sendTo";
-    public static final String STORAGE_SYSTEM = "storageSystem";
 
     public static final String SITE_NAME = "site.name";
     public static final String SERVER_ADDRESS = "server.address";

@@ -16,9 +16,11 @@
  */
 package com.mycollab.vaadin;
 
+import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.Version;
+import com.mycollab.module.file.StorageUtils;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.user.domain.BillingAccount;
 import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.spring.AppContextUtil;
@@ -50,7 +52,7 @@ public class MyCollabBootstrapListener implements BootstrapListener {
 
         BillingAccount account = billingService.getAccountByDomain(domain);
         if (account != null) {
-            String favIconPath = StorageFactory.getFavIconPath(account.getId(), account.getFaviconpath());
+            String favIconPath = StorageUtils.getFavIconPath(account.getId(), account.getFaviconpath());
             response.getDocument().head().getElementsByAttributeValue("rel", "shortcut icon").attr("href", favIconPath);
             response.getDocument().head().getElementsByAttributeValue("rel", "icon").attr("href", favIconPath);
         }
@@ -58,12 +60,13 @@ public class MyCollabBootstrapListener implements BootstrapListener {
         response.getDocument().head().append("<meta name=\"robots\" content=\"nofollow\" />");
 
         if (!MOBILE_APP.equals(response.getUiClass().getName()) || !Utils.isTablet(request)) {
+            ServerConfiguration serverConfiguration = AppContextUtil.getSpringBean(ServerConfiguration.class);
             response.getDocument().head()
                     .append(String.format("<script type=\"text/javascript\" src=\"%sjs/jquery-2.1.4.min.js\"></script>",
-                            SiteConfiguration.getCdnUrl()));
+                            serverConfiguration.getCdnUrl()));
             response.getDocument().head()
                     .append(String.format("<script type=\"text/javascript\" src=\"%sjs/stickytooltip-1.0.2.js?v=%s\"></script>",
-                            SiteConfiguration.getCdnUrl(), Version.getVersion()));
+                            serverConfiguration.getCdnUrl(), Version.getVersion()));
 
             Element div1 = response.getDocument().body().appendElement("div");
             div1.attr("id", "div1" + TOOLTIP_ID);

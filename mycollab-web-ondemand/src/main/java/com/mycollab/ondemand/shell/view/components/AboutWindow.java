@@ -3,7 +3,6 @@ package com.mycollab.ondemand.shell.view.components;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.Version;
 import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.vaadin.mvp.ViewComponent;

@@ -16,7 +16,8 @@
  */
 package com.mycollab.vaadin.ui;
 
-import com.mycollab.configuration.StorageFactory;
+import com.mycollab.module.file.service.AbstractStorageService;
+import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.resources.VaadinResourceFactory;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
@@ -39,7 +40,8 @@ public class UserAvatarControlFactory {
 
     public static Resource createAvatarResource(String avatarId, int size) {
         if (avatarId == null) {
-            return new ExternalResource(StorageFactory.generateAssetRelativeLink((String.format("icons/default_user_avatar_%d.png", size))));
+            return new ExternalResource(AppContextUtil.getSpringBean(AbstractStorageService.class)
+                    .generateAssetRelativeLink((String.format("icons/default_user_avatar_%d.png", size))));
         }
         return VaadinResourceFactory.getAvatarResource(avatarId, size);
     }

@@ -18,7 +18,7 @@ package com.mycollab.module.project.view.bug;
 
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
-import com.mycollab.configuration.StorageFactory;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
@@ -51,7 +51,7 @@ public class BugRowRenderer implements IBeanList.RowDisplayHandler<SimpleBug> {
         Span statusSpan = new Span().appendText(UserUIContext.getMessage(OptionI18nEnum.BugStatus.class,
                 bug.getStatus())).setCSSClass(UIConstants.BLOCK);
 
-        String avatarLink = StorageFactory.getAvatarPath(bug.getAssignUserAvatarId(), 16);
+        String avatarLink = StorageUtils.getAvatarPath(bug.getAssignUserAvatarId(), 16);
         Img img = new Img(bug.getAssignuserFullName(), avatarLink).setTitle(bug.getAssignuserFullName())
                 .setCSSClass(UIConstants.CIRCLE_BOX);
 

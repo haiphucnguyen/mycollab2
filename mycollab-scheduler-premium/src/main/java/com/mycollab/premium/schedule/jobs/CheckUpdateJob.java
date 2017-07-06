@@ -1,6 +1,7 @@
 package com.mycollab.premium.schedule.jobs;
 
 import com.mycollab.configuration.EnDecryptHelper;
+import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.BroadcastMessage;
 import com.mycollab.core.Broadcaster;
@@ -38,6 +39,9 @@ import java.util.zip.ZipFile;
 public class CheckUpdateJob extends GenericQuartzJobBean {
     private static Logger LOG = LoggerFactory.getLogger(CheckUpdateJob.class);
 
+    @Autowired
+    private ServerConfiguration serverConfiguration;
+
     private static boolean isDownloading = false;
     private static String latestFileDownloadedPath;
 
@@ -49,7 +53,7 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
         RestTemplate restTemplate = new RestTemplate();
         LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
         String customerId = EnDecryptHelper.encryptText(licenseInfo.getCustomerId());
-        String result = restTemplate.getForObject(SiteConfiguration.getApiUrl("checkpremiumupdate?version=" +
+        String result = restTemplate.getForObject(serverConfiguration.getApiUrl("checkpremiumupdate?version=" +
                 Version.getVersion() + "&customerId=" + customerId), String.class);
         final Properties props = JsonDeSerializer.fromJson(result, Properties.class);
         String version = props.getProperty("version");

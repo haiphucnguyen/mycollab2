@@ -16,6 +16,7 @@
  */
 package com.mycollab.community.schedule.jobs;
 
+import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.BroadcastMessage;
 import com.mycollab.core.Broadcaster;
@@ -27,6 +28,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -53,10 +55,13 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
     private static boolean isDownloading = false;
     private static String latestFileDownloadedPath;
 
+    @Autowired
+    private ServerConfiguration serverConfiguration;
+
     @Override
     public void executeJob(JobExecutionContext context) throws JobExecutionException {
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(SiteConfiguration.getApiUrl("checkupdate?version=" + Version.getVersion()), String.class);
+        String result = restTemplate.getForObject(serverConfiguration.getApiUrl("checkupdate?version=" + Version.getVersion()), String.class);
         final Properties props = JsonDeSerializer.fromJson(result, Properties.class);
         String version = props.getProperty("version");
         if (Version.isEditionNewer(version)) {

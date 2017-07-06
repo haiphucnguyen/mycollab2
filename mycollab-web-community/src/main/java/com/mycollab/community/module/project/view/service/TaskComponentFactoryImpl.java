@@ -23,8 +23,8 @@ import com.mycollab.common.i18n.FollowerI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.community.vaadin.web.ui.field.MetaFieldBuilder;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.NumberUtils;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
@@ -54,7 +54,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
 
     @Override
     public AbstractComponent createAssigneePopupField(SimpleTask task) {
-        String avatarLink = StorageFactory.getAvatarPath(task.getAssignUserAvatarId(), 16);
+        String avatarLink = StorageUtils.getAvatarPath(task.getAssignUserAvatarId(), 16);
         Img img = new Img(task.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                 .setTitle(task.getAssignUserFullName());
         return new MetaFieldBuilder().withCaption(img.write())

@@ -12,7 +12,6 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.common.service.CommentService;
 import com.mycollab.common.service.MonitorItemService;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.SecureAccessException;
 import com.mycollab.core.utils.HumanTime;
@@ -23,6 +22,7 @@ import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -47,7 +47,6 @@ import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.module.project.view.task.TaskEditForm;
 import com.mycollab.module.project.view.task.TaskStatusComboBox;
-import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
@@ -215,7 +214,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         PopupBeanFieldBuilder<ProjectTicket> builder = new PopupBeanFieldBuilder<ProjectTicket>() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String avatarLink = StorageFactory.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageUtils.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
                 Img img = new Img(ticket.getAssignUserFullName(), avatarLink).setTitle(ticket.getAssignUserFullName())
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 return img.write();

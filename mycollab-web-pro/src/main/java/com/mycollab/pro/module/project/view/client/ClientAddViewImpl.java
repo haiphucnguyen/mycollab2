@@ -68,7 +68,7 @@ public class ClientAddViewImpl extends AbstractVerticalPageView implements Clien
             EntityUploaderService entityUploaderService = AppContextUtil.getSpringBean(EntityUploaderService.class);
             String newLogoId = entityUploaderService.upload(image, PathUtils.getEntityLogoPath(MyCollabUI
                             .getAccountId()), account.getAvatarid(), UserUIContext.getUsername(), MyCollabUI.getAccountId(),
-                    new int[]{16, 32, 48, 64, 100});
+                    new Integer[]{16, 32, 48, 64, 100});
             AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
             account.setAvatarid(newLogoId);
             accountService.updateSelectiveWithSession(account, UserUIContext.getUsername());

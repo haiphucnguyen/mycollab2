@@ -21,7 +21,6 @@ import com.hp.gagawa.java.elements.Img;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
@@ -31,6 +30,7 @@ import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.query.LazyValueInjector;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -57,9 +57,9 @@ import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.addon.webcomponents.FloatingComponent;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
@@ -342,7 +342,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                                 status = UserUIContext.getMessage(StatusI18nEnum.class, ticket.getStatus());
                             }
                             rowComp.with(new ELabel(status).withStyleName(UIConstants.BLOCK).withWidthUndefined());
-                            String avatarLink = StorageFactory.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
+                            String avatarLink = StorageUtils.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
                             Img img = new Img(ticket.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                                     .setTitle(ticket.getAssignUserFullName());
                             rowComp.with(ELabel.html(img.write()).withWidthUndefined());

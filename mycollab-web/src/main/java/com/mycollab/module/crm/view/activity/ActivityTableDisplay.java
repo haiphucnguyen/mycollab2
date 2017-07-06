@@ -18,7 +18,6 @@ package com.mycollab.module.crm.view.activity;
 
 import com.hp.gagawa.java.elements.*;
 import com.mycollab.common.TableViewField;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.crm.CrmLinkBuilder;
 import com.mycollab.module.crm.CrmLinkGenerator;
@@ -28,6 +27,7 @@ import com.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.mycollab.module.crm.i18n.OptionI18nEnum;
 import com.mycollab.module.crm.service.EventService;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
@@ -288,7 +288,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
                             new Td().setStyle("width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top;")
                                     .appendChild(new A().setHref((event.getAssignUser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(
                                             MyCollabUI.getSiteUrl(), event.getAssignUser()) : "")
-                                            .appendChild(new Img("", StorageFactory.getAvatarPath(event.getAssignUserAvatarId(), 16)))
+                                            .appendChild(new Img("", StorageUtils.getAvatarPath(event.getAssignUserAvatarId(), 16)))
                                             .appendText(StringUtils.trimHtmlTags(event.getAssignUserFullName()))));
 
             Tr trRow4 = new Tr();

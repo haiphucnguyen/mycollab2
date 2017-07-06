@@ -47,7 +47,8 @@ public class EntityUploaderServiceImpl implements EntityUploaderService {
     private ResourceService resourceService;
 
     @Override
-    public String upload(BufferedImage image, String basePath, String oldId, String uploadedUser, Integer sAccountId, int[] preferSizes) {
+    public String upload(BufferedImage image, String basePath, String oldId, String uploadedUser,
+                         Integer sAccountId, Integer[] preferSizes) {
         // Construct new logoid
         String newLogoId = new GregorianCalendar().getTimeInMillis() + UUID.randomUUID().toString();
 
@@ -56,7 +57,7 @@ public class EntityUploaderServiceImpl implements EntityUploaderService {
         }
 
         if (StringUtils.isNotBlank(oldId)) {
-            for (int preferSize : preferSizes) {
+            for (Integer preferSize : preferSizes) {
                 try {
                     resourceService.removeResource(String.format("%s/%s_%d.png", basePath, oldId, preferSize),
                             uploadedUser, true, sAccountId);

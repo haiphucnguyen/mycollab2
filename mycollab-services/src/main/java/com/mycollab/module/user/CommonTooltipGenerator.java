@@ -18,13 +18,14 @@ package com.mycollab.module.user;
 
 import com.hp.gagawa.java.elements.*;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.core.utils.TimezoneVal;
 import com.mycollab.i18n.LocalizationHelper;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.domain.SimpleUser;
+import com.mycollab.spring.AppContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +42,7 @@ public class CommonTooltipGenerator {
     public static String generateTooltipUser(Locale locale, SimpleUser user, String siteURL, TimeZone timeZone) {
         try {
             if (user == null) {
-                return generateTolltipNull(locale);
+                return generateTooltipNull(locale);
             }
 
             Div div = new Div();
@@ -59,7 +60,7 @@ public class CommonTooltipGenerator {
                             new A().setHref("mailto:" + user.getEmail()).appendText(userEmail)));
 
             Td trRow1_value = new Td().setStyle("width:150px;text-align: right; vertical-align: top;")
-                    .appendChild(new Img("", StorageFactory.getAvatarPath(user.getAvatarid(), 100))
+                    .appendChild(new Img("", getAvatarPath(user.getAvatarid(), 100))
                             .setCSSClass("circle-box"));
             trRow1_value.setAttribute("rowspan", "5");
             trRow1.appendChild(new Td().setStyle("width: 0px; vertical-align: top; text-align: right;").appendChild(trRow1_value));
@@ -92,7 +93,7 @@ public class CommonTooltipGenerator {
         }
     }
 
-    private static String generateTolltipNull(Locale locale) {
+    private static String generateTooltipNull(Locale locale) {
         Div div = new Div();
         Table table = new Table();
         table.setStyle("padding-left:10px;  color: #5a5a5a; font-size:12px;");
@@ -104,5 +105,10 @@ public class CommonTooltipGenerator {
         div.appendChild(table);
 
         return div.write();
+    }
+
+    private static String getAvatarPath(String userAvatarId, Integer size) {
+        AbstractStorageService abstractStorageService = AppContextUtil.getSpringBean(AbstractStorageService.class);
+        return abstractStorageService.getAvatarPath(userAvatarId, size);
     }
 }

@@ -1,6 +1,7 @@
 package com.mycollab.license.service;
 
 import com.mycollab.common.service.AppPropertiesService;
+import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.UserInvalidInputException;
@@ -17,6 +18,7 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,6 +35,9 @@ import java.util.UUID;
 @Service
 public class LicenseResolverImpl implements LicenseResolver, AppPropertiesService, InitializingBean {
     private static final Logger LOG = LoggerFactory.getLogger(LicenseResolverImpl.class);
+
+    @Autowired
+    private ServerConfiguration serverConfiguration;
 
     private Properties properties;
     private LicenseInfo licenseInfo = null;
@@ -97,7 +102,7 @@ public class LicenseResolverImpl implements LicenseResolver, AppPropertiesServic
             properties.setProperty("edition", getEdition());
             RestTemplate restTemplate = new RestTemplate();
             try {
-                String licenseRequest = restTemplate.postForObject(SiteConfiguration.getApiUrl("order/register-trial"), null, String.class);
+                String licenseRequest = restTemplate.postForObject(serverConfiguration.getApiUrl("order/register-trial"), null, String.class);
                 checkAndSaveLicenseInfo(licenseRequest);
             } catch (Exception e) {
                 LOG.error("Can not retrieve a trial license", e);

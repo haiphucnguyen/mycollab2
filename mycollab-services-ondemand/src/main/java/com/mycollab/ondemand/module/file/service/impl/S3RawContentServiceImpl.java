@@ -18,7 +18,6 @@ package com.mycollab.ondemand.module.file.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.module.file.service.RawContentService;
 import com.mycollab.ondemand.configuration.S3Storage;

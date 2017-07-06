@@ -19,7 +19,6 @@ package com.mycollab.ondemand.configuration;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.configuration.Storage;
 
 /**
  * Amazon S3 Configuration

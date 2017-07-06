@@ -23,7 +23,6 @@ import com.mycollab.common.ActivityStreamConstants;
 import com.mycollab.common.domain.SimpleActivityStream;
 import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.mycollab.common.service.ActivityStreamService;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;
@@ -32,6 +31,7 @@ import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.crm.view.CrmLocalizationTypeMap;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.MyCollabUI;
@@ -124,7 +124,8 @@ class ActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityStreamSe
 
         private String buildAssigneeValue(SimpleActivityStream activityStream) {
             DivLessFormatter div = new DivLessFormatter();
-            Img userAvatar = new Img("", StorageFactory.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
+            Img userAvatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
+                    .getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
             A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(AccountLinkGenerator.generatePreviewFullUserLink(
                     MyCollabUI.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim

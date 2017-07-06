@@ -16,6 +16,7 @@
  */
 package com.mycollab.module.billing.servlet;
 
+import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.spring.AppContextUtil;
 import freemarker.template.Configuration;
@@ -39,8 +40,9 @@ class PageGeneratorUtil {
         Map<String, Object> context = new HashMap<>();
         context.put("loginURL", loginURL);
         context.put("username", username);
+        ServerConfiguration serverConfiguration = AppContextUtil.getSpringBean(ServerConfiguration.class);
         Map<String, String> defaultUrls = SiteConfiguration.defaultUrls();
-        defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+        defaultUrls.put("cdn_url", serverConfiguration.getCdnUrl());
         defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
         context.put("defaultUrls", defaultUrls);
 

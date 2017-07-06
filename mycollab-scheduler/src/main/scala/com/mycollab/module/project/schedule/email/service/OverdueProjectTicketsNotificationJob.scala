@@ -1,19 +1,19 @@
 /**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
+  * This file is part of mycollab-scheduler.
+  *
+  * mycollab-scheduler is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * mycollab-scheduler is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
+  */
 package com.mycollab.module.project.schedule.email.service
 
 import java.util
@@ -23,22 +23,24 @@ import com.hp.gagawa.java.elements.{A, Div, Img}
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.common.{FontAwesomeUtils, NotificationType}
-import com.mycollab.configuration.{EmailConfiguration, SiteConfiguration, StorageFactory}
+import com.mycollab.configuration.{EmailConfiguration, SiteConfiguration}
 import com.mycollab.core.MyCollabException
 import com.mycollab.core.utils.{BeanUtility, DateTimeUtils}
 import com.mycollab.db.arguments.{NumberSearchField, RangeDateSearchField, SearchField, SetSearchField}
 import com.mycollab.html.{DivLessFormatter, LinkUtils}
 import com.mycollab.i18n.LocalizationHelper
+import com.mycollab.module.file.service.AbstractStorageService
 import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria
 import com.mycollab.module.project.domain.{ProjectNotificationSetting, ProjectTicket}
-import com.mycollab.module.project.i18n.{ProjectCommonI18nEnum, TicketI18nEnum}
+import com.mycollab.module.project.i18n.TicketI18nEnum
 import com.mycollab.module.project.schedule.email.service.OverdueProjectTicketsNotificationJob.OverdueAssignmentFormatter
 import com.mycollab.module.project.service.{ProjectMemberService, ProjectNotificationSettingService, ProjectTicketService}
 import com.mycollab.module.project.{ProjectLinkGenerator, ProjectTypeConstants}
 import com.mycollab.module.user.AccountLinkGenerator
 import com.mycollab.module.user.domain.SimpleUser
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
+import com.mycollab.spring.AppContextUtil
 import org.joda.time.LocalDate
 import org.quartz.{JobExecutionContext, JobExecutionException}
 import org.slf4j.LoggerFactory
@@ -81,8 +83,10 @@ object OverdueProjectTicketsNotificationJob {
       }
     }
 
+    def storageService() = AppContextUtil.getSpringBean(classOf[AbstractStorageService])
+
     def formatAssignUser(subDomain: String, assignment: ProjectTicket): String = {
-      new Div().appendChild(new Img("", StorageFactory.getAvatarPath(assignment.getAssignUserAvatarId, 16)),
+      new Div().appendChild(new Img("", storageService.getAvatarPath(assignment.getAssignUserAvatarId, 16)),
         new A(AccountLinkGenerator.generatePreviewFullUserLink(subDomain, assignment.getAssignUser)).
           appendText(assignment.getAssignUserFullName)).write()
     }
@@ -155,8 +159,7 @@ class OverdueProjectTicketsNotificationJob extends GenericQuartzJobBean {
       }
     }
   }
-  
-  
+
 
   private def getNotifiersOfProject(projectId: Integer, accountId: Integer): Set[SimpleUser] = {
     import scala.collection.JavaConverters._

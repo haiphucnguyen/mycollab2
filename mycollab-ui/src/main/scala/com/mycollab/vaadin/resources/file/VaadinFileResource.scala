@@ -18,7 +18,7 @@ package com.mycollab.vaadin.resources.file
 
 import java.io.{File, FileInputStream, IOException}
 
-import com.mycollab.configuration.FileStorage
+import com.mycollab.core.utils.FileUtils
 import com.mycollab.vaadin.resources.VaadinResource
 import com.vaadin.server.{DownloadStream, FileResource, Resource}
 import org.slf4j.LoggerFactory
@@ -33,7 +33,7 @@ class VaadinFileResource extends VaadinResource {
   override def getStreamResource(documentPath: String): Resource = new FileStreamDownloadResource(documentPath)
   
   @SerialVersionUID(1L)
-  class FileStreamDownloadResource(val documentPath: String) extends FileResource(new File(FileStorage.getInstance.getBaseContentFolder, documentPath)) {
+  class FileStreamDownloadResource(val documentPath: String) extends FileResource(new File(FileUtils.getHomeFolder, documentPath)) {
     override def getStream: DownloadStream = {
       val fileName = getFilename.replace(" ", "_").replace("-", "_")
       try {

@@ -3,7 +3,6 @@ package com.mycollab.ondemand.vaadin.resources.s3;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.ondemand.configuration.S3Storage;
 import com.mycollab.vaadin.resources.VaadinResource;

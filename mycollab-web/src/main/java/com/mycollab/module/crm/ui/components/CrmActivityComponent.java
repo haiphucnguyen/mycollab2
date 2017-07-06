@@ -112,7 +112,8 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
 
         MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))
                 .withStyleName(WebThemes.FORM_SECTION, WebThemes.HOVER_EFFECT_NOT_BOX).withFullWidth()
-                .with(headerLbl, sortDirection).withAlign(headerLbl, Alignment.MIDDLE_LEFT).withAlign(sortDirection, Alignment.MIDDLE_RIGHT);
+                .with(headerLbl, sortDirection).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
+                .withAlign(sortDirection, Alignment.MIDDLE_RIGHT);
 
         commentBox = new CrmCommentInput(this, type);
         activityBox = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false));
@@ -186,11 +187,11 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
         MHorizontalLayout messageHeader = new MHorizontalLayout().withFullWidth();
         messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        ELabel timePostLbl = new ELabel(UserUIContext.getMessage(
+        ELabel timePostLbl = ELabel.html(UserUIContext.getMessage(
                 GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
-                UserUIContext.formatPrettyTime(comment.getCreatedtime())), ContentMode.HTML).
-                withDescription(UserUIContext.formatDateTime(comment.getCreatedtime()));
-        timePostLbl.setStyleName(UIConstants.META_INFO);
+                UserUIContext.formatPrettyTime(comment.getCreatedtime())))
+                .withDescription(UserUIContext.formatDateTime(comment.getCreatedtime()))
+                .withStyleName(UIConstants.META_INFO);
 
         if (hasDeletePermission(comment)) {
             MButton msgDeleteBtn = new MButton("", clickEvent ->
@@ -250,11 +251,11 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
             MHorizontalLayout messageHeader = new MHorizontalLayout().withFullWidth();
             messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-            ELabel timePostLbl = new ELabel(UserUIContext.getMessage(
+            ELabel timePostLbl = ELabel.html(UserUIContext.getMessage(
                     GenericI18Enum.EXT_MODIFIED_ITEM, auditLog.getPostedUserFullName(),
-                    UserUIContext.formatPrettyTime(auditLog.getPosteddate())), ContentMode.HTML).
-                    withDescription(UserUIContext.formatDateTime(auditLog.getPosteddate()));
-            timePostLbl.setStyleName(UIConstants.META_INFO);
+                    UserUIContext.formatPrettyTime(auditLog.getPosteddate())))
+                    .withDescription(UserUIContext.formatDateTime(auditLog.getPosteddate()))
+                    .withStyleName(UIConstants.META_INFO);
             messageHeader.with(timePostLbl).expand(timePostLbl);
 
             rowLayout.addComponent(messageHeader);
@@ -264,12 +265,12 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
 
                 DefaultFieldDisplayHandler fieldDisplayHandler = groupFormatter.getFieldDisplayHandler(fieldName);
                 if (fieldDisplayHandler != null) {
-                    Span fieldBlock = new Span().appendText(UserUIContext.getMessage(fieldDisplayHandler.getDisplayName
-                            ())).setCSSClass(UIConstants.BLOCK);
+                    Span fieldBlock = new Span().appendText(UserUIContext.getMessage(fieldDisplayHandler.getDisplayName()))
+                            .setCSSClass(UIConstants.BLOCK);
                     Div historyDiv = new Div().appendChild(fieldBlock).appendText(fieldDisplayHandler.getFormat()
                             .toString(item.getOldvalue())).appendText(" " + FontAwesome.LONG_ARROW_RIGHT.getHtml() +
                             " ").appendText(fieldDisplayHandler.getFormat().toString(item.getNewvalue()));
-                    rowLayout.addComponent(new Label(historyDiv.write(), ContentMode.HTML));
+                    rowLayout.addComponent(ELabel.html(historyDiv.write()));
                 }
             }
 
@@ -280,7 +281,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
         }
     }
 
-    private void setTotalNums(int nums) {
+    private void setTotalNums(Integer nums) {
         headerLbl.setValue(UserUIContext.getMessage(GenericI18Enum.OPT_CHANGE_HISTORY, nums));
     }
 
