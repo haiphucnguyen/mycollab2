@@ -22,8 +22,6 @@ import com.mycollab.core.ResourceNotFoundException;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.servlet.GenericHttpServlet;
 import org.apache.commons.io.FilenameUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +35,6 @@ import java.io.*;
  */
 @WebServlet(urlPatterns = "/file/avatar/*", name = "userAvatarFSServlet")
 public class UserAvatarHttpServletRequestHandler extends GenericHttpServlet {
-    private static final Logger LOG = LoggerFactory.getLogger(UserAvatarHttpServletRequestHandler.class);
 
     @Override
     protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,17 +52,7 @@ public class UserAvatarHttpServletRequestHandler extends GenericHttpServlet {
                 int size = Integer.valueOf(path.substring(lastIndex + 1, path.length()));
 
                 File userAvatarFile = new File(FileUtils.getHomeFolder(), String.format("/avatar/%s_%d.png", username, size));
-                InputStream avatarInputStream;
-                if (userAvatarFile != null) {
-                    avatarInputStream = new FileInputStream(userAvatarFile);
-                } else {
-                    String userAvatarPath = String.format("assets/icons/default_user_avatar_%d.png", size);
-                    avatarInputStream = UserAvatarHttpServletRequestHandler.class.getClassLoader().getResourceAsStream(userAvatarPath);
-                    if (avatarInputStream == null) {
-                        LOG.error("Error to get avatar", new MyCollabException("Invalid request for avatar " + path));
-                        throw new ResourceNotFoundException("Invalid path " + path);
-                    }
-                }
+                InputStream avatarInputStream = new FileInputStream(userAvatarFile);
 
                 response.setHeader("Content-Type", "image/png");
                 response.setHeader("Content-Length", String.valueOf(avatarInputStream.available()));

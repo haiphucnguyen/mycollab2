@@ -1,6 +1,6 @@
 package com.mycollab.module.mail
 
-import com.mycollab.configuration.{IDeploymentMode, SiteConfiguration}
+import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.module.file.service.AbstractStorageService
 import com.mycollab.module.user.service.BillingAccountService
 import com.mycollab.spring.AppContextUtil
@@ -16,9 +16,9 @@ object MailUtils {
     if (mode.isDemandEdition) {
       val billingAccountService = AppContextUtil.getSpringBean(classOf[BillingAccountService])
       val account = billingAccountService.getAccountById(sAccountId)
-      if (account != null) siteUrl = SiteConfiguration.getSiteUrl(account.getSubdomain)
+      if (account != null) siteUrl = mode.getSiteUrl(account.getSubdomain)
     }
-    else siteUrl = SiteConfiguration.getSiteUrl("")
+    else siteUrl = mode.getSiteUrl("")
     siteUrl
   }
 

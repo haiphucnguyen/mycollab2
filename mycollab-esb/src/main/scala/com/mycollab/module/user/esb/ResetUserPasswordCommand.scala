@@ -4,7 +4,7 @@ import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.mycollab.common.UrlEncodeDecoder
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
-import com.mycollab.configuration.{EmailConfiguration, SiteConfiguration}
+import com.mycollab.configuration.{ApplicationConfiguration, EmailConfiguration, IDeploymentMode}
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.esb.GenericCommand
@@ -23,6 +23,8 @@ import org.springframework.stereotype.Component
   @Autowired private val extMailService: ExtMailService = null
   @Autowired private val userService: UserService = null
   @Autowired private val contentGenerator: IContentGenerator = null
+  @Autowired private val applicationConfiguration: ApplicationConfiguration = null
+  @Autowired private val deploymentMode: IDeploymentMode = null
 
   @AllowConcurrentEvents
   @Subscribe
@@ -31,7 +33,7 @@ import org.springframework.stereotype.Component
     if (username != null) {
       val user = userService.findUserByUserName(username)
       val subDomain = "api"
-      val recoveryPasswordURL = SiteConfiguration.getSiteUrl(subDomain) + "user/recoverypassword/" +
+      val recoveryPasswordURL = deploymentMode.getSiteUrl(subDomain) + "user/recoverypassword/" +
         UrlEncodeDecoder.encode(username)
       val locale = LocalizationHelper.getLocaleInstance(user.getLanguage)
       contentGenerator.putVariable("username", user.getUsername)
@@ -41,10 +43,10 @@ import org.springframework.stereotype.Component
       val recipient = new MailRecipientField(user.getEmail, user.getUsername)
       val recipientFields = List[MailRecipientField](recipient)
       import collection.JavaConverters._
-      extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
+      extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, applicationConfiguration.getName,
         recipientFields.asJava,
         LocalizationHelper.getMessage(locale, UserI18nEnum.MAIL_RECOVERY_PASSWORD_SUBJECT,
-          SiteConfiguration.getDefaultSiteName),
+          applicationConfiguration.getName),
         contentGenerator.parseFile("mailUserRecoveryPasswordNotifier.ftl", locale))
     }
   }

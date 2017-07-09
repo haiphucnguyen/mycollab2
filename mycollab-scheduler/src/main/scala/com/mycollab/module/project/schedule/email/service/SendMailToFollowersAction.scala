@@ -21,7 +21,7 @@ import com.mycollab.common.domain.criteria.CommentSearchCriteria
 import com.mycollab.common.domain.{MailRecipientField, SimpleRelayEmailNotification}
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.common.service.{AuditLogService, CommentService}
-import com.mycollab.configuration.{EmailConfiguration, SiteConfiguration}
+import com.mycollab.configuration.{ApplicationConfiguration, EmailConfiguration, SiteConfiguration}
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.db.arguments.{BasicSearchRequest, StringSearchField}
 import com.mycollab.html.LinkUtils
@@ -41,13 +41,14 @@ import org.springframework.beans.factory.annotation.Autowired
   * @since 4.6.0
   */
 abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificationAction {
-  @Autowired var emailConfiguration: EmailConfiguration = _
-  @Autowired var extMailService: ExtMailService = _
-  @Autowired var projectService: ProjectService = _
-  @Autowired var projectMemberService: ProjectMemberService = _
-  @Autowired var commentService: CommentService = _
-  @Autowired var contentGenerator: IContentGenerator = _
-  @Autowired var auditLogService: AuditLogService = _
+  @Autowired private val applicationConfiguration: ApplicationConfiguration = null
+  @Autowired private val emailConfiguration: EmailConfiguration = null
+  @Autowired private val extMailService: ExtMailService = null
+  @Autowired private val projectService: ProjectService = null
+  @Autowired protected val projectMemberService: ProjectMemberService = null
+  @Autowired private val commentService: CommentService = null
+  @Autowired protected val contentGenerator: IContentGenerator = null
+  @Autowired private val auditLogService: AuditLogService = null
   
   protected var bean: B = _
   protected var projectMember: SimpleProjectMember = _
@@ -75,7 +76,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
           contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List[MailRecipientField](userMail)
-          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
+          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, applicationConfiguration.getName, recipients.asJava,
             getCreateSubject(context), contentGenerator.parseFile("mailProjectItemCreatedNotifier.ftl", context.getLocale))
         }
       }
@@ -118,7 +119,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
           contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List[MailRecipientField](userMail)
-          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
+          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, applicationConfiguration.getName, recipients.asJava,
             getUpdateSubject(context), contentGenerator.parseFile("mailProjectItemUpdatedNotifier.ftl", context.getLocale))
         }
       }
@@ -153,7 +154,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
           contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val toRecipients = List[MailRecipientField](userMail)
-          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, toRecipients.asJava,
+          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, applicationConfiguration.getName, toRecipients.asJava,
             getCommentSubject(context), contentGenerator.parseFile("mailProjectItemCommentNotifier.ftl", context.getLocale))
         }
       }

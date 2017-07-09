@@ -3,7 +3,7 @@ package com.mycollab.ondemand.schedule.jobs
 import java.util.Arrays
 
 import com.mycollab.common.domain.MailRecipientField
-import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.db.arguments.{BasicSearchRequest, RangeDateSearchField, SetSearchField}
 import com.mycollab.module.billing.AccountStatusConstants
 import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
@@ -25,10 +25,11 @@ import org.springframework.stereotype.Component
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class FollowupSignupUserAfterOneWeekJob extends GenericQuartzJobBean {
-  @Autowired var contentGenerator: IContentGenerator = _
-  @Autowired var billingService: BillingService = _
-  @Autowired var extMailService: ExtMailService = _
-  
+  @Autowired private val contentGenerator: IContentGenerator = null
+  @Autowired private val billingService: BillingService = null
+  @Autowired private val extMailService: ExtMailService = null
+  @Autowired private val deploymentMode: IDeploymentMode = null
+
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext): Unit = {
     val searchCriteria = new BillingAccountSearchCriteria
@@ -44,7 +45,9 @@ class FollowupSignupUserAfterOneWeekJob extends GenericQuartzJobBean {
            if accountOwner.getCanSendEmail) {
         val leadName = accountOwner.getFirstname + " " + accountOwner.getLastname
         contentGenerator.putVariable("lead", leadName)
-        contentGenerator.putVariable("unsubscribeUrl", SupportLinkGenerator.generateUnsubscribeEmailFullLink(SiteConfiguration.getSiteUrl("settings"), accountOwner.getEmail))
+        contentGenerator.putVariable("unsubscribeUrl",
+          SupportLinkGenerator.generateUnsubscribeEmailFullLink(deploymentMode.getSiteUrl("settings"),
+            accountOwner.getEmail))
         extMailService.sendHTMLMail("john.adam@mycollab.com", "John Adams",
           Arrays.asList(new MailRecipientField(accountOwner.getEmail, leadName)),
           "How are things going with MyCollab?",

@@ -41,18 +41,12 @@ public class SiteConfiguration {
 
     private static SiteConfiguration instance;
 
-    private String siteName;
-    private String serverAddress;
     private Locale defaultLocale;
+
     private String endecryptPassword;
+
     private String dropboxCallbackUrl;
     private String ggDriveCallbackUrl;
-    private String appUrl;
-
-    private String facebookUrl;
-    private String twitterUrl;
-    private String googleUrl;
-    private String linkedinUrl;
 
     private PullMethod pullMethod;
     private Configuration freemarkerConfiguration;
@@ -60,12 +54,9 @@ public class SiteConfiguration {
     public static void loadConfiguration() {
         TimeZone.setDefault(DateTimeZone.UTC.toTimeZone());
         DateTimeZone.setDefault(DateTimeZone.UTC);
-        int serverPort = Integer.parseInt(System.getProperty(ApplicationProperties.MYCOLLAB_PORT, "8080"));
         ApplicationProperties.loadProps();
         instance = new SiteConfiguration();
 
-        instance.siteName = ApplicationProperties.getString(SITE_NAME, "MyCollab");
-        instance.serverAddress = ApplicationProperties.getString(SERVER_ADDRESS, "localhost");
         String propLocale = ApplicationProperties.getString(DEFAULT_LOCALE, "en_US");
         try {
             instance.defaultLocale = Locale.forLanguageTag(propLocale);
@@ -80,11 +71,6 @@ public class SiteConfiguration {
 
         instance.dropboxCallbackUrl = ApplicationProperties.getString(DROPBOX_AUTH_LINK);
         instance.ggDriveCallbackUrl = ApplicationProperties.getString(GOOGLE_DRIVE_LINK);
-
-        instance.facebookUrl = ApplicationProperties.getString(FACEBOOK_URL, "https://www.facebook.com/mycollab2");
-        instance.twitterUrl = ApplicationProperties.getString(TWITTER_URL, "https://twitter.com/mycollabdotcom");
-        instance.googleUrl = ApplicationProperties.getString(GOOGLE_URL, "https://plus.google.com/u/0/b/112053350736358775306/+Mycollab/about/p/pub");
-        instance.linkedinUrl = ApplicationProperties.getString(LINKEDIN_URL, "http://www.linkedin.com/company/mycollab");
 
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_25);
         configuration.setDefaultEncoding("UTF-8");
@@ -118,37 +104,8 @@ public class SiteConfiguration {
         return instance;
     }
 
-    public static String getAppUrl() {
-        return getInstance().appUrl;
-    }
-
-    public static String getFacebookUrl() {
-        return getInstance().facebookUrl;
-    }
-
-    public static String getTwitterUrl() {
-        return getInstance().twitterUrl;
-    }
-
-    public static String getGoogleUrl() {
-        return getInstance().googleUrl;
-    }
-
-    public static String getLinkedinUrl() {
-        return getInstance().linkedinUrl;
-    }
-
-    public static String getDefaultSiteName() {
-        return getInstance().siteName;
-    }
-
     public static PullMethod getPullMethod() {
         return getInstance().pullMethod;
-    }
-
-    public static String getSiteUrl(String subDomain) {
-        IDeploymentMode modeService = AppContextUtil.getSpringBean(IDeploymentMode.class);
-        return modeService.getSiteUrl(subDomain);
     }
 
     public static boolean isDemandEdition() {
@@ -177,21 +134,8 @@ public class SiteConfiguration {
         return getInstance().endecryptPassword;
     }
 
-    public static String getServerAddress() {
-        return getInstance().serverAddress;
-    }
-
     public static Configuration freemarkerConfiguration() {
         return getInstance().freemarkerConfiguration;
-    }
-
-    public static Map<String, String> defaultUrls() {
-        Map<String, String> defaultUrls = new HashMap<>();
-        defaultUrls.put("facebook_url", SiteConfiguration.getFacebookUrl());
-        defaultUrls.put("google_url", SiteConfiguration.getGoogleUrl());
-        defaultUrls.put("linkedin_url", SiteConfiguration.getLinkedinUrl());
-        defaultUrls.put("twitter_url", SiteConfiguration.getTwitterUrl());
-        return defaultUrls;
     }
 
     public enum PullMethod {

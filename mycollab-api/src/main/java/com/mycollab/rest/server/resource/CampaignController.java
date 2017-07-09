@@ -1,8 +1,8 @@
 package com.mycollab.rest.server.resource;
 
 import com.mycollab.common.domain.MailRecipientField;
+import com.mycollab.configuration.ApplicationConfiguration;
 import com.mycollab.configuration.EmailConfiguration;
-import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.Version;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.module.mail.service.ExtMailService;
@@ -32,6 +32,9 @@ import java.util.Map;
 public class CampaignController {
     @Autowired
     private CommunityLeadMapper communityLeadMapper;
+
+    @Autowired
+    private ApplicationConfiguration applicationConfiguration;
 
     @Autowired
     private EditionInfoResolver editionInfoResolver;
@@ -93,7 +96,7 @@ public class CampaignController {
                     contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab.com/download/verify?email=%s", email));
                 }
 
-                extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
+                extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail(), applicationConfiguration.getName(),
                         Collections.singletonList(new MailRecipientField(email, firstname + " " + lastname)),
                         "MyCollab is ready for download", contentGenerator.parseFile("mailDownloadInfo.ftl"));
             }

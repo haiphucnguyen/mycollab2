@@ -1,6 +1,6 @@
 package com.mycollab.rest.server.resource;
 
-import com.mycollab.configuration.SiteConfiguration;
+import com.mycollab.configuration.IDeploymentMode;
 import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.ondemand.module.support.service.EmailReferenceService;
 import org.slf4j.Logger;
@@ -26,6 +26,9 @@ public class AccountController {
     @Autowired
     private EmailReferenceService emailReferenceService;
 
+    @Autowired
+    private IDeploymentMode deploymentMode;
+
     @RequestMapping(value = "signup", method = RequestMethod.POST, headers = "Content-Type=application/x-www-form-urlencoded")
     public String signup(@RequestParam("subDomain") String subdomain, @RequestParam("planId") Integer planId,
                          @RequestParam("password") String password, @RequestParam("email") String email,
@@ -37,6 +40,6 @@ public class AccountController {
         billingService.registerAccount(subdomain, planId, email, password, email, timezoneId, isEmailVerified);
 
         emailReferenceService.save(email);
-        return SiteConfiguration.getSiteUrl(subdomain);
+        return deploymentMode.getSiteUrl(subdomain);
     }
 }

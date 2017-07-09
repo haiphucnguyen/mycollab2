@@ -3,7 +3,7 @@ package com.mycollab.module.mail.service.impl
 import java.io._
 import java.util.Locale
 
-import com.mycollab.configuration.{ServerConfiguration, SiteConfiguration}
+import com.mycollab.configuration.{ApplicationConfiguration, ServerConfiguration}
 import com.mycollab.module.file.service.AbstractStorageService
 import com.mycollab.module.mail.service.IContentGenerator
 import com.mycollab.schedule.email.MailStyles
@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class ContentGenerator extends IContentGenerator with InitializingBean {
   private var templateContext: java.util.HashMap[String, Any] = _
+  @Autowired private val applicationConfiguration: ApplicationConfiguration = null
   @Autowired private val serverConfiguration: ServerConfiguration = null
   @Autowired private val templateEngine: Configuration = null
 
@@ -32,13 +33,13 @@ class ContentGenerator extends IContentGenerator with InitializingBean {
     templateContext = new java.util.HashMap[String, Any]()
     val defaultUrls = Map[String, String](
       "cdn_url" -> serverConfiguration.getCdnUrl,
-      "facebook_url" -> SiteConfiguration.getFacebookUrl,
-      "google_url" -> SiteConfiguration.getGoogleUrl,
-      "linkedin_url" -> SiteConfiguration.getLinkedinUrl,
-      "twitter_url" -> SiteConfiguration.getTwitterUrl)
+      "facebook_url" -> applicationConfiguration.getFacebookUrl,
+      "google_url" -> applicationConfiguration.getGoogleUrl,
+      "linkedin_url" -> applicationConfiguration.getLinkedinUrl,
+      "twitter_url" -> applicationConfiguration.getTwitterUrl)
     putVariable("defaultUrls", defaultUrls)
     putVariable("current_year", new LocalDate().getYear)
-    putVariable("siteName", SiteConfiguration.getDefaultSiteName)
+    putVariable("siteName", applicationConfiguration.getName)
     putVariable("styles", MailStyles.instance())
 
     val storageFactory = AppContextUtil.getSpringBean(classOf[AbstractStorageService])

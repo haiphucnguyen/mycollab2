@@ -3,7 +3,6 @@ package com.mycollab.premium.configuration;
 import com.mycollab.configuration.ApplicationProperties;
 import com.mycollab.configuration.IDeploymentMode;
 import com.mycollab.configuration.ServerConfiguration;
-import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.db.persistence.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -38,6 +37,6 @@ public class DeploymentMode implements IDeploymentMode, IService {
     @Override
     public String getSiteUrl(String subDomain) {
         return String.format(ApplicationProperties.getString(ApplicationProperties.APP_URL),
-                SiteConfiguration.getServerAddress(), serverConfiguration.getPort());
+                serverConfiguration.getAddress(), serverConfiguration.getPort());
     }
 }

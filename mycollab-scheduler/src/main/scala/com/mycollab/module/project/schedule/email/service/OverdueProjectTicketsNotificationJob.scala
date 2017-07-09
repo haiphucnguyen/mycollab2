@@ -1,19 +1,3 @@
-/**
-  * This file is part of mycollab-scheduler.
-  *
-  * mycollab-scheduler is free software: you can redistribute it and/or modify
-  * it under the terms of the GNU General Public License as published by
-  * the Free Software Foundation, either version 3 of the License, or
-  * (at your option) any later version.
-  *
-  * mycollab-scheduler is distributed in the hope that it will be useful,
-  * but WITHOUT ANY WARRANTY; without even the implied warranty of
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  * GNU General Public License for more details.
-  *
-  * You should have received a copy of the GNU General Public License
-  * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
-  */
 package com.mycollab.module.project.schedule.email.service
 
 import java.util
@@ -23,7 +7,7 @@ import com.hp.gagawa.java.elements.{A, Div, Img}
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.common.{FontAwesomeUtils, NotificationType}
-import com.mycollab.configuration.{EmailConfiguration, SiteConfiguration}
+import com.mycollab.configuration.{ApplicationConfiguration, EmailConfiguration, IDeploymentMode}
 import com.mycollab.core.MyCollabException
 import com.mycollab.core.utils.{BeanUtility, DateTimeUtils}
 import com.mycollab.db.arguments.{NumberSearchField, RangeDateSearchField, SearchField, SetSearchField}
@@ -60,26 +44,27 @@ object OverdueProjectTicketsNotificationJob {
     def formatDate(date: Date): String = DateTimeUtils.formatDate(date, "yyyy-MM-dd", Locale.US)
 
     def formatLink(subDomain: String, assignment: ProjectTicket): String = {
+      val mode = AppContextUtil.getSpringBean(classOf[IDeploymentMode])
       try {
         assignment.getType match {
           case ProjectTypeConstants.BUG => new Div().appendText(FontAwesomeUtils.toHtml(ProjectTypeConstants.BUG)).
-            appendChild(DivLessFormatter.EMPTY_SPACE, new A(ProjectLinkGenerator.generateBugPreviewFullLink(SiteConfiguration.getSiteUrl(subDomain),
+            appendChild(DivLessFormatter.EMPTY_SPACE, new A(ProjectLinkGenerator.generateBugPreviewFullLink(mode.getSiteUrl(subDomain),
               assignment.getExtraTypeId, assignment.getProjectShortName)).appendText(assignment.getName)).write()
           case ProjectTypeConstants.TASK => new Div().appendText(FontAwesomeUtils.toHtml(ProjectTypeConstants.TASK)).
-            appendChild(DivLessFormatter.EMPTY_SPACE, new A(ProjectLinkGenerator.generateTaskPreviewFullLink(SiteConfiguration.getSiteUrl(subDomain),
+            appendChild(DivLessFormatter.EMPTY_SPACE, new A(ProjectLinkGenerator.generateTaskPreviewFullLink(mode.getSiteUrl(subDomain),
               assignment.getExtraTypeId, assignment.getProjectShortName)).appendText(assignment.getName)).write()
           case ProjectTypeConstants.RISK => new Div().appendText(FontAwesomeUtils.toHtml(ProjectTypeConstants.RISK)).
-            appendChild(DivLessFormatter.EMPTY_SPACE, new A(ProjectLinkGenerator.generateRiskPreviewFullLink(SiteConfiguration.getSiteUrl(subDomain),
+            appendChild(DivLessFormatter.EMPTY_SPACE, new A(ProjectLinkGenerator.generateRiskPreviewFullLink(mode.getSiteUrl(subDomain),
               assignment.getProjectId, assignment.getTypeId)).appendText(assignment.getName)).write()
           case ProjectTypeConstants.MILESTONE => new Div().appendText(FontAwesomeUtils.toHtml(ProjectTypeConstants.MILESTONE)).
-            appendChild(DivLessFormatter.EMPTY_SPACE, new A(ProjectLinkGenerator.generateMilestonePreviewFullLink(SiteConfiguration.getSiteUrl(subDomain),
+            appendChild(DivLessFormatter.EMPTY_SPACE, new A(ProjectLinkGenerator.generateMilestonePreviewFullLink(mode.getSiteUrl(subDomain),
               assignment.getProjectId, assignment.getTypeId)).appendText(assignment.getName)).write()
           case typeVal => throw new MyCollabException("Do not support type " + typeVal)
         }
       } catch {
         case e: Exception =>
           LOG.error("Error in format assignment", BeanUtility.printBeanObj(assignment))
-          SiteConfiguration.getSiteUrl(subDomain)
+          mode.getSiteUrl(subDomain)
       }
     }
 
@@ -100,7 +85,11 @@ class OverdueProjectTicketsNotificationJob extends GenericQuartzJobBean {
 
   @Autowired private val projectAssignmentService: ProjectTicketService = null
 
+  @Autowired private val applicationConfiguration: ApplicationConfiguration = null
+
   @Autowired private val emailConfiguration: EmailConfiguration = null
+
+  @Autowired private val deploymentMode: IDeploymentMode = null
 
   @Autowired private val extMailService: ExtMailService = null
 
@@ -129,7 +118,7 @@ class OverdueProjectTicketsNotificationJob extends GenericQuartzJobBean {
         val projectIds = projectAssignmentService.getProjectsHasOverdueAssignments(searchCriteria).asScala.toList
         for (projectId <- projectIds) {
           searchCriteria.setProjectIds(new SetSearchField[Integer](projectId))
-          val siteUrl = SiteConfiguration.getSiteUrl(account.getSubdomain)
+          val siteUrl = deploymentMode.getSiteUrl(account.getSubdomain)
           contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, projectId))
           val assignments = projectAssignmentService.findAbsoluteListByCriteria(searchCriteria, 0, Integer.MAX_VALUE).asScala.toList
           if (assignments.nonEmpty) {
@@ -151,7 +140,7 @@ class OverdueProjectTicketsNotificationJob extends GenericQuartzJobBean {
               val content = contentGenerator.parseFile("mailProjectOverdueAssignmentsNotifier.ftl", Locale.US)
               val overdueAssignments = LocalizationHelper.getMessage(userLocale, TicketI18nEnum.VAL_OVERDUE_TICKETS) + "(" + assignments.length + ")"
               contentGenerator.putVariable("overdueAssignments", overdueAssignments)
-              extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
+              extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, applicationConfiguration.getName, recipients,
                 "[%s] %s".format(projectName, overdueAssignments), content)
             }
           }

@@ -5,7 +5,7 @@ import java.util.Arrays
 import com.google.common.eventbus.Subscribe
 import com.mycollab.common.dao.OptionValMapper
 import com.mycollab.common.domain.{MailRecipientField, OptionValExample}
-import com.mycollab.configuration.{EmailConfiguration, SiteConfiguration}
+import com.mycollab.configuration.{ApplicationConfiguration, EmailConfiguration, SiteConfiguration}
 import com.mycollab.core.utils.BeanUtility
 import com.mycollab.module.ecm.service.ResourceService
 import com.mycollab.module.esb.GenericCommand
@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component
   @Autowired private val optionValMapper: OptionValMapper = null
   @Autowired private val mailService: ExtMailService = null
   @Autowired private val emailConfiguration: EmailConfiguration = null
+  @Autowired private val applicationConfiguration: ApplicationConfiguration = null
   
   @Subscribe
   def deleteAccount(event: DeleteAccountEvent): Unit = {
@@ -38,7 +39,7 @@ import org.springframework.stereotype.Component
     
     val feedback = event.feedback
     val feedbackValue = if (feedback == null) "None" else BeanUtility.printBeanObj(feedback)
-    mailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
+    mailService.sendHTMLMail(emailConfiguration.getNotifyEmail, applicationConfiguration.getName,
       Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")),
       "User cancelled account", feedbackValue)
   }

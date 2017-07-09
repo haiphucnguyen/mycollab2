@@ -19,6 +19,8 @@ package com.mycollab.vaadin;
 import com.google.common.base.MoreObjects;
 import com.mycollab.common.SessionIdGenerator;
 import com.mycollab.common.i18n.ErrorI18nEnum;
+import com.mycollab.configuration.ApplicationConfiguration;
+import com.mycollab.configuration.IDeploymentMode;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.GroupIdProvider;
@@ -29,7 +31,6 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.ui.ThemeManager;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.WebBrowser;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,7 +84,8 @@ public abstract class MyCollabUI extends UI {
      * @return
      */
     public static String getSiteUrl() {
-        return SiteConfiguration.getSiteUrl(getBillingAccount().getSubdomain());
+        IDeploymentMode deploymentMode = AppContextUtil.getSpringBean(IDeploymentMode.class);
+        return deploymentMode.getSiteUrl(getBillingAccount().getSubdomain());
     }
 
     public static SimpleBillingAccount getBillingAccount() {
@@ -112,10 +114,11 @@ public abstract class MyCollabUI extends UI {
     }
 
     public static String getSiteName() {
+        ApplicationConfiguration applicationConfiguration = AppContextUtil.getSpringBean(ApplicationConfiguration.class);
         try {
-            return MoreObjects.firstNonNull(getInstance().billingAccount.getSitename(), SiteConfiguration.getDefaultSiteName());
+            return MoreObjects.firstNonNull(getInstance().billingAccount.getSitename(), applicationConfiguration.getName());
         } catch (Exception e) {
-            return SiteConfiguration.getDefaultSiteName();
+            return applicationConfiguration.getName();
         }
     }
 
@@ -191,14 +194,5 @@ public abstract class MyCollabUI extends UI {
         currentContext.clearSessionVariables();
         currentContext = null;
         super.close();
-    }
-
-    public static boolean isTablet() {
-        try {
-            WebBrowser webBrowser = Page.getCurrent().getWebBrowser();
-            return webBrowser.isIPad();
-        } catch (Exception e) {
-            return false;
-        }
     }
 }

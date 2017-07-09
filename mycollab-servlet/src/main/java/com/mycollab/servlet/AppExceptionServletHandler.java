@@ -18,6 +18,7 @@ package com.mycollab.servlet;
 
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.configuration.ApplicationConfiguration;
 import com.mycollab.configuration.IDeploymentMode;
 import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
@@ -56,6 +57,9 @@ public class AppExceptionServletHandler extends GenericHttpServlet {
     private IDeploymentMode deploymentMode;
 
     @Autowired
+    private ApplicationConfiguration applicationConfiguration;
+
+    @Autowired
     private ServerConfiguration serverConfiguration;
 
     @Override
@@ -82,9 +86,9 @@ public class AppExceptionServletHandler extends GenericHttpServlet {
 
     private void responsePage404(HttpServletResponse response) throws IOException, TemplateException {
         Map<String, Object> context = new HashMap<>();
-        Map<String, String> defaultUrls = SiteConfiguration.defaultUrls();
+        Map<String, String> defaultUrls = applicationConfiguration.defaultUrls();
         defaultUrls.put("cdn_url", serverConfiguration.getCdnUrl());
-        defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
+        defaultUrls.put("app_url", serverConfiguration.getUrl());
         context.put("defaultUrls", defaultUrls);
 
         StringWriter writer = new StringWriter();
@@ -116,10 +120,10 @@ public class AppExceptionServletHandler extends GenericHttpServlet {
         }
 
         Map<String, Object> context = new HashMap<>();
-        Map<String, String> defaultUrls = SiteConfiguration.defaultUrls();
+        Map<String, String> defaultUrls = applicationConfiguration.defaultUrls();
 
         defaultUrls.put("cdn_url", serverConfiguration.getCdnUrl());
-        defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
+        defaultUrls.put("app_url", serverConfiguration.getUrl());
         context.put("defaultUrls", defaultUrls);
 
         StringWriter writer = new StringWriter();

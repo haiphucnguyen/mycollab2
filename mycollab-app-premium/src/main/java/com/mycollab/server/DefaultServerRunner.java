@@ -4,6 +4,7 @@ import com.mycollab.core.utils.FileUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,18 +16,23 @@ import java.net.URI;
  * @author MyCollab Ltd
  * @since 5.5.0
  */
+@Configuration
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
+@ComponentScan(basePackages = {"com.mycollab"})
 public class DefaultServerRunner {
     public static void main(String[] args) {
+        SpringApplication application = new SpringApplication(DefaultServerRunner.class);
         if (!checkConfigFileExist()) {
-            openDefaultWebBrowserForInstallation();
+            application.setAdditionalProfiles("setup");
+            application.run(args);
         } else {
-            ProductionMyCollabServer.main(args);
+            application.run(args);
         }
     }
 
     private static boolean checkConfigFileExist() {
-        File confFolder = FileUtils.getDesireFile(FileUtils.getUserFolder(), "conf", "src/main/conf");
-        return confFolder != null && new File(confFolder, "mycollab.properties").exists();
+        File confFolder = FileUtils.getDesireFile(FileUtils.getUserFolder(), "config", "src/main/config");
+        return confFolder != null && new File(confFolder, "application.yml").exists();
     }
 
     private static void openDefaultWebBrowserForInstallation() {
