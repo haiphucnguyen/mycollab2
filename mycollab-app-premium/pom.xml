@@ -27,6 +27,12 @@
 
         <dependency>
             <groupId>com.mycollab</groupId>
+            <artifactId>mycollab-migration</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
             <version>${project.version}</version>
         </dependency>
