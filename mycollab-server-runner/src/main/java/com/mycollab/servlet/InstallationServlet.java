@@ -104,7 +104,7 @@ public class InstallationServlet extends HttpServlet {
             LOG.warn("Cannot authenticate mail server successfully. Make sure your inputs are correct.");
         }
 
-        Configuration configuration = SiteConfiguration.freemarkerConfiguration();
+//        Configuration configuration = SiteConfiguration.freemarkerConfiguration();
         Map<String, Object> templateContext = new HashMap<>();
         templateContext.put("sitename", sitename);
         templateContext.put("serveraddress", serverAddress);
@@ -134,8 +134,8 @@ public class InstallationServlet extends HttpServlet {
 
         try {
             StringWriter writer = new StringWriter();
-            Template template = configuration.getTemplate("mycollab.properties.ftl");
-            template.process(templateContext, writer);
+//            Template template = configuration.getTemplate("mycollab.properties.ftl");
+//            template.process(templateContext, writer);
 
             FileOutputStream outStream = new FileOutputStream(new File(confFolder, "mycollab.properties"));
             outStream.write(writer.toString().getBytes());
