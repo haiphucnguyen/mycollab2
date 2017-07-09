@@ -33,7 +33,7 @@ public class EnDecryptHelper {
 
     static {
         basicTextEncryptor = new BasicTextEncryptor();
-        basicTextEncryptor.setPassword(SiteConfiguration.getEnDecryptPassword());
+        basicTextEncryptor.setPassword("esofthead321");
     }
 
     /**

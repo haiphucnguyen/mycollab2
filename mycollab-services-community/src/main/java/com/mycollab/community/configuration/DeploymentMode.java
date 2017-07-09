@@ -16,7 +16,6 @@
  */
 package com.mycollab.community.configuration;
 
-import com.mycollab.configuration.ApplicationProperties;
 import com.mycollab.configuration.IDeploymentMode;
 import com.mycollab.configuration.ServerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,6 @@ public class DeploymentMode implements IDeploymentMode {
 
     @Override
     public String getSiteUrl(String subDomain) {
-        return String.format(ApplicationProperties.getString(ApplicationProperties.APP_URL),
-                serverConfiguration.getAddress(), serverConfiguration.getPort());
+        return serverConfiguration.getUrl();
     }
 }

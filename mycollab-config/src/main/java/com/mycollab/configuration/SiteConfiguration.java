@@ -36,8 +36,6 @@ public class SiteConfiguration {
 
     private Locale defaultLocale;
 
-    private String endecryptPassword;
-
     private String dropboxCallbackUrl;
     private String ggDriveCallbackUrl;
 
@@ -59,7 +57,6 @@ public class SiteConfiguration {
         String pullMethodValue = ApplicationProperties.getString(ApplicationProperties.PULL_METHOD, "push");
         instance.pullMethod = PullMethod.valueOf(pullMethodValue);
 
-        instance.endecryptPassword = ApplicationProperties.getString(BI_ENDECRYPT_PASSWORD, "esofthead321");
 
         instance.dropboxCallbackUrl = ApplicationProperties.getString(DROPBOX_AUTH_LINK);
         instance.ggDriveCallbackUrl = ApplicationProperties.getString(GOOGLE_DRIVE_LINK);
@@ -96,10 +93,6 @@ public class SiteConfiguration {
 
     public static String getGGDriveCallbackUrl() {
         return getInstance().ggDriveCallbackUrl;
-    }
-
-    public static String getEnDecryptPassword() {
-        return getInstance().endecryptPassword;
     }
 
     public enum PullMethod {

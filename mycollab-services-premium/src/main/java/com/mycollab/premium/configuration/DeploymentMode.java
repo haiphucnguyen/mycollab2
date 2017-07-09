@@ -1,6 +1,5 @@
 package com.mycollab.premium.configuration;
 
-import com.mycollab.configuration.ApplicationProperties;
 import com.mycollab.configuration.IDeploymentMode;
 import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.db.persistence.service.IService;
@@ -36,7 +35,6 @@ public class DeploymentMode implements IDeploymentMode, IService {
 
     @Override
     public String getSiteUrl(String subDomain) {
-        return String.format(ApplicationProperties.getString(ApplicationProperties.APP_URL),
-                serverConfiguration.getAddress(), serverConfiguration.getPort());
+        return serverConfiguration.getUrl();
     }
 }
