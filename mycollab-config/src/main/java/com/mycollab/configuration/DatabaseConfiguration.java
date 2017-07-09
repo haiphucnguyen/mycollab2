@@ -31,6 +31,13 @@ public class DatabaseConfiguration {
     private String username;
     private String  password;
 
+    private String cachePrepStmts = "true";
+    private String prepStmtCacheSize = "250";
+    private String prepStmtCacheSqlLimit = "2048";
+    private String useServerPrepStmts = "true";
+    private String maximumPoolSize = "20";
+    private String initializationFailFast = "false";
+
     public String getDriverClassName() {
         return driverClassName;
     }
@@ -61,5 +68,53 @@ public class DatabaseConfiguration {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCachePrepStmts() {
+        return cachePrepStmts;
+    }
+
+    public void setCachePrepStmts(String cachePrepStmts) {
+        this.cachePrepStmts = cachePrepStmts;
+    }
+
+    public String getPrepStmtCacheSize() {
+        return prepStmtCacheSize;
+    }
+
+    public void setPrepStmtCacheSize(String prepStmtCacheSize) {
+        this.prepStmtCacheSize = prepStmtCacheSize;
+    }
+
+    public String getPrepStmtCacheSqlLimit() {
+        return prepStmtCacheSqlLimit;
+    }
+
+    public void setPrepStmtCacheSqlLimit(String prepStmtCacheSqlLimit) {
+        this.prepStmtCacheSqlLimit = prepStmtCacheSqlLimit;
+    }
+
+    public String getUseServerPrepStmts() {
+        return useServerPrepStmts;
+    }
+
+    public void setUseServerPrepStmts(String useServerPrepStmts) {
+        this.useServerPrepStmts = useServerPrepStmts;
+    }
+
+    public String getMaximumPoolSize() {
+        return maximumPoolSize;
+    }
+
+    public void setMaximumPoolSize(String maximumPoolSize) {
+        this.maximumPoolSize = maximumPoolSize;
+    }
+
+    public String getInitializationFailFast() {
+        return initializationFailFast;
+    }
+
+    public void setInitializationFailFast(String initializationFailFast) {
+        this.initializationFailFast = initializationFailFast;
     }
 }

@@ -47,12 +47,12 @@ public class DataSourceConfiguration {
         dataSource.setPassword(dbConf.getPassword());
 
         Properties dsProperties = new Properties();
-        dsProperties.setProperty("cachePrepStmts", "true");
-        dsProperties.setProperty("prepStmtCacheSize", "250");
-        dsProperties.setProperty("prepStmtCacheSqlLimit", "2048");
-        dsProperties.setProperty("useServerPrepStmts", "true");
-        dsProperties.setProperty("maximumPoolSize", "20");
-        dsProperties.setProperty("initializationFailFast", "false");
+        dsProperties.setProperty(dbConf.getCachePrepStmts(), "true");
+        dsProperties.setProperty(dbConf.getPrepStmtCacheSize(), "250");
+        dsProperties.setProperty(dbConf.getPrepStmtCacheSqlLimit(), "2048");
+        dsProperties.setProperty(dbConf.getUseServerPrepStmts(), "true");
+        dsProperties.setProperty(dbConf.getMaximumPoolSize(), "20");
+        dsProperties.setProperty(dbConf.getInitializationFailFast(), "false");
         dataSource.setDataSourceProperties(dsProperties);
         return dataSource;
     }

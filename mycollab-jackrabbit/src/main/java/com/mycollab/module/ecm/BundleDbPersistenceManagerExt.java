@@ -17,7 +17,6 @@
 package com.mycollab.module.ecm;
 
 import com.mycollab.configuration.DatabaseConfiguration;
-import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.spring.AppContextUtil;
 import org.apache.jackrabbit.core.persistence.PMContext;
 import org.apache.jackrabbit.core.persistence.pool.BundleDbPersistenceManager;
