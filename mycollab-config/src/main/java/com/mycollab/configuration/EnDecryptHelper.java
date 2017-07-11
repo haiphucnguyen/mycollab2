@@ -51,6 +51,12 @@ public class EnDecryptHelper {
         return basicTextEncryptor.encrypt(text);
     }
 
+    public static void main(String[] args) {
+        String x = basicTextEncryptor.encrypt("3881;3");
+        String decrypt = decryptText("fp2YHQnzi75DUPGYoz4+FA==");
+        System.out.println(decrypt);
+    }
+
     public static String decryptText(String text) {
         try {
             return basicTextEncryptor.decrypt(text);

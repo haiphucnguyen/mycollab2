@@ -21,11 +21,14 @@ db:
   password: esofthead321
 
 mail:
-  #smtphost:
-  #port:
-  #username:
-  #password:
-  #isTLS: false
-  #isSSL: false
-  #notify:
-  #errorReport:
+  host: mail.comunicatii.gov.ro
+  port: 465
+  user: mycollab@comunicatii.gov.ro
+  password: xMV#pWxMsAp3
+  isTLS: false
+  isSSL: true
+  notifyEmail: noreply@mycollab.com
+  errorReportEmail: error@mycollab.com
+
+management:
+  port: 9090
