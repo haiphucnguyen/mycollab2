@@ -49,8 +49,8 @@ public class DefaultMailer implements IMailer {
             HtmlEmail email = new HtmlEmail();
             email.setHostName(emailConf.getHost());
             email.setSmtpPort(emailConf.getPort());
-            email.setStartTLSEnabled(emailConf.getIsStartTls());
-            email.setSSLOnConnect(emailConf.getIsSsl());
+            email.setStartTLSEnabled(emailConf.isTLS());
+            email.setSSLOnConnect(emailConf.isSSL());
             email.setFrom(fromEmail, fromName);
             email.setCharset(EmailConstants.UTF_8);
             for (MailRecipientField aToEmail : toEmail) {

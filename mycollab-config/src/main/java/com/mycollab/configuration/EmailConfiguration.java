@@ -39,8 +39,8 @@ public class EmailConfiguration extends ValuedBean implements Cloneable {
 
     private Integer port = 25;
 
-    private boolean isStartTls = false;
-    private boolean isSsl = false;
+    private Boolean isTLS = false;
+    private Boolean isSSL = false;
     private String notifyEmail;
     private String errorReportEmail;
 
@@ -76,20 +76,20 @@ public class EmailConfiguration extends ValuedBean implements Cloneable {
         this.port = port;
     }
 
-    public boolean getIsStartTls() {
-        return isStartTls;
+    public boolean isTLS() {
+        return isTLS;
     }
 
-    public void setIsStartTls(boolean isStartTls) {
-        this.isStartTls = isStartTls;
+    public void setIsTLS(Boolean TLS) {
+        isTLS = TLS;
     }
 
-    public boolean getIsSsl() {
-        return isSsl;
+    public boolean isSSL() {
+        return isSSL;
     }
 
-    public void setIsSsl(boolean isSsl) {
-        this.isSsl = isSsl;
+    public void setIsSSL(Boolean SSL) {
+        isSSL = SSL;
     }
 
     public EmailConfiguration clone() {

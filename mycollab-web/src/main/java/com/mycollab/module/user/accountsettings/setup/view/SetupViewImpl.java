@@ -20,7 +20,6 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.configuration.ApplicationProperties;
 import com.mycollab.configuration.EmailConfiguration;
-import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
@@ -31,7 +30,10 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
-import com.mycollab.vaadin.web.ui.*;
+import com.mycollab.vaadin.web.ui.AddViewLayout;
+import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
+import com.mycollab.vaadin.web.ui.IntegerField;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
@@ -105,7 +107,7 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
                 if (editForm.validateForm()) {
                     try {
                         InstallUtils.checkSMTPConfig(emailConf.getHost(), emailConf.getPort(), emailConf.getUser(),
-                                emailConf.getPassword(), true, emailConf.getIsStartTls(), emailConf.getIsSsl());
+                                emailConf.getPassword(), true, emailConf.isTLS(), emailConf.isSSL());
                         saveEmailConfiguration();
                     } catch (UserInvalidInputException e) {
                         ConfirmDialogExt.show(UI.getCurrent(),
@@ -134,8 +136,8 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
                     p.setProperty(ApplicationProperties.MAIL_USERNAME, emailConf.getUser());
                     p.setProperty(ApplicationProperties.MAIL_PASSWORD, emailConf.getPassword());
                     p.setProperty(ApplicationProperties.MAIL_PORT, emailConf.getPort());
-                    p.setProperty(ApplicationProperties.MAIL_IS_TLS, emailConf.getIsStartTls());
-                    p.setProperty(ApplicationProperties.MAIL_IS_SSL, emailConf.getIsSsl());
+                    p.setProperty(ApplicationProperties.MAIL_IS_TLS, emailConf.isTLS());
+                    p.setProperty(ApplicationProperties.MAIL_IS_SSL, emailConf.isSSL());
                     p.setProperty(ApplicationProperties.MAIL_NOTIFY, emailConf.getUser());
                     p.save();
                     NotificationUtil.showNotification(UserUIContext.getMessage(GenericI18Enum.OPT_CONGRATS),
