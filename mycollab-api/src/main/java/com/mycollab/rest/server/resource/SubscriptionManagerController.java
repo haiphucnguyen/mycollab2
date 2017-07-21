@@ -5,6 +5,7 @@ import com.google.common.eventbus.AsyncEventBus;
 import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.core.BroadcastMessage;
 import com.mycollab.core.Broadcaster;
+import com.mycollab.core.MyCollabException;
 import com.mycollab.module.billing.AccountStatusConstants;
 import com.mycollab.module.user.dao.BillingAccountMapper;
 import com.mycollab.module.user.domain.BillingAccount;
@@ -99,48 +100,60 @@ public class SubscriptionManagerController {
                                        @RequestParam("CompanyName") String companyName,
                                        @RequestParam("Phone") String phone,
                                        @RequestParam("SubscriptionCustomerUrl") String subscriptionCustomerUrl) throws Exception {
-        String decryptReferrer = EnDecryptHelper.decryptText(subscriptionReferrer);
-        String[] arr = decryptReferrer.split(";");
-        Integer sAccountId = Integer.parseInt(arr[0]);
-        BillingSubscriptionExample ex = new BillingSubscriptionExample();
-        ex.createCriteria().andSubreferenceEqualTo(subscriptionReference).andAccountidEqualTo(sAccountId);
-        List<BillingSubscription> subscriptions = subscriptionMapper.selectByExample(ex);
-        if (subscriptions.size() == 1) {
-            BillingSubscription subscription = subscriptions.get(0);
-            BillingSubscriptionHistory subscriptionHistory = new BillingSubscriptionHistory();
-            subscriptionHistory.setSubscriptionid(subscription.getId());
-            String reference = tempVariables.get(subscriptionReference);
-            if (reference == null) {
-                reference = UUID.randomUUID().toString() + new DateTime().millisOfSecond().get();
+        try {
+            String decryptReferrer = EnDecryptHelper.decryptText(subscriptionReferrer);
+            String[] arr = decryptReferrer.split(";");
+            Integer sAccountId = Integer.parseInt(arr[0]);
+            BillingSubscriptionExample ex = new BillingSubscriptionExample();
+            ex.createCriteria().andSubreferenceEqualTo(subscriptionReference).andAccountidEqualTo(sAccountId);
+            List<BillingSubscription> subscriptions = subscriptionMapper.selectByExample(ex);
+            if (subscriptions.size() == 1) {
+                BillingSubscription subscription = subscriptions.get(0);
+                BillingSubscriptionHistory subscriptionHistory = new BillingSubscriptionHistory();
+                subscriptionHistory.setSubscriptionid(subscription.getId());
+                String reference = tempVariables.get(subscriptionReference);
+                if (reference == null) {
+                    reference = UUID.randomUUID().toString() + new DateTime().millisOfSecond().get();
+                } else {
+                    tempVariables.remove(subscriptionReference);
+                }
+                subscriptionHistory.setOrderid(reference);
+                subscriptionHistory.setCreatedtime(new DateTime().toDate());
+                subscriptionHistory.setStatus("Success");
+                subscriptionHistory.setExpireddate(dateFormatter.parseLocalDate(nextPeriodDate).toDate());
+                subscriptionHistory.setProductname(productName);
+                subscriptionHistory.setTotalprice(Double.parseDouble(totalPrice));
+                subscriptionHistoryMapper.insert(subscriptionHistory);
+
+                subscription.setCompany(companyName);
+                subscription.setContactname(customerFullName);
+                subscription.setPhone(phone);
+                subscription.setSubscriptioncustomerurl(subscriptionCustomerUrl);
+
+                subscriptionMapper.updateByPrimaryKey(subscription);
+                Broadcaster.broadcast(new BroadcastMessage(subscription.getAccountid(), null, ""));
+
+                BillingAccountExample accountEx = new BillingAccountExample();
+                accountEx.createCriteria().andIdEqualTo(sAccountId);
+                BillingAccount billingAccount = new BillingAccount();
+                billingAccount.setStatus(AccountStatusConstants.ACTIVE);
+                billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
             } else {
-                tempVariables.remove(subscriptionReference);
+                LOG.error("Find subscription with id " + subscriptionReference + "in account " + sAccountId + " has count" +
+                        subscriptions.size());
             }
-            subscriptionHistory.setOrderid(reference);
-            subscriptionHistory.setCreatedtime(new DateTime().toDate());
-            subscriptionHistory.setStatus("Success");
-            subscriptionHistory.setExpireddate(dateFormatter.parseLocalDate(nextPeriodDate).toDate());
-            subscriptionHistory.setProductname(productName);
-            subscriptionHistory.setTotalprice(Double.parseDouble(totalPrice));
-            subscriptionHistoryMapper.insert(subscriptionHistory);
-
-            subscription.setCompany(companyName);
-            subscription.setContactname(customerFullName);
-            subscription.setPhone(phone);
-            subscription.setSubscriptioncustomerurl(subscriptionCustomerUrl);
-
-            subscriptionMapper.updateByPrimaryKey(subscription);
-            Broadcaster.broadcast(new BroadcastMessage(subscription.getAccountid(), null, ""));
-
-            BillingAccountExample accountEx = new BillingAccountExample();
-            accountEx.createCriteria().andIdEqualTo(sAccountId);
-            BillingAccount billingAccount = new BillingAccount();
-            billingAccount.setStatus(AccountStatusConstants.ACTIVE);
-            billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
-        } else {
-            LOG.error("Find subscription with id " + subscriptionReference + "in account " + sAccountId + " has count" +
-                    subscriptions.size());
+            return "Ok";
+        } catch (Exception e) {
+            StringBuilder errorMsg = new StringBuilder();
+            errorMsg.append("SubscriptionReference: ").append(subscriptionReference).append("\n");
+            errorMsg.append("SubscriptionReferrer: ").append(subscriptionReferrer).append("\n");
+            errorMsg.append("NextPeriodDate: ").append(nextPeriodDate).append("\n");
+            errorMsg.append("ProductName: ").append(productName).append("\n");
+            errorMsg.append("CompanyName: ").append(companyName).append("\n");
+            errorMsg.append("Email: ").append(email).append("\n");
+            LOG.error("Error in activate account " + errorMsg);
+            throw new MyCollabException(e);
         }
-        return "Ok";
     }
 
     @RequestMapping(path = "/rebill-completed", method = RequestMethod.POST, headers =

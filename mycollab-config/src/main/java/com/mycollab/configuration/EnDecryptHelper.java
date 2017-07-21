@@ -61,7 +61,7 @@ public class EnDecryptHelper {
         try {
             return basicTextEncryptor.decrypt(text);
         } catch (EncryptionOperationNotPossibleException e) {
-            throw new MyCollabException("Can not decrypt the text " + text);
+            throw new MyCollabException("Can not decrypt the text--" + text + "---");
         }
     }
 

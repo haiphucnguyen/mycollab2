@@ -23,6 +23,7 @@
             <artifactId>mycollab-client-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
@@ -33,6 +34,12 @@
                     <artifactId>mycollab-test</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mycollab</groupId>
+            <artifactId>mycollab-license</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
