@@ -34,25 +34,20 @@ public class AsyncInvoker {
         }
         pageCommand.setUI(ui);
         if (SiteConfiguration.getPullMethod() == SiteConfiguration.PullMethod.push) {
-            new Thread() {
-                @Override
-                public void run() {
-                    ui.access(() -> {
-                        try {
-                            pageCommand.run();
-                            ui.push();
-                            pageCommand.postRun();
-                        } finally {
-                            pageCommand.cleanUp();
-                            try {
-                                ui.push();
-                            } catch (Exception e) {
-                                LOG.error("Error", e);
-                            }
-                        }
-                    });
+            new Thread(() -> ui.access(() -> {
+                try {
+                    pageCommand.run();
+                    ui.push();
+                    pageCommand.postRun();
+                } finally {
+                    pageCommand.cleanUp();
+                    try {
+                        ui.push();
+                    } catch (Exception e) {
+                        LOG.error("Error", e);
+                    }
                 }
-            }.start();
+            })).start();
         } else {
             ui.getSession().getLockInstance().lock();
             try {
