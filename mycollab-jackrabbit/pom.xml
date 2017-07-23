@@ -12,6 +12,9 @@
         <version>5.4.10</version>
         <relativePath>../mycollab-parent-community/pom.xml</relativePath>
     </parent>
+    <properties>
+        <jackrabbit.version>2.15.3</jackrabbit.version>
+    </properties>
 
     <dependencies>
         <!-- MYCOLLAB DEPENDENCIES -->
