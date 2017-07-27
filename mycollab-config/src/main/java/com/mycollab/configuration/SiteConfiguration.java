@@ -139,8 +139,8 @@ public class SiteConfiguration {
         try {
             List<TemplateLoader> loaders = new ArrayList<>();
             File i18nFolder = new File(FileUtils.getUserFolder(), "i18n");
-            File confFolder1 = new File(FileUtils.getUserFolder(), "conf");
-            File confFolder2 = new File(FileUtils.getUserFolder(), "src/main/conf");
+            File confFolder1 = new File(FileUtils.getUserFolder(), "config");
+            File confFolder2 = new File(FileUtils.getUserFolder(), "src/main/config");
             if (i18nFolder.exists()) {
                 loaders.add(new FileTemplateLoader(i18nFolder));
             }

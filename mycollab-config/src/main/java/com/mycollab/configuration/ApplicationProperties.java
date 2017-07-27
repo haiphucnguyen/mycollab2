@@ -112,7 +112,7 @@ public class ApplicationProperties {
     }
 
     public static File getAppConfigFile() {
-        return FileUtils.getDesireFile(FileUtils.getUserFolder(), "conf/mycollab.properties", "src/main/conf/mycollab.properties");
+        return FileUtils.getDesireFile(FileUtils.getUserFolder(), "config/mycollab.properties", "src/main/config/mycollab.properties");
     }
 
     public static Properties getAppProperties() {

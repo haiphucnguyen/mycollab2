@@ -7,28 +7,7 @@ app:
   linkedinUrl: http://www.linkedin.com/company/mycollab
 
 server:
-  port: 8080
-  address: 127.0.0.1
-  url: http://${server.address}:${server.port}
-  cdnUrl: ${server.url}/assets/
-  downloadUrl: ${server.url}/file/
   apiUrl: https://api.mycollab.com/api/
-
-db:
-  driverClassName: com.mysql.jdbc.Driver
-  url: jdbc:mysql://localhost/mycollab_test?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&rewriteBatchedStatements=true&useCompression=true&useServerPrepStmts=false&verifyServerCertificate=false&useSSL=false
-  username: root
-  password: esofthead321
-
-mail:
-  host: mail.comunicatii.gov.ro
-  port: 465
-  user: mycollab@comunicatii.gov.ro
-  password: xMV#pWxMsAp3
-  isTLS: false
-  isSSL: true
-  notifyEmail: noreply@mycollab.com
-  errorReportEmail: error@mycollab.com
 
 management:
   port: 9090
