@@ -1,19 +1,19 @@
 /**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
+  * This file is part of mycollab-scheduler.
+  *
+  * mycollab-scheduler is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * mycollab-scheduler is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
+  */
 package com.mycollab.module.project.schedule.email.service
 
 import java.util
@@ -23,7 +23,7 @@ import com.hp.gagawa.java.elements.{A, Div, Img}
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.common.{FontAwesomeUtils, NotificationType}
-import com.mycollab.configuration.{ApplicationConfiguration, EmailConfiguration, IDeploymentMode, SiteConfiguration}
+import com.mycollab.configuration.{ApplicationConfiguration, IDeploymentMode, SiteConfiguration}
 import com.mycollab.core.MyCollabException
 import com.mycollab.core.utils.{BeanUtility, DateTimeUtils}
 import com.mycollab.db.arguments.{NumberSearchField, RangeDateSearchField, SearchField, SetSearchField}
@@ -84,13 +84,13 @@ object OverdueProjectTicketsNotificationJob {
       }
     }
 
-    def storageService() = AppContextUtil.getSpringBean(classOf[AbstractStorageService])
-
     def formatAssignUser(subDomain: String, assignment: ProjectTicket): String = {
       new Div().appendChild(new Img("", storageService.getAvatarPath(assignment.getAssignUserAvatarId, 16)),
         new A(AccountLinkGenerator.generatePreviewFullUserLink(subDomain, assignment.getAssignUser)).
           appendText(assignment.getAssignUserFullName)).write()
     }
+
+    def storageService() = AppContextUtil.getSpringBean(classOf[AbstractStorageService])
   }
 
 }
@@ -102,8 +102,6 @@ class OverdueProjectTicketsNotificationJob extends GenericQuartzJobBean {
   @Autowired private val projectAssignmentService: ProjectTicketService = null
 
   @Autowired private val applicationConfiguration: ApplicationConfiguration = null
-
-  @Autowired private val emailConfiguration: EmailConfiguration = null
 
   @Autowired private val deploymentMode: IDeploymentMode = null
 
@@ -156,7 +154,7 @@ class OverdueProjectTicketsNotificationJob extends GenericQuartzJobBean {
               val content = contentGenerator.parseFile("mailProjectOverdueAssignmentsNotifier.ftl", Locale.US)
               val overdueAssignments = LocalizationHelper.getMessage(userLocale, TicketI18nEnum.VAL_OVERDUE_TICKETS) + "(" + assignments.length + ")"
               contentGenerator.putVariable("overdueAssignments", overdueAssignments)
-              extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
+              extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients,
                 "[%s] %s".format(projectName, overdueAssignments), content)
             }
           }

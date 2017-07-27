@@ -4,7 +4,6 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Li;
 import com.hp.gagawa.java.elements.Ul;
 import com.mycollab.common.domain.MailRecipientField;
-import com.mycollab.configuration.EmailConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.module.mail.service.IContentGenerator;
@@ -28,9 +27,6 @@ public class TestimonialController {
     private IContentGenerator contentGenerator;
 
     @Autowired
-    private EmailConfiguration emailConfiguration;
-
-    @Autowired
     private ExtMailService extMailService;
 
     @RequestMapping(method = RequestMethod.POST, headers = "Content-Type=application/x-www-form-urlencoded")
@@ -44,7 +40,7 @@ public class TestimonialController {
                 new Li().appendText(String.format("Email: %s", email)),
                 new Li().appendText(String.format("Website: %s", website)),
                 new Li().appendText(String.format("Testimonial: %s", testimonial))));
-        extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail(), "MyCollab", Collections.singletonList(new
+        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), "MyCollab", Collections.singletonList(new
                         MailRecipientField("hainguyen@mycollab.com", "Hai Nguyen")),
                 "New testimonial for you", bodyContent.write());
     }

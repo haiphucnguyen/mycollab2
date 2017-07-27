@@ -26,9 +26,6 @@ public class ContactUsController {
     @Autowired
     private ExtMailService extMailService;
 
-    @Autowired
-    private EmailConfiguration emailConfiguration;
-
     @RequestMapping(value = "/submit", method = RequestMethod.POST, headers = {"Content-Type=application/x-www-form-urlencoded"})
     public String doContact(@RequestParam("name") String name, @RequestParam("email") String email,
                             @RequestParam("company") String company, @RequestParam("role") String role,
@@ -43,7 +40,7 @@ public class ContactUsController {
                 new Li().appendText(String.format("Budget: %s", budget)),
                 new Li().appendText(String.format("Subject: %s", subject)),
                 new Li().appendText(String.format("Message: %s", message))));
-        extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail(), "MyCollab", Collections.singletonList(new
+        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), "MyCollab", Collections.singletonList(new
                 MailRecipientField("hainguyen@mycollab.com", "Hai Nguyen")), "MyCollab inquiry", bodyContent.write());
         return "Ok";
     }

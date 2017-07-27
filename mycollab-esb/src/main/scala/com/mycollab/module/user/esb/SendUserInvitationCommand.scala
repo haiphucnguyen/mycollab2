@@ -5,7 +5,7 @@ import java.util.{Collections, Locale}
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
-import com.mycollab.configuration.{EmailConfiguration, IDeploymentMode, SiteConfiguration}
+import com.mycollab.configuration.{IDeploymentMode, SiteConfiguration}
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.esb.GenericCommand
@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component
   private val LOG = LoggerFactory.getLogger(classOf[SendUserInvitationCommand])
   @Autowired private val userService: UserService = null
   @Autowired private val contentGenerator: IContentGenerator = null
-  @Autowired private val emailConfiguration: EmailConfiguration = null
   @Autowired private val extMailService: ExtMailService = null
   @Autowired private val deploymentMode: IDeploymentMode = null
 
@@ -38,7 +37,7 @@ import org.springframework.stereotype.Component
       contentGenerator.putVariable("password", event.password)
       contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
         DateTimeUtils.getCurrentYear))
-      extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
+      extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Collections.singletonList(new MailRecipientField(event.invitee, event.invitee)),
         LocalizationHelper.getMessage(Locale.US, UserI18nEnum.MAIL_INVITE_USER_SUBJECT, SiteConfiguration.getDefaultSiteName),
         contentGenerator.parseFile("mailUserInvitationNotifier.ftl", Locale.US))

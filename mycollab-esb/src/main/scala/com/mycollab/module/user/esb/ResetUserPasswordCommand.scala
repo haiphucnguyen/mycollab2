@@ -4,7 +4,7 @@ import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.mycollab.common.UrlEncodeDecoder
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
-import com.mycollab.configuration.{EmailConfiguration, IDeploymentMode, SiteConfiguration}
+import com.mycollab.configuration.{IDeploymentMode, SiteConfiguration}
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.esb.GenericCommand
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component
   * @version 5.2.5
   */
 @Component class ResetUserPasswordCommand extends GenericCommand {
-  @Autowired private val emailConfiguration: EmailConfiguration = null
   @Autowired private val extMailService: ExtMailService = null
   @Autowired private val userService: UserService = null
   @Autowired private val contentGenerator: IContentGenerator = null
@@ -42,7 +41,7 @@ import org.springframework.stereotype.Component
       val recipient = new MailRecipientField(user.getEmail, user.getUsername)
       val recipientFields = List[MailRecipientField](recipient)
       import collection.JavaConverters._
-      extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
+      extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         recipientFields.asJava,
         LocalizationHelper.getMessage(locale, UserI18nEnum.MAIL_RECOVERY_PASSWORD_SUBJECT,
           SiteConfiguration.getDefaultSiteName),

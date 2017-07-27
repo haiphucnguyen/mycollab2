@@ -20,12 +20,12 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.configuration.ApplicationProperties;
 import com.mycollab.configuration.EmailConfiguration;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.mycollab.servlet.InstallUtils;
-import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -39,6 +39,7 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
@@ -70,7 +71,7 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
 
     @Override
     public void displaySetup() {
-        emailConf = AppContextUtil.getSpringBean(EmailConfiguration.class).clone();
+        emailConf = SiteConfiguration.getEmailConfiguration().clone();
         editForm.display(emailConf);
     }
 
@@ -127,10 +128,19 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
         }
 
         private void saveEmailConfiguration() {
+            SiteConfiguration.setEmailConfiguration(emailConf);
             File configFile = ApplicationProperties.getAppConfigFile();
             if (configFile != null) {
                 try {
-
+                    PropertiesConfiguration p = new PropertiesConfiguration(ApplicationProperties.getAppConfigFile());
+                    p.setProperty(ApplicationProperties.MAIL_SMTPHOST, emailConf.getHost());
+                    p.setProperty(ApplicationProperties.MAIL_USERNAME, emailConf.getUser());
+                    p.setProperty(ApplicationProperties.MAIL_PASSWORD, emailConf.getPassword());
+                    p.setProperty(ApplicationProperties.MAIL_PORT, emailConf.getPort());
+                    p.setProperty(ApplicationProperties.MAIL_IS_TLS, emailConf.getIsStartTls());
+                    p.setProperty(ApplicationProperties.MAIL_IS_SSL, emailConf.getIsSsl());
+                    p.setProperty(ApplicationProperties.MAIL_NOTIFY, emailConf.getUser());
+                    p.save();
                     NotificationUtil.showNotification(UserUIContext.getMessage(GenericI18Enum.OPT_CONGRATS),
                             UserUIContext.getMessage(ShellI18nEnum.OPT_SETUP_SMTP_SUCCESSFULLY));
                 } catch (Exception e) {
@@ -154,10 +164,10 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
             } else if (propertyId.equals("port")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(ShellI18nEnum.FORM_PORT),
                         UserUIContext.getMessage(ShellI18nEnum.FORM_PORT_HELP), 0, 3);
-            } else if (propertyId.equals("isTLS")) {
+            } else if (propertyId.equals("isStartTls")) {
                 return informationLayout.addComponent(field, "StartTls",
                         UserUIContext.getMessage(ShellI18nEnum.FORM_MAIL_SECURITY_HELP), 0, 4);
-            } else if (propertyId.equals("isSSL")) {
+            } else if (propertyId.equals("isSsl")) {
                 return informationLayout.addComponent(field, "Tls/Ssl",
                         UserUIContext.getMessage(ShellI18nEnum.FORM_MAIL_SECURITY_HELP), 0, 5);
             }

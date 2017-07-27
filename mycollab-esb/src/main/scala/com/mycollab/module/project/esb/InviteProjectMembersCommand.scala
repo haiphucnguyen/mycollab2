@@ -6,7 +6,7 @@ import java.util.{Date, Locale}
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
-import com.mycollab.configuration.{EmailConfiguration, IDeploymentMode, SiteConfiguration}
+import com.mycollab.configuration.{IDeploymentMode, SiteConfiguration}
 import com.mycollab.core.utils.{DateTimeUtils, RandomPasswordGenerator}
 import com.mycollab.html.LinkUtils
 import com.mycollab.i18n.LocalizationHelper
@@ -31,7 +31,6 @@ import org.springframework.stereotype.Component
   val LOG = LoggerFactory.getLogger(classOf[InviteProjectMembersCommand])
   @Autowired private val userService: UserService = null
   @Autowired private val roleService: RoleService = null
-  @Autowired private val emailConfiguration: EmailConfiguration = null
   @Autowired private val deploymentMode: IDeploymentMode = null
   @Autowired private val extMailService: ExtMailService = null
   @Autowired private val projectService: ProjectService = null
@@ -113,7 +112,7 @@ import org.springframework.stereotype.Component
         project.getName, SiteConfiguration.getDefaultSiteName)
       val content = contentGenerator.parseFile("mailMemberInvitationNotifier.ftl", Locale.US)
       val toUser = util.Arrays.asList(new MailRecipientField(inviteeEmail, inviteeEmail))
-      extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, toUser, subject, content)
+      extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, toUser, subject, content)
     }
   }
 }

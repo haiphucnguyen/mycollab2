@@ -5,7 +5,7 @@ import java.util.{Collections, Locale}
 import com.google.common.base.MoreObjects
 import com.mycollab.common.GenericLinkUtils
 import com.mycollab.common.domain.MailRecipientField
-import com.mycollab.configuration.{EmailConfiguration, IDeploymentMode, SiteConfiguration}
+import com.mycollab.configuration.{IDeploymentMode, SiteConfiguration}
 import com.mycollab.module.billing.{AccountReminderStatusContants, AccountStatusConstants}
 import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
 import com.mycollab.module.user.domain.{BillingAccount, BillingAccountWithOwners}
@@ -35,7 +35,6 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
 
   @Autowired private val billingService: BillingService = null
   @Autowired private val billingAccountService: BillingAccountService = null
-  @Autowired private val emailConfiguration: EmailConfiguration = null
   @Autowired private val extMailService: ExtMailService = null
   @Autowired private val contentGenerator: IContentGenerator = null
   @Autowired private val deploymentMode: IDeploymentMode = null
@@ -77,7 +76,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("userName", user.getLastname)
       val link = deploymentMode.getSiteUrl(account.getSubdomain) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
       contentGenerator.putVariable("link", link)
-      extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
+      extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Collections.singletonList(new MailRecipientField(user.getEmail, user.getDisplayName)),
         "Your trial has expired", contentGenerator.parseFile("mailInformAccountIsExpiredNotification.ftl", Locale.US))
     }
@@ -95,7 +94,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("expireDay", df.print(accountTrialTo))
       contentGenerator.putVariable("userName", user.getLastname)
       contentGenerator.putVariable("link", link)
-      extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
+      extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,
         Collections.singletonList(new MailRecipientField(user.getEmail, user.getDisplayName)),
         "Your trial will end soon", contentGenerator.parseFile("mailRemindAccountIsAboutExpiredNotification.ftl", Locale.US))
     }

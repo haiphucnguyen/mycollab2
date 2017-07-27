@@ -23,7 +23,6 @@ import com.mycollab.configuration.EmailConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.Version;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.spring.AppContextUtil;
 
 /**
  * @author MyCollab Ltd
@@ -45,7 +44,7 @@ public class MailAppender extends SMTPAppender {
 
     @Override
     public void start() {
-        EmailConfiguration conf = AppContextUtil.getSpringBean(EmailConfiguration.class);
+        EmailConfiguration conf = SiteConfiguration.getEmailConfiguration();
         if (StringUtils.isBlank(conf.getHost())) {
             return;
         }
