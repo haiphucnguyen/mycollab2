@@ -35,10 +35,25 @@ import java.util.Properties;
  * @since 1.0
  */
 public class ApplicationProperties {
+    private static final String RESOURCE_PROPERTIES = "mycollab.properties";
     private static final String DECRYPT_PASS = "esofthead321";
 
     private static Properties properties;
 
+    public static final String MYCOLLAB_PORT = "mycollab.port";
+
+    public static final String DB_USERNAME = "db.username";
+    public static final String DB_PASSWORD = "db.password";
+    public static final String DB_DRIVER_CLASS = "db.driverClassName";
+    public static final String DB_URL = "db.url";
+
+    public static final String CDN_URL = "cdn.url";
+    public static final String APP_URL = "app.url";
+
+    public static final String FACEBOOK_URL = "facebook.url";
+    public static final String GOOGLE_URL = "google.url";
+    public static final String LINKEDIN_URL = "linkedin.url";
+    public static final String TWITTER_URL = "twitter.url";
 
     public static final String MAIL_SMTPHOST = "mail.smtphost";
     public static final String MAIL_PORT = "mail.port";
@@ -49,6 +64,7 @@ public class ApplicationProperties {
     public static final String MAIL_NOTIFY = "mail.notify";
 
     public static final String ERROR_SENDTO = "error.sendTo";
+    public static final String STORAGE_SYSTEM = "storageSystem";
 
     public static final String SITE_NAME = "site.name";
     public static final String SERVER_ADDRESS = "server.address";
@@ -79,7 +95,16 @@ public class ApplicationProperties {
                     properties.load(isr);
                 }
             } else {
-
+                InputStream propStreams = Thread.currentThread().getContextClassLoader().getResourceAsStream(RESOURCE_PROPERTIES);
+                if (propStreams == null) {
+                    // Probably we are running testing
+                    InputStream propStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("default-mycollab-test.properties");
+                    if (propStream != null) {
+                        try (InputStreamReader isr = new InputStreamReader(propStream, "UTF-8")) {
+                            properties.load(isr);
+                        }
+                    }
+                }
             }
         } catch (Exception e) {
             throw new MyCollabException(e);

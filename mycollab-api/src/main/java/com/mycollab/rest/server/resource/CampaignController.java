@@ -1,8 +1,8 @@
 package com.mycollab.rest.server.resource;
 
 import com.mycollab.common.domain.MailRecipientField;
-import com.mycollab.configuration.ApplicationConfiguration;
 import com.mycollab.configuration.EmailConfiguration;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.Version;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.module.mail.service.ExtMailService;
@@ -34,9 +34,6 @@ public class CampaignController {
     private CommunityLeadMapper communityLeadMapper;
 
     @Autowired
-    private ApplicationConfiguration applicationConfiguration;
-
-    @Autowired
     private EditionInfoResolver editionInfoResolver;
 
     @RequestMapping(method = RequestMethod.GET, path = "/linktobuy")
@@ -60,10 +57,14 @@ public class CampaignController {
 
     @RequestMapping(path = "/register-ce", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
-    public Map registerCE(@RequestParam("firstname") final String firstname, @RequestParam("lastname") final String lastname,
-                          @RequestParam("email") final String email, @RequestParam("role") final String role,
-                          @RequestParam("company") final String company, @RequestParam("phone") final String phone,
-                          @RequestParam("country") final String country, @RequestParam("edition") final String edition) {
+    public Map registerCE(@RequestParam("firstname") final String firstname,
+                          @RequestParam("lastname") final String lastname,
+                          @RequestParam("email") final String email,
+                          @RequestParam("role") final String role,
+                          @RequestParam("company") final String company,
+                          @RequestParam("phone") final String phone,
+                          @RequestParam("country") final String country,
+                          @RequestParam("edition") final String edition) {
         final EditionInfo info = editionInfoResolver.getEditionInfo();
 
         new Thread() {
@@ -96,7 +97,7 @@ public class CampaignController {
                     contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab.com/download/verify?email=%s", email));
                 }
 
-                extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail(), applicationConfiguration.getName(),
+                extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
                         Collections.singletonList(new MailRecipientField(email, firstname + " " + lastname)),
                         "MyCollab is ready for download", contentGenerator.parseFile("mailDownloadInfo.ftl"));
             }

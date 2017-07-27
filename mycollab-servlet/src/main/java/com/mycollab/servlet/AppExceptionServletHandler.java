@@ -87,8 +87,8 @@ public class AppExceptionServletHandler extends GenericHttpServlet {
     private void responsePage404(HttpServletResponse response) throws IOException, TemplateException {
         Map<String, Object> context = new HashMap<>();
         Map<String, String> defaultUrls = applicationConfiguration.defaultUrls();
-        defaultUrls.put("cdn_url", serverConfiguration.getCdnUrl());
-        defaultUrls.put("app_url", serverConfiguration.getUrl());
+        defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+        defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
         context.put("defaultUrls", defaultUrls);
 
         StringWriter writer = new StringWriter();
@@ -122,8 +122,8 @@ public class AppExceptionServletHandler extends GenericHttpServlet {
         Map<String, Object> context = new HashMap<>();
         Map<String, String> defaultUrls = applicationConfiguration.defaultUrls();
 
-        defaultUrls.put("cdn_url", serverConfiguration.getCdnUrl());
-        defaultUrls.put("app_url", serverConfiguration.getUrl());
+        defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+        defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
         context.put("defaultUrls", defaultUrls);
 
         StringWriter writer = new StringWriter();

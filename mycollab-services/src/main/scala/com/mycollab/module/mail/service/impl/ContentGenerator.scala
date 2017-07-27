@@ -19,7 +19,7 @@ package com.mycollab.module.mail.service.impl
 import java.io._
 import java.util.Locale
 
-import com.mycollab.configuration.{ApplicationConfiguration, ServerConfiguration}
+import com.mycollab.configuration.{ApplicationConfiguration, ServerConfiguration, SiteConfiguration}
 import com.mycollab.module.file.service.AbstractStorageService
 import com.mycollab.module.mail.service.IContentGenerator
 import com.mycollab.schedule.email.MailStyles
@@ -41,21 +41,20 @@ import org.springframework.stereotype.Component
 class ContentGenerator extends IContentGenerator with InitializingBean {
   private var templateContext: java.util.HashMap[String, Any] = _
   @Autowired private val applicationConfiguration: ApplicationConfiguration = null
-  @Autowired private val serverConfiguration: ServerConfiguration = null
   @Autowired private val templateEngine: Configuration = null
 
   @throws(classOf[Exception])
   def afterPropertiesSet() {
     templateContext = new java.util.HashMap[String, Any]()
     val defaultUrls = Map[String, String](
-      "cdn_url" -> serverConfiguration.getCdnUrl,
+      "cdn_url" -> SiteConfiguration.getCdnUrl,
       "facebook_url" -> applicationConfiguration.getFacebookUrl,
       "google_url" -> applicationConfiguration.getGoogleUrl,
       "linkedin_url" -> applicationConfiguration.getLinkedinUrl,
       "twitter_url" -> applicationConfiguration.getTwitterUrl)
     putVariable("defaultUrls", defaultUrls)
     putVariable("current_year", new LocalDate().getYear)
-    putVariable("siteName", applicationConfiguration.getName)
+    putVariable("siteName", SiteConfiguration.getDefaultSiteName)
     putVariable("styles", MailStyles.instance())
 
     val storageFactory = AppContextUtil.getSpringBean(classOf[AbstractStorageService])

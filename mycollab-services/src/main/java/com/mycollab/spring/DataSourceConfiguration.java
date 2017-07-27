@@ -17,8 +17,8 @@
 package com.mycollab.spring;
 
 import com.mycollab.configuration.DatabaseConfiguration;
+import com.mycollab.configuration.SiteConfiguration;
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -35,24 +35,16 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class DataSourceConfiguration {
 
-    @Autowired
-    private DatabaseConfiguration dbConf;
-
     @Bean(name = "dataSource")
     public DataSource dataSource() {
+        DatabaseConfiguration dbConf = SiteConfiguration.getDatabaseConfiguration();
         HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setDriverClassName(dbConf.getDriverClassName());
+        dataSource.setDriverClassName(dbConf.getDriverClass());
         dataSource.setJdbcUrl(dbConf.getUrl());
-        dataSource.setUsername(dbConf.getUsername());
+        dataSource.setUsername(dbConf.getUser());
         dataSource.setPassword(dbConf.getPassword());
 
         Properties dsProperties = new Properties();
-        dsProperties.setProperty(dbConf.getCachePrepStmts(), "true");
-        dsProperties.setProperty(dbConf.getPrepStmtCacheSize(), "250");
-        dsProperties.setProperty(dbConf.getPrepStmtCacheSqlLimit(), "2048");
-        dsProperties.setProperty(dbConf.getUseServerPrepStmts(), "true");
-        dsProperties.setProperty(dbConf.getMaximumPoolSize(), "20");
-        dsProperties.setProperty(dbConf.getInitializationFailFast(), "false");
         dataSource.setDataSourceProperties(dsProperties);
         return dataSource;
     }

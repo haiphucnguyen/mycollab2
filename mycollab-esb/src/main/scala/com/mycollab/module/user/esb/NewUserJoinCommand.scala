@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-esb.
- *
- * mycollab-esb is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-esb is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-esb.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.user.esb
 
 import java.util.Locale
@@ -22,7 +6,7 @@ import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.hp.gagawa.java.elements.A
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
-import com.mycollab.configuration.{ApplicationConfiguration, EmailConfiguration, IDeploymentMode}
+import com.mycollab.configuration.{EmailConfiguration, IDeploymentMode, SiteConfiguration}
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.db.arguments._
 import com.mycollab.html.LinkUtils
@@ -67,7 +51,6 @@ object NewUserJoinCommand {
   @Autowired private val contentGenerator: IContentGenerator = null
   @Autowired private val userService: UserService = null
   @Autowired private val deploymentMode: IDeploymentMode = null
-  @Autowired private val applicationConfiguration: ApplicationConfiguration = null
 
   @AllowConcurrentEvents
   @Subscribe
@@ -93,7 +76,7 @@ object NewUserJoinCommand {
     contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
       DateTimeUtils.getCurrentYear))
     contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(account.getId, account.getLogopath))
-    extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, applicationConfiguration.getName, recipients.asJava,
+    extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
       String.format("%s has just joined on MyCollab workspace", newUser.getDisplayName),
       contentGenerator.parseFile("mailNewUserJoinAccountNotifier.ftl", Locale.US))
   }

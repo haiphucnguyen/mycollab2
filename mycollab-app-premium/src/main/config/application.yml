@@ -32,3 +32,6 @@ mail:
 
 management:
   port: 9090
+
+endpoints:
+  sensitive: false

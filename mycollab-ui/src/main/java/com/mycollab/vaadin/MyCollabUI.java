@@ -116,9 +116,9 @@ public abstract class MyCollabUI extends UI {
     public static String getSiteName() {
         ApplicationConfiguration applicationConfiguration = AppContextUtil.getSpringBean(ApplicationConfiguration.class);
         try {
-            return MoreObjects.firstNonNull(getInstance().billingAccount.getSitename(), applicationConfiguration.getName());
+            return MoreObjects.firstNonNull(getInstance().billingAccount.getSitename(), SiteConfiguration.getDefaultSiteName());
         } catch (Exception e) {
-            return applicationConfiguration.getName();
+            return SiteConfiguration.getDefaultSiteName();
         }
     }
 

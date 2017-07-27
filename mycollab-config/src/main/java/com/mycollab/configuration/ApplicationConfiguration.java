@@ -29,7 +29,6 @@ import java.util.Map;
 @Component
 @ConfigurationProperties(prefix = "app")
 public class ApplicationConfiguration {
-    private String name;
 
     private String description;
 
@@ -40,14 +39,6 @@ public class ApplicationConfiguration {
     private String googleUrl;
 
     private String linkedinUrl;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getDescription() {
         return description;

@@ -39,7 +39,6 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
@@ -107,7 +106,7 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
                 if (editForm.validateForm()) {
                     try {
                         InstallUtils.checkSMTPConfig(emailConf.getHost(), emailConf.getPort(), emailConf.getUser(),
-                                emailConf.getPassword(), true, emailConf.isTLS(), emailConf.isSSL());
+                                emailConf.getPassword(), true, emailConf.getIsStartTls(), emailConf.getIsSsl());
                         saveEmailConfiguration();
                     } catch (UserInvalidInputException e) {
                         ConfirmDialogExt.show(UI.getCurrent(),
@@ -131,15 +130,7 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
             File configFile = ApplicationProperties.getAppConfigFile();
             if (configFile != null) {
                 try {
-                    PropertiesConfiguration p = new PropertiesConfiguration(ApplicationProperties.getAppConfigFile());
-                    p.setProperty(ApplicationProperties.MAIL_SMTPHOST, emailConf.getHost());
-                    p.setProperty(ApplicationProperties.MAIL_USERNAME, emailConf.getUser());
-                    p.setProperty(ApplicationProperties.MAIL_PASSWORD, emailConf.getPassword());
-                    p.setProperty(ApplicationProperties.MAIL_PORT, emailConf.getPort());
-                    p.setProperty(ApplicationProperties.MAIL_IS_TLS, emailConf.isTLS());
-                    p.setProperty(ApplicationProperties.MAIL_IS_SSL, emailConf.isSSL());
-                    p.setProperty(ApplicationProperties.MAIL_NOTIFY, emailConf.getUser());
-                    p.save();
+
                     NotificationUtil.showNotification(UserUIContext.getMessage(GenericI18Enum.OPT_CONGRATS),
                             UserUIContext.getMessage(ShellI18nEnum.OPT_SETUP_SMTP_SUCCESSFULLY));
                 } catch (Exception e) {
@@ -163,10 +154,10 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
             } else if (propertyId.equals("port")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(ShellI18nEnum.FORM_PORT),
                         UserUIContext.getMessage(ShellI18nEnum.FORM_PORT_HELP), 0, 3);
-            } else if (propertyId.equals("isStartTls")) {
+            } else if (propertyId.equals("isTLS")) {
                 return informationLayout.addComponent(field, "StartTls",
                         UserUIContext.getMessage(ShellI18nEnum.FORM_MAIL_SECURITY_HELP), 0, 4);
-            } else if (propertyId.equals("isSsl")) {
+            } else if (propertyId.equals("isSSL")) {
                 return informationLayout.addComponent(field, "Tls/Ssl",
                         UserUIContext.getMessage(ShellI18nEnum.FORM_MAIL_SECURITY_HELP), 0, 5);
             }

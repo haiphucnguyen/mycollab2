@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project.schedule.email.service
 
 import com.hp.gagawa.java.elements.A
@@ -21,7 +5,7 @@ import com.mycollab.common.domain.criteria.CommentSearchCriteria
 import com.mycollab.common.domain.{MailRecipientField, SimpleRelayEmailNotification}
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.common.service.{AuditLogService, CommentService}
-import com.mycollab.configuration.{ApplicationConfiguration, EmailConfiguration, SiteConfiguration}
+import com.mycollab.configuration.{EmailConfiguration, SiteConfiguration}
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.db.arguments.{BasicSearchRequest, StringSearchField}
 import com.mycollab.html.LinkUtils
@@ -41,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired
   * @since 4.6.0
   */
 abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificationAction {
-  @Autowired private val applicationConfiguration: ApplicationConfiguration = null
   @Autowired private val emailConfiguration: EmailConfiguration = null
   @Autowired private val extMailService: ExtMailService = null
   @Autowired private val projectService: ProjectService = null
@@ -49,12 +32,12 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
   @Autowired private val commentService: CommentService = null
   @Autowired protected val contentGenerator: IContentGenerator = null
   @Autowired private val auditLogService: AuditLogService = null
-  
+
   protected var bean: B = _
   protected var projectMember: SimpleProjectMember = _
   protected var siteUrl: String = _
   private var projectId: Integer = _
-  
+
   def sendNotificationForCreateAction(notification: SimpleRelayEmailNotification) {
     val projectRelayEmailNotification = notification.asInstanceOf[ProjectRelayEmailNotification]
     val notifiers = getListNotifyUsersWithFilter(projectRelayEmailNotification)
@@ -76,13 +59,13 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
           contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List[MailRecipientField](userMail)
-          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, applicationConfiguration.getName, recipients.asJava,
+          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
             getCreateSubject(context), contentGenerator.parseFile("mailProjectItemCreatedNotifier.ftl", context.getLocale))
         }
       }
     }
   }
-  
+
   def sendNotificationForUpdateAction(notification: SimpleRelayEmailNotification) {
     val projectRelayEmailNotification = notification.asInstanceOf[ProjectRelayEmailNotification]
     val notifiers = getListNotifyUsersWithFilter(projectRelayEmailNotification)
@@ -101,7 +84,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
         searchCriteria.setSaccountid(null)
         val comments = commentService.findPageableListByCriteria(new BasicSearchRequest[CommentSearchCriteria](searchCriteria, 0, 5))
         contentGenerator.putVariable("lastComments", comments)
-        
+
         for (user <- notifiers) {
           val context = new MailContext[B](notification, user, siteUrl)
           context.setWrappedBean(bean)
@@ -119,13 +102,13 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
           contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val recipients = List[MailRecipientField](userMail)
-          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, applicationConfiguration.getName, recipients.asJava,
+          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
             getUpdateSubject(context), contentGenerator.parseFile("mailProjectItemUpdatedNotifier.ftl", context.getLocale))
         }
       }
     }
   }
-  
+
   def sendNotificationForCommentAction(notification: SimpleRelayEmailNotification) {
     val projectRelayEmailNotification = notification.asInstanceOf[ProjectRelayEmailNotification]
     val notifiers = getListNotifyUsersWithFilter(projectRelayEmailNotification)
@@ -141,7 +124,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
         searchCriteria.setSaccountid(null)
         val comments = commentService.findPageableListByCriteria(new BasicSearchRequest[CommentSearchCriteria](searchCriteria, 0, 5))
         contentGenerator.putVariable("lastComments", comments)
-        
+
         for (user <- notifiers) {
           val context = new MailContext[B](notification, user, siteUrl)
           context.wrappedBean = bean
@@ -154,13 +137,13 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
           contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
           val userMail = new MailRecipientField(user.getEmail, user.getUsername)
           val toRecipients = List[MailRecipientField](userMail)
-          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, applicationConfiguration.getName, toRecipients.asJava,
+          extMailService.sendHTMLMail(emailConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName, toRecipients.asJava,
             getCommentSubject(context), contentGenerator.parseFile("mailProjectItemCommentNotifier.ftl", context.getLocale))
         }
       }
     }
   }
-  
+
   private def onInitAction(notification: ProjectRelayEmailNotification) {
     projectId = notification.getProjectId
     siteUrl = MailUtils.getSiteUrl(notification.getSaccountid)
@@ -170,30 +153,30 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
     projectMember = projectMemberService.findMemberByUsername(notification.getChangeby, notification.getProjectId,
       notification.getSaccountid)
   }
-  
+
   protected def getBeanInContext(notification: ProjectRelayEmailNotification): B
-  
+
   protected def getItemName: String
-  
+
   protected def getProjectName: String
-  
-  private def getProjectFooter(context: MailContext[B]):String = LocalizationHelper.getMessage(context.locale,
+
+  private def getProjectFooter(context: MailContext[B]): String = LocalizationHelper.getMessage(context.locale,
     MailI18nEnum.Project_Footer, getProjectName, getProjectNotificationSettingLink(context))
-  
+
   private def getProjectNotificationSettingLink(context: MailContext[B]): String = {
     new A(ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, projectId)).
       appendText(LocalizationHelper.getMessage(context.locale, MailI18nEnum.Project_Notification_Setting)).write()
   }
-  
+
   protected def buildExtraTemplateVariables(emailNotification: MailContext[B])
-  
+
   protected def getItemFieldMapper: ItemFieldMapper
-  
+
   protected def getCreateSubject(context: MailContext[B]): String
-  
+
   protected def getUpdateSubject(context: MailContext[B]): String
-  
+
   protected def getCommentSubject(context: MailContext[B]): String
-  
+
   protected def getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): Set[SimpleUser]
 }

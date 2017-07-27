@@ -17,7 +17,7 @@
 package com.mycollab.module.ecm;
 
 import com.mycollab.configuration.DatabaseConfiguration;
-import com.mycollab.spring.AppContextUtil;
+import com.mycollab.configuration.SiteConfiguration;
 import org.apache.jackrabbit.core.journal.DatabaseJournal;
 
 /**
@@ -27,9 +27,9 @@ import org.apache.jackrabbit.core.journal.DatabaseJournal;
 public class MyCollabDatabaseJournal extends DatabaseJournal {
 
     public MyCollabDatabaseJournal() {
-        DatabaseConfiguration dbConf = AppContextUtil.getSpringBean(DatabaseConfiguration.class);
-        setDriver(dbConf.getDriverClassName());
-        setUser(dbConf.getUsername());
+        DatabaseConfiguration dbConf = SiteConfiguration.getDatabaseConfiguration();
+        setDriver(dbConf.getDriverClass());
+        setUser(dbConf.getUser());
         setPassword(dbConf.getPassword());
         setUrl(dbConf.getUrl());
         this.setDatabaseType("mysql");

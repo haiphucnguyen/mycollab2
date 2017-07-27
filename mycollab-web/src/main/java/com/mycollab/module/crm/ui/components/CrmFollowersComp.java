@@ -57,6 +57,8 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import static com.mycollab.vaadin.AsyncInvoker.*;
+
 /**
  * @author MyCollab Ltd.
  * @since 4.3.3
@@ -127,7 +129,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
     }
 
     private void loadWatchers() {
-        AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
+        access(getUI(), new PageCommand() {
             @Override
             public void run() {
                 watcherLayout.removeAllComponents();

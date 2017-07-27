@@ -18,13 +18,13 @@ package com.mycollab.module.mail.service.impl;
 
 import com.mycollab.common.domain.MailRecipientField;
 import com.mycollab.configuration.EmailConfiguration;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.mail.AttachmentSource;
 import com.mycollab.module.mail.DefaultMailer;
 import com.mycollab.module.mail.IMailer;
 import com.mycollab.module.mail.NullMailer;
 import com.mycollab.module.mail.service.ExtMailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,16 +36,15 @@ import java.util.List;
 @Service
 public class ExtMailServiceImpl implements ExtMailService {
 
-    @Autowired
-    private EmailConfiguration emailConfiguration;
-
     @Override
     public boolean isMailSetupValid() {
+        EmailConfiguration emailConfiguration = SiteConfiguration.getEmailConfiguration();
         return StringUtils.isNotBlank(emailConfiguration.getHost()) && StringUtils.isNotBlank(emailConfiguration.getUser())
                 && (emailConfiguration.getPort() > -1);
     }
 
     private IMailer getMailer() {
+        EmailConfiguration emailConfiguration = SiteConfiguration.getEmailConfiguration();
         if (!isMailSetupValid()) {
             return new NullMailer();
         }

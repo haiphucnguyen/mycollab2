@@ -18,8 +18,10 @@ package com.mycollab.configuration;
 
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.arguments.ValuedBean;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import com.mycollab.core.utils.StringUtils;
+
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 
 /**
  * Email configuration of MyCollab
@@ -27,22 +29,32 @@ import org.springframework.stereotype.Component;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@Component
-@ConfigurationProperties(prefix = "mail")
 public class EmailConfiguration extends ValuedBean implements Cloneable {
-
+    @NotNull
     private String host;
 
+    @NotNull
     private String user;
 
+    @NotNull
     private String password;
 
+    @Digits(integer = 6, fraction = 0)
     private Integer port = 25;
 
-    private Boolean isTLS = false;
-    private Boolean isSSL = false;
+    private boolean isStartTls = false;
+    private boolean isSsl = false;
     private String notifyEmail;
-    private String errorReportEmail;
+
+    EmailConfiguration(String host, String username, String password, int port, boolean isStartTls, boolean isSsl, String notifyEmail) {
+        this.host = host;
+        this.user = username;
+        this.password = password;
+        this.port = port;
+        this.isStartTls = isStartTls;
+        this.isSsl = isSsl;
+        this.notifyEmail = StringUtils.isBlank(notifyEmail) ? user : notifyEmail;
+    }
 
     public String getHost() {
         return host;
@@ -76,20 +88,20 @@ public class EmailConfiguration extends ValuedBean implements Cloneable {
         this.port = port;
     }
 
-    public boolean isTLS() {
-        return isTLS;
+    public boolean getIsStartTls() {
+        return isStartTls;
     }
 
-    public void setIsTLS(Boolean TLS) {
-        isTLS = TLS;
+    public void setIsStartTls(boolean isStartTls) {
+        this.isStartTls = isStartTls;
     }
 
-    public boolean isSSL() {
-        return isSSL;
+    public boolean getIsSsl() {
+        return isSsl;
     }
 
-    public void setIsSSL(Boolean SSL) {
-        isSSL = SSL;
+    public void setIsSsl(boolean isSsl) {
+        this.isSsl = isSsl;
     }
 
     public EmailConfiguration clone() {
@@ -106,13 +118,5 @@ public class EmailConfiguration extends ValuedBean implements Cloneable {
 
     public void setNotifyEmail(String notifyEmail) {
         this.notifyEmail = notifyEmail;
-    }
-
-    public String getErrorReportEmail() {
-        return errorReportEmail;
-    }
-
-    public void setErrorReportEmail(String errorReportEmail) {
-        this.errorReportEmail = errorReportEmail;
     }
 }

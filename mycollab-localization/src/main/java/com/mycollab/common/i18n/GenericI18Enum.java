@@ -210,6 +210,7 @@ public enum GenericI18Enum {
     OPT_SHARED_TO_ME,
     OPT_CHANGE_IMAGE,
     OPT_UPLOAD_IMAGE,
+    OPT_FROM_TO,
 
     M_BUTTON_BACK,
     M_BUTTON_SEND

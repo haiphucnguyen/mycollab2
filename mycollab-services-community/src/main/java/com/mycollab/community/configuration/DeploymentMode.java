@@ -16,9 +16,9 @@
  */
 package com.mycollab.community.configuration;
 
+import com.mycollab.configuration.ApplicationProperties;
 import com.mycollab.configuration.IDeploymentMode;
-import com.mycollab.configuration.ServerConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mycollab.configuration.SiteConfiguration;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +29,6 @@ import org.springframework.stereotype.Service;
 @Service
 @Order(value = 1)
 public class DeploymentMode implements IDeploymentMode {
-
-    @Autowired
-    private ServerConfiguration serverConfiguration;
 
     @Override
     public boolean isDemandEdition() {
@@ -50,6 +47,7 @@ public class DeploymentMode implements IDeploymentMode {
 
     @Override
     public String getSiteUrl(String subDomain) {
-        return serverConfiguration.getUrl();
+        return String.format(ApplicationProperties.getString(ApplicationProperties.APP_URL),
+                SiteConfiguration.getServerAddress(), SiteConfiguration.getServerPort());
     }
 }

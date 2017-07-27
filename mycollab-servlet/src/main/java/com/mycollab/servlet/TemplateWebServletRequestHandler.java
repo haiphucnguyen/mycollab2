@@ -18,6 +18,7 @@ package com.mycollab.servlet;
 
 import com.mycollab.configuration.ApplicationConfiguration;
 import com.mycollab.configuration.ServerConfiguration;
+import com.mycollab.configuration.SiteConfiguration;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -54,8 +55,8 @@ public abstract class TemplateWebServletRequestHandler extends GenericHttpServle
 
         Map<String, String> defaultUrls = applicationConfiguration.defaultUrls();
 
-        defaultUrls.put("cdn_url", serverConfiguration.getCdnUrl());
-        defaultUrls.put("app_url", serverConfiguration.getUrl());
+        defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
+        defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
         pageContext.put("defaultUrls", defaultUrls);
 
         StringWriter writer = new StringWriter();

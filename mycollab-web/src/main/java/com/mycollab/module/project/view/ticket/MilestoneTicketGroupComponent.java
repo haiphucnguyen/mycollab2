@@ -16,13 +16,18 @@
  */
 package com.mycollab.module.project.view.ticket;
 
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.project.domain.ProjectTicket;
+import com.mycollab.module.project.domain.SimpleMilestone;
+import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.components.IBlockContainer;
 import com.mycollab.module.project.ui.components.IGroupComponent;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.MyCollabUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.event.dd.DragAndDropEvent;
@@ -45,21 +50,33 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 5.4.5
  */
 class MilestoneTicketGroupComponent extends MVerticalLayout implements IGroupComponent, IBlockContainer {
+    private MVerticalLayout headerGroup;
     private Label headerLbl;
     private DDVerticalLayout wrapBody;
 
     private String titleValue;
-    private Integer milestoneId;
+    private SimpleMilestone milestone;
 
     MilestoneTicketGroupComponent(String titleValue, Integer milestoneId) {
         this.titleValue = titleValue;
-        this.milestoneId = milestoneId;
         this.setMargin(new MarginInfo(true, false, true, false));
         wrapBody = new DDVerticalLayout();
         wrapBody.setWidth("100%");
         wrapBody.addStyleName(WebThemes.BORDER_LIST);
         headerLbl = ELabel.h3("");
-        with(headerLbl);
+
+        MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
+        milestone = milestoneService.findById(milestoneId, MyCollabUI.getAccountId());
+        if (milestone != null) {
+            ELabel milestoneDateLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_FROM_TO,
+                    UserUIContext.formatDate(milestone.getStartdate()), UserUIContext.formatDate(milestone.getEnddate())))
+                    .withStyleName(UIConstants.META_INFO);
+            headerGroup = new MVerticalLayout(headerLbl, milestoneDateLbl).withMargin(false);
+        } else {
+            headerGroup = new MVerticalLayout(headerLbl).withMargin(false);
+        }
+
+        with(headerGroup);
         addComponent(wrapBody);
 
         wrapBody.setComponentVerticalDropRatio(0.3f);

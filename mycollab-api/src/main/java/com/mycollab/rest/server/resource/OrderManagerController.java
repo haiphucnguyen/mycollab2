@@ -36,8 +36,6 @@ import java.util.Properties;
 public class OrderManagerController {
     private static Logger LOG = LoggerFactory.getLogger(OrderManagerController.class);
 
-    private static final String PRIVATE_KEY = "2d4966f695ceae18a67c0061112886c6";
-
     @Autowired
     private ProEditionInfoMapper proEditionMapper;
 

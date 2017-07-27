@@ -20,6 +20,7 @@ import ch.qos.logback.classic.net.SMTPAppender;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Layout;
 import com.mycollab.configuration.EmailConfiguration;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.Version;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.spring.AppContextUtil;
@@ -53,9 +54,9 @@ public class MailAppender extends SMTPAppender {
         this.setSMTPPort(conf.getPort());
         this.setUsername(conf.getUser());
         this.setPassword(conf.getPassword());
-        this.setSTARTTLS(conf.isTLS());
+        this.setSTARTTLS(conf.getIsStartTls());
         this.setFrom(conf.getNotifyEmail());
-        this.addTo(conf.getErrorReportEmail());
+        this.addTo(SiteConfiguration.getSendErrorEmail());
         super.start();
     }
 }

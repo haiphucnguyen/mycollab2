@@ -43,6 +43,6 @@ public class FileStorageServiceImpl extends AbstractStorageService implements In
 
     @Override
     public String generateAssetRelativeLink(String resourceId) {
-        return String.format("%s%s?v=%s", serverConfiguration.getCdnUrl(), resourceId, Version.getVersion());
+        return String.format("%s%s?v=%s", SiteConfiguration.getCdnUrl(), resourceId, Version.getVersion());
     }
 }
