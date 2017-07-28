@@ -36,7 +36,7 @@ import java.net.URI;
 @Configuration
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, FreeMarkerAutoConfiguration.class,
         FlywayAutoConfiguration.class})
-@ComponentScan(basePackages = {"com.mycollab.spring"})
+@ComponentScan(basePackages = {"com.mycollab.**.spring, com.mycollab.**.configuration"})
 public class DefaultServerRunner {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(DefaultServerRunner.class);
@@ -44,6 +44,7 @@ public class DefaultServerRunner {
             application.setAdditionalProfiles("setup");
             application.run(args);
         } else {
+            application.setAdditionalProfiles("production");
             application.run(args);
         }
     }
