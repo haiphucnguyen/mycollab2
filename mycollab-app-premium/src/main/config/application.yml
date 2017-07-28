@@ -8,9 +8,7 @@ app:
 
 server:
   apiUrl: https://api.mycollab.com/api/
-
-management:
-  port: 9090
+  port: 7070
 
 endpoints:
   sensitive: false

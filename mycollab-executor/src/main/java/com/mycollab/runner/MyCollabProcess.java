@@ -23,17 +23,12 @@ import java.util.concurrent.TimeoutException;
  * @author MyCollab Ltd.
  * @since 5.0.7
  */
-class MyCollabProcessRunner {
-    private static Logger LOG = LoggerFactory.getLogger(MyCollabProcessRunner.class);
-
-    private int processRunningPort;
-    private int clientListenPort;
+class MyCollabProcess {
+    private static Logger LOG = LoggerFactory.getLogger(MyCollabProcess.class);
     private String initialOptions;
     private JavaProcess wrappedJavaProcess;
 
-    MyCollabProcessRunner(int processRunningPort, int clientListenPort, String initialOptions) {
-        this.processRunningPort = processRunningPort;
-        this.clientListenPort = clientListenPort;
+    MyCollabProcess(String initialOptions) {
         this.initialOptions = initialOptions;
     }
 
@@ -75,13 +70,13 @@ class MyCollabProcessRunner {
                             return pathname.isFile() && pathname.getName().endsWith("jar");
                         }
                     });
+
                     for (File subFile : jarFiles) {
                         classPaths.append(System.getProperty("path.separator"));
                         classPaths.append("./lib/" + subFile.getName());
                     }
 
-                    javaOptions.addAll(Arrays.asList("-cp", classPaths.toString(), "com.mycollab.server.DefaultServerRunner", "--port",
-                            processRunningPort + "", "--cport", clientListenPort + ""));
+                    javaOptions.addAll(Arrays.asList("-cp", classPaths.toString(), "com.mycollab.server.DefaultServerRunner"));
                     StringBuilder strBuilder = new StringBuilder();
                     for (String option : javaOptions) {
                         strBuilder.append(option).append(" ");
@@ -91,7 +86,6 @@ class MyCollabProcessRunner {
                             .directory(workingDir).redirectOutput(System.out).readOutput(true).start();
 
                     wrappedJavaProcess = Processes.newJavaProcess(javaProcess.getProcess());
-                    javaProcess.getFuture().get();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.exit(-1);
