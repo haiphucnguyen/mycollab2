@@ -36,9 +36,10 @@ import org.springframework.stereotype.Service;
 public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, AuditLogSearchCriteria> implements AuditLogService {
 
     @Autowired
-    protected AuditLogMapper auditLogMapper;
+    private AuditLogMapper auditLogMapper;
+
     @Autowired
-    protected AuditLogMapperExt auditLogMapperExt;
+    private AuditLogMapperExt auditLogMapperExt;
 
     @Override
     public ICrudGenericDAO<Integer, AuditLog> getCrudMapper() {

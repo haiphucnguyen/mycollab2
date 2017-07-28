@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-server-runner.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.servlet;
+package com.mycollab.spring;
 
+import com.mycollab.servlet.*;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,9 +26,9 @@ import org.springframework.context.annotation.Profile;
  * @author MyCollab Ltd
  * @since 5.5.0
  */
-@Profile("setup")
 @Configuration
-public class SetupSpringServletRegistor {
+@Profile("setup")
+public class SetupSpringServletConfiguration {
     @Bean
     public ServletRegistrationBean assetServlet() {
         return new ServletRegistrationBean(new AssetHttpServletRequestHandler(), "/assets/*");
@@ -44,11 +45,12 @@ public class SetupSpringServletRegistor {
     }
 
     @Bean
-    public ServletRegistrationBean installationSerlvet() {
+    public ServletRegistrationBean installationServlet() {
         return new ServletRegistrationBean(new InstallationServlet(), "/install");
     }
 
+    @Bean
     public ServletRegistrationBean setupServlet(){
-        return new ServletRegistrationBean(new SetupServlet(), "");
+        return new ServletRegistrationBean(new SetupServlet(), "/");
     }
 }

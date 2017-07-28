@@ -20,6 +20,7 @@ import com.mycollab.module.ecm.MyCollabContentSessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.extensions.jcr.JcrTemplate;
@@ -32,6 +33,7 @@ import javax.jcr.SimpleCredentials;
  * @since 4.6.0
  */
 @Configuration
+@Profile("production")
 public class EcmConfiguration {
 
     @Bean

@@ -18,12 +18,14 @@ package com.mycollab.community.configuration;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
  * @author MyCollab Ltd
  * @since 5.4.0
  */
 @Configuration
+@Profile("production")
 @ComponentScan(basePackages = {
         "com.mycollab.community.common.service",
         "com.mycollab.community.module.billing.service",

@@ -28,7 +28,7 @@ import org.joda.time.DateTime
 import org.quartz.JobExecutionContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.config.BeanDefinition
-import org.springframework.context.annotation.Scope
+import org.springframework.context.annotation.{Profile, Scope}
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 
@@ -37,6 +37,7 @@ import org.springframework.web.client.RestTemplate
   * @since 5.2.6
   */
 @Component
+@Profile(Array("production"))
 @Scope(BeanDefinition.SCOPE_SINGLETON)
 class LiveInstanceMonitorJob extends GenericQuartzJobBean {
 

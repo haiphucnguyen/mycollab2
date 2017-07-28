@@ -24,7 +24,7 @@ import org.quartz.{DisallowConcurrentExecution, JobExecutionContext}
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.config.BeanDefinition
-import org.springframework.context.annotation.Scope
+import org.springframework.context.annotation.{Profile, Scope}
 import org.springframework.stereotype.Component
 
 /**
@@ -32,6 +32,7 @@ import org.springframework.stereotype.Component
   * @since 4.6.0
   */
 @Component
+@Profile(Array("production"))
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @DisallowConcurrentExecution
 class ProjectSendingRelayEmailNotificationJob extends GenericQuartzJobBean {

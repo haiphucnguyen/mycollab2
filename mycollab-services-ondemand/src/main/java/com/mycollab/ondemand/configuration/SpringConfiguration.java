@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Profile;
  * @since 5.4.0
  */
 @Configuration
+@Profile("production")
 @ComponentScan(basePackages = {
         "com.mycollab.monitoring.spring",
         "com.mycollab.pro.cache.aspect",
@@ -28,7 +29,6 @@ import org.springframework.context.annotation.Profile;
         "com.mycollab.ondemand.schedule.jobs",
         "com.mycollab.ondemand.vaadin.ui.service"
 })
-@Profile("production")
 public class SpringConfiguration {
 
 }

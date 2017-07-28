@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent-community</artifactId>
-        <version>5.4.10</version>
+        <version>6.0.0</version>
         <relativePath>../mycollab-parent-community/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
@@ -77,7 +77,6 @@
     </dependencies>
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>

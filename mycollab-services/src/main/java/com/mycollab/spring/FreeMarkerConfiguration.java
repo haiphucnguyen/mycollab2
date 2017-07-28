@@ -26,6 +26,7 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
@@ -39,6 +40,7 @@ import java.util.List;
  * @since 5.3.4
  */
 @Component
+@Profile("production")
 public class FreeMarkerConfiguration extends FreeMarkerConfigurationFactoryBean {
     private static Logger LOG = LoggerFactory.getLogger(FreeMarkerConfiguration.class);
 

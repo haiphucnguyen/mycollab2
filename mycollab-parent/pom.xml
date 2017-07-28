@@ -5,13 +5,13 @@
     <name>mycollab-parent</name>
     <groupId>com.mycollab</groupId>
     <artifactId>mycollab-parent</artifactId>
-    <version>5.4.10</version>
+    <version>6.0.0</version>
     <packaging>pom</packaging>
     <!-- Inherit defaults from Spring Boot -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.4.RELEASE</version>
+        <version>1.5.6.RELEASE</version>
     </parent>
     <prerequisites>
         <maven>3.3.0</maven>
@@ -25,6 +25,9 @@
         <jackson.version>2.8.9</jackson.version>
         <scala.binary.version>2.12</scala.binary.version>
         <scala.version>2.12.2</scala.version>
+
+        <!--Override Spring boot version-->
+        <flyway.version>4.2.0</flyway.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.inceptionYear>2011</project.inceptionYear>
 

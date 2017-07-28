@@ -56,7 +56,7 @@ public class InstallationServlet extends HttpServlet {
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Expires", "-1");
         PrintWriter out = response.getWriter();
-        String sitename = request.getParameter("sitename");
+        String siteName = request.getParameter("sitename");
         String serverAddress = request.getParameter("serverAddress");
         String databaseName = request.getParameter("databaseName");
         String dbUserName = request.getParameter("dbUserName");
@@ -106,7 +106,7 @@ public class InstallationServlet extends HttpServlet {
 
 //        Configuration configuration = SiteConfiguration.freemarkerConfiguration();
         Map<String, Object> templateContext = new HashMap<>();
-        templateContext.put("sitename", sitename);
+        templateContext.put("sitename", siteName);
         templateContext.put("serveraddress", serverAddress);
         templateContext.put("dbUrl", dbUrl);
         templateContext.put("dbUser", dbUserName);

@@ -43,7 +43,7 @@ public class SetupServlet extends HttpServlet {
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
 
-//        Configuration configuration = SiteConfiguration.freemarkerConfiguration();
+        Configuration configuration = SiteConfiguration.freemarkerConfiguration();
         Map<String, Object> context = new HashMap<>();
 
         String postUrl = "/install";
@@ -59,12 +59,12 @@ public class SetupServlet extends HttpServlet {
         context.put("current_year", new LocalDate().getYear());
 
         StringWriter writer = new StringWriter();
-//        Template template = configuration.getTemplate("pageSetupFresh.ftl");
-//        try {
-//            template.process(context, writer);
-//        } catch (TemplateException e) {
-//            throw new IOException(e);
-//        }
+        Template template = configuration.getTemplate("pageSetupFresh.ftl");
+        try {
+            template.process(context, writer);
+        } catch (TemplateException e) {
+            throw new IOException(e);
+        }
 
         PrintWriter out = response.getWriter();
         out.print(writer.toString());

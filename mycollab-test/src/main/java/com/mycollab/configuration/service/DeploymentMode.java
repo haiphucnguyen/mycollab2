@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
  * @author MyCollab Ltd
  * @since 5.2.2
  */
-@Service
+@Service("testMode")
 @Order(value = 10)
 public class DeploymentMode implements IDeploymentMode {
     @Override

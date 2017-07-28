@@ -50,13 +50,6 @@ Version 6.0.0
 * The new module loader which uses Spring Boot
 * Support configuring SSL easier
 * Support docker image
-* Add project reports
-* The new project notification helps you keep update the latest project changes
-* The new project kanban categorized by users
-* Support custom fields
-* Support Scrum development process
-* Support SAML, OAuth2 authentication
-* Project REST api
 
 **Bug Fixes**
 

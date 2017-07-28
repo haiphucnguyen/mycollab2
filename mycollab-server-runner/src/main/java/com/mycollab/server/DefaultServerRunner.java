@@ -36,7 +36,7 @@ import java.net.URI;
 @Configuration
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, FreeMarkerAutoConfiguration.class,
         FlywayAutoConfiguration.class})
-@ComponentScan(basePackages = {"com.mycollab"})
+@ComponentScan(basePackages = {"com.mycollab.spring"})
 public class DefaultServerRunner {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(DefaultServerRunner.class);
@@ -50,7 +50,7 @@ public class DefaultServerRunner {
 
     private static boolean checkConfigFileExist() {
         File confFolder = FileUtils.getDesireFile(FileUtils.getUserFolder(), "config", "src/main/config");
-        return confFolder != null && new File(confFolder, "application.yml").exists();
+        return confFolder != null && new File(confFolder, "mycollab.properties").exists();
     }
 
     private static void openDefaultWebBrowserForInstallation() {
