@@ -301,11 +301,14 @@
                         <include>src/test/java/com/mycollab/**/*.java</include>
                         <include>src/main/scala/**/*.scala</include>
                     </includes>
+                    <keywords>
+                        <keyword>www.gnu.org/licenses</keyword>
+                    </keywords>
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
-                            <!-- <goal>remove</goal> -->
+                            <goal>remove</goal>
                             <goal>format</goal>
                         </goals>
                         <phase>compile</phase>
