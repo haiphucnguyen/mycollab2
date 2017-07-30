@@ -22,7 +22,7 @@ import java.net.URI;
 @Configuration
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, FreeMarkerAutoConfiguration.class,
         FlywayAutoConfiguration.class})
-@ComponentScan(basePackages = {"com.mycollab.**.spring, com.mycollab.**.configuration"})
+@ComponentScan(basePackages = {"com.mycollab.**.spring, com.mycollab.**.configuration, com.mycollab.**.servlet"})
 public class DefaultServerRunner {
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(DefaultServerRunner.class);
