@@ -8,7 +8,7 @@ import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -65,7 +65,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
                         riskId = bean.getId();
                     }
                     AttachmentUploadField uploadField = ((RiskEditFormFieldFactory) getFieldFactory()).getAttachmentUploadField();
-                    String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), bean.getProjectid(),
+                    String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
                             ProjectTypeConstants.RISK, "" + riskId);
                     uploadField.saveContentsToRepo(attachPath);
 

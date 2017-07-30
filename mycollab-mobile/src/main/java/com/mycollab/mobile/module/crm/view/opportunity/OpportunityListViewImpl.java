@@ -11,7 +11,7 @@ import com.mycollab.module.crm.domain.SimpleOpportunity;
 import com.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.mycollab.module.crm.i18n.OpportunityI18nEnum;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -46,7 +46,7 @@ public class OpportunityListViewImpl extends AbstractListPageView<OpportunitySea
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment("crm/opportunity/list", UserUIContext.getMessage(OpportunityI18nEnum.LIST));
+        AppUI.addFragment("crm/opportunity/list", UserUIContext.getMessage(OpportunityI18nEnum.LIST));
     }
 
     @Override

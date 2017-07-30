@@ -11,7 +11,7 @@ import com.mycollab.module.project.service.ProjectPageService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectGenericPresenter;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -82,6 +82,6 @@ public class PageAddPresenter extends ProjectGenericPresenter<PageAddView> {
         ProjectPageService pageService = AppContextUtil.getSpringBean(ProjectPageService.class);
 
         pageService.savePage(page, UserUIContext.getUsername(), CurrentProjectVariables.getProjectId(),
-                MyCollabUI.getAccountId());
+                AppUI.getAccountId());
     }
 }

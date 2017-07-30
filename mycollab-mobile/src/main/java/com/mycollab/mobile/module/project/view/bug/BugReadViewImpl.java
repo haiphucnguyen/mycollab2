@@ -31,7 +31,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -112,7 +112,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         }
 
         ResourceService resourceService = AppContextUtil.getSpringBean(ResourceService.class);
-        List<Content> attachments = resourceService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(),
+        List<Content> attachments = resourceService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(),
                 beanItem.getProjectid(), ProjectTypeConstants.BUG, "" + beanItem.getId()));
         if (CollectionUtils.isNotEmpty(attachments)) {
             attachmentComp = new ProjectAttachmentDisplayComp(attachments);
@@ -187,7 +187,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment(ProjectLinkGenerator.generateBugPreviewLink(beanItem.getBugkey(),
+        AppUI.addFragment(ProjectLinkGenerator.generateBugPreviewLink(beanItem.getBugkey(),
                 beanItem.getProjectShortName()), beanItem.getName());
     }
 

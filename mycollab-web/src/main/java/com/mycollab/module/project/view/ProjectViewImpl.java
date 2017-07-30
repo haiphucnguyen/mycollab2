@@ -29,7 +29,7 @@ import com.mycollab.module.project.view.time.IFinancePresenter;
 import com.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.mycollab.module.project.view.user.ProjectInfoComponent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.*;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
@@ -115,7 +115,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     filePresenter.go(ProjectViewImpl.this, new FileScreenData.GotoDashboard());
                 } else if (ProjectTypeConstants.PAGE.equals(caption)) {
                     pagePresenter.go(ProjectViewImpl.this,
-                            new PageScreenData.Search(PathUtils.getProjectDocumentPath(MyCollabUI.getAccountId(), project.getId())));
+                            new PageScreenData.Search(PathUtils.getProjectDocumentPath(AppUI.getAccountId(), project.getId())));
                 } else if (ProjectTypeConstants.DASHBOARD.equals(caption)) {
                     dashboardPresenter.go(ProjectViewImpl.this, null);
                 } else if (ProjectTypeConstants.MEMBER.equals(caption)) {

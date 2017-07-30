@@ -15,7 +15,7 @@ import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.service.ProjectTemplateService;
 import com.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -74,7 +74,7 @@ public class ProjectAddBaseTemplateWindow extends MWindow {
                     (ProjectTemplateService.class);
             if (projectTemplateService != null) {
                 Integer newProjectId = projectTemplateService.cloneProject(templatePrj.getId(), newPrjName, newPrjKey,
-                        MyCollabUI.getAccountId(), UserUIContext.getUsername());
+                        AppUI.getAccountId(), UserUIContext.getUsername());
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this,
                         new PageActionChain(new ProjectScreenData.Goto(newProjectId))));
                 close();
@@ -92,7 +92,7 @@ public class ProjectAddBaseTemplateWindow extends MWindow {
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
             ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
             searchCriteria.addExtraField(ProjectSearchCriteria.p_template.buildParamIsEqual(SearchField.AND, 1));
-            searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+            searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
             List<SimpleProject> projectTemplates = projectService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
             this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
             for (SimpleProject prjTemplate : projectTemplates) {

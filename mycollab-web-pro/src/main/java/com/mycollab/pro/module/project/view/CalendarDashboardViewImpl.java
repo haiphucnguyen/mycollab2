@@ -32,7 +32,7 @@ import com.mycollab.pro.module.project.view.assignments.GenericAssignmentEvent;
 import com.mycollab.pro.module.project.view.assignments.GenericAssignmentProvider;
 import com.mycollab.pro.module.project.view.risk.RiskAddWindow;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
@@ -126,7 +126,7 @@ public class CalendarDashboardViewImpl extends AbstractVerticalPageView implemen
     public void display() {
         this.removeAllComponents();
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-        projectKeys = projectService.getProjectKeysUserInvolved(UserUIContext.getUsername(), MyCollabUI.getAccountId());
+        projectKeys = projectService.getProjectKeysUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
         searchCriteria = new ProjectTicketSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(projectKeys));
         calendar = new Calendar();
@@ -160,22 +160,22 @@ public class CalendarDashboardViewImpl extends AbstractVerticalPageView implemen
                 if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
                         ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.TASKS)) {
                     ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                    SimpleTask task = taskService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
+                    SimpleTask task = taskService.findById(assignment.getTypeId(), AppUI.getAccountId());
                     UI.getCurrent().addWindow(new TaskAddWindow(task));
                 } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
                         ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.MILESTONES)) {
                     MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
+                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppUI.getAccountId());
                     UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
                 } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
                         ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.BUGS)) {
                     BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                    SimpleBug bug = bugService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
+                    SimpleBug bug = bugService.findById(assignment.getTypeId(), AppUI.getAccountId());
                     UI.getCurrent().addWindow(new BugAddWindow(bug));
                 } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
                         ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.RISKS)) {
                     RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                    SimpleRisk risk = riskService.findById(assignment.getTypeId(), MyCollabUI.getAccountId());
+                    SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppUI.getAccountId());
                     UI.getCurrent().addWindow(new RiskAddWindow(risk));
                 }
             }

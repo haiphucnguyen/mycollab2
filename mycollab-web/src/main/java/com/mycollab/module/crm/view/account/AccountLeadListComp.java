@@ -18,7 +18,7 @@ import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.*;
@@ -56,7 +56,7 @@ public class AccountLeadListComp extends RelatedListComp2<LeadService, LeadSearc
             MButton selectBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> {
                 AccountLeadSelectionWindow leadsWindow = new AccountLeadSelectionWindow(AccountLeadListComp.this);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 UI.getCurrent().addWindow(leadsWindow);
                 leadsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
@@ -79,7 +79,7 @@ public class AccountLeadListComp extends RelatedListComp2<LeadService, LeadSearc
 
     private void loadLeads() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
-        criteria.setSaccountid(NumberSearchField.equal(MyCollabUI.getAccountId()));
+        criteria.setSaccountid(NumberSearchField.equal(AppUI.getAccountId()));
         criteria.setAccountId(NumberSearchField.equal(account.getId()));
         setSearchCriteria(criteria);
     }
@@ -110,7 +110,7 @@ public class AccountLeadListComp extends RelatedListComp2<LeadService, LeadSearc
 
             MButton btnDelete = new MButton("", clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -120,7 +120,7 @@ public class AccountLeadListComp extends RelatedListComp2<LeadService, LeadSearc
                                 final AccountLead associateLead = new AccountLead();
                                 associateLead.setAccountid(account.getId());
                                 associateLead.setLeadid(lead.getId());
-                                accountService.removeAccountLeadRelationship(associateLead, MyCollabUI.getAccountId());
+                                accountService.removeAccountLeadRelationship(associateLead, AppUI.getAccountId());
                                 AccountLeadListComp.this.refresh();
                             }
                         });

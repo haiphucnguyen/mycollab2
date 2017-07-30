@@ -18,7 +18,7 @@ import com.mycollab.module.user.domain.SimpleBillingAccount;
 import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -66,7 +66,7 @@ public class GeneralSettingViewImpl extends AbstractVerticalPageView implements 
     public void displayView() {
         removeAllComponents();
 
-        billingAccount = MyCollabUI.getBillingAccount();
+        billingAccount = AppUI.getBillingAccount();
         FormContainer formContainer = new FormContainer();
         this.addComponent(formContainer);
 
@@ -244,7 +244,7 @@ public class GeneralSettingViewImpl extends AbstractVerticalPageView implements 
                     try {
                         AccountFavIconService favIconService = AppContextUtil.getSpringBean(AccountFavIconService.class);
                         BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageData));
-                        String newFavIconPath = favIconService.upload(UserUIContext.getUsername(), image, MyCollabUI
+                        String newFavIconPath = favIconService.upload(UserUIContext.getUsername(), image, AppUI
                                 .getAccountId());
                         favIconRes.setSource(new ExternalResource(StorageUtils.getFavIconPath(billingAccount.getId(),
                                 newFavIconPath)));

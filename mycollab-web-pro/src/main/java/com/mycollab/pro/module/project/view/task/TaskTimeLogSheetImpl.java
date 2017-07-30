@@ -21,7 +21,7 @@ import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.view.task.TaskTimeLogSheet;
 import com.mycollab.pro.module.project.ui.components.TimeLogEditWindow;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.UI;
@@ -124,7 +124,7 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
             item.setLogvalue(getInvestValue());
             item.setTypeid(bean.getId());
             item.setType(ProjectTypeConstants.TASK);
-            item.setSaccountid(MyCollabUI.getAccountId());
+            item.setSaccountid(AppUI.getAccountId());
             item.setProjectid(CurrentProjectVariables.getProjectId());
             item.setLogforday(forLogDate());
             item.setIsbillable(isBillableHours());

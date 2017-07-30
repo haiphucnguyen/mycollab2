@@ -7,7 +7,7 @@ import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.service.RiskService
 import com.mycollab.module.project.view.parameters.{ProjectScreenData, RiskScreenData}
 import com.mycollab.spring.AppContextUtil
-import com.mycollab.vaadin.MyCollabUI
+import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.mvp.PageActionChain
 
 /**
@@ -43,7 +43,7 @@ class RiskUrlResolver extends ProjectUrlResolver {
       val projectId = token.getInt
       val riskId = token.getInt
       val riskService = AppContextUtil.getSpringBean(classOf[RiskService])
-      val risk = riskService.findById(riskId, MyCollabUI.getAccountId)
+      val risk = riskService.findById(riskId, AppUI.getAccountId)
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new RiskScreenData.Edit(risk))
       EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }

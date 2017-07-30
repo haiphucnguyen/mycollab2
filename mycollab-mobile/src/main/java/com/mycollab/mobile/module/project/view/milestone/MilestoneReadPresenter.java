@@ -12,7 +12,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -49,7 +49,7 @@ public class MilestoneReadPresenter extends AbstractProjectPresenter<MilestoneRe
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                                milestoneService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                milestoneService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null));
                             }
                         });
@@ -69,12 +69,12 @@ public class MilestoneReadPresenter extends AbstractProjectPresenter<MilestoneRe
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
             if (data.getParams() instanceof Integer) {
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                SimpleMilestone milestone = milestoneService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleMilestone milestone = milestoneService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (milestone != null) {
                     view.previewItem(milestone);
                     super.onGo(container, data);
 
-                    MyCollabUI.addFragment("project/milestone/preview/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(), milestone.getId()),
+                    AppUI.addFragment("project/milestone/preview/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(), milestone.getId()),
                             milestone.getName());
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

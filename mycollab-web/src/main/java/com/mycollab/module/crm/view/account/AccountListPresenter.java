@@ -14,7 +14,7 @@ import com.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.ViewItemAction;
 import com.mycollab.vaadin.mvp.MassUpdateCommand;
@@ -92,12 +92,12 @@ public class AccountListPresenter extends CrmGenericListPresenter<AccountListVie
             List<Account> keyList = currentDataList.stream().filter(item -> item.isSelected()).collect(Collectors.toList());
 
             if (keyList.size() > 0) {
-                accountService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                accountService.massRemoveWithSession(keyList, UserUIContext.getUsername(), AppUI.getAccountId());
                 doSearch(searchCriteria);
                 checkWhetherEnableTableActionControl();
             }
         } else {
-            accountService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
+            accountService.removeByCriteria(searchCriteria, AppUI.getAccountId());
             doSearch(searchCriteria);
         }
     }
@@ -115,7 +115,7 @@ public class AccountListPresenter extends CrmGenericListPresenter<AccountListVie
                 this.displayNoExistItems(container, data);
             }
 
-            MyCollabUI.addFragment("crm/account/list", UserUIContext.getMessage(AccountI18nEnum.LIST));
+            AppUI.addFragment("crm/account/list", UserUIContext.getMessage(AccountI18nEnum.LIST));
         } else {
             throw new SecureAccessException();
         }
@@ -129,7 +129,7 @@ public class AccountListPresenter extends CrmGenericListPresenter<AccountListVie
                     .collect(Collectors.toList());
 
             if (keyList.size() > 0) {
-                accountService.massUpdateWithSession(value, keyList, MyCollabUI.getAccountId());
+                accountService.massUpdateWithSession(value, keyList, AppUI.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

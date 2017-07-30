@@ -9,7 +9,7 @@ import com.mycollab.module.tracker.domain.Component
 import com.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria
 import com.mycollab.module.tracker.service.ComponentService
 import com.mycollab.spring.AppContextUtil
-import com.mycollab.vaadin.MyCollabUI
+import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.mvp.PageActionChain
 
 /**
@@ -59,7 +59,7 @@ class ComponentUrlResolver extends ProjectUrlResolver {
       val projectId = token.getInt
       val componentId = token.getInt
       val componentService = AppContextUtil.getSpringBean(classOf[ComponentService])
-      val component = componentService.findById(componentId, MyCollabUI.getAccountId)
+      val component = componentService.findById(componentId, AppUI.getAccountId)
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new ComponentScreenData.Edit(component))
       EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }

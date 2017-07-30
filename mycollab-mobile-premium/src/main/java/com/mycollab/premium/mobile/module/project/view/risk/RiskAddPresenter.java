@@ -10,7 +10,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -55,7 +55,7 @@ public class RiskAddPresenter extends AbstractProjectPresenter<RiskAddView> {
     private void saveRisk(SimpleRisk risk) {
         RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
 
-        risk.setSaccountid(MyCollabUI.getAccountId());
+        risk.setSaccountid(AppUI.getAccountId());
         risk.setProjectid(CurrentProjectVariables.getProjectId());
 
         if (risk.getId() == null) {

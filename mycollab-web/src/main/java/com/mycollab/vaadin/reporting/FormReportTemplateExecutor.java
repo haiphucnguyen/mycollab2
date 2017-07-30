@@ -22,7 +22,7 @@ import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.reporting.ReportExportType;
 import com.mycollab.reporting.ReportTemplateExecutor;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.formatter.DefaultFieldDisplayHandler;
 import com.mycollab.vaadin.ui.formatter.FieldGroupFormatter;
@@ -225,7 +225,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
 
         AuditLogService auditLogService = AppContextUtil.getSpringBean(AuditLogService.class);
         final AuditLogSearchCriteria logCriteria = new AuditLogSearchCriteria();
-        logCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+        logCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         logCriteria.setType(StringSearchField.and(formReportLayout.getModuleName()));
         logCriteria.setTypeId(StringSearchField.and(typeId + ""));
         final int logCount = auditLogService.getTotalCount(logCriteria);

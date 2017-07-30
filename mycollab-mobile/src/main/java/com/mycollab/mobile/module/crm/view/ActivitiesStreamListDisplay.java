@@ -18,7 +18,7 @@ import com.mycollab.module.crm.view.CrmLocalizationTypeMap;
 import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
@@ -112,7 +112,7 @@ class ActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityStreamSe
                     .getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
             A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(AccountLinkGenerator.generatePreviewFullUserLink(
-                    MyCollabUI.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim
+                    AppUI.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim
                     (activityStream.getCreatedUserFullName(), 30, true));
 
             div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink);

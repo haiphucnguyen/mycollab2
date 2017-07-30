@@ -6,7 +6,7 @@ import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
@@ -28,7 +28,7 @@ public class AllActivitiesPresenter extends AbstractCrmPresenter<AllActivitiesVi
         NavigationManager currentNav = (NavigationManager) navigator;
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
         searchCriteria.setModuleSet(new SetSearchField(CrmModule.TYPE));
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         searchCriteria.setTypes(getRestrictedItemTypes());
         searchCriteria.addOrderField(new SearchCriteria.OrderField("createdTime", SearchCriteria.DESC));
         view.getPagedBeanTable().setSearchCriteria(searchCriteria);

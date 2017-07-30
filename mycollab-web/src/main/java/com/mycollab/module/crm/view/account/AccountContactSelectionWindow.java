@@ -9,7 +9,7 @@ import com.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.mycollab.module.crm.view.contact.ContactSearchPanel;
 import com.mycollab.module.crm.view.contact.ContactTableDisplay;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -38,8 +38,8 @@ public class AccountContactSelectionWindow extends RelatedItemSelectionWindow<Si
 
             return new ELabel(contact.getContactName()).withStyleName(WebThemes.BUTTON_LINK)
                     .withDescription(CrmTooltipGenerator.generateToolTipContact
-                            (UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
-                                    contact, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                            (UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                                    contact, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
 
         Button selectBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> close());

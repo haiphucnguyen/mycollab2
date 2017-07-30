@@ -12,7 +12,7 @@ import com.mycollab.module.crm.i18n.CallI18nEnum;
 import com.mycollab.module.crm.service.CallService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -57,7 +57,7 @@ public class CallAddPresenter extends AbstractCrmPresenter<CallAddView> {
 
             if (data.getParams() instanceof Integer) {
                 CallService callService = AppContextUtil.getSpringBean(CallService.class);
-                call = callService.findByPrimaryKey((Integer) data.getParams(), MyCollabUI.getAccountId());
+                call = callService.findByPrimaryKey((Integer) data.getParams(), AppUI.getAccountId());
                 if (call == null) {
                     NotificationUtil.showRecordNotExistNotification();
                     return;
@@ -71,10 +71,10 @@ public class CallAddPresenter extends AbstractCrmPresenter<CallAddView> {
             super.onGo(container, data);
             view.editItem(call);
             if (call.getId() == null) {
-                MyCollabUI.addFragment("crm/activity/call/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                AppUI.addFragment("crm/activity/call/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(CallI18nEnum.SINGLE)));
             } else {
-                MyCollabUI.addFragment("crm/activity/call/edit/" + UrlEncodeDecoder.encode(call.getId()),
+                AppUI.addFragment("crm/activity/call/edit/" + UrlEncodeDecoder.encode(call.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(CallI18nEnum.SINGLE), call.getSubject()));
             }
@@ -86,7 +86,7 @@ public class CallAddPresenter extends AbstractCrmPresenter<CallAddView> {
     public void save(CallWithBLOBs item) {
         CallService callService = AppContextUtil.getSpringBean(CallService.class);
 
-        item.setSaccountid(MyCollabUI.getAccountId());
+        item.setSaccountid(AppUI.getAccountId());
         if (item.getId() == null) {
             callService.saveWithSession(item, UserUIContext.getUsername());
         } else {

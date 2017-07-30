@@ -5,7 +5,7 @@ import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import fi.jasoft.dragdroplayouts.DDCssLayout;
 
 /**
@@ -21,7 +21,7 @@ public class ProjectActivityStreamComponent extends DDCssLayout {
         this.addComponent(activityStreamList);
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
         searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.PRJ));
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         searchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         activityStreamList.setSearchCriteria(searchCriteria);
     }

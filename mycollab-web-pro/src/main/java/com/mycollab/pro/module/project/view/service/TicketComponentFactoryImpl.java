@@ -53,7 +53,7 @@ import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
 import com.mycollab.pro.module.project.view.risk.RiskEditForm;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
@@ -372,7 +372,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             boolean hasPermission = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
             if (hasPermission) {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                beanItem = bugService.findById(beanItem.getId(), MyCollabUI.getAccountId());
+                beanItem = bugService.findById(beanItem.getId(), AppUI.getAccountId());
                 if (beanItem != null) {
                     if (BugStatus.Open.name().equals(beanItem.getStatus()) ||
                             BugStatus.ReOpen.name().equals(beanItem.getStatus())) {
@@ -528,7 +528,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 SimpleTask task = new SimpleTask();
                 task.setProjectid(prjId);
                 task.setMilestoneid(milestoneId);
-                task.setSaccountid(MyCollabUI.getAccountId());
+                task.setSaccountid(AppUI.getAccountId());
                 task.setCreateduser(UserUIContext.getUsername());
                 task.setStartdate(dateValue);
                 TaskEditForm editForm = new TaskEditForm() {
@@ -542,7 +542,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             } else if (UserUIContext.getMessage(BugI18nEnum.SINGLE).equals(value)) {
                 SimpleBug bug = new SimpleBug();
                 bug.setProjectid(prjId);
-                bug.setSaccountid(MyCollabUI.getAccountId());
+                bug.setSaccountid(AppUI.getAccountId());
                 bug.setStartdate(dateValue);
                 bug.setMilestoneid(milestoneId);
                 bug.setCreateduser(UserUIContext.getUsername());
@@ -556,7 +556,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 formLayout.addComponent(editForm);
             } else if (UserUIContext.getMessage(RiskI18nEnum.SINGLE).equals(value)) {
                 SimpleRisk risk = new SimpleRisk();
-                risk.setSaccountid(MyCollabUI.getAccountId());
+                risk.setSaccountid(AppUI.getAccountId());
                 risk.setProjectid(prjId);
                 risk.setStartdate(dateValue);
                 risk.setCreateduser(UserUIContext.getUsername());
@@ -627,7 +627,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                     timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
                     timeLogging.setType(ticket.getType());
                     timeLogging.setTypeid(ticket.getTypeId());
-                    timeLogging.setSaccountid(MyCollabUI.getAccountId());
+                    timeLogging.setSaccountid(AppUI.getAccountId());
                     timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
                     EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TicketBillableHoursPopupField.this));
 

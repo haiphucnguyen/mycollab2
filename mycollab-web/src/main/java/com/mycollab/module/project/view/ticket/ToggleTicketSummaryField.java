@@ -22,7 +22,7 @@ import com.mycollab.module.project.ui.components.BlockRowRender;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
@@ -88,7 +88,7 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
                     || (ticket.isTask() && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS))) {
                 MButton removeBtn = new MButton("", clickEvent -> {
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -124,21 +124,21 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
                 BugWithBLOBs bug = new BugWithBLOBs();
                 bug.setId(ticket.getTypeId());
                 bug.setName(ticket.getName());
-                bug.setSaccountid(MyCollabUI.getAccountId());
+                bug.setSaccountid(AppUI.getAccountId());
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 bugService.updateSelectiveWithSession(bug, UserUIContext.getUsername());
             } else if (ticket.isTask()) {
                 Task task = new Task();
                 task.setId(ticket.getTypeId());
                 task.setName(ticket.getName());
-                task.setSaccountid(MyCollabUI.getAccountId());
+                task.setSaccountid(AppUI.getAccountId());
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                 taskService.updateSelectiveWithSession(task, UserUIContext.getUsername());
             } else if (ticket.isRisk()) {
                 Risk risk = new Risk();
                 risk.setId(ticket.getTypeId());
                 risk.setName(ticket.getName());
-                risk.setSaccountid(MyCollabUI.getAccountId());
+                risk.setSaccountid(AppUI.getAccountId());
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 riskService.updateSelectiveWithSession(risk, UserUIContext.getUsername());
             }

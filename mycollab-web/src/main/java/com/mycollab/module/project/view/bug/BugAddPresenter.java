@@ -19,7 +19,7 @@ import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugRelatedItemService;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -93,14 +93,14 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
     private int saveBug(SimpleBug bug) {
         BugService bugService = AppContextUtil.getSpringBean(BugService.class);
         bug.setProjectid(CurrentProjectVariables.getProjectId());
-        bug.setSaccountid(MyCollabUI.getAccountId());
+        bug.setSaccountid(AppUI.getAccountId());
         AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
         if (bug.getId() == null) {
             bug.setStatus(BugStatus.Open.name());
             bug.setCreateduser(UserUIContext.getUsername());
             int bugId = bugService.saveWithSession(bug, UserUIContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
-            String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), bug.getProjectid(),
+            String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), bug.getProjectid(),
                     ProjectTypeConstants.BUG, "" + bugId);
             uploadField.saveContentsToRepo(attachPath);
 
@@ -109,7 +109,7 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
             bugRelatedItemService.saveAffectedVersionsOfBug(bugId, view.getAffectedVersions());
             bugRelatedItemService.saveFixedVersionsOfBug(bugId, view.getFixedVersion());
             bugRelatedItemService.saveComponentsOfBug(bugId, view.getComponents());
-            asyncEventBus.post(new CleanCacheEvent(MyCollabUI.getAccountId(), new Class[]{BugService.class}));
+            asyncEventBus.post(new CleanCacheEvent(AppUI.getAccountId(), new Class[]{BugService.class}));
 
             List<String> followers = view.getFollowers();
             if (followers.size() > 0) {
@@ -117,7 +117,7 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
                 for (String follower : followers) {
                     MonitorItem monitorItem = new MonitorItem();
                     monitorItem.setMonitorDate(new GregorianCalendar().getTime());
-                    monitorItem.setSaccountid(MyCollabUI.getAccountId());
+                    monitorItem.setSaccountid(AppUI.getAccountId());
                     monitorItem.setType(ProjectTypeConstants.BUG);
                     monitorItem.setTypeid(bugId);
                     monitorItem.setUser(follower);
@@ -130,7 +130,7 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
         } else {
             bugService.updateWithSession(bug, UserUIContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
-            String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), bug.getProjectid(),
+            String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), bug.getProjectid(),
                     ProjectTypeConstants.BUG, "" + bug.getId());
             uploadField.saveContentsToRepo(attachPath);
 
@@ -139,7 +139,7 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
             bugRelatedItemService.updateAffectedVersionsOfBug(bugId, view.getAffectedVersions());
             bugRelatedItemService.updateFixedVersionsOfBug(bugId, view.getFixedVersion());
             bugRelatedItemService.updateComponentsOfBug(bugId, view.getComponents());
-            asyncEventBus.post(new CleanCacheEvent(MyCollabUI.getAccountId(), new Class[]{BugService.class}));
+            asyncEventBus.post(new CleanCacheEvent(AppUI.getAccountId(), new Class[]{BugService.class}));
         }
 
         return bug.getId();

@@ -9,7 +9,7 @@ import com.mycollab.module.project.ProjectLinkParams
 import com.mycollab.module.tracker.domain.SimpleBug
 import com.mycollab.module.tracker.service.BugService
 import com.mycollab.spring.AppContextUtil
-import com.mycollab.vaadin.MyCollabUI
+import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.mvp.PageActionChain
 
 /**
@@ -29,7 +29,7 @@ class BugUrlResolver extends ProjectUrlResolver {
         val prjShortName = ProjectLinkParams.getProjectShortName(params(0))
         val itemKey = ProjectLinkParams.getItemKey(params(0))
         val bugService = AppContextUtil.getSpringBean(classOf[BugService])
-        val bug = bugService.findByProjectAndBugKey(itemKey, prjShortName, MyCollabUI.getAccountId)
+        val bug = bugService.findByProjectAndBugKey(itemKey, prjShortName, AppUI.getAccountId)
         if (bug != null) {
           projectId = bug.getProjectid
           bugId = bug.getId
@@ -53,7 +53,7 @@ class BugUrlResolver extends ProjectUrlResolver {
         val prjShortName = ProjectLinkParams.getProjectShortName(params(0))
         val itemKey = ProjectLinkParams.getItemKey(params(0))
         val bugService = AppContextUtil.getSpringBean(classOf[BugService])
-        bug = bugService.findByProjectAndBugKey(itemKey, prjShortName, MyCollabUI.getAccountId)
+        bug = bugService.findByProjectAndBugKey(itemKey, prjShortName, AppUI.getAccountId)
       }
       else {
         throw new MyCollabException("Invalid bug link: %s".format(params(0)))

@@ -8,7 +8,7 @@ import com.mycollab.module.user.service.RoleService;
 import com.mycollab.security.AccessPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -56,7 +56,7 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
 
     public void save(Role item) {
         RoleService roleService = AppContextUtil.getSpringBean(RoleService.class);
-        item.setSaccountid(MyCollabUI.getAccountId());
+        item.setSaccountid(AppUI.getAccountId());
 
         if (item.getId() == null) {
             roleService.saveWithSession(item, UserUIContext.getUsername());

@@ -11,7 +11,7 @@ import com.mycollab.module.ecm.service.ExternalDriveService;
 import com.mycollab.module.ecm.service.ExternalResourceService;
 import com.mycollab.module.file.events.FileEvent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
@@ -132,13 +132,13 @@ public class CloudDriveSettingWindow extends MWindow {
                 Button deleteBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                     try {
                         ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                MyCollabUI.getSiteName()),
+                                AppUI.getSiteName()),
                                 UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                                 confirmDialog -> {
                                     if (confirmDialog.isConfirmed()) {
-                                        externalDriveService.removeWithSession(drive, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                        externalDriveService.removeWithSession(drive, UserUIContext.getUsername(), AppUI.getAccountId());
                                         bodyLayout.removeComponent(OneDriveConnectionBodyLayout.this);
                                         EventBusFactory.getInstance().post(new FileEvent.ExternalDriveDeleteEvent(this, drive));
                                     }

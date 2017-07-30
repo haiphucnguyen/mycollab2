@@ -11,7 +11,7 @@ import com.mycollab.module.crm.domain.SimpleContact;
 import com.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -46,7 +46,7 @@ public class ContactListViewImpl extends AbstractListPageView<ContactSearchCrite
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment("crm/contact/list", UserUIContext.getMessage(ContactI18nEnum.LIST));
+        AppUI.addFragment("crm/contact/list", UserUIContext.getMessage(ContactI18nEnum.LIST));
     }
 
     @Override

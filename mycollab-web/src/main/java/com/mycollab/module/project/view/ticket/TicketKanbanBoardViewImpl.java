@@ -32,7 +32,7 @@ import com.mycollab.module.project.view.task.TaskSearchPanel;
 import com.mycollab.module.project.view.task.ToggleTaskSummaryField;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AsyncInvoker;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
@@ -184,7 +184,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                         indexMap.add(map);
                     }
                     if (indexMap.size() > 0) {
-                        optionValService.massUpdateOptionIndexes(indexMap, MyCollabUI.getAccountId());
+                        optionValService.massUpdateOptionIndexes(indexMap, AppUI.getAccountId());
                     }
                 }
             }
@@ -255,7 +255,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
             @Override
             public void run() {
                 List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
-                        CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
+                        CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
                 for (OptionVal optionVal : optionVals) {
                     if (!displayHiddenColumns && Boolean.FALSE.equals(optionVal.getIsshow())) {
                         continue;
@@ -390,7 +390,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                             }
                         }
                         if (indexMap.size() > 0) {
-                            taskService.massUpdateTaskIndexes(indexMap, MyCollabUI.getAccountId());
+                            taskService.massUpdateTaskIndexes(indexMap, AppUI.getAccountId());
                         }
                     }
                 }
@@ -465,13 +465,13 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                         NotificationUtil.showErrorNotification(UserUIContext.getMessage(TaskI18nEnum.ERROR_CAN_NOT_DELETE_COLUMN_HAS_TASK));
                     } else {
                         ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                MyCollabUI.getSiteName()),
+                                AppUI.getSiteName()),
                                 UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                                 confirmDialog -> {
                                     if (confirmDialog.isConfirmed()) {
-                                        optionValService.removeWithSession(stage, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                        optionValService.removeWithSession(stage, UserUIContext.getUsername(), AppUI.getAccountId());
                                         ((ComponentContainer) KanbanBlock.this.getParent()).removeComponent(KanbanBlock.this);
                                     }
                                 });
@@ -545,7 +545,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
             Component testComp = (dragLayoutContainer.getComponentCount() > 0) ? dragLayoutContainer.getComponent(0) : null;
             if (testComp instanceof KanbanTaskBlockItem || testComp == null) {
                 final SimpleTask task = new SimpleTask();
-                task.setSaccountid(MyCollabUI.getAccountId());
+                task.setSaccountid(AppUI.getAccountId());
                 task.setProjectid(CurrentProjectVariables.getProjectId());
                 task.setPercentagecomplete(0d);
                 task.setStatus(optionVal.getTypeval());
@@ -607,11 +607,11 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                     if (StringUtils.isNotBlank(columnNameField.getValue())) {
                         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
                         if (optionValService.isExistedOptionVal(ProjectTypeConstants.TASK, columnNameField
-                                .getValue(), "status", optionVal.getExtraid(), MyCollabUI.getAccountId())) {
+                                .getValue(), "status", optionVal.getExtraid(), AppUI.getAccountId())) {
                             NotificationUtil.showErrorNotification(UserUIContext.getMessage(TaskI18nEnum.ERROR_THERE_IS_ALREADY_COLUMN_NAME, columnNameField.getValue()));
                         } else {
                             taskService.massUpdateStatuses(optionVal.getTypeval(), columnNameField.getValue(), optionVal.getExtraid(),
-                                    MyCollabUI.getAccountId());
+                                    AppUI.getAccountId());
                             optionVal.setTypeval(columnNameField.getValue());
                             optionValService.updateWithSession(optionVal, UserUIContext.getUsername());
                             KanbanBlock.this.refresh();

@@ -22,7 +22,7 @@ import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.addon.webcomponents.FloatingComponent;
 import com.mycollab.vaadin.resources.LazyStreamSource;
@@ -98,7 +98,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
             if (selectedFolder == null) {
                 throw new DebugException(String.format("Can not find folder with path %s--%s in account", criteria.getBaseFolder(),
-                        criteria.getRootFolder(), MyCollabUI.getAccountId()));
+                        criteria.getRootFolder(), AppUI.getAccountId()));
             } else if (!(selectedFolder instanceof Folder)) {
                 LOG.error(String.format("Expect folder but the result is file %s--%s", criteria.getBaseFolder(),
                         criteria.getRootFolder()));
@@ -133,7 +133,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
     }
 
     private void deleteResourceAction(final Collection<Resource> deletedResources) {
-        ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+        ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                 UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -148,7 +148,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                                     EventBusFactory.getInstance().post(new FileEvent.ResourceRemovedEvent
                                             (ResourcesDisplayComponent.this, res));
                                 }
-                                resourceService.removeResource(res.getPath(), UserUIContext.getUsername(), true, MyCollabUI.getAccountId());
+                                resourceService.removeResource(res.getPath(), UserUIContext.getUsername(), true, AppUI.getAccountId());
                             }
                         }
 
@@ -375,7 +375,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 moreInfoAboutResLayout.addComponent(usernameLbl);
             } else {
                 UserService userService = AppContextUtil.getSpringBean(UserService.class);
-                SimpleUser user = userService.findUserByUserNameInAccount(resource.getCreatedUser(), MyCollabUI.getAccountId());
+                SimpleUser user = userService.findUserByUserNameInAccount(resource.getCreatedUser(), AppUI.getAccountId());
                 if (user != null) {
                     UserLink userLink = new UserLink(user.getUsername(), user.getAvatarid(), user.getDisplayName());
                     userLink.addStyleName(UIConstants.META_INFO);
@@ -524,7 +524,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                                         .getExternalDrive(), content, fileInputStream);
                             } else
                                 resourceService.saveContent(content, UserUIContext.getUsername(),
-                                        fileInputStream, MyCollabUI.getAccountId());
+                                        fileInputStream, AppUI.getAccountId());
                         } catch (IOException e) {
                             throw new MyCollabException(e);
                         }

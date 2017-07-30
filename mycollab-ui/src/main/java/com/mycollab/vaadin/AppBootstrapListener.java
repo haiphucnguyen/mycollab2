@@ -1,7 +1,6 @@
 package com.mycollab.vaadin;
 
 import com.mycollab.configuration.ServerConfiguration;
-import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.Version;
 import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.user.domain.BillingAccount;
@@ -13,14 +12,14 @@ import com.vaadin.server.BootstrapPageResponse;
 import com.vaadin.server.VaadinRequest;
 import org.jsoup.nodes.Element;
 
-import static com.mycollab.vaadin.MyCollabUIProvider.MOBILE_APP;
+import static com.mycollab.vaadin.AppUIProvider.MOBILE_APP;
 import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
  * @since 3.0
  */
-public class MyCollabBootstrapListener implements BootstrapListener {
+public class AppBootstrapListener implements BootstrapListener {
     private static final long serialVersionUID = 1L;
 
     @Override

@@ -6,14 +6,12 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.crm.events.LeadEvent;
 import com.mycollab.mobile.module.crm.view.AbstractCrmPresenter;
 import com.mycollab.mobile.ui.ConfirmDialog;
-import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.domain.SimpleLead;
 import com.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
-import com.mycollab.module.crm.i18n.LeadI18nEnum;
 import com.mycollab.module.crm.service.LeadService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -54,7 +52,7 @@ public class LeadReadPresenter extends AbstractCrmPresenter<LeadReadView> {
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 LeadService LeadService = AppContextUtil.getSpringBean(LeadService.class);
-                                LeadService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                LeadService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new LeadEvent.GotoList(this, null));
                             }
                         });
@@ -76,7 +74,7 @@ public class LeadReadPresenter extends AbstractCrmPresenter<LeadReadView> {
             public void gotoNext(SimpleLead data) {
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = contactService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -91,7 +89,7 @@ public class LeadReadPresenter extends AbstractCrmPresenter<LeadReadView> {
             public void gotoPrevious(SimpleLead data) {
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = contactService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -109,7 +107,7 @@ public class LeadReadPresenter extends AbstractCrmPresenter<LeadReadView> {
 
             if (data.getParams() instanceof Integer) {
                 LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
-                SimpleLead lead = leadService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleLead lead = leadService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (lead != null) {
                     view.previewItem(lead);
                     super.onGo(container, data);

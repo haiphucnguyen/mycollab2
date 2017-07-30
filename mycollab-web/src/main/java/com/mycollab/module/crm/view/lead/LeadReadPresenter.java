@@ -20,7 +20,7 @@ import com.mycollab.vaadin.reporting.FormReportLayout;
 import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -62,14 +62,14 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
             @Override
             public void onDelete(final SimpleLead data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 LeadService LeadService = AppContextUtil.getSpringBean(LeadService.class);
-                                LeadService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                LeadService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new LeadEvent.GotoList(this, null));
                             }
                         });
@@ -98,7 +98,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
             public void gotoNext(SimpleLead data) {
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = contactService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -112,7 +112,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
             public void gotoPrevious(SimpleLead data) {
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = contactService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -173,7 +173,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
                     }
 
                     CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-                    campaignService.saveCampaignLeadRelationship(associateCampaigns, MyCollabUI.getAccountId());
+                    campaignService.saveCampaignLeadRelationship(associateCampaigns, AppUI.getAccountId());
                     view.getRelatedCampaignHandlers().refresh();
                 }
             }
@@ -188,7 +188,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
                 SimpleLead lead = (SimpleLead) data.getParams();
                 super.onGo(container, data);
                 view.previewItem(lead);
-                MyCollabUI.addFragment(CrmLinkGenerator.generateLeadPreviewLink(lead.getId()),
+                AppUI.addFragment(CrmLinkGenerator.generateLeadPreviewLink(lead.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                 UserUIContext.getMessage(LeadI18nEnum.SINGLE), lead.getLeadName()));
 

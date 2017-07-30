@@ -4,7 +4,7 @@ import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.resources.file.VaadinFileResource;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
@@ -43,7 +43,7 @@ public class VaadinResourceFactory {
 
     public static Resource getLogoResource(String logoId, int size) {
         return new ExternalResource(AppContextUtil.getSpringBean(AbstractStorageService.class)
-                .getLogoPath(MyCollabUI.getAccountId(), logoId, size));
+                .getLogoPath(AppUI.getAccountId(), logoId, size));
     }
 
     public static Resource getAvatarResource(String avatarId, int size) {

@@ -28,16 +28,16 @@ import java.util.Map;
  * @author MyCollab Ltd.
  * @since 4.3.2
  */
-public abstract class MyCollabUI extends UI {
+public abstract class AppUI extends UI {
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory.getLogger(MyCollabUI.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AppUI.class);
 
     static {
         GroupIdProvider.registerAccountIdProvider(new GroupIdProvider() {
             @Override
             public Integer getGroupId() {
-                return MyCollabUI.getAccountId();
+                return AppUI.getAccountId();
             }
 
             @Override
@@ -76,8 +76,8 @@ public abstract class MyCollabUI extends UI {
         return getInstance().billingAccount;
     }
 
-    public static MyCollabUI getInstance() {
-        return (MyCollabUI) UI.getCurrent();
+    public static AppUI getInstance() {
+        return (AppUI) UI.getCurrent();
     }
 
     public static String getSubDomain() {

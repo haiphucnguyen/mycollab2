@@ -7,7 +7,7 @@ import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.shell.ShellController;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.ControllerRegistry;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.ui.MyCollabSession;
@@ -27,7 +27,7 @@ public class MainWindowContainer extends CssLayout {
     private static final long serialVersionUID = 1L;
 
     public MainWindowContainer() {
-        this.setCaption(MyCollabUI.getSiteName());
+        this.setCaption(AppUI.getSiteName());
         ControllerRegistry.addController(new ShellController(this));
         this.setSizeFull();
         this.setDefaultView();
@@ -40,7 +40,7 @@ public class MainWindowContainer extends CssLayout {
 
     private void setDefaultView() {
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        int activeUsersCount = userService.getTotalActiveUsersInAccount(MyCollabUI.getAccountId());
+        int activeUsersCount = userService.getTotalActiveUsersInAccount(AppUI.getAccountId());
         if (activeUsersCount == 0) {
             this.setContent(new SetupNewInstanceView());
         } else {

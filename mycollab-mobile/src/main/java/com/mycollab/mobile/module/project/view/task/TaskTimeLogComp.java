@@ -16,7 +16,7 @@ import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 
 import java.util.Date;
@@ -80,7 +80,7 @@ public class TaskTimeLogComp extends TimeLogComp<SimpleTask> {
             item.setLogvalue(spentHours);
             item.setTypeid(bean.getId());
             item.setType(ProjectTypeConstants.TASK);
-            item.setSaccountid(MyCollabUI.getAccountId());
+            item.setSaccountid(AppUI.getAccountId());
             item.setProjectid(CurrentProjectVariables.getProjectId());
             item.setLogforday(forDate);
             item.setIsbillable(isBillable);

@@ -9,7 +9,7 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
@@ -51,7 +51,7 @@ public class TagViewComponent extends CssLayout {
         this.type = type;
         this.typeId = typeId;
 
-        List<Tag> tags = tagService.findTags(type, typeId + "", MyCollabUI.getAccountId());
+        List<Tag> tags = tagService.findTags(type, typeId + "", AppUI.getAccountId());
         for (Tag tag : tags) {
             this.addComponent(new TagBlock(tag));
         }
@@ -89,7 +89,7 @@ public class TagViewComponent extends CssLayout {
                 tag.setName(tagName);
                 tag.setType(type);
                 tag.setTypeid(typeId + "");
-                tag.setSaccountid(MyCollabUI.getAccountId());
+                tag.setSaccountid(AppUI.getAccountId());
                 tag.setExtratypeid(CurrentProjectVariables.getProjectId());
                 int result = tagService.saveWithSession(tag, UserUIContext.getUsername());
                 if (result > 0) {
@@ -115,7 +115,7 @@ public class TagViewComponent extends CssLayout {
         }
         List<Tag> suggestedTags = tagService.findTagsInAccount(query, new String[]{ProjectTypeConstants.BUG,
                         ProjectTypeConstants.TASK, ProjectTypeConstants.MILESTONE, ProjectTypeConstants.RISK},
-                MyCollabUI.getAccountId());
+                AppUI.getAccountId());
         return new ArrayList<>(suggestedTags);
     }
 
@@ -149,13 +149,13 @@ public class TagViewComponent extends CssLayout {
             if (canAddNewTag) {
                 MButton deleteBtn = new MButton(FontAwesome.TIMES, clickEvent -> {
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                             confirmDialog -> {
                                 if (confirmDialog.isConfirmed()) {
-                                    tagService.removeWithSession(tag, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                    tagService.removeWithSession(tag, UserUIContext.getUsername(), AppUI.getAccountId());
                                     TagViewComponent.this.removeComponent(TagBlock.this);
                                 }
                             });

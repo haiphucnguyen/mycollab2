@@ -15,7 +15,7 @@ import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.module.tracker.service.ComponentService;
 import com.mycollab.module.tracker.service.VersionService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import org.jsoup.Jsoup;
 
@@ -29,7 +29,7 @@ public class GenericTaskDetailMapper {
     private String name;
 
     public GenericTaskDetailMapper(String type, int typeId) {
-        int sAccountId = MyCollabUI.getAccountId();
+        int sAccountId = AppUI.getAccountId();
         TimeZone timeZone = UserUIContext.getUserTimeZone();
 
         if (ProjectTypeConstants.BUG.equals(type)) {
@@ -68,7 +68,7 @@ public class GenericTaskDetailMapper {
             SimpleStandupReport standup = service.findById(typeId, sAccountId);
             if (standup != null) {
                 name = Jsoup.parse(DateTimeUtils.convertToStringWithUserTimeZone(
-                        standup.getCreatedtime(), MyCollabUI.getDateFormat(), UserUIContext.getUserLocale(), timeZone)).html();
+                        standup.getCreatedtime(), AppUI.getDateFormat(), UserUIContext.getUserLocale(), timeZone)).html();
             }
         }
     }

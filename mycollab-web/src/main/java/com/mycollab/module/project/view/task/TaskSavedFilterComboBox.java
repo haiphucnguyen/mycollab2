@@ -12,7 +12,7 @@ import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.query.CurrentProjectIdInjector;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.SavedFilterComboBox;
 import org.joda.time.LocalDate;
@@ -48,7 +48,7 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
                     public Object eval() {
                         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
                         List<OptionVal> options = optionValService.findOptionValsExcludeClosed(ProjectTypeConstants.TASK,
-                                CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
+                                CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
                         List<String> statuses = new ArrayList<>();
                         for (OptionVal option : options) {
                             statuses.add(option.getTypeval());

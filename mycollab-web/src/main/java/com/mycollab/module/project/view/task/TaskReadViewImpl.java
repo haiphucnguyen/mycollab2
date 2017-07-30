@@ -13,7 +13,7 @@ import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.*;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -184,7 +184,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                     .withWidthUndefined();
             with(titleLbl);
             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-            SimpleTask parentTask = taskService.findById(parentTaskId, MyCollabUI.getAccountId());
+            SimpleTask parentTask = taskService.findById(parentTaskId, AppUI.getAccountId());
             if (parentTask != null) {
                 with(new ToggleTaskSummaryWithChildRelationshipField(parentTask, childTask));
             }

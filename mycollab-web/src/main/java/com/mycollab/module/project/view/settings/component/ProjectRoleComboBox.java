@@ -8,7 +8,7 @@ import com.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.mycollab.module.project.i18n.ProjectRoleI18nEnum;
 import com.mycollab.module.project.service.ProjectRoleService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.ComboBox;
@@ -28,7 +28,7 @@ public class ProjectRoleComboBox extends ComboBox {
         this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 
         ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
 
         ProjectRoleService roleService = AppContextUtil.getSpringBean(ProjectRoleService.class);

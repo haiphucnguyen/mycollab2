@@ -1,6 +1,6 @@
 package com.mycollab.module.user;
 
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 
 /**
  * @author MyCollab Ltd.
@@ -8,10 +8,10 @@ import com.mycollab.vaadin.MyCollabUI;
  */
 public class AccountLinkBuilder {
     public static String generatePreviewFullUserLink(String username) {
-        return AccountLinkGenerator.generatePreviewFullUserLink(MyCollabUI.getSiteUrl(), username);
+        return AccountLinkGenerator.generatePreviewFullUserLink(AppUI.getSiteUrl(), username);
     }
 
     public static String generatePreviewFullRoleLink(Integer userRoleId) {
-        return AccountLinkGenerator.generatePreviewFullRoleLink(MyCollabUI.getSiteUrl(), userRoleId);
+        return AccountLinkGenerator.generatePreviewFullRoleLink(AppUI.getSiteUrl(), userRoleId);
     }
 }

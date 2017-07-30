@@ -13,7 +13,7 @@ import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.crm.ui.components.*;
 import com.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -109,7 +109,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
 
     protected void displayActivities() {
         ActivitySearchCriteria criteria = new ActivitySearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         criteria.setType(StringSearchField.and(CrmTypeConstants.CASE));
         criteria.setTypeid(new NumberSearchField(beanItem.getId()));
         associateActivityList.setSearchCriteria(criteria);

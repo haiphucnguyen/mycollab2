@@ -11,7 +11,7 @@ import com.mycollab.module.user.service.UserService;
 import com.mycollab.security.AccessPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -51,14 +51,14 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
             @Override
             public void onDelete(final User data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 UserService userService = AppContextUtil.getSpringBean(UserService.class);
-                                userService.pendingUserAccount(data.getUsername(), MyCollabUI.getAccountId());
+                                userService.pendingUserAccount(data.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new UserEvent.GotoList(this, null));
                             }
                         });
@@ -84,7 +84,7 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
             String username = (String) data.getParams();
 
             UserService userService = AppContextUtil.getSpringBean(UserService.class);
-            SimpleUser user = userService.findUserByUserNameInAccount(username, MyCollabUI.getAccountId());
+            SimpleUser user = userService.findUserByUserNameInAccount(username, AppUI.getAccountId());
             if (user != null) {
                 UserContainer userContainer = (UserContainer) container;
                 userContainer.removeAllComponents();

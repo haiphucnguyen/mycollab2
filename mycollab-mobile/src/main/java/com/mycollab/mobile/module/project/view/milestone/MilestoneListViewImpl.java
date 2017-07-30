@@ -27,7 +27,7 @@ import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -93,7 +93,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
         super.onBecomingVisible();
         setCaption(UserUIContext.getMessage(MilestoneI18nEnum.LIST));
         updateTabStatus();
-        MyCollabUI.addFragment("project/milestone/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+        AppUI.addFragment("project/milestone/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                 UserUIContext.getMessage(MilestoneI18nEnum.LIST));
     }
 

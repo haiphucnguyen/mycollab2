@@ -11,7 +11,7 @@ import com.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.mycollab.module.crm.service.OpportunityService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -52,7 +52,7 @@ public class OpportunityReadPresenter extends AbstractCrmPresenter<OpportunityRe
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 OpportunityService OpportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
-                                OpportunityService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                OpportunityService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new OpportunityEvent.GotoList(this, null));
                             }
                         });
@@ -74,7 +74,7 @@ public class OpportunityReadPresenter extends AbstractCrmPresenter<OpportunityRe
             public void gotoNext(SimpleOpportunity data) {
                 OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
                 OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = opportunityService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -88,7 +88,7 @@ public class OpportunityReadPresenter extends AbstractCrmPresenter<OpportunityRe
             public void gotoPrevious(SimpleOpportunity data) {
                 OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
                 OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = opportunityService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -106,7 +106,7 @@ public class OpportunityReadPresenter extends AbstractCrmPresenter<OpportunityRe
 
             if (data.getParams() instanceof Integer) {
                 OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
-                SimpleOpportunity opportunity = opportunityService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleOpportunity opportunity = opportunityService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (opportunity != null) {
                     view.previewItem(opportunity);
                     super.onGo(container, data);

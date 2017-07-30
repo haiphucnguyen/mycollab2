@@ -13,7 +13,7 @@ import com.mycollab.db.query.SearchQueryInfo;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
@@ -51,7 +51,7 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
         SaveSearchResultCriteria searchCriteria = new SaveSearchResultCriteria();
         searchCriteria.setType(StringSearchField.and(type));
         searchCriteria.setCreateUser(StringSearchField.and(UserUIContext.getUsername()));
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
 
         SaveSearchResultService saveSearchResultService = AppContextUtil.getSpringBean(SaveSearchResultService.class);
         List<SaveSearchResult> savedSearchResults = saveSearchResultService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));

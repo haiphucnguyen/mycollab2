@@ -10,7 +10,7 @@ import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.db.arguments.*;
 import com.mycollab.db.query.*;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.vaadin.data.util.BeanContainer;
@@ -109,7 +109,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         SaveSearchResultService saveSearchResultService = AppContextUtil.getSpringBean(SaveSearchResultService.class);
         SaveSearchResult searchResult = new SaveSearchResult();
         searchResult.setSaveuser(UserUIContext.getUsername());
-        searchResult.setSaccountid(MyCollabUI.getAccountId());
+        searchResult.setSaccountid(AppUI.getAccountId());
         searchResult.setQuerytext(QueryAnalyzer.toQueryParams(fieldInfos));
         searchResult.setType(searchCategory);
         searchResult.setQueryname(queryText);
@@ -447,14 +447,14 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                             List<SearchFieldInfo> fieldInfos = buildSearchFieldInfos();
                             SaveSearchResultService saveSearchResultService = AppContextUtil.getSpringBean(SaveSearchResultService.class);
                             data.setSaveuser(UserUIContext.getUsername());
-                            data.setSaccountid(MyCollabUI.getAccountId());
+                            data.setSaccountid(AppUI.getAccountId());
                             data.setQuerytext(QueryAnalyzer.toQueryParams(fieldInfos));
                             saveSearchResultService.updateWithSession(data, UserUIContext.getUsername());
                         }).withIcon(FontAwesome.REFRESH).withStyleName(WebThemes.BUTTON_ACTION);
 
                         MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                             SaveSearchResultService saveSearchResultService = AppContextUtil.getSpringBean(SaveSearchResultService.class);
-                            saveSearchResultService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                            saveSearchResultService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                             searchContainer.removeAllComponents();
                             if (filterBox.getComponentCount() > 2) {
                                 filterBox.removeComponent(filterBox.getComponent(1));
@@ -480,7 +480,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             SaveSearchResultCriteria searchCriteria = new SaveSearchResultCriteria();
             searchCriteria.setType(StringSearchField.and(searchCategory));
             searchCriteria.setCreateUser(StringSearchField.and(UserUIContext.getUsername()));
-            searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+            searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
 
             SaveSearchResultService saveSearchResultService = AppContextUtil.getSpringBean(SaveSearchResultService.class);
             List<SaveSearchResult> result = saveSearchResultService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));

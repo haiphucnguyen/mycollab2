@@ -11,7 +11,7 @@ import com.mycollab.security.BooleanPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.PageActionChain;
@@ -73,14 +73,14 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
         view.editItem(project);
 
         if (project.getId() == null) {
-            MyCollabUI.addFragment("project/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+            AppUI.addFragment("project/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                     UserUIContext.getMessage(ProjectI18nEnum.SINGLE)));
         }
     }
 
     private void saveProject(Project project) {
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-        project.setSaccountid(MyCollabUI.getAccountId());
+        project.setSaccountid(AppUI.getAccountId());
 
         if (project.getId() == null) {
             projectService.saveWithSession(project, UserUIContext.getUsername());

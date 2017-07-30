@@ -10,7 +10,7 @@ import com.mycollab.module.crm.service.MeetingService;
 import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -60,7 +60,7 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
                 meeting = (MeetingWithBLOBs) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 MeetingService meetingService = AppContextUtil.getSpringBean(MeetingService.class);
-                meeting = meetingService.findByPrimaryKey((Integer) data.getParams(), MyCollabUI.getAccountId());
+                meeting = meetingService.findByPrimaryKey((Integer) data.getParams(), AppUI.getAccountId());
             }
             if (meeting == null) {
                 NotificationUtil.showRecordNotExistNotification();
@@ -71,10 +71,10 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
             view.editItem(meeting);
 
             if (meeting.getId() == null) {
-                MyCollabUI.addFragment("crm/activity/meeting/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                AppUI.addFragment("crm/activity/meeting/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(MeetingI18nEnum.SINGLE)));
             } else {
-                MyCollabUI.addFragment("crm/activity/meeting/edit/" + UrlEncodeDecoder.encode(meeting.getId()),
+                AppUI.addFragment("crm/activity/meeting/edit/" + UrlEncodeDecoder.encode(meeting.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(MeetingI18nEnum.SINGLE), meeting.getSubject()));
             }
@@ -85,7 +85,7 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 
     public void save(MeetingWithBLOBs item) {
         MeetingService meetingService = AppContextUtil.getSpringBean(MeetingService.class);
-        item.setSaccountid(MyCollabUI.getAccountId());
+        item.setSaccountid(AppUI.getAccountId());
         if (item.getId() == null) {
             meetingService.saveWithSession(item, UserUIContext.getUsername());
         } else {

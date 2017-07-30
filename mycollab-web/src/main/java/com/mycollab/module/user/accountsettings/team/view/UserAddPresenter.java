@@ -11,7 +11,7 @@ import com.mycollab.module.user.service.UserService;
 import com.mycollab.security.AccessPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -58,8 +58,8 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
         }
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        user.setAccountId(MyCollabUI.getAccountId());
-        user.setSubdomain(MyCollabUI.getSubDomain());
+        user.setAccountId(AppUI.getAccountId());
+        user.setSubdomain(AppUI.getSubDomain());
 
         if (user.getStatus() == null) {
             user.setStatus(UserStatusConstants.EMAIL_VERIFIED_REQUEST);
@@ -74,10 +74,10 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
                 user.setPassword(RandomPasswordGenerator.generateRandomPassword());
             }
             String userPassword = user.getPassword();
-            userService.saveUserAccount(user, user.getRoleid(), MyCollabUI.getSubDomain(), MyCollabUI.getAccountId(), UserUIContext.getUsername(), true);
+            userService.saveUserAccount(user, user.getRoleid(), AppUI.getSubDomain(), AppUI.getAccountId(), UserUIContext.getUsername(), true);
             UI.getCurrent().addWindow(new NewUserAddedWindow(user, userPassword));
         } else {
-            userService.updateUserAccount(user, MyCollabUI.getAccountId());
+            userService.updateUserAccount(user, AppUI.getAccountId());
             EventBusFactory.getInstance().post(new UserEvent.GotoList(this, null));
         }
 

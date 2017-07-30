@@ -13,7 +13,7 @@ import com.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -85,7 +85,7 @@ public class CampaignListPresenter extends CrmGenericListPresenter<CampaignListV
                 this.displayNoExistItems(container, data);
             }
 
-            MyCollabUI.addFragment("crm/campaign/list", UserUIContext.getMessage(CampaignI18nEnum.LIST));
+            AppUI.addFragment("crm/campaign/list", UserUIContext.getMessage(CampaignI18nEnum.LIST));
         } else {
             throw new SecureAccessException();
         }
@@ -103,12 +103,12 @@ public class CampaignListPresenter extends CrmGenericListPresenter<CampaignListV
             }
 
             if (keyList.size() > 0) {
-                campaignService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                campaignService.massRemoveWithSession(keyList, UserUIContext.getUsername(), AppUI.getAccountId());
                 doSearch(searchCriteria);
                 checkWhetherEnableTableActionControl();
             }
         } else {
-            campaignService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
+            campaignService.removeByCriteria(searchCriteria, AppUI.getAccountId());
             doSearch(searchCriteria);
         }
     }
@@ -124,7 +124,7 @@ public class CampaignListPresenter extends CrmGenericListPresenter<CampaignListV
                 }
             }
             if (keyList.size() > 0) {
-                campaignService.massUpdateWithSession(value, keyList, MyCollabUI.getAccountId());
+                campaignService.massUpdateWithSession(value, keyList, AppUI.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

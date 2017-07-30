@@ -8,7 +8,7 @@ import com.mycollab.mobile.ui.SearchInputField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.ProjectActivityStream;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.Component;
@@ -43,7 +43,7 @@ public class ProjectActivitiesViewImpl extends AbstractListPageView<ActivityStre
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment("project/activities/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+        AppUI.addFragment("project/activities/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES));
     }
 }

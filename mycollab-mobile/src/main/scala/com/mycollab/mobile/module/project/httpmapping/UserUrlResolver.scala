@@ -9,7 +9,7 @@ import com.mycollab.module.project.ProjectMemberStatusConstants
 import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria
 import com.mycollab.module.project.service.ProjectMemberService
 import com.mycollab.spring.AppContextUtil
-import com.mycollab.vaadin.MyCollabUI
+import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.mvp.PageActionChain
 
 /**
@@ -49,7 +49,7 @@ class UserUrlResolver extends ProjectUrlResolver {
       val projectId = token.getInt
       val memberId = token.getInt
       val memberService = AppContextUtil.getSpringBean(classOf[ProjectMemberService])
-      val member = memberService.findById(memberId, MyCollabUI.getAccountId)
+      val member = memberService.findById(memberId, AppUI.getAccountId)
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new ProjectMemberScreenData.Edit(member))
       EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }

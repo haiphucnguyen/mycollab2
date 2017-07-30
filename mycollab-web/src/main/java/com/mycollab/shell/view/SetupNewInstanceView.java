@@ -11,7 +11,7 @@ import com.mycollab.module.user.domain.SimpleBillingAccount;
 import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.module.user.ui.components.LanguageSelectionField;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -101,7 +101,7 @@ class SetupNewInstanceView extends MVerticalLayout {
             String timezoneDbId = timeZoneSelectionField.getValue();
             BillingAccountMapper billingAccountMapper = AppContextUtil.getSpringBean(BillingAccountMapper.class);
             BillingAccountExample ex = new BillingAccountExample();
-            ex.createCriteria().andIdEqualTo(MyCollabUI.getAccountId());
+            ex.createCriteria().andIdEqualTo(AppUI.getAccountId());
             List<BillingAccount> billingAccounts = billingAccountMapper.selectByExample(ex);
             BillingAccount billingAccount = billingAccounts.get(0);
             billingAccount.setDefaultlanguagetag(language);
@@ -113,7 +113,7 @@ class SetupNewInstanceView extends MVerticalLayout {
 
             BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
             billingAccountService.createDefaultAccountData(adminName, password, timezoneDbId, language, true,
-                    createSampleDataSelection.getValue(), MyCollabUI.getAccountId());
+                    createSampleDataSelection.getValue(), AppUI.getAccountId());
 
             ((DesktopApplication) UI.getCurrent()).doLogin(adminName, password, false);
         }).withStyleName(WebThemes.BUTTON_ACTION);

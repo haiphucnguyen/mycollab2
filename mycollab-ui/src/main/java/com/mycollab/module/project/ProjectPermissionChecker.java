@@ -4,7 +4,7 @@ import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 
 /**
@@ -17,7 +17,7 @@ public class ProjectPermissionChecker {
     }
 
     public static boolean canWrite(Integer prjId, String permissionItem) {
-        SimpleProjectMember member = getMemberService().findMemberByUsername(UserUIContext.getUsername(), prjId, MyCollabUI.getAccountId());
+        SimpleProjectMember member = getMemberService().findMemberByUsername(UserUIContext.getUsername(), prjId, AppUI.getAccountId());
         if (member != null) {
             if (member.isProjectOwner()) {
                 return true;

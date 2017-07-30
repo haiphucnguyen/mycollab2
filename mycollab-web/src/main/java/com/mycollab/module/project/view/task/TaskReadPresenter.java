@@ -19,7 +19,7 @@ import com.mycollab.module.project.view.ticket.TicketContainer;
 import com.mycollab.vaadin.reporting.FormReportLayout;
 import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -74,14 +74,14 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
             @Override
             public void onDelete(final SimpleTask data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                                taskService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                taskService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null));
                             }
                         });
@@ -140,7 +140,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
             ticketContainer.setContent(view);
             if (data.getParams() instanceof Integer) {
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                SimpleTask task = taskService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleTask task = taskService.findById((Integer) data.getParams(), AppUI.getAccountId());
 
                 if (task != null) {
                     view.previewItem(task);

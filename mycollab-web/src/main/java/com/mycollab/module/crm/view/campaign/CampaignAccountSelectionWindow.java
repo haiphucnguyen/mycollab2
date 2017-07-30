@@ -9,7 +9,7 @@ import com.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.mycollab.module.crm.view.account.AccountSearchPanel;
 import com.mycollab.module.crm.view.account.AccountTableDisplay;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -40,7 +40,7 @@ public class CampaignAccountSelectionWindow extends RelatedItemSelectionWindow<S
             SimpleAccount account = tableItem.getBeanByIndex(itemId);
             return new ELabel(account.getAccountname()).withStyleName(WebThemes.BUTTON_LINK)
                     .withDescription(CrmTooltipGenerator.generateToolTipAccount(UserUIContext.getUserLocale(), account,
-                            MyCollabUI.getSiteUrl()));
+                            AppUI.getSiteUrl()));
         });
 
         MButton selectBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> close())

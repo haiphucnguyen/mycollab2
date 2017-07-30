@@ -9,7 +9,7 @@ import com.mycollab.module.crm.i18n.LeadI18nEnum;
 import com.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.mycollab.module.crm.view.lead.LeadSearchPanel;
 import com.mycollab.module.crm.view.lead.LeadTableDisplay;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -38,7 +38,7 @@ public class OpportunityLeadSelectionWindow extends RelatedItemSelectionWindow<S
             final SimpleLead lead = tableItem.getBeanByIndex(itemId);
             return new ELabel(lead.getLeadName()).withStyleName(WebThemes.BUTTON_LINK)
                     .withDescription(CrmTooltipGenerator.generateTooltipLead(UserUIContext.getUserLocale(), lead,
-                            MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                            AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
 
         MButton selectBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> close())

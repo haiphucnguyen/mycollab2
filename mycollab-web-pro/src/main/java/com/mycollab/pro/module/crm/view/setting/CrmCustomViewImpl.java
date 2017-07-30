@@ -20,7 +20,7 @@ import com.mycollab.pro.module.crm.view.setting.customlayout.CreateCustomFieldWi
 import com.mycollab.pro.module.crm.view.setting.customlayout.CreateSectionWindow;
 import com.mycollab.pro.module.crm.view.setting.customlayout.CustomLayoutDDComp;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -103,7 +103,7 @@ public class CrmCustomViewImpl extends AbstractVerticalPageView implements ICrmC
         MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             DynaForm rebuildForm = layoutComp.rebuildForm();
             MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
-            formService.saveCustomForm(MyCollabUI.getAccountId(), moduleName, rebuildForm);
+            formService.saveCustomForm(AppUI.getAccountId(), moduleName, rebuildForm);
         }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> display(moduleName))
@@ -124,7 +124,7 @@ public class CrmCustomViewImpl extends AbstractVerticalPageView implements ICrmC
 
     private static DynaForm getDynaForm(String moduleName) {
         MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
-        DynaForm form = formService.findCustomForm(MyCollabUI.getAccountId(), moduleName);
+        DynaForm form = formService.findCustomForm(AppUI.getAccountId(), moduleName);
 
         if (form == null) {
             if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {

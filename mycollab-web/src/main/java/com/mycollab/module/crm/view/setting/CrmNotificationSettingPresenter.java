@@ -4,7 +4,7 @@ import com.mycollab.module.crm.domain.CrmNotificationSetting;
 import com.mycollab.module.crm.service.CrmNotificationSettingService;
 import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.HasComponents;
@@ -26,9 +26,9 @@ public class CrmNotificationSettingPresenter extends CrmGenericPresenter<CrmNoti
         settingContainer.gotoSubView("notification");
 
         CrmNotificationSettingService service = AppContextUtil.getSpringBean(CrmNotificationSettingService.class);
-        CrmNotificationSetting setting = service.findNotification(UserUIContext.getUsername(), MyCollabUI.getAccountId());
+        CrmNotificationSetting setting = service.findNotification(UserUIContext.getUsername(), AppUI.getAccountId());
         view.showNotificationSettings(setting);
 
-        MyCollabUI.addFragment("crm/setting/notification", "Notification Settings");
+        AppUI.addFragment("crm/setting/notification", "Notification Settings");
     }
 }

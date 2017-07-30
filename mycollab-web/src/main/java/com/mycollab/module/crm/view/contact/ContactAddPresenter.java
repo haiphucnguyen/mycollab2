@@ -15,7 +15,7 @@ import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -65,7 +65,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
                 contact = (SimpleContact) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
-                contact = contactService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                contact = contactService.findById((Integer) data.getParams(), AppUI.getAccountId());
             }
             if (contact == null) {
                 throw new ResourceNotFoundException();
@@ -74,10 +74,10 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
             view.editItem(contact);
 
             if (contact.getId() == null) {
-                MyCollabUI.addFragment("crm/contact/add", UserUIContext.getMessage(GenericI18Enum
+                AppUI.addFragment("crm/contact/add", UserUIContext.getMessage(GenericI18Enum
                         .BROWSER_ADD_ITEM_TITLE, UserUIContext.getMessage(ContactI18nEnum.SINGLE)));
             } else {
-                MyCollabUI.addFragment("crm/contact/edit/" + UrlEncodeDecoder.encode(contact.getId()),
+                AppUI.addFragment("crm/contact/edit/" + UrlEncodeDecoder.encode(contact.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(ContactI18nEnum.SINGLE), contact.getLastname()));
             }
@@ -88,7 +88,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 
     private int saveContact(Contact contact) {
         ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
-        contact.setSaccountid(MyCollabUI.getAccountId());
+        contact.setSaccountid(AppUI.getAccountId());
         if (contact.getId() == null) {
             contactService.saveWithSession(contact, UserUIContext.getUsername());
         } else {

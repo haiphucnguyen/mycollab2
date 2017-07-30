@@ -4,7 +4,7 @@ import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -30,7 +30,7 @@ public class FileDashboardPresenter extends CrmGenericPresenter<FileDashboardVie
         if (UserUIContext.canRead(RolePermissionCollections.CRM_DOCUMENT)) {
             super.onGo(container, data);
             view.displayFiles();
-            MyCollabUI.addFragment("crm/file/dashboard", "Customer: File Dashboard");
+            AppUI.addFragment("crm/file/dashboard", "Customer: File Dashboard");
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }

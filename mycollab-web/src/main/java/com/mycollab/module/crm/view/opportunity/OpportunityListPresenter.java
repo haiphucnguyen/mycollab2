@@ -13,13 +13,12 @@ import com.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.web.ui.DefaultMassEditActionHandler;
 import com.mycollab.vaadin.web.ui.MailFormWindow;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 
@@ -87,7 +86,7 @@ public class OpportunityListPresenter extends CrmGenericListPresenter<Opportunit
                 this.displayNoExistItems(container, data);
             }
 
-            MyCollabUI.addFragment("crm/opportunity/list", UserUIContext.getMessage(OpportunityI18nEnum.LIST));
+            AppUI.addFragment("crm/opportunity/list", UserUIContext.getMessage(OpportunityI18nEnum.LIST));
         } else {
             throw new SecureAccessException();
         }
@@ -105,12 +104,12 @@ public class OpportunityListPresenter extends CrmGenericListPresenter<Opportunit
             }
 
             if (keyList.size() > 0) {
-                opportunityService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                opportunityService.massRemoveWithSession(keyList, UserUIContext.getUsername(), AppUI.getAccountId());
                 doSearch(searchCriteria);
                 checkWhetherEnableTableActionControl();
             }
         } else {
-            opportunityService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
+            opportunityService.removeByCriteria(searchCriteria, AppUI.getAccountId());
             doSearch(searchCriteria);
         }
     }
@@ -127,7 +126,7 @@ public class OpportunityListPresenter extends CrmGenericListPresenter<Opportunit
             }
 
             if (keyList.size() > 0) {
-                opportunityService.massUpdateWithSession(value, keyList, MyCollabUI.getAccountId());
+                opportunityService.massUpdateWithSession(value, keyList, AppUI.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

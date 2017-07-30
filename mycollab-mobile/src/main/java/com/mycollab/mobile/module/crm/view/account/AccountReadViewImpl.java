@@ -19,7 +19,7 @@ import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -98,7 +98,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment(CrmLinkGenerator.generateAccountPreviewLink(beanItem.getId()),
+        AppUI.addFragment(CrmLinkGenerator.generateAccountPreviewLink(beanItem.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(AccountI18nEnum.SINGLE), beanItem.getAccountname()));
     }

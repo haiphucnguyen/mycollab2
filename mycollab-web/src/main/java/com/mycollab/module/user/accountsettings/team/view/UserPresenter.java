@@ -6,7 +6,7 @@ import com.mycollab.module.billing.RegisterStatusConstants;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.accountsettings.view.parameters.UserScreenData;
 import com.mycollab.module.user.domain.criteria.UserSearchCriteria;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -32,7 +32,7 @@ public class UserPresenter extends AbstractPresenter<UserContainer> {
         if (data == null) {
             UserListPresenter listPresenter = PresenterResolver.getPresenter(UserListPresenter.class);
             UserSearchCriteria criteria = new UserSearchCriteria();
-            criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+            criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
             criteria.setRegisterStatuses(new SetSearchField<>(RegisterStatusConstants.ACTIVE, RegisterStatusConstants.NOT_LOG_IN_YET));
             listPresenter.go(view, new ScreenData.Search<>(criteria));
         } else if (data instanceof UserScreenData.Read) {

@@ -3,7 +3,7 @@ package com.mycollab.pro.module.file.view;
 import com.mycollab.module.file.view.FileMainView;
 import com.mycollab.security.AccessPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewPermission;
@@ -30,6 +30,6 @@ public class FileMainPresenter extends AbstractPresenter<FileMainView> {
         fileModule.setContent(view);
         view.lazyLoadView();
 
-        MyCollabUI.addFragment("document/list", "Documents");
+        AppUI.addFragment("document/list", "Documents");
     }
 }

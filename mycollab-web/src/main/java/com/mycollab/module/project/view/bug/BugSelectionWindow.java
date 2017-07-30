@@ -9,7 +9,7 @@ import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.mycollab.module.tracker.service.BugService;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.ui.UIUtils;
@@ -70,8 +70,8 @@ public class BugSelectionWindow extends MWindow {
                 b.addStyleName(WebThemes.LINK_OVERDUE);
             }
 
-            b.setDescription(ProjectTooltipGenerator.generateToolTipBug(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
-                    bug, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
+            b.setDescription(ProjectTooltipGenerator.generateToolTipBug(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                    bug, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
             return b;
         });
         return tableItem;

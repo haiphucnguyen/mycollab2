@@ -6,7 +6,7 @@ import com.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.mycollab.module.crm.i18n.CaseI18nEnum;
 import com.mycollab.module.crm.service.CaseService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
 
@@ -36,7 +36,7 @@ public class RelatedCaseNavigatorButton extends NavigationButton {
 
     public void displayRelatedByAccount(Integer accountId) {
         CaseSearchCriteria searchCriteria = new CaseSearchCriteria();
-        searchCriteria.setSaccountid(NumberSearchField.equal(MyCollabUI.getAccountId()));
+        searchCriteria.setSaccountid(NumberSearchField.equal(AppUI.getAccountId()));
         searchCriteria.setAccountId(NumberSearchField.equal(accountId));
         displayTotalCases(searchCriteria);
     }

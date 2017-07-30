@@ -10,7 +10,7 @@ import com.vaadin.ui.UI;
  * @author MyCollab Ltd.
  * @since 3.0
  */
-public class MyCollabUIProvider extends UIProvider {
+public class AppUIProvider extends UIProvider {
     private static final long serialVersionUID = 1L;
 
     static final String MOBILE_APP = "com.mycollab.mobile.MobileApplication";

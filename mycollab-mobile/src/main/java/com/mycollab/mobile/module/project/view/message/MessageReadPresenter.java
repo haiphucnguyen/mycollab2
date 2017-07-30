@@ -10,7 +10,7 @@ import com.mycollab.module.project.domain.SimpleMessage;
 import com.mycollab.module.project.i18n.MessageI18nEnum;
 import com.mycollab.module.project.service.MessageService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -32,11 +32,11 @@ public class MessageReadPresenter extends AbstractProjectPresenter<MessageReadVi
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MESSAGES)) {
             if (data.getParams() instanceof Integer) {
                 MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
-                SimpleMessage message = messageService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleMessage message = messageService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 view.previewItem(message);
                 super.onGo(container, data);
 
-                MyCollabUI.addFragment(ProjectLinkGenerator.generateMessagePreviewLink(CurrentProjectVariables.getProjectId(), message.getId()),
+                AppUI.addFragment(ProjectLinkGenerator.generateMessagePreviewLink(CurrentProjectVariables.getProjectId(), message.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                 UserUIContext.getMessage(MessageI18nEnum.SINGLE), message.getTitle()));
             } else {

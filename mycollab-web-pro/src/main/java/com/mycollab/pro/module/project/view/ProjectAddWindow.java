@@ -14,7 +14,7 @@ import com.mycollab.module.project.view.ProjectAddBaseTemplateWindow;
 import com.mycollab.module.project.view.ProjectGeneralInfoStep;
 import com.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -106,7 +106,7 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
             }
             NotificationUtil.showErrorNotification(errorMsg.toString());
         } else {
-            project.setSaccountid(MyCollabUI.getAccountId());
+            project.setSaccountid(AppUI.getAccountId());
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
             projectService.saveWithSession(project, UserUIContext.getUsername());
             customizeFeatureStep.saveProjectFeatures();
@@ -117,7 +117,7 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
                 ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
                 projectMemberService.inviteProjectMembers(new String[]{project.getLead()}, CurrentProjectVariables.getProjectId(),
                         -1, UserUIContext.getUsername(), UserUIContext.getMessage(ProjectMemberI18nEnum
-                                .MSG_DEFAULT_INVITATION_COMMENT), MyCollabUI.getAccountId());
+                                .MSG_DEFAULT_INVITATION_COMMENT), AppUI.getAccountId());
             }
             close();
         }

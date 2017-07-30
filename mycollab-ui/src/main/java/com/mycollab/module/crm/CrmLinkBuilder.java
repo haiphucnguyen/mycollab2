@@ -1,6 +1,6 @@
 package com.mycollab.module.crm;
 
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 
 import static com.mycollab.common.GenericLinkUtils.URL_PREFIX_PARAM;
 
@@ -35,7 +35,7 @@ public class CrmLinkBuilder {
     }
 
     public static String generateActivityPreviewLinkFull(String type, Integer typeId) {
-        return CrmLinkGenerator.generateCrmItemFullLink(MyCollabUI.getSiteUrl(), type, typeId);
+        return CrmLinkGenerator.generateCrmItemFullLink(AppUI.getSiteUrl(), type, typeId);
     }
 
     public static String generateMeetingPreviewLinkFull(Integer meetingId) {

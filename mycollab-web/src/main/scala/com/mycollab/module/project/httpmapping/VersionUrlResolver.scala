@@ -9,7 +9,7 @@ import com.mycollab.module.tracker.domain.Version
 import com.mycollab.module.tracker.domain.criteria.VersionSearchCriteria
 import com.mycollab.module.tracker.service.VersionService
 import com.mycollab.spring.AppContextUtil
-import com.mycollab.vaadin.MyCollabUI
+import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.mvp.PageActionChain
 
 /**
@@ -48,7 +48,7 @@ class VersionUrlResolver extends ProjectUrlResolver {
       val projectId = token.getInt
       val versionId = token.getInt
       val versionService = AppContextUtil.getSpringBean(classOf[VersionService])
-      val version = versionService.findById(versionId, MyCollabUI.getAccountId)
+      val version = versionService.findById(versionId, AppUI.getAccountId)
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new VersionScreenData.Edit(version))
       EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }

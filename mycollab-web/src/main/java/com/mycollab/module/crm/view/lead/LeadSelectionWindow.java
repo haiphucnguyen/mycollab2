@@ -7,7 +7,7 @@ import com.mycollab.module.crm.domain.SimpleLead;
 import com.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.mycollab.module.crm.fielddef.LeadTableFieldDef;
 import com.mycollab.module.crm.i18n.LeadI18nEnum;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -54,7 +54,7 @@ public class LeadSelectionWindow extends MWindow {
                 close();
             }).withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING)
                     .withDescription(CrmTooltipGenerator.generateTooltipLead(UserUIContext.getUserLocale(), lead,
-                            MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                            AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
         tableItem.setSearchCriteria(new LeadSearchCriteria());
     }

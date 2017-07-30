@@ -7,7 +7,7 @@ import com.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.mycollab.security.AccessPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.ViewPermission;
@@ -35,7 +35,7 @@ public class UserListPresenter extends AbstractPresenter<UserListView> {
         UserSearchCriteria criteria;
         if (data == null) {
             criteria = new UserSearchCriteria();
-            criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+            criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
             criteria.setRegisterStatuses(new SetSearchField<>(RegisterStatusConstants.ACTIVE, RegisterStatusConstants.NOT_LOG_IN_YET));
         } else {
             criteria = (UserSearchCriteria) data.getParams();

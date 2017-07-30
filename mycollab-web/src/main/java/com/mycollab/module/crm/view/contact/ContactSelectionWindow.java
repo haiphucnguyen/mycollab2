@@ -7,7 +7,7 @@ import com.mycollab.module.crm.domain.SimpleContact;
 import com.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.mycollab.module.crm.fielddef.ContactTableFieldDef;
 import com.mycollab.module.crm.i18n.ContactI18nEnum;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -55,8 +55,8 @@ public class ContactSelectionWindow extends MWindow {
             return new MButton(contact.getContactName(), clickEvent -> {
                 fieldSelection.fireValueChange(contact);
                 close();
-            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateToolTipContact(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
-                    contact, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateToolTipContact(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                    contact, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
     }
 }

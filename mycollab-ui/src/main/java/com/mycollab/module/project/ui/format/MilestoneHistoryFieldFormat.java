@@ -7,7 +7,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.formatter.HistoryFieldFormat;
 import com.mycollab.vaadin.UserUIContext;
 import org.apache.commons.lang3.StringUtils;
@@ -35,7 +35,7 @@ public final class MilestoneHistoryFieldFormat implements HistoryFieldFormat {
         try {
             Integer milestoneId = Integer.parseInt(value);
             MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-            SimpleMilestone milestone = milestoneService.findById(milestoneId, MyCollabUI.getAccountId());
+            SimpleMilestone milestone = milestoneService.findById(milestoneId, AppUI.getAccountId());
 
             if (milestone != null) {
                 if (displayAsHtml) {

@@ -10,7 +10,7 @@ import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
@@ -62,7 +62,7 @@ class EmailTokenField extends CssLayout implements SuggestField.NewItemsHandler,
         addComponent(suggestField);
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
         UserSearchCriteria searchCriteria = new UserSearchCriteria();
-        searchCriteria.setSaccountid(NumberSearchField.equal(MyCollabUI.getAccountId()));
+        searchCriteria.setSaccountid(NumberSearchField.equal(AppUI.getAccountId()));
         candidateUsers = userService.findAbsoluteListByCriteria(searchCriteria, 0, Integer.MAX_VALUE);
         suggestField.addBlurListener(blurEvent -> {
                     isFocusing = false;

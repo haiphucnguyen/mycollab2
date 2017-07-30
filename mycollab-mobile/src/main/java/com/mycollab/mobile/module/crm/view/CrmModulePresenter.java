@@ -6,7 +6,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.MobileApplication;
 import com.mycollab.mobile.module.crm.events.CrmEvent;
 import com.mycollab.mobile.shell.ModuleHelper;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.HasComponents;
@@ -30,7 +30,7 @@ public class CrmModulePresenter extends AbstractCrmPresenter<CrmModule> {
         String[] params = (String[]) data.getParams();
         if (params == null || params.length == 0) {
             EventBusFactory.getInstance().post(new CrmEvent.GotoActivitiesView(this, null));
-            MyCollabUI.addFragment("crm", UserUIContext.getMessage(GenericI18Enum.MODULE_CRM));
+            AppUI.addFragment("crm", UserUIContext.getMessage(GenericI18Enum.MODULE_CRM));
         } else {
             MobileApplication.rootUrlResolver.getSubResolver("crm").handle(params);
         }

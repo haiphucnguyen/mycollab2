@@ -7,7 +7,7 @@ import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.RelatedBugExample;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.RemoveInlineComponentMarker;
 import com.mycollab.vaadin.ui.UIUtils;
@@ -31,7 +31,7 @@ public class ToggleBugSummaryWithDependentField extends CustomField<SimpleBug> {
         toggleBugSummaryField = new ToggleBugSummaryField(relatedBug);
         MButton unlinkBtn = new MButton("", clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                    MyCollabUI.getSiteName()),
+                    AppUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO), confirmDialog -> {

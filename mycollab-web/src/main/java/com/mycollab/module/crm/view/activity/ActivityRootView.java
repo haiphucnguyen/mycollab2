@@ -5,7 +5,7 @@ import com.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.mycollab.module.crm.i18n.ActivityI18nEnum;
 import com.mycollab.module.crm.view.parameters.ActivityScreenData;
 import com.mycollab.module.file.StorageUtils;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.PresenterResolver;
@@ -69,7 +69,7 @@ public class ActivityRootView extends AbstractVerticalPageView {
                 calendarPresenter.go(ActivityRootView.this, new ActivityScreenData.GotoCalendar());
             } else if (UserUIContext.getMessage(ActivityI18nEnum.TAB_ACTIVITY_TITLE).equals(caption)) {
                 ActivitySearchCriteria criteria = new ActivitySearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 eventPresenter.go(ActivityRootView.this, new ActivityScreenData.GotoActivityList(criteria));
             }
         });

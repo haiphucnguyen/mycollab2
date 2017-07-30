@@ -14,7 +14,7 @@ import com.mycollab.module.crm.service.TaskService;
 import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -50,7 +50,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
             @Override
             public void onDelete(final SimpleCrmTask data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -58,7 +58,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
                             if (confirmDialog.isConfirmed()) {
                                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                                 taskService.removeWithSession(data,
-                                        UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                        UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new ActivityEvent.GotoTodoList(this, null));
                             }
                         });
@@ -80,7 +80,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
             public void gotoNext(SimpleCrmTask data) {
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                 CrmTaskSearchCriteria criteria = new CrmTaskSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = taskService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -95,7 +95,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
             public void gotoPrevious(SimpleCrmTask data) {
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                 CrmTaskSearchCriteria criteria = new CrmTaskSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = taskService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -113,7 +113,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
             SimpleCrmTask task;
             if (data.getParams() instanceof Integer) {
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
-                task = taskService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                task = taskService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (task == null) {
                     NotificationUtil.showRecordNotExistNotification();
                     return;
@@ -124,7 +124,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
 
             super.onGo(container, data);
             view.previewItem(task);
-            MyCollabUI.addFragment(CrmLinkGenerator.generateTaskPreviewLink(task.getId()),
+            AppUI.addFragment(CrmLinkGenerator.generateTaskPreviewLink(task.getId()),
                     UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                             UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getSubject()));
 

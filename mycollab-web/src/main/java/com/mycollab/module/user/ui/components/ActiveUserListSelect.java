@@ -8,7 +8,7 @@ import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.ui.ListSelect;
 
@@ -26,7 +26,7 @@ public class ActiveUserListSelect extends ListSelect {
         this.setMultiSelect(true);
 
         UserSearchCriteria criteria = new UserSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         criteria.setRegisterStatuses(new SetSearchField<>(RegisterStatusConstants.ACTIVE));
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);

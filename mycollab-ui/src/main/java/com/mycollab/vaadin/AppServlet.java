@@ -20,10 +20,11 @@ import javax.servlet.annotation.WebServlet;
                 @WebInitParam(name = "org.atmosphere.websocket.maxIdleTime", value = "86400000")
         })
 @CacheManifestEnabled(false)
-public class MyCollabServlet extends TouchKitServlet {
+public class AppServlet extends TouchKitServlet {
     private static final long serialVersionUID = 1L;
 
-    private MyCollabUIProvider uiProvider = new MyCollabUIProvider();
+    private AppUIProvider uiProvider = new AppUIProvider();
+    private AppBootstrapListener bootstrapListener = new AppBootstrapListener();
 
     @Override
     protected void servletInitialized() throws ServletException {
@@ -35,7 +36,7 @@ public class MyCollabServlet extends TouchKitServlet {
         s.getWebAppSettings().setStartupImage(contextPath + "VAADIN/themes/" + Version.THEME_MOBILE_VERSION + "/icons/icon.png");
 
         getService().addSessionInitListener(sessionInitEvent -> {
-            sessionInitEvent.getSession().addBootstrapListener(new MyCollabBootstrapListener());
+            sessionInitEvent.getSession().addBootstrapListener(bootstrapListener);
             sessionInitEvent.getSession().addUIProvider(uiProvider);
         });
     }

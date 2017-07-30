@@ -16,7 +16,7 @@ import com.mycollab.module.tracker.service.ComponentService;
 import com.mycollab.vaadin.reporting.FormReportLayout;
 import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -56,7 +56,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
             @Override
             public void onDelete(SimpleComponent data) {
                 ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
-                componentService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                componentService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                 EventBusFactory.getInstance().post(new BugComponentEvent.GotoList(this, null));
             }
 
@@ -115,7 +115,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
             if (data.getParams() instanceof Integer) {
                 ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
-                SimpleComponent component = componentService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleComponent component = componentService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (component != null) {
                     BugComponentContainer componentContainer = (BugComponentContainer) container;
                     componentContainer.removeAllComponents();

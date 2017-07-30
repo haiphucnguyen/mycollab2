@@ -14,7 +14,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.web.ui.chart.GenericChartWrapper;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.Depot;
@@ -170,7 +170,7 @@ public class TicketCloseTrendChartWidget extends Depot {
             LocalDate startDate = endDate.minusDays(30);
             OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
             List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
-                    CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
+                    CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
             List<String> options = optionVals.stream().map(OptionVal::getTypeval).collect(Collectors.toList());
             groupItems = timelineTrackingService.findTimelineItems("status", options, startDate.toDate(), endDate.toDate(), searchCriteria);
             displayChart();

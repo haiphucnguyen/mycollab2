@@ -28,7 +28,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -85,7 +85,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         }
 
         ResourceService resourceService = AppContextUtil.getSpringBean(ResourceService.class);
-        List<Content> attachments = resourceService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(),
+        List<Content> attachments = resourceService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(),
                 beanItem.getProjectid(), ProjectTypeConstants.TASK, "" + beanItem.getId()));
         if (CollectionUtils.isNotEmpty(attachments)) {
             attachmentComp = new ProjectAttachmentDisplayComp(attachments);
@@ -184,7 +184,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment(ProjectLinkGenerator.generateTaskPreviewLink(beanItem.getTaskkey(),
+        AppUI.addFragment(ProjectLinkGenerator.generateTaskPreviewLink(beanItem.getTaskkey(),
                 beanItem.getProjectShortname()), beanItem.getName());
     }
 

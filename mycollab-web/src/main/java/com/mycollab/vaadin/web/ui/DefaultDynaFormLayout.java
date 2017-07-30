@@ -7,7 +7,7 @@ import com.mycollab.form.view.builder.type.DynaForm;
 import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FormContainer;
 import com.mycollab.vaadin.ui.IDynaFormLayout;
@@ -36,7 +36,7 @@ public class DefaultDynaFormLayout implements IDynaFormLayout {
             this.excludeFields = new HashSet<>();
         }
         MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
-        DynaForm form = formService.findCustomForm(MyCollabUI.getAccountId(), moduleName);
+        DynaForm form = formService.findCustomForm(AppUI.getAccountId(), moduleName);
         this.dynaForm = (form != null) ? form : defaultForm;
     }
 

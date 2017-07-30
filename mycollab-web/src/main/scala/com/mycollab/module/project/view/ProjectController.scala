@@ -26,7 +26,7 @@ import com.mycollab.module.project.view.user.ProjectDashboardPresenter
 import com.mycollab.module.project.{CurrentProjectVariables, ProjectMemberStatusConstants}
 import com.mycollab.module.tracker.domain.criteria.{ComponentSearchCriteria, VersionSearchCriteria}
 import com.mycollab.module.tracker.domain.{Component, SimpleBug, Version}
-import com.mycollab.vaadin.MyCollabUI
+import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.mvp.{AbstractController, PresenterResolver}
 
 /**
@@ -362,7 +362,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         val project = CurrentProjectVariables.getProject
         val criteria = new ProjectMemberSearchCriteria
         criteria.setProjectId(new NumberSearchField(project.getId))
-        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
+        criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId))
         criteria.setStatuses(new SetSearchField[String](ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET))
         val presenter = PresenterResolver.getPresenter(classOf[UserSettingPresenter])
         presenter.go(projectView, new ProjectMemberScreenData.Search(criteria))

@@ -18,7 +18,7 @@ import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectGenericPresenter;
 import com.mycollab.module.project.view.ticket.TicketContainer;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -91,7 +91,7 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
     private int save(Task item) {
         ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
 
-        item.setSaccountid(MyCollabUI.getAccountId());
+        item.setSaccountid(AppUI.getAccountId());
         item.setProjectid(CurrentProjectVariables.getProjectId());
         if (item.getPercentagecomplete() == null) {
             item.setPercentagecomplete(0d);
@@ -113,7 +113,7 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
                 for (String follower : followers) {
                     MonitorItem monitorItem = new MonitorItem();
                     monitorItem.setMonitorDate(new GregorianCalendar().getTime());
-                    monitorItem.setSaccountid(MyCollabUI.getAccountId());
+                    monitorItem.setSaccountid(AppUI.getAccountId());
                     monitorItem.setType(ProjectTypeConstants.TASK);
                     monitorItem.setTypeid(taskId);
                     monitorItem.setUser(follower);
@@ -127,7 +127,7 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
             taskService.updateWithSession(item, UserUIContext.getUsername());
         }
         AttachmentUploadField uploadField = view.getAttachUploadField();
-        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), item.getProjectid(),
+        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), item.getProjectid(),
                 ProjectTypeConstants.TASK, "" + item.getId());
         uploadField.saveContentsToRepo(attachPath);
         return item.getId();

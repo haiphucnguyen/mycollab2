@@ -12,7 +12,7 @@ import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -44,7 +44,7 @@ public class TaskReadPresenter extends AbstractProjectPresenter<TaskReadView> {
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                                taskService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                taskService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
                             }
                         });
@@ -64,7 +64,7 @@ public class TaskReadPresenter extends AbstractProjectPresenter<TaskReadView> {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
             if (data.getParams() instanceof Integer) {
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                SimpleTask task = taskService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleTask task = taskService.findById((Integer) data.getParams(), AppUI.getAccountId());
 
                 if (task != null) {
                     view.previewItem(task);

@@ -3,7 +3,7 @@ package com.mycollab.pro.module.project.view.client;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -35,7 +35,7 @@ public class ClientListPresenter extends AbstractPresenter<ClientListView> {
         if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
             AccountSearchCriteria searchCriteria = (AccountSearchCriteria) data.getParams();
             view.display(searchCriteria);
-            MyCollabUI.addFragment("project/client/list", UserUIContext.getMessage(ClientI18nEnum.LIST));
+            AppUI.addFragment("project/client/list", UserUIContext.getMessage(ClientI18nEnum.LIST));
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }

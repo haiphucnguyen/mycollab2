@@ -11,7 +11,7 @@ import com.mycollab.module.crm.view.contact.ContactSelectionWindow;
 import com.mycollab.module.crm.view.lead.LeadSelectionWindow;
 import com.mycollab.module.crm.view.opportunity.OpportunitySelectionWindow;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.KeyCaptionComboBox;
@@ -126,37 +126,37 @@ public class RelatedEditItemField extends CustomField<String> implements FieldSe
             if (typeId != null) {
                 if (CrmTypeConstants.ACCOUNT.equals(type)) {
                     AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                    SimpleAccount account = accountService.findById(typeId, MyCollabUI.getAccountId());
+                    SimpleAccount account = accountService.findById(typeId, AppUI.getAccountId());
                     if (account != null) {
                         itemField.setValue(account.getAccountname());
                     }
                 } else if (CrmTypeConstants.CAMPAIGN.equals(type)) {
                     CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-                    SimpleCampaign campaign = campaignService.findById(typeId, MyCollabUI.getAccountId());
+                    SimpleCampaign campaign = campaignService.findById(typeId, AppUI.getAccountId());
                     if (campaign != null) {
                         itemField.setValue(campaign.getCampaignname());
                     }
                 } else if (CrmTypeConstants.CONTACT.equals(type)) {
                     ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
-                    SimpleContact contact = contactService.findById(typeId, MyCollabUI.getAccountId());
+                    SimpleContact contact = contactService.findById(typeId, AppUI.getAccountId());
                     if (contact != null) {
                         itemField.setValue(contact.getContactName());
                     }
                 } else if (CrmTypeConstants.LEAD.equals(type)) {
                     LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
-                    SimpleLead lead = leadService.findById(typeId, MyCollabUI.getAccountId());
+                    SimpleLead lead = leadService.findById(typeId, AppUI.getAccountId());
                     if (lead != null) {
                         itemField.setValue(lead.getLeadName());
                     }
                 } else if (CrmTypeConstants.OPPORTUNITY.equals(type)) {
                     OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
-                    SimpleOpportunity opportunity = opportunityService.findById(typeId, MyCollabUI.getAccountId());
+                    SimpleOpportunity opportunity = opportunityService.findById(typeId, AppUI.getAccountId());
                     if (opportunity != null) {
                         itemField.setValue(opportunity.getOpportunityname());
                     }
                 } else if (CrmTypeConstants.CASE.equals(type)) {
                     CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
-                    SimpleCase cases = caseService.findById(typeId, MyCollabUI.getAccountId());
+                    SimpleCase cases = caseService.findById(typeId, AppUI.getAccountId());
                     if (cases != null) {
                         itemField.setValue(cases.getSubject());
                     }

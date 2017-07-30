@@ -8,7 +8,7 @@ import com.mycollab.module.project.view.parameters.ProjectScreenData.{GotoCalend
 import com.mycollab.module.project.view.parameters.{MilestoneScreenData, ProjectScreenData}
 import com.mycollab.shell.events.ShellEvent
 import com.mycollab.spring.AppContextUtil
-import com.mycollab.vaadin.MyCollabUI
+import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.mvp.{PageActionChain, UrlResolver}
 import com.mycollab.vaadin.web.ui.ModuleHelper
 
@@ -102,7 +102,7 @@ class ProjectUrlResolver extends UrlResolver {
       } else {
         val projectId = UrlTokenizer(params(0)).getInt
         val prjService = AppContextUtil.getSpringBean(classOf[ProjectService])
-        val project = prjService.findById(projectId, MyCollabUI.getAccountId)
+        val project = prjService.findById(projectId, AppUI.getAccountId)
         if (project != null) {
           val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new ProjectScreenData.Edit(project))
           EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))

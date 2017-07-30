@@ -14,7 +14,7 @@ import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -90,7 +90,7 @@ public class ApproveInputWindow extends MWindow {
                             comment.setComment(Jsoup.clean(commentArea.getValue(), Whitelist.relaxed()));
                             comment.setCreatedtime(new GregorianCalendar().getTime());
                             comment.setCreateduser(UserUIContext.getUsername());
-                            comment.setSaccountid(MyCollabUI.getAccountId());
+                            comment.setSaccountid(AppUI.getAccountId());
                             comment.setType(ProjectTypeConstants.BUG);
                             comment.setTypeid("" + bug.getId());
                             comment.setExtratypeid(CurrentProjectVariables.getProjectId());

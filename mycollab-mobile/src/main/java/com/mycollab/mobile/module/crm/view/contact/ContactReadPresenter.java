@@ -6,14 +6,12 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.crm.events.ContactEvent;
 import com.mycollab.mobile.module.crm.view.AbstractCrmPresenter;
 import com.mycollab.mobile.ui.ConfirmDialog;
-import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.domain.SimpleContact;
 import com.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.mycollab.module.crm.service.ContactService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -54,7 +52,7 @@ public class ContactReadPresenter extends AbstractCrmPresenter<ContactReadView> 
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 ContactService ContactService = AppContextUtil.getSpringBean(ContactService.class);
-                                ContactService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                ContactService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new ContactEvent.GotoList(this, null));
                             }
                         });
@@ -76,7 +74,7 @@ public class ContactReadPresenter extends AbstractCrmPresenter<ContactReadView> 
             public void gotoNext(SimpleContact data) {
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
                 ContactSearchCriteria criteria = new ContactSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = contactService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -90,7 +88,7 @@ public class ContactReadPresenter extends AbstractCrmPresenter<ContactReadView> 
             public void gotoPrevious(SimpleContact data) {
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
                 ContactSearchCriteria criteria = new ContactSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = contactService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -108,7 +106,7 @@ public class ContactReadPresenter extends AbstractCrmPresenter<ContactReadView> 
 
             if (data.getParams() instanceof Integer) {
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
-                SimpleContact contact = contactService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleContact contact = contactService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (contact != null) {
                     view.previewItem(contact);
                     super.onGo(container, data);

@@ -10,10 +10,10 @@ public class TooltipHelper {
     public static String userHoverJsFunction(String username) {
         String uidVal = "'" + TOOLTIP_ID + "'";
         String usernameVal = "'" + username + "'";
-        String urlVal = "'" + MyCollabUI.getSiteUrl() + "tooltip/'";
-        String siteUrlVal = "'" + MyCollabUI.getSiteUrl() + "'";
+        String urlVal = "'" + AppUI.getSiteUrl() + "tooltip/'";
+        String siteUrlVal = "'" + AppUI.getSiteUrl() + "'";
         String timezoneVal = "'" + UserUIContext.getUser().getTimezone() + "'";
-        String accountIdVal = "'" + MyCollabUI.getAccountId() + "'";
+        String accountIdVal = "'" + AppUI.getAccountId() + "'";
         String localeVal = "'" + UserUIContext.getUserLocale().toLanguageTag() + "'";
 
         return String.format("return showUserTooltip(%s,%s,%s,%s,%s,%s,%s);", uidVal, usernameVal, urlVal,
@@ -24,12 +24,12 @@ public class TooltipHelper {
         String uidVal = "'" + TOOLTIP_ID + "'";
         String typeVal = "'" + type + "'";
         String typeIdVal = "'" + typeId + "'";
-        String urlVal = "'" + MyCollabUI.getSiteUrl() + "tooltip/'";
-        String accountIdVal = "'" + MyCollabUI.getAccountId() + "'";
-        String siteUrlVal = "'" + MyCollabUI.getSiteUrl() + "'";
-        String timezoneVal = "'" + MyCollabUI.getAccountId() + "'";
+        String urlVal = "'" + AppUI.getSiteUrl() + "tooltip/'";
+        String accountIdVal = "'" + AppUI.getAccountId() + "'";
+        String siteUrlVal = "'" + AppUI.getSiteUrl() + "'";
+        String timezoneVal = "'" + AppUI.getAccountId() + "'";
         String localeVal = "'" + UserUIContext.getUserLocale().toLanguageTag() + "'";
-        String dateFormatVal = "'" + MyCollabUI.getDateFormat() + "'";
+        String dateFormatVal = "'" + AppUI.getDateFormat() + "'";
 
         return String.format("return overIt(%s,%s,%s,%s,%s,%s,%s,%s,%s);", uidVal, typeVal, typeIdVal,
                 urlVal, accountIdVal, siteUrlVal, timezoneVal, localeVal, dateFormatVal);
@@ -39,12 +39,12 @@ public class TooltipHelper {
         String uidVal = "'" + TOOLTIP_ID + "'";
         String typeVal = "'" + type + "'";
         String typeIdVal = "'" + typeId + "'";
-        String urlVal = "'" + MyCollabUI.getSiteUrl() + "tooltip/'";
-        String accountIdVal = "'" + MyCollabUI.getAccountId() + "'";
-        String siteUrlVal = "'" + MyCollabUI.getSiteUrl() + "'";
-        String timezoneVal = "'" + MyCollabUI.getAccountId() + "'";
+        String urlVal = "'" + AppUI.getSiteUrl() + "tooltip/'";
+        String accountIdVal = "'" + AppUI.getAccountId() + "'";
+        String siteUrlVal = "'" + AppUI.getSiteUrl() + "'";
+        String timezoneVal = "'" + AppUI.getAccountId() + "'";
         String localeVal = "'" + UserUIContext.getUserLocale().toLanguageTag() + "'";
-        String dateFormatVal = "'" + MyCollabUI.getDateFormat() + "'";
+        String dateFormatVal = "'" + AppUI.getDateFormat() + "'";
         return String.format("return crmActivityOverIt(%s,%s,%s,%s,%s,%s,%s,%s,%s);",
                 uidVal, typeVal, typeIdVal, urlVal, accountIdVal, siteUrlVal, timezoneVal, localeVal, dateFormatVal);
     }

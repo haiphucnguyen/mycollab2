@@ -7,7 +7,7 @@ import com.mycollab.module.crm.ui.components.CrmAssetsUtil;
 import com.mycollab.module.file.PathUtils;
 import com.mycollab.module.file.service.EntityUploaderService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.ImagePreviewCropWindow;
 import com.mycollab.vaadin.web.ui.UploadImageField;
@@ -40,8 +40,8 @@ public class AccountLogoUpdateWindow extends MWindow implements ImagePreviewCrop
     @Override
     public void process(BufferedImage image) {
         EntityUploaderService entityUploaderService = AppContextUtil.getSpringBean(EntityUploaderService.class);
-        String newLogoId = entityUploaderService.upload(image, PathUtils.getEntityLogoPath(MyCollabUI.getAccountId()),
-                account.getAvatarid(), UserUIContext.getUsername(), MyCollabUI.getAccountId(),
+        String newLogoId = entityUploaderService.upload(image, PathUtils.getEntityLogoPath(AppUI.getAccountId()),
+                account.getAvatarid(), UserUIContext.getUsername(), AppUI.getAccountId(),
                 new Integer[]{16, 32, 48, 64, 100});
         AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
         account.setAvatarid(newLogoId);

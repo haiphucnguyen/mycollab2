@@ -4,7 +4,7 @@ import com.mycollab.common.domain.FavoriteItem;
 import com.mycollab.common.service.FavoriteItemService;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
@@ -179,7 +179,7 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
             favoriteItem.setExtratypeid(CurrentProjectVariables.getProjectId());
             favoriteItem.setType(getType());
             favoriteItem.setTypeid(PropertyUtils.getProperty(beanItem, "id").toString());
-            favoriteItem.setSaccountid(MyCollabUI.getAccountId());
+            favoriteItem.setSaccountid(AppUI.getAccountId());
             favoriteItem.setCreateduser(UserUIContext.getUsername());
             FavoriteItemService favoriteItemService = AppContextUtil.getSpringBean(FavoriteItemService.class);
             favoriteItemService.saveOrDelete(favoriteItem);

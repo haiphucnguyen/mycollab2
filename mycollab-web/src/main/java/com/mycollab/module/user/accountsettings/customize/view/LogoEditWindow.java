@@ -10,7 +10,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.file.service.AccountLogoService;
 import com.mycollab.module.user.accountsettings.view.events.SettingEvent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.addon.webcomponents.CropField;
 import com.mycollab.vaadin.addon.webcomponents.client.VCropSelection;
@@ -73,7 +73,7 @@ public class LogoEditWindow extends MWindow {
         MHorizontalLayout previewBox = new MHorizontalLayout().withMargin(new MarginInfo(false, true, true, false))
                 .withFullWidth();
 
-        final String logoPath = MyCollabUI.getBillingAccount().getLogopath();
+        final String logoPath = AppUI.getBillingAccount().getLogopath();
         Resource defaultPhoto = AccountAssetsResolver.createLogoResource(logoPath, 150);
         previewImage = new Embedded(null, defaultPhoto);
         previewImage.setWidth("100px");
@@ -94,7 +94,7 @@ public class LogoEditWindow extends MWindow {
                     BufferedImage image = ImageIO.read(new ByteArrayInputStream(scaleImageData));
                     AccountLogoService accountLogoService = AppContextUtil.getSpringBean(AccountLogoService.class);
                     accountLogoService.upload(UserUIContext.getUsername(),
-                            image, MyCollabUI.getAccountId());
+                            image, AppUI.getAccountId());
                     Page.getCurrent().getJavaScript().execute("window.location.reload();");
                 } catch (IOException e) {
                     throw new MyCollabException("Error when saving account logo", e);

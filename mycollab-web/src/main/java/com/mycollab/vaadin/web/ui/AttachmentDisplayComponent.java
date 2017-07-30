@@ -12,7 +12,7 @@ import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.resources.VaadinResourceFactory;
 import com.mycollab.vaadin.resources.file.FileAssetsUtil;
@@ -91,13 +91,13 @@ public class AttachmentDisplayComponent extends CssLayout {
 
         MButton trashBtn = new MButton("", clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                    MyCollabUI.getSiteName()), UserUIContext.getMessage(GenericI18Enum.CONFIRM_DELETE_ATTACHMENT),
+                    AppUI.getSiteName()), UserUIContext.getMessage(GenericI18Enum.CONFIRM_DELETE_ATTACHMENT),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                     confirmDialog -> {
                         if (confirmDialog.isConfirmed()) {
                             ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
-                            attachmentService.removeResource(attachment.getPath(), UserUIContext.getUsername(), true, MyCollabUI.getAccountId());
+                            attachmentService.removeResource(attachment.getPath(), UserUIContext.getUsername(), true, AppUI.getAccountId());
                             ((ComponentContainer) attachmentLayout.getParent()).removeComponent(attachmentLayout);
                         }
                     });

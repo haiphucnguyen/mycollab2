@@ -11,7 +11,7 @@ import com.mycollab.module.tracker.domain.Version;
 import com.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.mycollab.module.tracker.service.VersionService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.ViewItemAction;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -101,10 +101,10 @@ public class VersionListPresenter extends ProjectGenericListPresenter<VersionLis
             }
 
             if (keyList.size() > 0) {
-                versionService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                versionService.massRemoveWithSession(keyList, UserUIContext.getUsername(), AppUI.getAccountId());
             }
         } else {
-            versionService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
+            versionService.removeByCriteria(searchCriteria, AppUI.getAccountId());
         }
 
         int totalCount = versionService.getTotalCount(searchCriteria);

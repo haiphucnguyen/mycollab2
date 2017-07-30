@@ -3,7 +3,7 @@ package com.mycollab.module.project.view.ticket;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.SortedArrayMap;
 import com.mycollab.module.project.domain.ProjectTicket;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -24,7 +24,7 @@ public class DueDateOrderComponent extends TicketGroupOrderComponent {
 
     @Override
     public void insertTickets(List<ProjectTicket> tickets) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(MyCollabUI.getLongDateFormat()).withLocale(UserUIContext.getUserLocale());
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getLongDateFormat()).withLocale(UserUIContext.getUserLocale());
         for (ProjectTicket ticket : tickets) {
             if (ticket.getDueDate() != null) {
                 Date dueDate = ticket.getDueDate();

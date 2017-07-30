@@ -24,7 +24,7 @@ import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.components.BlockRowRender;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -89,7 +89,7 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
                 int openAssignmentsCount = genericTaskService.getTotalCount(searchCriteria);
                 if (openAssignmentsCount > 0) {
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, MyCollabUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, AppUI.getSiteName()),
                             UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_CLOSE_SUB_ASSIGNMENTS),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -127,14 +127,14 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
         if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MILESTONES)) {
             MButton removeBtn = new MButton("", clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 AppContextUtil.getSpringBean(MilestoneService.class).removeWithSession(milestone,
-                                        UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                        UserUIContext.getUsername(), AppUI.getAccountId());
                                 BlockRowRender rowRenderer = UIUtils.getRoot(ToggleMilestoneSummaryField.this, BlockRowRender.class);
                                 if (rowRenderer != null) {
                                     rowRenderer.selfRemoved();

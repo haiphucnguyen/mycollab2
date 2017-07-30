@@ -21,7 +21,7 @@ import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.service.ProjectRoleService;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -96,7 +96,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
                 dialog -> {
                     if (dialog.isConfirmed()) {
                         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-                        projectMemberService.removeWithSession(beanItem, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                        projectMemberService.removeWithSession(beanItem, UserUIContext.getUsername(), AppUI.getAccountId());
                         EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null));
                     }
                 })).withIcon(FontAwesome.TRASH).withStyleName(UIConstants.CIRCLE_BOX)
@@ -109,7 +109,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
         permissionGroup.removeAllComponents();
         if (roleId != null && roleId > 0) {
             ProjectRoleService roleService = AppContextUtil.getSpringBean(ProjectRoleService.class);
-            SimpleProjectRole role = roleService.findById(roleId, MyCollabUI.getAccountId());
+            SimpleProjectRole role = roleService.findById(roleId, AppUI.getAccountId());
             if (role != null) {
                 final PermissionMap permissionMap = role.getPermissionMap();
                 for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
@@ -137,7 +137,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment("project/user/preview/" + UrlEncodeDecoder.encode(CurrentProjectVariables
+        AppUI.addFragment("project/user/preview/" + UrlEncodeDecoder.encode(CurrentProjectVariables
                 .getProjectId() + "/" + beanItem.getUsername()), beanItem.getDisplayName());
     }
 

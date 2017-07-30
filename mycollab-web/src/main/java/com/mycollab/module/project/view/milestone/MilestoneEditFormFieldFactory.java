@@ -6,7 +6,7 @@ import com.mycollab.module.project.domain.Milestone;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
@@ -56,7 +56,7 @@ public class MilestoneEditFormFieldFactory extends AbstractBeanFieldGroupEditFie
         } else if (Milestone.Field.saccountid.equalTo(propertyId)) {
             Milestone beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
-                String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(),
+                String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(),
                         beanItem.getProjectid(), ProjectTypeConstants.MILESTONE, "" + beanItem.getId());
                 attachmentUploadField = new AttachmentUploadField(attachmentPath);
             } else {

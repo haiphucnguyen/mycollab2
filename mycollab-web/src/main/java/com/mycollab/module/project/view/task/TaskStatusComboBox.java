@@ -1,13 +1,12 @@
 package com.mycollab.module.project.view.task;
 
 import com.mycollab.common.domain.OptionVal;
-import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.common.service.OptionValService;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.OptionValComboBox;
 import com.vaadin.data.Property;
 
@@ -23,7 +22,7 @@ public class TaskStatusComboBox extends OptionValComboBox {
         super(StatusI18nEnum.class);
         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
         List<OptionVal> options = optionValService.findOptionVals(ProjectTypeConstants.TASK,
-                CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
+                CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
         options.forEach(this::addEntry);
     }
 

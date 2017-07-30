@@ -11,7 +11,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -48,7 +48,7 @@ public class BugReadPresenter extends AbstractProjectPresenter<BugReadView> {
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                                bugService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                bugService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null));
                             }
                         });
@@ -68,7 +68,7 @@ public class BugReadPresenter extends AbstractProjectPresenter<BugReadView> {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
             if (data.getParams() instanceof Integer) {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                SimpleBug bug = bugService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleBug bug = bugService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (bug != null) {
                     view.previewItem(bug);
                     super.onGo(container, data);

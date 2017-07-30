@@ -8,7 +8,7 @@ import com.mycollab.module.ecm.domain.Resource;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.resources.StreamDownloadResourceUtil;
 import com.mycollab.vaadin.resources.file.FileAssetsUtil;
@@ -69,7 +69,7 @@ class FileDownloadWindow extends MWindow {
         }
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        SimpleUser user = userService.findUserByUserNameInAccount(content.getCreatedUser(), MyCollabUI.getAccountId());
+        SimpleUser user = userService.findUserByUserNameInAccount(content.getCreatedUser(), AppUI.getAccountId());
         if (user == null) {
             inforLayout.addComponent(new UserLink(UserUIContext.getUsername(), UserUIContext.getUserAvatarId(),
                     UserUIContext.getUserDisplayName()), UserUIContext.getMessage(GenericI18Enum.OPT_CREATED_BY), 0, 1);

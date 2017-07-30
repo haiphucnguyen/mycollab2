@@ -5,7 +5,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.service.CommentService;
 import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.AttachmentDisplayComponent;
@@ -53,14 +53,14 @@ public class CommentRowDisplayHandler implements IBeanList.RowDisplayHandler<Sim
             MButton msgDeleteBtn = new MButton(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY)
                     .withListener(clickEvent -> {
                         ConfirmDialogExt.show(UI.getCurrent(),
-                                UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                                UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                                 UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                                 confirmDialog -> {
                                     if (confirmDialog.isConfirmed()) {
                                         CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
-                                        commentService.removeWithSession(comment, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                        commentService.removeWithSession(comment, UserUIContext.getUsername(), AppUI.getAccountId());
                                         ((BeanList) host).removeRow(layout);
                                     }
                                 });

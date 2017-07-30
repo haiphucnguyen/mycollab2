@@ -3,7 +3,7 @@ package com.mycollab.shell.view;
 import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -31,6 +31,6 @@ public class ForgotPasswordPresenter extends AbstractPresenter<ForgotPasswordVie
             NotificationUtil.showErrorNotification(UserUIContext.getMessage(ShellI18nEnum.WINDOW_SMTP_CONFIRM_SETUP_FOR_USER));
         }
 
-        MyCollabUI.addFragment("user/forgotpassword", UserUIContext.getMessage(ShellI18nEnum.OPT_FORGOT_PASSWORD_VIEW_TITLE));
+        AppUI.addFragment("user/forgotpassword", UserUIContext.getMessage(ShellI18nEnum.OPT_FORGOT_PASSWORD_VIEW_TITLE));
     }
 }

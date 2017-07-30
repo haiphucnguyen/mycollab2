@@ -14,7 +14,7 @@ import com.mycollab.module.crm.i18n.CaseI18nEnum;
 import com.mycollab.module.crm.service.CaseService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -60,7 +60,7 @@ public class CaseAddPresenter extends AbstractCrmPresenter<CaseAddView> implemen
                 cases = (SimpleCase) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
-                cases = caseService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                cases = caseService.findById((Integer) data.getParams(), AppUI.getAccountId());
             }
             if (cases == null) {
                 NotificationUtil.showRecordNotExistNotification();
@@ -70,10 +70,10 @@ public class CaseAddPresenter extends AbstractCrmPresenter<CaseAddView> implemen
             view.editItem(cases);
 
             if (cases.getId() == null) {
-                MyCollabUI.addFragment("crm/cases/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                AppUI.addFragment("crm/cases/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(CaseI18nEnum.SINGLE)));
             } else {
-                MyCollabUI.addFragment("crm/cases/edit/" + UrlEncodeDecoder.encode(cases.getId()),
+                AppUI.addFragment("crm/cases/edit/" + UrlEncodeDecoder.encode(cases.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(CaseI18nEnum.SINGLE), cases.getSubject()));
             }
@@ -84,7 +84,7 @@ public class CaseAddPresenter extends AbstractCrmPresenter<CaseAddView> implemen
 
     private void saveCase(CaseWithBLOBs cases) {
         CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
-        cases.setSaccountid(MyCollabUI.getAccountId());
+        cases.setSaccountid(AppUI.getAccountId());
         if (cases.getId() == null) {
             caseService.saveWithSession(cases, UserUIContext.getUsername());
         } else {

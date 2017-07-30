@@ -9,7 +9,7 @@ import com.mycollab.mobile.ui.AbstractEditItemComp;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.i18n.AccountI18nEnum;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -33,11 +33,11 @@ public class AccountAddViewImpl extends AbstractEditItemComp<SimpleAccount> impl
         super.onBecomingVisible();
 
         if (beanItem.getId() == null) {
-            MyCollabUI.addFragment("crm/account/add", UserUIContext.getMessage(GenericI18Enum
+            AppUI.addFragment("crm/account/add", UserUIContext.getMessage(GenericI18Enum
                     .BROWSER_ADD_ITEM_TITLE, UserUIContext.getMessage(AccountI18nEnum.SINGLE)));
 
         } else {
-            MyCollabUI.addFragment("crm/account/edit/" + UrlEncodeDecoder.encode(beanItem.getId()),
+            AppUI.addFragment("crm/account/edit/" + UrlEncodeDecoder.encode(beanItem.getId()),
                     UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                             UserUIContext.getMessage(AccountI18nEnum.SINGLE), beanItem.getAccountname()));
         }

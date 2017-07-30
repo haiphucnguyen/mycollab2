@@ -5,7 +5,7 @@ import com.mycollab.common.service.FavoriteItemService;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageView;
 import com.mycollab.vaadin.ui.ELabel;
@@ -133,7 +133,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
             favoriteItem.setExtratypeid(CurrentProjectVariables.getProjectId());
             favoriteItem.setType(getType());
             favoriteItem.setTypeid(PropertyUtils.getProperty(beanItem, "id").toString());
-            favoriteItem.setSaccountid(MyCollabUI.getAccountId());
+            favoriteItem.setSaccountid(AppUI.getAccountId());
             favoriteItem.setCreateduser(UserUIContext.getUsername());
             FavoriteItemService favoriteItemService = AppContextUtil.getSpringBean(FavoriteItemService.class);
             favoriteItemService.saveOrDelete(favoriteItem);

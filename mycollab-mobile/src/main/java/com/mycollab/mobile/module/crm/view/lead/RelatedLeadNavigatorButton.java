@@ -6,7 +6,7 @@ import com.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.mycollab.module.crm.i18n.LeadI18nEnum;
 import com.mycollab.module.crm.service.LeadService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
 
@@ -36,7 +36,7 @@ public class RelatedLeadNavigatorButton extends NavigationButton {
 
     public void displayRelatedByAccount(Integer accountId) {
         LeadSearchCriteria searchCriteria = new LeadSearchCriteria();
-        searchCriteria.setSaccountid(NumberSearchField.equal(MyCollabUI.getAccountId()));
+        searchCriteria.setSaccountid(NumberSearchField.equal(AppUI.getAccountId()));
         searchCriteria.setAccountId(NumberSearchField.equal(accountId));
         displayTotalLeads(searchCriteria);
     }

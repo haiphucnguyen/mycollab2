@@ -19,7 +19,7 @@ import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -70,10 +70,10 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
         super.onBecomingVisible();
 
         if (beanItem.getId() == null) {
-            MyCollabUI.addFragment("project/task/add/" + UrlEncodeDecoder.encode(CurrentProjectVariables.getProjectId()),
+            AppUI.addFragment("project/task/add/" + UrlEncodeDecoder.encode(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(TaskI18nEnum.NEW));
         } else {
-            MyCollabUI.addFragment(ProjectLinkGenerator.generateTaskEditLink(beanItem.getTaskkey(),
+            AppUI.addFragment(ProjectLinkGenerator.generateTaskEditLink(beanItem.getTaskkey(),
                     beanItem.getProjectShortname()), beanItem.getName());
         }
     }

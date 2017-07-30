@@ -6,7 +6,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -36,11 +36,11 @@ public class ProjectMemberReadPresenter extends AbstractProjectPresenter<Project
             ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
             SimpleProjectMember prjMember = null;
             if (data.getParams() instanceof Integer) {
-                prjMember = prjMemberService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                prjMember = prjMemberService.findById((Integer) data.getParams(), AppUI.getAccountId());
 
             } else if (data.getParams() instanceof String) {
                 String username = (String) data.getParams();
-                prjMember = prjMemberService.findMemberByUsername(username, CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
+                prjMember = prjMemberService.findMemberByUsername(username, CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
             }
             if (prjMember != null) {
                 this.view.previewItem(prjMember);

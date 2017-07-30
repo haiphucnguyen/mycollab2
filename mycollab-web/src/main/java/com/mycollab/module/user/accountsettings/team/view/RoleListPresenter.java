@@ -10,7 +10,7 @@ import com.mycollab.module.user.service.RoleService;
 import com.mycollab.security.AccessPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.ViewItemAction;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -83,11 +83,11 @@ public class RoleListPresenter extends ListSelectionPresenter<RoleListView, Role
             }
 
             if (keyList.size() > 0) {
-                roleService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                roleService.massRemoveWithSession(keyList, UserUIContext.getUsername(), AppUI.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {
-            roleService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
+            roleService.removeByCriteria(searchCriteria, AppUI.getAccountId());
             doSearch(searchCriteria);
         }
     }

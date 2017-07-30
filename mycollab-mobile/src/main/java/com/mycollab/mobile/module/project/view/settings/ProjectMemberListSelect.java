@@ -7,7 +7,7 @@ import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.vaadin.ui.ListSelect;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class ProjectMemberListSelect extends ListSelect {
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
         this.setRows(1);
         ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
 
         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);

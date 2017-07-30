@@ -4,7 +4,7 @@ import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.ui.components.TimeLogComp;
 import com.mycollab.module.tracker.domain.SimpleComponent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 
 /**
  * @author MyCollab Ltd
@@ -15,17 +15,17 @@ public class ComponentTimeLogComp extends TimeLogComp<SimpleComponent> {
 
     @Override
     protected Double getTotalBillableHours(SimpleComponent bean) {
-        return itemTimeLoggingService.getTotalBillableHoursByComponent(bean.getId(), MyCollabUI.getAccountId());
+        return itemTimeLoggingService.getTotalBillableHoursByComponent(bean.getId(), AppUI.getAccountId());
     }
 
     @Override
     protected Double getTotalNonBillableHours(SimpleComponent bean) {
-        return itemTimeLoggingService.getTotalNonBillableHoursByComponent(bean.getId(), MyCollabUI.getAccountId());
+        return itemTimeLoggingService.getTotalNonBillableHoursByComponent(bean.getId(), AppUI.getAccountId());
     }
 
     @Override
     protected Double getRemainedHours(SimpleComponent bean) {
-        return itemTimeLoggingService.getRemainHoursByComponent(bean.getId(), MyCollabUI.getAccountId());
+        return itemTimeLoggingService.getRemainHoursByComponent(bean.getId(), AppUI.getAccountId());
     }
 
     @Override

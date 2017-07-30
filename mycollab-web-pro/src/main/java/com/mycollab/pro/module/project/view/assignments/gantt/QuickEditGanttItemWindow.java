@@ -16,7 +16,7 @@ import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.pro.module.project.events.GanttEvent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -70,15 +70,15 @@ public class QuickEditGanttItemWindow extends MWindow {
                 MButton updateAllBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_OTHER_FIELDS), clickEvent -> {
                     if (bean instanceof TaskGanttItem) {
                         ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                        SimpleTask task = taskService.findById(bean.getId(), MyCollabUI.getAccountId());
+                        SimpleTask task = taskService.findById(bean.getId(), AppUI.getAccountId());
                         EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(QuickEditGanttItemWindow.this, task));
                     } else if (bean instanceof MilestoneGanttItem) {
                         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                        SimpleMilestone milestone = milestoneService.findById(bean.getId(), MyCollabUI.getAccountId());
+                        SimpleMilestone milestone = milestoneService.findById(bean.getId(), AppUI.getAccountId());
                         EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(QuickEditGanttItemWindow.this, milestone));
                     } else if (bean instanceof BugGanttItem) {
                         BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                        SimpleBug bug = bugService.findById(bean.getId(), MyCollabUI.getAccountId());
+                        SimpleBug bug = bugService.findById(bean.getId(), AppUI.getAccountId());
                         EventBusFactory.getInstance().post(new BugEvent.GotoEdit(QuickEditGanttItemWindow.this, bug));
                     } else {
                         throw new MyCollabException("Do not support gantt item type " + bean);

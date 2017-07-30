@@ -8,7 +8,7 @@ import com.mycollab.module.project.view.settings.ComponentDefaultFormLayoutFacto
 import com.mycollab.module.tracker.domain.Component;
 import com.mycollab.module.tracker.service.ComponentService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -34,7 +34,7 @@ class ComponentAddWindow extends MWindow implements IEditFormHandler<Component> 
         editForm.setBeanFormFieldFactory(new ComponentEditFormFieldFactory(editForm));
         Component component = new Component();
         component.setProjectid(CurrentProjectVariables.getProjectId());
-        component.setSaccountid(MyCollabUI.getAccountId());
+        component.setSaccountid(AppUI.getAccountId());
         component.setStatus(OptionI18nEnum.StatusI18nEnum.Open.name());
         editForm.setBean(component);
         ComponentContainer buttonControls = generateEditFormControls(editForm, true, false, true);

@@ -12,7 +12,7 @@ import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.ui.UIConstants;
 import org.slf4j.Logger;
@@ -65,7 +65,7 @@ public class ProjectLinkBuilder {
 
     public static String generateProjectMemberHtmlLink(Integer projectId, String username, Boolean isDisplayTooltip) {
         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-        SimpleProjectMember member = projectMemberService.findMemberByUsername(username, projectId, MyCollabUI.getAccountId());
+        SimpleProjectMember member = projectMemberService.findMemberByUsername(username, projectId, AppUI.getAccountId());
         if (member != null) {
             return generateProjectMemberHtmlLink(projectId, member.getUsername(), member.getDisplayName(), member
                     .getMemberAvatarId(), isDisplayTooltip);
@@ -111,7 +111,7 @@ public class ProjectLinkBuilder {
     }
 
     public static String generateHoursWeeklyReportLink() {
-        return MyCollabUI.getSiteUrl() + URL_PREFIX_PARAM + ProjectLinkGenerator
+        return AppUI.getSiteUrl() + URL_PREFIX_PARAM + ProjectLinkGenerator
                 .generateHoursWeeklyReportLink();
     }
 

@@ -15,7 +15,7 @@ import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
@@ -57,7 +57,7 @@ public class ProjectMemberListDisplay extends DefaultPagedBeanList<ProjectMember
             Label memberLbl = ELabel.html(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
             memberInfoLayout.addComponent(memberLbl);
 
-            if (Boolean.TRUE.equals(MyCollabUI.getBillingAccount().getDisplayemailpublicly())) {
+            if (Boolean.TRUE.equals(AppUI.getBillingAccount().getDisplayemailpublicly())) {
                 Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(), member.getUsername()))
                         .withStyleName(UIConstants.META_INFO);
                 memberInfoLayout.addComponent(memberEmailLabel);

@@ -15,7 +15,7 @@ import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -65,7 +65,7 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
                 account = (SimpleAccount) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                account = accountService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                account = accountService.findById((Integer) data.getParams(), AppUI.getAccountId());
             }
 
             if (account == null) {
@@ -75,11 +75,11 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
             super.onGo(container, data);
             view.editItem(account);
             if (account.getId() == null) {
-                MyCollabUI.addFragment("crm/account/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                AppUI.addFragment("crm/account/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(AccountI18nEnum.SINGLE)));
 
             } else {
-                MyCollabUI.addFragment("crm/account/edit/" + UrlEncodeDecoder.encode(account.getId()),
+                AppUI.addFragment("crm/account/edit/" + UrlEncodeDecoder.encode(account.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(AccountI18nEnum.SINGLE), account.getAccountname()));
             }
@@ -91,7 +91,7 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
     private int saveAccount(Account account) {
         AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
 
-        account.setSaccountid(MyCollabUI.getAccountId());
+        account.setSaccountid(AppUI.getAccountId());
         if (account.getId() == null) {
             accountService.saveWithSession(account, UserUIContext.getUsername());
         } else {

@@ -11,7 +11,7 @@ import com.mycollab.module.crm.domain.SimpleLead;
 import com.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.mycollab.module.crm.i18n.LeadI18nEnum;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -46,7 +46,7 @@ public class LeadListViewImpl extends AbstractListPageView<LeadSearchCriteria, S
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment("crm/lead/list", UserUIContext.getMessage(LeadI18nEnum.LIST));
+        AppUI.addFragment("crm/lead/list", UserUIContext.getMessage(LeadI18nEnum.LIST));
     }
 
     @Override

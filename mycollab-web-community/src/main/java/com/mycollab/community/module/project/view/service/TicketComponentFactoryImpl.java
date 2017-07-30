@@ -21,7 +21,7 @@ import com.mycollab.module.project.view.bug.BugEditForm;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.module.project.view.task.TaskEditForm;
 import com.mycollab.module.tracker.domain.SimpleBug;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -200,7 +200,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 SimpleTask task = new SimpleTask();
                 task.setProjectid(prjId);
                 task.setMilestoneid(milestoneId);
-                task.setSaccountid(MyCollabUI.getAccountId());
+                task.setSaccountid(AppUI.getAccountId());
                 task.setCreateduser(UserUIContext.getUsername());
                 task.setStartdate(dateValue);
                 TaskEditForm editForm = new TaskEditForm() {
@@ -214,7 +214,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             } else if (UserUIContext.getMessage(BugI18nEnum.SINGLE).equals(value)) {
                 SimpleBug bug = new SimpleBug();
                 bug.setProjectid(prjId);
-                bug.setSaccountid(MyCollabUI.getAccountId());
+                bug.setSaccountid(AppUI.getAccountId());
                 bug.setStartdate(dateValue);
                 bug.setMilestoneid(milestoneId);
                 bug.setCreateduser(UserUIContext.getUsername());

@@ -22,7 +22,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.ProjectListNoItemView;
 import com.mycollab.module.project.ui.components.ProjectMemberBlock;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasEditFormHandlers;
 import com.mycollab.vaadin.events.HasSearchHandlers;
@@ -136,14 +136,14 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
             timePostLbl.setStyleName(UIConstants.META_INFO);
 
             MButton deleteBtn = new MButton("", clickEvent -> ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                     confirmDialog -> {
                         if (confirmDialog.isConfirmed()) {
                             MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
-                            messageService.removeWithSession(message, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                            messageService.removeWithSession(message, UserUIContext.getUsername(), AppUI.getAccountId());
                             messageList.setSearchCriteria(searchCriteria);
                         }
                     })).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
@@ -171,7 +171,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
             }
             ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
             List<Content> attachments = attachmentService.getContents(AttachmentUtils
-                    .getProjectEntityAttachmentPath(MyCollabUI.getAccountId(),
+                    .getProjectEntityAttachmentPath(AppUI.getAccountId(),
                             message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
             if (CollectionUtils.isNotEmpty(attachments)) {
                 HorizontalLayout attachmentNotification = new HorizontalLayout();
@@ -278,12 +278,12 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                     message.setTitle(titleField.getValue());
                     message.setMessage(ckEditorTextField.getValue());
                     message.setPosteduser(UserUIContext.getUsername());
-                    message.setSaccountid(MyCollabUI.getAccountId());
+                    message.setSaccountid(AppUI.getAccountId());
                     message.setIsstick(chkIsStick.getValue());
                     MessageListViewImpl.this.fireSaveItem(message);
 
                     String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(
-                            MyCollabUI.getAccountId(), message.getProjectid(),
+                            AppUI.getAccountId(), message.getProjectid(),
                             ProjectTypeConstants.MESSAGE, "" + message.getId());
                     attachments.saveContentsToRepo(attachmentPath);
                 } else {

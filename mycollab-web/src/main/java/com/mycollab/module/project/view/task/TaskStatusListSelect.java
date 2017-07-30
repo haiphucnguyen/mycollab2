@@ -6,7 +6,7 @@ import com.mycollab.common.service.OptionValService;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.ui.ListSelect;
 
@@ -28,7 +28,7 @@ public class TaskStatusListSelect extends ListSelect {
     public void attach() {
         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
         List<OptionVal> options = optionValService.findOptionVals(ProjectTypeConstants.TASK,
-                CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
+                CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
         for (OptionVal option : options) {
             this.addItem(option.getTypeval());
             this.setItemCaption(option.getTypeval(), UserUIContext.getMessage(StatusI18nEnum.class,

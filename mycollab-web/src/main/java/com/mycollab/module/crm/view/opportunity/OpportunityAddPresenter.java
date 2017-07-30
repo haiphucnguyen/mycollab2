@@ -15,7 +15,7 @@ import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -65,7 +65,7 @@ public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddV
                 opportunity = (SimpleOpportunity) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 OpportunityService accountService = AppContextUtil.getSpringBean(OpportunityService.class);
-                opportunity = accountService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                opportunity = accountService.findById((Integer) data.getParams(), AppUI.getAccountId());
             }
             if (opportunity == null) {
                 throw new ResourceNotFoundException();
@@ -74,10 +74,10 @@ public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddV
             view.editItem(opportunity);
 
             if (opportunity.getId() == null) {
-                MyCollabUI.addFragment("crm/opportunity/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                AppUI.addFragment("crm/opportunity/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(OpportunityI18nEnum.SINGLE)));
             } else {
-                MyCollabUI.addFragment("crm/opportunity/edit/" + UrlEncodeDecoder.encode(opportunity.getId()),
+                AppUI.addFragment("crm/opportunity/edit/" + UrlEncodeDecoder.encode(opportunity.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(OpportunityI18nEnum.SINGLE), opportunity.getOpportunityname()));
             }
@@ -88,7 +88,7 @@ public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddV
 
     private int saveOpportunity(Opportunity opportunity) {
         OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
-        opportunity.setSaccountid(MyCollabUI.getAccountId());
+        opportunity.setSaccountid(AppUI.getAccountId());
         if (opportunity.getId() == null) {
             opportunityService.saveWithSession(opportunity, UserUIContext.getUsername());
         } else {

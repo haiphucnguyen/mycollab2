@@ -19,7 +19,7 @@ import com.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.mycollab.module.crm.view.activity.ActivityEventProvider.CrmEvent;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractCssPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -199,7 +199,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements Act
 
         Button activityListBtn = new Button("Activities", event -> {
             ActivitySearchCriteria criteria = new ActivitySearchCriteria();
-            criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+            criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
             EventBusFactory.getInstance().post(new ActivityEvent.GotoTodoList(this, null));
         });
         activityListBtn.addStyleName(WebThemes.BUTTON_ACTION);
@@ -612,7 +612,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements Act
             this.setWidth("1220px");
 
             this.meeting = new MeetingWithBLOBs();
-            this.meeting.setSaccountid(MyCollabUI.getAccountId());
+            this.meeting.setSaccountid(AppUI.getAccountId());
             this.meeting.setStartdate(startDate);
             this.meeting.setEnddate(endDate);
 

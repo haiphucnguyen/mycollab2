@@ -9,7 +9,7 @@ import com.mycollab.module.crm.i18n.OptionI18nEnum.CampaignStatus;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.CampaignType;
 import com.mycollab.module.crm.service.CampaignService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.*;
@@ -52,8 +52,8 @@ public class CampaignTableDisplay extends DefaultPagedBeanTable<CampaignService,
             final SimpleCampaign campaign = getBeanByIndex(itemId);
 
             LabelLink b = new LabelLink(campaign.getCampaignname(), CrmLinkBuilder.generateCampaignPreviewLinkFull(campaign.getId()));
-            b.setDescription(CrmTooltipGenerator.generateTooltipCampaign(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
-                    campaign, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            b.setDescription(CrmTooltipGenerator.generateTooltipCampaign(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                    campaign, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             b.setStyleName(WebThemes.BUTTON_LINK);
 
             if (Completed.name().equals(campaign.getStatus())) {

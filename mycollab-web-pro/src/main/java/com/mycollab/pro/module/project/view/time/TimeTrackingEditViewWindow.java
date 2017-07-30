@@ -12,7 +12,7 @@ import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
@@ -151,7 +151,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         timeLogging.setIsbillable(isBillableCheckBox.getValue());
         timeLogging.setIsovertime(isOvertimeCheckBox.getValue());
         timeLogging.setNote(descArea.getValue());
-        timeLogging.setSaccountid(MyCollabUI.getAccountId());
+        timeLogging.setSaccountid(AppUI.getAccountId());
         if (selectedTicket != null) {
             timeLogging.setType(selectedTicket.getType());
             timeLogging.setTypeid(selectedTicket.getTypeId());

@@ -3,7 +3,7 @@ package com.mycollab.pro.module.project.ui.components;
 import com.mycollab.common.TableViewField;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class TimeTrackingDateOrderComponent extends AbstractTimeTrackingDisplayComp {
     private static final long serialVersionUID = 1L;
-    private DateTimeFormatter formatter = DateTimeFormat.forPattern(MyCollabUI.getLongDateFormat()).withLocale
+    private DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getLongDateFormat()).withLocale
             (UserUIContext.getUserLocale());
 
     public TimeTrackingDateOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {

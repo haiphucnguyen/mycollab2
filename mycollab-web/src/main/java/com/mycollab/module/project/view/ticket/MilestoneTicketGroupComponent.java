@@ -8,7 +8,7 @@ import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.components.IBlockContainer;
 import com.mycollab.module.project.ui.components.IGroupComponent;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -21,7 +21,6 @@ import com.vaadin.event.dd.acceptcriteria.Not;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
@@ -50,7 +49,7 @@ class MilestoneTicketGroupComponent extends MVerticalLayout implements IGroupCom
         headerLbl = ELabel.h3("");
 
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-        milestone = milestoneService.findById(milestoneId, MyCollabUI.getAccountId());
+        milestone = milestoneService.findById(milestoneId, AppUI.getAccountId());
         if (milestone != null) {
             ELabel milestoneDateLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_FROM_TO,
                     UserUIContext.formatDate(milestone.getStartdate()), UserUIContext.formatDate(milestone.getEnddate())))

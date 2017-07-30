@@ -11,7 +11,7 @@ import com.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.mycollab.module.crm.service.CampaignService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -52,7 +52,7 @@ public class CampaignReadPresenter extends AbstractCrmPresenter<CampaignReadView
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-                                campaignService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                campaignService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new CampaignEvent.GotoList(this, null));
                             }
                         });
@@ -74,7 +74,7 @@ public class CampaignReadPresenter extends AbstractCrmPresenter<CampaignReadView
             public void gotoNext(SimpleCampaign data) {
                 CampaignService contactService = AppContextUtil.getSpringBean(CampaignService.class);
                 CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = contactService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -88,7 +88,7 @@ public class CampaignReadPresenter extends AbstractCrmPresenter<CampaignReadView
             public void gotoPrevious(SimpleCampaign data) {
                 CampaignService contactService = AppContextUtil.getSpringBean(CampaignService.class);
                 CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = contactService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -105,7 +105,7 @@ public class CampaignReadPresenter extends AbstractCrmPresenter<CampaignReadView
         if (UserUIContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
             if (data.getParams() instanceof Integer) {
                 CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-                SimpleCampaign campaign = campaignService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleCampaign campaign = campaignService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (campaign != null) {
                     view.previewItem(campaign);
                     super.onGo(container, data);

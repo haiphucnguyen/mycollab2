@@ -8,7 +8,7 @@ import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.view.IKanbanView;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -68,7 +68,7 @@ public class AddNewColumnWindow extends MWindow {
                 optionVal.setIsdefault(false);
                 optionVal.setExtraid(CurrentProjectVariables.getProjectId());
             }
-            optionVal.setSaccountid(MyCollabUI.getAccountId());
+            optionVal.setSaccountid(AppUI.getAccountId());
             optionVal.setType(type);
             optionVal.setTypeval(stageField.getValue());
             optionVal.setFieldgroup(fieldGroup);

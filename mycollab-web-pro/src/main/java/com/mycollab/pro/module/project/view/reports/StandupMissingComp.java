@@ -11,7 +11,7 @@ import com.mycollab.module.project.i18n.StandupI18nEnum;
 import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.ui.ELabel;
@@ -52,7 +52,7 @@ public class StandupMissingComp extends MVerticalLayout {
     public void search(Integer projectId, Date date) {
         bodyWrap.removeAllComponents();
         StandupReportService standupReportService = AppContextUtil.getSpringBean(StandupReportService.class);
-        List<SimpleUser> someGuys = standupReportService.findUsersNotDoReportYet(projectId, date, MyCollabUI.getAccountId());
+        List<SimpleUser> someGuys = standupReportService.findUsersNotDoReportYet(projectId, date, AppUI.getAccountId());
         if (someGuys.size() == 0) {
             bodyWrap.addComponent(new Label(UserUIContext.getMessage(GenericI18Enum.EXT_NO_ITEM)));
         } else {

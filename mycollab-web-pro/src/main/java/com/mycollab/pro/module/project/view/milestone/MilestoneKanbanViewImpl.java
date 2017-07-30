@@ -35,7 +35,7 @@ import com.mycollab.module.project.view.ticket.ToggleTicketSummaryField;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AsyncInvoker;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
@@ -164,7 +164,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                         }
                     }
                     if (indexMap.size() > 0) {
-                        AppContextUtil.getSpringBean(MilestoneService.class).massUpdateOptionIndexes(indexMap, MyCollabUI.getAccountId());
+                        AppContextUtil.getSpringBean(MilestoneService.class).massUpdateOptionIndexes(indexMap, AppUI.getAccountId());
                     }
                 }
             }
@@ -196,7 +196,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
         MButton newMilestoneBtn = new MButton(UserUIContext.getMessage(MilestoneI18nEnum.NEW), clickEvent -> {
             SimpleMilestone milestone = new SimpleMilestone();
-            milestone.setSaccountid(MyCollabUI.getAccountId());
+            milestone.setSaccountid(AppUI.getAccountId());
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
         }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
@@ -283,7 +283,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
     private void insertMilestone(Integer milestoneId) {
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-        SimpleMilestone milestone = milestoneService.findById(milestoneId, MyCollabUI.getAccountId());
+        SimpleMilestone milestone = milestoneService.findById(milestoneId, AppUI.getAccountId());
         if (milestone != null) {
             KanbanBlock kanbanBlock = new KanbanBlock(milestone);
             kanbanBlocks.put(milestone.getId(), kanbanBlock);
@@ -398,7 +398,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             } else {
                 header = new ELabel(milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS)
                         .withDescription(ProjectTooltipGenerator.generateToolTipMilestone(UserUIContext.getUserLocale(),
-                                MyCollabUI.getDateFormat(), milestone, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
+                                AppUI.getDateFormat(), milestone, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
                 headerLayout.with(ELabel.fontIcon(ProjectAssetsManager.getMilestoneStatus(milestone.getStatus())), header).expand(header);
             }
 
@@ -438,14 +438,14 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                     controlsBtn.setPopupVisible(false);
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                             confirmDialog -> {
                                 if (confirmDialog.isConfirmed()) {
                                     MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                                    milestoneService.removeWithSession(milestone, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                    milestoneService.removeWithSession(milestone, UserUIContext.getUsername(), AppUI.getAccountId());
                                     ((ComponentContainer) KanbanBlock.this.getParent()).removeComponent(KanbanBlock.this);
                                 }
                             });

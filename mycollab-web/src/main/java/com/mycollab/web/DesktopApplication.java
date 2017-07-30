@@ -25,7 +25,7 @@ import com.mycollab.shell.view.MainWindowContainer;
 import com.mycollab.shell.view.ShellUrlResolver;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AsyncInvoker;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.Utils;
 import com.mycollab.vaadin.mvp.ControllerRegistry;
@@ -57,7 +57,7 @@ import static com.mycollab.core.utils.ExceptionUtils.getExceptionType;
  */
 @Theme(Version.THEME_VERSION)
 @Widgetset("com.mycollab.widgetset.MyCollabWidgetSet")
-public class DesktopApplication extends MyCollabUI {
+public class DesktopApplication extends AppUI {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(DesktopApplication.class);
 
@@ -153,7 +153,7 @@ public class DesktopApplication extends MyCollabUI {
         if (usageBillingException != null) {
             if (UserUIContext.isAdmin()) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.WINDOW_ATTENTION_TITLE, MyCollabUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.WINDOW_ATTENTION_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.EXCEED_BILLING_PLAN_MSG_FOR_ADMIN),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -204,7 +204,7 @@ public class DesktopApplication extends MyCollabUI {
             Exception ex = (Exception) getExceptionType(e, systemEx);
             if (ex != null) {
                 ConfirmDialog dialog = ConfirmDialogExt.show(DesktopApplication.this,
-                        UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, MyCollabUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.ERROR_USER_SYSTEM_ERROR, ex.getMessage()),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -220,7 +220,7 @@ public class DesktopApplication extends MyCollabUI {
         IllegalStateException asyncNotSupport = getExceptionType(e, IllegalStateException.class);
         if (asyncNotSupport != null && asyncNotSupport.getMessage().contains("!asyncSupported")) {
             ConfirmDialog dialog = ConfirmDialogExt.show(DesktopApplication.this,
-                    UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, MyCollabUI.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppUI.getSiteName()),
                     UserUIContext.getMessage(ErrorI18nEnum.WEBSOCKET_NOT_SUPPORT),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -243,7 +243,7 @@ public class DesktopApplication extends MyCollabUI {
 
         LOG.error("Error", e);
         ConfirmDialog dialog = ConfirmDialogExt.show(DesktopApplication.this,
-                UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, MyCollabUI.getSiteName()),
+                UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppUI.getSiteName()),
                 UserUIContext.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE),
                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -274,7 +274,7 @@ public class DesktopApplication extends MyCollabUI {
 
     public void doLogin(String username, String password, boolean isRememberPassword) {
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        SimpleUser user = userService.authentication(username, password, MyCollabUI.getSubDomain(), false);
+        SimpleUser user = userService.authentication(username, password, AppUI.getSubDomain(), false);
 
         if (isRememberPassword) {
             rememberAccount(username, password);
@@ -288,7 +288,7 @@ public class DesktopApplication extends MyCollabUI {
     public void afterDoLogin(SimpleUser user) {
         BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
 
-        SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(MyCollabUI.getAccountId());
+        SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(AppUI.getAccountId());
         LOG.info(String.format("Get billing account successfully - Pricing: %s, User: %s - %s", "" + billingAccount.getBillingPlan().getPricing(),
                 user.getUsername(), user.getDisplayName()));
         UserUIContext.getInstance().setSessionVariables(user, billingAccount);
@@ -307,7 +307,7 @@ public class DesktopApplication extends MyCollabUI {
     public void redirectToLoginView() {
         clearSession();
 
-        MyCollabUI.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
+        AppUI.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
         // clear cookie remember username/password if any
         this.unsetRememberPassword();
 

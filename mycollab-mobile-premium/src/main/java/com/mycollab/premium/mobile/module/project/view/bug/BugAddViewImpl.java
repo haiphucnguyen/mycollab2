@@ -19,7 +19,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.SimpleBug;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -70,10 +70,10 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
     protected void onBecomingVisible() {
         super.onBecomingVisible();
         if (beanItem.getId() == null) {
-            MyCollabUI.addFragment("project/bug/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+            AppUI.addFragment("project/bug/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(BugI18nEnum.NEW));
         } else {
-            MyCollabUI.addFragment(ProjectLinkGenerator.generateBugEditLink(beanItem.getBugkey(), beanItem.getProjectShortName()),
+            AppUI.addFragment(ProjectLinkGenerator.generateBugEditLink(beanItem.getBugkey(), beanItem.getProjectShortName()),
                     UserUIContext.getMessage(BugI18nEnum.DETAIL));
         }
     }

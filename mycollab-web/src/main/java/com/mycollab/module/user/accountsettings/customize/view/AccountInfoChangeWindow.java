@@ -1,7 +1,6 @@
 package com.mycollab.module.user.accountsettings.customize.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.mycollab.module.user.domain.BillingAccount;
@@ -9,7 +8,7 @@ import com.mycollab.module.user.domain.SimpleBillingAccount;
 import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.module.user.ui.components.LanguageSelectionField;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -44,7 +43,7 @@ class AccountInfoChangeWindow extends MWindow {
         MVerticalLayout content = new MVerticalLayout();
         this.withModal(true).withResizable(false).withWidth("700px").withContent(content).withCenter();
 
-        billingAccount = BeanUtility.deepClone(MyCollabUI.getBillingAccount());
+        billingAccount = BeanUtility.deepClone(AppUI.getBillingAccount());
         editForm = new AdvancedEditBeanForm<>();
         editForm.setFormLayoutFactory(new AbstractFormLayoutFactory() {
             private GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 9, "200px");
@@ -114,7 +113,7 @@ class AccountInfoChangeWindow extends MWindow {
                 BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
                 billingAccountService.updateSelectiveWithSession(billingAccount, UserUIContext.getUsername());
                 close();
-                String siteUrl = MyCollabUI.getSiteUrl();
+                String siteUrl = AppUI.getSiteUrl();
                 String assignExec = String.format("window.location.assign(\'%s\');", siteUrl);
                 Page.getCurrent().getJavaScript().execute(assignExec);
             }

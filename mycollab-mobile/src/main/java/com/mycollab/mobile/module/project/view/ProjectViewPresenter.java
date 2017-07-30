@@ -11,7 +11,7 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.IPresenter;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.PresenterResolver;
@@ -36,7 +36,7 @@ public class ProjectViewPresenter extends ProjectGenericPresenter<ProjectView> {
         }
         if (data.getParams() instanceof Integer) {
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-            SimpleProject project = projectService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+            SimpleProject project = projectService.findById((Integer) data.getParams(), AppUI.getAccountId());
 
             if (project == null) {
                 throw new ResourceNotFoundException();

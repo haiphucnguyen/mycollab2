@@ -4,7 +4,7 @@ import com.mycollab.core.MyCollabException;
 import com.mycollab.core.arguments.NotBindable;
 import com.mycollab.core.utils.ClassUtils;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.validator.constraints.DateComparison;
@@ -88,7 +88,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                     ((RichTextArea) formField).setNullRepresentation("");
                 } else if (formField instanceof DateField && !(formField instanceof PopupDateFieldExt)) {
                     ((DateField) formField).setTimeZone(UserUIContext.getUserTimeZone());
-                    ((DateField) formField).setDateFormat(MyCollabUI.getDateFormat());
+                    ((DateField) formField).setDateFormat(AppUI.getDateFormat());
                 }
                 postCreateField(bindField, formField);
                 attachForm.attachField(bindField, formField);
@@ -130,7 +130,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                     ((RichTextArea) formField).setNullRepresentation("");
                 } else if (formField instanceof DateField) {
                     ((DateField) formField).setTimeZone(UserUIContext.getUserTimeZone());
-                    ((DateField) formField).setDateFormat(MyCollabUI.getDateFormat());
+                    ((DateField) formField).setDateFormat(AppUI.getDateFormat());
                 } else if (formField instanceof DatePicker) {
                     ((DatePicker) formField).setResolution(DatePickerState.Resolution.DAY);
                     formField.setWidth("100px");

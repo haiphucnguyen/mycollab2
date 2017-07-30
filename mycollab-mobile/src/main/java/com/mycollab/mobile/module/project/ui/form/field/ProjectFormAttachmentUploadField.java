@@ -10,7 +10,7 @@ import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.resources.file.FileAssetsUtil;
 import com.mycollab.vaadin.ui.ELabel;
@@ -65,7 +65,7 @@ public class ProjectFormAttachmentUploadField extends MVerticalLayout {
     }
 
     public void getAttachments(Integer projectId, String type, Integer typeId) {
-        attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), projectId, type, "" + typeId);
+        attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), projectId, type, "" + typeId);
         List<Content> attachments = resourceService.getContents(attachmentPath);
         rowWrap.removeAllComponents();
         if (CollectionUtils.isNotEmpty(attachments)) {
@@ -80,7 +80,7 @@ public class ProjectFormAttachmentUploadField extends MVerticalLayout {
     }
 
     public void saveContentsToRepo(Integer projectId, String type, Integer typeId) {
-        attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), projectId, type, "" + typeId);
+        attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), projectId, type, "" + typeId);
         MobileAttachmentUtils.saveContentsToRepo(attachmentPath, fileStores);
     }
 

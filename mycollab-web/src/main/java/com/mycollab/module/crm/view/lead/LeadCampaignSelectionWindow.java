@@ -9,7 +9,7 @@ import com.mycollab.module.crm.i18n.CampaignI18nEnum;
 import com.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.mycollab.module.crm.view.campaign.CampaignSearchPanel;
 import com.mycollab.module.crm.view.campaign.CampaignTableDisplay;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -41,8 +41,8 @@ class LeadCampaignSelectionWindow extends RelatedItemSelectionWindow<SimpleCampa
             final SimpleCampaign campaign = tableItem.getBeanByIndex(itemId);
 
             ELabel b = new ELabel(campaign.getCampaignname()).withStyleName(WebThemes.BUTTON_LINK)
-                    .withDescription(CrmTooltipGenerator.generateTooltipCampaign(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
-                            campaign, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    .withDescription(CrmTooltipGenerator.generateTooltipCampaign(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                            campaign, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
 
             if (CampaignStatus.Completed.name().equals(campaign.getStatus())) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);

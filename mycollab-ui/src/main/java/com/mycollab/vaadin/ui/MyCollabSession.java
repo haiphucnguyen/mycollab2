@@ -1,7 +1,7 @@
 package com.mycollab.vaadin.ui;
 
 import com.mycollab.core.SessionExpireException;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 
@@ -60,7 +60,7 @@ public class MyCollabSession {
      */
     public static void putCurrentUIVariable(String key, Object value) {
         try {
-            ((MyCollabUI) UI.getCurrent()).setAttribute(key, value);
+            ((AppUI) UI.getCurrent()).setAttribute(key, value);
         } catch (Exception e) {
             throw new SessionExpireException("Expire Exception");
         }
@@ -71,7 +71,7 @@ public class MyCollabSession {
      */
     public static void removeCurrentUIVariable(String key) {
         try {
-            ((MyCollabUI) UI.getCurrent()).setAttribute(key, null);
+            ((AppUI) UI.getCurrent()).setAttribute(key, null);
         } catch (Exception e) {
             throw new SessionExpireException("Expire Exception");
         }
@@ -83,7 +83,7 @@ public class MyCollabSession {
      */
     public static Object getCurrentUIVariable(String key) {
         try {
-            return ((MyCollabUI) UI.getCurrent()).getAttribute(key);
+            return ((AppUI) UI.getCurrent()).getAttribute(key);
         } catch (Exception e) {
             throw new SessionExpireException("Expire Exception");
         }

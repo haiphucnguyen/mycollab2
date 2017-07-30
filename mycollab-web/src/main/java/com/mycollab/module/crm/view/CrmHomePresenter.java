@@ -1,7 +1,7 @@
 package com.mycollab.module.crm.view;
 
 import com.mycollab.module.crm.CrmTypeConstants;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewScope;
@@ -24,6 +24,6 @@ public class CrmHomePresenter extends CrmGenericPresenter<CrmHomeView> {
         super.onGo(container, data);
         CrmModule.navigateItem(CrmTypeConstants.DASHBOARD);
         view.lazyLoadView();
-        MyCollabUI.addFragment("crm/dashboard", "Customer Dashboard");
+        AppUI.addFragment("crm/dashboard", "Customer Dashboard");
     }
 }

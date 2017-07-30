@@ -44,7 +44,7 @@ import com.mycollab.pro.module.project.view.risk.RiskPreviewForm;
 import com.mycollab.vaadin.reporting.FormReportLayout;
 import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -213,7 +213,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                 favoriteItem.setExtratypeid(item.getProjectId());
                 favoriteItem.setType(item.getType());
                 favoriteItem.setTypeid(item.getTypeId() + "");
-                favoriteItem.setSaccountid(MyCollabUI.getAccountId());
+                favoriteItem.setSaccountid(AppUI.getAccountId());
                 favoriteItem.setCreateduser(UserUIContext.getUsername());
                 FavoriteItemService favoriteItemService = AppContextUtil.getSpringBean(FavoriteItemService.class);
                 favoriteItemService.saveOrDelete(favoriteItem);
@@ -239,7 +239,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
             if (ProjectTypeConstants.BUG.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
                     BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                    final SimpleBug bug = bugService.findById(Integer.parseInt(assignment.getTypeId()), MyCollabUI.getAccountId());
+                    final SimpleBug bug = bugService.findById(Integer.parseInt(assignment.getTypeId()), AppUI.getAccountId());
                     if (bug != null) {
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + bug.getName());
 
@@ -275,7 +275,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
             } else if (ProjectTypeConstants.TASK.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
                     ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                    final SimpleTask task = taskService.findById(Integer.parseInt(assignment.getTypeId()), MyCollabUI.getAccountId());
+                    final SimpleTask task = taskService.findById(Integer.parseInt(assignment.getTypeId()), AppUI.getAccountId());
                     if (task != null) {
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + task.getName());
 
@@ -311,7 +311,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
                     MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                     final SimpleMilestone milestone = milestoneService.findById(Integer.parseInt(assignment.getTypeId()),
-                            MyCollabUI.getAccountId());
+                            AppUI.getAccountId());
                     if (milestone != null) {
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
                                 + milestone.getName());
@@ -344,7 +344,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
             } else if (ProjectTypeConstants.RISK.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS)) {
                     RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                    final SimpleRisk risk = riskService.findById(Integer.parseInt(assignment.getTypeId()), MyCollabUI.getAccountId());
+                    final SimpleRisk risk = riskService.findById(Integer.parseInt(assignment.getTypeId()), AppUI.getAccountId());
                     if (risk != null) {
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + risk.getName());
 
@@ -379,7 +379,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
                     ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
                     final SimpleComponent component = componentService.findById(Integer.parseInt(assignment.getTypeId()),
-                            MyCollabUI.getAccountId());
+                            AppUI.getAccountId());
                     if (component != null) {
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + component.getName());
 
@@ -416,7 +416,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS)) {
                     VersionService versionService = AppContextUtil.getSpringBean(VersionService.class);
                     final SimpleVersion version = versionService.findById(Integer.parseInt(assignment.getTypeId()),
-                            MyCollabUI.getAccountId());
+                            AppUI.getAccountId());
                     if (version != null) {
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + version.getName());
                         final PrintButton printBtn = new PrintButton();

@@ -18,7 +18,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskConsequence;
 import com.mycollab.module.project.i18n.OptionI18nEnum.RiskProbability;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -67,10 +67,10 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
     protected void onBecomingVisible() {
         super.onBecomingVisible();
         if (beanItem.getId() == null) {
-            MyCollabUI.addFragment("project/risk/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+            AppUI.addFragment("project/risk/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(RiskI18nEnum.NEW));
         } else {
-            MyCollabUI.addFragment(ProjectLinkGenerator.generateRiskEditLink(beanItem.getProjectid(), beanItem.getId()), beanItem.getName());
+            AppUI.addFragment(ProjectLinkGenerator.generateRiskEditLink(beanItem.getProjectid(), beanItem.getId()), beanItem.getName());
         }
     }
 

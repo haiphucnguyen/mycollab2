@@ -4,7 +4,7 @@ import com.mycollab.module.crm.domain.Contact;
 import com.mycollab.module.crm.domain.SimpleContact;
 import com.mycollab.module.crm.service.ContactService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.data.Property;
@@ -71,7 +71,7 @@ public class ContactSelectionField extends CustomField<Integer> implements Field
 
     private void setContactByVal(Integer contactId) {
         ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
-        SimpleContact contactVal = contactService.findById(contactId, MyCollabUI.getAccountId());
+        SimpleContact contactVal = contactService.findById(contactId, AppUI.getAccountId());
         if (contactVal != null) {
             this.contact = contact;
             contactName.setValue(contact.getContactName());

@@ -13,7 +13,7 @@ import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -52,10 +52,10 @@ public class MilestoneAddPresenter extends AbstractProjectPresenter<MilestoneAdd
             super.onGo(container, data);
 
             if (milestone.getId() == null) {
-                MyCollabUI.addFragment("project/milestone/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+                AppUI.addFragment("project/milestone/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                         UserUIContext.getMessage(MilestoneI18nEnum.NEW));
             } else {
-                MyCollabUI.addFragment("project/milestone/edit/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(),
+                AppUI.addFragment("project/milestone/edit/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(),
                         milestone.getId()), milestone.getName());
             }
         } else {
@@ -66,7 +66,7 @@ public class MilestoneAddPresenter extends AbstractProjectPresenter<MilestoneAdd
     private void saveMilestone(Milestone milestone) {
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
         milestone.setProjectid(CurrentProjectVariables.getProjectId());
-        milestone.setSaccountid(MyCollabUI.getAccountId());
+        milestone.setSaccountid(AppUI.getAccountId());
 
         if (milestone.getId() == null) {
             milestone.setCreateduser(UserUIContext.getUsername());

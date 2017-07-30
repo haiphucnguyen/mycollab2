@@ -16,7 +16,7 @@ import com.mycollab.module.crm.domain.SimpleCase;
 import com.mycollab.module.crm.i18n.CaseI18nEnum;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -86,7 +86,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment(CrmLinkGenerator.generateCasePreviewLink(beanItem.getId()),
+        AppUI.addFragment(CrmLinkGenerator.generateCasePreviewLink(beanItem.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(CaseI18nEnum.SINGLE), beanItem.getSubject()));
     }

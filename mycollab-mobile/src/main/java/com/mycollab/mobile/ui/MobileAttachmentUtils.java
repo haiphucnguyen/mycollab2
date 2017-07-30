@@ -9,7 +9,7 @@ import com.mycollab.mobile.shell.events.ShellEvent;
 import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.resources.VaadinResourceFactory;
 import com.mycollab.vaadin.resources.file.FileAssetsUtil;
@@ -115,7 +115,7 @@ public class MobileAttachmentUtils {
                         if (dialog.isConfirmed()) {
                             ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
                             attachmentService.removeResource(attachment.getPath(), UserUIContext.getUsername(), true,
-                                    MyCollabUI.getAccountId());
+                                    AppUI.getAccountId());
                             ((ComponentContainer) attachmentLayout.getParent()).removeComponent(attachmentLayout);
                         }
                     });
@@ -168,15 +168,15 @@ public class MobileAttachmentUtils {
                             ImageIO.write(scaledImage, fileExt, outStream);
 
                             resourceService.saveContent(constructContent(fileName, attachmentPath), UserUIContext.getUsername(),
-                                    new ByteArrayInputStream(outStream.toByteArray()), MyCollabUI.getAccountId());
+                                    new ByteArrayInputStream(outStream.toByteArray()), AppUI.getAccountId());
                         } catch (IOException e) {
                             LOG.error("Error in upload file", e);
                             resourceService.saveContent(constructContent(fileName, attachmentPath), UserUIContext.getUsername(),
-                                    new FileInputStream(fileStores.get(fileName)), MyCollabUI.getAccountId());
+                                    new FileInputStream(fileStores.get(fileName)), AppUI.getAccountId());
                         }
                     } else {
                         resourceService.saveContent(constructContent(fileName, attachmentPath),
-                                UserUIContext.getUsername(), new FileInputStream(file), MyCollabUI.getAccountId());
+                                UserUIContext.getUsername(), new FileInputStream(file), AppUI.getAccountId());
                     }
 
                 } catch (FileNotFoundException e) {

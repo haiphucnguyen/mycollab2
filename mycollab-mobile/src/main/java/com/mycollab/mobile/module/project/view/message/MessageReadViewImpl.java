@@ -12,7 +12,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleMessage;
 import com.mycollab.module.project.i18n.MessageI18nEnum;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -84,7 +84,7 @@ public class MessageReadViewImpl extends AbstractMobilePageView implements Messa
 
         ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
         List<Content> attachments = attachmentService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(
-                MyCollabUI.getAccountId(), bean.getProjectid(), ProjectTypeConstants.MESSAGE, "" + bean.getId()));
+                AppUI.getAccountId(), bean.getProjectid(), ProjectTypeConstants.MESSAGE, "" + bean.getId()));
         if (CollectionUtils.isNotEmpty(attachments)) {
             CssLayout attachmentPanel = new CssLayout();
             attachmentPanel.setStyleName("attachment-panel");

@@ -7,7 +7,7 @@ import com.mycollab.module.crm.domain.SimpleOpportunity;
 import com.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.mycollab.module.crm.fielddef.OpportunityTableFieldDef;
 import com.mycollab.module.crm.i18n.OpportunityI18nEnum;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -55,8 +55,8 @@ public class OpportunitySelectionWindow extends MWindow {
             return new MButton(opportunity.getOpportunityname(), clickEvent -> {
                 fieldSelection.fireValueChange(opportunity);
                 close();
-            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateTooltipOpportunity(UserUIContext.getUserLocale(), MyCollabUI.getDateFormat(),
-                    opportunity, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateTooltipOpportunity(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                    opportunity, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
     }
 }

@@ -11,7 +11,7 @@ import com.mycollab.module.crm.domain.SimpleCampaign;
 import com.mycollab.module.crm.service.CampaignService;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.formatter.HistoryFieldFormat;
@@ -42,7 +42,7 @@ public class CampaignHistoryFieldFormat implements HistoryFieldFormat {
         try {
             Integer campaignId = Integer.parseInt(value);
             CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-            SimpleCampaign campaign = campaignService.findById(campaignId, MyCollabUI.getAccountId());
+            SimpleCampaign campaign = campaignService.findById(campaignId, AppUI.getAccountId());
 
             if (campaign != null) {
                 if (displayAsHtml) {

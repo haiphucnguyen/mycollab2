@@ -18,7 +18,7 @@ import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.module.project.ui.components.ProjectMemberBlock;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.ReloadableComponent;
@@ -32,7 +32,6 @@ import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -127,7 +126,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
         final int commentCount = commentService.getTotalCount(commentCriteria);
 
         final AuditLogSearchCriteria logCriteria = new AuditLogSearchCriteria();
-        logCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+        logCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         logCriteria.setModule(StringSearchField.and(ModuleNameConstants.CRM));
         logCriteria.setType(StringSearchField.and(type));
         logCriteria.setTypeId(StringSearchField.and(typeId));
@@ -180,14 +179,14 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
         if (hasDeletePermission(comment)) {
             MButton msgDeleteBtn = new MButton("", clickEvent ->
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                             confirmDialog -> {
                                 if (confirmDialog.isConfirmed()) {
                                     CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
-                                    commentService.removeWithSession(comment, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                    commentService.removeWithSession(comment, UserUIContext.getUsername(), AppUI.getAccountId());
                                     activityBox.removeComponent(layout);
                                 }
                             })

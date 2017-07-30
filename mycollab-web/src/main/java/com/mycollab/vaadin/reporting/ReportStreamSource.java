@@ -1,7 +1,7 @@
 package com.mycollab.vaadin.reporting;
 
 import com.mycollab.reporting.ReportTemplateExecutor;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.server.StreamResource;
 
@@ -29,7 +29,7 @@ public abstract class ReportStreamSource implements StreamResource.StreamSource 
 
     private Map<String, Object> initReportParameters() {
         Map<String, Object> parameters = new ConcurrentHashMap<>();
-        parameters.put("siteUrl", MyCollabUI.getSiteUrl());
+        parameters.put("siteUrl", AppUI.getSiteUrl());
         parameters.put("user", UserUIContext.getUser());
         initReportParameters(parameters);
         return parameters;

@@ -17,7 +17,7 @@ import com.mycollab.module.user.CommonTooltipGenerator;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -142,9 +142,9 @@ public class UnresolvedTicketsByAssigneeWidget extends Depot {
             }).withWidth("100%").withIcon(UserAvatarControlFactory.createAvatarResource(assigneeAvatarId, 16))
                     .withStyleName(WebThemes.BUTTON_LINK, UIConstants.TEXT_ELLIPSIS);
             UserService service = AppContextUtil.getSpringBean(UserService.class);
-            SimpleUser user = service.findUserByUserNameInAccount(assignee, MyCollabUI.getAccountId());
+            SimpleUser user = service.findUserByUserNameInAccount(assignee, AppUI.getAccountId());
             this.setDescription(CommonTooltipGenerator.generateTooltipUser(UserUIContext.getUserLocale(), user,
-                    MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         }
     }
 }

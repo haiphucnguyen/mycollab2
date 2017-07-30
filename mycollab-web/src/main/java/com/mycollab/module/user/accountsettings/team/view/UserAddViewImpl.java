@@ -21,7 +21,7 @@ import com.mycollab.security.PermissionFlag;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
@@ -367,7 +367,7 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
             PermissionMap permissionMap = null;
             if (roleId != null && roleId > 0) {
                 RoleService roleService = AppContextUtil.getSpringBean(RoleService.class);
-                SimpleRole role = roleService.findById(roleId, MyCollabUI.getAccountId());
+                SimpleRole role = roleService.findById(roleId, AppUI.getAccountId());
                 if (role != null) {
                     permissionMap = role.getPermissionMap();
                 }

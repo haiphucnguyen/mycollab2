@@ -1,6 +1,6 @@
 package com.mycollab.vaadin.spring;
 
-import com.mycollab.vaadin.MyCollabServlet;
+import com.mycollab.vaadin.AppServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ public class VaadinSpringConfiguration {
     @Bean
     public ServletRegistrationBean mainServlet() {
         ServletRegistrationBean bean = new ServletRegistrationBean(
-                new MyCollabServlet(), "/*");
+                new AppServlet(), "/*");
         bean.setLoadOnStartup(1);
         return bean;
     }

@@ -4,7 +4,7 @@ import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.ui.components.TimeLogComp;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 
 /**
  * @author MyCollab Ltd
@@ -15,17 +15,17 @@ public class MilestoneTimeLogComp extends TimeLogComp<SimpleMilestone> {
 
     @Override
     protected Double getTotalBillableHours(SimpleMilestone bean) {
-        return itemLogService.getTotalBillableHoursByMilestone(bean.getId(), MyCollabUI.getAccountId());
+        return itemLogService.getTotalBillableHoursByMilestone(bean.getId(), AppUI.getAccountId());
     }
 
     @Override
     protected Double getTotalNonBillableHours(SimpleMilestone bean) {
-        return itemLogService.getTotalNonBillableHoursByMilestone(bean.getId(), MyCollabUI.getAccountId());
+        return itemLogService.getTotalNonBillableHoursByMilestone(bean.getId(), AppUI.getAccountId());
     }
 
     @Override
     protected Double getRemainedHours(SimpleMilestone bean) {
-        return itemLogService.getRemainHoursByMilestone(bean.getId(), MyCollabUI.getAccountId());
+        return itemLogService.getRemainHoursByMilestone(bean.getId(), AppUI.getAccountId());
     }
 
     @Override

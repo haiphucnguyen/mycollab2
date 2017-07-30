@@ -22,7 +22,7 @@ import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.crm.view.contact.ContactSelectionField;
 import com.mycollab.module.user.accountsettings.localization.RoleI18nEnum;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -111,7 +111,7 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
 
         if (contactOpps.size() > 0) {
             ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
-            contactService.saveContactOpportunityRelationship(contactOpps, MyCollabUI.getAccountId());
+            contactService.saveContactOpportunityRelationship(contactOpps, AppUI.getAccountId());
         }
 
         // lead user to opportunity view
@@ -151,7 +151,7 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
 
             ContactOpportunityService contactOppoService = AppContextUtil.getSpringBean(ContactOpportunityService.class);
             ContactSearchCriteria criteria = new ContactSearchCriteria();
-            criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+            criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
             criteria.setOpportunityId(new NumberSearchField(opportunity.getId()));
             List<SimpleContactOpportunityRel> contactOppoRels = contactOppoService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
             boolean oddRow = true;
@@ -237,7 +237,7 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
                     ContactOpportunity associateOpportunity = new ContactOpportunity();
                     associateOpportunity.setContactid(contactOpp.getId());
                     associateOpportunity.setOpportunityid(opportunity.getId());
-                    contactService.removeContactOpportunityRelationship(associateOpportunity, MyCollabUI.getAccountId());
+                    contactService.removeContactOpportunityRelationship(associateOpportunity, AppUI.getAccountId());
                 }
             }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
             this.addComponent(deleteBtn);

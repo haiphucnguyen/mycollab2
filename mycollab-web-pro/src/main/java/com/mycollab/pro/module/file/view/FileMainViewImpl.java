@@ -7,7 +7,7 @@ import com.mycollab.module.file.view.FileMainView;
 import com.mycollab.module.file.view.ResourcesDisplayComponent;
 import com.mycollab.module.user.domain.BillingPlan;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
@@ -40,7 +40,7 @@ public class FileMainViewImpl extends AbstractLazyPageView implements FileMainVi
     private MVerticalLayout mainBodyResourceLayout;
 
     public FileMainViewImpl() {
-        String rootPath = String.format("%d/Documents", MyCollabUI.getAccountId());
+        String rootPath = String.format("%d/Documents", AppUI.getAccountId());
         rootFolder = new Folder(rootPath);
     }
 
@@ -108,9 +108,9 @@ public class FileMainViewImpl extends AbstractLazyPageView implements FileMainVi
         linkBtn.setContent(filterBtnLayout);
         navButton.with(linkBtn);
 
-        BillingPlan currentBillingPlan = MyCollabUI.getBillingAccount().getBillingPlan();
+        BillingPlan currentBillingPlan = AppUI.getBillingAccount().getBillingPlan();
         DriveInfoService driveInfoService = AppContextUtil.getSpringBean(DriveInfoService.class);
-        String usedStorageTxt = FileUtils.getVolumeDisplay(driveInfoService.getUsedStorageVolume(MyCollabUI.getAccountId()))
+        String usedStorageTxt = FileUtils.getVolumeDisplay(driveInfoService.getUsedStorageVolume(AppUI.getAccountId()))
                 + " of " + FileUtils.getVolumeDisplay(currentBillingPlan.getVolume());
         ELabel usedVolumeInfo = ELabel.html("<div>" + usedStorageTxt + "</div>").withStyleName("volumeUsageInfo");
         topControlMenuWrapper.with(usedVolumeInfo).withAlign(usedVolumeInfo, Alignment.TOP_CENTER);

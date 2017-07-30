@@ -4,7 +4,7 @@ import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.module.user.events.UserEvent.PlainLogin;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.PageView.ViewListener;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewEvent;
@@ -41,6 +41,6 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
     protected void onGo(HasComponents container, ScreenData<?> data) {
         MainWindowContainer windowContainer = (MainWindowContainer) container;
         windowContainer.setContent(view);
-        MyCollabUI.addFragment("user/login", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
+        AppUI.addFragment("user/login", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
     }
 }

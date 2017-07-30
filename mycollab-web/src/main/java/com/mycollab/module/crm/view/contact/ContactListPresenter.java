@@ -14,7 +14,7 @@ import com.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -99,7 +99,7 @@ public class ContactListPresenter extends CrmGenericListPresenter<ContactListVie
                 this.displayNoExistItems(container, data);
             }
 
-            MyCollabUI.addFragment("crm/contact/list", UserUIContext.getMessage(ContactI18nEnum.LIST));
+            AppUI.addFragment("crm/contact/list", UserUIContext.getMessage(ContactI18nEnum.LIST));
         } else {
             throw new SecureAccessException();
         }
@@ -117,12 +117,12 @@ public class ContactListPresenter extends CrmGenericListPresenter<ContactListVie
             }
 
             if (keyList.size() > 0) {
-                contactService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                contactService.massRemoveWithSession(keyList, UserUIContext.getUsername(), AppUI.getAccountId());
                 doSearch(searchCriteria);
                 checkWhetherEnableTableActionControl();
             }
         } else {
-            contactService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
+            contactService.removeByCriteria(searchCriteria, AppUI.getAccountId());
             doSearch(searchCriteria);
         }
     }
@@ -138,7 +138,7 @@ public class ContactListPresenter extends CrmGenericListPresenter<ContactListVie
                 }
             }
             if (keyList.size() > 0) {
-                contactService.massUpdateWithSession(value, keyList, MyCollabUI.getAccountId());
+                contactService.massUpdateWithSession(value, keyList, AppUI.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

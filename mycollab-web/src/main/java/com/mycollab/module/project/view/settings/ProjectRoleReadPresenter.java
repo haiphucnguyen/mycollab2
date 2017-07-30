@@ -12,7 +12,7 @@ import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.mycollab.module.project.service.ProjectRoleService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -53,13 +53,13 @@ public class ProjectRoleReadPresenter extends AbstractPresenter<ProjectRoleReadV
             public void onDelete(final SimpleProjectRole role) {
                 if (Boolean.FALSE.equals(role.getIssystemrole())) {
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                             confirmDialog -> {
                                 if (confirmDialog.isConfirmed()) {
-                                    projectRoleService.removeWithSession(role, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                    projectRoleService.removeWithSession(role, UserUIContext.getUsername(), AppUI.getAccountId());
                                     EventBusFactory.getInstance().post(new ProjectRoleEvent.GotoList(this, null));
                                 }
                             });
@@ -114,7 +114,7 @@ public class ProjectRoleReadPresenter extends AbstractPresenter<ProjectRoleReadV
         ProjectRoleContainer roleContainer = (ProjectRoleContainer) container;
 
         if (data.getParams() instanceof Integer) {
-            SimpleProjectRole role = projectRoleService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+            SimpleProjectRole role = projectRoleService.findById((Integer) data.getParams(), AppUI.getAccountId());
             if (role == null) {
                 NotificationUtil.showRecordNotExistNotification();
             } else {

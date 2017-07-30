@@ -20,7 +20,7 @@ import com.mycollab.module.crm.service.LeadService;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -102,7 +102,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
         // check if there is converted lead associates with this contact
         LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
         SimpleLead lead = leadService.findConvertedLeadOfContact(
-                beanItem.getId(), MyCollabUI.getAccountId());
+                beanItem.getId(), AppUI.getAccountId());
         if (lead != null) {
             return beanItem.getContactName() + "&nbsp;"
                     + UserUIContext.getMessage(LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
@@ -127,7 +127,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment(CrmLinkGenerator.generateContactPreviewLink(beanItem.getId()),
+        AppUI.addFragment(CrmLinkGenerator.generateContactPreviewLink(beanItem.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(ContactI18nEnum.SINGLE), beanItem.getContactName()));
     }

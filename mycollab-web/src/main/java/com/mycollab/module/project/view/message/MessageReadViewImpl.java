@@ -15,7 +15,7 @@ import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.project.ui.components.ProjectAttachmentDisplayComponentFactory;
 import com.mycollab.module.project.ui.components.ProjectMemberBlock;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
@@ -95,14 +95,14 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
 
             MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
-                                messageService.removeWithSession(message, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                messageService.removeWithSession(message, UserUIContext.getUsername(), AppUI.getAccountId());
                                 previewForm.fireCancelForm(message);
                             }
                         });
@@ -112,7 +112,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
             stickyCheck = new CheckBox(UserUIContext.getMessage(MessageI18nEnum.FORM_IS_STICK), message.getIsstick());
             stickyCheck.addValueChangeListener(valueChangeEvent -> {
                 message.setIsstick(stickyCheck.getValue());
-                message.setSaccountid(MyCollabUI.getAccountId());
+                message.setSaccountid(AppUI.getAccountId());
                 MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
                 messageService.updateWithSession(message, UserUIContext.getUsername());
             });
@@ -153,7 +153,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
 
             ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
             List<Content> attachments = attachmentService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(
-                    MyCollabUI.getAccountId(), message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
+                    AppUI.getAccountId(), message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
             if (CollectionUtils.isNotEmpty(attachments)) {
                 HorizontalLayout attachmentField = new HorizontalLayout();
                 Button attachmentIcon = new Button(null, FontAwesome.PAPERCLIP);

@@ -15,7 +15,7 @@ import com.mycollab.module.crm.i18n.TaskI18nEnum;
 import com.mycollab.module.crm.service.TaskService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -56,7 +56,7 @@ public class AssignmentReadPresenter extends AbstractCrmPresenter<AssignmentRead
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
-                                taskService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                taskService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new ActivityEvent.GotoList(this, null));
                             }
                         });
@@ -78,7 +78,7 @@ public class AssignmentReadPresenter extends AbstractCrmPresenter<AssignmentRead
             public void gotoNext(SimpleCrmTask data) {
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                 CrmTaskSearchCriteria criteria = new CrmTaskSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = taskService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -93,7 +93,7 @@ public class AssignmentReadPresenter extends AbstractCrmPresenter<AssignmentRead
             public void gotoPrevious(SimpleCrmTask data) {
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                 CrmTaskSearchCriteria criteria = new CrmTaskSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = taskService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -112,7 +112,7 @@ public class AssignmentReadPresenter extends AbstractCrmPresenter<AssignmentRead
             SimpleCrmTask task;
             if (data.getParams() instanceof Integer) {
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
-                task = taskService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                task = taskService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (task == null) {
                     NotificationUtil.showRecordNotExistNotification();
                     return;
@@ -123,7 +123,7 @@ public class AssignmentReadPresenter extends AbstractCrmPresenter<AssignmentRead
             view.previewItem(task);
             super.onGo(container, data);
 
-            MyCollabUI.addFragment(CrmLinkGenerator.generateTaskPreviewLink(task.getId()),
+            AppUI.addFragment(CrmLinkGenerator.generateTaskPreviewLink(task.getId()),
                     UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                             UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getSubject()));
         } else {

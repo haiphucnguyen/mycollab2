@@ -17,7 +17,7 @@ import com.mycollab.module.user.service.UserService;
 import com.mycollab.ondemand.module.billing.domain.SimpleBillingSubscription;
 import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
@@ -96,7 +96,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         billingPlanListLayout = new MHorizontalLayout().withSpacing(false).withFullWidth().withStyleName("billing-plan-list");
         layout.addComponent(billingPlanListLayout);
         ELabel bankWireTransfer = ELabel.h3(UserUIContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE));
-        BillingPlan currentBillingPlan = MyCollabUI.getBillingAccount().getBillingPlan();
+        BillingPlan currentBillingPlan = AppUI.getBillingAccount().getBillingPlan();
         MButton bankwireBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT),
                 event -> UI.getCurrent().addWindow(new BankwireSelectionWindow(currentBillingPlan)))
                 .withIcon(FontAwesome.BANK).withStyleName(WebThemes.BUTTON_LINK);
@@ -110,8 +110,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
     private void displayBillingMonthly() {
         billingPlanListLayout.removeAllComponents();
 
-        BillingPlan currentBillingPlan = MyCollabUI.getBillingAccount().getBillingPlan();
-        SimpleBillingAccount billingAccount = MyCollabUI.getBillingAccount();
+        BillingPlan currentBillingPlan = AppUI.getBillingAccount().getBillingPlan();
+        SimpleBillingAccount billingAccount = AppUI.getBillingAccount();
         List<BillingPlan> availablePlans = billingService.getAvailablePlans();
 
         for (int i = 0; i < availablePlans.size(); i++) {
@@ -140,7 +140,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                             .withStyleName(WebThemes.BUTTON_DANGER)
                             .withIcon(FontAwesome.CREDIT_CARD);
                     BrowserWindowOpener opener = new BrowserWindowOpener(plan.getShoppingurl() +
-                            "?referrer=" + EnDecryptHelper.encryptText(MyCollabUI.getAccountId() + ";" + currentBillingPlan.getId()));
+                            "?referrer=" + EnDecryptHelper.encryptText(AppUI.getAccountId() + ";" + currentBillingPlan.getId()));
                     opener.extend(selectPlanBtn);
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
                 } else {
@@ -166,8 +166,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
     private void displayBillingYearly() {
         billingPlanListLayout.removeAllComponents();
 
-        BillingPlan currentBillingPlan = MyCollabUI.getBillingAccount().getBillingPlan();
-        SimpleBillingAccount billingAccount = MyCollabUI.getBillingAccount();
+        BillingPlan currentBillingPlan = AppUI.getBillingAccount().getBillingPlan();
+        SimpleBillingAccount billingAccount = AppUI.getBillingAccount();
         List<BillingPlan> availablePlans = billingService.getAvailablePlans();
 
         for (int i = 0; i < availablePlans.size(); i++) {
@@ -196,7 +196,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                             .withStyleName(WebThemes.BUTTON_DANGER)
                             .withIcon(FontAwesome.CREDIT_CARD);
                     BrowserWindowOpener opener = new BrowserWindowOpener(plan.getYearlyshoppingurl() +
-                            "?referrer=" + EnDecryptHelper.encryptText(MyCollabUI.getAccountId() + ";" + currentBillingPlan.getId()));
+                            "?referrer=" + EnDecryptHelper.encryptText(AppUI.getAccountId() + ";" + currentBillingPlan.getId()));
                     opener.extend(selectPlanBtn);
                     singlePlan.with(billingType, billingPrice, billingUser, billingStorage, billingProject, selectPlanBtn);
                 } else {
@@ -223,7 +223,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         currentPlanLayout.removeAllComponents();
         AbstractStorageService storageService = AppContextUtil.getSpringBean(AbstractStorageService.class);
         currentPlanLayout.with(new Image(null, new ExternalResource(storageService.generateAssetRelativeLink("icons/fs_button05.gif"))));
-        BillingPlan currentBillingPlan = MyCollabUI.getBillingAccount().getBillingPlan();
+        BillingPlan currentBillingPlan = AppUI.getBillingAccount().getBillingPlan();
 
         ELabel introText = ELabel.h2(UserUIContext.getMessage(BillingI18nEnum.OPT_CURRENT_PLAN, currentBillingPlan.getBillingtype()));
         SimpleBillingSubscription subscription = (SimpleBillingSubscription) MyCollabSession.getCurrentUIVariable("subscription");
@@ -231,7 +231,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             MButton selectPlanBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(WebThemes.BUTTON_DANGER)
                     .withIcon(FontAwesome.CREDIT_CARD);
             BrowserWindowOpener opener = new BrowserWindowOpener(currentBillingPlan.getShoppingurl() + "?referrer=" +
-                    EnDecryptHelper.encryptText(MyCollabUI.getAccountId() + ";" + currentBillingPlan.getId()));
+                    EnDecryptHelper.encryptText(AppUI.getAccountId() + ";" + currentBillingPlan.getId()));
             opener.extend(selectPlanBtn);
             currentPlanLayout.with(new MHorizontalLayout(introText, selectPlanBtn));
         } else {
@@ -259,20 +259,20 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         }
 
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-        numOfActiveProjects = projectService.getTotalActiveProjectsInAccount(MyCollabUI.getAccountId());
+        numOfActiveProjects = projectService.getTotalActiveProjectsInAccount(AppUI.getAccountId());
 
         ELabel projectInfo = ELabel.html(UserUIContext.getMessage(BillingI18nEnum.OPT_PLAN_NUM_PROJECTS,
                 numOfActiveProjects, currentBillingPlan.getNumprojects())).withStyleName(UIConstants.FIELD_NOTE);
 
         DriveInfoService driveInfoService = AppContextUtil.getSpringBean(DriveInfoService.class);
-        usedStorageVolume = driveInfoService.getUsedStorageVolume(MyCollabUI.getAccountId());
+        usedStorageVolume = driveInfoService.getUsedStorageVolume(AppUI.getAccountId());
         String usedStorageTxt = FileUtils.getVolumeDisplay(usedStorageVolume);
         ELabel storageInfo = ELabel.html(UserUIContext.getMessage(BillingI18nEnum.OPT_PLAN_STORAGE,
                 usedStorageTxt, FileUtils.getVolumeDisplay(currentBillingPlan.getVolume())))
                 .withStyleName(UIConstants.FIELD_NOTE);
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        numOfActiveUsers = userService.getTotalActiveUsersInAccount(MyCollabUI.getAccountId());
+        numOfActiveUsers = userService.getTotalActiveUsersInAccount(AppUI.getAccountId());
         ELabel userInfo = ELabel.html(UserUIContext.getMessage(BillingI18nEnum.OPT_PLAN_USERS,
                 numOfActiveUsers, currentBillingPlan.getNumusers())).withStyleName(UIConstants.FIELD_NOTE);
 
@@ -338,20 +338,20 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                     return;
                 }
 
-                if (chosenPlan.getBillingtype().equals(MyCollabUI.getBillingAccount().getBillingPlan().getBillingtype())) {
+                if (chosenPlan.getBillingtype().equals(AppUI.getBillingAccount().getBillingPlan().getBillingtype())) {
                     NotificationUtil.showErrorNotification("Selected plan is the same with the current plan");
                     return;
                 }
 
-                billingService.updateBillingPlan(MyCollabUI.getAccountId(), MyCollabUI.getBillingAccount().getBillingPlan(), chosenPlan);
+                billingService.updateBillingPlan(AppUI.getAccountId(), AppUI.getBillingAccount().getBillingPlan(), chosenPlan);
                 updateBillingPlan();
                 close();
             }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
-            SimpleBillingAccount billingAccount = MyCollabUI.getBillingAccount();
+            SimpleBillingAccount billingAccount = AppUI.getBillingAccount();
             if (billingAccount.isNotActive()) {
                 BrowserWindowOpener opener = new BrowserWindowOpener(chosenPlan.getShoppingurl() + "?referrer=" +
-                        EnDecryptHelper.encryptText(MyCollabUI.getAccountId() + ";" + chosenPlan.getId()));
+                        EnDecryptHelper.encryptText(AppUI.getAccountId() + ";" + chosenPlan.getId()));
                 opener.extend(saveBtn);
             }
 
@@ -360,7 +360,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         }
 
         private void updateBillingPlan() {
-            MyCollabUI.getBillingAccount().setBillingPlan(chosenPlan);
+            AppUI.getBillingAccount().setBillingPlan(chosenPlan);
             displayView();
         }
     }

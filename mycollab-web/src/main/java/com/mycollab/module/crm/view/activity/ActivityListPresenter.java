@@ -12,7 +12,7 @@ import com.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.ViewItemAction;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -73,7 +73,7 @@ public class ActivityListPresenter extends CrmGenericListPresenter<ActivityListV
             this.displayListView(container, data);
             doSearch(searchCriteria);
 
-            MyCollabUI.addFragment("crm/activity/todo", "Assignments");
+            AppUI.addFragment("crm/activity/todo", "Assignments");
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }

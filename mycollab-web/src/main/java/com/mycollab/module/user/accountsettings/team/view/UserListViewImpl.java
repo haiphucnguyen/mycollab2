@@ -20,7 +20,7 @@ import com.mycollab.module.user.events.UserEvent;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -156,7 +156,7 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
         if (RegisterStatusConstants.NOT_LOG_IN_YET.equals(member.getRegisterstatus())) {
             MButton resendBtn = new MButton(UserUIContext.getMessage(UserI18nEnum.ACTION_RESEND_INVITATION), clickEvent -> {
                 SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(member.getUsername(), null,
-                        member.getInviteUser(), MyCollabUI.getSubDomain(), MyCollabUI.getAccountId());
+                        member.getInviteUser(), AppUI.getSubDomain(), AppUI.getAccountId());
                 AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
                 asyncEventBus.post(invitationEvent);
                 NotificationUtil.showNotification(UserUIContext.getMessage(GenericI18Enum.OPT_SUCCESS), UserUIContext
@@ -171,14 +171,14 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
 
         MButton deleteBtn = new MButton("", clickEvent ->
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 UserService userService = AppContextUtil.getSpringBean(UserService.class);
-                                userService.pendingUserAccounts(Collections.singletonList(member.getUsername()), MyCollabUI.getAccountId());
+                                userService.pendingUserAccounts(Collections.singletonList(member.getUsername()), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new UserEvent.GotoList(UserListViewImpl.this, null));
                             }
                         })
@@ -188,7 +188,7 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
         memberInfo.addComponent(buttonControls);
         memberInfo.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);
 
-        A memberLink = new A(AccountLinkGenerator.generatePreviewFullUserLink(MyCollabUI.getSiteUrl(),
+        A memberLink = new A(AccountLinkGenerator.generatePreviewFullUserLink(AppUI.getSiteUrl(),
                 member.getUsername())).appendText(member.getDisplayName());
         ELabel memberLinkLbl = ELabel.h3(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
         memberInfo.addComponent(memberLinkLbl);
@@ -215,7 +215,7 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
             memberInfo.addComponent(lbl);
         }
 
-        if (Boolean.TRUE.equals(MyCollabUI.showEmailPublicly())) {
+        if (Boolean.TRUE.equals(AppUI.showEmailPublicly())) {
             Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(), member.getUsername()))
                     .withStyleName(UIConstants.TEXT_ELLIPSIS, UIConstants.META_INFO).withFullWidth();
             memberInfo.addComponent(memberEmailLabel);

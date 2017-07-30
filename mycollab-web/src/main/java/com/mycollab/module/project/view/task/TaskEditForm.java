@@ -14,7 +14,7 @@ import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.components.ProjectSubscribersComp;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -79,7 +79,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                     TaskEditFormFieldFactory taskEditFormFieldFactory = (TaskEditFormFieldFactory) fieldFactory;
 
                     AttachmentUploadField uploadField = taskEditFormFieldFactory.getAttachmentUploadField();
-                    String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(MyCollabUI.getAccountId(), bean.getProjectid(),
+                    String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
                             ProjectTypeConstants.TASK, "" + taskId);
                     uploadField.saveContentsToRepo(attachPath);
 
@@ -90,7 +90,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                         for (String follower : followers) {
                             MonitorItem monitorItem = new MonitorItem();
                             monitorItem.setMonitorDate(new GregorianCalendar().getTime());
-                            monitorItem.setSaccountid(MyCollabUI.getAccountId());
+                            monitorItem.setSaccountid(AppUI.getAccountId());
                             monitorItem.setType(ProjectTypeConstants.TASK);
                             monitorItem.setTypeid(taskId);
                             monitorItem.setUser(follower);

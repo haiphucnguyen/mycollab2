@@ -5,7 +5,7 @@ import com.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.mycollab.module.crm.i18n.OpportunityI18nEnum;
 import com.mycollab.module.crm.view.opportunity.OpportunityLeadSourceDashboard;
 import com.mycollab.module.crm.view.opportunity.OpportunitySalesStageDashboard;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.Depot;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
@@ -45,7 +45,7 @@ public class SalesDashboardView extends Depot {
             bodyContent.addComponent(salesStageDashboard);
 
             final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-            criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+            criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
             salesStageDashboard.displayChart(criteria);
         } else if ("OpportunityLeadSource".equals(reportName)) {
             this.setTitle(UserUIContext.getMessage(OpportunityI18nEnum.OPT_LEAD_SOURCES));
@@ -53,7 +53,7 @@ public class SalesDashboardView extends Depot {
             bodyContent.addComponent(leadSourceDashboard);
 
             final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-            criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+            criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
             leadSourceDashboard.displayChart(criteria);
         }
     }

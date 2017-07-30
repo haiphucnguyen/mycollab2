@@ -9,7 +9,7 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.ui.components.ProjectLogoUploadWindow;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -40,7 +40,7 @@ public class ProjectAssetsUtil {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(projectAvatarId)) {
             wrapper = new Image(null, new ExternalResource(StorageUtils.getResourcePath
-                    (String.format("%s/%s_%d.png", PathUtils.getProjectLogoPath(MyCollabUI.getAccountId(), projectId),
+                    (String.format("%s/%s_%d.png", PathUtils.getProjectLogoPath(AppUI.getAccountId(), projectId),
                             projectAvatarId, size))));
         } else {
             ELabel projectIcon = new ELabel(projectShortname).withStyleName(UIConstants.TEXT_ELLIPSIS, ValoTheme.LABEL_LARGE, "center");
@@ -70,7 +70,7 @@ public class ProjectAssetsUtil {
 
         if (!StringUtils.isBlank(projectAvatarId)) {
             Image image = new Image(null, new ExternalResource(StorageUtils.getResourcePath
-                    (String.format("%s/%s_%d.png", PathUtils.getProjectLogoPath(MyCollabUI.getAccountId(), projectId),
+                    (String.format("%s/%s_%d.png", PathUtils.getProjectLogoPath(AppUI.getAccountId(), projectId),
                             projectAvatarId, size))));
             image.addStyleName(UIConstants.CIRCLE_BOX);
             wrapper.addComponent(image);
@@ -90,7 +90,7 @@ public class ProjectAssetsUtil {
     public static Component clientLogoComp(SimpleAccount account, int size) {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(account.getAvatarid())) {
-            wrapper = new Image(null, new ExternalResource(StorageUtils.getEntityLogoPath(MyCollabUI
+            wrapper = new Image(null, new ExternalResource(StorageUtils.getEntityLogoPath(AppUI
                     .getAccountId(), account.getAvatarid(), 100)));
         } else {
             String accountName = account.getAccountname();

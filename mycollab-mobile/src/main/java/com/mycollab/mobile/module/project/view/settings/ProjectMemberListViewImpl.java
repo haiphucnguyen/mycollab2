@@ -11,7 +11,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -54,7 +54,7 @@ public class ProjectMemberListViewImpl extends AbstractListPageView<ProjectMembe
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment("project/user/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+        AppUI.addFragment("project/user/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                 UserUIContext.getMessage(ProjectMemberI18nEnum.LIST));
     }
 }

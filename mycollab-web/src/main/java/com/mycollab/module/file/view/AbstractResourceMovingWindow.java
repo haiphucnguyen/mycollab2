@@ -11,7 +11,7 @@ import com.mycollab.module.ecm.service.ExternalResourceService;
 import com.mycollab.module.ecm.service.ResourceMover;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
@@ -161,7 +161,7 @@ abstract class AbstractResourceMovingWindow extends MWindow {
                 boolean checkingFail = false;
                 for (Resource res : movedResources) {
                     try {
-                        resourceMover.moveResource(res, baseFolder, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                        resourceMover.moveResource(res, baseFolder, UserUIContext.getUsername(), AppUI.getAccountId());
                     } catch (Exception e) {
                         checkingFail = true;
                         LOG.error("Error", e);

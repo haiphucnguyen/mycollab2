@@ -5,7 +5,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.ApplicationEventListener;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.shell.events.ShellEvent;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ControllerRegistry;
@@ -86,7 +86,7 @@ public abstract class AbstractMainView extends AbstractVerticalPageView implemen
         headerLayout.setWidth("100%");
 
         final PopupButton modulePopup = new PopupButton("");
-        modulePopup.setIcon(AccountAssetsResolver.createLogoResource(MyCollabUI.getBillingAccount().getLogopath(), 150));
+        modulePopup.setIcon(AccountAssetsResolver.createLogoResource(AppUI.getBillingAccount().getLogopath(), 150));
         modulePopup.setHeightUndefined();
         modulePopup.setDirection(Alignment.BOTTOM_LEFT);
         OptionPopupContent modulePopupContent = new OptionPopupContent();

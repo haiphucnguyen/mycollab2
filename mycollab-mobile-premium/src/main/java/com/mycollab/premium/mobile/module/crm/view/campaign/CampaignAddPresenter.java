@@ -14,7 +14,7 @@ import com.mycollab.module.crm.i18n.CampaignI18nEnum;
 import com.mycollab.module.crm.service.CampaignService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -59,7 +59,7 @@ public class CampaignAddPresenter extends AbstractCrmPresenter<CampaignAddView> 
                 campaign = (SimpleCampaign) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-                campaign = campaignService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                campaign = campaignService.findById((Integer) data.getParams(), AppUI.getAccountId());
             }
             if (campaign == null) {
                 NotificationUtil.showRecordNotExistNotification();
@@ -69,10 +69,10 @@ public class CampaignAddPresenter extends AbstractCrmPresenter<CampaignAddView> 
             view.editItem(campaign);
 
             if (campaign.getId() == null) {
-                MyCollabUI.addFragment("crm/campaign/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                AppUI.addFragment("crm/campaign/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(CampaignI18nEnum.SINGLE)));
             } else {
-                MyCollabUI.addFragment("crm/campaign/edit/" + UrlEncodeDecoder.encode(campaign.getId()),
+                AppUI.addFragment("crm/campaign/edit/" + UrlEncodeDecoder.encode(campaign.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(CampaignI18nEnum.SINGLE), campaign.getCampaignname()));
             }
@@ -84,7 +84,7 @@ public class CampaignAddPresenter extends AbstractCrmPresenter<CampaignAddView> 
     private void saveCampaign(CampaignWithBLOBs campaign) {
         CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
 
-        campaign.setSaccountid(MyCollabUI.getAccountId());
+        campaign.setSaccountid(AppUI.getAccountId());
         if (campaign.getId() == null) {
             campaignService.saveWithSession(campaign, UserUIContext.getUsername());
         } else {

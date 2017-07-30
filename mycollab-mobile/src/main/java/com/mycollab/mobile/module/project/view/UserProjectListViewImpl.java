@@ -14,7 +14,7 @@ import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -98,6 +98,6 @@ public class UserProjectListViewImpl extends AbstractListPageView<ProjectSearchC
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment("project", UserUIContext.getMessage(ProjectI18nEnum.LIST));
+        AppUI.addFragment("project", UserUIContext.getMessage(ProjectI18nEnum.LIST));
     }
 }

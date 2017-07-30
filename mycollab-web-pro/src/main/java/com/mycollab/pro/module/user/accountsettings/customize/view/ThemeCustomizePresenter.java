@@ -17,7 +17,7 @@ import com.mycollab.module.user.service.AccountThemeService;
 import com.mycollab.security.BooleanPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -69,7 +69,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
-                                themeService.removeTheme(MyCollabUI.getAccountId());
+                                themeService.removeTheme(AppUI.getAccountId());
                                 Page.getCurrent().getJavaScript().execute("window.location.reload();");
                             }
                         });
@@ -84,13 +84,13 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
 
         AccountTheme accountTheme;
         if (data == null || data.getParams() == null) {
-            accountTheme = themeService.findTheme(MyCollabUI.getAccountId());
+            accountTheme = themeService.findTheme(AppUI.getAccountId());
         } else {
             accountTheme = (AccountTheme) data.getParams();
         }
 
         if (accountTheme == null) {
-            accountTheme = themeService.findDefaultTheme(MyCollabUI.getAccountId());
+            accountTheme = themeService.findDefaultTheme(AppUI.getAccountId());
         }
 
         if (accountTheme == null) {
@@ -104,7 +104,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
 
     private void saveTheme(AccountTheme accountTheme) {
         if (accountTheme.getSaccountid() == null) {
-            accountTheme.setSaccountid(MyCollabUI.getAccountId());
+            accountTheme.setSaccountid(AppUI.getAccountId());
             accountTheme.setId(null);
             accountTheme.setIsdefault(Boolean.FALSE);
             themeService.saveWithSession(accountTheme, UserUIContext.getUsername());

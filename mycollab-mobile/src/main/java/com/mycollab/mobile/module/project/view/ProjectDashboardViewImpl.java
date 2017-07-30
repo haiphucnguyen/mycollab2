@@ -12,7 +12,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.touchkit.NavigationBarQuickMenu;
@@ -161,7 +161,7 @@ public class ProjectDashboardViewImpl extends ProjectMobileMenuPageView implemen
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment(ProjectLinkGenerator.generateProjectLink(CurrentProjectVariables
+        AppUI.addFragment(ProjectLinkGenerator.generateProjectLink(CurrentProjectVariables
                 .getProject().getId()), UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));
     }
 

@@ -1,6 +1,6 @@
 package com.mycollab.vaadin.ui;
 
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.data.Property;
 import com.vaadin.ui.ComboBox;
@@ -31,7 +31,7 @@ public class CurrencyComboBoxField extends ComboBox {
     public void setPropertyDataSource(Property newDataSource) {
         Object value = newDataSource.getValue();
         if (value == null) {
-            Currency currency = MyCollabUI.getDefaultCurrency();
+            Currency currency = AppUI.getDefaultCurrency();
             newDataSource.setValue(currency.getCurrencyCode());
         }
         super.setPropertyDataSource(newDataSource);

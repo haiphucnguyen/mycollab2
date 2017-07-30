@@ -5,7 +5,6 @@ import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.SessionExpireException;
 import com.mycollab.core.utils.DateTimeUtils;
-import com.mycollab.core.utils.StringUtils;
 import com.mycollab.core.utils.TimezoneVal;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.module.user.dao.UserAccountMapper;
@@ -14,7 +13,6 @@ import com.mycollab.security.PermissionFlag;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.ui.MyCollabSession;
-import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -93,7 +91,7 @@ public class UserUIContext implements Serializable {
             UserAccount userAccount = new UserAccount();
             userAccount.setLastmodulevisit(moduleName);
             UserAccountExample ex = new UserAccountExample();
-            ex.createCriteria().andAccountidEqualTo(MyCollabUI.getAccountId()).andUsernameEqualTo(UserUIContext.getUsername());
+            ex.createCriteria().andAccountidEqualTo(AppUI.getAccountId()).andUsernameEqualTo(UserUIContext.getUsername());
             userAccountMapper.updateByExampleSelective(userAccount, ex);
         } catch (Exception e) {
             LOG.error("There is error when try to update user preference for last module visit", e);
@@ -120,7 +118,7 @@ public class UserUIContext implements Serializable {
     }
 
     public boolean isMatchAccount(Integer sAccountId) {
-        return sAccountId.equals(MyCollabUI.getAccountId());
+        return sAccountId.equals(AppUI.getAccountId());
     }
 
     public void clearSessionVariables() {
@@ -303,10 +301,10 @@ public class UserUIContext implements Serializable {
         } else {
             DateTime jodaDate = new DateTime(date).toDateTime(DateTimeZone.forTimeZone(UserUIContext.getUserTimeZone()));
             if (jodaDate.getHourOfDay() > 0 || jodaDate.getMinuteOfHour() > 0) {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(MyCollabUI.getDateTimeFormat()).withLocale(UserUIContext.getUserLocale());
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getDateTimeFormat()).withLocale(UserUIContext.getUserLocale());
                 return formatter.print(jodaDate);
             } else {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(MyCollabUI.getDateFormat()).withLocale(UserUIContext.getUserLocale());
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getDateFormat()).withLocale(UserUIContext.getUserLocale());
                 return formatter.print(jodaDate);
             }
         }
@@ -317,7 +315,7 @@ public class UserUIContext implements Serializable {
      * @return
      */
     public static String formatDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, MyCollabUI.getDateFormat(), UserUIContext.getUserLocale(),
+        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getDateFormat(), UserUIContext.getUserLocale(),
                 UserUIContext.getUserTimeZone());
     }
 
@@ -335,7 +333,7 @@ public class UserUIContext implements Serializable {
     }
 
     public static String formatShortDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, MyCollabUI.getShortDateFormat(), UserUIContext.getUserLocale(),
+        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getShortDateFormat(), UserUIContext.getUserLocale(),
                 UserUIContext.getUserTimeZone());
     }
 

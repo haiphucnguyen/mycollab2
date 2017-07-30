@@ -10,7 +10,7 @@ import com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunitySalesStage;
 import com.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.mycollab.module.crm.view.opportunity.OpportunitySearchPanel;
 import com.mycollab.module.crm.view.opportunity.OpportunityTableDisplay;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -41,7 +41,7 @@ public class ContactOpportunitySelectionWindow extends RelatedItemSelectionWindo
 
             ELabel b = new ELabel(opportunity.getOpportunityname()).withStyleName(WebThemes.BUTTON_LINK)
                     .withDescription(CrmTooltipGenerator.generateTooltipOpportunity(UserUIContext.getUserLocale(),
-                            MyCollabUI.getDateFormat(), opportunity, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                            AppUI.getDateFormat(), opportunity, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             if (OpportunitySalesStage.Closed_Won.name().equals(opportunity.getSalesstage()) ||
                     OpportunitySalesStage.Closed_Lost.name().equals(opportunity.getSalesstage())) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);

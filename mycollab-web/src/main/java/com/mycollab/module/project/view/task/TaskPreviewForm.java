@@ -27,7 +27,7 @@ import com.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
 import com.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.ui.field.DateTimeOptionViewField;
@@ -122,7 +122,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                     @Subscribe
                     public void handle(TaskEvent.NewTaskAdded event) {
                         final ProjectTaskService projectTaskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                        SimpleTask task = projectTaskService.findById((Integer) event.getData(), MyCollabUI.getAccountId());
+                        SimpleTask task = projectTaskService.findById((Integer) event.getData(), AppUI.getAccountId());
                         if (task != null && tasksLayout != null) {
                             tasksLayout.addComponent(generateSubTaskContent(task), 0);
                         }
@@ -180,7 +180,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             }
 
             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-            List<SimpleTask> subTasks = taskService.findSubTasks(beanItem.getId(), MyCollabUI.getAccountId(),
+            List<SimpleTask> subTasks = taskService.findSubTasks(beanItem.getId(), AppUI.getAccountId(),
                     new SearchCriteria.OrderField("createdTime", SearchCriteria.DESC));
             if (CollectionUtils.isNotEmpty(subTasks)) {
                 for (SimpleTask subTask : subTasks) {

@@ -20,7 +20,7 @@ import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
@@ -73,7 +73,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             A projectDiv = new A(ProjectLinkBuilder.generateProjectFullLink(project.getId())).appendText(project.getName());
             ELabel projectLbl = ELabel.h3(projectDiv.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
             projectLbl.setDescription(ProjectTooltipGenerator.generateToolTipProject(UserUIContext.getUserLocale(),
-                    MyCollabUI.getDateFormat(), project, MyCollabUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    AppUI.getDateFormat(), project, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
 
             linkIconFix.addComponent(projectLbl);
 
@@ -106,7 +106,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
                 if (project.getClientAvatarId() == null) {
                     accountDiv.appendText(FontAwesome.INSTITUTION.getHtml() + " ");
                 } else {
-                    Img clientImg = new Img("", StorageUtils.getEntityLogoPath(MyCollabUI
+                    Img clientImg = new Img("", StorageUtils.getEntityLogoPath(AppUI
                             .getAccountId(), project.getClientAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX);
                     accountDiv.appendChild(clientImg).appendChild(DivLessFormatter.EMPTY_SPACE());
                 }

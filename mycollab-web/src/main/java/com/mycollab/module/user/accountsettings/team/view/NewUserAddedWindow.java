@@ -6,7 +6,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.events.UserEvent;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -34,7 +34,7 @@ public class NewUserAddedWindow extends MWindow {
                 user.getDisplayName()));
         content.with(infoLbl);
 
-        String signinInstruction = UserUIContext.getMessage(UserI18nEnum.OPT_SIGN_IN_MSG, MyCollabUI.getSiteUrl(), MyCollabUI.getSiteUrl());
+        String signinInstruction = UserUIContext.getMessage(UserI18nEnum.OPT_SIGN_IN_MSG, AppUI.getSiteUrl(), AppUI.getSiteUrl());
         content.with(new MVerticalLayout(new Label(signinInstruction, ContentMode.HTML),
                 new ELabel(UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL)).withStyleName(UIConstants.META_INFO),
                 new Label("    " + user.getUsername()),

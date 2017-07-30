@@ -22,7 +22,7 @@ import com.mycollab.module.user.domain.UserAccountExample;
 import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ControllerRegistry;
 import com.mycollab.vaadin.mvp.PresenterResolver;
@@ -56,7 +56,7 @@ import java.util.GregorianCalendar;
 @Theme(Version.THEME_MOBILE_VERSION)
 @Viewport("width=device-width, initial-scale=1")
 @Widgetset("com.mycollab.widgetset.MyCollabMobileWidgetSet")
-public class MobileApplication extends MyCollabUI {
+public class MobileApplication extends AppUI {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(MobileApplication.class);
 
@@ -135,7 +135,7 @@ public class MobileApplication extends MyCollabUI {
         setContent(manager);
 
         registerControllers(manager);
-        ThemeManager.loadMobileTheme(MyCollabUI.getAccountId());
+        ThemeManager.loadMobileTheme(AppUI.getAccountId());
 
         getPage().addUriFragmentChangedListener(new UriFragmentChangedListener() {
             private static final long serialVersionUID = -6410955178515535406L;
@@ -183,7 +183,7 @@ public class MobileApplication extends MyCollabUI {
     public void doLogin(String username, String password, boolean isRememberPassword) {
         try {
             UserService userService = AppContextUtil.getSpringBean(UserService.class);
-            SimpleUser user = userService.authentication(username, password, MyCollabUI.getSubDomain(), false);
+            SimpleUser user = userService.authentication(username, password, AppUI.getSubDomain(), false);
 
             if (isRememberPassword) {
                 rememberPassword(username, password);
@@ -191,7 +191,7 @@ public class MobileApplication extends MyCollabUI {
 
             BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
 
-            SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(MyCollabUI.getAccountId());
+            SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(AppUI.getAccountId());
             UserUIContext.getInstance().setSessionVariables(user, billingAccount);
 
             UserAccountMapper userAccountMapper = AppContextUtil.getSpringBean(UserAccountMapper.class);
@@ -231,7 +231,7 @@ public class MobileApplication extends MyCollabUI {
 
     public void redirectToLoginView() {
         clearSession();
-        MyCollabUI.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
+        AppUI.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
         // clear cookie remember username/password if any
         this.unsetRememberPassword();
 

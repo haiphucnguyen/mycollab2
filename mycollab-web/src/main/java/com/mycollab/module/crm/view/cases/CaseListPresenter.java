@@ -14,7 +14,7 @@ import com.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.ViewItemAction;
 import com.mycollab.vaadin.mvp.MassUpdateCommand;
@@ -100,7 +100,7 @@ public class CaseListPresenter extends CrmGenericListPresenter<CaseListView, Cas
                 this.displayNoExistItems(container, data);
             }
 
-            MyCollabUI.addFragment("crm/cases/list", UserUIContext.getMessage(CaseI18nEnum.LIST));
+            AppUI.addFragment("crm/cases/list", UserUIContext.getMessage(CaseI18nEnum.LIST));
         } else {
             throw new SecureAccessException();
         }
@@ -118,12 +118,12 @@ public class CaseListPresenter extends CrmGenericListPresenter<CaseListView, Cas
             }
 
             if (keyList.size() > 0) {
-                caseService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                caseService.massRemoveWithSession(keyList, UserUIContext.getUsername(), AppUI.getAccountId());
                 doSearch(searchCriteria);
                 checkWhetherEnableTableActionControl();
             }
         } else {
-            caseService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
+            caseService.removeByCriteria(searchCriteria, AppUI.getAccountId());
             doSearch(searchCriteria);
         }
 
@@ -140,7 +140,7 @@ public class CaseListPresenter extends CrmGenericListPresenter<CaseListView, Cas
                 }
             }
             if (keyList.size() > 0) {
-                caseService.massUpdateWithSession(value, keyList, MyCollabUI.getAccountId());
+                caseService.massUpdateWithSession(value, keyList, AppUI.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

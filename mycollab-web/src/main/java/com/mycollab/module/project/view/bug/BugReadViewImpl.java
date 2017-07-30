@@ -21,7 +21,7 @@ import com.mycollab.module.tracker.domain.SimpleRelatedBug;
 import com.mycollab.module.tracker.service.BugRelationService;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -62,7 +62,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 public void handle(BugEvent.BugChanged event) {
                     Integer bugChangeId = (Integer) event.getData();
                     BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                    SimpleBug bugChange = bugService.findById(bugChangeId, MyCollabUI.getAccountId());
+                    SimpleBug bugChange = bugService.findById(bugChangeId, AppUI.getAccountId());
                     previewItem(bugChange);
                 }
             };

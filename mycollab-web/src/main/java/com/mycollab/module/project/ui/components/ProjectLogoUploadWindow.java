@@ -8,7 +8,7 @@ import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.ImagePreviewCropWindow;
 import com.mycollab.vaadin.web.ui.UploadImageField;
@@ -39,8 +39,8 @@ public class ProjectLogoUploadWindow extends MWindow implements ImagePreviewCrop
     public void process(BufferedImage image) {
         SimpleProject project = CurrentProjectVariables.getProject();
         EntityUploaderService entityUploaderService = AppContextUtil.getSpringBean(EntityUploaderService.class);
-        String newLogoId = entityUploaderService.upload(image, PathUtils.getProjectLogoPath(MyCollabUI.getAccountId(),
-                project.getId()), project.getAvatarid(), UserUIContext.getUsername(), MyCollabUI.getAccountId(),
+        String newLogoId = entityUploaderService.upload(image, PathUtils.getProjectLogoPath(AppUI.getAccountId(),
+                project.getId()), project.getAvatarid(), UserUIContext.getUsername(), AppUI.getAccountId(),
                 new Integer[]{16, 32, 48, 64, 100});
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         project.setAvatarid(newLogoId);
