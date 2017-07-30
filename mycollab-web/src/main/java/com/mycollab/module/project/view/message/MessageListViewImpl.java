@@ -61,7 +61,6 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
     private boolean isEmpty;
 
     public MessageListViewImpl() {
-        super();
         this.withSpacing(true).withMargin(true).withFullWidth();
 
         topMessagePanel = new TopMessagePanel();
@@ -248,11 +247,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
 
         private void createAddMessageLayout() {
             messagePanelBody.removeAllComponents();
-            MVerticalLayout addMessageWrapper = new MVerticalLayout().withWidth("700px");
-
-            final RichTextArea ckEditorTextField = new RichTextArea();
-            ckEditorTextField.setWidth("100%");
-            ckEditorTextField.setHeight("200px");
+            MVerticalLayout addMessageWrapper = new MVerticalLayout().withWidth("800px");
 
             Label titleLbl = new Label(UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE));
             final TextField titleField = new MTextField().withFullWidth().withNullRepresentation("").withRequired(true)
@@ -260,6 +255,10 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                             UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE)));
 
             MHorizontalLayout titleLayout = new MHorizontalLayout(titleLbl, titleField).expand(titleField).withFullWidth();
+
+            final RichTextArea ckEditorTextField = new RichTextArea();
+            ckEditorTextField.setWidth("100%");
+            ckEditorTextField.setHeight("200px");
 
             addMessageWrapper.with(titleLayout, ckEditorTextField).withAlign(titleLayout, Alignment.MIDDLE_LEFT)
                     .withAlign(ckEditorTextField, Alignment.MIDDLE_CENTER).expand(ckEditorTextField);
@@ -295,7 +294,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
             }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
 
             MHorizontalLayout controls = new MHorizontalLayout(attachments, chkIsStick, cancelBtn, saveBtn)
-                    .expand(attachments).withFullWidth();
+                    .expand(attachments).withFullWidth().alignAll(Alignment.TOP_LEFT);
 
             addMessageWrapper.with(controls).withAlign(controls, Alignment.MIDDLE_CENTER);
             messagePanelBody.addComponent(addMessageWrapper);

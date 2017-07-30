@@ -6,6 +6,7 @@ import com.mycollab.configuration.ApplicationProperties;
 import com.mycollab.configuration.EmailConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.UserInvalidInputException;
+import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.accountsettings.view.events.ProfileEvent;
@@ -112,6 +113,9 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
         }
 
         private void saveEmailConfiguration() {
+            if (StringUtils.isBlank(emailConf.getNotifyEmail())) {
+                emailConf.setNotifyEmail(emailConf.getUser());
+            }
             SiteConfiguration.setEmailConfiguration(emailConf);
             File configFile = ApplicationProperties.getAppConfigFile();
             if (configFile != null) {

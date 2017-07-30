@@ -2,6 +2,7 @@ package com.mycollab.vaadin.mvp
 
 import com.mycollab.vaadin.ui.NotificationUtil
 import com.mycollab.core.MyCollabException
+import com.mycollab.core.utils.BeanUtility
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.annotation.varargs
@@ -60,11 +61,10 @@ abstract class UrlResolver {
       }
     }
     catch {
-      case e: Exception => {
-        UrlResolver.LOG.error("Error while navigation", e)
+      case e: Exception =>
+        UrlResolver.LOG.error("Error while navigation " + BeanUtility.printBeanObj(params), e)
         defaultPageErrorHandler()
         NotificationUtil.showRecordNotExistNotification()
-      }
     }
   }
 
