@@ -17,6 +17,8 @@ public class ServerConfiguration {
 
     private String storageSystem = STORAGE_FILE;
 
+    private Integer port;
+
     private String apiUrl;
 
     public String getApiUrl() {
@@ -31,11 +33,31 @@ public class ServerConfiguration {
         return String.format("%s%s", apiUrl, path);
     }
 
+    public String getResourceDownloadUrl() {
+        return String.format("http://%s:%d/file/", SiteConfiguration.getServerAddress(), port);
+    }
+
+    public String getCdnUrl() {
+        return String.format("http://%s:%d/assets/", SiteConfiguration.getServerAddress(), port);
+    }
+
+    public String getAppUrl() {
+        return String.format("http://%s:%d/", SiteConfiguration.getServerAddress(), port);
+    }
+
     public String getStorageSystem() {
         return storageSystem;
     }
 
     public void setStorageSystem(String storageSystem) {
         this.storageSystem = storageSystem;
+    }
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public void setPort(Integer port) {
+        this.port = port;
     }
 }

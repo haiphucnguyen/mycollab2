@@ -285,31 +285,22 @@
             </plugin>
 
             <plugin>
-                <groupId>com.mycila</groupId>
+                <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
                 <inherited>true</inherited>
-                <version>3.0</version>
+                <version>1.13</version>
                 <configuration>
-                    <tag>${project.artifactId}-${project.version}</tag>
-                    <header>com/mycila/maven/plugin/license/templates/GPL-3.txt</header>
-                    <properties>
-                        <owner>MyCollab</owner>
-                        <email>support@mycollab.com</email>
-                    </properties>
                     <includes>
                         <include>src/main/java/com/mycollab/**/*.java</include>
                         <include>src/test/java/com/mycollab/**/*.java</include>
                         <include>src/main/scala/**/*.scala</include>
                     </includes>
-                    <keywords>
-                        <keyword>www.gnu.org/licenses</keyword>
-                    </keywords>
+                    <licenseName>gpl_v3</licenseName>
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>remove</goal>
-                            <goal>format</goal>
+                            <goal>remove-file-header</goal>
                         </goals>
                         <phase>compile</phase>
                     </execution>

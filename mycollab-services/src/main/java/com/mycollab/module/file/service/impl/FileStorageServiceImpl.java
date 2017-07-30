@@ -1,10 +1,12 @@
 package com.mycollab.module.file.service.impl;
 
+import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.Version;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.module.file.service.AbstractStorageService;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -15,6 +17,9 @@ import java.io.File;
  */
 @Service
 public class FileStorageServiceImpl extends AbstractStorageService implements InitializingBean {
+
+    @Autowired
+    private ServerConfiguration serverConfiguration;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -27,6 +32,6 @@ public class FileStorageServiceImpl extends AbstractStorageService implements In
 
     @Override
     public String generateAssetRelativeLink(String resourceId) {
-        return String.format("%s%s?v=%s", SiteConfiguration.getCdnUrl(), resourceId, Version.getVersion());
+        return String.format("%s%s?v=%s", serverConfiguration.getCdnUrl(), resourceId, Version.getVersion());
     }
 }

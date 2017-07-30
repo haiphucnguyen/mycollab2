@@ -39,8 +39,8 @@ public abstract class TemplateWebServletRequestHandler extends GenericHttpServle
 
         Map<String, String> defaultUrls = applicationConfiguration.defaultUrls();
 
-        defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
-        defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
+        defaultUrls.put("cdn_url", serverConfiguration.getCdnUrl());
+        defaultUrls.put("app_url", serverConfiguration.getAppUrl());
         pageContext.put("defaultUrls", defaultUrls);
 
         StringWriter writer = new StringWriter();

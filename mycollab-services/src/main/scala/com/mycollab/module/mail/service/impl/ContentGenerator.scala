@@ -25,13 +25,14 @@ import org.springframework.stereotype.Component
 class ContentGenerator extends IContentGenerator with InitializingBean {
   private var templateContext: java.util.HashMap[String, Any] = _
   @Autowired private val applicationConfiguration: ApplicationConfiguration = null
+  @Autowired private val serverConfiguration: ServerConfiguration = null
   @Autowired private val templateEngine: Configuration = null
 
   @throws(classOf[Exception])
   def afterPropertiesSet() {
     templateContext = new java.util.HashMap[String, Any]()
     val defaultUrls = Map[String, String](
-      "cdn_url" -> SiteConfiguration.getCdnUrl,
+      "cdn_url" -> serverConfiguration.getCdnUrl,
       "facebook_url" -> applicationConfiguration.getFacebookUrl,
       "google_url" -> applicationConfiguration.getGoogleUrl,
       "linkedin_url" -> applicationConfiguration.getLinkedinUrl,

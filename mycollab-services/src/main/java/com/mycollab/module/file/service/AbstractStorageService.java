@@ -15,19 +15,19 @@ public abstract class AbstractStorageService {
     protected ServerConfiguration serverConfiguration;
 
     public String getResourcePath(String documentPath) {
-        return SiteConfiguration.getResourceDownloadUrl() + documentPath;
+        return serverConfiguration.getResourceDownloadUrl() + documentPath;
     }
 
     public String getLogoPath(Integer accountId, String logoName, Integer size) {
         if (StringUtils.isBlank(logoName)) {
             return generateAssetRelativeLink("icons/logo.png");
         }
-        return String.format("%s%d/.assets/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), accountId,
+        return String.format("%s%d/.assets/%s_%d.png", serverConfiguration.getResourceDownloadUrl(), accountId,
                 logoName, size);
     }
 
     public String getEntityLogoPath(Integer accountId, String id, Integer size) {
-        return String.format("%s%d/.assets/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), accountId,
+        return String.format("%s%d/.assets/%s_%d.png", serverConfiguration.getResourceDownloadUrl(), accountId,
                 id, size);
     }
 
@@ -35,14 +35,14 @@ public abstract class AbstractStorageService {
         if (StringUtils.isBlank(favIconName)) {
             return generateAssetRelativeLink("favicon.ico");
         }
-        return String.format("%s%d/.assets/%s.ico", SiteConfiguration.getResourceDownloadUrl(), sAccountId, favIconName);
+        return String.format("%s%d/.assets/%s.ico", serverConfiguration.getResourceDownloadUrl(), sAccountId, favIconName);
     }
 
     public String getAvatarPath(String userAvatarId, Integer size) {
         if (StringUtils.isBlank(userAvatarId)) {
             return generateAssetRelativeLink(String.format("icons/default_user_avatar_%d.png", size));
         } else {
-            return String.format("%savatar/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), userAvatarId, size);
+            return String.format("%savatar/%s_%d.png", serverConfiguration.getResourceDownloadUrl(), userAvatarId, size);
         }
     }
 
