@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan(basePackages = {
-        "com.mycollab.premium.license.service",
+        "com.mycollab.license.service",
         "com.mycollab.premium.module.billing.service",
         "com.mycollab.premium.module.ecm.service",
         "com.mycollab.premium.module.file.service",
