@@ -25,10 +25,7 @@ import java.util.ArrayList;
 @Profile("production")
 @Import(DataSourceConfiguration.class)
 @DependsOn("dbMigration")
-@MapperScan(basePackages = {"com.mycollab.common.dao", "com.mycollab.form.dao", "com.mycollab.module.crm.dao",
-        "com.mycollab.module.ecm.dao", "com.mycollab.ondemand.module.billing.dao", "com.mycollab.module.user.dao",
-        "com.mycollab.module.project.dao", "com.mycollab.module.tracker.dao", "com.mycollab.pro.common.dao",
-        "com.mycollab.pro.module.project.dao", "com.mycollab.ondemand.module.support.dao"})
+@MapperScan(basePackages = {"com.mycollab.**.dao"})
 public class MyBatisConfiguration {
     @Autowired
     private DataSourceConfiguration dbConfig;
@@ -50,17 +47,7 @@ public class MyBatisConfiguration {
         sqlSessionFactory.setTypeAliases(new Class[]{VelocityDriverDeclare.class});
         sqlSessionFactory.setTypeHandlersPackage("com.mycollab.mybatis.plugin.ext");
         sqlSessionFactory.setMapperLocations(buildBatchMapperResources(
-                "classpath:sqlMap/billing/*Mapper*.xml",
-                "classpath:sqlMap/common/*Mapper*.xml",
-                "classpath:sqlMapExt/common/*Mapper*.xml",
-                "classpath:sqlMap/user/*Mapper*.xml",
-                "classpath:sqlMap/form/*Mapper*.xml",
-                "classpath:sqlMap/ecm/*Mapper*.xml",
-                "classpath:sqlMap/crm/*Mapper*.xml",
-                "classpath:sqlMap/project/*Mapper*.xml",
-                "classpath:sqlMapExt/project/*Mapper*.xml",
-                "classpath:sqlMap/tracker/*Mapper*.xml",
-                "classpath:sqlMap/support/*Mapper*.xml"));
+                "classpath:sqlMap/**/*Mapper*.xml"));
 
         return sqlSessionFactory.getObject();
     }
