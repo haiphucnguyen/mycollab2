@@ -25,7 +25,7 @@ public class CountryViewField extends CustomField<String> {
             Locale obj = new Locale("", countryCode);
             return new ELabel(obj.getDisplayCountry(UserUIContext.getUserLocale()));
         }
-        return new ELabel();
+        return new ELabel("");
     }
 
     @Override

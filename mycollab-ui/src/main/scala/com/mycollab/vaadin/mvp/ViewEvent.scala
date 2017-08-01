@@ -11,5 +11,5 @@ class ViewEvent[E](source: AnyRef, data: E) extends ApplicationEvent(source, dat
 }
 
 object ViewEvent {
-  val VIEW_IDENTIFIER: String = "viewevent";
+  val VIEW_IDENTIFIER: String = "viewevent"
 }

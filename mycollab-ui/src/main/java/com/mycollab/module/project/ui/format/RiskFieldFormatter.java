@@ -18,8 +18,6 @@ public final class RiskFieldFormatter extends FieldGroupFormatter {
     private static final RiskFieldFormatter _instance = new RiskFieldFormatter();
 
     public RiskFieldFormatter() {
-        super();
-
         this.generateFieldDisplayHandler(Risk.Field.name.name(), GenericI18Enum.FORM_NAME);
         this.generateFieldDisplayHandler(Risk.Field.description.name(), GenericI18Enum.FORM_DESCRIPTION, TRIM_HTMLS);
         this.generateFieldDisplayHandler(Risk.Field.createduser.name(), RiskI18nEnum.FORM_RAISED_BY, new ProjectMemberHistoryFieldFormat());

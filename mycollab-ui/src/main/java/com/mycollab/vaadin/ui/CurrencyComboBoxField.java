@@ -16,7 +16,6 @@ public class CurrencyComboBoxField extends ComboBox {
     private static final long serialVersionUID = 1L;
 
     public CurrencyComboBoxField() {
-        super();
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
         Set<Currency> availableCurrencies = Currency.getAvailableCurrencies();

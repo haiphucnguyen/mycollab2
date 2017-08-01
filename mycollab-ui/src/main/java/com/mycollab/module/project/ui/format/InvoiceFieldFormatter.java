@@ -14,8 +14,6 @@ public class InvoiceFieldFormatter extends FieldGroupFormatter {
     private static InvoiceFieldFormatter _instance = new InvoiceFieldFormatter();
 
     private InvoiceFieldFormatter() {
-        super();
-
         this.generateFieldDisplayHandler(Invoice.Field.noid.name(), InvoiceI18nEnum.FORM_NOID_FIELD);
         this.generateFieldDisplayHandler(Invoice.Field.issuedate.name(), InvoiceI18nEnum.FORM_ISSUE_DATE_FIELD, DATE_FIELD);
         this.generateFieldDisplayHandler(Invoice.Field.currentid.name(), GenericI18Enum.FORM_CURRENCY, CURRENCY_FIELD);

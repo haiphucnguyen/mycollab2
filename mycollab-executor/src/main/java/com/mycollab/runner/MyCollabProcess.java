@@ -37,12 +37,12 @@ class MyCollabProcess {
             @Override
             public void run() {
                 try {
-                    File workingDir = new File(System.getProperty("MYCOLLAB_APP_HOME"));
+                    File workingDir = new File("C:\\Users\\hainguyen\\Documents\\my\\MyCollab\\mycollab2\\mycollab-app-premium\\target\\staging");
                     List<String> javaOptions = new ArrayList<>();
                     String javaHomePath = System.getProperty("java.home");
                     String javaPath;
                     if (SystemUtils.IS_OS_WINDOWS) {
-                        javaPath = javaHomePath + "/bin/javaw.exe";
+                        javaPath = javaHomePath + "/bin/java.exe";
                     } else {
                         javaPath = javaHomePath + "/bin/java";
                     }
@@ -59,7 +59,7 @@ class MyCollabProcess {
                         javaOptions.addAll(Arrays.asList(optArr));
                     }
 
-                    File libDir = new File(System.getProperty("MYCOLLAB_APP_HOME"), "lib");
+                    File libDir = new File(workingDir, "lib");
                     if (!libDir.exists() || libDir.isFile()) {
                         throw new RuntimeException("Can not find the library folder at " + libDir.getAbsolutePath());
                     }
@@ -81,7 +81,7 @@ class MyCollabProcess {
                     for (String option : javaOptions) {
                         strBuilder.append(option).append(" ");
                     }
-                    LOG.info("MyCollab options: " + strBuilder.toString());
+                    LOG.info(strBuilder.toString());
                     StartedProcess javaProcess = new ProcessExecutor().command(javaOptions.toArray(new String[javaOptions.size()]))
                             .directory(workingDir).redirectOutput(System.out).readOutput(true).start();
 

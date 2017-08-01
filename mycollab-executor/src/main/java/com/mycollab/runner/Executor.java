@@ -25,10 +25,8 @@ public class Executor {
     private static void unpackFile(File upgradeFile) throws IOException {
         if (isValidZipFile(upgradeFile)) {
             File libFolder = new File(getUserDir(), "lib");
-            File webappFolder = new File(getUserDir(), "webapp");
             File i18nFolder = new File(getUserDir(), "i18n");
             assertFolderWritePermission(libFolder);
-            assertFolderWritePermission(webappFolder);
             assertFolderWritePermission(i18nFolder);
 
             //Hack for windows since the jar files still be keep by process, we will wait until
@@ -37,7 +35,6 @@ public class Executor {
             while (tryTimes < 10) {
                 try {
                     FileUtils.deleteDirectory(libFolder);
-                    FileUtils.deleteDirectory(webappFolder);
                     FileUtils.deleteDirectory(i18nFolder);
                     break;
                 } catch (Exception e) {
@@ -115,14 +112,6 @@ public class Executor {
             System.exit(-1);
         }
 
-    }
-
-    public static void start(String[] args) throws Exception {
-        new Executor().runServer();
-    }
-
-    public static void stop(String[] args) throws Exception {
-        new Executor().stopServer();
     }
 
     private static File getUserDir() {

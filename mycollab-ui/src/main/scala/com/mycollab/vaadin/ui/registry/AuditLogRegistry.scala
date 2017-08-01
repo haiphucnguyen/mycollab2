@@ -14,15 +14,13 @@ import org.springframework.stereotype.Component
 @Component
 class AuditLogRegistry extends InitializingBean {
   private var auditPrinters: Map[String, FieldGroupFormatter] = Map[String, FieldGroupFormatter]()
-  
-  override def afterPropertiesSet(): Unit = {
-    
-  }
-  
+
+  override def afterPropertiesSet(): Unit = {}
+
   def registerAuditLogHandler(typeVal: String, fieldGroupFormatter: FieldGroupFormatter) {
     auditPrinters += (typeVal -> fieldGroupFormatter)
   }
-  
+
   def generatorDetailChangeOfActivity(activityStream: SimpleActivityStream): String = {
     if (activityStream.getAssoAuditLog != null) {
       val value = auditPrinters.get(activityStream.getType)
@@ -52,7 +50,7 @@ class AuditLogRegistry extends InitializingBean {
     }
     ""
   }
-  
+
   def getFieldGroupFormatter(typeVal: String): FieldGroupFormatter = {
     val fieldGroupFormatter = auditPrinters.get(typeVal)
     fieldGroupFormatter match {

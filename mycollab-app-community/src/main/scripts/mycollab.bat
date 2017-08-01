@@ -10,6 +10,7 @@ rem   MYCOLLAB_HOME   May point at your MyCollab "build" directory.
 rem ---------------------------------------------------------------------------
 
 set _RUNJAVA=java
+MYCOLLAB_OPTS=-noverify -server -Xms394m -Xmx768m -XX:NewSize=128m -XX:+DisableExplicitGC -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC
 
 rem Suppress Terminate batch job on CTRL+C
 if not ""%1"" == ""run"" goto mainEntry
@@ -59,10 +60,10 @@ goto end
 shift
 if not "%OS%" == "Windows_NT" goto noTitle
 if "%TITLE%" == "" set TITLE=MyCollab
-set _EXECJAVA=start "%TITLE%" %_RUNJAVA%
+set _EXECJAVA=start "%TITLE%" %_RUNJAVA% %MYCOLLAB_OPTS%
 goto gotTitle
 :noTitle
-set _EXECJAVA=start %_RUNJAVA%
+set _EXECJAVA=start %_RUNJAVA% %MYCOLLAB_OPTS%
 :gotTitle
 shift
 goto execCmd

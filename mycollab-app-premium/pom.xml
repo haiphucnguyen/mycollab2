@@ -12,7 +12,7 @@
     </parent>
     <packaging>jar</packaging>
     <properties>
-        <proguardVersion>5.2.1</proguardVersion>
+        <proguard.version>5.3.3</proguard.version>
         <installer.staging.dir>${project.build.directory}/staging</installer.staging.dir>
         <installer.resource.dir.app>${basedir}/src/main/installer-resources</installer.resource.dir.app>
         <staging.dir.app>${installer.staging.dir}</staging.dir.app>
@@ -190,7 +190,7 @@
                     <dependency>
                         <groupId>net.sf.proguard</groupId>
                         <artifactId>proguard-base</artifactId>
-                        <version>${proguardVersion}</version>
+                        <version>${proguard.version}</version>
                     </dependency>
                 </dependencies>
                 <executions>
@@ -202,7 +202,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <proguardVersion>${proguardVersion}</proguardVersion>
+                    <proguardVersion>${proguard.version}</proguardVersion>
                     <obfuscate>true</obfuscate>
                     <outjar>mycollab-runner-${project.version}.jar</outjar>
                     <proguardInclude>${basedir}/proguard.conf</proguardInclude>
@@ -349,7 +349,7 @@
                     </execution>
                 </executions>
             </plugin>
-
+<!--
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
@@ -368,6 +368,7 @@
                     <tag>${project.version}</tag>
                 </configuration>
             </plugin>
+            -->
         </plugins>
     </build>
 </project>

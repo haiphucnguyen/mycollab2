@@ -19,7 +19,7 @@ public class CurrencyViewField extends CustomField<String> {
 
     public CurrencyViewField(String value) {
         if (StringUtils.isBlank(value)) {
-            label = new ELabel();
+            label = new ELabel("");
         } else {
             Currency currency = CurrencyUtils.getInstance(value);
             label = new ELabel(String.format("%s (%s)", currency.getDisplayName(UserUIContext.getUserLocale()), currency.getCurrencyCode()))

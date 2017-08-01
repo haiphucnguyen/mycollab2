@@ -20,7 +20,6 @@ import java.io.Serializable;
 public abstract class AbstractMobilePageView extends NavigationView implements PageView {
 
     public AbstractMobilePageView() {
-        super();
         if (this.getLeftComponent() != null && this.getLeftComponent() instanceof NavigationButton) {
             this.getLeftComponent().setCaption(getBackTitle());
         }
