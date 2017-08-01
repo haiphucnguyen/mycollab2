@@ -27,8 +27,8 @@ public class PageSessionFactory extends JcrSessionFactory {
         final String[] jcrNamespaces = session.getWorkspace()
                 .getNamespaceRegistry().getPrefixes();
         boolean createNamespace = true;
-        for (int i = 0; i < jcrNamespaces.length; i++) {
-            if (jcrNamespaces[i].equals("wiki")) {
+        for (String jcrNamespace : jcrNamespaces) {
+            if (jcrNamespace.equals("wiki")) {
                 createNamespace = false;
                 LOG.debug("Jackrabbit OCM namespace exists.");
             }

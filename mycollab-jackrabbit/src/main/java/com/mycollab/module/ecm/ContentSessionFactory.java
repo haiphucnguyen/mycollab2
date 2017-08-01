@@ -1,6 +1,5 @@
 package com.mycollab.module.ecm;
 
-import org.apache.jackrabbit.core.util.db.ConnectionHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.extensions.jcr.JcrSessionFactory;
@@ -17,9 +16,8 @@ import javax.jcr.nodetype.PropertyDefinitionTemplate;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class MyCollabContentSessionFactory extends JcrSessionFactory {
-    private static final Logger LOG = LoggerFactory.getLogger(MyCollabContentSessionFactory.class);
-    ConnectionHelper a;
+public class ContentSessionFactory extends JcrSessionFactory {
+    private static final Logger LOG = LoggerFactory.getLogger(ContentSessionFactory.class);
 
     @Override
     protected void registerNodeTypes() throws Exception {

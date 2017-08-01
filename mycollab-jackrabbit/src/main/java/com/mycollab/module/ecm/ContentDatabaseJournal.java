@@ -8,9 +8,9 @@ import org.apache.jackrabbit.core.journal.DatabaseJournal;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class MyCollabDatabaseJournal extends DatabaseJournal {
+public class ContentDatabaseJournal extends DatabaseJournal {
 
-    public MyCollabDatabaseJournal() {
+    public ContentDatabaseJournal() {
         DatabaseConfiguration dbConf = SiteConfiguration.getDatabaseConfiguration();
         setDriver(dbConf.getDriverClass());
         setUser(dbConf.getUser());

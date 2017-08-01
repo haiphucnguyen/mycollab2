@@ -1,6 +1,6 @@
 package com.mycollab.spring;
 
-import com.mycollab.module.ecm.MyCollabContentSessionFactory;
+import com.mycollab.module.ecm.ContentSessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -30,8 +30,8 @@ public class EcmConfiguration {
     }
 
     @Bean
-    public MyCollabContentSessionFactory jcrSessionFactory() throws Exception {
-        MyCollabContentSessionFactory bean = new MyCollabContentSessionFactory();
+    public ContentSessionFactory jcrSessionFactory() throws Exception {
+        ContentSessionFactory bean = new ContentSessionFactory();
         bean.setRepository(repository().getObject());
         bean.setCredentials(new SimpleCredentials("hainguyen", "esofthead321".toCharArray()));
         return bean;
