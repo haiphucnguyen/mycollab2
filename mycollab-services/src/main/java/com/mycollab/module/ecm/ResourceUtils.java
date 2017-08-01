@@ -60,7 +60,7 @@ public class ResourceUtils {
                     throw new Exception("Current support only dropbox resource service");
                 }
             } catch (Exception e) {
-                throw new MyCollabException("Can not define sotrage name of bean " + BeanUtility.printBeanObj(resource));
+                throw new MyCollabException("Can not define storage name of bean " + BeanUtility.printBeanObj(resource));
             }
         }
     }

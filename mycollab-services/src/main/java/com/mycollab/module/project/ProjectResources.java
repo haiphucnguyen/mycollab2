@@ -14,23 +14,6 @@ public class ProjectResources {
     private static Logger LOG = LoggerFactory.getLogger(ProjectResources.class);
     private static Method getResMethod;
 
-    public static final String T_PRIORITY_HIGHT_IMG = "icons/12/priority_high.png";
-    public static final String T_PRIORITY_LOW_IMG = "icons/12/priority_low.png";
-    public static final String T_PRIORITY_MEDIUM_IMG = "icons/12/priority_medium.png";
-    public static final String T_PRIORITY_NONE_IMG = "icons/12/priority_none.png";
-    public static final String T_PRIORITY_URGENT_IMG = "icons/12/priority_urgent.png";
-
-    public static final String B_PRIORITY_BLOCKER_IMG_12 = "icons/12/priority_urgent.png";
-    public static final String B_PRIORITY_CRITICAL_IMG_12 = "icons/12/priority_high.png";
-    public static final String B_PRIORITY_MAJOR_IMG_12 = "icons/12/priority_medium.png";
-    public static final String B_PRIORITY_MINOR_IMG_12 = "icons/12/priority_low.png";
-    public static final String B_PRIORITY_TRIVIAL_IMG_12 = "icons/12/priority_none.png";
-
-    public static final String B_SEVERITY_CRITICAL_IMG_12 = "icons/12/severity_critical.png";
-    public static final String B_SEVERITY_MAJOR_IMG_12 = "icons/12/severity_major.png";
-    public static final String B_SEVERITY_MINOR_IMG_12 = "icons/12/severity_minor.png";
-    public static final String B_SEVERITY_TRIVIAL_IMG_12 = "icons/12/severity_trivial.png";
-
     static {
         try {
             Class<?> resourceCls = Class.forName("com.mycollab.module.project.ui.ProjectAssetsManager");

@@ -25,8 +25,8 @@ public class ProjectLinkGenerator {
         return "project/ticket/dashboard/" + UrlEncodeDecoder.encode(projectId);
     }
 
-    public static String generateTaskPreviewLink(Integer taskkey, String prjShortName) {
-        return String.format("project/task/preview/%s-%d", prjShortName, taskkey);
+    public static String generateTaskPreviewLink(Integer taskKey, String prjShortName) {
+        return String.format("project/task/preview/%s-%d", prjShortName, taskKey);
     }
 
     public static String generateTaskPreviewFullLink(String siteUrl, Integer taskKey, String prjShortName) {
@@ -136,20 +136,20 @@ public class ProjectLinkGenerator {
         return siteUrl + URL_PREFIX_PARAM + generateBugVersionPreviewLink(projectId, versionId);
     }
 
-    public static String generateBugPreviewLink(Integer bugKey, String prjShortname) {
-        return String.format("project/bug/preview/%s-%d", prjShortname, bugKey);
+    public static String generateBugPreviewLink(Integer bugKey, String prjShortName) {
+        return String.format("project/bug/preview/%s-%d", prjShortName, bugKey);
     }
 
-    public static String generateBugEditLink(Integer bugkey, String prjShortname) {
-        return String.format("project/bug/edit/%s-%d", prjShortname, bugkey);
+    public static String generateBugEditLink(Integer bugKey, String prjShortName) {
+        return String.format("project/bug/edit/%s-%d", prjShortName, bugKey);
     }
 
     public static String generateBugsLink(Integer projectId) {
         return "project/bug/list/" + UrlEncodeDecoder.encode(projectId);
     }
 
-    public static String generateBugPreviewFullLink(String siteUrl, Integer bugKey, String prjShortname) {
-        return siteUrl + URL_PREFIX_PARAM + generateBugPreviewLink(bugKey, prjShortname);
+    public static String generateBugPreviewFullLink(String siteUrl, Integer bugKey, String prjShortName) {
+        return siteUrl + URL_PREFIX_PARAM + generateBugPreviewLink(bugKey, prjShortName);
     }
 
     public static String generateFileDashboardLink(Integer projectId) {

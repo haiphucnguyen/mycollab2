@@ -17,7 +17,6 @@ import java.util.List;
 public interface ResourceService extends IService {
 
     /**
-     * 
      * @param baseFolderPath
      * @param folderName
      * @param description
@@ -59,7 +58,6 @@ public interface ResourceService extends IService {
     void saveContent(Content content, String createdUser, InputStream refStream, Integer sAccountId);
 
     /**
-     *
      * @param path
      */
     void removeResource(String path);
