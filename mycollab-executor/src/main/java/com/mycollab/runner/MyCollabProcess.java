@@ -37,7 +37,7 @@ class MyCollabProcess {
             @Override
             public void run() {
                 try {
-                    File workingDir = new File("C:\\Users\\hainguyen\\Documents\\my\\MyCollab\\mycollab2\\mycollab-app-premium\\target\\staging");
+                    File workingDir = new File(System.getProperty("MYCOLLAB_APP_HOME"));
                     List<String> javaOptions = new ArrayList<>();
                     String javaHomePath = System.getProperty("java.home");
                     String javaPath;

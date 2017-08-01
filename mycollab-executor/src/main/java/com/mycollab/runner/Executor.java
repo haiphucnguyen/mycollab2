@@ -52,8 +52,8 @@ public class Executor {
             try (ZipInputStream inputStream = new ZipInputStream(new FileInputStream(upgradeFile))) {
                 ZipEntry entry;
                 while ((entry = inputStream.getNextEntry()) != null) {
-                    if (!entry.isDirectory() && (entry.getName().startsWith("lib/") || entry.getName().startsWith
-                            ("webapp") || entry.getName().startsWith("i18n"))) {
+                    if (!entry.isDirectory() && (entry.getName().startsWith("lib/") ||
+                            entry.getName().startsWith("i18n"))) {
                         File candidateFile = new File(getUserDir(), entry.getName());
                         candidateFile.getParentFile().mkdirs();
                         LOG.info("Copy file: " + entry.getName());

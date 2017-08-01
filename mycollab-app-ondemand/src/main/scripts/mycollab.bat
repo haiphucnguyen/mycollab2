@@ -6,11 +6,6 @@ rem Start/Stop Script for the MyCollab Server
 rem
 rem Environment Variable Prerequisites
 rem
-rem   MYCOLLAB_HOME   May point at your MyCollab "build" directory.
-rem   MYCOLLAB_OUT    (Optional) Full path to a file where stdout and stderr
-rem                   will be redirected.
-rem                   Default is $CATALINA_BASE/logs/catalina.out
-rem   MYCOLLAB_PORT   Port of server to allow user access to server
 rem   MYCOLLAB_OPTS   (Optional) Java runtime options used when the "start",
 rem                    "stop" command is executed.
 rem                   Include here and not in JAVA_OPTS all options, that should
@@ -23,7 +18,7 @@ rem                   Required to run the with the "debug" argument.
 rem ---------------------------------------------------------------------------
 
 set _RUNJAVA=java
-MYCOLLAB_OPTS=-noverify -server -Xms394m -Xmx768m -XX:NewSize=128m -XX:+DisableExplicitGC -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC
+set MYCOLLAB_OPTS=-noverify -server -Xms394m -Xmx768m -XX:NewSize=128m -XX:+DisableExplicitGC -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC
 
 rem Suppress Terminate batch job on CTRL+C
 if not ""%1"" == ""run"" goto mainEntry

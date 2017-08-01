@@ -4,6 +4,7 @@ import com.mycollab.core.MyCollabException;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
@@ -17,6 +18,7 @@ import javax.validation.Validator;
  * @since 1.0.0
  */
 @Component("appContextUtil")
+@Profile("production")
 public class AppContextUtil implements ApplicationContextAware {
     private static ApplicationContext ctx;
 

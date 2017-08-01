@@ -1,8 +1,6 @@
 package com.mycollab.spring;
 
 import com.google.common.eventbus.AsyncEventBus;
-import com.google.common.eventbus.SubscriberExceptionContext;
-import com.google.common.eventbus.SubscriberExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -22,11 +20,7 @@ public class AppEventBus {
 
     @Bean
     public AsyncEventBus asyncEventBus() {
-        return new AsyncEventBus(Executors.newCachedThreadPool(), new SubscriberExceptionHandler() {
-            @Override
-            public void handleException(Throwable throwable, SubscriberExceptionContext subscriberExceptionContext) {
-                LOG.error("Error in event bus execution", throwable);
-            }
-        });
+        return new AsyncEventBus(Executors.newCachedThreadPool(),
+                (throwable, subscriberExceptionContext) -> LOG.error("Error in event bus execution", throwable));
     }
 }

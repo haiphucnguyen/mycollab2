@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
  * @since 5.1.3
  */
 public class Broadcaster implements Serializable {
-    static ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private static ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private static LinkedList<BroadcastListener> listeners = new LinkedList<>();
 

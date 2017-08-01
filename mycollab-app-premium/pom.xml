@@ -310,7 +310,7 @@
                                 </copy>
                                 <copy todir="${installer.staging.dir}/config">
                                     <fileset dir="${basedir}/src/main/config">
-                                        <exclude name="application.yml"/>
+                                        <exclude name="mycollab.properties"/>
                                     </fileset>
                                 </copy>
                                 <copy todir="${installer.staging.dir}/logs">
