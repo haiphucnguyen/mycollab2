@@ -4,11 +4,13 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.security.CodeSource;
+import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
@@ -20,13 +22,13 @@ import java.util.zip.ZipInputStream;
 public class Executor {
     private static Logger LOG = LoggerFactory.getLogger(Executor.class);
 
-    private MyCollabProcess process;
-
     private static void unpackFile(File upgradeFile) throws IOException {
         if (isValidZipFile(upgradeFile)) {
             File libFolder = new File(getUserDir(), "lib");
+            File webappFolder = new File(getUserDir(), "webapp");
             File i18nFolder = new File(getUserDir(), "i18n");
             assertFolderWritePermission(libFolder);
+            assertFolderWritePermission(webappFolder);
             assertFolderWritePermission(i18nFolder);
 
             //Hack for windows since the jar files still be keep by process, we will wait until
@@ -35,6 +37,7 @@ public class Executor {
             while (tryTimes < 10) {
                 try {
                     FileUtils.deleteDirectory(libFolder);
+                    FileUtils.deleteDirectory(webappFolder);
                     FileUtils.deleteDirectory(i18nFolder);
                     break;
                 } catch (Exception e) {
@@ -52,8 +55,8 @@ public class Executor {
             try (ZipInputStream inputStream = new ZipInputStream(new FileInputStream(upgradeFile))) {
                 ZipEntry entry;
                 while ((entry = inputStream.getNextEntry()) != null) {
-                    if (!entry.isDirectory() && (entry.getName().startsWith("lib/") ||
-                            entry.getName().startsWith("i18n"))) {
+                    if (!entry.isDirectory() && (entry.getName().startsWith("lib/") || entry.getName().startsWith
+                            ("webapp") || entry.getName().startsWith("i18n"))) {
                         File candidateFile = new File(getUserDir(), entry.getName());
                         candidateFile.getParentFile().mkdirs();
                         LOG.info("Copy file: " + entry.getName());
@@ -86,11 +89,28 @@ public class Executor {
         }
     }
 
+    private Integer processRunningPort, processPort;
+    private String stopKey;
+    private String initialOptions;
 
-    Executor() {
+    private Executor() {
         try {
             File jarFile = getUserDir();
             System.setProperty("MYCOLLAB_APP_HOME", jarFile.getAbsolutePath());
+            File iniFile = new File(jarFile, "bin/mycollab.ini");
+            LOG.info("Load config variables at " + iniFile.getAbsolutePath() + "--" + iniFile.exists());
+            if (iniFile.exists()) {
+                Properties properties = new Properties();
+                properties.load(new FileInputStream(iniFile));
+                initialOptions = properties.getProperty("MYCOLLAB_OPTS", "");
+                processRunningPort = Integer.parseInt(properties.getProperty("port", "8080"));
+                processPort = Integer.parseInt(properties.getProperty("process_port", "12345"));
+                stopKey = properties.getProperty("stop_key", "mycollab");
+                LOG.info("Options in config file: " + initialOptions);
+            } else {
+                LOG.error("Can not find mycollab.ini in path " + iniFile.getAbsolutePath());
+                System.exit(-1);
+            }
         } catch (Exception e) {
             LOG.error("Error in parsing arguments", e);
             System.exit(-1);
@@ -99,22 +119,82 @@ public class Executor {
 
     private void runServer() throws Exception {
         LOG.info("Start MyCollab server process");
-        process = new MyCollabProcess("");
+        final ServerSocket serverSocket = new ServerSocket(processPort);
+        final AppProcess process = new AppProcess(processRunningPort, processPort, initialOptions);
+        final ExecutorService clientProcessingPool = Executors.newSingleThreadExecutor();
+        Runnable serverTask = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        try (Socket socket = serverSocket.accept();
+                             InputStream inputStream = socket.getInputStream();
+                             DataInputStream dataInputStream = new DataInputStream(inputStream);
+                             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream())) {
+                            String request = dataInputStream.readUTF();
+                            if (request.startsWith("RELOAD")) {
+                                String filePath = request.substring("RELOAD:".length());
+                                LOG.info(String.format("Update MyCollab with file %s", filePath));
+                                File upgradeFile = new File(filePath);
+                                if (upgradeFile.exists()) {
+                                    process.stop();
+                                    unpackFile(upgradeFile);
+                                    process.start();
+                                } else {
+                                    LOG.error("Can not upgrade MyCollab because the upgrade file is not existed " +
+                                            upgradeFile.getAbsolutePath());
+                                }
+                            } else if (request.startsWith("STOP")) {
+                                String key = request.substring("STOP:".length());
+                                LOG.info(String.format("Request to terminate MyCollab server with key %s", key));
+                                if (stopKey.equals(key)) {
+                                    try {
+                                        process.stop();
+                                        dataOutputStream.writeUTF("Stop success");
+                                    } finally {
+                                        LOG.info("Stop wrapper process");
+                                        System.exit(-1);
+                                    }
+                                } else {
+                                    LOG.info("Invalid stop key " + key + ". It should be " + stopKey);
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        clientProcessingPool.submit(serverTask);
         process.start();
+
     }
 
     private void stopServer() {
-        try {
-            process.stop();
+        LOG.info("Kill MyCollab server process");
+        try (Socket socket = new Socket("localhost", processPort);
+             OutputStream outputStream = socket.getOutputStream();
+             DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream())) {
+            dataOutputStream.writeUTF("STOP:" + stopKey);
+            LOG.info("Result: " + dataInputStream.readUTF());
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Error while send RELOAD request to the host process", e);
         } finally {
             System.exit(-1);
         }
-
     }
 
-    private static File getUserDir() {
+    public static void start(String[] args) throws Exception {
+        new Executor().runServer();
+    }
+
+    public static void stop(String[] args) throws Exception {
+        new Executor().stopServer();
+    }
+
+    private static File getUserDir(){
         try {
             CodeSource codeSource = Executor.class.getProtectionDomain().getCodeSource();
             File jarFile = new File(codeSource.getLocation().toURI().getPath());

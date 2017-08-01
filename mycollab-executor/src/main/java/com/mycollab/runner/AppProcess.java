@@ -23,12 +23,17 @@ import java.util.concurrent.TimeoutException;
  * @author MyCollab Ltd.
  * @since 5.0.7
  */
-class MyCollabProcess {
-    private static Logger LOG = LoggerFactory.getLogger(MyCollabProcess.class);
+class AppProcess {
+    private static Logger LOG = LoggerFactory.getLogger(AppProcess.class);
+
+    private Integer processRunningPort;
+    private Integer clientListenPort;
     private String initialOptions;
     private JavaProcess wrappedJavaProcess;
 
-    MyCollabProcess(String initialOptions) {
+    AppProcess(Integer processRunningPort, Integer clientListenPort, String initialOptions) {
+        this.processRunningPort = processRunningPort;
+        this.clientListenPort = clientListenPort;
         this.initialOptions = initialOptions;
     }
 
@@ -42,7 +47,7 @@ class MyCollabProcess {
                     String javaHomePath = System.getProperty("java.home");
                     String javaPath;
                     if (SystemUtils.IS_OS_WINDOWS) {
-                        javaPath = javaHomePath + "/bin/java.exe";
+                        javaPath = javaHomePath + "/bin/javaw.exe";
                     } else {
                         javaPath = javaHomePath + "/bin/java";
                     }
@@ -59,7 +64,7 @@ class MyCollabProcess {
                         javaOptions.addAll(Arrays.asList(optArr));
                     }
 
-                    File libDir = new File(workingDir, "lib");
+                    File libDir = new File(System.getProperty("MYCOLLAB_APP_HOME"), "lib");
                     if (!libDir.exists() || libDir.isFile()) {
                         throw new RuntimeException("Can not find the library folder at " + libDir.getAbsolutePath());
                     }
@@ -70,22 +75,23 @@ class MyCollabProcess {
                             return pathname.isFile() && pathname.getName().endsWith("jar");
                         }
                     });
-
                     for (File subFile : jarFiles) {
                         classPaths.append(System.getProperty("path.separator"));
                         classPaths.append("./lib/" + subFile.getName());
                     }
 
-                    javaOptions.addAll(Arrays.asList("-cp", classPaths.toString(), "com.mycollab.server.DefaultServerRunner"));
+                    javaOptions.addAll(Arrays.asList("-cp", classPaths.toString(), "com.mycollab.server.DefaultServerRunner", "--port",
+                            processRunningPort + "", "--cport", clientListenPort + ""));
                     StringBuilder strBuilder = new StringBuilder();
                     for (String option : javaOptions) {
                         strBuilder.append(option).append(" ");
                     }
-                    LOG.info(strBuilder.toString());
+                    LOG.info("MyCollab options: " + strBuilder.toString());
                     StartedProcess javaProcess = new ProcessExecutor().command(javaOptions.toArray(new String[javaOptions.size()]))
                             .directory(workingDir).redirectOutput(System.out).readOutput(true).start();
 
                     wrappedJavaProcess = Processes.newJavaProcess(javaProcess.getProcess());
+                    javaProcess.getFuture().get();
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.exit(-1);
