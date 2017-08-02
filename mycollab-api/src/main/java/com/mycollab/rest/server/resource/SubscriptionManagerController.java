@@ -72,20 +72,31 @@ public class SubscriptionManagerController {
                              @RequestParam("subscriptionReference") String subscriptionReference,
                              @RequestParam(value = "test", required = false) String test,
                              @RequestParam("security_request_hash") String security_request_hash) {
-        String decryptReferrer = EnDecryptHelper.decryptTextWithEncodeFriendly(referrer);
-        String[] arr = decryptReferrer.split(";");
-        BillingSubscription subscription = new BillingSubscription();
-        subscription.setEmail(email);
-        subscription.setAccountid(Integer.parseInt(arr[0]));
-        subscription.setName(name);
-        subscription.setBillingid(Integer.parseInt(arr[1]));
-        subscription.setSubreference(subscriptionReference);
-        subscription.setSubscriptioncustomerurl("");
-        subscription.setCreatedtime(new DateTime().toDate());
-        subscription.setStatus("Active");
-        subscriptionMapper.insert(subscription);
-        tempVariables.put(subscriptionReference, reference);
-        return "Ok";
+        try {
+            String decryptReferrer = EnDecryptHelper.decryptTextWithEncodeFriendly(referrer);
+            String[] arr = decryptReferrer.split(";");
+            BillingSubscription subscription = new BillingSubscription();
+            subscription.setEmail(email);
+            subscription.setAccountid(Integer.parseInt(arr[0]));
+            subscription.setName(name);
+            subscription.setBillingid(Integer.parseInt(arr[1]));
+            subscription.setSubreference(subscriptionReference);
+            subscription.setSubscriptioncustomerurl("");
+            subscription.setCreatedtime(new DateTime().toDate());
+            subscription.setStatus("Active");
+            subscriptionMapper.insert(subscription);
+            tempVariables.put(subscriptionReference, reference);
+            return "Ok";
+        } catch (Exception e) {
+            StringBuilder errorMsg = new StringBuilder();
+            errorMsg.append("email: ").append(email).append("\n");
+            errorMsg.append("internalProductName: ").append(internalProductName).append("\n");
+            errorMsg.append("name: ").append(name).append("\n");
+            errorMsg.append("referrer: ").append(referrer).append("\n");
+            errorMsg.append("subscriptionReference: ").append(subscriptionReference).append("\n");
+            LOG.error("Error in subscribe account " + errorMsg);
+            throw new MyCollabException(e);
+        }
     }
 
     @RequestMapping(path = "/activated", method = RequestMethod.POST, headers =
