@@ -30,7 +30,6 @@ public class EnDecryptHelper {
         return strongEncryptor.encryptPassword(password);
     }
 
-
     public static String encryptText(String text) {
         return basicTextEncryptor.encrypt(text);
     }
