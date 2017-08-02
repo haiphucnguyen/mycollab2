@@ -72,7 +72,7 @@ public class SubscriptionManagerController {
                              @RequestParam("subscriptionReference") String subscriptionReference,
                              @RequestParam(value = "test", required = false) String test,
                              @RequestParam("security_request_hash") String security_request_hash) {
-        String decryptReferrer = EnDecryptHelper.decryptText(referrer);
+        String decryptReferrer = EnDecryptHelper.decryptTextWithEncodeFriendly(referrer);
         String[] arr = decryptReferrer.split(";");
         BillingSubscription subscription = new BillingSubscription();
         subscription.setEmail(email);
@@ -101,7 +101,7 @@ public class SubscriptionManagerController {
                                        @RequestParam("Phone") String phone,
                                        @RequestParam("SubscriptionCustomerUrl") String subscriptionCustomerUrl) throws Exception {
         try {
-            String decryptReferrer = EnDecryptHelper.decryptText(subscriptionReferrer);
+            String decryptReferrer = EnDecryptHelper.decryptTextWithEncodeFriendly(subscriptionReferrer);
             String[] arr = decryptReferrer.split(";");
             Integer sAccountId = Integer.parseInt(arr[0]);
             BillingSubscriptionExample ex = new BillingSubscriptionExample();
