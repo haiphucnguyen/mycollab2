@@ -11,7 +11,6 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Label;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -42,7 +41,7 @@ class BankwireSelectionWindow extends MWindow {
                 "</span>&nbsp;Projects").withWidthUndefined();
         MButton chargeBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE), event -> close()).withStyleName(WebThemes.BUTTON_ACTION);
         BrowserWindowOpener opener = new BrowserWindowOpener(billingPlan.getBanktransferpath() +
-                "?referrer=" + EnDecryptHelper.encryptText(AppUI.getAccountId() + ";" + billingPlan.getId()));
+                "?referrer=" + EnDecryptHelper.encryptTextWithEncodeFriendly(AppUI.getAccountId() + ";" + billingPlan.getId()));
         opener.extend(chargeBtn);
         planLayout = new MVerticalLayout(billingType, billingPrice, billingUser, billingStorage, billingProject)
                 .withWidth("200px");
@@ -51,18 +50,5 @@ class BankwireSelectionWindow extends MWindow {
         MHorizontalLayout planWrapper = new MHorizontalLayout(planLayout, bankwireNoteLbl).expand(bankwireNoteLbl).withFullWidth()
                 .alignAll(Alignment.TOP_LEFT);
         contentLayout.with(planWrapper, chargeBtn).withAlign(chargeBtn, Alignment.TOP_RIGHT);
-    }
-
-    public static void main(String[] args) {
-        String a = EnDecryptHelper.encryptText("1;2");
-        System.out.println("A: " + a);
-        String s = EnDecryptHelper.decryptText("/eL1Z9SzqQp5kQ5QkaS3RA==");
-        System.out.println(s);
-    }
-
-    private static class BillingPlanSelection extends ComboBox {
-        BillingPlanSelection() {
-
-        }
     }
 }
