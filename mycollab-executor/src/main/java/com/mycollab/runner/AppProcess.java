@@ -25,14 +25,10 @@ import java.util.concurrent.TimeoutException;
 class AppProcess {
     private static Logger LOG = LoggerFactory.getLogger(AppProcess.class);
 
-    private Integer processRunningPort;
-    private Integer clientListenPort;
     private String initialOptions;
     private JavaProcess wrappedJavaProcess;
 
-    AppProcess(Integer processRunningPort, Integer clientListenPort, String initialOptions) {
-        this.processRunningPort = processRunningPort;
-        this.clientListenPort = clientListenPort;
+    AppProcess(String initialOptions) {
         this.initialOptions = initialOptions;
     }
 
@@ -55,7 +51,6 @@ class AppProcess {
                     javaOptions.add("java");
                 }
 
-
                 if (!"".equals(initialOptions)) {
                     String[] optArr = initialOptions.split(" ");
                     javaOptions.addAll(Arrays.asList(optArr));
@@ -72,8 +67,7 @@ class AppProcess {
                     classPaths.append("./lib/" + subFile.getName());
                 }
 
-                javaOptions.addAll(Arrays.asList("-cp", classPaths.toString(), "com.mycollab.server.DefaultServerRunner", "--port",
-                        processRunningPort + "", "--cport", clientListenPort + ""));
+                javaOptions.addAll(Arrays.asList("-cp", classPaths.toString(), "com.mycollab.server.DefaultServerRunner"));
                 StringBuilder strBuilder = new StringBuilder();
                 for (String option : javaOptions) {
                     strBuilder.append(option).append(" ");

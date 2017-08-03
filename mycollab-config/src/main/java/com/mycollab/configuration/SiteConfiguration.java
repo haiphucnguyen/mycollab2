@@ -60,7 +60,7 @@ public class SiteConfiguration {
         String pullMethodValue = ApplicationProperties.getString(ApplicationProperties.PULL_METHOD, "push");
         instance.pullMethod = PullMethod.valueOf(pullMethodValue);
 
-        instance.endecryptPassword = ApplicationProperties.getString(BI_ENDECRYPT_PASSWORD, "esofthead321");
+        instance.endecryptPassword = ApplicationProperties.getString(BI_ENDECRYPT_PASSWORD, "mycollab123");
 
         // load email
         String host = ApplicationProperties.getString(MAIL_SMTPHOST);

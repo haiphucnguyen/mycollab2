@@ -48,7 +48,7 @@ public class EditionInfoResolver implements InitializingBean {
                                     Path modifiedPath = ((WatchEvent<Path>) watchEvent).context();
                                     // Output
                                     String fileName = modifiedPath.toFile().getName();
-                                    if ("version".equals(modifiedPath.toFile().getName())) {
+                                    if ("version".equals(fileName)) {
                                         loadEditionInfo(versionFile);
                                     }
                                 }
