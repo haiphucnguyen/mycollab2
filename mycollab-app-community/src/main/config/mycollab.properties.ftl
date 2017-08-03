@@ -43,13 +43,4 @@ mail.notify=${mailNotify}
 # want to send report automatically to our team, you can
 # leave this field to empty
 #=====================================================
-error.sendTo=error@esofthead.com
-
-#=====================================================
-#    LINK CONFIGURATION
-# You should not change these values. 
-#=====================================================
-cdn.url=http://%s:%d/assets/
-app.url=http://%s:%d/
-resource.downloadUrl=http://%s:%d/file/
-api.url=https://api.mycollab.com/api/
+error.sendTo=error@mycollab.com
