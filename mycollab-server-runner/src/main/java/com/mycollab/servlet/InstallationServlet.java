@@ -103,7 +103,7 @@ public class InstallationServlet extends HttpServlet {
         templateContext.put("smtpSSLEnable", ssl);
         templateContext.put("mailNotify", smtpUserName);
 
-        File confFolder = FileUtils.getDesireFile(FileUtils.getUserFolder(), "conf", "src/main/conf");
+        File confFolder = FileUtils.getDesireFile(FileUtils.getUserFolder(), "config", "src/main/config");
         if (confFolder == null) {
             out.write("Can not write the settings to the file system. You should check our knowledge base article at " +
                     "http://support.mycollab.com/topic/994098-/ to solve this issue.");

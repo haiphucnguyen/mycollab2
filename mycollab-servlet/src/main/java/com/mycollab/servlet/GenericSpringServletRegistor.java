@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile("production")
 public class GenericSpringServletRegistor {
+
     @Bean
     public ServletRegistrationBean errorServlet() {
         return new ServletRegistrationBean(new AppExceptionServletHandler(), "/error");
