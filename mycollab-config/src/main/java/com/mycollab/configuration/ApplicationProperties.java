@@ -34,11 +34,6 @@ public class ApplicationProperties {
     public static final String CDN_URL = "cdn.url";
     public static final String APP_URL = "app.url";
 
-    public static final String FACEBOOK_URL = "facebook.url";
-    public static final String GOOGLE_URL = "google.url";
-    public static final String LINKEDIN_URL = "linkedin.url";
-    public static final String TWITTER_URL = "twitter.url";
-
     public static final String MAIL_SMTPHOST = "mail.smtphost";
     public static final String MAIL_PORT = "mail.port";
     public static final String MAIL_USERNAME = "mail.username";
