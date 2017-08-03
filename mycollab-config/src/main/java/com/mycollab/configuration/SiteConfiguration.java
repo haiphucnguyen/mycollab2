@@ -29,7 +29,6 @@ public class SiteConfiguration {
     private static SiteConfiguration instance;
 
     private String sentErrorEmail;
-    private String siteName;
     private String serverAddress;
     private Locale defaultLocale;
     private EmailConfiguration emailConfiguration;
@@ -48,7 +47,6 @@ public class SiteConfiguration {
         instance = new SiteConfiguration();
 
         instance.sentErrorEmail = ApplicationProperties.getString(ERROR_SENDTO, "support@mycollab.com");
-        instance.siteName = ApplicationProperties.getString(SITE_NAME, "MyCollab");
         instance.serverAddress = ApplicationProperties.getString(SERVER_ADDRESS, "localhost");
         String propLocale = ApplicationProperties.getString(DEFAULT_LOCALE, "en_US");
         try {
@@ -129,10 +127,6 @@ public class SiteConfiguration {
 
     public static String getNotifyEmail() {
         return getInstance().emailConfiguration.getNotifyEmail();
-    }
-
-    public static String getDefaultSiteName() {
-        return getInstance().siteName;
     }
 
     public static PullMethod getPullMethod() {

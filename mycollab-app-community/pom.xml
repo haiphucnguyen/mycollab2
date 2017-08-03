@@ -229,8 +229,8 @@
                                 <copy todir="${installer.staging.dir}">
                                     <fileset dir="${installer.resource.dir.app}"/>
                                 </copy>
-                                <copy todir="${installer.staging.dir}/conf">
-                                    <fileset dir="${basedir}/src/main/conf">
+                                <copy todir="${installer.staging.dir}/config">
+                                    <fileset dir="${basedir}/src/main/config">
                                         <exclude name="mycollab.properties"/>
                                     </fileset>
                                 </copy>
@@ -239,9 +239,6 @@
                                 </copy>
                                 <copy todir="${installer.staging.dir}/bin">
                                     <fileset dir="${basedir}/src/main/scripts"/>
-                                </copy>
-                                <copy todir="${installer.staging.dir}/webapp">
-                                    <fileset dir="${basedir}/src/main/webapp"/>
                                 </copy>
                                 <copy todir="${installer.staging.dir}/lib">
                                     <fileset dir="${basedir}/src/main/lib"/>
