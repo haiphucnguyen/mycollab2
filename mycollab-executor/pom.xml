@@ -20,12 +20,6 @@
             <artifactId>zt-process-killer</artifactId>
             <version>1.7</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.esotericsoftware.yamlbeans</groupId>
-            <artifactId>yamlbeans</artifactId>
-            <version>1.12</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -68,7 +62,6 @@
                                     <include>net.java.dev.jna:jna</include>
                                     <include>commons-lang:commons-lang</include>
                                     <include>commons-io:commons-io</include>
-                                    <include>com.esotericsoftware.yamlbeans:yamlbeans</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
