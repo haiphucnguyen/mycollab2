@@ -26,6 +26,18 @@
 
         <dependency>
             <groupId>com.mycollab</groupId>
+            <artifactId>mycollab-migration</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mycollab</groupId>
+            <artifactId>mycollab-mobile</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
             <version>${project.version}</version>
             <exclusions>
@@ -51,12 +63,6 @@
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-scheduler-community</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mycollab</groupId>
-            <artifactId>mycollab-mobile</artifactId>
             <version>${project.version}</version>
         </dependency>
 

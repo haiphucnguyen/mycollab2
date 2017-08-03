@@ -50,8 +50,7 @@ public class Executor {
             try (ZipInputStream inputStream = new ZipInputStream(new FileInputStream(upgradeFile))) {
                 ZipEntry entry;
                 while ((entry = inputStream.getNextEntry()) != null) {
-                    if (!entry.isDirectory() && (entry.getName().startsWith("lib/") || entry.getName().startsWith
-                            ("webapp") || entry.getName().startsWith("i18n"))) {
+                    if (!entry.isDirectory() && (entry.getName().startsWith("lib/") || entry.getName().startsWith("i18n"))) {
                         File candidateFile = new File(getUserDir(), entry.getName());
                         candidateFile.getParentFile().mkdirs();
                         LOG.info("Copy file: " + entry.getName());
@@ -120,9 +119,9 @@ public class Executor {
                             String fileName = modifiedPath.toFile().getName();
                             if (PID_FILE.equals(fileName)) {
                                 String fileContent = FileUtils.readFileToString(pIdFile);
-                                if (fileContent.startsWith("RELOAD")) {
-                                    String filePath = fileContent.substring("RELOAD:".length());
-                                    LOG.info(String.format("Update MyCollab with file %s", filePath));
+                                if (fileContent.startsWith("UPGRADE")) {
+                                    String filePath = fileContent.substring("UPGRADE:".length());
+                                    LOG.info(String.format("Upgrade MyCollab with file %s", filePath));
                                     File upgradeFile = new File(filePath);
                                     if (upgradeFile.exists()) {
                                         process.stop();
@@ -139,6 +138,9 @@ public class Executor {
                                         LOG.info("Stop wrapper process");
                                         System.exit(-1);
                                     }
+                                } else if (fileContent.equals("RESTART")) {
+                                    process.stop();
+                                    process.start();
                                 }
                             }
                         }
