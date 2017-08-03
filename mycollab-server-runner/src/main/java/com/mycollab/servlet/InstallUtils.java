@@ -27,24 +27,15 @@ public class InstallUtils {
                 props.setProperty("mail.smtp.startssl.enable", "false");
                 props.setProperty("mail.smtp.ssl.enable", "true");
                 props.setProperty("mail.smtp.ssl.socketFactory.fallback", "false");
-
             }
 
             Email email = new SimpleEmail();
             email.setHostName(host);
             email.setSmtpPort(port);
             email.setAuthenticator(new DefaultAuthenticator(username, password));
-            if (isStartTls) {
-                email.setStartTLSEnabled(true);
-            } else {
-                email.setStartTLSEnabled(false);
-            }
+            email.setStartTLSEnabled(isStartTls);
+            email.setSSLOnConnect(isSSL);
 
-            if (isSSL) {
-                email.setSSLOnConnect(true);
-            } else {
-                email.setSSLOnConnect(false);
-            }
             email.setFrom(username);
             email.setSubject("MyCollab Test Email");
             email.setMsg("This is a test mail ... :-)");
