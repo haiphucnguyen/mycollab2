@@ -96,7 +96,7 @@ public class SiteConfiguration {
         }
 
         instance.apiUrl = ApplicationProperties.getString(API_URL, "https://api.mycollab.com/api/");
-        instance.endecryptPassword = ApplicationProperties.getString(BI_ENDECRYPT_PASSWORD, "esofthead321");
+        instance.endecryptPassword = ApplicationProperties.getString(BI_ENDECRYPT_PASSWORD, "mycollab123");
 
         // load email
         String host = ApplicationProperties.getString(MAIL_SMTPHOST);
