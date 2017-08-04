@@ -7,7 +7,7 @@ import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.crm.domain.SimpleOpportunity;
 import com.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntegrationServiceTest;
+import com.mycollab.test.spring.IntegrationServiceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

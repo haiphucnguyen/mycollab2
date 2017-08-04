@@ -3,7 +3,7 @@ package com.mycollab.module.crm.service;
 import com.mycollab.module.crm.domain.SimpleLead;
 import com.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntegrationServiceTest;
+import com.mycollab.test.spring.IntegrationServiceTest;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;

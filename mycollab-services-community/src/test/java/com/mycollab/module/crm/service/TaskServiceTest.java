@@ -15,7 +15,7 @@ import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.module.crm.domain.criteria.CrmTaskSearchCriteria;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntegrationServiceTest;
+import com.mycollab.test.spring.IntegrationServiceTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TaskServiceTest extends IntegrationServiceTest {

@@ -1,6 +1,5 @@
-package com.mycollab.test.service;
+package com.mycollab.test.spring;
 
-import com.mycollab.spring.test.service.RootConfigurationTest;
 import com.mycollab.test.rule.DbUnitInitializerRule;
 import com.mycollab.test.rule.EssentialInitRule;
 import org.junit.ClassRule;

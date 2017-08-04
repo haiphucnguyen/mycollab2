@@ -1,4 +1,4 @@
-package com.mycollab.test.service;
+package com.mycollab.test.spring;
 
 import com.mycollab.test.TestDbConfiguration;
 import com.zaxxer.hikari.HikariConfig;

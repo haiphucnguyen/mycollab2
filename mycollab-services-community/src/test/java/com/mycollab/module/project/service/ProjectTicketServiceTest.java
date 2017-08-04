@@ -9,7 +9,7 @@ import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.user.domain.BillingAccount;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntegrationServiceTest;
+import com.mycollab.test.spring.IntegrationServiceTest;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;

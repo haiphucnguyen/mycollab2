@@ -7,7 +7,7 @@ import com.mycollab.module.tracker.domain.SimpleVersion;
 import com.mycollab.module.tracker.domain.Version;
 import com.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntegrationServiceTest;
+import com.mycollab.test.spring.IntegrationServiceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

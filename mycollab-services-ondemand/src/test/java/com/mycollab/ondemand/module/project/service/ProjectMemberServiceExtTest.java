@@ -3,7 +3,7 @@ package com.mycollab.ondemand.module.project.service;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntegrationServiceTest;
+import com.mycollab.test.spring.IntegrationServiceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

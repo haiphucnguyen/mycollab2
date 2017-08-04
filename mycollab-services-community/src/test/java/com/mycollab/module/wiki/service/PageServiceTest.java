@@ -4,7 +4,7 @@ import com.mycollab.common.i18n.WikiI18nEnum;
 import com.mycollab.module.page.domain.Page;
 import com.mycollab.module.page.domain.PageVersion;
 import com.mycollab.module.page.service.PageService;
-import com.mycollab.test.service.IntegrationServiceTest;
+import com.mycollab.test.spring.IntegrationServiceTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

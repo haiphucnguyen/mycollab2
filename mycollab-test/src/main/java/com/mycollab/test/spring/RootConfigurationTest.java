@@ -1,4 +1,4 @@
-package com.mycollab.spring.test.service;
+package com.mycollab.test.spring;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

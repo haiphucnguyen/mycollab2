@@ -1,4 +1,4 @@
-package com.mycollab.configuration.service;
+package com.mycollab.test.spring;
 
 import com.mycollab.configuration.IDeploymentMode;
 import org.springframework.core.annotation.Order;

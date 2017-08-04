@@ -19,7 +19,7 @@ import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.module.ecm.domain.Folder;
 import com.mycollab.module.ecm.domain.Resource;
 import com.mycollab.module.ecm.service.ContentJcrDao;
-import com.mycollab.test.service.IntegrationServiceTest;
+import com.mycollab.test.spring.IntegrationServiceTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ContentJcrDaoTest extends IntegrationServiceTest {

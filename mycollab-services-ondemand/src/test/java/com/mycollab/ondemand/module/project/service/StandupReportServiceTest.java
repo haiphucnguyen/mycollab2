@@ -5,7 +5,7 @@ import com.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntegrationServiceTest;
+import com.mycollab.test.spring.IntegrationServiceTest;
 import com.mycollab.db.arguments.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,6 +1,5 @@
-package com.mycollab.spring.test.service;
+package com.mycollab.test.spring;
 
-import com.mycollab.test.service.DataSourceFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

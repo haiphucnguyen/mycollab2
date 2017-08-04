@@ -11,7 +11,7 @@ import com.mycollab.module.project.domain.ProjectActivityStream;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntegrationServiceTest;
+import com.mycollab.test.spring.IntegrationServiceTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

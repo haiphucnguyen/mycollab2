@@ -1,4 +1,4 @@
-package com.mycollab.spring.test.service;
+package com.mycollab.test.spring;
 
 import com.mycollab.module.page.PageSessionFactory;
 import org.springframework.context.annotation.Bean;

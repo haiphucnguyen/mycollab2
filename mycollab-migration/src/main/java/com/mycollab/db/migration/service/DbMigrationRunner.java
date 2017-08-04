@@ -18,7 +18,7 @@ import javax.sql.DataSource;
  * @since 1.0
  */
 @Component("dbMigration")
-@Profile("production")
+@Profile({"production", "test"})
 @DependsOn("appContextUtil")
 public class DbMigrationRunner {
     private static final Logger LOG = LoggerFactory.getLogger(DbMigrationRunner.class);

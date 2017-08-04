@@ -7,7 +7,7 @@ import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntegrationServiceTest;
+import com.mycollab.test.spring.IntegrationServiceTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

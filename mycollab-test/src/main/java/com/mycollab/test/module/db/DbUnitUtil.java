@@ -1,6 +1,6 @@
 package com.mycollab.test.module.db;
 
-import com.mycollab.test.service.DataSourceFactoryBean;
+import com.mycollab.test.spring.DataSourceFactoryBean;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;
