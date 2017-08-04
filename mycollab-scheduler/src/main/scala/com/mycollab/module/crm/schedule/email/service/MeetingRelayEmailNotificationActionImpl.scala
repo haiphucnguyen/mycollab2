@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class MeetingRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAction[SimpleMeeting] with MeetingRelayEmailNotificationAction {
-  @Autowired var meetingService: MeetingService = _
+  @Autowired private val meetingService: MeetingService = null
   private val mapper = new MeetingFieldNameMapper
 
   protected def buildExtraTemplateVariables(context: MailContext[SimpleMeeting]) {

@@ -1,6 +1,5 @@
 package com.mycollab.ondemand.schedule.spring;
 
-import com.mycollab.ondemand.schedule.jobs.BillingSendingNotificationJob;
 import com.mycollab.ondemand.schedule.jobs.*;
 import com.mycollab.schedule.AutowiringSpringBeanJobFactory;
 import com.mycollab.schedule.QuartzScheduleProperties;
@@ -13,6 +12,8 @@ import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
+import javax.sql.DataSource;
+
 /**
  * @author MyCollab Ltd.
  * @since 4.6.0
@@ -20,6 +21,10 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 @Configuration
 @Profile("production")
 public class DemandScheduleConfiguration {
+
+    @Autowired
+    private DataSource dataSource;
+
     @Bean
     public JobDetailFactoryBean sendCountUserLoginByDateJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
@@ -143,16 +148,10 @@ public class DemandScheduleConfiguration {
     @Autowired
     private ApplicationContext applicationContext;
 
-    public DemandScheduleConfiguration() {
-        super();
-    }
-
     @Bean
     public SchedulerFactoryBean quartzSchedulerDemand() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
-//        if (DeploymentMode.site == SiteConfiguration.getDeploymentMode()) {
-//            bean.setDataSource(new DataSourceConfiguration().dataSource());
-//        }
+        bean.setDataSource(dataSource);
 
         bean.setQuartzProperties(new QuartzScheduleProperties());
         AutowiringSpringBeanJobFactory factory = new AutowiringSpringBeanJobFactory();

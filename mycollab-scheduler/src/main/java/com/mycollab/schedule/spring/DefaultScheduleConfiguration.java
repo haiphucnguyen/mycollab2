@@ -3,7 +3,10 @@ package com.mycollab.schedule.spring;
 import com.mycollab.module.project.schedule.email.service.OverdueProjectTicketsNotificationJob;
 import com.mycollab.schedule.AutowiringSpringBeanJobFactory;
 import com.mycollab.schedule.QuartzScheduleProperties;
-import com.mycollab.schedule.jobs.*;
+import com.mycollab.schedule.jobs.CleanupTimeTrackingCacheDataJob;
+import com.mycollab.schedule.jobs.CrmSendingRelayEmailNotificationJob;
+import com.mycollab.schedule.jobs.LiveInstanceMonitorJob;
+import com.mycollab.schedule.jobs.ProjectSendingRelayEmailNotificationJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +16,8 @@ import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
+import javax.sql.DataSource;
+
 /**
  * @author MyCollab Ltd.
  * @since 4.6.0
@@ -20,6 +25,9 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 @Configuration
 @Profile("production")
 public class DefaultScheduleConfiguration {
+
+    @Autowired
+    private DataSource dataSource;
 
     @Bean
     public JobDetailFactoryBean cleanTimelineTrackingCacheJob() {
@@ -102,10 +110,7 @@ public class DefaultScheduleConfiguration {
     @Bean
     public SchedulerFactoryBean quartzScheduler() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
-
-//        if (DeploymentMode.site == SiteConfiguration.getDeploymentMode()) {
-//            bean.setDataSource(new DataSourceConfiguration().dataSource());
-//        }
+        bean.setDataSource(dataSource);
 
         bean.setQuartzProperties(new QuartzScheduleProperties());
         bean.setOverwriteExistingJobs(true);

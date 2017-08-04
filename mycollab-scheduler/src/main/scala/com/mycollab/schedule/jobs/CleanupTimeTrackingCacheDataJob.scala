@@ -22,8 +22,8 @@ class CleanupTimeTrackingCacheDataJob extends GenericQuartzJobBean {
 
   def executeJob(context: JobExecutionContext): Unit = {
     val ex = new TimelineTrackingCachingExample
-    val lessthan40Days = new LocalDate().minusDays(40)
-    ex.createCriteria().andFordayLessThan(lessthan40Days.toDate)
+    val lessThan40Days = new LocalDate().minusDays(40)
+    ex.createCriteria().andFordayLessThan(lessThan40Days.toDate)
     timeTrackingCacheMapper.deleteByExample(ex)
   }
 }

@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class AccountRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAction[SimpleAccount] with AccountRelayEmailNotificationAction {
-  @Autowired var accountService: AccountService = _
+  @Autowired private val accountService: AccountService = null
   private val mapper = new AccountFieldNameMapper
   
   override protected def getBeanInContext(notification: SimpleRelayEmailNotification): SimpleAccount =

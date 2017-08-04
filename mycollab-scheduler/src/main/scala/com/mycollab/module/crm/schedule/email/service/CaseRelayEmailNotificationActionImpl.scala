@@ -33,7 +33,7 @@ import org.springframework.stereotype.Component
 class CaseRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAction[SimpleCase] with CaseRelayEmailNotificationAction {
   private val LOG = LoggerFactory.getLogger(classOf[CaseRelayEmailNotificationActionImpl])
 
-  @Autowired var caseService: CaseService = _
+  @Autowired private val caseService: CaseService = null
   private val mapper = new CaseFieldNameMapper
 
   override protected def getBeanInContext(notification: SimpleRelayEmailNotification): SimpleCase =

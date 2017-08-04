@@ -12,6 +12,8 @@ import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
+import javax.sql.DataSource;
+
 /**
  * @author MyCollab Ltd
  * @since 5.2.9
@@ -19,6 +21,10 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 @Configuration
 @Profile("production")
 public class PremiumScheduleConfiguration {
+
+    @Autowired
+    private DataSource dataSource;
+
     @Bean
     public JobDetailFactoryBean checkUpdateJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
@@ -38,9 +44,10 @@ public class PremiumScheduleConfiguration {
     private ApplicationContext applicationContext;
 
     @Bean
-    public SchedulerFactoryBean quartzSchedulerCommunity() {
+    public SchedulerFactoryBean quartzPremiumScheduler() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
 
+        bean.setDataSource(dataSource);
         bean.setQuartzProperties(new QuartzScheduleProperties());
         bean.setOverwriteExistingJobs(true);
         AutowiringSpringBeanJobFactory factory = new AutowiringSpringBeanJobFactory();

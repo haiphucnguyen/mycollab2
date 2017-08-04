@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class CallRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAction[SimpleCall] with CallRelayEmailNotificationAction {
-  @Autowired var callService: CallService = _
+  @Autowired private val callService: CallService = null
   private val mapper: CallFieldNameMapper = new CallFieldNameMapper
 
   override protected def getBeanInContext(notification: SimpleRelayEmailNotification): SimpleCall =

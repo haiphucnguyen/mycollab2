@@ -33,7 +33,7 @@ import org.springframework.stereotype.Component
 class ContactRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAction[SimpleContact] with ContactRelayEmailNotificationAction {
   private val LOG = LoggerFactory.getLogger(classOf[ContactRelayEmailNotificationActionImpl])
   
-  @Autowired var contactService: ContactService = _
+  @Autowired private val contactService: ContactService = null
   
   private val mapper = new ContactFieldNameMapper
   

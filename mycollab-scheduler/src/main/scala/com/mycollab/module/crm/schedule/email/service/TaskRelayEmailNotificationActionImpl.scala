@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE) class TaskRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAction[SimpleCrmTask] with TaskRelayEmailNotificationAction {
   private val LOG = LoggerFactory.getLogger(classOf[TaskRelayEmailNotificationActionImpl])
   
-  @Autowired var taskService: TaskService = _
+  @Autowired private val taskService: TaskService = null
   private val mapper = new TaskFieldNameMapper
   
   protected def buildExtraTemplateVariables(context: MailContext[SimpleCrmTask]) {

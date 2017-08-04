@@ -33,9 +33,9 @@ import org.springframework.stereotype.Component
 class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAction[SimpleTask] with ProjectTaskRelayEmailNotificationAction {
   private val LOG = LoggerFactory.getLogger(classOf[ProjectTaskRelayEmailNotificationActionImpl])
 
-  @Autowired var projectTaskService: ProjectTaskService = _
+  @Autowired private val projectTaskService: ProjectTaskService = null
 
-  @Autowired var projectNotificationService: ProjectNotificationSettingService = _
+  @Autowired private val projectNotificationService: ProjectNotificationSettingService = null
 
   private val mapper = new TaskFieldNameMapper
 

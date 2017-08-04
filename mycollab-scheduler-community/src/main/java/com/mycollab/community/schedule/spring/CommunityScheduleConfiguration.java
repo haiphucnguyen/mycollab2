@@ -1,8 +1,8 @@
 package com.mycollab.community.schedule.spring;
 
+import com.mycollab.community.schedule.jobs.CheckUpdateJob;
 import com.mycollab.schedule.AutowiringSpringBeanJobFactory;
 import com.mycollab.schedule.QuartzScheduleProperties;
-import com.mycollab.community.schedule.jobs.CheckUpdateJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +12,8 @@ import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
+import javax.sql.DataSource;
+
 /**
  * @author MyCollab Ltd
  * @since 5.1.3
@@ -19,6 +21,10 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 @Configuration
 @Profile("production")
 public class CommunityScheduleConfiguration {
+
+    @Autowired
+    private DataSource dataSource;
+
     @Bean
     public JobDetailFactoryBean checkUpdateJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
@@ -40,6 +46,7 @@ public class CommunityScheduleConfiguration {
     @Bean
     public SchedulerFactoryBean quartzSchedulerCommunity() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
+        bean.setDataSource(dataSource);
 
         bean.setQuartzProperties(new QuartzScheduleProperties());
         bean.setOverwriteExistingJobs(true);

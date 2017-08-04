@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service
 @Service
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class ProjectPageRelayEmailNotificationActionImpl extends SendMailToAllMembersAction[Page] with ProjectPageRelayEmailNotificationAction {
-  @Autowired var pageService: PageService = _
+  @Autowired private val pageService: PageService = null
 
   protected def getBeanInContext(notification: ProjectRelayEmailNotification): Page =
     pageService.getPage(notification.getTypeid, "")

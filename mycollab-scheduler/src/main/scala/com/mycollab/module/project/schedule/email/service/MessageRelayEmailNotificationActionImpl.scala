@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service
 @Service
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class MessageRelayEmailNotificationActionImpl extends SendMailToAllMembersAction[SimpleMessage] with MessageRelayEmailNotificationAction {
-  @Autowired var messageService: MessageService = _
+  @Autowired private val messageService: MessageService = null
 
   protected def getItemName: String = StringUtils.trim(bean.getTitle, 100)
   

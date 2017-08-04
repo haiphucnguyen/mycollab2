@@ -33,7 +33,7 @@ import org.springframework.stereotype.Component
 class OpportunityRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAction[SimpleOpportunity] with OpportunityRelayEmailNotificationAction {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[OpportunityRelayEmailNotificationActionImpl])
   
-  @Autowired var opportunityService: OpportunityService = _
+  @Autowired private val opportunityService: OpportunityService = null
   private val mapper: OpportunityFieldNameMapper = new OpportunityFieldNameMapper
   
   override protected def getBeanInContext(notification: SimpleRelayEmailNotification): SimpleOpportunity =

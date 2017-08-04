@@ -36,8 +36,8 @@ import org.springframework.stereotype.Component
 class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[SimpleBug] with BugRelayEmailNotificationAction {
   private val LOG = LoggerFactory.getLogger(classOf[BugRelayEmailNotificationActionImpl])
   
-  @Autowired var bugService: BugService = _
-  @Autowired var projectNotificationService: ProjectNotificationSettingService = _
+  @Autowired private val bugService: BugService = null
+  @Autowired private val projectNotificationService: ProjectNotificationSettingService = null
   
   private val mapper = new BugFieldNameMapper
   

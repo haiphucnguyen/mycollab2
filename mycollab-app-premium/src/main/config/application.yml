@@ -8,7 +8,9 @@ app:
 
 server:
   apiUrl: https://api.mycollab.com/api/
-  port: 7070
+  port: 8080
+  # Session timeout in seconds
+  session.timeout: 1800
 
 endpoints:
   sensitive: false
