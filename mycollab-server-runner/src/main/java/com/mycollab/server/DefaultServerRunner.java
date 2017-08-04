@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
 import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,7 +20,7 @@ import java.io.FileWriter;
  * @since 5.5.0
  */
 @Configuration
-@EnableAutoConfiguration(exclude = {FreeMarkerAutoConfiguration.class,
+@EnableAutoConfiguration(exclude = {FreeMarkerAutoConfiguration.class, DataSourceAutoConfiguration.class,
         FlywayAutoConfiguration.class})
 @ComponentScan(basePackages = {"com.mycollab.**.spring, com.mycollab.**.configuration, com.mycollab.**.servlet"})
 public class DefaultServerRunner {
