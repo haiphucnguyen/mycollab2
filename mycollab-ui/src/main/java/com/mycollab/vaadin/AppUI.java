@@ -3,7 +3,6 @@ package com.mycollab.vaadin;
 import com.google.common.base.MoreObjects;
 import com.mycollab.common.SessionIdGenerator;
 import com.mycollab.common.i18n.ErrorI18nEnum;
-import com.mycollab.configuration.ApplicationConfiguration;
 import com.mycollab.configuration.IDeploymentMode;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.utils.StringUtils;
@@ -98,7 +97,6 @@ public abstract class AppUI extends UI {
     }
 
     public static String getSiteName() {
-        ApplicationConfiguration applicationConfiguration = AppContextUtil.getSpringBean(ApplicationConfiguration.class);
         try {
             return MoreObjects.firstNonNull(getInstance().billingAccount.getSitename(), SiteConfiguration.getDefaultSiteName());
         } catch (Exception e) {

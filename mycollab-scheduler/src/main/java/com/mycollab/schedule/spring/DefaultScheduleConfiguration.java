@@ -7,6 +7,8 @@ import com.mycollab.schedule.jobs.CleanupTimeTrackingCacheDataJob;
 import com.mycollab.schedule.jobs.CrmSendingRelayEmailNotificationJob;
 import com.mycollab.schedule.jobs.LiveInstanceMonitorJob;
 import com.mycollab.schedule.jobs.ProjectSendingRelayEmailNotificationJob;
+import org.quartz.CronTrigger;
+import org.quartz.Trigger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +19,8 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import javax.sql.DataSource;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd.
@@ -124,13 +128,9 @@ public class DefaultScheduleConfiguration {
         bean.setJobFactory(factory);
         bean.setApplicationContextSchedulerContextKey("applicationContextSchedulerContextKey");
 
-        bean.setTriggers(
-                projectSendRelayNotificationEmailTrigger().getObject(),
-                projectOverdueAssignmentsNotificationEmailTrigger().getObject(),
-                crmSendRelayNotificationEmailTrigger().getObject(),
-                cleanUpTimelineCacheDataTrigger().getObject(),
-                liveInstanceMonitorTrigger().getObject()
-        );
+        Map<String, CronTrigger> triggersMap = applicationContext.getBeansOfType(CronTrigger.class);
+        Collection<CronTrigger> triggers = triggersMap.values();
+        bean.setTriggers(triggers.toArray(new Trigger[0]));
         return bean;
     }
 }
