@@ -25,9 +25,13 @@ public class PremiumScheduleConfiguration {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private ApplicationContext applicationContext;
+
     @Bean
     public JobDetailFactoryBean checkUpdateJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(CheckUpdateJob.class);
         return bean;
     }
@@ -40,13 +44,9 @@ public class PremiumScheduleConfiguration {
         return bean;
     }
 
-    @Autowired
-    private ApplicationContext applicationContext;
-
     @Bean
     public SchedulerFactoryBean quartzPremiumScheduler() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
-
         bean.setDataSource(dataSource);
         bean.setQuartzProperties(new QuartzScheduleProperties());
         bean.setOverwriteExistingJobs(true);

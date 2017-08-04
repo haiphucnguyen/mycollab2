@@ -28,6 +28,7 @@ public class DemandScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean sendCountUserLoginByDateJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(SendingCountUserLoginByDateJob.class);
         return bean;
     }
@@ -35,6 +36,7 @@ public class DemandScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean sendCountLiveInstancesByDateJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(CountLiveInstancesJob.class);
         return bean;
     }
@@ -42,6 +44,7 @@ public class DemandScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean removeObsoleteAccountsJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(DeleteObsoleteAccountJob.class);
         return bean;
     }
@@ -49,6 +52,7 @@ public class DemandScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean removeObsoleteUsersJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(DeleteObsoleteUsersJob.class);
         return bean;
     }
@@ -56,6 +60,7 @@ public class DemandScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean removeObsoleteLiveInstancesJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(DeleteObsoleteLiveInstancesJob.class);
         return bean;
     }
@@ -63,6 +68,7 @@ public class DemandScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean sendOneWeekFollowupDownloadedUsersJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(FollowupDownloadedUsersAfterOneWeekJob.class);
         return bean;
     }
@@ -70,6 +76,7 @@ public class DemandScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean sendOneWeekFollowupSignupUsersJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(FollowupSignupUserAfterOneWeekJob.class);
         return bean;
     }
@@ -133,6 +140,7 @@ public class DemandScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean sendAccountBillingRequestEmailJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(BillingSendingNotificationJob.class);
         return bean;
     }

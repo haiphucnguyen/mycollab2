@@ -28,6 +28,7 @@ public class CommunityScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean checkUpdateJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(CheckUpdateJob.class);
         return bean;
     }

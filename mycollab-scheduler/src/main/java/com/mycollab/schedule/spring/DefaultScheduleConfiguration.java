@@ -32,6 +32,7 @@ public class DefaultScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean cleanTimelineTrackingCacheJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(CleanupTimeTrackingCacheDataJob.class);
         return bean;
     }
@@ -39,6 +40,7 @@ public class DefaultScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean projectSendRelayNotificationEmailJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(ProjectSendingRelayEmailNotificationJob.class);
         return bean;
     }
@@ -46,6 +48,7 @@ public class DefaultScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean projectOverdueAssignmentsNotificationEmailJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(OverdueProjectTicketsNotificationJob.class);
         return bean;
     }
@@ -53,6 +56,7 @@ public class DefaultScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean crmSendRelayNotificationEmailJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(CrmSendingRelayEmailNotificationJob.class);
         return bean;
     }
@@ -60,6 +64,7 @@ public class DefaultScheduleConfiguration {
     @Bean
     public JobDetailFactoryBean liveInstanceMonitorJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setDurability(true);
         bean.setJobClass(LiveInstanceMonitorJob.class);
         return bean;
     }
