@@ -1,6 +1,7 @@
 package com.mycollab.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.Map;
  * @since 5.5.0
  */
 @Component
+@Profile({"production", "test"})
 @ConfigurationProperties(prefix = "app")
 public class ApplicationConfiguration {
 

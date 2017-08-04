@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
  * @since 5.1.0
  */
 @Configuration
-@Profile("production")
+@Profile({"production", "test"})
 public class AppEventBus {
     private static Logger LOG = LoggerFactory.getLogger(AppEventBus.class);
 

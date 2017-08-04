@@ -21,6 +21,12 @@
 
         <dependency>
             <groupId>com.mycollab</groupId>
+            <artifactId>mycollab-config</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-core</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -39,13 +45,13 @@
 
         <dependency>
             <groupId>com.mycollab</groupId>
-            <artifactId>mycollab-config</artifactId>
+            <artifactId>mycollab-jackrabbit</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
-            <artifactId>mycollab-jackrabbit</artifactId>
+            <artifactId>mycollab-migration</artifactId>
             <version>${project.version}</version>
         </dependency>
 

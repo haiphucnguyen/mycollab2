@@ -37,12 +37,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.mycollab</groupId>
-            <artifactId>mycollab-services</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
