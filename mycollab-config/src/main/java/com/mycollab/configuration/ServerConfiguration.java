@@ -23,6 +23,8 @@ public class ServerConfiguration {
 
     private String apiUrl;
 
+    private String pull_method;
+
     public String getApiUrl() {
         return apiUrl;
     }
@@ -61,5 +63,17 @@ public class ServerConfiguration {
 
     public void setPort(Integer port) {
         this.port = port;
+    }
+
+    public String getPull_method() {
+        return pull_method;
+    }
+
+    public void setPull_method(String pull_method) {
+        this.pull_method = pull_method;
+    }
+
+    public boolean isPush() {
+        return !"pull".equalsIgnoreCase(pull_method);
     }
 }

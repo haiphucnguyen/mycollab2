@@ -1,1 +1,53 @@
-MyCollab output log file
+09:32:36,123  INFO c.m.s.DefaultServerRunner:48 - Starting DefaultServerRunner on ABT101469 with PID 12700 (C:\Users\hainguyen\Documents\my\MyCollab\mycollab2\mycollab-server-runner\target\classes started by hainguyen in C:\Users\hainguyen\Documents\my\MyCollab\mycollab2\mycollab-app-premium\src\main)
+09:32:36,138  INFO c.m.s.DefaultServerRunner:597 - The following profiles are active: production
+09:32:36,262  INFO o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext:583 - Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@686449f9: startup date [Sat Aug 05 09:32:36 UTC 2017]; root of context hierarchy
+09:32:36,898  INFO o.h.v.i.u.Version:30 - HV000001: Hibernate Validator 5.3.5.Final
+09:32:41,548  INFO o.s.b.f.s.DefaultListableBeanFactory:828 - Overriding bean definition for bean 'checkUpdateJob' with a different definition: replacing [Generic bean: class [com.mycollab.premium.schedule.jobs.CheckUpdateJob]; scope=prototype; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [C:\Users\hainguyen\Documents\my\MyCollab\mycollab2\mycollab-scheduler-premium\target\classes\com\mycollab\premium\schedule\jobs\CheckUpdateJob.class]] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=premiumScheduleConfiguration; factoryMethodName=checkUpdateJob; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/mycollab/premium/schedule/spring/PremiumScheduleConfiguration.class]]
+09:32:41,551  INFO o.s.b.f.s.DefaultListableBeanFactory:828 - Overriding bean definition for bean 'liveInstanceMonitorJob' with a different definition: replacing [Generic bean: class [com.mycollab.schedule.jobs.LiveInstanceMonitorJob]; scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [C:\Users\hainguyen\Documents\my\MyCollab\mycollab2\mycollab-scheduler\target\classes\com\mycollab\schedule\jobs\LiveInstanceMonitorJob.class]] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=defaultScheduleConfiguration; factoryMethodName=liveInstanceMonitorJob; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/mycollab/schedule/spring/DefaultScheduleConfiguration.class]]
+09:32:42,295  INFO o.s.b.f.s.DefaultListableBeanFactory:828 - Overriding bean definition for bean 'managementServletContext' with a different definition: replacing [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.actuate.autoconfigure.EndpointWebMvcHypermediaManagementContextConfiguration; factoryMethodName=managementServletContext; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/actuate/autoconfigure/EndpointWebMvcHypermediaManagementContextConfiguration.class]] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration; factoryMethodName=managementServletContext; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.class]]
+09:32:43,520  INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker:325 - Bean 'validatorConfiguration' of type [com.mycollab.spring.ValidatorConfiguration$$EnhancerBySpringCGLIB$$8fc216d8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+09:32:44,288  INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker:325 - Bean 'validator' of type [org.springframework.validation.beanvalidation.LocalValidatorFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+09:32:44,591  INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker:325 - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$fee15656] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+09:32:46,200  INFO o.s.b.c.e.t.TomcatEmbeddedServletContainer:89 - Tomcat initialized with port(s): 8080 (http)
+09:32:46,229  INFO o.a.c.c.StandardService:179 - Starting service [Tomcat]
+09:32:46,233  INFO o.a.c.c.StandardEngine:179 - Starting Servlet Engine: Apache Tomcat/8.5.16
+09:32:46,621  INFO o.a.c.c.C.[.[.[/]:179 - Initializing Spring embedded WebApplicationContext
+09:32:46,621  INFO o.s.w.c.ContextLoader:276 - Root WebApplicationContext: initialization completed in 10359 ms
+09:32:47,550  INFO o.s.b.w.s.ServletRegistrationBean:190 - Mapping servlet: 'checkAppStartedServlet' to [/checkStarted]
+09:32:47,552  INFO o.s.b.w.s.ServletRegistrationBean:190 - Mapping servlet: 'appServlet' to [/*]
+09:32:47,553  INFO o.s.b.w.s.ServletRegistrationBean:190 - Mapping servlet: 'confirmEmailHandler' to [/user/confirm_signup/*]
+09:32:47,553  INFO o.s.b.w.s.ServletRegistrationBean:190 - Mapping servlet: 'resetPasswordHandler' to [/user/recoverypassword/action/*]
+09:32:47,554  INFO o.s.b.w.s.ServletRegistrationBean:190 - Mapping servlet: 'resetPasswordHandler' to [/user/recoverypassword/*]
+09:32:47,554  INFO o.s.b.w.s.ServletRegistrationBean:193 - Servlet resetPasswordHandler was not registered (possibly already registered?)
+09:32:47,554  INFO o.s.b.w.s.ServletRegistrationBean:190 - Mapping servlet: 'assetHandler' to [/assets/*]
+09:32:47,555  INFO o.s.b.w.s.ServletRegistrationBean:190 - Mapping servlet: 'resourceGetHandler' to [/file/*]
+09:32:47,555  INFO o.s.b.w.s.ServletRegistrationBean:190 - Mapping servlet: 'userAvatarHttpServletRequestHandler' to [/file/avatar/*]
+09:32:47,556  INFO o.s.b.w.s.ServletRegistrationBean:190 - Mapping servlet: 'fileUploadServlet' to [/page/upload]
+09:32:47,556  INFO o.s.b.w.s.ServletRegistrationBean:190 - Mapping servlet: 'appExceptionServletHandler' to [/error]
+09:32:47,556  INFO o.s.b.w.s.ServletRegistrationBean:190 - Mapping servlet: 'tooltipGeneratorServletRequestHandler' to [/tooltip/*]
+09:32:47,557  INFO o.s.b.w.s.ServletRegistrationBean:190 - Mapping servlet: 'dispatcherServlet' to [/]
+09:32:47,570  INFO o.s.b.w.s.FilterRegistrationBean:258 - Mapping filter: 'metricsFilter' to: [/*]
+09:32:47,571  INFO o.s.b.w.s.FilterRegistrationBean:258 - Mapping filter: 'characterEncodingFilter' to: [/*]
+09:32:47,571  INFO o.s.b.w.s.FilterRegistrationBean:258 - Mapping filter: 'webRequestLoggingFilter' to: [/*]
+09:32:47,571  INFO o.s.b.w.s.FilterRegistrationBean:258 - Mapping filter: 'applicationContextIdFilter' to: [/*]
+09:32:47,774  INFO c.m.s.FreeMarkerConfiguration:387 - No FreeMarker TemplateLoaders specified
+09:32:48,128  INFO o.f.c.i.u.VersionPrinter:44 - Flyway 4.2.0 by Boxfuse
+09:32:48,132  INFO c.z.h.HikariDataSource:95 - HikariPool-1 - Starting...
+09:32:48,476  INFO c.z.h.HikariDataSource:107 - HikariPool-1 - Start completed.
+09:32:48,497  INFO o.f.c.i.d.DbSupportFactory:44 - Database: jdbc:mysql://localhost/mycollab_live?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&rewriteBatchedStatements=true&useCompression=true&useServerPrepStmts=false&verifyServerCertificate=false&useSSL=false (MySQL 5.7)
+09:32:48,811  INFO o.f.c.i.c.DbMigrate:44 - Current version of schema `mycollab_live`: 20170801.1
+09:32:48,812  INFO o.f.c.i.c.DbMigrate:44 - Schema `mycollab_live` is up to date. No migration necessary.
+09:32:49,584  WARN o.i.m.DefaultCacheManager:241 - ISPN000435: Cache manager initialized with a default cache configuration but without a name for it. Set it in the GlobalConfiguration.
+09:32:49,936  INFO o.i.f.GlobalComponentRegistry:242 - ISPN000128: Infinispan version: Infinispan 'Bastille' 9.1.0.Final
+09:33:00,235  WARN o.a.j.c.u.RepositoryLock:134 - Existing lock file C:\Users\hainguyen\Documents\my\MyCollab\mycollab2\mycollab-app-premium\src\main\repo2\content-workspace\.lock detected. Repository was not shut down properly.
+09:33:00,241  INFO o.a.j.c.RepositoryImpl:258 - Starting repository...
+09:33:00,646  INFO o.a.j.c.j.DatabaseJournal:374 - Initialized local revision to 501
+09:33:00,647  INFO o.a.j.c.j.DatabaseJournal:383 - Cluster revision janitor thread not started
+09:33:00,648  INFO o.a.j.c.j.DatabaseJournal:280 - DatabaseJournal initialized.
+09:33:00,789  INFO o.a.j.c.RepositoryImpl:2034 - initializing workspace 'default2'...
+09:33:00,976  INFO o.a.j.c.RepositoryImpl:2038 - workspace 'default2' initialized
+09:33:00,985  INFO o.a.j.c.RepositoryImpl:454 - SecurityManager = class org.apache.jackrabbit.core.security.simple.SimpleSecurityManager
+09:33:00,987  INFO o.a.j.c.s.s.SimpleSecurityManager:137 - init: using Repository LoginModule configuration for Jackrabbit
+09:33:01,002  INFO o.a.j.c.RepositoryImpl:366 - Repository started (761ms)
+09:33:01,062  INFO c.m.m.e.ContentSessionFactory:24 - Register node types
+09:33:01,152  INFO c.m.m.e.ContentSessionFactory:50 - Register mycollab content type

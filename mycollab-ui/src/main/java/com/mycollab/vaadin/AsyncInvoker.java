@@ -1,6 +1,7 @@
 package com.mycollab.vaadin;
 
-import com.mycollab.configuration.SiteConfiguration;
+import com.mycollab.configuration.ServerConfiguration;
+import com.mycollab.spring.AppContextUtil;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +13,9 @@ import org.slf4j.LoggerFactory;
 public class AsyncInvoker {
     private static Logger LOG = LoggerFactory.getLogger(AsyncInvoker.class);
 
-    public static void access(final UI ui, final PageCommand pageCommand) {
-        if (ui == null) {
-            return;
-        }
-        pageCommand.setUI(ui);
-        if (SiteConfiguration.getPullMethod() == SiteConfiguration.PullMethod.push) {
+    public static void access(UI ui, final PageCommand pageCommand) {
+        pageCommand.currentUI = ui;
+        if (pageCommand.isPush) {
             new Thread(() -> ui.access(() -> {
                 try {
                     pageCommand.run();
@@ -47,10 +45,12 @@ public class AsyncInvoker {
     }
 
     public static abstract class PageCommand {
-        UI currentUI;
+        private UI currentUI;
+        private boolean isPush;
 
-        void setUI(UI ui) {
-            currentUI = ui;
+        public PageCommand() {
+            ServerConfiguration serverConfiguration = AppContextUtil.getSpringBean(ServerConfiguration.class);
+            isPush = serverConfiguration.isPush();
         }
 
         public UI getUI() {
@@ -66,7 +66,7 @@ public class AsyncInvoker {
         }
 
         public void push() {
-            if (SiteConfiguration.getPullMethod() == SiteConfiguration.PullMethod.push) {
+            if (isPush) {
                 currentUI.push();
             }
         }

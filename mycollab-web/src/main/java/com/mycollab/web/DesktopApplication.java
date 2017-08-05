@@ -5,6 +5,7 @@ import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.configuration.EnDecryptHelper;
+import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.*;
 import com.mycollab.eventmanager.EventBusFactory;
@@ -72,7 +73,9 @@ public class DesktopApplication extends AppUI {
     @Override
     protected void init(final VaadinRequest request) {
         broadcastReceiverService = AppContextUtil.getSpringBean(BroadcastReceiverService.class);
-        if (SiteConfiguration.getPullMethod() == SiteConfiguration.PullMethod.push) {
+
+        ServerConfiguration serverConfiguration = AppContextUtil.getSpringBean(ServerConfiguration.class);
+        if (serverConfiguration.isPush()) {
             getPushConfiguration().setPushMode(PushMode.MANUAL);
         }
 

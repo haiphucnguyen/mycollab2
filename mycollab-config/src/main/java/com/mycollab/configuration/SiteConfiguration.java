@@ -38,7 +38,6 @@ public class SiteConfiguration {
     private String dropboxCallbackUrl;
     private String ggDriveCallbackUrl;
 
-    private PullMethod pullMethod;
     private Configuration freemarkerConfiguration;
 
     public static void loadConfiguration() {
@@ -56,9 +55,6 @@ public class SiteConfiguration {
         } catch (Exception e) {
             instance.defaultLocale = Locale.US;
         }
-
-        String pullMethodValue = ApplicationProperties.getString(ApplicationProperties.PULL_METHOD, "push");
-        instance.pullMethod = PullMethod.valueOf(pullMethodValue);
 
         instance.endecryptPassword = ApplicationProperties.getString(BI_ENDECRYPT_PASSWORD, "esofthead321");
 
@@ -135,10 +131,6 @@ public class SiteConfiguration {
         return getInstance().siteName;
     }
 
-    public static PullMethod getPullMethod() {
-        return getInstance().pullMethod;
-    }
-
     public static String getSendErrorEmail() {
         return getInstance().sentErrorEmail;
     }
@@ -180,9 +172,5 @@ public class SiteConfiguration {
 
     public static Configuration freemarkerConfiguration() {
         return getInstance().freemarkerConfiguration;
-    }
-
-    public enum PullMethod {
-        push, pull
     }
 }
