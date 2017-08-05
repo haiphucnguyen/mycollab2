@@ -17,8 +17,6 @@ public class S3RawContentServiceImpl implements RawContentService {
     private S3StorageServiceImpl storageConfiguration;
 
     public S3RawContentServiceImpl() {
-        //TODO : configure with s3
-//        storageConfiguration = (S3StorageServiceImpl) StorageFactory.getInstance();
     }
 
     @Override
@@ -84,7 +82,7 @@ public class S3RawContentServiceImpl implements RawContentService {
             }
 
         } catch (Exception e) {
-            throw new MyCollabException("Can not remane from path " + oldPath + " to " + newPath, e);
+            throw new MyCollabException("Can not rename from path " + oldPath + " to " + newPath, e);
         }
 
     }

@@ -3,6 +3,8 @@ package com.mycollab.lock;
 import com.mycollab.spring.AppContextUtil;
 import org.apache.commons.collections.map.AbstractReferenceMap;
 import org.apache.commons.collections.map.ReferenceMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.Map;
@@ -14,7 +16,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * @since 4.5.2
  */
 public class DistributionLockUtil {
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static Logger LOG = LoggerFactory.getLogger(DistributionLockUtil.class);
+
     private static final Map map = Collections.synchronizedMap(new ReferenceMap(AbstractReferenceMap.WEAK, AbstractReferenceMap.WEAK));
 
     public static Lock getLock(String lockName) {
@@ -27,6 +30,7 @@ public class DistributionLockUtil {
                 return lock;
             }
         } catch (Exception e) {
+            LOG.warn("Can not get lock service", e);
             return getStaticDefaultLock(lockName);
         }
     }
@@ -35,7 +39,6 @@ public class DistributionLockUtil {
         map.remove(lockName);
     }
 
-    @SuppressWarnings("unchecked")
     private static Lock getStaticDefaultLock(String lockName) {
         synchronized (map) {
             Lock lock = (Lock) map.get(lockName);

@@ -1,4 +1,4 @@
-package com.mycollab.premium.jgroups.protocols;
+package com.mycollab.pro.jgroups.protocols;
 
 import org.jgroups.conf.ClassConfigurator;
 import org.jgroups.protocols.JDBC_PING;

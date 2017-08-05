@@ -6,14 +6,16 @@ import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.db.persistence.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.2
  */
-@Service
+@Component
+@Profile("production")
 @Order(value = 1)
 public class DeploymentMode implements IDeploymentMode, IService {
 

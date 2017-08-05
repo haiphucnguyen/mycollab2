@@ -359,7 +359,7 @@ function updateInfoAction(){
     }
 
      $.ajax({
-          type: 'GET',
+          type: 'POST',
           url: urlPost,
           data : {
                     sitename : $('#sitename').val().trim(),
