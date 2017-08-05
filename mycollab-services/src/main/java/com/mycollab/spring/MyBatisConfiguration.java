@@ -8,11 +8,15 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
+import javax.sql.DataSource;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,18 +26,17 @@ import java.util.ArrayList;
  * @since 4.6.0
  */
 @Configuration
-@Profile("production")
-@Import(DataSourceConfiguration.class)
+@Profile({"production", "test"})
 @DependsOn("dbMigration")
 @MapperScan(basePackages = {"com.mycollab.**.dao"})
 public class MyBatisConfiguration {
     @Autowired
-    private DataSourceConfiguration dbConfig;
+    private DataSource dataSource;
 
     @Bean
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
-        sqlSessionFactory.setDataSource(dbConfig.dataSource());
+        sqlSessionFactory.setDataSource(dataSource);
         sqlSessionFactory.setTypeAliasesPackage("com.mycollab.common.domain.criteria;" +
                 "com.mycollab.module.crm.domain.criteria;" +
                 "com.mycollab.module.ecm.domain.criteria;" +
@@ -47,7 +50,17 @@ public class MyBatisConfiguration {
         sqlSessionFactory.setTypeAliases(new Class[]{VelocityDriverDeclare.class});
         sqlSessionFactory.setTypeHandlersPackage("com.mycollab.mybatis.plugin.ext");
         sqlSessionFactory.setMapperLocations(buildBatchMapperResources(
-                "classpath:sqlMap/**/*Mapper*.xml", "classpath:sqlMapExt/**/*Mapper*.xml"));
+                "classpath:sqlMap/billing/*Mapper*.xml",
+                "classpath:sqlMap/common/*Mapper*.xml",
+                "classpath:sqlMapExt/common/*Mapper*.xml",
+                "classpath:sqlMap/user/*Mapper*.xml",
+                "classpath:sqlMap/form/*Mapper*.xml",
+                "classpath:sqlMap/ecm/*Mapper*.xml",
+                "classpath:sqlMap/crm/*Mapper*.xml",
+                "classpath:sqlMap/project/*Mapper*.xml",
+                "classpath:sqlMapExt/project/*Mapper*.xml",
+                "classpath:sqlMap/tracker/*Mapper*.xml",
+                "classpath:sqlMap/support/*Mapper*.xml"));
 
         return sqlSessionFactory.getObject();
     }

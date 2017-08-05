@@ -17,11 +17,11 @@ import javax.jcr.SimpleCredentials;
  * @since 4.6.0
  */
 @Configuration
+@DependsOn("dbMigration")
 @Profile("production")
 public class EcmConfiguration {
 
     @Bean
-    @DependsOn(value = "dbMigration")
     public RepositoryFactoryBean repository() {
         RepositoryFactoryBean bean = new RepositoryFactoryBean();
         bean.setConfiguration(new ClassPathResource("jackrabbit-repo.xml"));

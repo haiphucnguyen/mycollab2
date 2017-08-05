@@ -81,7 +81,7 @@ public class BillingServiceImpl implements BillingService {
 
         BillingAccountExample billingEx = new BillingAccountExample();
         billingEx.createCriteria().andSubdomainEqualTo(subDomain);
-        if (this.billingAccountMapper.countByExample(billingEx) > 0) {
+        if (billingAccountMapper.countByExample(billingEx) > 0) {
             throw new ExistedSubDomainException(LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(),
                     ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }

@@ -14,7 +14,6 @@ import javax.sql.DataSource;
  */
 @Configuration
 @Profile("test")
-@MapperScan("com.mycollab.**.dao")
 public class DataSourceConfigurationTest {
 
     @Bean

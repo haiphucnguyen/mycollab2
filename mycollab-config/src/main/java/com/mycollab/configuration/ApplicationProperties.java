@@ -24,8 +24,6 @@ public class ApplicationProperties {
 
     private static Properties properties;
 
-    public static final String MYCOLLAB_PORT = "mycollab.port";
-
     public static final String DB_USERNAME = "db.username";
     public static final String DB_PASSWORD = "db.password";
     public static final String DB_DRIVER_CLASS = "db.driverClassName";
@@ -43,13 +41,9 @@ public class ApplicationProperties {
     public static final String MAIL_NOTIFY = "mail.notify";
 
     public static final String ERROR_SENDTO = "error.sendTo";
-    public static final String STORAGE_SYSTEM = "storageSystem";
 
     public static final String SITE_NAME = "site.name";
     public static final String SERVER_ADDRESS = "server.address";
-
-    public static final String RESOURCE_DOWNLOAD_URL = "resource.downloadUrl";
-    public static final String API_URL = "api.url";
 
     public static final String DROPBOX_AUTH_LINK = "dropbox.callbackUrl";
     public static final String GOOGLE_DRIVE_LINK = "ggDrive.callbackUrl";
@@ -65,10 +59,10 @@ public class ApplicationProperties {
 
         properties = new EncryptableProperties(encryptor);
         try {
-            File myCollabResourceFile = getAppConfigFile();
+            File configFile = getAppConfigFile();
 
-            if (myCollabResourceFile != null) {
-                try (InputStreamReader isr = new InputStreamReader(new FileInputStream(myCollabResourceFile), "UTF-8")) {
+            if (configFile != null) {
+                try (InputStreamReader isr = new InputStreamReader(new FileInputStream(configFile), "UTF-8")) {
                     properties.load(isr);
                 }
             } else {

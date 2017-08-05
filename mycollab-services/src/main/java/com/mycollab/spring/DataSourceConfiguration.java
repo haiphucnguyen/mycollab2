@@ -21,7 +21,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class DataSourceConfiguration {
 
-    @Bean(name = "dataSource")
+    @Bean
     public DataSource dataSource() {
         DatabaseConfiguration dbConf = SiteConfiguration.getDatabaseConfiguration();
         HikariDataSource dataSource = new HikariDataSource();

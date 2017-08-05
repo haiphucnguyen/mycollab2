@@ -9,7 +9,7 @@ import org.infinispan.manager.EmbeddedCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -19,7 +19,7 @@ import java.util.Set;
  * @since 5.1.4
  */
 @Service
-@Order(value = 1)
+@Profile({"production"})
 public class InfinispanCacheService implements CacheService {
     private static Logger LOG = LoggerFactory.getLogger(InfinispanCacheService.class);
 
