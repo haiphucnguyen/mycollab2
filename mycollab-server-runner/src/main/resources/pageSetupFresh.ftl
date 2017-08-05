@@ -376,7 +376,7 @@ function updateInfoAction(){
                     ssl: sslStatus
                 },
           success: function(res) {
-             if (res!=null) {
+             if (res != null) {
                 if(res.length > 0) {
                     $('#setupBtn').html('<span>Setup</span>');
                     alert(res);

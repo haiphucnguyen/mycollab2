@@ -29,16 +29,8 @@ public class InstallationServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(InstallationServlet.class);
 
-    private boolean waitFlag = true;
-
-    public void setWaitFlag(boolean flag) {
-        this.waitFlag = flag;
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOG.info("Try to install MyCollab");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setHeader("Expires", "-1");
         PrintWriter out = response.getWriter();
         String siteName = request.getParameter("sitename");
         String serverAddress = request.getParameter("serverAddress");
@@ -125,16 +117,6 @@ public class InstallationServlet extends HttpServlet {
             outStream.write(writer.toString().getBytes());
             outStream.flush();
             outStream.close();
-
-            while (waitFlag) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    throw new MyCollabException(e);
-                }
-            }
-
-
         } catch (Exception e) {
             LOG.error("Error while set up MyCollab", e);
             out.write("Can not write the settings to the file system. You should check our knowledge base article at " +

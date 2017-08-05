@@ -7,6 +7,7 @@ import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.ondemand.configuration.AmazonServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
  * @since 1.0
  */
 @Service
+@Profile("production")
 public class S3StorageServiceImpl extends AbstractStorageService {
 
     @Autowired
