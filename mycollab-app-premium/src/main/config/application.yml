@@ -12,5 +12,8 @@ server:
   # Session timeout in seconds
   session.timeout: 1800
 
+logging.level:
+  org.jgroups: ERROR
+
 endpoints:
   sensitive: false

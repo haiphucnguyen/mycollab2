@@ -47,7 +47,7 @@ public class MyBatisConfiguration {
         sqlSessionFactory.setTypeAliases(new Class[]{VelocityDriverDeclare.class});
         sqlSessionFactory.setTypeHandlersPackage("com.mycollab.mybatis.plugin.ext");
         sqlSessionFactory.setMapperLocations(buildBatchMapperResources(
-                "classpath:sqlMap/**/*Mapper*.xml"));
+                "classpath:sqlMap/**/*Mapper*.xml", "classpath:sqlMapExt/**/*Mapper*.xml"));
 
         return sqlSessionFactory.getObject();
     }
