@@ -9,14 +9,6 @@ app:
 server:
   apiUrl: https://api.mycollab.com/api/
   port: 8080
-  # Session timeout in seconds
-  session.timeout: 1800
-  # The method to pull data from server to client. They are two values: push or pull. Push method is recommended, but
-  # if your network causes the push method does not work properly then you should use pull method
-  pull_method: push
-
-logging.level:
-  org.jgroups: ERROR
 
 endpoints:
   sensitive: false

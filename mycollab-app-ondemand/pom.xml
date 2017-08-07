@@ -208,7 +208,7 @@
                                 <manifest>
                                     <addClasspath>true</addClasspath>
                                     <classpathPrefix>lib/</classpathPrefix>
-                                    <mainClass>com.mycollab.server.DefaultServerRunnerLegacy</mainClass>
+                                    <mainClass>com.mycollab.server.DefaultServerRunner</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
@@ -329,8 +329,8 @@
                                 <copy todir="${installer.staging.dir}">
                                     <fileset dir="${installer.resource.dir.app}"/>
                                 </copy>
-                                <copy todir="${installer.staging.dir}/conf">
-                                    <fileset dir="${basedir}/src/main/conf">
+                                <copy todir="${installer.staging.dir}/config">
+                                    <fileset dir="${basedir}/src/main/config">
                                         <exclude name="mycollab.properties"/>
                                     </fileset>
                                 </copy>

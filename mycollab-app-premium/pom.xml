@@ -159,7 +159,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.mycollab.server.DefaultServerRunnerLegacy</mainClass>
+                                    <mainClass>com.mycollab.server.DefaultServerRunner</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>

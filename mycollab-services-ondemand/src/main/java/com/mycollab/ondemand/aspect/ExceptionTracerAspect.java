@@ -29,7 +29,7 @@ public class ExceptionTracerAspect {
 		Class<?> cls = advised.getTargetSource().getTargetClass();
 		String methodName = joinPoint.getSignature().getName();
 		Object[] args = joinPoint.getArgs();
-		StringBuffer errorMsg = new StringBuffer("Class name: ").append(cls.getName());
+		StringBuilder errorMsg = new StringBuilder("Class name: ").append(cls.getName());
 		errorMsg.append(" Method: ").append(methodName).append(". Arguments: ");
 		for (Object arg : args) {
 			errorMsg.append(BeanUtility.printBeanObj(arg));

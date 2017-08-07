@@ -9,10 +9,6 @@
 site.name=${sitename}
 server.address=${serveraddress}
 
-# The method to pull data from server to client. They are two values: push or pull. Push method is recommended, but
-# if your network causes the push method does not work properly then you should use pull method
-pull_method=push
-
 
 #=====================================================
 #    DATABASE CONFIGURATION

@@ -52,13 +52,6 @@ public class CheckVersionController {
         props.put("releaseNotes", String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
                 Version.getVersion().replace('.', '-')));
         props.put("autoDownload", editionInfoResolver.getEditionInfo().getPremiumUpgradeLink());
-//        ProEditionInfoExample ex = new ProEditionInfoExample();
-//        ex.createCriteria().andIdEqualTo(Integer.parseInt(EnDecryptHelper.decryptText(customerId)));
-//        boolean isExistCustomer = proEditionInfoMapper.countByExample(ex) > 0;
-//        if (isExistCustomer && version != null && Version.isEditionNewer(liveVersion, version)) {
-//            props.put("autoDownload", editionInfoResolver.getEditionInfo().getPremiumUpgradeLink());
-//        }
-
         return props;
     }
 }
