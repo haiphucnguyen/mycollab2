@@ -72,7 +72,7 @@ if "%TITLE%" == "" set TITLE=MyCollab
 set _EXECJAVA=start "%TITLE%" %_RUNJAVA% %MYCOLLAB_OPTS%
 goto gotTitle
 :noTitle
-set _EXECJAVA=start %_RUNJAVA% %MYCOLLAB_OPTS%
+set _EXECJAVA=start %_RUNJAVA%
 :gotTitle
 shift
 goto execCmd
@@ -85,7 +85,7 @@ goto execCmd
 
 rem Execute Java with the applicable properties
 cd ..
-%_EXECJAVA% -jar executor.jar %*
+%_EXECJAVA% -jar executor.jar %* %MYCOLLAB_OPTS%
 goto end
 
 :end

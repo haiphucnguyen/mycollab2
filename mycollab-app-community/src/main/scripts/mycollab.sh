@@ -153,7 +153,7 @@ if [ "$1" = "--start" ] ; then
   shift
   touch "$MYCOLLAB_OUT"
   cd ..
-  eval \"$_RUNJAVA\" $MYCOLLAB_OPTS -jar $MYCOLLAB_HOME/executor.jar &
+  eval \"$_RUNJAVA\" -jar $MYCOLLAB_HOME/executor.jar $MYCOLLAB_OPTS &
 
   if [ ! -z "$MYCOLLAB_PID" ]; then
     echo $! > "$MYCOLLAB_PID"
@@ -196,7 +196,7 @@ elif [ "$1" = "--stop" ] ; then
   fi
 
   cd ..
-  eval \"$_RUNJAVA\" -jar $MYCOLLAB_HOME/executor.jar --stop
+  eval \"$_RUNJAVA\" -jar $MYCOLLAB_HOME/executor.jar --stop $MYCOLLAB_OPTS
 
   if [ ! -z "$MYCOLLAB_PID" ]; then
     if [ -f "$MYCOLLAB_PID" ]; then
