@@ -13,12 +13,12 @@ import org.springframework.context.annotation.Profile;
 @Profile("production")
 public class GenericSpringServletRegistor {
 
-    @Bean
+    @Bean("errorServlet")
     public ServletRegistrationBean errorServlet() {
         return new ServletRegistrationBean(new AppExceptionServletHandler(), "/error");
     }
 
-    @Bean
+    @Bean("tooltipServlet")
     public ServletRegistrationBean tooltipServlet() {
         return new ServletRegistrationBean(new TooltipGeneratorServletRequestHandler(), "/tooltip/*");
     }

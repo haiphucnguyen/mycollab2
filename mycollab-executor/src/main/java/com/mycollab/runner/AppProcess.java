@@ -91,7 +91,7 @@ class AppProcess {
 
     void stop() throws InterruptedException, TimeoutException, IOException {
         LOG.info("Stopping MyCollab process");
-        ProcessUtil.destroyGracefullyOrForcefullyAndWait(wrappedJavaProcess, 6000, TimeUnit.SECONDS, 6000, TimeUnit.SECONDS);
+        ProcessUtil.destroyGracefullyOrForcefullyAndWait(wrappedJavaProcess, 20000, TimeUnit.SECONDS, 20000, TimeUnit.SECONDS);
         LOG.info("Stopped MyCollab process successfully");
     }
 }

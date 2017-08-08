@@ -12,18 +12,18 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile("production")
 public class BillingSpringServletRegistrator {
-    @Bean
+    @Bean("confirmEmailServlet")
     public ServletRegistrationBean confirmEmailServlet() {
         return new ServletRegistrationBean(new ConfirmEmailHandler(), "/user/confirm_signup/*");
     }
 
 
-    @Bean
+    @Bean("resetPasswordServlet")
     public ServletRegistrationBean resetPasswordServlet() {
         return new ServletRegistrationBean(new ResetPasswordHandler(), "/user/recoverypassword/action/*");
     }
 
-    @Bean
+    @Bean("resetPasswordServlet")
     public ServletRegistrationBean resetPasswordPage() {
         return new ServletRegistrationBean(new ResetPasswordHandler(), "/user/recoverypassword/*");
     }

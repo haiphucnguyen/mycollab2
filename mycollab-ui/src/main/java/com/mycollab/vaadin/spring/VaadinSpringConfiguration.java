@@ -13,7 +13,8 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile("production")
 public class VaadinSpringConfiguration {
-    @Bean
+
+    @Bean("mainServlet")
     public ServletRegistrationBean mainServlet() {
         ServletRegistrationBean bean = new ServletRegistrationBean(
                 new AppServlet(), "/*");

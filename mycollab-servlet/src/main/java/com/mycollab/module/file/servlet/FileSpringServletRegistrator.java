@@ -12,17 +12,17 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile("production")
 public class FileSpringServletRegistrator {
-    @Bean
+    @Bean("assetServlet")
     public ServletRegistrationBean assetServlet() {
         return new ServletRegistrationBean(new AssetHandler(), "/assets/*");
     }
 
-    @Bean
+    @Bean("resourceGetServlet")
     public ServletRegistrationBean resourceGetServlet() {
         return new ServletRegistrationBean(new ResourceGetHandler(), "/file/*");
     }
 
-    @Bean
+    @Bean("userAvatarServlet")
     public ServletRegistrationBean userAvatarServlet() {
         return new ServletRegistrationBean(new UserAvatarHttpServletRequestHandler(), "/file/avatar/*");
     }

@@ -96,7 +96,8 @@ public class Executor {
         try (FileWriter writer = new FileWriter(new File(getUserDir(), PID_FILE), false)) {
             writer.write("START");
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Error to write pid file", e);
+            System.exit(-1);
         }
 
         new Thread(() -> {

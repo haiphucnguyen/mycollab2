@@ -1,6 +1,5 @@
 package com.mycollab.module.page.servlet;
 
-import com.mycollab.module.file.servlet.AssetHandler;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +12,7 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile("production")
 public class PageSpringServletRegistor {
-    @Bean
+    @Bean("fileUploadServlet")
     public ServletRegistrationBean fileUploadServlet() {
         return new ServletRegistrationBean(new FileUploadServlet(), "/page/upload");
     }
