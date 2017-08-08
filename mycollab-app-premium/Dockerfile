@@ -1,3 +1,4 @@
+FROM ubuntu:14.04
 FROM java:8
 MAINTAINER Hai Nguyen <hainguyen@mycollab.com>
 

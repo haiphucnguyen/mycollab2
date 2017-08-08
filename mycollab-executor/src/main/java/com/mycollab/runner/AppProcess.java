@@ -25,10 +25,10 @@ import java.util.concurrent.TimeoutException;
 class AppProcess {
     private static Logger LOG = LoggerFactory.getLogger(AppProcess.class);
 
-    private String initialOptions;
+    private String[] initialOptions;
     private JavaProcess wrappedJavaProcess;
 
-    AppProcess(String initialOptions) {
+    AppProcess(String[] initialOptions) {
         this.initialOptions = initialOptions;
     }
 
@@ -51,9 +51,12 @@ class AppProcess {
                     javaOptions.add("java");
                 }
 
-                if (!"".equals(initialOptions)) {
-                    String[] optArr = initialOptions.split(" ");
-                    javaOptions.addAll(Arrays.asList(optArr));
+                if (initialOptions.length > 0) {
+                    List<String> options = new ArrayList<>(Arrays.asList(initialOptions));
+                    if (options.contains("--start")) {
+                        options.remove("--start");
+                    }
+                    javaOptions.addAll(options);
                 }
 
                 File libDir = new File(System.getProperty("MYCOLLAB_APP_HOME"), "lib");

@@ -83,16 +83,15 @@ public class Executor {
         }
     }
 
-    private String initialOptions = "";
 
     private Executor() {
         File jarFile = getUserDir();
         System.setProperty("MYCOLLAB_APP_HOME", jarFile.getAbsolutePath());
     }
 
-    private void runServer() throws Exception {
+    private void runServer(String[] args) throws Exception {
         LOG.info("Start MyCollab server process");
-        final AppProcess process = new AppProcess(initialOptions);
+        final AppProcess process = new AppProcess(args);
         File pIdFile = new File(getUserDir(), PID_FILE);
         try (FileWriter writer = new FileWriter(new File(getUserDir(), PID_FILE), false)) {
             writer.write("START");
@@ -163,14 +162,6 @@ public class Executor {
         }
     }
 
-    public static void start(String[] args) throws Exception {
-        new Executor().runServer();
-    }
-
-    public static void stop(String[] args) throws Exception {
-        new Executor().stopServer();
-    }
-
     private static File getUserDir() {
         try {
             CodeSource codeSource = Executor.class.getProtectionDomain().getCodeSource();
@@ -183,10 +174,10 @@ public class Executor {
     }
 
     public static void main(String[] args) throws Exception {
-        if (args.length > 0 && (args[0].equals("stop") || args[0].equals("--stop"))) {
+        if (args.length > 0 && args[0].equals("--stop")) {
             new Executor().stopServer();
         } else {
-            new Executor().runServer();
+            new Executor().runServer(args);
         }
     }
 }
