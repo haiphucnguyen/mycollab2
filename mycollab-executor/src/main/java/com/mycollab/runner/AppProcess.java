@@ -82,7 +82,7 @@ class AppProcess {
                 wrappedJavaProcess = Processes.newJavaProcess(javaProcess.getProcess());
                 javaProcess.getFuture().get();
             } catch (Exception e) {
-                e.printStackTrace();
+                LOG.error("Fail to start process", e);
                 System.exit(-1);
             }
         });
@@ -91,7 +91,7 @@ class AppProcess {
 
     void stop() throws InterruptedException, TimeoutException, IOException {
         LOG.info("Stopping MyCollab process");
-        ProcessUtil.destroyGracefullyOrForcefullyAndWait(wrappedJavaProcess, 20000, TimeUnit.SECONDS, 20000, TimeUnit.SECONDS);
+        ProcessUtil.destroyGracefullyOrForcefullyAndWait(wrappedJavaProcess, 10, TimeUnit.SECONDS, 10, TimeUnit.SECONDS);
         LOG.info("Stopped MyCollab process successfully");
     }
 }

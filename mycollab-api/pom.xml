@@ -50,11 +50,70 @@
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-services-pro</artifactId>
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-jersey2-jaxrs</artifactId>
+            <version>1.5.16</version>
+        </dependency>
+
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.kongchen</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <apiSources>
+                        <apiSource>
+                            <locations>com.mycollab.rest.server.resource</locations>
+                            <schemes>https</schemes>
+                            <host>www.mycollab.com</host>
+                            <basePath>/api</basePath>
+                            <swaggerDirectory>${project.build.directory}/swagger-ui</swaggerDirectory>
+                            <springmvc>true</springmvc>
+                            <info>
+                                <title>Billing API document</title>
+                                <version>v2</version>
+                                <contact>
+                                    <name>API Support</name>
+                                    <url>https://www.mycollab.com</url>
+                                    <email>support@mycollab.com</email>
+                                </contact>
+                                <license>
+                                    <name>Commercial API</name>
+                                    <url>https://www.mycollab.com/api/license</url>
+                                </license>
+                            </info>
+                        </apiSource>
+                    </apiSources>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <!-- Adding dependency to swagger-hibernate-validations to enable the BeanValidator as a custom
+                         model converter -->
+                    <dependency>
+                        <groupId>io.swagger</groupId>
+                        <artifactId>swagger-hibernate-validations</artifactId>
+                        <version>1.5.16</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
 </project>

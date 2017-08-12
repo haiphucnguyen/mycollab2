@@ -3,6 +3,8 @@ package com.mycollab.rest.server.resource;
 import com.mycollab.core.Version;
 import com.mycollab.ondemand.module.billing.dao.ProEditionInfoMapper;
 import com.mycollab.ondemand.module.support.service.EditionInfoResolver;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +18,15 @@ import java.util.Properties;
  * @author MyCollab Ltd
  * @since 5.1.2
  */
+@Api(value = "Versions", tags = "Support")
 @RestController
 public class CheckVersionController {
 
     @Autowired
     private EditionInfoResolver editionInfoResolver;
 
+    @ApiOperation(value = "Check version whether it is the latest version. If it is not, return the latest version information",
+            response = String.class)
     @RequestMapping(value = "/checkupdate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Properties getLatestVersion(@RequestParam("version") String version) {
         Properties props = new Properties();

@@ -102,54 +102,57 @@ public class Executor {
 
         new Thread(() -> {
             Path toWatch = Paths.get(pIdFile.getParent());
-            try (WatchService pIdWatcher = toWatch.getFileSystem().newWatchService()) {
+            try (final WatchService pIdWatcher = FileSystems.getDefault().newWatchService()) {
                 toWatch.register(pIdWatcher, StandardWatchEventKinds.ENTRY_MODIFY);
                 // get the first event before looping
-                WatchKey key = pIdWatcher.take();
-                while (key != null) {
+                while (true) {
+                    final WatchKey key = pIdWatcher.take();
+                    LOG.info("Watch key: " + key);
                     // we have a polled event, now we traverse it and
                     // receive all the states from it
                     for (WatchEvent event : key.pollEvents()) {
                         final WatchEvent.Kind<?> kind = event.kind();
+                        // A new Path was created
+                        Path modifiedPath = ((WatchEvent<Path>) event).context();
+                        // Output
+                        String fileName = modifiedPath.toFile().getName();
                         // Overflow event
-                        if (StandardWatchEventKinds.ENTRY_MODIFY == kind) {
-                            // A new Path was created
-                            Path modifiedPath = ((WatchEvent<Path>) event).context();
-                            // Output
-                            String fileName = modifiedPath.toFile().getName();
-                            if (PID_FILE.equals(fileName)) {
-                                String fileContent = FileUtils.readFileToString(pIdFile);
-                                if (fileContent.startsWith("UPGRADE")) {
-                                    String filePath = fileContent.substring("UPGRADE:".length());
-                                    LOG.info(String.format("Upgrade MyCollab with file %s", filePath));
-                                    File upgradeFile = new File(filePath);
-                                    if (upgradeFile.exists()) {
-                                        process.stop();
-                                        unpackFile(upgradeFile);
-                                        process.start();
-                                    } else {
-                                        LOG.error("Can not upgrade MyCollab because the upgrade file is not existed " +
-                                                upgradeFile.getAbsolutePath());
-                                    }
-                                } else if (fileContent.startsWith("STOP")) {
-                                    try {
-                                        process.stop();
-                                    } finally {
-                                        LOG.info("Stop wrapper process");
-                                        System.exit(-1);
-                                    }
-                                } else if (fileContent.equals("RESTART")) {
+                        if (StandardWatchEventKinds.ENTRY_MODIFY == kind && PID_FILE.equals(fileName)) {
+                            String fileContent = FileUtils.readFileToString(pIdFile);
+                            LOG.info("Processing " + kind.hashCode() + "---" + event + "---" + fileContent);
+                            if (fileContent.startsWith("UPGRADE")) {
+                                String filePath = fileContent.substring("UPGRADE:".length());
+                                LOG.info(String.format("Upgrade MyCollab with file %s", filePath));
+                                File upgradeFile = new File(filePath);
+                                if (upgradeFile.exists()) {
                                     process.stop();
+                                    unpackFile(upgradeFile);
                                     process.start();
+                                } else {
+                                    LOG.error("Can not upgrade MyCollab because the upgrade file is not existed " +
+                                            upgradeFile.getAbsolutePath());
                                 }
+                            } else if (fileContent.startsWith("STOP")) {
+                                process.stop();
+                                Thread.sleep(10000);
+                                LOG.info("Stop wrapper process");
+                                System.exit(-1);
+                            } else if (fileContent.equals("RESTART")) {
+                                LOG.info("Restart service ...");
+                                process.stop();
+                                process.start();
                             }
+                            LOG.info("Stop processing");
+                            break;
                         }
                     }
-                    key.reset();
-                    key = pIdWatcher.take();
+                    boolean isValid = key.reset();
+                    if (!isValid) {
+                        return;
+                    }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                LOG.error("Error", e);
             }
         }).start();
         process.start();
@@ -175,10 +178,34 @@ public class Executor {
     }
 
     public static void main(String[] args) throws Exception {
-        if (args.length > 0 && args[0].equals("--stop")) {
-            new Executor().stopServer();
-        } else {
-            new Executor().runServer(args);
+//        if (args.length > 0 && args[0].equals("--stop")) {
+//            new Executor().stopServer();
+//        } else {
+//            new Executor().runServer(args);
+//        }
+        File pIdFile = new File(getUserDir(), PID_FILE);
+        System.out.println(pIdFile.getAbsolutePath());
+        Path toWatch = Paths.get(pIdFile.getParent());
+        try (final WatchService pIdWatcher = FileSystems.getDefault().newWatchService()) {
+            toWatch.register(pIdWatcher, StandardWatchEventKinds.ENTRY_MODIFY);
+            // get the first event before looping
+            while (true) {
+                final WatchKey key = pIdWatcher.take();
+                for (WatchEvent event : key.pollEvents()) {
+                    final WatchEvent.Kind<?> kind = event.kind();
+                    // A new Path was created
+                    Path modifiedPath = ((WatchEvent<Path>) event).context();
+                    // Output
+                    String fileName = modifiedPath.toFile().getName();
+                    // Overflow event
+                    if (StandardWatchEventKinds.ENTRY_MODIFY == kind && PID_FILE.equals(fileName)) {
+                        String fileContent = FileUtils.readFileToString(pIdFile);
+                        LOG.info("Processing " + kind.hashCode() + "---" + event + "---" + fileContent);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
