@@ -178,34 +178,10 @@ public class Executor {
     }
 
     public static void main(String[] args) throws Exception {
-//        if (args.length > 0 && args[0].equals("--stop")) {
-//            new Executor().stopServer();
-//        } else {
-//            new Executor().runServer(args);
-//        }
-        File pIdFile = new File(getUserDir(), PID_FILE);
-        System.out.println(pIdFile.getAbsolutePath());
-        Path toWatch = Paths.get(pIdFile.getParent());
-        try (final WatchService pIdWatcher = FileSystems.getDefault().newWatchService()) {
-            toWatch.register(pIdWatcher, StandardWatchEventKinds.ENTRY_MODIFY);
-            // get the first event before looping
-            while (true) {
-                final WatchKey key = pIdWatcher.take();
-                for (WatchEvent event : key.pollEvents()) {
-                    final WatchEvent.Kind<?> kind = event.kind();
-                    // A new Path was created
-                    Path modifiedPath = ((WatchEvent<Path>) event).context();
-                    // Output
-                    String fileName = modifiedPath.toFile().getName();
-                    // Overflow event
-                    if (StandardWatchEventKinds.ENTRY_MODIFY == kind && PID_FILE.equals(fileName)) {
-                        String fileContent = FileUtils.readFileToString(pIdFile);
-                        LOG.info("Processing " + kind.hashCode() + "---" + event + "---" + fileContent);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (args.length > 0 && args[0].equals("--stop")) {
+            new Executor().stopServer();
+        } else {
+            new Executor().runServer(args);
         }
     }
 }
