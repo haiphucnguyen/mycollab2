@@ -104,6 +104,8 @@ public class Executor {
             Path toWatch = Paths.get(pIdFile.getParent());
             try (final WatchService pIdWatcher = FileSystems.getDefault().newWatchService()) {
                 toWatch.register(pIdWatcher, StandardWatchEventKinds.ENTRY_MODIFY);
+                long lastInvokeTime = System.currentTimeMillis();
+                String lastFileContent = "";
                 // get the first event before looping
                 while (true) {
                     final WatchKey key = pIdWatcher.take();
@@ -119,31 +121,37 @@ public class Executor {
                         // Overflow event
                         if (StandardWatchEventKinds.ENTRY_MODIFY == kind && PID_FILE.equals(fileName)) {
                             String fileContent = FileUtils.readFileToString(pIdFile);
-                            LOG.info("Processing " + kind.hashCode() + "---" + event + "---" + fileContent);
-                            if (fileContent.startsWith("UPGRADE")) {
-                                String filePath = fileContent.substring("UPGRADE:".length());
-                                LOG.info(String.format("Upgrade MyCollab with file %s", filePath));
-                                File upgradeFile = new File(filePath);
-                                if (upgradeFile.exists()) {
+                            long currentTime = System.currentTimeMillis();
+                            LOG.info("A: " + (currentTime - lastInvokeTime) + "--" + fileContent + "---" + lastFileContent);
+                            if ((currentTime - lastInvokeTime > 5000) || !fileContent.equalsIgnoreCase(lastFileContent)) {
+                                lastInvokeTime = currentTime;
+                                lastFileContent = fileContent;
+                                LOG.info("Processing " + kind.hashCode() + "---" + event + "---" + fileContent + "--" + lastFileContent);
+                                if (fileContent.startsWith("UPGRADE")) {
+                                    String filePath = fileContent.substring("UPGRADE:".length());
+                                    LOG.info(String.format("Upgrade MyCollab with file %s", filePath));
+                                    File upgradeFile = new File(filePath);
+                                    if (upgradeFile.exists()) {
+                                        process.stop();
+                                        unpackFile(upgradeFile);
+                                        process.start();
+                                    } else {
+                                        LOG.error("Can not upgrade MyCollab because the upgrade file is not existed " +
+                                                upgradeFile.getAbsolutePath());
+                                    }
+                                } else if (fileContent.startsWith("STOP")) {
                                     process.stop();
-                                    unpackFile(upgradeFile);
+                                    Thread.sleep(10000);
+                                    LOG.info("Stop wrapper process");
+                                    System.exit(-1);
+                                } else if (fileContent.equals("RESTART")) {
+                                    LOG.info("Restart service ...");
+                                    process.stop();
                                     process.start();
-                                } else {
-                                    LOG.error("Can not upgrade MyCollab because the upgrade file is not existed " +
-                                            upgradeFile.getAbsolutePath());
                                 }
-                            } else if (fileContent.startsWith("STOP")) {
-                                process.stop();
-                                Thread.sleep(10000);
-                                LOG.info("Stop wrapper process");
-                                System.exit(-1);
-                            } else if (fileContent.equals("RESTART")) {
-                                LOG.info("Restart service ...");
-                                process.stop();
-                                process.start();
+                                LOG.info("Stop processing");
+                                break;
                             }
-                            LOG.info("Stop processing");
-                            break;
                         }
                     }
                     boolean isValid = key.reset();
