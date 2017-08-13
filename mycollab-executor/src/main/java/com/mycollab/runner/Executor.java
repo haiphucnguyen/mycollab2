@@ -141,7 +141,6 @@ public class Executor {
                                     }
                                 } else if (fileContent.startsWith("STOP")) {
                                     process.stop();
-                                    Thread.sleep(10000);
                                     LOG.info("Stop wrapper process");
                                     System.exit(-1);
                                 } else if (fileContent.equals("RESTART")) {

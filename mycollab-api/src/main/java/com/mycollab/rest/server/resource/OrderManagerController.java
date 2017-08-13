@@ -12,6 +12,7 @@ import com.mycollab.ondemand.module.billing.dao.ProEditionInfoMapper;
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfo;
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfoExample;
 import com.verhas.licensor.License;
+import io.swagger.annotations.Api;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -31,6 +32,7 @@ import java.util.Properties;
  * @author MyCollab Ltd
  * @since 5.2.5
  */
+@Api(value = "Order", tags = "Billing")
 @RestController
 @RequestMapping(path = "/order")
 public class OrderManagerController {

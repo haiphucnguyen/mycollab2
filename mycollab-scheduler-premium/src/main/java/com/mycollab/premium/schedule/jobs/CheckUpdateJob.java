@@ -138,7 +138,7 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
                         // get the cookie if need, for login
                         String cookies = httpConn.getHeaderField("Set-Cookie");
 
-                        // open the new connnection again
+                        // open the new connection again
                         httpConn = (HttpURLConnection) new URL(newUrl).openConnection();
                         httpConn.setRequestProperty("Cookie", cookies);
                         httpConn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");

@@ -3,6 +3,7 @@ package com.mycollab.rest.server.resource;
 import com.mycollab.configuration.IDeploymentMode;
 import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.ondemand.module.support.service.EmailReferenceService;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/account")
+@Api()
 public class AccountController {
     private static Logger LOG = LoggerFactory.getLogger(AccountController.class);
 
