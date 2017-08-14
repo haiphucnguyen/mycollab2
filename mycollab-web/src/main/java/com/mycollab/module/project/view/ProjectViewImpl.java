@@ -23,6 +23,7 @@ import com.mycollab.module.project.view.message.MessagePresenter;
 import com.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.mycollab.module.project.view.page.PagePresenter;
 import com.mycollab.module.project.view.parameters.*;
+import com.mycollab.module.project.view.reports.IProjectReportPresenter;
 import com.mycollab.module.project.view.settings.UserSettingPresenter;
 import com.mycollab.module.project.view.ticket.TicketPresenter;
 import com.mycollab.module.project.view.time.IFinancePresenter;
@@ -90,10 +91,10 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         private PagePresenter pagePresenter;
         private FilePresenter filePresenter;
         private IFinancePresenter financePresenter;
+        private IProjectReportPresenter reportPresenter;
         private UserSettingPresenter userPresenter;
 
         ProjectViewWrap(SimpleProject project) {
-            super();
             this.setWidth("100%");
             this.addStyleName("project-view");
 
@@ -125,6 +126,8 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     userPresenter.go(ProjectViewImpl.this, new ProjectMemberScreenData.Search(criteria));
                 } else if (ProjectTypeConstants.FINANCE.equals(caption)) {
                     financePresenter.go(ProjectViewImpl.this, null);
+                } else if (ProjectTypeConstants.REPORTS.equals(caption)) {
+                    reportPresenter.go(ProjectViewImpl.this, null);
                 }
             });
 
@@ -227,6 +230,11 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             } else {
                 myProjectTab.removeTab(ProjectTypeConstants.FINANCE);
             }
+
+//            myProjectTab.addTab(constructProjectReportComponent(), ProjectTypeConstants.REPORTS, 12,
+//                    UserUIContext.getMessage(PageI18nEnum.LIST),
+//                    GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateProjectLink(prjId),
+//                    ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE));
 
             myProjectTab.addTab(constructProjectUsers(), ProjectTypeConstants.MEMBER, 13,
                     UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_MEMBER),

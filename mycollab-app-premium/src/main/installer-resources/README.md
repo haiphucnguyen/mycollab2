@@ -47,9 +47,9 @@ Version 6.0.0
 
 **Improvements & New Features**
 
+* Support embedded database, MySQL is not required
 * The new module loader which uses Spring Boot
 * Support configuring SSL easier
-* Support docker image
 
 **Bug Fixes**
 
