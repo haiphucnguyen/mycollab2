@@ -22,12 +22,6 @@
 
         <dependency>
             <groupId>com.mycollab</groupId>
-            <artifactId>mycollab-caching-premium</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-migration</artifactId>
             <version>${project.version}</version>
         </dependency>

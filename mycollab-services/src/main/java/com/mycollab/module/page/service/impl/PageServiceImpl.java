@@ -306,7 +306,7 @@ public class PageServiceImpl implements PageService {
             Node node = JcrUtils.getNodeIfExists(rootNode, path);
             if (node != null) {
                 if (isNodeFolder(node)) {
-                    List<PageResource> resources = new ArrayList<PageResource>();
+                    List<PageResource> resources = new ArrayList<>();
                     NodeIterator childNodes = node.getNodes();
                     while (childNodes.hasNext()) {
                         Node childNode = childNodes.nextNode();
@@ -320,8 +320,7 @@ public class PageServiceImpl implements PageService {
                             }
                         } else {
                             String errorString = "Node %s has type not mycollab:content or mycollab:folder";
-                            LOG.error(String.format(errorString,
-                                    childNode.getPath()));
+                            LOG.error(String.format(errorString, childNode.getPath()));
                         }
                     }
 
@@ -334,7 +333,7 @@ public class PageServiceImpl implements PageService {
             }
 
             LOG.debug("There is no resource in path {}", path);
-            return new ArrayList<>();
+            return new ArrayList<PageResource>();
         });
     }
 
