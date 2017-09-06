@@ -15,10 +15,6 @@ public class FastSpringFactoryBean extends AbstractFactoryBean<FastSpring> {
         return FastSpring.class;
     }
 
-    public void afterPropertiesSet() throws Exception {
-        super.afterPropertiesSet();
-    }
-
     @Override
     public boolean isSingleton() {
         return false;

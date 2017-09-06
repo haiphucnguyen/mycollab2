@@ -75,7 +75,6 @@ public class SiteConfiguration {
         String dbPassword = ApplicationProperties.getString(DB_PASSWORD);
         instance.databaseConfiguration = new DatabaseConfiguration(driverClass, dbUrl, dbUser, dbPassword);
 
-
         instance.dropboxCallbackUrl = ApplicationProperties.getString(DROPBOX_AUTH_LINK);
         instance.ggDriveCallbackUrl = ApplicationProperties.getString(GOOGLE_DRIVE_LINK);
 

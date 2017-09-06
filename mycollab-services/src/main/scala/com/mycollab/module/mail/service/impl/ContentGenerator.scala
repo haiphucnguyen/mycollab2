@@ -49,8 +49,8 @@ class ContentGenerator extends IContentGenerator with InitializingBean {
   override def putVariable(key: String, value: Any): Unit = {
     import scala.collection.JavaConverters._
     value match {
-      case map: Map[_, _] => templateContext.put(key, mapAsJavaMap(map))
-      case list: List[_] => templateContext.put(key, seqAsJavaList(list))
+      case map: Map[_, _] => templateContext.put(key, map.asJava)
+      case list: List[_] => templateContext.put(key, list.asJava)
       case _ => templateContext.put(key, value)
     }
   }

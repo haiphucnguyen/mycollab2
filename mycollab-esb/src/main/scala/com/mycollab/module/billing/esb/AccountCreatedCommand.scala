@@ -56,7 +56,7 @@ import org.springframework.stereotype.Component
   }
 
   private def createSampleProjectData(initialUser: String, accountId: Integer): Unit = {
-    val now: DateTime = new DateTime()
+    val now = new DateTime()
 
     val project = new Project()
     project.setSaccountid(accountId)
@@ -84,7 +84,7 @@ import org.springframework.stereotype.Component
     message.setPosteddate(now.toLocalDate.toDate)
     messageService.saveWithSession(message, initialUser)
 
-    val milestone: Milestone = new Milestone()
+    val milestone = new Milestone()
     milestone.setCreateduser(initialUser)
     milestone.setDuedate(now.plusDays(14).toLocalDate.toDate)
     milestone.setStartdate(now.toLocalDate.toDate)

@@ -93,7 +93,7 @@ public class BillingAccountServiceImpl extends DefaultCrudService<Integer, Billi
         }
 
         List<BillingAccount> accounts = billingAccountMapper.selectByExample(ex);
-        if (accounts == null || accounts.size() == 0) {
+        if (CollectionUtils.isEmpty(accounts)) {
             return null;
         } else {
             return accounts.get(0);

@@ -20,8 +20,4 @@ class TicketController {
 
     @Autowired
     private val projectTicketService: ProjectTicketService? = null
-
-    fun list(@PathVariable sAccountId: Int?): List<ProjectTicket> {
-        return ArrayList()
-    }
 }

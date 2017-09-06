@@ -25,6 +25,7 @@ public class RoleServiceDBImpl extends DefaultService<Integer, Role, RoleSearchC
 
     @Autowired
     private RoleMapper roleMapper;
+
     @Autowired
     private RoleMapperExt roleMapperExt;
 
