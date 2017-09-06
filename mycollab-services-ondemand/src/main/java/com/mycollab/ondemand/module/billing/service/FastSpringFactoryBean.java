@@ -16,6 +16,11 @@ public class FastSpringFactoryBean extends AbstractFactoryBean<FastSpring> {
     }
 
     @Override
+    public boolean isSingleton() {
+        return false;
+    }
+
+    @Override
     protected FastSpring createInstance() throws Exception {
         return new FastSpring("mycollab", "haiphucnguyen@gmail.com", "8ADellm064OP");
     }
