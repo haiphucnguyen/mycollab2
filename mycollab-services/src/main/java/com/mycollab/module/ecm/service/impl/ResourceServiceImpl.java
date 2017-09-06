@@ -30,7 +30,7 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-@Service(value = "resourceService")
+@Service
 public class ResourceServiceImpl implements ResourceService {
     private static final Logger LOG = LoggerFactory.getLogger(ResourceServiceImpl.class);
 

@@ -1,10 +1,10 @@
 package com.mycollab.ondemand.module.file.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.module.file.service.AbstractStorageService;
-import com.mycollab.ondemand.configuration.AmazonServiceConfiguration;
+import com.mycollab.ondemand.module.file.service.AmazonServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -16,18 +16,17 @@ import org.springframework.stereotype.Service;
  * @since 1.0
  */
 @Service
-@Profile("production")
 public class S3StorageServiceImpl extends AbstractStorageService {
 
     @Autowired
     private ServerConfiguration serverConfiguration;
 
-    public final AmazonS3 newS3Client() {
-        return new AmazonS3Client(AmazonServiceConfiguration.amazonCredentials());
+    public AmazonS3 newS3Client() {
+        return AmazonS3ClientBuilder.defaultClient();
     }
 
     public String getBucket() {
-        return AmazonServiceConfiguration.getBucket();
+        return AmazonServiceConfiguration.getInstance().getBucket();
     }
 
     @Override

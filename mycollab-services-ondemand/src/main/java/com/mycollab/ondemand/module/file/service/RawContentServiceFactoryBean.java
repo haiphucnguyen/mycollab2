@@ -1,7 +1,6 @@
 package com.mycollab.ondemand.module.file.service;
 
 import com.mycollab.cache.IgnoreCacheClass;
-import com.mycollab.configuration.ApplicationProperties;
 import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.db.persistence.service.IService;
 import com.mycollab.module.file.service.RawContentService;
@@ -9,7 +8,6 @@ import com.mycollab.module.file.service.impl.FileRawContentServiceImpl;
 import com.mycollab.ondemand.module.file.service.impl.S3RawContentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import static com.mycollab.configuration.ServerConfiguration.STORAGE_S3;
@@ -21,8 +19,7 @@ import static com.mycollab.configuration.ServerConfiguration.STORAGE_S3;
  * <code>S3RawContentServiceImpl</code> if MyCollab is installed on MyCollab
  * server.
  */
-@Service(value = "rawContentService")
-@Profile("production")
+@Service
 @IgnoreCacheClass
 public class RawContentServiceFactoryBean extends AbstractFactoryBean<RawContentService> implements IService {
 
@@ -32,7 +29,12 @@ public class RawContentServiceFactoryBean extends AbstractFactoryBean<RawContent
     @Override
     protected RawContentService createInstance() throws Exception {
         String storageSystem = serverConfiguration.getStorageSystem();
-        return STORAGE_S3.equals(storageSystem) ? new S3RawContentServiceImpl() : new FileRawContentServiceImpl();
+        return (STORAGE_S3.equals(storageSystem)) ? new S3RawContentServiceImpl() : new FileRawContentServiceImpl();
+    }
+
+    @Override
+    public boolean isSingleton() {
+        return false;
     }
 
     @Override

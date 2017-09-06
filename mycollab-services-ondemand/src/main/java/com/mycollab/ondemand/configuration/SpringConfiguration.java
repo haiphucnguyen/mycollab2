@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile("production")
 @ComponentScan(basePackages = {
-        "com.mycollab.monitoring.spring",
+        "com.mycollab.license.service",
         "com.mycollab.pro.cache.aspect",
         "com.mycollab.pro.common.service",
         "com.mycollab.pro.jgroups.service",
@@ -26,8 +26,8 @@ import org.springframework.context.annotation.Profile;
         "com.mycollab.ondemand.module.file.service",
         "com.mycollab.ondemand.module.support.service",
         "com.mycollab.ondemand.module.user.esb",
-        "com.mycollab.ondemand.schedule.spring",
         "com.mycollab.ondemand.schedule.jobs",
+        "com.mycollab.ondemand.schedule.spring",
         "com.mycollab.ondemand.vaadin.ui.service"
 })
 public class SpringConfiguration {

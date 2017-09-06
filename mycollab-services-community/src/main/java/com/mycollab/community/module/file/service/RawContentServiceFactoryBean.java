@@ -5,7 +5,6 @@ import com.mycollab.db.persistence.service.IService;
 import com.mycollab.module.file.service.RawContentService;
 import com.mycollab.module.file.service.impl.FileRawContentServiceImpl;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,8 +17,7 @@ import org.springframework.stereotype.Service;
  * @author MyCollab Ltd
  * @since 1.0.0
  */
-@Service(value = "rawContentService")
-@Profile("production")
+@Service
 @IgnoreCacheClass
 public class RawContentServiceFactoryBean extends AbstractFactoryBean<RawContentService> implements IService {
 
