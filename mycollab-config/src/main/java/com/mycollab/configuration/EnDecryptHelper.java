@@ -21,7 +21,7 @@ public class EnDecryptHelper {
 
     static {
         basicTextEncryptor = new BasicTextEncryptor();
-        basicTextEncryptor.setPassword("esofthead321");
+        basicTextEncryptor.setPassword(SiteConfiguration.getEnDecryptPassword());
     }
 
     /**
