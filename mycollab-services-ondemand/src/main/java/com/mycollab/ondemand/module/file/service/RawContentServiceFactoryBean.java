@@ -9,6 +9,7 @@ import com.mycollab.module.file.service.impl.FileRawContentServiceImpl;
 import com.mycollab.ondemand.module.file.service.impl.S3RawContentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import static com.mycollab.configuration.ServerConfiguration.STORAGE_S3;
@@ -21,6 +22,7 @@ import static com.mycollab.configuration.ServerConfiguration.STORAGE_S3;
  * server.
  */
 @Service(value = "rawContentService")
+@Profile("production")
 @IgnoreCacheClass
 public class RawContentServiceFactoryBean extends AbstractFactoryBean<RawContentService> implements IService {
 

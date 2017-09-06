@@ -1,4 +1,4 @@
-package com.mycollab.ondemand.module.file.service;
+package com.mycollab.ondemand.module.file.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;

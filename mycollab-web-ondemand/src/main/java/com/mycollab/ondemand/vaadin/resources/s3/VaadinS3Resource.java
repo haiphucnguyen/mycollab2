@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.mycollab.core.MyCollabException;
-import com.mycollab.ondemand.module.file.service.S3StorageServiceImpl;
+import com.mycollab.ondemand.module.file.service.impl.S3StorageServiceImpl;
 import com.mycollab.vaadin.resources.VaadinResource;
 import com.vaadin.server.DownloadStream;
 import com.vaadin.server.Resource;

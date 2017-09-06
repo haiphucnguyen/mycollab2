@@ -4,7 +4,6 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.module.file.service.RawContentService;
-import com.mycollab.ondemand.module.file.service.S3StorageServiceImpl;
 
 import java.io.InputStream;
 
