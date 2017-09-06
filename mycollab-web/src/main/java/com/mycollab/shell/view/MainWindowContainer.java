@@ -51,7 +51,7 @@ public class MainWindowContainer extends CssLayout {
                     if (loginParams.length == 2) {
                         try {
                             ((DesktopApplication) UI.getCurrent()).doLogin(loginParams[0], EnDecryptHelper.decryptText(loginParams[1]), false);
-                        } catch (UserInvalidInputException e) {
+                        } catch (Exception e) {
                             navigateToLoginView();
                         }
                     } else {
