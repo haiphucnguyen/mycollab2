@@ -1,4 +1,4 @@
-package com.mycollab.module.file.service.impl;
+package com.mycollab.premium.module.file.service.impl;
 
 import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
