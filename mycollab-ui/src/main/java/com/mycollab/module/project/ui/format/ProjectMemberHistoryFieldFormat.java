@@ -1,30 +1,14 @@
-/**
- * This file is part of mycollab-ui.
- *
- * mycollab-ui is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-ui is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project.ui.format;
 
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.html.DivLessFormatter;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.formatter.HistoryFieldFormat;
 import com.mycollab.vaadin.TooltipHelper;
@@ -55,10 +39,11 @@ public final class ProjectMemberHistoryFieldFormat implements HistoryFieldFormat
 
         try {
             UserService userService = AppContextUtil.getSpringBean(UserService.class);
-            SimpleUser user = userService.findUserByUserNameInAccount(value, MyCollabUI.getAccountId());
+            SimpleUser user = userService.findUserByUserNameInAccount(value, AppUI.getAccountId());
             if (user != null) {
                 if (displayAsHtml) {
-                    Img userAvatar = new Img("", StorageFactory.getAvatarPath(user.getAvatarid(), 16)).setCSSClass(UIConstants.CIRCLE_BOX);
+                    Img userAvatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
+                            .getAvatarPath(user.getAvatarid(), 16)).setCSSClass(UIConstants.CIRCLE_BOX);
                     A link = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink
                             (CurrentProjectVariables.getProjectId(),
                                     user.getUsername())).appendText(StringUtils.trim(user.getDisplayName(), 30, true));

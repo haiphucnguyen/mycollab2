@@ -6,11 +6,6 @@ rem Start/Stop Script for the MyCollab Server
 rem
 rem Environment Variable Prerequisites
 rem
-rem   MYCOLLAB_HOME   May point at your MyCollab "build" directory.
-rem   MYCOLLAB_OUT    (Optional) Full path to a file where stdout and stderr
-rem                   will be redirected.
-rem                   Default is $CATALINA_BASE/logs/catalina.out
-rem   MYCOLLAB_PORT   Port of server to allow user access to server
 rem   MYCOLLAB_OPTS   (Optional) Java runtime options used when the "start",
 rem                    "stop" command is executed.
 rem                   Include here and not in JAVA_OPTS all options, that should
@@ -22,10 +17,8 @@ rem   JAVA_HOME       Must point at your Java Development Kit installation.
 rem                   Required to run the with the "debug" argument.
 rem ---------------------------------------------------------------------------
 
-set MYCOLLAB_PORT=8080
-set PROCESS_PORT=12345
-set STOP_KEY=mycollab
 set _RUNJAVA=java
+set MYCOLLAB_OPTS=-noverify -server -Xms394m -Xmx768m -XX:NewSize=128m -XX:+DisableExplicitGC -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC
 
 rem Suppress Terminate batch job on CTRL+C
 if not ""%1"" == ""run"" goto mainEntry
@@ -61,7 +54,6 @@ rem ----- Execute The Requested Command ---------------------------------------
 echo Using MYCOLLAB_HOME:   "%MYCOLLAB_HOME%"
 
 set _EXECJAVA=%_RUNJAVA%
-set ACTION=--port %MYCOLLAB_PORT% --process-port %PROCESS_PORT% --stop-key %STOP_KEY%
 
 
 if ""%1"" == ""--start"" goto doStart
@@ -77,7 +69,7 @@ goto end
 shift
 if not "%OS%" == "Windows_NT" goto noTitle
 if "%TITLE%" == "" set TITLE=MyCollab
-set _EXECJAVA=start "%TITLE%" %_RUNJAVA%
+set _EXECJAVA=start "%TITLE%" %_RUNJAVA% %MYCOLLAB_OPTS%
 goto gotTitle
 :noTitle
 set _EXECJAVA=start %_RUNJAVA%
@@ -93,7 +85,7 @@ goto execCmd
 
 rem Execute Java with the applicable properties
 cd ..
-%_EXECJAVA% -jar executor.jar  %ACTION% %*
+%_EXECJAVA% -jar executor.jar %* %MYCOLLAB_OPTS%
 goto end
 
 :end

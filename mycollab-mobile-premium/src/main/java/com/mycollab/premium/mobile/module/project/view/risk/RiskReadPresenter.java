@@ -12,7 +12,7 @@ import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -42,7 +42,7 @@ public class RiskReadPresenter extends AbstractProjectPresenter<RiskReadView> {
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                                riskService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                riskService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
                             }
                         });
@@ -62,7 +62,7 @@ public class RiskReadPresenter extends AbstractProjectPresenter<RiskReadView> {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS)) {
             if (data.getParams() instanceof Integer) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                SimpleRisk risk = riskService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleRisk risk = riskService.findById((Integer) data.getParams(), AppUI.getAccountId());
 
                 if (risk != null) {
                     this.view.previewItem(risk);

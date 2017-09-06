@@ -4,7 +4,7 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -15,7 +15,7 @@ import com.mycollab.module.project.view.service.MilestoneComponentFactory;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
@@ -39,7 +39,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String avatarLink = StorageFactory.getAvatarPath(milestone.getOwnerAvatarId(), 16);
+                String avatarLink = StorageUtils.getAvatarPath(milestone.getOwnerAvatarId(), 16);
                 Img img = new Img(milestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX);
                 if (isDisplayName) {
                     img.setTitle(milestone.getOwnerFullName());
@@ -50,8 +50,8 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
             @Override
             protected String generateSmallAsHtmlAfterUpdate() {
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                SimpleMilestone newMilestone = milestoneService.findById(milestone.getId(), MyCollabUI.getAccountId());
-                String avatarLink = StorageFactory.getAvatarPath(newMilestone.getOwnerAvatarId(), 16);
+                SimpleMilestone newMilestone = milestoneService.findById(milestone.getId(), AppUI.getAccountId());
+                String avatarLink = StorageUtils.getAvatarPath(newMilestone.getOwnerAvatarId(), 16);
                 Img img = new Img(newMilestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX);
                 if (isDisplayName) {
                     img.setTitle(newMilestone.getOwnerFullName());

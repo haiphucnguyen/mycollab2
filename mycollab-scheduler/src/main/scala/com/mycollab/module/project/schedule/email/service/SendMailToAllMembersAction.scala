@@ -1,28 +1,6 @@
-/**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project.schedule.email.service
 
 import com.hp.gagawa.java.elements.A
-import com.mycollab.common.domain.MailRecipientField
-import com.mycollab.module.mail.service.IContentGenerator
-import com.mycollab.module.project.domain.{ProjectRelayEmailNotification, SimpleProjectMember}
-import com.mycollab.module.project.service.{ProjectMemberService, ProjectNotificationSettingService, ProjectService}
-import com.mycollab.module.user.domain.SimpleUser
-import com.mycollab.schedule.email.SendingRelayEmailNotificationAction
 import com.mycollab.common.NotificationType
 import com.mycollab.common.domain.criteria.CommentSearchCriteria
 import com.mycollab.common.domain.{MailRecipientField, SimpleRelayEmailNotification}
@@ -34,10 +12,13 @@ import com.mycollab.db.arguments.{BasicSearchRequest, StringSearchField}
 import com.mycollab.html.LinkUtils
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.mail.MailUtils
-import com.mycollab.module.mail.service.ExtMailService
+import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
 import com.mycollab.module.project.ProjectLinkGenerator
+import com.mycollab.module.project.domain.{ProjectRelayEmailNotification, SimpleProjectMember}
+import com.mycollab.module.project.service.{ProjectMemberService, ProjectNotificationSettingService, ProjectService}
+import com.mycollab.module.user.domain.SimpleUser
 import com.mycollab.schedule.email.format.WebItem
-import com.mycollab.schedule.email.{ItemFieldMapper, MailContext}
+import com.mycollab.schedule.email.{ItemFieldMapper, MailContext, SendingRelayEmailNotificationAction}
 import org.springframework.beans.factory.annotation.Autowired
 
 /**
@@ -45,13 +26,13 @@ import org.springframework.beans.factory.annotation.Autowired
   * @since 4.6.0
   */
 abstract class SendMailToAllMembersAction[B] extends SendingRelayEmailNotificationAction {
-  @Autowired var extMailService: ExtMailService = _
-  @Autowired var projectService: ProjectService = _
-  @Autowired var projectMemberService: ProjectMemberService = _
-  @Autowired var projectNotificationService: ProjectNotificationSettingService = _
-  @Autowired val commentService: CommentService = null
-  @Autowired var auditLogService: AuditLogService = _
-  @Autowired protected var contentGenerator: IContentGenerator = _
+  @Autowired private val extMailService: ExtMailService = null
+  @Autowired private val projectService: ProjectService = null
+  @Autowired private val projectMemberService: ProjectMemberService = null
+  @Autowired private val projectNotificationService: ProjectNotificationSettingService = null
+  @Autowired private val commentService: CommentService = null
+  @Autowired private val auditLogService: AuditLogService = null
+  @Autowired protected val contentGenerator: IContentGenerator = null
 
   protected var bean: B = _
   protected var projectMember: SimpleProjectMember = _
@@ -114,14 +95,14 @@ abstract class SendMailToAllMembersAction[B] extends SendingRelayEmailNotificati
         contentGenerator.putVariable("historyLog", auditLog)
         contentGenerator.putVariable("mapper", getItemFieldMapper)
         contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.getSaccountid, notification.getAccountLogo))
-        
+
         val searchCriteria = new CommentSearchCriteria
         searchCriteria.setType(StringSearchField.and(notification.getType))
         searchCriteria.setTypeId(StringSearchField.and(notification.getTypeid))
         searchCriteria.setSaccountid(null)
         val comments = commentService.findPageableListByCriteria(new BasicSearchRequest[CommentSearchCriteria](searchCriteria, 0, 5))
         contentGenerator.putVariable("lastComments", comments)
-        
+
         import scala.collection.JavaConverters._
         for (user <- notifiers) {
           val context = new MailContext[B](notification, user, siteUrl)
@@ -161,7 +142,7 @@ abstract class SendMailToAllMembersAction[B] extends SendingRelayEmailNotificati
         val comments = commentService.findPageableListByCriteria(new BasicSearchRequest[CommentSearchCriteria](searchCriteria, 0, 5))
         contentGenerator.putVariable("lastComments", comments)
         contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.getSaccountid, notification.getAccountLogo))
-        
+
         import scala.collection.JavaConverters._
         for (user <- notifiers) {
           val context = new MailContext[B](notification, user, siteUrl)
@@ -193,17 +174,17 @@ abstract class SendMailToAllMembersAction[B] extends SendingRelayEmailNotificati
   protected def getBeanInContext(notification: ProjectRelayEmailNotification): B
 
   protected def buildExtraTemplateVariables(context: MailContext[B])
-  
-  private def getProjectFooter(context: MailContext[B]):String = LocalizationHelper.getMessage(context.locale,
+
+  private def getProjectFooter(context: MailContext[B]): String = LocalizationHelper.getMessage(context.locale,
     MailI18nEnum.Project_Footer, getProjectName, getProjectNotificationSettingLink(context))
-  
+
   private def getProjectNotificationSettingLink(context: MailContext[B]): String = {
     new A(ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, projectId)).
       appendText(LocalizationHelper.getMessage(context.locale, MailI18nEnum.Project_Notification_Setting)).write()
   }
 
   protected def getItemName: String
-  
+
   protected def getProjectName: String
 
   protected def getCreateSubject(context: MailContext[B]): String

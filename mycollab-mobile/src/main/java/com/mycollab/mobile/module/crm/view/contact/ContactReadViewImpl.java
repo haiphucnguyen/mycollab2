@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.mobile.module.crm.view.contact;
 
 import com.mycollab.common.i18n.GenericI18Enum;
@@ -36,7 +20,7 @@ import com.mycollab.module.crm.service.LeadService;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -118,7 +102,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
         // check if there is converted lead associates with this contact
         LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
         SimpleLead lead = leadService.findConvertedLeadOfContact(
-                beanItem.getId(), MyCollabUI.getAccountId());
+                beanItem.getId(), AppUI.getAccountId());
         if (lead != null) {
             return beanItem.getContactName() + "&nbsp;"
                     + UserUIContext.getMessage(LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
@@ -143,7 +127,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        MyCollabUI.addFragment(CrmLinkGenerator.generateContactPreviewLink(beanItem.getId()),
+        AppUI.addFragment(CrmLinkGenerator.generateContactPreviewLink(beanItem.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(ContactI18nEnum.SINGLE), beanItem.getContactName()));
     }

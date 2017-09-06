@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.premium.module.user.accountsettings.view
 
 import com.google.common.eventbus.Subscribe
@@ -33,8 +17,8 @@ import com.mycollab.module.user.accountsettings.view.parameters.{BillingScreenDa
 import com.mycollab.module.user.domain.criteria.{RoleSearchCriteria, UserSearchCriteria}
 import com.mycollab.module.user.domain.{Role, SimpleUser}
 import com.mycollab.module.user.events.{RoleEvent, UserEvent}
-import com.mycollab.vaadin.MyCollabUI.getAccountId
-import com.mycollab.vaadin.{MyCollabUI, UserUIContext}
+import com.mycollab.vaadin.AppUI.getAccountId
+import com.mycollab.vaadin.{AppUI, UserUIContext}
 import com.mycollab.vaadin.mvp.{AbstractController, PresenterResolver}
 
 /**
@@ -106,7 +90,7 @@ class UserAccountController(container: AccountModule) extends AbstractController
       @Subscribe def handle(event: UserEvent.GotoList) {
         val presenter = PresenterResolver.getPresenter(classOf[UserPermissionManagementPresenter])
         val criteria = new UserSearchCriteria
-        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
+        criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId))
         criteria.setRegisterStatuses(new SetSearchField[String](RegisterStatusConstants.ACTIVE, RegisterStatusConstants.NOT_LOG_IN_YET))
         presenter.go(container, new UserScreenData.Search(criteria))
       }
@@ -137,7 +121,7 @@ class UserAccountController(container: AccountModule) extends AbstractController
       @Subscribe def handle(event: RoleEvent.GotoList) {
         val presenter = PresenterResolver.getPresenter(classOf[UserPermissionManagementPresenter])
         val criteria = new RoleSearchCriteria
-        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
+        criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId))
         presenter.go(container, new RoleScreenData.Search(criteria))
       }
     })

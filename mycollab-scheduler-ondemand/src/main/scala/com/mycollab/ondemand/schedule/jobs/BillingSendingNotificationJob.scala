@@ -13,7 +13,7 @@ import com.mycollab.module.user.service.BillingAccountService
 import com.mycollab.ondemand.module.billing.service.BillingService
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.joda.time.format.DateTimeFormat
-import org.joda.time.{DateTime, Duration, LocalDateTime}
+import org.joda.time.{DateTime, Duration}
 import org.quartz.{DisallowConcurrentExecution, JobExecutionContext, JobExecutionException}
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
@@ -32,25 +32,25 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[BillingSendingNotificationJob])
   private val DATE_REMIND_FOR_ENDING_TRIAL_1ST: Integer = 26
   private val NUM_DAY_FREE_TRIAL: Integer = 30
-  
-  @Autowired var billingService: BillingService = _
-  @Autowired var billingAccountService: BillingAccountService = _
-  @Autowired var extMailService: ExtMailService = _
-  @Autowired var contentGenerator: IContentGenerator = _
-  @Autowired var deploymentMode: IDeploymentMode = _
-  
+
+  @Autowired private val billingService: BillingService = null
+  @Autowired private val billingAccountService: BillingAccountService = null
+  @Autowired private val extMailService: ExtMailService = null
+  @Autowired private val contentGenerator: IContentGenerator = null
+  @Autowired private val deploymentMode: IDeploymentMode = null
+
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext) {
     val now = new DateTime()
-    
+
     import scala.collection.JavaConverters._
     val trialAccountsWithOwners = billingService.getTrialAccountsWithOwners.asScala.toList
-    
+
     for (account <- trialAccountsWithOwners) {
       val accountTrialFrom = new DateTime(MoreObjects.firstNonNull(account.getTrialfrom, account.getCreatedtime))
       val accountTrialTo = new DateTime(MoreObjects.firstNonNull(account.getTrialto, accountTrialFrom.plusDays(NUM_DAY_FREE_TRIAL)))
       val durationDays = new Duration(now, accountTrialTo).getStandardDays
-      
+
       if (durationDays < (NUM_DAY_FREE_TRIAL - DATE_REMIND_FOR_ENDING_TRIAL_1ST) && (account.getReminderstatus == null)) {
         sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_ENDING_TRIAL_1ST)
         val billingAccount = new BillingAccount
@@ -67,7 +67,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       }
     }
   }
-  
+
   private def sendingEmailInformAccountIsInvalid(account: BillingAccountWithOwners) {
     import scala.collection.JavaConverters._
     for (user <- account.getOwners.asScala) {
@@ -81,7 +81,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
         "Your trial has expired", contentGenerator.parseFile("mailInformAccountIsExpiredNotification.ftl", Locale.US))
     }
   }
-  
+
   private def sendRemindEmailAskUpdateBillingAccount(account: BillingAccountWithOwners, afterDay: Integer) {
     val df = DateTimeFormat.forPattern("MM/dd/yyyy")
     import scala.collection.JavaConverters._

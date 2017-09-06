@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.crm.view.lead;
 
 import com.mycollab.common.UrlEncodeDecoder;
@@ -31,7 +15,7 @@ import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -82,7 +66,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
                 lead = (SimpleLead) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
-                lead = leadService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                lead = leadService.findById((Integer) data.getParams(), AppUI.getAccountId());
             }
 
             if (lead == null) {
@@ -93,10 +77,10 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
             view.editItem(lead);
 
             if (lead.getId() == null) {
-                MyCollabUI.addFragment("crm/lead/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                AppUI.addFragment("crm/lead/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(LeadI18nEnum.SINGLE)));
             } else {
-                MyCollabUI.addFragment("crm/lead/edit/" + UrlEncodeDecoder.encode(lead.getId()),
+                AppUI.addFragment("crm/lead/edit/" + UrlEncodeDecoder.encode(lead.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(LeadI18nEnum.SINGLE), lead.getLastname()));
             }
@@ -108,7 +92,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 
     private int saveLead(Lead lead) {
         LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
-        lead.setSaccountid(MyCollabUI.getAccountId());
+        lead.setSaccountid(AppUI.getAccountId());
         if (lead.getId() == null) {
             leadService.saveWithSession(lead, UserUIContext.getUsername());
         } else {

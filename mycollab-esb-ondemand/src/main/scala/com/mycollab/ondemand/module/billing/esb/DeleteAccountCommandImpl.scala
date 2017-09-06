@@ -23,18 +23,18 @@ import org.springframework.stereotype.Component
   @Autowired private val pageService: PageService = null
   @Autowired private val optionValMapper: OptionValMapper = null
   @Autowired private val mailService: ExtMailService = null
-  
+
   @Subscribe
   def deleteAccount(event: DeleteAccountEvent): Unit = {
     val rootPath = event.accountId + ""
     resourceService.removeResource(rootPath, "", false, event.accountId)
     pageService.removeResource(rootPath)
-    
+
     //delete all options of this account
     val optionEx = new OptionValExample
     optionEx.createCriteria().andSaccountidEqualTo(event.accountId)
     optionValMapper.deleteByExample(optionEx)
-    
+
     val feedback = event.feedback
     val feedbackValue = if (feedback == null) "None" else BeanUtility.printBeanObj(feedback)
     mailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,

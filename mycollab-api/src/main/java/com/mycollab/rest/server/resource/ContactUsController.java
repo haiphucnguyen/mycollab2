@@ -6,6 +6,8 @@ import com.hp.gagawa.java.elements.Ul;
 import com.mycollab.common.domain.MailRecipientField;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.module.mail.service.ExtMailService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,7 @@ import java.util.Collections;
  * @author MyCollab Ltd
  * @since 5.1.2
  */
+@Api(value = "contact-us", tags = "Support")
 @RestController
 @RequestMapping(value = "/contact-us")
 public class ContactUsController {
@@ -25,11 +28,17 @@ public class ContactUsController {
     @Autowired
     private ExtMailService extMailService;
 
-    @RequestMapping(value = "/submit", method = RequestMethod.POST, headers = {"Content-Type=application/x-www-form-urlencoded"})
-    public String doContact(@RequestParam("name") String name, @RequestParam("email") String email,
-                            @RequestParam("company") String company, @RequestParam("role") String role,
-                            @RequestParam("industry") String industry, @RequestParam("budget") String budget,
-                            @RequestParam("subject") String subject, @RequestParam("message") String message) {
+    @ApiOperation(value = "Send the inquery request", response = String.class)
+    @RequestMapping(value = "/submit", method = RequestMethod.POST,
+            headers = {"Content-Type=application/x-www-form-urlencoded"})
+    public String doContact(@RequestParam("name") String name,
+                            @RequestParam("email") String email,
+                            @RequestParam("company") String company,
+                            @RequestParam("role") String role,
+                            @RequestParam("industry") String industry,
+                            @RequestParam("budget") String budget,
+                            @RequestParam("subject") String subject,
+                            @RequestParam("message") String message) {
         Div bodyContent = new Div().appendChild(new Ul().appendChild(
                 new Li().appendText(String.format("Name: %s", name)),
                 new Li().appendText(String.format("Email: %s", email)),

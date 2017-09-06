@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-services.
- *
- * mycollab-services is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-services is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.file.service.impl;
 
 import com.mycollab.core.MyCollabException;
@@ -23,8 +7,6 @@ import com.mycollab.module.file.service.EntityUploaderService;
 import com.mycollab.module.file.service.UserAvatarService;
 import com.mycollab.module.user.dao.UserMapper;
 import com.mycollab.module.user.domain.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +21,6 @@ import java.io.InputStream;
  */
 @Service(value = "userAvatarService")
 public class UserAvatarServiceImpl implements UserAvatarService {
-    private static final Logger LOG = LoggerFactory.getLogger(UserAvatarServiceImpl.class);
 
     @Autowired
     private ResourceService resourceService;
@@ -50,7 +31,7 @@ public class UserAvatarServiceImpl implements UserAvatarService {
     @Autowired
     private UserMapper userMapper;
 
-    private static final int[] SUPPORT_SIZES = {100, 64, 48, 32, 24, 16};
+    private static final Integer[] SUPPORT_SIZES = {100, 64, 48, 32, 24, 16};
 
     @Override
     public String uploadDefaultAvatar(String username) {

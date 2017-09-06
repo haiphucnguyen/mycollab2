@@ -13,7 +13,7 @@ import com.mycollab.module.project.service.ProjectGenericItemService;
 import com.mycollab.module.project.ui.components.GenericItemRowDisplayHandler;
 import com.mycollab.module.project.view.ITagListView;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -102,7 +102,7 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
         }
 
         void displayTagItems() {
-            List<AggregateTag> tags = tagService.findTagsInProject(CurrentProjectVariables.getProjectId(), MyCollabUI.getAccountId());
+            List<AggregateTag> tags = tagService.findTagsInProject(CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
             if (CollectionUtils.isEmpty(tags)) {
                 this.addComponent(new Label(UserUIContext.getMessage(TagI18nEnum.OPT_NO_TAG_EXISTED)));
             } else {

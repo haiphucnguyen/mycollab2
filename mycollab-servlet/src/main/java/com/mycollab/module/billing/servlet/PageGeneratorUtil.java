@@ -1,21 +1,7 @@
-/**
- * This file is part of mycollab-servlet.
- *
- * mycollab-servlet is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-servlet is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-servlet.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.billing.servlet;
 
+import com.mycollab.configuration.ApplicationConfiguration;
+import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.spring.AppContextUtil;
 import freemarker.template.Configuration;
@@ -39,9 +25,11 @@ class PageGeneratorUtil {
         Map<String, Object> context = new HashMap<>();
         context.put("loginURL", loginURL);
         context.put("username", username);
-        Map<String, String> defaultUrls = SiteConfiguration.defaultUrls();
-        defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
-        defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
+        ApplicationConfiguration applicationConfiguration = AppContextUtil.getSpringBean(ApplicationConfiguration.class);
+        ServerConfiguration serverConfiguration = AppContextUtil.getSpringBean(ServerConfiguration.class);
+        Map<String, String> defaultUrls = applicationConfiguration.defaultUrls();
+        defaultUrls.put("cdn_url", serverConfiguration.getCdnUrl());
+        defaultUrls.put("app_url", serverConfiguration.getAppUrl());
         context.put("defaultUrls", defaultUrls);
 
         StringWriter writer = new StringWriter();

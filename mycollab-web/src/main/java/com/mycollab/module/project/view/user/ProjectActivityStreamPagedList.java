@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project.view.user;
 
 import com.hp.gagawa.java.elements.A;
@@ -23,11 +7,11 @@ import com.mycollab.common.ActivityStreamConstants;
 import com.mycollab.common.domain.SimpleActivityStream;
 import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.html.DivLessFormatter;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.page.domain.Page;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectLinkGenerator;
@@ -168,7 +152,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
 
     private String buildAssigneeValue(SimpleActivityStream activityStream) {
         DivLessFormatter div = new DivLessFormatter();
-        Img userAvatar = new Img("", StorageFactory.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
+        Img userAvatar = new Img("", StorageUtils.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                 .setCSSClass(UIConstants.CIRCLE_BOX);
         A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                 activityStream.getExtratypeid(), activityStream.getCreateduser()));

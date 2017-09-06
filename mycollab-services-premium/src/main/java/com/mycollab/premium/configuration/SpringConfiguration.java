@@ -2,12 +2,14 @@ package com.mycollab.premium.configuration;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
  * @author MyCollab Ltd
  * @since 5.4.0
  */
 @Configuration
+@Profile("production")
 @ComponentScan(basePackages = {
         "com.mycollab.license.service",
         "com.mycollab.premium.module.billing.service",
@@ -19,6 +21,7 @@ import org.springframework.context.annotation.Configuration;
         "com.mycollab.premium.vaadin.ui.service",
         "com.mycollab.pro.cache.aspect",
         "com.mycollab.pro.common.service",
+        "com.mycollab.pro.jgroups.service",
         "com.mycollab.pro.module.project.service",
         "com.mycollab.pro.module.user.service",
         "com.mycollab.pro.module.project.view.service"

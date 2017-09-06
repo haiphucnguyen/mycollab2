@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project.schedule.email.service
 
 import com.hp.gagawa.java.elements.{Span, Text}
@@ -52,8 +36,8 @@ import org.springframework.stereotype.Component
 class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[SimpleBug] with BugRelayEmailNotificationAction {
   private val LOG = LoggerFactory.getLogger(classOf[BugRelayEmailNotificationActionImpl])
   
-  @Autowired var bugService: BugService = _
-  @Autowired var projectNotificationService: ProjectNotificationSettingService = _
+  @Autowired private val bugService: BugService = null
+  @Autowired private val projectNotificationService: ProjectNotificationSettingService = null
   
   private val mapper = new BugFieldNameMapper
   

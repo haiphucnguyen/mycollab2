@@ -17,6 +17,8 @@ import com.mycollab.ondemand.module.billing.domain.BillingSubscription;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionExample;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionHistory;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -37,6 +39,7 @@ import java.util.WeakHashMap;
  * @author MyCollab Ltd
  * @since 5.3.4
  */
+@Api(value = "subscription", tags = "Billing")
 @RestController
 @RequestMapping(path = "/subscription")
 public class SubscriptionManagerController {
@@ -61,6 +64,7 @@ public class SubscriptionManagerController {
     @Autowired
     private AsyncEventBus asyncEventBus;
 
+    @ApiOperation(value = "Register the subscription", response = String.class)
     @RequestMapping(path = "/register", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
     public String registerEE(@RequestParam("email") String email,

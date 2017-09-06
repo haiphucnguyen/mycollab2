@@ -3,7 +3,7 @@ package com.mycollab.ondemand.module.project.service;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.service.ProjectTaskService;
-import com.mycollab.test.service.IntegrationServiceTest;
+import com.mycollab.ondemand.test.spring.IntegrationServiceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

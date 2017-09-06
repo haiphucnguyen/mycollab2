@@ -11,6 +11,8 @@ import com.mycollab.ondemand.module.support.domain.CommunityLead;
 import com.mycollab.ondemand.module.support.domain.CommunityLeadExample;
 import com.mycollab.ondemand.module.support.domain.EditionInfo;
 import com.mycollab.ondemand.module.support.service.EditionInfoResolver;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,7 @@ import java.util.Map;
  * @author MyCollab Ltd
  * @since 5.2.2
  */
+@Api(value = "Community Campaign API", tags = "Community")
 @RestController
 public class CampaignController {
     @Autowired
@@ -35,6 +38,7 @@ public class CampaignController {
     @Autowired
     private EditionInfoResolver editionInfoResolver;
 
+    @ApiOperation(value = "Get the html page contains link to buy", response = String.class)
     @RequestMapping(method = RequestMethod.GET, path = "/linktobuy")
     public String getLinkToBuy() throws IOException {
         return FileUtils.readFileAsPlainString("buying.html");
@@ -53,10 +57,14 @@ public class CampaignController {
 
     @RequestMapping(path = "/register-ce", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
-    public Map registerCE(@RequestParam("firstname") final String firstname, @RequestParam("lastname") final String lastname,
-                          @RequestParam("email") final String email, @RequestParam("role") final String role,
-                          @RequestParam("company") final String company, @RequestParam("phone") final String phone,
-                          @RequestParam("country") final String country, @RequestParam("edition") final String edition) {
+    public Map registerCE(@RequestParam("firstname") final String firstname,
+                          @RequestParam("lastname") final String lastname,
+                          @RequestParam("email") final String email,
+                          @RequestParam("role") final String role,
+                          @RequestParam("company") final String company,
+                          @RequestParam("phone") final String phone,
+                          @RequestParam("country") final String country,
+                          @RequestParam("edition") final String edition) {
         final EditionInfo info = editionInfoResolver.getEditionInfo();
 
         new Thread() {

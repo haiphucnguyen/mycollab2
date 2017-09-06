@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.mobile.module.project.view.bug;
 
 import com.mycollab.common.i18n.GenericI18Enum;
@@ -27,7 +11,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -64,7 +48,7 @@ public class BugReadPresenter extends AbstractProjectPresenter<BugReadView> {
                         dialog -> {
                             if (dialog.isConfirmed()) {
                                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                                bugService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                bugService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null));
                             }
                         });
@@ -84,7 +68,7 @@ public class BugReadPresenter extends AbstractProjectPresenter<BugReadView> {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
             if (data.getParams() instanceof Integer) {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                SimpleBug bug = bugService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleBug bug = bugService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (bug != null) {
                     view.previewItem(bug);
                     super.onGo(container, data);

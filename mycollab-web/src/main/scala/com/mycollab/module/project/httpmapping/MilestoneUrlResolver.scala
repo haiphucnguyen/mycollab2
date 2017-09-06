@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project.httpmapping
 
 import com.mycollab.common.UrlTokenizer
@@ -25,7 +9,7 @@ import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.service.MilestoneService
 import com.mycollab.module.project.view.parameters.{MilestoneScreenData, ProjectScreenData}
 import com.mycollab.spring.AppContextUtil
-import com.mycollab.vaadin.MyCollabUI
+import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.mvp.PageActionChain
 
 /**
@@ -73,7 +57,7 @@ class MilestoneUrlResolver extends ProjectUrlResolver {
       val projectId = token.getInt
       val milestoneId = token.getInt
       val milestoneService = AppContextUtil.getSpringBean(classOf[MilestoneService])
-      val milestone = milestoneService.findById(milestoneId, MyCollabUI.getAccountId)
+      val milestone = milestoneService.findById(milestoneId, AppUI.getAccountId)
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new MilestoneScreenData.Edit(milestone))
       EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }

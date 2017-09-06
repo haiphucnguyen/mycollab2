@@ -1,9 +1,12 @@
 package com.mycollab.ondemand.configuration;
 
-import com.mycollab.configuration.ApplicationProperties;
 import com.mycollab.configuration.IDeploymentMode;
+import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,8 +14,13 @@ import org.springframework.stereotype.Service;
  * @since 5.2.2
  */
 @Order(value = 1)
-@Service
+@Component
+@Profile("production")
 public class DeploymentMode implements IDeploymentMode {
+
+    @Autowired
+    private ServerConfiguration serverConfiguration;
+
     @Override
     public boolean isDemandEdition() {
         return true;
@@ -30,8 +38,6 @@ public class DeploymentMode implements IDeploymentMode {
 
     @Override
     public String getSiteUrl(String subDomain) {
-        return String.format(ApplicationProperties.getString(ApplicationProperties.APP_URL), subDomain);
-//        return String.format(ApplicationProperties.getString(ApplicationProperties.APP_URL),
-//                SiteConfiguration.getServerAddress(), SiteConfiguration.getServerPort());
+        return String.format(serverConfiguration.getAppUrl(), subDomain);
     }
 }

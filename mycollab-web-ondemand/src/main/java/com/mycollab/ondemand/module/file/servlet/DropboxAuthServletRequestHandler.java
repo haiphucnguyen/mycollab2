@@ -8,7 +8,7 @@ import com.mycollab.oauth.service.MyCollabOauthServiceFactory;
 import com.mycollab.ondemand.module.file.event.CloudDriveOAuthCallbackEvent;
 import com.mycollab.servlet.GenericHttpServlet;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.MyCollabSession;
 import com.vaadin.ui.UI;
 import org.scribe.model.Token;
@@ -43,8 +43,8 @@ public class DropboxAuthServletRequestHandler extends GenericHttpServlet {
             CloudDriveInfo cloudDriveInfo = new CloudDriveInfo(StorageNames.DROPBOX, accessTokenVal);
 
             UI ui = (UI) cacheService.getValue("tempCache", state);
-            if (ui instanceof MyCollabUI) {
-                MyCollabUI myUI = (MyCollabUI) ui;
+            if (ui instanceof AppUI) {
+                AppUI myUI = (AppUI) ui;
                 EventBus eventBus = (EventBus) myUI.getAttribute(MyCollabSession.EVENT_BUS_VAL);
                 if (eventBus != null) {
                     eventBus.post(new CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo(

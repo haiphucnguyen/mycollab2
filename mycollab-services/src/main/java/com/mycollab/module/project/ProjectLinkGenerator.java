@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-services.
- *
- * mycollab-services is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-services is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project;
 
 import com.mycollab.common.GenericLinkUtils;
@@ -41,8 +25,8 @@ public class ProjectLinkGenerator {
         return "project/ticket/dashboard/" + UrlEncodeDecoder.encode(projectId);
     }
 
-    public static String generateTaskPreviewLink(Integer taskkey, String prjShortName) {
-        return String.format("project/task/preview/%s-%d", prjShortName, taskkey);
+    public static String generateTaskPreviewLink(Integer taskKey, String prjShortName) {
+        return String.format("project/task/preview/%s-%d", prjShortName, taskKey);
     }
 
     public static String generateTaskPreviewFullLink(String siteUrl, Integer taskKey, String prjShortName) {
@@ -152,20 +136,20 @@ public class ProjectLinkGenerator {
         return siteUrl + URL_PREFIX_PARAM + generateBugVersionPreviewLink(projectId, versionId);
     }
 
-    public static String generateBugPreviewLink(Integer bugKey, String prjShortname) {
-        return String.format("project/bug/preview/%s-%d", prjShortname, bugKey);
+    public static String generateBugPreviewLink(Integer bugKey, String prjShortName) {
+        return String.format("project/bug/preview/%s-%d", prjShortName, bugKey);
     }
 
-    public static String generateBugEditLink(Integer bugkey, String prjShortname) {
-        return String.format("project/bug/edit/%s-%d", prjShortname, bugkey);
+    public static String generateBugEditLink(Integer bugKey, String prjShortName) {
+        return String.format("project/bug/edit/%s-%d", prjShortName, bugKey);
     }
 
     public static String generateBugsLink(Integer projectId) {
         return "project/bug/list/" + UrlEncodeDecoder.encode(projectId);
     }
 
-    public static String generateBugPreviewFullLink(String siteUrl, Integer bugKey, String prjShortname) {
-        return siteUrl + URL_PREFIX_PARAM + generateBugPreviewLink(bugKey, prjShortname);
+    public static String generateBugPreviewFullLink(String siteUrl, Integer bugKey, String prjShortName) {
+        return siteUrl + URL_PREFIX_PARAM + generateBugPreviewLink(bugKey, prjShortName);
     }
 
     public static String generateFileDashboardLink(Integer projectId) {

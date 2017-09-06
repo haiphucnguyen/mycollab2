@@ -8,7 +8,24 @@
     <parent>
         <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent</artifactId>
-        <version>5.4.10</version>
+        <version>6.0.0</version>
         <relativePath>../mycollab-parent/pom.xml</relativePath>
     </parent>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-sleuth</artifactId>
+                <version>1.2.2.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

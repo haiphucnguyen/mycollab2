@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web-premium.
- *
- * mycollab-web-premium is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web-premium is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web-premium.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.pro.module.user.accountsettings.customize.view;
 
 import com.google.common.eventbus.Subscribe;
@@ -33,7 +17,7 @@ import com.mycollab.module.user.service.AccountThemeService;
 import com.mycollab.security.BooleanPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -85,7 +69,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
-                                themeService.removeTheme(MyCollabUI.getAccountId());
+                                themeService.removeTheme(AppUI.getAccountId());
                                 Page.getCurrent().getJavaScript().execute("window.location.reload();");
                             }
                         });
@@ -100,13 +84,13 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
 
         AccountTheme accountTheme;
         if (data == null || data.getParams() == null) {
-            accountTheme = themeService.findTheme(MyCollabUI.getAccountId());
+            accountTheme = themeService.findTheme(AppUI.getAccountId());
         } else {
             accountTheme = (AccountTheme) data.getParams();
         }
 
         if (accountTheme == null) {
-            accountTheme = themeService.findDefaultTheme(MyCollabUI.getAccountId());
+            accountTheme = themeService.findDefaultTheme(AppUI.getAccountId());
         }
 
         if (accountTheme == null) {
@@ -120,7 +104,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
 
     private void saveTheme(AccountTheme accountTheme) {
         if (accountTheme.getSaccountid() == null) {
-            accountTheme.setSaccountid(MyCollabUI.getAccountId());
+            accountTheme.setSaccountid(AppUI.getAccountId());
             accountTheme.setId(null);
             accountTheme.setIsdefault(Boolean.FALSE);
             themeService.saveWithSession(accountTheme, UserUIContext.getUsername());

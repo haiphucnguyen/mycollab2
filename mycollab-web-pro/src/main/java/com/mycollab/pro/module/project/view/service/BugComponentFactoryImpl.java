@@ -11,7 +11,6 @@ import com.mycollab.common.i18n.FollowerI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.service.CommentService;
 import com.mycollab.common.service.MonitorItemService;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.HumanTime;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BooleanSearchField;
@@ -19,6 +18,7 @@ import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -45,7 +45,7 @@ import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -99,7 +99,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String avatarLink = StorageFactory.getAvatarPath(bug.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageUtils.getAvatarPath(bug.getAssignUserAvatarId(), 16);
                 Img img = new Img(bug.getAssignuserFullName(), avatarLink).setTitle(bug.getAssignuserFullName())
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 return img.write();
@@ -108,8 +108,8 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             @Override
             protected String generateSmallAsHtmlAfterUpdate() {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                SimpleBug newBug = bugService.findById(bug.getId(), MyCollabUI.getAccountId());
-                String avatarLink = StorageFactory.getAvatarPath(newBug.getAssignUserAvatarId(), 16);
+                SimpleBug newBug = bugService.findById(bug.getId(), AppUI.getAccountId());
+                String avatarLink = StorageUtils.getAvatarPath(newBug.getAssignUserAvatarId(), 16);
                 Img img = new Img(newBug.getAssignuserFullName(), avatarLink).setTitle(newBug.getAssignuserFullName())
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 return img.write();
@@ -452,7 +452,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                     timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
                     timeLogging.setType(ProjectTypeConstants.BUG);
                     timeLogging.setTypeid(bug.getId());
-                    timeLogging.setSaccountid(MyCollabUI.getAccountId());
+                    timeLogging.setSaccountid(AppUI.getAccountId());
                     timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
                     EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(BugBillableHoursPopupField.this));
 

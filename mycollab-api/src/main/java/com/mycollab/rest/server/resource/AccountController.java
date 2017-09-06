@@ -1,8 +1,9 @@
 package com.mycollab.rest.server.resource;
 
-import com.mycollab.configuration.SiteConfiguration;
+import com.mycollab.configuration.IDeploymentMode;
 import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.ondemand.module.support.service.EmailReferenceService;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/account")
+@Api()
 public class AccountController {
     private static Logger LOG = LoggerFactory.getLogger(AccountController.class);
 
@@ -25,6 +27,9 @@ public class AccountController {
 
     @Autowired
     private EmailReferenceService emailReferenceService;
+
+    @Autowired
+    private IDeploymentMode deploymentMode;
 
     @RequestMapping(value = "signup", method = RequestMethod.POST, headers = "Content-Type=application/x-www-form-urlencoded")
     public String signup(@RequestParam("subDomain") String subdomain, @RequestParam("planId") Integer planId,
@@ -37,6 +42,6 @@ public class AccountController {
         billingService.registerAccount(subdomain, planId, email, password, email, timezoneId, isEmailVerified);
 
         emailReferenceService.save(email);
-        return SiteConfiguration.getSiteUrl(subdomain);
+        return deploymentMode.getSiteUrl(subdomain);
     }
 }

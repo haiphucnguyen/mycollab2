@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.mobile.module.project.view
 
 import com.google.common.eventbus.Subscribe
@@ -39,7 +23,7 @@ import com.mycollab.module.project.{CurrentProjectVariables, ProjectMemberStatus
 import com.mycollab.module.tracker.domain.SimpleBug
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.mvp.{AbstractController, PageActionChain, PresenterResolver, ScreenData}
-import com.mycollab.vaadin.{MyCollabUI, UserUIContext}
+import com.mycollab.vaadin.{AppUI, UserUIContext}
 import com.vaadin.addon.touchkit.ui.NavigationManager
 
 /**
@@ -82,10 +66,10 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
       @Subscribe def handle(event: ProjectEvent.GotoAllActivitiesView) {
         val presenter = PresenterResolver.getPresenter(classOf[AllActivitiesStreamPresenter])
         val prjService = AppContextUtil.getSpringBean(classOf[ProjectService])
-        val prjKeys = prjService.getProjectKeysUserInvolved(UserUIContext.getUsername, MyCollabUI.getAccountId)
+        val prjKeys = prjService.getProjectKeysUserInvolved(UserUIContext.getUsername, AppUI.getAccountId)
         val searchCriteria = new ActivityStreamSearchCriteria()
         searchCriteria.setModuleSet(new SetSearchField(ModuleNameConstants.PRJ))
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId))
         searchCriteria.setExtraTypeIds(new SetSearchField(prjKeys))
         presenter.go(navManager, new ProjectScreenData.AllActivities(searchCriteria))
       }
@@ -95,7 +79,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
         val presenter = PresenterResolver.getPresenter(classOf[ProjectActivityStreamPresenter])
         val searchCriteria = new ActivityStreamSearchCriteria()
         searchCriteria.setModuleSet(new SetSearchField(ModuleNameConstants.PRJ))
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId))
         searchCriteria.setExtraTypeIds(new SetSearchField(event.getData.asInstanceOf[Integer]))
         presenter.go(navManager, new ProjectActivities(searchCriteria))
       }
@@ -260,7 +244,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
       @Subscribe def handle(event: ProjectMemberEvent.GotoList) {
         val criteria = new ProjectMemberSearchCriteria
         criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId))
-        criteria.setSaccountid(NumberSearchField.equal(MyCollabUI.getAccountId))
+        criteria.setSaccountid(NumberSearchField.equal(AppUI.getAccountId))
         criteria.setStatuses(new SetSearchField(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET))
         val presenter = PresenterResolver.getPresenter(classOf[ProjectUserPresenter])
         presenter.go(navManager, new ProjectMemberScreenData.Search(criteria))

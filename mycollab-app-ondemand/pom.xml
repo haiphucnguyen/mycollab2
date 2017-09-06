@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent-ondemand</artifactId>
-        <version>5.4.10</version>
+        <version>6.0.0</version>
         <relativePath>../mycollab-parent-ondemand/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
@@ -121,29 +121,20 @@
         </dependency>
 
         <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlets</artifactId>
-            <version>${jettyVersion}</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiled</artifactId>
-            <version>${vaadinVersion}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client</artifactId>
-            <version>${vaadinVersion}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiler</artifactId>
-            <version>${vaadinVersion}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -187,7 +178,7 @@
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
-                <version>${vaadinVersion}</version>
+                <version>${vaadin.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -338,8 +329,8 @@
                                 <copy todir="${installer.staging.dir}">
                                     <fileset dir="${installer.resource.dir.app}"/>
                                 </copy>
-                                <copy todir="${installer.staging.dir}/conf">
-                                    <fileset dir="${basedir}/src/main/conf">
+                                <copy todir="${installer.staging.dir}/config">
+                                    <fileset dir="${basedir}/src/main/config">
                                         <exclude name="mycollab.properties"/>
                                     </fileset>
                                 </copy>

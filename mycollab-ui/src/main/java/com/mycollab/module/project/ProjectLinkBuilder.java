@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-ui.
- *
- * mycollab-ui is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-ui is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project;
 
 import com.hp.gagawa.java.elements.A;
@@ -21,14 +5,14 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.UrlEncodeDecoder;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.html.DivLessFormatter;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.ui.UIConstants;
 import org.slf4j.Logger;
@@ -66,7 +50,8 @@ public class ProjectLinkBuilder {
 
     public static String generateProjectMemberHtmlLink(Integer projectId, String username, String displayName, String avatarId,
                                                        Boolean isDisplayTooltip) {
-        Img userAvatar = new Img("", StorageFactory.getAvatarPath(avatarId, 16)).setCSSClass(UIConstants.CIRCLE_BOX);
+        Img userAvatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
+                .getAvatarPath(avatarId, 16)).setCSSClass(UIConstants.CIRCLE_BOX);
         A link = new A().setId("tag" + TOOLTIP_ID).setHref(generateProjectMemberFullLink(projectId,
                 username)).appendText(StringUtils.trim(displayName, 30, true));
         if (isDisplayTooltip) {
@@ -80,7 +65,7 @@ public class ProjectLinkBuilder {
 
     public static String generateProjectMemberHtmlLink(Integer projectId, String username, Boolean isDisplayTooltip) {
         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-        SimpleProjectMember member = projectMemberService.findMemberByUsername(username, projectId, MyCollabUI.getAccountId());
+        SimpleProjectMember member = projectMemberService.findMemberByUsername(username, projectId, AppUI.getAccountId());
         if (member != null) {
             return generateProjectMemberHtmlLink(projectId, member.getUsername(), member.getDisplayName(), member
                     .getMemberAvatarId(), isDisplayTooltip);
@@ -126,7 +111,7 @@ public class ProjectLinkBuilder {
     }
 
     public static String generateHoursWeeklyReportLink() {
-        return MyCollabUI.getSiteUrl() + URL_PREFIX_PARAM + ProjectLinkGenerator
+        return AppUI.getSiteUrl() + URL_PREFIX_PARAM + ProjectLinkGenerator
                 .generateHoursWeeklyReportLink();
     }
 

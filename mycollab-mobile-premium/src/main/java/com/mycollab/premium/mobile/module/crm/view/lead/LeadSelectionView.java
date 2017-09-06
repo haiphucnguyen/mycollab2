@@ -6,7 +6,7 @@ import com.mycollab.mobile.ui.AbstractSelectionView;
 import com.mycollab.module.crm.domain.SimpleLead;
 import com.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.mycollab.module.crm.i18n.LeadI18nEnum;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.vaadin.ui.Button;
@@ -38,7 +38,7 @@ public class LeadSelectionView extends AbstractSelectionView<SimpleLead> {
     @Override
     public void load() {
         LeadSearchCriteria searchCriteria = new LeadSearchCriteria();
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         itemList.search(searchCriteria);
         SimpleLead clearLead = new SimpleLead();
         itemList.addComponentAtTop(rowHandler.generateRow(itemList, clearLead, 0));

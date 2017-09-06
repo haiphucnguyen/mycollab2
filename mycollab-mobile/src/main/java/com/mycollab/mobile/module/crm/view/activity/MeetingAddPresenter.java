@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.mobile.module.crm.view.activity;
 
 import com.mycollab.common.UrlEncodeDecoder;
@@ -27,7 +11,7 @@ import com.mycollab.module.crm.i18n.MeetingI18nEnum;
 import com.mycollab.module.crm.service.MeetingService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -73,7 +57,7 @@ public class MeetingAddPresenter extends AbstractCrmPresenter<MeetingAddView> {
                 meeting = (MeetingWithBLOBs) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 MeetingService meetingService = AppContextUtil.getSpringBean(MeetingService.class);
-                meeting = meetingService.findByPrimaryKey((Integer) data.getParams(), MyCollabUI.getAccountId());
+                meeting = meetingService.findByPrimaryKey((Integer) data.getParams(), AppUI.getAccountId());
             }
             if (meeting == null) {
                 NotificationUtil.showRecordNotExistNotification();
@@ -84,10 +68,10 @@ public class MeetingAddPresenter extends AbstractCrmPresenter<MeetingAddView> {
             view.editItem(meeting);
 
             if (meeting.getId() == null) {
-                MyCollabUI.addFragment("crm/activity/meeting/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
+                AppUI.addFragment("crm/activity/meeting/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(MeetingI18nEnum.SINGLE)));
             } else {
-                MyCollabUI.addFragment("crm/activity/meeting/edit/" + UrlEncodeDecoder.encode(meeting.getId()),
+                AppUI.addFragment("crm/activity/meeting/edit/" + UrlEncodeDecoder.encode(meeting.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                                 UserUIContext.getMessage(MeetingI18nEnum.SINGLE), meeting.getSubject()));
             }
@@ -98,7 +82,7 @@ public class MeetingAddPresenter extends AbstractCrmPresenter<MeetingAddView> {
 
     public void save(MeetingWithBLOBs item) {
         MeetingService meetingService = AppContextUtil.getSpringBean(MeetingService.class);
-        item.setSaccountid(MyCollabUI.getAccountId());
+        item.setSaccountid(AppUI.getAccountId());
         if (item.getId() == null) {
             meetingService.saveWithSession(item, UserUIContext.getUsername());
         } else {

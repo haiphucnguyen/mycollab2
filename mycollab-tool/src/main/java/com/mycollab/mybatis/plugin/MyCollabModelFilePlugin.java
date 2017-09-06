@@ -55,13 +55,13 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
             annotation = String.format(annotation, introspectedColumn.getLength(), "Field value is too long");
             field.addAnnotation(annotation);
         }
-        String columnAnnotation = "@Column(\"%s\")";
-        columnAnnotation = String.format(columnAnnotation, introspectedColumn.getActualColumnName());
+
+        String columnAnnotation = String.format("@Column(\"%s\")", introspectedColumn.getActualColumnName());
         field.addAnnotation(columnAnnotation);
 
         if (isPrimaryKeyOfTable(introspectedColumn, introspectedTable)) {
             generateEqualsMethod(field, topLevelClass);
-            generateHascodeMethod(field, topLevelClass);
+            generateHashCodeMethod(field, topLevelClass);
         }
         return true;
     }
@@ -83,7 +83,7 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
         topLevelClass.addMethod(m);
     }
 
-    private void generateHascodeMethod(Field field, TopLevelClass topLevelClass) {
+    private void generateHashCodeMethod(Field field, TopLevelClass topLevelClass) {
         topLevelClass.addImportedType(" org.apache.commons.lang3.builder.HashCodeBuilder");
         Method m = new Method();
         m.setName("hashCode");
@@ -91,7 +91,7 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
         m.setVisibility(JavaVisibility.PUBLIC);
         m.setFinal(true);
         m.addBodyLine(String.format("return new HashCodeBuilder(%d, %d).append(%s).build();", Math.abs(new Random()
-                .nextInt(1000)*2 +1), Math.abs(new Random().nextInt(1000)*2 + 1), field.getName()));
+                .nextInt(1000) * 2 + 1), Math.abs(new Random().nextInt(1000) * 2 + 1), field.getName()));
         topLevelClass.addMethod(m);
     }
 
@@ -131,7 +131,7 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
         TextElement commentElement = new TextElement("<!--WARNING - @mbggenerated-->");
         element.addElement(commentElement);
 
-        StringBuffer sqlBuilder = new StringBuffer("insert into ").append(
+        StringBuilder sqlBuilder = new StringBuilder("insert into ").append(
                 introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime()).append(" (");
 
         StringBuilder valueSt = new StringBuilder("values (");
@@ -165,7 +165,7 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
         element.addAttribute(new Attribute("id", "removeKeysWithSession"));
         element.addAttribute(new Attribute("parameterType", "java.util.List"));
 
-        StringBuffer sqlBuilder = new StringBuffer("delete from ").append(introspectedTable
+        StringBuilder sqlBuilder = new StringBuilder("delete from ").append(introspectedTable
                 .getAliasedFullyQualifiedTableNameAtRuntime())
                 .append(" where id IN <foreach item=\"item\" index=\"index\" collection=\"list\" open=\"(\" separator=\",\" close=\")\"> #{item} </foreach>");
 
@@ -177,7 +177,7 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
         XmlElement sqlElement = new XmlElement("sql");
         sqlElement.addAttribute(new Attribute("id", "massUpdateWithSessionSql"));
         sqlElement.addElement(new TextElement("<!--WARNING - @mbggenerated-->"));
-StringBuilder sqlBuilder = new StringBuilder("#set($record = $_parameter.record)");
+        StringBuilder sqlBuilder = new StringBuilder("#set($record = $_parameter.record)");
         sqlBuilder.append("\nupdate ")
                 .append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         sqlElement.addElement(new TextElement(sqlBuilder.toString()));
@@ -231,6 +231,7 @@ StringBuilder sqlBuilder = new StringBuilder("#set($record = $_parameter.record)
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         topLevelClass.addImportedType("com.mycollab.db.metadata.Column");
         topLevelClass.addImportedType("com.mycollab.db.metadata.Table");
+        topLevelClass.addImportedType("org.apache.ibatis.type.Alias");
         String commentLine = "/*Domain class of table %s*/";
         topLevelClass.addFileCommentLine(String.format(commentLine,
                 introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime()));
@@ -256,9 +257,11 @@ StringBuilder sqlBuilder = new StringBuilder("#set($record = $_parameter.record)
             topLevelClass.setVisibility(JavaVisibility.DEFAULT);
         }
 
-        String tableAnnotation = "@Table(\"%s\")";
-        tableAnnotation = String.format(tableAnnotation, introspectedTable.getTableConfiguration().getTableName());
+        String tableAnnotation = String.format("@Table(\"%s\")", introspectedTable.getTableConfiguration().getTableName());
         topLevelClass.addAnnotation(tableAnnotation);
+
+        String aliasAnnotation = String.format("@Alias(\"%s\")", topLevelClass.getType().getShortName());
+        topLevelClass.addAnnotation(aliasAnnotation);
 
         return super.modelBaseRecordClassGenerated(topLevelClass, introspectedTable);
     }

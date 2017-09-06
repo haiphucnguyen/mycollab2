@@ -1,32 +1,16 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.mobile.module.project.ui;
 
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.arguments.ValuedBean;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.mobile.ui.AbstractMobilePageView;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
@@ -202,8 +186,9 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
 
         @Override
         public Component generateRow(IBeanList<SimpleItemTimeLogging> host, SimpleItemTimeLogging itemLogging, int rowIndex) {
-            Img avatar = new Img("", StorageFactory.getAvatarPath(itemLogging.getLogUserAvatarId(), 16)).setCSSClass
-                    (UIConstants.CIRCLE_BOX);
+            Img avatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
+                    .getAvatarPath(itemLogging.getLogUserAvatarId(), 16))
+                    .setCSSClass(UIConstants.CIRCLE_BOX);
             Div memberLink = new DivLessFormatter().appendChild(avatar, DivLessFormatter.EMPTY_SPACE(),
                     new A(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables.getProjectId(),
                             itemLogging.getLoguser())).appendText(itemLogging.getLogUserFullName()));

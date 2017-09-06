@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-esb.
- *
- * mycollab-esb is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-esb is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-esb.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.user.esb
 
 import java.util.Locale
@@ -22,7 +6,7 @@ import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.hp.gagawa.java.elements.A
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
-import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.configuration.{IDeploymentMode, SiteConfiguration}
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.db.arguments._
 import com.mycollab.html.LinkUtils
@@ -65,6 +49,7 @@ object NewUserJoinCommand {
   @Autowired private val extMailService: ExtMailService = null
   @Autowired private val contentGenerator: IContentGenerator = null
   @Autowired private val userService: UserService = null
+  @Autowired private val deploymentMode: IDeploymentMode = null
 
   @AllowConcurrentEvents
   @Subscribe
@@ -84,7 +69,7 @@ object NewUserJoinCommand {
       recipients.append(new MailRecipientField(inst.getUsername, inst.getDisplayName))
     })
     val account = billingAccountService.getAccountById(sAccountId)
-    contentGenerator.putVariable("siteUrl", SiteConfiguration.getSiteUrl(account.getSubdomain))
+    contentGenerator.putVariable("siteUrl", deploymentMode.getSiteUrl(account.getSubdomain))
     contentGenerator.putVariable("newUser", newUser)
     contentGenerator.putVariable("formatter", new Formatter)
     contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,

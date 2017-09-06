@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.crm.schedule.email.service
 
 import com.mycollab.common.MonitorTypeConstants
@@ -44,7 +28,7 @@ import scala.util.control.Breaks._
   */
 abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNotificationAction {
   private val LOG = LoggerFactory.getLogger(classOf[CrmDefaultSendingRelayEmailAction[_]])
-  
+
   @Autowired val extMailService: ExtMailService = null
   @Autowired val auditLogService: AuditLogService = null
   @Autowired val userService: UserService = null
@@ -54,7 +38,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
   protected var bean: B = _
   protected var changeUser: SimpleUser = _
   protected var siteUrl: String = _
-  
+
   override def sendNotificationForCreateAction(notification: SimpleRelayEmailNotification): Unit = {
     val notifiers = getListNotifyUserWithFilter(notification, MonitorTypeConstants.CREATE_ACTION)
     if ((notifiers != null) && notifiers.nonEmpty) {
@@ -88,7 +72,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
       }
     }
   }
-  
+
   def sendNotificationForUpdateAction(notification: SimpleRelayEmailNotification) {
     val notifiers = getListNotifyUserWithFilter(notification, MonitorTypeConstants.UPDATE_ACTION)
     if ((notifiers != null) && notifiers.nonEmpty) {
@@ -138,12 +122,12 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
       }
     }
   }
-  
+
   def sendNotificationForCommentAction(notification: SimpleRelayEmailNotification) {
     val notifiers = getListNotifyUserWithFilter(notification, MonitorTypeConstants.ADD_COMMENT_ACTION)
     if ((notifiers != null) && notifiers.nonEmpty) {
       onInitAction(notification)
-      
+
       val searchCriteria = new CommentSearchCriteria
       searchCriteria.setType(StringSearchField.and(notification.getType))
       searchCriteria.setTypeId(StringSearchField.and(notification.getTypeid))
@@ -151,7 +135,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
       val comments = commentService.findPageableListByCriteria(new BasicSearchRequest[CommentSearchCriteria](searchCriteria, 0, 5))
       contentGenerator.putVariable("lastComments", comments)
       contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.getSaccountid, notification.getAccountLogo))
-      
+
       import scala.collection.JavaConverters._
       for (user <- notifiers) {
         val notifierFullName = user.getDisplayName
@@ -160,7 +144,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
           MailI18nEnum.Last_Comments_Value, "" + comments.size()))
         contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Copyright,
           DateTimeUtils.getCurrentYear))
-        
+
         breakable {
           if (notifierFullName == null) {
             LOG.error("Can not find user {} of notification {}", Array[AnyRef](BeanUtility.printBeanObj(user),
@@ -168,7 +152,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
             break()
           }
         }
-        
+
         bean = getBeanInContext(notification)
         context.setWrappedBean(bean)
         buildExtraTemplateVariables(context)
@@ -180,30 +164,30 @@ abstract class CrmDefaultSendingRelayEmailAction[B] extends SendingRelayEmailNot
       }
     }
   }
-  
+
   private def getListNotifyUserWithFilter(notification: SimpleRelayEmailNotification, `type`: String): List[SimpleUser] = {
     import scala.collection.JavaConverters._
-    
+
     val sendUsers = notification.getNotifyUsers.asScala
     sendUsers.toList
   }
-  
+
   private def onInitAction(notification: SimpleRelayEmailNotification) {
     siteUrl = MailUtils.getSiteUrl(notification.getSaccountid)
     changeUser = userService.findUserByUserNameInAccount(notification.getChangeby, notification.getSaccountid)
   }
-  
+
   protected def getBeanInContext(context: SimpleRelayEmailNotification): B
-  
+
   protected def buildExtraTemplateVariables(context: MailContext[B])
-  
+
   protected def getCreateSubjectKey: Enum[_]
-  
+
   protected def getUpdateSubjectKey: Enum[_]
-  
+
   protected def getCommentSubjectKey: Enum[_]
-  
+
   protected def getItemName: String
-  
+
   protected def getItemFieldMapper: ItemFieldMapper
 }

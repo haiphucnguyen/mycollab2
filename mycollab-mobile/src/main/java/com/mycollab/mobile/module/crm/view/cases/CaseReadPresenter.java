@@ -1,35 +1,3 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
-/**
- * This file is part of mycollab-mobile.
- * <p>
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * <p>
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.mobile.module.crm.view.cases;
 
 import com.mycollab.common.i18n.GenericI18Enum;
@@ -43,7 +11,7 @@ import com.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.mycollab.module.crm.service.CaseService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -85,7 +53,7 @@ public class CaseReadPresenter extends AbstractCrmPresenter<CaseReadView> {
                             if (dialog.isConfirmed()) {
                                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
                                 caseService.removeWithSession(data,
-                                        UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                        UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new CaseEvent.GotoList(this, null));
                             }
                         });
@@ -107,7 +75,7 @@ public class CaseReadPresenter extends AbstractCrmPresenter<CaseReadView> {
             public void gotoNext(SimpleCase data) {
                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
                 CaseSearchCriteria criteria = new CaseSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
                 Integer nextId = caseService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -122,7 +90,7 @@ public class CaseReadPresenter extends AbstractCrmPresenter<CaseReadView> {
             public void gotoPrevious(SimpleCase data) {
                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
                 CaseSearchCriteria criteria = new CaseSearchCriteria();
-                criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+                criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
                 criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
                 Integer nextId = caseService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -140,7 +108,7 @@ public class CaseReadPresenter extends AbstractCrmPresenter<CaseReadView> {
 
             if (data.getParams() instanceof Integer) {
                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
-                SimpleCase cases = caseService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleCase cases = caseService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (cases != null) {
                     view.previewItem(cases);
                     super.onGo(container, data);

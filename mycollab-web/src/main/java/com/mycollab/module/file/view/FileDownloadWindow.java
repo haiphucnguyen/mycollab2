@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.file.view;
 
 import com.mycollab.common.i18n.FileI18nEnum;
@@ -24,7 +8,7 @@ import com.mycollab.module.ecm.domain.Resource;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.resources.StreamDownloadResourceUtil;
 import com.mycollab.vaadin.resources.file.FileAssetsUtil;
@@ -85,7 +69,7 @@ class FileDownloadWindow extends MWindow {
         }
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        SimpleUser user = userService.findUserByUserNameInAccount(content.getCreatedUser(), MyCollabUI.getAccountId());
+        SimpleUser user = userService.findUserByUserNameInAccount(content.getCreatedUser(), AppUI.getAccountId());
         if (user == null) {
             inforLayout.addComponent(new UserLink(UserUIContext.getUsername(), UserUIContext.getUserAvatarId(),
                     UserUIContext.getUserDisplayName()), UserUIContext.getMessage(GenericI18Enum.OPT_CREATED_BY), 0, 1);

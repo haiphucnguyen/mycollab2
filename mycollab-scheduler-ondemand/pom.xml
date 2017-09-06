@@ -7,16 +7,11 @@
     <parent>
         <groupId>com.mycollab</groupId>
         <artifactId>mycollab-parent-ondemand</artifactId>
-        <version>5.4.10</version>
+        <version>6.0.0</version>
         <relativePath>../mycollab-parent-ondemand/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
     <dependencies>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${jodaVersion}</version>
-        </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>

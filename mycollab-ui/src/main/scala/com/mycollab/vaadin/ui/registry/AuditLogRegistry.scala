@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-ui.
- *
- * mycollab-ui is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-ui is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.vaadin.ui.registry
 
 import com.mycollab.common.domain.{AuditChangeItem, SimpleActivityStream}
@@ -30,15 +14,13 @@ import org.springframework.stereotype.Component
 @Component
 class AuditLogRegistry extends InitializingBean {
   private var auditPrinters: Map[String, FieldGroupFormatter] = Map[String, FieldGroupFormatter]()
-  
-  override def afterPropertiesSet(): Unit = {
-    
-  }
-  
+
+  override def afterPropertiesSet(): Unit = {}
+
   def registerAuditLogHandler(typeVal: String, fieldGroupFormatter: FieldGroupFormatter) {
     auditPrinters += (typeVal -> fieldGroupFormatter)
   }
-  
+
   def generatorDetailChangeOfActivity(activityStream: SimpleActivityStream): String = {
     if (activityStream.getAssoAuditLog != null) {
       val value = auditPrinters.get(activityStream.getType)
@@ -68,7 +50,7 @@ class AuditLogRegistry extends InitializingBean {
     }
     ""
   }
-  
+
   def getFieldGroupFormatter(typeVal: String): FieldGroupFormatter = {
     val fieldGroupFormatter = auditPrinters.get(typeVal)
     fieldGroupFormatter match {

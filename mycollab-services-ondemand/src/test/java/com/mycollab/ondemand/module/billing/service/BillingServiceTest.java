@@ -1,12 +1,11 @@
 package com.mycollab.ondemand.module.billing.service;
 
-import com.mycollab.core.MyCollabException;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.ondemand.module.billing.ExistedSubDomainException;
+import com.mycollab.ondemand.test.spring.IntegrationServiceTest;
 import com.mycollab.test.DataSet;
-import com.mycollab.test.service.IntegrationServiceTest;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

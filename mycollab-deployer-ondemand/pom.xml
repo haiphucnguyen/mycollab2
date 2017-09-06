@@ -5,7 +5,7 @@
     <name>mycollab-deployer-ondemand</name>
     <groupId>com.mycollab</groupId>
     <artifactId>mycollab-deployer-ondemand</artifactId>
-    <version>5.4.10</version>
+    <version>6.0.0</version>
     <packaging>pom</packaging>
     <prerequisites>
         <maven>3.0.4</maven>
@@ -35,7 +35,6 @@
         <module>../mycollab-reporting-premium</module>
         <module>../mycollab-scheduler</module>
         <module>../mycollab-servlet</module>
-        <module>../mycollab-simple-monitoring</module>
         <module>../mycollab-servlet-ondemand</module>
         <module>../mycollab-client-api</module>
         <module>../mycollab-ui</module>

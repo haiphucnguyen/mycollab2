@@ -1,26 +1,10 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.pro.module.crm.view.setting.customlayout;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.UnsupportedFeatureException;
 import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.module.crm.view.setting.ICrmCustomView;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.DetailFieldInfoPanel;
 import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.IntegerDetailFieldInfoPanel;
 import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.TextDetailFieldInfoPanel;
@@ -60,22 +44,22 @@ public class CreateCustomFieldWindow extends Window {
     private static final String AUTO_NUMBER = "Auto Number";
 
     private static final Object[][] fieldsTable = new Object[][]{
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/text.png")), TEXT_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/integer.png")), INTEGER_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/percent.png")), PERCENT_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/decimal.png")), DECIMAL_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/currency.png")), CURRENCY_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/date.png")), DATE_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/date_time.png")), DATETIME_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/mail.png")), EMAIL_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/phone.png")), PHONE_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/pick_list.png")), PICK_LIST_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/url.png")), URL_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/text_area.png")), TEXTAREA_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/check_box.png")), CHECKBOX_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/select_pick_list.png")), MULTIPLE_SELECT_LIST_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/long.png")), LONG_FIELD},
-            {new ExternalResource(StorageFactory.generateAssetRelativeLink("icons/16/customform/auto_number.png")), AUTO_NUMBER}};
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/text.png")), TEXT_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/integer.png")), INTEGER_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/percent.png")), PERCENT_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/decimal.png")), DECIMAL_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/currency.png")), CURRENCY_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/date.png")), DATE_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/date_time.png")), DATETIME_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/mail.png")), EMAIL_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/phone.png")), PHONE_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/pick_list.png")), PICK_LIST_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/url.png")), URL_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/text_area.png")), TEXTAREA_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/check_box.png")), CHECKBOX_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/select_pick_list.png")), MULTIPLE_SELECT_LIST_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/long.png")), LONG_FIELD},
+            {new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/customform/auto_number.png")), AUTO_NUMBER}};
 
     private CssLayout fieldLayoutWrapper;
     @SuppressWarnings("rawtypes")

@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.crm.view
 
 import com.mycollab.eventmanager.ApplicationEventListener
@@ -39,8 +23,8 @@ import com.mycollab.module.crm.domain._
 import com.mycollab.module.crm.domain.criteria._
 import com.mycollab.module.crm.service.LeadService
 import com.mycollab.spring.AppContextUtil
-import com.mycollab.vaadin.MyCollabUI.getAccountId
-import com.mycollab.vaadin.{MyCollabUI, UserUIContext}
+import com.mycollab.vaadin.AppUI.getAccountId
+import com.mycollab.vaadin.{AppUI, UserUIContext}
 
 /**
   * @author MyCollab Ltd.
@@ -72,7 +56,7 @@ class CrmController(val container: CrmModule) extends AbstractController {
       @Subscribe def handle(event: AccountEvent.GotoList) {
         val presenter = PresenterResolver.getPresenter(classOf[AccountListPresenter])
         val criteria = new AccountSearchCriteria
-        criteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
+        criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId))
         presenter.go(container, new ScreenData.Search[AccountSearchCriteria](criteria))
       }
     })
@@ -112,7 +96,7 @@ class CrmController(val container: CrmModule) extends AbstractController {
       @Subscribe def handle(event: ActivityEvent.GotoTodoList) {
         val presenter = PresenterResolver.getPresenter(classOf[ActivityListPresenter])
         val searchCriteria = new ActivitySearchCriteria
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId))
         presenter.go(container, new ActivityScreenData.GotoActivityList(searchCriteria))
       }
     })
@@ -186,7 +170,7 @@ class CrmController(val container: CrmModule) extends AbstractController {
       @Subscribe def handle(event: CampaignEvent.GotoList) {
         val presenter = PresenterResolver.getPresenter(classOf[CampaignListPresenter])
         val searchCriteria = new CampaignSearchCriteria
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId))
         presenter.go(container, new ScreenData.Search[CampaignSearchCriteria](searchCriteria))
       }
     })
@@ -219,7 +203,7 @@ class CrmController(val container: CrmModule) extends AbstractController {
       @Subscribe def handle(event: ContactEvent.GotoList) {
         val presenter = PresenterResolver.getPresenter(classOf[ContactListPresenter])
         val searchCriteria = new ContactSearchCriteria
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId))
         presenter.go(container, new ScreenData.Search[ContactSearchCriteria](searchCriteria))
       }
     })
@@ -277,7 +261,7 @@ class CrmController(val container: CrmModule) extends AbstractController {
       @Subscribe def handle(event: LeadEvent.GotoList) {
         val presenter = PresenterResolver.getPresenter(classOf[LeadListPresenter])
         val searchCriteria = new LeadSearchCriteria
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId))
         presenter.go(container, new ScreenData.Search[LeadSearchCriteria](searchCriteria))
       }
     })
@@ -303,7 +287,7 @@ class CrmController(val container: CrmModule) extends AbstractController {
         var lead: SimpleLead = null
         if (value.isInstanceOf[Integer]) {
           val leadService = AppContextUtil.getSpringBean(classOf[LeadService])
-          lead = leadService.findById(value.asInstanceOf[Integer], MyCollabUI.getAccountId)
+          lead = leadService.findById(value.asInstanceOf[Integer], AppUI.getAccountId)
         }
         else if (value.isInstanceOf[SimpleLead]) {
           lead = value.asInstanceOf[SimpleLead]
@@ -333,7 +317,7 @@ class CrmController(val container: CrmModule) extends AbstractController {
         }
         else {
           searchCriteria = new OpportunitySearchCriteria
-          searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
+          searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId))
         }
         presenter.go(container, new ScreenData.Search[OpportunitySearchCriteria](searchCriteria))
       }
@@ -375,7 +359,7 @@ class CrmController(val container: CrmModule) extends AbstractController {
       @Subscribe def handle(event: CaseEvent.GotoList) {
         val presenter = PresenterResolver.getPresenter(classOf[CaseListPresenter])
         val searchCriteria = new CaseSearchCriteria
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId))
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId))
         presenter.go(container, new ScreenData.Search[CaseSearchCriteria](searchCriteria))
       }
     })

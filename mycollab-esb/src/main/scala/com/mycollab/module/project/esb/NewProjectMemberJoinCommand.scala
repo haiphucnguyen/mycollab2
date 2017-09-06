@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-esb.
- *
- * mycollab-esb is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-esb is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-esb.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project.esb
 
 import java.util.Locale
@@ -23,7 +7,7 @@ import com.hp.gagawa.java.elements.A
 import com.mycollab.common.FontAwesomeUtils
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
-import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.configuration.{IDeploymentMode, SiteConfiguration}
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.html.{DivLessFormatter, LinkUtils}
 import com.mycollab.i18n.LocalizationHelper
@@ -71,6 +55,7 @@ object NewProjectMemberJoinCommand {
   @Autowired private val projectMemberService: ProjectMemberService = null
   @Autowired private val extMailService: ExtMailService = null
   @Autowired private val contentGenerator: IContentGenerator = null
+  @Autowired private val deploymentMode: IDeploymentMode = null
 
   @AllowConcurrentEvents
   @Subscribe
@@ -86,7 +71,7 @@ object NewProjectMemberJoinCommand {
     contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
       DateTimeUtils.getCurrentYear))
     contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(account.getId, account.getLogopath))
-    contentGenerator.putVariable("siteUrl", SiteConfiguration.getSiteUrl(account.getSubdomain))
+    contentGenerator.putVariable("siteUrl", deploymentMode.getSiteUrl(account.getSubdomain))
     val recipients = ListBuffer[MailRecipientField]()
     membersInProjects.foreach(user => {
       if (event.username != user.getUsername)

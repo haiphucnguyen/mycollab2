@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-ui.
- *
- * mycollab-ui is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-ui is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.user.ui.format;
 
 import com.hp.gagawa.java.elements.A;
@@ -25,7 +9,7 @@ import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.formatter.HistoryFieldFormat;
 import org.slf4j.Logger;
@@ -53,14 +37,14 @@ public class UserHistoryFieldFormat implements HistoryFieldFormat {
 
         try {
             UserService userService = AppContextUtil.getSpringBean(UserService.class);
-            SimpleUser user = userService.findUserByUserNameInAccount(value, MyCollabUI.getAccountId());
+            SimpleUser user = userService.findUserByUserNameInAccount(value, AppUI.getAccountId());
             if (user != null) {
                 if (displayAsHtml) {
                     String userAvatarLink = MailUtils.getAvatarLink(user.getAvatarid(), 16);
                     Img img = FormatUtils.newImg("avatar", userAvatarLink);
 
                     String userLink = AccountLinkGenerator.generatePreviewFullUserLink(
-                            MailUtils.getSiteUrl(MyCollabUI.getAccountId()), user.getUsername());
+                            MailUtils.getSiteUrl(AppUI.getAccountId()), user.getUsername());
 
                     A link = FormatUtils.newA(userLink, user.getDisplayName());
                     return FormatUtils.newLink(img, link).write();

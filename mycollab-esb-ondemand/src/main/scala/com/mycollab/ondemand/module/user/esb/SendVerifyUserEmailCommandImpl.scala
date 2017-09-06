@@ -26,21 +26,21 @@ import org.springframework.stereotype.Component
   @Autowired private val userService: UserService = null
   @Autowired private val extMailService: ExtMailService = null
   @Autowired private val contentGenerator: IContentGenerator = null
-  
+
   @AllowConcurrentEvents
   @Subscribe
   def sendVerifyEmailRequest(event: SendUserEmailVerifyRequestEvent): Unit = {
-//    sendConfirmEmailToUser(event.user)
+    //    sendConfirmEmailToUser(event.user)
     event.user.setStatus(UserStatusConstants.EMAIL_VERIFIED_REQUEST)
     userService.updateWithSession(event.user, event.user.getUsername)
   }
-  
+
   def sendConfirmEmailToUser(user: User) {
     contentGenerator.putVariable("user", user)
-//    val siteUrl = GenericLinkUtils.generateSiteUrlByAccountId(user.getAccountId)
-//    contentGenerator.putVariable("siteUrl", siteUrl)
-//    val confirmLink = siteUrl + "user/confirm_signup/" + UrlEncodeDecoder.encode(user.getUsername + "/" + user.getAccountId)
-//    contentGenerator.putVariable("linkConfirm", confirmLink)
+    //    val siteUrl = GenericLinkUtils.generateSiteUrlByAccountId(user.getAccountId)
+    //    contentGenerator.putVariable("siteUrl", siteUrl)
+    //    val confirmLink = siteUrl + "user/confirm_signup/" + UrlEncodeDecoder.encode(user.getUsername + "/" + user.getAccountId)
+    //    contentGenerator.putVariable("linkConfirm", confirmLink)
     contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
       DateTimeUtils.getCurrentYear))
     extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail, SiteConfiguration.getDefaultSiteName,

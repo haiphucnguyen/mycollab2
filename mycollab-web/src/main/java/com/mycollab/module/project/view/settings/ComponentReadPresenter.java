@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project.view.settings;
 
 import com.mycollab.core.MyCollabException;
@@ -32,7 +16,7 @@ import com.mycollab.module.tracker.service.ComponentService;
 import com.mycollab.vaadin.reporting.FormReportLayout;
 import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -72,7 +56,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
             @Override
             public void onDelete(SimpleComponent data) {
                 ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
-                componentService.removeWithSession(data, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                componentService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                 EventBusFactory.getInstance().post(new BugComponentEvent.GotoList(this, null));
             }
 
@@ -131,7 +115,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
             if (data.getParams() instanceof Integer) {
                 ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
-                SimpleComponent component = componentService.findById((Integer) data.getParams(), MyCollabUI.getAccountId());
+                SimpleComponent component = componentService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (component != null) {
                     BugComponentContainer componentContainer = (BugComponentContainer) container;
                     componentContainer.removeAllComponents();

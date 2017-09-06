@@ -12,6 +12,7 @@ import com.mycollab.ondemand.module.billing.dao.ProEditionInfoMapper;
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfo;
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfoExample;
 import com.verhas.licensor.License;
+import io.swagger.annotations.Api;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -31,12 +32,11 @@ import java.util.Properties;
  * @author MyCollab Ltd
  * @since 5.2.5
  */
+@Api(value = "Order", tags = "Billing")
 @RestController
 @RequestMapping(path = "/order")
 public class OrderManagerController {
     private static Logger LOG = LoggerFactory.getLogger(OrderManagerController.class);
-
-    private static final String PRIVATE_KEY = "2d4966f695ceae18a67c0061112886c6";
 
     @Autowired
     private ProEditionInfoMapper proEditionMapper;
@@ -190,12 +190,12 @@ public class OrderManagerController {
 
     public static void main(String[] args) {
         LicenseInfo licenseInfo = new LicenseInfo();
-        licenseInfo.setCustomerId("8");
-        licenseInfo.setExpireDate(new DateTime().plusDays(36500).toDate());
+        licenseInfo.setCustomerId("10");
+        licenseInfo.setExpireDate(new DateTime().plusDays(365).toDate());
         licenseInfo.setIssueDate(new DateTime().toDate());
-        licenseInfo.setMaxUsers(9999);
+        licenseInfo.setMaxUsers(10);
         licenseInfo.setLicenseType(LicenseType.PRO);
-        licenseInfo.setLicenseOrg("MCSI");
+        licenseInfo.setLicenseOrg("On Call Computer Solutions");
         System.out.println(encode(licenseInfo));
     }
 }

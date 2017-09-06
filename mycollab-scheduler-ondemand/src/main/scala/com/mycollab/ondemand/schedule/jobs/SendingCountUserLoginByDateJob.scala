@@ -30,9 +30,9 @@ class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[SendingCountUserLoginByDateJob])
   private val COUNT_USER_LOGIN_TEMPLATE: String = "mailCountUserLoginByDate.ftl"
 
-  @Autowired var userService: UserService = _
-  @Autowired var extMailService: ExtMailService = _
-  @Autowired var contentGenerator: IContentGenerator = _
+  @Autowired private val userService: UserService = null
+  @Autowired private val extMailService: ExtMailService = null
+  @Autowired private val contentGenerator: IContentGenerator = null
 
   @SuppressWarnings(Array("unchecked"))
   @throws(classOf[JobExecutionException])

@@ -1,27 +1,10 @@
-/**
- * This file is part of mycollab-services.
- *
- * mycollab-services is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-services is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.ondemand.module.file.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.module.file.service.RawContentService;
-import com.mycollab.ondemand.configuration.S3Storage;
+import com.mycollab.ondemand.module.file.service.S3StorageServiceImpl;
 
 import java.io.InputStream;
 
@@ -31,10 +14,9 @@ import java.io.InputStream;
  */
 public class S3RawContentServiceImpl implements RawContentService {
 
-    private S3Storage storageConfiguration;
+    private S3StorageServiceImpl storageConfiguration;
 
     public S3RawContentServiceImpl() {
-        storageConfiguration = (S3Storage) StorageFactory.getInstance();
     }
 
     @Override
@@ -100,7 +82,7 @@ public class S3RawContentServiceImpl implements RawContentService {
             }
 
         } catch (Exception e) {
-            throw new MyCollabException("Can not remane from path " + oldPath + " to " + newPath, e);
+            throw new MyCollabException("Can not rename from path " + oldPath + " to " + newPath, e);
         }
 
     }

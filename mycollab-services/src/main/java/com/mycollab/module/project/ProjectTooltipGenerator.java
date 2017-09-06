@@ -1,29 +1,13 @@
-/**
- * This file is part of mycollab-services.
- *
- * mycollab-services is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-services is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project;
 
 import com.hp.gagawa.java.elements.*;
 import com.mycollab.common.TooltipBuilder;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.i18n.LocalizationHelper;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.page.domain.Page;
 import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.i18n.*;
@@ -130,7 +114,7 @@ public class ProjectTooltipGenerator {
             String assignUserLink = (task.getAssignuser() != null) ? AccountLinkGenerator
                     .generatePreviewFullUserLink(siteURL, task.getAssignuser())
                     : "";
-            String assignUserAvatarLink = StorageFactory.getAvatarPath(task.getAssignUserAvatarId(), 16);
+            String assignUserAvatarLink = getAvatarPath(task.getAssignUserAvatarId(), 16);
             Td cell42 = buildCellLink(assignUserLink, assignUserAvatarLink, task.getAssignUserFullName());
             Td cell43 = buildCellName(LocalizationHelper.getMessage(locale, MilestoneI18nEnum.SINGLE));
             String taskgroupLink = (task.getMilestoneName() != null) ? ProjectLinkGenerator
@@ -217,11 +201,11 @@ public class ProjectTooltipGenerator {
             Tr trRow6 = new Tr();
             Td cell61 = buildCellName(LocalizationHelper.getMessage(locale, BugI18nEnum.FORM_LOG_BY));
             String logbyUserLink = (bug.getCreateduser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(siteURL, bug.getCreateduser()) : "";
-            String logbyAvatarLink = StorageFactory.getAvatarPath(bug.getLoguserAvatarId(), 16);
+            String logbyAvatarLink = getAvatarPath(bug.getLoguserAvatarId(), 16);
             Td cell62 = buildCellLink(logbyUserLink, logbyAvatarLink, bug.getLoguserFullName());
             Td cell63 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_ASSIGNEE));
             String assignUserLink = (bug.getAssignuser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(siteURL, bug.getAssignuser()) : "";
-            String assignUserAvatarLink = StorageFactory.getAvatarPath(bug.getAssignUserAvatarId(), 16);
+            String assignUserAvatarLink = getAvatarPath(bug.getAssignUserAvatarId(), 16);
             Td cell64 = buildCellLink(assignUserLink, assignUserAvatarLink, bug.getAssignuserFullName());
             trRow6.appendChild(cell61, cell62, cell63, cell64);
             tooltipManager.appendRow(trRow6);
@@ -264,7 +248,7 @@ public class ProjectTooltipGenerator {
             Td cell11 = buildCellName(LocalizationHelper.getMessage(locale, RiskI18nEnum.FORM_RAISED_BY));
             String raisedUserLink = (risk.getCreateduser() != null) ? AccountLinkGenerator
                     .generatePreviewFullUserLink(siteURL, risk.getCreateduser()) : "";
-            String raisedUserAvatarLink = StorageFactory.getAvatarPath(risk.getRaisedByUserAvatarId(), 16);
+            String raisedUserAvatarLink = getAvatarPath(risk.getRaisedByUserAvatarId(), 16);
             Td cell12 = buildCellLink(raisedUserLink, raisedUserAvatarLink, risk.getRaisedByUserFullName());
             Td cell13 = buildCellName(LocalizationHelper.getMessage(locale, RiskI18nEnum.FORM_CONSEQUENCE));
             Td cell14 = buildCellValue(risk.getConsequence());
@@ -275,7 +259,7 @@ public class ProjectTooltipGenerator {
             Td cell21 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_ASSIGNEE));
             String assignUserLink = (risk.getAssignuser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(siteURL,
                     risk.getAssignuser()) : "";
-            String assignUserAvatarLink = StorageFactory.getAvatarPath(risk.getAssignToUserAvatarId(), 16);
+            String assignUserAvatarLink = getAvatarPath(risk.getAssignToUserAvatarId(), 16);
             Td cell22 = buildCellLink(assignUserLink, assignUserAvatarLink,
                     risk.getAssignedToUserFullName());
             Td cell23 = buildCellName(LocalizationHelper.getMessage(locale, RiskI18nEnum.FORM_PROBABILITY));
@@ -366,7 +350,7 @@ public class ProjectTooltipGenerator {
             Td cell31 = buildCellName(LocalizationHelper.getMessage(locale, ComponentI18nEnum.FORM_LEAD));
             String leadLink = (component.getUserlead() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(siteURL,
                     component.getUserlead()) : "";
-            String leadAvatarLink = StorageFactory.getAvatarPath(component.getUserLeadAvatarId(), 16);
+            String leadAvatarLink = getAvatarPath(component.getUserLeadAvatarId(), 16);
             Td cell32 = buildCellLink(leadLink, leadAvatarLink, component.getUserLeadFullName());
             trRow3.appendChild(cell31, cell32);
             tooltipManager.appendRow(trRow3);
@@ -455,7 +439,7 @@ public class ProjectTooltipGenerator {
             Td cell23 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_ASSIGNEE));
             String assignUserLink = (milestone.getAssignuser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink
                     (siteURL, milestone.getAssignuser()) : "";
-            String assignUserAvatarLink = StorageFactory.getAvatarPath(milestone.getOwnerAvatarId(), 16);
+            String assignUserAvatarLink = getAvatarPath(milestone.getOwnerAvatarId(), 16);
             Td cell24 = buildCellLink(assignUserLink, assignUserAvatarLink,
                     milestone.getOwnerFullName());
             trRow2.appendChild(cell21, cell22, cell23, cell24);
@@ -569,5 +553,10 @@ public class ProjectTooltipGenerator {
             LOG.error("Error while generate tooltip for servlet project tooltip", e);
             return null;
         }
+    }
+
+    private static String getAvatarPath(String userAvatarId, Integer size) {
+        AbstractStorageService abstractStorageService = AppContextUtil.getSpringBean(AbstractStorageService.class);
+        return abstractStorageService.getAvatarPath(userAvatarId, size);
     }
 }

@@ -6,7 +6,7 @@ import com.mycollab.mobile.ui.AbstractSelectionView;
 import com.mycollab.module.crm.domain.SimpleOpportunity;
 import com.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.mycollab.module.crm.i18n.OpportunityI18nEnum;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.vaadin.ui.Button;
@@ -37,7 +37,7 @@ public class OpportunitySelectionView extends AbstractSelectionView<SimpleOpport
     @Override
     public void load() {
         OpportunitySearchCriteria searchCriteria = new OpportunitySearchCriteria();
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         itemList.search(searchCriteria);
         SimpleOpportunity clearOpportunity = new SimpleOpportunity();
         itemList.addComponentAtTop(rowHandler.generateRow(itemList, clearOpportunity, 0));

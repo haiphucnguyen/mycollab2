@@ -1,30 +1,12 @@
-/**
- * This file is part of mycollab-core.
- *
- * mycollab-core is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-core is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-core.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.core.utils;
 
 import com.google.common.base.MoreObjects;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.UserInvalidInputException;
-import org.apache.commons.io.IOUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -73,14 +55,10 @@ public class FileUtils {
     public static String readFileAsPlainString(String fileName) {
         try {
             File pricingFile = FileUtils.getDesireFile(FileUtils.getUserFolder(), fileName, "src/main/conf/" + fileName);
-            InputStream pricingStream;
             if (pricingFile != null) {
-                pricingStream = new FileInputStream(pricingFile);
-            } else {
-                pricingStream = FileUtils.class.getClassLoader().getResourceAsStream(fileName);
+                return new String(Files.readAllBytes(pricingFile.toPath()), Charset.forName("UTF-8"));
             }
-
-            return IOUtils.toString(pricingStream, "UTF-8");
+            return "";
         } catch (IOException e) {
             throw new MyCollabException(e);
         }

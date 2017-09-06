@@ -14,7 +14,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -58,12 +58,12 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
     private Integer saveBug(SimpleBug bug) {
         BugService bugService = AppContextUtil.getSpringBean(BugService.class);
         bug.setProjectid(CurrentProjectVariables.getProjectId());
-        bug.setSaccountid(MyCollabUI.getAccountId());
+        bug.setSaccountid(AppUI.getAccountId());
         ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
         if (bug.getId() == null) {
             bug.setStatus(BugStatus.Open.name());
             bug.setCreateduser(UserUIContext.getUsername());
-            bug.setSaccountid(MyCollabUI.getAccountId());
+            bug.setSaccountid(AppUI.getAccountId());
             int bugId = bugService.saveWithSession(bug, UserUIContext.getUsername());
             uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.BUG, bugId);
         } else {

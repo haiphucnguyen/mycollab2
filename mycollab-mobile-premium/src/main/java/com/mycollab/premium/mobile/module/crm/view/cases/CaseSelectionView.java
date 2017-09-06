@@ -6,7 +6,7 @@ import com.mycollab.mobile.ui.AbstractSelectionView;
 import com.mycollab.module.crm.domain.SimpleCase;
 import com.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.mycollab.module.crm.i18n.CaseI18nEnum;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.vaadin.ui.Button;
@@ -38,7 +38,7 @@ public class CaseSelectionView extends AbstractSelectionView<SimpleCase> {
     @Override
     public void load() {
         CaseSearchCriteria searchCriteria = new CaseSearchCriteria();
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         itemList.search(searchCriteria);
         SimpleCase clearCase = new SimpleCase();
         itemList.addComponentAtTop(rowHandler.generateRow(itemList, clearCase, 0));

@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.crm.schedule.email.service
 
 import com.hp.gagawa.java.elements.{Span, Text}
@@ -49,7 +33,7 @@ import org.springframework.stereotype.Component
 class OpportunityRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAction[SimpleOpportunity] with OpportunityRelayEmailNotificationAction {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[OpportunityRelayEmailNotificationActionImpl])
   
-  @Autowired var opportunityService: OpportunityService = _
+  @Autowired private val opportunityService: OpportunityService = null
   private val mapper: OpportunityFieldNameMapper = new OpportunityFieldNameMapper
   
   override protected def getBeanInContext(notification: SimpleRelayEmailNotification): SimpleOpportunity =

@@ -5,13 +5,13 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.mycollab.module.crm.service.AccountService;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.event.ClientEvent;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
@@ -19,7 +19,7 @@ import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
@@ -82,14 +82,14 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
 
         MButton deleteBtn = new MButton("", clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                     confirmDialog -> {
                         if (confirmDialog.isConfirmed()) {
                             AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                            accountService.removeWithSession(client, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                            accountService.removeWithSession(client, UserUIContext.getUsername(), AppUI.getAccountId());
                             EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
                         }
                     });
@@ -120,8 +120,8 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
                 ", " + MoreObjects.firstNonNull(client.getBillingcountry(), UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)));
         clientInfo.addComponent(new ELabel(addressDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO));
         Div assignUserDiv = new Div().appendText(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + " : ").
-                appendChild(new Img("", StorageFactory.getAvatarPath(client.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
-                        new A(AccountLinkGenerator.generatePreviewFullUserLink(MyCollabUI.getSiteUrl(), client.getAssignuser())).
+                appendChild(new Img("", StorageUtils.getAvatarPath(client.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
+                        new A(AccountLinkGenerator.generatePreviewFullUserLink(AppUI.getSiteUrl(), client.getAssignuser())).
                                 appendText(client.getAssignUserFullName()));
         clientInfo.addComponent(new ELabel(assignUserDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO,
                 UIConstants.TEXT_ELLIPSIS));

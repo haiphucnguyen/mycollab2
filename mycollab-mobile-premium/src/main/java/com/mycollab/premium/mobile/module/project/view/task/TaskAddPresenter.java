@@ -13,7 +13,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -58,7 +58,7 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
     private void saveTask(SimpleTask task) {
         ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
 
-        task.setSaccountid(MyCollabUI.getAccountId());
+        task.setSaccountid(AppUI.getAccountId());
         task.setProjectid(CurrentProjectVariables.getProjectId());
         if (task.getPercentagecomplete() == null) {
             task.setPercentagecomplete(0d);

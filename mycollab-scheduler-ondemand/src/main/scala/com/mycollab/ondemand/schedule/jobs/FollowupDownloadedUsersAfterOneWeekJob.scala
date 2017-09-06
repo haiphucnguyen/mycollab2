@@ -2,10 +2,9 @@ package com.mycollab.ondemand.schedule.jobs
 
 import java.util.Arrays
 
-import com.mycollab.module.mail.service.IContentGenerator
 import com.mycollab.common.domain.MailRecipientField
-import com.mycollab.configuration.SiteConfiguration
-import com.mycollab.module.mail.service.ExtMailService
+import com.mycollab.configuration.IDeploymentMode
+import com.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
 import com.mycollab.ondemand.module.support.SupportLinkGenerator
 import com.mycollab.ondemand.module.support.dao.CommunityLeadMapper
 import com.mycollab.ondemand.module.support.domain.CommunityLeadExample
@@ -24,9 +23,10 @@ import org.springframework.stereotype.Component
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class FollowupDownloadedUsersAfterOneWeekJob extends GenericQuartzJobBean {
-  @Autowired var communityLeadMapper: CommunityLeadMapper = _
-  @Autowired var contentGenerator: IContentGenerator = _
-  @Autowired var extMailService: ExtMailService = _
+  @Autowired private val communityLeadMapper: CommunityLeadMapper = null
+  @Autowired private val contentGenerator: IContentGenerator = null
+  @Autowired private val extMailService: ExtMailService = null
+  @Autowired private val deploymentMode: IDeploymentMode = null
 
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext): Unit = {
@@ -38,7 +38,7 @@ class FollowupDownloadedUsersAfterOneWeekJob extends GenericQuartzJobBean {
     for (customerLead <- leads) {
       val leadName = customerLead.getFirstname + " " + customerLead.getLastname
       contentGenerator.putVariable("lead", leadName)
-      contentGenerator.putVariable("unsubscribeUrl", SupportLinkGenerator.generateUnsubscribeEmailFullLink(SiteConfiguration.getSiteUrl("settings"), customerLead.getEmail))
+      contentGenerator.putVariable("unsubscribeUrl", SupportLinkGenerator.generateUnsubscribeEmailFullLink(deploymentMode.getSiteUrl("settings"), customerLead.getEmail))
       extMailService.sendHTMLMail("john.adam@mycollab.com", "John Adams",
         Arrays.asList(new MailRecipientField(customerLead.getEmail, leadName)),
         "How are things going with MyCollab?", contentGenerator.parseFile("mailFollowupDownloadedUserAfter1Week.ftl"))

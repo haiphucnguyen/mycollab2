@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.mobile.module.crm.view;
 
 import com.hp.gagawa.java.elements.A;
@@ -23,7 +7,6 @@ import com.mycollab.common.ActivityStreamConstants;
 import com.mycollab.common.domain.SimpleActivityStream;
 import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.mycollab.common.service.ActivityStreamService;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;
@@ -32,9 +15,10 @@ import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.crm.view.CrmLocalizationTypeMap;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
@@ -124,10 +108,11 @@ class ActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityStreamSe
 
         private String buildAssigneeValue(SimpleActivityStream activityStream) {
             DivLessFormatter div = new DivLessFormatter();
-            Img userAvatar = new Img("", StorageFactory.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
+            Img userAvatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
+                    .getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
             A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(AccountLinkGenerator.generatePreviewFullUserLink(
-                    MyCollabUI.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim
+                    AppUI.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim
                     (activityStream.getCreatedUserFullName(), 30, true));
 
             div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink);

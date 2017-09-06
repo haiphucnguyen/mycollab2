@@ -7,7 +7,7 @@ import com.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.mycollab.module.crm.domain.SimpleCampaign;
 import com.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.mycollab.module.crm.i18n.CampaignI18nEnum;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.vaadin.ui.Button;
@@ -39,7 +39,7 @@ public class CampaignSelectionView extends AbstractSelectionView<CampaignWithBLO
     @Override
     public void load() {
         CampaignSearchCriteria searchCriteria = new CampaignSearchCriteria();
-        searchCriteria.setSaccountid(new NumberSearchField(MyCollabUI.getAccountId()));
+        searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         itemList.search(searchCriteria);
         SimpleCampaign clearCampaign = new SimpleCampaign();
         itemList.addComponentAtTop(rowHandler.generateRow(itemList, clearCampaign, 0));

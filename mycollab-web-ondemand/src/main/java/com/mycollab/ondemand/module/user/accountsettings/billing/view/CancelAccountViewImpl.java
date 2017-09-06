@@ -1,30 +1,14 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 
 import com.mycollab.common.domain.CustomerFeedbackWithBLOBs;
-import com.mycollab.configuration.StorageFactory;
 import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
 import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -65,7 +49,8 @@ public class CancelAccountViewImpl extends AbstractVerticalPageView implements C
         ELabel headerNote = new ELabel(UserUIContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE))
                 .withStyleName(UIConstants.META_INFO).withWidthUndefined();
 
-        header.with(new Image(null, new ExternalResource(StorageFactory.generateAssetRelativeLink(WebResourceIds._sad_face))),
+        AbstractStorageService storageService = AppContextUtil.getSpringBean(AbstractStorageService.class);
+        header.with(new Image(null, new ExternalResource(storageService.generateAssetRelativeLink(WebResourceIds._sad_face))),
                 headerTopLine, headerMsg, headerNote);
         return header;
     }
@@ -106,7 +91,7 @@ public class CancelAccountViewImpl extends AbstractVerticalPageView implements C
             CustomerFeedbackWithBLOBs feedback = new CustomerFeedbackWithBLOBs();
             String whyLeavingMsg = whyLeaving.getValue();
             feedback.setUsername(UserUIContext.getUsername());
-            feedback.setSaccountid(MyCollabUI.getAccountId());
+            feedback.setSaccountid(AppUI.getAccountId());
             feedback.setOthertool(alternativeTool.getValue());
             feedback.setReasontoback(reasonToBack.getValue());
             if (optionGroupField.getValue() != null) {
@@ -116,7 +101,7 @@ public class CancelAccountViewImpl extends AbstractVerticalPageView implements C
             }
 
             BillingService billingService = AppContextUtil.getSpringBean(BillingService.class);
-            billingService.cancelAccount(MyCollabUI.getAccountId(), feedback);
+            billingService.cancelAccount(AppUI.getAccountId(), feedback);
             UI.getCurrent().getPage().setLocation("https://www.mycollab.com");
         }).withStyleName(WebThemes.BUTTON_DANGER);
 

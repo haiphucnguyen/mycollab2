@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.crm.view.account;
 
 import com.mycollab.common.i18n.ErrorI18nEnum;
@@ -30,7 +14,7 @@ import com.mycollab.module.crm.view.CrmGenericListPresenter;
 import com.mycollab.module.crm.view.CrmModule;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.ViewItemAction;
 import com.mycollab.vaadin.mvp.MassUpdateCommand;
@@ -108,12 +92,12 @@ public class AccountListPresenter extends CrmGenericListPresenter<AccountListVie
             List<Account> keyList = currentDataList.stream().filter(item -> item.isSelected()).collect(Collectors.toList());
 
             if (keyList.size() > 0) {
-                accountService.massRemoveWithSession(keyList, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                accountService.massRemoveWithSession(keyList, UserUIContext.getUsername(), AppUI.getAccountId());
                 doSearch(searchCriteria);
                 checkWhetherEnableTableActionControl();
             }
         } else {
-            accountService.removeByCriteria(searchCriteria, MyCollabUI.getAccountId());
+            accountService.removeByCriteria(searchCriteria, AppUI.getAccountId());
             doSearch(searchCriteria);
         }
     }
@@ -131,7 +115,7 @@ public class AccountListPresenter extends CrmGenericListPresenter<AccountListVie
                 this.displayNoExistItems(container, data);
             }
 
-            MyCollabUI.addFragment("crm/account/list", UserUIContext.getMessage(AccountI18nEnum.LIST));
+            AppUI.addFragment("crm/account/list", UserUIContext.getMessage(AccountI18nEnum.LIST));
         } else {
             throw new SecureAccessException();
         }
@@ -145,7 +129,7 @@ public class AccountListPresenter extends CrmGenericListPresenter<AccountListVie
                     .collect(Collectors.toList());
 
             if (keyList.size() > 0) {
-                accountService.massUpdateWithSession(value, keyList, MyCollabUI.getAccountId());
+                accountService.massUpdateWithSession(value, keyList, AppUI.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

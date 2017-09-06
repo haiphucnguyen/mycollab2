@@ -29,7 +29,7 @@ import com.mycollab.pro.module.project.ui.components.TimeTrackingUserOrderCompon
 import com.mycollab.pro.module.project.view.reports.TimesheetCustomizeReportOutputWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AsyncInvoker;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -255,14 +255,14 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
                 }
             } else if ("delete".equals(event.getFieldName())) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, MyCollabUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 ItemTimeLoggingService itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
-                                itemTimeLoggingService.removeWithSession(itemLogging, UserUIContext.getUsername(), MyCollabUI.getAccountId());
+                                itemTimeLoggingService.removeWithSession(itemLogging, UserUIContext.getUsername(), AppUI.getAccountId());
                                 displayTimeEntries();
                             }
                         });

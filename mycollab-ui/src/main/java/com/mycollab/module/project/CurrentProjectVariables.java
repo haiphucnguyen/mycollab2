@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-ui.
- *
- * mycollab-ui is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-ui is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.module.project;
 
 import com.google.common.base.MoreObjects;
@@ -27,7 +11,7 @@ import com.mycollab.module.project.esb.NewProjectMemberJoinEvent;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.MyCollabUI;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.MyCollabSession;
 import org.slf4j.Logger;
@@ -57,7 +41,7 @@ public class CurrentProjectVariables {
 
         // get member permission
         ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-        SimpleProjectMember prjMember = prjMemberService.findMemberByUsername(UserUIContext.getUsername(), project.getId(), MyCollabUI.getAccountId());
+        SimpleProjectMember prjMember = prjMemberService.findMemberByUsername(UserUIContext.getUsername(), project.getId(), AppUI.getAccountId());
         if (prjMember != null) {
             if (ProjectMemberStatusConstants.INACTIVE.equals(prjMember.getStatus())) {
                 throw new UserNotBelongProjectException("You are not belong to this project");
@@ -81,7 +65,7 @@ public class CurrentProjectVariables {
                 prjMember.setStatus(ProjectMemberStatusConstants.ACTIVE);
                 prjMemberService.updateSelectiveWithSession(prjMember, UserUIContext.getUsername());
                 AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
-                asyncEventBus.post(new NewProjectMemberJoinEvent(prjMember.getUsername(), prjMember.getProjectid(), MyCollabUI.getAccountId()));
+                asyncEventBus.post(new NewProjectMemberJoinEvent(prjMember.getUsername(), prjMember.getProjectid(), AppUI.getAccountId()));
             }
             setProjectMember(prjMember);
             if (getProjectToggleMenu() == null) {
@@ -227,7 +211,7 @@ public class CurrentProjectVariables {
     public static String getCurrentPagePath() {
         String path = (String) MyCollabSession.getCurrentUIVariable(CURRENT_PAGE_VAR);
         if (path == null) {
-            path = PathUtils.getProjectDocumentPath(MyCollabUI.getAccountId(), getProjectId());
+            path = PathUtils.getProjectDocumentPath(AppUI.getAccountId(), getProjectId());
             setCurrentPagePath(path);
         }
 
