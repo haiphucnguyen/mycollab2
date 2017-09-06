@@ -50,69 +50,65 @@ public class PageServiceImpl implements PageService {
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public void savePage(final Page page, final String createdUser) {
-        jcrTemplate.execute(new JcrCallback() {
-
-            @Override
-            public Object doInJcr(Session session) throws IOException, RepositoryException {
-                page.setCreatedTime(new GregorianCalendar());
-                page.setCreatedUser(createdUser);
-                page.setLastUpdatedTime(new GregorianCalendar());
-                page.setLastUpdatedUser(createdUser);
-                Node rootNode = session.getRootNode();
-                Node node = JcrUtils.getNodeIfExists(rootNode, page.getPath());
-                // forward to current path
-                if (node != null) {
-                    if (isNodeFolder(node)) {
-                        String errorStr = String.format("Resource is existed. Search node is not a folder. It has path %s and type is %s",
-                                node.getPath(), node.getPrimaryNodeType().getName());
-                        throw new ContentException(errorStr);
-                    } else if (isNodePage(node)) {
-                        LOG.debug("Found existing resource. Override");
-                        VersionManager vm = session.getWorkspace().getVersionManager();
-                        vm.checkout("/" + page.getPath());
-                        convertPageToNode(node, page, createdUser);
-                        session.save();
-                        vm.checkin("/" + page.getPath());
-                    } else {
-                        String errorStr = String.format("Resource is existed. But its node type is not mycollab:content. It has path %s and type is %s",
-                                node.getPath(), node.getPrimaryNodeType().getName());
-                        throw new ContentException(errorStr);
-                    }
+        jcrTemplate.execute((JcrCallback) session -> {
+            page.setCreatedTime(new GregorianCalendar());
+            page.setCreatedUser(createdUser);
+            page.setLastUpdatedTime(new GregorianCalendar());
+            page.setLastUpdatedUser(createdUser);
+            Node rootNode = session.getRootNode();
+            Node node = JcrUtils.getNodeIfExists(rootNode, page.getPath());
+            // forward to current path
+            if (node != null) {
+                if (isNodeFolder(node)) {
+                    String errorStr = String.format("Resource is existed. Search node is not a folder. It has path %s and type is %s",
+                            node.getPath(), node.getPrimaryNodeType().getName());
+                    throw new ContentException(errorStr);
+                } else if (isNodePage(node)) {
+                    LOG.debug("Found existing resource. Override");
+                    VersionManager vm = session.getWorkspace().getVersionManager();
+                    vm.checkout("/" + page.getPath());
+                    convertPageToNode(node, page, createdUser);
+                    session.save();
+                    vm.checkin("/" + page.getPath());
                 } else {
-                    try {
-                        String path = page.getPath();
-                        String[] pathStr = path.split("/");
-                        Node parentNode = rootNode;
-                        // create folder note
-                        for (int i = 0; i < pathStr.length - 1; i++) {
-                            // move to lastest node of the path
-                            Node childNode = JcrUtils.getNodeIfExists(parentNode, pathStr[i]);
-                            if (childNode != null) {
-                                if (!isNodeFolder(childNode)) {
-                                    // node must is folder
-                                    String errorString = "Invalid path. User want to create a content has path %s but there is a folder has path %s";
-                                    throw new ContentException(String.format(errorString, page.getPath(), childNode.getPath()));
-                                }
-                            } else {
-                                // add node
-                                childNode = parentNode.addNode(pathStr[i], "{http://www.esofthead.com/wiki}folder");
-                                childNode.setProperty("wiki:createdUser", createdUser);
-                                childNode.setProperty("wiki:name", pathStr[i]);
-                                childNode.setProperty("wiki:description", "");
-                            }
-                            parentNode = childNode;
-                        }
-
-                        Node addNode = parentNode.addNode(pathStr[pathStr.length - 1], "{http://www.esofthead.com/wiki}page");
-                        convertPageToNode(addNode, page, createdUser);
-                        session.save();
-                    } catch (Exception e) {
-                        LOG.error("error in convertToNode Method", e);
-                        throw new MyCollabException(e);
-                    }
+                    String errorStr = String.format("Resource is existed. But its node type is not mycollab:content. It has path %s and type is %s",
+                            node.getPath(), node.getPrimaryNodeType().getName());
+                    throw new ContentException(errorStr);
                 }
-                return null;
+            } else {
+                try {
+                    String path = page.getPath();
+                    String[] pathStr = path.split("/");
+                    Node parentNode = rootNode;
+                    // create folder note
+                    for (int i = 0; i < pathStr.length - 1; i++) {
+                        // move to lastest node of the path
+                        Node childNode = JcrUtils.getNodeIfExists(parentNode, pathStr[i]);
+                        if (childNode != null) {
+                            if (!isNodeFolder(childNode)) {
+                                // node must is folder
+                                String errorString = "Invalid path. User want to create a content has path %s but there is a folder has path %s";
+                                throw new ContentException(String.format(errorString, page.getPath(), childNode.getPath()));
+                            }
+                        } else {
+                            // add node
+                            childNode = parentNode.addNode(pathStr[i], "{http://www.esofthead.com/wiki}folder");
+                            childNode.setProperty("wiki:createdUser", createdUser);
+                            childNode.setProperty("wiki:name", pathStr[i]);
+                            childNode.setProperty("wiki:description", "");
+                        }
+                        parentNode = childNode;
+                    }
+
+                    Node addNode = parentNode.addNode(pathStr[pathStr.length - 1], "{http://www.esofthead.com/wiki}page");
+                    convertPageToNode(addNode, page, createdUser);
+                    session.save();
+                } catch (Exception e) {
+                    LOG.error("error in convertToNode Method", e);
+                    throw new MyCollabException(e);
+                }
             }
+            return null;
         });
 
     }

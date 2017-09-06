@@ -17,7 +17,7 @@ public class FastSpringFactoryBean extends AbstractFactoryBean<FastSpring> {
 
     @Override
     public boolean isSingleton() {
-        return true;
+        return false;
     }
 
     @Override
