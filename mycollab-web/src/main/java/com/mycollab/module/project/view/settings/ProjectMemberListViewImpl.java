@@ -178,7 +178,7 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
         blockTop.addComponent(buttonControls);
         blockTop.setComponentAlignment(buttonControls, Alignment.TOP_RIGHT);
 
-        A memberLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(member.getProjectid(), member
+        A memberLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(member.getProjectid(), member
                 .getUsername())).appendText(member.getMemberFullName()).setTitle(member.getMemberFullName());
         ELabel memberNameLbl = ELabel.h3(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
 

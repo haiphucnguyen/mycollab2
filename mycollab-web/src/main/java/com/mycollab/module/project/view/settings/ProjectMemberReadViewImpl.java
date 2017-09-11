@@ -225,7 +225,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         protected Field<?> onCreateField(final Object propertyId) {
             if (propertyId.equals("projectroleid")) {
                 if (Boolean.FALSE.equals(attachForm.getBean().getIsadmin())) {
-                    return new LinkViewField(attachForm.getBean().getRoleName(), ProjectLinkBuilder.generateRolePreviewFullLink(
+                    return new LinkViewField(attachForm.getBean().getRoleName(), ProjectLinkBuilder.INSTANCE.generateRolePreviewFullLink(
                             attachForm.getBean().getProjectid(), attachForm.getBean().getProjectroleid()), null);
                 } else {
                     return new DefaultViewField(UserUIContext.getMessage(ProjectRoleI18nEnum.OPT_ADMIN_ROLE_DISPLAY));

@@ -125,14 +125,14 @@ public class AllMilestoneTimelineWidget extends MVerticalLayout {
             }
             li.appendChild(timestampDiv);
 
-            A projectDiv = new A(ProjectLinkBuilder.generateProjectFullLink(milestone.getProjectid())).appendText
+            A projectDiv = new A(ProjectLinkBuilder.INSTANCE.generateProjectFullLink(milestone.getProjectid())).appendText
                     (FontAwesome.BUILDING_O.getHtml() + " " + StringUtils.trim(milestone.getProjectName(), 30, true))
                     .setId("tag" + TOOLTIP_ID);
             projectDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.INSTANCE.getPROJECT(),
                     milestone.getProjectid() + ""));
             projectDiv.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 
-            A milestoneDiv = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
+            A milestoneDiv = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink
                     (milestone.getProjectid(), milestone.getId())).appendText(ProjectAssetsManager.getAsset
                     (ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true))
                     .setId("tag" + TOOLTIP_ID);

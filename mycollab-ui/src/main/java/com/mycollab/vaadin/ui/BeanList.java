@@ -60,7 +60,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
     }
 
     public int setSearchRequest(BasicSearchRequest<S> searchRequest) {
-        List<T> currentListData = searchService.findPageableListByCriteria(searchRequest);
+        List currentListData = searchService.findPageableListByCriteria(searchRequest);
         loadItems(currentListData);
         return currentListData.size();
     }

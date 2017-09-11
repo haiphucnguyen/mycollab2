@@ -116,7 +116,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
                     SimpleItemTimeLogging itemLogging = getBeanByIndex(itemId);
 
                     LabelLink b = new LabelLink(itemLogging.getProjectName(),
-                            ProjectLinkBuilder.generateProjectFullLink(itemLogging.getProjectid()));
+                            ProjectLinkBuilder.INSTANCE.generateProjectFullLink(itemLogging.getProjectid()));
                     b.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPROJECT()));
                     return b;
                 }

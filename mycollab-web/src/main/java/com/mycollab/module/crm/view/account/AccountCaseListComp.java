@@ -141,7 +141,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
             blockContent.addComponent(deleteBtn);
             blockContent.setComponentAlignment(deleteBtn, Alignment.TOP_RIGHT);
 
-            A caseLink = new A(CrmLinkBuilder.generateCasePreviewLinkFull(oneCase.getId())).appendText(oneCase.getSubject());
+            A caseLink = new A(CrmLinkBuilder.INSTANCE.generateCasePreviewLinkFull(oneCase.getId())).appendText(oneCase.getSubject());
             ELabel caseSubject = ELabel.h3(caseLink.write());
             caseInfo.addComponent(caseSubject);
 

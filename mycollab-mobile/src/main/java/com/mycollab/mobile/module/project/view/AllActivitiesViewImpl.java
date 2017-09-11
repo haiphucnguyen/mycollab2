@@ -178,7 +178,7 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
         Img userAvatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
                 .getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                 .setCSSClass(UIConstants.CIRCLE_BOX);
-        A userLink = new A().setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+        A userLink = new A().setHref(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(
                 activityStream.getExtratypeid(), activityStream.getCreateduser()));
         userLink.appendText(StringUtils.trim(activityStream.getCreatedUserFullName(), 30, true));
 
@@ -208,7 +208,7 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
     private static String buildProjectValue(ProjectActivityStream activityStream) {
         DivLessFormatter div = new DivLessFormatter();
         Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPROJECT()).getHtml());
-        A prjLink = new A(ProjectLinkBuilder.generateProjectFullLink(activityStream.getProjectId())).appendText(activityStream.getProjectName());
+        A prjLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectFullLink(activityStream.getProjectId())).appendText(activityStream.getProjectName());
         div.appendChild(prjImg, DivLessFormatter.EMPTY_SPACE(), prjLink);
         return div.write();
     }

@@ -68,7 +68,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
             SimpleActivity simpleEvent = getBeanByIndex(itemId);
 
             FontAwesome iconLink = CrmAssetsManager.getAsset(simpleEvent.getEventType());
-            ELabel b = ELabel.html(iconLink.getHtml() + " " + simpleEvent.getSubject(), CrmLinkBuilder.generateActivityPreviewLinkFull(
+            ELabel b = ELabel.html(iconLink.getHtml() + " " + simpleEvent.getSubject(), CrmLinkBuilder.INSTANCE.generateActivityPreviewLinkFull(
                     simpleEvent.getEventType(), simpleEvent.getId())).withDescription(generateToolTip(simpleEvent));
 
             if (simpleEvent.isCompleted()) {

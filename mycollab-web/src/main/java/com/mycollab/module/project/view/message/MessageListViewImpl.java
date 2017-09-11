@@ -125,7 +125,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
 
             MVerticalLayout rowLayout = new MVerticalLayout().withFullWidth().withStyleName(WebThemes.MESSAGE_CONTAINER);
 
-            A labelLink = new A(ProjectLinkBuilder.generateMessagePreviewFullLink(message.getProjectid(), message.getId()),
+            A labelLink = new A(ProjectLinkBuilder.INSTANCE.generateMessagePreviewFullLink(message.getProjectid(), message.getId()),
                     new Text(message.getTitle()));
 
             MHorizontalLayout messageHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false));

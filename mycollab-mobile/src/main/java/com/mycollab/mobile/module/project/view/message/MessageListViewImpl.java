@@ -103,7 +103,7 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
 
             MHorizontalLayout titleRow = new MHorizontalLayout().withFullWidth().withStyleName("title-row");
 
-            A messageLink = new A(ProjectLinkBuilder.generateMessagePreviewFullLink(CurrentProjectVariables
+            A messageLink = new A(ProjectLinkBuilder.INSTANCE.generateMessagePreviewFullLink(CurrentProjectVariables
                     .getProjectId(), message.getId())).appendText(message.getTitle());
             ELabel messageTitle = ELabel.h3(messageLink.write());
             CssLayout messageWrap = new CssLayout(messageTitle);

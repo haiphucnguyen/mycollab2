@@ -32,7 +32,7 @@ public class CampaignListDisplay extends DefaultPagedBeanList<CampaignService, C
         @Override
         public Component generateRow(IBeanList<SimpleCampaign> host, final SimpleCampaign campaign, int rowIndex) {
             MVerticalLayout rowLayout = new MVerticalLayout().withMargin(false).withSpacing(false).withFullWidth();
-            A itemLink = new A(CrmLinkBuilder.generateCampaignPreviewLinkFull(campaign.getId())).appendText(campaign.getCampaignname());
+            A itemLink = new A(CrmLinkBuilder.INSTANCE.generateCampaignPreviewLinkFull(campaign.getId())).appendText(campaign.getCampaignname());
             MCssLayout itemWrap = new MCssLayout(ELabel.html(itemLink.write()));
             rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.getAsset
                     (CrmTypeConstants.INSTANCE.getCAMPAIGN())), itemWrap).expand(itemWrap).withFullWidth());

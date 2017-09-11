@@ -39,14 +39,14 @@ class OpportunityReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFac
 
         if (propertyId.equals("accountid")) {
             if (opportunity.getAccountid() != null) {
-                A accountLink = new A(CrmLinkBuilder.generateAccountPreviewLinkFull(opportunity.getAccountid()))
+                A accountLink = new A(CrmLinkBuilder.INSTANCE.generateAccountPreviewLinkFull(opportunity.getAccountid()))
                         .appendText(opportunity.getAccountName());
                 Div accountDiv = new Div().appendText(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), accountLink);
                 field = new DefaultViewField(accountDiv.write(), ContentMode.HTML);
             }
         } else if (propertyId.equals("campaignid")) {
             if (opportunity.getCampaignid() != null) {
-                A campaignLink = new A(CrmLinkBuilder.generateCampaignPreviewLinkFull(opportunity.getAccountid()))
+                A campaignLink = new A(CrmLinkBuilder.INSTANCE.generateCampaignPreviewLinkFull(opportunity.getAccountid()))
                         .appendText(opportunity.getCampaignName());
                 Div campaignDiv = new Div().appendText(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN()).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), campaignLink);
                 field = new DefaultViewField(campaignDiv.write(), ContentMode.HTML);

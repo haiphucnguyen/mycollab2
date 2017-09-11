@@ -7,7 +7,9 @@ import com.mycollab.common.domain.SimpleRelayEmailNotification
 import com.mycollab.common.i18n.GenericI18Enum
 import com.mycollab.core.MyCollabException
 import com.mycollab.core.utils.StringUtils
-import com.mycollab.html.FormatUtils.*
+import com.mycollab.html.FormatUtils.newA
+import com.mycollab.html.FormatUtils.newImg
+import com.mycollab.html.FormatUtils.newLink
 import com.mycollab.html.LinkUtils
 import com.mycollab.module.crm.CrmLinkGenerator
 import com.mycollab.module.crm.CrmResources
@@ -73,7 +75,7 @@ class TaskRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAction
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
-    override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleCrmTask =
+    override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleCrmTask? =
             taskService!!.findById(notification.typeid.toInt(), notification.saccountid)
 
     class TaskFieldNameMapper() : ItemFieldMapper() {
@@ -140,20 +142,22 @@ class TaskRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAction
         }
 
         override fun formatField(context: MailContext<*>, value: String): String {
-            if (StringUtils.isBlank(value)) {
-                return Span().write()
+            return if (StringUtils.isBlank(value)) {
+                Span().write()
             } else {
                 val userService = AppContextUtil.getSpringBean(UserService::class.java)
                 val user = userService.findUserByUserNameInAccount(value, context.user.accountId)
-                return if (user != null) {
-                    val userAvatarLink = MailUtils.getAvatarLink(user.avatarid, 16)
-                    val userLink = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.accountId),
-                            user.username)
-                    val img = newImg("avatar", userAvatarLink)
-                    val link = newA(userLink, user.displayName)
-                    newLink(img, link).write()
-                } else
-                    value
+                when {
+                    user != null -> {
+                        val userAvatarLink = MailUtils.getAvatarLink(user.avatarid, 16)
+                        val userLink = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.accountId),
+                                user.username)
+                        val img = newImg("avatar", userAvatarLink)
+                        val link = newA(userLink, user.displayName)
+                        newLink(img, link).write()
+                    }
+                    else -> value
+                }
             }
         }
     }

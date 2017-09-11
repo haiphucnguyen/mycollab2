@@ -75,7 +75,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         if (project.getLead() != null) {
             Div leadAvatar = new DivLessFormatter().appendChild(new Img("", StorageUtils.INSTANCE.getAvatarPath
                             (project.getLeadAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX), DivLessFormatter.EMPTY_SPACE(),
-                    new A(ProjectLinkBuilder.generateProjectMemberFullLink(project.getId(), project.getLead()))
+                    new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(project.getId(), project.getLead()))
                             .appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
                     .setTitle(project.getLeadFullName());
             ELabel leadLbl = ELabel.html(UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER) + ": " + leadAvatar.write()).withWidthUndefined();
@@ -97,7 +97,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 clientDiv.appendChild(clientImg).appendChild(DivLessFormatter.EMPTY_SPACE());
             }
-            clientDiv.appendChild(new A(ProjectLinkBuilder.generateClientPreviewFullLink(project.getAccountid()))
+            clientDiv.appendChild(new A(ProjectLinkBuilder.INSTANCE.generateClientPreviewFullLink(project.getAccountid()))
                     .appendText(StringUtils.trim(project.getClientName(), 30, true)));
             ELabel accountBtn = ELabel.html(clientDiv.write()).withStyleName(WebThemes.BUTTON_LINK)
                     .withWidthUndefined();

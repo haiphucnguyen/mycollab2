@@ -139,7 +139,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
         public Component generateRow(IBeanList<SimpleMilestone> host, final SimpleMilestone milestone, int rowIndex) {
             MVerticalLayout milestoneInfoLayout = new MVerticalLayout().withSpacing(false).withFullWidth();
 
-            A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink(CurrentProjectVariables
+            A milestoneLink = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink(CurrentProjectVariables
                     .getProjectId(), milestone.getId())).appendChild(new Span().appendText(milestone.getName()));
             if (milestone.isCompleted()) {
                 milestoneLink.setCSSClass(MobileUIConstants.LINK_COMPLETED);

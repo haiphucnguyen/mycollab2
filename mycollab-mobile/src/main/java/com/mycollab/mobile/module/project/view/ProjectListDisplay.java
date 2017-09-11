@@ -43,7 +43,7 @@ public class ProjectListDisplay extends DefaultPagedBeanList<ProjectService, Pro
         @Override
         public Component generateRow(IBeanList<SimpleProject> host, final SimpleProject project, int rowIndex) {
             MVerticalLayout layout = new MVerticalLayout();
-            A prjLink = new A(ProjectLinkBuilder.generateProjectFullLink(project.getId())).appendText(String.format
+            A prjLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectFullLink(project.getId())).appendText(String.format
                     ("[%s] %s", project.getShortname(), project.getName()));
             layout.with(ELabel.html(prjLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS, MobileUIConstants.LARGE));
 
@@ -68,7 +68,7 @@ public class ProjectListDisplay extends DefaultPagedBeanList<ProjectService, Pro
                 Div leadDiv = new Div().appendChild(new Img("",
                                 AppContextUtil.getSpringBean(AbstractStorageService.class)
                                         .getAvatarPath(project.getLeadAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
-                        new A(ProjectLinkBuilder.generateProjectMemberFullLink(project.getId(), project.getLead()))
+                        new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(project.getId(), project.getLead()))
                                 .appendText(project.getLeadFullName())).setTitle(UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER));
                 metaDiv.appendChild(0, leadDiv);
                 metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE());

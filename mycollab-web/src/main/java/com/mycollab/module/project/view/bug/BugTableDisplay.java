@@ -53,7 +53,7 @@ class BugTableDisplay extends DefaultPagedBeanTable<BugService, BugSearchCriteri
 
         this.addGeneratedColumn("name", (source, itemId, columnId) -> {
             SimpleBug bug = getBeanByIndex(itemId);
-            LabelLink b = new LabelLink(bug.getName(), ProjectLinkBuilder.generateBugPreviewFullLink(bug.getBugkey(),
+            LabelLink b = new LabelLink(bug.getName(), ProjectLinkBuilder.INSTANCE.generateBugPreviewFullLink(bug.getBugkey(),
                     bug.getProjectShortName()));
 
             if (StringUtils.isNotBlank(bug.getPriority())) {

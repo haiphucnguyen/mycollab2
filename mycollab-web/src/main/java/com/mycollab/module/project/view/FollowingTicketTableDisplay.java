@@ -115,7 +115,7 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
         this.addGeneratedColumn("projectName", (source, itemId, columnId) -> {
             final FollowingTicket ticket = getBeanByIndex(itemId);
             Div projectLinkDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPROJECT()).getHtml() + " ")
-                    .appendChild(new A(ProjectLinkBuilder.generateProjectFullLink(ticket.getProjectId()))
+                    .appendChild(new A(ProjectLinkBuilder.INSTANCE.generateProjectFullLink(ticket.getProjectId()))
                             .appendText(ticket.getProjectName()));
             return new ELabel(projectLinkDiv.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_WORD_WRAP);
         });

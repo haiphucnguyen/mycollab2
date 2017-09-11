@@ -190,7 +190,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
                     .getAvatarPath(itemLogging.getLogUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
             Div memberLink = new DivLessFormatter().appendChild(avatar, DivLessFormatter.EMPTY_SPACE(),
-                    new A(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables.getProjectId(),
+                    new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(CurrentProjectVariables.getProjectId(),
                             itemLogging.getLoguser())).appendText(itemLogging.getLogUserFullName()));
             MCssLayout memberLbl = new MCssLayout(ELabel.html(memberLink.write()).withStyleName(UIConstants
                     .TEXT_ELLIPSIS).withFullWidth());

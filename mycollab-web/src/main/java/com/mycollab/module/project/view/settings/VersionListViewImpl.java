@@ -76,7 +76,7 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
 
         tableItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
             final Version bugVersion = tableItem.getBeanByIndex(itemId);
-            final LabelLink b = new LabelLink(bugVersion.getName(), ProjectLinkBuilder
+            final LabelLink b = new LabelLink(bugVersion.getName(), ProjectLinkBuilder.INSTANCE
                     .generateBugVersionPreviewFullLink(bugVersion.getProjectid(), bugVersion.getId()));
             if (bugVersion.getStatus() != null && bugVersion.getStatus().equals(StatusI18nEnum.Closed.name())) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);

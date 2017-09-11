@@ -61,8 +61,8 @@ class ProjectMemberServiceImpl : DefaultService<Int, ProjectMember, ProjectMembe
         return projectMemberMapperExt!!.getUsersNotInProject(projectId!!, sAccountId!!)
     }
 
-    override fun findMemberByUsername(username: String, projectId: Int?, sAccountId: Int?): SimpleProjectMember {
-        return projectMemberMapperExt!!.findMemberByUsername(username, projectId!!)
+    override fun findMemberByUsername(username: String, projectId: Int, sAccountId: Int): SimpleProjectMember? {
+        return projectMemberMapperExt!!.findMemberByUsername(username, projectId)
     }
 
     override fun updateWithSession(member: ProjectMember, username: String): Int {
@@ -83,12 +83,9 @@ class ProjectMemberServiceImpl : DefaultService<Int, ProjectMember, ProjectMembe
 
     override fun massRemoveWithSession(members: List<ProjectMember>, username: String, sAccountId: Int) {
         if (CollectionUtils.isNotEmpty(members)) {
-            val usernames = ArrayList<String>()
-            for (member in members) {
-                usernames.add(member.username)
-            }
+            val userNames = members.map { it.username }
             var ex = ProjectMemberExample()
-            ex.createCriteria().andUsernameNotIn(usernames).andProjectidEqualTo(members[0].projectid)
+            ex.createCriteria().andUsernameNotIn(userNames).andProjectidEqualTo(members[0].projectid)
                     .andIsadminEqualTo(true).andStatusEqualTo(ProjectMemberStatusConstants.ACTIVE)
             if (projectMemberMapper!!.countByExample(ex) == 0L) {
                 throw UserInvalidInputException("Can not delete users. The reason is there is no project owner in the rest users")

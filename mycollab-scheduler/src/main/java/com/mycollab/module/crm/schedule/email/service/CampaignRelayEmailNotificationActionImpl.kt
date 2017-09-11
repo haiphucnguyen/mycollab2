@@ -39,7 +39,7 @@ class CampaignRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAc
     @Autowired private val campaignService: CampaignService? = null
     private val mapper: CampaignFieldNameMapper = CampaignFieldNameMapper()
 
-    override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleCampaign =
+    override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleCampaign? =
             campaignService!!.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getCreateSubjectKey(): Enum<*> = CampaignI18nEnum.MAIL_CREATE_ITEM_SUBJECT

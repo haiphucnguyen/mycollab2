@@ -37,7 +37,7 @@ class ContactReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory
         SimpleContact contact = attachForm.getBean();
         if (Contact.Field.accountid.equalTo(propertyId)) {
             if (contact.getAccountid() != null) {
-                A accountLink = new A(CrmLinkBuilder.generateAccountPreviewLinkFull(contact.getAccountid()))
+                A accountLink = new A(CrmLinkBuilder.INSTANCE.generateAccountPreviewLinkFull(contact.getAccountid()))
                         .appendText(contact.getAccountName());
                 Div accountDiv = new Div().appendText(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), accountLink);
                 return new DefaultViewField(accountDiv.write(), ContentMode.HTML);

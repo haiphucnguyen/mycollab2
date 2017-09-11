@@ -43,7 +43,7 @@ class ContactRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAct
 
     private val mapper = ContactFieldNameMapper()
 
-    override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleContact =
+    override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleContact? =
             contactService.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getCreateSubjectKey(): Enum<*> = ContactI18nEnum.MAIL_CREATE_ITEM_SUBJECT

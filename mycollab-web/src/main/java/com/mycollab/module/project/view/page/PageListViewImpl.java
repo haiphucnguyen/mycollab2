@@ -179,7 +179,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
     private Layout displayFolderBlock(final Folder resource) {
         MVerticalLayout container = new MVerticalLayout().withFullWidth().withStyleName("page-item-block");
 
-        A folderHtml = new A(ProjectLinkBuilder.generatePageFolderFullLink(CurrentProjectVariables
+        A folderHtml = new A(ProjectLinkBuilder.INSTANCE.generatePageFolderFullLink(CurrentProjectVariables
                 .getProjectId(), resource.getPath())).appendText(FontAwesome.FOLDER_OPEN.getHtml() + " " + resource.getName());
         ELabel folderLink = ELabel.h3(folderHtml.write());
         container.addComponent(folderLink);
@@ -188,7 +188,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
         }
 
         Label lastUpdateInfo = new ELabel(UserUIContext.getMessage(PageI18nEnum.LABEL_LAST_UPDATE,
-                ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(), resource.getCreatedUser(), true),
+                ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(), resource.getCreatedUser(), true),
                 UserUIContext.formatPrettyTime(resource.getCreatedTime()
                         .getTime())), ContentMode.HTML).withDescription(UserUIContext.formatDateTime(resource.getCreatedTime().getTime()));
         lastUpdateInfo.addStyleName(UIConstants.META_INFO);
@@ -222,14 +222,14 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
 
     private Layout displayPageBlock(final Page resource) {
         MVerticalLayout container = new MVerticalLayout().withFullWidth().withStyleName("page-item-block");
-        A pageHtml = new A(ProjectLinkBuilder.generatePageFullLink(CurrentProjectVariables.getProjectId(), resource
+        A pageHtml = new A(ProjectLinkBuilder.INSTANCE.generatePageFullLink(CurrentProjectVariables.getProjectId(), resource
                 .getPath())).appendText(FontAwesome.FILE_WORD_O.getHtml() + " " + resource.getSubject());
         ELabel pageLink = ELabel.h3(pageHtml.write());
 
         container.with(pageLink, new SafeHtmlLabel(resource.getContent(), 400));
 
         Label lastUpdateInfo = new ELabel(UserUIContext.getMessage(
-                PageI18nEnum.LABEL_LAST_UPDATE, ProjectLinkBuilder.generateProjectMemberHtmlLink(
+                PageI18nEnum.LABEL_LAST_UPDATE, ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(
                         CurrentProjectVariables.getProjectId(), resource.getLastUpdatedUser(), true),
                 UserUIContext.formatPrettyTime(resource.getLastUpdatedTime().getTime())), ContentMode.HTML)
                 .withDescription(UserUIContext.formatDateTime(resource.getLastUpdatedTime().getTime()));

@@ -7,7 +7,10 @@ import com.mycollab.common.NotificationType
 import com.mycollab.common.i18n.GenericI18Enum
 import com.mycollab.core.MyCollabException
 import com.mycollab.core.utils.StringUtils
-import com.mycollab.html.FormatUtils.*
+import com.mycollab.html.FormatUtils
+import com.mycollab.html.FormatUtils.newA
+import com.mycollab.html.FormatUtils.newImg
+import com.mycollab.html.FormatUtils.newLink
 import com.mycollab.html.LinkUtils
 import com.mycollab.module.mail.MailUtils
 import com.mycollab.module.project.ProjectLinkGenerator
@@ -150,7 +153,7 @@ class BugRelayEmailNotificationActionImpl() : SendMailToFollowersAction<SimpleBu
                 val milestoneLink = ProjectLinkGenerator.generateMilestonePreviewFullLink(context.siteUrl,
                         bug.projectid, bug.milestoneid)
                 val link = newA(milestoneLink, bug.milestoneName)
-                newLink(img, link).write()
+                FormatUtils.newLink(img, link).write()
             }
         }
 

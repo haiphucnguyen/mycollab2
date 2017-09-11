@@ -105,7 +105,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
         Component clientAvatar = ProjectAssetsUtil.clientLogoComp(client, 100);
         blockTop.addComponent(clientAvatar);
 
-        A clientLink = new A(ProjectLinkBuilder.generateClientPreviewFullLink(client.getId())).appendText(client
+        A clientLink = new A(ProjectLinkBuilder.INSTANCE.generateClientPreviewFullLink(client.getId())).appendText(client
                 .getAccountname()).setTitle(client.getAccountname());
         ELabel clientLinkLbl = ELabel.h3(clientLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
 

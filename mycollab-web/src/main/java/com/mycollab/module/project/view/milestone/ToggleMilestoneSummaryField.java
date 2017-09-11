@@ -175,7 +175,7 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
     }
 
     private String buildMilestoneLink() {
-        A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink(milestone.getProjectid(), milestone.getId()));
+        A milestoneLink = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink(milestone.getProjectid(), milestone.getId()));
         milestoneLink.appendText(StringUtils.trim(milestone.getName(), maxLength, true));
 
         Div milestoneDiv = new Div().appendChild(milestoneLink);

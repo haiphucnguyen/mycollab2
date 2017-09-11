@@ -55,7 +55,7 @@ public class LeadTableDisplay extends DefaultPagedBeanTable<LeadService, LeadSea
         this.addGeneratedColumn("leadName", (source, itemId, columnId) -> {
             final SimpleLead lead = getBeanByIndex(itemId);
 
-            LabelLink b = new LabelLink(lead.getLeadName(), CrmLinkBuilder.generateLeadPreviewLinkFull(lead.getId()));
+            LabelLink b = new LabelLink(lead.getLeadName(), CrmLinkBuilder.INSTANCE.generateLeadPreviewLinkFull(lead.getId()));
             if ("Dead".equals(lead.getStatus()) || "Converted".equals(lead.getStatus())) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);
             }

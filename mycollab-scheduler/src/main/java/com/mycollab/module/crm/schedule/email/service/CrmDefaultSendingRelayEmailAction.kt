@@ -166,7 +166,6 @@ abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificat
                 val recipients = listOf(userMail)
                 extMailService!!.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
                         subject, contentGenerator.parseFile("mailCrmItemAddNoteNotifier.ftl", context.locale))
-
             }
         }
     }

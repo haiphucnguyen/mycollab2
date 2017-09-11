@@ -197,11 +197,11 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
             if (Risk.Field.assignuser.equalTo(propertyId)) {
-                return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables
+                return new DefaultViewField(ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(CurrentProjectVariables
                         .getProjectId(), beanItem.getAssignuser(), beanItem.getAssignedToUserFullName(), beanItem
                         .getAssignToUserAvatarId(), false), ContentMode.HTML);
             } else if (Risk.Field.createduser.equalTo(propertyId)) {
-                return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
+                return new DefaultViewField(ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
                         beanItem.getCreateduser(), beanItem.getRaisedByUserFullName(), beanItem.getRaisedByUserAvatarId(), false),
                         ContentMode.HTML);
             } else if (Risk.Field.startdate.equalTo(propertyId)) {
@@ -220,7 +220,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 }
             } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
                 if (beanItem.getMilestoneid() != null) {
-                    A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
+                    A milestoneLink = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink
                             (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
                     Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);

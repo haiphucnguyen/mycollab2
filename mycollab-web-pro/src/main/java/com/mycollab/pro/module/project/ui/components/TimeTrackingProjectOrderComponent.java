@@ -30,7 +30,7 @@ public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDispl
             SimpleItemTimeLogging firstItem = timeLoggingEntries.get(0);
 
             Div projectDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPROJECT()).getHtml
-                    () + " ").appendChild(new A(ProjectLinkBuilder.generateProjectFullLink(firstItem.getProjectid())).appendText(firstItem.getProjectName()));
+                    () + " ").appendChild(new A(ProjectLinkBuilder.INSTANCE.generateProjectFullLink(firstItem.getProjectid())).appendText(firstItem.getProjectName()));
             ELabel link = ELabel.h3(projectDiv.write());
             addComponent(link);
             addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));

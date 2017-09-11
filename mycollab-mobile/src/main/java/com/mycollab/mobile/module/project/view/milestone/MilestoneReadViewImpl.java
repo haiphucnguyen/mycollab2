@@ -136,7 +136,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
             } else if (Milestone.Field.enddate.equalTo(propertyId)) {
                 return new DateViewField(beanItem.getEnddate());
             } else if (Milestone.Field.assignuser.equalTo(propertyId)) {
-                return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
+                return new DefaultViewField(ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
                         beanItem.getAssignuser(), beanItem.getOwnerFullName(), beanItem.getOwnerAvatarId(), false), ContentMode.HTML);
             } else if (Milestone.Field.description.equalTo(propertyId)) {
                 return new RichTextViewField(beanItem.getDescription());

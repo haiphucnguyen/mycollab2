@@ -32,7 +32,7 @@ class CaseReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<Si
         final SimpleCase cases = attachForm.getBean();
         if (propertyId.equals("accountid")) {
             return new LinkViewField(cases.getAccountName(),
-                    CrmLinkBuilder.generateAccountPreviewLinkFull(cases.getAccountid()),
+                    CrmLinkBuilder.INSTANCE.generateAccountPreviewLinkFull(cases.getAccountid()),
                     CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()));
         } else if (propertyId.equals("email")) {
             return new EmailViewField(cases.getEmail());

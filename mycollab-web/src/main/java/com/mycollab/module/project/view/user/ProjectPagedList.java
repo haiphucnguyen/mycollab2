@@ -70,7 +70,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             final VerticalLayout linkIconFix = new VerticalLayout();
             linkIconFix.setSpacing(true);
 
-            A projectDiv = new A(ProjectLinkBuilder.generateProjectFullLink(project.getId())).appendText(project.getName());
+            A projectDiv = new A(ProjectLinkBuilder.INSTANCE.generateProjectFullLink(project.getId())).appendText(project.getName());
             ELabel projectLbl = ELabel.h3(projectDiv.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
             projectLbl.setDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipProject(UserUIContext.getUserLocale(),
                     AppUI.getDateFormat(), project, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
@@ -94,7 +94,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             if (project.getLead() != null) {
                 Div leadDiv = new Div().appendChild(new Img("", StorageUtils.INSTANCE.getAvatarPath(project
                                 .getLeadAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX), DivLessFormatter.EMPTY_SPACE(),
-                        new A(ProjectLinkBuilder.generateProjectMemberFullLink(project.getId(), project.getLead()))
+                        new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(project.getId(), project.getLead()))
                                 .appendText(StringUtils.trim(project.getLeadFullName(), 30, true))).setTitle
                         (UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER));
                 metaDiv.appendChild(0, leadDiv);
@@ -111,7 +111,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
                     accountDiv.appendChild(clientImg).appendChild(DivLessFormatter.EMPTY_SPACE());
                 }
 
-                accountDiv.appendChild(new A(ProjectLinkBuilder.generateClientPreviewFullLink(project.getAccountid()))
+                accountDiv.appendChild(new A(ProjectLinkBuilder.INSTANCE.generateClientPreviewFullLink(project.getAccountid()))
                         .appendText(StringUtils.trim(project.getClientName(), 30, true))).setCSSClass(UIConstants.BLOCK)
                         .setTitle(project.getClientName());
                 metaDiv.appendChild(0, accountDiv);

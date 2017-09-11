@@ -52,7 +52,7 @@ public class ProjectMemberListDisplay extends DefaultPagedBeanList<ProjectMember
             MVerticalLayout memberInfoLayout = new MVerticalLayout().withMargin(false);
             mainLayout.with(memberAvatar, memberInfoLayout).expand(memberInfoLayout);
 
-            A memberLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables
+            A memberLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(CurrentProjectVariables
                     .getProjectId(), member.getUsername())).appendText(member.getDisplayName());
             Label memberLbl = ELabel.html(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
             memberInfoLayout.addComponent(memberLbl);

@@ -198,7 +198,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
             if (Task.Field.assignuser.equalTo(propertyId)) {
-                return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
+                return new DefaultViewField(ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
                         beanItem.getAssignuser(), beanItem.getAssignUserFullName(), beanItem.getAssignUserAvatarId(), false), ContentMode.HTML);
             } else if (Task.Field.startdate.equalTo(propertyId)) {
                 return new DefaultViewField(UserUIContext.formatDate(beanItem.getStartdate()));
@@ -216,7 +216,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                 }
             } else if (Task.Field.milestoneid.equalTo(propertyId)) {
                 if (beanItem.getMilestoneid() != null) {
-                    A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
+                    A milestoneLink = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink
                             (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
                     Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);

@@ -32,7 +32,7 @@ public class OpportunityListDisplay extends DefaultPagedBeanList<OpportunityServ
         @Override
         public Component generateRow(IBeanList<SimpleOpportunity> host, final SimpleOpportunity opportunity, int rowIndex) {
             MVerticalLayout rowLayout = new MVerticalLayout().withMargin(false).withSpacing(false).withFullWidth();
-            A itemLink = new A(CrmLinkBuilder.generateOpportunityPreviewLinkFull(opportunity.getId())).appendText(opportunity.getOpportunityname());
+            A itemLink = new A(CrmLinkBuilder.INSTANCE.generateOpportunityPreviewLinkFull(opportunity.getId())).appendText(opportunity.getOpportunityname());
             MCssLayout itemWrap = new MCssLayout(ELabel.html(itemLink.write()));
             rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.getAsset
                     (CrmTypeConstants.INSTANCE.getOPPORTUNITY())), itemWrap).expand(itemWrap).withFullWidth());

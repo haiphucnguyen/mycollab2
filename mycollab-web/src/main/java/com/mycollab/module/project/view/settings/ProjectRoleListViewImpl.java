@@ -69,7 +69,7 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
         tableItem.addGeneratedColumn("rolename", (source, itemId, columnId) -> {
             ProjectRole role = tableItem.getBeanByIndex(itemId);
             return new LabelLink(role.getRolename(),
-                    ProjectLinkBuilder.generateRolePreviewFullLink(role.getProjectid(), role.getId()));
+                    ProjectLinkBuilder.INSTANCE.generateRolePreviewFullLink(role.getProjectid(), role.getId()));
         });
 
         listLayout.addComponent(this.constructTableActionControls());

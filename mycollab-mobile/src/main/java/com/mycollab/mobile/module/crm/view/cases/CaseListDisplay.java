@@ -36,7 +36,7 @@ public class CaseListDisplay extends DefaultPagedBeanList<CaseService, CaseSearc
         @Override
         public Component generateRow(IBeanList<SimpleCase> host, final SimpleCase cases, int rowIndex) {
             MVerticalLayout rowLayout = new MVerticalLayout().withMargin(false).withSpacing(false).withFullWidth();
-            A itemLink = new A(CrmLinkBuilder.generateCasePreviewLinkFull(cases.getId())).appendText(cases.getSubject());
+            A itemLink = new A(CrmLinkBuilder.INSTANCE.generateCasePreviewLinkFull(cases.getId())).appendText(cases.getSubject());
             if (Closed.name().equals(cases.getStatus()) || Rejected.name().equals(cases.getStatus())) {
                 itemLink.setCSSClass(MobileUIConstants.LINK_COMPLETED);
             }
