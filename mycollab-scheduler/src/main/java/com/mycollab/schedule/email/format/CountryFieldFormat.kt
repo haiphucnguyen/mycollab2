@@ -13,21 +13,23 @@ import java.util.*
 class CountryFieldFormat(fieldName: String, displayName: Enum<*>) : FieldFormat(fieldName, displayName) {
     override fun formatField(context: MailContext<*>): String {
         val wrappedBean = context.wrappedBean
-        try {
+        return try {
             val countryCode = PropertyUtils.getProperty(wrappedBean, fieldName) as String
             val locale = Locale("", countryCode)
-            return Span().appendText(locale.getDisplayCountry(locale)).write()
+            Span().appendText(locale.getDisplayCountry(locale)).write()
         } catch (e: Exception) {
-            return Span().write()
+            Span().write()
         }
     }
 
     override fun formatField(context: MailContext<*>, value: String): String {
-        if (StringUtils.isBlank(value)) {
-            return Span().write()
+        return when {
+            StringUtils.isBlank(value) -> Span().write()
+            else -> {
+                val locale = Locale("", value)
+                Span().appendText(locale.getDisplayCountry(context.locale)).write()
+            }
         }
 
-        val locale = Locale("", value)
-        return Span().appendText(locale.getDisplayCountry(context.locale)).write()
     }
 }
