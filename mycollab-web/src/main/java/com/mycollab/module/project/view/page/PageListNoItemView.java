@@ -26,7 +26,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public class PageListNoItemView extends ProjectListNoItemView {
     @Override
     protected FontAwesome viewIcon() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE);
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPAGE());
     }
 
     @Override
@@ -71,6 +71,6 @@ public class PageListNoItemView extends ProjectListNoItemView {
 
     @Override
     protected boolean hasPermission() {
-        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES);
+        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getPAGES());
     }
 }

@@ -20,7 +20,7 @@ public class ProjectActivityStreamComponent extends DDCssLayout {
         ProjectActivityStreamPagedList activityStreamList = new ProjectActivityStreamPagedList();
         this.addComponent(activityStreamList);
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-        searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.PRJ));
+        searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.INSTANCE.getPRJ()));
         searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         searchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         activityStreamList.setSearchCriteria(searchCriteria);

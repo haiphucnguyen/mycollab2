@@ -178,7 +178,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             if (index == 1) {
                 this.addComponent(ELabel.html("&nbsp;").withWidth("90px"), 1, 0);
             } else {
-                operatorSelectionBox = new ValueComboBox(false, SearchField.AND, SearchField.OR);
+                operatorSelectionBox = new ValueComboBox(false, SearchField.Companion.getAND(), SearchField.Companion.getOR());
                 operatorSelectionBox.setWidth("90px");
                 this.addComponent(operatorSelectionBox, 1, 0);
             }
@@ -239,7 +239,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 valueBox.addComponent(valueField);
             } else if (param instanceof DateParam) {
                 String compareItem = (String) compareSelectionBox.getValue();
-                if (DateParam.BETWEEN.equals(compareItem) || DateParam.NOT_BETWEEN.equals(compareItem)) {
+                if (DateParam.Companion.getBETWEEN().equals(compareItem) || DateParam.Companion.getNOT_BETWEEN().equals(compareItem)) {
                     PopupDateFieldExt field1 = new PopupDateFieldExt();
                     field1.setValue((Date) Array.get(searchFieldInfo.eval(), 0));
                     field1.setWidth(width);
@@ -308,23 +308,23 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 Param field = (Param) fieldSelectionBox.getValue();
                 if (field != null) {
                     if (field instanceof StringParam) {
-                        compareSelectionBox.loadData(Arrays.asList(StringParam.OPTIONS));
+                        compareSelectionBox.loadData(Arrays.asList(StringParam.Companion.getOPTIONS()));
                     } else if (field instanceof NumberParam) {
-                        compareSelectionBox.loadData(Arrays.asList(NumberParam.OPTIONS));
+                        compareSelectionBox.loadData(Arrays.asList(NumberParam.Companion.getOPTIONS()));
                     } else if (field instanceof DateParam) {
-                        compareSelectionBox.loadData(DateParam.OPTIONS);
+                        compareSelectionBox.loadData(DateParam.Companion.getOPTIONS());
                     } else if (field instanceof PropertyParam) {
-                        compareSelectionBox.loadData(Arrays.asList(PropertyParam.OPTIONS));
+                        compareSelectionBox.loadData(Arrays.asList(PropertyParam.Companion.getOPTIONS()));
                     } else if (field instanceof PropertyListParam || field instanceof CustomSqlParam || field instanceof SearchCriteriaBridgeParam) {
-                        compareSelectionBox.loadData(Arrays.asList(PropertyListParam.OPTIONS));
+                        compareSelectionBox.loadData(Arrays.asList(PropertyListParam.Companion.getOPTIONS()));
                     } else if (field instanceof StringListParam) {
-                        compareSelectionBox.loadData(Arrays.asList(StringListParam.OPTIONS));
+                        compareSelectionBox.loadData(Arrays.asList(StringListParam.Companion.getOPTIONS()));
                     } else if (field instanceof I18nStringListParam) {
-                        compareSelectionBox.loadData(Arrays.asList(I18nStringListParam.OPTIONS));
+                        compareSelectionBox.loadData(Arrays.asList(I18nStringListParam.Companion.getOPTIONS()));
                     } else if (field instanceof CompositionStringParam) {
-                        compareSelectionBox.loadData(Arrays.asList(StringParam.OPTIONS));
+                        compareSelectionBox.loadData(Arrays.asList(StringParam.Companion.getOPTIONS()));
                     } else if (field instanceof ConcatStringParam) {
-                        compareSelectionBox.loadData(Arrays.asList(ConcatStringParam.OPTIONS));
+                        compareSelectionBox.loadData(Arrays.asList(ConcatStringParam.Companion.getOPTIONS()));
                     }
                 }
             });
@@ -349,7 +349,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 tempTextField.setWidth(width);
                 valueBox.addComponent(tempTextField);
             } else if (field instanceof DateParam) {
-                if (DateParam.BETWEEN.equals(compareItem) || DateParam.NOT_BETWEEN.equals(compareItem)) {
+                if (DateParam.Companion.getBETWEEN().equals(compareItem) || DateParam.Companion.getNOT_BETWEEN().equals(compareItem)) {
                     PopupDateFieldExt field1 = new PopupDateFieldExt().withWidth(width);
                     PopupDateFieldExt field2 = new PopupDateFieldExt().withWidth(width);
                     valueBox.with(field1, field2);

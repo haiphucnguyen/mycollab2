@@ -288,7 +288,7 @@ public class UserUIContext implements Serializable {
 
     public static String getPermissionCaptionValue(PermissionMap permissionMap, String permissionItem) {
         Integer perVal = permissionMap.get(permissionItem);
-        return UserUIContext.getMessage(PermissionFlag.toVal(perVal));
+        return UserUIContext.getMessage(PermissionFlag.Companion.toVal(perVal));
     }
 
     /**

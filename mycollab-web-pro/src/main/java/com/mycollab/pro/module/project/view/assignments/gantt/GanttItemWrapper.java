@@ -3,7 +3,7 @@ package com.mycollab.pro.module.project.view.assignments.gantt;
 import com.google.common.base.MoreObjects;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
-import com.mycollab.common.TooltipBuilder;
+import com.mycollab.html.TooltipBuilder;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.UserInvalidInputException;
@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.mycollab.common.TooltipBuilder.buildCellName;
-import static com.mycollab.common.TooltipBuilder.buildCellValue;
+import static com.mycollab.html.TooltipBuilder.buildCellName;
+import static com.mycollab.html.TooltipBuilder.buildCellValue;
 
 /**
  * @author MyCollab Ltd.
@@ -114,15 +114,15 @@ public class GanttItemWrapper {
     }
 
     public boolean isTask() {
-        return (task instanceof TaskGanttItem) && ProjectTypeConstants.TASK.equals(task.getType());
+        return (task instanceof TaskGanttItem) && ProjectTypeConstants.INSTANCE.getTASK().equals(task.getType());
     }
 
     public boolean isBug() {
-        return (task instanceof TaskGanttItem) && ProjectTypeConstants.BUG.equals(task.getType());
+        return (task instanceof TaskGanttItem) && ProjectTypeConstants.INSTANCE.getBUG().equals(task.getType());
     }
 
     public boolean isRisk() {
-        return (task instanceof TaskGanttItem) && ProjectTypeConstants.RISK.equals(task.getType());
+        return (task instanceof TaskGanttItem) && ProjectTypeConstants.INSTANCE.getRISK().equals(task.getType());
     }
 
     public boolean hasSubTasks() {
@@ -193,7 +193,7 @@ public class GanttItemWrapper {
         if (task instanceof TaskGanttItem) {
             return task.getType();
         } else if (task instanceof MilestoneGanttItem) {
-            return ProjectTypeConstants.MILESTONE;
+            return ProjectTypeConstants.INSTANCE.getMILESTONE();
         } else {
             throw new MyCollabException("Do not support assignment type " + this);
         }

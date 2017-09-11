@@ -39,7 +39,7 @@ public class InvoiceAddWindow extends MWindow {
         this.withWidth("800px").withModal(true).withResizable(false).withCenter().withContent(content);
         final AdvancedEditBeanForm<SimpleInvoice> editBeanForm = new AdvancedEditBeanForm<>();
         content.addComponent(editBeanForm);
-        editBeanForm.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.INVOICE,
+        editBeanForm.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getINVOICE(),
                 InvoiceDefaultFormLayoutFactory.getForm()));
         final InvoiceEditFormFieldFactory invoiceEditFormFieldFactory = new InvoiceEditFormFieldFactory(editBeanForm);
         editBeanForm.setBeanFormFieldFactory(invoiceEditFormFieldFactory);
@@ -57,8 +57,8 @@ public class InvoiceAddWindow extends MWindow {
                     EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceUpdateAdded(this, invoice));
                 }
                 AttachmentUploadField uploadField = invoiceEditFormFieldFactory.getAttachmentUploadField();
-                String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), invoice.getProjectid(),
-                        ProjectTypeConstants.INVOICE, "" + invoice.getId());
+                String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), invoice.getProjectid(),
+                        ProjectTypeConstants.INSTANCE.getINVOICE(), "" + invoice.getId());
                 uploadField.saveContentsToRepo(attachPath);
                 close();
             }

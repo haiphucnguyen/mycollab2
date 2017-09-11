@@ -40,7 +40,7 @@ public class TraceableCreateAspect {
         if (traceableAnnotation != null) {
             try {
                 ActivityStreamWithBLOBs activity = constructActivity(cls, traceableAnnotation, bean, username,
-                        ActivityStreamConstants.ACTION_CREATE);
+                        ActivityStreamConstants.INSTANCE.getACTION_CREATE());
                 activityStreamService.save(activity);
             } catch (Exception e) {
                 LOG.error("Error when save activity for save action of service " + cls.getName(), e);
@@ -57,7 +57,7 @@ public class TraceableCreateAspect {
         if (traceableAnnotation != null) {
             try {
                 ActivityStreamWithBLOBs activity = constructActivity(cls, traceableAnnotation, bean, username,
-                        ActivityStreamConstants.ACTION_DELETE);
+                        ActivityStreamConstants.INSTANCE.getACTION_DELETE());
                 activityStreamService.save(activity);
             } catch (Exception e) {
                 LOG.error("Error when save activity for save action of service " + cls.getName(), e);
@@ -68,8 +68,8 @@ public class TraceableCreateAspect {
     static ActivityStreamWithBLOBs constructActivity(Class<?> cls, Traceable traceableAnnotation, Object bean, String username, String action)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         ActivityStreamWithBLOBs activity = new ActivityStreamWithBLOBs();
-        activity.setModule(ClassInfoMap.getModule(cls));
-        activity.setType(ClassInfoMap.getType(cls));
+        activity.setModule(ClassInfoMap.INSTANCE.getModule(cls));
+        activity.setType(ClassInfoMap.INSTANCE.getType(cls));
         activity.setTypeid(String.valueOf(PropertyUtils.getProperty(bean, traceableAnnotation.idField())));
         activity.setCreatedtime(new GregorianCalendar().getTime());
         activity.setAction(action);

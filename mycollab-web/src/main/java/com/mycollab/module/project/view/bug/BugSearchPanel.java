@@ -75,7 +75,7 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
                     EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, fieldInfos));
                 }
             });
-            ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml()).withWidthUndefined();
+            ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()).getHtml()).withWidthUndefined();
             return new MHorizontalLayout(taskIcon, savedFilterComboBox).expand(savedFilterComboBox).alignAll(Alignment.MIDDLE_LEFT);
         } else {
             return null;
@@ -151,10 +151,10 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
         @Override
         protected BugSearchCriteria fillUpSearchCriteria() {
             List<SearchFieldInfo> searchFieldInfos = new ArrayList<>();
-            searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, BugSearchCriteria.p_textDesc, StringI18nEnum.CONTAINS.name(),
+            searchFieldInfos.add(new SearchFieldInfo(SearchField.Companion.getAND(), BugSearchCriteria.p_textDesc, StringI18nEnum.CONTAINS.name(),
                     ConstantValueInjector.valueOf(nameField.getValue().trim())));
             if (myItemCheckbox.getValue()) {
-                searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, BugSearchCriteria.p_assignee, CollectionI18nEnum.IN.name(),
+                searchFieldInfos.add(new SearchFieldInfo(SearchField.Companion.getAND(), BugSearchCriteria.p_assignee, CollectionI18nEnum.IN.name(),
                         ConstantValueInjector.valueOf(Collections.singletonList(UserUIContext.getUsername()))));
             }
             EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, searchFieldInfos));
@@ -169,7 +169,7 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
         private static final long serialVersionUID = 1L;
 
         BugAdvancedSearchLayout() {
-            super(BugSearchPanel.this, ProjectTypeConstants.BUG);
+            super(BugSearchPanel.this, ProjectTypeConstants.INSTANCE.getBUG());
         }
 
         @Override

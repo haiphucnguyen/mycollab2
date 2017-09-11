@@ -49,9 +49,9 @@ public class AccountHistoryFieldFormat implements HistoryFieldFormat {
                     A link = new A().setId("tag" + TOOLTIP_ID);
                     link.setHref(CrmLinkBuilder.generateAccountPreviewLinkFull(accountId))
                             .appendChild(new Text(account.getAccountname()));
-                    link.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(CrmTypeConstants.ACCOUNT, accountId + ""));
+                    link.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(CrmTypeConstants.INSTANCE.getACCOUNT(), accountId + ""));
                     link.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-                    Div div = new DivLessFormatter().appendChild(new Text(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT).getHtml()),
+                    Div div = new DivLessFormatter().appendChild(new Text(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()).getHtml()),
                             DivLessFormatter.EMPTY_SPACE(), link);
                     return div.write();
                 } else {

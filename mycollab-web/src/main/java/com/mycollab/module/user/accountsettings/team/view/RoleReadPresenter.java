@@ -27,7 +27,7 @@ import com.vaadin.ui.UI;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_ROLE, impliedPermissionVal = AccessPermissionFlag.READ_ONLY)
+@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_ROLE(), impliedPermissionVal = AccessPermissionFlag.Companion.getREAD_ONLY())
 public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
     private static final long serialVersionUID = 1L;
 
@@ -85,7 +85,7 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.ACCOUNT_ROLE)) {
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getACCOUNT_ROLE())) {
             RoleService roleService = AppContextUtil.getSpringBean(RoleService.class);
             SimpleRole role = roleService.findById((Integer) data.getParams(), AppUI.getAccountId());
             if (role != null) {

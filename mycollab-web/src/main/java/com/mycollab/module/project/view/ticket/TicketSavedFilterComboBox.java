@@ -12,7 +12,7 @@ import static com.mycollab.module.project.query.TicketQueryInfo.*;
 public class TicketSavedFilterComboBox extends SavedFilterComboBox {
 
     public TicketSavedFilterComboBox() {
-        super(ProjectTypeConstants.TICKET);
+        super(ProjectTypeConstants.INSTANCE.getTICKET());
 
         this.addSharedSearchQueryInfo(allTasksQuery);
         this.addSharedSearchQueryInfo(allOpenTaskQuery);

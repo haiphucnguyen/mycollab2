@@ -109,7 +109,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_MEETING)) {
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_MEETING())) {
             SimpleMeeting meeting;
             if (data.getParams() instanceof Integer) {
                 MeetingService meetingService = AppContextUtil.getSpringBean(MeetingService.class);
@@ -125,7 +125,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
             super.onGo(container, data);
             view.previewItem(meeting);
 
-            AppUI.addFragment(CrmLinkGenerator.generateMeetingPreviewLink(meeting.getId()),
+            AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateMeetingPreviewLink(meeting.getId()),
                     UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                             UserUIContext.getMessage(MeetingI18nEnum.SINGLE), meeting.getSubject()));
         } else {

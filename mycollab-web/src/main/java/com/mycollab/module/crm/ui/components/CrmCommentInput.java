@@ -68,7 +68,7 @@ class CrmCommentInput extends MHorizontalLayout {
             CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentId = commentService.saveWithSession(comment, UserUIContext.getUsername());
 
-            String attachmentPath = AttachmentUtils.getCommentAttachmentPath(typeVal,
+            String attachmentPath = AttachmentUtils.INSTANCE.getCommentAttachmentPath(typeVal,
                     AppUI.getAccountId(), null, typeId, commentId);
 
             if (!"".equals(attachmentPath)) {

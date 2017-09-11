@@ -68,7 +68,7 @@ public class VersionListPresenter extends ProjectGenericListPresenter<VersionLis
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getVERSIONS())) {
             VersionContainer versionContainer = (VersionContainer) container;
             versionContainer.removeAllComponents();
             versionContainer.addComponent(view);

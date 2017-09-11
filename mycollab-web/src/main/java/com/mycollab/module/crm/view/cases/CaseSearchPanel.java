@@ -35,12 +35,12 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
     private boolean canCreateCase;
 
     private static Param[] paramFields = new Param[]{
-            CaseSearchCriteria.p_account, CaseSearchCriteria.p_priority,
-            CaseSearchCriteria.p_status, CaseSearchCriteria.p_email,
-            CaseSearchCriteria.p_origin, CaseSearchCriteria.p_reason,
-            CaseSearchCriteria.p_subject, CaseSearchCriteria.p_type,
-            CaseSearchCriteria.p_createdtime,
-            CaseSearchCriteria.p_lastupdatedtime};
+            CaseSearchCriteria.Companion.getP_account(), CaseSearchCriteria.Companion.getP_priority(),
+            CaseSearchCriteria.Companion.getP_status(), CaseSearchCriteria.Companion.getP_email(),
+            CaseSearchCriteria.Companion.getP_origin(), CaseSearchCriteria.Companion.getP_reason(),
+            CaseSearchCriteria.Companion.getP_subject(), CaseSearchCriteria.Companion.getP_type(),
+            CaseSearchCriteria.Companion.getP_createdtime(),
+            CaseSearchCriteria.Companion.getP_lastupdatedtime()};
 
     public CaseSearchPanel(boolean canCreateCase) {
         this.canCreateCase = canCreateCase;
@@ -48,7 +48,7 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.CASE, UserUIContext.getMessage(CaseI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getCASE(), UserUIContext.getMessage(CaseI18nEnum.LIST));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
         return (canCreateCase) ? new MButton(UserUIContext.getMessage(CaseI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new CaseEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CASE)) : null;
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CASE())) : null;
     }
 
     @SuppressWarnings("unchecked")
@@ -74,7 +74,7 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
         private static final long serialVersionUID = 1L;
 
         CaseAdvancedSearchLayout() {
-            super(CaseSearchPanel.this, CrmTypeConstants.CASE);
+            super(CaseSearchPanel.this, CrmTypeConstants.INSTANCE.getCASE());
         }
 
         @Override

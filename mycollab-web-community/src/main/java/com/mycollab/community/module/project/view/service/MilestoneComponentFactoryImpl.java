@@ -26,7 +26,7 @@ import org.vaadin.teemu.VaadinIcons;
 public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory {
     @Override
     public AbstractComponent createMilestoneAssigneePopupField(SimpleMilestone milestone, boolean isDisplayName) {
-        String avatarLink = StorageUtils.getAvatarPath(milestone.getOwnerAvatarId(), 16);
+        String avatarLink = StorageUtils.INSTANCE.getAvatarPath(milestone.getOwnerAvatarId(), 16);
         Img img = new Img(milestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                 .setTitle(milestone.getOwnerFullName());
         if (isDisplayName) {

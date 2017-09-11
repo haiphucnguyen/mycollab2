@@ -83,8 +83,8 @@ public class MessageReadViewImpl extends AbstractMobilePageView implements Messa
         rightCol.addComponent(messageContent);
 
         ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
-        List<Content> attachments = attachmentService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(
-                AppUI.getAccountId(), bean.getProjectid(), ProjectTypeConstants.MESSAGE, "" + bean.getId()));
+        List<Content> attachments = attachmentService.getContents(AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(
+                AppUI.getAccountId(), bean.getProjectid(), ProjectTypeConstants.INSTANCE.getMESSAGE(), "" + bean.getId()));
         if (CollectionUtils.isNotEmpty(attachments)) {
             CssLayout attachmentPanel = new CssLayout();
             attachmentPanel.setStyleName("attachment-panel");
@@ -101,7 +101,7 @@ public class MessageReadViewImpl extends AbstractMobilePageView implements Messa
 
         Label commentTitleLbl = new Label();
         Component section = FormSectionBuilder.build(FontAwesome.COMMENT, commentTitleLbl);
-        MessageCommentListDisplay commentDisplay = new MessageCommentListDisplay(ProjectTypeConstants.MESSAGE,
+        MessageCommentListDisplay commentDisplay = new MessageCommentListDisplay(ProjectTypeConstants.INSTANCE.getMESSAGE(),
                 bean.getId() + "", bean.getProjectid(), true);
         int numComments = commentDisplay.getNumComments();
         commentTitleLbl.setValue(UserUIContext.getMessage(GenericI18Enum.OPT_COMMENTS_VALUE, numComments));

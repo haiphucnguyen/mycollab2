@@ -27,7 +27,7 @@ public class CrmCustomViewPresenter extends CrmGenericPresenter<ICrmCustomView> 
 
         AppUI.addFragment("crm/setting/customlayout", "Custom Layouts");
 
-        view.display(CrmTypeConstants.ACCOUNT);
+        view.display(CrmTypeConstants.INSTANCE.getACCOUNT());
     }
 
 }

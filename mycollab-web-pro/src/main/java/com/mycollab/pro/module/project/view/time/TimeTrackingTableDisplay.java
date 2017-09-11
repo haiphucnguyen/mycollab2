@@ -68,14 +68,14 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
                             Label timeTrackingLink = ELabel.html(buildItemValue(itemLogging)).withStyleName
                                     (UIConstants.LABEL_WORD_WRAP).withFullWidth();
 
-                            if (ProjectTypeConstants.BUG.equals(type)) {
+                            if (ProjectTypeConstants.INSTANCE.getBUG().equals(type)) {
                                 if (BugStatus.Verified.name().equals(itemLogging.getStatus())) {
                                     timeTrackingLink.addStyleName(WebThemes.LINK_COMPLETED);
                                 } else if (itemLogging.getDueDate() != null && (itemLogging.getDueDate()
                                         .before(DateTimeUtils.getCurrentDateWithoutMS()))) {
                                     timeTrackingLink.addStyleName(WebThemes.LINK_OVERDUE);
                                 }
-                            } else if (type.equals(ProjectTypeConstants.TASK)) {
+                            } else if (type.equals(ProjectTypeConstants.INSTANCE.getTASK())) {
                                 if (itemLogging.getPercentageComplete() != null
                                         && 100d == itemLogging.getPercentageComplete()) {
                                     timeTrackingLink.addStyleName(WebThemes.LINK_COMPLETED);
@@ -117,7 +117,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
 
                     LabelLink b = new LabelLink(itemLogging.getProjectName(),
                             ProjectLinkBuilder.generateProjectFullLink(itemLogging.getProjectid()));
-                    b.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
+                    b.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPROJECT()));
                     return b;
                 }
         );
@@ -165,13 +165,13 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
         Text image = new Text(ProjectAssetsManager.getAsset(itemLogging.getType()).getHtml());
         A itemLink = new A().setId("tag" + TOOLTIP_ID);
 
-        if (ProjectTypeConstants.TASK.equals(itemLogging.getType()) || ProjectTypeConstants.BUG.equals(itemLogging.getType())) {
-            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(
+        if (ProjectTypeConstants.INSTANCE.getTASK().equals(itemLogging.getType()) || ProjectTypeConstants.INSTANCE.getBUG().equals(itemLogging.getType())) {
+            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(
                     itemLogging.getProjectShortName(),
                     itemLogging.getProjectid(), itemLogging.getType(),
                     itemLogging.getExtraTypeId() + ""));
         } else {
-            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(
+            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(
                     itemLogging.getProjectShortName(),
                     itemLogging.getProjectid(), itemLogging.getType(),
                     itemLogging.getTypeid() + ""));

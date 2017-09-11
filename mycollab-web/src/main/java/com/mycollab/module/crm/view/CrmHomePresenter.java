@@ -22,7 +22,7 @@ public class CrmHomePresenter extends CrmGenericPresenter<CrmHomeView> {
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         super.onGo(container, data);
-        CrmModule.navigateItem(CrmTypeConstants.DASHBOARD);
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getDASHBOARD());
         view.lazyLoadView();
         AppUI.addFragment("crm/dashboard", "Customer Dashboard");
     }

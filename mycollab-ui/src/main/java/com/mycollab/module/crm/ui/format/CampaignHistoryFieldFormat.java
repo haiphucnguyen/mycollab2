@@ -49,10 +49,10 @@ public class CampaignHistoryFieldFormat implements HistoryFieldFormat {
                     A link = new A().setId("tag" + TOOLTIP_ID);
                     link.setHref(CrmLinkBuilder.generateCampaignPreviewLinkFull(campaignId))
                             .appendChild(new Text(campaign.getCampaignname()));
-                    link.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(CrmTypeConstants.CAMPAIGN,
+                    link.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(CrmTypeConstants.INSTANCE.getCAMPAIGN(),
                             campaignId + ""));
                     link.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-                    Div div = new DivLessFormatter().appendChild(new Text(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN).getHtml()),
+                    Div div = new DivLessFormatter().appendChild(new Text(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN()).getHtml()),
                             DivLessFormatter.EMPTY_SPACE(), link);
                     return div.write();
                 } else {

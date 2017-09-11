@@ -58,8 +58,8 @@ public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddV
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.OPPORTUNITY);
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) {
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getOPPORTUNITY());
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY())) {
             SimpleOpportunity opportunity = null;
             if (data.getParams() instanceof SimpleOpportunity) {
                 opportunity = (SimpleOpportunity) data.getParams();

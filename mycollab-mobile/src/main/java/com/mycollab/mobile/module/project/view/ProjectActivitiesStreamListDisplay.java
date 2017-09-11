@@ -85,22 +85,22 @@ class ProjectActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityS
             String assigneeParam = buildAssigneeValue(activityStream);
             String itemParam = buildItemValue(activityStream);
             StringBuilder content = new StringBuilder();
-            if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {
+            if (ActivityStreamConstants.INSTANCE.getACTION_CREATE().equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
                         assigneeParam, itemType, itemParam));
-            } else if (ActivityStreamConstants.ACTION_UPDATE.equals(activityStream.getAction())) {
+            } else if (ActivityStreamConstants.INSTANCE.getACTION_UPDATE().equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
                         assigneeParam, itemType, itemParam));
                 if (activityStream.getAssoAuditLog() != null) {
                     content.append(auditLogRegistry.generatorDetailChangeOfActivity(activityStream));
                 }
-            } else if (ActivityStreamConstants.ACTION_COMMENT.equals(activityStream.getAction())) {
+            } else if (ActivityStreamConstants.INSTANCE.getACTION_COMMENT().equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_COMMENT_ACTION_TITLE,
                         assigneeParam, itemType, itemParam));
                 if (activityStream.getAssoAuditLog() != null) {
                     content.append("<p><ul><li>\"").append(activityStream.getAssoAuditLog().getChangeset()).append("\"</li></ul></p>");
                 }
-            } else if (ActivityStreamConstants.ACTION_DELETE.equals(activityStream.getAction())) {
+            } else if (ActivityStreamConstants.INSTANCE.getACTION_DELETE().equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_DELETE_ACTION_TITLE,
                         assigneeParam, itemType, itemParam));
             }
@@ -123,12 +123,12 @@ class ProjectActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityS
     private static String buildItemValue(ProjectActivityStream activity) {
         Text image = new Text(ProjectAssetsManager.getAsset(activity.getType()).getHtml());
         A itemLink = new A();
-        if (ProjectTypeConstants.TASK.equals(activity.getType()) || ProjectTypeConstants.BUG.equals(activity.getType())) {
-            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(
+        if (ProjectTypeConstants.INSTANCE.getTASK().equals(activity.getType()) || ProjectTypeConstants.INSTANCE.getBUG().equals(activity.getType())) {
+            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(
                     activity.getProjectShortName(), activity.getExtratypeid(),
                     activity.getType(), activity.getItemKey() + ""));
         } else {
-            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(
+            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(
                     activity.getProjectShortName(), activity.getExtratypeid(),
                     activity.getType(), activity.getTypeid()));
         }

@@ -36,9 +36,9 @@ public class PageListPresenter extends ProjectGenericPresenter<PageListView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PAGES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getPAGES())) {
             PageContainer pageContainer = (PageContainer) container;
-            pageContainer.navigateToContainer(ProjectTypeConstants.PAGE);
+            pageContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getPAGE());
 
             String path = (String) data.getParams();
             if (path == null) {

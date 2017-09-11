@@ -141,7 +141,7 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent, Ha
                     FileSearchCriteria criteria = new FileSearchCriteria();
                     criteria.setBaseFolder("/");
                     criteria.setRootFolder("/");
-                    criteria.setStorageName(StorageNames.DROPBOX);
+                    criteria.setStorageName(StorageNames.INSTANCE.getDROPBOX());
                     criteria.setExternalDrive(folder.getExternalDrive());
                     notifySearchHandler(criteria);
                 });
@@ -154,7 +154,7 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent, Ha
                     FileSearchCriteria criteria = new FileSearchCriteria();
                     criteria.setBaseFolder(newPath);
                     criteria.setRootFolder("/");
-                    criteria.setStorageName(StorageNames.DROPBOX);
+                    criteria.setStorageName(StorageNames.INSTANCE.getDROPBOX());
                     criteria.setExternalDrive(folder.getExternalDrive());
                     notifySearchHandler(criteria);
                 });
@@ -172,7 +172,7 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent, Ha
                 criteria.setBaseFolder(newPath);
 
                 criteria.setRootFolder("/");
-                criteria.setStorageName(StorageNames.DROPBOX);
+                criteria.setStorageName(StorageNames.INSTANCE.getDROPBOX());
                 criteria.setExternalDrive(folder.getExternalDrive());
                 notifySearchHandler(criteria);
             });

@@ -16,7 +16,7 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd
  * @since 5.1.0
  */
-@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_THEME, impliedPermissionVal = BooleanPermissionFlag.TRUE)
+@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_THEME(), impliedPermissionVal = BooleanPermissionFlag.Companion.getTRUE())
 public class GeneralSettingPresenter extends AbstractPresenter<GeneralSettingView> {
     public GeneralSettingPresenter() {
         super(GeneralSettingView.class);

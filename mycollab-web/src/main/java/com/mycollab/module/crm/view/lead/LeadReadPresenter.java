@@ -78,7 +78,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
             @Override
             public void onPrint(Object source, SimpleLead data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.LEAD, Lead.Field.lastname.name(),
+                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.INSTANCE.getLEAD(), Lead.Field.lastname.name(),
                         LeadDefaultDynaFormLayoutFactory.getForm()));
             }
 
@@ -134,17 +134,17 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
             public void createNewRelatedItem(String itemId) {
                 if (itemId.equals("task")) {
                     SimpleCrmTask task = new SimpleCrmTask();
-                    task.setType(CrmTypeConstants.LEAD);
+                    task.setType(CrmTypeConstants.INSTANCE.getLEAD());
                     task.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(LeadReadPresenter.this, task));
                 } else if (itemId.equals("meeting")) {
                     SimpleMeeting meeting = new SimpleMeeting();
-                    meeting.setType(CrmTypeConstants.LEAD);
+                    meeting.setType(CrmTypeConstants.INSTANCE.getLEAD());
                     meeting.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(LeadReadPresenter.this, meeting));
                 } else if (itemId.equals("call")) {
                     SimpleCall call = new SimpleCall();
-                    call.setType(CrmTypeConstants.LEAD);
+                    call.setType(CrmTypeConstants.INSTANCE.getLEAD());
                     call.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(LeadReadPresenter.this, call));
                 }
@@ -182,13 +182,13 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.LEAD);
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_LEAD)) {
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getLEAD());
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
             if (data.getParams() instanceof SimpleLead) {
                 SimpleLead lead = (SimpleLead) data.getParams();
                 super.onGo(container, data);
                 view.previewItem(lead);
-                AppUI.addFragment(CrmLinkGenerator.generateLeadPreviewLink(lead.getId()),
+                AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateLeadPreviewLink(lead.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                 UserUIContext.getMessage(LeadI18nEnum.SINGLE), lead.getLeadName()));
 

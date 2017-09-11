@@ -64,7 +64,7 @@ public class RiskTimeLogSheetImpl extends RiskTimeLogSheet {
     private Double loadTotalBillableHours() {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(StringSearchField.and(ProjectTypeConstants.RISK));
+        criteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getRISK()));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
         criteria.setIsBillable(new BooleanSearchField(true));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
@@ -73,7 +73,7 @@ public class RiskTimeLogSheetImpl extends RiskTimeLogSheet {
     private Double loadTotalNonBillableHours() {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(StringSearchField.and(ProjectTypeConstants.RISK));
+        criteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getRISK()));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
         criteria.setIsBillable(new BooleanSearchField(false));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
@@ -99,7 +99,7 @@ public class RiskTimeLogSheetImpl extends RiskTimeLogSheet {
 
     @Override
     protected boolean hasEditPermission() {
-        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS);
+        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS());
     }
 
     @Override
@@ -120,7 +120,7 @@ public class RiskTimeLogSheetImpl extends RiskTimeLogSheet {
             item.setLoguser(UserUIContext.getUsername());
             item.setLogvalue(getInvestValue());
             item.setTypeid(bean.getId());
-            item.setType(ProjectTypeConstants.RISK);
+            item.setType(ProjectTypeConstants.INSTANCE.getRISK());
             item.setSaccountid(AppUI.getAccountId());
             item.setProjectid(CurrentProjectVariables.getProjectId());
             item.setLogforday(forLogDate());
@@ -140,7 +140,7 @@ public class RiskTimeLogSheetImpl extends RiskTimeLogSheet {
         protected ItemTimeLoggingSearchCriteria getItemSearchCriteria() {
             ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.RISK));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getRISK()));
             searchCriteria.setTypeId(new NumberSearchField(bean.getId()));
             return searchCriteria;
         }
@@ -152,7 +152,7 @@ public class RiskTimeLogSheetImpl extends RiskTimeLogSheet {
 
         @Override
         protected boolean isEnableAdd() {
-            return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS);
+            return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS());
         }
     }
 }

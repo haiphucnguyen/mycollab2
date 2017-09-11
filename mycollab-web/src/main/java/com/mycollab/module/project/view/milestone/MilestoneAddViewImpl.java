@@ -39,7 +39,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE);
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE());
     }
 
     @Override
@@ -59,7 +59,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(ProjectTypeConstants.MILESTONE, MilestoneDefaultFormLayoutFactory.getForm(), Milestone.Field.id.name());
+        return new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getMILESTONE(), MilestoneDefaultFormLayoutFactory.getForm(), Milestone.Field.id.name());
     }
 
     @Override

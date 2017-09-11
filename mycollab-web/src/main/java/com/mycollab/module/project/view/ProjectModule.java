@@ -87,10 +87,10 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
             MButton newPrjButton = new MButton(UserUIContext.getMessage(ProjectI18nEnum.SINGLE), clickEvent -> {
                 UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class));
                 newBtn.setPopupVisible(false);
-            }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
+            }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPROJECT()));
             contentLayout.addOption(newPrjButton);
             newBtn.setContent(contentLayout);
-            newBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
+            newBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.INSTANCE.getCREATE_NEW_PROJECT()));
 
             serviceMenuContainer.with(newBtn).withAlign(newBtn, Alignment.MIDDLE_LEFT);
         }
@@ -124,10 +124,10 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
                 if (searchCriteria != null) {
                     if (isSortAsc) {
                         sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
-                        searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.ASC)));
+                        searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.Companion.getASC())));
                     } else {
                         sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
-                        searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.DESC)));
+                        searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.Companion.getDESC())));
                     }
                     displayResults();
                 }

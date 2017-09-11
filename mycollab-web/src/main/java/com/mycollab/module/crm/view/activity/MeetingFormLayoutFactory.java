@@ -24,13 +24,13 @@ public abstract class MeetingFormLayoutFactory extends WrappedFormLayoutFactory 
 
     @Override
     public AbstractComponent getLayout() {
-        AddViewLayout2 meetingLayout = new AddViewLayout2(title, CrmAssetsManager.getAsset(CrmTypeConstants.MEETING));
+        AddViewLayout2 meetingLayout = new AddViewLayout2(title, CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getMEETING()));
 
         Layout topPanel = createTopPanel();
         if (topPanel != null) {
             meetingLayout.addControlButtons(topPanel);
         }
-        wrappedLayoutFactory = new DefaultDynaFormLayout(CrmTypeConstants.MEETING, MeetingDefaultFormLayoutFactory.getForm());
+        wrappedLayoutFactory = new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getMEETING(), MeetingDefaultFormLayoutFactory.getForm());
         VerticalLayout body = new VerticalLayout();
         body.setStyleName(WebThemes.BOX);
         body.addComponent(wrappedLayoutFactory.getLayout());

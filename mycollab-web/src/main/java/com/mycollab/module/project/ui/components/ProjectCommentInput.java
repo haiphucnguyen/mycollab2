@@ -72,7 +72,7 @@ class ProjectCommentInput extends MHorizontalLayout {
             final CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentId = commentService.saveWithSession(comment, UserUIContext.getUsername());
 
-            String attachmentPath = AttachmentUtils.getCommentAttachmentPath(typeVal, AppUI.getAccountId(),
+            String attachmentPath = AttachmentUtils.INSTANCE.getCommentAttachmentPath(typeVal, AppUI.getAccountId(),
                     CurrentProjectVariables.getProjectId(), typeId, commentId);
 
             if (!"".equals(attachmentPath)) {

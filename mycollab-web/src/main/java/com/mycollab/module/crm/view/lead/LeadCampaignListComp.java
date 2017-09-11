@@ -62,7 +62,7 @@ public class LeadCampaignListComp extends RelatedListComp2<CampaignService, Camp
         VerticalLayout controlBtnWrap = new VerticalLayout();
         controlBtnWrap.setWidth("100%");
 
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) {
             final SplitButton controlsBtn = new SplitButton();
             controlsBtn.setSizeUndefined();
             controlsBtn.addStyleName(WebThemes.BUTTON_ACTION);
@@ -77,7 +77,7 @@ public class LeadCampaignListComp extends RelatedListComp2<CampaignService, Camp
                 leadsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
             });
-            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
+            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN()));
             OptionPopupContent buttonControlsLayout = new OptionPopupContent();
             buttonControlsLayout.addOption(selectBtn);
             controlsBtn.setContent(buttonControlsLayout);
@@ -101,7 +101,7 @@ public class LeadCampaignListComp extends RelatedListComp2<CampaignService, Camp
             MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel campaignIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
+            ELabel campaignIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN()));
             iconWrap.addComponent(campaignIcon);
             blockTop.addComponent(iconWrap);
 
@@ -129,8 +129,8 @@ public class LeadCampaignListComp extends RelatedListComp2<CampaignService, Camp
             blockContent.addComponent(btnDelete);
             blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
 
-            Label contactName = ELabel.html(UserUIContext.getMessage(GenericI18Enum.FORM_NAME) + ": " + new A(CrmLinkGenerator.generateCrmItemLink(
-                    CrmTypeConstants.CAMPAIGN, campaign.getId())).appendText(campaign.getCampaignname()).write());
+            Label contactName = ELabel.html(UserUIContext.getMessage(GenericI18Enum.FORM_NAME) + ": " + new A(CrmLinkGenerator.INSTANCE.generateCrmItemLink(
+                    CrmTypeConstants.INSTANCE.getCAMPAIGN(), campaign.getId())).appendText(campaign.getCampaignname()).write());
 
             campaignInfo.addComponent(contactName);
 

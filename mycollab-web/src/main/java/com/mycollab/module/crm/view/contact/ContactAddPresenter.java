@@ -58,8 +58,8 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.CONTACT);
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CONTACT)) {
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getCONTACT());
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CONTACT())) {
             SimpleContact contact = null;
             if (data.getParams() instanceof SimpleContact) {
                 contact = (SimpleContact) data.getParams();

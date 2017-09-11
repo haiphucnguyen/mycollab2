@@ -39,7 +39,7 @@ public class MilestoneAddWindow extends MWindow {
         withWidth("800px").withModal(true).withResizable(false).withContent(content).withCenter();
         final AdvancedEditBeanForm<SimpleMilestone> editForm = new AdvancedEditBeanForm<>();
         content.addComponent(editForm);
-        editForm.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.MILESTONE,
+        editForm.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getMILESTONE(),
                 MilestoneDefaultFormLayoutFactory.getForm(), Milestone.Field.id.name()));
         final MilestoneEditFormFieldFactory milestoneEditFormFieldFactory = new MilestoneEditFormFieldFactory(editForm);
         editForm.setBeanFormFieldFactory(milestoneEditFormFieldFactory);
@@ -57,13 +57,13 @@ public class MilestoneAddWindow extends MWindow {
                 }
 
                 AttachmentUploadField uploadField = milestoneEditFormFieldFactory.getAttachmentUploadField();
-                String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), milestone.getProjectid(),
-                        ProjectTypeConstants.MILESTONE, "" + milestone.getId());
+                String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), milestone.getProjectid(),
+                        ProjectTypeConstants.INSTANCE.getMILESTONE(), "" + milestone.getId());
                 uploadField.saveContentsToRepo(attachPath);
 
                 EventBusFactory.getInstance().post(new MilestoneEvent.NewMilestoneAdded(MilestoneAddWindow.this, milestoneId));
                 EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(MilestoneAddWindow.this,
-                        ProjectTypeConstants.MILESTONE, milestoneId));
+                        ProjectTypeConstants.INSTANCE.getMILESTONE(), milestoneId));
                 close();
             }
         }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);

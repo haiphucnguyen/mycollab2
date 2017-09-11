@@ -107,7 +107,7 @@ public class AssignmentReadPresenter extends AbstractCrmPresenter<AssignmentRead
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_TASK)) {
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_TASK())) {
 
             SimpleCrmTask task;
             if (data.getParams() instanceof Integer) {
@@ -123,7 +123,7 @@ public class AssignmentReadPresenter extends AbstractCrmPresenter<AssignmentRead
             view.previewItem(task);
             super.onGo(container, data);
 
-            AppUI.addFragment(CrmLinkGenerator.generateTaskPreviewLink(task.getId()),
+            AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateTaskPreviewLink(task.getId()),
                     UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                             UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getSubject()));
         } else {

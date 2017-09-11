@@ -34,7 +34,7 @@ public class ProjectMemberListSelect extends ListSelect {
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
 
         if (listActiveMembersOnly) {
-            criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE));
+            criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.INSTANCE.getACTIVE()));
         }
 
         ProjectMemberService userService = AppContextUtil.getSpringBean(ProjectMemberService.class);

@@ -37,7 +37,7 @@ public class AccountContactSelectionWindow extends RelatedItemSelectionWindow<Si
             final SimpleContact contact = tableItem.getBeanByIndex(itemId);
 
             return new ELabel(contact.getContactName()).withStyleName(WebThemes.BUTTON_LINK)
-                    .withDescription(CrmTooltipGenerator.generateToolTipContact
+                    .withDescription(CrmTooltipGenerator.INSTANCE.generateToolTipContact
                             (UserUIContext.getUserLocale(), AppUI.getDateFormat(),
                                     contact, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });

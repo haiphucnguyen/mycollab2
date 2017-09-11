@@ -76,7 +76,7 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
             @Override
             public void onPrint(Object source, SimpleAccount data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.ACCOUNT, Account.Field.accountname.name(),
+                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.INSTANCE.getACCOUNT(), Account.Field.accountname.name(),
                         AccountDefaultDynaFormLayoutFactory.getForm()));
             }
 
@@ -117,7 +117,7 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
             AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
             SimpleAccount account = accountService.findById((Integer) data.getParams(), AppUI.getAccountId());
             if (account != null) {

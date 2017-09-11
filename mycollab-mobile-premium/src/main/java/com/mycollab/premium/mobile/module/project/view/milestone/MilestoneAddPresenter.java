@@ -46,16 +46,16 @@ public class MilestoneAddPresenter extends AbstractProjectPresenter<MilestoneAdd
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
             SimpleMilestone milestone = (SimpleMilestone) data.getParams();
             view.editItem(milestone);
             super.onGo(container, data);
 
             if (milestone.getId() == null) {
-                AppUI.addFragment("project/milestone/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+                AppUI.addFragment("project/milestone/add/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId()),
                         UserUIContext.getMessage(MilestoneI18nEnum.NEW));
             } else {
-                AppUI.addFragment("project/milestone/edit/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(),
+                AppUI.addFragment("project/milestone/edit/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId(),
                         milestone.getId()), milestone.getName());
             }
         } else {

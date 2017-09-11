@@ -96,13 +96,13 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         sortCombo.addValueChangeListener(valueChangeEvent -> {
             String sortValue = (String) sortCombo.getValue();
             if (UserUIContext.getMessage(GenericI18Enum.OPT_SORT_ASCENDING).equals(sortValue)) {
-                sortDirection = SearchCriteria.ASC;
+                sortDirection = SearchCriteria.Companion.getASC();
             } else {
-                sortDirection = SearchCriteria.DESC;
+                sortDirection = SearchCriteria.Companion.getDESC();
             }
             displayTimeEntries();
         });
-        sortDirection = SearchCriteria.DESC;
+        sortDirection = SearchCriteria.Companion.getDESC();
         groupWrapLayout.addComponent(sortCombo);
 
         groupWrapLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)));
@@ -125,7 +125,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
             UI.getCurrent().addWindow(addTimeEntry);
         }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
         createBtn.setVisible(!CurrentProjectVariables.isProjectArchived() &&
-                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TIME));
+                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTIME()));
         groupWrapLayout.addComponent(createBtn);
         searchPanel.addHeaderRight(groupWrapLayout);
 
@@ -178,7 +178,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
 
     @Override
     public void setSearchCriteria(ItemTimeLoggingSearchCriteria searchCriteria) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TIME)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getTIME())) {
             this.searchCriteria = searchCriteria;
             displayTimeEntries();
         } else {
@@ -246,11 +246,11 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         public void itemClick(final TableClickEvent event) {
             final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event.getData();
             if ("name".equals(event.getFieldName())) {
-                if (ProjectTypeConstants.BUG.equals(itemLogging.getType())) {
+                if (ProjectTypeConstants.INSTANCE.getBUG().equals(itemLogging.getType())) {
                     EventBusFactory.getInstance().post(new BugEvent.GotoRead(this, itemLogging.getTypeid()));
-                } else if (ProjectTypeConstants.TASK.equals(itemLogging.getType())) {
+                } else if (ProjectTypeConstants.INSTANCE.getTASK().equals(itemLogging.getType())) {
                     EventBusFactory.getInstance().post(new TaskEvent.GotoRead(this, itemLogging.getTypeid()));
-                } else if (ProjectTypeConstants.RISK.equals(itemLogging.getType())) {
+                } else if (ProjectTypeConstants.INSTANCE.getRISK().equals(itemLogging.getType())) {
                     EventBusFactory.getInstance().post(new RiskEvent.GotoRead(this, itemLogging.getTypeid()));
                 }
             } else if ("delete".equals(event.getFieldName())) {

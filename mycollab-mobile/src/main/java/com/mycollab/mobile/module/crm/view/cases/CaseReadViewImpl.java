@@ -75,7 +75,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.CASE, CaseDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getCASE(), CaseDefaultFormLayoutFactory.getForm());
     }
 
     @Override
@@ -86,7 +86,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(CrmLinkGenerator.generateCasePreviewLink(beanItem.getId()),
+        AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateCasePreviewLink(beanItem.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(CaseI18nEnum.SINGLE), beanItem.getSubject()));
     }
@@ -95,21 +95,21 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
     protected ComponentContainer createButtonControls() {
         VerticalLayout buttonControls = new CrmPreviewFormControlsGenerator<>(previewForm).
                 createButtonControls(CLONE_BTN_PRESENTED | DELETE_BTN_PRESENTED,
-                        RolePermissionCollections.CRM_CASE);
+                        RolePermissionCollections.INSTANCE.getCRM_CASE());
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new CaseEvent.GotoEdit(this, beanItem)))
                 .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CASE));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CASE()));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(buttonControls));
     }
 
     @Override
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withFullWidth().withSpacing(false).withMargin(false);
-        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT),
+        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()),
                 associateContacts);
         toolbarLayout.addComponent(contactSection);
 
-        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY),
+        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()),
                 associateActivities);
         toolbarLayout.addComponent(activitySection);
 
@@ -118,6 +118,6 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.CASE;
+        return CrmTypeConstants.INSTANCE.getCASE();
     }
 }

@@ -59,7 +59,7 @@ public class LeadTableDisplay extends DefaultPagedBeanTable<LeadService, LeadSea
             if ("Dead".equals(lead.getStatus()) || "Converted".equals(lead.getStatus())) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);
             }
-            b.setDescription(CrmTooltipGenerator.generateTooltipLead(
+            b.setDescription(CrmTooltipGenerator.INSTANCE.generateTooltipLead(
                     UserUIContext.getUserLocale(), lead,
                     AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;

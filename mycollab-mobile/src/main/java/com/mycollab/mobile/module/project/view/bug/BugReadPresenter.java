@@ -65,7 +65,7 @@ public class BugReadPresenter extends AbstractProjectPresenter<BugReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
             if (data.getParams() instanceof Integer) {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 SimpleBug bug = bugService.findById((Integer) data.getParams(), AppUI.getAccountId());

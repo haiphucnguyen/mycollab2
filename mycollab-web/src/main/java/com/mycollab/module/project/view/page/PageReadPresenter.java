@@ -68,9 +68,9 @@ public class PageReadPresenter extends ProjectGenericPresenter<PageReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PAGES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getPAGES())) {
             PageContainer pageContainer = (PageContainer) container;
-            pageContainer.navigateToContainer(ProjectTypeConstants.PAGE);
+            pageContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getPAGE());
             pageContainer.setContent(view);
             Page page = (Page) data.getParams();
             view.previewItem(page);

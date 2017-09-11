@@ -31,15 +31,15 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCriteria> {
 
     private static Param[] paramFields = new Param[]{
-            AccountSearchCriteria.p_accountName, AccountSearchCriteria.p_anyPhone, AccountSearchCriteria.p_website,
-            AccountSearchCriteria.p_numemployees, AccountSearchCriteria.p_assignee, AccountSearchCriteria.p_industries,
-            AccountSearchCriteria.p_types, AccountSearchCriteria.p_assignee, AccountSearchCriteria.p_billingCountry,
-            AccountSearchCriteria.p_shippingCountry, AccountSearchCriteria.p_anyCity, AccountSearchCriteria.p_createdtime,
-            AccountSearchCriteria.p_lastupdatedtime};
+            AccountSearchCriteria.Companion.getP_accountName(), AccountSearchCriteria.Companion.getP_anyPhone(), AccountSearchCriteria.Companion.getP_website(),
+            AccountSearchCriteria.Companion.getP_numemployees(), AccountSearchCriteria.Companion.getP_assignee(), AccountSearchCriteria.Companion.getP_industries(),
+            AccountSearchCriteria.Companion.getP_types(), AccountSearchCriteria.Companion.getP_assignee(), AccountSearchCriteria.Companion.getP_billingCountry(),
+            AccountSearchCriteria.Companion.getP_shippingCountry(), AccountSearchCriteria.Companion.getP_anyCity(), AccountSearchCriteria.Companion.getP_createdtime(),
+            AccountSearchCriteria.Companion.getP_lastupdatedtime()};
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.ACCOUNT, UserUIContext.getMessage(ClientI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getACCOUNT(), UserUIContext.getMessage(ClientI18nEnum.LIST));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
         MButton createBtn = new MButton(UserUIContext.getMessage(ClientI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
-        createBtn.setVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+        createBtn.setVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT()));
         return createBtn;
     }
 
@@ -64,7 +64,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
     private class AccountAdvancedSearchLayout extends DynamicQueryParamLayout<AccountSearchCriteria> {
 
         private AccountAdvancedSearchLayout() {
-            super(ClientSearchPanel.this, CrmTypeConstants.ACCOUNT);
+            super(ClientSearchPanel.this, CrmTypeConstants.INSTANCE.getACCOUNT());
         }
 
         @Override

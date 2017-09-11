@@ -51,7 +51,7 @@ public class AssignmentAddPresenter extends AbstractCrmPresenter<AssignmentAddVi
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_TASK)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_TASK())) {
 
             CrmTask task;
             if (data.getParams() instanceof CrmTask) {

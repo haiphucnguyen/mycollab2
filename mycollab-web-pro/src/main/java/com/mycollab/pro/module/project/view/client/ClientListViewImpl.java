@@ -78,7 +78,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
 
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, client)))
                 .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ICON_ONLY)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT()));
 
         MButton deleteBtn = new MButton("", clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
@@ -94,7 +94,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
                         }
                     });
         }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY)
-                .withVisible(UserUIContext.canAccess(RolePermissionCollections.CRM_ACCOUNT));
+                .withVisible(UserUIContext.canAccess(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT()));
         deleteBtn.setDescription(UserUIContext.getMessage(ClientI18nEnum.OPT_REMOVE_CLIENT, client.getAccountname()));
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(editBtn, deleteBtn);
@@ -120,7 +120,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
                 ", " + MoreObjects.firstNonNull(client.getBillingcountry(), UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)));
         clientInfo.addComponent(new ELabel(addressDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO));
         Div assignUserDiv = new Div().appendText(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + " : ").
-                appendChild(new Img("", StorageUtils.getAvatarPath(client.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
+                appendChild(new Img("", StorageUtils.INSTANCE.getAvatarPath(client.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
                         new A(AccountLinkGenerator.generatePreviewFullUserLink(AppUI.getSiteUrl(), client.getAssignuser())).
                                 appendText(client.getAssignUserFullName()));
         clientInfo.addComponent(new ELabel(assignUserDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO,

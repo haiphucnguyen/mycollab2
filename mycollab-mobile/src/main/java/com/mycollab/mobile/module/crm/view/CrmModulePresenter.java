@@ -25,7 +25,7 @@ public class CrmModulePresenter extends AbstractCrmPresenter<CrmModule> {
     @Override
     protected void onGo(HasComponents navigator, ScreenData<?> data) {
         ModuleHelper.setCurrentModule(view);
-        UserUIContext.updateLastModuleVisit(ModuleNameConstants.CRM);
+        UserUIContext.updateLastModuleVisit(ModuleNameConstants.INSTANCE.getCRM());
 
         String[] params = (String[]) data.getParams();
         if (params == null || params.length == 0) {

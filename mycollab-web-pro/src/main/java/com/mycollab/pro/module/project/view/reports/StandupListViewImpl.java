@@ -186,7 +186,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
 
         MHorizontalLayout headerLeft = new MHorizontalLayout();
 
-        HeaderWithFontAwesome titleLbl = ComponentUtils.headerH2(ProjectTypeConstants.STANDUP,
+        HeaderWithFontAwesome titleLbl = ComponentUtils.headerH2(ProjectTypeConstants.INSTANCE.getSTANDUP(),
                 UserUIContext.getMessage(StandupI18nEnum.VIEW_LIST_TITLE));
 
         headerLeft.with(titleLbl, standupCalendar);

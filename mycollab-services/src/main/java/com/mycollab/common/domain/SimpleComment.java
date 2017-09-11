@@ -47,7 +47,7 @@ public class SimpleComment extends CommentWithBLOBs {
         try {
             if (attachments == null) {
                 ContentJcrDao contentJcr = AppContextUtil.getSpringBean(ContentJcrDao.class);
-                String commentPath = AttachmentUtils.getCommentAttachmentPath(getType(), getSaccountid(), getExtratypeid(), getTypeid(), getId());
+                String commentPath = AttachmentUtils.INSTANCE.getCommentAttachmentPath(getType(), getSaccountid(), getExtratypeid(), getTypeid(), getId());
                 attachments = contentJcr.getContents(commentPath);
             }
         } catch (Exception e) {

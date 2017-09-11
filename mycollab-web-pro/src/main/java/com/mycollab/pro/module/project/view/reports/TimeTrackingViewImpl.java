@@ -127,7 +127,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         if (CollectionUtils.isNotEmpty(projects)) {
             itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
-            Label titleLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() + " " +
+            Label titleLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTIME()).getHtml() + " " +
                     UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TIMESHEET));
 
             MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true,
@@ -238,9 +238,9 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         Order order = (Order) orderField.getValue();
         String sortDirection;
         if (Order.ASCENDING == order) {
-            sortDirection = SearchCriteria.ASC;
+            sortDirection = SearchCriteria.Companion.getASC();
         } else {
-            sortDirection = SearchCriteria.DESC;
+            sortDirection = SearchCriteria.Companion.getDESC();
         }
 
         if (UserUIContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupField.getValue())) {
@@ -253,7 +253,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
 
         final Date fromDate = fromDateField.getValue();
         final Date toDate = toDateField.getValue();
-        searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
+        searchCriteria.addExtraField(DateParam.Companion.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
                 ConstantValueInjector.valueOf(Date.class, new Date[]{fromDate, toDate})));
 
         Collection<String> selectedUsers = (Collection<String>) userField.getValue();
@@ -318,11 +318,11 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
                 int typeId = itemLogging.getTypeid();
                 int projectId = itemLogging.getProjectid();
 
-                if (ProjectTypeConstants.BUG.equals(itemLogging.getType())) {
+                if (ProjectTypeConstants.INSTANCE.getBUG().equals(itemLogging.getType())) {
                     PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
                             new BugScreenData.Read(typeId));
                     EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
-                } else if (ProjectTypeConstants.TASK.equals(itemLogging.getType())) {
+                } else if (ProjectTypeConstants.INSTANCE.getTASK().equals(itemLogging.getType())) {
                     PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
                             new TaskScreenData.Read(typeId));
                     EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));

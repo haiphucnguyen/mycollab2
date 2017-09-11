@@ -31,9 +31,9 @@ public class TicketKanbanBoardPresenter extends ProjectGenericPresenter<TicketKa
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
             TicketContainer ticketContainer = (TicketContainer) container;
-            ticketContainer.navigateToContainer(ProjectTypeConstants.TASK);
+            ticketContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getTASK());
             ticketContainer.setContent(view);
             view.display();
 

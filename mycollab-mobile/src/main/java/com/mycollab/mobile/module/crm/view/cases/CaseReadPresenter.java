@@ -104,7 +104,7 @@ public class CaseReadPresenter extends AbstractCrmPresenter<CaseReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_CASE)) {
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CASE())) {
 
             if (data.getParams() instanceof Integer) {
                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);

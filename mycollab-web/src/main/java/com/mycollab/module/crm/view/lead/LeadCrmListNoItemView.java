@@ -24,7 +24,7 @@ public class LeadCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.LEAD);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD());
     }
 
     @Override
@@ -54,6 +54,6 @@ public class LeadCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected boolean hasPermission() {
-        return UserUIContext.canWrite(RolePermissionCollections.CRM_LEAD);
+        return UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_LEAD());
     }
 }

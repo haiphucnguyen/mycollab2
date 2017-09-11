@@ -11,38 +11,38 @@ import static com.mycollab.common.GenericLinkUtils.URL_PREFIX_PARAM;
 public class CrmLinkBuilder {
 
     public static String generateAccountPreviewLinkFull(Integer accountId) {
-        return URL_PREFIX_PARAM + CrmLinkGenerator.generateAccountPreviewLink(accountId);
+        return INSTANCE.getURL_PREFIX_PARAM() + CrmLinkGenerator.INSTANCE.generateAccountPreviewLink(accountId);
     }
 
     public static String generateCampaignPreviewLinkFull(Integer campaignId) {
-        return URL_PREFIX_PARAM + CrmLinkGenerator.generateCampaignPreviewLink(campaignId);
+        return INSTANCE.getURL_PREFIX_PARAM() + CrmLinkGenerator.INSTANCE.generateCampaignPreviewLink(campaignId);
     }
 
     public static String generateCasePreviewLinkFull(Integer caseId) {
-        return URL_PREFIX_PARAM + CrmLinkGenerator.generateCasePreviewLink(caseId);
+        return INSTANCE.getURL_PREFIX_PARAM() + CrmLinkGenerator.INSTANCE.generateCasePreviewLink(caseId);
     }
 
     public static String generateContactPreviewLinkFull(Integer contactId) {
-        return URL_PREFIX_PARAM + CrmLinkGenerator.generateContactPreviewLink(contactId);
+        return INSTANCE.getURL_PREFIX_PARAM() + CrmLinkGenerator.INSTANCE.generateContactPreviewLink(contactId);
     }
 
     public static String generateLeadPreviewLinkFull(Integer leadId) {
-        return URL_PREFIX_PARAM + CrmLinkGenerator.generateLeadPreviewLink(leadId);
+        return INSTANCE.getURL_PREFIX_PARAM() + CrmLinkGenerator.INSTANCE.generateLeadPreviewLink(leadId);
     }
 
     public static String generateOpportunityPreviewLinkFull(Integer opportunityId) {
-        return URL_PREFIX_PARAM + CrmLinkGenerator.generateOpportunityPreviewLink(opportunityId);
+        return INSTANCE.getURL_PREFIX_PARAM() + CrmLinkGenerator.INSTANCE.generateOpportunityPreviewLink(opportunityId);
     }
 
     public static String generateActivityPreviewLinkFull(String type, Integer typeId) {
-        return CrmLinkGenerator.generateCrmItemFullLink(AppUI.getSiteUrl(), type, typeId);
+        return CrmLinkGenerator.INSTANCE.generateCrmItemFullLink(AppUI.getSiteUrl(), type, typeId);
     }
 
     public static String generateMeetingPreviewLinkFull(Integer meetingId) {
-        return URL_PREFIX_PARAM + CrmLinkGenerator.generateMeetingPreviewLink(meetingId);
+        return INSTANCE.getURL_PREFIX_PARAM() + CrmLinkGenerator.INSTANCE.generateMeetingPreviewLink(meetingId);
     }
 
     public static String generateCallPreviewLinkFul(Integer callId) {
-        return URL_PREFIX_PARAM + CrmLinkGenerator.generateCallPreviewLink(callId);
+        return INSTANCE.getURL_PREFIX_PARAM() + CrmLinkGenerator.INSTANCE.generateCallPreviewLink(callId);
     }
 }

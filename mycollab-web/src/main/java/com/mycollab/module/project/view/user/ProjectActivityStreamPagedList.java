@@ -97,7 +97,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
 
         try {
             for (ProjectActivityStream activityStream : currentListData) {
-                if (ProjectTypeConstants.PAGE.equals(activityStream.getType())) {
+                if (ProjectTypeConstants.INSTANCE.getPAGE().equals(activityStream.getType())) {
                     ProjectPageService pageService = AppContextUtil.getSpringBean(ProjectPageService.class);
                     Page page = pageService.getPage(activityStream.getTypeid(), UserUIContext.getUsername());
                     if (page != null) {
@@ -118,23 +118,23 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
                 String assigneeParam = buildAssigneeValue(activityStream);
                 String itemParam = buildItemValue(activityStream);
 
-                if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {
+                if (ActivityStreamConstants.INSTANCE.getACTION_CREATE().equals(activityStream.getAction())) {
                     content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
                             assigneeParam, itemType, itemParam));
-                } else if (ActivityStreamConstants.ACTION_UPDATE.equals(activityStream.getAction())) {
+                } else if (ActivityStreamConstants.INSTANCE.getACTION_UPDATE().equals(activityStream.getAction())) {
                     content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
                             assigneeParam, itemType, itemParam));
                     if (activityStream.getAssoAuditLog() != null) {
                         content.append(auditLogRegistry.generatorDetailChangeOfActivity(activityStream));
                     }
-                } else if (ActivityStreamConstants.ACTION_COMMENT.equals(activityStream.getAction())) {
+                } else if (ActivityStreamConstants.INSTANCE.getACTION_COMMENT().equals(activityStream.getAction())) {
                     content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_COMMENT_ACTION_TITLE,
                             assigneeParam, itemType, itemParam));
                     if (activityStream.getAssoAuditLog() != null) {
                         content.append("<ul><li>\"").append(
                                 StringUtils.trimHtmlTags(activityStream.getAssoAuditLog().getChangeset(), 200)).append("\"</li></ul>");
                     }
-                } else if (ActivityStreamConstants.ACTION_DELETE.equals(activityStream.getAction())) {
+                } else if (ActivityStreamConstants.INSTANCE.getACTION_DELETE().equals(activityStream.getAction())) {
                     content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_DELETE_ACTION_TITLE,
                             assigneeParam, itemType, itemParam));
                 }
@@ -152,7 +152,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
 
     private String buildAssigneeValue(SimpleActivityStream activityStream) {
         DivLessFormatter div = new DivLessFormatter();
-        Img userAvatar = new Img("", StorageUtils.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
+        Img userAvatar = new Img("", StorageUtils.INSTANCE.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                 .setCSSClass(UIConstants.CIRCLE_BOX);
         A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                 activityStream.getExtratypeid(), activityStream.getCreateduser()));
@@ -170,14 +170,14 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
         DivLessFormatter div = new DivLessFormatter();
         Text image = new Text(ProjectAssetsManager.getAsset(activityStream.getType()).getHtml());
         A itemLink = new A().setId("tag" + TOOLTIP_ID);
-        if (ProjectTypeConstants.TASK.equals(activityStream.getType())
-                || ProjectTypeConstants.BUG.equals(activityStream.getType())) {
-            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(
+        if (ProjectTypeConstants.INSTANCE.getTASK().equals(activityStream.getType())
+                || ProjectTypeConstants.INSTANCE.getBUG().equals(activityStream.getType())) {
+            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(
                     activityStream.getProjectShortName(),
                     activityStream.getExtratypeid(), activityStream.getType(),
                     activityStream.getItemKey() + ""));
         } else {
-            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(
+            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(
                     activityStream.getProjectShortName(),
                     activityStream.getExtratypeid(), activityStream.getType(),
                     activityStream.getTypeid()));
@@ -188,7 +188,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
         itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
         itemLink.appendText(StringUtils.trim(activityStream.getNamefield(), 50, true));
 
-        if (ActivityStreamConstants.ACTION_DELETE.equals(activityStream.getAction())) {
+        if (ActivityStreamConstants.INSTANCE.getACTION_DELETE().equals(activityStream.getAction())) {
             itemLink.setCSSClass(WebThemes.LINK_COMPLETED);
         }
 

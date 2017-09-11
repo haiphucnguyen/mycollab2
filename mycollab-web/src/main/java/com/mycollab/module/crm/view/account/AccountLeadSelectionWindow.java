@@ -39,7 +39,7 @@ class AccountLeadSelectionWindow extends RelatedItemSelectionWindow<SimpleLead, 
             final SimpleLead lead = tableItem.getBeanByIndex(itemId);
 
             ELabel b = new ELabel(lead.getLeadName()).withStyleName(WebThemes.BUTTON_LINK)
-                    .withDescription(CrmTooltipGenerator.generateTooltipLead(UserUIContext.getUserLocale(), lead,
+                    .withDescription(CrmTooltipGenerator.INSTANCE.generateTooltipLead(UserUIContext.getUserLocale(), lead,
                             AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             if ("Dead".equals(lead.getStatus()) || "Converted".equals(lead.getStatus())) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);

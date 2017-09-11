@@ -45,25 +45,25 @@ public class CustomizeFeatureComponent extends BlockWidget {
         leftColLayout.setWidth("100%");
 
         final FeatureSelectionBox displayMsgSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMESSAGE()),
                 UserUIContext.getMessage(MessageI18nEnum.LIST),
                 customizeView.getDisplaymessage());
         leftColLayout.addComponent(displayMsgSelection);
 
         final FeatureSelectionBox displayPhaseSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()),
                 UserUIContext.getMessage(MilestoneI18nEnum.LIST),
                 customizeView.getDisplaymilestone());
         leftColLayout.addComponent(displayPhaseSelection);
 
         final FeatureSelectionBox displayTicketSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTICKET()),
                 UserUIContext.getMessage(TicketI18nEnum.LIST),
                 customizeView.getDisplayticket());
         leftColLayout.addComponent(displayTicketSelection);
 
         final FeatureSelectionBox displayPageSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPAGE()),
                 UserUIContext.getMessage(PageI18nEnum.LIST),
                 customizeView.getDisplaypage());
         leftColLayout.addComponent(displayPageSelection);
@@ -73,25 +73,25 @@ public class CustomizeFeatureComponent extends BlockWidget {
         MVerticalLayout rightColLayout = new MVerticalLayout().withFullWidth().withMargin(false);
 
         final FeatureSelectionBox displayFileSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getFILE()),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
                 customizeView.getDisplayfile());
         rightColLayout.addComponent(displayFileSelection);
 
         final FeatureSelectionBox displayTimeSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTIME()),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
                 customizeView.getDisplaytimelogging());
         rightColLayout.addComponent(displayTimeSelection);
 
         final FeatureSelectionBox displayStandupSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getSTANDUP()),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
                 customizeView.getDisplaystandup());
         rightColLayout.addComponent(displayStandupSelection);
 
         final FeatureSelectionBox displayInvoiceSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getINVOICE()),
                 UserUIContext.getMessage(InvoiceI18nEnum.LIST),
                 customizeView.getDisplayinvoice());
         rightColLayout.addComponent(displayInvoiceSelection);

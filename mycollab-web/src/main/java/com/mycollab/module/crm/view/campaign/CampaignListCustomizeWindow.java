@@ -17,7 +17,7 @@ public class CampaignListCustomizeWindow extends CustomizedTableWindow {
     private static final long serialVersionUID = 1L;
 
     public CampaignListCustomizeWindow(AbstractPagedBeanTable table) {
-        super(CrmTypeConstants.CAMPAIGN, table);
+        super(CrmTypeConstants.INSTANCE.getCAMPAIGN(), table);
     }
 
     @Override

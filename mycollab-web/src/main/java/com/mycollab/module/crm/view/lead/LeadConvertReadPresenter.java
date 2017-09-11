@@ -73,14 +73,14 @@ public class LeadConvertReadPresenter extends CrmGenericPresenter<LeadConvertRea
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.LEAD);
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_LEAD)) {
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getLEAD());
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
             if (data.getParams() instanceof SimpleLead) {
                 SimpleLead lead = (SimpleLead) data.getParams();
                 super.onGo(container, data);
                 view.previewItem(lead);
 
-                AppUI.addFragment(CrmLinkGenerator.generateLeadPreviewLink(lead.getId()),
+                AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateLeadPreviewLink(lead.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE, UserUIContext.getMessage(LeadI18nEnum.SINGLE),
                                 lead.getLeadName()));
             }

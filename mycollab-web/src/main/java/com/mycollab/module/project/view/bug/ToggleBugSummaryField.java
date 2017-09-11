@@ -48,7 +48,7 @@ public class ToggleBugSummaryField extends AbstractToggleSummaryField {
         titleLinkLbl = ELabel.html(buildBugLink()).withStyleName(UIConstants.LABEL_WORD_WRAP).withWidthUndefined();
         this.addComponent(titleLinkLbl);
         buttonControls = new MHorizontalLayout().withStyleName("toggle").withSpacing(false);
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
             this.addStyleName("editable-field");
             MButton instantEditBtn = new MButton("", clickEvent -> {
                 if (isRead) {
@@ -100,7 +100,7 @@ public class ToggleBugSummaryField extends AbstractToggleSummaryField {
             bugLink.setCSSClass("completed");
         }
 
-        bugLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.BUG, bug.getId() + ""));
+        bugLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.INSTANCE.getBUG(), bug.getId() + ""));
         bugLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 
         return resultDiv.write();

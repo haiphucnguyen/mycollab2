@@ -59,7 +59,7 @@ public class TicketQueryInfo {
 
     public static final SearchQueryInfo overdueTaskQuery = new SearchQueryInfo(OVERDUE_TICKETS,
             UserUIContext.getMessage(TicketI18nEnum.VAL_OVERDUE_TICKETS),
-            new SearchFieldInfo(SearchField.AND, ProjectTicketSearchCriteria.p_dueDate, DateParam.BEFORE, new LazyValueInjector() {
+            new SearchFieldInfo(SearchField.Companion.getAND(), ProjectTicketSearchCriteria.p_dueDate, DateParam.Companion.getBEFORE(), new LazyValueInjector() {
                 @Override
                 protected Object doEval() {
                     return new LocalDate().toDate();

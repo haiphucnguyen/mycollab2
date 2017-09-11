@@ -21,7 +21,7 @@ public class AccountModulePresenter extends AbstractPresenter<AccountModule> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        UserUIContext.updateLastModuleVisit(ModuleNameConstants.ACCOUNT);
+        UserUIContext.updateLastModuleVisit(ModuleNameConstants.INSTANCE.getACCOUNT());
         MainView mainView = (MainView) container;
         mainView.addModule(view);
 

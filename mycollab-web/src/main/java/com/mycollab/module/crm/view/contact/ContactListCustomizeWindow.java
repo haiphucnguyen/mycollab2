@@ -17,7 +17,7 @@ public class ContactListCustomizeWindow extends CustomizedTableWindow {
     private static final long serialVersionUID = 1L;
 
     public ContactListCustomizeWindow(AbstractPagedBeanTable table) {
-        super(CrmTypeConstants.CONTACT, table);
+        super(CrmTypeConstants.INSTANCE.getCONTACT(), table);
     }
 
     @Override

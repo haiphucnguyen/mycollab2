@@ -48,7 +48,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
     private CrmFollowersComp<SimpleOpportunity> followersComp;
 
     public OpportunityReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
+        super(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY()));
     }
 
     @Override
@@ -58,7 +58,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_OPPORTUNITY);
+        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY());
     }
 
     @Override
@@ -78,7 +78,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
         peopleInfoComp.displayEntryPeople(beanItem);
         followersComp.displayFollowers(beanItem);
 
-        tabSheet.selectTab(CrmTypeConstants.DETAIL);
+        tabSheet.selectTab(CrmTypeConstants.INSTANCE.getDETAIL());
 
         if (beanItem.isOverdue()) {
             previewLayout.addTitleStyleName(WebThemes.LABEL_OVERDUE);
@@ -92,8 +92,8 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
         SimpleLead lead = leadService.findConvertedLeadOfOpportunity(beanItem.getId(), AppUI.getAccountId());
         if (lead != null) {
             return String.format("<h2>%s%s</h2>", beanItem.getOpportunityname(), UserUIContext
-                    .getMessage(LeadI18nEnum.CONVERT_FROM_LEAD_TITLE, CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
-                            CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()), lead.getLeadName()));
+                    .getMessage(LeadI18nEnum.CONVERT_FROM_LEAD_TITLE, CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()),
+                            CrmLinkGenerator.INSTANCE.generateCrmItemLink(CrmTypeConstants.INSTANCE.getLEAD(), lead.getId()), lead.getLeadName()));
         } else {
             return beanItem.getOpportunityname();
         }
@@ -105,26 +105,26 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
         associateLeadList = new OpportunityLeadListComp();
         associateActivityList = new ActivityRelatedItemListComp(true);
 
-        activityComponent = new CrmActivityComponent(CrmTypeConstants.OPPORTUNITY);
+        activityComponent = new CrmActivityComponent(CrmTypeConstants.INSTANCE.getOPPORTUNITY());
 
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        followersComp = new CrmFollowersComp<>(CrmTypeConstants.OPPORTUNITY, RolePermissionCollections.CRM_OPPORTUNITY);
+        followersComp = new CrmFollowersComp<>(CrmTypeConstants.INSTANCE.getOPPORTUNITY(), RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY());
         addToSideBar(dateInfoComp, peopleInfoComp, followersComp);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
-        tabSheet.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
-        tabSheet.addTab(associateLeadList, CrmTypeConstants.LEAD, UserUIContext.getMessage(LeadI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
-        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
-                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
+        tabSheet.addTab(previewLayout, CrmTypeConstants.INSTANCE.getDETAIL(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getDETAIL()));
+        tabSheet.addTab(associateContactList, CrmTypeConstants.INSTANCE.getCONTACT(), UserUIContext.getMessage(ContactI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()));
+        tabSheet.addTab(associateLeadList, CrmTypeConstants.INSTANCE.getLEAD(), UserUIContext.getMessage(LeadI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()));
+        tabSheet.addTab(associateActivityList, CrmTypeConstants.INSTANCE.getACTIVITY(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
+                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()));
     }
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.OPPORTUNITY, OpportunityDefaultDynaFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getOPPORTUNITY(), OpportunityDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -139,7 +139,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
     private void displayActivities() {
         ActivitySearchCriteria criteria = new ActivitySearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-        criteria.setType(StringSearchField.and(CrmTypeConstants.OPPORTUNITY));
+        criteria.setType(StringSearchField.and(CrmTypeConstants.INSTANCE.getOPPORTUNITY()));
         criteria.setTypeid(new NumberSearchField(beanItem.getId()));
         associateActivityList.setSearchCriteria(criteria);
     }
@@ -179,6 +179,6 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.OPPORTUNITY;
+        return CrmTypeConstants.INSTANCE.getOPPORTUNITY();
     }
 }

@@ -14,8 +14,8 @@ public class YesNoPermissionComboBox extends KeyCaptionComboBox {
 
     public YesNoPermissionComboBox() {
         super(false);
-        this.addItem(BooleanPermissionFlag.TRUE, UserUIContext.getMessage(SecurityI18nEnum.YES));
-        this.addItem(BooleanPermissionFlag.FALSE, UserUIContext.getMessage(SecurityI18nEnum.NO));
-        this.setValue(BooleanPermissionFlag.FALSE);
+        this.addItem(BooleanPermissionFlag.Companion.getTRUE(), UserUIContext.getMessage(SecurityI18nEnum.YES));
+        this.addItem(BooleanPermissionFlag.Companion.getFALSE(), UserUIContext.getMessage(SecurityI18nEnum.NO));
+        this.setValue(BooleanPermissionFlag.Companion.getFALSE());
     }
 }

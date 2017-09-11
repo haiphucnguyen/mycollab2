@@ -21,9 +21,9 @@ public class MilestoneRoadmapPresenter extends ProjectGenericPresenter<Milestone
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
             MilestoneContainer milestoneContainer = (MilestoneContainer) container;
-            milestoneContainer.navigateToContainer(ProjectTypeConstants.MILESTONE);
+            milestoneContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getMILESTONE());
             milestoneContainer.setContent(view);
 
             view.lazyLoadView();

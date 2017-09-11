@@ -35,16 +35,16 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
     private boolean canCreateOpportunity;
 
     private static Param[] paramFields = new Param[]{
-            OpportunitySearchCriteria.p_opportunityName,
-            OpportunitySearchCriteria.p_account,
-            OpportunitySearchCriteria.p_nextStep,
-            OpportunitySearchCriteria.p_campaign,
-            OpportunitySearchCriteria.p_leadSource,
-            OpportunitySearchCriteria.p_saleStage,
-            OpportunitySearchCriteria.p_type,
-            OpportunitySearchCriteria.p_expectedcloseddate,
-            OpportunitySearchCriteria.p_createdtime,
-            OpportunitySearchCriteria.p_lastupdatedtime};
+            OpportunitySearchCriteria.Companion.getP_opportunityName(),
+            OpportunitySearchCriteria.Companion.getP_account(),
+            OpportunitySearchCriteria.Companion.getP_nextStep(),
+            OpportunitySearchCriteria.Companion.getP_campaign(),
+            OpportunitySearchCriteria.Companion.getP_leadSource(),
+            OpportunitySearchCriteria.Companion.getP_saleStage(),
+            OpportunitySearchCriteria.Companion.getP_type(),
+            OpportunitySearchCriteria.Companion.getP_expectedcloseddate(),
+            OpportunitySearchCriteria.Companion.getP_createdtime(),
+            OpportunitySearchCriteria.Companion.getP_lastupdatedtime()};
 
     public OpportunitySearchPanel(boolean canCreateOpportunity) {
         this.canCreateOpportunity = canCreateOpportunity;
@@ -52,7 +52,7 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.OPPORTUNITY, UserUIContext.getMessage(OpportunityI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getOPPORTUNITY(), UserUIContext.getMessage(OpportunityI18nEnum.LIST));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
         return (canCreateOpportunity) ? new MButton(UserUIContext.getMessage(OpportunityI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new OpportunityEvent.GotoAdd(OpportunitySearchPanel.this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) : null;
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY())) : null;
     }
 
     @Override
@@ -132,7 +132,7 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
     private class OpportunityAdvancedSearchLayout extends DynamicQueryParamLayout<OpportunitySearchCriteria> {
 
         OpportunityAdvancedSearchLayout() {
-            super(OpportunitySearchPanel.this, CrmTypeConstants.OPPORTUNITY);
+            super(OpportunitySearchPanel.this, CrmTypeConstants.INSTANCE.getOPPORTUNITY());
         }
 
         @Override

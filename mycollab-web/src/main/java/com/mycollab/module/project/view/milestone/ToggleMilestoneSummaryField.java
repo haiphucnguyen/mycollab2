@@ -60,7 +60,7 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
         this.maxLength = maxLength;
         this.setWidth("100%");
         this.addStyleName("editable-field");
-        if (toggleStatusSupport && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+        if (toggleStatusSupport && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
             toggleStatusSelect = new CssCheckBox();
             toggleStatusSelect.setSimpleMode(true);
             toggleStatusSelect.setValue(milestone.isCompleted());
@@ -81,8 +81,8 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
                 milestoneService.updateSelectiveWithSession(milestone, UserUIContext.getUsername());
                 ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
                 searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.RISK,
-                        ProjectTypeConstants.TASK));
+                searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.INSTANCE.getBUG(), ProjectTypeConstants.INSTANCE.getRISK(),
+                        ProjectTypeConstants.INSTANCE.getTASK()));
                 searchCriteria.setMilestoneId(NumberSearchField.equal(milestone.getId()));
                 searchCriteria.setIsOpenned(new SearchField());
                 ProjectTicketService genericTaskService = AppContextUtil.getSpringBean(ProjectTicketService.class);
@@ -105,7 +105,7 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
         titleLinkLbl = ELabel.h3(buildMilestoneLink()).withStyleName(UIConstants.LABEL_WORD_WRAP).withWidthUndefined();
         this.addComponent(titleLinkLbl);
         buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(false, false, false, true)).withStyleName("toggle");
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
             MButton instantEditBtn = new MButton("", clickEvent -> {
                 if (isRead) {
                     ToggleMilestoneSummaryField.this.removeComponent(titleLinkLbl);
@@ -124,7 +124,7 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
                     .withIcon(FontAwesome.EDIT).withStyleName(ValoTheme.BUTTON_ICON_ALIGN_TOP);
             buttonControls.with(instantEditBtn);
         }
-        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MILESTONES)) {
+        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
             MButton removeBtn = new MButton("", clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),

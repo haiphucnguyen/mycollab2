@@ -41,7 +41,7 @@ class LeadCampaignSelectionWindow extends RelatedItemSelectionWindow<SimpleCampa
             final SimpleCampaign campaign = tableItem.getBeanByIndex(itemId);
 
             ELabel b = new ELabel(campaign.getCampaignname()).withStyleName(WebThemes.BUTTON_LINK)
-                    .withDescription(CrmTooltipGenerator.generateTooltipCampaign(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                    .withDescription(CrmTooltipGenerator.INSTANCE.generateTooltipCampaign(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
                             campaign, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
 
             if (CampaignStatus.Completed.name().equals(campaign.getStatus())) {

@@ -78,7 +78,7 @@ public class AuditLogAspect {
                     findMethod = cls.getMethod("findByPrimaryKey", Integer.class, Integer.class);
                 }
                 oldValue = findMethod.invoke(service, typeId, sAccountId);
-                String key = bean.toString() + ClassInfoMap.getType(cls) + typeId;
+                String key = bean.toString() + ClassInfoMap.INSTANCE.getType(cls) + typeId;
 
                 cacheService.putValue(AUDIT_TEMP_CACHE, key, oldValue);
             } catch (Exception e) {
@@ -96,7 +96,7 @@ public class AuditLogAspect {
         try {
             Watchable watchableAnnotation = cls.getAnnotation(Watchable.class);
             if (watchableAnnotation != null) {
-                String monitorType = ClassInfoMap.getType(cls);
+                String monitorType = ClassInfoMap.INSTANCE.getType(cls);
                 Integer sAccountId = (Integer) PropertyUtils.getProperty(bean, "saccountid");
                 int typeId = (Integer) PropertyUtils.getProperty(bean, "id");
 
@@ -128,11 +128,11 @@ public class AuditLogAspect {
             Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
             if (traceableAnnotation != null) {
                 try {
-                    ClassInfo classInfo = ClassInfoMap.getClassInfo(cls);
+                    ClassInfo classInfo = ClassInfoMap.INSTANCE.getClassInfo(cls);
                     String changeSet = getChangeSet(cls, bean, classInfo.getExcludeHistoryFields(),isSelective);
                     if (changeSet != null) {
                         ActivityStreamWithBLOBs activity = TraceableCreateAspect.constructActivity(cls,
-                                traceableAnnotation, bean, username, ActivityStreamConstants.ACTION_UPDATE);
+                                traceableAnnotation, bean, username, ActivityStreamConstants.INSTANCE.getACTION_UPDATE());
                         Integer activityStreamId = activityStreamService.save(activity);
 
                         Integer sAccountId = (Integer) PropertyUtils.getProperty(bean, "saccountid");
@@ -144,12 +144,12 @@ public class AuditLogAspect {
                         relayNotification.setChangeby(username);
                         relayNotification.setChangecomment("");
                         relayNotification.setSaccountid(sAccountId);
-                        relayNotification.setType(ClassInfoMap.getType(cls));
+                        relayNotification.setType(ClassInfoMap.INSTANCE.getType(cls));
                         relayNotification.setTypeid("" + typeId);
                         if (auditLogId != null) {
                             relayNotification.setExtratypeid(auditLogId);
                         }
-                        relayNotification.setAction(MonitorTypeConstants.UPDATE_ACTION);
+                        relayNotification.setAction(MonitorTypeConstants.INSTANCE.getUPDATE_ACTION());
 
                         relayEmailNotificationService.saveWithSession(relayNotification, username);
                     }
@@ -166,11 +166,11 @@ public class AuditLogAspect {
     private String getChangeSet(Class<?> targetCls, Object bean, List<String> excludeHistoryFields, boolean isSelective) {
         try {
             Integer typeId = (Integer) PropertyUtils.getProperty(bean, "id");
-            String key = bean.toString() + ClassInfoMap.getType(targetCls) + typeId;
+            String key = bean.toString() + ClassInfoMap.INSTANCE.getType(targetCls) + typeId;
 
             Object oldValue = cacheService.getValue(AUDIT_TEMP_CACHE, key);
             if (oldValue != null) {
-                return AuditLogUtil.getChangeSet(oldValue, bean, excludeHistoryFields, isSelective);
+                return AuditLogUtil.INSTANCE.getChangeSet(oldValue, bean, excludeHistoryFields, isSelective);
             }
             return null;
         } catch (Exception e) {
@@ -185,8 +185,8 @@ public class AuditLogAspect {
             Integer typeId = (Integer) PropertyUtils.getProperty(bean, "id");
             AuditLog auditLog = new AuditLog();
             auditLog.setPosteduser(username);
-            auditLog.setModule(ClassInfoMap.getModule(targetCls));
-            auditLog.setType(ClassInfoMap.getType(targetCls));
+            auditLog.setModule(ClassInfoMap.INSTANCE.getModule(targetCls));
+            auditLog.setType(ClassInfoMap.INSTANCE.getType(targetCls));
             auditLog.setTypeid(typeId);
             auditLog.setSaccountid(sAccountId);
             auditLog.setPosteddate(new GregorianCalendar().getTime());

@@ -26,7 +26,7 @@ import java.util.Collection;
  */
 public class BugCustomizeReportOutputWindow extends CustomizeReportOutputWindow<BugSearchCriteria, SimpleBug> {
     public BugCustomizeReportOutputWindow(VariableInjector<BugSearchCriteria> variableInjector) {
-        super(ProjectTypeConstants.BUG, UserUIContext.getMessage(BugI18nEnum.LIST), SimpleBug.class,
+        super(ProjectTypeConstants.INSTANCE.getBUG(), UserUIContext.getMessage(BugI18nEnum.LIST), SimpleBug.class,
                 AppContextUtil.getSpringBean(BugService.class), variableInjector);
     }
 

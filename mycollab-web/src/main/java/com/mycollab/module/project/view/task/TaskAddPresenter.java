@@ -70,9 +70,9 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
             TicketContainer ticketContainer = (TicketContainer) container;
-            ticketContainer.navigateToContainer(ProjectTypeConstants.TASK);
+            ticketContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getTASK());
             ticketContainer.setContent(view);
             SimpleTask task = (SimpleTask) data.getParams();
 
@@ -114,7 +114,7 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
                     MonitorItem monitorItem = new MonitorItem();
                     monitorItem.setMonitorDate(new GregorianCalendar().getTime());
                     monitorItem.setSaccountid(AppUI.getAccountId());
-                    monitorItem.setType(ProjectTypeConstants.TASK);
+                    monitorItem.setType(ProjectTypeConstants.INSTANCE.getTASK());
                     monitorItem.setTypeid(taskId);
                     monitorItem.setUser(follower);
                     monitorItem.setExtratypeid(CurrentProjectVariables.getProjectId());
@@ -127,8 +127,8 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
             taskService.updateWithSession(item, UserUIContext.getUsername());
         }
         AttachmentUploadField uploadField = view.getAttachUploadField();
-        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), item.getProjectid(),
-                ProjectTypeConstants.TASK, "" + item.getId());
+        String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), item.getProjectid(),
+                ProjectTypeConstants.INSTANCE.getTASK(), "" + item.getId());
         uploadField.saveContentsToRepo(attachPath);
         return item.getId();
     }

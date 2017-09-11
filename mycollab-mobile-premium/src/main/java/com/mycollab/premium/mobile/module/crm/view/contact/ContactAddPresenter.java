@@ -53,7 +53,7 @@ public class ContactAddPresenter extends AbstractCrmPresenter<ContactAddView> im
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CONTACT)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CONTACT())) {
             SimpleContact contact = null;
             if (data.getParams() instanceof SimpleContact) {
                 contact = (SimpleContact) data.getParams();

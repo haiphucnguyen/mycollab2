@@ -27,7 +27,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.MILESTONE, MilestoneDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(ProjectTypeConstants.INSTANCE.getMILESTONE(), MilestoneDefaultFormLayoutFactory.getForm());
     }
 
     @Override

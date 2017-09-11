@@ -45,7 +45,7 @@ public class RoleSearchPanel extends DefaultGenericSearchPanel<RoleSearchCriteri
         return new MButton(UserUIContext.getMessage(RoleI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new RoleEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.ACCOUNT_ROLE));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getACCOUNT_ROLE()));
     }
 
     private class RoleBasicSearchLayout extends BasicSearchLayout<RoleSearchCriteria> {

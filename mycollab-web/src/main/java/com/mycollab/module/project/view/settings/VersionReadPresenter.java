@@ -72,7 +72,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
             @Override
             public void onPrint(Object source, Version data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.BUG_VERSION, Version.Field.name.name(),
+                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.INSTANCE.getBUG_VERSION(), Version.Field.name.name(),
                         VersionDefaultFormLayoutFactory.getForm(), Version.Field.id.name()));
             }
 
@@ -108,7 +108,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getVERSIONS())) {
             if (data.getParams() instanceof Integer) {
                 VersionService componentService = AppContextUtil.getSpringBean(VersionService.class);
                 Version version = componentService.findById((Integer) data.getParams(), AppUI.getAccountId());

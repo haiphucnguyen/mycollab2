@@ -73,7 +73,7 @@ public class Content extends Resource {
     }
 
     public static Content buildContentInstance(Integer accountId, String objectPath) {
-        String newPath = PathUtils.buildPath(accountId, objectPath);
+        String newPath = PathUtils.INSTANCE.buildPath(accountId, objectPath);
         Content content = new Content();
         content.setDescription("");
         content.setPath(newPath);

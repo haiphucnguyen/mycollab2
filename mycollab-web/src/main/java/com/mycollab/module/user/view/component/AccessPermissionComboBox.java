@@ -15,10 +15,10 @@ public class AccessPermissionComboBox extends KeyCaptionComboBox {
     public AccessPermissionComboBox() {
         super(false);
 
-        this.addItem(AccessPermissionFlag.NO_ACCESS, UserUIContext.getMessage(SecurityI18nEnum.NO_ACCESS));
-        this.addItem(AccessPermissionFlag.READ_ONLY, UserUIContext.getMessage(SecurityI18nEnum.READONLY));
-        this.addItem(AccessPermissionFlag.READ_WRITE, UserUIContext.getMessage(SecurityI18nEnum.READ_WRITE));
-        this.addItem(AccessPermissionFlag.ACCESS, UserUIContext.getMessage(SecurityI18nEnum.ACCESS));
-        this.setValue(AccessPermissionFlag.READ_ONLY);
+        this.addItem(AccessPermissionFlag.Companion.getNO_ACCESS(), UserUIContext.getMessage(SecurityI18nEnum.NO_ACCESS));
+        this.addItem(AccessPermissionFlag.Companion.getREAD_ONLY(), UserUIContext.getMessage(SecurityI18nEnum.READONLY));
+        this.addItem(AccessPermissionFlag.Companion.getREAD_WRITE(), UserUIContext.getMessage(SecurityI18nEnum.READ_WRITE));
+        this.addItem(AccessPermissionFlag.Companion.getACCESS(), UserUIContext.getMessage(SecurityI18nEnum.ACCESS));
+        this.setValue(AccessPermissionFlag.Companion.getREAD_ONLY());
     }
 }

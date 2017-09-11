@@ -55,7 +55,7 @@ public class OpportunitySelectionWindow extends MWindow {
             return new MButton(opportunity.getOpportunityname(), clickEvent -> {
                 fieldSelection.fireValueChange(opportunity);
                 close();
-            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateTooltipOpportunity(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.INSTANCE.generateTooltipOpportunity(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
                     opportunity, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
     }

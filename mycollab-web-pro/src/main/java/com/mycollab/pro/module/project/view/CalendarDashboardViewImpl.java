@@ -157,23 +157,23 @@ public class CalendarDashboardViewImpl extends AbstractVerticalPageView implemen
             public void eventClick(CalendarComponentEvents.EventClick event) {
                 GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
                 ProjectTicket assignment = calendarEvent.getTicket();
-                if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
-                        ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.TASKS)) {
+                if (ProjectTypeConstants.INSTANCE.getTASK().equals(assignment.getType()) &&
+                        ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
                     ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                     SimpleTask task = taskService.findById(assignment.getTypeId(), AppUI.getAccountId());
                     UI.getCurrent().addWindow(new TaskAddWindow(task));
-                } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
-                        ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.MILESTONES)) {
+                } else if (ProjectTypeConstants.INSTANCE.getMILESTONE().equals(assignment.getType()) &&
+                        ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
                     MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                     SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppUI.getAccountId());
                     UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
-                } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
-                        ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.BUGS)) {
+                } else if (ProjectTypeConstants.INSTANCE.getBUG().equals(assignment.getType()) &&
+                        ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
                     BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                     SimpleBug bug = bugService.findById(assignment.getTypeId(), AppUI.getAccountId());
                     UI.getCurrent().addWindow(new BugAddWindow(bug));
-                } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
-                        ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.RISKS)) {
+                } else if (ProjectTypeConstants.INSTANCE.getRISK().equals(assignment.getType()) &&
+                        ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
                     RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                     SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppUI.getAccountId());
                     UI.getCurrent().addWindow(new RiskAddWindow(risk));

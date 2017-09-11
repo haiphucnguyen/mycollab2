@@ -49,27 +49,27 @@ public class ProjectDashboardViewImpl extends ProjectMobileMenuPageView implemen
 
         MVerticalLayout content = new MVerticalLayout();
 
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMESSAGES())) {
             content.with(new Button(UserUIContext.getMessage(MessageI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new MessageEvent.GotoAdd(this, null))));
         }
 
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
             content.with(new Button(UserUIContext.getMessage(MilestoneI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoAdd(this, null))));
         }
 
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
             content.with(new Button(UserUIContext.getMessage(TaskI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(this, null))));
         }
 
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
             content.with(new Button(UserUIContext.getMessage(BugI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoAdd(this, null))));
         }
 
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
             content.with(new Button(UserUIContext.getMessage(RiskI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null))));
         }
@@ -141,15 +141,15 @@ public class ProjectDashboardViewImpl extends ProjectMobileMenuPageView implemen
 
         NavigationButton messageBtn = new NavigationButton(UserUIContext.getMessage(MessageI18nEnum.LIST));
         messageBtn.addClickListener(navigationButtonClickEvent -> EventBusFactory.getInstance().post(new MessageEvent.GotoList(this, null)));
-        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE), messageBtn));
+        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMESSAGE()), messageBtn));
 
         NavigationButton milestoneBtn = new NavigationButton(UserUIContext.getMessage(MilestoneI18nEnum.LIST));
         milestoneBtn.addClickListener(navigationButtonClickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null)));
-        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE), milestoneBtn));
+        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()), milestoneBtn));
 
         NavigationButton taskBtn = new NavigationButton(UserUIContext.getMessage(TicketI18nEnum.LIST));
         taskBtn.addClickListener(navigationButtonClickEvent -> EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null)));
-        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET), taskBtn));
+        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTICKET()), taskBtn));
 
         NavigationButton userBtn = new NavigationButton(UserUIContext.getMessage(ProjectMemberI18nEnum.LIST));
         userBtn.addClickListener(navigationButtonClickEvent -> EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null)));
@@ -161,7 +161,7 @@ public class ProjectDashboardViewImpl extends ProjectMobileMenuPageView implemen
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(ProjectLinkGenerator.generateProjectLink(CurrentProjectVariables
+        AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateProjectLink(CurrentProjectVariables
                 .getProject().getId()), UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));
     }
 

@@ -66,17 +66,17 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
         controls.with(searchBtn);
         NavigationBarQuickMenu actionMenu = new NavigationBarQuickMenu();
         MVerticalLayout content = new MVerticalLayout();
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
             content.with(new Button(UserUIContext.getMessage(TaskI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(TicketListViewImpl.this, null))));
         }
 
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
             content.with(new Button(UserUIContext.getMessage(BugI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoAdd(TicketListViewImpl.this, null))));
         }
 
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS) && !SiteConfiguration.isCommunityEdition()) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS()) && !SiteConfiguration.isCommunityEdition()) {
             content.with(new Button(UserUIContext.getMessage(RiskI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(TicketListViewImpl.this, null))));
         }
@@ -92,7 +92,7 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment("project/ticket/dashboard/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+        AppUI.addFragment("project/ticket/dashboard/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId()),
                 UserUIContext.getMessage(TicketI18nEnum.LIST));
     }
 }

@@ -61,7 +61,7 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
         MButton createBtn = new MButton(UserUIContext.getMessage(UserI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new UserEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.ACCOUNT_USER));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getACCOUNT_USER()));
 
         headerText = HeaderWithFontAwesome.h2(FontAwesome.USERS, UserUIContext.getMessage(UserI18nEnum.LIST) + " " +
                 UserUIContext.getMessage(GenericI18Enum.OPT_TOTAL_VALUE, 0));
@@ -120,9 +120,9 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
     private void displayUsers() {
         contentLayout.removeAllComponents();
         if (sortAsc) {
-            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("displayName", SearchCriteria.ASC)));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("displayName", SearchCriteria.Companion.getASC())));
         } else {
-            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("displayName", SearchCriteria.DESC)));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("displayName", SearchCriteria.Companion.getDESC())));
         }
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
@@ -151,7 +151,7 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
 
         MHorizontalLayout buttonControls = new MHorizontalLayout();
         buttonControls.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
-        buttonControls.setVisible(UserUIContext.canWrite(RolePermissionCollections.ACCOUNT_USER));
+        buttonControls.setVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getACCOUNT_USER()));
 
         if (RegisterStatusConstants.NOT_LOG_IN_YET.equals(member.getRegisterstatus())) {
             MButton resendBtn = new MButton(UserUIContext.getMessage(UserI18nEnum.ACTION_RESEND_INVITATION), clickEvent -> {

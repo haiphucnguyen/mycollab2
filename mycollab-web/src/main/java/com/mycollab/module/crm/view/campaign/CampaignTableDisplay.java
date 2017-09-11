@@ -52,7 +52,7 @@ public class CampaignTableDisplay extends DefaultPagedBeanTable<CampaignService,
             final SimpleCampaign campaign = getBeanByIndex(itemId);
 
             LabelLink b = new LabelLink(campaign.getCampaignname(), CrmLinkBuilder.generateCampaignPreviewLinkFull(campaign.getId()));
-            b.setDescription(CrmTooltipGenerator.generateTooltipCampaign(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+            b.setDescription(CrmTooltipGenerator.INSTANCE.generateTooltipCampaign(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
                     campaign, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             b.setStyleName(WebThemes.BUTTON_LINK);
 

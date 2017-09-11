@@ -61,7 +61,7 @@ public class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<Proj
         }
         issueDiv.appendChild(new Span().appendText(status).setCSSClass(UIConstants.BLOCK));
 
-        String avatarLink = StorageUtils.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
+        String avatarLink = StorageUtils.INSTANCE.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
         Img img = new Img(ticket.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                 .setTitle(ticket.getAssignUserFullName());
         issueDiv.appendChild(img, DivLessFormatter.EMPTY_SPACE());
@@ -69,18 +69,18 @@ public class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<Proj
         A ticketLink = new A().setId("tag" + TOOLTIP_ID);
         ticketLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ticket.getType(), ticket.getTypeId() + ""));
         ticketLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-        if (ProjectTypeConstants.BUG.equals(ticket.getType()) || ProjectTypeConstants.TASK.equals(ticket.getType())) {
+        if (ProjectTypeConstants.INSTANCE.getBUG().equals(ticket.getType()) || ProjectTypeConstants.INSTANCE.getTASK().equals(ticket.getType())) {
             if (displayPrjShortname) {
                 ticketLink.appendText(String.format("[%s-%d] - %s", ticket.getProjectShortName(), ticket.getExtraTypeId(),
                         ticket.getName()));
             } else {
                 ticketLink.appendText(ticket.getName());
             }
-            ticketLink.setHref(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(),
+            ticketLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(ticket.getProjectShortName(),
                     ticket.getProjectId(), ticket.getType(), ticket.getExtraTypeId() + ""));
         } else {
             ticketLink.appendText(ticket.getName());
-            ticketLink.setHref(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(),
+            ticketLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(ticket.getProjectShortName(),
                     ticket.getProjectId(), ticket.getType(), ticket.getTypeId() + ""));
         }
 

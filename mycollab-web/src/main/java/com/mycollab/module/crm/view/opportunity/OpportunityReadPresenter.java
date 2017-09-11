@@ -87,7 +87,7 @@ public class OpportunityReadPresenter extends CrmGenericPresenter<OpportunityRea
             @Override
             public void onPrint(Object source, SimpleOpportunity data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.OPPORTUNITY, Opportunity.Field.opportunityname.name(),
+                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.INSTANCE.getOPPORTUNITY(), Opportunity.Field.opportunityname.name(),
                         OpportunityDefaultDynaFormLayoutFactory.getForm()));
             }
 
@@ -131,17 +131,17 @@ public class OpportunityReadPresenter extends CrmGenericPresenter<OpportunityRea
             public void createNewRelatedItem(String itemId) {
                 if (itemId.equals("task")) {
                     SimpleCrmTask task = new SimpleCrmTask();
-                    task.setType(CrmTypeConstants.OPPORTUNITY);
+                    task.setType(CrmTypeConstants.INSTANCE.getOPPORTUNITY());
                     task.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(OpportunityReadPresenter.this, task));
                 } else if (itemId.equals("meeting")) {
                     SimpleMeeting meeting = new SimpleMeeting();
-                    meeting.setType(CrmTypeConstants.OPPORTUNITY);
+                    meeting.setType(CrmTypeConstants.INSTANCE.getOPPORTUNITY());
                     meeting.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(OpportunityReadPresenter.this, meeting));
                 } else if (itemId.equals("call")) {
                     SimpleCall call = new SimpleCall();
-                    call.setType(CrmTypeConstants.OPPORTUNITY);
+                    call.setType(CrmTypeConstants.INSTANCE.getOPPORTUNITY());
                     call.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(OpportunityReadPresenter.this, call));
                 }
@@ -205,8 +205,8 @@ public class OpportunityReadPresenter extends CrmGenericPresenter<OpportunityRea
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.OPPORTUNITY);
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_OPPORTUNITY)) {
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getOPPORTUNITY());
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY())) {
             if (data.getParams() instanceof Integer) {
                 OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
                 SimpleOpportunity opportunity = opportunityService.findById((Integer) data.getParams(), AppUI.getAccountId());
@@ -214,7 +214,7 @@ public class OpportunityReadPresenter extends CrmGenericPresenter<OpportunityRea
                     super.onGo(container, data);
                     view.previewItem(opportunity);
 
-                    AppUI.addFragment(CrmLinkGenerator.generateOpportunityPreviewLink(opportunity.getId()),
+                    AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateOpportunityPreviewLink(opportunity.getId()),
                             UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                     UserUIContext.getMessage(OpportunityI18nEnum.SINGLE), opportunity.getOpportunityname()));
                 } else {

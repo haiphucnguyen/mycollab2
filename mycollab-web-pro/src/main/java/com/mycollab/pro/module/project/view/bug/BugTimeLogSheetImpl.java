@@ -65,7 +65,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
 
     @Override
     protected boolean hasEditPermission() {
-        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
+        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS());
     }
 
     @Override
@@ -86,7 +86,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
     private Double loadTotalBillableHours() {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
+        criteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getBUG()));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
         criteria.setIsBillable(new BooleanSearchField(true));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
@@ -95,7 +95,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
     private Double loadTotalNonBillableHours() {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
+        criteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getBUG()));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
         criteria.setIsBillable(new BooleanSearchField(false));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
@@ -127,7 +127,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
             item.setLoguser(UserUIContext.getUsername());
             item.setLogvalue(getInvestValue());
             item.setTypeid(bean.getId());
-            item.setType(ProjectTypeConstants.BUG);
+            item.setType(ProjectTypeConstants.INSTANCE.getBUG());
             item.setSaccountid(AppUI.getAccountId());
             item.setProjectid(CurrentProjectVariables.getProjectId());
             item.setLogforday(forLogDate());
@@ -147,7 +147,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
         protected ItemTimeLoggingSearchCriteria getItemSearchCriteria() {
             ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getBUG()));
             searchCriteria.setTypeId(new NumberSearchField(bean.getId()));
             return searchCriteria;
         }
@@ -164,7 +164,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
 
         @Override
         protected boolean isEnableAdd() {
-            return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
+            return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS());
         }
     }
 }

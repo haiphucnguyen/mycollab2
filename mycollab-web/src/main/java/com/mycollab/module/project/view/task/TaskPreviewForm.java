@@ -57,7 +57,7 @@ import java.util.List;
 public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
     @Override
     public void setBean(SimpleTask bean) {
-        this.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getForm(),
+        this.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getTASK(), TaskDefaultFormLayoutFactory.getForm(),
                 Task.Field.name.name(), SimpleTask.Field.selected.name()));
         this.setBeanFormFieldFactory(new PreviewFormFieldFactory(this));
         super.setBean(bean);
@@ -83,9 +83,9 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             } else if (Task.Field.duedate.equalTo(propertyId)) {
                 return new DateTimeOptionViewField(beanItem.getDuedate());
             } else if (Task.Field.milestoneid.equalTo(propertyId)) {
-                return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, beanItem.getMilestoneid() + "", beanItem.getMilestoneName());
+                return new ProjectItemViewField(ProjectTypeConstants.INSTANCE.getMILESTONE(), beanItem.getMilestoneid() + "", beanItem.getMilestoneName());
             } else if (Task.Field.id.equalTo(propertyId)) {
-                return new ProjectFormAttachmentDisplayField(beanItem.getProjectid(), ProjectTypeConstants.TASK, beanItem.getId());
+                return new ProjectFormAttachmentDisplayField(beanItem.getProjectid(), ProjectTypeConstants.INSTANCE.getTASK(), beanItem.getId());
             } else if (Task.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
                     FontAwesome fontPriority = ProjectAssetsManager.getPriority(beanItem.getPriority());
@@ -154,7 +154,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             tasksLayout = new VerticalRemoveInlineComponentMarker().withFullWidth().withMargin(new MarginInfo(false, true, true, false));
             contentLayout.with(tasksLayout).expand(tasksLayout);
 
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
                 MButton addNewTaskBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD), clickEvent -> {
                     SimpleTask task = new SimpleTask();
                     task.setMilestoneid(beanItem.getMilestoneid());
@@ -181,7 +181,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
 
             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
             List<SimpleTask> subTasks = taskService.findSubTasks(beanItem.getId(), AppUI.getAccountId(),
-                    new SearchCriteria.OrderField("createdTime", SearchCriteria.DESC));
+                    new SearchCriteria.OrderField("createdTime", SearchCriteria.Companion.getDESC()));
             if (CollectionUtils.isNotEmpty(subTasks)) {
                 for (SimpleTask subTask : subTasks) {
                     tasksLayout.addComponent(generateSubTaskContent(subTask));
@@ -200,7 +200,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             layout.setDefaultComponentAlignment(Alignment.TOP_LEFT);
 
             final CheckBox checkBox = new CheckBox("", subTask.isCompleted());
-            checkBox.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+            checkBox.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
             layout.with(checkBox);
 
             Span priorityLink = new Span().appendText(ProjectAssetsManager.getPriorityHtml(subTask.getPriority()))
@@ -211,7 +211,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             final ELabel statusLbl = new ELabel(taskStatus).withStyleName(UIConstants.FIELD_NOTE).withWidthUndefined();
             layout.with(statusLbl);
 
-            String avatarLink = StorageUtils.getAvatarPath(subTask.getAssignUserAvatarId(), 16);
+            String avatarLink = StorageUtils.INSTANCE.getAvatarPath(subTask.getAssignUserAvatarId(), 16);
             Img avatarImg = new Img(subTask.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                     .setTitle(subTask.getAssignUserFullName());
             layout.with(ELabel.html(avatarImg.write()).withWidthUndefined());

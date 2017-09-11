@@ -85,7 +85,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
             @Override
             public void onPrint(Object source, SimpleContact data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.CONTACT, Contact.Field.lastname.name(),
+                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.INSTANCE.getCONTACT(), Contact.Field.lastname.name(),
                         ContactDefaultDynaFormLayoutFactory.getForm()));
             }
 
@@ -129,17 +129,17 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
             public void createNewRelatedItem(String itemId) {
                 if (itemId.equals("task")) {
                     SimpleCrmTask task = new SimpleCrmTask();
-                    task.setType(CrmTypeConstants.CONTACT);
+                    task.setType(CrmTypeConstants.INSTANCE.getCONTACT());
                     task.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(ContactReadPresenter.this, task));
                 } else if (itemId.equals("meeting")) {
                     SimpleMeeting meeting = new SimpleMeeting();
-                    meeting.setType(CrmTypeConstants.CONTACT);
+                    meeting.setType(CrmTypeConstants.INSTANCE.getCONTACT());
                     meeting.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(ContactReadPresenter.this, meeting));
                 } else if (itemId.equals("call")) {
                     SimpleCall call = new SimpleCall();
-                    call.setType(CrmTypeConstants.CONTACT);
+                    call.setType(CrmTypeConstants.INSTANCE.getCONTACT());
                     call.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(ContactReadPresenter.this, call));
                 }
@@ -179,8 +179,8 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.CONTACT);
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getCONTACT());
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CONTACT())) {
             if (data.getParams() instanceof Integer) {
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
                 SimpleContact contact = contactService.findById((Integer) data.getParams(), AppUI.getAccountId());
@@ -188,7 +188,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
                     super.onGo(container, data);
                     view.previewItem(contact);
 
-                    AppUI.addFragment(CrmLinkGenerator.generateContactPreviewLink(contact.getId()),
+                    AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateContactPreviewLink(contact.getId()),
                             UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                     UserUIContext.getMessage(ContactI18nEnum.SINGLE), contact.getContactName()));
 

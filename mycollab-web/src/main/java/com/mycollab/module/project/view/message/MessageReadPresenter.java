@@ -45,9 +45,9 @@ public class MessageReadPresenter extends ProjectGenericPresenter<MessageReadVie
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MESSAGES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getMESSAGES())) {
             MessageContainer messageContainer = (MessageContainer) container;
-            messageContainer.navigateToContainer(ProjectTypeConstants.MESSAGE);
+            messageContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getMESSAGE());
             messageContainer.setContent(view);
 
             if (data.getParams() instanceof Integer) {

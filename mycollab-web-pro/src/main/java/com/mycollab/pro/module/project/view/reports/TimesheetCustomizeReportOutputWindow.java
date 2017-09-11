@@ -23,7 +23,7 @@ import java.util.Collection;
  */
 public class TimesheetCustomizeReportOutputWindow extends CustomizeReportOutputWindow<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> {
     public TimesheetCustomizeReportOutputWindow(VariableInjector<ItemTimeLoggingSearchCriteria> variableInjector) {
-        super(ProjectTypeConstants.TIME, UserUIContext.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE),
+        super(ProjectTypeConstants.INSTANCE.getTIME(), UserUIContext.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE),
                 SimpleItemTimeLogging.class, AppContextUtil.getSpringBean(ItemTimeLoggingService.class), variableInjector);
     }
 

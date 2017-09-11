@@ -40,7 +40,7 @@ public class DropboxAuthServletRequestHandler extends GenericHttpServlet {
             OAuthService dropboxService = MyCollabOauthServiceFactory.getDropboxService();
             Token accessToken = dropboxService.getAccessToken(null, verifier);
             final String accessTokenVal = accessToken.getToken();
-            CloudDriveInfo cloudDriveInfo = new CloudDriveInfo(StorageNames.DROPBOX, accessTokenVal);
+            CloudDriveInfo cloudDriveInfo = new CloudDriveInfo(StorageNames.INSTANCE.getDROPBOX(), accessTokenVal);
 
             UI ui = (UI) cacheService.getValue("tempCache", state);
             if (ui instanceof AppUI) {

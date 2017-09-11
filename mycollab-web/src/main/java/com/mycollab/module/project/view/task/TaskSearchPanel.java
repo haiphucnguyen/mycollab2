@@ -71,7 +71,7 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
                     EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, fieldInfos));
                 }
             });
-            ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml()).withWidthUndefined();
+            ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()).getHtml()).withWidthUndefined();
             return new MHorizontalLayout(taskIcon, savedFilterComboBox).expand(savedFilterComboBox).alignAll(Alignment.MIDDLE_LEFT);
         } else {
             return null;
@@ -157,10 +157,10 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
         @Override
         protected TaskSearchCriteria fillUpSearchCriteria() {
             List<SearchFieldInfo> searchFieldInfos = new ArrayList<>();
-            searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, TaskSearchCriteria.p_taskname, StringI18nEnum.CONTAINS.name(),
+            searchFieldInfos.add(new SearchFieldInfo(SearchField.Companion.getAND(), TaskSearchCriteria.p_taskname, StringI18nEnum.CONTAINS.name(),
                     ConstantValueInjector.valueOf(nameField.getValue().trim())));
             if (myItemCheckbox.getValue()) {
-                searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, TaskSearchCriteria.p_assignee, CollectionI18nEnum.IN.name(),
+                searchFieldInfos.add(new SearchFieldInfo(SearchField.Companion.getAND(), TaskSearchCriteria.p_assignee, CollectionI18nEnum.IN.name(),
                         ConstantValueInjector.valueOf(Collections.singletonList(UserUIContext.getUsername()))));
             }
             EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, searchFieldInfos));
@@ -175,7 +175,7 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
         private static final long serialVersionUID = 1L;
 
         private TaskAdvancedSearchLayout() {
-            super(TaskSearchPanel.this, ProjectTypeConstants.TASK);
+            super(TaskSearchPanel.this, ProjectTypeConstants.INSTANCE.getTASK());
         }
 
         @Override

@@ -214,7 +214,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         PopupBeanFieldBuilder<ProjectTicket> builder = new PopupBeanFieldBuilder<ProjectTicket>() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String avatarLink = StorageUtils.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageUtils.INSTANCE.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
                 Img img = new Img(ticket.getAssignUserFullName(), avatarLink).setTitle(ticket.getAssignUserFullName())
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 return img.write();
@@ -282,7 +282,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                     .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP))
                     .withField(new TaskStatusComboBox()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
                     .withValue(ticket.getStatus())
-                    .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+                    .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
             return builder.build();
         } else if (ticket.isBug()) {
             return new BugStatusPopupView(ProjectTicket.buildBug(ticket));
@@ -305,7 +305,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             builder.withBean(risk).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
                     .withField(new I18nValueComboBox(false, StatusI18nEnum.Open, StatusI18nEnum.Closed))
                     .withService(AppContextUtil.getSpringBean(RiskService.class)).withValue(ticket.getStatus())
-                    .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
+                    .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS()));
             return builder.build();
         } else {
             throw new MyCollabException("Not support");
@@ -369,7 +369,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             MVerticalLayout content = getWrapContent();
             content.removeAllComponents();
             content.setWidthUndefined();
-            boolean hasPermission = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
+            boolean hasPermission = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS());
             if (hasPermission) {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 beanItem = bugService.findById(beanItem.getId(), AppUI.getAccountId());
@@ -480,28 +480,28 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
             typeSelection = new ComboBox();
             typeSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
                 typeSelection.addItem(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
                 typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()));
             }
 
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
                 typeSelection.addItem(UserUIContext.getMessage(BugI18nEnum.SINGLE));
                 typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()));
             }
 
-            if (isIncludeMilestone && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+            if (isIncludeMilestone && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
                 typeSelection.addItem(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
                 typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()));
             }
 
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
                 typeSelection.addItem(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
                 typeSelection.setItemIcon(UserUIContext.getMessage(RiskI18nEnum.SINGLE),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getRISK()));
             }
 
             typeSelection.setNullSelectionAllowed(false);
@@ -594,7 +594,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         protected void doShow() {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
-            if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
+            if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
                 timeInput.setValue("");
                 timeInput.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TIME_FORMAT));
                 String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :

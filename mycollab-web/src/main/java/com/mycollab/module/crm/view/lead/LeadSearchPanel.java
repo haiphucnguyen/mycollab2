@@ -35,14 +35,14 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
     private boolean canCreateLead;
 
     private static Param[] paramFields = new Param[]{
-            LeadSearchCriteria.p_leadContactName,
-            LeadSearchCriteria.p_accountName, LeadSearchCriteria.p_website,
-            LeadSearchCriteria.p_anyEmail, LeadSearchCriteria.p_anyPhone,
-            LeadSearchCriteria.p_anyCity,
-            LeadSearchCriteria.p_billingCountry,
-            LeadSearchCriteria.p_shippingCountry,
-            LeadSearchCriteria.p_statuses, LeadSearchCriteria.p_sources,
-            LeadSearchCriteria.p_assignee};
+            LeadSearchCriteria.Companion.getP_leadContactName(),
+            LeadSearchCriteria.Companion.getP_accountName(), LeadSearchCriteria.Companion.getP_website(),
+            LeadSearchCriteria.Companion.getP_anyEmail(), LeadSearchCriteria.Companion.getP_anyPhone(),
+            LeadSearchCriteria.Companion.getP_anyCity(),
+            LeadSearchCriteria.Companion.getP_billingCountry(),
+            LeadSearchCriteria.Companion.getP_shippingCountry(),
+            LeadSearchCriteria.Companion.getP_statuses(), LeadSearchCriteria.Companion.getP_sources(),
+            LeadSearchCriteria.Companion.getP_assignee()};
 
     public LeadSearchPanel(boolean canCreateLead) {
         this.canCreateLead = canCreateLead;
@@ -50,7 +50,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.LEAD, UserUIContext.getMessage(LeadI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getLEAD(), UserUIContext.getMessage(LeadI18nEnum.LIST));
     }
 
     @Override
@@ -58,7 +58,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
         return (canCreateLead) ? new MButton(UserUIContext.getMessage(LeadI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new LeadEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_LEAD)) : null;
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_LEAD())) : null;
     }
 
     @Override
@@ -128,7 +128,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
     private class LeadAdvancedSearchLayout extends DynamicQueryParamLayout<LeadSearchCriteria> {
 
         LeadAdvancedSearchLayout() {
-            super(LeadSearchPanel.this, CrmTypeConstants.LEAD);
+            super(LeadSearchPanel.this, CrmTypeConstants.INSTANCE.getLEAD());
         }
 
         @Override

@@ -77,7 +77,7 @@ public class BugReadPresenter extends ProjectGenericPresenter<BugReadView> {
             @Override
             public void onPrint(Object source, SimpleBug data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.BUG, BugWithBLOBs.Field.name.name(),
+                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.INSTANCE.getBUG(), BugWithBLOBs.Field.name.name(),
                         BugDefaultFormLayoutFactory.getForm(), SimpleBug.Field.components.name(), SimpleBug.Field
                         .affectedVersions.name(), SimpleBug.Field.fixedVersions.name(), BugWithBLOBs.Field.id.name(),
                         SimpleBug.Field.selected.name()));
@@ -95,7 +95,7 @@ public class BugReadPresenter extends ProjectGenericPresenter<BugReadView> {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 BugSearchCriteria searchCriteria = new BugSearchCriteria();
                 searchCriteria.setProjectId(NumberSearchField.equal(data.getProjectid()));
-                searchCriteria.addExtraField(BugSearchCriteria.p_bugkey.buildSearchField(SearchField.AND, NumberI18nEnum.GREATER_THAN.name(),
+                searchCriteria.addExtraField(BugSearchCriteria.p_bugkey.buildSearchField(SearchField.Companion.getAND(), NumberI18nEnum.GREATER_THAN.name(),
                         data.getBugkey()));
                 Integer nextId = bugService.getNextItemKey(searchCriteria);
                 if (nextId != null) {
@@ -110,7 +110,7 @@ public class BugReadPresenter extends ProjectGenericPresenter<BugReadView> {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 BugSearchCriteria searchCriteria = new BugSearchCriteria();
                 searchCriteria.setProjectId(NumberSearchField.equal(data.getProjectid()));
-                searchCriteria.addExtraField(BugSearchCriteria.p_bugkey.buildSearchField(SearchField.AND, NumberI18nEnum.LESS_THAN.name(),
+                searchCriteria.addExtraField(BugSearchCriteria.p_bugkey.buildSearchField(SearchField.Companion.getAND(), NumberI18nEnum.LESS_THAN.name(),
                         data.getBugkey()));
                 Integer previousId = bugService.getPreviousItemKey(searchCriteria);
                 if (previousId != null) {
@@ -129,7 +129,7 @@ public class BugReadPresenter extends ProjectGenericPresenter<BugReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
             if (data.getParams() instanceof Integer) {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 SimpleBug bug = bugService.findById((Integer) data.getParams(), AppUI.getAccountId());

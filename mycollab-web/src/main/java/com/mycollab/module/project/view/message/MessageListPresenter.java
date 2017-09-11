@@ -45,12 +45,12 @@ public class MessageListPresenter extends ProjectGenericPresenter<MessageListVie
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MESSAGES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getMESSAGES())) {
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoMessageList();
 
             MessageContainer messageContainer = (MessageContainer) container;
-            messageContainer.navigateToContainer(ProjectTypeConstants.MESSAGE);
+            messageContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getMESSAGE());
             messageContainer.setContent(view);
             doSearch((MessageSearchCriteria) data.getParams());
         } else {

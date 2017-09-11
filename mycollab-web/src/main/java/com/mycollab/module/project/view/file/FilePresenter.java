@@ -23,7 +23,7 @@ public class FilePresenter extends AbstractPresenter<FileContainer> {
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
-        projectViewContainer.gotoSubView(ProjectTypeConstants.FILE);
+        projectViewContainer.gotoSubView(ProjectTypeConstants.INSTANCE.getFILE());
 
         AbstractPresenter<?> presenter;
 

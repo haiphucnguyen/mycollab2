@@ -70,7 +70,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG);
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG());
     }
 
     @Override
@@ -86,9 +86,9 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
         if (beanItem.getId() == null) {
-            return new DefaultDynaFormLayout(ProjectTypeConstants.BUG, BugDefaultFormLayoutFactory.getForm());
+            return new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getBUG(), BugDefaultFormLayoutFactory.getForm());
         } else {
-            return new DefaultDynaFormLayout(ProjectTypeConstants.BUG, BugDefaultFormLayoutFactory.getForm(), "selected");
+            return new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getBUG(), BugDefaultFormLayoutFactory.getForm(), "selected");
         }
     }
 

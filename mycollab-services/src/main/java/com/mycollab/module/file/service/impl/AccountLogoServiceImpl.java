@@ -53,7 +53,7 @@ public class AccountLogoServiceImpl implements AccountLogoService {
         if (account.getLogopath() != null) {
             for (int SUPPORT_SIZE : SUPPORT_SIZES) {
                 try {
-                    resourceService.removeResource(PathUtils.buildLogoPath(sAccountId, account.getLogopath(), SUPPORT_SIZE),
+                    resourceService.removeResource(PathUtils.INSTANCE.buildLogoPath(sAccountId, account.getLogopath(), SUPPORT_SIZE),
                             uploadedUser, true, sAccountId);
                 } catch (Exception e) {
                     LOG.error("Error while delete old logo", e);
@@ -77,7 +77,7 @@ public class AccountLogoServiceImpl implements AccountLogoService {
             throw new MyCollabException("Error while write image to stream", e);
         }
         Content logoContent = new Content();
-        logoContent.setPath(PathUtils.buildLogoPath(sAccountId, logoId, width));
+        logoContent.setPath(PathUtils.INSTANCE.buildLogoPath(sAccountId, logoId, width));
         logoContent.setName(logoId + "_" + width);
         resourceService.saveContent(logoContent, uploadedUser, new ByteArrayInputStream(outStream.toByteArray()), null);
     }

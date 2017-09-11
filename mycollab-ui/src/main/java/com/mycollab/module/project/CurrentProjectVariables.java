@@ -43,7 +43,7 @@ public class CurrentProjectVariables {
         ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
         SimpleProjectMember prjMember = prjMemberService.findMemberByUsername(UserUIContext.getUsername(), project.getId(), AppUI.getAccountId());
         if (prjMember != null) {
-            if (ProjectMemberStatusConstants.INACTIVE.equals(prjMember.getStatus())) {
+            if (ProjectMemberStatusConstants.INSTANCE.getINACTIVE().equals(prjMember.getStatus())) {
                 throw new UserNotBelongProjectException("You are not belong to this project");
             }
             if (!prjMember.isProjectOwner()) {
@@ -56,13 +56,13 @@ public class CurrentProjectVariables {
                 List<ProjectRolePermission> rolePermissions = rolePermissionMapper.selectByExampleWithBLOBs(ex);
                 if (!rolePermissions.isEmpty()) {
                     ProjectRolePermission rolePer = rolePermissions.get(0);
-                    PermissionMap permissionMap = PermissionMap.fromJsonString(rolePer.getRoleval());
+                    PermissionMap permissionMap = PermissionMap.Companion.fromJsonString(rolePer.getRoleval());
                     prjMember.setPermissionMaps(permissionMap);
                 }
             }
 
-            if (ProjectMemberStatusConstants.NOT_ACCESS_YET.equals(prjMember.getStatus())) {
-                prjMember.setStatus(ProjectMemberStatusConstants.ACTIVE);
+            if (ProjectMemberStatusConstants.INSTANCE.getNOT_ACCESS_YET().equals(prjMember.getStatus())) {
+                prjMember.setStatus(ProjectMemberStatusConstants.INSTANCE.getACTIVE());
                 prjMemberService.updateSelectiveWithSession(prjMember, UserUIContext.getUsername());
                 AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
                 asyncEventBus.post(new NewProjectMemberJoinEvent(prjMember.getUsername(), prjMember.getProjectid(), AppUI.getAccountId()));
@@ -119,8 +119,8 @@ public class CurrentProjectVariables {
     }
 
     public static boolean canReadAssignments() {
-        return canRead(ProjectRolePermissionCollections.BUGS) || canRead(ProjectRolePermissionCollections.TASKS) ||
-                canRead(ProjectRolePermissionCollections.RISKS) || canRead(ProjectRolePermissionCollections.MILESTONES);
+        return canRead(ProjectRolePermissionCollections.INSTANCE.getBUGS()) || canRead(ProjectRolePermissionCollections.INSTANCE.getTASKS()) ||
+                canRead(ProjectRolePermissionCollections.INSTANCE.getRISKS()) || canRead(ProjectRolePermissionCollections.INSTANCE.getMILESTONES());
     }
 
     public static boolean canWrite(String permissionItem) {
@@ -211,7 +211,7 @@ public class CurrentProjectVariables {
     public static String getCurrentPagePath() {
         String path = (String) MyCollabSession.getCurrentUIVariable(CURRENT_PAGE_VAR);
         if (path == null) {
-            path = PathUtils.getProjectDocumentPath(AppUI.getAccountId(), getProjectId());
+            path = PathUtils.INSTANCE.getProjectDocumentPath(AppUI.getAccountId(), getProjectId());
             setCurrentPagePath(path);
         }
 
@@ -234,62 +234,62 @@ public class CurrentProjectVariables {
 
     public static boolean canWriteTicket(ProjectTicket ticket) {
         if (ticket.isTask()) {
-            return canWrite(ProjectRolePermissionCollections.TASKS);
+            return canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS());
         } else if (ticket.isBug()) {
-            return canWrite(ProjectRolePermissionCollections.BUGS);
+            return canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS());
         } else if (ticket.isRisk()) {
-            return canWrite(ProjectRolePermissionCollections.RISKS);
+            return canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS());
         } else {
             return false;
         }
     }
 
     public static boolean canReadTicket() {
-        return canRead(ProjectRolePermissionCollections.TASKS) || canRead(ProjectRolePermissionCollections.BUGS)
-                || canRead(ProjectRolePermissionCollections.RISKS);
+        return canRead(ProjectRolePermissionCollections.INSTANCE.getTASKS()) || canRead(ProjectRolePermissionCollections.INSTANCE.getBUGS())
+                || canRead(ProjectRolePermissionCollections.INSTANCE.getRISKS());
     }
 
     public static boolean canWriteTicket() {
-        return canWrite(ProjectRolePermissionCollections.TASKS) || canWrite(ProjectRolePermissionCollections.BUGS)
-                || canWrite(ProjectRolePermissionCollections.RISKS);
+        return canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()) || canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS())
+                || canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS());
     }
 
     public static SetSearchField<String> getRestrictedItemTypes() {
         SetSearchField<String> types = new SetSearchField<>();
-        if (canRead(ProjectRolePermissionCollections.MESSAGES)) {
-            types.addValue(ProjectTypeConstants.MESSAGE);
+        if (canRead(ProjectRolePermissionCollections.INSTANCE.getMESSAGES())) {
+            types.addValue(ProjectTypeConstants.INSTANCE.getMESSAGE());
         }
-        if (canRead(ProjectRolePermissionCollections.MILESTONES)) {
-            types.addValue(ProjectTypeConstants.MILESTONE);
+        if (canRead(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
+            types.addValue(ProjectTypeConstants.INSTANCE.getMILESTONE());
         }
-        if (canRead(ProjectRolePermissionCollections.TASKS)) {
-            types.addValue(ProjectTypeConstants.TASK);
+        if (canRead(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+            types.addValue(ProjectTypeConstants.INSTANCE.getTASK());
         }
-        if (canRead(ProjectRolePermissionCollections.BUGS)) {
-            types.addValue(ProjectTypeConstants.BUG);
+        if (canRead(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
+            types.addValue(ProjectTypeConstants.INSTANCE.getBUG());
         }
-        if (canRead(ProjectRolePermissionCollections.RISKS)) {
-            types.addValue(ProjectTypeConstants.RISK);
+        if (canRead(ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
+            types.addValue(ProjectTypeConstants.INSTANCE.getRISK());
         }
-        if (canRead(ProjectRolePermissionCollections.COMPONENTS)) {
-            types.addValue(ProjectTypeConstants.BUG_COMPONENT);
+        if (canRead(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS())) {
+            types.addValue(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT());
         }
-        if (canRead(ProjectRolePermissionCollections.VERSIONS)) {
-            types.addValue(ProjectTypeConstants.BUG_VERSION);
+        if (canRead(ProjectRolePermissionCollections.INSTANCE.getVERSIONS())) {
+            types.addValue(ProjectTypeConstants.INSTANCE.getBUG_VERSION());
         }
         return types;
     }
 
     public static SetSearchField<String> getRestrictedTicketTypes() {
         SetSearchField<String> types = new SetSearchField<>();
-        if (canRead(ProjectRolePermissionCollections.TASKS)) {
-            types.addValue(ProjectTypeConstants.TASK);
+        if (canRead(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+            types.addValue(ProjectTypeConstants.INSTANCE.getTASK());
         }
-        if (canRead(ProjectRolePermissionCollections.BUGS)) {
-            types.addValue(ProjectTypeConstants.BUG);
+        if (canRead(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
+            types.addValue(ProjectTypeConstants.INSTANCE.getBUG());
         }
-        if (canRead(ProjectRolePermissionCollections.RISKS)) {
-            types.addValue(ProjectTypeConstants.RISK);
+        if (canRead(ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
+            types.addValue(ProjectTypeConstants.INSTANCE.getRISK());
         }
         return types;
     }

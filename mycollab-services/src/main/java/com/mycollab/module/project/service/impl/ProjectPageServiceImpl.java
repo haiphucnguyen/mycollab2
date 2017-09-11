@@ -27,13 +27,13 @@ public class ProjectPageServiceImpl implements ProjectPageService {
 		pageService.savePage(page, createdUser);
 
 		ActivityStreamWithBLOBs activityStream = new ActivityStreamWithBLOBs();
-		activityStream.setAction(ActivityStreamConstants.ACTION_CREATE);
+		activityStream.setAction(ActivityStreamConstants.INSTANCE.getACTION_CREATE());
 		activityStream.setCreateduser(createdUser);
 		activityStream.setCreatedtime(new GregorianCalendar().getTime());
-		activityStream.setModule(ModuleNameConstants.PRJ);
+		activityStream.setModule(ModuleNameConstants.INSTANCE.getPRJ());
 		activityStream.setNamefield(page.getSubject());
 		activityStream.setSaccountid(accountId);
-		activityStream.setType(ProjectTypeConstants.PAGE);
+		activityStream.setType(ProjectTypeConstants.INSTANCE.getPAGE());
 		activityStream.setTypeid(page.getPath());
 		activityStream.setExtratypeid(projectId);
 		activityStreamService.save(activityStream);

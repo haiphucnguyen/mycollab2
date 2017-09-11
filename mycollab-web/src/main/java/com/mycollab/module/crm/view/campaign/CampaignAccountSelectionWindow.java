@@ -39,7 +39,7 @@ public class CampaignAccountSelectionWindow extends RelatedItemSelectionWindow<S
         tableItem.addGeneratedColumn("accountname", (source, itemId, columnId) -> {
             SimpleAccount account = tableItem.getBeanByIndex(itemId);
             return new ELabel(account.getAccountname()).withStyleName(WebThemes.BUTTON_LINK)
-                    .withDescription(CrmTooltipGenerator.generateToolTipAccount(UserUIContext.getUserLocale(), account,
+                    .withDescription(CrmTooltipGenerator.INSTANCE.generateToolTipAccount(UserUIContext.getUserLocale(), account,
                             AppUI.getSiteUrl()));
         });
 

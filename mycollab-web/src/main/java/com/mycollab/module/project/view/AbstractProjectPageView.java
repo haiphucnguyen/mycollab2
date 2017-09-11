@@ -22,8 +22,6 @@ public class AbstractProjectPageView extends AbstractVerticalPageView {
     protected MHorizontalLayout header;
 
     public AbstractProjectPageView(String headerText, FontAwesome icon) {
-        super();
-
         this.headerText = ELabel.h2(icon.getHtml() + " " + headerText);
         super.addComponent(constructHeader());
 

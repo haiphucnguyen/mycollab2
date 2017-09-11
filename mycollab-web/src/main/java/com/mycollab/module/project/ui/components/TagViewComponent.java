@@ -113,8 +113,8 @@ public class TagViewComponent extends CssLayout {
         if ("".equals(query) || query == null) {
             return Collections.emptyList();
         }
-        List<Tag> suggestedTags = tagService.findTagsInAccount(query, new String[]{ProjectTypeConstants.BUG,
-                        ProjectTypeConstants.TASK, ProjectTypeConstants.MILESTONE, ProjectTypeConstants.RISK},
+        List<Tag> suggestedTags = tagService.findTagsInAccount(query, new String[]{ProjectTypeConstants.INSTANCE.getBUG(),
+                        ProjectTypeConstants.INSTANCE.getTASK(), ProjectTypeConstants.INSTANCE.getMILESTONE(), ProjectTypeConstants.INSTANCE.getRISK()},
                 AppUI.getAccountId());
         return new ArrayList<>(suggestedTags);
     }

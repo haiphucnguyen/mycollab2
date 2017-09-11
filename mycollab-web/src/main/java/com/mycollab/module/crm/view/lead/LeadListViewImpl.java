@@ -39,7 +39,7 @@ public class LeadListViewImpl extends AbstractListItemComp<LeadSearchCriteria, S
 
     @Override
     protected AbstractPagedBeanTable<LeadSearchCriteria, SimpleLead> createBeanTable() {
-        return new LeadTableDisplay(CrmTypeConstants.LEAD, LeadTableFieldDef.selected(),
+        return new LeadTableDisplay(CrmTypeConstants.INSTANCE.getLEAD(), LeadTableFieldDef.selected(),
                 Arrays.asList(LeadTableFieldDef.name(), LeadTableFieldDef.status(),
                         LeadTableFieldDef.accountName(), LeadTableFieldDef.phoneoffice(),
                         LeadTableFieldDef.email(), LeadTableFieldDef.assignedUser()));
@@ -49,7 +49,7 @@ public class LeadListViewImpl extends AbstractListItemComp<LeadSearchCriteria, S
     protected DefaultMassItemActionHandlerContainer createActionControls() {
         DefaultMassItemActionHandlerContainer container = new DefaultMassItemActionHandlerContainer();
 
-        if (UserUIContext.canAccess(RolePermissionCollections.CRM_LEAD)) {
+        if (UserUIContext.canAccess(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
             container.addDeleteActionItem();
         }
 
@@ -58,7 +58,7 @@ public class LeadListViewImpl extends AbstractListItemComp<LeadSearchCriteria, S
         container.addDownloadExcelActionItem();
         container.addDownloadCsvActionItem();
 
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_LEAD)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
             container.addMassUpdateActionItem();
         }
 

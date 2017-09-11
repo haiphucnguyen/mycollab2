@@ -81,7 +81,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
         notesWrap.with(noteBlock).expand(noteBlock);
         controlsBtnWrap.with(notesWrap).expand(notesWrap);
 
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CASE)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CASE())) {
             MButton createBtn = new MButton(UserUIContext.getMessage(CaseI18nEnum.NEW), clickEvent -> fireNewRelatedItem(""))
                     .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
             controlsBtnWrap.with(createBtn).withAlign(createBtn, Alignment.TOP_RIGHT);
@@ -116,7 +116,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
             MHorizontalLayout blockTop = new MHorizontalLayout();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel caseIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CASE));
+            ELabel caseIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCASE()));
             iconWrap.addComponent(caseIcon);
             blockTop.addComponent(iconWrap);
 

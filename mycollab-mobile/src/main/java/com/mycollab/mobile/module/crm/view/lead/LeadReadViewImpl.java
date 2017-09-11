@@ -75,7 +75,7 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.LEAD, LeadDefaultDynaFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getLEAD(), LeadDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -86,7 +86,7 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(CrmLinkGenerator.generateLeadPreviewLink(beanItem.getId()),
+        AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateLeadPreviewLink(beanItem.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(LeadI18nEnum.SINGLE), beanItem.getLeadName()));
     }
@@ -95,10 +95,10 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
     protected ComponentContainer createButtonControls() {
         VerticalLayout buttonControls = new CrmPreviewFormControlsGenerator<>(previewForm).
                 createButtonControls(CLONE_BTN_PRESENTED | DELETE_BTN_PRESENTED,
-                        RolePermissionCollections.CRM_LEAD);
+                        RolePermissionCollections.INSTANCE.getCRM_LEAD());
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new LeadEvent.GotoEdit(this, beanItem)))
                 .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_LEAD));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_LEAD()));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(buttonControls));
     }
 
@@ -106,11 +106,11 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withFullWidth().withSpacing(false).withMargin(false);
 
-        Component campaignSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN),
+        Component campaignSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN()),
                 associateCampaigns);
         toolbarLayout.addComponent(campaignSection);
 
-        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY),
+        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()),
                 associateActivities);
         toolbarLayout.addComponent(activitySection);
 
@@ -119,6 +119,6 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.LEAD;
+        return CrmTypeConstants.INSTANCE.getLEAD();
     }
 }

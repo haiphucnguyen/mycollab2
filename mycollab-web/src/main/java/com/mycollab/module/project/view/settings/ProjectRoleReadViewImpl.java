@@ -65,14 +65,13 @@ public class ProjectRoleReadViewImpl extends MVerticalLayout implements ProjectR
     }
 
     protected ComponentContainer createButtonControls() {
-        return (new ProjectPreviewFormControlsGenerator<>(previewForm)).createButtonControls(ProjectRolePermissionCollections.ROLES);
+        return (new ProjectPreviewFormControlsGenerator<>(previewForm)).createButtonControls(ProjectRolePermissionCollections.INSTANCE.getROLES());
     }
 
     protected ComponentContainer createBottomPanel() {
         FormContainer permissionsPanel = new FormContainer();
 
-        projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, (ProjectRolePermissionCollections
-                .PROJECT_PERMISSIONS.length + 1) / 2, "180px");
+        projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, (ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS().length + 1) / 2, "180px");
         permissionsPanel.addSection(UserUIContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS), projectFormHelper.getLayout());
 
         return permissionsPanel;
@@ -82,11 +81,11 @@ public class ProjectRoleReadViewImpl extends MVerticalLayout implements ProjectR
         projectFormHelper.getLayout().removeAllComponents();
 
         PermissionMap permissionMap = beanItem.getPermissionMap();
-        for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
-            String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
+        for (int i = 0; i < ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS().length; i++) {
+            String permissionPath = ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS()[i];
             Enum permissionKey = RolePermissionI18nEnum.valueOf(permissionPath);
             Integer perVal = permissionMap.get(permissionKey.name());
-            SecurityI18nEnum permissionVal = PermissionFlag.toVal(perVal);
+            SecurityI18nEnum permissionVal = PermissionFlag.Companion.toVal(perVal);
             projectFormHelper.addComponent(new Label(UserUIContext.getMessage(permissionVal)),
                     UserUIContext.getMessage(permissionKey), UserUIContext.getMessage(permissionVal.desc()), i % 2, i / 2);
         }

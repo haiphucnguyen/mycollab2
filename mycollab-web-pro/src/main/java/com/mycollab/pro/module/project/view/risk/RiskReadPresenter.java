@@ -81,7 +81,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
             @Override
             public void onPrint(Object source, SimpleRisk data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.RISK, Risk.Field.name.name(),
+                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.INSTANCE.getRISK(), Risk.Field.name.name(),
                         RiskDefaultFormLayoutFactory.getForm(), Risk.Field.id.name()));
             }
 
@@ -123,7 +123,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
             if (data.getParams() instanceof Integer) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 SimpleRisk risk = riskService.findById((Integer) data.getParams(), AppUI.getAccountId());

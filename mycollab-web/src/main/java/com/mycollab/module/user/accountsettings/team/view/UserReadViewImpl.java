@@ -130,7 +130,7 @@ public class UserReadViewImpl extends AbstractVerticalPageView implements UserRe
     private Layout createTopPanel() {
         final PreviewFormControlsGenerator<User> controlGenerator = new PreviewFormControlsGenerator<>(previewForm);
         return controlGenerator.createButtonControls(ADD_BTN_PRESENTED | EDIT_BTN_PRESENTED |
-                DELETE_BTN_PRESENTED | CLONE_BTN_PRESENTED, RolePermissionCollections.ACCOUNT_USER);
+                DELETE_BTN_PRESENTED | CLONE_BTN_PRESENTED, RolePermissionCollections.INSTANCE.getACCOUNT_USER());
     }
 
     @Override

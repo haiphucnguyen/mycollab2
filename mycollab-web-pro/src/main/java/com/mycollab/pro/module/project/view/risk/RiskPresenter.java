@@ -26,7 +26,7 @@ public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
-        TicketContainer ticketContainer = (TicketContainer) projectViewContainer.gotoSubView(ProjectTypeConstants.TICKET);
+        TicketContainer ticketContainer = (TicketContainer) projectViewContainer.gotoSubView(ProjectTypeConstants.INSTANCE.getTICKET());
         ticketContainer.setContent(view);
 
         AbstractPresenter presenter;

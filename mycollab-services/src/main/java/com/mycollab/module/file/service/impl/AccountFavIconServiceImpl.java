@@ -53,12 +53,12 @@ public class AccountFavIconServiceImpl implements AccountFavIconService {
             throw new UserInvalidInputException("Can not convert file to ico format", e);
         }
         Content logoContent = new Content();
-        logoContent.setPath(PathUtils.buildFavIconPath(sAccountId, newLogoId));
+        logoContent.setPath(PathUtils.INSTANCE.buildFavIconPath(sAccountId, newLogoId));
         logoContent.setName(newLogoId);
         resourceService.saveContent(logoContent, uploadedUser, new ByteArrayInputStream(outStream.toByteArray()), null);
 
         //remove the old favicon
-        resourceService.removeResource(PathUtils.buildFavIconPath(sAccountId, account.getFaviconpath()),
+        resourceService.removeResource(PathUtils.INSTANCE.buildFavIconPath(sAccountId, account.getFaviconpath()),
                 uploadedUser, true, sAccountId);
 
         account.setFaviconpath(newLogoId);

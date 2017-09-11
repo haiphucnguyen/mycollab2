@@ -80,7 +80,7 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
                     return false;
                 } else {
                     Integer value = permissionMap.get(permissionId);
-                    return (value != null) && PermissionChecker.isImplied(value, impliedPermissionVal);
+                    return (value != null) && PermissionChecker.INSTANCE.isImplied(value, impliedPermissionVal);
                 }
             }
         } else {

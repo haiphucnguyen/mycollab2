@@ -129,7 +129,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
     }
 
     private void initUI() {
-        HeaderWithFontAwesome headerText = ComponentUtils.headerH2(ProjectTypeConstants.MILESTONE,
+        HeaderWithFontAwesome headerText = ComponentUtils.headerH2(ProjectTypeConstants.INSTANCE.getMILESTONE(),
                 UserUIContext.getMessage(MilestoneI18nEnum.LIST));
 
         MHorizontalLayout header = new MHorizontalLayout().withStyleName("hdr-view").withFullWidth().withMargin(true)
@@ -146,7 +146,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
         }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES()));
         layout.with(createBtn);
 
         MButton printBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new

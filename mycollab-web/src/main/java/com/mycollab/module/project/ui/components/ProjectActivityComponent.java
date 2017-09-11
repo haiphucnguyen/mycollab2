@@ -126,7 +126,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
 
         final AuditLogSearchCriteria logCriteria = new AuditLogSearchCriteria();
         logCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-        logCriteria.setModule(StringSearchField.and(ModuleNameConstants.PRJ));
+        logCriteria.setModule(StringSearchField.and(ModuleNameConstants.INSTANCE.getPRJ()));
         logCriteria.setType(StringSearchField.and(type));
         logCriteria.setTypeId(StringSearchField.and(typeId));
         final int logCount = auditLogService.getTotalCount(logCriteria);

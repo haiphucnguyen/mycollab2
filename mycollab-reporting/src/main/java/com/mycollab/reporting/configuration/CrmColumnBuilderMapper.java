@@ -77,7 +77,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer accountId = reportParameters.getFieldValue("id");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return CrmLinkGenerator.generateAccountPreviewFullLink(siteUrl, accountId);
+                return CrmLinkGenerator.INSTANCE.generateAccountPreviewFullLink(siteUrl, accountId);
             }
         };
         map.put(Account.Field.accountname.name(), new HyperlinkBuilderGenerator(accountTitleExpr, accountHrefExpr));
@@ -96,7 +96,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer accountId = reportParameters.getFieldValue("accountid");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return CrmLinkGenerator.generateAccountPreviewFullLink(siteUrl, accountId);
+                return CrmLinkGenerator.INSTANCE.generateAccountPreviewFullLink(siteUrl, accountId);
             }
         };
         map.put("accountName", new HyperlinkBuilderGenerator(accountTitleExpr, accountHrefExpr));
@@ -109,7 +109,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer contactid = reportParameters.getFieldValue("id");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return CrmLinkGenerator.generateContactPreviewFullLink(siteUrl, contactid);
+                return CrmLinkGenerator.INSTANCE.generateContactPreviewFullLink(siteUrl, contactid);
             }
         };
         map.put("contactName", new HyperlinkBuilderGenerator(contactTitleExpr, contactHrefExpr));
@@ -163,7 +163,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer campaignId = reportParameters.getFieldValue("id");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return CrmLinkGenerator.generateCampaignPreviewFullLink(siteUrl, campaignId);
+                return CrmLinkGenerator.INSTANCE.generateCampaignPreviewFullLink(siteUrl, campaignId);
             }
         };
         map.put("campaignname", new HyperlinkBuilderGenerator(campaignTitleExpr, campaignHrefExpr));
@@ -200,7 +200,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer leadId = reportParameters.getFieldValue("id");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return CrmLinkGenerator.generateLeadPreviewFullLink(siteUrl, leadId);
+                return CrmLinkGenerator.INSTANCE.generateLeadPreviewFullLink(siteUrl, leadId);
             }
         };
         map.put("leadName", new HyperlinkBuilderGenerator(leadTitleExpr, leadHrefExpr));
@@ -237,7 +237,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer opportunityId = reportParameters.getFieldValue("id");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return CrmLinkGenerator.generateOpportunityPreviewFullLink(siteUrl, opportunityId);
+                return CrmLinkGenerator.INSTANCE.generateOpportunityPreviewFullLink(siteUrl, opportunityId);
             }
         };
 
@@ -306,7 +306,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer caseId = reportParameters.getFieldValue("id");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return CrmLinkGenerator.generateCasePreviewFullLink(siteUrl, caseId);
+                return CrmLinkGenerator.INSTANCE.generateCasePreviewFullLink(siteUrl, caseId);
             }
         };
         map.put("subject", new HyperlinkBuilderGenerator(caseTitleExpr, caseHrefExpr));

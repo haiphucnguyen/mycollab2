@@ -98,7 +98,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         @Override
         @Subscribe
         public void handle(TicketEvent.NewTicketAdded event) {
-            if (!ProjectTypeConstants.MILESTONE.equals(event.getTypeVal())) {
+            if (!ProjectTypeConstants.INSTANCE.getMILESTONE().equals(event.getTypeVal())) {
                 ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
                 ProjectTicket ticket = projectTicketService.findTicket(event.getTypeVal(), event.getTypeIdVal());
                 if (ticket != null) {
@@ -118,7 +118,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         searchPanel = new AssignmentSearchPanel(false) {
             @Override
             protected ComponentContainer buildSearchTitle() {
-                return new MHorizontalLayout(ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() +
+                return new MHorizontalLayout(ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml() +
                         " " + UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)).withWidthUndefined());
             }
         };
@@ -241,7 +241,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             public void run() {
                 MilestoneSearchCriteria milestoneSearchCriteria = new MilestoneSearchCriteria();
                 milestoneSearchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                milestoneSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("orderIndex", SearchCriteria.ASC)));
+                milestoneSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("orderIndex", SearchCriteria.Companion.getASC())));
                 if (displayClosedMilestones) {
                     milestoneSearchCriteria.setStatuses(null);
                 } else {
@@ -397,7 +397,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 headerLayout.with(header).expand(header);
             } else {
                 header = new ELabel(milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS)
-                        .withDescription(ProjectTooltipGenerator.generateToolTipMilestone(UserUIContext.getUserLocale(),
+                        .withDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipMilestone(UserUIContext.getUserLocale(),
                                 AppUI.getDateFormat(), milestone, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
                 headerLayout.with(ELabel.fontIcon(ProjectAssetsManager.getMilestoneStatus(milestone.getStatus())), header).expand(header);
             }
@@ -405,8 +405,8 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             final PopupButton controlsBtn = new PopupButton();
             controlsBtn.addStyleName(WebThemes.BUTTON_LINK);
 
-            boolean canWrite = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES);
-            boolean canExecute = CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MILESTONES);
+            boolean canWrite = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES());
+            boolean canExecute = CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getMILESTONES());
             OptionPopupContent popupContent = new OptionPopupContent();
 
             if (canWrite) {

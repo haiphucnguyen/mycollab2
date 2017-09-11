@@ -72,7 +72,7 @@ public class ProjectRoleAddPresenter extends AbstractPresenter<ProjectRoleAddVie
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.ROLES)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getROLES())) {
             ProjectRoleContainer roleContainer = (ProjectRoleContainer) container;
             roleContainer.removeAllComponents();
             roleContainer.addComponent(view);

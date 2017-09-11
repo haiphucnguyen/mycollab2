@@ -40,7 +40,7 @@ public class ComponentSearchPanel extends DefaultGenericSearchPanel<ComponentSea
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.headerH2(ProjectTypeConstants.BUG_COMPONENT, UserUIContext.getMessage(ComponentI18nEnum.LIST));
+        return ComponentUtils.headerH2(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT(), UserUIContext.getMessage(ComponentI18nEnum.LIST));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ComponentSearchPanel extends DefaultGenericSearchPanel<ComponentSea
         return new MButton(UserUIContext.getMessage(ComponentI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new BugComponentEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS()));
     }
 
     private class ComponentBasicSearchLayout extends BasicSearchLayout<ComponentSearchCriteria> {

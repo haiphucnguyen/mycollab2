@@ -32,7 +32,7 @@ public class GanttTaskServiceTest extends IntegrationServiceTest {
 
         ProjectGanttItem project = (ProjectGanttItem) assignmentWithPredecessors.get(0);
         assertThat(project.getName()).isEqualTo("Project A");
-        assertThat(project.getType()).isEqualTo(ProjectTypeConstants.PROJECT);
+        assertThat(project.getType()).isEqualTo(ProjectTypeConstants.INSTANCE.getPROJECT());
 
         List<MilestoneGanttItem> subMilestones = project.getMilestones();
         assertThat(subMilestones).hasSize(2);

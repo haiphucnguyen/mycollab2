@@ -24,7 +24,7 @@ public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements 
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
             IPresenter<?> presenter;
 
             if (data instanceof RiskScreenData.Read) {

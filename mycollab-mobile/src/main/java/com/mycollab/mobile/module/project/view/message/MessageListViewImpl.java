@@ -68,14 +68,14 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
         };
         MButton newMessageBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new MessageEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMESSAGES()));
         return new MHorizontalLayout(searchBtn, newMessageBtn).alignAll(Alignment.TOP_RIGHT);
     }
 
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(ProjectLinkGenerator.generateMessagesLink(CurrentProjectVariables.getProjectId()),
+        AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateMessagesLink(CurrentProjectVariables.getProjectId()),
                 UserUIContext.getMessage(MessageI18nEnum.LIST));
     }
 
@@ -124,8 +124,8 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
             rightCol.addComponent(messageContent);
 
             ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
-            List<Content> attachments = attachmentService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(
-                    AppUI.getAccountId(), message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
+            List<Content> attachments = attachmentService.getContents(AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(
+                    AppUI.getAccountId(), message.getProjectid(), ProjectTypeConstants.INSTANCE.getMESSAGE(), "" + message.getId()));
             if (CollectionUtils.isNotEmpty(attachments)) {
                 CssLayout attachmentPanel = new CssLayout();
                 attachmentPanel.setStyleName("attachment-panel");

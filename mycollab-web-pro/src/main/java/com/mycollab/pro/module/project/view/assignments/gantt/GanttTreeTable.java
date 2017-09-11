@@ -146,17 +146,17 @@ public class GanttTreeTable extends TreeTable {
                 field.setBuffered(true);
                 field.setWidth("100%");
                 if (ganttItem.isMilestone()) {
-                    if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+                    if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
                         field.setEnabled(false);
                         ((AbstractComponent) field).setDescription(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK));
                     }
                 } else if (ganttItem.isTask()) {
-                    if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                    if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
                         field.setEnabled(false);
                         ((AbstractComponent) field).setDescription(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK));
                     }
                 } else if (ganttItem.isBug()) {
-                    if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                    if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
                         field.setEnabled(false);
                         ((AbstractComponent) field).setDescription(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK));
                     }
@@ -432,7 +432,7 @@ public class GanttTreeTable extends TreeTable {
                 UI.getCurrent().addWindow(new PredecessorWindow(GanttTreeTable.this, ganttItemWrapper));
             });
             predecessorMenuItem.setIcon(FontAwesome.MAP_MARKER);
-            predecessorMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+            predecessorMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
 
             MenuItem indentMenuItem = this.addItem(UserUIContext.getMessage(GanttI18nEnum.ACTION_INDENT), (Command) menuItem -> {
                 GanttItemWrapper preItemWrapper = beanContainer.prevItemId(ganttItemWrapper);
@@ -448,7 +448,7 @@ public class GanttTreeTable extends TreeTable {
                 }
             });
             indentMenuItem.setIcon(FontAwesome.INDENT);
-            indentMenuItem.setEnabled(ganttItemWrapper.isIndentable() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+            indentMenuItem.setEnabled(ganttItemWrapper.isIndentable() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
 
             MenuItem outdentMenuItem = this.addItem(UserUIContext.getMessage(GanttI18nEnum.ACTION_OUTDENT), (Command) menuItem -> {
                 GanttItemWrapper parent = ganttItemWrapper.getParent();
@@ -481,14 +481,14 @@ public class GanttTreeTable extends TreeTable {
                 }
             });
             outdentMenuItem.setIcon(FontAwesome.OUTDENT);
-            outdentMenuItem.setVisible(ganttItemWrapper.isOutdentable() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+            outdentMenuItem.setVisible(ganttItemWrapper.isOutdentable() && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
 
             if (beanContainer.indexOfId(ganttItemWrapper) > 0) {
                 MenuItem insertRowBeforeMenuItem = this.addItem(UserUIContext.getMessage(GanttI18nEnum.ACTION_INSERT_ROW_BEFORE), (Command) menuItem -> {
                     int index = beanContainer.indexOfId(ganttItemWrapper);
                     if (index > 0) {
                         TaskGanttItem newTask = new TaskGanttItem();
-                        newTask.setType(ProjectTypeConstants.TASK);
+                        newTask.setType(ProjectTypeConstants.INSTANCE.getTASK());
                         newTask.setPrjId(ganttItemWrapper.getTask().getPrjId());
                         newTask.setName(UserUIContext.getMessage(TaskI18nEnum.NEW));
                         newTask.setProgress(0d);
@@ -512,13 +512,13 @@ public class GanttTreeTable extends TreeTable {
                     refreshRowCache();
                 });
                 insertRowBeforeMenuItem.setIcon(FontAwesome.PLUS_CIRCLE);
-                insertRowBeforeMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+                insertRowBeforeMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
             }
 
             MenuItem insertRowAfterMenuItem = this.addItem(UserUIContext.getMessage(GanttI18nEnum.ACTION_INSERT_ROW_AFTER), (Command) menuItem -> {
                 int index = beanContainer.indexOfId(ganttItemWrapper) + 1;
                 TaskGanttItem newTask = new TaskGanttItem();
-                newTask.setType(ProjectTypeConstants.TASK);
+                newTask.setType(ProjectTypeConstants.INSTANCE.getTASK());
                 newTask.setPrjId(ganttItemWrapper.getTask().getPrjId());
                 newTask.setName(UserUIContext.getMessage(TaskI18nEnum.NEW));
                 newTask.setProgress(0d);
@@ -544,7 +544,7 @@ public class GanttTreeTable extends TreeTable {
                 refreshRowCache();
             });
             insertRowAfterMenuItem.setIcon(FontAwesome.PLUS_CIRCLE);
-            insertRowAfterMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+            insertRowAfterMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
 
             MenuItem deleteRowMenuItem = this.addItem(UserUIContext.getMessage(GanttI18nEnum.ACTION_DELETE_ROW), menuItem -> ConfirmDialogExt.show(UI.getCurrent(),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
@@ -557,7 +557,7 @@ public class GanttTreeTable extends TreeTable {
                         }
                     }));
             deleteRowMenuItem.setIcon(FontAwesome.TRASH_O);
-            deleteRowMenuItem.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
+            deleteRowMenuItem.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
         }
 
         private void removeAssignments(GanttItemWrapper task) {

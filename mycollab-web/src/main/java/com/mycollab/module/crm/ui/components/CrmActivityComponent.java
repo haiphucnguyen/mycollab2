@@ -127,7 +127,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
 
         final AuditLogSearchCriteria logCriteria = new AuditLogSearchCriteria();
         logCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-        logCriteria.setModule(StringSearchField.and(ModuleNameConstants.CRM));
+        logCriteria.setModule(StringSearchField.and(ModuleNameConstants.INSTANCE.getCRM()));
         logCriteria.setType(StringSearchField.and(type));
         logCriteria.setTypeId(StringSearchField.and(typeId));
         final int logCount = auditLogService.getTotalCount(logCriteria);

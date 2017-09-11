@@ -75,7 +75,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
             @Override
             public void onPrint(Object source, SimpleComponent data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.BUG_COMPONENT, Component.Field.name.name(),
+                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT(), Component.Field.name.name(),
                         ComponentDefaultFormLayoutFactory.getForm(), Component.Field.id.name()));
             }
 
@@ -112,7 +112,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS())) {
             if (data.getParams() instanceof Integer) {
                 ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
                 SimpleComponent component = componentService.findById((Integer) data.getParams(), AppUI.getAccountId());

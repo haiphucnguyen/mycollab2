@@ -47,8 +47,8 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
             final FollowingTicket ticket = getBeanByIndex(itemId);
             final MButton ticketLink = new MButton(ticket.getName()).withStyleName(WebThemes.BUTTON_LINK);
 
-            if (ProjectTypeConstants.BUG.equals(ticket.getType())) {
-                ticketLink.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
+            if (ProjectTypeConstants.INSTANCE.getBUG().equals(ticket.getType())) {
+                ticketLink.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()));
 
                 if (BugStatus.Verified.name().equals(ticket.getStatus())) {
                     ticketLink.addStyleName(WebThemes.LINK_COMPLETED);
@@ -63,8 +63,8 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
                             new BugScreenData.Read(bugId));
                     EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
                 });
-            } else if (ProjectTypeConstants.TASK.equals(ticket.getType())) {
-                ticketLink.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
+            } else if (ProjectTypeConstants.INSTANCE.getTASK().equals(ticket.getType())) {
+                ticketLink.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()));
 
                 if ("Closed".equals(ticket.getStatus())) {
                     ticketLink.addStyleName(WebThemes.LINK_COMPLETED);
@@ -82,8 +82,8 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
                     PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new TaskScreenData.Read(taskId));
                     EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
                 });
-            } else if (ProjectTypeConstants.RISK.equals(ticket.getType())) {
-                ticketLink.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
+            } else if (ProjectTypeConstants.INSTANCE.getRISK().equals(ticket.getType())) {
+                ticketLink.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getRISK()));
 
                 if ("Closed".equals(ticket.getStatus())) {
                     ticketLink.addStyleName(WebThemes.LINK_COMPLETED);
@@ -114,7 +114,7 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
 
         this.addGeneratedColumn("projectName", (source, itemId, columnId) -> {
             final FollowingTicket ticket = getBeanByIndex(itemId);
-            Div projectLinkDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml() + " ")
+            Div projectLinkDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPROJECT()).getHtml() + " ")
                     .appendChild(new A(ProjectLinkBuilder.generateProjectFullLink(ticket.getProjectId()))
                             .appendText(ticket.getProjectName()));
             return new ELabel(projectLinkDiv.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_WORD_WRAP);

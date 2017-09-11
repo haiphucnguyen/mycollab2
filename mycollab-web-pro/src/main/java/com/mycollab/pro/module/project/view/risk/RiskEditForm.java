@@ -47,7 +47,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
         @Override
         public AbstractComponent getLayout() {
             VerticalLayout layout = new VerticalLayout();
-            formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm());
+            formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getRISK(), RiskDefaultFormLayoutFactory.getForm());
             AbstractComponent gridLayout = formLayoutFactory.getLayout();
             gridLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
             new Restrain(gridLayout).setMaxHeight((UIUtils.getBrowserHeight() - 180) + "px");
@@ -65,12 +65,12 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
                         riskId = bean.getId();
                     }
                     AttachmentUploadField uploadField = ((RiskEditFormFieldFactory) getFieldFactory()).getAttachmentUploadField();
-                    String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
-                            ProjectTypeConstants.RISK, "" + riskId);
+                    String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
+                            ProjectTypeConstants.INSTANCE.getRISK(), "" + riskId);
                     uploadField.saveContentsToRepo(attachPath);
 
                     postExecution();
-                    EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(this, ProjectTypeConstants.RISK, riskId));
+                    EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(this, ProjectTypeConstants.INSTANCE.getRISK(), riskId));
                 }
             }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE).withClickShortcut(ShortcutAction.KeyCode.ENTER);
 

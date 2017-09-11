@@ -46,7 +46,7 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
             SimpleBug bug = (SimpleBug) data.getParams();
             view.editItem(bug);
             super.onGo(container, data);
@@ -65,7 +65,7 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
             bug.setCreateduser(UserUIContext.getUsername());
             bug.setSaccountid(AppUI.getAccountId());
             int bugId = bugService.saveWithSession(bug, UserUIContext.getUsername());
-            uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.BUG, bugId);
+            uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.INSTANCE.getBUG(), bugId);
         } else {
             bugService.updateWithSession(bug, UserUIContext.getUsername());
             uploadField.saveContentsToRepo();

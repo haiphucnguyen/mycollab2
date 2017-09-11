@@ -32,7 +32,7 @@ public class ClientListPresenter extends AbstractPresenter<ClientListView> {
         ClientContainer clientContainer = (ClientContainer) container;
         clientContainer.removeAllComponents();
         clientContainer.addComponent(view);
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
             AccountSearchCriteria searchCriteria = (AccountSearchCriteria) data.getParams();
             view.display(searchCriteria);
             AppUI.addFragment("project/client/list", UserUIContext.getMessage(ClientI18nEnum.LIST));

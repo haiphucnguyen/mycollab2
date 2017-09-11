@@ -53,10 +53,10 @@ public class MyProjectListComponent extends MVerticalLayout {
             if (searchCriteria != null) {
                 if (isSortAsc) {
                     sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
-                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.ASC)));
+                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.Companion.getASC())));
                 } else {
                     sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
-                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.DESC)));
+                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.Companion.getDESC())));
                 }
                 displayResults();
             }
@@ -121,7 +121,7 @@ public class MyProjectListComponent extends MVerticalLayout {
     private ProjectSearchCriteria getAllProjectsSearchCriteria() {
         ProjectSearchCriteria prjSearchCriteria = new ProjectSearchCriteria();
         prjSearchCriteria.setInvolvedMember(StringSearchField.and(UserUIContext.getUsername()));
-        prjSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.ASC)));
+        prjSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.Companion.getASC())));
         return prjSearchCriteria;
     }
 
@@ -129,7 +129,7 @@ public class MyProjectListComponent extends MVerticalLayout {
         ProjectSearchCriteria prjSearchCriteria = new ProjectSearchCriteria();
         prjSearchCriteria.setInvolvedMember(StringSearchField.and(UserUIContext.getUsername()));
         prjSearchCriteria.setProjectStatuses(new SetSearchField<>(StatusI18nEnum.Open.name()));
-        prjSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.ASC)));
+        prjSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.Companion.getASC())));
         return prjSearchCriteria;
     }
 
@@ -137,7 +137,7 @@ public class MyProjectListComponent extends MVerticalLayout {
         ProjectSearchCriteria prjSearchCriteria = new ProjectSearchCriteria();
         prjSearchCriteria.setInvolvedMember(StringSearchField.and(UserUIContext.getUsername()));
         prjSearchCriteria.setProjectStatuses(new SetSearchField<>(StatusI18nEnum.Archived.name()));
-        prjSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.ASC)));
+        prjSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.Companion.getASC())));
         return prjSearchCriteria;
     }
 

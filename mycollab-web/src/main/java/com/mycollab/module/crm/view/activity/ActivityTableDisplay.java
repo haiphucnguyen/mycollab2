@@ -86,11 +86,11 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
     }
 
     private static String generateToolTip(SimpleActivity event) {
-        if (CrmTypeConstants.MEETING.equals(event.getEventType())) {
+        if (CrmTypeConstants.INSTANCE.getMEETING().equals(event.getEventType())) {
             return generateToolTipMeeting(event);
-        } else if (CrmTypeConstants.CALL.equals(event.getEventType())) {
+        } else if (CrmTypeConstants.INSTANCE.getCALL().equals(event.getEventType())) {
             return generateToolTipCall(event);
-        } else if (CrmTypeConstants.TASK.equals(event.getEventType())) {
+        } else if (CrmTypeConstants.INSTANCE.getTASK().equals(event.getEventType())) {
             return generateToolTipTask(event);
         }
         return "";
@@ -258,7 +258,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
                     .appendText("Contact:"))
                     .appendChild(new Td().setStyle("width:110px; vertical-align: top; text-align: left;")
                             .appendChild(new A().setHref((event.getContactId() != null) ? AppUI.getSiteUrl() + "#"
-                                    + CrmLinkGenerator.generateContactPreviewLink(event.getContactId()) : "")
+                                    + CrmLinkGenerator.INSTANCE.generateContactPreviewLink(event.getContactId()) : "")
                                     .appendText(StringUtils.trimHtmlTags(event.getContactFullName()))));
 
             Tr trRow3 = new Tr();
@@ -272,7 +272,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
                             new Td().setStyle("width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top;")
                                     .appendChild(new A().setHref((event.getAssignUser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(
                                             AppUI.getSiteUrl(), event.getAssignUser()) : "")
-                                            .appendChild(new Img("", StorageUtils.getAvatarPath(event.getAssignUserAvatarId(), 16)))
+                                            .appendChild(new Img("", StorageUtils.INSTANCE.getAvatarPath(event.getAssignUserAvatarId(), 16)))
                                             .appendText(StringUtils.trimHtmlTags(event.getAssignUserFullName()))));
 
             Tr trRow4 = new Tr();

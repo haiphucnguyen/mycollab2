@@ -57,7 +57,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
         @Override
         public AbstractComponent getLayout() {
             VerticalLayout layout = new VerticalLayout();
-            formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getForm(),
+            formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getTASK(), TaskDefaultFormLayoutFactory.getForm(),
                     Task.Field.parenttaskid.name());
             AbstractComponent gridLayout = formLayoutFactory.getLayout();
             gridLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
@@ -79,8 +79,8 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                     TaskEditFormFieldFactory taskEditFormFieldFactory = (TaskEditFormFieldFactory) fieldFactory;
 
                     AttachmentUploadField uploadField = taskEditFormFieldFactory.getAttachmentUploadField();
-                    String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
-                            ProjectTypeConstants.TASK, "" + taskId);
+                    String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
+                            ProjectTypeConstants.INSTANCE.getTASK(), "" + taskId);
                     uploadField.saveContentsToRepo(attachPath);
 
                     ProjectSubscribersComp subscribersComp = taskEditFormFieldFactory.getSubscribersComp();
@@ -91,7 +91,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                             MonitorItem monitorItem = new MonitorItem();
                             monitorItem.setMonitorDate(new GregorianCalendar().getTime());
                             monitorItem.setSaccountid(AppUI.getAccountId());
-                            monitorItem.setType(ProjectTypeConstants.TASK);
+                            monitorItem.setType(ProjectTypeConstants.INSTANCE.getTASK());
                             monitorItem.setTypeid(taskId);
                             monitorItem.setUser(follower);
                             monitorItem.setExtratypeid(bean.getProjectid());
@@ -104,7 +104,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                     postExecution();
                     EventBusFactory.getInstance().post(new TaskEvent.NewTaskAdded(TaskEditForm.this, taskId));
                     EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(TaskEditForm.this,
-                            ProjectTypeConstants.TASK, taskId));
+                            ProjectTypeConstants.INSTANCE.getTASK(), taskId));
                 }
             }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 

@@ -23,7 +23,7 @@ public class MassUpdateOpportunityWindow extends MassUpdateWindow<Opportunity> {
     private static final long serialVersionUID = 1L;
 
     public MassUpdateOpportunityWindow(final String title, final OpportunityListPresenter presenter) {
-        super(title, CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY), new Opportunity(), presenter);
+        super(title, CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY()), new Opportunity(), presenter);
     }
 
     @Override

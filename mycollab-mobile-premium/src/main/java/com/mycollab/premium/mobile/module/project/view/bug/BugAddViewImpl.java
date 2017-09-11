@@ -50,7 +50,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
     public void editItem(SimpleBug item) {
         attachmentUploadField = new ProjectFormAttachmentUploadField();
         if (item.getId() != null) {
-            attachmentUploadField.getAttachments(item.getProjectid(), ProjectTypeConstants.BUG, item.getId());
+            attachmentUploadField.getAttachments(item.getProjectid(), ProjectTypeConstants.INSTANCE.getBUG(), item.getId());
         }
         super.editItem(item);
         editForm.addComponent(attachmentUploadField);
@@ -58,7 +58,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.BUG, BugDefaultFormLayoutFactory.getForm(), "status");
+        return new DynaFormLayout(ProjectTypeConstants.INSTANCE.getBUG(), BugDefaultFormLayoutFactory.getForm(), "status");
     }
 
     @Override
@@ -70,10 +70,10 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
     protected void onBecomingVisible() {
         super.onBecomingVisible();
         if (beanItem.getId() == null) {
-            AppUI.addFragment("project/bug/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+            AppUI.addFragment("project/bug/add/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(BugI18nEnum.NEW));
         } else {
-            AppUI.addFragment(ProjectLinkGenerator.generateBugEditLink(beanItem.getBugkey(), beanItem.getProjectShortName()),
+            AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateBugEditLink(beanItem.getBugkey(), beanItem.getProjectShortName()),
                     UserUIContext.getMessage(BugI18nEnum.DETAIL));
         }
     }

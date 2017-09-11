@@ -33,6 +33,6 @@ public class ProjectModulePresenter extends AbstractPresenter<ProjectModule> {
             ShellUrlResolver.ROOT().getSubResolver("project").handle(params);
         }
 
-        UserUIContext.updateLastModuleVisit(ModuleNameConstants.PRJ);
+        UserUIContext.updateLastModuleVisit(ModuleNameConstants.INSTANCE.getPRJ());
     }
 }

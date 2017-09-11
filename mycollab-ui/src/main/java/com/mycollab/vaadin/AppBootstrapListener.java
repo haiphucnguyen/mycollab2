@@ -34,7 +34,7 @@ public class AppBootstrapListener implements BootstrapListener {
 
         BillingAccount account = billingService.getAccountByDomain(domain);
         if (account != null) {
-            String favIconPath = StorageUtils.getFavIconPath(account.getId(), account.getFaviconpath());
+            String favIconPath = StorageUtils.INSTANCE.getFavIconPath(account.getId(), account.getFaviconpath());
             response.getDocument().head().getElementsByAttributeValue("rel", "shortcut icon").attr("href", favIconPath);
             response.getDocument().head().getElementsByAttributeValue("rel", "icon").attr("href", favIconPath);
         }

@@ -32,7 +32,7 @@ public class TaskTimeLogComp extends TimeLogComp<SimpleTask> {
     protected Double getTotalBillableHours(SimpleTask bean) {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
+        criteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getTASK()));
         criteria.setTypeId(new NumberSearchField(bean.getId()));
         criteria.setIsBillable(new BooleanSearchField(true));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
@@ -42,7 +42,7 @@ public class TaskTimeLogComp extends TimeLogComp<SimpleTask> {
     protected Double getTotalNonBillableHours(SimpleTask bean) {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
+        criteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getTASK()));
         criteria.setTypeId(new NumberSearchField(bean.getId()));
         criteria.setIsBillable(new BooleanSearchField(false));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
@@ -58,7 +58,7 @@ public class TaskTimeLogComp extends TimeLogComp<SimpleTask> {
 
     @Override
     protected boolean hasEditPermission() {
-        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS);
+        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS());
     }
 
     @Override
@@ -79,7 +79,7 @@ public class TaskTimeLogComp extends TimeLogComp<SimpleTask> {
             item.setLoguser(UserUIContext.getUsername());
             item.setLogvalue(spentHours);
             item.setTypeid(bean.getId());
-            item.setType(ProjectTypeConstants.TASK);
+            item.setType(ProjectTypeConstants.INSTANCE.getTASK());
             item.setSaccountid(AppUI.getAccountId());
             item.setProjectid(CurrentProjectVariables.getProjectId());
             item.setLogforday(forDate);
@@ -99,7 +99,7 @@ public class TaskTimeLogComp extends TimeLogComp<SimpleTask> {
         protected ItemTimeLoggingSearchCriteria getItemSearchCriteria() {
             ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getTASK()));
             searchCriteria.setTypeId(new NumberSearchField(bean.getId()));
             return searchCriteria;
         }
@@ -114,7 +114,7 @@ public class TaskTimeLogComp extends TimeLogComp<SimpleTask> {
 
         @Override
         protected boolean isEnableAdd() {
-            return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS);
+            return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS());
         }
     }
 }

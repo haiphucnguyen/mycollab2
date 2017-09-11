@@ -31,7 +31,7 @@ public class ContactAddViewImpl extends AbstractEditItemComp<SimpleContact> impl
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT());
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ContactAddViewImpl extends AbstractEditItemComp<SimpleContact> impl
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.CONTACT, ContactDefaultDynaFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getCONTACT(), ContactDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override

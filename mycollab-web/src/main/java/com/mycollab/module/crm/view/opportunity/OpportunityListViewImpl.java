@@ -40,7 +40,7 @@ public class OpportunityListViewImpl extends AbstractListItemComp<OpportunitySea
 
     @Override
     protected AbstractPagedBeanTable<OpportunitySearchCriteria, SimpleOpportunity> createBeanTable() {
-        return new OpportunityTableDisplay(CrmTypeConstants.OPPORTUNITY,
+        return new OpportunityTableDisplay(CrmTypeConstants.INSTANCE.getOPPORTUNITY(),
                 OpportunityTableFieldDef.selected(), Arrays.asList(
                 OpportunityTableFieldDef.opportunityName(), OpportunityTableFieldDef.accountName(),
                 OpportunityTableFieldDef.saleStage(), OpportunityTableFieldDef.amount(),
@@ -51,7 +51,7 @@ public class OpportunityListViewImpl extends AbstractListItemComp<OpportunitySea
     protected DefaultMassItemActionHandlerContainer createActionControls() {
         DefaultMassItemActionHandlerContainer container = new DefaultMassItemActionHandlerContainer();
 
-        if (UserUIContext.canAccess(RolePermissionCollections.CRM_OPPORTUNITY)) {
+        if (UserUIContext.canAccess(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY())) {
             container.addDeleteActionItem();
         }
 
@@ -60,7 +60,7 @@ public class OpportunityListViewImpl extends AbstractListItemComp<OpportunitySea
         container.addDownloadExcelActionItem();
         container.addDownloadCsvActionItem();
 
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY())) {
             container.addMassUpdateActionItem();
         }
 

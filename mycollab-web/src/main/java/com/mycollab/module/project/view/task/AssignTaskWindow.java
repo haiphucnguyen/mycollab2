@@ -87,7 +87,7 @@ class AssignTaskWindow extends MWindow {
                             comment.setCreatedtime(new GregorianCalendar().getTime());
                             comment.setCreateduser(UserUIContext.getUsername());
                             comment.setSaccountid(AppUI.getAccountId());
-                            comment.setType(ProjectTypeConstants.TASK);
+                            comment.setType(ProjectTypeConstants.INSTANCE.getTASK());
                             comment.setTypeid("" + task.getId());
                             comment.setExtratypeid(CurrentProjectVariables.getProjectId());
 

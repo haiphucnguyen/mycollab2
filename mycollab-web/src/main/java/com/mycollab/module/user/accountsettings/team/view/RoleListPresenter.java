@@ -31,7 +31,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_ROLE, impliedPermissionVal = AccessPermissionFlag.READ_ONLY)
+@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_ROLE(), impliedPermissionVal = AccessPermissionFlag.Companion.getREAD_ONLY())
 public class RoleListPresenter extends ListSelectionPresenter<RoleListView, RoleSearchCriteria, SimpleRole> {
     private static final long serialVersionUID = 1L;
 
@@ -94,7 +94,7 @@ public class RoleListPresenter extends ListSelectionPresenter<RoleListView, Role
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.ACCOUNT_ROLE)) {
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getACCOUNT_ROLE())) {
             RoleContainer roleContainer = (RoleContainer) container;
             roleContainer.removeAllComponents();
             roleContainer.addComponent(view);

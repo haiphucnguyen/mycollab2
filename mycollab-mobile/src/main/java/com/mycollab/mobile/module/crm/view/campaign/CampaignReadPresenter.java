@@ -102,7 +102,7 @@ public class CampaignReadPresenter extends AbstractCrmPresenter<CampaignReadView
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) {
             if (data.getParams() instanceof Integer) {
                 CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
                 SimpleCampaign campaign = campaignService.findById((Integer) data.getParams(), AppUI.getAccountId());

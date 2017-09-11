@@ -23,7 +23,7 @@ public class MilestoneListPresenter extends ProjectListPresenter<MilestoneListVi
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
             super.onGo(container, data);
             view.displayStatus(MilestoneStatus.InProgress);
         } else {

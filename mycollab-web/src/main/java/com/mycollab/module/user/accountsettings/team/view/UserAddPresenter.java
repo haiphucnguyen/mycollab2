@@ -26,7 +26,7 @@ import com.vaadin.ui.UI;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_USER, impliedPermissionVal = AccessPermissionFlag.READ_WRITE)
+@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_USER(), impliedPermissionVal = AccessPermissionFlag.Companion.getREAD_WRITE())
 public class UserAddPresenter extends AbstractPresenter<UserAddView> {
     private static final long serialVersionUID = 1L;
 

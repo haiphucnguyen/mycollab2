@@ -56,10 +56,10 @@ public class ProjectMemberInvitePresenter extends AbstractProjectPresenter<Proje
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS())) {
             super.onGo(container, data);
             view.display();
-            AppUI.addFragment("project/user/invite/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+            AppUI.addFragment("project/user/invite/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(ProjectMemberI18nEnum.NEW));
 
         } else {

@@ -29,14 +29,14 @@ public class MessageReadPresenter extends AbstractProjectPresenter<MessageReadVi
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MESSAGES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getMESSAGES())) {
             if (data.getParams() instanceof Integer) {
                 MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
                 SimpleMessage message = messageService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 view.previewItem(message);
                 super.onGo(container, data);
 
-                AppUI.addFragment(ProjectLinkGenerator.generateMessagePreviewLink(CurrentProjectVariables.getProjectId(), message.getId()),
+                AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateMessagePreviewLink(CurrentProjectVariables.getProjectId(), message.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                 UserUIContext.getMessage(MessageI18nEnum.SINGLE), message.getTitle()));
             } else {

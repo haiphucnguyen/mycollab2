@@ -75,8 +75,8 @@ public class OpportunityListPresenter extends CrmGenericListPresenter<Opportunit
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.OPPORTUNITY);
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_OPPORTUNITY)) {
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getOPPORTUNITY());
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY())) {
             searchCriteria = (OpportunitySearchCriteria) data.getParams();
             int totalCount = opportunityService.getTotalCount(searchCriteria);
             if (totalCount > 0) {

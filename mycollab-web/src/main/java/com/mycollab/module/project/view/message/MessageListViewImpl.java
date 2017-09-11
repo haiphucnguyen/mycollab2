@@ -147,7 +147,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                             messageList.setSearchCriteria(searchCriteria);
                         }
                     })).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
-            deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MESSAGES));
+            deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getMESSAGES()));
 
             MHorizontalLayout rightHeader = new MHorizontalLayout();
             rightHeader.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
@@ -170,9 +170,9 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                 notification.addComponent(commentNotification);
             }
             ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
-            List<Content> attachments = attachmentService.getContents(AttachmentUtils
+            List<Content> attachments = attachmentService.getContents(AttachmentUtils.INSTANCE
                     .getProjectEntityAttachmentPath(AppUI.getAccountId(),
-                            message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
+                            message.getProjectid(), ProjectTypeConstants.INSTANCE.getMESSAGE(), "" + message.getId()));
             if (CollectionUtils.isNotEmpty(attachments)) {
                 HorizontalLayout attachmentNotification = new HorizontalLayout();
                 Label attachmentCountLbl = new Label(Integer.toString(attachments.size()));
@@ -282,9 +282,9 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                     message.setIsstick(chkIsStick.getValue());
                     MessageListViewImpl.this.fireSaveItem(message);
 
-                    String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(
+                    String attachmentPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(
                             AppUI.getAccountId(), message.getProjectid(),
-                            ProjectTypeConstants.MESSAGE, "" + message.getId());
+                            ProjectTypeConstants.INSTANCE.getMESSAGE(), "" + message.getId());
                     attachments.saveContentsToRepo(attachmentPath);
                 } else {
                     titleField.addStyleName("errorField");
@@ -308,7 +308,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                 MButton createMessageBtn = new MButton(UserUIContext.getMessage(MessageI18nEnum.NEW),
                         clickEvent -> createAddMessageLayout())
                         .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                        .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
+                        .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMESSAGES()));
 
                 messagePanelBody.addComponent(createMessageBtn);
                 messagePanelBody.setComponentAlignment(createMessageBtn, Alignment.MIDDLE_RIGHT);
@@ -331,7 +331,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
 
         @Override
         protected FontAwesome viewIcon() {
-            return ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE);
+            return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMESSAGE());
         }
 
         @Override
@@ -356,7 +356,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
 
         @Override
         protected boolean hasPermission() {
-            return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES);
+            return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMESSAGES());
         }
     }
 }

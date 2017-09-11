@@ -49,7 +49,7 @@ public class CaseTableDisplay extends DefaultPagedBeanTable<CaseService, CaseSea
             if (cases.isCompleted()) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);
             }
-            b.setDescription(CrmTooltipGenerator.generateTooltipCases(UserUIContext.getUserLocale(), cases,
+            b.setDescription(CrmTooltipGenerator.INSTANCE.generateTooltipCases(UserUIContext.getUserLocale(), cases,
                     AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
         });

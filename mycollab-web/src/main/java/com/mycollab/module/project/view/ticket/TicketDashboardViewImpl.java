@@ -123,13 +123,13 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         sortCombo.addValueChangeListener(valueChangeEvent -> {
             String sortValue = (String) sortCombo.getValue();
             if (UserUIContext.getMessage(GenericI18Enum.OPT_SORT_ASCENDING).equals(sortValue)) {
-                sortDirection = SearchCriteria.ASC;
+                sortDirection = SearchCriteria.Companion.getASC();
             } else {
-                sortDirection = SearchCriteria.DESC;
+                sortDirection = SearchCriteria.Companion.getDESC();
             }
             queryAndDisplayTickets();
         });
-        sortDirection = SearchCriteria.DESC;
+        sortDirection = SearchCriteria.Companion.getDESC();
         groupWrapLayout.addComponent(sortCombo);
 
         groupWrapLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)));
@@ -207,13 +207,13 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
 
         statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
         statisticSearchCriteria.setIsOpenned(new SearchField());
-        statisticSearchCriteria.setTypes(new SetSearchField(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK,
-                ProjectTypeConstants.RISK));
+        statisticSearchCriteria.setTypes(new SetSearchField(ProjectTypeConstants.INSTANCE.getBUG(), ProjectTypeConstants.INSTANCE.getTASK(),
+                ProjectTypeConstants.INSTANCE.getRISK()));
 
         if (StringUtils.isNotBlank(query)) {
             try {
                 String jsonQuery = UrlEncodeDecoder.decode(query);
-                List<SearchFieldInfo> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.TICKET);
+                List<SearchFieldInfo> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.INSTANCE.getTICKET());
                 ticketSearchPanel.displaySearchFieldInfos(searchFieldInfos);
                 ProjectTicketSearchCriteria searchCriteria = SearchFieldInfo.buildSearchCriteria(baseCriteria, searchFieldInfos);
                 searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));

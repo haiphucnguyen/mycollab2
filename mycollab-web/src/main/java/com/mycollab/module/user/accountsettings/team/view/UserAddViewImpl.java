@@ -372,21 +372,21 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
                     permissionMap = role.getPermissionMap();
                 }
             } else {
-                permissionMap = PermissionMap.buildAdminPermissionCollection();
+                permissionMap = PermissionMap.Companion.buildAdminPermissionCollection();
             }
 
             if (permissionMap != null) {
                 permissionLayout.addComponent(constructPermissionSectionView(UserUIContext.getMessage(RoleI18nEnum.SECTION_PROJECT_MANAGEMENT_TITLE),
-                        permissionMap, RolePermissionCollections.PROJECT_PERMISSION_ARR));
+                        permissionMap, RolePermissionCollections.INSTANCE.getPROJECT_PERMISSION_ARR()));
 
                 permissionLayout.addComponent(constructPermissionSectionView(UserUIContext.getMessage(RoleI18nEnum.SECTION_CRM_TITLE),
-                        permissionMap, RolePermissionCollections.CRM_PERMISSIONS_ARR));
+                        permissionMap, RolePermissionCollections.INSTANCE.getCRM_PERMISSIONS_ARR()));
 
                 permissionLayout.addComponent(constructPermissionSectionView(UserUIContext.getMessage(RoleI18nEnum.SECTION_DOCUMENT_TITLE),
-                        permissionMap, RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
+                        permissionMap, RolePermissionCollections.INSTANCE.getDOCUMENT_PERMISSION_ARR()));
 
                 permissionLayout.addComponent(constructPermissionSectionView(UserUIContext.getMessage(RoleI18nEnum.SECTION_ACCOUNT_MANAGEMENT_TITLE),
-                        permissionMap, RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
+                        permissionMap, RolePermissionCollections.INSTANCE.getACCOUNT_PERMISSION_ARR()));
             }
         }
 
@@ -398,7 +398,7 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
             for (int i = 0; i < defItems.size(); i++) {
                 PermissionDefItem permissionDefItem = defItems.get(i);
                 Integer flag = permissionMap.getPermissionFlag(permissionDefItem.getKey());
-                SecurityI18nEnum permissionVal = PermissionFlag.toVal(flag);
+                SecurityI18nEnum permissionVal = PermissionFlag.Companion.toVal(flag);
                 formHelper.addComponent(new Label(UserUIContext.getMessage(permissionVal)), UserUIContext.getMessage(permissionDefItem.getCaption()),
                         UserUIContext.getMessage(permissionVal.desc()), i % 2, i / 2);
             }

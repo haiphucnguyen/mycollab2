@@ -76,7 +76,7 @@ public class MilestoneReadPresenter extends ProjectGenericPresenter<MilestoneRea
             @Override
             public void onPrint(Object source, SimpleMilestone data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.MILESTONE, Milestone.Field.name.name(),
+                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.INSTANCE.getMILESTONE(), Milestone.Field.name.name(),
                         MilestoneDefaultFormLayoutFactory.getForm(), Milestone.Field.id.name(),
                         Milestone.Field.saccountid.name()));
             }
@@ -126,9 +126,9 @@ public class MilestoneReadPresenter extends ProjectGenericPresenter<MilestoneRea
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
             MilestoneContainer milestoneContainer = (MilestoneContainer) container;
-            milestoneContainer.navigateToContainer(ProjectTypeConstants.MILESTONE);
+            milestoneContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getMILESTONE());
             if (data.getParams() instanceof Integer) {
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 SimpleMilestone milestone = milestoneService.findById((Integer) data.getParams(), AppUI.getAccountId());

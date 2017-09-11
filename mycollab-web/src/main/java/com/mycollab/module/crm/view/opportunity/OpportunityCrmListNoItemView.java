@@ -24,7 +24,7 @@ public class OpportunityCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY());
     }
 
     @Override
@@ -54,6 +54,6 @@ public class OpportunityCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected boolean hasPermission() {
-        return UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY);
+        return UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY());
     }
 }

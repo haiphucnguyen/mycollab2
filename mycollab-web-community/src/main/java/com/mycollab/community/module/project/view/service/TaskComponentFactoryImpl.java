@@ -38,7 +38,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
 
     @Override
     public AbstractComponent createAssigneePopupField(SimpleTask task) {
-        String avatarLink = StorageUtils.getAvatarPath(task.getAssignUserAvatarId(), 16);
+        String avatarLink = StorageUtils.INSTANCE.getAvatarPath(task.getAssignUserAvatarId(), 16);
         Img img = new Img(task.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                 .setTitle(task.getAssignUserFullName());
         return new MetaFieldBuilder().withCaption(img.write())
@@ -81,13 +81,13 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
     public AbstractComponent createMilestonePopupField(SimpleTask task) {
         if (task.getMilestoneid() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
-            divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
+            divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml());
             divHint.appendChild(new Span().appendText(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)).setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write())
                     .withDescription(UserUIContext.getMessage(ShellI18nEnum.OPT_UPGRADE_PRO_INTRO,
                             UserUIContext.getMessage(MilestoneI18nEnum.SINGLE))).build();
         } else {
-            return new MetaFieldBuilder().withCaptionAndIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE), task
+            return new MetaFieldBuilder().withCaptionAndIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()), task
                     .getMilestoneName()).withDescription(UserUIContext.getMessage(ShellI18nEnum.OPT_UPGRADE_PRO_INTRO,
                     UserUIContext.getMessage(MilestoneI18nEnum.SINGLE))).build();
         }

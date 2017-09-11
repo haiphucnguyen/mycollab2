@@ -54,7 +54,7 @@ public class ProjectMemberEditPresenter extends AbstractPresenter<ProjectMemberE
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS())) {
             ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
             userGroupContainer.setContent(view);
 

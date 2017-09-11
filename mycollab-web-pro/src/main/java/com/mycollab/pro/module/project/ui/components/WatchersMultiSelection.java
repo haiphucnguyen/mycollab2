@@ -49,8 +49,8 @@ public class WatchersMultiSelection extends MVerticalLayout {
 
         ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE));
-        criteria.addOrderField(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC));
+        criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.INSTANCE.getACTIVE()));
+        criteria.addOrderField(new SearchCriteria.OrderField("memberFullName", SearchCriteria.Companion.getASC()));
 
         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
         List<SimpleProjectMember> projectMembers = projectMemberService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));

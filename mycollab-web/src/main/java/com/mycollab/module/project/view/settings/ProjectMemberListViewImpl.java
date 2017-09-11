@@ -63,7 +63,7 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
         MHorizontalLayout viewHeader = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withFullWidth();
         viewHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        headerText = ComponentUtils.headerH2(ProjectTypeConstants.MEMBER, UserUIContext.getMessage(ProjectMemberI18nEnum.LIST));
+        headerText = ComponentUtils.headerH2(ProjectTypeConstants.INSTANCE.getMEMBER(), UserUIContext.getMessage(ProjectMemberI18nEnum.LIST));
         viewHeader.with(headerText).expand(headerText);
 
         final MButton sortBtn = new MButton().withIcon(FontAwesome.SORT_ALPHA_ASC).withStyleName(WebThemes.BUTTON_ICON_ONLY);
@@ -106,7 +106,7 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
         MButton createBtn = new MButton(UserUIContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEES),
                 clickEvent -> EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoInviteMembers(this, null)))
                 .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SEND);
-        createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
+        createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS()));
         viewHeader.addComponent(createBtn);
 
         addComponent(viewHeader);
@@ -125,10 +125,10 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
     private void displayMembers() {
         contentLayout.removeAllComponents();
         if (sortAsc) {
-            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC)));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName", SearchCriteria.Companion.getASC())));
         } else {
             searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName",
-                    SearchCriteria.DESC)));
+                    SearchCriteria.Companion.getDESC())));
         }
         ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
         List<SimpleProjectMember> memberLists = prjMemberService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
@@ -141,7 +141,7 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
         MHorizontalLayout blockContent = new MHorizontalLayout().withSpacing(false)
                 .withStyleName("member-block").withWidth("350px");
         blockContent.setStyleName("member-block");
-        if (ProjectMemberStatusConstants.NOT_ACCESS_YET.equals(member.getStatus())) {
+        if (ProjectMemberStatusConstants.INSTANCE.getNOT_ACCESS_YET().equals(member.getStatus())) {
             blockContent.addStyleName("inactive");
         }
 
@@ -154,7 +154,7 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
 
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoEdit(this, member)))
                 .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_LINK)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS()));
         editBtn.setDescription("Edit user '" + member.getDisplayName() + "' information");
 
         MButton deleteBtn = new MButton("", clickEvent -> {
@@ -171,7 +171,7 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
                         }
                     });
         }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_LINK)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS))
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS()))
                 .withDescription("Remove user '" + member.getDisplayName() + "' out of this project");
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(editBtn, deleteBtn);
@@ -184,8 +184,8 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
 
         blockTop.with(memberNameLbl, ELabel.hr());
 
-        String roleLink = String.format("<a href=\"%s%s%s\"", AppUI.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
-                ProjectLinkGenerator.generateRolePreviewLink(member.getProjectid(), member.getProjectroleid()));
+        String roleLink = String.format("<a href=\"%s%s%s\"", AppUI.getSiteUrl(), GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM(),
+                ProjectLinkGenerator.INSTANCE.generateRolePreviewLink(member.getProjectid(), member.getProjectroleid()));
         ELabel memberRole = new ELabel("", ContentMode.HTML).withFullWidth().withStyleName(UIConstants.TEXT_ELLIPSIS);
         if (member.isProjectOwner()) {
             memberRole.setValue(String.format("%sstyle=\"color: #B00000;\">%s</a>", roleLink, UserUIContext.getMessage
@@ -206,16 +206,16 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
                 .withFullWidth();
         blockTop.addComponent(memberSinceLabel);
 
-        if (ProjectMemberStatusConstants.ACTIVE.equals(member.getStatus())) {
+        if (ProjectMemberStatusConstants.INSTANCE.getACTIVE().equals(member.getStatus())) {
             ELabel lastAccessTimeLbl = ELabel.html(UserUIContext.getMessage(UserI18nEnum.OPT_MEMBER_LOGGED_IN, UserUIContext
                     .formatPrettyTime(member.getLastAccessTime())))
                     .withDescription(UserUIContext.formatDateTime(member.getLastAccessTime()));
             blockTop.addComponent(lastAccessTimeLbl);
         }
 
-        String memberWorksInfo = ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + " " + new Span()
+        String memberWorksInfo = ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()).getHtml() + " " + new Span()
                 .appendText("" + member.getNumOpenTasks()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_TASKS)) +
-                "  " + ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + " " + new Span()
+                "  " + ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()).getHtml() + " " + new Span()
                 .appendText("" + member.getNumOpenBugs()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_BUGS)) +
                 " " + FontAwesome.MONEY.getHtml() + " " + new Span().appendText("" + NumberUtils.roundDouble(2,
                 member.getTotalBillableLogTime())).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)) +

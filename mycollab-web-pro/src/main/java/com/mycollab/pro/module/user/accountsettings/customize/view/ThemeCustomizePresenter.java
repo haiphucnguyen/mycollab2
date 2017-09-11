@@ -32,7 +32,7 @@ import com.vaadin.ui.UI;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_THEME, impliedPermissionVal = BooleanPermissionFlag.TRUE)
+@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_THEME(), impliedPermissionVal = BooleanPermissionFlag.Companion.getTRUE())
 public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeView> implements IThemeCustomizePresenter {
     private static final long serialVersionUID = 5330315328389778202L;
 

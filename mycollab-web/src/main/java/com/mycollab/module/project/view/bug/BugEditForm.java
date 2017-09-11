@@ -56,7 +56,7 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
         @Override
         public AbstractComponent getLayout() {
             VerticalLayout layout = new VerticalLayout();
-            formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.BUG, BugDefaultFormLayoutFactory.getForm());
+            formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getBUG(), BugDefaultFormLayoutFactory.getForm());
             AbstractComponent gridLayout = formLayoutFactory.getLayout();
             gridLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
             new Restrain(gridLayout).setMaxHeight((UIUtils.getBrowserHeight() - 180) + "px");
@@ -83,11 +83,11 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
                     asyncEventBus.post(new CleanCacheEvent(AppUI.getAccountId(), new Class[]{BugService.class}));
 
                     AttachmentUploadField uploadField = bugEditFormFieldFactory.getAttachmentUploadField();
-                    String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
-                            ProjectTypeConstants.BUG, "" + bugId);
+                    String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
+                            ProjectTypeConstants.INSTANCE.getBUG(), "" + bugId);
                     uploadField.saveContentsToRepo(attachPath);
                     EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(BugEditForm.this,
-                            ProjectTypeConstants.BUG, bugId));
+                            ProjectTypeConstants.INSTANCE.getBUG(), bugId));
                     ProjectSubscribersComp subcribersComp = bugEditFormFieldFactory.getSubscribersComp();
                     List<String> followers = subcribersComp.getFollowers();
                     if (followers.size() > 0) {
@@ -96,7 +96,7 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
                             MonitorItem monitorItem = new MonitorItem();
                             monitorItem.setMonitorDate(new GregorianCalendar().getTime());
                             monitorItem.setSaccountid(AppUI.getAccountId());
-                            monitorItem.setType(ProjectTypeConstants.BUG);
+                            monitorItem.setType(ProjectTypeConstants.INSTANCE.getBUG());
                             monitorItem.setTypeid(bugId);
                             monitorItem.setUser(follower);
                             monitorItem.setExtratypeid(bean.getProjectid());

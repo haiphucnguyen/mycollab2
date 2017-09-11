@@ -55,7 +55,7 @@ public class AccountSelectionWindow extends MWindow {
             return new MButton(account.getAccountname(), clickEvent -> {
                 fieldSelection.fireValueChange(account);
                 close();
-            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateToolTipAccount(
+            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.INSTANCE.generateToolTipAccount(
                     UserUIContext.getUserLocale(), account, AppUI.getSiteUrl()));
         });
     }

@@ -41,7 +41,7 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.headerH2(ProjectTypeConstants.RISK, UserUIContext.getMessage(RiskI18nEnum.LIST));
+        return ComponentUtils.headerH2(ProjectTypeConstants.INSTANCE.getRISK(), UserUIContext.getMessage(RiskI18nEnum.LIST));
     }
 
     @Override
@@ -49,7 +49,7 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
         return new MButton(UserUIContext.getMessage(RiskI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null)))
                 .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS()));
     }
 
     @Override
@@ -112,7 +112,7 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
         private static final long serialVersionUID = 1L;
 
         RiskAdvancedSearchLayout() {
-            super(RiskSearchPanel.this, ProjectTypeConstants.RISK);
+            super(RiskSearchPanel.this, ProjectTypeConstants.INSTANCE.getRISK());
         }
 
         @Override

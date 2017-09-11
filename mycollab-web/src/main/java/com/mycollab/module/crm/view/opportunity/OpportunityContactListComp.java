@@ -79,7 +79,7 @@ public class OpportunityContactListComp extends RelatedListComp2<ContactOpportun
         notesWrap.with(noteBlock).expand(noteBlock);
         controlsBtnWrap.addComponent(notesWrap);
 
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CONTACT)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CONTACT())) {
             final SplitButton controlsBtn = new SplitButton();
             controlsBtn.setSizeUndefined();
             controlsBtn.addStyleName(WebThemes.BUTTON_ACTION);
@@ -94,7 +94,7 @@ public class OpportunityContactListComp extends RelatedListComp2<ContactOpportun
                 contactsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
             });
-            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
+            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()));
             OptionPopupContent buttonControlLayout = new OptionPopupContent();
             buttonControlLayout.addOption(selectBtn);
             controlsBtn.setContent(buttonControlLayout);
@@ -134,7 +134,7 @@ public class OpportunityContactListComp extends RelatedListComp2<ContactOpportun
             MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel contactAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
+            ELabel contactAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()));
             iconWrap.addComponent(contactAvatar);
             blockTop.addComponent(iconWrap);
 
@@ -162,8 +162,8 @@ public class OpportunityContactListComp extends RelatedListComp2<ContactOpportun
             blockContent.addComponent(btnDelete);
             blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
 
-            Label contactName = ELabel.html(UserUIContext.getMessage(GenericI18Enum.FORM_NAME) + ": " + new A(CrmLinkGenerator.generateCrmItemLink(
-                    CrmTypeConstants.CONTACT, contact.getId())).appendText(contact.getContactName()).write());
+            Label contactName = ELabel.html(UserUIContext.getMessage(GenericI18Enum.FORM_NAME) + ": " + new A(CrmLinkGenerator.INSTANCE.generateCrmItemLink(
+                    CrmTypeConstants.INSTANCE.getCONTACT(), contact.getId())).appendText(contact.getContactName()).write());
 
             contactInfo.addComponent(contactName);
 

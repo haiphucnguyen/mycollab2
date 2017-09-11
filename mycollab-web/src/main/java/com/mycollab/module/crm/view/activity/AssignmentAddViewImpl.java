@@ -40,7 +40,7 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<CrmTask> impleme
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.TASK);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getTASK());
     }
 
     @Override
@@ -55,7 +55,7 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<CrmTask> impleme
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.TASK, AssignmentDefaultFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getTASK(), AssignmentDefaultFormLayoutFactory.getForm());
     }
 
     @Override

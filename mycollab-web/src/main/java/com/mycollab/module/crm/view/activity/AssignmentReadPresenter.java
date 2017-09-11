@@ -109,7 +109,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_TASK)) {
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_TASK())) {
             SimpleCrmTask task;
             if (data.getParams() instanceof Integer) {
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
@@ -124,7 +124,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
 
             super.onGo(container, data);
             view.previewItem(task);
-            AppUI.addFragment(CrmLinkGenerator.generateTaskPreviewLink(task.getId()),
+            AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateTaskPreviewLink(task.getId()),
                     UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                             UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getSubject()));
 

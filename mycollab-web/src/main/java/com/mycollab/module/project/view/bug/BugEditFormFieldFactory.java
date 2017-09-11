@@ -68,8 +68,8 @@ class BugEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Sim
             return field;
         } else if (propertyId.equals("id")) {
             if (beanItem.getId() != null) {
-                String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(),
-                        beanItem.getProjectid(), ProjectTypeConstants.BUG, "" + beanItem.getId());
+                String attachmentPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(),
+                        beanItem.getProjectid(), ProjectTypeConstants.INSTANCE.getBUG(), "" + beanItem.getId());
                 attachmentUploadField = new AttachmentUploadField(attachmentPath);
             } else {
                 attachmentUploadField = new AttachmentUploadField();

@@ -36,7 +36,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
 
     @Override
     public AbstractComponent createAssigneePopupField(SimpleBug bug) {
-        String avatarLink = StorageUtils.getAvatarPath(bug.getAssignUserAvatarId(), 16);
+        String avatarLink = StorageUtils.INSTANCE.getAvatarPath(bug.getAssignUserAvatarId(), 16);
         Img img = new Img(bug.getAssignuserFullName(), avatarLink).setTitle(bug.getAssignuserFullName())
                 .setCSSClass(UIConstants.CIRCLE_BOX);
         return new MetaFieldBuilder().withCaption(img.write())
@@ -58,12 +58,12 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
     public AbstractComponent createMilestonePopupField(SimpleBug bug) {
         if (bug.getMilestoneid() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
-            divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
+            divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml());
             divHint.appendChild(new Span().appendText(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)).setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write()).withDescription(UserUIContext.getMessage
                     (MilestoneI18nEnum.SINGLE)).build();
         } else {
-            return new MetaFieldBuilder().withCaptionAndIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE),
+            return new MetaFieldBuilder().withCaptionAndIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()),
                     bug.getMilestoneName()).withDescription(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE)).build();
         }
     }

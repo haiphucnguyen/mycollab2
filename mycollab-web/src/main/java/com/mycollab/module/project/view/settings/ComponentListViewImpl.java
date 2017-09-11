@@ -85,7 +85,7 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
             if (bugComponent.getStatus() != null && bugComponent.getStatus().equals(StatusI18nEnum.Closed.name())) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);
             }
-            b.setDescription(ProjectTooltipGenerator.generateToolTipComponent(UserUIContext.getUserLocale(),
+            b.setDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipComponent(UserUIContext.getUserLocale(),
                     bugComponent, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
         });
@@ -133,7 +133,7 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
         layout.addComponent(this.selectOptionButton);
 
         tableActionControls = new DefaultMassItemActionHandlerContainer();
-        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.COMPONENTS)) {
+        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS())) {
             tableActionControls.addDeleteActionItem();
         }
 

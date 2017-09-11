@@ -28,7 +28,7 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<CrmTask> impleme
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.TASK, AssignmentDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getTASK(), AssignmentDefaultFormLayoutFactory.getForm());
     }
 
     @Override

@@ -37,7 +37,7 @@ public class SimpleProjectRole extends ProjectRole {
                 permissionMap = new PermissionMap();
             } else {
                 try {
-                    permissionMap = PermissionMap.fromJsonString(permissionVal);
+                    permissionMap = PermissionMap.Companion.fromJsonString(permissionVal);
                 } catch (Exception e) {
                     LOG.error("Error while get permission", e);
                 }

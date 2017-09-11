@@ -49,7 +49,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
     public void editItem(SimpleTask item) {
         attachmentUploadField = new ProjectFormAttachmentUploadField();
         if (item.getId() != null) {
-            attachmentUploadField.getAttachments(item.getProjectid(), ProjectTypeConstants.TASK, item.getId());
+            attachmentUploadField.getAttachments(item.getProjectid(), ProjectTypeConstants.INSTANCE.getTASK(), item.getId());
         }
         super.editItem(item);
         editForm.addComponent(attachmentUploadField);
@@ -57,7 +57,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(ProjectTypeConstants.INSTANCE.getTASK(), TaskDefaultFormLayoutFactory.getForm());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
             AppUI.addFragment("project/task/add/" + UrlEncodeDecoder.encode(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(TaskI18nEnum.NEW));
         } else {
-            AppUI.addFragment(ProjectLinkGenerator.generateTaskEditLink(beanItem.getTaskkey(),
+            AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateTaskEditLink(beanItem.getTaskkey(),
                     beanItem.getProjectShortname()), beanItem.getName());
         }
     }

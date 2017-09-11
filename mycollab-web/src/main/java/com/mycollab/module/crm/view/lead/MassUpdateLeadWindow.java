@@ -23,7 +23,7 @@ public class MassUpdateLeadWindow extends MassUpdateWindow<Lead> {
     private static final long serialVersionUID = 1L;
 
     public MassUpdateLeadWindow(final String title, final LeadListPresenter presenter) {
-        super(title, CrmAssetsManager.getAsset(CrmTypeConstants.LEAD), new Lead(), presenter);
+        super(title, CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()), new Lead(), presenter);
     }
 
     @Override

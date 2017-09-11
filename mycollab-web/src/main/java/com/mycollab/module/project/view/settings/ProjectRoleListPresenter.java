@@ -97,7 +97,7 @@ public class ProjectRoleListPresenter extends ListSelectionPresenter<ProjectRole
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.ROLES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getROLES())) {
             ProjectRoleContainer roleContainer = (ProjectRoleContainer) container;
             roleContainer.removeAllComponents();
             roleContainer.addComponent(view);

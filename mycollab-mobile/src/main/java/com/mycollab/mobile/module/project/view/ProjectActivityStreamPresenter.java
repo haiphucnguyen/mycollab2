@@ -21,7 +21,7 @@ public class ProjectActivityStreamPresenter extends ProjectListPresenter<Project
 
     @Override
     protected void onGo(HasComponents navigator, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PROJECT)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getPROJECT())) {
             super.onGo(navigator, data);
         } else {
             NotificationUtil.showMessagePermissionAlert();

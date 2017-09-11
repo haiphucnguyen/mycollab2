@@ -66,41 +66,41 @@ public class ActivityStreamPanel extends CssLayout {
 
     public void display() {
         final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-        searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.CRM));
+        searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.INSTANCE.getCRM()));
         searchCriteria.setTypes(getRestrictedItemTypes());
         searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-        searchCriteria.addOrderField(new SearchCriteria.OrderField("createdTime", SearchCriteria.DESC));
+        searchCriteria.addOrderField(new SearchCriteria.OrderField("createdTime", SearchCriteria.Companion.getDESC()));
         this.activityStreamList.setSearchCriteria(searchCriteria);
     }
 
     private SetSearchField<String> getRestrictedItemTypes() {
         SetSearchField<String> types = new SetSearchField<>();
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
-            types.addValue(CrmTypeConstants.ACCOUNT);
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
+            types.addValue(CrmTypeConstants.INSTANCE.getACCOUNT());
         }
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
-            types.addValue(CrmTypeConstants.CONTACT);
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CONTACT())) {
+            types.addValue(CrmTypeConstants.INSTANCE.getCONTACT());
         }
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_LEAD)) {
-            types.addValue(CrmTypeConstants.LEAD);
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
+            types.addValue(CrmTypeConstants.INSTANCE.getLEAD());
         }
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
-            types.addValue(CrmTypeConstants.CAMPAIGN);
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) {
+            types.addValue(CrmTypeConstants.INSTANCE.getCAMPAIGN());
         }
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_OPPORTUNITY)) {
-            types.addValue(CrmTypeConstants.OPPORTUNITY);
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY())) {
+            types.addValue(CrmTypeConstants.INSTANCE.getOPPORTUNITY());
         }
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_CASE)) {
-            types.addValue(CrmTypeConstants.CASE);
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CASE())) {
+            types.addValue(CrmTypeConstants.INSTANCE.getCASE());
         }
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_TASK)) {
-            types.addValue(CrmTypeConstants.TASK);
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_TASK())) {
+            types.addValue(CrmTypeConstants.INSTANCE.getTASK());
         }
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_MEETING)) {
-            types.addValue(CrmTypeConstants.MEETING);
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_MEETING())) {
+            types.addValue(CrmTypeConstants.INSTANCE.getMEETING());
         }
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_CALL)) {
-            types.addValue(CrmTypeConstants.CALL);
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CALL())) {
+            types.addValue(CrmTypeConstants.INSTANCE.getCALL());
         }
         return types;
     }
@@ -164,21 +164,21 @@ public class ActivityStreamPanel extends CssLayout {
                     String assigneeValue = buildAssigneeValue(activityStream);
                     String itemValue = buildItemValue(activityStream);
 
-                    if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {
+                    if (ActivityStreamConstants.INSTANCE.getACTION_CREATE().equals(activityStream.getAction())) {
                         content.append(UserUIContext.getMessage(CrmCommonI18nEnum.WIDGET_ACTIVITY_CREATE_ACTION,
                                 assigneeValue, itemType, itemValue));
-                    } else if (ActivityStreamConstants.ACTION_UPDATE.equals(activityStream.getAction())) {
+                    } else if (ActivityStreamConstants.INSTANCE.getACTION_UPDATE().equals(activityStream.getAction())) {
                         content.append(UserUIContext.getMessage(CrmCommonI18nEnum.WIDGET_ACTIVITY_UPDATE_ACTION,
                                 assigneeValue, itemType, itemValue));
                         if (activityStream.getAssoAuditLog() != null) {
                             content.append(auditLogRegistry.generatorDetailChangeOfActivity(activityStream));
                         }
-                    } else if (ActivityStreamConstants.ACTION_COMMENT.equals(activityStream.getAction())) {
+                    } else if (ActivityStreamConstants.INSTANCE.getACTION_COMMENT().equals(activityStream.getAction())) {
                         content.append(UserUIContext.getMessage(CrmCommonI18nEnum.WIDGET_ACTIVITY_COMMENT_ACTION, assigneeValue, itemType, itemValue));
                         if (activityStream.getAssoAuditLog() != null) {
                             content.append("<p><ul><li>\"").append(activityStream.getAssoAuditLog().getChangeset()).append("\"</li></ul></p>");
                         }
-                    } else if (ActivityStreamConstants.ACTION_DELETE.equals(activityStream.getAction())) {
+                    } else if (ActivityStreamConstants.INSTANCE.getACTION_DELETE().equals(activityStream.getAction())) {
                         content.append(UserUIContext.getMessage(CrmCommonI18nEnum.WIDGET_ACTIVITY_DELETE_ACTION,
                                 assigneeValue, itemType, itemValue));
                     }
@@ -236,7 +236,7 @@ public class ActivityStreamPanel extends CssLayout {
 
         private String buildAssigneeValue(SimpleActivityStream activityStream) {
             DivLessFormatter div = new DivLessFormatter();
-            Img userAvatar = new Img("", StorageUtils.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
+            Img userAvatar = new Img("", StorageUtils.INSTANCE.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
             A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(AccountLinkGenerator.generatePreviewFullUserLink(
                     AppUI.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim
@@ -252,7 +252,7 @@ public class ActivityStreamPanel extends CssLayout {
         private String buildItemValue(SimpleActivityStream activityStream) {
             DivLessFormatter div = new DivLessFormatter();
             Text itemImg = new Text(CrmAssetsManager.getAsset(activityStream.getType()).getHtml());
-            A itemLink = new A().setId("tag" + TOOLTIP_ID).setHref(CrmLinkGenerator.generateCrmItemLink(
+            A itemLink = new A().setId("tag" + TOOLTIP_ID).setHref(CrmLinkGenerator.INSTANCE.generateCrmItemLink(
                     activityStream.getType(), Integer.parseInt(activityStream.getTypeid())));
 
             itemLink.setAttribute("onmouseover", TooltipHelper.crmHoverJsFunction(activityStream.getType(), activityStream.getTypeid()));

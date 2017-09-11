@@ -87,7 +87,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
     protected ComponentContainer createButtonControls() {
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoEdit(this, beanItem)))
                 .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS()));
 
         MButton deleteBtn = new MButton("", clickEvent -> ConfirmDialog.show(UI.getCurrent(),
                 UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
@@ -100,7 +100,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
                         EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null));
                     }
                 })).withIcon(FontAwesome.TRASH).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.USERS));
+                .withVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getUSERS()));
 
         return new MHorizontalLayout(editBtn, deleteBtn);
     }
@@ -112,16 +112,16 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
             SimpleProjectRole role = roleService.findById(roleId, AppUI.getAccountId());
             if (role != null) {
                 final PermissionMap permissionMap = role.getPermissionMap();
-                for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
-                    final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
+                for (int i = 0; i < ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS().length; i++) {
+                    final String permissionPath = ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS()[i];
                     Label permissionLbl = new Label(UserUIContext.getPermissionCaptionValue(permissionMap, permissionPath));
                     permissionLbl.setCaption(UserUIContext.getMessage(RolePermissionI18nEnum.valueOf(permissionPath)));
                     permissionGroup.addComponent(permissionLbl);
                 }
             }
         } else {
-            for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
-                final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
+            for (int i = 0; i < ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS().length; i++) {
+                final String permissionPath = ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS()[i];
                 Label permissionLbl = new Label(UserUIContext.getMessage(SecurityI18nEnum.ACCESS));
                 permissionLbl.setCaption(permissionPath);
                 permissionGroup.addComponent(permissionLbl);

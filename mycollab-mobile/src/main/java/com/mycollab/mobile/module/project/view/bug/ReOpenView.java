@@ -67,7 +67,7 @@ class ReOpenView extends AbstractMobilePageView {
                     comment.setCreatedtime(new GregorianCalendar().getTime());
                     comment.setCreateduser(UserUIContext.getUsername());
                     comment.setSaccountid(AppUI.getAccountId());
-                    comment.setType(ProjectTypeConstants.BUG);
+                    comment.setType(ProjectTypeConstants.INSTANCE.getBUG());
                     comment.setTypeid("" + bug.getId());
                     comment.setExtratypeid(CurrentProjectVariables.getProjectId());
 

@@ -62,7 +62,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
             RiskContainer riskContainer = (RiskContainer) container;
             riskContainer.removeAllComponents();
             riskContainer.addComponent(view);
@@ -91,8 +91,8 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
             riskService.updateWithSession(risk, UserUIContext.getUsername());
         }
         AttachmentUploadField uploadField = view.getAttachUploadField();
-        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), risk.getProjectid(),
-                ProjectTypeConstants.RISK, "" + risk.getId());
+        String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), risk.getProjectid(),
+                ProjectTypeConstants.INSTANCE.getRISK(), "" + risk.getId());
         uploadField.saveContentsToRepo(attachPath);
         return risk.getId();
     }

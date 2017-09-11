@@ -34,7 +34,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
 
     @Override
     public void setBean(SimpleRisk bean) {
-        setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.RISK,
+        setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getRISK(),
                 RiskDefaultFormLayoutFactory.getForm(), Risk.Field.name.name()));
         setBeanFormFieldFactory(new RiskReadFormFieldFactory(this));
         super.setBean(bean);
@@ -77,9 +77,9 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
             } else if (Risk.Field.response.equalTo(propertyId)) {
                 return new RichTextViewField(risk.getResponse());
             } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
-                return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, risk.getMilestoneid() + "", risk.getMilestoneName());
+                return new ProjectItemViewField(ProjectTypeConstants.INSTANCE.getMILESTONE(), risk.getMilestoneid() + "", risk.getMilestoneName());
             } else if (Risk.Field.id.equalTo(propertyId)) {
-                return new ProjectFormAttachmentDisplayField(risk.getProjectid(), ProjectTypeConstants.RISK, risk.getId());
+                return new ProjectFormAttachmentDisplayField(risk.getProjectid(), ProjectTypeConstants.INSTANCE.getRISK(), risk.getId());
             } else if (Risk.Field.consequence.equalTo(propertyId)) {
                 return new I18nFormViewField(risk.getConsequence(), RiskConsequence.class);
             } else if (Risk.Field.probalitity.equalTo(propertyId)) {

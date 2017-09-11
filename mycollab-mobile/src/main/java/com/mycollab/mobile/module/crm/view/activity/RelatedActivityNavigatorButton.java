@@ -39,42 +39,42 @@ public class RelatedActivityNavigatorButton extends NavigationButton {
     public void displayRelatedByAccount(Integer accountId) {
         ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
         searchCriteria.setSaccountid(NumberSearchField.equal(AppUI.getAccountId()));
-        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.ACCOUNT));
+        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.INSTANCE.getACCOUNT()));
         searchCriteria.setTypeid(NumberSearchField.equal(accountId));
         displayTotalActivities(searchCriteria);
     }
 
     public void displayRelatedByContact(Integer contactId) {
         ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
-        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.CONTACT));
+        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.INSTANCE.getCONTACT()));
         searchCriteria.setTypeid(NumberSearchField.equal(contactId));
         displayTotalActivities(searchCriteria);
     }
 
     public void displayRelatedByCampaign(Integer campaignId) {
         ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
-        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.CAMPAIGN));
+        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.INSTANCE.getCAMPAIGN()));
         searchCriteria.setTypeid(NumberSearchField.equal(campaignId));
         displayTotalActivities(searchCriteria);
     }
 
     public void displayRelatedByLead(Integer leadId) {
         ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
-        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.LEAD));
+        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.INSTANCE.getLEAD()));
         searchCriteria.setTypeid(NumberSearchField.equal(leadId));
         displayTotalActivities(searchCriteria);
     }
 
     public void displayRelatedByOpportunity(Integer opportunityId) {
         ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
-        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.OPPORTUNITY));
+        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.INSTANCE.getOPPORTUNITY()));
         searchCriteria.setTypeid(NumberSearchField.equal(opportunityId));
         displayTotalActivities(searchCriteria);
     }
 
     public void displayRelatedByCase(Integer caseId) {
         ActivitySearchCriteria searchCriteria = new ActivitySearchCriteria();
-        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.CASE));
+        searchCriteria.setType(StringSearchField.and(CrmTypeConstants.INSTANCE.getCASE()));
         searchCriteria.setTypeid(NumberSearchField.equal(caseId));
         displayTotalActivities(searchCriteria);
     }

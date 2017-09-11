@@ -25,7 +25,7 @@ class ProjectMemberSelectionField extends ComboBox {
 
         ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        criteria.addOrderField(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC));
+        criteria.addOrderField(new SearchCriteria.OrderField("memberFullName", SearchCriteria.Companion.getASC()));
 //        criteria.setStatus(StringSearchField.and(ProjectMemberStatusConstants.ACTIVE));
 
         ProjectMemberService userService = AppContextUtil.getSpringBean(ProjectMemberService.class);

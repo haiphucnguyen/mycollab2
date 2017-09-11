@@ -90,7 +90,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         fileBreadCrumb = new FileBreadcrumb(rootPath);
         fileBreadCrumb.addSearchHandler(criteria -> {
             Resource selectedFolder;
-            if (StorageNames.DROPBOX.equals(criteria.getStorageName())) {
+            if (StorageNames.INSTANCE.getDROPBOX().equals(criteria.getStorageName())) {
                 selectedFolder = externalResourceService.getCurrentResourceByPath(criteria.getExternalDrive(), criteria.getBaseFolder());
             } else {
                 selectedFolder = resourceService.getResource(criteria.getBaseFolder());
@@ -108,19 +108,19 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 baseFolder = resultFolder;
             }
         });
-        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE).getHtml() + " " +
+        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getFILE()).getHtml() + " " +
                 UserUIContext.getMessage(FileI18nEnum.LIST));
 
         MButton createBtn = new MButton(UserUIContext.getMessage(FileI18nEnum.ACTION_NEW_FOLDER), clickEvent -> UI.getCurrent().addWindow
                 (new AddNewFolderWindow()))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getPUBLIC_DOCUMENT_ACCESS()));
 
         MButton uploadBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPLOAD), clickEvent -> {
             MultiUploadContentWindow multiUploadWindow = new MultiUploadContentWindow();
             UI.getCurrent().addWindow(multiUploadWindow);
         }).withIcon(FontAwesome.UPLOAD).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getPUBLIC_DOCUMENT_ACCESS()));
 
         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, new MHorizontalLayout(createBtn, uploadBtn)).expand(headerLbl);
         resourcesContainer = new ResourcesContainer();
@@ -201,7 +201,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(UserUIContext.getUsername());
                 if (CollectionUtils.isNotEmpty(externalDrives)) {
                     for (ExternalDrive drive : externalDrives) {
-                        if (StorageNames.DROPBOX.equals(drive.getStoragename())) {
+                        if (StorageNames.INSTANCE.getDROPBOX().equals(drive.getStoragename())) {
                             try {
                                 Resource res = externalResourceService.getCurrentResourceByPath(drive, "/");
                                 res.setName(drive.getFoldername());
@@ -299,7 +299,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             } else if (resource instanceof Content) {
                 Content content = (Content) resource;
                 if (StringUtils.isNotBlank(content.getThumbnail())) {
-                    resourceIcon = new Embedded(null, new ExternalResource(StorageUtils.getResourcePath(content.getThumbnail())));
+                    resourceIcon = new Embedded(null, new ExternalResource(StorageUtils.INSTANCE.getResourcePath(content.getThumbnail())));
                     resourceIcon.setWidth("38px");
                     resourceIcon.setHeight("38px");
                 } else {

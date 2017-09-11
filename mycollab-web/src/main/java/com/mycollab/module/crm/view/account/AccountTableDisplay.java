@@ -67,7 +67,7 @@ public class AccountTableDisplay extends DefaultPagedBeanTable<AccountService, A
         addGeneratedColumn("accountname", (source, itemId, columnId) -> {
             SimpleAccount account = getBeanByIndex(itemId);
             A accountLink = new A(CrmLinkBuilder.generateAccountPreviewLinkFull(account.getId())).appendText(account.getAccountname());
-            accountLink.setAttribute("onmouseover", TooltipHelper.crmHoverJsFunction(CrmTypeConstants.ACCOUNT,
+            accountLink.setAttribute("onmouseover", TooltipHelper.crmHoverJsFunction(CrmTypeConstants.INSTANCE.getACCOUNT(),
                     account.getId() + ""));
             accountLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             A url;

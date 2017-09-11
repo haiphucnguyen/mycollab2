@@ -17,7 +17,7 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_THEME, impliedPermissionVal = BooleanPermissionFlag.TRUE)
+@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_THEME(), impliedPermissionVal = BooleanPermissionFlag.Companion.getTRUE())
 public class AccountSettingPresenter extends AbstractPresenter<AccountSettingContainer> {
     private static final long serialVersionUID = 1L;
 

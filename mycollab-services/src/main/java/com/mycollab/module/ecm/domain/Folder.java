@@ -15,7 +15,6 @@ public class Folder extends Resource {
     }
 
     public Folder(String path) {
-        super();
         this.setPath(path);
     }
 

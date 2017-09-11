@@ -69,7 +69,7 @@ public class ComponentListPresenter extends ProjectGenericListPresenter<Componen
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS())) {
             BugComponentContainer trackerContainer = (BugComponentContainer) container;
             trackerContainer.removeAllComponents();
             trackerContainer.addComponent(view);

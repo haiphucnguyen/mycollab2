@@ -72,9 +72,9 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
             MilestoneContainer milestoneContainer = (MilestoneContainer) container;
-            milestoneContainer.navigateToContainer(ProjectTypeConstants.MILESTONE);
+            milestoneContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getMILESTONE());
             milestoneContainer.setContent(view);
 
             SimpleMilestone milestone = (SimpleMilestone) data.getParams();
@@ -103,15 +103,15 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
             milestoneService.updateWithSession(milestone, UserUIContext.getUsername());
         }
         AttachmentUploadField uploadField = view.getAttachUploadField();
-        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), milestone.getProjectid(),
-                ProjectTypeConstants.MILESTONE, "" + milestone.getId());
+        String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), milestone.getProjectid(),
+                ProjectTypeConstants.INSTANCE.getMILESTONE(), "" + milestone.getId());
         uploadField.saveContentsToRepo(attachPath);
 
         if (!SiteConfiguration.isCommunityEdition() && MilestoneStatus.Closed.name().equals(milestone.getStatus())) {
             ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-            searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.RISK,
-                    ProjectTypeConstants.TASK));
+            searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.INSTANCE.getBUG(), ProjectTypeConstants.INSTANCE.getRISK(),
+                    ProjectTypeConstants.INSTANCE.getTASK()));
             searchCriteria.setMilestoneId(NumberSearchField.equal(milestone.getId()));
             searchCriteria.setIsOpenned(new SearchField());
             ProjectTicketService genericTaskService = AppContextUtil.getSpringBean(ProjectTicketService.class);

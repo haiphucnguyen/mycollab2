@@ -195,7 +195,7 @@ public class GeneralSettingViewImpl extends AbstractVerticalPageView implements 
         logoUploadField.addStyleName("upload-field");
         logoUploadField.setSizeUndefined();
         logoUploadField.setFieldType(UploadField.FieldType.BYTE_ARRAY);
-        logoUploadField.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+        logoUploadField.setVisible(UserUIContext.canBeYes(RolePermissionCollections.INSTANCE.getACCOUNT_THEME()));
 
         MButton resetButton = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_RESET), clickEvent -> {
             BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
@@ -203,7 +203,7 @@ public class GeneralSettingViewImpl extends AbstractVerticalPageView implements 
             billingAccountService.updateWithSession(billingAccount, UserUIContext.getUsername());
             Page.getCurrent().getJavaScript().execute("window.location.reload();");
         }).withStyleName(WebThemes.BUTTON_OPTION);
-        resetButton.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+        resetButton.setVisible(UserUIContext.canBeYes(RolePermissionCollections.INSTANCE.getACCOUNT_THEME()));
 
         buttonControls.with(resetButton, logoUploadField);
         rightPanel.with(previewLayout, buttonControls);
@@ -219,7 +219,7 @@ public class GeneralSettingViewImpl extends AbstractVerticalPageView implements 
         Label logoDesc = new Label(UserUIContext.getMessage(FileI18nEnum.OPT_FAVICON_FORMAT_DESCRIPTION));
         leftPanel.with(logoDesc).withWidth("250px");
         MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false);
-        final Image favIconRes = new Image("", new ExternalResource(StorageUtils.getFavIconPath(billingAccount.getId(),
+        final Image favIconRes = new Image("", new ExternalResource(StorageUtils.INSTANCE.getFavIconPath(billingAccount.getId(),
                 billingAccount.getFaviconpath())));
 
         MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false));
@@ -246,7 +246,7 @@ public class GeneralSettingViewImpl extends AbstractVerticalPageView implements 
                         BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageData));
                         String newFavIconPath = favIconService.upload(UserUIContext.getUsername(), image, AppUI
                                 .getAccountId());
-                        favIconRes.setSource(new ExternalResource(StorageUtils.getFavIconPath(billingAccount.getId(),
+                        favIconRes.setSource(new ExternalResource(StorageUtils.INSTANCE.getFavIconPath(billingAccount.getId(),
                                 newFavIconPath)));
                         Page.getCurrent().getJavaScript().execute("window.location.reload();");
                     } catch (IOException e) {
@@ -261,7 +261,7 @@ public class GeneralSettingViewImpl extends AbstractVerticalPageView implements 
         favIconUploadField.addStyleName("upload-field");
         favIconUploadField.setSizeUndefined();
         favIconUploadField.setFieldType(UploadField.FieldType.BYTE_ARRAY);
-        favIconUploadField.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+        favIconUploadField.setVisible(UserUIContext.canBeYes(RolePermissionCollections.INSTANCE.getACCOUNT_THEME()));
 
         MButton resetButton = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_RESET), clickEvent -> {
             BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
@@ -269,7 +269,7 @@ public class GeneralSettingViewImpl extends AbstractVerticalPageView implements 
             billingAccountService.updateWithSession(billingAccount, UserUIContext.getUsername());
             Page.getCurrent().getJavaScript().execute("window.location.reload();");
         }).withStyleName(WebThemes.BUTTON_OPTION);
-        resetButton.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+        resetButton.setVisible(UserUIContext.canBeYes(RolePermissionCollections.INSTANCE.getACCOUNT_THEME()));
 
         buttonControls.with(resetButton, favIconUploadField);
         rightPanel.with(favIconRes, buttonControls);

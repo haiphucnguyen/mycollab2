@@ -33,7 +33,7 @@ public abstract class AppUI extends UI {
     private static final Logger LOG = LoggerFactory.getLogger(AppUI.class);
 
     static {
-        GroupIdProvider.registerAccountIdProvider(new GroupIdProvider() {
+        GroupIdProvider.Companion.registerAccountIdProvider(new GroupIdProvider() {
             @Override
             public Integer getGroupId() {
                 return AppUI.getAccountId();
@@ -45,7 +45,7 @@ public abstract class AppUI extends UI {
             }
         });
 
-        SessionIdGenerator.registerSessionIdGenerator(new SessionIdGenerator() {
+        SessionIdGenerator.Companion.registerSessionIdGenerator(new SessionIdGenerator() {
             @Override
             public String getSessionIdApp() {
                 return UI.getCurrent().toString();

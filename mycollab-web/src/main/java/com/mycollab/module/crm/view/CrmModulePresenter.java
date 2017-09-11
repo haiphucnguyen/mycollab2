@@ -31,6 +31,6 @@ public class CrmModulePresenter extends AbstractPresenter<CrmModule> {
             ShellUrlResolver.ROOT().getSubResolver("crm").handle(params);
         }
 
-        UserUIContext.updateLastModuleVisit(ModuleNameConstants.CRM);
+        UserUIContext.updateLastModuleVisit(ModuleNameConstants.INSTANCE.getCRM());
     }
 }

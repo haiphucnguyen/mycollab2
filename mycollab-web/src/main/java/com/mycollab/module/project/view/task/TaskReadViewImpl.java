@@ -51,7 +51,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     public TaskReadViewImpl() {
         super(UserUIContext.getMessage(TaskI18nEnum.DETAIL),
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK), new TaskPreviewFormLayout());
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()), new TaskPreviewFormLayout());
     }
 
     @Override
@@ -66,10 +66,10 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     @Override
     protected void initRelatedComponents() {
-        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.TASK, CurrentProjectVariables.getProjectId());
+        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getTASK(), CurrentProjectVariables.getProjectId());
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.TASK, ProjectRolePermissionCollections.TASKS);
+        followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.INSTANCE.getTASK(), ProjectRolePermissionCollections.INSTANCE.getTASKS());
 
         if (SiteConfiguration.isCommunityEdition()) {
             addToSideBar(dateInfoComp, peopleInfoComp, followerSheet);
@@ -84,7 +84,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         ((TaskPreviewFormLayout) previewLayout).displayTaskHeader(beanItem);
 
         if (tagViewComponent != null) {
-            tagViewComponent.display(ProjectTypeConstants.TASK, beanItem.getId());
+            tagViewComponent.display(ProjectTypeConstants.INSTANCE.getTASK(), beanItem.getId());
         }
 
         if (timeLogComp != null) {
@@ -118,7 +118,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                         | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.PRINT_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.NAVIGATOR_BTN_PRESENTED,
-                ProjectRolePermissionCollections.TASKS);
+                ProjectRolePermissionCollections.INSTANCE.getTASKS());
     }
 
     @Override
@@ -126,7 +126,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         if (SiteConfiguration.isCommunityEdition()) {
             return null;
         } else {
-            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
             return tagViewComponent;
         }
     }
@@ -138,7 +138,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     @Override
     protected String getType() {
-        return ProjectTypeConstants.TASK;
+        return ProjectTypeConstants.INSTANCE.getTASK();
     }
 
     private static class TaskPreviewFormLayout extends ReadViewLayout {

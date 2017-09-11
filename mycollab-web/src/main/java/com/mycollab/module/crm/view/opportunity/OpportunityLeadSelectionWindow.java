@@ -37,7 +37,7 @@ public class OpportunityLeadSelectionWindow extends RelatedItemSelectionWindow<S
         tableItem.addGeneratedColumn("leadName", (source, itemId, columnId) -> {
             final SimpleLead lead = tableItem.getBeanByIndex(itemId);
             return new ELabel(lead.getLeadName()).withStyleName(WebThemes.BUTTON_LINK)
-                    .withDescription(CrmTooltipGenerator.generateTooltipLead(UserUIContext.getUserLocale(), lead,
+                    .withDescription(CrmTooltipGenerator.INSTANCE.generateTooltipLead(UserUIContext.getUserLocale(), lead,
                             AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
 

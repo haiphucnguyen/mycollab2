@@ -55,11 +55,11 @@ public class ActivityRootView extends AbstractVerticalPageView {
     private void buildComponents() {
         activityTabs.addTab(constructCalendarView(), "calendar",
                 UserUIContext.getMessage(ActivityI18nEnum.TAB_CALENDAR_TITLE),
-                new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/22/crm/calendar.png")));
+                new ExternalResource(StorageUtils.INSTANCE.generateAssetRelativeLink("icons/22/crm/calendar.png")));
 
         activityTabs.addTab(constructActivityListView(), "activities",
                 UserUIContext.getMessage(ActivityI18nEnum.TAB_ACTIVITY_TITLE),
-                new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/22/crm/activitylist.png")));
+                new ExternalResource(StorageUtils.INSTANCE.generateAssetRelativeLink("icons/22/crm/activitylist.png")));
 
         activityTabs.addSelectedTabChangeListener(selectedTabChangeEvent -> {
             Tab tab = ((VerticalTabsheet) selectedTabChangeEvent.getSource()).getSelectedTab();

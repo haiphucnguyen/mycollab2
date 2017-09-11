@@ -13,7 +13,7 @@ public class AccountTypeComboBox extends I18nValueComboBox {
     public AccountTypeComboBox() {
         super();
         setCaption(null);
-        this.loadData(CrmDataTypeFactory.getAccountTypeList());
+        this.loadData(CrmDataTypeFactory.INSTANCE.getAccountTypeList());
     }
 
 }

@@ -108,7 +108,7 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_CALL)) {
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CALL())) {
             SimpleCall call;
             if (data.getParams() instanceof Integer) {
                 CallService callService = AppContextUtil.getSpringBean(CallService.class);
@@ -124,7 +124,7 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
             super.onGo(container, data);
 
             view.previewItem(call);
-            AppUI.addFragment(CrmLinkGenerator.generateCallPreviewLink(call.getId()), UserUIContext.
+            AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateCallPreviewLink(call.getId()), UserUIContext.
                     getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE, UserUIContext.getMessage(CallI18nEnum.SINGLE),
                             call.getSubject()));
         } else {

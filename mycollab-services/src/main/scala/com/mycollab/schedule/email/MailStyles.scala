@@ -20,7 +20,7 @@ class MailStyles {
   }
 
   def cell(width: String): String = {
-    return "width: " + width + "; padding: 10px; vertical-align: top;"
+    "width: " + width + "; padding: 10px; vertical-align: top;"
   }
 }
 

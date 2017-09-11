@@ -27,7 +27,7 @@ public class ActivityPresenter extends AbstractPresenter<ActivityContainer> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.ACTIVITY);
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getACTIVITY());
         ActivityRootView activityContainer = (ActivityRootView) container;
         ActivityContainer eventContainer = (ActivityContainer) activityContainer
                 .gotoView(UserUIContext.getMessage(ActivityI18nEnum.TAB_ACTIVITY_TITLE));

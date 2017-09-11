@@ -20,7 +20,7 @@ public class ActivityCalendarPresenter extends CrmGenericPresenter<ActivityCalen
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.ACTIVITY);
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getACTIVITY());
         super.onGo(container, data);
 
         AppUI.addFragment("crm/activity/calendar", "Calendar");

@@ -47,7 +47,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
     public void editItem(SimpleRisk item) {
         attachmentUploadField = new ProjectFormAttachmentUploadField();
         if (item.getId() != null) {
-            attachmentUploadField.getAttachments(item.getProjectid(), ProjectTypeConstants.RISK, item.getId());
+            attachmentUploadField.getAttachments(item.getProjectid(), ProjectTypeConstants.INSTANCE.getRISK(), item.getId());
         }
         super.editItem(item);
         editForm.addComponent(attachmentUploadField);
@@ -55,7 +55,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(ProjectTypeConstants.INSTANCE.getRISK(), RiskDefaultFormLayoutFactory.getForm());
     }
 
     @Override
@@ -67,10 +67,10 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
     protected void onBecomingVisible() {
         super.onBecomingVisible();
         if (beanItem.getId() == null) {
-            AppUI.addFragment("project/risk/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+            AppUI.addFragment("project/risk/add/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(RiskI18nEnum.NEW));
         } else {
-            AppUI.addFragment(ProjectLinkGenerator.generateRiskEditLink(beanItem.getProjectid(), beanItem.getId()), beanItem.getName());
+            AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateRiskEditLink(beanItem.getProjectid(), beanItem.getId()), beanItem.getName());
         }
     }
 

@@ -27,7 +27,7 @@ import static com.mycollab.vaadin.ui.MyCollabSession.CURRENT_PROJECT;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewPermission(permissionId = RolePermissionCollections.CREATE_NEW_PROJECT, impliedPermissionVal = BooleanPermissionFlag.TRUE)
+@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getCREATE_NEW_PROJECT(), impliedPermissionVal = BooleanPermissionFlag.Companion.getTRUE())
 public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
     private static final long serialVersionUID = 1L;
 

@@ -14,11 +14,11 @@ public class FontAwesomeUtils {
 
     static {
         resources = new HashMap<>();
-        resources.put(ProjectTypeConstants.BUG, Integer.toHexString('\uf188'));
-        resources.put(ProjectTypeConstants.TASK, Integer.toHexString('\uf0ae'));
-        resources.put(ProjectTypeConstants.RISK, Integer.toHexString('\uf132'));
-        resources.put(ProjectTypeConstants.MILESTONE, Integer.toHexString('\uf11e'));
-        resources.put(ProjectTypeConstants.PROJECT, Integer.toHexString('\uf133'));
+        resources.put(ProjectTypeConstants.INSTANCE.getBUG(), Integer.toHexString('\uf188'));
+        resources.put(ProjectTypeConstants.INSTANCE.getTASK(), Integer.toHexString('\uf0ae'));
+        resources.put(ProjectTypeConstants.INSTANCE.getRISK(), Integer.toHexString('\uf132'));
+        resources.put(ProjectTypeConstants.INSTANCE.getMILESTONE(), Integer.toHexString('\uf11e'));
+        resources.put(ProjectTypeConstants.INSTANCE.getPROJECT(), Integer.toHexString('\uf133'));
     }
 
     public static String toHtml(String resId) {

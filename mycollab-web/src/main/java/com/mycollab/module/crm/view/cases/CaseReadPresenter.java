@@ -80,7 +80,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
             @Override
             public void onPrint(Object source, SimpleCase data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.CASE, CaseWithBLOBs.Field.subject.name(),
+                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.INSTANCE.getCASE(), CaseWithBLOBs.Field.subject.name(),
                         CasesDefaultFormLayoutFactory.getForm()));
             }
 
@@ -131,17 +131,17 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
             public void createNewRelatedItem(String itemId) {
                 if (itemId.equals("task")) {
                     SimpleCrmTask task = new SimpleCrmTask();
-                    task.setType(CrmTypeConstants.CASE);
+                    task.setType(CrmTypeConstants.INSTANCE.getCASE());
                     task.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(CaseReadPresenter.this, task));
                 } else if (itemId.equals("meeting")) {
                     SimpleMeeting meeting = new SimpleMeeting();
-                    meeting.setType(CrmTypeConstants.CASE);
+                    meeting.setType(CrmTypeConstants.INSTANCE.getCASE());
                     meeting.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(CaseReadPresenter.this, meeting));
                 } else if (itemId.equals("call")) {
                     SimpleCall call = new SimpleCall();
-                    call.setType(CrmTypeConstants.CASE);
+                    call.setType(CrmTypeConstants.INSTANCE.getCASE());
                     call.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(CaseReadPresenter.this, call));
                 }
@@ -178,8 +178,8 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.CASE);
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_CASE)) {
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getCASE());
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CASE())) {
             if (data.getParams() instanceof Integer) {
                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
                 SimpleCase cases = caseService.findById((Integer) data.getParams(), AppUI.getAccountId());
@@ -187,7 +187,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
                     super.onGo(container, data);
                     view.previewItem(cases);
 
-                    AppUI.addFragment(CrmLinkGenerator.generateCasePreviewLink(cases.getId()),
+                    AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateCasePreviewLink(cases.getId()),
                             UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                     UserUIContext.getMessage(CaseI18nEnum.SINGLE), cases.getSubject()));
                 } else {

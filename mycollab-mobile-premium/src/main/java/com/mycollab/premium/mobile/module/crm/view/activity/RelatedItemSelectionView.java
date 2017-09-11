@@ -57,19 +57,19 @@ public class RelatedItemSelectionView extends AbstractMobileTabPageView {
             return;
         }
         switch (tabName) {
-            case CrmTypeConstants.CAMPAIGN:
+            case CrmTypeConstants.INSTANCE.getCAMPAIGN():
                 this.setSelectedTab(campaignList);
                 break;
-            case CrmTypeConstants.CASE:
+            case CrmTypeConstants.INSTANCE.getCASE():
                 this.setSelectedTab(caseList);
                 break;
-            case CrmTypeConstants.CONTACT:
+            case CrmTypeConstants.INSTANCE.getCONTACT():
                 this.setSelectedTab(contactList);
                 break;
-            case CrmTypeConstants.LEAD:
+            case CrmTypeConstants.INSTANCE.getLEAD():
                 this.setSelectedTab(leadList);
                 break;
-            case CrmTypeConstants.OPPORTUNITY:
+            case CrmTypeConstants.INSTANCE.getOPPORTUNITY():
                 this.setSelectedTab(opportunityList);
                 break;
             default:

@@ -103,8 +103,8 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
     @Override
     public void display() {
         removeAllComponents();
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE)) {
-            ELabel invoiceIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml()).withWidthUndefined();
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getINVOICE())) {
+            ELabel invoiceIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getINVOICE()).getHtml()).withWidthUndefined();
 
             Component headerRightLayout = createHeaderRight();
             statusComboBox = new InvoiceStatusComboBox();
@@ -137,7 +137,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
             invoice.setStatus(InvoiceStatus.Scheduled.name());
             UI.getCurrent().addWindow(new InvoiceAddWindow(invoice));
         }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
-        createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
+        createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getINVOICE()));
         return new MHorizontalLayout(createBtn);
     }
 
@@ -145,10 +145,10 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
         invoiceStatus = status;
         InvoiceSearchCriteria searchCriteria = new InvoiceSearchCriteria();
         if (!InvoiceStatus.All.name().equals(status)) {
-            searchCriteria.addExtraField(InvoiceSearchCriteria.p_status().buildPropertyParamInList(SearchField.AND,
+            searchCriteria.addExtraField(InvoiceSearchCriteria.p_status().buildPropertyParamInList(SearchField.Companion.getAND(),
                     Collections.singletonList(status)));
         }
-        searchCriteria.addExtraField(InvoiceSearchCriteria.p_projectIds().buildPropertyParamInList(SearchField.AND,
+        searchCriteria.addExtraField(InvoiceSearchCriteria.p_projectIds().buildPropertyParamInList(SearchField.Companion.getAND(),
                 Collections.singletonList(CurrentProjectVariables.getProjectId())));
         int count = invoiceListComp.setSearchCriteria(searchCriteria);
         statusComboBox.setItemCaption(status, status + " (" + count + ")");
@@ -274,14 +274,14 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
 
             PrintButton printBtn = new PrintButton();
             printBtn.setStyleName(WebThemes.BUTTON_OPTION);
-            printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE));
-            printBtn.doPrint(invoice, new FormReportLayout(ProjectTypeConstants.INVOICE, Invoice.Field.noid.name(),
+            printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getINVOICE()));
+            printBtn.doPrint(invoice, new FormReportLayout(ProjectTypeConstants.INSTANCE.getINVOICE(), Invoice.Field.noid.name(),
                     InvoiceDefaultFormLayoutFactory.getForm(), Invoice.Field.id.name()));
 
             MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                     clickEvent -> UI.getCurrent().addWindow(new InvoiceAddWindow(invoice)))
                     .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.EDIT);
-            editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
+            editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getINVOICE()));
 
             MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
@@ -297,24 +297,24 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
                             }
                         });
             }).withStyleName(WebThemes.BUTTON_DANGER).withIcon(FontAwesome.TRASH_O);
-            deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INVOICE));
+            deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getINVOICE()));
 
             MHorizontalLayout buttonControls = new MHorizontalLayout(printBtn, editBtn, deleteBtn);
             header.with(headerLbl, buttonControls).expand(headerLbl);
             previewForm = new AdvancedPreviewBeanForm<>();
             addComponent(previewForm);
 
-            activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INVOICE, CurrentProjectVariables.getProjectId());
+            activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getINVOICE(), CurrentProjectVariables.getProjectId());
             addComponent(activityComponent);
 
             if (StringUtils.isBlank(invoice.getNote())) {
-                headerLbl.setValue(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml() + " " + invoice.getNoid());
+                headerLbl.setValue(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getINVOICE()).getHtml() + " " + invoice.getNoid());
             } else {
-                headerLbl.setValue(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml() + " " +
+                headerLbl.setValue(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getINVOICE()).getHtml() + " " +
                         invoice.getNoid() + " - " + invoice.getNote());
             }
 
-            previewForm.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.INVOICE,
+            previewForm.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getINVOICE(),
                     InvoiceDefaultFormLayoutFactory.getForm()));
             previewForm.setBeanFormFieldFactory(new InvoiceReadFormFieldFactory(previewForm));
             previewForm.setBean(invoice);

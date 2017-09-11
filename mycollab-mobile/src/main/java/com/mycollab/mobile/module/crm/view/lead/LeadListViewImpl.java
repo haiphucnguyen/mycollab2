@@ -59,7 +59,7 @@ public class LeadListViewImpl extends AbstractListPageView<LeadSearchCriteria, S
         };
         MButton newLeadBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new LeadEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_LEAD));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_LEAD()));
         return new MHorizontalLayout(searchBtn, newLeadBtn).alignAll(Alignment.TOP_RIGHT);
     }
 }

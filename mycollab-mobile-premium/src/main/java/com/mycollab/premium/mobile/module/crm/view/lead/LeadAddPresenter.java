@@ -53,7 +53,7 @@ public class LeadAddPresenter extends AbstractCrmPresenter<LeadAddView> implemen
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_LEAD)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
             SimpleLead lead = null;
             if (data.getParams() instanceof SimpleLead) {
                 lead = (SimpleLead) data.getParams();

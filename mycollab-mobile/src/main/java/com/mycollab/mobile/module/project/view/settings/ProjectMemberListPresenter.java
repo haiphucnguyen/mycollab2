@@ -22,7 +22,7 @@ public class ProjectMemberListPresenter extends ProjectListPresenter<ProjectMemb
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.USERS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getUSERS())) {
             super.onGo(container, data);
         } else {
             NotificationUtil.showMessagePermissionAlert();

@@ -38,11 +38,11 @@ public class TicketTableDisplay extends DefaultPagedBeanTable<ProjectTicketServi
             Div div = new DivLessFormatter();
             Text image = new Text(ProjectAssetsManager.getAsset(task.getType()).getHtml());
             A itemLink = new A().setId("tag" + TOOLTIP_ID);
-            if (ProjectTypeConstants.TASK.equals(task.getType()) || ProjectTypeConstants.BUG.equals(task.getType())) {
-                itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(task.getProjectShortName(),
+            if (ProjectTypeConstants.INSTANCE.getTASK().equals(task.getType()) || ProjectTypeConstants.INSTANCE.getBUG().equals(task.getType())) {
+                itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(task.getProjectShortName(),
                         task.getProjectId(), task.getType(), task.getExtraTypeId() + ""));
             } else {
-                itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(task.getProjectShortName(),
+                itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(task.getProjectShortName(),
                         task.getProjectId(), task.getType(), task.getTypeId() + ""));
             }
 

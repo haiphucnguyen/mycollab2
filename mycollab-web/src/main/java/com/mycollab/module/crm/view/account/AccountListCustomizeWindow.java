@@ -16,7 +16,7 @@ public class AccountListCustomizeWindow extends CustomizedTableWindow {
     private static final long serialVersionUID = 1L;
 
     public AccountListCustomizeWindow(AccountTableDisplay table) {
-        super(CrmTypeConstants.ACCOUNT, table);
+        super(CrmTypeConstants.INSTANCE.getACCOUNT(), table);
     }
 
     protected Collection<TableViewField> getAvailableColumns() {

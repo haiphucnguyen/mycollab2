@@ -112,7 +112,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
         baseCriteria = new MilestoneSearchCriteria();
         baseCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("startdate",
-                SearchCriteria.DESC), new SearchCriteria.OrderField("enddate", SearchCriteria.DESC)));
+                SearchCriteria.Companion.getDESC()), new SearchCriteria.OrderField("enddate", SearchCriteria.Companion.getDESC())));
         displayMilestones();
 
         closeMilestoneSelection = new CheckBox("", true);
@@ -185,13 +185,13 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             roadMapView.addComponent(new MilestoneBlock(milestone));
         }
 
-        headerText.setValue(String.format("%s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml(),
+        headerText.setValue(String.format("%s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml(),
                 UserUIContext.getMessage(MilestoneI18nEnum.OPT_ROADMAP_VALUE, milestones.size())));
     }
 
     @Override
     public void refresh() {
-        headerText.setValue(String.format("%s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml(),
+        headerText.setValue(String.format("%s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml(),
                 UserUIContext.getMessage(MilestoneI18nEnum.OPT_ROADMAP_VALUE, roadMapView.getComponentCount())));
     }
 
@@ -215,7 +215,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
         }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES()));
 
         MButton printBtn = new MButton("", clickEvent ->
                 UI.getCurrent().addWindow(new MilestoneCustomizeReportOutputWindow(new LazyValueInjector() {
@@ -326,7 +326,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                                 status = UserUIContext.getMessage(StatusI18nEnum.class, ticket.getStatus());
                             }
                             rowComp.with(new ELabel(status).withStyleName(UIConstants.BLOCK).withWidthUndefined());
-                            String avatarLink = StorageUtils.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
+                            String avatarLink = StorageUtils.INSTANCE.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
                             Img img = new Img(ticket.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                                     .setTitle(ticket.getAssignUserFullName());
                             rowComp.with(ELabel.html(img.write()).withWidthUndefined());

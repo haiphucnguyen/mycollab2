@@ -52,7 +52,7 @@ public class OpportunityAddPresenter extends AbstractCrmPresenter<OpportunityAdd
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY())) {
 
             SimpleOpportunity opportunity = null;
             if (data.getParams() instanceof SimpleOpportunity) {

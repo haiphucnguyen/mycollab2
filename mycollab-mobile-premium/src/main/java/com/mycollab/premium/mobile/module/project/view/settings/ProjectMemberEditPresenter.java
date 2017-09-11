@@ -45,12 +45,12 @@ public class ProjectMemberEditPresenter extends AbstractProjectPresenter<Project
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS())) {
             SimpleProjectMember member = (SimpleProjectMember) data.getParams();
             super.onGo(container, data);
             view.editItem(member);
 
-            AppUI.addFragment("project/user/edit/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(),
+            AppUI.addFragment("project/user/edit/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId(),
                     member.getId()), member.getDisplayName());
         } else {
             NotificationUtil.showMessagePermissionAlert();

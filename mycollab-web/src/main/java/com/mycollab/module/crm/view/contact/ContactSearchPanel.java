@@ -33,18 +33,18 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public class ContactSearchPanel extends DefaultGenericSearchPanel<ContactSearchCriteria> {
 
     private static Param[] paramFields = new Param[]{
-            ContactSearchCriteria.p_name, ContactSearchCriteria.p_account,
-            ContactSearchCriteria.p_leadsource,
-            ContactSearchCriteria.p_billingCountry,
-            ContactSearchCriteria.p_shippingCountry,
-            ContactSearchCriteria.p_anyPhone, ContactSearchCriteria.p_anyEmail,
-            ContactSearchCriteria.p_anyCity, ContactSearchCriteria.p_assignee,
-            ContactSearchCriteria.p_createdtime,
-            ContactSearchCriteria.p_lastupdatedtime};
+            ContactSearchCriteria.Companion.getP_name(), ContactSearchCriteria.Companion.getP_account(),
+            ContactSearchCriteria.Companion.getP_leadsource(),
+            ContactSearchCriteria.Companion.getP_billingCountry(),
+            ContactSearchCriteria.Companion.getP_shippingCountry(),
+            ContactSearchCriteria.Companion.getP_anyPhone(), ContactSearchCriteria.Companion.getP_anyEmail(),
+            ContactSearchCriteria.Companion.getP_anyCity(), ContactSearchCriteria.Companion.getP_assignee(),
+            ContactSearchCriteria.Companion.getP_createdtime(),
+            ContactSearchCriteria.Companion.getP_lastupdatedtime()};
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getCONTACT(), UserUIContext.getMessage(ContactI18nEnum.LIST));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ContactSearchPanel extends DefaultGenericSearchPanel<ContactSearchC
         return new MButton(UserUIContext.getMessage(ContactI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CONTACT));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CONTACT()));
     }
 
     @Override
@@ -119,7 +119,7 @@ public class ContactSearchPanel extends DefaultGenericSearchPanel<ContactSearchC
     private class ContactAdvancedSearchLayout extends DynamicQueryParamLayout<ContactSearchCriteria> {
 
         ContactAdvancedSearchLayout() {
-            super(ContactSearchPanel.this, CrmTypeConstants.CONTACT);
+            super(ContactSearchPanel.this, CrmTypeConstants.INSTANCE.getCONTACT());
         }
 
         @Override

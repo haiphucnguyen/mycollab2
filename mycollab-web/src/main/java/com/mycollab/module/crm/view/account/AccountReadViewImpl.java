@@ -45,7 +45,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     private CrmFollowersComp<SimpleAccount> compFollowers;
 
     public AccountReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
+        super(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()));
     }
 
     @Override
@@ -60,13 +60,13 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_ACCOUNT);
+        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT());
     }
 
     private void displayActivities() {
         ActivitySearchCriteria criteria = new ActivitySearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-        criteria.setType(StringSearchField.and(CrmTypeConstants.ACCOUNT));
+        criteria.setType(StringSearchField.and(CrmTypeConstants.INSTANCE.getACCOUNT()));
         criteria.setTypeid(new NumberSearchField(beanItem.getId()));
         associateActivityList.setSearchCriteria(criteria);
     }
@@ -95,8 +95,8 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
         SimpleLead lead = leadService.findConvertedLeadOfAccount(beanItem.getId(), AppUI.getAccountId());
         if (lead != null) {
             return beanItem.getAccountname() + UserUIContext.getMessage(
-                    LeadI18nEnum.CONVERT_FROM_LEAD_TITLE, CrmAssetsManager.getAsset(CrmTypeConstants.LEAD).getHtml(),
-                    CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()), lead.getLeadName());
+                    LeadI18nEnum.CONVERT_FROM_LEAD_TITLE, CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()).getHtml(),
+                    CrmLinkGenerator.INSTANCE.generateCrmItemLink(CrmTypeConstants.INSTANCE.getLEAD(), lead.getId()), lead.getLeadName());
         } else {
             return beanItem.getAccountname();
         }
@@ -116,31 +116,31 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
         associateOpportunityList = new AccountOpportunityListComp();
         associateLeadList = new AccountLeadListComp();
         associateCaseList = new AccountCaseListComp();
-        activityComponent = new CrmActivityComponent(CrmTypeConstants.ACCOUNT);
+        activityComponent = new CrmActivityComponent(CrmTypeConstants.INSTANCE.getACCOUNT());
 
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        compFollowers = new CrmFollowersComp<>(CrmTypeConstants.ACCOUNT, RolePermissionCollections.CRM_ACCOUNT);
+        compFollowers = new CrmFollowersComp<>(CrmTypeConstants.INSTANCE.getACCOUNT(), RolePermissionCollections.INSTANCE.getCRM_ACCOUNT());
         addToSideBar(dateInfoComp, peopleInfoComp, compFollowers);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
-        tabSheet.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
-        tabSheet.addTab(associateLeadList, CrmTypeConstants.LEAD, UserUIContext.getMessage(LeadI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
-        tabSheet.addTab(associateOpportunityList, CrmTypeConstants.OPPORTUNITY,
-                UserUIContext.getMessage(OpportunityI18nEnum.LIST), CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
-        tabSheet.addTab(associateCaseList, CrmTypeConstants.CASE, UserUIContext.getMessage(CaseI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.CASE));
-        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
-                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
-        tabSheet.selectTab(CrmTypeConstants.DETAIL);
+        tabSheet.addTab(previewLayout, CrmTypeConstants.INSTANCE.getDETAIL(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getDETAIL()));
+        tabSheet.addTab(associateContactList, CrmTypeConstants.INSTANCE.getCONTACT(), UserUIContext.getMessage(ContactI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()));
+        tabSheet.addTab(associateLeadList, CrmTypeConstants.INSTANCE.getLEAD(), UserUIContext.getMessage(LeadI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()));
+        tabSheet.addTab(associateOpportunityList, CrmTypeConstants.INSTANCE.getOPPORTUNITY(),
+                UserUIContext.getMessage(OpportunityI18nEnum.LIST), CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY()));
+        tabSheet.addTab(associateCaseList, CrmTypeConstants.INSTANCE.getCASE(), UserUIContext.getMessage(CaseI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCASE()));
+        tabSheet.addTab(associateActivityList, CrmTypeConstants.INSTANCE.getACTIVITY(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
+                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()));
+        tabSheet.selectTab(CrmTypeConstants.INSTANCE.getDETAIL());
     }
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.ACCOUNT, AccountDefaultDynaFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getACCOUNT(), AccountDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -161,7 +161,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
         dateInfoComp.displayEntryDateTime(beanItem);
         compFollowers.displayFollowers(beanItem);
 
-        tabSheet.selectTab(CrmTypeConstants.DETAIL);
+        tabSheet.selectTab(CrmTypeConstants.INSTANCE.getDETAIL());
     }
 
     @Override
@@ -201,6 +201,6 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.ACCOUNT;
+        return CrmTypeConstants.INSTANCE.getACCOUNT();
     }
 }

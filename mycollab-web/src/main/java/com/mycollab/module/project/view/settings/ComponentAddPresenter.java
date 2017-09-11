@@ -75,7 +75,7 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS())) {
             BugComponentContainer componentContainer = (BugComponentContainer) container;
             componentContainer.removeAllComponents();
             componentContainer.addComponent(view);

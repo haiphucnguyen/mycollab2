@@ -50,7 +50,7 @@ public class CaseSelectionWindow extends MWindow {
             return new MButton(cases.getSubject(), clickEvent -> {
                 fieldSelection.fireValueChange(cases);
                 close();
-            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateTooltipCases(
+            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.INSTANCE.generateTooltipCases(
                     UserUIContext.getUserLocale(), cases, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
     }

@@ -103,7 +103,7 @@ public class LeadReadPresenter extends AbstractCrmPresenter<LeadReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_LEAD)) {
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
 
             if (data.getParams() instanceof Integer) {
                 LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);

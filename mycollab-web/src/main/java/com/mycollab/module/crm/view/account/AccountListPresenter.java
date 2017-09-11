@@ -104,8 +104,8 @@ public class AccountListPresenter extends CrmGenericListPresenter<AccountListVie
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.ACCOUNT);
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getACCOUNT());
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
             searchCriteria = (AccountSearchCriteria) data.getParams();
             int totalCount = accountService.getTotalCount(searchCriteria);
             if (totalCount > 0) {

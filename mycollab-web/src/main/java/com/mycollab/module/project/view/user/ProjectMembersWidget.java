@@ -57,11 +57,11 @@ public class ProjectMembersWidget extends Depot {
             sortAsc = !sortAsc;
             if (sortAsc) {
                 sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
-                searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC)));
+                searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName", SearchCriteria.Companion.getASC())));
             } else {
                 sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
                 searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName",
-                        SearchCriteria.DESC)));
+                        SearchCriteria.Companion.getDESC())));
             }
             memberList.setSearchCriteria(searchCriteria);
             setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.WIDGET_MEMBERS_TITLE, memberList.getTotalCount()));
@@ -87,7 +87,7 @@ public class ProjectMembersWidget extends Depot {
         MButton inviteMemberBtn = new MButton(UserUIContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEE), clickEvent ->
                 EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoInviteMembers(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS()));
         addHeaderElement(inviteMemberBtn);
 
         memberList = new DefaultBeanPagedList<>(AppContextUtil.getSpringBean(ProjectMemberService.class),
@@ -98,9 +98,9 @@ public class ProjectMembersWidget extends Depot {
     void showInformation() {
         searchCriteria = new ProjectMemberSearchCriteria();
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        searchCriteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE,
-                ProjectMemberStatusConstants.NOT_ACCESS_YET));
-        searchCriteria.addOrderField(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC));
+        searchCriteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.INSTANCE.getACTIVE(),
+                ProjectMemberStatusConstants.INSTANCE.getNOT_ACCESS_YET()));
+        searchCriteria.addOrderField(new SearchCriteria.OrderField("memberFullName", SearchCriteria.Companion.getASC()));
         showMembers();
     }
 
@@ -134,10 +134,10 @@ public class ProjectMembersWidget extends Depot {
                     .withStyleName(UIConstants.META_INFO);
             footer.addComponent(memberRole);
 
-            String memberWorksInfo = ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + "&nbsp;" +
+            String memberWorksInfo = ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()).getHtml() + "&nbsp;" +
                     new Span().appendText("" + member.getNumOpenTasks()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_TASKS)) +
                     "&nbsp;&nbsp;" +
-                    ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + "&nbsp;" +
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()).getHtml() + "&nbsp;" +
                     new Span().appendText("" + member.getNumOpenBugs()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_BUGS)) + "&nbsp;&nbsp;"
                     + FontAwesome.MONEY.getHtml() + "&nbsp;" + new Span().appendText("" + NumberUtils.roundDouble(2,
                     member.getTotalBillableLogTime())).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)) + "&nbsp;&nbsp;" +

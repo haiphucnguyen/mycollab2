@@ -70,7 +70,7 @@ public class ReportBreadcrumb extends Breadcrumb implements CacheableComponent {
         this.addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(new Button(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD)));
-        AppUI.addFragment(ProjectLinkGenerator.generateUsersWorkloadReportLink(), UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
+        AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateUsersWorkloadReportLink(), UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
     }
 
     private static class GotoReportsListener implements Button.ClickListener {

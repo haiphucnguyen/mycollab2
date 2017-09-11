@@ -44,7 +44,7 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleCrmTas
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.TASK, AssignmentDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getTASK(), AssignmentDefaultFormLayoutFactory.getForm());
     }
 
     @Override
@@ -54,7 +54,7 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleCrmTas
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_TASK);
+        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.INSTANCE.getCRM_TASK());
     }
 
     @Override
@@ -66,6 +66,6 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleCrmTas
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.TASK;
+        return CrmTypeConstants.INSTANCE.getTASK();
     }
 }

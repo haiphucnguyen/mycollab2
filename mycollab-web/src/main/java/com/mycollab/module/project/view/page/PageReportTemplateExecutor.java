@@ -93,7 +93,7 @@ class PageReportTemplateExecutor extends ReportTemplateExecutor {
     private void printActivities(Page bean) {
         CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
         final CommentSearchCriteria commentCriteria = new CommentSearchCriteria();
-        commentCriteria.setType(StringSearchField.and(ProjectTypeConstants.PAGE));
+        commentCriteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getPAGE()));
         commentCriteria.setTypeId(StringSearchField.and(bean.getPath()));
         final int commentCount = commentService.getTotalCount(commentCriteria);
         HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text("Comments (" + commentCount + ")")

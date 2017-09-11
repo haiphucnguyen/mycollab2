@@ -27,7 +27,7 @@ public class ProjectMemberListPresenter extends AbstractPresenter<ProjectMemberL
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.USERS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getUSERS())) {
             ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
             userGroupContainer.setContent(view);
 
@@ -35,7 +35,7 @@ public class ProjectMemberListPresenter extends AbstractPresenter<ProjectMemberL
             if (data.getParams() == null) {
                 criteria = new ProjectMemberSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                criteria.setStatuses(new SetSearchField<String>(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET));
+                criteria.setStatuses(new SetSearchField<String>(ProjectMemberStatusConstants.INSTANCE.getACTIVE(), ProjectMemberStatusConstants.INSTANCE.getNOT_ACCESS_YET()));
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
             } else {
                 criteria = (ProjectMemberSearchCriteria) data.getParams();

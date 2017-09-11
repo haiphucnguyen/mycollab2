@@ -55,7 +55,7 @@ public class ContactSelectionWindow extends MWindow {
             return new MButton(contact.getContactName(), clickEvent -> {
                 fieldSelection.fireValueChange(contact);
                 close();
-            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateToolTipContact(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.INSTANCE.generateToolTipContact(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
                     contact, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
     }

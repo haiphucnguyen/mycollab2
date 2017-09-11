@@ -15,7 +15,7 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd
  * @since 5.3.5
  */
-@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_BILLING, impliedPermissionVal = BooleanPermissionFlag.TRUE)
+@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_BILLING(), impliedPermissionVal = BooleanPermissionFlag.Companion.getTRUE())
 public class BillingHistoryPresenter extends AbstractPresenter<BillingHistoryView> {
     private static final long serialVersionUID = 1L;
 

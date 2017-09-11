@@ -99,7 +99,7 @@ public class AccountReadPresenter extends AbstractCrmPresenter<AccountReadView> 
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
             if (data.getParams() instanceof Integer) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 SimpleAccount account = accountService.findById((Integer) data.getParams(), AppUI.getAccountId());

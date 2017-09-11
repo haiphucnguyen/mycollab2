@@ -135,7 +135,7 @@ public class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
                 return new ProjectUserFormLinkField(beanItem.getCreateduser(), beanItem.getLoguserAvatarId(), beanItem.getLoguserFullName());
             } else if (BugWithBLOBs.Field.id.equalTo(propertyId)) {
                 return new ProjectFormAttachmentDisplayField(
-                        beanItem.getProjectid(), ProjectTypeConstants.BUG, beanItem.getId());
+                        beanItem.getProjectid(), ProjectTypeConstants.INSTANCE.getBUG(), beanItem.getId());
             } else if (SimpleBug.Field.components.equalTo(propertyId)) {
                 final List<Component> components = beanItem.getComponents();
                 if (CollectionUtils.isNotEmpty(components)) {
@@ -180,7 +180,7 @@ public class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
                 }
 
             } else if (SimpleBug.Field.milestoneName.equalTo(propertyId)) {
-                return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, beanItem.getMilestoneid() + "",
+                return new ProjectItemViewField(ProjectTypeConstants.INSTANCE.getMILESTONE(), beanItem.getMilestoneid() + "",
                         beanItem.getMilestoneName());
             } else if (BugWithBLOBs.Field.environment.equalTo(propertyId)) {
                 return new RichTextViewField(beanItem.getEnvironment());

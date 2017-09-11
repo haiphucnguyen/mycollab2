@@ -122,8 +122,8 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
             String type = ProjectLocalizationTypeMap.getType(activityStream.getType());
             AuditLogRegistry auditLogRegistry = AppContextUtil.getSpringBean(AuditLogRegistry.class);
 
-            if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {
-                if (ProjectTypeConstants.PROJECT.equals(activityStream.getType())) {
+            if (ActivityStreamConstants.INSTANCE.getACTION_CREATE().equals(activityStream.getAction())) {
+                if (ProjectTypeConstants.INSTANCE.getPROJECT().equals(activityStream.getType())) {
                     content.append(UserUIContext.getMessage(
                             ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
                             assigneeValue, type, projectLink));
@@ -133,8 +133,8 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
                             assigneeValue, type, itemLink, projectLink));
                 }
 
-            } else if (ActivityStreamConstants.ACTION_UPDATE.equals(activityStream.getAction())) {
-                if (ProjectTypeConstants.PROJECT.equals(activityStream.getType())) {
+            } else if (ActivityStreamConstants.INSTANCE.getACTION_UPDATE().equals(activityStream.getAction())) {
+                if (ProjectTypeConstants.INSTANCE.getPROJECT().equals(activityStream.getType())) {
                     content.append(UserUIContext.getMessage(
                             ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
                             assigneeValue, type, projectLink));
@@ -146,7 +146,7 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
                 if (activityStream.getAssoAuditLog() != null) {
                     content.append(auditLogRegistry.generatorDetailChangeOfActivity(activityStream));
                 }
-            } else if (ActivityStreamConstants.ACTION_COMMENT.equals(activityStream.getAction())) {
+            } else if (ActivityStreamConstants.INSTANCE.getACTION_COMMENT().equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(
                         ProjectCommonI18nEnum.FEED_PROJECT_USER_ACTIVITY_COMMENT_ACTION_TITLE,
                         assigneeValue, type, itemLink, projectLink));
@@ -155,8 +155,8 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
                     content.append("<p><ul><li>\"").append(activityStream.getAssoAuditLog()
                             .getChangeset()).append("\"</li></ul></p>");
                 }
-            } else if (ActivityStreamConstants.ACTION_DELETE.equals(activityStream.getAction())) {
-                if (ProjectTypeConstants.PROJECT.equals(activityStream.getType())) {
+            } else if (ActivityStreamConstants.INSTANCE.getACTION_DELETE().equals(activityStream.getAction())) {
+                if (ProjectTypeConstants.INSTANCE.getPROJECT().equals(activityStream.getType())) {
                     content.append(UserUIContext.getMessage(
                             ProjectCommonI18nEnum.FEED_USER_ACTIVITY_DELETE_ACTION_TITLE,
                             assigneeValue, type, projectLink));
@@ -191,12 +191,12 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
         Text itemImg = new Text(ProjectAssetsManager.getAsset(activityStream.getType()).getHtml());
         A itemLink = new A();
 
-        if (ProjectTypeConstants.TASK.equals(activityStream.getType())
-                || ProjectTypeConstants.BUG.equals(activityStream.getType())) {
-            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(activityStream.getProjectShortName(),
+        if (ProjectTypeConstants.INSTANCE.getTASK().equals(activityStream.getType())
+                || ProjectTypeConstants.INSTANCE.getBUG().equals(activityStream.getType())) {
+            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(activityStream.getProjectShortName(),
                     activityStream.getExtratypeid(), activityStream.getType(), activityStream.getItemKey() + ""));
         } else {
-            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(activityStream.getProjectShortName(),
+            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(activityStream.getProjectShortName(),
                     activityStream.getExtratypeid(), activityStream.getType(), activityStream.getTypeid()));
         }
         itemLink.appendText(StringUtils.trim(activityStream.getNamefield(), 50, true));
@@ -207,7 +207,7 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
 
     private static String buildProjectValue(ProjectActivityStream activityStream) {
         DivLessFormatter div = new DivLessFormatter();
-        Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml());
+        Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPROJECT()).getHtml());
         A prjLink = new A(ProjectLinkBuilder.generateProjectFullLink(activityStream.getProjectId())).appendText(activityStream.getProjectName());
         div.appendChild(prjImg, DivLessFormatter.EMPTY_SPACE(), prjLink);
         return div.write();

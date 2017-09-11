@@ -21,10 +21,10 @@ public class ItemTimeLoggingSearchCriteria extends SearchCriteria {
     private NumberSearchField typeId;
     private BooleanSearchField isBillable;
 
-    public static final DateParam p_logDates = CacheParamMapper.register(ProjectTypeConstants.TIME,
+    public static final DateParam p_logDates = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTIME(),
             TimeTrackingI18nEnum.LOG_FOR_DATE, new DateParam("logdate", "m_prj_time_logging", "logForDay"));
 
-    public static final PropertyListParam<String> p_logUsers = CacheParamMapper.register(ProjectTypeConstants.TIME,
+    public static final PropertyListParam<String> p_logUsers = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTIME(),
             UserI18nEnum.LIST, new PropertyListParam<String>("loguser", "m_prj_time_logging", "loguser"));
 
     public SetSearchField<Integer> getProjectIds() {

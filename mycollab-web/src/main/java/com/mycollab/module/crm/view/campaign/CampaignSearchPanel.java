@@ -35,13 +35,13 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
     private boolean canCreateCampaign;
 
     private static Param[] paramFields = new Param[]{
-            CampaignSearchCriteria.p_campaignName,
-            CampaignSearchCriteria.p_startDate,
-            CampaignSearchCriteria.p_endDate,
-            CampaignSearchCriteria.p_createdtime,
-            CampaignSearchCriteria.p_lastUpdatedTime,
-            CampaignSearchCriteria.p_types, CampaignSearchCriteria.p_statuses,
-            CampaignSearchCriteria.p_assignee};
+            CampaignSearchCriteria.Companion.getP_campaignName(),
+            CampaignSearchCriteria.Companion.getP_startDate(),
+            CampaignSearchCriteria.Companion.getP_endDate(),
+            CampaignSearchCriteria.Companion.getP_createdtime(),
+            CampaignSearchCriteria.Companion.getP_lastUpdatedTime(),
+            CampaignSearchCriteria.Companion.getP_types(), CampaignSearchCriteria.Companion.getP_statuses(),
+            CampaignSearchCriteria.Companion.getP_assignee()};
 
     public CampaignSearchPanel(boolean canCreateCampaign) {
         this.canCreateCampaign = canCreateCampaign;
@@ -49,7 +49,7 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.CAMPAIGN, UserUIContext.getMessage(CampaignI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getCAMPAIGN(), UserUIContext.getMessage(CampaignI18nEnum.LIST));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
         return (canCreateCampaign) ? new MButton(UserUIContext.getMessage(CampaignI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN)) : null;
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) : null;
     }
 
     @Override
@@ -129,7 +129,7 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
         private static final long serialVersionUID = 1L;
 
         CampaignAdvancedSearchLayout() {
-            super(CampaignSearchPanel.this, CrmTypeConstants.CAMPAIGN);
+            super(CampaignSearchPanel.this, CrmTypeConstants.INSTANCE.getCAMPAIGN());
         }
 
         @Override

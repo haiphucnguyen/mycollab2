@@ -105,7 +105,7 @@ public class UserDashboardViewImpl extends AbstractVerticalPageView implements U
             tabSheet.setSelectedTab(0);
         }
 
-        if (UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
+        if (UserUIContext.canBeYes(RolePermissionCollections.INSTANCE.getCREATE_NEW_PROJECT())) {
             int countActiveProjects = prjService.getTotalActiveProjectsOfInvolvedUsers(UserUIContext.getUsername(), AppUI.getAccountId());
             if (countActiveProjects == 0) {
                 UI.getCurrent().addWindow(new AskCreateNewProjectWindow());

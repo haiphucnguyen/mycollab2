@@ -53,7 +53,7 @@ public class CampaignAddPresenter extends AbstractCrmPresenter<CampaignAddView> 
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) {
             SimpleCampaign campaign = null;
             if (data.getParams() instanceof SimpleCampaign) {
                 campaign = (SimpleCampaign) data.getParams();

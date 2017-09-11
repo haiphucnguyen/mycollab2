@@ -48,25 +48,25 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
         leftColLayout.setWidth("100%");
 
         displayMsgSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMESSAGE()),
                 UserUIContext.getMessage(MessageI18nEnum.LIST),
                 true);
         leftColLayout.addComponent(displayMsgSelection);
 
         displayPhaseSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()),
                 UserUIContext.getMessage(MilestoneI18nEnum.LIST),
                 true);
         leftColLayout.addComponent(displayPhaseSelection);
 
         displayTicketSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTICKET()),
                 UserUIContext.getMessage(TicketI18nEnum.LIST),
                 true);
         leftColLayout.addComponent(displayTicketSelection);
 
         displayPageSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPAGE()),
                 UserUIContext.getMessage(PageI18nEnum.LIST),
                 true);
         leftColLayout.addComponent(displayPageSelection);
@@ -78,25 +78,25 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
         rightColLayout.setSpacing(true);
 
         displayFileSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getFILE()),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
                 true);
         rightColLayout.addComponent(displayFileSelection);
 
         displayTimeSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTIME()),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
                 true);
         rightColLayout.addComponent(displayTimeSelection);
 
         displayStandupSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getSTANDUP()),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
                 true);
         rightColLayout.addComponent(displayStandupSelection);
 
         displayInvoiceSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getINVOICE()),
                 UserUIContext.getMessage(InvoiceI18nEnum.LIST),
                 true);
         rightColLayout.addComponent(displayInvoiceSelection);

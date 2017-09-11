@@ -58,9 +58,9 @@ public class PageAddPresenter extends ProjectGenericPresenter<PageAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getPAGES())) {
             PageContainer pageContainer = (PageContainer) container;
-            pageContainer.navigateToContainer(ProjectTypeConstants.PAGE);
+            pageContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getPAGE());
             pageContainer.setContent(view);
 
             Page page = (Page) data.getParams();

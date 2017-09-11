@@ -38,7 +38,7 @@ public class GenericAssignmentEvent extends BasicEvent {
             this.setCaption(String.format("%s %s", icon.getHtml(), ticket.getName()));
         }
 
-        this.setDescription(ProjectTooltipGenerator.generateTooltipEntity(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+        this.setDescription(ProjectTooltipGenerator.INSTANCE.generateTooltipEntity(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
                 ticket.getType(), ticket.getTypeId(), AppUI.getAccountId(), AppUI.getSiteUrl(),
                 UserUIContext.getUserTimeZone(), showProject));
         this.setAllDay(true);
@@ -96,29 +96,29 @@ public class GenericAssignmentEvent extends BasicEvent {
     }
 
     public void updateAssociateEntity() {
-        if (ProjectTypeConstants.TASK.equals(ticket.getType()) &&
-                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+        if (ProjectTypeConstants.INSTANCE.getTASK().equals(ticket.getType()) &&
+                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
             SimpleTask task = taskService.findById(ticket.getTypeId(), AppUI.getAccountId());
             task.setStartdate(getStart());
             task.setEnddate(getEnd());
             taskService.updateWithSession(task, UserUIContext.getUsername());
-        } else if (ProjectTypeConstants.BUG.equals(ticket.getType()) &&
-                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+        } else if (ProjectTypeConstants.INSTANCE.getBUG().equals(ticket.getType()) &&
+                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
             BugService bugService = AppContextUtil.getSpringBean(BugService.class);
             SimpleBug bug = bugService.findById(ticket.getTypeId(), AppUI.getAccountId());
             bug.setStartdate(getStart());
             bug.setEnddate(getEnd());
             bugService.updateWithSession(bug, UserUIContext.getUsername());
-        } else if(ProjectTypeConstants.MILESTONE.equals(ticket.getType()) &&
-                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+        } else if(ProjectTypeConstants.INSTANCE.getMILESTONE().equals(ticket.getType()) &&
+                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
             MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
             SimpleMilestone milestone = milestoneService.findById(ticket.getTypeId(), AppUI.getAccountId());
             milestone.setStartdate(getStart());
             milestone.setEnddate(getEnd());
             milestoneService.updateWithSession(milestone, UserUIContext.getUsername());
-        } else if (ProjectTypeConstants.RISK.equals(ticket.getType()) &&
-                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
+        } else if (ProjectTypeConstants.INSTANCE.getRISK().equals(ticket.getType()) &&
+                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
             RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
             SimpleRisk risk = riskService.findById(ticket.getTypeId(), AppUI.getAccountId());
             risk.setStartdate(getStart());

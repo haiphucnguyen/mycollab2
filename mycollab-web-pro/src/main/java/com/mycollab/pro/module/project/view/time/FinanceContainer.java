@@ -40,12 +40,12 @@ public class FinanceContainer extends AbstractVerticalPageView implements IFinan
     private void buildComponents() {
         if (CurrentProjectVariables.hasTimeFeature()) {
             myProjectTab.addWrappedTab(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
-                    ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME));
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTIME()));
         }
 
         if (CurrentProjectVariables.hasInvoiceFeature()) {
             myProjectTab.addWrappedTab(UserUIContext.getMessage(InvoiceI18nEnum.LIST),
-                    ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE));
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getINVOICE()));
         }
 
         myProjectTab.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
@@ -74,7 +74,7 @@ public class FinanceContainer extends AbstractVerticalPageView implements IFinan
         TimeTrackingListPresenter timeTrackingListPresenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
         ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
+        searchCriteria.addExtraField(DateParam.Companion.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
                 VariableInjector.THIS_WEEK));
         timeTrackingListPresenter.go(FinanceContainer.this, new TimeTrackingScreenData.Search(searchCriteria));
     }

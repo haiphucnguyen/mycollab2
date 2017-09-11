@@ -58,8 +58,8 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.ACCOUNT);
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getACCOUNT());
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
             SimpleAccount account = null;
             if (data.getParams() instanceof SimpleAccount) {
                 account = (SimpleAccount) data.getParams();

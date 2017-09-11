@@ -50,7 +50,7 @@ public class MonitorItemAspect {
 
                 MonitorItem monitorItem = new MonitorItem();
                 monitorItem.setMonitorDate(new GregorianCalendar().getTime());
-                monitorItem.setType(ClassInfoMap.getType(cls));
+                monitorItem.setType(ClassInfoMap.INSTANCE.getType(cls));
                 monitorItem.setTypeid(typeId);
                 monitorItem.setExtratypeid(extraTypeId);
                 monitorItem.setUser(username);
@@ -76,8 +76,8 @@ public class MonitorItemAspect {
                 relayNotification.setChangeby(username);
                 relayNotification.setChangecomment("");
                 relayNotification.setSaccountid(sAccountId);
-                relayNotification.setType(ClassInfoMap.getType(cls));
-                relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
+                relayNotification.setType(ClassInfoMap.INSTANCE.getType(cls));
+                relayNotification.setAction(MonitorTypeConstants.INSTANCE.getCREATE_ACTION());
                 relayNotification.setTypeid("" + typeId);
                 relayEmailNotificationService.saveWithSession(relayNotification, username);
                 // Save notification item

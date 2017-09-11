@@ -11,7 +11,7 @@ public class CompositionStringParam extends Param {
     private StringParam[] params;
 
     public CompositionStringParam(String id, StringParam... params) {
-        this.id = id;
+        this.setId(id);
         this.params = params;
     }
 

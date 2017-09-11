@@ -58,8 +58,8 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.CASE);
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CASE)) {
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getCASE());
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CASE())) {
             SimpleCase cases = null;
             if (data.getParams() instanceof SimpleCase) {
                 cases = (SimpleCase) data.getParams();

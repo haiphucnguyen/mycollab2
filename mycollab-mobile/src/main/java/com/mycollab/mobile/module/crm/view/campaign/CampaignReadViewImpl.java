@@ -83,7 +83,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.CAMPAIGN, CampaignDefaultDynaFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getCAMPAIGN(), CampaignDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -94,7 +94,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(CrmLinkGenerator.generateCampaignPreviewLink(beanItem.getId()),
+        AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateCampaignPreviewLink(beanItem.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(CampaignI18nEnum.SINGLE), beanItem.getCampaignname()));
     }
@@ -103,10 +103,10 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
     protected ComponentContainer createButtonControls() {
         VerticalLayout buttonControls = new CrmPreviewFormControlsGenerator<>(previewForm).
                 createButtonControls(CLONE_BTN_PRESENTED | DELETE_BTN_PRESENTED,
-                        RolePermissionCollections.CRM_CAMPAIGN);
+                        RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN());
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GotoEdit(this, beanItem)))
                 .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN()));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(buttonControls));
     }
 
@@ -114,19 +114,19 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withFullWidth().withSpacing(false).withMargin(false);
 
-        Component accountSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT),
+        Component accountSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()),
                 associateAccounts);
         toolbarLayout.addComponent(accountSection);
 
-        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT),
+        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()),
                 associateContacts);
         toolbarLayout.addComponent(contactSection);
 
-        Component leadSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
+        Component leadSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()),
                 associateLeads);
         toolbarLayout.addComponent(leadSection);
 
-        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY),
+        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()),
                 associateActivities);
         toolbarLayout.addComponent(activitySection);
 
@@ -135,6 +135,6 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.CAMPAIGN;
+        return CrmTypeConstants.INSTANCE.getCAMPAIGN();
     }
 }

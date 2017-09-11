@@ -44,7 +44,7 @@ public class ProjectMemberListViewImpl extends AbstractListPageView<ProjectMembe
 
     @Override
     protected Component buildRightComponent() {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS())) {
             return new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoInviteMembers(this, null)))
                     .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX);
         }
@@ -54,7 +54,7 @@ public class ProjectMemberListViewImpl extends AbstractListPageView<ProjectMembe
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment("project/user/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+        AppUI.addFragment("project/user/list/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId()),
                 UserUIContext.getMessage(ProjectMemberI18nEnum.LIST));
     }
 }

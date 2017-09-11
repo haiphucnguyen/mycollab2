@@ -45,10 +45,10 @@ public class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<Proj
 
         A ticketLink = new A();
         if (ticket.isBug() || ticket.isTask()) {
-            ticketLink.setHref(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(),
+            ticketLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(ticket.getProjectShortName(),
                     ticket.getProjectId(), ticket.getType(), ticket.getExtraTypeId() + ""));
         } else if (ticket.isRisk()) {
-            ticketLink.setHref(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(),
+            ticketLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(ticket.getProjectShortName(),
                     ticket.getProjectId(), ticket.getType(), ticket.getTypeId() + ""));
         } else {
             throw new IgnoreException("Not support type: " + ticket.getType());
@@ -74,7 +74,7 @@ public class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<Proj
                 .formatPrettyTime((ticket.getLastUpdatedTime())))).withStyleName(UIConstants.META_INFO);
         metaInfoLayout.addComponent(lastUpdatedTimeLbl);
 
-        A assigneeLink = new A(ProjectLinkGenerator.generateProjectMemberLink(CurrentProjectVariables.getProjectId(),
+        A assigneeLink = new A(ProjectLinkGenerator.INSTANCE.generateProjectMemberLink(CurrentProjectVariables.getProjectId(),
                 ticket.getAssignUser()));
         assigneeLink.appendText(StringUtils.trim(ticket.getAssignUserFullName(), 30, true));
         Div assigneeDiv = new Div().appendText(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))

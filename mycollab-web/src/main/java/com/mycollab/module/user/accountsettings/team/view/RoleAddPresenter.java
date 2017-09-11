@@ -22,7 +22,7 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_ROLE, impliedPermissionVal = AccessPermissionFlag.READ_WRITE)
+@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_ROLE(), impliedPermissionVal = AccessPermissionFlag.Companion.getREAD_WRITE())
 public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
     private static final long serialVersionUID = 1L;
 
@@ -69,7 +69,7 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canWrite(RolePermissionCollections.ACCOUNT_ROLE)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getACCOUNT_ROLE())) {
             RoleContainer roleContainer = (RoleContainer) container;
             roleContainer.removeAllComponents();
             roleContainer.addComponent(view);

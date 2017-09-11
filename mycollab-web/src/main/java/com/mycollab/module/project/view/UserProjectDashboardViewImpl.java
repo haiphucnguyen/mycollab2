@@ -93,7 +93,7 @@ public class UserProjectDashboardViewImpl extends AbstractVerticalPageView imple
         } else {
             this.with(ELabel.h1(VaadinIcons.TASKS.getHtml()).withWidthUndefined());
             this.with(ELabel.h2(UserUIContext.getMessage(GenericI18Enum.VIEW_NO_ITEM_TITLE)).withWidthUndefined());
-            if (UserUIContext.canWrite(RolePermissionCollections.CREATE_NEW_PROJECT)) {
+            if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCREATE_NEW_PROJECT())) {
                 MButton newProjectBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.NEW),
                         clickEvent -> UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class)))
                         .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS);

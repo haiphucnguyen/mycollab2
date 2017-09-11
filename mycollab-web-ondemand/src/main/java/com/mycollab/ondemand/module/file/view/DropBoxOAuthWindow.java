@@ -17,7 +17,7 @@ public final class DropBoxOAuthWindow extends DefaultCloudDriveOAuthWindow {
 
     @Override
     protected String getStorageName() {
-        return StorageNames.DROPBOX;
+        return StorageNames.INSTANCE.getDROPBOX();
     }
 
     @Override

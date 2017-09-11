@@ -118,19 +118,19 @@ public class ProjectTicket extends ValuedBean implements Serializable {
     }
 
     public boolean isBug() {
-        return ProjectTypeConstants.BUG.equals(getType());
+        return ProjectTypeConstants.INSTANCE.getBUG().equals(getType());
     }
 
     public boolean isMilestone() {
-        return ProjectTypeConstants.MILESTONE.equals(getType());
+        return ProjectTypeConstants.INSTANCE.getMILESTONE().equals(getType());
     }
 
     public boolean isTask() {
-        return ProjectTypeConstants.TASK.equals(getType());
+        return ProjectTypeConstants.INSTANCE.getTASK().equals(getType());
     }
 
     public boolean isRisk() {
-        return ProjectTypeConstants.RISK.equals(getType());
+        return ProjectTypeConstants.INSTANCE.getRISK().equals(getType());
     }
 
     public void setAssignUserFullName(String assignUserFullName) {

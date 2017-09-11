@@ -39,7 +39,7 @@ public class ContactListViewImpl extends AbstractListItemComp<ContactSearchCrite
 
     @Override
     protected AbstractPagedBeanTable<ContactSearchCriteria, SimpleContact> createBeanTable() {
-        return new ContactTableDisplay(CrmTypeConstants.CONTACT, ContactTableFieldDef.selected(),
+        return new ContactTableDisplay(CrmTypeConstants.INSTANCE.getCONTACT(), ContactTableFieldDef.selected(),
                 Arrays.asList(ContactTableFieldDef.name(), ContactTableFieldDef.title(),
                         ContactTableFieldDef.account(), ContactTableFieldDef.email(), ContactTableFieldDef.phoneOffice()));
     }
@@ -48,7 +48,7 @@ public class ContactListViewImpl extends AbstractListItemComp<ContactSearchCrite
     protected DefaultMassItemActionHandlerContainer createActionControls() {
         DefaultMassItemActionHandlerContainer container = new DefaultMassItemActionHandlerContainer();
 
-        if (UserUIContext.canAccess(RolePermissionCollections.CRM_CONTACT)) {
+        if (UserUIContext.canAccess(RolePermissionCollections.INSTANCE.getCRM_CONTACT())) {
             container.addDeleteActionItem();
         }
 
@@ -57,7 +57,7 @@ public class ContactListViewImpl extends AbstractListItemComp<ContactSearchCrite
         container.addDownloadExcelActionItem();
         container.addDownloadCsvActionItem();
 
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CONTACT)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CONTACT())) {
             container.addMassUpdateActionItem();
         }
 

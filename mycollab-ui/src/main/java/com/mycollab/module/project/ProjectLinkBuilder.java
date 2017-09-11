@@ -29,23 +29,23 @@ public class ProjectLinkBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(ProjectLinkBuilder.class);
 
     public static String generateProjectFullLink(Integer projectId) {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateProjectLink(projectId);
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateProjectLink(projectId);
     }
 
     public static String generateComponentPreviewFullLink(Integer projectId, Integer componentId) {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateBugComponentPreviewLink(projectId, componentId);
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateBugComponentPreviewLink(projectId, componentId);
     }
 
     public static String generateBugVersionPreviewFullLink(Integer projectId, Integer versionId) {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateBugVersionPreviewLink(projectId, versionId);
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateBugVersionPreviewLink(projectId, versionId);
     }
 
     public static String generateRolePreviewFullLink(Integer projectId, Integer roleId) {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateRolePreviewLink(projectId, roleId);
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateRolePreviewLink(projectId, roleId);
     }
 
     public static String generateProjectMemberFullLink(Integer projectId, String memberName) {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateProjectMemberLink(projectId, memberName);
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateProjectMemberLink(projectId, memberName);
     }
 
     public static String generateProjectMemberHtmlLink(Integer projectId, String username, String displayName, String avatarId,
@@ -75,58 +75,58 @@ public class ProjectLinkBuilder {
     }
 
     public static String generateBugPreviewFullLink(Integer bugKey, String prjShortName) {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateBugPreviewLink(bugKey, prjShortName);
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateBugPreviewLink(bugKey, prjShortName);
     }
 
     public static String generateMessagePreviewFullLink(Integer projectId, Integer messageId) {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateMessagePreviewLink(projectId, messageId);
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateMessagePreviewLink(projectId, messageId);
     }
 
     public static String generateRiskPreviewFullLink(Integer projectId, Integer riskId) {
-        return URL_PREFIX_PARAM + "project/risk/preview/" + UrlEncodeDecoder.encode(projectId + "/" + riskId);
+        return INSTANCE.getURL_PREFIX_PARAM() + "project/risk/preview/" + UrlEncodeDecoder.encode(projectId + "/" + riskId);
     }
 
     public static String generateTaskPreviewFullLink(Integer taskKey, String prjShortName) {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateTaskPreviewLink(taskKey, prjShortName);
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateTaskPreviewLink(taskKey, prjShortName);
     }
 
     public static String generateMilestonePreviewFullLink(Integer projectId, Integer milestoneId) {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateMilestonePreviewLink(projectId, milestoneId);
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateMilestonePreviewLink(projectId, milestoneId);
     }
 
     public static String generateClientPreviewFullLink(Integer clientId) {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateClientPreviewLink(clientId);
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateClientPreviewLink(clientId);
     }
 
     public static String generatePageFolderFullLink(Integer projectId, String folderPath) {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generatePagesLink(projectId, folderPath);
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generatePagesLink(projectId, folderPath);
     }
 
     public static String generatePageFullLink(Integer projectId, String pagePath) {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generatePageRead(projectId, pagePath);
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generatePageRead(projectId, pagePath);
     }
 
     public static String generateStandupDashboardLink() {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateStandupDashboardLink();
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateStandupDashboardLink();
     }
 
     public static String generateHoursWeeklyReportLink() {
-        return AppUI.getSiteUrl() + URL_PREFIX_PARAM + ProjectLinkGenerator
+        return AppUI.getSiteUrl() + INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE
                 .generateHoursWeeklyReportLink();
     }
 
     public static String generateTimesheetReportLink() {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateTimesheetReportLink();
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateTimesheetReportLink();
     }
 
     public static String generateUsersWorkloadReportLink() {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateUsersWorkloadReportLink();
+        return INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateUsersWorkloadReportLink();
     }
 
     public static String generateProjectItemHtmlLinkAndTooltip(String prjShortName, Integer projectId, String summary, String type, String typeId) {
         Text image = new Text(ProjectAssetsManager.getAsset(type).getHtml());
         A link = new A().setId("tag" + TOOLTIP_ID);
-        link.setHref(URL_PREFIX_PARAM + ProjectLinkGenerator.generateProjectItemLink(prjShortName, projectId, type, typeId))
+        link.setHref(INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateProjectItemLink(prjShortName, projectId, type, typeId))
                 .appendChild(new Text(summary));
         link.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(type, typeId));
         link.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

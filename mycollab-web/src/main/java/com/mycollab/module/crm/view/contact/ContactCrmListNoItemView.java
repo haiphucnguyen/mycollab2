@@ -24,7 +24,7 @@ public class ContactCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT());
     }
 
     @Override
@@ -54,6 +54,6 @@ public class ContactCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected boolean hasPermission() {
-        return UserUIContext.canWrite(RolePermissionCollections.CRM_CONTACT);
+        return UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CONTACT());
     }
 }

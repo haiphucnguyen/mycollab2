@@ -74,7 +74,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
         };
         MButton newMilestoneBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoAdd(MilestoneListViewImpl.this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES()));
         return new MHorizontalLayout(searchBtn, newMilestoneBtn).alignAll(Alignment.TOP_RIGHT);
     }
 
@@ -93,7 +93,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
         super.onBecomingVisible();
         setCaption(UserUIContext.getMessage(MilestoneI18nEnum.LIST));
         updateTabStatus();
-        AppUI.addFragment("project/milestone/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+        AppUI.addFragment("project/milestone/list/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId()),
                 UserUIContext.getMessage(MilestoneI18nEnum.LIST));
     }
 
@@ -148,7 +148,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
             }
             MCssLayout milestoneWrap = new MCssLayout(ELabel.html(milestoneLink.write()));
             milestoneInfoLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset
-                    (ProjectTypeConstants.MILESTONE)), milestoneWrap).expand(milestoneWrap).withFullWidth());
+                    (ProjectTypeConstants.INSTANCE.getMILESTONE())), milestoneWrap).expand(milestoneWrap).withFullWidth());
 
             MCssLayout metaLayout = new MCssLayout();
             milestoneInfoLayout.addComponent(metaLayout);
@@ -165,7 +165,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
             metaLayout.addComponent(endDateInfo);
             metaLayout.addComponent(ELabel.EMPTY_SPACE());
 
-            A assigneeLink = new A(ProjectLinkGenerator.generateProjectMemberLink(CurrentProjectVariables.getProjectId(),
+            A assigneeLink = new A(ProjectLinkGenerator.INSTANCE.generateProjectMemberLink(CurrentProjectVariables.getProjectId(),
                     milestone.getAssignuser())).appendText(StringUtils.trim(milestone.getOwnerFullName(), 30, true));
             Div assigneeDiv = new Div().appendChild(new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class).getAvatarPath(milestone
                     .getOwnerAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX)).appendChild(assigneeLink);

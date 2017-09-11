@@ -42,7 +42,7 @@ public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canAccess(RolePermissionCollections.CREATE_NEW_PROJECT)) {
+        if (UserUIContext.canAccess(RolePermissionCollections.INSTANCE.getCREATE_NEW_PROJECT())) {
             super.onGo(container, data);
             SimpleProject project = (SimpleProject) data.getParams();
             if (project.getProjectstatus() == null) {

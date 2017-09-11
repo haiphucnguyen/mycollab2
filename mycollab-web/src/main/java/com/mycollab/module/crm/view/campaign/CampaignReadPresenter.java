@@ -84,7 +84,7 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
             @Override
             public void onPrint(Object source, SimpleCampaign data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.CAMPAIGN, CampaignWithBLOBs.Field.campaignname.name(),
+                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.INSTANCE.getCAMPAIGN(), CampaignWithBLOBs.Field.campaignname.name(),
                         CampaignDefaultDynaFormLayoutFactory.getForm()));
             }
 
@@ -128,18 +128,18 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
             public void createNewRelatedItem(String itemId) {
                 if (itemId.equals("task")) {
                     SimpleCrmTask task = new SimpleCrmTask();
-                    task.setType(CrmTypeConstants.CAMPAIGN);
+                    task.setType(CrmTypeConstants.INSTANCE.getCAMPAIGN());
                     task.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(CampaignReadPresenter.this, task));
                 } else if (itemId.equals("meeting")) {
                     SimpleMeeting meeting = new SimpleMeeting();
-                    meeting.setType(CrmTypeConstants.CAMPAIGN);
+                    meeting.setType(CrmTypeConstants.INSTANCE.getCAMPAIGN());
                     meeting.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(
                             CampaignReadPresenter.this, meeting));
                 } else if (itemId.equals("call")) {
                     SimpleCall call = new SimpleCall();
-                    call.setType(CrmTypeConstants.CAMPAIGN);
+                    call.setType(CrmTypeConstants.INSTANCE.getCAMPAIGN());
                     call.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(CampaignReadPresenter.this, call));
                 }
@@ -239,15 +239,15 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.CAMPAIGN);
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
+        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getCAMPAIGN());
+        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) {
             if (data.getParams() instanceof Integer) {
                 CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
                 SimpleCampaign campaign = campaignService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (campaign != null) {
                     super.onGo(container, data);
                     view.previewItem(campaign);
-                    AppUI.addFragment(CrmLinkGenerator.generateCampaignPreviewLink(campaign.getId()),
+                    AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateCampaignPreviewLink(campaign.getId()),
                             UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                     UserUIContext.getMessage(CampaignI18nEnum.SINGLE), campaign.getCampaignname()));
                 } else {

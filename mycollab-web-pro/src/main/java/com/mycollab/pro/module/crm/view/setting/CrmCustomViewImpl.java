@@ -127,23 +127,23 @@ public class CrmCustomViewImpl extends AbstractVerticalPageView implements ICrmC
         DynaForm form = formService.findCustomForm(AppUI.getAccountId(), moduleName);
 
         if (form == null) {
-            if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {
+            if (CrmTypeConstants.INSTANCE.getACCOUNT().equals(moduleName)) {
                 form = AccountDefaultDynaFormLayoutFactory.getForm();
-            } else if (CrmTypeConstants.CONTACT.equals(moduleName)) {
+            } else if (CrmTypeConstants.INSTANCE.getCONTACT().equals(moduleName)) {
                 form = ContactDefaultDynaFormLayoutFactory.getForm();
-            } else if (CrmTypeConstants.CAMPAIGN.equals(moduleName)) {
+            } else if (CrmTypeConstants.INSTANCE.getCAMPAIGN().equals(moduleName)) {
                 form = CampaignDefaultDynaFormLayoutFactory.getForm();
-            } else if (CrmTypeConstants.LEAD.equals(moduleName)) {
+            } else if (CrmTypeConstants.INSTANCE.getLEAD().equals(moduleName)) {
                 form = LeadDefaultDynaFormLayoutFactory.getForm();
-            } else if (CrmTypeConstants.OPPORTUNITY.equals(moduleName)) {
+            } else if (CrmTypeConstants.INSTANCE.getOPPORTUNITY().equals(moduleName)) {
                 form = OpportunityDefaultDynaFormLayoutFactory.getForm();
-            } else if (CrmTypeConstants.CASE.equals(moduleName)) {
+            } else if (CrmTypeConstants.INSTANCE.getCASE().equals(moduleName)) {
                 form = CasesDefaultFormLayoutFactory.getForm();
-            } else if (CrmTypeConstants.CALL.equals(moduleName)) {
+            } else if (CrmTypeConstants.INSTANCE.getCALL().equals(moduleName)) {
                 form = CallDefaultFormLayoutFactory.getForm();
-            } else if (CrmTypeConstants.MEETING.equals(moduleName)) {
+            } else if (CrmTypeConstants.INSTANCE.getMEETING().equals(moduleName)) {
                 form = MeetingDefaultFormLayoutFactory.getForm();
-            } else if (CrmTypeConstants.TASK.equals(moduleName)) {
+            } else if (CrmTypeConstants.INSTANCE.getTASK().equals(moduleName)) {
                 form = AssignmentDefaultFormLayoutFactory.getForm();
             } else {
                 throw new MyCollabException("Do not support custom layout of module " + moduleName);
@@ -167,11 +167,11 @@ public class CrmCustomViewImpl extends AbstractVerticalPageView implements ICrmC
         private static final long serialVersionUID = 1L;
 
         ModuleSelectionComboBox() {
-            super(false, CrmTypeConstants.ACCOUNT, CrmTypeConstants.CONTACT,
-                    CrmTypeConstants.CAMPAIGN, CrmTypeConstants.LEAD,
-                    CrmTypeConstants.OPPORTUNITY, CrmTypeConstants.CASE,
-                    CrmTypeConstants.TASK, CrmTypeConstants.CALL,
-                    CrmTypeConstants.MEETING);
+            super(false, CrmTypeConstants.INSTANCE.getACCOUNT(), CrmTypeConstants.INSTANCE.getCONTACT(),
+                    CrmTypeConstants.INSTANCE.getCAMPAIGN(), CrmTypeConstants.INSTANCE.getLEAD(),
+                    CrmTypeConstants.INSTANCE.getOPPORTUNITY(), CrmTypeConstants.INSTANCE.getCASE(),
+                    CrmTypeConstants.INSTANCE.getTASK(), CrmTypeConstants.INSTANCE.getCALL(),
+                    CrmTypeConstants.INSTANCE.getMEETING());
 
             this.addValueChangeListener(valueChangeEvent -> {
                 String module = (String) ModuleSelectionComboBox.this.getValue();

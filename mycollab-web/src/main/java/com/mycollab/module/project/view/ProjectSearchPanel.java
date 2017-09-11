@@ -40,7 +40,7 @@ public class ProjectSearchPanel extends DefaultGenericSearchPanel<ProjectSearchC
 
     @Override
     protected ComponentContainer buildSearchTitle() {
-        return ComponentUtils.headerH2(ProjectTypeConstants.PROJECT, UserUIContext.getMessage(ProjectI18nEnum.LIST));
+        return ComponentUtils.headerH2(ProjectTypeConstants.INSTANCE.getPROJECT(), UserUIContext.getMessage(ProjectI18nEnum.LIST));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ProjectSearchPanel extends DefaultGenericSearchPanel<ProjectSearchC
         MButton createBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.NEW),
                 clickEvent -> UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class)))
                 .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
-        createBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
+        createBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.INSTANCE.getCREATE_NEW_PROJECT()));
         return createBtn;
     }
 
@@ -97,7 +97,7 @@ public class ProjectSearchPanel extends DefaultGenericSearchPanel<ProjectSearchC
         private static final long serialVersionUID = 1L;
 
         private ProjectAdvancedSearchLayout() {
-            super(ProjectSearchPanel.this, ProjectTypeConstants.PROJECT);
+            super(ProjectSearchPanel.this, ProjectTypeConstants.INSTANCE.getPROJECT());
         }
 
         @Override

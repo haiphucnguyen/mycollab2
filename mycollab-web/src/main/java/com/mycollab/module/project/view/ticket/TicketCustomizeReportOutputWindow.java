@@ -23,7 +23,7 @@ import java.util.Collection;
  */
 public class TicketCustomizeReportOutputWindow extends CustomizeReportOutputWindow<ProjectTicketSearchCriteria, ProjectTicket> {
     public TicketCustomizeReportOutputWindow(VariableInjector<ProjectTicketSearchCriteria> variableInjector) {
-        super(ProjectTypeConstants.TICKET, UserUIContext.getMessage(TicketI18nEnum.LIST), ProjectTicket.class,
+        super(ProjectTypeConstants.INSTANCE.getTICKET(), UserUIContext.getMessage(TicketI18nEnum.LIST), ProjectTicket.class,
                 AppContextUtil.getSpringBean(ProjectTicketService.class), variableInjector);
     }
 

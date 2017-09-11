@@ -18,22 +18,22 @@ import java.util.Arrays;
 public class ProjectSearchCriteria extends SearchCriteria {
     private static final long serialVersionUID = 1L;
 
-    public static final NumberParam p_template = CacheParamMapper.register(ProjectTypeConstants.PROJECT, GenericI18Enum.FORM_NAME,
+    public static final NumberParam p_template = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getPROJECT(), GenericI18Enum.FORM_NAME,
             new NumberParam("template", "m_prj_project", "istemplate"));
 
-    public static final StringParam p_name = CacheParamMapper.register(ProjectTypeConstants.PROJECT, GenericI18Enum.FORM_NAME,
+    public static final StringParam p_name = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getPROJECT(), GenericI18Enum.FORM_NAME,
             new StringParam("name", "m_prj_project", "name"));
 
-    public static final DateParam p_startdate = CacheParamMapper.register(ProjectTypeConstants.PROJECT, GenericI18Enum.FORM_START_DATE,
+    public static final DateParam p_startdate = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getPROJECT(), GenericI18Enum.FORM_START_DATE,
             new DateParam("startdate", "m_prj_project", "planStartDate"));
 
-    public static final DateParam p_enddate = CacheParamMapper.register(ProjectTypeConstants.PROJECT, GenericI18Enum.FORM_END_DATE,
+    public static final DateParam p_enddate = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getPROJECT(), GenericI18Enum.FORM_END_DATE,
             new DateParam("enddate", "m_prj_project", "planEndDate"));
 
-    public static final DateParam p_createdtime = CacheParamMapper.register(ProjectTypeConstants.PROJECT, GenericI18Enum.FORM_CREATED_TIME,
+    public static final DateParam p_createdtime = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getPROJECT(), GenericI18Enum.FORM_CREATED_TIME,
             new DateParam("createdtime", "m_prj_project", "createdTime"));
 
-    public static final StringListParam p_status = CacheParamMapper.register(ProjectTypeConstants.PROJECT, GenericI18Enum.FORM_STATUS,
+    public static final StringListParam p_status = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getPROJECT(), GenericI18Enum.FORM_STATUS,
             new StringListParam("status", "m_prj_project", "projectStatus", Arrays.asList(OptionI18nEnum.StatusI18nEnum.Open.name(),
                     OptionI18nEnum.StatusI18nEnum.Closed.name(), OptionI18nEnum.StatusI18nEnum.Archived.name())));
 
