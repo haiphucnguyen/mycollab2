@@ -45,7 +45,7 @@ public class ProjectMemberEditPresenter extends AbstractProjectPresenter<Project
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
             SimpleProjectMember member = (SimpleProjectMember) data.getParams();
             super.onGo(container, data);
             view.editItem(member);

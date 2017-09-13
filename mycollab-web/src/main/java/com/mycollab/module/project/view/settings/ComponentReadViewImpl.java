@@ -52,7 +52,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
 
     public ComponentReadViewImpl() {
         super(UserUIContext.getMessage(ComponentI18nEnum.DETAIL),
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT()));
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_COMPONENT));
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
 
     @Override
     protected void initRelatedComponents() {
-        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT(), CurrentProjectVariables.getProjectId());
+        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_COMPONENT, CurrentProjectVariables.getProjectId());
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
         if (SiteConfiguration.isCommunityEdition()) {
@@ -90,7 +90,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
         peopleInfoComp.displayEntryPeople(beanItem);
 
         if (tagViewComponent != null) {
-            tagViewComponent.display(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT(), beanItem.getId());
+            tagViewComponent.display(ProjectTypeConstants.BUG_COMPONENT, beanItem.getId());
         }
 
         if (componentTimeLogComp != null) {
@@ -114,7 +114,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
         if (SiteConfiguration.isCommunityEdition()) {
             return null;
         } else {
-            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS()));
+            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
             return tagViewComponent;
         }
     }
@@ -127,7 +127,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
     @Override
     protected HorizontalLayout createButtonControls() {
         ProjectPreviewFormControlsGenerator<SimpleComponent> componentPreviewForm = new ProjectPreviewFormControlsGenerator<>(previewForm);
-        HorizontalLayout topPanel = componentPreviewForm.createButtonControls(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS());
+        HorizontalLayout topPanel = componentPreviewForm.createButtonControls(ProjectRolePermissionCollections.COMPONENTS);
         quickActionStatusBtn = new MButton("", clickEvent -> {
             if (StatusI18nEnum.Closed.name().equals(beanItem.getStatus())) {
                 beanItem.setStatus(StatusI18nEnum.Open.name());
@@ -145,7 +145,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
             service.updateSelectiveWithSession(beanItem, UserUIContext.getUsername());
         }).withStyleName(WebThemes.BUTTON_ACTION);
         componentPreviewForm.insertToControlBlock(quickActionStatusBtn);
-        quickActionStatusBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS()));
+        quickActionStatusBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
         return topPanel;
     }
 
@@ -156,7 +156,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
 
     @Override
     protected String getType() {
-        return ProjectTypeConstants.INSTANCE.getBUG_COMPONENT();
+        return ProjectTypeConstants.BUG_COMPONENT;
     }
 
     private static class PeopleInfoComp extends MVerticalLayout {

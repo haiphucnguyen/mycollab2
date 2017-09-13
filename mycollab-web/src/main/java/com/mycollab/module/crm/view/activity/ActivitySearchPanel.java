@@ -37,14 +37,14 @@ public class ActivitySearchPanel extends DefaultGenericSearchPanel<ActivitySearc
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getACTIVITY(), "Events");
+        return ComponentUtils.header(CrmTypeConstants.ACTIVITY, "Events");
     }
 
     @Override
     protected Component buildExtraControls() {
         final SplitButton splitBtn = new SplitButton();
         splitBtn.setSizeUndefined();
-        splitBtn.setEnabled(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CALL()) || UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_MEETING()));
+        splitBtn.setEnabled(UserUIContext.canWrite(RolePermissionCollections.CRM_CALL) || UserUIContext.canWrite(RolePermissionCollections.CRM_MEETING));
         splitBtn.addStyleName(WebThemes.BUTTON_ACTION);
         splitBtn.setIcon(FontAwesome.PLUS);
         splitBtn.setCaption(UserUIContext.getMessage(TaskI18nEnum.NEW));
@@ -58,12 +58,12 @@ public class ActivitySearchPanel extends DefaultGenericSearchPanel<ActivitySearc
             EventBusFactory.getInstance().post(new ActivityEvent.MeetingAdd(this, null));
         });
         btnControlsLayout.addOption(createMeetingBtn);
-        createMeetingBtn.setEnabled(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_MEETING()));
+        createMeetingBtn.setEnabled(UserUIContext.canWrite(RolePermissionCollections.CRM_MEETING));
         final Button createCallBtn = new Button(UserUIContext.getMessage(CallI18nEnum.NEW), clickEvent -> {
             splitBtn.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ActivityEvent.CallAdd(this, null));
         });
-        createCallBtn.setEnabled(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CALL()));
+        createCallBtn.setEnabled(UserUIContext.canWrite(RolePermissionCollections.CRM_CALL));
         btnControlsLayout.addOption(createCallBtn);
 
         ButtonGroup viewSwitcher = new ButtonGroup();

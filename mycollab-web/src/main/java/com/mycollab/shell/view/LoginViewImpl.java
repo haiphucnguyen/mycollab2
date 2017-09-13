@@ -14,7 +14,7 @@ import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.mvp.ViewEvent;
+import com.mycollab.vaadin.events.ViewEvent;
 import com.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -53,9 +53,9 @@ public class LoginViewImpl extends AbstractVerticalPageView implements LoginView
         @Override
         protected Component createContent(TextField usernameField, PasswordField passwordField, Button loginBtn) {
             custom = CustomLayoutExt.createLayout("loginForm");
-            Resource logoResource = AccountAssetsResolver.createLogoResource(AppUI.getBillingAccount().getLogopath(), 150);
+            Resource logoResource = AccountAssetsResolver.createLogoResource(AppUI.Companion.getBillingAccount().getLogopath(), 150);
             custom.addComponent(new Image(null, logoResource), "logo-here");
-            custom.addComponent(ELabel.h1(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.BUTTON_LOG_IN))
+            custom.addComponent(ELabel.h1(LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), ShellI18nEnum.BUTTON_LOG_IN))
                     .withWidthUndefined(), "form-header");
             custom.addStyleName("customLoginForm");
             custom.addComponent(usernameField, "usernameField");
@@ -64,7 +64,7 @@ public class LoginViewImpl extends AbstractVerticalPageView implements LoginView
             passwordField.addValidator(passwordValidator);
             custom.addComponent(passwordField, "passwordField");
 
-            rememberMe = new CheckBox(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.OPT_REMEMBER_PASSWORD),
+            rememberMe = new CheckBox(LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), ShellI18nEnum.OPT_REMEMBER_PASSWORD),
                     false);
             custom.addComponent(rememberMe, "rememberMe");
 
@@ -72,15 +72,15 @@ public class LoginViewImpl extends AbstractVerticalPageView implements LoginView
             loginBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
             custom.addComponent(loginBtn, "loginButton");
 
-            MButton forgotPasswordBtn = new MButton(LocalizationHelper.getMessage(AppUI.getDefaultLocale(),
+            MButton forgotPasswordBtn = new MButton(LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(),
                     ShellI18nEnum.BUTTON_FORGOT_PASSWORD), clickEvent -> EventBusFactory.getInstance().post(new ShellEvent.GotoForgotPasswordPage(this, null)))
                     .withStyleName(WebThemes.BUTTON_LINK);
             custom.addComponent(forgotPasswordBtn, "forgotLink");
 
-            custom.addComponent(ELabel.html(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.OPT_REMEMBER_PASSWORD,
+            custom.addComponent(ELabel.html(LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), ShellI18nEnum.OPT_REMEMBER_PASSWORD,
                     ShellI18nEnum.OPT_SIGNIN_MYCOLLAB)), "newToUs");
             custom.addComponent(ELabel.html(new A("https://www.mycollab.com/pricing/", "_blank").appendText
-                    (LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.ACTION_CREATE_ACCOUNT)).write())
+                    (LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), ShellI18nEnum.ACTION_CREATE_ACCOUNT)).write())
                     .withWidthUndefined(), "createAccountLink");
 
             return custom;
@@ -88,16 +88,16 @@ public class LoginViewImpl extends AbstractVerticalPageView implements LoginView
 
         @Override
         protected String getUserNameFieldCaption() {
-            return LocalizationHelper.getMessage(AppUI.getDefaultLocale(), GenericI18Enum.FORM_EMAIL);
+            return LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), GenericI18Enum.FORM_EMAIL);
         }
 
         @Override
         protected String getPasswordFieldCaption() {
-            return LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.FORM_PASSWORD);
+            return LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), ShellI18nEnum.FORM_PASSWORD);
         }
 
         protected String getLoginButtonCaption() {
-            return LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.BUTTON_LOG_IN);
+            return LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), ShellI18nEnum.BUTTON_LOG_IN);
         }
 
         // You can also override this method to handle the login directly, instead of using the event mechanism

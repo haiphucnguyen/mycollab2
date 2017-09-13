@@ -23,7 +23,7 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
     private static final long serialVersionUID = 1L;
 
     public MassUpdateContactWindow(String title, ContactListPresenter presenter) {
-        super(title, CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()), new Contact(), presenter);
+        super(title, CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT), new Contact(), presenter);
     }
 
     @Override

@@ -159,7 +159,7 @@ class EmailTokenField extends CssLayout implements SuggestField.NewItemsHandler,
     private Component generateToken(final SimpleUser user) {
         final Button btn = new Button("", FontAwesome.TIMES);
         btn.setCaptionAsHtml(true);
-        btn.setCaption((new Img("", StorageUtils.INSTANCE.getAvatarPath(user.getAvatarid(), 16))).write() + " " + user.getDisplayName());
+        btn.setCaption((new Img("", StorageUtils.getAvatarPath(user.getAvatarid(), 16))).write() + " " + user.getDisplayName());
         btn.addClickListener(clickEvent -> {
             EmailTokenField.this.removeComponent(btn);
             inviteEmails.remove(user.getEmail());

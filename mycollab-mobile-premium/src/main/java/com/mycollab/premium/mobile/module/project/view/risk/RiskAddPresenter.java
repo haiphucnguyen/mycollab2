@@ -43,7 +43,7 @@ public class RiskAddPresenter extends AbstractProjectPresenter<RiskAddView> {
 
     @Override
     protected void onGo(HasComponents navigator, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
             SimpleRisk risk = (SimpleRisk) data.getParams();
             view.editItem(risk);
             super.onGo(navigator, data);
@@ -62,7 +62,7 @@ public class RiskAddPresenter extends AbstractProjectPresenter<RiskAddView> {
             risk.setCreateduser(UserUIContext.getUsername());
             int riskId = riskService.saveWithSession(risk, UserUIContext.getUsername());
             ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
-            uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.INSTANCE.getRISK(), riskId);
+            uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.RISK, riskId);
         } else {
             riskService.updateWithSession(risk, UserUIContext.getUsername());
             ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();

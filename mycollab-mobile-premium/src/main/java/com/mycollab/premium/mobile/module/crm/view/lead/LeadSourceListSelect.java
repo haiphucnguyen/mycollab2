@@ -13,6 +13,6 @@ public class LeadSourceListSelect extends I18NValueListSelect {
     private static final long serialVersionUID = 1L;
 
     public LeadSourceListSelect() {
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getLeadSourceList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.leadSourceList));
     }
 }

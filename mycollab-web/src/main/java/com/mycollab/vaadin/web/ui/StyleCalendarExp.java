@@ -42,19 +42,19 @@ public class StyleCalendarExp extends VerticalLayout {
         setDateOptionsGenerator();
 
         btnShowNextYear = new Button();
-        btnShowNextYear.setIcon(new ExternalResource(StorageUtils.INSTANCE.generateAssetRelativeLink("icons/16/cal_year_next.png")));
+        btnShowNextYear.setIcon(new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/cal_year_next.png")));
         btnShowNextYear.setStyleName(WebThemes.BUTTON_LINK);
 
         btnShowNextMonth = new Button();
-        btnShowNextMonth.setIcon(new ExternalResource(StorageUtils.INSTANCE.generateAssetRelativeLink("icons/16/cal_month_next.png")));
+        btnShowNextMonth.setIcon(new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/cal_month_next.png")));
         btnShowNextMonth.setStyleName(WebThemes.BUTTON_LINK);
 
         btnShowPreviousMonth = new Button();
-        btnShowPreviousMonth.setIcon(new ExternalResource(StorageUtils.INSTANCE.generateAssetRelativeLink("icons/16/cal_month_pre.png")));
+        btnShowPreviousMonth.setIcon(new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/cal_month_pre.png")));
         btnShowPreviousMonth.setStyleName(WebThemes.BUTTON_LINK);
 
         btnShowPreviousYear = new Button();
-        btnShowPreviousYear.setIcon(new ExternalResource(StorageUtils.INSTANCE.generateAssetRelativeLink("icons/16/cal_year_pre.png")));
+        btnShowPreviousYear.setIcon(new ExternalResource(StorageUtils.generateAssetRelativeLink("icons/16/cal_year_pre.png")));
         btnShowPreviousYear.setStyleName(WebThemes.BUTTON_LINK);
 
         lbSelectedDate.setValue(UserUIContext.formatDate(new Date()));

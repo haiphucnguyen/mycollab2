@@ -180,18 +180,16 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
 
     private void displayMilestones() {
         roadMapView.removeAllComponents();
-        List<SimpleMilestone> milestones = milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(baseCriteria));
-        for (SimpleMilestone milestone : milestones) {
-            roadMapView.addComponent(new MilestoneBlock(milestone));
-        }
+        List<SimpleMilestone> milestones = (List<SimpleMilestone>) milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(baseCriteria));
+        milestones.forEach(milestone -> roadMapView.addComponent(new MilestoneBlock(milestone)));
 
-        headerText.setValue(String.format("%s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml(),
+        headerText.setValue(String.format("%s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml(),
                 UserUIContext.getMessage(MilestoneI18nEnum.OPT_ROADMAP_VALUE, milestones.size())));
     }
 
     @Override
     public void refresh() {
-        headerText.setValue(String.format("%s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml(),
+        headerText.setValue(String.format("%s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml(),
                 UserUIContext.getMessage(MilestoneI18nEnum.OPT_ROADMAP_VALUE, roadMapView.getComponentCount())));
     }
 
@@ -215,7 +213,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
         }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES()));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
 
         MButton printBtn = new MButton("", clickEvent ->
                 UI.getCurrent().addWindow(new MilestoneCustomizeReportOutputWindow(new LazyValueInjector() {
@@ -306,10 +304,10 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                         viewIssuesBtn.setCaption(UserUIContext.getMessage(ProjectI18nEnum.ACTION_HIDE_TICKETS));
                         ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
                         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                        searchCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
+                        searchCriteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
                         searchCriteria.setMilestoneId(new NumberSearchField(milestone.getId()));
                         ProjectTicketService genericTaskService = AppContextUtil.getSpringBean(ProjectTicketService.class);
-                        List<ProjectTicket> tickets = genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+                        List<ProjectTicket> tickets = (List<ProjectTicket>) genericTaskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
                         for (ProjectTicket ticket : tickets) {
                             ToggleTicketSummaryField toggleTicketSummaryField = new ToggleTicketSummaryField(ticket);
                             MHorizontalLayout rowComp = new MHorizontalLayout(ELabel.EMPTY_SPACE());
@@ -326,7 +324,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                                 status = UserUIContext.getMessage(StatusI18nEnum.class, ticket.getStatus());
                             }
                             rowComp.with(new ELabel(status).withStyleName(UIConstants.BLOCK).withWidthUndefined());
-                            String avatarLink = StorageUtils.INSTANCE.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
+                            String avatarLink = StorageUtils.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
                             Img img = new Img(ticket.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                                     .setTitle(ticket.getAssignUserFullName());
                             rowComp.with(ELabel.html(img.write()).withWidthUndefined());

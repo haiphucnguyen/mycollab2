@@ -59,18 +59,18 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         mainBody.with(constructTopMenuCustomizeBlock(), constructVTabsheetCustomizeBlock(), constructButtonCustomizeBlock());
 
 
-        ELabel viewTitle = ELabel.h2(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING).getHtml() + " " +
+        ELabel viewTitle = ELabel.h2(SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getGENERAL_SETTING()).getHtml() + " " +
                 UserUIContext.getMessage(ThemeI18nEnum.OPT_THEME_CUSTOMIZATION));
 
         MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.SaveTheme(this, accountTheme)))
                 .withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
-        saveBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.INSTANCE.getACCOUNT_THEME()));
+        saveBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         MButton resetToDefaultBtn = new MButton(UserUIContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.ResetTheme(ThemeCustomizeViewImpl.this, null)))
                 .withStyleName(WebThemes.BUTTON_DANGER);
-        resetToDefaultBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.INSTANCE.getACCOUNT_THEME()));
+        resetToDefaultBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         MHorizontalLayout controlButtons = new MHorizontalLayout(viewTitle, resetToDefaultBtn, saveBtn).withFullWidth()
                 .expand(viewTitle);

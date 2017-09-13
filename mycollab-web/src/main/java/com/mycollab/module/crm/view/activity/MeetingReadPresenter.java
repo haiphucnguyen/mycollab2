@@ -50,7 +50,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
             @Override
             public void onDelete(final SimpleMeeting data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -109,7 +109,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_MEETING())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_MEETING)) {
             SimpleMeeting meeting;
             if (data.getParams() instanceof Integer) {
                 MeetingService meetingService = AppContextUtil.getSpringBean(MeetingService.class);

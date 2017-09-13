@@ -60,7 +60,7 @@ public class MilestoneReadPresenter extends ProjectGenericPresenter<MilestoneRea
             @Override
             public void onDelete(final SimpleMilestone data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -76,7 +76,7 @@ public class MilestoneReadPresenter extends ProjectGenericPresenter<MilestoneRea
             @Override
             public void onPrint(Object source, SimpleMilestone data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.INSTANCE.getMILESTONE(), Milestone.Field.name.name(),
+                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.MILESTONE, Milestone.Field.name.name(),
                         MilestoneDefaultFormLayoutFactory.getForm(), Milestone.Field.id.name(),
                         Milestone.Field.saccountid.name()));
             }
@@ -98,7 +98,7 @@ public class MilestoneReadPresenter extends ProjectGenericPresenter<MilestoneRea
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
                 criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = milestoneService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new MilestoneEvent.GotoRead(this, nextId));
@@ -113,7 +113,7 @@ public class MilestoneReadPresenter extends ProjectGenericPresenter<MilestoneRea
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
                 criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = milestoneService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new MilestoneEvent.GotoRead(this, nextId));
@@ -126,9 +126,9 @@ public class MilestoneReadPresenter extends ProjectGenericPresenter<MilestoneRea
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.MILESTONES)) {
             MilestoneContainer milestoneContainer = (MilestoneContainer) container;
-            milestoneContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getMILESTONE());
+            milestoneContainer.navigateToContainer(ProjectTypeConstants.MILESTONE);
             if (data.getParams() instanceof Integer) {
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 SimpleMilestone milestone = milestoneService.findById((Integer) data.getParams(), AppUI.getAccountId());
@@ -136,7 +136,7 @@ public class MilestoneReadPresenter extends ProjectGenericPresenter<MilestoneRea
                     milestoneContainer.setContent(view);
                     view.previewItem(milestone);
 
-                    ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+                    ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
                     breadcrumb.gotoMilestoneRead(milestone);
                 } else {
                     throw new ResourceNotFoundException();

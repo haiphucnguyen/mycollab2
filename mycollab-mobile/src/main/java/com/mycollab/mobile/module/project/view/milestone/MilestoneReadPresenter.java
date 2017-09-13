@@ -66,7 +66,7 @@ public class MilestoneReadPresenter extends AbstractProjectPresenter<MilestoneRe
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.MILESTONES)) {
             if (data.getParams() instanceof Integer) {
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 SimpleMilestone milestone = milestoneService.findById((Integer) data.getParams(), AppUI.getAccountId());

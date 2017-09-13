@@ -73,9 +73,9 @@ public class CampaignListPresenter extends CrmGenericListPresenter<CampaignListV
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getCAMPAIGN());
+        CrmModule.navigateItem(CrmTypeConstants.CAMPAIGN);
 
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
             searchCriteria = (CampaignSearchCriteria) data.getParams();
             int totalCount = campaignService.getTotalCount(searchCriteria);
             if (totalCount > 0) {

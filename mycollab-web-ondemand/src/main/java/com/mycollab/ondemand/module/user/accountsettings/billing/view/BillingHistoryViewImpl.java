@@ -47,7 +47,7 @@ public class BillingHistoryViewImpl extends AbstractLazyPageView implements Bill
         MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.h2("Billing Overview"));
         with(headerLayout);
 
-        SimpleBillingSubscription subscription = (SimpleBillingSubscription) MyCollabSession.getCurrentUIVariable("subscription");
+        SimpleBillingSubscription subscription = (SimpleBillingSubscription) MyCollabSession.INSTANCE.getCurrentUIVariable("subscription");
         if (subscription != null) {
             MButton changeBillingInfoBtn = new MButton(UserUIContext.getMessage(BillingI18nEnum.ACTION_CHANGE_BILLING_INFORMATION),
                     clickEvent -> UI.getCurrent().addWindow(new ChangeBillingPlanInformationWindow(subscription)))

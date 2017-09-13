@@ -4,14 +4,12 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.mobile.MobileApplication;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageView;
-import com.mycollab.vaadin.mvp.ViewEvent;
+import com.mycollab.vaadin.events.ViewEvent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.UI;
-
-import java.io.Serializable;
 
 /**
  * @author MyCollab Ltd
@@ -35,7 +33,7 @@ public abstract class AbstractMobilePageView extends NavigationView implements P
 
     @Override
     public void addViewListener(ViewListener listener) {
-        addListener(ViewEvent.VIEW_IDENTIFIER(), ViewEvent.class, listener, ViewListener.viewInitMethod);
+        addListener(ViewEvent.VIEW_IDENTIFIER, ViewEvent.class, listener, ViewListener.Companion.getViewInitMethod());
     }
 
     @Override

@@ -63,7 +63,7 @@ public class CampaignAccountListComp extends RelatedListComp2<AccountService, Ac
         VerticalLayout controlsBtnWrap = new VerticalLayout();
         controlsBtnWrap.setWidth("100%");
 
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
             final SplitButton controlsBtn = new SplitButton();
             controlsBtn.addStyleName(WebThemes.BUTTON_ACTION);
             controlsBtn.setCaption(UserUIContext.getMessage(AccountI18nEnum.NEW));
@@ -77,7 +77,7 @@ public class CampaignAccountListComp extends RelatedListComp2<AccountService, Ac
                 accountsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
             });
-            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()));
+            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
             OptionPopupContent buttonControlLayout = new OptionPopupContent();
             buttonControlLayout.addOption(selectBtn);
             controlsBtn.setContent(buttonControlLayout);
@@ -101,7 +101,7 @@ public class CampaignAccountListComp extends RelatedListComp2<AccountService, Ac
             MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel accountAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()));
+            ELabel accountAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
             iconWrap.addComponent(accountAvatar);
             blockTop.addComponent(iconWrap);
 
@@ -110,7 +110,7 @@ public class CampaignAccountListComp extends RelatedListComp2<AccountService, Ac
 
             MButton btnDelete = new MButton("", clickEvent ->
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -130,7 +130,7 @@ public class CampaignAccountListComp extends RelatedListComp2<AccountService, Ac
             blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
 
             Label accountName = ELabel.html(UserUIContext.getMessage(GenericI18Enum.FORM_NAME) + ": " + new A(CrmLinkGenerator.INSTANCE.generateCrmItemLink(
-                    CrmTypeConstants.INSTANCE.getACCOUNT(), account.getId())).appendText(account.getAccountname()).write());
+                    CrmTypeConstants.ACCOUNT, account.getId())).appendText(account.getAccountname()).write());
 
             accountInfo.addComponent(accountName);
 

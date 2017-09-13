@@ -27,7 +27,7 @@ public class AccountListViewImpl extends AbstractListItemComp<AccountSearchCrite
 
     @Override
     protected AbstractPagedBeanTable<AccountSearchCriteria, SimpleAccount> createBeanTable() {
-        return new AccountTableDisplay(CrmTypeConstants.INSTANCE.getACCOUNT(), AccountTableFieldDef.selected(),
+        return new AccountTableDisplay(CrmTypeConstants.ACCOUNT, AccountTableFieldDef.selected(),
                 Arrays.asList(AccountTableFieldDef.accountname(), AccountTableFieldDef.city(),
                         AccountTableFieldDef.phoneoffice(), AccountTableFieldDef.email(),
                         AccountTableFieldDef.assignUser()));
@@ -42,7 +42,7 @@ public class AccountListViewImpl extends AbstractListItemComp<AccountSearchCrite
     protected DefaultMassItemActionHandlerContainer createActionControls() {
         DefaultMassItemActionHandlerContainer container = new DefaultMassItemActionHandlerContainer();
 
-        if (UserUIContext.canAccess(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
+        if (UserUIContext.canAccess(RolePermissionCollections.CRM_ACCOUNT)) {
             container.addDeleteActionItem();
         }
 
@@ -51,7 +51,7 @@ public class AccountListViewImpl extends AbstractListItemComp<AccountSearchCrite
         container.addDownloadExcelActionItem();
         container.addDownloadCsvActionItem();
 
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
             container.addMassUpdateActionItem();
         }
 

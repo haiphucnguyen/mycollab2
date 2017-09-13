@@ -50,17 +50,17 @@ public class GenericItemRowDisplayHandler implements IBeanList.RowDisplayHandler
                 .setTitle(UserUIContext.formatDateTime(item.getLastUpdatedTime())).setStyle("float:right;margin-right:5px");
 
         if (StringUtils.isBlank(item.getCreatedUser())) {
-            div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), new Text(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)),
+            div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE, new Text(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)),
                     lastUpdatedOn);
         } else {
-            Img userAvatar = new Img("", StorageUtils.INSTANCE.getAvatarPath(item.getCreatedUserAvatarId(), 16))
+            Img userAvatar = new Img("", StorageUtils.getAvatarPath(item.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
             A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(item.getProjectId(), item
                     .getCreatedUser())).appendText(item.getCreatedUserDisplayName());
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(item.getCreatedUser()));
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 
-            div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), userAvatar, DivLessFormatter.EMPTY_SPACE(),
+            div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE, userAvatar, DivLessFormatter.EMPTY_SPACE,
                     userLink, lastUpdatedOn);
         }
 

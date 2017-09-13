@@ -43,7 +43,7 @@ public class MessageAddPresenter extends AbstractProjectPresenter<MessageAddView
                 MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
                 messageService.saveWithSession(bean, UserUIContext.getUsername());
                 ProjectFormAttachmentUploadField uploadField = view.getUploadField();
-                uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.INSTANCE.getMESSAGE(), bean.getId());
+                uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.MESSAGE, bean.getId());
                 EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
             }
         });
@@ -51,7 +51,7 @@ public class MessageAddPresenter extends AbstractProjectPresenter<MessageAddView
 
     @Override
     protected void onGo(HasComponents navigator, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMESSAGES())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES)) {
             super.onGo(navigator, data);
             AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateMessageAddLink(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(MessageI18nEnum.NEW));

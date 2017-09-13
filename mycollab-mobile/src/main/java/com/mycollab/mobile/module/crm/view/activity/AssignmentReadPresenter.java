@@ -79,7 +79,7 @@ public class AssignmentReadPresenter extends AbstractCrmPresenter<AssignmentRead
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                 CrmTaskSearchCriteria criteria = new CrmTaskSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = taskService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskRead(this, nextId));
@@ -94,7 +94,7 @@ public class AssignmentReadPresenter extends AbstractCrmPresenter<AssignmentRead
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                 CrmTaskSearchCriteria criteria = new CrmTaskSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = taskService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskRead(this, nextId));
@@ -107,7 +107,7 @@ public class AssignmentReadPresenter extends AbstractCrmPresenter<AssignmentRead
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_TASK())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_TASK)) {
 
             SimpleCrmTask task;
             if (data.getParams() instanceof Integer) {

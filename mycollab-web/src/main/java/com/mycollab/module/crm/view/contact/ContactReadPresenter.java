@@ -62,7 +62,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
             @Override
             public void onDelete(final SimpleContact data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -85,7 +85,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
             @Override
             public void onPrint(Object source, SimpleContact data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.INSTANCE.getCONTACT(), Contact.Field.lastname.name(),
+                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.CONTACT, Contact.Field.lastname.name(),
                         ContactDefaultDynaFormLayoutFactory.getForm()));
             }
 
@@ -99,7 +99,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
                 ContactSearchCriteria criteria = new ContactSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = contactService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ContactEvent.GotoRead(this, nextId));
@@ -114,7 +114,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
                 ContactSearchCriteria criteria = new ContactSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = contactService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ContactEvent.GotoRead(this, nextId));
@@ -129,17 +129,17 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
             public void createNewRelatedItem(String itemId) {
                 if (itemId.equals("task")) {
                     SimpleCrmTask task = new SimpleCrmTask();
-                    task.setType(CrmTypeConstants.INSTANCE.getCONTACT());
+                    task.setType(CrmTypeConstants.CONTACT);
                     task.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(ContactReadPresenter.this, task));
                 } else if (itemId.equals("meeting")) {
                     SimpleMeeting meeting = new SimpleMeeting();
-                    meeting.setType(CrmTypeConstants.INSTANCE.getCONTACT());
+                    meeting.setType(CrmTypeConstants.CONTACT);
                     meeting.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(ContactReadPresenter.this, meeting));
                 } else if (itemId.equals("call")) {
                     SimpleCall call = new SimpleCall();
-                    call.setType(CrmTypeConstants.INSTANCE.getCONTACT());
+                    call.setType(CrmTypeConstants.CONTACT);
                     call.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(ContactReadPresenter.this, call));
                 }
@@ -179,8 +179,8 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getCONTACT());
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CONTACT())) {
+        CrmModule.navigateItem(CrmTypeConstants.CONTACT);
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
             if (data.getParams() instanceof Integer) {
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
                 SimpleContact contact = contactService.findById((Integer) data.getParams(), AppUI.getAccountId());

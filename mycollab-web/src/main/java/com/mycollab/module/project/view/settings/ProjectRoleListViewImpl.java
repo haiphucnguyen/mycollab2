@@ -97,7 +97,7 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
         layout.addComponent(this.selectOptionButton);
 
         tableActionControls = new DefaultMassItemActionHandlerContainer();
-        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getROLES())) {
+        if (CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.ROLES)) {
             tableActionControls.addDeleteActionItem();
         }
 

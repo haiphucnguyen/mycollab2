@@ -25,7 +25,7 @@ public class ProjectModulePresenter extends AbstractProjectPresenter<ProjectModu
     @Override
     protected void onGo(HasComponents navigator, ScreenData<?> data) {
         ModuleHelper.setCurrentModule(view);
-        UserUIContext.updateLastModuleVisit(ModuleNameConstants.INSTANCE.getPRJ());
+        UserUIContext.updateLastModuleVisit(ModuleNameConstants.PRJ);
 
         String[] params = (String[]) data.getParams();
         if (params == null || params.length == 0) {

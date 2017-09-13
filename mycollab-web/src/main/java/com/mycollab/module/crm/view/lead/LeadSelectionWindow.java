@@ -54,7 +54,7 @@ public class LeadSelectionWindow extends MWindow {
                 close();
             }).withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING)
                     .withDescription(CrmTooltipGenerator.INSTANCE.generateTooltipLead(UserUIContext.getUserLocale(), lead,
-                            AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                            AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
         tableItem.setSearchCriteria(new LeadSearchCriteria());
     }

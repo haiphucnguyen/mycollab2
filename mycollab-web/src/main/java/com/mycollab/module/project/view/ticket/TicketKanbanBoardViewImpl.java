@@ -121,17 +121,17 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         groupWrapLayout.addComponent(toggleShowColumnsBtn);
         toggleShowButton();
 
-        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+        if (CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.TASKS)) {
             MButton addNewColumnBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.ACTION_NEW_COLUMN),
-                    clickEvent -> UI.getCurrent().addWindow(new AddNewColumnWindow(this, ProjectTypeConstants.INSTANCE.getTASK(), "status")))
+                    clickEvent -> UI.getCurrent().addWindow(new AddNewColumnWindow(this, ProjectTypeConstants.TASK, "status")))
                     .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
             groupWrapLayout.addComponent(addNewColumnBtn);
         }
 
         MButton deleteColumnBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.ACTION_DELETE_COLUMNS),
-                clickEvent -> UI.getCurrent().addWindow(new DeleteColumnWindow(this, ProjectTypeConstants.INSTANCE.getTASK())))
+                clickEvent -> UI.getCurrent().addWindow(new DeleteColumnWindow(this, ProjectTypeConstants.TASK)))
                 .withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_DANGER);
-        deleteColumnBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+        deleteColumnBtn.setVisible(CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.TASKS));
 
         MButton advanceDisplayBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST),
                 clickEvent -> EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null)))
@@ -254,7 +254,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-                List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.INSTANCE.getTASK(),
+                List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
                         CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
                 for (OptionVal optionVal : optionVals) {
                     if (!displayHiddenColumns && Boolean.FALSE.equals(optionVal.getIsshow())) {
@@ -270,7 +270,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                 searchPanel.setTotalCountNumber(totalTasks);
                 int pages = totalTasks / 50;
                 for (int page = 0; page < pages + 1; page++) {
-                    List<SimpleTask> tasks = taskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
+                    List<SimpleTask> tasks = (List<SimpleTask>) taskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
                     if (CollectionUtils.isNotEmpty(tasks)) {
                         for (SimpleTask task : tasks) {
                             String status = task.getStatus();
@@ -413,7 +413,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
             String typeVal = optionVal.getTypeval();
             boolean canRename = !typeVal.equals(StatusI18nEnum.Closed.name()) && !typeVal.equals(StatusI18nEnum.Open.name());
-            boolean canExecute = CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getTASKS());
+            boolean canExecute = CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.TASKS);
 
             OptionPopupContent popupContent = new OptionPopupContent();
 
@@ -465,7 +465,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                         NotificationUtil.showErrorNotification(UserUIContext.getMessage(TaskI18nEnum.ERROR_CAN_NOT_DELETE_COLUMN_HAS_TASK));
                     } else {
                         ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                AppUI.getSiteName()),
+                                AppUI.Companion.getSiteName()),
                                 UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -483,7 +483,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
             popupContent.addSeparator();
 
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                 MButton addBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.NEW), clickEvent -> {
                     controlsBtn.setPopupVisible(false);
                     addNewTaskComp();
@@ -492,7 +492,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
             }
             controlsBtn.setContent(popupContent);
 
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                 MButton addNewBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.NEW), clickEvent -> addNewTaskComp())
                         .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
                 buttonControls = new MHorizontalLayout(addNewBtn).withAlign(addNewBtn, Alignment.MIDDLE_RIGHT).withFullWidth();
@@ -504,7 +504,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         }
 
         void toggleShowButton() {
-            if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+            if (CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.TASKS)) {
                 if (Boolean.FALSE.equals(optionVal.getIsshow())) {
                     hideColumnBtn.setCaption(UserUIContext.getMessage(TaskI18nEnum.ACTION_SHOW_COLUMN));
                     hideColumnBtn.setIcon(FontAwesome.TOGGLE_UP);
@@ -549,7 +549,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                 task.setProjectid(CurrentProjectVariables.getProjectId());
                 task.setPercentagecomplete(0d);
                 task.setStatus(optionVal.getTypeval());
-                task.setProjectShortname(CurrentProjectVariables.getShortName());
+                task.setProjectShortname(CurrentProjectVariables.INSTANCE.getShortName());
                 final MVerticalLayout layout = new MVerticalLayout();
                 layout.addStyleName("kanban-item");
                 final TextField taskNameField = new TextField();
@@ -606,7 +606,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                 MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
                     if (StringUtils.isNotBlank(columnNameField.getValue())) {
                         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
-                        if (optionValService.isExistedOptionVal(ProjectTypeConstants.INSTANCE.getTASK(), columnNameField
+                        if (optionValService.isExistedOptionVal(ProjectTypeConstants.TASK, columnNameField
                                 .getValue(), "status", optionVal.getExtraid(), AppUI.getAccountId())) {
                             NotificationUtil.showErrorNotification(UserUIContext.getMessage(TaskI18nEnum.ERROR_THERE_IS_ALREADY_COLUMN_NAME, columnNameField.getValue()));
                         } else {

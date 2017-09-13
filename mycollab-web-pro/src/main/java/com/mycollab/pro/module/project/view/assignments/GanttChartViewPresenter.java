@@ -152,12 +152,12 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canReadAssignments()) {
+        if (CurrentProjectVariables.INSTANCE.canReadAssignments()) {
             ProjectDashboardContainer projectDashboardContainer = (ProjectDashboardContainer) container;
             projectDashboardContainer.setContent(view);
             ((GanttChartView) view).lazyLoadView();
 
-            ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoGanttView();
         } else {
             NotificationUtil.showMessagePermissionAlert();

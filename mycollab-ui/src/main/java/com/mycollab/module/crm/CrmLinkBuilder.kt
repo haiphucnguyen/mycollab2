@@ -28,7 +28,7 @@ object CrmLinkBuilder {
             URL_PREFIX_PARAM + CrmLinkGenerator.generateOpportunityPreviewLink(opportunityId)
 
     fun generateActivityPreviewLinkFull(type: String, typeId: Int?): String =
-            CrmLinkGenerator.generateCrmItemFullLink(AppUI.getSiteUrl(), type, typeId)
+            CrmLinkGenerator.generateCrmItemFullLink(AppUI.siteUrl, type, typeId)
 
     fun generateMeetingPreviewLinkFull(meetingId: Int?): String =
             URL_PREFIX_PARAM + CrmLinkGenerator.generateMeetingPreviewLink(meetingId)

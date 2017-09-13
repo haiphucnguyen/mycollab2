@@ -52,12 +52,12 @@ public class ProjectMemberListDisplay extends DefaultPagedBeanList<ProjectMember
             MVerticalLayout memberInfoLayout = new MVerticalLayout().withMargin(false);
             mainLayout.with(memberAvatar, memberInfoLayout).expand(memberInfoLayout);
 
-            A memberLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(CurrentProjectVariables
+            A memberLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(CurrentProjectVariables.INSTANCE
                     .getProjectId(), member.getUsername())).appendText(member.getDisplayName());
             Label memberLbl = ELabel.html(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
             memberInfoLayout.addComponent(memberLbl);
 
-            if (Boolean.TRUE.equals(AppUI.getBillingAccount().getDisplayemailpublicly())) {
+            if (Boolean.TRUE.equals(AppUI.Companion.getBillingAccount().getDisplayemailpublicly())) {
                 Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(), member.getUsername()))
                         .withStyleName(UIConstants.META_INFO);
                 memberInfoLayout.addComponent(memberEmailLabel);
@@ -72,7 +72,7 @@ public class ProjectMemberListDisplay extends DefaultPagedBeanList<ProjectMember
                     .withDescription(UserUIContext.formatDateTime(member.getLastAccessTime())).withStyleName(UIConstants.META_INFO);
             memberInfoLayout.addComponent(lastAccessTimeLbl);
 
-            String memberWorksInfo = String.format("%s %s  %s %s  %s %s  %s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()).getHtml(), new Span().appendText("" + member.getNumOpenTasks()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_TASKS)), ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()).getHtml(), new Span().appendText("" + member.getNumOpenBugs())
+            String memberWorksInfo = String.format("%s %s  %s %s  %s %s  %s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml(), new Span().appendText("" + member.getNumOpenTasks()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_TASKS)), ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml(), new Span().appendText("" + member.getNumOpenBugs())
                     .setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_BUGS)), FontAwesome.MONEY.getHtml(), new Span().appendText("" + NumberUtils.roundDouble(2,
                     member.getTotalBillableLogTime())).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)), FontAwesome.GIFT.getHtml(), new Span().appendText("" + NumberUtils.roundDouble(2, member.getTotalNonBillableLogTime()))
                     .setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS)));

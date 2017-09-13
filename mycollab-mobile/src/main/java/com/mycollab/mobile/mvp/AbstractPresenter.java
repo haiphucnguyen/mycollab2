@@ -34,7 +34,7 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
     @Override
     public V getView() {
         if (view == null) {
-            view = ViewManager.getCacheComponent(viewClass);
+            view = ViewManager.INSTANCE.getCacheComponent(viewClass);
             postInitView();
         }
         return view;

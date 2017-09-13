@@ -83,8 +83,8 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
             } else if (bugVersion.getDuedate() != null && (bugVersion.getDuedate().before(new GregorianCalendar().getTime()))) {
                 b.addStyleName(WebThemes.LINK_OVERDUE);
             }
-            b.setDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipVersion(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
-                    bugVersion, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            b.setDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipVersion(UserUIContext.getUserLocale(), AppUI.Companion.getDateFormat(),
+                    bugVersion, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
         });
 
@@ -131,7 +131,7 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
 
         tableActionControls = new DefaultMassItemActionHandlerContainer();
 
-        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getVERSIONS())) {
+        if (CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.VERSIONS)) {
             tableActionControls.addDeleteActionItem();
         }
 

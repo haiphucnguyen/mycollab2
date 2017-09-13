@@ -34,22 +34,22 @@ public class CrmHomeViewImpl extends AbstractLazyPageView implements CrmHomeView
 
         MVerticalLayout myAssignmentsLayout = new MVerticalLayout().withMargin(new MarginInfo(false, false, true, false));
 
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
             accountDashlet = new AccountListDashlet();
             myAssignmentsLayout.addComponent(accountDashlet);
         }
 
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_MEETING())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_MEETING)) {
             meetingDashlet = new MeetingListDashlet();
             myAssignmentsLayout.addComponent(meetingDashlet);
         }
 
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CALL())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_CALL)) {
             callDashlet = new CallListDashlet();
             myAssignmentsLayout.addComponent(callDashlet);
         }
 
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_LEAD)) {
             leadDashlet = new LeadListDashlet();
             myAssignmentsLayout.addComponent(leadDashlet);
         }

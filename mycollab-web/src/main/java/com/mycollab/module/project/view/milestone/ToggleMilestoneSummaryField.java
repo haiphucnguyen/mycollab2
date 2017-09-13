@@ -60,7 +60,7 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
         this.maxLength = maxLength;
         this.setWidth("100%");
         this.addStyleName("editable-field");
-        if (toggleStatusSupport && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
+        if (toggleStatusSupport && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
             toggleStatusSelect = new CssCheckBox();
             toggleStatusSelect.setSimpleMode(true);
             toggleStatusSelect.setValue(milestone.isCompleted());
@@ -81,15 +81,15 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
                 milestoneService.updateSelectiveWithSession(milestone, UserUIContext.getUsername());
                 ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
                 searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.INSTANCE.getBUG(), ProjectTypeConstants.INSTANCE.getRISK(),
-                        ProjectTypeConstants.INSTANCE.getTASK()));
+                searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.RISK,
+                        ProjectTypeConstants.TASK));
                 searchCriteria.setMilestoneId(NumberSearchField.equal(milestone.getId()));
                 searchCriteria.setIsOpenned(new SearchField());
                 ProjectTicketService genericTaskService = AppContextUtil.getSpringBean(ProjectTicketService.class);
                 int openAssignmentsCount = genericTaskService.getTotalCount(searchCriteria);
                 if (openAssignmentsCount > 0) {
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, AppUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, AppUI.Companion.getSiteName()),
                             UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_CLOSE_SUB_ASSIGNMENTS),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -105,7 +105,7 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
         titleLinkLbl = ELabel.h3(buildMilestoneLink()).withStyleName(UIConstants.LABEL_WORD_WRAP).withWidthUndefined();
         this.addComponent(titleLinkLbl);
         buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(false, false, false, true)).withStyleName("toggle");
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
             MButton instantEditBtn = new MButton("", clickEvent -> {
                 if (isRead) {
                     ToggleMilestoneSummaryField.this.removeComponent(titleLinkLbl);
@@ -124,10 +124,10 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
                     .withIcon(FontAwesome.EDIT).withStyleName(ValoTheme.BUTTON_ICON_ALIGN_TOP);
             buttonControls.with(instantEditBtn);
         }
-        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
+        if (CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.MILESTONES)) {
             MButton removeBtn = new MButton("", clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

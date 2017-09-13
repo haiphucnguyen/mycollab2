@@ -79,7 +79,7 @@ object CrmLinkGenerator {
         return siteUrl + "#" + generateCallPreviewLink(callId)
     }
 
-    fun generateCrmItemLink(type: String, typeId: Int?): String {
+    @JvmStatic fun generateCrmItemLink(type: String, typeId: Int?): String {
         var result = ""
 
         when (type) {

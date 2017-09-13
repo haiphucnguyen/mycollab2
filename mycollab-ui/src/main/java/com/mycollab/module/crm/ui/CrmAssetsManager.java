@@ -15,18 +15,18 @@ public class CrmAssetsManager {
 
     static {
         resources = new HashMap<>();
-        resources.put(CrmTypeConstants.INSTANCE.getACCOUNT(), FontAwesome.INSTITUTION);
-        resources.put(CrmTypeConstants.INSTANCE.getCONTACT(), FontAwesome.USER);
-        resources.put(CrmTypeConstants.INSTANCE.getOPPORTUNITY(), FontAwesome.MONEY);
-        resources.put(CrmTypeConstants.INSTANCE.getCASE(), FontAwesome.BUG);
-        resources.put(CrmTypeConstants.INSTANCE.getLEAD(), FontAwesome.BUILDING);
-        resources.put(CrmTypeConstants.INSTANCE.getACTIVITY(), FontAwesome.CALENDAR);
-        resources.put(CrmTypeConstants.INSTANCE.getTASK(), FontAwesome.LIST_ALT);
-        resources.put(CrmTypeConstants.INSTANCE.getCALL(), FontAwesome.PHONE);
-        resources.put(CrmTypeConstants.INSTANCE.getMEETING(), FontAwesome.PLANE);
-        resources.put(CrmTypeConstants.INSTANCE.getCAMPAIGN(), FontAwesome.TROPHY);
-        resources.put(CrmTypeConstants.INSTANCE.getDETAIL(), FontAwesome.LIST);
-        resources.put(CrmTypeConstants.INSTANCE.getNOTE(), FontAwesome.PENCIL);
+        resources.put(CrmTypeConstants.ACCOUNT, FontAwesome.INSTITUTION);
+        resources.put(CrmTypeConstants.CONTACT, FontAwesome.USER);
+        resources.put(CrmTypeConstants.OPPORTUNITY, FontAwesome.MONEY);
+        resources.put(CrmTypeConstants.CASE, FontAwesome.BUG);
+        resources.put(CrmTypeConstants.LEAD, FontAwesome.BUILDING);
+        resources.put(CrmTypeConstants.ACTIVITY, FontAwesome.CALENDAR);
+        resources.put(CrmTypeConstants.TASK, FontAwesome.LIST_ALT);
+        resources.put(CrmTypeConstants.CALL, FontAwesome.PHONE);
+        resources.put(CrmTypeConstants.MEETING, FontAwesome.PLANE);
+        resources.put(CrmTypeConstants.CAMPAIGN, FontAwesome.TROPHY);
+        resources.put(CrmTypeConstants.DETAIL, FontAwesome.LIST);
+        resources.put(CrmTypeConstants.NOTE, FontAwesome.PENCIL);
     }
 
     public static FontAwesome getAsset(String resId) {

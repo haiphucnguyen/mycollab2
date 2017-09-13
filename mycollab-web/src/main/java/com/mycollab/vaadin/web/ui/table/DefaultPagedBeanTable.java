@@ -42,7 +42,7 @@ public class DefaultPagedBeanTable<SearchService extends ISearchableService<S>, 
 
     @Override
     protected List<T> queryCurrentData() {
-        return searchService.findPageableListByCriteria(searchRequest);
+        return (List<T>) searchService.findPageableListByCriteria(searchRequest);
     }
 
 }

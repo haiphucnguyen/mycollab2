@@ -14,7 +14,7 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_BILLING(), impliedPermissionVal = BooleanPermissionFlag.Companion.getTRUE())
+@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_BILLING, impliedPermissionVal = BooleanPermissionFlag.TRUE)
 public class CancelAccountPresenter extends AbstractPresenter<CancelAccountView> {
     private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,7 @@ public class CancelAccountPresenter extends AbstractPresenter<CancelAccountView>
         IBillingContainer accountContainer = (IBillingContainer) container;
         accountContainer.setContent(view);
 
-        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
+        AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
         breadcrumb.gotoCancelAccountPage();
     }
 }

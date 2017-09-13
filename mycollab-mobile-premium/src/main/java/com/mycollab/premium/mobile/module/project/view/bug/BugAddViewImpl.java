@@ -50,7 +50,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
     public void editItem(SimpleBug item) {
         attachmentUploadField = new ProjectFormAttachmentUploadField();
         if (item.getId() != null) {
-            attachmentUploadField.getAttachments(item.getProjectid(), ProjectTypeConstants.INSTANCE.getBUG(), item.getId());
+            attachmentUploadField.getAttachments(item.getProjectid(), ProjectTypeConstants.BUG, item.getId());
         }
         super.editItem(item);
         editForm.addComponent(attachmentUploadField);
@@ -58,7 +58,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.INSTANCE.getBUG(), BugDefaultFormLayoutFactory.getForm(), "status");
+        return new DynaFormLayout(ProjectTypeConstants.BUG, BugDefaultFormLayoutFactory.getForm(), "status");
     }
 
     @Override

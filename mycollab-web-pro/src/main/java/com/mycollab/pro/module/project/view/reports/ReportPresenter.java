@@ -41,7 +41,7 @@ public class ReportPresenter extends AbstractPresenter<IReportContainer> impleme
         } else {
             view.showDashboard();
 
-            ReportBreadcrumb breadcrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
+            ReportBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ReportBreadcrumb.class);
             breadcrumb.gotoReportDashboard();
         }
     }

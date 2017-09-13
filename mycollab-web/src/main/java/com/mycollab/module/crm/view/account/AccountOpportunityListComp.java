@@ -45,8 +45,8 @@ public class AccountOpportunityListComp extends RelatedListComp2<OpportunityServ
 
     static {
         Map<String, String> tmpMap = new HashMap<>();
-        for (int i = 0; i < CrmDataTypeFactory.getOpportunitySalesStageList().length; i++) {
-            OpportunitySalesStage roleKeyName = CrmDataTypeFactory.getOpportunitySalesStageList()[i];
+        for (int i = 0; i < CrmDataTypeFactory.opportunitySalesStageList.length; i++) {
+            OpportunitySalesStage roleKeyName = CrmDataTypeFactory.opportunitySalesStageList[i];
             if (!tmpMap.containsKey(roleKeyName.name())) {
                 tmpMap.put(roleKeyName.name(), AbstractBeanBlockList.COLOR_STYLENAME_LIST[i]);
             }
@@ -70,7 +70,7 @@ public class AccountOpportunityListComp extends RelatedListComp2<OpportunityServ
         notesWrap.addComponent(noteLbl);
 
         MCssLayout noteBlock = new MCssLayout().withFullWidth().withStyleName("list-note-block");
-        for (OpportunitySalesStage stage : CrmDataTypeFactory.getOpportunitySalesStageList()) {
+        for (OpportunitySalesStage stage : CrmDataTypeFactory.opportunitySalesStageList) {
             MHorizontalLayout note = new MHorizontalLayout(new ELabel(UserUIContext.getMessage(stage)))
                     .withStyleName("note-label", colormap.get(stage.name()));
             noteBlock.addComponent(note);
@@ -78,7 +78,7 @@ public class AccountOpportunityListComp extends RelatedListComp2<OpportunityServ
         notesWrap.with(noteBlock).expand(noteBlock);
         controlsBtnWrap.with(notesWrap).expand(notesWrap);
 
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) {
             MButton createBtn = new MButton(UserUIContext.getMessage(OpportunityI18nEnum.NEW), clickEvent -> fireNewRelatedItem(""))
                     .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
             controlsBtnWrap.with(createBtn).withAlign(createBtn, Alignment.TOP_RIGHT);
@@ -113,7 +113,7 @@ public class AccountOpportunityListComp extends RelatedListComp2<OpportunityServ
             MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel opportunityIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY()));
+            ELabel opportunityIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
             iconWrap.addComponent(opportunityIcon);
             blockTop.addComponent(iconWrap);
 
@@ -122,7 +122,7 @@ public class AccountOpportunityListComp extends RelatedListComp2<OpportunityServ
 
             MButton btnDelete = new MButton("", clickEvent ->
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

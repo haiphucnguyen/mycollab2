@@ -17,7 +17,7 @@ public class OpportunityListCustomizeWindow extends CustomizedTableWindow {
     private static final long serialVersionUID = 1L;
 
     public OpportunityListCustomizeWindow(AbstractPagedBeanTable table) {
-        super(CrmTypeConstants.INSTANCE.getOPPORTUNITY(), table);
+        super(CrmTypeConstants.OPPORTUNITY, table);
     }
 
     @Override

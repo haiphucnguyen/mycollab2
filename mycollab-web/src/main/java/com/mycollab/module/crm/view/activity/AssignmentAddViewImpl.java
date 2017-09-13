@@ -40,7 +40,7 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<CrmTask> impleme
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getTASK());
+        return CrmAssetsManager.getAsset(CrmTypeConstants.TASK);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<CrmTask> impleme
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getTASK(), AssignmentDefaultFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.TASK, AssignmentDefaultFormLayoutFactory.getForm());
     }
 
     @Override
@@ -111,7 +111,7 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<CrmTask> impleme
         TaskPriorityComboBox() {
             super();
             setCaption(null);
-            this.loadData(Arrays.asList(CrmDataTypeFactory.getTaskPriorities()));
+            this.loadData(Arrays.asList(CrmDataTypeFactory.taskPriorities));
         }
     }
 
@@ -121,7 +121,7 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<CrmTask> impleme
         TaskStatusComboBox() {
             super();
             setCaption(null);
-            this.loadData(Arrays.asList(CrmDataTypeFactory.getTaskStatuses()));
+            this.loadData(Arrays.asList(CrmDataTypeFactory.taskStatuses));
         }
     }
 }

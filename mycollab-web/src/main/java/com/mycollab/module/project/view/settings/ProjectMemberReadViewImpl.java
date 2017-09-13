@@ -107,7 +107,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
 
     private ComponentContainer createButtonControls() {
         return new ProjectPreviewFormControlsGenerator<>(previewForm).createButtonControls(ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED
-                | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED, ProjectRolePermissionCollections.INSTANCE.getUSERS());
+                | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED, ProjectRolePermissionCollections.USERS);
     }
 
     private void createBottomPanel() {
@@ -122,7 +122,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         bottomLayout.with(leftColumn, userAssignmentWidget).expand(leftColumn);
 
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-        searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.INSTANCE.getPRJ()));
+        searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.PRJ));
         searchCriteria.setCreatedUser(StringSearchField.and(previewForm.getBean().getUsername()));
         searchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
@@ -157,11 +157,11 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             ELabel memberLink = ELabel.h3(beanItem.getMemberFullName()).withWidthUndefined();
             MButton editNotificationBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum
                     .ACTION_EDIT_NOTIFICATION), clickEvent -> UI.getCurrent().addWindow(new NotificationSettingWindow(beanItem)))
-                    .withStyleName(WebThemes.BUTTON_LINK).withVisible(CurrentProjectVariables.canAccess
-                            (ProjectRolePermissionCollections.INSTANCE.getUSERS()));
+                    .withStyleName(WebThemes.BUTTON_LINK).withVisible(CurrentProjectVariables.INSTANCE.canAccess
+                            (ProjectRolePermissionCollections.USERS));
             memberInfo.addComponent(new MHorizontalLayout(memberLink, editNotificationBtn).alignAll(Alignment.MIDDLE_LEFT));
 
-            String memberRoleLinkPrefix = String.format("<a href=\"%s%s%s\"", AppUI.getSiteUrl(), GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM(),
+            String memberRoleLinkPrefix = String.format("<a href=\"%s%s%s\"", AppUI.Companion.getSiteUrl(), GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM(),
                     ProjectLinkGenerator.INSTANCE.generateRolePreviewLink(beanItem.getProjectid(), beanItem.getProjectroleid()));
             ELabel memberRole = new ELabel(ContentMode.HTML).withStyleName(UIConstants.META_INFO).withWidthUndefined();
             if (Boolean.TRUE.equals(beanItem.getIsadmin()) || beanItem.getProjectroleid() == null) {
@@ -172,7 +172,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             }
             memberInfo.addComponent(memberRole);
 
-            if (Boolean.TRUE.equals(AppUI.showEmailPublicly())) {
+            if (Boolean.TRUE.equals(AppUI.Companion.showEmailPublicly())) {
                 Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", beanItem.getUsername(),
                         beanItem.getUsername())).withStyleName(UIConstants.META_INFO).withFullWidth();
                 memberInfo.addComponent(memberEmailLabel);
@@ -182,16 +182,16 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                     .withDescription(UserUIContext.formatDateTime(beanItem.getJoindate())).withFullWidth();
             memberInfo.addComponent(memberSinceLabel);
 
-            if (ProjectMemberStatusConstants.INSTANCE.getACTIVE().equals(beanItem.getStatus())) {
+            if (ProjectMemberStatusConstants.ACTIVE.equals(beanItem.getStatus())) {
                 Label lastAccessTimeLbl = ELabel.html(UserUIContext.getMessage(UserI18nEnum.OPT_MEMBER_LOGGED_IN, UserUIContext.formatPrettyTime(beanItem.getLastAccessTime())))
                         .withDescription(UserUIContext.formatDateTime(beanItem.getLastAccessTime()));
                 memberInfo.addComponent(lastAccessTimeLbl);
             }
 
             String memberWorksInfo = String.format("%s %s  %s %s  %s %s  %s %s",
-                    ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()).getHtml(),
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml(),
                     new Span().appendText("" + beanItem.getNumOpenTasks()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_TASKS)), ProjectAssetsManager
-                            .getAsset(ProjectTypeConstants.INSTANCE.getBUG()).getHtml(), new Span().appendText("" + beanItem
+                            .getAsset(ProjectTypeConstants.BUG).getHtml(), new Span().appendText("" + beanItem
                             .getNumOpenBugs()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_BUGS)), FontAwesome.MONEY.getHtml(), new Span().appendText("" + NumberUtils.roundDouble(2,
                             beanItem.getTotalBillableLogTime())).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)), FontAwesome.GIFT.getHtml(), new Span().appendText("" + NumberUtils.roundDouble(2, beanItem.getTotalNonBillableLogTime()
                     )).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS)));
@@ -302,7 +302,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             A taskLink = new A().setId("tag" + TOOLTIP_ID);
             taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(genericTask.getType(), genericTask.getTypeId() + ""));
             taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-            if (ProjectTypeConstants.INSTANCE.getBUG().equals(genericTask.getType()) || ProjectTypeConstants.INSTANCE.getTASK().equals(genericTask.getType())) {
+            if (ProjectTypeConstants.BUG.equals(genericTask.getType()) || ProjectTypeConstants.TASK.equals(genericTask.getType())) {
                 taskLink.appendText(String.format("[#%d] - %s", genericTask.getExtraTypeId(), genericTask.getName()));
                 taskLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(genericTask.getProjectShortName(),
                         genericTask.getProjectId(), genericTask.getType(), genericTask.getExtraTypeId() + ""));
@@ -318,7 +318,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                 issueLbl.addStyleName("overdue");
             }
 
-            String avatarLink = StorageUtils.INSTANCE.getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
+            String avatarLink = StorageUtils.getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
             Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                     .setTitle(genericTask.getAssignUserFullName());
 

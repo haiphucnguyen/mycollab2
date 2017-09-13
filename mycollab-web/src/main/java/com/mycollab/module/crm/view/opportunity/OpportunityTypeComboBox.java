@@ -13,6 +13,6 @@ public class OpportunityTypeComboBox extends I18nValueComboBox {
     private static final long serialVersionUID = 1L;
 
     public OpportunityTypeComboBox() {
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getOpportunityTypeList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.opportunityTypeList));
     }
 }

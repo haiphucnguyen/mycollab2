@@ -18,23 +18,23 @@ public class ProjectAssetsManager {
 
     static {
         resources = new HashMap<>();
-        resources.put(ProjectTypeConstants.INSTANCE.getDASHBOARD(), FontAwesome.DASHBOARD);
-        resources.put(ProjectTypeConstants.INSTANCE.getMESSAGE(), FontAwesome.COMMENT);
-        resources.put(ProjectTypeConstants.INSTANCE.getMILESTONE(), FontAwesome.FLAG_CHECKERED);
-        resources.put(ProjectTypeConstants.INSTANCE.getTASK(), FontAwesome.TASKS);
-        resources.put(ProjectTypeConstants.INSTANCE.getTICKET(), FontAwesome.TICKET);
-        resources.put(ProjectTypeConstants.INSTANCE.getPAGE(), FontAwesome.FILE);
-        resources.put(ProjectTypeConstants.INSTANCE.getBUG(), FontAwesome.BUG);
-        resources.put(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT(), FontAwesome.CUBE);
-        resources.put(ProjectTypeConstants.INSTANCE.getBUG_VERSION(), FontAwesome.LEAF);
-        resources.put(ProjectTypeConstants.INSTANCE.getFILE(), FontAwesome.BRIEFCASE);
-        resources.put(ProjectTypeConstants.INSTANCE.getRISK(), FontAwesome.SHIELD);
-        resources.put(ProjectTypeConstants.INSTANCE.getFINANCE(), FontAwesome.MONEY);
-        resources.put(ProjectTypeConstants.INSTANCE.getTIME(), FontAwesome.CLOCK_O);
-        resources.put(ProjectTypeConstants.INSTANCE.getINVOICE(), FontAwesome.CREDIT_CARD);
-        resources.put(ProjectTypeConstants.INSTANCE.getSTANDUP(), FontAwesome.CUBES);
-        resources.put(ProjectTypeConstants.INSTANCE.getMEMBER(), FontAwesome.USERS);
-        resources.put(ProjectTypeConstants.INSTANCE.getPROJECT(), FontAwesome.CALENDAR_O);
+        resources.put(ProjectTypeConstants.DASHBOARD, FontAwesome.DASHBOARD);
+        resources.put(ProjectTypeConstants.MESSAGE, FontAwesome.COMMENT);
+        resources.put(ProjectTypeConstants.MILESTONE, FontAwesome.FLAG_CHECKERED);
+        resources.put(ProjectTypeConstants.TASK, FontAwesome.TASKS);
+        resources.put(ProjectTypeConstants.TICKET, FontAwesome.TICKET);
+        resources.put(ProjectTypeConstants.PAGE, FontAwesome.FILE);
+        resources.put(ProjectTypeConstants.BUG, FontAwesome.BUG);
+        resources.put(ProjectTypeConstants.BUG_COMPONENT, FontAwesome.CUBE);
+        resources.put(ProjectTypeConstants.BUG_VERSION, FontAwesome.LEAF);
+        resources.put(ProjectTypeConstants.FILE, FontAwesome.BRIEFCASE);
+        resources.put(ProjectTypeConstants.RISK, FontAwesome.SHIELD);
+        resources.put(ProjectTypeConstants.FINANCE, FontAwesome.MONEY);
+        resources.put(ProjectTypeConstants.TIME, FontAwesome.CLOCK_O);
+        resources.put(ProjectTypeConstants.INVOICE, FontAwesome.CREDIT_CARD);
+        resources.put(ProjectTypeConstants.STANDUP, FontAwesome.CUBES);
+        resources.put(ProjectTypeConstants.MEMBER, FontAwesome.USERS);
+        resources.put(ProjectTypeConstants.PROJECT, FontAwesome.CALENDAR_O);
     }
 
     public static FontAwesome getAsset(String resId) {

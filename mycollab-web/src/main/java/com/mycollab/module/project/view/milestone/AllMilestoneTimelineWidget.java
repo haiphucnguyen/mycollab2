@@ -18,8 +18,8 @@ import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.UserDashboardView;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -68,7 +68,7 @@ public class AllMilestoneTimelineWidget extends MVerticalLayout {
         searchCriteria.setProjectIds(new SetSearchField<>(userDashboardView.getInvolvedProjectKeys()));
         searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(Milestone.Field.enddate.name(), "ASC")));
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-        milestones = milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        milestones = (List<SimpleMilestone>) milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
 
         this.addComponent(headerLayout);
         timelineContainer = new CssLayout();
@@ -128,15 +128,15 @@ public class AllMilestoneTimelineWidget extends MVerticalLayout {
             A projectDiv = new A(ProjectLinkBuilder.INSTANCE.generateProjectFullLink(milestone.getProjectid())).appendText
                     (FontAwesome.BUILDING_O.getHtml() + " " + StringUtils.trim(milestone.getProjectName(), 30, true))
                     .setId("tag" + TOOLTIP_ID);
-            projectDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.INSTANCE.getPROJECT(),
+            projectDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.PROJECT,
                     milestone.getProjectid() + ""));
             projectDiv.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 
             A milestoneDiv = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink
                     (milestone.getProjectid(), milestone.getId())).appendText(ProjectAssetsManager.getAsset
-                    (ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true))
+                    (ProjectTypeConstants.MILESTONE).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true))
                     .setId("tag" + TOOLTIP_ID);
-            milestoneDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.INSTANCE.getMILESTONE(),
+            milestoneDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.MILESTONE,
                     milestone.getId() + ""));
             milestoneDiv.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 

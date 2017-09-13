@@ -11,6 +11,6 @@ import java.util.Arrays;
  */
 class CampaignTypeListSelect extends I18NValueListSelect {
     CampaignTypeListSelect() {
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getCampaignTypeList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.campaignTypeList));
     }
 }

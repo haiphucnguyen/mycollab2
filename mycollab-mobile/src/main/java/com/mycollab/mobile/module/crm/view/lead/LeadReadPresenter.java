@@ -75,7 +75,7 @@ public class LeadReadPresenter extends AbstractCrmPresenter<LeadReadView> {
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = contactService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new LeadEvent.GotoRead(this, nextId));
@@ -90,7 +90,7 @@ public class LeadReadPresenter extends AbstractCrmPresenter<LeadReadView> {
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = contactService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new LeadEvent.GotoRead(this, nextId));
@@ -103,7 +103,7 @@ public class LeadReadPresenter extends AbstractCrmPresenter<LeadReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_LEAD)) {
 
             if (data.getParams() instanceof Integer) {
                 LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);

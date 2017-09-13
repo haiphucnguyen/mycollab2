@@ -27,39 +27,39 @@ public class CrmMobileMenuPageView extends AbstractMobileMenuPageView {
         MButton accountBtn = new MButton(UserUIContext.getMessage(AccountI18nEnum.LIST), clickEvent -> {
             closeMenu();
             EventBusFactory.getInstance().post(new AccountEvent.GotoList(this, null));
-        }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()));
+        }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
         addMenuItem(accountBtn);
 
         // Buttons with styling (slightly smaller with left-aligned text)
         MButton contactBtn = new MButton(UserUIContext.getMessage(ContactI18nEnum.LIST), clickEvent -> {
             closeMenu();
             EventBusFactory.getInstance().post(new ContactEvent.GotoList(this, null));
-        }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()));
+        }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
         addMenuItem(contactBtn);
 
         // add more buttons for a more realistic look.
         MButton campaignBtn = new MButton(UserUIContext.getMessage(CampaignI18nEnum.LIST), clickEvent -> {
             closeMenu();
             EventBusFactory.getInstance().post(new CampaignEvent.GotoList(this, null));
-        }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN()));
+        }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
         addMenuItem(campaignBtn);
 
         MButton leadBtn = new MButton(UserUIContext.getMessage(LeadI18nEnum.LIST), clickEvent -> {
             closeMenu();
             EventBusFactory.getInstance().post(new LeadEvent.GotoList(this, null));
-        }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()));
+        }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
         addMenuItem(leadBtn);
 
         MButton opportunityBtn = new MButton(UserUIContext.getMessage(OpportunityI18nEnum.LIST), clickEvent -> {
             closeMenu();
             EventBusFactory.getInstance().post(new OpportunityEvent.GotoList(this, null));
-        }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY()));
+        }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
         addMenuItem(opportunityBtn);
 
         MButton caseBtn = new MButton(UserUIContext.getMessage(CaseI18nEnum.LIST), clickEvent -> {
             closeMenu();
             EventBusFactory.getInstance().post(new CaseEvent.GotoList(this, null));
-        }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCASE()));
+        }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CASE));
         addMenuItem(caseBtn);
 
         addSection("Modules");

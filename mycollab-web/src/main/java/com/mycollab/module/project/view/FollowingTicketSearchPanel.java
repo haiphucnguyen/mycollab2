@@ -100,13 +100,13 @@ public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<Follow
             selectionLayout.addComponent(typeSelectWrapper, 1, 1);
 
             this.taskSelect = new CheckBox(UserUIContext.getMessage(TaskI18nEnum.SINGLE), true);
-            this.taskSelect.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()));
+            this.taskSelect.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
 
             this.bugSelect = new CheckBox(UserUIContext.getMessage(BugI18nEnum.SINGLE), true);
-            this.bugSelect.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()));
+            this.bugSelect.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
 
             this.riskSelect = new CheckBox(UserUIContext.getMessage(RiskI18nEnum.SINGLE), true);
-            this.riskSelect.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getRISK()));
+            this.riskSelect.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
 
             typeSelectWrapper.with(this.taskSelect, this.bugSelect, this.riskSelect);
 
@@ -136,13 +136,13 @@ public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<Follow
 
             List<String> types = new ArrayList<>();
             if (this.taskSelect.getValue()) {
-                types.add(ProjectTypeConstants.INSTANCE.getTASK());
+                types.add(ProjectTypeConstants.TASK);
             }
             if (this.bugSelect.getValue()) {
-                types.add(ProjectTypeConstants.INSTANCE.getBUG());
+                types.add(ProjectTypeConstants.BUG);
             }
             if (this.riskSelect.getValue()) {
-                types.add(ProjectTypeConstants.INSTANCE.getRISK());
+                types.add(ProjectTypeConstants.RISK);
             }
 
             if (types.size() > 0) {

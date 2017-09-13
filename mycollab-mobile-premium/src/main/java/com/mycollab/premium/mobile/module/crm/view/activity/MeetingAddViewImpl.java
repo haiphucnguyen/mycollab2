@@ -27,12 +27,11 @@ public class MeetingAddViewImpl extends AbstractEditItemComp<MeetingWithBLOBs> i
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getMEETING(), MeetingDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.MEETING, MeetingDefaultFormLayoutFactory.getForm());
     }
 
     @Override
     protected AbstractBeanFieldGroupEditFieldFactory<MeetingWithBLOBs> initBeanFormFieldFactory() {
         return new MeetingEditFormFieldFactory(editForm);
     }
-
 }

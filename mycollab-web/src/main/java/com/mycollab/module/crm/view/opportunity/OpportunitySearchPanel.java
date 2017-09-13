@@ -52,7 +52,7 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getOPPORTUNITY(), UserUIContext.getMessage(OpportunityI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.OPPORTUNITY, UserUIContext.getMessage(OpportunityI18nEnum.LIST));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
         return (canCreateOpportunity) ? new MButton(UserUIContext.getMessage(OpportunityI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new OpportunityEvent.GotoAdd(OpportunitySearchPanel.this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY())) : null;
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) : null;
     }
 
     @Override
@@ -132,7 +132,7 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
     private class OpportunityAdvancedSearchLayout extends DynamicQueryParamLayout<OpportunitySearchCriteria> {
 
         OpportunityAdvancedSearchLayout() {
-            super(OpportunitySearchPanel.this, CrmTypeConstants.INSTANCE.getOPPORTUNITY());
+            super(OpportunitySearchPanel.this, CrmTypeConstants.OPPORTUNITY);
         }
 
         @Override

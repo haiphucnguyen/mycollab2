@@ -13,7 +13,7 @@ import com.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.mycollab.module.user.accountsettings.view.parameters.BillingScreenData;
 import com.mycollab.module.user.ui.SettingAssetsManager;
 import com.mycollab.module.user.ui.SettingUIConstants;
-import com.mycollab.premium.module.user.accountsettings.view.UserAccountController;
+import com.mycollab.module.user.accountsettings.view.UserAccountController;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.*;
@@ -55,7 +55,7 @@ public class AccountModuleImpl extends AbstractSingleContainerPageView implement
         ControllerRegistry.addController(new UserAccountController(this));
 
         MHorizontalLayout topPanel = new MHorizontalLayout().withFullWidth().withMargin(true).withStyleName("border-bottom");
-        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
+        AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
 
         MButton helpBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP))
                 .withIcon(FontAwesome.MORTAR_BOARD).withStyleName(WebThemes.BUTTON_LINK);
@@ -78,23 +78,23 @@ public class AccountModuleImpl extends AbstractSingleContainerPageView implement
     }
 
     private void buildComponents() {
-        tabSheet.addTab(constructUserInformationComponent(), SettingUIConstants.PROFILE,
-                UserUIContext.getMessage(AdminI18nEnum.VIEW_PROFILE), SettingAssetsManager.getAsset(SettingUIConstants.PROFILE));
+        tabSheet.addTab(constructUserInformationComponent(), SettingUIConstants.INSTANCE.getPROFILE(),
+                UserUIContext.getMessage(AdminI18nEnum.VIEW_PROFILE), SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getPROFILE()));
 
         if (!SiteConfiguration.isCommunityEdition()) {
-            tabSheet.addTab(constructAccountSettingsComponent(), SettingUIConstants.BILLING,
-                    UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING), SettingAssetsManager.getAsset(SettingUIConstants.BILLING));
+            tabSheet.addTab(constructAccountSettingsComponent(), SettingUIConstants.INSTANCE.getBILLING(),
+                    UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING), SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getBILLING()));
         }
 
-        tabSheet.addTab(constructUserRoleComponent(), SettingUIConstants.USERS,
-                UserUIContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES), SettingAssetsManager.getAsset(SettingUIConstants.USERS));
+        tabSheet.addTab(constructUserRoleComponent(), SettingUIConstants.INSTANCE.getUSERS(),
+                UserUIContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES), SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getUSERS()));
 
-        tabSheet.addTab(constructThemeComponent(), SettingUIConstants.GENERAL_SETTING,
-                UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING), SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING));
+        tabSheet.addTab(constructThemeComponent(), SettingUIConstants.INSTANCE.getGENERAL_SETTING(),
+                UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING), SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getGENERAL_SETTING()));
 
         if (!SiteConfiguration.isDemandEdition()) {
-            tabSheet.addTab(constructSetupComponent(), SettingUIConstants.SETUP,
-                    UserUIContext.getMessage(AdminI18nEnum.VIEW_SETUP), SettingAssetsManager.getAsset(SettingUIConstants.SETUP));
+            tabSheet.addTab(constructSetupComponent(), SettingUIConstants.INSTANCE.getSETUP(),
+                    UserUIContext.getMessage(AdminI18nEnum.VIEW_SETUP), SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getSETUP()));
         }
 
         tabSheet.addSelectedTabChangeListener(new SelectedTabChangeListener() {
@@ -104,15 +104,15 @@ public class AccountModuleImpl extends AbstractSingleContainerPageView implement
             public void selectedTabChange(SelectedTabChangeEvent event) {
                 Tab tab = ((VerticalTabsheet) event.getSource()).getSelectedTab();
                 String tabId = ((TabImpl) tab).getTabId();
-                if (SettingUIConstants.PROFILE.equals(tabId)) {
+                if (SettingUIConstants.INSTANCE.getPROFILE().equals(tabId)) {
                     profilePresenter.go(AccountModuleImpl.this, null);
-                } else if (SettingUIConstants.BILLING.equals(tabId)) {
+                } else if (SettingUIConstants.INSTANCE.getBILLING().equals(tabId)) {
                     billingPresenter.go(AccountModuleImpl.this, new BillingScreenData.BillingSummary());
-                } else if (SettingUIConstants.USERS.equals(tabId)) {
+                } else if (SettingUIConstants.INSTANCE.getUSERS().equals(tabId)) {
                     userPermissionPresenter.go(AccountModuleImpl.this, null);
-                } else if (SettingUIConstants.GENERAL_SETTING.equals(tabId)) {
+                } else if (SettingUIConstants.INSTANCE.getGENERAL_SETTING().equals(tabId)) {
                     customizePresenter.go(AccountModuleImpl.this, null);
-                } else if (SettingUIConstants.SETUP.equals(tabId)) {
+                } else if (SettingUIConstants.INSTANCE.getSETUP().equals(tabId)) {
                     setupPresenter.go(AccountModuleImpl.this, null);
                 }
             }

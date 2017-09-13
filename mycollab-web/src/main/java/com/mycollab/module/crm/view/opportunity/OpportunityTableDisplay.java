@@ -61,8 +61,8 @@ public class OpportunityTableDisplay extends DefaultPagedBeanTable<OpportunitySe
                     b.addStyleName(WebThemes.LINK_OVERDUE);
                 }
             }
-            b.setDescription(CrmTooltipGenerator.INSTANCE.generateTooltipOpportunity(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
-                    opportunity, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            b.setDescription(CrmTooltipGenerator.INSTANCE.generateTooltipOpportunity(UserUIContext.getUserLocale(), AppUI.Companion.getDateFormat(),
+                    opportunity, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
 
             return b;
         });

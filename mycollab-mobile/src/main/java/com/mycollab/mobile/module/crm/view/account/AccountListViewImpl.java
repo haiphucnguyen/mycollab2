@@ -48,7 +48,7 @@ public class AccountListViewImpl extends AbstractListPageView<AccountSearchCrite
         };
         MButton newAccountBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT()));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
         return new MHorizontalLayout(searchBtn, newAccountBtn).alignAll(Alignment.TOP_RIGHT);
     }
 

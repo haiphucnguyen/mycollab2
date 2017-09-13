@@ -74,7 +74,7 @@ public class CallReadPresenter extends AbstractCrmPresenter<CallReadView> {
                 CallService callService = AppContextUtil.getSpringBean(CallService.class);
                 CallSearchCriteria criteria = new CallSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = callService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ActivityEvent.CallRead(this, nextId));
@@ -88,7 +88,7 @@ public class CallReadPresenter extends AbstractCrmPresenter<CallReadView> {
                 CallService callService = AppContextUtil.getSpringBean(CallService.class);
                 CallSearchCriteria criteria = new CallSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = callService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ActivityEvent.CallRead(this, nextId));
@@ -101,7 +101,7 @@ public class CallReadPresenter extends AbstractCrmPresenter<CallReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CALL())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_CALL)) {
             SimpleCall call;
             if (data.getParams() instanceof Integer) {
                 CallService callService = AppContextUtil.getSpringBean(CallService.class);

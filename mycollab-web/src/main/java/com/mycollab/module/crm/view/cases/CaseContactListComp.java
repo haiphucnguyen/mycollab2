@@ -61,7 +61,7 @@ public class CaseContactListComp extends RelatedListComp2<ContactService, Contac
         VerticalLayout controlsBtnWrap = new VerticalLayout();
         controlsBtnWrap.setWidth("100%");
 
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CONTACT())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CONTACT)) {
             final SplitButton controlsBtn = new SplitButton();
             controlsBtn.addStyleName(WebThemes.BUTTON_ACTION);
             controlsBtn.setCaption(UserUIContext.getMessage(ContactI18nEnum.NEW));
@@ -75,7 +75,7 @@ public class CaseContactListComp extends RelatedListComp2<ContactService, Contac
                 contactsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
             });
-            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()));
+            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
             OptionPopupContent buttonControlsLayout = new OptionPopupContent();
             buttonControlsLayout.addOption(selectBtn);
             controlsBtn.setContent(buttonControlsLayout);
@@ -98,7 +98,7 @@ public class CaseContactListComp extends RelatedListComp2<ContactService, Contac
             VerticalLayout blockContent = new VerticalLayout();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel contactAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()));
+            ELabel contactAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
             iconWrap.addComponent(contactAvatar);
             MHorizontalLayout blockTop = new MHorizontalLayout();
             blockTop.addComponent(iconWrap);
@@ -108,7 +108,7 @@ public class CaseContactListComp extends RelatedListComp2<ContactService, Contac
 
             MButton btnDelete = new MButton("", clickEvent ->
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -128,7 +128,7 @@ public class CaseContactListComp extends RelatedListComp2<ContactService, Contac
             blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
 
             Label contactName = ELabel.html(UserUIContext.getMessage(GenericI18Enum.FORM_NAME) + ": " + new A(CrmLinkGenerator.INSTANCE.generateCrmItemLink(
-                    CrmTypeConstants.INSTANCE.getCONTACT(), contact.getId())).appendText(contact.getContactName()).write());
+                    CrmTypeConstants.CONTACT, contact.getId())).appendText(contact.getContactName()).write());
 
             contactInfo.addComponent(contactName);
 

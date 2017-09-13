@@ -56,9 +56,9 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                 if (ganttItem instanceof MilestoneGanttItem) {
                     milestoneGanttItems.add((MilestoneGanttItem) ganttItem);
                 } else if (ganttItem instanceof TaskGanttItem) {
-                    if (ProjectTypeConstants.INSTANCE.getBUG().equals(ganttItem.getType())) {
+                    if (ProjectTypeConstants.BUG.equals(ganttItem.getType())) {
                         bugGanttItems.add((TaskGanttItem) ganttItem);
-                    } else if (ProjectTypeConstants.INSTANCE.getTASK().equals(ganttItem.getType())) {
+                    } else if (ProjectTypeConstants.TASK.equals(ganttItem.getType())) {
                         taskGanttItems.add((TaskGanttItem) ganttItem);
                     }
                 } else {
@@ -188,7 +188,7 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                                 "`lastUpdatedTime`=?, `percentagecomplete`=?, `assignUser`=?, `ganttindex`=?, " +
                                 "`milestoneId`=?, `parentTaskId`=? WHERE `id` = ?");
                         for (TaskGanttItem ganttItem : taskGanttItems) {
-                            if (ProjectTypeConstants.INSTANCE.getTASK().equals(ganttItem.getType())) {
+                            if (ProjectTypeConstants.TASK.equals(ganttItem.getType())) {
                                 batchTasksStatement.setString(1, ganttItem.getName());
                                 batchTasksStatement.setDate(2, getDateWithNullValue(ganttItem.getStartDate()));
                                 batchTasksStatement.setDate(3, getDateWithNullValue(ganttItem.getEndDate()));
@@ -229,7 +229,7 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                                 "`lastUpdatedTime`=?, `percentagecomplete`=?, `assignuser`=?, `ganttindex`=?, " +
                                 "`milestoneId`=? WHERE `id` = ?");
                         for (TaskGanttItem ganttItem : taskGanttItems) {
-                            if (ProjectTypeConstants.INSTANCE.getBUG().equals(ganttItem.getType())) {
+                            if (ProjectTypeConstants.BUG.equals(ganttItem.getType())) {
                                 batchTasksStatement.setString(1, ganttItem.getName());
                                 batchTasksStatement.setDate(2, getDateWithNullValue(ganttItem.getStartDate()));
                                 batchTasksStatement.setDate(3, getDateWithNullValue(ganttItem.getEndDate()));
@@ -270,9 +270,9 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                     }
 
                 } else if (ganttItem instanceof TaskGanttItem) {
-                    if (ProjectTypeConstants.INSTANCE.getTASK().equals(ganttItem.getType()) && ganttItem.getId() != null) {
+                    if (ProjectTypeConstants.TASK.equals(ganttItem.getType()) && ganttItem.getId() != null) {
                         taskIds.add(ganttItem.getId());
-                    } else if (ProjectTypeConstants.INSTANCE.getBUG().equals(ganttItem.getType()) && ganttItem.getId() != null) {
+                    } else if (ProjectTypeConstants.BUG.equals(ganttItem.getType()) && ganttItem.getId() != null) {
                         bugIds.add(ganttItem.getId());
                     }
                 } else {

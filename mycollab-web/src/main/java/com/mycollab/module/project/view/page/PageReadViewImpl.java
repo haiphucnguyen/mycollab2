@@ -68,7 +68,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
     private void constructHeader() {
         pageVersionsSelection = new PageVersionSelectionBox();
 
-        HeaderWithFontAwesome headerLbl = ComponentUtils.headerH2(ProjectTypeConstants.INSTANCE.getPAGE(), UserUIContext.getMessage(PageI18nEnum.DETAIL));
+        HeaderWithFontAwesome headerLbl = ComponentUtils.headerH2(ProjectTypeConstants.PAGE, UserUIContext.getMessage(PageI18nEnum.DETAIL));
         headerLbl.setWidthUndefined();
 
         header.addComponent(headerLbl, 0);
@@ -83,7 +83,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
 
     @Override
     protected void initRelatedComponents() {
-        commentListComp = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getPAGE(), CurrentProjectVariables.getProjectId());
+        commentListComp = new ProjectActivityComponent(ProjectTypeConstants.PAGE, CurrentProjectVariables.getProjectId());
     }
 
     @Override
@@ -115,7 +115,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
                 ProjectPreviewFormControlsGenerator.ADD_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED,
-                ProjectRolePermissionCollections.INSTANCE.getPAGES());
+                ProjectRolePermissionCollections.PAGES);
 
         MButton exportPdfBtn = new MButton("").withIcon(FontAwesome.FILE_PDF_O).withStyleName(WebThemes
                 .BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
@@ -144,7 +144,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
 
     @Override
     protected String getType() {
-        return ProjectTypeConstants.INSTANCE.getPAGE();
+        return ProjectTypeConstants.PAGE;
     }
 
     private static class PagePreviewFormLayout extends ReadViewLayout {
@@ -161,7 +161,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
             SimpleProjectMember member = projectMemberService.findMemberByUsername(beanItem.getCreatedUser(),
                     CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
             if (member != null) {
-                Img userAvatar = new Img("", StorageUtils.INSTANCE.getAvatarPath(member.getMemberAvatarId(), 16))
+                Img userAvatar = new Img("", StorageUtils.getAvatarPath(member.getMemberAvatarId(), 16))
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(member
                         .getProjectid(), member.getUsername())).appendText(StringUtils.trim(member.getMemberFullName(), 30, true));
@@ -169,7 +169,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
                 userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
                 footer.appendChild(lastUpdatedTimeTxt, new Text("&nbsp;-&nbsp;" + UserUIContext.getMessage
                                 (GenericI18Enum.OPT_CREATED_BY) + ": "), userAvatar,
-                        DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE());
+                        DivLessFormatter.EMPTY_SPACE, userLink, DivLessFormatter.EMPTY_SPACE);
             } else {
                 footer.appendChild(lastUpdatedTimeTxt);
             }

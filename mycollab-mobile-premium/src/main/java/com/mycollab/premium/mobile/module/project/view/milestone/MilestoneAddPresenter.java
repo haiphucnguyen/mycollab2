@@ -46,7 +46,7 @@ public class MilestoneAddPresenter extends AbstractProjectPresenter<MilestoneAdd
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
             SimpleMilestone milestone = (SimpleMilestone) data.getParams();
             view.editItem(milestone);
             super.onGo(container, data);

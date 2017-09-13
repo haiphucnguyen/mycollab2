@@ -24,7 +24,7 @@ public class DueDateOrderComponent extends TicketGroupOrderComponent {
 
     @Override
     public void insertTickets(List<ProjectTicket> tickets) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getLongDateFormat()).withLocale(UserUIContext.getUserLocale());
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.Companion.getLongDateFormat()).withLocale(UserUIContext.getUserLocale());
         for (ProjectTicket ticket : tickets) {
             if (ticket.getDueDate() != null) {
                 Date dueDate = ticket.getDueDate();

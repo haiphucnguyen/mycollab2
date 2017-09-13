@@ -84,7 +84,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
         ResourceService resourceService = AppContextUtil.getSpringBean(ResourceService.class);
         List<Content> attachments = resourceService.getContents(AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(),
-                beanItem.getProjectid(), ProjectTypeConstants.INSTANCE.getRISK(), "" + beanItem.getId()));
+                beanItem.getProjectid(), ProjectTypeConstants.RISK, "" + beanItem.getId()));
         if (CollectionUtils.isNotEmpty(attachments)) {
             attachmentComp = new ProjectAttachmentDisplayComp(attachments);
             previewForm.addComponent(attachmentComp);
@@ -101,7 +101,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         } else if (beanItem.isOverdue()) {
             beanTitle.setCSSClass(MobileUIConstants.LINK_OVERDUE);
         }
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getRISK()).getHtml() + " " + beanTitle.write();
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK).getHtml() + " " + beanTitle.write();
     }
 
     @Override
@@ -111,7 +111,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.INSTANCE.getRISK(), RiskDefaultFormLayoutFactory.getForm(), Risk.Field.name.name());
+        return new DynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm(), Risk.Field.name.name());
     }
 
     @Override
@@ -125,7 +125,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         final VerticalLayout formControls = previewForm.createButtonControls(
                 ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED,
-                ProjectRolePermissionCollections.INSTANCE.getRISKS());
+                ProjectRolePermissionCollections.RISKS);
 
         quickActionStatusBtn = new Button("", clickEvent -> {
             if (beanItem.getStatus() != null && beanItem.getStatus().equals(StatusI18nEnum.Closed.name())) {
@@ -147,19 +147,19 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
         previewForm.insertToControlBlock(quickActionStatusBtn);
 
-        if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
+        if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
             quickActionStatusBtn.setEnabled(false);
         }
 
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoEdit(this, beanItem)))
                 .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS()));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(formControls));
     }
 
     @Override
     protected String getType() {
-        return ProjectTypeConstants.INSTANCE.getRISK();
+        return ProjectTypeConstants.RISK;
     }
 
     @Override
@@ -174,7 +174,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         MVerticalLayout toolbarLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
         toolbarLayout.setDefaultComponentAlignment(Alignment.TOP_LEFT);
 
-        relatedComments = new CommentNavigationButton(ProjectTypeConstants.INSTANCE.getRISK(), beanItem.getId() + "");
+        relatedComments = new CommentNavigationButton(ProjectTypeConstants.RISK, beanItem.getId() + "");
         Component section = FormSectionBuilder.build(FontAwesome.COMMENT, relatedComments);
         toolbarLayout.addComponent(section);
 
@@ -197,7 +197,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
             if (Risk.Field.assignuser.equalTo(propertyId)) {
-                return new DefaultViewField(ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(CurrentProjectVariables
+                return new DefaultViewField(ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(CurrentProjectVariables.INSTANCE
                         .getProjectId(), beanItem.getAssignuser(), beanItem.getAssignedToUserFullName(), beanItem
                         .getAssignToUserAvatarId(), false), ContentMode.HTML);
             } else if (Risk.Field.createduser.equalTo(propertyId)) {
@@ -222,7 +222,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 if (beanItem.getMilestoneid() != null) {
                     A milestoneLink = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink
                             (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
-                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), milestoneLink);
+                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
                 }
             } else if (Risk.Field.description.equalTo(propertyId)) {

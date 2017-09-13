@@ -53,7 +53,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
     private CrmFollowersComp<SimpleLead> compFollowers;
 
     public LeadConvertReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()));
+        super(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
     }
 
     @Override
@@ -64,7 +64,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
     @Override
     protected ComponentContainer createButtonControls() {
         CrmPreviewFormControlsGenerator<SimpleLead> controlsButton = new CrmPreviewFormControlsGenerator<>(previewForm);
-        return controlsButton.createButtonControls(BACK_BTN_PRESENTED | NAVIGATOR_BTN_PRESENTED, RolePermissionCollections.INSTANCE.getCRM_LEAD());
+        return controlsButton.createButtonControls(BACK_BTN_PRESENTED | NAVIGATOR_BTN_PRESENTED, RolePermissionCollections.CRM_LEAD);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         peopleInfoComp.displayEntryPeople(beanItem);
         compFollowers.displayFollowers(beanItem);
 
-        tabSheet.selectTab(CrmTypeConstants.INSTANCE.getDETAIL());
+        tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 
     @Override
@@ -102,25 +102,25 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
     protected void initRelatedComponents() {
         associateCampaignList = new LeadCampaignListComp();
 
-        activityComponent = new CrmActivityComponent(CrmTypeConstants.INSTANCE.getLEAD());
+        activityComponent = new CrmActivityComponent(CrmTypeConstants.LEAD);
         associateActivityList = new ActivityRelatedItemListComp(false);
 
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        compFollowers = new CrmFollowersComp<>(CrmTypeConstants.INSTANCE.getLEAD(), RolePermissionCollections.INSTANCE.getCRM_LEAD());
+        compFollowers = new CrmFollowersComp<>(CrmTypeConstants.LEAD, RolePermissionCollections.CRM_LEAD);
         addToSideBar(dateInfoComp, peopleInfoComp, compFollowers);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.INSTANCE.getDETAIL(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getDETAIL()));
-        tabSheet.addTab(associateCampaignList, CrmTypeConstants.INSTANCE.getCAMPAIGN(), UserUIContext.getMessage(CampaignI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN()));
-        tabSheet.addTab(associateActivityList, CrmTypeConstants.INSTANCE.getACTIVITY(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()));
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+        tabSheet.addTab(associateCampaignList, CrmTypeConstants.CAMPAIGN, UserUIContext.getMessage(CampaignI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
+        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
+                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
     }
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getLEAD(), LeadDefaultDynaFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.LEAD, LeadDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -136,7 +136,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
     private void displayActivities() {
         ActivitySearchCriteria criteria = new ActivitySearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-        criteria.setType(StringSearchField.and(CrmTypeConstants.INSTANCE.getLEAD()));
+        criteria.setType(StringSearchField.and(CrmTypeConstants.LEAD));
         criteria.setTypeid(new NumberSearchField(beanItem.getId()));
         associateActivityList.setSearchCriteria(criteria);
     }
@@ -172,7 +172,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         if (account != null) {
             MButton accountLink = new MButton(account.getAccountname(),
                     clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GotoRead(this, account.getId())))
-                    .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()))
+                    .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT))
                     .withStyleName(WebThemes.BUTTON_LINK);
             layoutHelper.addComponent(accountLink, UserUIContext.getMessage(AccountI18nEnum.SINGLE), 0, 0);
         } else {
@@ -184,7 +184,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         if (contact != null) {
             MButton contactLink = new MButton(contact.getContactName(),
                     clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GotoRead(this, contact.getId())))
-                    .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT())).withStyleName(WebThemes.BUTTON_LINK);
+                    .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT)).withStyleName(WebThemes.BUTTON_LINK);
             layoutHelper.addComponent(contactLink, UserUIContext.getMessage(ContactI18nEnum.SINGLE), 0, 1);
         } else {
             layoutHelper.addComponent(new Label(""), UserUIContext.getMessage(ContactI18nEnum.SINGLE), 0, 1);
@@ -196,7 +196,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         if (opportunity != null) {
             MButton opportunityLink = new MButton(opportunity.getOpportunityname(),
                     clickEvent -> EventBusFactory.getInstance().post(new OpportunityEvent.GotoRead(this, opportunity.getId())))
-                    .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY())).withStyleName(WebThemes.BUTTON_LINK);
+                    .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY)).withStyleName(WebThemes.BUTTON_LINK);
             layoutHelper.addComponent(opportunityLink, UserUIContext.getMessage(OpportunityI18nEnum.SINGLE), 0, 2);
         } else {
             layoutHelper.addComponent(new Label(""), UserUIContext.getMessage(OpportunityI18nEnum.SINGLE), 0, 2);
@@ -208,6 +208,6 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getLEAD();
+        return CrmTypeConstants.LEAD;
     }
 }

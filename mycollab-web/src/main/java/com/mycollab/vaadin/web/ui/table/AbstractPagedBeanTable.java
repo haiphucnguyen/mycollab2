@@ -40,7 +40,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractPagedBeanTable.class);
 
-    private int displayNumItems = BasicSearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS();
+    private int displayNumItems = BasicSearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS;
     private Collection<B> currentListData;
     protected BasicSearchRequest<S> searchRequest;
 

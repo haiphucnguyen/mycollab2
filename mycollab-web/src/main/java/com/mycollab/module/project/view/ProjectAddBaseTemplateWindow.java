@@ -91,9 +91,9 @@ public class ProjectAddBaseTemplateWindow extends MWindow {
         TemplateProjectComboBox() {
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
             ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
-            searchCriteria.addExtraField(ProjectSearchCriteria.p_template.buildParamIsEqual(SearchField.Companion.getAND(), 1));
+            searchCriteria.addExtraField(ProjectSearchCriteria.p_template.buildParamIsEqual(SearchField.AND, 1));
             searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-            List<SimpleProject> projectTemplates = projectService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+            List<SimpleProject> projectTemplates = (List<SimpleProject>) projectService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
             this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
             for (SimpleProject prjTemplate : projectTemplates) {
                 this.addItem(prjTemplate);

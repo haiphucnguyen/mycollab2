@@ -60,7 +60,7 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
         this.task = task;
         titleLinkLbl = ELabel.html(buildTaskLink()).withWidthUndefined().withStyleName(UIConstants.LABEL_WORD_WRAP);
 
-        if (toggleStatusSupport && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+        if (toggleStatusSupport && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             toggleStatusSelect = new CssCheckBox();
             toggleStatusSelect.setSimpleMode(true);
             toggleStatusSelect.setValue(task.isCompleted());
@@ -83,7 +83,7 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
                     Integer countOfOpenSubTasks = projectTaskService.getCountOfOpenSubTasks(task.getId());
                     if (countOfOpenSubTasks > 0) {
                         ConfirmDialogExt.show(UI.getCurrent(),
-                                UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, AppUI.getSiteName()),
+                                UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, AppUI.Companion.getSiteName()),
                                 UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_CLOSE_SUB_ASSIGNMENTS),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -102,7 +102,7 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
 
         this.addComponent(titleLinkLbl);
         buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(false, false, false, true)).withStyleName("toggle");
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             this.addStyleName("editable-field");
 
             MButton instantEditBtn = new MButton("", clickEvent -> {
@@ -124,10 +124,10 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
             buttonControls.with(instantEditBtn);
         }
 
-        if (canRemove && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+        if (canRemove && CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.TASKS)) {
             MButton removeBtn = new MButton("", clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -177,7 +177,7 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
     private String buildTaskLink() {
         String linkName = StringUtils.trim(task.getName(), maxLength, true);
         A taskLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.INSTANCE.generateTaskPreviewFullLink(task.getTaskkey(),
-                CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
+                CurrentProjectVariables.INSTANCE.getShortName())).appendText(linkName).setStyle("display:inline");
         Div resultDiv = new DivLessFormatter().appendChild(taskLink);
         if (task.isOverdue()) {
             taskLink.setCSSClass("overdue");
@@ -187,7 +187,7 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
             taskLink.setCSSClass("completed");
         }
 
-        taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.INSTANCE.getTASK(), task.getId() + ""));
+        taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.TASK, task.getId() + ""));
         taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 
         return resultDiv.write();

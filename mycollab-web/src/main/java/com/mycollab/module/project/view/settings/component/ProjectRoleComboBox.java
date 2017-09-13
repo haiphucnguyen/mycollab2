@@ -32,7 +32,7 @@ public class ProjectRoleComboBox extends ComboBox {
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
 
         ProjectRoleService roleService = AppContextUtil.getSpringBean(ProjectRoleService.class);
-        List<SimpleProjectRole> roleList = roleService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
+        List<SimpleProjectRole> roleList = (List<SimpleProjectRole>) roleService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
 
         BeanContainer<String, SimpleProjectRole> beanItem = new BeanContainer<>(SimpleProjectRole.class);
         beanItem.setBeanIdProperty("id");

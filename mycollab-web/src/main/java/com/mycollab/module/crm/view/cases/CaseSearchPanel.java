@@ -48,7 +48,7 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getCASE(), UserUIContext.getMessage(CaseI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.CASE, UserUIContext.getMessage(CaseI18nEnum.LIST));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
         return (canCreateCase) ? new MButton(UserUIContext.getMessage(CaseI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new CaseEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CASE())) : null;
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CASE)) : null;
     }
 
     @SuppressWarnings("unchecked")
@@ -74,7 +74,7 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
         private static final long serialVersionUID = 1L;
 
         CaseAdvancedSearchLayout() {
-            super(CaseSearchPanel.this, CrmTypeConstants.INSTANCE.getCASE());
+            super(CaseSearchPanel.this, CrmTypeConstants.CASE);
         }
 
         @Override

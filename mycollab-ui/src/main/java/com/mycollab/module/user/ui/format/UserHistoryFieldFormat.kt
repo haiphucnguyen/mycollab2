@@ -27,14 +27,14 @@ class UserHistoryFieldFormat : HistoryFieldFormat {
         }
 
         val userService = AppContextUtil.getSpringBean(UserService::class.java)
-        val user = userService.findUserByUserNameInAccount(value, AppUI.getAccountId())
+        val user = userService.findUserByUserNameInAccount(value, AppUI.accountId)
         if (user != null) {
             return if (displayAsHtml!!) {
                 val userAvatarLink = MailUtils.getAvatarLink(user.avatarid, 16)
                 val img = FormatUtils.newImg("avatar", userAvatarLink)
 
                 val userLink = AccountLinkGenerator.generatePreviewFullUserLink(
-                        MailUtils.getSiteUrl(AppUI.getAccountId()), user.username)
+                        MailUtils.getSiteUrl(AppUI.accountId), user.username)
 
                 val link = FormatUtils.newA(userLink, user.displayName)
                 FormatUtils.newLink(img, link).write()

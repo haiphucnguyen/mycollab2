@@ -36,13 +36,13 @@ public class PageListPresenter extends ProjectGenericPresenter<PageListView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getPAGES())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.PAGES)) {
             PageContainer pageContainer = (PageContainer) container;
-            pageContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getPAGE());
+            pageContainer.navigateToContainer(ProjectTypeConstants.PAGE);
 
             String path = (String) data.getParams();
             if (path == null) {
-                path = CurrentProjectVariables.getCurrentPagePath();
+                path = CurrentProjectVariables.INSTANCE.getCurrentPagePath();
             } else {
                 CurrentProjectVariables.setCurrentPagePath(path);
             }
@@ -55,7 +55,7 @@ public class PageListPresenter extends ProjectGenericPresenter<PageListView> {
                 view.showNoItemView();
             }
 
-            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
             breadcrumb.gotoPageList();
         } else {
             throw new SecureAccessException();

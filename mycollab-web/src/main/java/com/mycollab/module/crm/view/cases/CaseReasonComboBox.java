@@ -13,8 +13,7 @@ public class CaseReasonComboBox extends I18nValueComboBox {
     private static final long serialVersionUID = 1L;
 
     public CaseReasonComboBox() {
-        super();
         setCaption(null);
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getCasesReason()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.casesReason));
     }
 }

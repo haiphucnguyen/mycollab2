@@ -51,7 +51,7 @@ class OpportunityServiceImpl : DefaultService<Int, Opportunity, OpportunitySearc
     override val searchMapper: ISearchableDAO<OpportunitySearchCriteria>?
         get() = opportunityMapperExt
 
-    override fun findById(opportunityId: Int?, sAccountId: Int?): SimpleOpportunity {
+    override fun findById(opportunityId: Int, sAccountId: Int): SimpleOpportunity? {
         return opportunityMapperExt!!.findById(opportunityId)
     }
 

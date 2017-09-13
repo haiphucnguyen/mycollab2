@@ -46,7 +46,7 @@ public class ProjectMemberReadPresenter extends AbstractPresenter<ProjectMemberR
             @Override
             public void onDelete(final SimpleProjectMember data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -76,9 +76,9 @@ public class ProjectMemberReadPresenter extends AbstractPresenter<ProjectMemberR
                 ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
                 ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.INSTANCE.getACTIVE(), ProjectMemberStatusConstants.INSTANCE.getNOT_ACCESS_YET()));
+                criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET));
 
                 Integer nextId = projectMemberService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -94,8 +94,8 @@ public class ProjectMemberReadPresenter extends AbstractPresenter<ProjectMemberR
                 ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
                 ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
-                criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.INSTANCE.getACTIVE(), ProjectMemberStatusConstants.INSTANCE.getNOT_ACCESS_YET()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
+                criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET));
 
                 Integer nextId = projectMemberService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -116,7 +116,7 @@ public class ProjectMemberReadPresenter extends AbstractPresenter<ProjectMemberR
                 isCurrentUserAccess = true;
             }
         }
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getUSERS()) || isCurrentUserAccess) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.USERS) || isCurrentUserAccess) {
             ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
             SimpleProjectMember prjMember = null;
             if (data.getParams() instanceof Integer) {
@@ -131,7 +131,7 @@ public class ProjectMemberReadPresenter extends AbstractPresenter<ProjectMemberR
                 ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
                 userGroupContainer.setContent(view);
                 view.previewItem(prjMember);
-                ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+                ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
                 breadCrumb.gotoUserRead(prjMember);
             } else {
                 NotificationUtil.showRecordNotExistNotification();

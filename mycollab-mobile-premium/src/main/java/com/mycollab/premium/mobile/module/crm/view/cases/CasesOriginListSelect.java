@@ -14,6 +14,6 @@ class CasesOriginListSelect extends I18NValueListSelect {
 
     CasesOriginListSelect() {
         setCaption(null);
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getCasesOrigin()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.casesOrigin));
     }
 }

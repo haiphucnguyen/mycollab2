@@ -68,7 +68,7 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
         };
         MButton newMessageBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new MessageEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMESSAGES()));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
         return new MHorizontalLayout(searchBtn, newMessageBtn).alignAll(Alignment.TOP_RIGHT);
     }
 
@@ -103,7 +103,7 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
 
             MHorizontalLayout titleRow = new MHorizontalLayout().withFullWidth().withStyleName("title-row");
 
-            A messageLink = new A(ProjectLinkBuilder.INSTANCE.generateMessagePreviewFullLink(CurrentProjectVariables
+            A messageLink = new A(ProjectLinkBuilder.INSTANCE.generateMessagePreviewFullLink(CurrentProjectVariables.INSTANCE
                     .getProjectId(), message.getId())).appendText(message.getTitle());
             ELabel messageTitle = ELabel.h3(messageLink.write());
             CssLayout messageWrap = new CssLayout(messageTitle);
@@ -125,7 +125,7 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
 
             ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
             List<Content> attachments = attachmentService.getContents(AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(
-                    AppUI.getAccountId(), message.getProjectid(), ProjectTypeConstants.INSTANCE.getMESSAGE(), "" + message.getId()));
+                    AppUI.getAccountId(), message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
             if (CollectionUtils.isNotEmpty(attachments)) {
                 CssLayout attachmentPanel = new CssLayout();
                 attachmentPanel.setStyleName("attachment-panel");

@@ -11,6 +11,6 @@ class LeadStatusComboBox extends I18nValueComboBox {
     private static final long serialVersionUID = 1L;
 
     LeadStatusComboBox() {
-        super(false, CrmDataTypeFactory.getLeadStatusList());
+        super(false, CrmDataTypeFactory.leadStatusList);
     }
 }

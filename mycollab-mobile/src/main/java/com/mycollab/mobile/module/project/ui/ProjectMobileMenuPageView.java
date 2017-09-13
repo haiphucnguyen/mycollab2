@@ -41,25 +41,25 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
         MButton messageBtn = new MButton(UserUIContext.getMessage(MessageI18nEnum.LIST), clickEvent -> {
             closeMenu();
             EventBusFactory.getInstance().post(new MessageEvent.GotoList(this, null));
-        }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMESSAGE()));
+        }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE));
         addMenuItem(messageBtn);
 
         MButton phaseBtn = new MButton(UserUIContext.getMessage(MilestoneI18nEnum.LIST), clickEvent -> {
             closeMenu();
             EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null));
-        }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()));
+        }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
         addMenuItem(phaseBtn);
 
         MButton ticketBtn = new MButton(UserUIContext.getMessage(TicketI18nEnum.LIST), clickEvent -> {
             closeMenu();
             EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null));
-        }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTICKET()));
+        }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET));
         addMenuItem(ticketBtn);
 
         MButton userBtn = new MButton(UserUIContext.getMessage(ProjectMemberI18nEnum.LIST), clickEvent -> {
             closeMenu();
             EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null));
-        }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMEMBER()));
+        }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MEMBER));
         addMenuItem(userBtn);
 
         addSection("Modules");

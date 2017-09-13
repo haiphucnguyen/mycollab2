@@ -28,7 +28,7 @@ public class ProjectMemberListSelect extends ListSelect {
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
 
         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-        List<SimpleProjectMember> projectMembers = projectMemberService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        List<SimpleProjectMember> projectMembers = (List<SimpleProjectMember>) projectMemberService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         for (SimpleProjectMember projectMember : projectMembers) {
             addItem(projectMember.getUsername());
             setItemCaption(projectMember.getUsername(), projectMember.getDisplayName());

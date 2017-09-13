@@ -40,7 +40,7 @@ public class VersionSearchPanel extends DefaultGenericSearchPanel<VersionSearchC
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.headerH2(ProjectTypeConstants.INSTANCE.getBUG_VERSION(), UserUIContext.getMessage(VersionI18nEnum.LIST));
+        return ComponentUtils.headerH2(ProjectTypeConstants.BUG_VERSION, UserUIContext.getMessage(VersionI18nEnum.LIST));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class VersionSearchPanel extends DefaultGenericSearchPanel<VersionSearchC
         MButton createBtn = new MButton(UserUIContext.getMessage(VersionI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new BugVersionEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getVERSIONS()));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
         return createBtn;
     }
 

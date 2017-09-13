@@ -86,7 +86,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
         ResourceService resourceService = AppContextUtil.getSpringBean(ResourceService.class);
         List<Content> attachments = resourceService.getContents(AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(),
-                beanItem.getProjectid(), ProjectTypeConstants.INSTANCE.getTASK(), "" + beanItem.getId()));
+                beanItem.getProjectid(), ProjectTypeConstants.TASK, "" + beanItem.getId()));
         if (CollectionUtils.isNotEmpty(attachments)) {
             attachmentComp = new ProjectAttachmentDisplayComp(attachments);
             previewForm.addComponent(attachmentComp);
@@ -103,7 +103,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         } else if (beanItem.isOverdue()) {
             beanTitle.setCSSClass(MobileUIConstants.LINK_OVERDUE);
         }
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()).getHtml() + " " + beanTitle.write();
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + " " + beanTitle.write();
     }
 
     @Override
@@ -113,7 +113,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.INSTANCE.getTASK(), TaskDefaultFormLayoutFactory.getForm(), Task.Field.name.name());
+        return new DynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getForm(), Task.Field.name.name());
     }
 
     @Override
@@ -123,7 +123,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     @Override
     protected String getType() {
-        return ProjectTypeConstants.INSTANCE.getTASK();
+        return ProjectTypeConstants.TASK;
     }
 
     @Override
@@ -132,7 +132,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         final VerticalLayout formControls = taskPreviewForm.createButtonControls(
                 ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED,
-                ProjectRolePermissionCollections.INSTANCE.getTASKS());
+                ProjectRolePermissionCollections.TASKS);
 
         quickActionStatusBtn = new Button("", clickEvent -> {
             if (beanItem.getStatus() != null && beanItem.getStatus().equals(StatusI18nEnum.Closed.name())) {
@@ -154,13 +154,13 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
         taskPreviewForm.insertToControlBlock(quickActionStatusBtn);
 
-        if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+        if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             quickActionStatusBtn.setEnabled(false);
         }
 
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(this, beanItem)))
                 .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(formControls));
     }
 
@@ -169,7 +169,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         MVerticalLayout toolbarLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
         toolbarLayout.setDefaultComponentAlignment(Alignment.TOP_LEFT);
 
-        relatedComments = new CommentNavigationButton(ProjectTypeConstants.INSTANCE.getTASK(), beanItem.getId() + "");
+        relatedComments = new CommentNavigationButton(ProjectTypeConstants.TASK, beanItem.getId() + "");
         Component section = FormSectionBuilder.build(FontAwesome.COMMENT, relatedComments);
         toolbarLayout.addComponent(section);
 
@@ -218,7 +218,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                 if (beanItem.getMilestoneid() != null) {
                     A milestoneLink = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink
                             (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
-                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), milestoneLink);
+                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
                 }
             } else if (Task.Field.description.equalTo(propertyId)) {

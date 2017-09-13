@@ -40,7 +40,7 @@ public class CaseListViewImpl extends AbstractListItemComp<CaseSearchCriteria, S
     @Override
     protected AbstractPagedBeanTable<CaseSearchCriteria, SimpleCase> createBeanTable() {
         return new CaseTableDisplay(
-                CrmTypeConstants.INSTANCE.getCASE(), CaseTableFieldDef.selected(),
+                CrmTypeConstants.CASE, CaseTableFieldDef.selected(),
                 Arrays.asList(CaseTableFieldDef.subject(), CaseTableFieldDef.account(),
                         CaseTableFieldDef.priority(), CaseTableFieldDef.status(),
                         CaseTableFieldDef.assignUser(), CaseTableFieldDef.createdTime()));
@@ -50,7 +50,7 @@ public class CaseListViewImpl extends AbstractListItemComp<CaseSearchCriteria, S
     protected DefaultMassItemActionHandlerContainer createActionControls() {
         DefaultMassItemActionHandlerContainer container = new DefaultMassItemActionHandlerContainer();
 
-        if (UserUIContext.canAccess(RolePermissionCollections.INSTANCE.getCRM_CASE())) {
+        if (UserUIContext.canAccess(RolePermissionCollections.CRM_CASE)) {
             container.addDeleteActionItem();
         }
 
@@ -59,7 +59,7 @@ public class CaseListViewImpl extends AbstractListItemComp<CaseSearchCriteria, S
         container.addDownloadExcelActionItem();
         container.addDownloadCsvActionItem();
 
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CASE())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CASE)) {
             container.addMassUpdateActionItem();
         }
 

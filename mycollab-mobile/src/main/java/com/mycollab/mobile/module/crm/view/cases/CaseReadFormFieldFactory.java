@@ -38,7 +38,7 @@ class CaseReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<Si
             if (cases.getAccountid() != null) {
                 A accountLink = new A(CrmLinkBuilder.INSTANCE.generateAccountPreviewLinkFull(cases.getAccountid()))
                         .appendText(cases.getAccountName());
-                Div accountDiv = new Div().appendText(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), accountLink);
+                Div accountDiv = new Div().appendText(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, accountLink);
                 return new DefaultViewField(accountDiv.write(), ContentMode.HTML);
             }
         } else if (propertyId.equals("email")) {

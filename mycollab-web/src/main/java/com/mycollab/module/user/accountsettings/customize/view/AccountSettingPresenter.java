@@ -17,7 +17,7 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_THEME(), impliedPermissionVal = BooleanPermissionFlag.Companion.getTRUE())
+@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_THEME, impliedPermissionVal = BooleanPermissionFlag.TRUE)
 public class AccountSettingPresenter extends AbstractPresenter<AccountSettingContainer> {
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class AccountSettingPresenter extends AbstractPresenter<AccountSettingCon
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         AccountModule accountContainer = (AccountModule) container;
-        accountContainer.gotoSubView(SettingUIConstants.GENERAL_SETTING);
+        accountContainer.gotoSubView(SettingUIConstants.INSTANCE.getGENERAL_SETTING());
 
         IPresenter<?> presenter;
         if (data instanceof SettingExtScreenData.GeneralSetting || data == null) {

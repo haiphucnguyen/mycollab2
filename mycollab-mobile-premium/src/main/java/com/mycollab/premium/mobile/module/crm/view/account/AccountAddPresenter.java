@@ -50,8 +50,7 @@ public class AccountAddPresenter extends AbstractCrmPresenter<AccountAddView> im
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
-
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
             SimpleAccount account = null;
             if (data.getParams() instanceof SimpleAccount) {
                 account = (SimpleAccount) data.getParams();

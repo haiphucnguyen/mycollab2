@@ -56,7 +56,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
             @Override
             public void onDelete(final SimpleAccount data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -84,7 +84,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
             @Override
             public void onPrint(Object source, SimpleAccount data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.INSTANCE.getACCOUNT(), Account.Field.accountname.name(),
+                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.ACCOUNT, Account.Field.accountname.name(),
                         AccountDefaultDynaFormLayoutFactory.getForm()));
             }
 
@@ -98,7 +98,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = accountService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new AccountEvent.GotoRead(this, nextId));
@@ -112,7 +112,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = accountService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new AccountEvent.GotoRead(this, nextId));
@@ -197,17 +197,17 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
             public void createNewRelatedItem(final String itemId) {
                 if (itemId.equals("task")) {
                     SimpleCrmTask task = new SimpleCrmTask();
-                    task.setType(CrmTypeConstants.INSTANCE.getACCOUNT());
+                    task.setType(CrmTypeConstants.ACCOUNT);
                     task.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(AccountReadPresenter.this, task));
                 } else if (itemId.equals("meeting")) {
                     SimpleMeeting meeting = new SimpleMeeting();
-                    meeting.setType(CrmTypeConstants.INSTANCE.getACCOUNT());
+                    meeting.setType(CrmTypeConstants.ACCOUNT);
                     meeting.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(AccountReadPresenter.this, meeting));
                 } else if (itemId.equals("call")) {
                     SimpleCall call = new SimpleCall();
-                    call.setType(CrmTypeConstants.INSTANCE.getACCOUNT());
+                    call.setType(CrmTypeConstants.ACCOUNT);
                     call.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(AccountReadPresenter.this, call));
                 }
@@ -217,8 +217,8 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getACCOUNT());
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
+        CrmModule.navigateItem(CrmTypeConstants.ACCOUNT);
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
             if (data.getParams() instanceof Integer) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 SimpleAccount account = accountService.findById((Integer) data.getParams(), AppUI.getAccountId());

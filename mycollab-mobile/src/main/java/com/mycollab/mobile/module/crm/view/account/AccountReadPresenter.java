@@ -71,7 +71,7 @@ public class AccountReadPresenter extends AbstractCrmPresenter<AccountReadView> 
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = accountService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new AccountEvent.GotoRead(this, nextId));
@@ -86,7 +86,7 @@ public class AccountReadPresenter extends AbstractCrmPresenter<AccountReadView> 
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 AccountSearchCriteria criteria = new AccountSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = accountService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new AccountEvent.GotoRead(this, nextId));
@@ -99,7 +99,7 @@ public class AccountReadPresenter extends AbstractCrmPresenter<AccountReadView> 
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
             if (data.getParams() instanceof Integer) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 SimpleAccount account = accountService.findById((Integer) data.getParams(), AppUI.getAccountId());

@@ -12,8 +12,7 @@ public class IndustryListSelect extends I18NValueListSelect {
     private static final long serialVersionUID = 1L;
 
     public IndustryListSelect() {
-        super();
         setCaption(null);
-        loadData(Arrays.asList(CrmDataTypeFactory.getAccountIndustryList()));
+        loadData(Arrays.asList(CrmDataTypeFactory.accountIndustryList));
     }
 }

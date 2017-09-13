@@ -13,6 +13,6 @@ public class LeadSourceComboBox extends I18nValueComboBox {
     private static final long serialVersionUID = 1L;
 
     public LeadSourceComboBox() {
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getLeadSourceList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.leadSourceList));
     }
 }

@@ -27,7 +27,7 @@ public class FileDashboardPresenter extends AbstractPresenter<FileDashboardView>
 
         view.displayProjectFiles();
 
-        ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+        ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
         breadcrumb.gotoFileList();
     }
 }

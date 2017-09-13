@@ -96,7 +96,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         billingPlanListLayout = new MHorizontalLayout().withSpacing(false).withFullWidth().withStyleName("billing-plan-list");
         layout.addComponent(billingPlanListLayout);
         ELabel bankWireTransfer = ELabel.h3(UserUIContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE));
-        BillingPlan currentBillingPlan = AppUI.getBillingAccount().getBillingPlan();
+        BillingPlan currentBillingPlan = AppUI.Companion.getBillingAccount().getBillingPlan();
         MButton bankwireBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT),
                 event -> UI.getCurrent().addWindow(new BankwireSelectionWindow(currentBillingPlan)))
                 .withIcon(FontAwesome.BANK).withStyleName(WebThemes.BUTTON_LINK);
@@ -110,8 +110,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
     private void displayBillingMonthly() {
         billingPlanListLayout.removeAllComponents();
 
-        BillingPlan currentBillingPlan = AppUI.getBillingAccount().getBillingPlan();
-        SimpleBillingAccount billingAccount = AppUI.getBillingAccount();
+        BillingPlan currentBillingPlan = AppUI.Companion.getBillingAccount().getBillingPlan();
+        SimpleBillingAccount billingAccount = AppUI.Companion.getBillingAccount();
         List<BillingPlan> availablePlans = billingService.getAvailablePlans();
 
         for (int i = 0; i < availablePlans.size(); i++) {
@@ -167,8 +167,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
     private void displayBillingYearly() {
         billingPlanListLayout.removeAllComponents();
 
-        BillingPlan currentBillingPlan = AppUI.getBillingAccount().getBillingPlan();
-        SimpleBillingAccount billingAccount = AppUI.getBillingAccount();
+        BillingPlan currentBillingPlan = AppUI.Companion.getBillingAccount().getBillingPlan();
+        SimpleBillingAccount billingAccount = AppUI.Companion.getBillingAccount();
         List<BillingPlan> availablePlans = billingService.getAvailablePlans();
 
         for (int i = 0; i < availablePlans.size(); i++) {
@@ -225,10 +225,10 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         currentPlanLayout.removeAllComponents();
         AbstractStorageService storageService = AppContextUtil.getSpringBean(AbstractStorageService.class);
         currentPlanLayout.with(new Image(null, new ExternalResource(storageService.generateAssetRelativeLink("icons/fs_button05.gif"))));
-        BillingPlan currentBillingPlan = AppUI.getBillingAccount().getBillingPlan();
+        BillingPlan currentBillingPlan = AppUI.Companion.getBillingAccount().getBillingPlan();
 
         ELabel introText = ELabel.h2(UserUIContext.getMessage(BillingI18nEnum.OPT_CURRENT_PLAN, currentBillingPlan.getBillingtype()));
-        SimpleBillingSubscription subscription = (SimpleBillingSubscription) MyCollabSession.getCurrentUIVariable("subscription");
+        SimpleBillingSubscription subscription = (SimpleBillingSubscription) MyCollabSession.INSTANCE.getCurrentUIVariable("subscription");
         if (subscription == null) {
             MButton selectPlanBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(WebThemes.BUTTON_DANGER)
                     .withIcon(FontAwesome.CREDIT_CARD);
@@ -340,17 +340,17 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                     return;
                 }
 
-                if (chosenPlan.getBillingtype().equals(AppUI.getBillingAccount().getBillingPlan().getBillingtype())) {
+                if (chosenPlan.getBillingtype().equals(AppUI.Companion.getBillingAccount().getBillingPlan().getBillingtype())) {
                     NotificationUtil.showErrorNotification("Selected plan is the same with the current plan");
                     return;
                 }
 
-                billingService.updateBillingPlan(AppUI.getAccountId(), AppUI.getBillingAccount().getBillingPlan(), chosenPlan);
+                billingService.updateBillingPlan(AppUI.getAccountId(), AppUI.Companion.getBillingAccount().getBillingPlan(), chosenPlan);
                 updateBillingPlan();
                 close();
             }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
 
-            SimpleBillingAccount billingAccount = AppUI.getBillingAccount();
+            SimpleBillingAccount billingAccount = AppUI.Companion.getBillingAccount();
             if (billingAccount.isNotActive()) {
                 BrowserWindowOpener opener = new BrowserWindowOpener(chosenPlan.getShoppingurl() + "?referrer=" +
                         EnDecryptHelper.encryptTextWithEncodeFriendly(AppUI.getAccountId() + ";" + chosenPlan.getId()));
@@ -362,7 +362,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         }
 
         private void updateBillingPlan() {
-            AppUI.getBillingAccount().setBillingPlan(chosenPlan);
+            AppUI.Companion.getBillingAccount().setBillingPlan(chosenPlan);
             displayView();
         }
     }

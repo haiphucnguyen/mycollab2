@@ -78,9 +78,9 @@ public class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<Proj
                 ticket.getAssignUser()));
         assigneeLink.appendText(StringUtils.trim(ticket.getAssignUserFullName(), 30, true));
         Div assigneeDiv = new Div().appendText(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
-                .appendChild(DivLessFormatter.EMPTY_SPACE(), new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
+                .appendChild(DivLessFormatter.EMPTY_SPACE, new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
                                 .getAvatarPath(ticket.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
-                        DivLessFormatter.EMPTY_SPACE(), assigneeLink);
+                        DivLessFormatter.EMPTY_SPACE, assigneeLink);
 
         ELabel assigneeLbl = ELabel.html(assigneeDiv.write()).withStyleName(UIConstants.META_INFO).withWidthUndefined();
         metaInfoLayout.addComponent(assigneeLbl);

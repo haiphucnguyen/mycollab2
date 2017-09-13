@@ -58,7 +58,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
             @Override
             public void onDelete(final SimpleRisk data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -81,7 +81,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
             @Override
             public void onPrint(Object source, SimpleRisk data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.INSTANCE.getRISK(), Risk.Field.name.name(),
+                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.RISK, Risk.Field.name.name(),
                         RiskDefaultFormLayoutFactory.getForm(), Risk.Field.id.name()));
             }
 
@@ -123,7 +123,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.RISKS)) {
             if (data.getParams() instanceof Integer) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 SimpleRisk risk = riskService.findById((Integer) data.getParams(), AppUI.getAccountId());
@@ -133,7 +133,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
                     riskContainer.addComponent(view);
                     view.previewItem(risk);
 
-                    ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+                    ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
                     breadCrumb.gotoRiskRead(risk);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

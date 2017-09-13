@@ -46,7 +46,7 @@ public class LeadConvertReadPresenter extends CrmGenericPresenter<LeadConvertRea
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = contactService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new LeadEvent.GotoRead(this, nextId));
@@ -60,7 +60,7 @@ public class LeadConvertReadPresenter extends CrmGenericPresenter<LeadConvertRea
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = contactService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new LeadEvent.GotoRead(this, nextId));
@@ -73,8 +73,8 @@ public class LeadConvertReadPresenter extends CrmGenericPresenter<LeadConvertRea
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getLEAD());
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
+        CrmModule.navigateItem(CrmTypeConstants.LEAD);
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_LEAD)) {
             if (data.getParams() instanceof SimpleLead) {
                 SimpleLead lead = (SimpleLead) data.getParams();
                 super.onGo(container, data);

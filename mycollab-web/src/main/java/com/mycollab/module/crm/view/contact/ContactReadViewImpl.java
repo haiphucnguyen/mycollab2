@@ -47,7 +47,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
     private CrmFollowersComp<SimpleContact> compFollowers;
 
     public ContactReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()));
+        super(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.INSTANCE.getCRM_CONTACT());
+        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_CONTACT);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
     private void displayActivities() {
         final ActivitySearchCriteria criteria = new ActivitySearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-        criteria.setType(StringSearchField.and(CrmTypeConstants.INSTANCE.getCONTACT()));
+        criteria.setType(StringSearchField.and(CrmTypeConstants.CONTACT));
         criteria.setTypeid(new NumberSearchField(this.beanItem.getId()));
         this.associateActivityList.setSearchCriteria(criteria);
     }
@@ -95,7 +95,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
         dateInfoComp.displayEntryDateTime(beanItem);
         compFollowers.displayFollowers(beanItem);
 
-        tabSheet.selectTab(CrmTypeConstants.INSTANCE.getDETAIL());
+        tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 
     @Override
@@ -106,8 +106,8 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
         if (lead != null) {
             return beanItem.getContactName() + "&nbsp;" + UserUIContext.getMessage(
                     LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
-                    CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()).getHtml(),
-                    CrmLinkGenerator.INSTANCE.generateCrmItemLink(CrmTypeConstants.INSTANCE.getLEAD(), lead.getId()),
+                    CrmAssetsManager.getAsset(CrmTypeConstants.LEAD).getHtml(),
+                    CrmLinkGenerator.INSTANCE.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()),
                     lead.getLeadName());
         } else {
             return beanItem.getContactName();
@@ -118,24 +118,24 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
     protected void initRelatedComponents() {
         this.associateOpportunityList = new ContactOpportunityListComp();
         this.associateActivityList = new ActivityRelatedItemListComp(true);
-        activityComponent = new CrmActivityComponent(CrmTypeConstants.INSTANCE.getCONTACT());
+        activityComponent = new CrmActivityComponent(CrmTypeConstants.CONTACT);
 
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        compFollowers = new CrmFollowersComp<>(CrmTypeConstants.INSTANCE.getCONTACT(), RolePermissionCollections.INSTANCE.getCRM_CONTACT());
+        compFollowers = new CrmFollowersComp<>(CrmTypeConstants.CONTACT, RolePermissionCollections.CRM_CONTACT);
         addToSideBar(dateInfoComp, peopleInfoComp, compFollowers);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.INSTANCE.getDETAIL(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getDETAIL()));
-        tabSheet.addTab(associateOpportunityList, CrmTypeConstants.INSTANCE.getOPPORTUNITY(), UserUIContext.getMessage(OpportunityI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY()));
-        tabSheet.addTab(associateActivityList, CrmTypeConstants.INSTANCE.getACTIVITY(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()));
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+        tabSheet.addTab(associateOpportunityList, CrmTypeConstants.OPPORTUNITY, UserUIContext.getMessage(OpportunityI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
+        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
+                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
     }
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getCONTACT(), ContactDefaultDynaFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.CONTACT, ContactDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -165,6 +165,6 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getCONTACT();
+        return CrmTypeConstants.CONTACT;
     }
 }

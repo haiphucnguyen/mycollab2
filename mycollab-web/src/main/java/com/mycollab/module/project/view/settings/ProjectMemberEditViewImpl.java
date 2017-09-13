@@ -55,7 +55,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMEMBER());
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.MEMBER);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
             layout.addComponent(wrappedLayoutFactory.getLayout());
 
             FormContainer permissionsPanel = new FormContainer();
-            projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, (ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS().length + 1) / 2, "180px");
+            projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, (ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length + 1) / 2, "180px");
             permissionsPanel.addSection(UserUIContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS),
                     projectFormHelper.getLayout());
             layout.addComponent(permissionsPanel);
@@ -131,19 +131,19 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
             SimpleProjectRole role = roleService.findById(roleId, AppUI.getAccountId());
             if (role != null) {
                 final PermissionMap permissionMap = role.getPermissionMap();
-                for (int i = 0; i < ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS().length; i++) {
-                    final String permissionPath = ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS()[i];
+                for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
+                    final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
                     Enum permissionKey = RolePermissionI18nEnum.valueOf(permissionPath);
                     Integer perVal = permissionMap.get(permissionKey.name());
-                    SecurityI18nEnum permissionVal = PermissionFlag.Companion.toVal(perVal);
+                    SecurityI18nEnum permissionVal = PermissionFlag.toVal(perVal);
                     projectFormHelper.addComponent(new Label(UserUIContext.getPermissionCaptionValue(
                             permissionMap, permissionPath)), UserUIContext.getMessage(permissionKey),
                             UserUIContext.getMessage(permissionVal.desc()), i % 2, i / 2);
                 }
             }
         } else {
-            for (int i = 0; i < ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS().length; i++) {
-                final String permissionPath = ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS()[i];
+            for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
+                final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
                 Enum permissionKey = RolePermissionI18nEnum.valueOf(permissionPath);
                 projectFormHelper.addComponent(new Label(UserUIContext.getMessage(SecurityI18nEnum.ACCESS)),
                         UserUIContext.getMessage(permissionKey), i % 2, i / 2);
@@ -164,7 +164,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         public void commit() throws SourceException, InvalidValueException {
             Integer roleId = (Integer) roleComboBox.getValue();
             if (roleId == -1) {
-                if (CurrentProjectVariables.isAdmin()) {
+                if (CurrentProjectVariables.INSTANCE.isAdmin()) {
                     beanItem.setIsadmin(Boolean.TRUE);
                     this.setInternalValue(null);
                 } else {

@@ -60,7 +60,7 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
             @Override
             public void onDelete(final SimpleCampaign data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -84,7 +84,7 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
             @Override
             public void onPrint(Object source, SimpleCampaign data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.INSTANCE.getCAMPAIGN(), CampaignWithBLOBs.Field.campaignname.name(),
+                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.CAMPAIGN, CampaignWithBLOBs.Field.campaignname.name(),
                         CampaignDefaultDynaFormLayoutFactory.getForm()));
             }
 
@@ -98,7 +98,7 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
                 CampaignService contactService = AppContextUtil.getSpringBean(CampaignService.class);
                 CampaignSearchCriteria criteria = new CampaignSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = contactService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new CampaignEvent.GotoRead(this, nextId));
@@ -113,7 +113,7 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
                 CampaignService contactService = AppContextUtil.getSpringBean(CampaignService.class);
                 CampaignSearchCriteria criteria = new CampaignSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = contactService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new CampaignEvent.GotoRead(this, nextId));
@@ -128,18 +128,18 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
             public void createNewRelatedItem(String itemId) {
                 if (itemId.equals("task")) {
                     SimpleCrmTask task = new SimpleCrmTask();
-                    task.setType(CrmTypeConstants.INSTANCE.getCAMPAIGN());
+                    task.setType(CrmTypeConstants.CAMPAIGN);
                     task.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(CampaignReadPresenter.this, task));
                 } else if (itemId.equals("meeting")) {
                     SimpleMeeting meeting = new SimpleMeeting();
-                    meeting.setType(CrmTypeConstants.INSTANCE.getCAMPAIGN());
+                    meeting.setType(CrmTypeConstants.CAMPAIGN);
                     meeting.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(
                             CampaignReadPresenter.this, meeting));
                 } else if (itemId.equals("call")) {
                     SimpleCall call = new SimpleCall();
-                    call.setType(CrmTypeConstants.INSTANCE.getCAMPAIGN());
+                    call.setType(CrmTypeConstants.CAMPAIGN);
                     call.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(CampaignReadPresenter.this, call));
                 }
@@ -239,8 +239,8 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getCAMPAIGN());
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) {
+        CrmModule.navigateItem(CrmTypeConstants.CAMPAIGN);
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
             if (data.getParams() instanceof Integer) {
                 CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
                 SimpleCampaign campaign = campaignService.findById((Integer) data.getParams(), AppUI.getAccountId());

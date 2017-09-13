@@ -51,7 +51,7 @@ public class MainViewImpl extends AbstractMainView {
         BillingSubscriptionMapperExt billingSubscriptionMapperExt = AppContextUtil.getSpringBean(BillingSubscriptionMapperExt.class);
         SimpleBillingSubscription subscription = billingSubscriptionMapperExt.findSubscription(AppUI.getAccountId());
         if (subscription != null) {
-            MyCollabSession.putCurrentUIVariable("subscription", subscription);
+            MyCollabSession.INSTANCE.putCurrentUIVariable("subscription", subscription);
             if (!subscription.canAccess()) {
                 TrialBlock trialBlock = new TrialBlock();
                 accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
@@ -66,7 +66,7 @@ public class MainViewImpl extends AbstractMainView {
                 UserUIContext.getInstance().setIsValidAccount(true);
             }
         } else {
-            SimpleBillingAccount billingAccount = AppUI.getBillingAccount();
+            SimpleBillingAccount billingAccount = AppUI.Companion.getBillingAccount();
             if (billingAccount.isNotActive()) {
                 TrialBlock trialBlock = new TrialBlock();
                 accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
@@ -84,7 +84,7 @@ public class MainViewImpl extends AbstractMainView {
             }
         }
 
-        Label accountNameLabel = new Label(AppUI.getSubDomain());
+        Label accountNameLabel = new Label(AppUI.Companion.getSubDomain());
         accountNameLabel.addStyleName("subDomain");
         accountLayout.addComponent(accountNameLabel);
 
@@ -105,25 +105,25 @@ public class MainViewImpl extends AbstractMainView {
         MButton myProfileBtn = new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_PROFILE), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
-        }).withIcon(SettingAssetsManager.getAsset(SettingUIConstants.PROFILE));
+        }).withIcon(SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getPROFILE()));
         accountPopupContent.addOption(myProfileBtn);
 
         MButton userMgtBtn = new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"user", "list"}));
-        }).withIcon(SettingAssetsManager.getAsset(SettingUIConstants.USERS));
+        }).withIcon(SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getUSERS()));
         accountPopupContent.addOption(userMgtBtn);
 
         MButton generalSettingBtn = new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"setting", "general"}));
-        }).withIcon(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING));
+        }).withIcon(SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getGENERAL_SETTING()));
         accountPopupContent.addOption(generalSettingBtn);
 
         MButton themeCustomizeBtn = new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_THEME), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"setting", "theme"}));
-        }).withIcon(SettingAssetsManager.getAsset(SettingUIConstants.THEME_CUSTOMIZE));
+        }).withIcon(SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getTHEME_CUSTOMIZE()));
         accountPopupContent.addOption(themeCustomizeBtn);
 
         accountPopupContent.addSeparator();
@@ -149,13 +149,13 @@ public class MainViewImpl extends AbstractMainView {
         MButton myAccountBtn = new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"billing"}));
-        }).withIcon(SettingAssetsManager.getAsset(SettingUIConstants.BILLING));
+        }).withIcon(SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getBILLING()));
         accountPopupContent.addOption(myAccountBtn);
 
         accountPopupContent.addSeparator();
         MButton aboutBtn = new MButton(UserUIContext.getMessage(ShellI18nEnum.OPT_ABOUT_MYCOLLAB), clickEvent -> {
             accountMenu.setPopupVisible(false);
-            Window aboutWindow = ViewManager.getCacheComponent(AbstractAboutWindow.class);
+            Window aboutWindow = ViewManager.INSTANCE.getCacheComponent(AbstractAboutWindow.class);
             UI.getCurrent().addWindow(aboutWindow);
         }).withIcon(FontAwesome.INFO_CIRCLE);
         accountPopupContent.addOption(aboutBtn);

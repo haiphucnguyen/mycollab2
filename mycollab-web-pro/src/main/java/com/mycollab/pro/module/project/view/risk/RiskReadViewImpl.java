@@ -45,7 +45,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     private ProjectFollowersComp<SimpleRisk> followerSheet;
 
     public RiskReadViewImpl() {
-        super(UserUIContext.getMessage(RiskI18nEnum.DETAIL), ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getRISK()));
+        super(UserUIContext.getMessage(RiskI18nEnum.DETAIL), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected HorizontalLayout createButtonControls() {
-        return new ProjectPreviewFormControlsGenerator<>(previewForm).createButtonControls(ProjectRolePermissionCollections.INSTANCE.getRISKS());
+        return new ProjectPreviewFormControlsGenerator<>(previewForm).createButtonControls(ProjectRolePermissionCollections.RISKS);
     }
 
     @Override
@@ -65,14 +65,14 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected void initRelatedComponents() {
-        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getRISK(), CurrentProjectVariables.getProjectId());
+        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.RISK, CurrentProjectVariables.getProjectId());
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.INSTANCE.getRISK(), ProjectRolePermissionCollections.INSTANCE.getRISKS());
+        followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.RISK, ProjectRolePermissionCollections.RISKS);
         if (SiteConfiguration.isCommunityEdition()) {
             addToSideBar(dateInfoComp, peopleInfoComp, followerSheet);
         } else {
-            timeLogComp = ViewManager.getCacheComponent(RiskTimeLogSheet.class);
+            timeLogComp = ViewManager.INSTANCE.getCacheComponent(RiskTimeLogSheet.class);
             addToSideBar(dateInfoComp, peopleInfoComp, timeLogComp, followerSheet);
         }
     }
@@ -88,7 +88,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         }
 
         if (!SiteConfiguration.isCommunityEdition()) {
-            tagViewComponent.display(ProjectTypeConstants.INSTANCE.getRISK(), beanItem.getId());
+            tagViewComponent.display(ProjectTypeConstants.RISK, beanItem.getId());
         }
 
         if (timeLogComp != null) {
@@ -105,7 +105,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         if (SiteConfiguration.isCommunityEdition()) {
             return null;
         } else {
-            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS()));
+            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
             return tagViewComponent;
         }
     }
@@ -117,7 +117,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected String getType() {
-        return ProjectTypeConstants.INSTANCE.getRISK();
+        return ProjectTypeConstants.RISK;
     }
 
 

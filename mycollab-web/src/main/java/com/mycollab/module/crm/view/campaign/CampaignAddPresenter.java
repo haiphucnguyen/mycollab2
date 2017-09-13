@@ -58,8 +58,8 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getCAMPAIGN());
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) {
+        CrmModule.navigateItem(CrmTypeConstants.CAMPAIGN);
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN)) {
             SimpleCampaign campaign = null;
             if (data.getParams() instanceof SimpleCampaign) {
                 campaign = (SimpleCampaign) data.getParams();

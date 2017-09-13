@@ -60,7 +60,7 @@ public class RoleReadViewImpl extends AbstractVerticalPageView implements RoleRe
 
     private Layout createTopPanel() {
         PreviewFormControlsGenerator<Role> buttonControls = new PreviewFormControlsGenerator<>(previewForm);
-        return buttonControls.createButtonControls(RolePermissionCollections.INSTANCE.getACCOUNT_ROLE());
+        return buttonControls.createButtonControls(RolePermissionCollections.ACCOUNT_ROLE);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class RoleReadViewImpl extends AbstractVerticalPageView implements RoleRe
         for (int i = 0; i < defItems.size(); i++) {
             PermissionDefItem permissionDefItem = defItems.get(i);
             final Integer perVal = permissionMap.get(permissionDefItem.getKey());
-            SecurityI18nEnum enumVal = AccessPermissionFlag.Companion.toVal(perVal);
+            SecurityI18nEnum enumVal = AccessPermissionFlag.toVal(perVal);
             formHelper.addComponent(new Label(UserUIContext.getMessage(enumVal)), UserUIContext.getMessage(permissionDefItem.getCaption()),
                     UserUIContext.getMessage(enumVal.desc()), i % 2, i / 2);
         }
@@ -110,7 +110,6 @@ public class RoleReadViewImpl extends AbstractVerticalPageView implements RoleRe
     }
 
     class FormLayoutFactory extends RoleFormLayoutFactory {
-        private static final long serialVersionUID = 1L;
 
         public FormLayoutFactory() {
             super(role.getRolename());
@@ -123,16 +122,16 @@ public class RoleReadViewImpl extends AbstractVerticalPageView implements RoleRe
             PermissionMap permissionMap = role.getPermissionMap();
 
             permissionsPanel.addComponent(constructPermissionSectionView(UserUIContext.getMessage(RoleI18nEnum.SECTION_PROJECT_MANAGEMENT_TITLE),
-                    permissionMap, RolePermissionCollections.INSTANCE.getPROJECT_PERMISSION_ARR()));
+                    permissionMap, RolePermissionCollections.PROJECT_PERMISSION_ARR));
 
             permissionsPanel.addComponent(constructPermissionSectionView(UserUIContext.getMessage(RoleI18nEnum.SECTION_CRM_TITLE),
-                    permissionMap, RolePermissionCollections.INSTANCE.getCRM_PERMISSIONS_ARR()));
+                    permissionMap, RolePermissionCollections.CRM_PERMISSIONS_ARR));
 
             permissionsPanel.addComponent(constructPermissionSectionView(UserUIContext.getMessage(RoleI18nEnum.SECTION_DOCUMENT_TITLE),
-                    permissionMap, RolePermissionCollections.INSTANCE.getDOCUMENT_PERMISSION_ARR()));
+                    permissionMap, RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
 
             permissionsPanel.addComponent(constructPermissionSectionView(UserUIContext.getMessage(RoleI18nEnum.SECTION_ACCOUNT_MANAGEMENT_TITLE),
-                    permissionMap, RolePermissionCollections.INSTANCE.getACCOUNT_PERMISSION_ARR()));
+                    permissionMap, RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
 
             return permissionsPanel;
         }

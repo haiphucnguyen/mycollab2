@@ -88,8 +88,8 @@ public class LeadListPresenter extends CrmGenericListPresenter<LeadListView, Lea
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getLEAD());
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
+        CrmModule.navigateItem(CrmTypeConstants.LEAD);
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_LEAD)) {
             searchCriteria = (LeadSearchCriteria) data.getParams();
             int totalCount = leadService.getTotalCount(searchCriteria);
             if (totalCount > 0) {

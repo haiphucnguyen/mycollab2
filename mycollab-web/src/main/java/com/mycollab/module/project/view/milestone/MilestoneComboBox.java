@@ -31,7 +31,7 @@ public class MilestoneComboBox extends ComboBox {
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
         MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
-        SimpleProject project = CurrentProjectVariables.getProject();
+        SimpleProject project = CurrentProjectVariables.INSTANCE.getProject();
         if (project != null) {
             criteria.setProjectIds(new SetSearchField<>(project.getId()));
             MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);

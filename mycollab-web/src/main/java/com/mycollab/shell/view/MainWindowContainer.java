@@ -17,8 +17,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
 import org.vaadin.viritin.util.BrowserCookie;
 
-import static com.mycollab.vaadin.ui.MyCollabSession.USER_VAL;
-
 /**
  * @author MyCollab Ltd.
  * @since 1.0
@@ -27,7 +25,7 @@ public class MainWindowContainer extends CssLayout {
     private static final long serialVersionUID = 1L;
 
     public MainWindowContainer() {
-        this.setCaption(AppUI.getSiteName());
+        this.setCaption(AppUI.Companion.getSiteName());
         ControllerRegistry.addController(new ShellController(this));
         this.setSizeFull();
         this.setDefaultView();
@@ -59,7 +57,7 @@ public class MainWindowContainer extends CssLayout {
                     }
                 } else {
                     try {
-                        SimpleUser user = (SimpleUser) MyCollabSession.getSessionVariable(USER_VAL);
+                        SimpleUser user = (SimpleUser) MyCollabSession.getSessionVariable(MyCollabSession.USER_VAL);
                         if (user != null) {
                             ((DesktopApplication) UI.getCurrent()).afterDoLogin(user);
                         } else {

@@ -56,7 +56,7 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
         @Override
         public AbstractComponent getLayout() {
             VerticalLayout layout = new VerticalLayout();
-            formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getBUG(), BugDefaultFormLayoutFactory.getForm());
+            formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.BUG, BugDefaultFormLayoutFactory.getForm());
             AbstractComponent gridLayout = formLayoutFactory.getLayout();
             gridLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
             new Restrain(gridLayout).setMaxHeight((UIUtils.getBrowserHeight() - 180) + "px");
@@ -84,10 +84,10 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
 
                     AttachmentUploadField uploadField = bugEditFormFieldFactory.getAttachmentUploadField();
                     String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
-                            ProjectTypeConstants.INSTANCE.getBUG(), "" + bugId);
+                            ProjectTypeConstants.BUG, "" + bugId);
                     uploadField.saveContentsToRepo(attachPath);
                     EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(BugEditForm.this,
-                            ProjectTypeConstants.INSTANCE.getBUG(), bugId));
+                            ProjectTypeConstants.BUG, bugId));
                     ProjectSubscribersComp subcribersComp = bugEditFormFieldFactory.getSubscribersComp();
                     List<String> followers = subcribersComp.getFollowers();
                     if (followers.size() > 0) {
@@ -96,7 +96,7 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
                             MonitorItem monitorItem = new MonitorItem();
                             monitorItem.setMonitorDate(new GregorianCalendar().getTime());
                             monitorItem.setSaccountid(AppUI.getAccountId());
-                            monitorItem.setType(ProjectTypeConstants.INSTANCE.getBUG());
+                            monitorItem.setType(ProjectTypeConstants.BUG);
                             monitorItem.setTypeid(bugId);
                             monitorItem.setUser(follower);
                             monitorItem.setExtratypeid(bean.getProjectid());

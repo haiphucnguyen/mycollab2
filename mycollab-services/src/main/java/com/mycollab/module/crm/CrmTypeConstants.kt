@@ -5,33 +5,33 @@ package com.mycollab.module.crm
  * @since 1.0
  */
 object CrmTypeConstants {
-    val DASHBOARD = "Crm-Dashboard"
+    @JvmField val DASHBOARD = "Crm-Dashboard"
 
-    val FILE = "Crm-File"
+    @JvmField val FILE = "Crm-File"
 
-    val SETTING = "Crm-Setting"
+    @JvmField val SETTING = "Crm-Setting"
 
-    val ACCOUNT = "Crm-Account"
+    @JvmField val ACCOUNT = "Crm-Account"
 
-    val CAMPAIGN = "Crm-Campaign"
+    @JvmField val CAMPAIGN = "Crm-Campaign"
 
-    val CONTACT = "Crm-Contact"
+    @JvmField val CONTACT = "Crm-Contact"
 
-    val LEAD = "Crm-Lead"
+    @JvmField val LEAD = "Crm-Lead"
 
-    val OPPORTUNITY = "Crm-Opportunity"
+    @JvmField val OPPORTUNITY = "Crm-Opportunity"
 
-    val CASE = "Crm-Case"
+    @JvmField val CASE = "Crm-Case"
 
-    val TASK = "Crm-Task"
+    @JvmField val TASK = "Crm-Task"
 
-    val MEETING = "Crm-Meeting"
+    @JvmField val MEETING = "Crm-Meeting"
 
-    val CALL = "Crm-Call"
+    @JvmField val CALL = "Crm-Call"
 
-    val NOTE = "Crm-Note"
+    @JvmField val NOTE = "Crm-Note"
 
-    val ACTIVITY = "Crm-Activity"
+    @JvmField val ACTIVITY = "Crm-Activity"
 
-    val DETAIL = "Crm-Detail"
+    @JvmField val DETAIL = "Crm-Detail"
 }

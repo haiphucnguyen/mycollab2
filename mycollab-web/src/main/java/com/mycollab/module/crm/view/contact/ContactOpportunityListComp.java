@@ -47,7 +47,7 @@ public class ContactOpportunityListComp extends RelatedListComp2<OpportunityServ
         VerticalLayout controlsBtnWrap = new VerticalLayout();
         controlsBtnWrap.setWidth("100%");
 
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) {
             final SplitButton controlsBtn = new SplitButton();
             controlsBtn.addStyleName(WebThemes.BUTTON_ACTION);
             controlsBtn.setCaption(UserUIContext.getMessage(OpportunityI18nEnum.NEW));
@@ -62,7 +62,7 @@ public class ContactOpportunityListComp extends RelatedListComp2<OpportunityServ
                 UI.getCurrent().addWindow(opportunitiesWindow);
                 opportunitiesWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
-            }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY()));
+            }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
 
             OptionPopupContent buttonControlsLayout = new OptionPopupContent();
             buttonControlsLayout.addOption(selectBtn);
@@ -102,7 +102,7 @@ public class ContactOpportunityListComp extends RelatedListComp2<OpportunityServ
             MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel opportunityIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY()));
+            ELabel opportunityIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
             iconWrap.addComponent(opportunityIcon);
             blockTop.addComponent(iconWrap);
 
@@ -111,7 +111,7 @@ public class ContactOpportunityListComp extends RelatedListComp2<OpportunityServ
 
             MButton btnDelete = new MButton("", clickEvent ->
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -126,13 +126,13 @@ public class ContactOpportunityListComp extends RelatedListComp2<OpportunityServ
                                 }
                             })
             ).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY)
-                    .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CONTACT()));
+                    .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CONTACT));
 
             blockContent.addComponent(btnDelete);
             blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
 
             Label opportunityName = ELabel.html(UserUIContext.getMessage(GenericI18Enum.FORM_NAME) + ": " + new A(CrmLinkGenerator.INSTANCE.generateCrmItemLink(
-                    CrmTypeConstants.INSTANCE.getOPPORTUNITY(), opportunity.getId())).appendText(opportunity.getOpportunityname()).write());
+                    CrmTypeConstants.OPPORTUNITY, opportunity.getId())).appendText(opportunity.getOpportunityname()).write());
 
             opportunityInfo.addComponent(opportunityName);
 

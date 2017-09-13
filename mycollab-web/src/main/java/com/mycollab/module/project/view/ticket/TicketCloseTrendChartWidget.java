@@ -164,12 +164,12 @@ public class TicketCloseTrendChartWidget extends Depot {
         }
 
         void display(TimelineTrackingSearchCriteria searchCriteria) {
-            searchCriteria.setTypes(new SetSearchField(ProjectTypeConstants.INSTANCE.getTASK(), ProjectTypeConstants.INSTANCE.getBUG(), ProjectTypeConstants.INSTANCE.getTASK()));
+            searchCriteria.setTypes(new SetSearchField(ProjectTypeConstants.TASK, ProjectTypeConstants.BUG, ProjectTypeConstants.TASK));
             searchCriteria.setFieldgroup(StringSearchField.and("status"));
             LocalDate endDate = new LocalDate(new GregorianCalendar().getTime());
             LocalDate startDate = endDate.minusDays(30);
             OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
-            List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.INSTANCE.getTASK(),
+            List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
                     CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
             List<String> options = optionVals.stream().map(OptionVal::getTypeval).collect(Collectors.toList());
             groupItems = timelineTrackingService.findTimelineItems("status", options, startDate.toDate(), endDate.toDate(), searchCriteria);

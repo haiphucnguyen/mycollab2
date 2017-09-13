@@ -88,8 +88,8 @@ public class ContactListPresenter extends CrmGenericListPresenter<ContactListVie
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getCONTACT());
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CONTACT())) {
+        CrmModule.navigateItem(CrmTypeConstants.CONTACT);
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
             searchCriteria = (ContactSearchCriteria) data.getParams();
             int totalCount = contactService.getTotalCount(searchCriteria);
             if (totalCount > 0) {

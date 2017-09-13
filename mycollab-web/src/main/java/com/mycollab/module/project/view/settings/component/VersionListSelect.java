@@ -29,7 +29,7 @@ public class VersionListSelect extends IntegerKeyListSelect {
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
 
         VersionService versionService = AppContextUtil.getSpringBean(VersionService.class);
-        List<Version> versions = versionService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        List<Version> versions = (List<Version>) versionService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         for (Version version : versions) {
             this.addItem(version.getId());
             this.setItemCaption(version.getId(), version.getName());

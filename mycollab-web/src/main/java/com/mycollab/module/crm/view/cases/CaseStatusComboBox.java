@@ -14,6 +14,6 @@ public class CaseStatusComboBox extends I18nValueComboBox {
 
     public CaseStatusComboBox() {
         setCaption(null);
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getCasesStatusList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.casesStatusList));
     }
 }

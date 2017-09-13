@@ -31,11 +31,11 @@ public class ActivityListDisplay extends DefaultPagedBeanList<EventService, Acti
         @Override
         public Component generateRow(IBeanList<SimpleActivity> host, final SimpleActivity simpleEvent, int rowIndex) {
             Button b = new Button(simpleEvent.getSubject(), clickEvent -> {
-                if (simpleEvent.getEventType().equals(CrmTypeConstants.INSTANCE.getTASK())) {
+                if (simpleEvent.getEventType().equals(CrmTypeConstants.TASK)) {
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskRead(this, simpleEvent.getId()));
-                } else if (simpleEvent.getEventType().equals(CrmTypeConstants.INSTANCE.getCALL())) {
+                } else if (simpleEvent.getEventType().equals(CrmTypeConstants.CALL)) {
                     EventBusFactory.getInstance().post(new ActivityEvent.CallRead(this, simpleEvent.getId()));
-                } else if (simpleEvent.getEventType().equals(CrmTypeConstants.INSTANCE.getMEETING())) {
+                } else if (simpleEvent.getEventType().equals(CrmTypeConstants.MEETING)) {
                     EventBusFactory.getInstance().post(new ActivityEvent.MeetingRead(this, simpleEvent.getId()));
                 }
             });

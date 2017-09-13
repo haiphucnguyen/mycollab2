@@ -203,17 +203,17 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
     public void displayView(String query) {
         baseCriteria = new ProjectTicketSearchCriteria();
         baseCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        baseCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
+        baseCriteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
 
         statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
         statisticSearchCriteria.setIsOpenned(new SearchField());
-        statisticSearchCriteria.setTypes(new SetSearchField(ProjectTypeConstants.INSTANCE.getBUG(), ProjectTypeConstants.INSTANCE.getTASK(),
-                ProjectTypeConstants.INSTANCE.getRISK()));
+        statisticSearchCriteria.setTypes(new SetSearchField(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK,
+                ProjectTypeConstants.RISK));
 
         if (StringUtils.isNotBlank(query)) {
             try {
                 String jsonQuery = UrlEncodeDecoder.decode(query);
-                List<SearchFieldInfo> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.INSTANCE.getTICKET());
+                List<SearchFieldInfo> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.TICKET);
                 ticketSearchPanel.displaySearchFieldInfos(searchFieldInfos);
                 ProjectTicketSearchCriteria searchCriteria = SearchFieldInfo.buildSearchCriteria(baseCriteria, searchFieldInfos);
                 searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
@@ -251,7 +251,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
     @Override
     public void queryTickets(ProjectTicketSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
-        baseCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
+        baseCriteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
         queryAndDisplayTickets();
         displayTicketsStatistic();
     }

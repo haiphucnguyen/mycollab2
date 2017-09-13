@@ -67,7 +67,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
         } else if (beanItem.isOverdue()) {
             beanTitle.setCSSClass(MobileUIConstants.LINK_OVERDUE);
         }
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml() + " " + beanTitle.write();
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " + beanTitle.write();
     }
 
     @Override
@@ -82,12 +82,12 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
 
     @Override
     protected String getType() {
-        return ProjectTypeConstants.INSTANCE.getMILESTONE();
+        return ProjectTypeConstants.MILESTONE;
     }
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.INSTANCE.getMILESTONE(), MilestoneDefaultFormLayoutFactory.getForm(),
+        return new DynaFormLayout(ProjectTypeConstants.MILESTONE, MilestoneDefaultFormLayoutFactory.getForm(),
                 Milestone.Field.name.name());
     }
 
@@ -102,10 +102,10 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
         final VerticalLayout formControls = formControlsGenerator.createButtonControls(
                 ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED,
-                ProjectRolePermissionCollections.INSTANCE.getMILESTONES());
+                ProjectRolePermissionCollections.MILESTONES);
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(this, beanItem)))
                 .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES()));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(formControls));
     }
 
@@ -116,7 +116,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
         ticketNavigatorButton = new TicketNavigatorButton();
         Component issueSection = FormSectionBuilder.build(FontAwesome.TICKET, ticketNavigatorButton);
         toolbarLayout.addComponent(issueSection);
-        relatedComments = new CommentNavigationButton(ProjectTypeConstants.INSTANCE.getMILESTONE(), beanItem.getId() + "");
+        relatedComments = new CommentNavigationButton(ProjectTypeConstants.MILESTONE, beanItem.getId() + "");
         Component commentSection = FormSectionBuilder.build(FontAwesome.COMMENT, relatedComments);
         toolbarLayout.addComponent(commentSection);
         return toolbarLayout;

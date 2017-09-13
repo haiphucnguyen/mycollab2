@@ -34,7 +34,7 @@ public class BugSavedFilterComboBox extends SavedFilterComboBox {
     public static final String WAITING_FOR_APPROVAL = "WAITING_FOR_APPROVAL";
 
     public BugSavedFilterComboBox() {
-        super(ProjectTypeConstants.INSTANCE.getBUG());
+        super(ProjectTypeConstants.BUG);
 
         SearchQueryInfo allBugsQuery = new SearchQueryInfo(ALL_BUGS, UserUIContext.getMessage(BugI18nEnum.VAL_ALL_BUGS),
                 SearchFieldInfo.inCollection(BugSearchCriteria.p_projectIds, new CurrentProjectIdInjector()));
@@ -45,7 +45,7 @@ public class BugSavedFilterComboBox extends SavedFilterComboBox {
                                 Arrays.asList(BugStatus.Open.name(), BugStatus.ReOpen.name()))));
 
         SearchQueryInfo overdueTaskQuery = new SearchQueryInfo(OVERDUE_BUGS, UserUIContext.getMessage(BugI18nEnum.VAL_OVERDUE_BUGS),
-                new SearchFieldInfo(SearchField.Companion.getAND(), BugSearchCriteria.p_duedate, DateParam.Companion.getBEFORE(),
+                new SearchFieldInfo(SearchField.AND, BugSearchCriteria.p_duedate, DateParam.Companion.getBEFORE(),
                         new VariableInjector() {
                             @Override
                             public Object eval() {
@@ -67,7 +67,7 @@ public class BugSavedFilterComboBox extends SavedFilterComboBox {
                                 return false;
                             }
                         }),
-                new SearchFieldInfo(SearchField.Companion.getAND(), new StringParam("id-status",
+                new SearchFieldInfo(SearchField.AND, new StringParam("id-status",
                         "m_tracker_bug", "status"), StringI18nEnum.IS_NOT.name(),
                         ConstantValueInjector.valueOf(BugStatus.Verified.name())));
 

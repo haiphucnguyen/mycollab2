@@ -40,7 +40,7 @@ public class CampaignAccountSelectionWindow extends RelatedItemSelectionWindow<S
             SimpleAccount account = tableItem.getBeanByIndex(itemId);
             return new ELabel(account.getAccountname()).withStyleName(WebThemes.BUTTON_LINK)
                     .withDescription(CrmTooltipGenerator.INSTANCE.generateToolTipAccount(UserUIContext.getUserLocale(), account,
-                            AppUI.getSiteUrl()));
+                            AppUI.Companion.getSiteUrl()));
         });
 
         MButton selectBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> close())

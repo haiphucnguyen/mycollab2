@@ -11,6 +11,6 @@ import java.util.Arrays;
  */
 public class CampaignTypeComboBox extends I18nValueComboBox {
     public CampaignTypeComboBox() {
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getCampaignTypeList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.campaignTypeList));
     }
 }

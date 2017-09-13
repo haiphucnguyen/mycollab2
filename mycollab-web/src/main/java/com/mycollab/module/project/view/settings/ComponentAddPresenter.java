@@ -60,7 +60,7 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
     private void save(Component item) {
         ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
 
-        SimpleProject project = CurrentProjectVariables.getProject();
+        SimpleProject project = CurrentProjectVariables.INSTANCE.getProject();
         item.setSaccountid(AppUI.getAccountId());
         item.setProjectid(project.getId());
         item.setStatus("Open");
@@ -75,7 +75,7 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS)) {
             BugComponentContainer componentContainer = (BugComponentContainer) container;
             componentContainer.removeAllComponents();
             componentContainer.addComponent(view);
@@ -83,7 +83,7 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
             Component component = (Component) data.getParams();
             view.editItem(component);
 
-            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
 
             if (component.getId() == null) {
                 breadcrumb.gotoComponentAdd();

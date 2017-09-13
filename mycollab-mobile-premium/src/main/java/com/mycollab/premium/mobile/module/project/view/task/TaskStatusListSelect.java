@@ -21,7 +21,7 @@ public class TaskStatusListSelect extends OptionValListSelect {
     public TaskStatusListSelect() {
         super(StatusI18nEnum.class);
         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
-        List<OptionVal> options = optionValService.findOptionVals(ProjectTypeConstants.INSTANCE.getTASK(), CurrentProjectVariables.getProjectId(),
+        List<OptionVal> options = optionValService.findOptionVals(ProjectTypeConstants.TASK, CurrentProjectVariables.getProjectId(),
                 AppUI.getAccountId());
         options.forEach(this::addEntry);
     }

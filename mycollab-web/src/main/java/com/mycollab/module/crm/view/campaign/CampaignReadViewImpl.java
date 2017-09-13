@@ -47,7 +47,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
     private CrmFollowersComp<SimpleCampaign> compFollowers;
 
     public CampaignReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN()));
+        super(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN());
+        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_CAMPAIGN);
     }
 
     @Override
@@ -71,29 +71,29 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
         associateContactList = new CampaignContactListComp();
         associateLeadList = new CampaignLeadListComp();
         associateActivityList = new ActivityRelatedItemListComp(true);
-        activityComponent = new CrmActivityComponent(CrmTypeConstants.INSTANCE.getCAMPAIGN());
+        activityComponent = new CrmActivityComponent(CrmTypeConstants.CAMPAIGN);
 
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        compFollowers = new CrmFollowersComp<>(CrmTypeConstants.INSTANCE.getCAMPAIGN(), RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN());
+        compFollowers = new CrmFollowersComp<>(CrmTypeConstants.CAMPAIGN, RolePermissionCollections.CRM_CAMPAIGN);
         addToSideBar(dateInfoComp, peopleInfoComp, compFollowers);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.INSTANCE.getDETAIL(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getDETAIL()));
-        tabSheet.addTab(associateAccountList, CrmTypeConstants.INSTANCE.getACCOUNT(), UserUIContext.getMessage(AccountI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()));
-        tabSheet.addTab(associateContactList, CrmTypeConstants.INSTANCE.getCONTACT(), UserUIContext.getMessage(ContactI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()));
-        tabSheet.addTab(associateLeadList, CrmTypeConstants.INSTANCE.getLEAD(), UserUIContext.getMessage(LeadI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()));
-        tabSheet.addTab(associateActivityList, CrmTypeConstants.INSTANCE.getACTIVITY(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()));
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+        tabSheet.addTab(associateAccountList, CrmTypeConstants.ACCOUNT, UserUIContext.getMessage(AccountI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
+        tabSheet.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
+        tabSheet.addTab(associateLeadList, CrmTypeConstants.LEAD, UserUIContext.getMessage(LeadI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
+        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
+                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
     }
 
     private void displayActivities() {
         ActivitySearchCriteria criteria = new ActivitySearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-        criteria.setType(StringSearchField.and(CrmTypeConstants.INSTANCE.getCAMPAIGN()));
+        criteria.setType(StringSearchField.and(CrmTypeConstants.CAMPAIGN));
         criteria.setTypeid(new NumberSearchField(beanItem.getId()));
         associateActivityList.setSearchCriteria(criteria);
     }
@@ -127,7 +127,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
         peopleInfoComp.displayEntryPeople(beanItem);
         compFollowers.displayFollowers(beanItem);
 
-        tabSheet.selectTab(CrmTypeConstants.INSTANCE.getDETAIL());
+        tabSheet.selectTab(CrmTypeConstants.DETAIL);
 
         Date now = new GregorianCalendar().getTime();
         String status = beanItem.getStatus();
@@ -143,7 +143,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getCAMPAIGN(), CampaignDefaultDynaFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.CAMPAIGN, CampaignDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -183,6 +183,6 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getCAMPAIGN();
+        return CrmTypeConstants.CAMPAIGN;
     }
 }

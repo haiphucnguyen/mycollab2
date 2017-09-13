@@ -38,7 +38,7 @@ public class ComponentAddViewImpl extends AbstractEditItemComp<Component> implem
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT());
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_COMPONENT);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ComponentAddViewImpl extends AbstractEditItemComp<Component> implem
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT(), ComponentDefaultFormLayoutFactory.getForm(), "id");
+        return new DefaultDynaFormLayout(ProjectTypeConstants.BUG_COMPONENT, ComponentDefaultFormLayoutFactory.getForm(), "id");
     }
 
     @Override

@@ -82,7 +82,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getACCOUNT(), AccountDefaultDynaFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.ACCOUNT, AccountDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -107,33 +107,33 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     protected ComponentContainer createButtonControls() {
         VerticalLayout buttonControls = new CrmPreviewFormControlsGenerator<>(previewForm)
                 .createButtonControls(CLONE_BTN_PRESENTED | DELETE_BTN_PRESENTED,
-                        RolePermissionCollections.INSTANCE.getCRM_ACCOUNT());
+                        RolePermissionCollections.CRM_ACCOUNT);
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GotoEdit(this, beanItem)))
                 .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT()));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(buttonControls));
     }
 
     @Override
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withFullWidth().withSpacing(false).withMargin(false);
-        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()),
+        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT),
                 associateContacts);
         toolbarLayout.addComponent(contactSection);
 
-        Component leadSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()),
+        Component leadSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
                 associateLeads);
         toolbarLayout.addComponent(leadSection);
 
-        Component opportunitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY()),
+        Component opportunitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY),
                 associateOpportunities);
         toolbarLayout.addComponent(opportunitySection);
 
-        Component caseSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCASE()),
+        Component caseSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CASE),
                 associateCases);
         toolbarLayout.addComponent(caseSection);
 
-        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()),
+        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY),
                 associateActivities);
         toolbarLayout.addComponent(activitySection);
         return toolbarLayout;
@@ -141,6 +141,6 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getACCOUNT();
+        return CrmTypeConstants.ACCOUNT;
     }
 }

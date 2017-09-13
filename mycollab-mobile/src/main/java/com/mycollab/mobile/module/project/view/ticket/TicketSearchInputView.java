@@ -51,9 +51,9 @@ public class TicketSearchInputView extends SearchInputView<ProjectTicketSearchCr
 
     private void addSharedSearchQueryInfo(SearchQueryInfo queryInfo) {
         content.with(new MButton(queryInfo.getQueryName(), clickEvent -> {
-            List<SearchFieldInfo> fieldInfos = queryInfo.getSearchFieldInfos();
+            List<SearchFieldInfo<?>> fieldInfos = queryInfo.getSearchFieldInfos();
             criteria = SearchFieldInfo.buildSearchCriteria(ProjectTicketSearchCriteria.class, fieldInfos);
-            criteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
+            criteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
             criteria.setProjectIds(new SetSearchField(CurrentProjectVariables.getProjectId()));
             getNavigationManager().navigateBack();
         }));
@@ -64,7 +64,7 @@ public class TicketSearchInputView extends SearchInputView<ProjectTicketSearchCr
         if (criteria == null) {
             criteria = new ProjectTicketSearchCriteria();
             criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-            criteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
+            criteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
             criteria.setName(StringSearchField.and(nameField.getValue()));
         }
 

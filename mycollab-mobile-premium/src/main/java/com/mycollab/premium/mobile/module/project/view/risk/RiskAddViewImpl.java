@@ -47,7 +47,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
     public void editItem(SimpleRisk item) {
         attachmentUploadField = new ProjectFormAttachmentUploadField();
         if (item.getId() != null) {
-            attachmentUploadField.getAttachments(item.getProjectid(), ProjectTypeConstants.INSTANCE.getRISK(), item.getId());
+            attachmentUploadField.getAttachments(item.getProjectid(), ProjectTypeConstants.RISK, item.getId());
         }
         super.editItem(item);
         editForm.addComponent(attachmentUploadField);
@@ -55,7 +55,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.INSTANCE.getRISK(), RiskDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm());
     }
 
     @Override

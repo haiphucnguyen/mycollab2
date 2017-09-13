@@ -53,7 +53,7 @@ public class ProjectRoleReadPresenter extends AbstractPresenter<ProjectRoleReadV
             public void onDelete(final SimpleProjectRole role) {
                 if (Boolean.FALSE.equals(role.getIssystemrole())) {
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -85,7 +85,7 @@ public class ProjectRoleReadPresenter extends AbstractPresenter<ProjectRoleReadV
             public void gotoNext(SimpleProjectRole data) {
                 ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = projectRoleService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ProjectRoleEvent.GotoRead(this, nextId));
@@ -98,7 +98,7 @@ public class ProjectRoleReadPresenter extends AbstractPresenter<ProjectRoleReadV
             public void gotoPrevious(SimpleProjectRole data) {
                 ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = projectRoleService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ProjectRoleEvent.GotoRead(this, nextId));
@@ -121,7 +121,7 @@ public class ProjectRoleReadPresenter extends AbstractPresenter<ProjectRoleReadV
                 roleContainer.removeAllComponents();
                 roleContainer.addComponent(view);
                 view.previewItem(role);
-                ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+                ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
                 breadCrumb.gotoRoleRead(role);
             }
         } else {

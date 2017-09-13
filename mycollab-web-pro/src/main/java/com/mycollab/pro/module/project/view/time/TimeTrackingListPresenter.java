@@ -28,7 +28,7 @@ public class TimeTrackingListPresenter extends AbstractPresenter<TimeTrackingLis
         wrappedTab.addView(view);
         view.setSearchCriteria((ItemTimeLoggingSearchCriteria) data.getParams());
 
-        ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+        ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
         breadCrumb.gotoTimeTrackingList();
     }
 }

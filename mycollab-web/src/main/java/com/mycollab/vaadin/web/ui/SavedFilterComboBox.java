@@ -7,6 +7,7 @@ import com.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.mycollab.common.service.SaveSearchResultService;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.NumberSearchField;
+import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.db.query.SearchFieldInfo;
 import com.mycollab.db.query.SearchQueryInfo;
@@ -54,7 +55,7 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
         searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
 
         SaveSearchResultService saveSearchResultService = AppContextUtil.getSpringBean(SaveSearchResultService.class);
-        List<SaveSearchResult> savedSearchResults = saveSearchResultService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        List<SaveSearchResult> savedSearchResults = (List<SaveSearchResult>)saveSearchResultService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         savedQueries = new ArrayList<>();
         for (SaveSearchResult searchResultWithBLOBs : savedSearchResults) {
             try {
@@ -167,14 +168,14 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
     }
 
     public static class QuerySelectEvent extends Component.Event {
-        private List<SearchFieldInfo> searchFieldInfos;
+        private List<SearchFieldInfo<? extends SearchCriteria>> searchFieldInfos;
 
-        QuerySelectEvent(Component source, List<SearchFieldInfo> searchFieldInfos) {
+        QuerySelectEvent(Component source, List<SearchFieldInfo<? extends SearchCriteria>> searchFieldInfos) {
             super(source);
             this.searchFieldInfos = searchFieldInfos;
         }
 
-        public List<SearchFieldInfo> getSearchFieldInfos() {
+        public List<SearchFieldInfo<? extends SearchCriteria>> getSearchFieldInfos() {
             return searchFieldInfos;
         }
     }

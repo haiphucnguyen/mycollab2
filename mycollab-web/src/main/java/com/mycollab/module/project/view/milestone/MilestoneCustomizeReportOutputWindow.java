@@ -23,7 +23,7 @@ import java.util.Collection;
  */
 public class MilestoneCustomizeReportOutputWindow extends CustomizeReportOutputWindow<MilestoneSearchCriteria, SimpleMilestone> {
     public MilestoneCustomizeReportOutputWindow(VariableInjector<MilestoneSearchCriteria> variableInjector) {
-        super(ProjectTypeConstants.INSTANCE.getMILESTONE(), UserUIContext.getMessage(MilestoneI18nEnum.LIST), SimpleMilestone.class,
+        super(ProjectTypeConstants.MILESTONE, UserUIContext.getMessage(MilestoneI18nEnum.LIST), SimpleMilestone.class,
                 AppContextUtil.getSpringBean(MilestoneService.class), variableInjector);
     }
 

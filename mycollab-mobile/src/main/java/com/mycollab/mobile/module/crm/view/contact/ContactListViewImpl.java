@@ -59,7 +59,7 @@ public class ContactListViewImpl extends AbstractListPageView<ContactSearchCrite
         };
         MButton newContactBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CONTACT()));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CONTACT));
         return new MHorizontalLayout(searchBtn, newContactBtn).alignAll(Alignment.TOP_RIGHT);
     }
 }

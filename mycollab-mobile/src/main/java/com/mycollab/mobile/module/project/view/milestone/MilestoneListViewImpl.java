@@ -56,7 +56,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
 
     @Override
     protected AbstractPagedBeanList<MilestoneSearchCriteria, SimpleMilestone> createBeanList() {
-        return new DefaultPagedBeanList<>(AppContextUtil.getSpringBean(MilestoneService.class), new MilestoneRowDisplayHandler());
+        return new DefaultPagedBeanList(AppContextUtil.getSpringBean(MilestoneService.class), new MilestoneRowDisplayHandler());
     }
 
     @Override
@@ -74,7 +74,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
         };
         MButton newMilestoneBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoAdd(MilestoneListViewImpl.this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES()));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return new MHorizontalLayout(searchBtn, newMilestoneBtn).alignAll(Alignment.TOP_RIGHT);
     }
 
@@ -139,7 +139,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
         public Component generateRow(IBeanList<SimpleMilestone> host, final SimpleMilestone milestone, int rowIndex) {
             MVerticalLayout milestoneInfoLayout = new MVerticalLayout().withSpacing(false).withFullWidth();
 
-            A milestoneLink = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink(CurrentProjectVariables
+            A milestoneLink = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink(CurrentProjectVariables.INSTANCE
                     .getProjectId(), milestone.getId())).appendChild(new Span().appendText(milestone.getName()));
             if (milestone.isCompleted()) {
                 milestoneLink.setCSSClass(MobileUIConstants.LINK_COMPLETED);
@@ -148,7 +148,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
             }
             MCssLayout milestoneWrap = new MCssLayout(ELabel.html(milestoneLink.write()));
             milestoneInfoLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset
-                    (ProjectTypeConstants.INSTANCE.getMILESTONE())), milestoneWrap).expand(milestoneWrap).withFullWidth());
+                    (ProjectTypeConstants.MILESTONE)), milestoneWrap).expand(milestoneWrap).withFullWidth());
 
             MCssLayout metaLayout = new MCssLayout();
             milestoneInfoLayout.addComponent(metaLayout);

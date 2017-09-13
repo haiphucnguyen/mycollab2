@@ -49,7 +49,7 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getCAMPAIGN(), UserUIContext.getMessage(CampaignI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.CAMPAIGN, UserUIContext.getMessage(CampaignI18nEnum.LIST));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
         return (canCreateCampaign) ? new MButton(UserUIContext.getMessage(CampaignI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) : null;
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN)) : null;
     }
 
     @Override
@@ -129,7 +129,7 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
         private static final long serialVersionUID = 1L;
 
         CampaignAdvancedSearchLayout() {
-            super(CampaignSearchPanel.this, CrmTypeConstants.INSTANCE.getCAMPAIGN());
+            super(CampaignSearchPanel.this, CrmTypeConstants.CAMPAIGN);
         }
 
         @Override

@@ -27,7 +27,7 @@ public class OpportunityAddViewImpl extends AbstractEditItemComp<SimpleOpportuni
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getOPPORTUNITY(), OpportunityDefaultDynaFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.OPPORTUNITY, OpportunityDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override

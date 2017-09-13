@@ -3,8 +3,7 @@ package com.mycollab.common.service
 import com.mycollab.cache.IgnoreCacheClass
 import com.mycollab.common.domain.MonitorItem
 import com.mycollab.common.domain.criteria.MonitorSearchCriteria
-import com.mycollab.db.persistence.service.ICrudService
-import com.mycollab.db.persistence.service.ISearchableService
+import com.mycollab.db.persistence.service.IDefaultService
 import com.mycollab.module.user.domain.SimpleUser
 
 /**
@@ -12,7 +11,7 @@ import com.mycollab.module.user.domain.SimpleUser
  * @since 1.0
  */
 @IgnoreCacheClass
-interface MonitorItemService : ICrudService<Int, MonitorItem>, ISearchableService<MonitorSearchCriteria> {
+interface MonitorItemService : IDefaultService<Int, MonitorItem, MonitorSearchCriteria> {
 
     fun isUserWatchingItem(username: String, type: String, typeId: Int?): Boolean
 

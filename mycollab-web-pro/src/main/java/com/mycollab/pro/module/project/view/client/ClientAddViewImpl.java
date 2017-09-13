@@ -66,7 +66,7 @@ public class ClientAddViewImpl extends AbstractVerticalPageView implements Clien
         @Override
         public void process(BufferedImage image) {
             EntityUploaderService entityUploaderService = AppContextUtil.getSpringBean(EntityUploaderService.class);
-            String newLogoId = entityUploaderService.upload(image, PathUtils.INSTANCE.getEntityLogoPath(AppUI
+            String newLogoId = entityUploaderService.upload(image, PathUtils.INSTANCE.getEntityLogoPath(AppUI.Companion
                             .getAccountId()), account.getAvatarid(), UserUIContext.getUsername(), AppUI.getAccountId(),
                     new Integer[]{16, 32, 48, 64, 100});
             AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
@@ -106,7 +106,7 @@ public class ClientAddViewImpl extends AbstractVerticalPageView implements Clien
 
         @Override
         public AbstractComponent getLayout() {
-            wrappedLayoutFactory = new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getACCOUNT(), AccountDefaultDynaFormLayoutFactory.getForm());
+            wrappedLayoutFactory = new DefaultDynaFormLayout(CrmTypeConstants.ACCOUNT, AccountDefaultDynaFormLayoutFactory.getForm());
             MHorizontalLayout header = new MHorizontalLayout().withFullWidth().withMargin(new MarginInfo(true, false, true, false));
             header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
             final AddViewLayout clientAddLayout = new AddViewLayout(header);

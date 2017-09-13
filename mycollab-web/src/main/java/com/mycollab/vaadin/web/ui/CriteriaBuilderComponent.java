@@ -10,5 +10,5 @@ import java.util.List;
  * @since 5.4.4
  */
 public interface CriteriaBuilderComponent<S extends SearchCriteria> {
-    List<SearchFieldInfo> buildSearchFieldInfos();
+    List<SearchFieldInfo<S>> buildSearchFieldInfos();
 }

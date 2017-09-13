@@ -50,7 +50,7 @@ public class CloudDriveSettingWindow extends MWindow {
         externalResourceService = AppContextUtil.getSpringBean(ExternalResourceService.class);
 
         MButton connectAccountBtn = new MButton("Connect account", clickEvent -> {
-            OauthWindowFactory oauthWindowFactory = ViewManager.getCacheComponent(OauthWindowFactory.class);
+            OauthWindowFactory oauthWindowFactory = ViewManager.INSTANCE.getCacheComponent(OauthWindowFactory.class);
             Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
             UI.getCurrent().addWindow(dropboxWindow);
         }).withStyleName(WebThemes.BUTTON_ACTION).withClickShortcut(ShortcutAction.KeyCode.ENTER);
@@ -132,7 +132,7 @@ public class CloudDriveSettingWindow extends MWindow {
                 Button deleteBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                     try {
                         ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                AppUI.getSiteName()),
+                                AppUI.Companion.getSiteName()),
                                 UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

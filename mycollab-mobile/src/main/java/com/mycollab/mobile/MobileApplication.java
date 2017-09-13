@@ -9,7 +9,7 @@ import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.mobile.module.user.view.LoginPresenter;
-import com.mycollab.mobile.shell.ShellUrlResolver;
+import com.mycollab.mobile.shell.view.ShellUrlResolver;
 import com.mycollab.mobile.shell.events.ShellEvent;
 import com.mycollab.mobile.shell.view.ShellController;
 import com.mycollab.mobile.ui.ConfirmDialog;
@@ -128,7 +128,7 @@ public class MobileApplication extends AppUI {
         });
 
         setCurrentFragmentUrl(this.getPage().getUriFragment());
-        currentContext = new UserUIContext();
+        setCurrentContext(new UserUIContext());
         postSetupApp(request);
 
         final NavigationManager manager = new NavigationManager();
@@ -183,7 +183,7 @@ public class MobileApplication extends AppUI {
     public void doLogin(String username, String password, boolean isRememberPassword) {
         try {
             UserService userService = AppContextUtil.getSpringBean(UserService.class);
-            SimpleUser user = userService.authentication(username, password, AppUI.getSubDomain(), false);
+            SimpleUser user = userService.authentication(username, password, AppUI.Companion.getSubDomain(), false);
 
             if (isRememberPassword) {
                 rememberPassword(username, password);
@@ -242,8 +242,8 @@ public class MobileApplication extends AppUI {
     }
 
     private void clearSession() {
-        if (currentContext != null) {
-            currentContext.clearSessionVariables();
+        if (getCurrentContext() != null) {
+            getCurrentContext().clearSessionVariables();
             setCurrentFragmentUrl("");
         }
     }

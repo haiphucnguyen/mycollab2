@@ -6,8 +6,15 @@ package com.mycollab.common
  */
 object ActivityStreamConstants {
 
+    @JvmField
     val ACTION_CREATE = "create"
+
+    @JvmField
     val ACTION_UPDATE = "update"
+
+    @JvmField
     val ACTION_COMMENT = "comment"
+
+    @JvmField
     val ACTION_DELETE = "delete"
 }

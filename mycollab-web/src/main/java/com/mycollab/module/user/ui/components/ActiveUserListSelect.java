@@ -30,9 +30,9 @@ public class ActiveUserListSelect extends ListSelect {
         criteria.setRegisterStatuses(new SetSearchField<>(RegisterStatusConstants.ACTIVE));
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        List<SimpleUser> userList = userService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
+        List<SimpleUser> users = (List<SimpleUser>) userService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
 
-        for (SimpleUser user : userList) {
+        for (SimpleUser user : users) {
             this.addItem(user.getUsername());
             this.setItemCaption(user.getUsername(), user.getDisplayName());
             this.setItemIcon(user.getUsername(), UserAvatarControlFactory.createAvatarResource(user.getAvatarid(), 16));

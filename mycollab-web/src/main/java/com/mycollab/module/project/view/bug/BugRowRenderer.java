@@ -35,11 +35,11 @@ public class BugRowRenderer implements IBeanList.RowDisplayHandler<SimpleBug> {
         Span statusSpan = new Span().appendText(UserUIContext.getMessage(OptionI18nEnum.BugStatus.class,
                 bug.getStatus())).setCSSClass(UIConstants.BLOCK);
 
-        String avatarLink = StorageUtils.INSTANCE.getAvatarPath(bug.getAssignUserAvatarId(), 16);
+        String avatarLink = StorageUtils.getAvatarPath(bug.getAssignUserAvatarId(), 16);
         Img img = new Img(bug.getAssignuserFullName(), avatarLink).setTitle(bug.getAssignuserFullName())
                 .setCSSClass(UIConstants.CIRCLE_BOX);
 
-        rowComp.with(ELabel.fontIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG())).withWidthUndefined(),
+        rowComp.with(ELabel.fontIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG)).withWidthUndefined(),
                 ELabel.html(priorityLink.write()).withWidthUndefined(),
                 ELabel.html(statusSpan.write()).withWidthUndefined(),
                 ELabel.html(img.write()).withWidthUndefined(),

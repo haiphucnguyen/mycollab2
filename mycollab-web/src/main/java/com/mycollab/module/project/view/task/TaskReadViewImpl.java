@@ -51,7 +51,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     public TaskReadViewImpl() {
         super(UserUIContext.getMessage(TaskI18nEnum.DETAIL),
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()), new TaskPreviewFormLayout());
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK), new TaskPreviewFormLayout());
     }
 
     @Override
@@ -66,15 +66,15 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     @Override
     protected void initRelatedComponents() {
-        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getTASK(), CurrentProjectVariables.getProjectId());
+        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.TASK, CurrentProjectVariables.getProjectId());
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.INSTANCE.getTASK(), ProjectRolePermissionCollections.INSTANCE.getTASKS());
+        followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.TASK, ProjectRolePermissionCollections.TASKS);
 
         if (SiteConfiguration.isCommunityEdition()) {
             addToSideBar(dateInfoComp, peopleInfoComp, followerSheet);
         } else {
-            timeLogComp = ViewManager.getCacheComponent(TaskTimeLogSheet.class);
+            timeLogComp = ViewManager.INSTANCE.getCacheComponent(TaskTimeLogSheet.class);
             addToSideBar(dateInfoComp, peopleInfoComp, timeLogComp, followerSheet);
         }
     }
@@ -84,7 +84,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         ((TaskPreviewFormLayout) previewLayout).displayTaskHeader(beanItem);
 
         if (tagViewComponent != null) {
-            tagViewComponent.display(ProjectTypeConstants.INSTANCE.getTASK(), beanItem.getId());
+            tagViewComponent.display(ProjectTypeConstants.TASK, beanItem.getId());
         }
 
         if (timeLogComp != null) {
@@ -118,7 +118,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                         | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.PRINT_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.NAVIGATOR_BTN_PRESENTED,
-                ProjectRolePermissionCollections.INSTANCE.getTASKS());
+                ProjectRolePermissionCollections.TASKS);
     }
 
     @Override
@@ -126,7 +126,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         if (SiteConfiguration.isCommunityEdition()) {
             return null;
         } else {
-            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             return tagViewComponent;
         }
     }
@@ -138,7 +138,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     @Override
     protected String getType() {
-        return ProjectTypeConstants.INSTANCE.getTASK();
+        return ProjectTypeConstants.TASK;
     }
 
     private static class TaskPreviewFormLayout extends ReadViewLayout {

@@ -39,20 +39,20 @@ public class AdRequestWindow extends MWindow {
                 ContentMode.HTML);
 
         Label tweetUs = new Label(new Div().appendChild(new Text("&nbsp;&nbsp;" + FontAwesome.TWITTER.getHtml()),
-                DivLessFormatter.EMPTY_SPACE(),
+                DivLessFormatter.EMPTY_SPACE,
                 new A("https://twitter.com/intent/tweet?text=I am using MyCollab to manage all project activities, " +
                         "accounts and it works great @mycollabdotcom&source=webclient", "_blank")
                         .appendText("Share on Twitter")).setStyle("color:#006dac").write(), ContentMode.HTML);
 
         Label linkedIn = new Label(new Div().appendChild(new Text("&nbsp;&nbsp;" + FontAwesome.LINKEDIN_SQUARE.getHtml()),
-                DivLessFormatter.EMPTY_SPACE(),
+                DivLessFormatter.EMPTY_SPACE,
                 new A("https://www.linkedin.com/cws/share?url=https%3A%2F%2Fwww.mycollab.com&original_referer=https%3A%2F%2Fwww.mycollab.com&token=&isFramed=false&lang=en_US", "_blank")
                         .appendText("Share on LinkedIn")).setStyle("color:#006dac").write(), ContentMode.HTML);
 
         Label testimonialAd = new Label("A chance to get a free license of the premium MyCollab software for 10 users" +
                 ". If you execute one of the following:");
         Label rateSourceforge = new Label(new Div().appendChild(new Text("&nbsp;&nbsp;" + FontAwesome.FLAG_CHECKERED.getHtml()),
-                DivLessFormatter.EMPTY_SPACE(), new A("https://community.mycollab.com/docs/developing-mycollab/translating/", "_blank")
+                DivLessFormatter.EMPTY_SPACE, new A("https://community.mycollab.com/docs/developing-mycollab/translating/", "_blank")
                         .appendText("Localize MyCollab to your language at least 20% of the phrases")).setStyle
                 ("color:#006dac").write(), ContentMode.HTML);
         MButton testimonialBtn = new MButton("Write a testimonial which is selected to post on our website",

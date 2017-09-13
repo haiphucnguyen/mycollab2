@@ -40,7 +40,7 @@ public class MeetingAddViewImpl extends AbstractEditItemComp<MeetingWithBLOBs> i
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getMEETING());
+        return CrmAssetsManager.getAsset(CrmTypeConstants.MEETING);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class MeetingAddViewImpl extends AbstractEditItemComp<MeetingWithBLOBs> i
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getMEETING(), MeetingDefaultFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.MEETING, MeetingDefaultFormLayoutFactory.getForm());
     }
 
     @Override

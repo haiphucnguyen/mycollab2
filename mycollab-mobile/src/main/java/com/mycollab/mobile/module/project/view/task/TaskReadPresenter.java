@@ -61,7 +61,7 @@ public class TaskReadPresenter extends AbstractProjectPresenter<TaskReadView> {
 
     @Override
     protected void onGo(final HasComponents container, final ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.TASKS)) {
             if (data.getParams() instanceof Integer) {
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                 SimpleTask task = taskService.findById((Integer) data.getParams(), AppUI.getAccountId());

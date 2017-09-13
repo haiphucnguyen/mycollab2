@@ -66,17 +66,17 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
         controls.with(searchBtn);
         NavigationBarQuickMenu actionMenu = new NavigationBarQuickMenu();
         MVerticalLayout content = new MVerticalLayout();
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             content.with(new Button(UserUIContext.getMessage(TaskI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(TicketListViewImpl.this, null))));
         }
 
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
             content.with(new Button(UserUIContext.getMessage(BugI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoAdd(TicketListViewImpl.this, null))));
         }
 
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS()) && !SiteConfiguration.isCommunityEdition()) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS) && !SiteConfiguration.isCommunityEdition()) {
             content.with(new Button(UserUIContext.getMessage(RiskI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(TicketListViewImpl.this, null))));
         }

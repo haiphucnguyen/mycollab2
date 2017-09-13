@@ -27,7 +27,7 @@ public class TicketPresenter extends AbstractPresenter<TicketContainer> {
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
-        projectViewContainer.gotoSubView(ProjectTypeConstants.INSTANCE.getTICKET());
+        projectViewContainer.gotoSubView(ProjectTypeConstants.TICKET);
 
         AbstractPresenter<?> presenter;
 

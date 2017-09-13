@@ -90,7 +90,7 @@ class AssignBugWindow extends MWindow {
                             comment.setCreatedtime(new GregorianCalendar().getTime());
                             comment.setCreateduser(UserUIContext.getUsername());
                             comment.setSaccountid(AppUI.getAccountId());
-                            comment.setType(ProjectTypeConstants.INSTANCE.getBUG());
+                            comment.setType(ProjectTypeConstants.BUG);
                             comment.setTypeid("" + bug.getId());
                             comment.setExtratypeid(CurrentProjectVariables.getProjectId());
 

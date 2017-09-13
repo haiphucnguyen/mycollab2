@@ -22,62 +22,62 @@ import java.util.Collection;
 public class BugSearchCriteria extends SearchCriteria {
     private static final long serialVersionUID = 1L;
 
-    public static final CompositionStringParam p_textDesc = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), BugI18nEnum.FORM_ANY_TEXT,
+    public static final CompositionStringParam p_textDesc = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_ANY_TEXT,
             new CompositionStringParam("textDesc",
                     new StringParam("", "m_tracker_bug", "name"),
                     new StringParam("", "m_tracker_bug", "detail"),
                     new StringParam("", "m_tracker_bug", "environment")));
 
-    public static final Param p_createdtime = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), GenericI18Enum.FORM_CREATED_TIME,
+    public static final Param p_createdtime = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_CREATED_TIME,
             new DateParam("createdtime", "m_tracker_bug", "createdTime"));
 
-    public static final DateParam p_lastupdatedtime = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), GenericI18Enum.FORM_LAST_UPDATED_TIME,
+    public static final DateParam p_lastupdatedtime = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_LAST_UPDATED_TIME,
             new DateParam("lastupdatedtime", "m_tracker_bug", "lastUpdatedTime"));
 
-    public static final DateParam p_resolveddate = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), BugI18nEnum.FORM_RESOLVED_DATE,
+    public static final DateParam p_resolveddate = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_RESOLVED_DATE,
             new DateParam("resolveddate", "m_tracker_bug", "resolveddate"));
 
-    public static final DateParam p_createddate = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), GenericI18Enum.FORM_CREATED_TIME,
+    public static final DateParam p_createddate = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_CREATED_TIME,
             new DateParam("createdTime", "m_tracker_bug", "createdTime"));
 
-    public static final DateParam p_duedate = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), GenericI18Enum.FORM_DUE_DATE,
+    public static final DateParam p_duedate = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_DUE_DATE,
             new DateParam("dueDate", "m_tracker_bug", "dueDate"));
 
-    public static final NumberParam p_bugkey = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), BugI18nEnum.FORM_BUG_KEY,
+    public static final NumberParam p_bugkey = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_BUG_KEY,
             new NumberParam("key", "m_tracker_bug", "bugkey"));
 
-    public static final PropertyListParam<Integer> p_milestones = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), MilestoneI18nEnum.SINGLE,
+    public static final PropertyListParam<Integer> p_milestones = CacheParamMapper.register(ProjectTypeConstants.BUG, MilestoneI18nEnum.SINGLE,
             new PropertyListParam<Integer>("milestones", "m_tracker_bug", "milestoneId"));
 
-    public static final I18nStringListParam p_priority = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), GenericI18Enum.FORM_PRIORITY,
+    public static final I18nStringListParam p_priority = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_PRIORITY,
             new I18nStringListParam("priority", "m_tracker_bug", "priority",
                     Arrays.asList(Priority.Urgent, Priority.High, Priority.Medium,
                             Priority.Low, Priority.None)));
 
-    public static final I18nStringListParam p_severity = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), BugI18nEnum.FORM_SEVERITY,
+    public static final I18nStringListParam p_severity = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_SEVERITY,
             new I18nStringListParam("severity", "m_tracker_bug", "severity",
                     Arrays.asList(BugSeverity.Critical, BugSeverity.Major, BugSeverity.Minor, BugSeverity.Trivial)));
 
-    public static final I18nStringListParam p_status = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), GenericI18Enum.FORM_STATUS,
+    public static final I18nStringListParam p_status = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_STATUS,
             new I18nStringListParam("status", "m_tracker_bug", "status",
                     Arrays.asList(BugStatus.Verified, BugStatus.Open, BugStatus.ReOpen, BugStatus.Resolved)));
 
-    public static final BugTypeCustomSqlParam p_affectedVersions = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), BugI18nEnum.FORM_AFFECTED_VERSIONS,
+    public static final BugTypeCustomSqlParam p_affectedVersions = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_AFFECTED_VERSIONS,
             new BugTypeCustomSqlParam("affected_versions", "AffVersion"));
 
-    public static final BugTypeCustomSqlParam p_fixedVersions = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), BugI18nEnum.FORM_FIXED_VERSIONS,
+    public static final BugTypeCustomSqlParam p_fixedVersions = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_FIXED_VERSIONS,
             new BugTypeCustomSqlParam("fixed_versions", "FixVersion"));
 
-    public static final BugTypeCustomSqlParam p_components = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), BugI18nEnum.FORM_COMPONENTS,
+    public static final BugTypeCustomSqlParam p_components = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_COMPONENTS,
             new BugTypeCustomSqlParam("components", "Component"));
 
-    public static final PropertyListParam<String> p_assignee = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), GenericI18Enum.FORM_ASSIGNEE,
+    public static final PropertyListParam<String> p_assignee = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_ASSIGNEE,
             new PropertyListParam<String>("assignUser", "m_tracker_bug", "assignUser"));
 
-    public static final PropertyListParam<String> p_createdUser = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE,
+    public static final PropertyListParam<String> p_createdUser = CacheParamMapper.register(ProjectTypeConstants.BUG, ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE,
             new PropertyListParam<String>("createdUser", "m_tracker_bug", "createdUser"));
 
-    public static final PropertyListParam p_projectIds = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getBUG(), null,
+    public static final PropertyListParam p_projectIds = CacheParamMapper.register(ProjectTypeConstants.BUG, null,
             new PropertyListParam("projectId", "m_tracker_bug", "projectId"));
 
     private static class BugTypeCustomSqlParam extends CustomSqlParam {

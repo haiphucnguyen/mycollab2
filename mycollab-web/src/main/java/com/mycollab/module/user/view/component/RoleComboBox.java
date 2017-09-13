@@ -27,7 +27,7 @@ public class RoleComboBox extends ComboBox {
         RoleSearchCriteria criteria = new RoleSearchCriteria();
 
         RoleService roleService = AppContextUtil.getSpringBean(RoleService.class);
-        List<SimpleRole> roleList = roleService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
+        List<SimpleRole> roles = (List<SimpleRole>) roleService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
 
         BeanContainer<String, SimpleRole> beanItem = new BeanContainer<>(SimpleRole.class);
         beanItem.setBeanIdProperty("id");
@@ -39,7 +39,7 @@ public class RoleComboBox extends ComboBox {
         ownerRole.setRolename(UserUIContext.getMessage(RoleI18nEnum.OPT_ACCOUNT_OWNER));
         beanItem.addBean(ownerRole);
 
-        for (SimpleRole role : roleList) {
+        for (SimpleRole role : roles) {
             beanItem.addBean(role);
             if (Boolean.TRUE.equals(role.getIsdefault())) {
                 this.setValue(role.getId());

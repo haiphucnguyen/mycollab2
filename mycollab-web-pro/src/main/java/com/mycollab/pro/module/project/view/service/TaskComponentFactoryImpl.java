@@ -77,7 +77,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String avatarLink = StorageUtils.INSTANCE.getAvatarPath(task.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageUtils.getAvatarPath(task.getAssignUserAvatarId(), 16);
                 Img img = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName())
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 return img.write();
@@ -87,7 +87,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             protected String generateSmallAsHtmlAfterUpdate() {
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                 SimpleTask newTask = taskService.findById(task.getId(), AppUI.getAccountId());
-                String avatarLink = StorageUtils.INSTANCE.getAvatarPath(newTask.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageUtils.getAvatarPath(newTask.getAssignUserAvatarId(), 16);
                 Img img = new Img(newTask.getAssignUserFullName(), avatarLink).setTitle(newTask.getAssignUserFullName())
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 return img.write();
@@ -101,7 +101,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         builder.withBean(task).withBindProperty("assignuser").withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
                 .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
                 .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getAssignuser())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -123,7 +123,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP))
                 .withField(new PriorityComboBox())
                 .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPriority())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -146,7 +146,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         builder.withBean(task).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
                 .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP))
                 .withField(new TaskStatusComboBox()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStatus())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -157,13 +157,13 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             protected String generateSmallContentAsHtml() {
                 if (task.getMilestoneid() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
-                    divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml());
+                    divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
                     String milestoneName = ((MilestoneComboBox) field).getItemCaption(task.getMilestoneid());
-                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml() + " " +
+                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
                             StringUtils.trim(milestoneName, 20, true);
                 }
             }
@@ -172,7 +172,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         milestoneComboBox.setWidth("300px");
         builder.withBean(task).withBindProperty("milestoneid").withCaption(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE))
                 .withField(milestoneComboBox).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
-                .withValue(task.getMilestoneid()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+                .withValue(task.getMilestoneid()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -196,7 +196,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                 .withCaption(UserUIContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE)).withField(new TaskSliderField())
                 .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE))
                 .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPercentagecomplete())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -220,7 +220,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         builder.withBean(task).withBindProperty("duedate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
                 .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
                 .withValue(task.getDuedate()).withHasPermission(CurrentProjectVariables.canWrite
-                (ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+                (ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -244,7 +244,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         builder.withBean(task).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
                 .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService
                 .class)).withValue(task.getStartdate())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -268,7 +268,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         builder.withBean(task).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
                 .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService
                 .class)).withValue(task.getEnddate())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -313,8 +313,8 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         protected void doShow() {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
-            watchersMultiSelection = new WatchersMultiSelection(ProjectTypeConstants.INSTANCE.getTASK(), task.getId(),
-                    CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+            watchersMultiSelection = new WatchersMultiSelection(ProjectTypeConstants.TASK, task.getId(),
+                    CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             layout.with(new ELabel(UserUIContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS))
                     .withStyleName(ValoTheme.LABEL_H3), watchersMultiSelection);
         }
@@ -327,7 +327,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             monitorItemService.saveMonitorItems(items);
 
             MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
-            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getTASK()));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
             searchCriteria.setTypeId(new NumberSearchField(task.getId()));
             int numFollowers = monitorItemService.getTotalCount(searchCriteria);
             this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + numFollowers);
@@ -345,7 +345,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
 
         @Override
         protected void doShow() {
-            CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.INSTANCE.getTASK(), CurrentProjectVariables.getProjectId());
+            CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.TASK, CurrentProjectVariables.getProjectId());
             MVerticalLayout layout = getWrapContent().withStyleName(WebThemes.SCROLLABLE_CONTAINER);
             layout.removeAllComponents();
             layout.with(commentDisplay);
@@ -355,7 +355,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         @Override
         protected void doHide() {
             CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
-            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getTASK()));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
             searchCriteria.setTypeId(StringSearchField.and(task.getId() + ""));
             CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentCount = commentService.getTotalCount(searchCriteria);
@@ -389,7 +389,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         protected void doShow() {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
-            if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+            if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.TASKS)) {
                 timeInput.setValue("");
                 timeInput.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TIME_FORMAT));
                 String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
@@ -420,7 +420,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                     timeLogging.setLogforday(date);
                     timeLogging.setLogvalue(hours);
                     timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
-                    timeLogging.setType(ProjectTypeConstants.INSTANCE.getTASK());
+                    timeLogging.setType(ProjectTypeConstants.TASK);
                     timeLogging.setTypeid(task.getId());
                     timeLogging.setSaccountid(AppUI.getAccountId());
                     timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
@@ -430,7 +430,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                     ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
                     searchCriteria.setIsBillable(new BooleanSearchField(isBillable));
                     searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                    searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getTASK()));
+                    searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
                     searchCriteria.setTypeId(new NumberSearchField(task.getId()));
                     Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
                     if (isBillable) {

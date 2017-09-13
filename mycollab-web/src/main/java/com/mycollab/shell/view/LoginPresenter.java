@@ -7,7 +7,7 @@ import com.mycollab.module.user.events.UserEvent.PlainLogin;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.PageView.ViewListener;
 import com.mycollab.vaadin.mvp.ScreenData;
-import com.mycollab.vaadin.mvp.ViewEvent;
+import com.mycollab.vaadin.events.ViewEvent;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.mycollab.web.DesktopApplication;
 import com.vaadin.ui.HasComponents;

@@ -99,7 +99,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             approveNCloseBtn.setWidth("100%");
             bugWorkFlowControl.addComponent(approveNCloseBtn);
         }
-        bugWorkFlowControl.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+        bugWorkFlowControl.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
     }
 
     @Override
@@ -113,7 +113,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
         ResourceService resourceService = AppContextUtil.getSpringBean(ResourceService.class);
         List<Content> attachments = resourceService.getContents(AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(),
-                beanItem.getProjectid(), ProjectTypeConstants.INSTANCE.getBUG(), "" + beanItem.getId()));
+                beanItem.getProjectid(), ProjectTypeConstants.BUG, "" + beanItem.getId()));
         if (CollectionUtils.isNotEmpty(attachments)) {
             attachmentComp = new ProjectAttachmentDisplayComp(attachments);
             previewForm.addComponent(attachmentComp);
@@ -132,7 +132,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         } else if (beanItem.isOverdue()) {
             beanTitle.setCSSClass(MobileUIConstants.LINK_OVERDUE);
         }
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()).getHtml() + " " + beanTitle.write();
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + " " + beanTitle.write();
     }
 
     @Override
@@ -143,7 +143,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.INSTANCE.getBUG(), BugDefaultFormLayoutFactory.getForm(), BugWithBLOBs.Field.name.name());
+        return new DynaFormLayout(ProjectTypeConstants.BUG, BugDefaultFormLayoutFactory.getForm(), BugWithBLOBs.Field.name.name());
     }
 
     @Override
@@ -157,10 +157,10 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         bugWorkFlowControl = new MVerticalLayout().withMargin(false).withFullWidth();
         formControlsGenerator.insertToControlBlock(bugWorkFlowControl);
         VerticalLayout formControls = formControlsGenerator.createButtonControls(ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
-                | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED, ProjectRolePermissionCollections.INSTANCE.getBUGS());
+                | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED, ProjectRolePermissionCollections.BUGS);
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoEdit(this,
                 beanItem))).withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(formControls));
     }
 
@@ -173,7 +173,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             toolbarLayout.addComponent(bugTimeLogComp);
         }
 
-        relatedComments = new CommentNavigationButton(ProjectTypeConstants.INSTANCE.getBUG(), beanItem.getId() + "");
+        relatedComments = new CommentNavigationButton(ProjectTypeConstants.BUG, beanItem.getId() + "");
         Component section = FormSectionBuilder.build(FontAwesome.COMMENT, relatedComments);
         toolbarLayout.addComponent(section);
         return toolbarLayout;
@@ -181,7 +181,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     @Override
     protected String getType() {
-        return ProjectTypeConstants.INSTANCE.getBUG();
+        return ProjectTypeConstants.BUG;
     }
 
     @Override
@@ -214,7 +214,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 if (beanItem.getMilestoneid() != null) {
                     A milestoneLink = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink
                             (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
-                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), milestoneLink);
+                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
                 } else {
                     return new DefaultViewField("", ContentMode.HTML);

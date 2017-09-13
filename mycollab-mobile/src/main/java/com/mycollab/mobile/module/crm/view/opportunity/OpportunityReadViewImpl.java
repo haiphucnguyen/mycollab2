@@ -79,7 +79,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getOPPORTUNITY(), OpportunityDefaultDynaFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.OPPORTUNITY, OpportunityDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -99,10 +99,10 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
     protected ComponentContainer createButtonControls() {
         VerticalLayout buttonControls = new CrmPreviewFormControlsGenerator<>(previewForm).
                 createButtonControls(CLONE_BTN_PRESENTED | DELETE_BTN_PRESENTED,
-                        RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY());
+                        RolePermissionCollections.CRM_OPPORTUNITY);
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new OpportunityEvent.GotoEdit(this, beanItem)))
                 .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY()));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(buttonControls));
     }
 
@@ -110,15 +110,15 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withFullWidth().withSpacing(false).withMargin(false);
 
-        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()),
+        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT),
                 associateContacts);
         toolbarLayout.addComponent(contactSection);
 
-        Component leadSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()),
+        Component leadSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
                 associateLeads);
         toolbarLayout.addComponent(leadSection);
 
-        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()),
+        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY),
                 associateActivities);
         toolbarLayout.addComponent(activitySection);
 
@@ -127,6 +127,6 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getOPPORTUNITY();
+        return CrmTypeConstants.OPPORTUNITY;
     }
 }

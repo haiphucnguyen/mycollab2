@@ -25,7 +25,7 @@ public class SetSearchField<T> extends SearchField {
             CollectionUtils.addAll(values, vals);
         }
 
-        this.setOperation(Companion.getAND());
+        this.setOperation(SearchField.AND);
     }
 
     public SetSearchField(String oper, Collection<T> vals) {
@@ -37,7 +37,7 @@ public class SetSearchField<T> extends SearchField {
         if (CollectionUtils.isNotEmpty(items)) {
             values.addAll(items);
         }
-        this.setOperation(Companion.getAND());
+        this.setOperation(SearchField.AND);
     }
 
     public Set<T> getValues() {

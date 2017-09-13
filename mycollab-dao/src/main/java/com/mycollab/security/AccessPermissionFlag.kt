@@ -8,9 +8,16 @@ package com.mycollab.security
  */
 class AccessPermissionFlag : PermissionFlag() {
     companion object {
+        @JvmField
         val NO_ACCESS = 0
+
+        @JvmField
         val READ_ONLY = 1
+
+        @JvmField
         val READ_WRITE = 2
+
+        @JvmField
         val ACCESS = 4
 
         /**

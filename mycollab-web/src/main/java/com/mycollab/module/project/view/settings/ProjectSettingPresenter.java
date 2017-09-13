@@ -35,7 +35,7 @@ public class ProjectSettingPresenter extends AbstractPresenter<ProjectSettingVie
                 .findNotification(UserUIContext.getUsername(), CurrentProjectVariables.getProjectId(),
                         AppUI.getAccountId());
 
-        ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+        ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
         breadCrumb.gotoProjectSetting();
         view.showNotificationSettings(notification);
     }

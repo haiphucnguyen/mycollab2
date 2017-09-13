@@ -40,7 +40,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
 
     public VersionReadViewImpl() {
         super(UserUIContext.getMessage(VersionI18nEnum.DETAIL),
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG_VERSION()));
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
 
     @Override
     protected void initRelatedComponents() {
-        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getBUG_VERSION(),
+        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_VERSION,
                 CurrentProjectVariables.getProjectId());
 
         dateInfoComp = new DateInfoComp();
@@ -68,7 +68,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
         dateInfoComp.displayEntryDateTime(beanItem);
 
         if (tagViewComponent != null) {
-            tagViewComponent.display(ProjectTypeConstants.INSTANCE.getBUG_VERSION(), beanItem.getId());
+            tagViewComponent.display(ProjectTypeConstants.BUG_VERSION, beanItem.getId());
         }
 
         if (versionTimeLogComp != null) {
@@ -91,7 +91,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
         if (SiteConfiguration.isCommunityEdition()) {
             return null;
         } else {
-            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getVERSIONS()));
+            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
             return tagViewComponent;
         }
     }
@@ -109,7 +109,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
     @Override
     protected HorizontalLayout createButtonControls() {
         ProjectPreviewFormControlsGenerator<Version> versionPreviewForm = new ProjectPreviewFormControlsGenerator<>(previewForm);
-        HorizontalLayout topPanel = versionPreviewForm.createButtonControls(ProjectRolePermissionCollections.INSTANCE.getVERSIONS());
+        HorizontalLayout topPanel = versionPreviewForm.createButtonControls(ProjectRolePermissionCollections.VERSIONS);
 
         quickActionStatusBtn = new MButton("", clickEvent -> {
             if (StatusI18nEnum.Closed.name().equals(beanItem.getStatus())) {
@@ -127,7 +127,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
             VersionService service = AppContextUtil.getSpringBean(VersionService.class);
             service.updateSelectiveWithSession(beanItem, UserUIContext.getUsername());
         }).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getVERSIONS()));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
         versionPreviewForm.insertToControlBlock(quickActionStatusBtn);
         return topPanel;
     }
@@ -144,7 +144,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
 
     @Override
     protected String getType() {
-        return ProjectTypeConstants.INSTANCE.getBUG_VERSION();
+        return ProjectTypeConstants.BUG_VERSION;
     }
 
 }

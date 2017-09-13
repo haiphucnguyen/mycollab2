@@ -68,7 +68,7 @@ public class VersionListPresenter extends ProjectGenericListPresenter<VersionLis
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getVERSIONS())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.VERSIONS)) {
             VersionContainer versionContainer = (VersionContainer) container;
             versionContainer.removeAllComponents();
             versionContainer.addComponent(view);
@@ -82,7 +82,7 @@ public class VersionListPresenter extends ProjectGenericListPresenter<VersionLis
                 view.showNoItemView();
             }
 
-            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
             breadcrumb.gotoVersionList();
         } else {
             NotificationUtil.showMessagePermissionAlert();

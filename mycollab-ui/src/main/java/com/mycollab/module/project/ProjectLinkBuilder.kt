@@ -59,7 +59,7 @@ object ProjectLinkBuilder {
 
     fun generateProjectMemberHtmlLink(projectId: Int, username: String, isDisplayTooltip: Boolean?): String? {
         val projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService::class.java)
-        val member = projectMemberService.findMemberByUsername(username, projectId, AppUI.getAccountId())
+        val member = projectMemberService.findMemberByUsername(username, projectId, AppUI.accountId)
         return if (member != null) {
             generateProjectMemberHtmlLink(projectId, member.username, member.displayName, member
                     .memberAvatarId, isDisplayTooltip)
@@ -103,7 +103,7 @@ object ProjectLinkBuilder {
     }
 
     fun generateHoursWeeklyReportLink(): String {
-        return AppUI.getSiteUrl() + URL_PREFIX_PARAM + ProjectLinkGenerator
+        return AppUI.siteUrl + URL_PREFIX_PARAM + ProjectLinkGenerator
                 .generateHoursWeeklyReportLink()
     }
 

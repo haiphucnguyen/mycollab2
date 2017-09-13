@@ -45,7 +45,7 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
     private CrmFollowersComp<SimpleLead> compFollowers;
 
     public LeadReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()));
+        super(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
     }
 
     @Override
@@ -58,14 +58,14 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
         CrmPreviewFormControlsGenerator<SimpleLead> controlsButton = new CrmPreviewFormControlsGenerator<>(
                 previewForm);
 
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_LEAD)) {
             MButton convertButton = new MButton(UserUIContext.getMessage(LeadI18nEnum.BUTTON_CONVERT_LEAD),
                     clickEvent -> previewForm.fireExtraAction("convert", beanItem))
                     .withIcon(FontAwesome.FLASK).withStyleName(WebThemes.BUTTON_ACTION);
             controlsButton.insertToControlBlock(convertButton);
         }
 
-        return controlsButton.createButtonControls(RolePermissionCollections.INSTANCE.getCRM_LEAD());
+        return controlsButton.createButtonControls(RolePermissionCollections.CRM_LEAD);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
         peopleInfoComp.displayEntryPeople(beanItem);
         compFollowers.displayFollowers(beanItem);
 
-        tabSheet.selectTab(CrmTypeConstants.INSTANCE.getDETAIL());
+        tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 
     @Override
@@ -93,27 +93,27 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
 
     @Override
     protected void initRelatedComponents() {
-        activityComponent = new CrmActivityComponent(CrmTypeConstants.INSTANCE.getLEAD());
+        activityComponent = new CrmActivityComponent(CrmTypeConstants.LEAD);
 
         associateCampaignList = new LeadCampaignListComp();
         associateActivityList = new ActivityRelatedItemListComp(true);
 
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        compFollowers = new CrmFollowersComp<>(CrmTypeConstants.INSTANCE.getLEAD(), RolePermissionCollections.INSTANCE.getCRM_LEAD());
+        compFollowers = new CrmFollowersComp<>(CrmTypeConstants.LEAD, RolePermissionCollections.CRM_LEAD);
         addToSideBar(dateInfoComp, peopleInfoComp, compFollowers);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.INSTANCE.getDETAIL(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getDETAIL()));
-        tabSheet.addTab(associateCampaignList, CrmTypeConstants.INSTANCE.getCAMPAIGN(), UserUIContext.getMessage(CampaignI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN()));
-        tabSheet.addTab(associateActivityList, CrmTypeConstants.INSTANCE.getACTIVITY(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()));
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+        tabSheet.addTab(associateCampaignList, CrmTypeConstants.CAMPAIGN, UserUIContext.getMessage(CampaignI18nEnum.LIST),
+                CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
+        tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
+                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
     }
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getLEAD(), LeadDefaultDynaFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.LEAD, LeadDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -128,7 +128,7 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
     private void displayActivities() {
         ActivitySearchCriteria criteria = new ActivitySearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-        criteria.setType(StringSearchField.and(CrmTypeConstants.INSTANCE.getLEAD()));
+        criteria.setType(StringSearchField.and(CrmTypeConstants.LEAD));
         criteria.setTypeid(new NumberSearchField(beanItem.getId()));
         associateActivityList.setSearchCriteria(criteria);
     }
@@ -155,6 +155,6 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getLEAD();
+        return CrmTypeConstants.LEAD;
     }
 }

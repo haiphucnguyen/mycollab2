@@ -16,7 +16,7 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd
  * @since 5.1.0
  */
-@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_THEME(), impliedPermissionVal = BooleanPermissionFlag.Companion.getTRUE())
+@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_THEME, impliedPermissionVal = BooleanPermissionFlag.TRUE)
 public class GeneralSettingPresenter extends AbstractPresenter<GeneralSettingView> {
     public GeneralSettingPresenter() {
         super(GeneralSettingView.class);
@@ -28,7 +28,7 @@ public class GeneralSettingPresenter extends AbstractPresenter<GeneralSettingVie
             AccountSettingContainer customizeContainer = (AccountSettingContainer) container;
             customizeContainer.gotoSubView(UserUIContext.getMessage(AdminI18nEnum.OPT_GENERAL_SETTINGS));
             view.displayView();
-            AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
+            AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
             breadcrumb.gotoGeneralSetting();
         } else {
             NotificationUtil.showMessagePermissionAlert();

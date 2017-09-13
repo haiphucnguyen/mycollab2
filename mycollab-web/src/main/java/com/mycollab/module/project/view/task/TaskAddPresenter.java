@@ -70,13 +70,13 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             TicketContainer ticketContainer = (TicketContainer) container;
-            ticketContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getTASK());
+            ticketContainer.navigateToContainer(ProjectTypeConstants.TASK);
             ticketContainer.setContent(view);
             SimpleTask task = (SimpleTask) data.getParams();
 
-            ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
             if (task.getId() == null) {
                 breadCrumb.gotoTaskAdd();
             } else {
@@ -114,7 +114,7 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
                     MonitorItem monitorItem = new MonitorItem();
                     monitorItem.setMonitorDate(new GregorianCalendar().getTime());
                     monitorItem.setSaccountid(AppUI.getAccountId());
-                    monitorItem.setType(ProjectTypeConstants.INSTANCE.getTASK());
+                    monitorItem.setType(ProjectTypeConstants.TASK);
                     monitorItem.setTypeid(taskId);
                     monitorItem.setUser(follower);
                     monitorItem.setExtratypeid(CurrentProjectVariables.getProjectId());
@@ -128,7 +128,7 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
         }
         AttachmentUploadField uploadField = view.getAttachUploadField();
         String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), item.getProjectid(),
-                ProjectTypeConstants.INSTANCE.getTASK(), "" + item.getId());
+                ProjectTypeConstants.TASK, "" + item.getId());
         uploadField.saveContentsToRepo(attachPath);
         return item.getId();
     }

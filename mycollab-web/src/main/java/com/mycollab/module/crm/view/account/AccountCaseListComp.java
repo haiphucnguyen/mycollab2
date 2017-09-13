@@ -48,8 +48,8 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
 
     static {
         Map<String, String> tmpMap = new HashMap<>();
-        for (int i = 0; i < CrmDataTypeFactory.getCasesStatusList().length; i++) {
-            String roleKeyName = CrmDataTypeFactory.getCasesStatusList()[i].name();
+        for (int i = 0; i < CrmDataTypeFactory.casesStatusList.length; i++) {
+            String roleKeyName = CrmDataTypeFactory.casesStatusList[i].name();
             if (!tmpMap.containsKey(roleKeyName)) {
                 tmpMap.put(roleKeyName, AbstractBeanBlockList.COLOR_STYLENAME_LIST[i]);
             }
@@ -73,7 +73,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
         notesWrap.addComponent(noteLbl);
 
         MCssLayout noteBlock = new MCssLayout().withFullWidth().withStyleName("list-note-block");
-        for (CaseStatus status : CrmDataTypeFactory.getCasesStatusList()) {
+        for (CaseStatus status : CrmDataTypeFactory.casesStatusList) {
             ELabel note = new ELabel(UserUIContext.getMessage(status)).withStyleName("note-label", colorsMap.get(status
                     .name())).withWidthUndefined();
             noteBlock.addComponent(note);
@@ -81,7 +81,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
         notesWrap.with(noteBlock).expand(noteBlock);
         controlsBtnWrap.with(notesWrap).expand(notesWrap);
 
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CASE())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CASE)) {
             MButton createBtn = new MButton(UserUIContext.getMessage(CaseI18nEnum.NEW), clickEvent -> fireNewRelatedItem(""))
                     .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
             controlsBtnWrap.with(createBtn).withAlign(createBtn, Alignment.TOP_RIGHT);
@@ -116,7 +116,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
             MHorizontalLayout blockTop = new MHorizontalLayout();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel caseIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCASE()));
+            ELabel caseIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CASE));
             iconWrap.addComponent(caseIcon);
             blockTop.addComponent(iconWrap);
 
@@ -125,7 +125,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
 
             MButton deleteBtn = new MButton("", clickEvent ->
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -159,7 +159,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
 
             String assigneeValue = (oneCase.getAssignuser() == null) ? new Span().appendText(UserUIContext.getMessage
                     (GenericI18Enum.OPT_UNDEFINED)).write() : new A(AccountLinkGenerator.generatePreviewFullUserLink(
-                    AppUI.getSiteUrl(), oneCase.getAssignuser()))
+                    AppUI.Companion.getSiteUrl(), oneCase.getAssignuser()))
                     .appendText(oneCase.getAssignUserFullName()).write();
             Label caseAssignUser = ELabel.html(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + ": " + assigneeValue);
             caseInfo.addComponent(caseAssignUser);

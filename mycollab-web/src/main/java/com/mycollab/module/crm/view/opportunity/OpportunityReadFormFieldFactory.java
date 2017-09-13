@@ -38,11 +38,11 @@ public class OpportunityReadFormFieldFactory extends AbstractBeanFieldGroupViewF
         if (propertyId.equals("accountid")) {
             field = new LinkViewField(opportunity.getAccountName(),
                     CrmLinkBuilder.INSTANCE.generateAccountPreviewLinkFull(opportunity.getAccountid()),
-                    CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()));
+                    CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
         } else if (propertyId.equals("campaignid")) {
             field = new LinkViewField(opportunity.getCampaignName(),
                     CrmLinkBuilder.INSTANCE.generateCampaignPreviewLinkFull(opportunity.getCampaignid()),
-                    CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN()));
+                    CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
         } else if (propertyId.equals("assignuser")) {
             field = new UserLinkViewField(opportunity.getAssignuser(), opportunity.getAssignUserAvatarId(),
                     opportunity.getAssignUserFullName());

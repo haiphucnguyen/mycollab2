@@ -54,7 +54,7 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_MEETING())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_MEETING)) {
             MeetingWithBLOBs meeting = null;
             if (data.getParams() instanceof MeetingWithBLOBs) {
                 meeting = (MeetingWithBLOBs) data.getParams();

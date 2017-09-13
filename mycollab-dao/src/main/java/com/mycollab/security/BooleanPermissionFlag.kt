@@ -10,8 +10,9 @@ import com.mycollab.common.i18n.SecurityI18nEnum
  */
 class BooleanPermissionFlag : PermissionFlag() {
     companion object {
-        val TRUE = 128
-        val FALSE = 129
+        @JvmField val TRUE = 128
+
+        @JvmField val FALSE = 129
 
         /**
          * Check whether `flag` is true permission

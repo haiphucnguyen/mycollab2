@@ -31,7 +31,7 @@ public class LeadAddViewImpl extends AbstractEditItemComp<SimpleLead> implements
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD());
+        return CrmAssetsManager.getAsset(CrmTypeConstants.LEAD);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class LeadAddViewImpl extends AbstractEditItemComp<SimpleLead> implements
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getLEAD(), LeadDefaultDynaFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.LEAD, LeadDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override

@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class TimeTrackingDateOrderComponent extends AbstractTimeTrackingDisplayComp {
     private static final long serialVersionUID = 1L;
-    private DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getLongDateFormat()).withLocale
+    private DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.Companion.getLongDateFormat()).withLocale
             (UserUIContext.getUserLocale());
 
     public TimeTrackingDateOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {

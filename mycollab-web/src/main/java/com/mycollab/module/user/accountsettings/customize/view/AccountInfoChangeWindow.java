@@ -43,7 +43,7 @@ class AccountInfoChangeWindow extends MWindow {
         MVerticalLayout content = new MVerticalLayout();
         this.withModal(true).withResizable(false).withWidth("700px").withContent(content).withCenter();
 
-        billingAccount = BeanUtility.deepClone(AppUI.getBillingAccount());
+        billingAccount = BeanUtility.deepClone(AppUI.Companion.getBillingAccount());
         editForm = new AdvancedEditBeanForm<>();
         editForm.setFormLayoutFactory(new AbstractFormLayoutFactory() {
             private GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 9, "200px");
@@ -113,7 +113,7 @@ class AccountInfoChangeWindow extends MWindow {
                 BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
                 billingAccountService.updateSelectiveWithSession(billingAccount, UserUIContext.getUsername());
                 close();
-                String siteUrl = AppUI.getSiteUrl();
+                String siteUrl = AppUI.Companion.getSiteUrl();
                 String assignExec = String.format("window.location.assign(\'%s\');", siteUrl);
                 Page.getCurrent().getJavaScript().execute(assignExec);
             }

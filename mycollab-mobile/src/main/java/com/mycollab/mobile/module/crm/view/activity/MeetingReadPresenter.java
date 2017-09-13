@@ -73,7 +73,7 @@ public class MeetingReadPresenter extends AbstractCrmPresenter<MeetingReadView> 
                 MeetingService accountService = AppContextUtil.getSpringBean(MeetingService.class);
                 MeetingSearchCriteria criteria = new MeetingSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = accountService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ActivityEvent.MeetingRead(this, nextId));
@@ -88,7 +88,7 @@ public class MeetingReadPresenter extends AbstractCrmPresenter<MeetingReadView> 
                 MeetingService accountService = AppContextUtil.getSpringBean(MeetingService.class);
                 MeetingSearchCriteria criteria = new MeetingSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = accountService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ActivityEvent.MeetingRead(this, nextId));
@@ -101,7 +101,7 @@ public class MeetingReadPresenter extends AbstractCrmPresenter<MeetingReadView> 
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_MEETING())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_MEETING)) {
 
             SimpleMeeting meeting;
             if (data.getParams() instanceof Integer) {

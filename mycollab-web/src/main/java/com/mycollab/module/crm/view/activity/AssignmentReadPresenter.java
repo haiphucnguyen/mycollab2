@@ -50,7 +50,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
             @Override
             public void onDelete(final SimpleCrmTask data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -81,7 +81,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                 CrmTaskSearchCriteria criteria = new CrmTaskSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = taskService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskRead(this, nextId));
@@ -96,7 +96,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                 CrmTaskSearchCriteria criteria = new CrmTaskSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = taskService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskRead(this, nextId));
@@ -109,7 +109,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_TASK())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_TASK)) {
             SimpleCrmTask task;
             if (data.getParams() instanceof Integer) {
                 TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);

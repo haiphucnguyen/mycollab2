@@ -59,7 +59,7 @@ public class RiskReadPresenter extends AbstractProjectPresenter<RiskReadView> {
 
     @Override
     protected void onGo(final HasComponents container, final ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.RISKS)) {
             if (data.getParams() instanceof Integer) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 SimpleRisk risk = riskService.findById((Integer) data.getParams(), AppUI.getAccountId());

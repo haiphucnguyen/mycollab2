@@ -11,6 +11,6 @@ import java.util.Arrays;
  */
 public class CampaignStatusComboBox extends I18nValueComboBox {
     public CampaignStatusComboBox() {
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getCampaignStatusList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.campaignStatusList));
     }
 }

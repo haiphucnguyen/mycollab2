@@ -27,7 +27,7 @@ public class FinancePresenter extends AbstractPresenter<IFinanceContainer> imple
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
-        projectViewContainer.gotoSubView(ProjectTypeConstants.INSTANCE.getFINANCE());
+        projectViewContainer.gotoSubView(ProjectTypeConstants.FINANCE);
         AbstractPresenter presenter;
 
         if (data instanceof TimeTrackingScreenData.Search) {
@@ -37,9 +37,9 @@ public class FinancePresenter extends AbstractPresenter<IFinanceContainer> imple
             presenter = PresenterResolver.getPresenter(InvoicePresenter.class);
             presenter.go(view, data);
         } else {
-            if (CurrentProjectVariables.hasTimeFeature()) {
+            if (CurrentProjectVariables.INSTANCE.hasTimeFeature()) {
                 view.showTimeView();
-            } else if (CurrentProjectVariables.hasInvoiceFeature()) {
+            } else if (CurrentProjectVariables.INSTANCE.hasInvoiceFeature()) {
                 view.showInvoiceView();
             } else {
                 throw new MyCollabException("Not support screen data type null");

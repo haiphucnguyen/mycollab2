@@ -1,10 +1,10 @@
 package com.mycollab.db.persistence.service
 
-import com.mycollab.db.arguments.SearchCriteria
-import com.mycollab.db.arguments.BasicSearchRequest
 import com.mycollab.core.cache.CacheEvict
 import com.mycollab.core.cache.CacheKey
 import com.mycollab.core.cache.Cacheable
+import com.mycollab.db.arguments.BasicSearchRequest
+import com.mycollab.db.arguments.SearchCriteria
 
 /**
  * @param <S>

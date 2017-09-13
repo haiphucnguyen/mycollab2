@@ -32,12 +32,12 @@ public class CalendarPresenter extends AbstractPresenter<CalendarView> implement
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canReadAssignments()) {
+        if (CurrentProjectVariables.INSTANCE.canReadAssignments()) {
             ProjectDashboardContainer projectDashboardContainer = (ProjectDashboardContainer) container;
             projectDashboardContainer.setContent(view);
             view.lazyLoadView();
 
-            ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoCalendar();
         } else {
             NotificationUtil.showMessagePermissionAlert();

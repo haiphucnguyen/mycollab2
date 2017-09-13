@@ -65,10 +65,10 @@ public class ActivityListPresenter extends CrmGenericListPresenter<ActivityListV
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getACTIVITY());
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_MEETING())
-                || UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_TASK())
-                || UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CALL())) {
+        CrmModule.navigateItem(CrmTypeConstants.ACTIVITY);
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_MEETING)
+                || UserUIContext.canRead(RolePermissionCollections.CRM_TASK)
+                || UserUIContext.canRead(RolePermissionCollections.CRM_CALL)) {
             searchCriteria = (ActivitySearchCriteria) data.getParams();
             this.displayListView(container, data);
             doSearch(searchCriteria);
@@ -88,11 +88,11 @@ public class ActivityListPresenter extends CrmGenericListPresenter<ActivityListV
         if (!isSelectAll) {
             for (SimpleActivity item : currentDataList) {
                 if (item.isSelected()) {
-                    if (CrmTypeConstants.INSTANCE.getCALL().equals(item.getEventType())) {
+                    if (CrmTypeConstants.CALL.equals(item.getEventType())) {
                         keyListCall.add(item.getId());
-                    } else if (CrmTypeConstants.INSTANCE.getMEETING().equals(item.getEventType())) {
+                    } else if (CrmTypeConstants.MEETING.equals(item.getEventType())) {
                         keyListMeeting.add(item.getId());
-                    } else if (CrmTypeConstants.INSTANCE.getTASK()
+                    } else if (CrmTypeConstants.TASK
                             .equals(item.getEventType())) {
                         keyListTask.add(item.getId());
                     }
@@ -100,11 +100,11 @@ public class ActivityListPresenter extends CrmGenericListPresenter<ActivityListV
             }
         } else {
             for (SimpleActivity item : currentDataList) {
-                if ((CrmTypeConstants.INSTANCE.getCALL().equals(item.getEventType()))) {
+                if ((CrmTypeConstants.CALL.equals(item.getEventType()))) {
                     keyListCall.add(item.getId());
-                } else if (CrmTypeConstants.INSTANCE.getMEETING().equals(item.getEventType())) {
+                } else if (CrmTypeConstants.MEETING.equals(item.getEventType())) {
                     keyListMeeting.add(item.getId());
-                } else if (CrmTypeConstants.INSTANCE.getTASK().equals(item.getEventType())) {
+                } else if (CrmTypeConstants.TASK.equals(item.getEventType())) {
                     keyListTask.add(item.getId());
                 }
             }

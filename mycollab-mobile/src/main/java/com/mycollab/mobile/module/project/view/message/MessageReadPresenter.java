@@ -29,7 +29,7 @@ public class MessageReadPresenter extends AbstractProjectPresenter<MessageReadVi
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getMESSAGES())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.MESSAGES)) {
             if (data.getParams() instanceof Integer) {
                 MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
                 SimpleMessage message = messageService.findById((Integer) data.getParams(), AppUI.getAccountId());

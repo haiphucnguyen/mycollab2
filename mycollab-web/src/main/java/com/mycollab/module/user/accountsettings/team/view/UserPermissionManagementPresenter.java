@@ -25,7 +25,7 @@ public class UserPermissionManagementPresenter extends AbstractPresenter<UserPer
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         AccountModule accountModule = (AccountModule) container;
-        accountModule.gotoSubView(SettingUIConstants.USERS);
+        accountModule.gotoSubView(SettingUIConstants.INSTANCE.getUSERS());
 
         AbstractPresenter<?> presenter;
         if ((data == null) || (data instanceof UserScreenData.Read)

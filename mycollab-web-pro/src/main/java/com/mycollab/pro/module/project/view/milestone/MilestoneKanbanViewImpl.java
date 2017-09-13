@@ -98,7 +98,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         @Override
         @Subscribe
         public void handle(TicketEvent.NewTicketAdded event) {
-            if (!ProjectTypeConstants.INSTANCE.getMILESTONE().equals(event.getTypeVal())) {
+            if (!ProjectTypeConstants.MILESTONE.equals(event.getTypeVal())) {
                 ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
                 ProjectTicket ticket = projectTicketService.findTicket(event.getTypeVal(), event.getTypeIdVal());
                 if (ticket != null) {
@@ -118,7 +118,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         searchPanel = new AssignmentSearchPanel(false) {
             @Override
             protected ComponentContainer buildSearchTitle() {
-                return new MHorizontalLayout(ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml() +
+                return new MHorizontalLayout(ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() +
                         " " + UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)).withWidthUndefined());
             }
         };
@@ -229,7 +229,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
     private void queryTickets(ProjectTicketSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
-        baseCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
+        baseCriteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
         kanbanLayout.removeAllComponents();
         toggleShowButton();
         kanbanBlocks = new ConcurrentHashMap<>();
@@ -398,15 +398,15 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             } else {
                 header = new ELabel(milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS)
                         .withDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipMilestone(UserUIContext.getUserLocale(),
-                                AppUI.getDateFormat(), milestone, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
+                                AppUI.Companion.getDateFormat(), milestone, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
                 headerLayout.with(ELabel.fontIcon(ProjectAssetsManager.getMilestoneStatus(milestone.getStatus())), header).expand(header);
             }
 
             final PopupButton controlsBtn = new PopupButton();
             controlsBtn.addStyleName(WebThemes.BUTTON_LINK);
 
-            boolean canWrite = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES());
-            boolean canExecute = CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getMILESTONES());
+            boolean canWrite = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES);
+            boolean canExecute = CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.MILESTONES);
             OptionPopupContent popupContent = new OptionPopupContent();
 
             if (canWrite) {
@@ -438,7 +438,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                     controlsBtn.setPopupVisible(false);
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

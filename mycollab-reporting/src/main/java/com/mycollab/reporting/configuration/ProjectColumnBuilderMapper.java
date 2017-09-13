@@ -194,7 +194,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer typeId = reportParameters.getFieldValue("typeId");
                 String projectShortName = reportParameters.getFieldValue("projectShortName");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                if (ProjectTypeConstants.INSTANCE.getBUG().equals(type) || ProjectTypeConstants.INSTANCE.getTASK().equals(type)) {
+                if (ProjectTypeConstants.BUG.equals(type) || ProjectTypeConstants.TASK.equals(type)) {
                     return siteUrl + ProjectLinkGenerator.INSTANCE.generateProjectItemLink(projectShortName, projectId, type, extraTypeId + "");
                 } else {
                     return siteUrl + ProjectLinkGenerator.INSTANCE.generateProjectItemLink(projectShortName, projectId, type, typeId + "");
@@ -680,11 +680,11 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
 
                 if (type == null) {
                     return "";
-                } else if (type.equals(ProjectTypeConstants.INSTANCE.getBUG())) {
+                } else if (type.equals(ProjectTypeConstants.BUG)) {
                     return ProjectLinkGenerator.INSTANCE.generateBugPreviewFullLink(siteUrl, typeId, projectShortName);
-                } else if (type.equals(ProjectTypeConstants.INSTANCE.getTASK())) {
+                } else if (type.equals(ProjectTypeConstants.TASK)) {
                     return ProjectLinkGenerator.INSTANCE.generateTaskPreviewFullLink(siteUrl, typeId, projectShortName);
-                } else if (type.equals(ProjectTypeConstants.INSTANCE.getRISK())) {
+                } else if (type.equals(ProjectTypeConstants.RISK)) {
                     return ProjectLinkGenerator.INSTANCE.generateRiskPreviewFullLink(siteUrl, projectId, typeId);
                 }
                 return type;
@@ -715,9 +715,9 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
 
                 if (type == null) {
                     return "";
-                } else if (type.equals(ProjectTypeConstants.INSTANCE.getBUG())) {
+                } else if (type.equals(ProjectTypeConstants.BUG)) {
                     return ProjectLinkGenerator.INSTANCE.generateBugPreviewFullLink(siteUrl, typeId, projectShortName);
-                } else if (type.equals(ProjectTypeConstants.INSTANCE.getTASK())) {
+                } else if (type.equals(ProjectTypeConstants.TASK)) {
                     return ProjectLinkGenerator.INSTANCE.generateTaskPreviewFullLink(siteUrl, typeId, projectShortName);
                 }
                 return type;

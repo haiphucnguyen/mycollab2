@@ -2,6 +2,7 @@ package com.mycollab.module.project.view.bug;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.NumberSearchField;
+import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SearchField;
 import com.mycollab.db.query.ConstantValueInjector;
 import com.mycollab.db.query.Param;
@@ -68,14 +69,14 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
             savedFilterComboBox.addQuerySelectListener(new SavedFilterComboBox.QuerySelectListener() {
                 @Override
                 public void querySelect(SavedFilterComboBox.QuerySelectEvent querySelectEvent) {
-                    List<SearchFieldInfo> fieldInfos = querySelectEvent.getSearchFieldInfos();
+                    List<SearchFieldInfo<? extends SearchCriteria>> fieldInfos = querySelectEvent.getSearchFieldInfos();
                     BugSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(BugSearchCriteria.class, fieldInfos);
                     criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                     EventBusFactory.getInstance().post(new BugEvent.SearchRequest(BugSearchPanel.this, criteria));
                     EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, fieldInfos));
                 }
             });
-            ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()).getHtml()).withWidthUndefined();
+            ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml()).withWidthUndefined();
             return new MHorizontalLayout(taskIcon, savedFilterComboBox).expand(savedFilterComboBox).alignAll(Alignment.MIDDLE_LEFT);
         } else {
             return null;
@@ -150,11 +151,11 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
 
         @Override
         protected BugSearchCriteria fillUpSearchCriteria() {
-            List<SearchFieldInfo> searchFieldInfos = new ArrayList<>();
-            searchFieldInfos.add(new SearchFieldInfo(SearchField.Companion.getAND(), BugSearchCriteria.p_textDesc, StringI18nEnum.CONTAINS.name(),
+            List<SearchFieldInfo<? extends SearchCriteria>> searchFieldInfos = new ArrayList<>();
+            searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, BugSearchCriteria.p_textDesc, StringI18nEnum.CONTAINS.name(),
                     ConstantValueInjector.valueOf(nameField.getValue().trim())));
             if (myItemCheckbox.getValue()) {
-                searchFieldInfos.add(new SearchFieldInfo(SearchField.Companion.getAND(), BugSearchCriteria.p_assignee, CollectionI18nEnum.IN.name(),
+                searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, BugSearchCriteria.p_assignee, CollectionI18nEnum.IN.name(),
                         ConstantValueInjector.valueOf(Collections.singletonList(UserUIContext.getUsername()))));
             }
             EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, searchFieldInfos));
@@ -169,7 +170,7 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
         private static final long serialVersionUID = 1L;
 
         BugAdvancedSearchLayout() {
-            super(BugSearchPanel.this, ProjectTypeConstants.INSTANCE.getBUG());
+            super(BugSearchPanel.this, ProjectTypeConstants.BUG);
         }
 
         @Override

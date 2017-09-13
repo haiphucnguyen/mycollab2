@@ -44,23 +44,23 @@ public class SearchFieldInfo<S extends SearchCriteria> implements Serializable {
     }
 
     public static SearchFieldInfo inCollection(PropertyListParam param, VariableInjector value) {
-        return new SearchFieldInfo(SearchField.Companion.getAND(), param, CollectionI18nEnum.IN.name(), value);
+        return new SearchFieldInfo(SearchField.AND, param, CollectionI18nEnum.IN.name(), value);
     }
 
     public static SearchFieldInfo inCollection(I18nStringListParam param, VariableInjector value) {
-        return new SearchFieldInfo(SearchField.Companion.getAND(), param, CollectionI18nEnum.IN.name(), value);
+        return new SearchFieldInfo(SearchField.AND, param, CollectionI18nEnum.IN.name(), value);
     }
 
     public static SearchFieldInfo notInCollection(I18nStringListParam param, VariableInjector value) {
-        return new SearchFieldInfo(SearchField.Companion.getAND(), param, CollectionI18nEnum.NOT_IN.name(), value);
+        return new SearchFieldInfo(SearchField.AND, param, CollectionI18nEnum.NOT_IN.name(), value);
     }
 
     public static SearchFieldInfo inCollection(StringListParam param, VariableInjector value) {
-        return new SearchFieldInfo(SearchField.Companion.getAND(), param, IN.name(), value);
+        return new SearchFieldInfo(SearchField.AND, param, IN.name(), value);
     }
 
     public static SearchFieldInfo inDateRange(DateParam param, VariableInjector value) {
-        return new SearchFieldInfo(SearchField.Companion.getAND(), param, DateParam.Companion.getBETWEEN(), value);
+        return new SearchFieldInfo(SearchField.AND, param, DateParam.Companion.getBETWEEN(), value);
     }
 
     public String getPrefixOper() {
@@ -194,7 +194,7 @@ public class SearchFieldInfo<S extends SearchCriteria> implements Serializable {
         }
     }
 
-    public static <S extends SearchCriteria> S buildSearchCriteria(Class<S> cls, List<SearchFieldInfo> fieldInfos) {
+    public static <S extends SearchCriteria> S buildSearchCriteria(Class<S> cls, List<SearchFieldInfo<?>> fieldInfos) {
         try {
             S searchCriteria = cls.newInstance();
             for (SearchFieldInfo info : fieldInfos) {

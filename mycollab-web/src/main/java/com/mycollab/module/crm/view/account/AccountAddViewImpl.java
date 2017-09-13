@@ -31,7 +31,7 @@ public class AccountAddViewImpl extends AbstractEditItemComp<SimpleAccount> impl
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT());
+        return CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class AccountAddViewImpl extends AbstractEditItemComp<SimpleAccount> impl
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getACCOUNT(), AccountDefaultDynaFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.ACCOUNT, AccountDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override

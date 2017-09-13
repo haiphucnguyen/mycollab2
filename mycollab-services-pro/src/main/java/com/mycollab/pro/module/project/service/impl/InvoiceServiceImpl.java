@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class InvoiceServiceImpl extends DefaultService<Integer, Invoice, InvoiceSearchCriteria> implements InvoiceService {
 
     static {
-        ClassInfoMap.INSTANCE.put(InvoiceServiceImpl.class, new ClassInfo(ModuleNameConstants.INSTANCE.getPRJ(), ProjectTypeConstants.INSTANCE.getINVOICE()));
+        ClassInfoMap.INSTANCE.put(InvoiceServiceImpl.class, new ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.INVOICE));
     }
 
     @Autowired

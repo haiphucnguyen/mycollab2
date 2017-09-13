@@ -24,7 +24,6 @@ import com.mycollab.module.project.service.ProjectTaskService
 import com.mycollab.module.project.service.ProjectTicketService
 import com.mycollab.module.project.service.RiskService
 import com.mycollab.module.tracker.service.BugService
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

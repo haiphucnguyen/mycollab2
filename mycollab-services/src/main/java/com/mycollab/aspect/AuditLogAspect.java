@@ -132,7 +132,7 @@ public class AuditLogAspect {
                     String changeSet = getChangeSet(cls, bean, classInfo.getExcludeHistoryFields(),isSelective);
                     if (changeSet != null) {
                         ActivityStreamWithBLOBs activity = TraceableCreateAspect.constructActivity(cls,
-                                traceableAnnotation, bean, username, ActivityStreamConstants.INSTANCE.getACTION_UPDATE());
+                                traceableAnnotation, bean, username, ActivityStreamConstants.ACTION_UPDATE);
                         Integer activityStreamId = activityStreamService.save(activity);
 
                         Integer sAccountId = (Integer) PropertyUtils.getProperty(bean, "saccountid");

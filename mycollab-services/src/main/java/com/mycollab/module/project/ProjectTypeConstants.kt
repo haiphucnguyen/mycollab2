@@ -5,41 +5,41 @@ package com.mycollab.module.project
  * @since 4.0
  */
 object ProjectTypeConstants {
-    val PROJECT = "Project"
+    @JvmField val PROJECT = "Project"
 
-    val PROJECT_ROLE = "project_role"
+    @JvmField val PROJECT_ROLE = "project_role"
 
-    val TICKET = "Project-Assignment"
+    @JvmField val TICKET = "Project-Assignment"
 
-    val TASK = "Project-Task"
+    @JvmField val TASK = "Project-Task"
 
-    val MESSAGE = "Project-Message"
+    @JvmField val MESSAGE = "Project-Message"
 
-    val MILESTONE = "Project-Milestone"
+    @JvmField val MILESTONE = "Project-Milestone"
 
-    val RISK = "Project-Risk"
+    @JvmField val RISK = "Project-Risk"
 
-    val BUG = "Project-Bug"
+    @JvmField val BUG = "Project-Bug"
 
-    val BUG_COMPONENT = "Project-Component"
+    @JvmField val BUG_COMPONENT = "Project-Component"
 
-    val BUG_VERSION = "Project-Version"
+    @JvmField val BUG_VERSION = "Project-Version"
 
-    val STANDUP = "Project-StandUp"
+    @JvmField val STANDUP = "Project-StandUp"
 
-    val PAGE = "Project-Page"
+    @JvmField val PAGE = "Project-Page"
 
-    val DASHBOARD = "Project-Dashboard"
+    @JvmField val DASHBOARD = "Project-Dashboard"
 
-    val FILE = "Project-File"
+    @JvmField val FILE = "Project-File"
 
-    val TIME = "Project-Time"
+    @JvmField val TIME = "Project-Time"
 
-    val INVOICE = "Project-Invoice"
+    @JvmField val INVOICE = "Project-Invoice"
 
-    val FINANCE = "Project-Finance"
+    @JvmField val FINANCE = "Project-Finance"
 
-    val REPORTS = "Project-Reports"
+    @JvmField val REPORTS = "Project-Reports"
 
-    val MEMBER = "Project-Member"
+    @JvmField val MEMBER = "Project-Member"
 }

@@ -43,7 +43,7 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getCALL(), CallDefaultFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.CALL, CallDefaultFormLayoutFactory.getForm());
     }
 
     @Override
@@ -53,7 +53,7 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(this.previewForm).createButtonControls(RolePermissionCollections.INSTANCE.getCRM_CALL());
+        return new CrmPreviewFormControlsGenerator<>(this.previewForm).createButtonControls(RolePermissionCollections.CRM_CALL);
     }
 
     @Override
@@ -63,6 +63,6 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getCALL();
+        return CrmTypeConstants.CALL;
     }
 }

@@ -10,15 +10,15 @@ open class NumberSearchField @JvmOverloads constructor(operation: String, val va
     constructor(value: Int?, compareOperator: String) : this(SearchField.AND, value, compareOperator)
 
     companion object {
-        val EQUAL = "="
-        val NOT_EQUAL = "<>"
-        val LESS_THAN = "<"
-        val GREATER = ">"
+        @JvmField val EQUAL = "="
+        @JvmField val NOT_EQUAL = "<>"
+        @JvmField val LESS_THAN = "<"
+        @JvmField val GREATER = ">"
 
-        fun equal(value: Int) = NumberSearchField(SearchField.AND, value, EQUAL)
+        @JvmStatic fun equal(value: Int) = NumberSearchField(SearchField.AND, value, EQUAL)
 
-        fun greaterThan(value: Int) = NumberSearchField(SearchField.AND, value, GREATER)
+        @JvmStatic fun greaterThan(value: Int) = NumberSearchField(SearchField.AND, value, GREATER)
 
-        fun lessThan(value: Int) = NumberSearchField(SearchField.AND, value, LESS_THAN)
+        @JvmStatic fun lessThan(value: Int) = NumberSearchField(SearchField.AND, value, LESS_THAN)
     }
 }

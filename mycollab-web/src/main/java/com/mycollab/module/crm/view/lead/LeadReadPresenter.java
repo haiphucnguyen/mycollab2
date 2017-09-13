@@ -62,7 +62,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
             @Override
             public void onDelete(final SimpleLead data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -78,7 +78,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
             @Override
             public void onPrint(Object source, SimpleLead data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.INSTANCE.getLEAD(), Lead.Field.lastname.name(),
+                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.LEAD, Lead.Field.lastname.name(),
                         LeadDefaultDynaFormLayoutFactory.getForm()));
             }
 
@@ -99,7 +99,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = contactService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new LeadEvent.GotoRead(this, nextId));
@@ -113,7 +113,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
                 LeadService contactService = AppContextUtil.getSpringBean(LeadService.class);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = contactService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new LeadEvent.GotoRead(this, nextId));
@@ -134,17 +134,17 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
             public void createNewRelatedItem(String itemId) {
                 if (itemId.equals("task")) {
                     SimpleCrmTask task = new SimpleCrmTask();
-                    task.setType(CrmTypeConstants.INSTANCE.getLEAD());
+                    task.setType(CrmTypeConstants.LEAD);
                     task.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(LeadReadPresenter.this, task));
                 } else if (itemId.equals("meeting")) {
                     SimpleMeeting meeting = new SimpleMeeting();
-                    meeting.setType(CrmTypeConstants.INSTANCE.getLEAD());
+                    meeting.setType(CrmTypeConstants.LEAD);
                     meeting.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(LeadReadPresenter.this, meeting));
                 } else if (itemId.equals("call")) {
                     SimpleCall call = new SimpleCall();
-                    call.setType(CrmTypeConstants.INSTANCE.getLEAD());
+                    call.setType(CrmTypeConstants.LEAD);
                     call.setTypeid(view.getItem().getId());
                     EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(LeadReadPresenter.this, call));
                 }
@@ -182,8 +182,8 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getLEAD());
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
+        CrmModule.navigateItem(CrmTypeConstants.LEAD);
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_LEAD)) {
             if (data.getParams() instanceof SimpleLead) {
                 SimpleLead lead = (SimpleLead) data.getParams();
                 super.onGo(container, data);

@@ -23,7 +23,7 @@ public class VersionListNoItemView extends ProjectListNoItemView {
 
     @Override
     protected FontAwesome viewIcon() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG_VERSION());
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION);
     }
 
     @Override
@@ -53,6 +53,6 @@ public class VersionListNoItemView extends ProjectListNoItemView {
 
     @Override
     protected boolean hasPermission() {
-        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getVERSIONS());
+        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS);
     }
 }

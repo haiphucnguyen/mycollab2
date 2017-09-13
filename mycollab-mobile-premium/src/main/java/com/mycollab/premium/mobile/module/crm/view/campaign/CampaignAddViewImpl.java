@@ -27,7 +27,7 @@ public class CampaignAddViewImpl extends AbstractEditItemComp<SimpleCampaign> im
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getCAMPAIGN(), CampaignDefaultDynaFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.CAMPAIGN, CampaignDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override

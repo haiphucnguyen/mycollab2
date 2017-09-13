@@ -13,6 +13,6 @@ class LeadStatusListSelect extends I18NValueListSelect {
     private static final long serialVersionUID = 1L;
 
     LeadStatusListSelect() {
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getLeadStatusList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.leadStatusList));
     }
 }

@@ -14,7 +14,7 @@ import com.mycollab.mobile.ui.FormSectionBuilder;
 import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
-import com.mycollab.module.crm.view.CrmLocalizationTypeMap;
+import com.mycollab.module.crm.ui.CrmLocalizationTypeMap;
 import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.spring.AppContextUtil;
@@ -53,7 +53,7 @@ class ActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityStreamSe
 
     @Override
     protected List<SimpleActivityStream> queryCurrentData() {
-        return activityStreamService.findPageableListByCriteria(searchRequest);
+        return (List<SimpleActivityStream>) activityStreamService.findPageableListByCriteria(searchRequest);
     }
 
     @Override
@@ -80,25 +80,25 @@ class ActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityStreamSe
             layout.addStyleName("activity-cell");
             StringBuilder content = new StringBuilder();
             AuditLogRegistry auditLogRegistry = AppContextUtil.getSpringBean(AuditLogRegistry.class);
-            String itemType = CrmLocalizationTypeMap.getType(activityStream.getType());
+            String itemType = CrmLocalizationTypeMap.INSTANCE.getType(activityStream.getType());
             String assigneeValue = buildAssigneeValue(activityStream);
             String itemValue = buildItemValue(activityStream);
 
-            if (ActivityStreamConstants.INSTANCE.getACTION_CREATE().equals(activityStream.getAction())) {
+            if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(CrmCommonI18nEnum.WIDGET_ACTIVITY_CREATE_ACTION,
                         assigneeValue, itemType, itemValue));
-            } else if (ActivityStreamConstants.INSTANCE.getACTION_UPDATE().equals(activityStream.getAction())) {
+            } else if (ActivityStreamConstants.ACTION_UPDATE.equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(CrmCommonI18nEnum.WIDGET_ACTIVITY_UPDATE_ACTION,
                         assigneeValue, itemType, itemValue));
                 if (activityStream.getAssoAuditLog() != null) {
                     content.append(auditLogRegistry.generatorDetailChangeOfActivity(activityStream));
                 }
-            } else if (ActivityStreamConstants.INSTANCE.getACTION_COMMENT().equals(activityStream.getAction())) {
+            } else if (ActivityStreamConstants.ACTION_COMMENT.equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(CrmCommonI18nEnum.WIDGET_ACTIVITY_COMMENT_ACTION, assigneeValue, itemType, itemValue));
                 if (activityStream.getAssoAuditLog() != null) {
                     content.append("<p><ul><li>\"").append(activityStream.getAssoAuditLog().getChangeset()).append("\"</li></ul></p>");
                 }
-            } else if (ActivityStreamConstants.INSTANCE.getACTION_DELETE().equals(activityStream.getAction())) {
+            } else if (ActivityStreamConstants.ACTION_DELETE.equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(CrmCommonI18nEnum.WIDGET_ACTIVITY_DELETE_ACTION,
                         assigneeValue, itemType, itemValue));
             }
@@ -115,7 +115,7 @@ class ActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityStreamSe
                     AppUI.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim
                     (activityStream.getCreatedUserFullName(), 30, true));
 
-            div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink);
+            div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE, userLink);
 
             return div.write();
         }
@@ -123,12 +123,12 @@ class ActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityStreamSe
         private String buildItemValue(SimpleActivityStream activityStream) {
             DivLessFormatter div = new DivLessFormatter();
             Text itemImg = new Text(CrmAssetsManager.getAsset(activityStream.getType()).getHtml());
-            A itemLink = new A().setId("tag" + TOOLTIP_ID).setHref(CrmLinkGenerator.INSTANCE.generateCrmItemLink(
+            A itemLink = new A().setId("tag" + TOOLTIP_ID).setHref(CrmLinkGenerator.generateCrmItemLink(
                     activityStream.getType(), Integer.parseInt(activityStream.getTypeid())));
 
             itemLink.appendText(activityStream.getNamefield());
 
-            div.appendChild(itemImg, DivLessFormatter.EMPTY_SPACE(), itemLink);
+            div.appendChild(itemImg, DivLessFormatter.EMPTY_SPACE, itemLink);
             return div.write();
         }
     }

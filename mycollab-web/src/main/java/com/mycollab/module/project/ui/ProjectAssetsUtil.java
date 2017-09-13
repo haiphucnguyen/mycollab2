@@ -39,7 +39,7 @@ public class ProjectAssetsUtil {
     public static Component projectLogoComp(String projectShortname, Integer projectId, String projectAvatarId, int size) {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(projectAvatarId)) {
-            wrapper = new Image(null, new ExternalResource(StorageUtils.INSTANCE.getResourcePath
+            wrapper = new Image(null, new ExternalResource(StorageUtils.getResourcePath
                     (String.format("%s/%s_%d.png", PathUtils.INSTANCE.getProjectLogoPath(AppUI.getAccountId(), projectId),
                             projectAvatarId, size))));
         } else {
@@ -60,7 +60,7 @@ public class ProjectAssetsUtil {
     public static Component editableProjectLogoComp(String projectShortname, Integer projectId, String projectAvatarId, int size) {
         VerticalLayout wrapper = new VerticalLayout();
 
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getPROJECT())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROJECT)) {
             wrapper.addStyleName("cursor_pointer");
             wrapper.setDescription(UserUIContext.getMessage(GenericI18Enum.OPT_CHANGE_IMAGE));
             wrapper.addLayoutClickListener((LayoutEvents.LayoutClickListener) layoutClickEvent ->
@@ -69,7 +69,7 @@ public class ProjectAssetsUtil {
         }
 
         if (!StringUtils.isBlank(projectAvatarId)) {
-            Image image = new Image(null, new ExternalResource(StorageUtils.INSTANCE.getResourcePath
+            Image image = new Image(null, new ExternalResource(StorageUtils.getResourcePath
                     (String.format("%s/%s_%d.png", PathUtils.INSTANCE.getProjectLogoPath(AppUI.getAccountId(), projectId),
                             projectAvatarId, size))));
             image.addStyleName(UIConstants.CIRCLE_BOX);
@@ -90,7 +90,7 @@ public class ProjectAssetsUtil {
     public static Component clientLogoComp(SimpleAccount account, int size) {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(account.getAvatarid())) {
-            wrapper = new Image(null, new ExternalResource(StorageUtils.INSTANCE.getEntityLogoPath(AppUI
+            wrapper = new Image(null, new ExternalResource(StorageUtils.getEntityLogoPath(AppUI.Companion
                     .getAccountId(), account.getAvatarid(), 100)));
         } else {
             String accountName = account.getAccountname();

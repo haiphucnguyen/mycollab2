@@ -21,13 +21,11 @@ import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.HasComponents;
 
-import static com.mycollab.vaadin.ui.MyCollabSession.CURRENT_PROJECT;
-
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getCREATE_NEW_PROJECT(), impliedPermissionVal = BooleanPermissionFlag.Companion.getTRUE())
+@ViewPermission(permissionId = RolePermissionCollections.CREATE_NEW_PROJECT, impliedPermissionVal = BooleanPermissionFlag.TRUE)
 public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
     private static final long serialVersionUID = 1L;
 
@@ -86,7 +84,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
             projectService.saveWithSession(project, UserUIContext.getUsername());
         } else {
             projectService.updateWithSession(project, UserUIContext.getUsername());
-            MyCollabSession.putCurrentUIVariable(CURRENT_PROJECT, project);
+            MyCollabSession.putCurrentUIVariable(MyCollabSession.CURRENT_PROJECT, project);
         }
     }
 }

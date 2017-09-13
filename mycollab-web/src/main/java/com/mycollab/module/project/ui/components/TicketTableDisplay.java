@@ -38,7 +38,7 @@ public class TicketTableDisplay extends DefaultPagedBeanTable<ProjectTicketServi
             Div div = new DivLessFormatter();
             Text image = new Text(ProjectAssetsManager.getAsset(task.getType()).getHtml());
             A itemLink = new A().setId("tag" + TOOLTIP_ID);
-            if (ProjectTypeConstants.INSTANCE.getTASK().equals(task.getType()) || ProjectTypeConstants.INSTANCE.getBUG().equals(task.getType())) {
+            if (ProjectTypeConstants.TASK.equals(task.getType()) || ProjectTypeConstants.BUG.equals(task.getType())) {
                 itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(task.getProjectShortName(),
                         task.getProjectId(), task.getType(), task.getExtraTypeId() + ""));
             } else {
@@ -50,7 +50,7 @@ public class TicketTableDisplay extends DefaultPagedBeanTable<ProjectTicketServi
             itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             itemLink.appendText(task.getName());
 
-            div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink);
+            div.appendChild(image, DivLessFormatter.EMPTY_SPACE, itemLink);
 
             MButton assignmentLink = new MButton(div.write(),
                     clickEvent -> fireTableEvent(new TableClickEvent(TicketTableDisplay.this, task, "name")))

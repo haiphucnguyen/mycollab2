@@ -57,7 +57,7 @@ public class ProjectRoleAddPresenter extends AbstractPresenter<ProjectRoleAddVie
         ProjectRoleService roleService = AppContextUtil.getSpringBean(ProjectRoleService.class);
         item.setSaccountid(AppUI.getAccountId());
 
-        SimpleProject project = CurrentProjectVariables.getProject();
+        SimpleProject project = CurrentProjectVariables.INSTANCE.getProject();
         item.setProjectid(project.getId());
 
         if (item.getId() == null) {
@@ -72,7 +72,7 @@ public class ProjectRoleAddPresenter extends AbstractPresenter<ProjectRoleAddVie
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getROLES())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.ROLES)) {
             ProjectRoleContainer roleContainer = (ProjectRoleContainer) container;
             roleContainer.removeAllComponents();
             roleContainer.addComponent(view);
@@ -80,7 +80,7 @@ public class ProjectRoleAddPresenter extends AbstractPresenter<ProjectRoleAddVie
             ProjectRole role = (ProjectRole) data.getParams();
 
             view.editItem(role);
-            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
             if (role.getId() == null) {
                 breadcrumb.gotoRoleAdd();
             } else {

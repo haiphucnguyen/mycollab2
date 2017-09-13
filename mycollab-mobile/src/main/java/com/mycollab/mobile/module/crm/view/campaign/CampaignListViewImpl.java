@@ -60,7 +60,7 @@ public class CampaignListViewImpl extends AbstractListPageView<CampaignSearchCri
         };
         MButton newCampaignBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN()));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
         return new MHorizontalLayout(searchBtn, newCampaignBtn).alignAll(Alignment.TOP_RIGHT);
     }
 

@@ -37,7 +37,7 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
     public static final String UPDATE_TASKS_LAST_WEEK = "UPDATE_TICKETS_LAST_WEEK";
 
     public TaskSavedFilterComboBox() {
-        super(ProjectTypeConstants.INSTANCE.getTASK());
+        super(ProjectTypeConstants.TASK);
 
         SearchQueryInfo allTasksQuery = new SearchQueryInfo(ALL_TASKS, UserUIContext.getMessage(TaskI18nEnum.VAL_ALL_TASKS),
                 SearchFieldInfo.inCollection(TaskSearchCriteria.p_projectIds, new CurrentProjectIdInjector()));
@@ -47,7 +47,7 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
                     @Override
                     public Object eval() {
                         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
-                        List<OptionVal> options = optionValService.findOptionValsExcludeClosed(ProjectTypeConstants.INSTANCE.getTASK(),
+                        List<OptionVal> options = optionValService.findOptionValsExcludeClosed(ProjectTypeConstants.TASK,
                                 CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
                         List<String> statuses = new ArrayList<>();
                         for (OptionVal option : options) {
@@ -73,12 +73,12 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
                 }));
 
         SearchQueryInfo overdueTaskQuery = new SearchQueryInfo(OVERDUE_TASKS, UserUIContext.getMessage(TaskI18nEnum.VAL_OVERDUE_TASKS),
-                new SearchFieldInfo(SearchField.Companion.getAND(), TaskSearchCriteria.p_duedate, DateParam.Companion.getBEFORE(), new LazyValueInjector() {
+                new SearchFieldInfo(SearchField.AND, TaskSearchCriteria.p_duedate, DateParam.Companion.getBEFORE(), new LazyValueInjector() {
                     @Override
                     protected Object doEval() {
                         return new LocalDate().toDate();
                     }
-                }), new SearchFieldInfo(SearchField.Companion.getAND(), new StringParam("id-status", "m_prj_task", "status"), QueryI18nEnum.StringI18nEnum.IS_NOT.name(),
+                }), new SearchFieldInfo(SearchField.AND, new StringParam("id-status", "m_prj_task", "status"), QueryI18nEnum.StringI18nEnum.IS_NOT.name(),
                 ConstantValueInjector.valueOf(OptionI18nEnum.StatusI18nEnum.Closed.name())));
 
         SearchQueryInfo myTasksQuery = new SearchQueryInfo(MY_TASKS, UserUIContext.getMessage(TaskI18nEnum.VAL_MY_TASKS),

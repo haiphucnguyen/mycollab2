@@ -13,8 +13,7 @@ public class CasePriorityComboBox extends I18nValueComboBox {
     private static final long serialVersionUID = 1L;
 
     public CasePriorityComboBox() {
-        super();
         setCaption(null);
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getCasesPriorityList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.casesPriorityList));
     }
 }

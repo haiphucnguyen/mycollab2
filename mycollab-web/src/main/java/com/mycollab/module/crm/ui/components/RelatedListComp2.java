@@ -41,7 +41,7 @@ public abstract class RelatedListComp2<SearchService extends ISearchableService<
 
     @Override
     protected List<T> queryCurrentData() {
-        return searchService.findPageableListByCriteria(searchRequest);
+        return (List<T>) searchService.findPageableListByCriteria(searchRequest);
     }
 
     @Override

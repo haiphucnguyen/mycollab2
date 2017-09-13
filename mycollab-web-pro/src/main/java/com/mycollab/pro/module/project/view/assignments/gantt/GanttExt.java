@@ -37,20 +37,20 @@ public class GanttExt extends Gantt {
         beanContainer = new GanttItemContainer();
 
         this.addClickListener(clickEvent -> {
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                 StepExt step = (StepExt) clickEvent.getStep();
                 getUI().addWindow(new QuickEditGanttItemWindow(GanttExt.this, step.getGanttItemWrapper()));
             }
         });
 
         this.addMoveListener(moveEvent -> {
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                 updateTasksInfoByResizeOrMove((StepExt) moveEvent.getStep(), moveEvent.getStartDate(), moveEvent.getEndDate());
             }
         });
 
         this.addResizeListener(resizeEvent -> {
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                 updateTasksInfoByResizeOrMove((StepExt) resizeEvent.getStep(), resizeEvent.getStartDate(), resizeEvent.getEndDate());
             }
         });

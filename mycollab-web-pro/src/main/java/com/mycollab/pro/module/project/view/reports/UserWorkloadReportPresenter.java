@@ -22,7 +22,7 @@ public class UserWorkloadReportPresenter extends AbstractPresenter<UserWorkloadR
         reportContainer.addView(view);
         view.display();
 
-        ReportBreadcrumb breadCrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
+        ReportBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ReportBreadcrumb.class);
         breadCrumb.gotoUserWorkloadReport();
     }
 }

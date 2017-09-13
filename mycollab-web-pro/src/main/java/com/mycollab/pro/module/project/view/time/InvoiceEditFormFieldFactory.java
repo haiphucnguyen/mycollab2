@@ -70,7 +70,7 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
             Invoice beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
                 String attachmentPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(),
-                        CurrentProjectVariables.getProjectId(), ProjectTypeConstants.INSTANCE.getINVOICE(), "" + beanItem.getId());
+                        CurrentProjectVariables.getProjectId(), ProjectTypeConstants.INVOICE, "" + beanItem.getId());
                 attachmentUploadField = new AttachmentUploadField(attachmentPath);
             } else {
                 attachmentUploadField = new AttachmentUploadField();

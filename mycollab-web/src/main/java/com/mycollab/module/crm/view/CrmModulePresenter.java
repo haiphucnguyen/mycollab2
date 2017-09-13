@@ -28,9 +28,9 @@ public class CrmModulePresenter extends AbstractPresenter<CrmModule> {
         if (params == null || params.length == 0) {
             view.gotoCrmDashboard();
         } else {
-            ShellUrlResolver.ROOT().getSubResolver("crm").handle(params);
+            ShellUrlResolver.ROOT.getSubResolver("crm").handle(params);
         }
 
-        UserUIContext.updateLastModuleVisit(ModuleNameConstants.INSTANCE.getCRM());
+        UserUIContext.updateLastModuleVisit(ModuleNameConstants.CRM);
     }
 }

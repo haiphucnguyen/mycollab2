@@ -83,7 +83,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getCAMPAIGN(), CampaignDefaultDynaFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.CAMPAIGN, CampaignDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -103,10 +103,10 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
     protected ComponentContainer createButtonControls() {
         VerticalLayout buttonControls = new CrmPreviewFormControlsGenerator<>(previewForm).
                 createButtonControls(CLONE_BTN_PRESENTED | DELETE_BTN_PRESENTED,
-                        RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN());
+                        RolePermissionCollections.CRM_CAMPAIGN);
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GotoEdit(this, beanItem)))
                 .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN()));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(buttonControls));
     }
 
@@ -114,19 +114,19 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withFullWidth().withSpacing(false).withMargin(false);
 
-        Component accountSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()),
+        Component accountSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT),
                 associateAccounts);
         toolbarLayout.addComponent(accountSection);
 
-        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()),
+        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT),
                 associateContacts);
         toolbarLayout.addComponent(contactSection);
 
-        Component leadSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()),
+        Component leadSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
                 associateLeads);
         toolbarLayout.addComponent(leadSection);
 
-        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()),
+        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY),
                 associateActivities);
         toolbarLayout.addComponent(activitySection);
 
@@ -135,6 +135,6 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getCAMPAIGN();
+        return CrmTypeConstants.CAMPAIGN;
     }
 }

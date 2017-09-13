@@ -75,7 +75,7 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getLEAD(), LeadDefaultDynaFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.LEAD, LeadDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -95,10 +95,10 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
     protected ComponentContainer createButtonControls() {
         VerticalLayout buttonControls = new CrmPreviewFormControlsGenerator<>(previewForm).
                 createButtonControls(CLONE_BTN_PRESENTED | DELETE_BTN_PRESENTED,
-                        RolePermissionCollections.INSTANCE.getCRM_LEAD());
+                        RolePermissionCollections.CRM_LEAD);
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new LeadEvent.GotoEdit(this, beanItem)))
                 .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_LEAD()));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_LEAD));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(buttonControls));
     }
 
@@ -106,11 +106,11 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withFullWidth().withSpacing(false).withMargin(false);
 
-        Component campaignSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN()),
+        Component campaignSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN),
                 associateCampaigns);
         toolbarLayout.addComponent(campaignSection);
 
-        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()),
+        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY),
                 associateActivities);
         toolbarLayout.addComponent(activitySection);
 
@@ -119,6 +119,6 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getLEAD();
+        return CrmTypeConstants.LEAD;
     }
 }

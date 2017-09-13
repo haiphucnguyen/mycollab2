@@ -17,7 +17,7 @@ public class CaseListCustomizeWindow extends CustomizedTableWindow {
     private static final long serialVersionUID = 1L;
 
     public CaseListCustomizeWindow(AbstractPagedBeanTable table) {
-        super(CrmTypeConstants.INSTANCE.getCASE(), table);
+        super(CrmTypeConstants.CASE, table);
     }
 
     @Override

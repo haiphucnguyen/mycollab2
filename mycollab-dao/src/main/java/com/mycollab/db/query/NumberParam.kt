@@ -27,7 +27,7 @@ class NumberParam(id: String, table: String, column: String) : ColumnParam(id, t
         }
     }
 
-    private fun buildParamIsEqual(oper: String, value: Any): OneValueSearchField {
+    fun buildParamIsEqual(oper: String, value: Any): OneValueSearchField {
         return OneValueSearchField(oper, String.format(EQUAL_EXPR, this.table, this.column), value)
     }
 

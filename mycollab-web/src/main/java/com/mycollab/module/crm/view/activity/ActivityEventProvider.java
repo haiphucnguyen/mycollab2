@@ -39,11 +39,11 @@ public class ActivityEventProvider implements CalendarEventProvider {
         List<CalendarEvent> events = new ArrayList<>();
 
         MeetingSearchCriteria searchCriteria = new MeetingSearchCriteria();
-        searchCriteria.setStartDate(new DateTimeSearchField(SearchField.Companion.getAND(), DateTimeSearchField.GREATER_THAN_EQUAL(), startDate));
-        searchCriteria.setEndDate(new DateTimeSearchField(SearchField.Companion.getAND(), DateTimeSearchField.LESS_THAN_EQUAL(), endDate));
+        searchCriteria.setStartDate(new DateTimeSearchField(SearchField.AND, DateTimeSearchField.GREATER_THAN_EQUAL, startDate));
+        searchCriteria.setEndDate(new DateTimeSearchField(SearchField.AND, DateTimeSearchField.LESS_THAN_EQUAL, endDate));
 
         LOG.debug("Get event from: " + startDate + " to " + endDate);
-        List<SimpleMeeting> crmEvents = meetingService.findPageableListByCriteria(new BasicSearchRequest<>(
+        List<SimpleMeeting> crmEvents = (List<SimpleMeeting>) meetingService.findPageableListByCriteria(new BasicSearchRequest<>(
                         searchCriteria, 0, Integer.MAX_VALUE));
         LOG.debug("There are " + crmEvents.size() + " event from " + startDate + " to " + endDate);
 

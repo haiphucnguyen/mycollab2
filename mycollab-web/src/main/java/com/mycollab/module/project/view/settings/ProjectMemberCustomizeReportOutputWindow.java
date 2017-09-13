@@ -21,7 +21,7 @@ import java.util.Collection;
  */
 public class ProjectMemberCustomizeReportOutputWindow extends CustomizeReportOutputWindow<ProjectMemberSearchCriteria, SimpleProjectMember> {
     public ProjectMemberCustomizeReportOutputWindow(VariableInjector<ProjectMemberSearchCriteria> variableInjector) {
-        super(ProjectTypeConstants.INSTANCE.getMEMBER(), UserUIContext.getMessage(ProjectMemberI18nEnum.LIST), SimpleProjectMember.class,
+        super(ProjectTypeConstants.MEMBER, UserUIContext.getMessage(ProjectMemberI18nEnum.LIST), SimpleProjectMember.class,
                 AppContextUtil.getSpringBean(ProjectMemberService.class), variableInjector);
     }
 

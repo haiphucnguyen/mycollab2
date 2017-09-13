@@ -54,8 +54,8 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
     private void addSummaryLink() {
         removeAllComponents();
         with(ELabel.h3(new A("#" + ProjectLinkGenerator.INSTANCE.generateProjectLink(project.getId())).appendText(StringUtils
-                .trim(project.getName(), 30, true)).write())).withDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipProject(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
-                project, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                .trim(project.getName(), 30, true)).write())).withDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipProject(UserUIContext.getUserLocale(), AppUI.Companion.getDateFormat(),
+                project, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
     }
 
     private void addLink(Button button) {
@@ -190,7 +190,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
 
     private void buildPageBreadcrumbChain() {
         String basePath = PathUtils.INSTANCE.getProjectDocumentPath(AppUI.getAccountId(), CurrentProjectVariables.getProjectId());
-        String currentPath = CurrentProjectVariables.getCurrentPagePath();
+        String currentPath = CurrentProjectVariables.INSTANCE.getCurrentPagePath();
 
         addEnabledLink(new Button(UserUIContext.getMessage(PageI18nEnum.LIST), new GotoPageListListener(basePath)));
 
@@ -220,7 +220,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
         addSummaryLink();
         buildPageBreadcrumbChain();
         AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generatePagesLink(project.getId(),
-                CurrentProjectVariables.getCurrentPagePath()), UserUIContext.getMessage(PageI18nEnum.LIST));
+                CurrentProjectVariables.INSTANCE.getCurrentPagePath()), UserUIContext.getMessage(PageI18nEnum.LIST));
     }
 
     public void gotoPageAdd() {
@@ -228,7 +228,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
         buildPageBreadcrumbChain();
         addLink(new Button(UserUIContext.getMessage(PageI18nEnum.NEW)));
         AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generatePageAdd(
-                project.getId(), CurrentProjectVariables.getCurrentPagePath()),
+                project.getId(), CurrentProjectVariables.INSTANCE.getCurrentPagePath()),
                 UserUIContext.getMessage(PageI18nEnum.NEW));
     }
 

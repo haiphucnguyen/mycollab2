@@ -45,7 +45,7 @@ public class AccountSearchPanel extends DefaultGenericSearchPanel<AccountSearchC
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getACCOUNT(), UserUIContext.getMessage(AccountI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.ACCOUNT, UserUIContext.getMessage(AccountI18nEnum.LIST));
     }
 
     @Override
@@ -53,7 +53,7 @@ public class AccountSearchPanel extends DefaultGenericSearchPanel<AccountSearchC
         return (canCreateAccount) ? new MButton(UserUIContext.getMessage(AccountI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) : null;
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) : null;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class AccountSearchPanel extends DefaultGenericSearchPanel<AccountSearchC
     private class AccountAdvancedSearchLayout extends DynamicQueryParamLayout<AccountSearchCriteria> {
 
         AccountAdvancedSearchLayout() {
-            super(AccountSearchPanel.this, CrmTypeConstants.INSTANCE.getACCOUNT());
+            super(AccountSearchPanel.this, CrmTypeConstants.ACCOUNT);
         }
 
         @Override

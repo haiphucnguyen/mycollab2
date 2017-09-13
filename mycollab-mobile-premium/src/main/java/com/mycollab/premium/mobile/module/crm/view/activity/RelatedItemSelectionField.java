@@ -103,22 +103,22 @@ public class RelatedItemSelectionField extends CustomField<Integer> implements F
             setInternalValue((Integer) dataId);
 
             if (data instanceof SimpleAccount) {
-                PropertyUtils.setProperty(bean, "type", CrmTypeConstants.INSTANCE.getACCOUNT());
+                PropertyUtils.setProperty(bean, "type", CrmTypeConstants.ACCOUNT);
                 navButton.setCaption(((SimpleAccount) data).getAccountname());
             } else if (data instanceof SimpleCampaign) {
-                PropertyUtils.setProperty(bean, "type", CrmTypeConstants.INSTANCE.getCAMPAIGN());
+                PropertyUtils.setProperty(bean, "type", CrmTypeConstants.CAMPAIGN);
                 navButton.setCaption(((SimpleCampaign) data).getCampaignname());
             } else if (data instanceof SimpleContact) {
-                PropertyUtils.setProperty(bean, "type", CrmTypeConstants.INSTANCE.getCONTACT());
+                PropertyUtils.setProperty(bean, "type", CrmTypeConstants.CONTACT);
                 navButton.setCaption(((SimpleContact) data).getContactName());
             } else if (data instanceof SimpleLead) {
-                PropertyUtils.setProperty(bean, "type", CrmTypeConstants.INSTANCE.getLEAD());
+                PropertyUtils.setProperty(bean, "type", CrmTypeConstants.LEAD);
                 navButton.setCaption(((SimpleLead) data).getLeadName());
             } else if (data instanceof SimpleOpportunity) {
-                PropertyUtils.setProperty(bean, "type", CrmTypeConstants.INSTANCE.getOPPORTUNITY());
+                PropertyUtils.setProperty(bean, "type", CrmTypeConstants.OPPORTUNITY);
                 navButton.setCaption(((SimpleOpportunity) data).getOpportunityname());
             } else if (data instanceof SimpleCase) {
-                PropertyUtils.setProperty(bean, "type", CrmTypeConstants.INSTANCE.getCASE());
+                PropertyUtils.setProperty(bean, "type", CrmTypeConstants.CASE);
                 navButton.setCaption(((SimpleCase) data).getSubject());
             }
         } catch (Exception e) {

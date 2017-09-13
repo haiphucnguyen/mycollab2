@@ -7,10 +7,5 @@ import java.util.Locale
  * @since 1.0
  */
 object CountryValueFactory {
-    var countryList: Array<String>? = null
-        private set
-
-    init {
-        countryList = Locale.getISOCountries()
-    }
+    @JvmField var countryList = Locale.getISOCountries()
 }

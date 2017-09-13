@@ -17,7 +17,7 @@ import com.mycollab.module.project.domain.ProjectActivityStream;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.service.ProjectActivityStreamService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
-import com.mycollab.module.project.view.ProjectLocalizationTypeMap;
+import com.mycollab.module.project.ui.ProjectLocalizationTypeMap;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.IBeanList;
@@ -85,22 +85,22 @@ class ProjectActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityS
             String assigneeParam = buildAssigneeValue(activityStream);
             String itemParam = buildItemValue(activityStream);
             StringBuilder content = new StringBuilder();
-            if (ActivityStreamConstants.INSTANCE.getACTION_CREATE().equals(activityStream.getAction())) {
+            if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
                         assigneeParam, itemType, itemParam));
-            } else if (ActivityStreamConstants.INSTANCE.getACTION_UPDATE().equals(activityStream.getAction())) {
+            } else if (ActivityStreamConstants.ACTION_UPDATE.equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
                         assigneeParam, itemType, itemParam));
                 if (activityStream.getAssoAuditLog() != null) {
                     content.append(auditLogRegistry.generatorDetailChangeOfActivity(activityStream));
                 }
-            } else if (ActivityStreamConstants.INSTANCE.getACTION_COMMENT().equals(activityStream.getAction())) {
+            } else if (ActivityStreamConstants.ACTION_COMMENT.equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_COMMENT_ACTION_TITLE,
                         assigneeParam, itemType, itemParam));
                 if (activityStream.getAssoAuditLog() != null) {
                     content.append("<p><ul><li>\"").append(activityStream.getAssoAuditLog().getChangeset()).append("\"</li></ul></p>");
                 }
-            } else if (ActivityStreamConstants.INSTANCE.getACTION_DELETE().equals(activityStream.getAction())) {
+            } else if (ActivityStreamConstants.ACTION_DELETE.equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_DELETE_ACTION_TITLE,
                         assigneeParam, itemType, itemParam));
             }
@@ -117,13 +117,13 @@ class ProjectActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityS
                 .setCSSClass(UIConstants.CIRCLE_BOX);
         A userLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(activity.getExtratypeid(), activity
                 .getCreateduser())).appendText(StringUtils.trim(activity.getCreatedUserFullName(), 30, true));
-        return new DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink).write();
+        return new DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE, userLink).write();
     }
 
     private static String buildItemValue(ProjectActivityStream activity) {
         Text image = new Text(ProjectAssetsManager.getAsset(activity.getType()).getHtml());
         A itemLink = new A();
-        if (ProjectTypeConstants.INSTANCE.getTASK().equals(activity.getType()) || ProjectTypeConstants.INSTANCE.getBUG().equals(activity.getType())) {
+        if (ProjectTypeConstants.TASK.equals(activity.getType()) || ProjectTypeConstants.BUG.equals(activity.getType())) {
             itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(
                     activity.getProjectShortName(), activity.getExtratypeid(),
                     activity.getType(), activity.getItemKey() + ""));
@@ -133,7 +133,7 @@ class ProjectActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityS
                     activity.getType(), activity.getTypeid()));
         }
         itemLink.appendText(StringUtils.trim(activity.getNamefield(), 30, true));
-        return new DivLessFormatter().appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink).write();
+        return new DivLessFormatter().appendChild(image, DivLessFormatter.EMPTY_SPACE, itemLink).write();
     }
 
 }

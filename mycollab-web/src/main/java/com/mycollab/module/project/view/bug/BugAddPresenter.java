@@ -71,7 +71,7 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
             BugContainer bugContainer = (BugContainer) container;
             bugContainer.removeAllComponents();
             bugContainer.addComponent(view);
@@ -79,7 +79,7 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
             SimpleBug bug = (SimpleBug) data.getParams();
             view.editItem(bug);
 
-            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
             if (bug.getId() == null) {
                 breadcrumb.gotoBugAdd();
             } else {
@@ -101,7 +101,7 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
             int bugId = bugService.saveWithSession(bug, UserUIContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
             String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), bug.getProjectid(),
-                    ProjectTypeConstants.INSTANCE.getBUG(), "" + bugId);
+                    ProjectTypeConstants.BUG, "" + bugId);
             uploadField.saveContentsToRepo(attachPath);
 
             // save component
@@ -118,7 +118,7 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
                     MonitorItem monitorItem = new MonitorItem();
                     monitorItem.setMonitorDate(new GregorianCalendar().getTime());
                     monitorItem.setSaccountid(AppUI.getAccountId());
-                    monitorItem.setType(ProjectTypeConstants.INSTANCE.getBUG());
+                    monitorItem.setType(ProjectTypeConstants.BUG);
                     monitorItem.setTypeid(bugId);
                     monitorItem.setUser(follower);
                     monitorItem.setExtratypeid(CurrentProjectVariables.getProjectId());
@@ -131,7 +131,7 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
             bugService.updateWithSession(bug, UserUIContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
             String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), bug.getProjectid(),
-                    ProjectTypeConstants.INSTANCE.getBUG(), "" + bug.getId());
+                    ProjectTypeConstants.BUG, "" + bug.getId());
             uploadField.saveContentsToRepo(attachPath);
 
             int bugId = bug.getId();

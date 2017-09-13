@@ -60,7 +60,7 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
         this.addStyleName("oppcontact-role-edit");
 
         AddViewLayout2 previewLayout = new AddViewLayout2(UserUIContext.getMessage(ContactI18nEnum.OPT_ADD_EDIT_CONTACT_ROLES),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT()));
+                CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
         this.addComponent(previewLayout);
 
         ComponentContainer actionControls = createButtonControls();
@@ -153,7 +153,7 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
             ContactSearchCriteria criteria = new ContactSearchCriteria();
             criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
             criteria.setOpportunityId(new NumberSearchField(opportunity.getId()));
-            List<SimpleContactOpportunityRel> contactOppoRels = contactOppoService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
+            List<SimpleContactOpportunityRel> contactOppoRels = (List<SimpleContactOpportunityRel>) contactOppoService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
             boolean oddRow = true;
             if (!CollectionUtils.isEmpty(contactOppoRels)) {
                 for (SimpleContactOpportunityRel contactOppoRel : contactOppoRels) {
@@ -217,7 +217,7 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
 
             MButton accountLink = new MButton(contactOpp.getAccountName(),
                     clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GotoRead(this, contactOpp.getAccountid())))
-                    .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT())).withStyleName(WebThemes.BUTTON_LINK);
+                    .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT)).withStyleName(WebThemes.BUTTON_LINK);
             accountLink.setWidth("250px");
             this.addComponent(accountLink);
 
@@ -262,9 +262,8 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
         private static final long serialVersionUID = 1L;
 
         RoleDecisionComboBox() {
-            super();
             this.setNullSelectionAllowed(false);
-            this.loadData(Arrays.asList(CrmDataTypeFactory.getOpportunityContactRoleList()));
+            this.loadData(Arrays.asList(CrmDataTypeFactory.opportunityContactRoleList));
         }
     }
 }

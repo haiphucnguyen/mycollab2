@@ -54,7 +54,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK());
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK);
     }
 
     @Override
@@ -70,10 +70,10 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
         if (beanItem.getId() == null) {
-            return new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getTASK(), TaskDefaultFormLayoutFactory.getForm(),
+            return new DefaultDynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getForm(),
                     Task.Field.parenttaskid.name());
         } else {
-            return new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getTASK(), TaskDefaultFormLayoutFactory.getForm(),
+            return new DefaultDynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getForm(),
                     Task.Field.parenttaskid.name(), "selected");
         }
     }

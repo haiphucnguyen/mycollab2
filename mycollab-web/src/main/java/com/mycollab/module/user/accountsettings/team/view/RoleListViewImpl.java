@@ -67,7 +67,7 @@ public class RoleListViewImpl extends AbstractVerticalPageView implements RoleLi
         layout.addComponent(selectOptionButton);
 
         tableActionControls = new DefaultMassItemActionHandlerContainer();
-        if (UserUIContext.canAccess(RolePermissionCollections.INSTANCE.getACCOUNT_ROLE())) {
+        if (UserUIContext.canAccess(RolePermissionCollections.ACCOUNT_ROLE)) {
             tableActionControls.addDeleteActionItem();
         }
         tableActionControls.addDownloadPdfActionItem();

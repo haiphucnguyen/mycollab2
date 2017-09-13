@@ -45,7 +45,7 @@ public class DropboxAuthServletRequestHandler extends GenericHttpServlet {
             UI ui = (UI) cacheService.getValue("tempCache", state);
             if (ui instanceof AppUI) {
                 AppUI myUI = (AppUI) ui;
-                EventBus eventBus = (EventBus) myUI.getAttribute(MyCollabSession.EVENT_BUS_VAL);
+                EventBus eventBus = (EventBus) myUI.getAttribute(MyCollabSession.INSTANCE.getEVENT_BUS_VAL());
                 if (eventBus != null) {
                     eventBus.post(new CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo(
                             DropboxAuthServletRequestHandler.this, cloudDriveInfo));

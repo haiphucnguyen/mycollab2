@@ -20,7 +20,7 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageView.ViewListener;
 import com.mycollab.vaadin.mvp.ScreenData;
-import com.mycollab.vaadin.mvp.ViewEvent;
+import com.mycollab.vaadin.events.ViewEvent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -82,13 +82,13 @@ public class ProjectMemberInvitePresenter extends AbstractPresenter<ProjectMembe
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
             ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
             userGroupContainer.setContent(view);
 
             view.display();
 
-            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
             breadcrumb.gotoUserAdd();
             SystemUIChecker.hasValidSmtpAccount();
         } else {
@@ -113,7 +113,7 @@ public class ProjectMemberInvitePresenter extends AbstractPresenter<ProjectMembe
             contentLayout.with(ELabel.html(infoDiv.write()));
 
             Div introDiv = new Div().appendText("Below users are invited to the project ")
-                    .appendChild(new B().appendText(CurrentProjectVariables.getProject().getName()))
+                    .appendChild(new B().appendText(CurrentProjectVariables.INSTANCE.getProject().getName()))
                     .appendText(" as role ").appendChild(new B().appendText(invitation.getRoleName()));
             contentLayout.with(ELabel.html(introDiv.write()));
 

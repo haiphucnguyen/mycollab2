@@ -2,6 +2,7 @@ package com.mycollab.module.project.view.ticket;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.QueryI18nEnum;
+import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.query.ConstantValueInjector;
@@ -54,7 +55,7 @@ public class TicketSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSe
             savedFilterComboBox.addQuerySelectListener(new SavedFilterComboBox.QuerySelectListener() {
                 @Override
                 public void querySelect(SavedFilterComboBox.QuerySelectEvent querySelectEvent) {
-                    List<SearchFieldInfo> fieldInfos = querySelectEvent.getSearchFieldInfos();
+                    List<SearchFieldInfo<? extends SearchCriteria>> fieldInfos = querySelectEvent.getSearchFieldInfos();
                     ProjectTicketSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(ProjectTicketSearchCriteria.class,
                             fieldInfos);
                     criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
@@ -62,7 +63,7 @@ public class TicketSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSe
                     EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, fieldInfos));
                 }
             });
-            ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTICKET()).getHtml()).withWidthUndefined();
+            ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET).getHtml()).withWidthUndefined();
             return new MHorizontalLayout(taskIcon, savedFilterComboBox).expand(savedFilterComboBox).alignAll(Alignment.MIDDLE_LEFT);
         } else {
             return null;
@@ -147,12 +148,12 @@ public class TicketSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSe
 
         @Override
         protected ProjectTicketSearchCriteria fillUpSearchCriteria() {
-            List<SearchFieldInfo> searchFieldInfos = new ArrayList<>();
-            searchFieldInfos.add(new SearchFieldInfo(SearchField.Companion.getAND(), ProjectTicketSearchCriteria.p_name,
+            List<SearchFieldInfo<? extends SearchCriteria>> searchFieldInfos = new ArrayList<>();
+            searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, ProjectTicketSearchCriteria.p_name,
                     QueryI18nEnum.StringI18nEnum.CONTAINS.name(),
                     ConstantValueInjector.valueOf(nameField.getValue().trim())));
             if (myItemCheckbox.getValue()) {
-                searchFieldInfos.add(new SearchFieldInfo(SearchField.Companion.getAND(), ProjectTicketSearchCriteria.p_assignee,
+                searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, ProjectTicketSearchCriteria.p_assignee,
                         QueryI18nEnum.CollectionI18nEnum.IN.name(),
                         ConstantValueInjector.valueOf(Collections.singletonList(UserUIContext.getUsername()))));
             }
@@ -167,7 +168,7 @@ public class TicketSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSe
         private static final long serialVersionUID = 1L;
 
         private TicketAdvancedSearchLayout() {
-            super(TicketSearchPanel.this, ProjectTypeConstants.INSTANCE.getTICKET());
+            super(TicketSearchPanel.this, ProjectTypeConstants.TICKET);
         }
 
         @Override

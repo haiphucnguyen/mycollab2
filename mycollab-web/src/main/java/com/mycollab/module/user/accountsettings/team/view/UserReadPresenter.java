@@ -27,7 +27,7 @@ import com.vaadin.ui.UI;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_USER(), impliedPermissionVal = AccessPermissionFlag.Companion.getREAD_ONLY())
+@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_USER, impliedPermissionVal = AccessPermissionFlag.READ_ONLY)
 public class UserReadPresenter extends AbstractPresenter<UserReadView> {
     private static final long serialVersionUID = 1L;
 
@@ -51,7 +51,7 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
             @Override
             public void onDelete(final User data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -80,7 +80,7 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getACCOUNT_USER())) {
+        if (UserUIContext.canRead(RolePermissionCollections.ACCOUNT_USER)) {
             String username = (String) data.getParams();
 
             UserService userService = AppContextUtil.getSpringBean(UserService.class);
@@ -91,7 +91,7 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
                 userContainer.addComponent(view);
                 view.previewItem(user);
 
-                AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
+                AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
                 breadcrumb.gotoUserRead(user);
             } else {
                 NotificationUtil.showErrorNotification(UserUIContext.getMessage(UserI18nEnum.ERROR_NO_USER_IN_ACCOUNT, username));

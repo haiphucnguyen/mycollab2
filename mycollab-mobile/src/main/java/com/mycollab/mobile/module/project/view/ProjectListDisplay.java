@@ -62,8 +62,8 @@ public class ProjectListDisplay extends DefaultPagedBeanList<ProjectService, Pro
             Div nonBillableHoursDiv = new Div().appendText(FontAwesome.GIFT.getHtml() + " " + NumberUtils.roundDouble(2, project.getTotalNonBillableHours()));
             nonBillableHoursDiv.setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
 
-            Div metaDiv = new Div().appendChild(activeMembersDiv, DivLessFormatter.EMPTY_SPACE(), createdTimeDiv, DivLessFormatter.EMPTY_SPACE(),
-                    billableHoursDiv, DivLessFormatter.EMPTY_SPACE(), nonBillableHoursDiv);
+            Div metaDiv = new Div().appendChild(activeMembersDiv, DivLessFormatter.EMPTY_SPACE, createdTimeDiv, DivLessFormatter.EMPTY_SPACE,
+                    billableHoursDiv, DivLessFormatter.EMPTY_SPACE, nonBillableHoursDiv);
             if (project.getLead() != null) {
                 Div leadDiv = new Div().appendChild(new Img("",
                                 AppContextUtil.getSpringBean(AbstractStorageService.class)
@@ -71,7 +71,7 @@ public class ProjectListDisplay extends DefaultPagedBeanList<ProjectService, Pro
                         new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(project.getId(), project.getLead()))
                                 .appendText(project.getLeadFullName())).setTitle(UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER));
                 metaDiv.appendChild(0, leadDiv);
-                metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE());
+                metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE);
             }
             metaDiv.setCSSClass("flex");
             metaInfo.addComponent(ELabel.html(metaDiv.write()).withStyleName(UIConstants.META_INFO));

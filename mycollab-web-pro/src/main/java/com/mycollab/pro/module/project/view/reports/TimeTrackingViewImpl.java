@@ -127,7 +127,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         if (CollectionUtils.isNotEmpty(projects)) {
             itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
-            Label titleLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTIME()).getHtml() + " " +
+            Label titleLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() + " " +
                     UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TIMESHEET));
 
             MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true,
@@ -318,11 +318,11 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
                 int typeId = itemLogging.getTypeid();
                 int projectId = itemLogging.getProjectid();
 
-                if (ProjectTypeConstants.INSTANCE.getBUG().equals(itemLogging.getType())) {
+                if (ProjectTypeConstants.BUG.equals(itemLogging.getType())) {
                     PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
                             new BugScreenData.Read(typeId));
                     EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
-                } else if (ProjectTypeConstants.INSTANCE.getTASK().equals(itemLogging.getType())) {
+                } else if (ProjectTypeConstants.TASK.equals(itemLogging.getType())) {
                     PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
                             new TaskScreenData.Read(typeId));
                     EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));

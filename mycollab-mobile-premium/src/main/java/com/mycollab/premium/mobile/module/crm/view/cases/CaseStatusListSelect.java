@@ -14,6 +14,6 @@ class CaseStatusListSelect extends I18NValueListSelect {
 
     CaseStatusListSelect() {
         setCaption(null);
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getCasesStatusList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.casesStatusList));
     }
 }

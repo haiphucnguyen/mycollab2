@@ -36,7 +36,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public class ComponentPreviewForm extends AdvancedPreviewBeanForm<SimpleComponent> {
     @Override
     public void setBean(SimpleComponent bean) {
-        setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT(), ComponentDefaultFormLayoutFactory.getForm(),
+        setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.BUG_COMPONENT, ComponentDefaultFormLayoutFactory.getForm(),
                 Component.Field.name.name()));
         setBeanFormFieldFactory(new ReadFormFieldFactory(this));
         super.setBean(bean);

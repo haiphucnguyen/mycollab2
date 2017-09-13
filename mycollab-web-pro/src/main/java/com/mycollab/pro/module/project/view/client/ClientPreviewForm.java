@@ -14,7 +14,7 @@ import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 public class ClientPreviewForm extends AdvancedPreviewBeanForm<SimpleAccount> {
     @Override
     public void setBean(SimpleAccount bean) {
-        this.setFormLayoutFactory(new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getACCOUNT(), AccountDefaultDynaFormLayoutFactory.getForm()));
+        this.setFormLayoutFactory(new DefaultDynaFormLayout(CrmTypeConstants.ACCOUNT, AccountDefaultDynaFormLayoutFactory.getForm()));
         this.setBeanFormFieldFactory(new AccountReadFormFieldFactory(this));
         super.setBean(bean);
     }

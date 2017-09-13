@@ -7,13 +7,18 @@ import java.util.*
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class DateTimeSearchField(operation: String, comparison: String, dateVal: Date, value: Date = DateTimeUtils.convertDateTimeToUTC(dateVal)) : SearchField(operation) {
+class DateTimeSearchField(operation: String, val comparison: String, val dateVal: Date, val value: Date = DateTimeUtils.convertDateTimeToUTC(dateVal)) : SearchField(operation) {
     companion object {
-        val LESS_THAN = "<"
-        val LESS_THAN_EQUAL = "<="
-        val GREATER_THAN = ">"
-        val GREATER_THAN_EQUAL = ">="
-        val EQUAL = "="
-        val NOT_EQUAL = "<>"
+        @JvmField val LESS_THAN = "<"
+
+        @JvmField val LESS_THAN_EQUAL = "<="
+
+        @JvmField val GREATER_THAN = ">"
+
+        @JvmField val GREATER_THAN_EQUAL = ">="
+
+        @JvmField val EQUAL = "="
+
+        @JvmField val NOT_EQUAL = "<>"
     }
 }

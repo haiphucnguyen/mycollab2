@@ -106,27 +106,27 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             myProjectTab.addSelectedTabChangeListener(selectedTabChangeEvent -> {
                 Tab tab = ((VerticalTabsheet) selectedTabChangeEvent.getSource()).getSelectedTab();
                 String caption = ((TabImpl) tab).getTabId();
-                if (ProjectTypeConstants.INSTANCE.getMESSAGE().equals(caption)) {
+                if (ProjectTypeConstants.MESSAGE.equals(caption)) {
                     messagePresenter.go(ProjectViewImpl.this, null);
-                } else if (ProjectTypeConstants.INSTANCE.getMILESTONE().equals(caption)) {
+                } else if (ProjectTypeConstants.MILESTONE.equals(caption)) {
                     milestonesPresenter.go(ProjectViewImpl.this, new MilestoneScreenData.Roadmap());
-                } else if (ProjectTypeConstants.INSTANCE.getTICKET().equals(caption)) {
+                } else if (ProjectTypeConstants.TICKET.equals(caption)) {
                     ticketPresenter.go(ProjectViewImpl.this, null);
-                } else if (ProjectTypeConstants.INSTANCE.getFILE().equals(caption)) {
+                } else if (ProjectTypeConstants.FILE.equals(caption)) {
                     filePresenter.go(ProjectViewImpl.this, new FileScreenData.GotoDashboard());
-                } else if (ProjectTypeConstants.INSTANCE.getPAGE().equals(caption)) {
+                } else if (ProjectTypeConstants.PAGE.equals(caption)) {
                     pagePresenter.go(ProjectViewImpl.this,
                             new PageScreenData.Search(PathUtils.INSTANCE.getProjectDocumentPath(AppUI.getAccountId(), project.getId())));
-                } else if (ProjectTypeConstants.INSTANCE.getDASHBOARD().equals(caption)) {
+                } else if (ProjectTypeConstants.DASHBOARD.equals(caption)) {
                     dashboardPresenter.go(ProjectViewImpl.this, null);
-                } else if (ProjectTypeConstants.INSTANCE.getMEMBER().equals(caption)) {
+                } else if (ProjectTypeConstants.MEMBER.equals(caption)) {
                     ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
                     criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                    criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.INSTANCE.getACTIVE(), ProjectMemberStatusConstants.INSTANCE.getNOT_ACCESS_YET()));
+                    criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET));
                     userPresenter.go(ProjectViewImpl.this, new ProjectMemberScreenData.Search(criteria));
-                } else if (ProjectTypeConstants.INSTANCE.getFINANCE().equals(caption)) {
+                } else if (ProjectTypeConstants.FINANCE.equals(caption)) {
                     financePresenter.go(ProjectViewImpl.this, null);
-                } else if (ProjectTypeConstants.INSTANCE.getREPORTS().equals(caption)) {
+                } else if (ProjectTypeConstants.REPORTS.equals(caption)) {
                     reportPresenter.go(ProjectViewImpl.this, null);
                 }
             });
@@ -147,7 +147,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             if (project.getContextask() == null || project.getContextask()) {
                 ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();
                 searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                searchCriteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.INSTANCE.getACTIVE(), ProjectMemberStatusConstants.INSTANCE.getNOT_ACCESS_YET()));
+                searchCriteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET));
                 ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
                 int totalMembers = prjMemberService.getTotalCount(searchCriteria);
                 if (totalMembers < 2) {
@@ -171,64 +171,64 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         private void buildComponents() {
             Integer prjId = CurrentProjectVariables.getProjectId();
 
-            myProjectTab.addTab(constructProjectDashboardComponent(), ProjectTypeConstants.INSTANCE.getDASHBOARD(), 1,
+            myProjectTab.addTab(constructProjectDashboardComponent(), ProjectTypeConstants.DASHBOARD, 1,
                     UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD),
                     GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateProjectLink(prjId),
-                    ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getDASHBOARD()));
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.DASHBOARD));
 
-            if (CurrentProjectVariables.hasMessageFeature()) {
-                myProjectTab.addTab(constructProjectMessageComponent(), ProjectTypeConstants.INSTANCE.getMESSAGE(), 2,
+            if (CurrentProjectVariables.INSTANCE.hasMessageFeature()) {
+                myProjectTab.addTab(constructProjectMessageComponent(), ProjectTypeConstants.MESSAGE, 2,
                         UserUIContext.getMessage(MessageI18nEnum.LIST),
                         GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateMessagesLink(prjId),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMESSAGE()));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE));
             } else {
-                myProjectTab.removeTab(ProjectTypeConstants.INSTANCE.getMESSAGE());
+                myProjectTab.removeTab(ProjectTypeConstants.MESSAGE);
             }
 
-            if (CurrentProjectVariables.hasPhaseFeature()) {
-                myProjectTab.addTab(constructProjectMilestoneComponent(), ProjectTypeConstants.INSTANCE.getMILESTONE(), 3,
+            if (CurrentProjectVariables.INSTANCE.hasPhaseFeature()) {
+                myProjectTab.addTab(constructProjectMilestoneComponent(), ProjectTypeConstants.MILESTONE, 3,
                         UserUIContext.getMessage(MilestoneI18nEnum.LIST),
                         GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateMilestonesLink(prjId),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
             } else {
-                myProjectTab.removeTab(ProjectTypeConstants.INSTANCE.getMILESTONE());
+                myProjectTab.removeTab(ProjectTypeConstants.MILESTONE);
             }
 
-            if (CurrentProjectVariables.hasTicketFeature()) {
+            if (CurrentProjectVariables.INSTANCE.hasTicketFeature()) {
                 myProjectTab.addTab(constructTaskDashboardComponent(),
-                        ProjectTypeConstants.INSTANCE.getTICKET(), 4, UserUIContext.getMessage(TicketI18nEnum.LIST),
+                        ProjectTypeConstants.TICKET, 4, UserUIContext.getMessage(TicketI18nEnum.LIST),
                         GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateTicketDashboardLink(prjId),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTICKET()));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET));
             } else {
-                myProjectTab.removeTab(ProjectTypeConstants.INSTANCE.getTICKET());
+                myProjectTab.removeTab(ProjectTypeConstants.TICKET);
             }
 
-            if (CurrentProjectVariables.hasPageFeature()) {
-                myProjectTab.addTab(constructProjectPageComponent(), ProjectTypeConstants.INSTANCE.getPAGE(), 6,
+            if (CurrentProjectVariables.INSTANCE.hasPageFeature()) {
+                myProjectTab.addTab(constructProjectPageComponent(), ProjectTypeConstants.PAGE, 6,
                         UserUIContext.getMessage(PageI18nEnum.LIST),
                         GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateProjectLink(prjId),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPAGE()));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE));
             } else {
-                myProjectTab.removeTab(ProjectTypeConstants.INSTANCE.getPAGE());
+                myProjectTab.removeTab(ProjectTypeConstants.PAGE);
             }
 
-            if (CurrentProjectVariables.hasFileFeature()) {
-                myProjectTab.addTab(constructProjectFileComponent(), ProjectTypeConstants.INSTANCE.getFILE(), 7,
+            if (CurrentProjectVariables.INSTANCE.hasFileFeature()) {
+                myProjectTab.addTab(constructProjectFileComponent(), ProjectTypeConstants.FILE, 7,
                         UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
                         GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateFileDashboardLink(prjId),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getFILE()));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE));
             } else {
-                myProjectTab.removeTab(ProjectTypeConstants.INSTANCE.getFILE());
+                myProjectTab.removeTab(ProjectTypeConstants.FILE);
             }
 
-            if ((CurrentProjectVariables.hasTimeFeature() || CurrentProjectVariables.hasInvoiceFeature())
+            if ((CurrentProjectVariables.INSTANCE.hasTimeFeature() || CurrentProjectVariables.INSTANCE.hasInvoiceFeature())
                     && !SiteConfiguration.isCommunityEdition()) {
-                myProjectTab.addTab(constructTimeTrackingComponent(), ProjectTypeConstants.INSTANCE.getFINANCE(), 10,
+                myProjectTab.addTab(constructTimeTrackingComponent(), ProjectTypeConstants.FINANCE, 10,
                         UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FINANCE),
                         GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateTimeReportLink(prjId),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getFINANCE()));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.FINANCE));
             } else {
-                myProjectTab.removeTab(ProjectTypeConstants.INSTANCE.getFINANCE());
+                myProjectTab.removeTab(ProjectTypeConstants.FINANCE);
             }
 
 //            myProjectTab.addTab(constructProjectReportComponent(), ProjectTypeConstants.REPORTS, 12,
@@ -236,10 +236,10 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
 //                    GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateProjectLink(prjId),
 //                    ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE));
 
-            myProjectTab.addTab(constructProjectUsers(), ProjectTypeConstants.INSTANCE.getMEMBER(), 13,
+            myProjectTab.addTab(constructProjectUsers(), ProjectTypeConstants.MEMBER, 13,
                     UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_MEMBER),
                     GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM() + ProjectLinkGenerator.INSTANCE.generateUsersLink(prjId),
-                    ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMEMBER()));
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.MEMBER));
 
             myProjectTab.addToggleNavigatorControl();
         }
@@ -295,7 +295,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
 
             MButton skipBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_SKIP), clickEvent -> {
                 ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-                SimpleProject project = CurrentProjectVariables.getProject();
+                SimpleProject project = CurrentProjectVariables.INSTANCE.getProject();
                 project.setContextask(false);
                 projectService.updateSelectiveWithSession(project, UserUIContext.getUsername());
                 close();

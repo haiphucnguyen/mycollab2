@@ -127,14 +127,14 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
 
         final AuditLogSearchCriteria logCriteria = new AuditLogSearchCriteria();
         logCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-        logCriteria.setModule(StringSearchField.and(ModuleNameConstants.INSTANCE.getCRM()));
+        logCriteria.setModule(StringSearchField.and(ModuleNameConstants.CRM));
         logCriteria.setType(StringSearchField.and(type));
         logCriteria.setTypeId(StringSearchField.and(typeId));
         final int logCount = auditLogService.getTotalCount(logCriteria);
         setTotalNums(commentCount + logCount);
 
-        List<SimpleComment> comments = commentService.findPageableListByCriteria(new BasicSearchRequest<>(commentCriteria));
-        List<SimpleAuditLog> auditLogs = auditLogService.findPageableListByCriteria(new BasicSearchRequest<>(logCriteria));
+        List<SimpleComment> comments = (List<SimpleComment>) commentService.findPageableListByCriteria(new BasicSearchRequest<>(commentCriteria));
+        List<SimpleAuditLog> auditLogs = (List<SimpleAuditLog>) auditLogService.findPageableListByCriteria(new BasicSearchRequest<>(logCriteria));
         List activities = new ArrayList(commentCount + logCount);
         activities.addAll(comments);
         activities.addAll(auditLogs);
@@ -179,7 +179,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
         if (hasDeletePermission(comment)) {
             MButton msgDeleteBtn = new MButton("", clickEvent ->
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

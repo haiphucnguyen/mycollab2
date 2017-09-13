@@ -126,7 +126,7 @@ public class UnresolvedTicketByPriorityWidget extends Depot {
         public void buttonClick(final ClickEvent event) {
             String key = ((ButtonI18nComp) event.getButton()).getKey();
             ProjectTicketSearchCriteria criteria = BeanUtility.deepClone(searchCriteria);
-            criteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
+            criteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
             criteria.addExtraField(ProjectTicketSearchCriteria.p_priority.andStringParamInList(Collections.singletonList(key)));
             EventBusFactory.getInstance().post(new TicketEvent.SearchRequest(this, criteria));
         }

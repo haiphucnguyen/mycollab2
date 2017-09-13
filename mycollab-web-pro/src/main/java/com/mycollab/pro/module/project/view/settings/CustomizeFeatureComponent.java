@@ -34,7 +34,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
     }
 
     private void constructBody() {
-        final ProjectCustomizeView customizeView = CurrentProjectVariables.getFeatures();
+        final ProjectCustomizeView customizeView = CurrentProjectVariables.INSTANCE.getFeatures();
 
         MVerticalLayout body = new MVerticalLayout().withFullWidth();
 
@@ -45,25 +45,25 @@ public class CustomizeFeatureComponent extends BlockWidget {
         leftColLayout.setWidth("100%");
 
         final FeatureSelectionBox displayMsgSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMESSAGE()),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE),
                 UserUIContext.getMessage(MessageI18nEnum.LIST),
                 customizeView.getDisplaymessage());
         leftColLayout.addComponent(displayMsgSelection);
 
         final FeatureSelectionBox displayPhaseSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE),
                 UserUIContext.getMessage(MilestoneI18nEnum.LIST),
                 customizeView.getDisplaymilestone());
         leftColLayout.addComponent(displayPhaseSelection);
 
         final FeatureSelectionBox displayTicketSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTICKET()),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET),
                 UserUIContext.getMessage(TicketI18nEnum.LIST),
                 customizeView.getDisplayticket());
         leftColLayout.addComponent(displayTicketSelection);
 
         final FeatureSelectionBox displayPageSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPAGE()),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE),
                 UserUIContext.getMessage(PageI18nEnum.LIST),
                 customizeView.getDisplaypage());
         leftColLayout.addComponent(displayPageSelection);
@@ -73,25 +73,25 @@ public class CustomizeFeatureComponent extends BlockWidget {
         MVerticalLayout rightColLayout = new MVerticalLayout().withFullWidth().withMargin(false);
 
         final FeatureSelectionBox displayFileSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getFILE()),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
                 customizeView.getDisplayfile());
         rightColLayout.addComponent(displayFileSelection);
 
         final FeatureSelectionBox displayTimeSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTIME()),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
                 customizeView.getDisplaytimelogging());
         rightColLayout.addComponent(displayTimeSelection);
 
         final FeatureSelectionBox displayStandupSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getSTANDUP()),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
                 customizeView.getDisplaystandup());
         rightColLayout.addComponent(displayStandupSelection);
 
         final FeatureSelectionBox displayInvoiceSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getINVOICE()),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE),
                 UserUIContext.getMessage(InvoiceI18nEnum.LIST),
                 customizeView.getDisplayinvoice());
         rightColLayout.addComponent(displayInvoiceSelection);
@@ -116,9 +116,9 @@ public class CustomizeFeatureComponent extends BlockWidget {
                 projectCustomizeService.updateWithSession(customizeView, UserUIContext.getUsername());
             }
 
-            CurrentProjectVariables.getProject().setCustomizeView(customizeView);
+            CurrentProjectVariables.INSTANCE.getProject().setCustomizeView(customizeView);
             EventBusFactory.getInstance().post(new CustomizeUIEvent.UpdateFeaturesList(CustomizeFeatureComponent.this));
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE).withVisible(CurrentProjectVariables.isAdmin());
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE).withVisible(CurrentProjectVariables.INSTANCE.isAdmin());
 
         body.addComponent(updateFeaturesBtn);
         this.addToBody(body);

@@ -77,21 +77,21 @@ public class ProjectTicketServiceImpl extends AbstractProjectTicketServiceImpl {
         BugWithBLOBs bug = new BugWithBLOBs();
         bug.setStatus(BugStatus.Resolved.name());
         BugSearchCriteria bugSearchCriteria = new BugSearchCriteria();
-        bugSearchCriteria.addExtraField(BugSearchCriteria.p_milestones.buildPropertyParamInList(SearchField.Companion.getAND(),
+        bugSearchCriteria.addExtraField(BugSearchCriteria.p_milestones.buildPropertyParamInList(SearchField.AND,
                 Collections.singleton(milestoneId)));
         bugService.updateBySearchCriteria(bug, bugSearchCriteria);
 
         Risk risk = new Risk();
         risk.setStatus(StatusI18nEnum.Closed.name());
         RiskSearchCriteria riskSearchCriteria = new RiskSearchCriteria();
-        riskSearchCriteria.addExtraField(RiskSearchCriteria.p_milestones.buildPropertyParamInList(SearchField.Companion.getAND(),
+        riskSearchCriteria.addExtraField(RiskSearchCriteria.p_milestones.buildPropertyParamInList(SearchField.AND,
                 Collections.singleton(milestoneId)));
         riskService.updateBySearchCriteria(risk, riskSearchCriteria);
 
         Task task = new Task();
         task.setStatus(StatusI18nEnum.Closed.name());
         TaskSearchCriteria taskSearchCriteria = new TaskSearchCriteria();
-        taskSearchCriteria.addExtraField(TaskSearchCriteria.p_milestoneId.buildPropertyParamInList(SearchField.Companion.getAND(),
+        taskSearchCriteria.addExtraField(TaskSearchCriteria.p_milestoneId.buildPropertyParamInList(SearchField.AND,
                 Collections.singleton(milestoneId)));
         taskService.updateBySearchCriteria(task, taskSearchCriteria);
 

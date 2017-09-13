@@ -59,7 +59,7 @@ public class UserUIContext implements Serializable {
     private Boolean isValidAccount = true;
 
     public UserUIContext() {
-        MyCollabSession.putCurrentUIVariable("context", this);
+        MyCollabSession.INSTANCE.putCurrentUIVariable("context", this);
     }
 
     /**
@@ -69,7 +69,7 @@ public class UserUIContext implements Serializable {
      */
     public static UserUIContext getInstance() {
         try {
-            UserUIContext context = (UserUIContext) MyCollabSession.getCurrentUIVariable("context");
+            UserUIContext context = (UserUIContext) MyCollabSession.INSTANCE.getCurrentUIVariable("context");
             if (context == null) {
                 throw new SessionExpireException("Session is expired");
             }
@@ -114,7 +114,7 @@ public class UserUIContext implements Serializable {
         messageHelper = LocalizationHelper.getMessageConveyor(userLocale);
 
         userTimeZone = TimezoneVal.valueOf(session.getTimezone());
-        MyCollabSession.putSessionVariable(USER_VAL, userSession);
+        MyCollabSession.putSessionVariable(MyCollabSession.USER_VAL, userSession);
     }
 
     public boolean isMatchAccount(Integer sAccountId) {
@@ -124,9 +124,9 @@ public class UserUIContext implements Serializable {
     public void clearSessionVariables() {
         session = null;
         billingAccount = null;
-        MyCollabSession.removeSessionVariable(USER_VAL);
-        MyCollabSession.removeCurrentUIVariable(PRESENTER_VAL);
-        MyCollabSession.removeCurrentUIVariable(VIEW_MANAGER_VAL);
+        MyCollabSession.removeSessionVariable(MyCollabSession.USER_VAL);
+        MyCollabSession.removeCurrentUIVariable(MyCollabSession.PRESENTER_VAL);
+        MyCollabSession.removeCurrentUIVariable(MyCollabSession.VIEW_MANAGER_VAL);
     }
 
     public void setIsValidAccount(Boolean isValidAccount) {
@@ -288,7 +288,7 @@ public class UserUIContext implements Serializable {
 
     public static String getPermissionCaptionValue(PermissionMap permissionMap, String permissionItem) {
         Integer perVal = permissionMap.get(permissionItem);
-        return UserUIContext.getMessage(PermissionFlag.Companion.toVal(perVal));
+        return UserUIContext.getMessage(PermissionFlag.toVal(perVal));
     }
 
     /**
@@ -301,10 +301,10 @@ public class UserUIContext implements Serializable {
         } else {
             DateTime jodaDate = new DateTime(date).toDateTime(DateTimeZone.forTimeZone(UserUIContext.getUserTimeZone()));
             if (jodaDate.getHourOfDay() > 0 || jodaDate.getMinuteOfHour() > 0) {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getDateTimeFormat()).withLocale(UserUIContext.getUserLocale());
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.Companion.getDateTimeFormat()).withLocale(UserUIContext.getUserLocale());
                 return formatter.print(jodaDate);
             } else {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getDateFormat()).withLocale(UserUIContext.getUserLocale());
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.Companion.getDateFormat()).withLocale(UserUIContext.getUserLocale());
                 return formatter.print(jodaDate);
             }
         }
@@ -315,7 +315,7 @@ public class UserUIContext implements Serializable {
      * @return
      */
     public static String formatDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getDateFormat(), UserUIContext.getUserLocale(),
+        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.Companion.getDateFormat(), UserUIContext.getUserLocale(),
                 UserUIContext.getUserTimeZone());
     }
 
@@ -333,7 +333,7 @@ public class UserUIContext implements Serializable {
     }
 
     public static String formatShortDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getShortDateFormat(), UserUIContext.getUserLocale(),
+        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.Companion.getShortDateFormat(), UserUIContext.getUserLocale(),
                 UserUIContext.getUserTimeZone());
     }
 

@@ -9,7 +9,7 @@ import com.mycollab.vaadin.UserUIContext
  * @since 6.0.0
  */
 object CrmLocalizationTypeMap {
-    fun getType(key: String): String {
+    @JvmStatic fun getType(key: String): String {
         return when (key) {
             CrmTypeConstants.ACCOUNT -> UserUIContext.getMessage(AccountI18nEnum.SINGLE)
             CrmTypeConstants.CALL -> UserUIContext.getMessage(CallI18nEnum.SINGLE)

@@ -23,10 +23,10 @@ public class SetupPresenter extends AbstractPresenter<SetupView> {
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (UserUIContext.isAdmin()) {
             AccountModule accountContainer = (AccountModule) container;
-            accountContainer.gotoSubView(SettingUIConstants.SETUP);
+            accountContainer.gotoSubView(SettingUIConstants.INSTANCE.getSETUP());
             view.displaySetup();
 
-            AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
+            AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
             breadcrumb.gotoSetup();
         } else {
             NotificationUtil.showMessagePermissionAlert();

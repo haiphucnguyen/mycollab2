@@ -10,6 +10,6 @@ public class CountryListSelect extends ValueListSelect {
 	private static final long serialVersionUID = 1L;
 
 	public CountryListSelect() {
-		loadData(CountryValueFactory.getCountryList());
+		loadData(CountryValueFactory.countryList);
 	}
 }

@@ -31,7 +31,7 @@ public class OpportunityAddViewImpl extends AbstractEditItemComp<SimpleOpportuni
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY());
+        return CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class OpportunityAddViewImpl extends AbstractEditItemComp<SimpleOpportuni
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getOPPORTUNITY(), OpportunityDefaultDynaFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.OPPORTUNITY, OpportunityDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override

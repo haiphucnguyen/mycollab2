@@ -59,7 +59,7 @@ public class OpportunityListViewImpl extends AbstractListPageView<OpportunitySea
         };
         MButton newOpportunityBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new OpportunityEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY()));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
         return new MHorizontalLayout(searchBtn, newOpportunityBtn).alignAll(Alignment.TOP_RIGHT);
     }
 

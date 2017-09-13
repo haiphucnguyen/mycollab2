@@ -39,8 +39,8 @@ public final class TaskHistoryFieldFormat implements HistoryFieldFormat {
 
             if (task != null) {
                 if (displayAsHtml) {
-                    return ProjectLinkBuilder.INSTANCE.generateProjectItemHtmlLinkAndTooltip(CurrentProjectVariables.getShortName(),
-                            task.getProjectid(), task.getName(), ProjectTypeConstants.INSTANCE.getTASK(), task.getId() + "");
+                    return ProjectLinkBuilder.INSTANCE.generateProjectItemHtmlLinkAndTooltip(CurrentProjectVariables.INSTANCE.getShortName(),
+                            task.getProjectid(), task.getName(), ProjectTypeConstants.TASK, task.getId() + "");
                 } else {
                     return task.getName();
                 }

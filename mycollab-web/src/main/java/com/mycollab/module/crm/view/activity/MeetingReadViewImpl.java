@@ -28,7 +28,7 @@ public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting> 
     private CrmFollowersComp<SimpleMeeting> followersComp;
 
     public MeetingReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getMEETING()));
+        super(CrmAssetsManager.getAsset(CrmTypeConstants.MEETING));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting> 
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.INSTANCE.getCRM_MEETING());
+        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_MEETING);
     }
 
     @Override
@@ -60,20 +60,20 @@ public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting> 
 
     @Override
     protected void initRelatedComponents() {
-        activityComponent = new CrmActivityComponent(CrmTypeConstants.INSTANCE.getMEETING());
+        activityComponent = new CrmActivityComponent(CrmTypeConstants.MEETING);
 
         dateInfoComp = new DateInfoComp();
-        followersComp = new CrmFollowersComp<>(CrmTypeConstants.INSTANCE.getMEETING(), RolePermissionCollections.INSTANCE.getCRM_MEETING());
+        followersComp = new CrmFollowersComp<>(CrmTypeConstants.MEETING, RolePermissionCollections.CRM_MEETING);
         addToSideBar(dateInfoComp, followersComp);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.INSTANCE.getDETAIL(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getDETAIL()));
-        tabSheet.selectTab(CrmTypeConstants.INSTANCE.getDETAIL());
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+        tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getMEETING(), MeetingDefaultFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.MEETING, MeetingDefaultFormLayoutFactory.getForm());
     }
 
     @Override
@@ -93,6 +93,6 @@ public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting> 
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getMEETING();
+        return CrmTypeConstants.MEETING;
     }
 }

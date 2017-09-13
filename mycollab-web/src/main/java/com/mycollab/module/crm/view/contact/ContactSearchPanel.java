@@ -44,7 +44,7 @@ public class ContactSearchPanel extends DefaultGenericSearchPanel<ContactSearchC
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getCONTACT(), UserUIContext.getMessage(ContactI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ContactSearchPanel extends DefaultGenericSearchPanel<ContactSearchC
         return new MButton(UserUIContext.getMessage(ContactI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CONTACT()));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CONTACT));
     }
 
     @Override
@@ -119,7 +119,7 @@ public class ContactSearchPanel extends DefaultGenericSearchPanel<ContactSearchC
     private class ContactAdvancedSearchLayout extends DynamicQueryParamLayout<ContactSearchCriteria> {
 
         ContactAdvancedSearchLayout() {
-            super(ContactSearchPanel.this, CrmTypeConstants.INSTANCE.getCONTACT());
+            super(ContactSearchPanel.this, CrmTypeConstants.CONTACT);
         }
 
         @Override

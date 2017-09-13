@@ -28,7 +28,7 @@ public class InvoicePresenter extends AbstractPresenter<IInvoiceContainer> imple
         contentLayout.addView(view);
         view.display();
 
-        ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+        ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
         breadCrumb.gotoInvoiceView();
     }
 }

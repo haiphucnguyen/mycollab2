@@ -37,13 +37,13 @@ public class TicketDashboardPresenter extends ProjectGenericListPresenter<Ticket
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canReadTicket()) {
+        if (CurrentProjectVariables.INSTANCE.canReadTicket()) {
             TicketContainer ticketContainer = (TicketContainer) container;
             ticketContainer.setContent(view);
             String query = (data != null && data.getParams() instanceof String) ? (String) data.getParams() : "";
             view.displayView(query);
 
-            ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoTicketDashboard(query);
         } else {
             throw new SecureAccessException();

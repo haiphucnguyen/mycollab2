@@ -35,7 +35,7 @@ public class CampaignListDisplay extends DefaultPagedBeanList<CampaignService, C
             A itemLink = new A(CrmLinkBuilder.INSTANCE.generateCampaignPreviewLinkFull(campaign.getId())).appendText(campaign.getCampaignname());
             MCssLayout itemWrap = new MCssLayout(ELabel.html(itemLink.write()));
             rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.getAsset
-                    (CrmTypeConstants.INSTANCE.getCAMPAIGN())), itemWrap).expand(itemWrap).withFullWidth());
+                    (CrmTypeConstants.CAMPAIGN)), itemWrap).expand(itemWrap).withFullWidth());
             return rowLayout;
         }
 

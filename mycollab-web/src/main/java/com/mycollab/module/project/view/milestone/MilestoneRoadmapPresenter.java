@@ -21,13 +21,13 @@ public class MilestoneRoadmapPresenter extends ProjectGenericPresenter<Milestone
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.MILESTONES)) {
             MilestoneContainer milestoneContainer = (MilestoneContainer) container;
-            milestoneContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getMILESTONE());
+            milestoneContainer.navigateToContainer(ProjectTypeConstants.MILESTONE);
             milestoneContainer.setContent(view);
 
             view.lazyLoadView();
-            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
             breadcrumb.gotoRoadmap();
         } else {
             throw new SecureAccessException();

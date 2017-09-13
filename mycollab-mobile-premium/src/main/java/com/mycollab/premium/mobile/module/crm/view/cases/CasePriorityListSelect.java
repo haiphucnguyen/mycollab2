@@ -14,6 +14,6 @@ class CasePriorityListSelect extends I18NValueListSelect {
 
     CasePriorityListSelect() {
         setCaption(null);
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getCasesPriorityList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.casesPriorityList));
     }
 }

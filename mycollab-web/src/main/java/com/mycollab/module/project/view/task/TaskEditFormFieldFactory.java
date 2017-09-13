@@ -120,7 +120,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             Task beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
                 String attachmentPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(),
-                        beanItem.getProjectid(), ProjectTypeConstants.INSTANCE.getTASK(), "" + beanItem.getId());
+                        beanItem.getProjectid(), ProjectTypeConstants.TASK, "" + beanItem.getId());
                 attachmentUploadField = new AttachmentUploadField(attachmentPath);
             } else {
                 attachmentUploadField = new AttachmentUploadField();

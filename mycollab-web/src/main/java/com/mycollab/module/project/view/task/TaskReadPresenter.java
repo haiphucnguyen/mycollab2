@@ -66,7 +66,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
             @Override
             public void onPrint(Object source, SimpleTask data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.INSTANCE.getTASK(), Task.Field.name.name(),
+                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.TASK, Task.Field.name.name(),
                         TaskDefaultFormLayoutFactory.getForm(), Task.Field.name.name(), Task.Field.id.name(),
                         Task.Field.parenttaskid.name(), "selected"));
             }
@@ -74,7 +74,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
             @Override
             public void onDelete(final SimpleTask data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -105,7 +105,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
                 TaskSearchCriteria criteria = new TaskSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                criteria.addExtraField(TaskSearchCriteria.p_taskkey.buildSearchField(SearchField.Companion.getAND(), NumberI18nEnum.GREATER_THAN.name(),
+                criteria.addExtraField(TaskSearchCriteria.p_taskkey.buildSearchField(SearchField.AND, NumberI18nEnum.GREATER_THAN.name(),
                         task.getTaskkey()));
                 Integer nextId = taskService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -121,7 +121,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
                 TaskSearchCriteria criteria = new TaskSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(task.getProjectid()));
-                criteria.addExtraField(TaskSearchCriteria.p_taskkey.buildSearchField(SearchField.Companion.getAND(), NumberI18nEnum.LESS_THAN.name(),
+                criteria.addExtraField(TaskSearchCriteria.p_taskkey.buildSearchField(SearchField.AND, NumberI18nEnum.LESS_THAN.name(),
                         task.getTaskkey()));
                 Integer nextId = taskService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -135,7 +135,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.TASKS)) {
             TicketContainer ticketContainer = (TicketContainer) container;
             ticketContainer.setContent(view);
             if (data.getParams() instanceof Integer) {
@@ -144,7 +144,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
                 if (task != null) {
                     view.previewItem(task);
-                    ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+                    ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
                     breadCrumb.gotoTaskRead(task);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

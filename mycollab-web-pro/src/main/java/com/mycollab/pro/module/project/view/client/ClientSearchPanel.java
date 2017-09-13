@@ -39,7 +39,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getACCOUNT(), UserUIContext.getMessage(ClientI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.ACCOUNT, UserUIContext.getMessage(ClientI18nEnum.LIST));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
         MButton createBtn = new MButton(UserUIContext.getMessage(ClientI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
-        createBtn.setVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT()));
+        createBtn.setVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
         return createBtn;
     }
 
@@ -64,7 +64,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
     private class AccountAdvancedSearchLayout extends DynamicQueryParamLayout<AccountSearchCriteria> {
 
         private AccountAdvancedSearchLayout() {
-            super(ClientSearchPanel.this, CrmTypeConstants.INSTANCE.getACCOUNT());
+            super(ClientSearchPanel.this, CrmTypeConstants.ACCOUNT);
         }
 
         @Override

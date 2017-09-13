@@ -43,7 +43,7 @@ public class VersionAddViewImpl extends AbstractEditItemComp<Version> implements
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG_VERSION());
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class VersionAddViewImpl extends AbstractEditItemComp<Version> implements
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getBUG_VERSION(), VersionDefaultFormLayoutFactory.getForm(), "id");
+        return new DefaultDynaFormLayout(ProjectTypeConstants.BUG_VERSION, VersionDefaultFormLayoutFactory.getForm(), "id");
     }
 
     @Override

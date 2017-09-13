@@ -21,39 +21,39 @@ import java.util.Arrays;
 public class RiskSearchCriteria extends SearchCriteria {
     private static final long serialVersionUID = 1L;
 
-    public static final Param p_assignee = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getRISK(), GenericI18Enum.FORM_ASSIGNEE,
+    public static final Param p_assignee = CacheParamMapper.register(ProjectTypeConstants.RISK, GenericI18Enum.FORM_ASSIGNEE,
             new PropertyListParam("assignuser", "m_prj_risk", "assignUser"));
 
-    public static final Param p_raisedUser = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getRISK(), RiskI18nEnum.FORM_RAISED_BY,
+    public static final Param p_raisedUser = CacheParamMapper.register(ProjectTypeConstants.RISK, RiskI18nEnum.FORM_RAISED_BY,
             new PropertyListParam("createdUser", "m_prj_risk", "createdUser"));
 
-    public static final Param p_duedate = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getRISK(), GenericI18Enum.FORM_DUE_DATE,
+    public static final Param p_duedate = CacheParamMapper.register(ProjectTypeConstants.RISK, GenericI18Enum.FORM_DUE_DATE,
             new DateParam("dueDate", "m_prj_risk", "dueDate"));
 
-    public static final Param p_raiseddate = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getRISK(), GenericI18Enum.FORM_CREATED_TIME,
+    public static final Param p_raiseddate = CacheParamMapper.register(ProjectTypeConstants.RISK, GenericI18Enum.FORM_CREATED_TIME,
             new DateParam("raiseddate", "m_prj_risk", "dateraised"));
 
-    public static final Param p_status = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getRISK(), GenericI18Enum.FORM_STATUS,
+    public static final Param p_status = CacheParamMapper.register(ProjectTypeConstants.RISK, GenericI18Enum.FORM_STATUS,
             new I18nStringListParam("status", "m_prj_risk", "status", Arrays.asList(
                     StatusI18nEnum.Open, StatusI18nEnum.Closed)));
 
-    public static final PropertyListParam<Integer> p_milestones = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getRISK(),
+    public static final PropertyListParam<Integer> p_milestones = CacheParamMapper.register(ProjectTypeConstants.RISK,
             MilestoneI18nEnum.SINGLE, new PropertyListParam<Integer>("milestones", "m_prj_risk", "milestoneId"));
 
-    public static final Param p_probalitity = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getRISK(), RiskI18nEnum.FORM_PROBABILITY,
+    public static final Param p_probalitity = CacheParamMapper.register(ProjectTypeConstants.RISK, RiskI18nEnum.FORM_PROBABILITY,
             new I18nStringListParam("probalitity", "m_prj_risk", "probalitity",
                     Arrays.asList(RiskProbability.Certain, RiskProbability.Likely, RiskProbability.Possible,
                             RiskProbability.Unlikely, RiskProbability.Rare)));
 
-    public static final Param p_consequence = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getRISK(), RiskI18nEnum.FORM_CONSEQUENCE,
+    public static final Param p_consequence = CacheParamMapper.register(ProjectTypeConstants.RISK, RiskI18nEnum.FORM_CONSEQUENCE,
             new I18nStringListParam("consequence", "m_prj_risk", "consequence",
                     Arrays.asList(RiskConsequence.Catastrophic, RiskConsequence.Critical, RiskConsequence.Marginal,
                             RiskConsequence.Negligible)));
 
-    public static final Param p_createdtime = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getRISK(), GenericI18Enum.FORM_CREATED_TIME,
+    public static final Param p_createdtime = CacheParamMapper.register(ProjectTypeConstants.RISK, GenericI18Enum.FORM_CREATED_TIME,
             new DateParam("createdtime", "m_prj_risk", "createdTime"));
 
-    public static final Param p_lastupdatedtime = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getRISK(), GenericI18Enum.FORM_LAST_UPDATED_TIME,
+    public static final Param p_lastupdatedtime = CacheParamMapper.register(ProjectTypeConstants.RISK, GenericI18Enum.FORM_LAST_UPDATED_TIME,
             new DateParam("lastupdatedtime", "m_prj_risk", "lastUpdatedTime"));
 
     private StringSearchField name;

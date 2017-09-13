@@ -25,10 +25,10 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.web.CustomLayoutExt;
@@ -106,7 +106,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         baseCriteria = new MilestoneSearchCriteria();
         baseCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-        List<SimpleMilestone> milestones = milestoneService.findAbsoluteListByCriteria(baseCriteria, 0, Integer.MAX_VALUE);
+        List<SimpleMilestone> milestones = (List<SimpleMilestone>) milestoneService.findAbsoluteListByCriteria(baseCriteria, 0, Integer.MAX_VALUE);
         int totalClosedMilestones = 0, totalInprogressMilestones = 0, totalFutureMilestones = 0;
 
         for (SimpleMilestone milestone : milestones) {
@@ -129,7 +129,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
     }
 
     private void initUI() {
-        HeaderWithFontAwesome headerText = ComponentUtils.headerH2(ProjectTypeConstants.INSTANCE.getMILESTONE(),
+        HeaderWithFontAwesome headerText = ComponentUtils.headerH2(ProjectTypeConstants.MILESTONE,
                 UserUIContext.getMessage(MilestoneI18nEnum.LIST));
 
         MHorizontalLayout header = new MHorizontalLayout().withStyleName("hdr-view").withFullWidth().withMargin(true)
@@ -146,7 +146,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
         }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES()));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         layout.with(createBtn);
 
         MButton printBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new

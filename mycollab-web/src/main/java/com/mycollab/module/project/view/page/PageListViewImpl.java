@@ -92,7 +92,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
     }
 
     private void initHeader() {
-        HeaderWithFontAwesome headerText = ComponentUtils.headerH2(ProjectTypeConstants.INSTANCE.getPAGE(),
+        HeaderWithFontAwesome headerText = ComponentUtils.headerH2(ProjectTypeConstants.PAGE,
                 UserUIContext.getMessage(PageI18nEnum.LIST));
 
         headerLayout.with(headerText).alignAll(Alignment.MIDDLE_LEFT).expand(headerText);
@@ -141,13 +141,13 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
         MButton newGroupBtn = new MButton(UserUIContext.getMessage(PageI18nEnum.NEW_GROUP),
                 clickEvent -> UI.getCurrent().addWindow(new GroupPageAddWindow()))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
-        newGroupBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getPAGES()));
+        newGroupBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
         headerLayout.with(newGroupBtn).withAlign(newGroupBtn, Alignment.MIDDLE_RIGHT);
 
         MButton newPageBtn = new MButton(UserUIContext.getMessage(PageI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new PageEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
-        newPageBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getPAGES()));
+        newPageBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
 
         headerLayout.with(newPageBtn).withAlign(newPageBtn, Alignment.MIDDLE_RIGHT);
     }
@@ -179,7 +179,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
     private Layout displayFolderBlock(final Folder resource) {
         MVerticalLayout container = new MVerticalLayout().withFullWidth().withStyleName("page-item-block");
 
-        A folderHtml = new A(ProjectLinkBuilder.INSTANCE.generatePageFolderFullLink(CurrentProjectVariables
+        A folderHtml = new A(ProjectLinkBuilder.INSTANCE.generatePageFolderFullLink(CurrentProjectVariables.INSTANCE
                 .getProjectId(), resource.getPath())).appendText(FontAwesome.FOLDER_OPEN.getHtml() + " " + resource.getName());
         ELabel folderLink = ELabel.h3(folderHtml.write());
         container.addComponent(folderLink);
@@ -197,11 +197,11 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                 clickEvent -> UI.getCurrent().addWindow(new GroupPageAddWindow(resource)))
                 .withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING).withIcon(FontAwesome.EDIT);
-        editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getPAGES()));
+        editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
 
         MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -214,7 +214,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
                         }
                     });
         }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING);
-        deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getPAGES()));
+        deleteBtn.setVisible(CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.PAGES));
 
         container.addComponent(new MHorizontalLayout(editBtn, deleteBtn));
         return container;
@@ -239,11 +239,11 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                 clickEvent -> EventBusFactory.getInstance().post(new PageEvent.GotoEdit(PageListViewImpl.this, resource)))
                 .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING);
-        editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getPAGES()));
+        editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
 
         MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -256,7 +256,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
                         }
                     });
         }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING);
-        deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getPAGES()));
+        deleteBtn.setVisible(CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.PAGES));
 
         container.addComponent(new MHorizontalLayout(editBtn, deleteBtn));
         return container;

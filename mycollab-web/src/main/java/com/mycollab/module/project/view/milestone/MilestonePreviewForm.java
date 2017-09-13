@@ -50,7 +50,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMilestone> {
     @Override
     public void setBean(SimpleMilestone bean) {
-        this.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.INSTANCE.getMILESTONE(), MilestoneDefaultFormLayoutFactory.getForm(),
+        this.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.MILESTONE, MilestoneDefaultFormLayoutFactory.getForm(),
                 Milestone.Field.name.name()));
         this.setBeanFormFieldFactory(new MilestoneFormFieldFactory(this));
         super.setBean(bean);
@@ -85,7 +85,7 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
                 containerField.addComponentField(new AssignmentsComp(beanItem));
                 return containerField;
             } else if (Milestone.Field.saccountid.equalTo(propertyId)) {
-                return new ProjectFormAttachmentDisplayField(beanItem.getProjectid(), ProjectTypeConstants.INSTANCE.getMILESTONE(),
+                return new ProjectFormAttachmentDisplayField(beanItem.getProjectid(), ProjectTypeConstants.MILESTONE,
                         beanItem.getId());
             }
             return null;
@@ -127,15 +127,15 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
 
             final CheckBox taskSelection = new CheckBox(UserUIContext.getMessage(TaskI18nEnum.LIST), true);
             taskSelection.addValueChangeListener(valueChangeEvent -> updateTypeSearchStatus(taskSelection.getValue(),
-                    ProjectTypeConstants.INSTANCE.getTASK()));
+                    ProjectTypeConstants.TASK));
 
             final CheckBox bugSelection = new CheckBox(UserUIContext.getMessage(BugI18nEnum.LIST), true);
             bugSelection.addValueChangeListener(valueChangeEvent -> updateTypeSearchStatus(bugSelection.getValue(),
-                    ProjectTypeConstants.INSTANCE.getBUG()));
+                    ProjectTypeConstants.BUG));
 
             final CheckBox riskSelection = new CheckBox(UserUIContext.getMessage(RiskI18nEnum.LIST), true);
             riskSelection.addValueChangeListener(valueChangeEvent -> updateTypeSearchStatus(riskSelection.getValue(),
-                    ProjectTypeConstants.INSTANCE.getRISK()));
+                    ProjectTypeConstants.RISK));
 
             header.with(openSelection, overdueSelection, spacingLbl1, taskSelection, bugSelection, riskSelection, spacingLbl2)
                     .withAlign(openSelection, Alignment.MIDDLE_LEFT).withAlign(overdueSelection, Alignment.MIDDLE_LEFT)
@@ -148,7 +148,7 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
             searchCriteria = new ProjectTicketSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
             searchCriteria.setIsOpenned(new SearchField());
-            searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.INSTANCE.getBUG(), ProjectTypeConstants.INSTANCE.getTASK(), ProjectTypeConstants.INSTANCE.getRISK()));
+            searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK, ProjectTypeConstants.RISK));
             searchCriteria.setMilestoneId(new NumberSearchField(beanItem.getId()));
             updateSearchStatus();
         }
@@ -189,7 +189,7 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
                 status = UserUIContext.getMessage(StatusI18nEnum.class, genericTask.getStatus());
             }
             rowComp.with(new ELabel(status).withStyleName(UIConstants.BLOCK).withWidthUndefined());
-            String avatarLink = StorageUtils.INSTANCE.getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
+            String avatarLink = StorageUtils.getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
             Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                     .setTitle(genericTask.getAssignUserFullName());
 

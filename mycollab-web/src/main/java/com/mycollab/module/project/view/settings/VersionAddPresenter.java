@@ -70,13 +70,13 @@ public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getVERSIONS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS)) {
             VersionContainer versionContainer = (VersionContainer) container;
             versionContainer.addComponent(view);
             Version version = (Version) data.getParams();
             view.editItem(version);
 
-            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
             if (version.getId() == null) {
                 breadcrumb.gotoVersionAdd();
             } else {

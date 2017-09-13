@@ -57,7 +57,7 @@ public class MilestoneEditFormFieldFactory extends AbstractBeanFieldGroupEditFie
             Milestone beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
                 String attachmentPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(),
-                        beanItem.getProjectid(), ProjectTypeConstants.INSTANCE.getMILESTONE(), "" + beanItem.getId());
+                        beanItem.getProjectid(), ProjectTypeConstants.MILESTONE, "" + beanItem.getId());
                 attachmentUploadField = new AttachmentUploadField(attachmentPath);
             } else {
                 attachmentUploadField = new AttachmentUploadField();

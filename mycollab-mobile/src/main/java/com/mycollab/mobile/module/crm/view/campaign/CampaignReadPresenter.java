@@ -75,7 +75,7 @@ public class CampaignReadPresenter extends AbstractCrmPresenter<CampaignReadView
                 CampaignService contactService = AppContextUtil.getSpringBean(CampaignService.class);
                 CampaignSearchCriteria criteria = new CampaignSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = contactService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new CampaignEvent.GotoRead(this, nextId));
@@ -89,7 +89,7 @@ public class CampaignReadPresenter extends AbstractCrmPresenter<CampaignReadView
                 CampaignService contactService = AppContextUtil.getSpringBean(CampaignService.class);
                 CampaignSearchCriteria criteria = new CampaignSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = contactService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new CampaignEvent.GotoRead(this, nextId));
@@ -102,7 +102,7 @@ public class CampaignReadPresenter extends AbstractCrmPresenter<CampaignReadView
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
             if (data.getParams() instanceof Integer) {
                 CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
                 SimpleCampaign campaign = campaignService.findById((Integer) data.getParams(), AppUI.getAccountId());

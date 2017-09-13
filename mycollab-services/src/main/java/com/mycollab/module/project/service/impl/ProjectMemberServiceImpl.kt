@@ -127,10 +127,6 @@ class ProjectMemberServiceImpl : DefaultService<Int, ProjectMember, ProjectMembe
         return projectMemberMapperExt!!.getActiveUsersInProjects(projectIds, sAccountId)
     }
 
-    override fun findPageableListByCriteria(searchRequest: BasicSearchRequest<ProjectMemberSearchCriteria>): List<*> {
-        return super.findPageableListByCriteria(searchRequest)
-    }
-
     override fun getActiveUserOfProject(username: String, projectId: Int, @CacheKey sAccountId: Int): SimpleUser? {
         return projectMemberMapperExt!!.getActiveUserOfProject(username, projectId, sAccountId)
     }

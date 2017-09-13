@@ -3,6 +3,7 @@ package com.mycollab.module.project.view.task;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.QueryI18nEnum.CollectionI18nEnum;
 import com.mycollab.db.arguments.NumberSearchField;
+import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SearchField;
 import com.mycollab.db.query.ConstantValueInjector;
 import com.mycollab.db.query.Param;
@@ -64,14 +65,14 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
             savedFilterComboBox.addQuerySelectListener(new SavedFilterComboBox.QuerySelectListener() {
                 @Override
                 public void querySelect(SavedFilterComboBox.QuerySelectEvent querySelectEvent) {
-                    List<SearchFieldInfo> fieldInfos = querySelectEvent.getSearchFieldInfos();
+                    List<SearchFieldInfo<?>> fieldInfos = querySelectEvent.getSearchFieldInfos();
                     TaskSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class, fieldInfos);
                     criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                     EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(TaskSearchPanel.this, criteria));
                     EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, fieldInfos));
                 }
             });
-            ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()).getHtml()).withWidthUndefined();
+            ELabel taskIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml()).withWidthUndefined();
             return new MHorizontalLayout(taskIcon, savedFilterComboBox).expand(savedFilterComboBox).alignAll(Alignment.MIDDLE_LEFT);
         } else {
             return null;
@@ -156,16 +157,15 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
 
         @Override
         protected TaskSearchCriteria fillUpSearchCriteria() {
-            List<SearchFieldInfo> searchFieldInfos = new ArrayList<>();
-            searchFieldInfos.add(new SearchFieldInfo(SearchField.Companion.getAND(), TaskSearchCriteria.p_taskname, StringI18nEnum.CONTAINS.name(),
+            List<SearchFieldInfo<? extends SearchCriteria>> searchFieldInfos = new ArrayList<>();
+            searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, TaskSearchCriteria.p_taskname, StringI18nEnum.CONTAINS.name(),
                     ConstantValueInjector.valueOf(nameField.getValue().trim())));
             if (myItemCheckbox.getValue()) {
-                searchFieldInfos.add(new SearchFieldInfo(SearchField.Companion.getAND(), TaskSearchCriteria.p_assignee, CollectionI18nEnum.IN.name(),
+                searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, TaskSearchCriteria.p_assignee, CollectionI18nEnum.IN.name(),
                         ConstantValueInjector.valueOf(Collections.singletonList(UserUIContext.getUsername()))));
             }
             EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, searchFieldInfos));
-            searchCriteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class,
-                    searchFieldInfos);
+            searchCriteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class, searchFieldInfos);
             searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
             return searchCriteria;
         }
@@ -175,7 +175,7 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
         private static final long serialVersionUID = 1L;
 
         private TaskAdvancedSearchLayout() {
-            super(TaskSearchPanel.this, ProjectTypeConstants.INSTANCE.getTASK());
+            super(TaskSearchPanel.this, ProjectTypeConstants.TASK);
         }
 
         @Override

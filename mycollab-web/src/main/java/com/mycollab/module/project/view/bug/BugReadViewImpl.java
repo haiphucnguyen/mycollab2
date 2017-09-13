@@ -77,7 +77,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     public BugReadViewImpl() {
         super(UserUIContext.getMessage(BugI18nEnum.DETAIL),
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()), new BugPreviewFormLayout());
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG), new BugPreviewFormLayout());
     }
 
     @Override
@@ -133,7 +133,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
             bugWorkflowControl.addComponent(navButton);
         }
-        bugWorkflowControl.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+        bugWorkflowControl.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
     }
 
     @Override
@@ -150,15 +150,15 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     @Override
     protected void initRelatedComponents() {
-        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getBUG(), CurrentProjectVariables.getProjectId());
+        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG, CurrentProjectVariables.getProjectId());
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        bugFollowersList = new ProjectFollowersComp<>(ProjectTypeConstants.INSTANCE.getBUG(), ProjectRolePermissionCollections.INSTANCE.getBUGS());
+        bugFollowersList = new ProjectFollowersComp<>(ProjectTypeConstants.BUG, ProjectRolePermissionCollections.BUGS);
 
         if (SiteConfiguration.isCommunityEdition()) {
             addToSideBar(dateInfoComp, peopleInfoComp, bugFollowersList);
         } else {
-            bugTimeLogList = ViewManager.getCacheComponent(BugTimeLogSheet.class);
+            bugTimeLogList = ViewManager.INSTANCE.getCacheComponent(BugTimeLogSheet.class);
             addToSideBar(dateInfoComp, peopleInfoComp, bugTimeLogList, bugFollowersList);
         }
     }
@@ -166,7 +166,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     @Override
     protected void onPreviewItem() {
         if (tagViewComponent != null) {
-            tagViewComponent.display(ProjectTypeConstants.INSTANCE.getBUG(), beanItem.getId());
+            tagViewComponent.display(ProjectTypeConstants.BUG, beanItem.getId());
         }
         if (bugTimeLogList != null) {
             bugTimeLogList.displayTime(beanItem);
@@ -185,7 +185,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     @Override
     protected String getType() {
-        return ProjectTypeConstants.INSTANCE.getBUG();
+        return ProjectTypeConstants.BUG;
     }
 
     private static class BugPreviewFormLayout extends ReadViewLayout {
@@ -248,7 +248,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     @Override
     protected HorizontalLayout createButtonControls() {
         ProjectPreviewFormControlsGenerator<SimpleBug> bugPreviewFormControls = new ProjectPreviewFormControlsGenerator<>(previewForm);
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
             MButton linkBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.OPT_BUG_DEPENDENCIES),
                     clickEvent -> UI.getCurrent().addWindow(new LinkIssueWindow(beanItem)))
                     .withIcon(FontAwesome.BOLT);
@@ -262,12 +262,12 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                         | ProjectPreviewFormControlsGenerator.PRINT_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.NAVIGATOR_BTN_PRESENTED,
-                ProjectRolePermissionCollections.INSTANCE.getBUGS());
+                ProjectRolePermissionCollections.BUGS);
 
         MButton assignBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ASSIGN),
                 clickEvent -> UI.getCurrent().addWindow(new AssignBugWindow(beanItem)))
                 .withIcon(FontAwesome.SHARE).withStyleName(WebThemes.BUTTON_ACTION);
-        assignBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+        assignBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
 
         bugWorkflowControl = new CssLayout();
         bugPreviewFormControls.insertToControlBlock(bugWorkflowControl);
@@ -281,7 +281,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         if (SiteConfiguration.isCommunityEdition()) {
             return null;
         } else {
-            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
             return tagViewComponent;
         }
     }

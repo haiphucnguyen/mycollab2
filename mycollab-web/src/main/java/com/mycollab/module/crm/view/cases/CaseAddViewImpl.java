@@ -31,7 +31,7 @@ public class CaseAddViewImpl extends AbstractEditItemComp<SimpleCase> implements
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCASE());
+        return CrmAssetsManager.getAsset(CrmTypeConstants.CASE);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class CaseAddViewImpl extends AbstractEditItemComp<SimpleCase> implements
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getCASE(), CasesDefaultFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.CASE, CasesDefaultFormLayoutFactory.getForm());
     }
 
     @Override

@@ -76,7 +76,7 @@ public class CaseReadPresenter extends AbstractCrmPresenter<CaseReadView> {
                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
                 CaseSearchCriteria criteria = new CaseSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = caseService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new CaseEvent.GotoRead(this, nextId));
@@ -91,7 +91,7 @@ public class CaseReadPresenter extends AbstractCrmPresenter<CaseReadView> {
                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
                 CaseSearchCriteria criteria = new CaseSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = caseService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new CaseEvent.GotoRead(this, nextId));
@@ -104,7 +104,7 @@ public class CaseReadPresenter extends AbstractCrmPresenter<CaseReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CASE())) {
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_CASE)) {
 
             if (data.getParams() instanceof Integer) {
                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);

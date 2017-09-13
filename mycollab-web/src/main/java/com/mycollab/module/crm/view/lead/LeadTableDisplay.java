@@ -61,7 +61,7 @@ public class LeadTableDisplay extends DefaultPagedBeanTable<LeadService, LeadSea
             }
             b.setDescription(CrmTooltipGenerator.INSTANCE.generateTooltipLead(
                     UserUIContext.getUserLocale(), lead,
-                    AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
         });
 

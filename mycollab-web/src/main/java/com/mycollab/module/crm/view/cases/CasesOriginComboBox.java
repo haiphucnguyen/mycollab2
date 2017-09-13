@@ -13,8 +13,7 @@ public class CasesOriginComboBox extends I18nValueComboBox {
     private static final long serialVersionUID = 1L;
 
     public CasesOriginComboBox() {
-        super();
         setCaption(null);
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getCasesOrigin()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.casesOrigin));
     }
 }

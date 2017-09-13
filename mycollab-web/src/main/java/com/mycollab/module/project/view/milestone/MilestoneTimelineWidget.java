@@ -1,10 +1,11 @@
 package com.mycollab.module.project.view.milestone;
 
+import com.hp.gagawa.java.elements.*;
 import com.mycollab.common.i18n.DayI18nEnum;
-import com.mycollab.db.arguments.SearchCriteria;
-import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.core.utils.StringUtils;
+import com.mycollab.db.arguments.BasicSearchRequest;
+import com.mycollab.db.arguments.SearchCriteria;
+import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -20,7 +21,6 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.hp.gagawa.java.elements.*;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -28,7 +28,6 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CssLayout;
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Collections;
 import java.util.List;
@@ -68,7 +67,7 @@ public class MilestoneTimelineWidget extends DDVerticalLayout {
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(Milestone.Field.enddate.name(), "ASC")));
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-        milestones = milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        milestones = (List<SimpleMilestone>) milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
 
         this.addComponent(headerLayout);
         timelineContainer = new CssLayout();
@@ -129,9 +128,9 @@ public class MilestoneTimelineWidget extends DDVerticalLayout {
 
             A milestoneDiv = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink
                     (milestone.getProjectid(), milestone.getId())).appendText(ProjectAssetsManager.getAsset
-                    (ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true))
+                    (ProjectTypeConstants.MILESTONE).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true))
                     .setId("tag" + TOOLTIP_ID);
-            milestoneDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.INSTANCE.getMILESTONE(),
+            milestoneDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.MILESTONE,
                     milestone.getId() + ""));
             milestoneDiv.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 

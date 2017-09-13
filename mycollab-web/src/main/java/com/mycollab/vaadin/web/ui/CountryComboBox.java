@@ -14,7 +14,7 @@ public class CountryComboBox extends ComboBox {
     private static final long serialVersionUID = 1L;
 
     public CountryComboBox() {
-        String[] countryList = CountryValueFactory.getCountryList();
+        String[] countryList = CountryValueFactory.countryList;
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
         for (String country : countryList) {
             Locale obj = new Locale("", country);

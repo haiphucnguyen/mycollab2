@@ -35,7 +35,7 @@ public class ContactListDisplay extends DefaultPagedBeanList<ContactService, Con
             A itemLink = new A(CrmLinkBuilder.INSTANCE.generateContactPreviewLinkFull(contact.getId())).appendText(contact.getContactName());
             MCssLayout itemWrap = new MCssLayout(ELabel.html(itemLink.write()));
             rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.getAsset
-                    (CrmTypeConstants.INSTANCE.getCONTACT())), itemWrap).expand(itemWrap).withFullWidth());
+                    (CrmTypeConstants.CONTACT)), itemWrap).expand(itemWrap).withFullWidth());
             return rowLayout;
         }
 

@@ -115,7 +115,7 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
                         comment.setCreatedtime(new GregorianCalendar().getTime());
                         comment.setCreateduser(UserUIContext.getUsername());
                         comment.setSaccountid(AppUI.getAccountId());
-                        comment.setType(ProjectTypeConstants.INSTANCE.getBUG());
+                        comment.setType(ProjectTypeConstants.BUG);
                         comment.setTypeid("" + bug.getId());
                         comment.setExtratypeid(CurrentProjectVariables.getProjectId());
 

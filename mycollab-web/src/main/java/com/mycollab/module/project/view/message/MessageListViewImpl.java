@@ -136,7 +136,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
             timePostLbl.setStyleName(UIConstants.META_INFO);
 
             MButton deleteBtn = new MButton("", clickEvent -> ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -147,7 +147,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                             messageList.setSearchCriteria(searchCriteria);
                         }
                     })).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
-            deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getMESSAGES()));
+            deleteBtn.setVisible(CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.MESSAGES));
 
             MHorizontalLayout rightHeader = new MHorizontalLayout();
             rightHeader.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
@@ -172,7 +172,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
             ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
             List<Content> attachments = attachmentService.getContents(AttachmentUtils.INSTANCE
                     .getProjectEntityAttachmentPath(AppUI.getAccountId(),
-                            message.getProjectid(), ProjectTypeConstants.INSTANCE.getMESSAGE(), "" + message.getId()));
+                            message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
             if (CollectionUtils.isNotEmpty(attachments)) {
                 HorizontalLayout attachmentNotification = new HorizontalLayout();
                 Label attachmentCountLbl = new Label(Integer.toString(attachments.size()));
@@ -284,7 +284,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
 
                     String attachmentPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(
                             AppUI.getAccountId(), message.getProjectid(),
-                            ProjectTypeConstants.INSTANCE.getMESSAGE(), "" + message.getId());
+                            ProjectTypeConstants.MESSAGE, "" + message.getId());
                     attachments.saveContentsToRepo(attachmentPath);
                 } else {
                     titleField.addStyleName("errorField");
@@ -308,7 +308,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                 MButton createMessageBtn = new MButton(UserUIContext.getMessage(MessageI18nEnum.NEW),
                         clickEvent -> createAddMessageLayout())
                         .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                        .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMESSAGES()));
+                        .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
 
                 messagePanelBody.addComponent(createMessageBtn);
                 messagePanelBody.setComponentAlignment(createMessageBtn, Alignment.MIDDLE_RIGHT);
@@ -331,7 +331,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
 
         @Override
         protected FontAwesome viewIcon() {
-            return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMESSAGE());
+            return ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE);
         }
 
         @Override
@@ -356,7 +356,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
 
         @Override
         protected boolean hasPermission() {
-            return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMESSAGES());
+            return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES);
         }
     }
 }

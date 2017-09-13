@@ -23,7 +23,7 @@ public class ComponentListNoItemView extends ProjectListNoItemView {
 
     @Override
     protected FontAwesome viewIcon() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT());
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_COMPONENT);
     }
 
     @Override
@@ -53,6 +53,6 @@ public class ComponentListNoItemView extends ProjectListNoItemView {
 
     @Override
     protected boolean hasPermission() {
-        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS());
+        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS);
     }
 }

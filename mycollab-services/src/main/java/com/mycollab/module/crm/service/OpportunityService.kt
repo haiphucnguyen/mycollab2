@@ -18,7 +18,7 @@ import com.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria
 interface OpportunityService : IDefaultService<Int, Opportunity, OpportunitySearchCriteria> {
 
     @Cacheable
-    fun findById(opportunityId: Int?, @CacheKey sAccountId: Int?): SimpleOpportunity
+    fun findById(opportunityId: Int, @CacheKey sAccountId: Int): SimpleOpportunity?
 
     @Cacheable
     fun getSalesStageSummary(@CacheKey criteria: OpportunitySearchCriteria): List<GroupItem>

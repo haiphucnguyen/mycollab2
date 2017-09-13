@@ -236,8 +236,8 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
             this.setMargin(new MarginInfo(false, false, false, true));
             removeAllComponents();
             ProjectActivityComponent activityComponent;
-            if (ProjectTypeConstants.INSTANCE.getBUG().equals(assignment.getType())) {
-                if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
+            if (ProjectTypeConstants.BUG.equals(assignment.getType())) {
+                if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.BUGS)) {
                     BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                     final SimpleBug bug = bugService.findById(Integer.parseInt(assignment.getTypeId()), AppUI.getAccountId());
                     if (bug != null) {
@@ -245,19 +245,19 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
-                                printBtn.doPrint(bug, new FormReportLayout(ProjectTypeConstants.INSTANCE.getBUG(), BugWithBLOBs.Field.name.name(),
+                                printBtn.doPrint(bug, new FormReportLayout(ProjectTypeConstants.BUG, BugWithBLOBs.Field.name.name(),
                                         BugDefaultFormLayoutFactory.getForm(), SimpleBug.Field.components.name(), SimpleBug.Field
                                         .affectedVersions.name(), SimpleBug.Field.fixedVersions.name(), BugWithBLOBs.Field.id.name(),
                                         SimpleBug.Field.selected.name()))
                         );
                         printBtn.setStyleName(WebThemes.BUTTON_OPTION);
                         printBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_PRINT));
-                        printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+                        printBtn.setVisible(CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.BUGS));
 
                         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoEdit(this, bug)))
                                 .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
-                                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+                                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn).withAlign(printBtn, Alignment.TOP_RIGHT)
                                 .withAlign(editBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
@@ -265,15 +265,15 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         BugPreviewForm form = new BugPreviewForm();
                         form.setBean(bug);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getBUG(), assignment.getProjectId());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG, assignment.getProjectId());
                         activityComponent.loadActivities("" + bug.getId());
                         addComponent(activityComponent);
                     }
                 } else {
                     addComponent(ELabel.h3(UserUIContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
-            } else if (ProjectTypeConstants.INSTANCE.getTASK().equals(assignment.getType())) {
-                if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+            } else if (ProjectTypeConstants.TASK.equals(assignment.getType())) {
+                if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.TASKS)) {
                     ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                     final SimpleTask task = taskService.findById(Integer.parseInt(assignment.getTypeId()), AppUI.getAccountId());
                     if (task != null) {
@@ -281,18 +281,18 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
-                                printBtn.doPrint(task, new FormReportLayout(ProjectTypeConstants.INSTANCE.getTASK(), Task.Field.name.name(),
+                                printBtn.doPrint(task, new FormReportLayout(ProjectTypeConstants.TASK, Task.Field.name.name(),
                                         TaskDefaultFormLayoutFactory.getForm(), Task.Field.name.name(), Task.Field.id.name(),
                                         Task.Field.parenttaskid.name()))
                         );
                         printBtn.setStyleName(WebThemes.BUTTON_OPTION);
                         printBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_PRINT));
-                        printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+                        printBtn.setVisible(CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.TASKS));
 
                         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(this, task)))
                                 .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
-                                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS()));
+                                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
                                 .withAlign(printBtn, Alignment.TOP_RIGHT).withAlign(editBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
@@ -300,15 +300,15 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         TaskPreviewForm form = new TaskPreviewForm();
                         form.setBean(task);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getTASK(), assignment.getProjectId());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.TASK, assignment.getProjectId());
                         activityComponent.loadActivities("" + task.getId());
                         addComponent(activityComponent);
                     }
                 } else {
                     addComponent(ELabel.h3(UserUIContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
-            } else if (ProjectTypeConstants.INSTANCE.getMILESTONE().equals(assignment.getType())) {
-                if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
+            } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType())) {
+                if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.MILESTONES)) {
                     MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                     final SimpleMilestone milestone = milestoneService.findById(Integer.parseInt(assignment.getTypeId()),
                             AppUI.getAccountId());
@@ -318,15 +318,15 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.withListener(clickEvent ->
-                                printBtn.doPrint(milestone, new FormReportLayout(ProjectTypeConstants.INSTANCE.getMILESTONE(), Milestone.Field.name.name(),
+                                printBtn.doPrint(milestone, new FormReportLayout(ProjectTypeConstants.MILESTONE, Milestone.Field.name.name(),
                                         MilestoneDefaultFormLayoutFactory.getForm(), Milestone.Field.id.name()))
                         ).withStyleName(WebThemes.BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_PRINT))
-                                .withVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getMILESTONES()));
+                                .withVisible(CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.MILESTONES));
 
                         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(this, milestone)))
                                 .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
-                                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES()));
+                                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
                                 .withAlign(printBtn, Alignment.TOP_RIGHT).withAlign(editBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
@@ -334,15 +334,15 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         MilestonePreviewForm form = new MilestonePreviewForm();
                         form.setBean(milestone);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getMILESTONE(), assignment.getProjectId());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.MILESTONE, assignment.getProjectId());
                         activityComponent.loadActivities("" + milestone.getId());
                         addComponent(activityComponent);
                     }
                 } else {
                     addComponent(ELabel.h3(UserUIContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
-            } else if (ProjectTypeConstants.INSTANCE.getRISK().equals(assignment.getType())) {
-                if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getRISKS())) {
+            } else if (ProjectTypeConstants.RISK.equals(assignment.getType())) {
+                if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.RISKS)) {
                     RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                     final SimpleRisk risk = riskService.findById(Integer.parseInt(assignment.getTypeId()), AppUI.getAccountId());
                     if (risk != null) {
@@ -350,17 +350,17 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
-                                printBtn.doPrint(risk, new FormReportLayout(ProjectTypeConstants.INSTANCE.getRISK(), Risk.Field.name.name(),
+                                printBtn.doPrint(risk, new FormReportLayout(ProjectTypeConstants.RISK, Risk.Field.name.name(),
                                         RiskDefaultFormLayoutFactory.getForm()))
                         );
                         printBtn.setStyleName(WebThemes.BUTTON_OPTION);
                         printBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_PRINT));
-                        printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getRISKS()));
+                        printBtn.setVisible(CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.RISKS));
 
                         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoEdit(this, risk)))
                                 .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
-                                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS()));
+                                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
                                 .withAlign(printBtn, Alignment.TOP_RIGHT).withAlign(editBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
@@ -368,15 +368,15 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         RiskPreviewForm form = new RiskPreviewForm();
                         form.setBean(risk);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getRISK(), assignment.getProjectId());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.RISK, assignment.getProjectId());
                         activityComponent.loadActivities("" + risk.getId());
                         addComponent(activityComponent);
                     }
                 } else {
                     addComponent(ELabel.h3(UserUIContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
-            } else if (ProjectTypeConstants.INSTANCE.getBUG_COMPONENT().equals(assignment.getType())) {
-                if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS())) {
+            } else if (ProjectTypeConstants.BUG_COMPONENT.equals(assignment.getType())) {
+                if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
                     ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
                     final SimpleComponent component = componentService.findById(Integer.parseInt(assignment.getTypeId()),
                             AppUI.getAccountId());
@@ -385,18 +385,18 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
-                                printBtn.doPrint(component, new FormReportLayout(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT(),
+                                printBtn.doPrint(component, new FormReportLayout(ProjectTypeConstants.BUG_COMPONENT,
                                         com.mycollab.module.tracker.domain.Component.Field.name.name(),
                                         ComponentDefaultFormLayoutFactory.getForm(), com.mycollab.module.tracker.domain.Component.Field.id.name()))
                         );
                         printBtn.setStyleName(WebThemes.BUTTON_OPTION);
                         printBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_PRINT));
-                        printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS()));
+                        printBtn.setVisible(CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.COMPONENTS));
 
                         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new BugComponentEvent.GotoEdit(this, component)))
                                 .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
-                                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS()));
+                                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
                                 .withAlign(printBtn, Alignment.TOP_RIGHT)
@@ -405,15 +405,15 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         ComponentPreviewForm form = new ComponentPreviewForm();
                         form.setBean(component);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT(), assignment.getProjectId());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_COMPONENT, assignment.getProjectId());
                         activityComponent.loadActivities("" + component.getId());
                         addComponent(activityComponent);
                     }
                 } else {
                     addComponent(ELabel.h3(UserUIContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
-            } else if (ProjectTypeConstants.INSTANCE.getBUG_VERSION().equals(assignment.getType())) {
-                if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getVERSIONS())) {
+            } else if (ProjectTypeConstants.BUG_VERSION.equals(assignment.getType())) {
+                if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.VERSIONS)) {
                     VersionService versionService = AppContextUtil.getSpringBean(VersionService.class);
                     final SimpleVersion version = versionService.findById(Integer.parseInt(assignment.getTypeId()),
                             AppUI.getAccountId());
@@ -421,17 +421,17 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + version.getName());
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
-                                printBtn.doPrint(version, new FormReportLayout(ProjectTypeConstants.INSTANCE.getBUG_VERSION(), Version.Field.name.name(),
+                                printBtn.doPrint(version, new FormReportLayout(ProjectTypeConstants.BUG_VERSION, Version.Field.name.name(),
                                         VersionDefaultFormLayoutFactory.getForm(), Version.Field.id.name()))
                         );
                         printBtn.setStyleName(WebThemes.BUTTON_OPTION);
                         printBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_PRINT));
-                        printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getVERSIONS()));
+                        printBtn.setVisible(CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.VERSIONS));
 
                         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new BugVersionEvent.GotoEdit(this, version)))
                                 .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
-                                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getVERSIONS()));
+                                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn).withAlign
                                 (editBtn, Alignment.TOP_RIGHT).withAlign(printBtn, Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
@@ -439,7 +439,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         VersionPreviewForm form = new VersionPreviewForm();
                         form.setBean(version);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getBUG_VERSION(), assignment.getProjectId());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_VERSION, assignment.getProjectId());
                         activityComponent.loadActivities("" + version.getId());
                         addComponent(activityComponent);
                     }

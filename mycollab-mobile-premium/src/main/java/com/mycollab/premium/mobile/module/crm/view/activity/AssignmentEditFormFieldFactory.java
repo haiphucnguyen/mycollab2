@@ -68,9 +68,8 @@ public class AssignmentEditFormFieldFactory extends AbstractBeanFieldGroupEditFi
         private static final long serialVersionUID = 1L;
 
         private TaskPriorityListSelect() {
-            super();
             setCaption(null);
-            this.loadData(Arrays.asList(CrmDataTypeFactory.getTaskPriorities()));
+            this.loadData(Arrays.asList(CrmDataTypeFactory.taskPriorities));
         }
     }
 
@@ -78,9 +77,8 @@ public class AssignmentEditFormFieldFactory extends AbstractBeanFieldGroupEditFi
         private static final long serialVersionUID = 1L;
 
         private TaskStatusListSelect() {
-            super();
             setCaption(null);
-            this.loadData(Arrays.asList(CrmDataTypeFactory.getTaskStatuses()));
+            this.loadData(Arrays.asList(CrmDataTypeFactory.taskStatuses));
         }
     }
 }

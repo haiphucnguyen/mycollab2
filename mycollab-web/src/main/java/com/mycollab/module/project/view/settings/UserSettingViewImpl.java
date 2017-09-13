@@ -54,11 +54,11 @@ public class UserSettingViewImpl extends AbstractVerticalPageView implements Use
 
         componentPresenter = PresenterResolver.getPresenter(ComponentPresenter.class);
         myProjectTab.addTab(componentPresenter.getView(), UserUIContext.getMessage(ComponentI18nEnum.LIST),
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT()));
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_COMPONENT));
 
         versionPresenter = PresenterResolver.getPresenter(VersionPresenter.class);
         myProjectTab.addTab(versionPresenter.getView(), UserUIContext.getMessage(VersionI18nEnum.LIST),
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG_VERSION()));
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION));
 
         settingPresenter = PresenterResolver.getPresenter(ProjectSettingPresenter.class);
         myProjectTab.addTab(settingPresenter.getView(), UserUIContext.getMessage(ProjectCommonI18nEnum
@@ -80,13 +80,13 @@ public class UserSettingViewImpl extends AbstractVerticalPageView implements Use
             public void selectedTabChange(SelectedTabChangeEvent event) {
                 Tab tab = ((TabSheetDecorator) event.getTabSheet()).getSelectedTabInfo();
                 String caption = tab.getCaption();
-                SimpleProject project = CurrentProjectVariables.getProject();
+                SimpleProject project = CurrentProjectVariables.INSTANCE.getProject();
 
                 if (UserUIContext.getMessage(ProjectMemberI18nEnum.LIST).equals(caption)) {
                     ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
                     criteria.setProjectId(new NumberSearchField(project.getId()));
-                    criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.INSTANCE.getACTIVE(),
-                            ProjectMemberStatusConstants.INSTANCE.getNOT_ACCESS_YET()));
+                    criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE,
+                            ProjectMemberStatusConstants.NOT_ACCESS_YET));
                     userPresenter.go(UserSettingViewImpl.this, new ScreenData.Search<>(criteria));
                 } else if (UserUIContext.getMessage(ProjectRoleI18nEnum.LIST).equals(caption)) {
                     ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();

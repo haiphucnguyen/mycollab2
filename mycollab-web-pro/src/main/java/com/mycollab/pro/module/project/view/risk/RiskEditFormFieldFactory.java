@@ -88,7 +88,7 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             Risk beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
                 String attachmentPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(),
-                        beanItem.getProjectid(), ProjectTypeConstants.INSTANCE.getRISK(), "" + beanItem.getId());
+                        beanItem.getProjectid(), ProjectTypeConstants.RISK, "" + beanItem.getId());
                 attachmentUploadField = new AttachmentUploadField(attachmentPath);
             } else {
                 attachmentUploadField = new AttachmentUploadField();

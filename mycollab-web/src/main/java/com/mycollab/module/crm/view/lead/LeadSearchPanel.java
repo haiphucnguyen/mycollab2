@@ -50,7 +50,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.INSTANCE.getLEAD(), UserUIContext.getMessage(LeadI18nEnum.LIST));
+        return ComponentUtils.header(CrmTypeConstants.LEAD, UserUIContext.getMessage(LeadI18nEnum.LIST));
     }
 
     @Override
@@ -58,7 +58,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
         return (canCreateLead) ? new MButton(UserUIContext.getMessage(LeadI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new LeadEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_LEAD())) : null;
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_LEAD)) : null;
     }
 
     @Override
@@ -128,7 +128,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
     private class LeadAdvancedSearchLayout extends DynamicQueryParamLayout<LeadSearchCriteria> {
 
         LeadAdvancedSearchLayout() {
-            super(LeadSearchPanel.this, CrmTypeConstants.INSTANCE.getLEAD());
+            super(LeadSearchPanel.this, CrmTypeConstants.LEAD);
         }
 
         @Override

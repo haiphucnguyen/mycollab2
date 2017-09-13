@@ -140,10 +140,10 @@ public class ProjectGenericItem {
     }
 
     public boolean isBug() {
-        return ProjectTypeConstants.INSTANCE.getBUG().equals(getType());
+        return ProjectTypeConstants.BUG.equals(getType());
     }
 
     public boolean isTask() {
-        return ProjectTypeConstants.INSTANCE.getTASK().equals(getType());
+        return ProjectTypeConstants.TASK.equals(getType());
     }
 }

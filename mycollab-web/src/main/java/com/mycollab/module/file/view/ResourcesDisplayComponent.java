@@ -108,19 +108,19 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 baseFolder = resultFolder;
             }
         });
-        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getFILE()).getHtml() + " " +
+        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE).getHtml() + " " +
                 UserUIContext.getMessage(FileI18nEnum.LIST));
 
         MButton createBtn = new MButton(UserUIContext.getMessage(FileI18nEnum.ACTION_NEW_FOLDER), clickEvent -> UI.getCurrent().addWindow
                 (new AddNewFolderWindow()))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getPUBLIC_DOCUMENT_ACCESS()));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 
         MButton uploadBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPLOAD), clickEvent -> {
             MultiUploadContentWindow multiUploadWindow = new MultiUploadContentWindow();
             UI.getCurrent().addWindow(multiUploadWindow);
         }).withIcon(FontAwesome.UPLOAD).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getPUBLIC_DOCUMENT_ACCESS()));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 
         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, new MHorizontalLayout(createBtn, uploadBtn)).expand(headerLbl);
         resourcesContainer = new ResourcesContainer();
@@ -133,7 +133,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
     }
 
     private void deleteResourceAction(final Collection<Resource> deletedResources) {
-        ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+        ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                 UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -299,7 +299,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             } else if (resource instanceof Content) {
                 Content content = (Content) resource;
                 if (StringUtils.isNotBlank(content.getThumbnail())) {
-                    resourceIcon = new Embedded(null, new ExternalResource(StorageUtils.INSTANCE.getResourcePath(content.getThumbnail())));
+                    resourceIcon = new Embedded(null, new ExternalResource(StorageUtils.getResourcePath(content.getThumbnail())));
                     resourceIcon.setWidth("38px");
                     resourceIcon.setHeight("38px");
                 } else {

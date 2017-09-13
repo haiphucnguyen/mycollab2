@@ -70,8 +70,8 @@ public class BugSelectionWindow extends MWindow {
                 b.addStyleName(WebThemes.LINK_OVERDUE);
             }
 
-            b.setDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipBug(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
-                    bug, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
+            b.setDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipBug(UserUIContext.getUserLocale(), AppUI.Companion.getDateFormat(),
+                    bug, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
             return b;
         });
         return tableItem;

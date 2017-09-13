@@ -24,7 +24,7 @@ public class CampaignCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN());
+        return CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN);
     }
 
     @Override
@@ -54,6 +54,6 @@ public class CampaignCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected boolean hasPermission() {
-        return UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN());
+        return UserUIContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN);
     }
 }

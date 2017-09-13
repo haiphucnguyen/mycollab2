@@ -23,7 +23,7 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
     private static final long serialVersionUID = 1L;
 
     public MassUpdateAccountWindow(String title, AccountListPresenter presenter) {
-        super(title, CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()), new Account(), presenter);
+        super(title, CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT), new Account(), presenter);
     }
 
     @Override

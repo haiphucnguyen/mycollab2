@@ -79,7 +79,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
 
     @Override
     protected S fillUpSearchCriteria() {
-        List<SearchFieldInfo> searchFieldInfos = buildCriterionComp.buildSearchFieldInfos();
+        List<SearchFieldInfo<? extends SearchCriteria>> searchFieldInfos = buildCriterionComp.buildSearchFieldInfos();
         EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, searchFieldInfos));
         return SearchFieldInfo.buildSearchCriteria(getType(), searchFieldInfos);
     }

@@ -13,6 +13,6 @@ public class OpportunityTypeListSelect extends I18NValueListSelect {
     private static final long serialVersionUID = 1L;
 
     public OpportunityTypeListSelect() {
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getOpportunityTypeList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.opportunityTypeList));
     }
 }

@@ -1,10 +1,10 @@
 package com.mycollab.module.project.view.settings.component;
 
+import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
-import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectMemberStatusConstants;
 import com.mycollab.module.project.domain.SimpleProjectMember;
@@ -30,11 +30,11 @@ public class ProjectMemberSelectionBox extends ComboBox {
 
         ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.INSTANCE.getACTIVE()));
+        criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE));
         criteria.addOrderField(new SearchCriteria.OrderField("memberFullName", SearchCriteria.Companion.getASC()));
 
-        ProjectMemberService userService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-        List<SimpleProjectMember> memberList = userService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
+        ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
+        List<SimpleProjectMember> memberList = (List<SimpleProjectMember>) projectMemberService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
         loadUserList(memberList);
     }
 

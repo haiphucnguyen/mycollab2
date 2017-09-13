@@ -39,7 +39,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String avatarLink = StorageUtils.INSTANCE.getAvatarPath(milestone.getOwnerAvatarId(), 16);
+                String avatarLink = StorageUtils.getAvatarPath(milestone.getOwnerAvatarId(), 16);
                 Img img = new Img(milestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX);
                 if (isDisplayName) {
                     img.setTitle(milestone.getOwnerFullName());
@@ -51,7 +51,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
             protected String generateSmallAsHtmlAfterUpdate() {
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 SimpleMilestone newMilestone = milestoneService.findById(milestone.getId(), AppUI.getAccountId());
-                String avatarLink = StorageUtils.INSTANCE.getAvatarPath(newMilestone.getOwnerAvatarId(), 16);
+                String avatarLink = StorageUtils.getAvatarPath(newMilestone.getOwnerAvatarId(), 16);
                 Img img = new Img(newMilestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX);
                 if (isDisplayName) {
                     img.setTitle(newMilestone.getOwnerFullName());
@@ -67,7 +67,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
         builder.withBean(milestone).withBindProperty("owner").withDescription(milestone.getOwnerFullName())
                 .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
                 .withService(AppContextUtil.getSpringBean(MilestoneService.class)).withValue(milestone.getAssignuser())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
     }
 
@@ -91,7 +91,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
         builder.withBean(milestone).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
                 .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
                 .withValue(milestone.getStartdate())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
     }
 
@@ -115,7 +115,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
         builder.withBean(milestone).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
                 .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
                 .withValue(milestone.getEnddate())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
     }
 
@@ -130,9 +130,9 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
             @Override
             public Component getPopupComponent() {
                 MVerticalLayout layout = new MVerticalLayout();
-                layout.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()).getHtml() + ": " +
+                layout.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + ": " +
                         milestone.getTotalBugBillableHours(), ContentMode.HTML));
-                layout.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()).getHtml() + ": " +
+                layout.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + ": " +
                         milestone.getTotalTaskBillableHours(), ContentMode.HTML));
                 return layout;
             }
@@ -153,9 +153,9 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
             @Override
             public Component getPopupComponent() {
                 MVerticalLayout layout = new MVerticalLayout();
-                layout.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()).getHtml() + ": " +
+                layout.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + ": " +
                         milestone.getTotalBugNonBillableHours(), ContentMode.HTML));
-                layout.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()).getHtml() + ": " +
+                layout.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + ": " +
                         milestone.getTotalTaskNonBillableHours(), ContentMode.HTML));
                 return layout;
             }

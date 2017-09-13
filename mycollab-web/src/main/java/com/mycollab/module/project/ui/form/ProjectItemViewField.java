@@ -37,7 +37,7 @@ public class ProjectItemViewField extends CustomField<String> {
             return new Label();
         }
 
-        SimpleProject project = CurrentProjectVariables.getProject();
+        SimpleProject project = CurrentProjectVariables.INSTANCE.getProject();
         DivLessFormatter div = new DivLessFormatter();
 
         A milestoneLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(project.getShortname(),

@@ -35,7 +35,7 @@ public class PageAddViewImpl extends AbstractEditItemComp<Page> implements PageA
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPAGE());
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE);
     }
 
     @Override

@@ -51,7 +51,7 @@ public class CallAddPresenter extends AbstractCrmPresenter<CallAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CALL())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CALL)) {
 
             CallWithBLOBs call;
 

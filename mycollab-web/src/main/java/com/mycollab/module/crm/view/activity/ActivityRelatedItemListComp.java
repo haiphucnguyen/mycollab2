@@ -37,15 +37,15 @@ public class ActivityRelatedItemListComp extends RelatedListComp<SimpleActivity,
         if (allowCreateNew) {
             final MButton newTaskBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.NEW), clickEvent -> fireNewRelatedItem("task"))
                     .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                    .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_TASK()));
+                    .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_TASK));
 
             final MButton newCallBtn = new MButton(UserUIContext.getMessage(CallI18nEnum.NEW), clickEvent -> fireNewRelatedItem("call"))
                     .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                    .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CALL()));
+                    .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CALL));
 
             final MButton newMeetingBtn = new MButton(UserUIContext.getMessage(MeetingI18nEnum.NEW), clickEvent -> fireNewRelatedItem("meeting"))
                     .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                    .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_MEETING()));
+                    .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_MEETING));
 
             this.addComponent(new MHorizontalLayout(newTaskBtn, newCallBtn, newMeetingBtn));
             this.addStyleName("activity-related-content");

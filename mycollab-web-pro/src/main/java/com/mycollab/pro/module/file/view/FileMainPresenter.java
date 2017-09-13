@@ -16,7 +16,7 @@ import com.vaadin.ui.HasComponents;
  * @since 1.0
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getPUBLIC_DOCUMENT_ACCESS(), impliedPermissionVal = AccessPermissionFlag.Companion.getREAD_ONLY())
+@ViewPermission(permissionId = RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS, impliedPermissionVal = AccessPermissionFlag.READ_ONLY)
 public class FileMainPresenter extends AbstractPresenter<FileMainView> {
     private static final long serialVersionUID = 1L;
 

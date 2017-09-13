@@ -17,7 +17,7 @@ public class LeadListCustomizeWindow extends CustomizedTableWindow {
     private static final long serialVersionUID = 1L;
 
     public LeadListCustomizeWindow(AbstractPagedBeanTable table) {
-        super(CrmTypeConstants.INSTANCE.getLEAD(), table);
+        super(CrmTypeConstants.LEAD, table);
     }
 
     @Override

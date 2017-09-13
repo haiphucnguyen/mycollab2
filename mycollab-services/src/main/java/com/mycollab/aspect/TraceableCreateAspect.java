@@ -40,7 +40,7 @@ public class TraceableCreateAspect {
         if (traceableAnnotation != null) {
             try {
                 ActivityStreamWithBLOBs activity = constructActivity(cls, traceableAnnotation, bean, username,
-                        ActivityStreamConstants.INSTANCE.getACTION_CREATE());
+                        ActivityStreamConstants.ACTION_CREATE);
                 activityStreamService.save(activity);
             } catch (Exception e) {
                 LOG.error("Error when save activity for save action of service " + cls.getName(), e);
@@ -57,7 +57,7 @@ public class TraceableCreateAspect {
         if (traceableAnnotation != null) {
             try {
                 ActivityStreamWithBLOBs activity = constructActivity(cls, traceableAnnotation, bean, username,
-                        ActivityStreamConstants.INSTANCE.getACTION_DELETE());
+                        ActivityStreamConstants.ACTION_DELETE);
                 activityStreamService.save(activity);
             } catch (Exception e) {
                 LOG.error("Error when save activity for save action of service " + cls.getName(), e);

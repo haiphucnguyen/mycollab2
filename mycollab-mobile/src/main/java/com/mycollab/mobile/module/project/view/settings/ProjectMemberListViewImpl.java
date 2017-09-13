@@ -44,7 +44,7 @@ public class ProjectMemberListViewImpl extends AbstractListPageView<ProjectMembe
 
     @Override
     protected Component buildRightComponent() {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
             return new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoInviteMembers(this, null)))
                     .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX);
         }

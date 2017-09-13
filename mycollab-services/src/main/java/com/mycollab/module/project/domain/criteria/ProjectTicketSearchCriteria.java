@@ -18,7 +18,7 @@ import java.util.Collection;
 public class ProjectTicketSearchCriteria extends SearchCriteria {
     private static final long serialVersionUID = 1L;
 
-    public static final Param p_type = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTICKET(),
+    public static final Param p_type = CacheParamMapper.register(ProjectTypeConstants.TICKET,
             GenericI18Enum.FORM_TYPE, new SearchCriteriaBridgeParam<ProjectTicketSearchCriteria>("type") {
                 @Override
                 public ProjectTicketSearchCriteria injectCriteriaInList(ProjectTicketSearchCriteria searchCriteria, String oper, Collection<?> value) {
@@ -33,41 +33,41 @@ public class ProjectTicketSearchCriteria extends SearchCriteria {
                 }
             });
 
-    public static final Param p_name = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTICKET(),
+    public static final Param p_name = CacheParamMapper.register(ProjectTypeConstants.TICKET,
             GenericI18Enum.FORM_NAME, new StringParam("name", "mainTbl", "name"));
 
-    public static final I18nStringListParam p_priority = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTICKET(), GenericI18Enum.FORM_PRIORITY,
+    public static final I18nStringListParam p_priority = CacheParamMapper.register(ProjectTypeConstants.TICKET, GenericI18Enum.FORM_PRIORITY,
             new I18nStringListParam("priority", "mainTbl", "priority",
                     Arrays.asList(Priority.Urgent, Priority.High, Priority.Medium, Priority.Low, Priority.None)));
 
-    public static final PropertyListParam<Integer> p_milestones = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTICKET(), MilestoneI18nEnum.SINGLE,
+    public static final PropertyListParam<Integer> p_milestones = CacheParamMapper.register(ProjectTypeConstants.TICKET, MilestoneI18nEnum.SINGLE,
             new PropertyListParam<Integer>("milestone", "mainTbl", "milestoneId"));
 
-    public static final PropertyListParam<String> p_assignee = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTICKET(), GenericI18Enum.FORM_ASSIGNEE,
+    public static final PropertyListParam<String> p_assignee = CacheParamMapper.register(ProjectTypeConstants.TICKET, GenericI18Enum.FORM_ASSIGNEE,
             new PropertyListParam<String>("assignuser", "mainTbl", "assignUser"));
 
-    public static final PropertyListParam<String> p_createdUser = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTICKET(),
+    public static final PropertyListParam<String> p_createdUser = CacheParamMapper.register(ProjectTypeConstants.TICKET,
             GenericI18Enum.OPT_CREATED_BY, new PropertyListParam<String>("createduser", "mainTbl", "createdUser"));
 
-    public static final DateParam p_startDate = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTICKET(),
+    public static final DateParam p_startDate = CacheParamMapper.register(ProjectTypeConstants.TICKET,
             GenericI18Enum.FORM_START_DATE, new DateParam("startdate", "mainTbl", "startDate"));
 
-    public static final DateParam p_endDate = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTICKET(),
+    public static final DateParam p_endDate = CacheParamMapper.register(ProjectTypeConstants.TICKET,
             GenericI18Enum.FORM_END_DATE, new DateParam("enddate", "mainTbl", "endDate"));
 
-    public static final DateParam p_dueDate = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTICKET(),
+    public static final DateParam p_dueDate = CacheParamMapper.register(ProjectTypeConstants.TICKET,
             GenericI18Enum.FORM_DUE_DATE, new DateParam("duedate", "mainTbl", "duedate"));
 
-    public static final DateParam p_createtime = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTICKET(), GenericI18Enum.FORM_CREATED_TIME,
+    public static final DateParam p_createtime = CacheParamMapper.register(ProjectTypeConstants.TICKET, GenericI18Enum.FORM_CREATED_TIME,
             new DateParam("createtime", "mainTbl", "createdTime"));
 
-    public static final DateParam p_lastupdatedtime = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTICKET(), GenericI18Enum.FORM_LAST_UPDATED_TIME,
+    public static final DateParam p_lastupdatedtime = CacheParamMapper.register(ProjectTypeConstants.TICKET, GenericI18Enum.FORM_LAST_UPDATED_TIME,
             new DateParam("lastupdatedtime", "mainTbl", "lastUpdatedTime"));
 
-    public static final I18nStringListParam p_status = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTICKET(),
+    public static final I18nStringListParam p_status = CacheParamMapper.register(ProjectTypeConstants.TICKET,
             GenericI18Enum.FORM_STATUS, new I18nStringListParam("status", "mainTbl", "status", null));
 
-    public static final PropertyListParam p_projectIds = CacheParamMapper.register(ProjectTypeConstants.INSTANCE.getTICKET(), null,
+    public static final PropertyListParam p_projectIds = CacheParamMapper.register(ProjectTypeConstants.TICKET, null,
             new PropertyListParam("projectid", "mainTbl", "projectId"));
 
     private SetSearchField<Integer> projectIds;

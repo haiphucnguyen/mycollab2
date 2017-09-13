@@ -30,9 +30,9 @@ public class ProjectModulePresenter extends AbstractPresenter<ProjectModule> {
             UserDashboardPresenter presenter = PresenterResolver.getPresenter(UserDashboardPresenter.class);
             presenter.go(view, null);
         } else {
-            ShellUrlResolver.ROOT().getSubResolver("project").handle(params);
+            ShellUrlResolver.ROOT.getSubResolver("project").handle(params);
         }
 
-        UserUIContext.updateLastModuleVisit(ModuleNameConstants.INSTANCE.getPRJ());
+        UserUIContext.updateLastModuleVisit(ModuleNameConstants.PRJ);
     }
 }

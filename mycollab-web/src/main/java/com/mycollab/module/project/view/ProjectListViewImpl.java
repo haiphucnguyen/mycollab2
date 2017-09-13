@@ -78,7 +78,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
 
     private void generateDisplayTable() {
         tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(ProjectService.class),
-                SimpleProject.class, ProjectTypeConstants.INSTANCE.getPROJECT(),
+                SimpleProject.class, ProjectTypeConstants.PROJECT,
                 ProjectTableFieldDef.selected(), Arrays.asList(ProjectTableFieldDef.projectName(),
                 ProjectTableFieldDef.lead(), ProjectTableFieldDef.client(), ProjectTableFieldDef.startDate(),
                 ProjectTableFieldDef.status()));
@@ -95,7 +95,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
         tableItem.addGeneratedColumn(Project.Field.name.name(), (source, itemId, columnId) -> {
             SimpleProject project = tableItem.getBeanByIndex(itemId);
             A projectLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectFullLink(project.getId())).appendText(project.getName());
-            projectLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.INSTANCE.getPROJECT(),
+            projectLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.PROJECT,
                     project.getId() + ""));
             projectLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             A url;
@@ -123,7 +123,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
             if (project.getAccountid() != null) {
                 LabelLink b = new LabelLink(project.getClientName(), ProjectLinkBuilder.INSTANCE.generateClientPreviewFullLink
                         (project.getAccountid()));
-                b.setIconLink(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT()));
+                b.setIconLink(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
                 return b;
             } else {
                 return new Label();

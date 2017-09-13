@@ -14,7 +14,7 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_BILLING(), impliedPermissionVal = BooleanPermissionFlag.Companion.getTRUE())
+@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_BILLING, impliedPermissionVal = BooleanPermissionFlag.TRUE)
 public class BillingSummaryPresenter extends AbstractPresenter<BillingSummaryView> {
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class BillingSummaryPresenter extends AbstractPresenter<BillingSummaryVie
         accountContainer.setContent(view);
 
         view.lazyLoadView();
-        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
+        AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
         breadcrumb.gotoBillingPage();
     }
 }

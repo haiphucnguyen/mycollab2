@@ -39,7 +39,7 @@ public class CampaignListViewImpl extends AbstractListItemComp<CampaignSearchCri
 
     @Override
     protected AbstractPagedBeanTable<CampaignSearchCriteria, SimpleCampaign> createBeanTable() {
-        return new CampaignTableDisplay(CrmTypeConstants.INSTANCE.getCAMPAIGN(), CampaignTableFieldDef.selected(),
+        return new CampaignTableDisplay(CrmTypeConstants.CAMPAIGN, CampaignTableFieldDef.selected(),
                 Arrays.asList(CampaignTableFieldDef.campaignname(), CampaignTableFieldDef.status(),
                         CampaignTableFieldDef.type(), CampaignTableFieldDef.expectedRevenue(),
                         CampaignTableFieldDef.endDate(), CampaignTableFieldDef.assignUser()));
@@ -49,7 +49,7 @@ public class CampaignListViewImpl extends AbstractListItemComp<CampaignSearchCri
     protected DefaultMassItemActionHandlerContainer createActionControls() {
         DefaultMassItemActionHandlerContainer container = new DefaultMassItemActionHandlerContainer();
 
-        if (UserUIContext.canAccess(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) {
+        if (UserUIContext.canAccess(RolePermissionCollections.CRM_CAMPAIGN)) {
             container.addDeleteActionItem();
         }
 
@@ -58,7 +58,7 @@ public class CampaignListViewImpl extends AbstractListItemComp<CampaignSearchCri
         container.addDownloadExcelActionItem();
         container.addDownloadCsvActionItem();
 
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN)) {
             container.addMassUpdateActionItem();
         }
 

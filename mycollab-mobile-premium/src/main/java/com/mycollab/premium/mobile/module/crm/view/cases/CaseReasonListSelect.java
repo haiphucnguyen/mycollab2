@@ -14,6 +14,6 @@ class CaseReasonListSelect extends I18NValueListSelect {
 
     CaseReasonListSelect() {
         setCaption(null);
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getCasesReason()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.casesReason));
     }
 }

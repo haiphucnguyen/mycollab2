@@ -98,7 +98,7 @@ public class FileMainViewImpl extends AbstractLazyPageView implements FileMainVi
 
         MButton connectDropboxBtn = new MButton("Connect Dropbox", clickEvent -> {
             linkBtn.setPopupVisible(false);
-            OauthWindowFactory oauthWindowFactory = ViewManager.getCacheComponent(OauthWindowFactory.class);
+            OauthWindowFactory oauthWindowFactory = ViewManager.INSTANCE.getCacheComponent(OauthWindowFactory.class);
             Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
             UI.getCurrent().addWindow(dropboxWindow);
         }).withIcon(FontAwesome.DROPBOX);
@@ -108,7 +108,7 @@ public class FileMainViewImpl extends AbstractLazyPageView implements FileMainVi
         linkBtn.setContent(filterBtnLayout);
         navButton.with(linkBtn);
 
-        BillingPlan currentBillingPlan = AppUI.getBillingAccount().getBillingPlan();
+        BillingPlan currentBillingPlan = AppUI.Companion.getBillingAccount().getBillingPlan();
         DriveInfoService driveInfoService = AppContextUtil.getSpringBean(DriveInfoService.class);
         String usedStorageTxt = FileUtils.getVolumeDisplay(driveInfoService.getUsedStorageVolume(AppUI.getAccountId()))
                 + " of " + FileUtils.getVolumeDisplay(currentBillingPlan.getVolume());

@@ -113,8 +113,8 @@ public class TagViewComponent extends CssLayout {
         if ("".equals(query) || query == null) {
             return Collections.emptyList();
         }
-        List<Tag> suggestedTags = tagService.findTagsInAccount(query, new String[]{ProjectTypeConstants.INSTANCE.getBUG(),
-                        ProjectTypeConstants.INSTANCE.getTASK(), ProjectTypeConstants.INSTANCE.getMILESTONE(), ProjectTypeConstants.INSTANCE.getRISK()},
+        List<Tag> suggestedTags = tagService.findTagsInAccount(query, new String[]{ProjectTypeConstants.BUG,
+                        ProjectTypeConstants.TASK, ProjectTypeConstants.MILESTONE, ProjectTypeConstants.RISK},
                 AppUI.getAccountId());
         return new ArrayList<>(suggestedTags);
     }
@@ -149,7 +149,7 @@ public class TagViewComponent extends CssLayout {
             if (canAddNewTag) {
                 MButton deleteBtn = new MButton(FontAwesome.TIMES, clickEvent -> {
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

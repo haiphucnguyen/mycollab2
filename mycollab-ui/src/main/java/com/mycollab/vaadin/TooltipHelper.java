@@ -10,8 +10,8 @@ public class TooltipHelper {
     public static String userHoverJsFunction(String username) {
         String uidVal = "'" + TOOLTIP_ID + "'";
         String usernameVal = "'" + username + "'";
-        String urlVal = "'" + AppUI.getSiteUrl() + "tooltip/'";
-        String siteUrlVal = "'" + AppUI.getSiteUrl() + "'";
+        String urlVal = "'" + AppUI.Companion.getSiteUrl() + "tooltip/'";
+        String siteUrlVal = "'" + AppUI.Companion.getSiteUrl() + "'";
         String timezoneVal = "'" + UserUIContext.getUser().getTimezone() + "'";
         String accountIdVal = "'" + AppUI.getAccountId() + "'";
         String localeVal = "'" + UserUIContext.getUserLocale().toLanguageTag() + "'";
@@ -24,12 +24,12 @@ public class TooltipHelper {
         String uidVal = "'" + TOOLTIP_ID + "'";
         String typeVal = "'" + type + "'";
         String typeIdVal = "'" + typeId + "'";
-        String urlVal = "'" + AppUI.getSiteUrl() + "tooltip/'";
+        String urlVal = "'" + AppUI.Companion.getSiteUrl() + "tooltip/'";
         String accountIdVal = "'" + AppUI.getAccountId() + "'";
-        String siteUrlVal = "'" + AppUI.getSiteUrl() + "'";
+        String siteUrlVal = "'" + AppUI.Companion.getSiteUrl() + "'";
         String timezoneVal = "'" + AppUI.getAccountId() + "'";
         String localeVal = "'" + UserUIContext.getUserLocale().toLanguageTag() + "'";
-        String dateFormatVal = "'" + AppUI.getDateFormat() + "'";
+        String dateFormatVal = "'" + AppUI.Companion.getDateFormat() + "'";
 
         return String.format("return overIt(%s,%s,%s,%s,%s,%s,%s,%s,%s);", uidVal, typeVal, typeIdVal,
                 urlVal, accountIdVal, siteUrlVal, timezoneVal, localeVal, dateFormatVal);
@@ -39,12 +39,12 @@ public class TooltipHelper {
         String uidVal = "'" + TOOLTIP_ID + "'";
         String typeVal = "'" + type + "'";
         String typeIdVal = "'" + typeId + "'";
-        String urlVal = "'" + AppUI.getSiteUrl() + "tooltip/'";
+        String urlVal = "'" + AppUI.Companion.getSiteUrl() + "tooltip/'";
         String accountIdVal = "'" + AppUI.getAccountId() + "'";
-        String siteUrlVal = "'" + AppUI.getSiteUrl() + "'";
+        String siteUrlVal = "'" + AppUI.Companion.getSiteUrl() + "'";
         String timezoneVal = "'" + AppUI.getAccountId() + "'";
         String localeVal = "'" + UserUIContext.getUserLocale().toLanguageTag() + "'";
-        String dateFormatVal = "'" + AppUI.getDateFormat() + "'";
+        String dateFormatVal = "'" + AppUI.Companion.getDateFormat() + "'";
         return String.format("return crmActivityOverIt(%s,%s,%s,%s,%s,%s,%s,%s,%s);",
                 uidVal, typeVal, typeIdVal, urlVal, accountIdVal, siteUrlVal, timezoneVal, localeVal, dateFormatVal);
     }

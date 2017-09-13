@@ -70,16 +70,16 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
             SimpleProjectRole role = roleService.findById(roleId, AppUI.getAccountId());
             if (role != null) {
                 final PermissionMap permissionMap = role.getPermissionMap();
-                for (int i = 0; i < ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS().length; i++) {
-                    final String permissionPath = ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS()[i];
+                for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
+                    final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
                     Label permissionLbl = new Label(UserUIContext.getPermissionCaptionValue(permissionMap, permissionPath));
                     permissionLbl.setCaption(UserUIContext.getMessage(RolePermissionI18nEnum.valueOf(permissionPath)));
                     permissionGroup.addComponent(permissionLbl);
                 }
             }
         } else {
-            for (int i = 0; i < ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS().length; i++) {
-                final String permissionPath = ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS()[i];
+            for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
+                final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
                 Label permissionLbl = new Label(UserUIContext.getMessage(SecurityI18nEnum.ACCESS));
                 permissionLbl.setCaption(permissionPath);
                 permissionGroup.addComponent(permissionLbl);
@@ -125,7 +125,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         @Override
         protected Field<?> onCreateField(Object propertyId) {
             if (ProjectMember.Field.username.equalTo(propertyId)) {
-                return new DefaultViewField(ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(CurrentProjectVariables
+                return new DefaultViewField(ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(CurrentProjectVariables.INSTANCE
                         .getProjectId(), beanItem.getUsername(), beanItem.getDisplayName(), beanItem
                         .getMemberAvatarId(), false), ContentMode.HTML);
             } else if (ProjectMember.Field.projectroleid.equalTo(propertyId)) {

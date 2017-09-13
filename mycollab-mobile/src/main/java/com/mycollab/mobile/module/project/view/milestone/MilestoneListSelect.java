@@ -27,7 +27,7 @@ public class MilestoneListSelect extends ValueListSelect {
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
 
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-        List<SimpleMilestone> milestones = milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
+        List<SimpleMilestone> milestones = (List<SimpleMilestone>) milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
 
         BeanContainer<String, SimpleMilestone> beanItem = new BeanContainer<>(SimpleMilestone.class);
         beanItem.setBeanIdProperty("id");

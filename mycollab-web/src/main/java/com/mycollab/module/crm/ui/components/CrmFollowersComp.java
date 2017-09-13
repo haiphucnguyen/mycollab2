@@ -129,7 +129,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
             final Image userAvatarBtn = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(user.getAvatarid(), 32);
             userAvatarBtn.addStyleName(UIConstants.CIRCLE_BOX);
             userAvatarBtn.setDescription(CommonTooltipGenerator.generateTooltipUser(UserUIContext.getUserLocale(), user,
-                    AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
             addComponent(userAvatarBtn);
             this.addStyleName("removeable-btn");
             this.setWidthUndefined();
@@ -179,10 +179,8 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
             criteria.setStatuses(new SetSearchField<>("Active"));
 
             UserService userService = AppContextUtil.getSpringBean(UserService.class);
-            users = userService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
-            for (SimpleUser member : users) {
-                this.addComponent(new FollowerRow(member));
-            }
+            users = (List<SimpleUser>) userService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
+            users.stream().map(FollowerRow::new).forEach(this::addComponent);
         }
 
         List<MonitorItem> getUnsavedItems() {

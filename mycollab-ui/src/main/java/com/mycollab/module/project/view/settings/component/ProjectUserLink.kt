@@ -28,7 +28,7 @@ class ProjectUserLink(username: String, userAvatarId: String, displayName: Strin
                     .getAvatarPath(userAvatarId, 16))
             avatarLink.cssClass = UIConstants.CIRCLE_BOX
             val memberLink = A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
-                    CurrentProjectVariables.getProjectId(), username)).appendText(StringUtils.trim(displayName, 30, true))
+                    CurrentProjectVariables.projectId, username)).appendText(StringUtils.trim(displayName, 30, true))
             memberLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(username))
             memberLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction())
             div.appendChild(avatarLink, DivLessFormatter.EMPTY_SPACE, memberLink)

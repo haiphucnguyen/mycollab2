@@ -124,7 +124,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
             AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow();
             UI.getCurrent().addWindow(addTimeEntry);
         }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
-        createBtn.setVisible(!CurrentProjectVariables.isProjectArchived() &&
+        createBtn.setVisible(!CurrentProjectVariables.INSTANCE.isProjectArchived() &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTIME()));
         groupWrapLayout.addComponent(createBtn);
         searchPanel.addHeaderRight(groupWrapLayout);
@@ -178,7 +178,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
 
     @Override
     public void setSearchCriteria(ItemTimeLoggingSearchCriteria searchCriteria) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getTIME())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.INSTANCE.getTIME())) {
             this.searchCriteria = searchCriteria;
             displayTimeEntries();
         } else {
@@ -246,16 +246,16 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         public void itemClick(final TableClickEvent event) {
             final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event.getData();
             if ("name".equals(event.getFieldName())) {
-                if (ProjectTypeConstants.INSTANCE.getBUG().equals(itemLogging.getType())) {
+                if (ProjectTypeConstants.BUG.equals(itemLogging.getType())) {
                     EventBusFactory.getInstance().post(new BugEvent.GotoRead(this, itemLogging.getTypeid()));
-                } else if (ProjectTypeConstants.INSTANCE.getTASK().equals(itemLogging.getType())) {
+                } else if (ProjectTypeConstants.TASK.equals(itemLogging.getType())) {
                     EventBusFactory.getInstance().post(new TaskEvent.GotoRead(this, itemLogging.getTypeid()));
-                } else if (ProjectTypeConstants.INSTANCE.getRISK().equals(itemLogging.getType())) {
+                } else if (ProjectTypeConstants.RISK.equals(itemLogging.getType())) {
                     EventBusFactory.getInstance().post(new RiskEvent.GotoRead(this, itemLogging.getTypeid()));
                 }
             } else if ("delete".equals(event.getFieldName())) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

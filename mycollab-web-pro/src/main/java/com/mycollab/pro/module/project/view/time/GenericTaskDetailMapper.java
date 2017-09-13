@@ -32,43 +32,43 @@ public class GenericTaskDetailMapper {
         int sAccountId = AppUI.getAccountId();
         TimeZone timeZone = UserUIContext.getUserTimeZone();
 
-        if (ProjectTypeConstants.INSTANCE.getBUG().equals(type)) {
+        if (ProjectTypeConstants.BUG.equals(type)) {
             BugService service = AppContextUtil.getSpringBean(BugService.class);
             SimpleBug bug = service.findById(typeId, sAccountId);
             if (bug != null) {
                 name = bug.getName();
             }
-        } else if (ProjectTypeConstants.INSTANCE.getTASK().equals(type)) {
+        } else if (ProjectTypeConstants.TASK.equals(type)) {
             ProjectTaskService service = AppContextUtil.getSpringBean(ProjectTaskService.class);
             SimpleTask task = service.findById(typeId, sAccountId);
             if (task != null) {
                 name = task.getName();
             }
-        } else if (ProjectTypeConstants.INSTANCE.getRISK().equals(type)) {
+        } else if (ProjectTypeConstants.RISK.equals(type)) {
             RiskService service = AppContextUtil.getSpringBean(RiskService.class);
             SimpleRisk risk = service.findById(typeId, sAccountId);
             if (risk != null) {
                 name = risk.getName();
             }
-        } else if (ProjectTypeConstants.INSTANCE.getBUG_VERSION().equals(type)) {
+        } else if (ProjectTypeConstants.BUG_VERSION.equals(type)) {
             VersionService service = AppContextUtil
                     .getSpringBean(VersionService.class);
             SimpleVersion version = service.findById(typeId, sAccountId);
             if (version != null) {
                 name = version.getName();
             }
-        } else if (ProjectTypeConstants.INSTANCE.getBUG_COMPONENT().equals(type)) {
+        } else if (ProjectTypeConstants.BUG_COMPONENT.equals(type)) {
             ComponentService service = AppContextUtil.getSpringBean(ComponentService.class);
             SimpleComponent component = service.findById(typeId, sAccountId);
             if (component != null) {
                 name = component.getName();
             }
-        } else if (ProjectTypeConstants.INSTANCE.getSTANDUP().equals(type)) {
+        } else if (ProjectTypeConstants.STANDUP.equals(type)) {
             StandupReportService service = AppContextUtil.getSpringBean(StandupReportService.class);
             SimpleStandupReport standup = service.findById(typeId, sAccountId);
             if (standup != null) {
                 name = Jsoup.parse(DateTimeUtils.convertToStringWithUserTimeZone(
-                        standup.getCreatedtime(), AppUI.getDateFormat(), UserUIContext.getUserLocale(), timeZone)).html();
+                        standup.getCreatedtime(), AppUI.Companion.getDateFormat(), UserUIContext.getUserLocale(), timeZone)).html();
             }
         }
     }

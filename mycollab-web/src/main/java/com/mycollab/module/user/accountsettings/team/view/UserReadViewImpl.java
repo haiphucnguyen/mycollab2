@@ -97,7 +97,7 @@ public class UserReadViewImpl extends AbstractVerticalPageView implements UserRe
         userFormLayout.addComponent(new Label(UserUIContext.formatDate(user.getDateofbirth())),
                 UserUIContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 0, 1);
 
-        if (Boolean.TRUE.equals(AppUI.showEmailPublicly())) {
+        if (Boolean.TRUE.equals(AppUI.Companion.showEmailPublicly())) {
             userFormLayout.addComponent(ELabel.html(new A("mailto:" + user.getEmail()).appendText(user.getEmail()).write()),
                     UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL), 0, 2);
         } else {
@@ -130,7 +130,7 @@ public class UserReadViewImpl extends AbstractVerticalPageView implements UserRe
     private Layout createTopPanel() {
         final PreviewFormControlsGenerator<User> controlGenerator = new PreviewFormControlsGenerator<>(previewForm);
         return controlGenerator.createButtonControls(ADD_BTN_PRESENTED | EDIT_BTN_PRESENTED |
-                DELETE_BTN_PRESENTED | CLONE_BTN_PRESENTED, RolePermissionCollections.INSTANCE.getACCOUNT_USER());
+                DELETE_BTN_PRESENTED | CLONE_BTN_PRESENTED, RolePermissionCollections.ACCOUNT_USER);
     }
 
     @Override

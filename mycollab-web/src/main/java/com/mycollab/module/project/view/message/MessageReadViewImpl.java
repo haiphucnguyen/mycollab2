@@ -95,7 +95,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
 
             MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -107,7 +107,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
                             }
                         });
             }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_DANGER);
-            deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getMESSAGES()));
+            deleteBtn.setVisible(CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.MESSAGES));
 
             stickyCheck = new CheckBox(UserUIContext.getMessage(MessageI18nEnum.FORM_IS_STICK), message.getIsstick());
             stickyCheck.addValueChangeListener(valueChangeEvent -> {
@@ -116,9 +116,9 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
                 MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
                 messageService.updateWithSession(message, UserUIContext.getUsername());
             });
-            stickyCheck.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMESSAGES()));
+            stickyCheck.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
 
-            HeaderWithFontAwesome headerText = ComponentUtils.headerH2(ProjectTypeConstants.INSTANCE.getMESSAGE(), message.getTitle());
+            HeaderWithFontAwesome headerText = ComponentUtils.headerH2(ProjectTypeConstants.MESSAGE, message.getTitle());
             header.with(headerText, stickyCheck, deleteBtn).withAlign(headerText, Alignment.MIDDLE_LEFT)
                     .withAlign(stickyCheck, Alignment.MIDDLE_RIGHT).withAlign(deleteBtn, Alignment.MIDDLE_RIGHT).expand(headerText);
 
@@ -153,7 +153,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
 
             ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
             List<Content> attachments = attachmentService.getContents(AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(
-                    AppUI.getAccountId(), message.getProjectid(), ProjectTypeConstants.INSTANCE.getMESSAGE(), "" + message.getId()));
+                    AppUI.getAccountId(), message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
             if (CollectionUtils.isNotEmpty(attachments)) {
                 HorizontalLayout attachmentField = new HorizontalLayout();
                 Button attachmentIcon = new Button(null, FontAwesome.PAPERCLIP);
@@ -164,7 +164,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
                 attachmentField.addComponent(lbAttachment);
 
                 Component attachmentDisplayComp = ProjectAttachmentDisplayComponentFactory
-                        .getAttachmentDisplayComponent(message.getProjectid(), ProjectTypeConstants.INSTANCE.getMESSAGE(), message.getId());
+                        .getAttachmentDisplayComponent(message.getProjectid(), ProjectTypeConstants.MESSAGE, message.getId());
 
                 MVerticalLayout messageFooter = new MVerticalLayout().withFullWidth()
                         .with(attachmentField, attachmentDisplayComp);
@@ -185,7 +185,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
         }
 
         CommentDisplay createCommentPanel() {
-            CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.INSTANCE.getMESSAGE(), CurrentProjectVariables.getProjectId());
+            CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.MESSAGE, CurrentProjectVariables.getProjectId());
             commentDisplay.loadComments("" + message.getId());
             return commentDisplay;
         }

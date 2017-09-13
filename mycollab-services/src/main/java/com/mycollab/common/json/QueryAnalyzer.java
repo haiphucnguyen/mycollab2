@@ -1,6 +1,7 @@
 package com.mycollab.common.json;
 
 import com.mycollab.core.MyCollabException;
+import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.query.CacheParamMapper;
 import com.mycollab.db.query.Param;
 import com.mycollab.db.query.SearchFieldInfo;
@@ -22,7 +23,7 @@ import java.util.List;
 public class QueryAnalyzer {
     private static final Logger LOG = LoggerFactory.getLogger(QueryAnalyzer.class);
 
-    public static String toQueryParams(List<SearchFieldInfo> searchFieldInfos) {
+    public static String toQueryParams(List<SearchFieldInfo<? extends SearchCriteria>> searchFieldInfos) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             SimpleModule module = new SimpleModule();

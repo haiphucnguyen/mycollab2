@@ -47,7 +47,7 @@ public class AccountLeadListComp extends RelatedListComp2<LeadService, LeadSearc
         VerticalLayout controlsBtnWrap = new VerticalLayout();
         controlsBtnWrap.setWidth("100%");
 
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_LEAD)) {
             final SplitButton controlsBtn = new SplitButton();
             controlsBtn.addStyleName(WebThemes.BUTTON_ACTION);
             controlsBtn.setCaption(UserUIContext.getMessage(LeadI18nEnum.NEW));
@@ -60,7 +60,7 @@ public class AccountLeadListComp extends RelatedListComp2<LeadService, LeadSearc
                 UI.getCurrent().addWindow(leadsWindow);
                 leadsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
-            }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()));
+            }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
 
             OptionPopupContent buttonControlLayout = new OptionPopupContent();
             buttonControlLayout.addOption(selectBtn);
@@ -101,7 +101,7 @@ public class AccountLeadListComp extends RelatedListComp2<LeadService, LeadSearc
             MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel leadAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()));
+            ELabel leadAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
             iconWrap.addComponent(leadAvatar);
             blockTop.addComponent(iconWrap);
 
@@ -110,7 +110,7 @@ public class AccountLeadListComp extends RelatedListComp2<LeadService, LeadSearc
 
             MButton btnDelete = new MButton("", clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -129,7 +129,7 @@ public class AccountLeadListComp extends RelatedListComp2<LeadService, LeadSearc
             blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
 
             Label leadName = ELabel.html(UserUIContext.getMessage(GenericI18Enum.FORM_NAME) + ": " + new A(CrmLinkGenerator.INSTANCE.generateCrmItemLink(
-                    CrmTypeConstants.INSTANCE.getLEAD(), lead.getId())).appendText(lead.getLeadName()).write());
+                    CrmTypeConstants.LEAD, lead.getId())).appendText(lead.getLeadName()).write());
 
             leadInfo.addComponent(leadName);
 

@@ -35,7 +35,7 @@ public class OpportunityListDisplay extends DefaultPagedBeanList<OpportunityServ
             A itemLink = new A(CrmLinkBuilder.INSTANCE.generateOpportunityPreviewLinkFull(opportunity.getId())).appendText(opportunity.getOpportunityname());
             MCssLayout itemWrap = new MCssLayout(ELabel.html(itemLink.write()));
             rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.getAsset
-                    (CrmTypeConstants.INSTANCE.getOPPORTUNITY())), itemWrap).expand(itemWrap).withFullWidth());
+                    (CrmTypeConstants.OPPORTUNITY)), itemWrap).expand(itemWrap).withFullWidth());
             return rowLayout;
         }
     }

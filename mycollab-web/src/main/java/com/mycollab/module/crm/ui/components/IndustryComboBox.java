@@ -13,8 +13,7 @@ public class IndustryComboBox extends I18nValueComboBox {
     private static final long serialVersionUID = 1L;
 
     public IndustryComboBox() {
-        super();
         setCaption(null);
-        loadData(Arrays.asList(CrmDataTypeFactory.getAccountIndustryList()));
+        loadData(Arrays.asList(CrmDataTypeFactory.accountIndustryList));
     }
 }

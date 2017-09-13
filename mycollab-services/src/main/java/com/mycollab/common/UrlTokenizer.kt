@@ -8,7 +8,7 @@ class UrlTokenizer(url: String) {
 
     private var internalVal: String = "";
     var remainValue: String = ""
-    private var query: String = ""
+    var query: String = ""
 
     @Throws(InvalidTokenException::class)
     fun getInt(): Int {

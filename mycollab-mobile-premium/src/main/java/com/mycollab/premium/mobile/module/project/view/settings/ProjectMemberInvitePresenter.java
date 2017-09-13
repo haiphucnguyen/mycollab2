@@ -16,7 +16,7 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageView.ViewListener;
 import com.mycollab.vaadin.mvp.ScreenData;
-import com.mycollab.vaadin.mvp.ViewEvent;
+import com.mycollab.vaadin.events.ViewEvent;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.HasComponents;
 import org.apache.commons.collections.CollectionUtils;
@@ -56,7 +56,7 @@ public class ProjectMemberInvitePresenter extends AbstractProjectPresenter<Proje
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
             super.onGo(container, data);
             view.display();
             AppUI.addFragment("project/user/invite/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId()),

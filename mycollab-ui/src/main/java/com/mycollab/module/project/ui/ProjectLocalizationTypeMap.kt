@@ -9,7 +9,7 @@ import com.mycollab.vaadin.UserUIContext
  * @since 6.0.0
  */
 object ProjectLocalizationTypeMap {
-    fun getType(key: String): String {
+    @JvmStatic fun getType(key: String): String {
         return when (key) {
             ProjectTypeConstants.PROJECT -> UserUIContext.getMessage(ProjectI18nEnum.SINGLE)
             ProjectTypeConstants.MESSAGE -> UserUIContext.getMessage(MessageI18nEnum.SINGLE)

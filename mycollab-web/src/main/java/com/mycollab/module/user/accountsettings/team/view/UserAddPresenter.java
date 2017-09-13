@@ -26,7 +26,7 @@ import com.vaadin.ui.UI;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewPermission(permissionId = RolePermissionCollections.INSTANCE.getACCOUNT_USER(), impliedPermissionVal = AccessPermissionFlag.Companion.getREAD_WRITE())
+@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_USER, impliedPermissionVal = AccessPermissionFlag.READ_WRITE)
 public class UserAddPresenter extends AbstractPresenter<UserAddView> {
     private static final long serialVersionUID = 1L;
 
@@ -59,7 +59,7 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
         user.setAccountId(AppUI.getAccountId());
-        user.setSubdomain(AppUI.getSubDomain());
+        user.setSubdomain(AppUI.Companion.getSubDomain());
 
         if (user.getStatus() == null) {
             user.setStatus(UserStatusConstants.EMAIL_VERIFIED_REQUEST);
@@ -74,7 +74,7 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
                 user.setPassword(RandomPasswordGenerator.generateRandomPassword());
             }
             String userPassword = user.getPassword();
-            userService.saveUserAccount(user, user.getRoleid(), AppUI.getSubDomain(), AppUI.getAccountId(), UserUIContext.getUsername(), true);
+            userService.saveUserAccount(user, user.getRoleid(), AppUI.Companion.getSubDomain(), AppUI.getAccountId(), UserUIContext.getUsername(), true);
             UI.getCurrent().addWindow(new NewUserAddedWindow(user, userPassword));
         } else {
             userService.updateUserAccount(user, AppUI.getAccountId());
@@ -99,7 +99,7 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
             view.editItem(user);
         }
 
-        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
+        AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
 
         if (user.getUsername() == null) {
             breadcrumb.gotoUserAdd();

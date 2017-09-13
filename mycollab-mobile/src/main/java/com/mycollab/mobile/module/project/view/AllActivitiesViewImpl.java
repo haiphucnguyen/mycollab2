@@ -22,7 +22,7 @@ import com.mycollab.module.project.domain.ProjectActivityStream;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
-import com.mycollab.module.project.view.ProjectLocalizationTypeMap;
+import com.mycollab.module.project.ui.ProjectLocalizationTypeMap;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
@@ -69,7 +69,7 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
         // Buttons with styling (slightly smaller with left-aligned text)
         Button activityBtn = new Button("Activities", clickEvent -> {
             closeMenu();
-            EventBusFactory.getInstance().post(new ProjectEvent.GotoAllActivitiesView(this));
+            EventBusFactory.getInstance().post(new ProjectEvent.GotoAllActivitiesView(this, null));
         });
         activityBtn.setIcon(FontAwesome.INBOX);
         addMenuItem(activityBtn);
@@ -122,8 +122,8 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
             String type = ProjectLocalizationTypeMap.getType(activityStream.getType());
             AuditLogRegistry auditLogRegistry = AppContextUtil.getSpringBean(AuditLogRegistry.class);
 
-            if (ActivityStreamConstants.INSTANCE.getACTION_CREATE().equals(activityStream.getAction())) {
-                if (ProjectTypeConstants.INSTANCE.getPROJECT().equals(activityStream.getType())) {
+            if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {
+                if (ProjectTypeConstants.PROJECT.equals(activityStream.getType())) {
                     content.append(UserUIContext.getMessage(
                             ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
                             assigneeValue, type, projectLink));
@@ -133,8 +133,8 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
                             assigneeValue, type, itemLink, projectLink));
                 }
 
-            } else if (ActivityStreamConstants.INSTANCE.getACTION_UPDATE().equals(activityStream.getAction())) {
-                if (ProjectTypeConstants.INSTANCE.getPROJECT().equals(activityStream.getType())) {
+            } else if (ActivityStreamConstants.ACTION_UPDATE.equals(activityStream.getAction())) {
+                if (ProjectTypeConstants.PROJECT.equals(activityStream.getType())) {
                     content.append(UserUIContext.getMessage(
                             ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
                             assigneeValue, type, projectLink));
@@ -146,7 +146,7 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
                 if (activityStream.getAssoAuditLog() != null) {
                     content.append(auditLogRegistry.generatorDetailChangeOfActivity(activityStream));
                 }
-            } else if (ActivityStreamConstants.INSTANCE.getACTION_COMMENT().equals(activityStream.getAction())) {
+            } else if (ActivityStreamConstants.ACTION_COMMENT.equals(activityStream.getAction())) {
                 content.append(UserUIContext.getMessage(
                         ProjectCommonI18nEnum.FEED_PROJECT_USER_ACTIVITY_COMMENT_ACTION_TITLE,
                         assigneeValue, type, itemLink, projectLink));
@@ -155,8 +155,8 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
                     content.append("<p><ul><li>\"").append(activityStream.getAssoAuditLog()
                             .getChangeset()).append("\"</li></ul></p>");
                 }
-            } else if (ActivityStreamConstants.INSTANCE.getACTION_DELETE().equals(activityStream.getAction())) {
-                if (ProjectTypeConstants.INSTANCE.getPROJECT().equals(activityStream.getType())) {
+            } else if (ActivityStreamConstants.ACTION_DELETE.equals(activityStream.getAction())) {
+                if (ProjectTypeConstants.PROJECT.equals(activityStream.getType())) {
                     content.append(UserUIContext.getMessage(
                             ProjectCommonI18nEnum.FEED_USER_ACTIVITY_DELETE_ACTION_TITLE,
                             assigneeValue, type, projectLink));
@@ -182,7 +182,7 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
                 activityStream.getExtratypeid(), activityStream.getCreateduser()));
         userLink.appendText(StringUtils.trim(activityStream.getCreatedUserFullName(), 30, true));
 
-        div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink);
+        div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE, userLink);
         return div.write();
     }
 
@@ -191,8 +191,8 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
         Text itemImg = new Text(ProjectAssetsManager.getAsset(activityStream.getType()).getHtml());
         A itemLink = new A();
 
-        if (ProjectTypeConstants.INSTANCE.getTASK().equals(activityStream.getType())
-                || ProjectTypeConstants.INSTANCE.getBUG().equals(activityStream.getType())) {
+        if (ProjectTypeConstants.TASK.equals(activityStream.getType())
+                || ProjectTypeConstants.BUG.equals(activityStream.getType())) {
             itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(activityStream.getProjectShortName(),
                     activityStream.getExtratypeid(), activityStream.getType(), activityStream.getItemKey() + ""));
         } else {
@@ -201,15 +201,15 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
         }
         itemLink.appendText(StringUtils.trim(activityStream.getNamefield(), 50, true));
 
-        div.appendChild(itemImg, DivLessFormatter.EMPTY_SPACE(), itemLink);
+        div.appendChild(itemImg, DivLessFormatter.EMPTY_SPACE, itemLink);
         return div.write();
     }
 
     private static String buildProjectValue(ProjectActivityStream activityStream) {
         DivLessFormatter div = new DivLessFormatter();
-        Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getPROJECT()).getHtml());
+        Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml());
         A prjLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectFullLink(activityStream.getProjectId())).appendText(activityStream.getProjectName());
-        div.appendChild(prjImg, DivLessFormatter.EMPTY_SPACE(), prjLink);
+        div.appendChild(prjImg, DivLessFormatter.EMPTY_SPACE, prjLink);
         return div.write();
     }
 }

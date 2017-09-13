@@ -22,7 +22,7 @@ public class ContactRoleEditPresenter extends CrmGenericPresenter<ContactRoleEdi
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) {
             SimpleOpportunity opportunity = (SimpleOpportunity) data.getParams();
             super.onGo(container, data);
             view.display(opportunity);

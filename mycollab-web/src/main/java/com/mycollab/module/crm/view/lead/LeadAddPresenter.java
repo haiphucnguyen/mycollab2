@@ -58,8 +58,8 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getLEAD());
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
+        CrmModule.navigateItem(CrmTypeConstants.LEAD);
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_LEAD)) {
             SimpleLead lead = null;
 
             if (data.getParams() instanceof SimpleLead) {

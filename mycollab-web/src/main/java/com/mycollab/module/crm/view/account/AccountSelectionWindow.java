@@ -56,7 +56,7 @@ public class AccountSelectionWindow extends MWindow {
                 fieldSelection.fireValueChange(account);
                 close();
             }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.INSTANCE.generateToolTipAccount(
-                    UserUIContext.getUserLocale(), account, AppUI.getSiteUrl()));
+                    UserUIContext.getUserLocale(), account, AppUI.Companion.getSiteUrl()));
         });
     }
 }

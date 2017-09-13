@@ -43,51 +43,51 @@ public class RelatedReadItemField extends CustomField {
             FontAwesome relatedLink = null;
             String relateItemName = null;
 
-            if (CrmTypeConstants.INSTANCE.getACCOUNT().equals(type)) {
+            if (CrmTypeConstants.ACCOUNT.equals(type)) {
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 final SimpleAccount account = accountService.findById(typeId, AppUI.getAccountId());
                 if (account != null) {
                     relateItemName = account.getAccountname();
-                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACCOUNT());
+                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT);
                 }
-            } else if (CrmTypeConstants.INSTANCE.getCAMPAIGN().equals(type)) {
+            } else if (CrmTypeConstants.CAMPAIGN.equals(type)) {
                 CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
                 final SimpleCampaign campaign = campaignService.findById(typeId, AppUI.getAccountId());
                 if (campaign != null) {
                     relateItemName = campaign.getCampaignname();
-                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN());
+                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN);
 
                 }
-            } else if (CrmTypeConstants.INSTANCE.getCONTACT().equals(type)) {
+            } else if (CrmTypeConstants.CONTACT.equals(type)) {
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
                 final SimpleContact contact = contactService.findById(typeId, AppUI.getAccountId());
                 if (contact != null) {
                     relateItemName = contact.getContactName();
-                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCONTACT());
+                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT);
 
                 }
-            } else if (CrmTypeConstants.INSTANCE.getLEAD().equals(type)) {
+            } else if (CrmTypeConstants.LEAD.equals(type)) {
                 LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
                 final SimpleLead lead = leadService.findById(typeId, AppUI.getAccountId());
                 if (lead != null) {
                     relateItemName = lead.getLeadName();
-                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD());
+                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.LEAD);
 
                 }
-            } else if (CrmTypeConstants.INSTANCE.getOPPORTUNITY().equals(type)) {
+            } else if (CrmTypeConstants.OPPORTUNITY.equals(type)) {
                 OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
                 final SimpleOpportunity opportunity = opportunityService.findById(typeId, AppUI.getAccountId());
                 if (opportunity != null) {
                     relateItemName = opportunity.getOpportunityname();
-                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY());
+                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY);
 
                 }
-            } else if (CrmTypeConstants.INSTANCE.getCASE().equals(type)) {
+            } else if (CrmTypeConstants.CASE.equals(type)) {
                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
                 final SimpleCase cases = caseService.findById(typeId, AppUI.getAccountId());
                 if (cases != null) {
                     relateItemName = cases.getSubject();
-                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCASE());
+                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.CASE);
                 }
             }
 

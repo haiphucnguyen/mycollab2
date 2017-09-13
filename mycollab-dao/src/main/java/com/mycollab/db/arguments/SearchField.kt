@@ -25,7 +25,10 @@ open class SearchField : Serializable {
     companion object {
         private const val serialVersionUID = 1L
 
+        @JvmField
         val OR = "OR"
+
+        @JvmField
         val AND = "AND"
     }
 }

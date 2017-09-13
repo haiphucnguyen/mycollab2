@@ -15,6 +15,6 @@ class DivLessFormatter() : Div() {
     }
 
     companion object {
-        val EMPTY_SPACE = Text("&nbsp;")
+        @JvmField val EMPTY_SPACE = Text("&nbsp;")
     }
 }

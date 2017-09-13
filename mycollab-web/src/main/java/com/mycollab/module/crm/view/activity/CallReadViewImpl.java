@@ -28,7 +28,7 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
     private CrmFollowersComp<SimpleCall> followersComp;
 
     public CallReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCALL()));
+        super(CrmAssetsManager.getAsset(CrmTypeConstants.CALL));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.INSTANCE.getCRM_CALL());
+        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_CALL);
     }
 
     @Override
@@ -60,20 +60,20 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
 
     @Override
     protected void initRelatedComponents() {
-        activityComponent = new CrmActivityComponent(CrmTypeConstants.INSTANCE.getCALL());
+        activityComponent = new CrmActivityComponent(CrmTypeConstants.CALL);
 
         dateInfoComp = new DateInfoComp();
-        followersComp = new CrmFollowersComp<>(CrmTypeConstants.INSTANCE.getCALL(), RolePermissionCollections.INSTANCE.getCRM_CALL());
+        followersComp = new CrmFollowersComp<>(CrmTypeConstants.CALL, RolePermissionCollections.CRM_CALL);
         addToSideBar(dateInfoComp, followersComp);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.INSTANCE.getDETAIL(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getDETAIL()));
-        tabSheet.selectTab(CrmTypeConstants.INSTANCE.getDETAIL());
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+        tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getCALL(), CallDefaultFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.CALL, CallDefaultFormLayoutFactory.getForm());
     }
 
     @Override
@@ -93,6 +93,6 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getCALL();
+        return CrmTypeConstants.CALL;
     }
 }

@@ -72,7 +72,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
             @Override
             public void onPrint(Object source, Version data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.INSTANCE.getBUG_VERSION(), Version.Field.name.name(),
+                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.BUG_VERSION, Version.Field.name.name(),
                         VersionDefaultFormLayoutFactory.getForm(), Version.Field.id.name()));
             }
 
@@ -81,7 +81,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
                 VersionService componentService = AppContextUtil.getSpringBean(VersionService.class);
                 VersionSearchCriteria criteria = new VersionSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = componentService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new BugVersionEvent.GotoRead(this, nextId));
@@ -95,7 +95,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
                 VersionService componentService = AppContextUtil.getSpringBean(VersionService.class);
                 VersionSearchCriteria criteria = new VersionSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = componentService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new BugVersionEvent.GotoRead(this, nextId));
@@ -108,7 +108,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getVERSIONS())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.VERSIONS)) {
             if (data.getParams() instanceof Integer) {
                 VersionService componentService = AppContextUtil.getSpringBean(VersionService.class);
                 Version version = componentService.findById((Integer) data.getParams(), AppUI.getAccountId());
@@ -118,7 +118,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
                     versionContainer.addComponent(view);
                     view.previewItem(version);
 
-                    ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+                    ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
                     breadcrumb.gotoVersionRead(version);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

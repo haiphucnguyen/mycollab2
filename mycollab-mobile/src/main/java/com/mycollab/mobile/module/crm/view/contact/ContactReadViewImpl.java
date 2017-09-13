@@ -53,11 +53,11 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
     @Override
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withFullWidth().withSpacing(false).withMargin(false);
-        Component opportunitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getOPPORTUNITY()),
+        Component opportunitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY),
                 associateOpportunities);
         toolbarLayout.addComponent(opportunitySection);
 
-        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getACTIVITY()),
+        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY),
                 associateActivities);
         toolbarLayout.addComponent(activitySection);
 
@@ -73,10 +73,10 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
     protected ComponentContainer createButtonControls() {
         VerticalLayout buttonControls = new CrmPreviewFormControlsGenerator<>(previewForm).
                 createButtonControls(CLONE_BTN_PRESENTED | DELETE_BTN_PRESENTED,
-                        RolePermissionCollections.INSTANCE.getCRM_CONTACT());
+                        RolePermissionCollections.CRM_CONTACT);
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GotoEdit(this, beanItem)))
                 .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CONTACT()));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CONTACT));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(buttonControls));
     }
 
@@ -106,8 +106,8 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
         if (lead != null) {
             return beanItem.getContactName() + "&nbsp;"
                     + UserUIContext.getMessage(LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
-                    CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getLEAD()),
-                    CrmLinkGenerator.INSTANCE.generateCrmItemLink(CrmTypeConstants.INSTANCE.getLEAD(), lead.getId()),
+                    CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
+                    CrmLinkGenerator.INSTANCE.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()),
                     lead.getLeadName());
         } else {
             return beanItem.getContactName();
@@ -116,7 +116,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.INSTANCE.getCONTACT(), ContactDefaultDynaFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.CONTACT, ContactDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -134,7 +134,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getCONTACT();
+        return CrmTypeConstants.CONTACT;
     }
 
     @Override

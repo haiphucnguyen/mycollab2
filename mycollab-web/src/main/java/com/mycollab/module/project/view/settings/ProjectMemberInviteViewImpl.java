@@ -20,7 +20,7 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.mvp.ViewEvent;
+import com.mycollab.vaadin.events.ViewEvent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.FormContainer;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -103,7 +103,7 @@ public class ProjectMemberInviteViewImpl extends AbstractVerticalPageView implem
     private Layout createBottomPanel() {
         FormContainer permissionsPanel = new FormContainer();
 
-        projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS().length / 2 + 1, "180px");
+        projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length / 2 + 1, "180px");
         permissionsPanel.addSection(UserUIContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS), projectFormHelper.getLayout());
         roleId = (Integer) roleComboBox.getValue();
         displayRolePermission(roleId);
@@ -118,19 +118,19 @@ public class ProjectMemberInviteViewImpl extends AbstractVerticalPageView implem
             SimpleProjectRole role = roleService.findById(roleId, AppUI.getAccountId());
             if (role != null) {
                 PermissionMap permissionMap = role.getPermissionMap();
-                for (int i = 0; i < ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS().length; i++) {
-                    String permissionPath = ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS()[i];
+                for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
+                    String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
                     Enum permissionKey = RolePermissionI18nEnum.valueOf(permissionPath);
                     Integer perVal = permissionMap.get(permissionKey.name());
-                    SecurityI18nEnum permissionVal = PermissionFlag.Companion.toVal(perVal);
+                    SecurityI18nEnum permissionVal = PermissionFlag.toVal(perVal);
                     projectFormHelper.addComponent(new Label(UserUIContext.getPermissionCaptionValue(
                             permissionMap, permissionPath)), UserUIContext.getMessage(permissionKey),
                             UserUIContext.getMessage(permissionVal.desc()), i % 2, i / 2);
                 }
             }
         } else {
-            for (int i = 0; i < ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS().length; i++) {
-                final String permissionPath = ProjectRolePermissionCollections.INSTANCE.getPROJECT_PERMISSIONS()[i];
+            for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
+                final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
                 projectFormHelper.addComponent(new Label(UserUIContext.getMessage(SecurityI18nEnum.ACCESS)),
                         permissionPath, i % 2, i / 2);
             }

@@ -86,11 +86,11 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
     }
 
     private static String generateToolTip(SimpleActivity event) {
-        if (CrmTypeConstants.INSTANCE.getMEETING().equals(event.getEventType())) {
+        if (CrmTypeConstants.MEETING.equals(event.getEventType())) {
             return generateToolTipMeeting(event);
-        } else if (CrmTypeConstants.INSTANCE.getCALL().equals(event.getEventType())) {
+        } else if (CrmTypeConstants.CALL.equals(event.getEventType())) {
             return generateToolTipCall(event);
-        } else if (CrmTypeConstants.INSTANCE.getTASK().equals(event.getEventType())) {
+        } else if (CrmTypeConstants.TASK.equals(event.getEventType())) {
             return generateToolTipTask(event);
         }
         return "";
@@ -257,7 +257,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
             trRow2.appendChild(new Td().setStyle("width: 90px; vertical-align: top; text-align: right;")
                     .appendText("Contact:"))
                     .appendChild(new Td().setStyle("width:110px; vertical-align: top; text-align: left;")
-                            .appendChild(new A().setHref((event.getContactId() != null) ? AppUI.getSiteUrl() + "#"
+                            .appendChild(new A().setHref((event.getContactId() != null) ? AppUI.Companion.getSiteUrl() + "#"
                                     + CrmLinkGenerator.INSTANCE.generateContactPreviewLink(event.getContactId()) : "")
                                     .appendText(StringUtils.trimHtmlTags(event.getContactFullName()))));
 
@@ -271,8 +271,8 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
                     .appendChild(
                             new Td().setStyle("width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top;")
                                     .appendChild(new A().setHref((event.getAssignUser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(
-                                            AppUI.getSiteUrl(), event.getAssignUser()) : "")
-                                            .appendChild(new Img("", StorageUtils.INSTANCE.getAvatarPath(event.getAssignUserAvatarId(), 16)))
+                                            AppUI.Companion.getSiteUrl(), event.getAssignUser()) : "")
+                                            .appendChild(new Img("", StorageUtils.getAvatarPath(event.getAssignUserAvatarId(), 16)))
                                             .appendText(StringUtils.trimHtmlTags(event.getAssignUserFullName()))));
 
             Tr trRow4 = new Tr();

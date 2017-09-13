@@ -19,13 +19,13 @@ class TicketTypeListSelect extends ListSelect {
         this.setMultiSelect(true);
         this.setRows(3);
 
-        this.addItem(ProjectTypeConstants.INSTANCE.getTASK());
-        this.setItemCaption(ProjectTypeConstants.INSTANCE.getTASK(), UserUIContext.getMessage(TaskI18nEnum.SINGLE));
-        this.addItem(ProjectTypeConstants.INSTANCE.getBUG());
-        this.setItemCaption(ProjectTypeConstants.INSTANCE.getBUG(), UserUIContext.getMessage(BugI18nEnum.SINGLE));
+        this.addItem(ProjectTypeConstants.TASK);
+        this.setItemCaption(ProjectTypeConstants.TASK, UserUIContext.getMessage(TaskI18nEnum.SINGLE));
+        this.addItem(ProjectTypeConstants.BUG);
+        this.setItemCaption(ProjectTypeConstants.BUG, UserUIContext.getMessage(BugI18nEnum.SINGLE));
         if (!SiteConfiguration.isCommunityEdition()) {
-            this.addItem(ProjectTypeConstants.INSTANCE.getRISK());
-            this.setItemCaption(ProjectTypeConstants.INSTANCE.getRISK(), UserUIContext.getMessage(RiskI18nEnum.SINGLE));
+            this.addItem(ProjectTypeConstants.RISK);
+            this.setItemCaption(ProjectTypeConstants.RISK, UserUIContext.getMessage(RiskI18nEnum.SINGLE));
         }
     }
 }

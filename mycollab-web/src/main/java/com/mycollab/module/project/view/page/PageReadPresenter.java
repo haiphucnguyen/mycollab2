@@ -51,7 +51,7 @@ public class PageReadPresenter extends ProjectGenericPresenter<PageReadView> {
             @Override
             public void onDelete(final Page data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -68,14 +68,14 @@ public class PageReadPresenter extends ProjectGenericPresenter<PageReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getPAGES())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.PAGES)) {
             PageContainer pageContainer = (PageContainer) container;
-            pageContainer.navigateToContainer(ProjectTypeConstants.INSTANCE.getPAGE());
+            pageContainer.navigateToContainer(ProjectTypeConstants.PAGE);
             pageContainer.setContent(view);
             Page page = (Page) data.getParams();
             view.previewItem(page);
 
-            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
             breadcrumb.gotoPageRead(page);
         } else {
             throw new SecureAccessException();

@@ -46,7 +46,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
 
     public MilestoneReadViewImpl() {
         super(UserUIContext.getMessage(MilestoneI18nEnum.DETAIL), ProjectAssetsManager.getAsset
-                (ProjectTypeConstants.INSTANCE.getMILESTONE()), new MilestonePreviewFormLayout());
+                (ProjectTypeConstants.MILESTONE), new MilestonePreviewFormLayout());
     }
 
     @Override
@@ -57,7 +57,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
     @Override
     protected HorizontalLayout createButtonControls() {
         ProjectPreviewFormControlsGenerator<SimpleMilestone> controlsGenerator = new ProjectPreviewFormControlsGenerator<>(previewForm);
-        return controlsGenerator.createButtonControls(ProjectRolePermissionCollections.INSTANCE.getMILESTONES());
+        return controlsGenerator.createButtonControls(ProjectRolePermissionCollections.MILESTONES);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
         if (SiteConfiguration.isCommunityEdition()) {
             return null;
         } else {
-            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES()));
+            tagViewComponent = new TagViewComponent(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
             return tagViewComponent;
         }
     }
@@ -77,7 +77,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
 
     @Override
     protected void initRelatedComponents() {
-        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INSTANCE.getMILESTONE(), CurrentProjectVariables.getProjectId());
+        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.MILESTONE, CurrentProjectVariables.getProjectId());
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
 
@@ -102,7 +102,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
     @Override
     protected void onPreviewItem() {
         if (tagViewComponent != null) {
-            tagViewComponent.display(ProjectTypeConstants.INSTANCE.getMILESTONE(), beanItem.getId());
+            tagViewComponent.display(ProjectTypeConstants.MILESTONE, beanItem.getId());
         }
         if (milestoneTimeLogComp != null) {
             milestoneTimeLogComp.displayTime(beanItem);
@@ -120,7 +120,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
 
     @Override
     protected String getType() {
-        return ProjectTypeConstants.INSTANCE.getMILESTONE();
+        return ProjectTypeConstants.MILESTONE;
     }
 
     private static class MilestonePreviewFormLayout extends ReadViewLayout {

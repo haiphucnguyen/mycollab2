@@ -114,15 +114,15 @@ public class GanttItemWrapper {
     }
 
     public boolean isTask() {
-        return (task instanceof TaskGanttItem) && ProjectTypeConstants.INSTANCE.getTASK().equals(task.getType());
+        return (task instanceof TaskGanttItem) && ProjectTypeConstants.TASK.equals(task.getType());
     }
 
     public boolean isBug() {
-        return (task instanceof TaskGanttItem) && ProjectTypeConstants.INSTANCE.getBUG().equals(task.getType());
+        return (task instanceof TaskGanttItem) && ProjectTypeConstants.BUG.equals(task.getType());
     }
 
     public boolean isRisk() {
-        return (task instanceof TaskGanttItem) && ProjectTypeConstants.INSTANCE.getRISK().equals(task.getType());
+        return (task instanceof TaskGanttItem) && ProjectTypeConstants.RISK.equals(task.getType());
     }
 
     public boolean hasSubTasks() {
@@ -193,7 +193,7 @@ public class GanttItemWrapper {
         if (task instanceof TaskGanttItem) {
             return task.getType();
         } else if (task instanceof MilestoneGanttItem) {
-            return ProjectTypeConstants.INSTANCE.getMILESTONE();
+            return ProjectTypeConstants.MILESTONE;
         } else {
             throw new MyCollabException("Do not support assignment type " + this);
         }

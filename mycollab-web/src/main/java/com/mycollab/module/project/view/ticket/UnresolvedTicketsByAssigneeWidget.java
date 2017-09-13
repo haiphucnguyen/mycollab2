@@ -136,7 +136,7 @@ public class UnresolvedTicketsByAssigneeWidget extends Depot {
             this.withListener(clickEvent -> {
                 ProjectTicketSearchCriteria criteria = BeanUtility.deepClone(searchCriteria);
                 criteria.setAssignUser(StringSearchField.and(assignee));
-                criteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
+                criteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
                 EventBusFactory.getInstance().post(new TicketEvent.SearchRequest(UnresolvedTicketsByAssigneeWidget.this,
                         criteria));
             }).withWidth("100%").withIcon(UserAvatarControlFactory.createAvatarResource(assigneeAvatarId, 16))
@@ -144,7 +144,7 @@ public class UnresolvedTicketsByAssigneeWidget extends Depot {
             UserService service = AppContextUtil.getSpringBean(UserService.class);
             SimpleUser user = service.findUserByUserNameInAccount(assignee, AppUI.getAccountId());
             this.setDescription(CommonTooltipGenerator.generateTooltipUser(UserUIContext.getUserLocale(), user,
-                    AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
         }
     }
 }

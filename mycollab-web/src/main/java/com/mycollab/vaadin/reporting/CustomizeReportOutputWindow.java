@@ -151,7 +151,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
                     UserUIContext.getUserTimeZone(), UserUIContext.getUserLocale(), reportTitle,
                     new RpFieldsBuilder(columns), getExportType(), beanCls, searchableService);
             Map<String, Object> parameters = new ConcurrentHashMap<>();
-            parameters.put("siteUrl", AppUI.getSiteUrl());
+            parameters.put("siteUrl", AppUI.Companion.getSiteUrl());
             parameters.put("user", UserUIContext.getUser());
             parameters.put(SimpleReportTemplateExecutor.CRITERIA, variableInjector.eval());
             reportTemplateExecutor.setParameters(parameters);

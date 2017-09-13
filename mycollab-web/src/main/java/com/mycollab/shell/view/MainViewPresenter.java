@@ -35,14 +35,14 @@ public class MainViewPresenter extends AbstractPresenter<MainView> {
                 if (url.startsWith("/")) {
                     url = url.substring(1);
                 }
-                ShellUrlResolver.ROOT().resolveFragment(url);
+                ShellUrlResolver.ROOT.resolveFragment(url);
             } else {
                 SimpleUser pref = UserUIContext.getUser();
-                if (ModuleNameConstants.INSTANCE.getCRM().equals(pref.getLastModuleVisit())) {
+                if (ModuleNameConstants.CRM.equals(pref.getLastModuleVisit())) {
                     EventBusFactory.getInstance().post(new ShellEvent.GotoCrmModule(this, null));
-                } else if (ModuleNameConstants.INSTANCE.getACCOUNT().equals(pref.getLastModuleVisit())) {
+                } else if (ModuleNameConstants.ACCOUNT.equals(pref.getLastModuleVisit())) {
                     EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, null));
-                } else if (ModuleNameConstants.INSTANCE.getFILE().equals(pref.getLastModuleVisit())) {
+                } else if (ModuleNameConstants.FILE.equals(pref.getLastModuleVisit())) {
                     EventBusFactory.getInstance().post(new ShellEvent.GotoFileModule(this, null));
                 } else {
                     EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));

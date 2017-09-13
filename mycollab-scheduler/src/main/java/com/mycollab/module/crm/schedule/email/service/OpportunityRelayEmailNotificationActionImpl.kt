@@ -45,7 +45,7 @@ class OpportunityRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmai
     @Autowired private val opportunityService: OpportunityService? = null
     private val mapper: OpportunityFieldNameMapper = OpportunityFieldNameMapper()
 
-    override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleOpportunity =
+    override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleOpportunity? =
             opportunityService!!.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getCreateSubjectKey(): Enum<*> = OpportunityI18nEnum.MAIL_CREATE_ITEM_SUBJECT

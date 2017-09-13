@@ -68,14 +68,14 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
     protected void initRelatedComponents() {
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        followerSheet = new CrmFollowersComp<>(CrmTypeConstants.INSTANCE.getACCOUNT(), RolePermissionCollections.INSTANCE.getCRM_ACCOUNT());
+        followerSheet = new CrmFollowersComp<>(CrmTypeConstants.ACCOUNT, RolePermissionCollections.CRM_ACCOUNT);
         addToSideBar(dateInfoComp, peopleInfoComp, followerSheet);
         projectListComp = new ProjectListComp();
     }
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getACCOUNT();
+        return CrmTypeConstants.ACCOUNT;
     }
 
     @Override
@@ -89,9 +89,9 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
     @Override
     protected String initFormTitle() {
         if (beanItem.getAvatarid() != null) {
-            Img img = new Img("", StorageUtils.INSTANCE.getEntityLogoPath(AppUI.getAccountId(), beanItem.getAvatarid(), 16))
+            Img img = new Img("", StorageUtils.getEntityLogoPath(AppUI.getAccountId(), beanItem.getAvatarid(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
-            return new Div().appendChild(img).appendChild(DivLessFormatter.EMPTY_SPACE()).appendText(beanItem.getAccountname()).write();
+            return new Div().appendChild(img).appendChild(DivLessFormatter.EMPTY_SPACE).appendText(beanItem.getAccountname()).write();
         } else {
             return beanItem.getAccountname();
         }
@@ -104,7 +104,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
 
     @Override
     protected HorizontalLayout createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT());
+        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_ACCOUNT);
     }
 
     @Override
@@ -183,13 +183,13 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                 Project project = new Project();
                 project.setAccountid(accountId);
                 UI.getCurrent().addWindow(new ProjectAddWindow(project));
-            }).withStyleName(WebThemes.BUTTON_ACTION).withVisible(UserUIContext.canBeYes(RolePermissionCollections.INSTANCE.getCREATE_NEW_PROJECT()));
+            }).withStyleName(WebThemes.BUTTON_ACTION).withVisible(UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
 
             MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(WebThemes.FORM_SECTION)
                     .withFullWidth().with(headerLbl, newProjectBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
                     .withAlign(newProjectBtn, Alignment.MIDDLE_RIGHT);
             this.addComponent(headerPanel);
-            List<SimpleProject> projects = projectService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+            List<SimpleProject> projects = (List<SimpleProject>) projectService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
             CssLayout content = new CssLayout();
             content.setStyleName(WebThemes.FLEX_DISPLAY);
             this.addComponent(content);
@@ -216,16 +216,16 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                     setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
             Div nonBillableHoursDiv = new Div().appendText(FontAwesome.GIFT.getHtml() + " " + NumberUtils.roundDouble(2,
                     project.getTotalNonBillableHours())).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
-            Div metaDiv = new Div().appendChild(activeMembersDiv, DivLessFormatter.EMPTY_SPACE(), createdTimeDiv,
-                    DivLessFormatter.EMPTY_SPACE(), billableHoursDiv, DivLessFormatter.EMPTY_SPACE(),
-                    nonBillableHoursDiv, DivLessFormatter.EMPTY_SPACE());
+            Div metaDiv = new Div().appendChild(activeMembersDiv, DivLessFormatter.EMPTY_SPACE, createdTimeDiv,
+                    DivLessFormatter.EMPTY_SPACE, billableHoursDiv, DivLessFormatter.EMPTY_SPACE,
+                    nonBillableHoursDiv, DivLessFormatter.EMPTY_SPACE);
             if (project.getLead() != null) {
-                Div leadDiv = new Div().appendChild(new Img("", StorageUtils.INSTANCE.getAvatarPath(project
-                        .getLeadAvatarId(), 16)), DivLessFormatter.EMPTY_SPACE(), new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(project
+                Div leadDiv = new Div().appendChild(new Img("", StorageUtils.getAvatarPath(project
+                        .getLeadAvatarId(), 16)), DivLessFormatter.EMPTY_SPACE, new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(project
                         .getId(), project.getLead())).appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
                         .setTitle(UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER));
                 metaDiv.appendChild(0, leadDiv);
-                metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE());
+                metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE);
             }
             metaDiv.setCSSClass(WebThemes.FLEX_DISPLAY);
             ELabel prjInfo = new ELabel(metaDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO).withWidthUndefined();

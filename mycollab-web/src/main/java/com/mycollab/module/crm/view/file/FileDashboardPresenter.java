@@ -26,8 +26,8 @@ public class FileDashboardPresenter extends CrmGenericPresenter<FileDashboardVie
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        CrmModule.navigateItem(CrmTypeConstants.INSTANCE.getFILE());
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_DOCUMENT())) {
+        CrmModule.navigateItem(CrmTypeConstants.FILE);
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_DOCUMENT)) {
             super.onGo(container, data);
             view.displayFiles();
             AppUI.addFragment("crm/file/dashboard", "Customer: File Dashboard");

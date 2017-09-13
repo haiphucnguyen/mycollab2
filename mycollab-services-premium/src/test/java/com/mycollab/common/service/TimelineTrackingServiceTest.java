@@ -33,7 +33,7 @@ public class TimelineTrackingServiceTest extends IntegrationServiceTest {
     public void testFindTimeline() {
         TimelineTrackingSearchCriteria criteria = new TimelineTrackingSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(1));
-        criteria.setTypes(new SetSearchField(ProjectTypeConstants.INSTANCE.getBUG()));
+        criteria.setTypes(new SetSearchField(ProjectTypeConstants.BUG));
         Map<String, List<GroupItem>> timelineItems = timelineTrackingService.findTimelineItems("status",
                 Arrays.asList(BugStatus.ReOpen.name(), BugStatus.Resolved.name()),
                 new GregorianCalendar(2015, 9, 2).getTime(), new GregorianCalendar(2015, 9, 31).getTime(), criteria);

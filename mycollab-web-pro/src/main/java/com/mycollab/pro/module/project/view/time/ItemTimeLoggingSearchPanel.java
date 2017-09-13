@@ -60,7 +60,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.headerH2(ProjectTypeConstants.INSTANCE.getTIME(), UserUIContext.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
+        return ComponentUtils.headerH2(ProjectTypeConstants.TIME, UserUIContext.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
     }
 
     public void addComponent(Component c, int index) {

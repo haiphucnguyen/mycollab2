@@ -46,7 +46,7 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
 
     @Override
     protected void onGo(HasComponents navigator, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             SimpleTask task = (SimpleTask) data.getParams();
             view.editItem(task);
             super.onGo(navigator, data);
@@ -70,7 +70,7 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
             task.setCreateduser(UserUIContext.getUsername());
             int taskId = taskService.saveWithSession(task, UserUIContext.getUsername());
             ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
-            uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.INSTANCE.getTASK(), taskId);
+            uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.TASK, taskId);
         } else {
             taskService.updateWithSession(task, UserUIContext.getUsername());
             ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();

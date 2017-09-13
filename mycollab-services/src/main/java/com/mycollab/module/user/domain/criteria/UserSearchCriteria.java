@@ -65,7 +65,7 @@ public class UserSearchCriteria extends SearchCriteria {
         String expr = String.format("s_user_account.lastAccessedTime >= '%s' AND s_user_account.lastAccessedTime <='%s'",
                         DateTimeUtils.formatDate(from, "yyyy-MM-dd", Locale.US),
                         DateTimeUtils.formatDate(to, "yyyy-MM-dd", Locale.US));
-        NoValueSearchField searchField = new NoValueSearchField(SearchField.Companion.getAND(), expr);
+        NoValueSearchField searchField = new NoValueSearchField(SearchField.AND, expr);
         this.addExtraField(searchField);
     }
 }

@@ -24,7 +24,7 @@ public class CaseCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCASE());
+        return CrmAssetsManager.getAsset(CrmTypeConstants.CASE);
     }
 
     @Override
@@ -54,6 +54,6 @@ public class CaseCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected boolean hasPermission() {
-        return UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CASE());
+        return UserUIContext.canWrite(RolePermissionCollections.CRM_CASE);
     }
 }

@@ -90,7 +90,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP))
                 .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY)).withField(new PriorityComboBox())
                 .withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getPriority())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
 
@@ -99,7 +99,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String avatarLink = StorageUtils.INSTANCE.getAvatarPath(bug.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageUtils.getAvatarPath(bug.getAssignUserAvatarId(), 16);
                 Img img = new Img(bug.getAssignuserFullName(), avatarLink).setTitle(bug.getAssignuserFullName())
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 return img.write();
@@ -109,7 +109,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             protected String generateSmallAsHtmlAfterUpdate() {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 SimpleBug newBug = bugService.findById(bug.getId(), AppUI.getAccountId());
-                String avatarLink = StorageUtils.INSTANCE.getAvatarPath(newBug.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageUtils.getAvatarPath(newBug.getAssignUserAvatarId(), 16);
                 Img img = new Img(newBug.getAssignuserFullName(), avatarLink).setTitle(newBug.getAssignuserFullName())
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 return img.write();
@@ -123,7 +123,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         builder.withBean(bug).withBindProperty(BugWithBLOBs.Field.assignuser.name()).withDescription(bug.getAssignuserFullName())
                 .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
                 .withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getAssignuser())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
 
@@ -158,8 +158,8 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         protected void doShow() {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
-            watchersMultiSelection = new WatchersMultiSelection(ProjectTypeConstants.INSTANCE.getBUG(), bug.getId(),
-                    CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+            watchersMultiSelection = new WatchersMultiSelection(ProjectTypeConstants.BUG, bug.getId(),
+                    CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
             layout.with(new ELabel(UserUIContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS)).withStyleName(ValoTheme.LABEL_H3),
                     watchersMultiSelection);
         }
@@ -172,7 +172,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             monitorItemService.saveMonitorItems(items);
 
             MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
-            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getBUG()));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
             searchCriteria.setTypeId(new NumberSearchField(bug.getId()));
             int numFollowers = monitorItemService.getTotalCount(searchCriteria);
             this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + numFollowers);
@@ -199,7 +199,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
 
         @Override
         protected void doShow() {
-            CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.INSTANCE.getBUG(), CurrentProjectVariables.getProjectId());
+            CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.BUG, CurrentProjectVariables.getProjectId());
             MVerticalLayout layout = getWrapContent().withStyleName(WebThemes.SCROLLABLE_CONTAINER);
             layout.removeAllComponents();
             layout.with(commentDisplay);
@@ -209,7 +209,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         @Override
         protected void doHide() {
             CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
-            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getBUG()));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
             searchCriteria.setTypeId(StringSearchField.and(bug.getId() + ""));
             CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentCount = commentService.getTotalCount(searchCriteria);
@@ -237,7 +237,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         protected void doShow() {
             MVerticalLayout content = getWrapContent();
             content.removeAllComponents();
-            boolean hasPermission = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS());
+            boolean hasPermission = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
             if (BugStatus.Open.name().equals(beanItem.getStatus()) ||
                     BugStatus.ReOpen.name().equals(beanItem.getStatus())) {
                 MButton resolveBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), clickEvent -> {
@@ -303,13 +303,13 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             protected String generateSmallContentAsHtml() {
                 if (bug.getMilestoneid() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
-                    divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml());
+                    divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
                     String milestoneName = ((MilestoneComboBox) field).getItemCaption(bug.getMilestoneid());
-                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()).getHtml() + " " +
+                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
                             StringUtils.trim(milestoneName, 20, true);
                 }
             }
@@ -318,7 +318,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         milestoneComboBox.setWidth("300px");
         builder.withBean(bug).withBindProperty("milestoneid").withCaption(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE))
                 .withField(milestoneComboBox).withService(AppContextUtil.getSpringBean(BugService.class))
-                .withValue(bug.getMilestoneid()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+                .withValue(bug.getMilestoneid()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
 
@@ -340,7 +340,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         };
         builder.withBean(bug).withBindProperty("duedate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
                 .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
 
@@ -362,7 +362,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         };
         builder.withBean(bug).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
                 .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getStartdate())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
 
@@ -383,7 +383,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         };
         builder.withBean(bug).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
                 .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getEnddate())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS()));
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
 
@@ -418,7 +418,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         protected void doShow() {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
-            if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
+            if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.BUGS)) {
                 timeInput.setValue("");
                 timeInput.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TIME_FORMAT));
                 String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
@@ -450,7 +450,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                     timeLogging.setLogforday(date);
                     timeLogging.setLogvalue(hours);
                     timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
-                    timeLogging.setType(ProjectTypeConstants.INSTANCE.getBUG());
+                    timeLogging.setType(ProjectTypeConstants.BUG);
                     timeLogging.setTypeid(bug.getId());
                     timeLogging.setSaccountid(AppUI.getAccountId());
                     timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
@@ -460,7 +460,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                     ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
                     searchCriteria.setIsBillable(new BooleanSearchField(isBillable));
                     searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                    searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getBUG()));
+                    searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
                     searchCriteria.setTypeId(new NumberSearchField(bug.getId()));
                     Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
                     if (isBillable) {

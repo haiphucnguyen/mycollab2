@@ -1,7 +1,7 @@
 package com.mycollab.module.project.view.bug;
 
-import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.BasicSearchRequest;
+import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.tracker.domain.SimpleBug;
@@ -11,7 +11,10 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import org.vaadin.suggestfield.BeanSuggestionConverter;
 import org.vaadin.suggestfield.SuggestField;
 import org.vaadin.suggestfield.client.SuggestFieldSuggestion;
@@ -76,7 +79,7 @@ public class BugSelectionField extends CustomField<SimpleBug> implements FieldSe
         BugSearchCriteria searchCriteria = new BugSearchCriteria();
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         searchCriteria.setName(StringSearchField.and(query));
-        items = bugService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        items = (List<SimpleBug>) bugService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         return new ArrayList<>(items);
     }
 

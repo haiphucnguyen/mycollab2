@@ -31,7 +31,7 @@ public class ActiveUserComboBox extends ListSelect {
         criteria.setRegisterStatuses(new SetSearchField<>(RegisterStatusConstants.ACTIVE));
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        List<SimpleUser> userList = userService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
+        List<SimpleUser> userList = (List<SimpleUser>)userService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
         loadUserList(userList);
     }
 

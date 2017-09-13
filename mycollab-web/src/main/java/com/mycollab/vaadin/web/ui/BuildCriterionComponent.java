@@ -100,7 +100,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
     }
 
     private void saveSearchCriteria(String queryText) {
-        List<SearchFieldInfo> fieldInfos = buildSearchFieldInfos();
+        List<SearchFieldInfo<S>> fieldInfos = buildSearchFieldInfos();
 
         if (CollectionUtils.isEmpty(fieldInfos)) {
             throw new UserInvalidInputException(UserUIContext.getMessage(ErrorI18nEnum.SELECT_AT_LEAST_ONE_CRITERIA));
@@ -118,9 +118,9 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
     }
 
     @Override
-    public List<SearchFieldInfo> buildSearchFieldInfos() {
+    public List<SearchFieldInfo<S>> buildSearchFieldInfos() {
         Iterator<Component> iterator = searchContainer.iterator();
-        List<SearchFieldInfo> fieldInfos = new ArrayList<>();
+        List<SearchFieldInfo<S>> fieldInfos = new ArrayList<>();
         while (iterator.hasNext()) {
             CriteriaSelectionLayout criteriaSelectionLayout = (CriteriaSelectionLayout) iterator.next();
             SearchFieldInfo searchFieldInfo = criteriaSelectionLayout.buildSearchFieldInfo();
@@ -178,7 +178,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             if (index == 1) {
                 this.addComponent(ELabel.html("&nbsp;").withWidth("90px"), 1, 0);
             } else {
-                operatorSelectionBox = new ValueComboBox(false, SearchField.Companion.getAND(), SearchField.Companion.getOR());
+                operatorSelectionBox = new ValueComboBox(false, SearchField.AND, SearchField.OR);
                 operatorSelectionBox.setWidth("90px");
                 this.addComponent(operatorSelectionBox, 1, 0);
             }
@@ -444,7 +444,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
                     if (filterBox.getComponentCount() <= 3) {
                         MButton updateBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
-                            List<SearchFieldInfo> fieldInfos = buildSearchFieldInfos();
+                            List<SearchFieldInfo<S>> fieldInfos = buildSearchFieldInfos();
                             SaveSearchResultService saveSearchResultService = AppContextUtil.getSpringBean(SaveSearchResultService.class);
                             data.setSaveuser(UserUIContext.getUsername());
                             data.setSaccountid(AppUI.getAccountId());
@@ -483,7 +483,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
 
             SaveSearchResultService saveSearchResultService = AppContextUtil.getSpringBean(SaveSearchResultService.class);
-            List<SaveSearchResult> result = saveSearchResultService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+            List<SaveSearchResult> result = (List<SaveSearchResult>) saveSearchResultService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
             beanItem = new BeanContainer<>(SaveSearchResult.class);
             beanItem.setBeanIdProperty("id");
 

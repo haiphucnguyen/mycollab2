@@ -64,7 +64,7 @@ public class StandupMissingComp extends MVerticalLayout {
 
     private String buildMemberLink(Integer projectId, SimpleUser user) {
         DivLessFormatter div = new DivLessFormatter();
-        Img userAvatar = new Img("", StorageUtils.INSTANCE.getAvatarPath(user.getAvatarid(), 16)).setCSSClass(UIConstants.CIRCLE_BOX);
+        Img userAvatar = new Img("", StorageUtils.getAvatarPath(user.getAvatarid(), 16)).setCSSClass(UIConstants.CIRCLE_BOX);
         A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(
                 projectId, user.getUsername()));
 
@@ -72,7 +72,7 @@ public class StandupMissingComp extends MVerticalLayout {
         userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
         userLink.appendText(StringUtils.trim(user.getDisplayName(), 30, true));
 
-        div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink);
+        div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE, userLink);
         return div.write();
     }
 

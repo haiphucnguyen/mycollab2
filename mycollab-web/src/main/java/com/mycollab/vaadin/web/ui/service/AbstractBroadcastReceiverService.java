@@ -6,6 +6,7 @@ import com.mycollab.core.AbstractNotification;
 import com.mycollab.core.BroadcastMessage;
 import com.mycollab.shell.events.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.web.DesktopApplication;
 
 import static com.mycollab.vaadin.ui.MyCollabSession.EVENT_BUS_VAL;
@@ -25,7 +26,7 @@ public abstract class AbstractBroadcastReceiverService implements BroadcastRecei
     @Override
     public void broadcast(BroadcastMessage message) {
         if (message.getWrapObj() instanceof AbstractNotification) {
-            EventBus eventBus = (EventBus) myCollabApp.getAttribute(EVENT_BUS_VAL);
+            EventBus eventBus = (EventBus) myCollabApp.getAttribute(MyCollabSession.EVENT_BUS_VAL);
             eventBus.post(new ShellEvent.NewNotification(this, message.getWrapObj()));
 
             CacheService cacheService = AppContextUtil.getSpringBean(CacheService.class);

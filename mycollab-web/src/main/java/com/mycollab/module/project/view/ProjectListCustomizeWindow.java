@@ -17,7 +17,7 @@ public class ProjectListCustomizeWindow extends CustomizedTableWindow {
     private static final long serialVersionUID = 1L;
 
     public ProjectListCustomizeWindow(AbstractPagedBeanTable table) {
-        super(ProjectTypeConstants.INSTANCE.getPROJECT(), table);
+        super(ProjectTypeConstants.PROJECT, table);
     }
 
     @Override

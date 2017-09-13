@@ -29,7 +29,7 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleCrmTas
     private CrmFollowersComp<SimpleCrmTask> followersComp;
 
     public AssignmentReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getTASK()));
+        super(CrmAssetsManager.getAsset(CrmTypeConstants.TASK));
     }
 
     @Override
@@ -39,7 +39,7 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleCrmTas
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.INSTANCE.getCRM_TASK());
+        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_TASK);
     }
 
     @Override
@@ -61,20 +61,20 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleCrmTas
 
     @Override
     protected void initRelatedComponents() {
-        activityComponent = new CrmActivityComponent(CrmTypeConstants.INSTANCE.getTASK());
+        activityComponent = new CrmActivityComponent(CrmTypeConstants.TASK);
 
         dateInfoComp = new DateInfoComp();
-        followersComp = new CrmFollowersComp<>(CrmTypeConstants.INSTANCE.getTASK(), RolePermissionCollections.INSTANCE.getCRM_TASK());
+        followersComp = new CrmFollowersComp<>(CrmTypeConstants.TASK, RolePermissionCollections.CRM_TASK);
         addToSideBar(dateInfoComp, followersComp);
 
-        tabSheet.addTab(previewLayout, CrmTypeConstants.INSTANCE.getDETAIL(), UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getDETAIL()));
-        tabSheet.selectTab(CrmTypeConstants.INSTANCE.getDETAIL());
+        tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+        tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getTASK(), AssignmentDefaultFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.TASK, AssignmentDefaultFormLayoutFactory.getForm());
     }
 
     @Override
@@ -94,6 +94,6 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleCrmTas
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.INSTANCE.getTASK();
+        return CrmTypeConstants.TASK;
     }
 }

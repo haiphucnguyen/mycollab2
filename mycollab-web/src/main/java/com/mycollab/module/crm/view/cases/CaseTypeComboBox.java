@@ -14,8 +14,7 @@ public class CaseTypeComboBox extends I18nValueComboBox {
     private static final long serialVersionUID = 1L;
 
     public CaseTypeComboBox() {
-        super();
         setCaption(null);
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getCasesType()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.casesType));
     }
 }

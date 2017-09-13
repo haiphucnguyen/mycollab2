@@ -37,32 +37,32 @@ public class AllActivitiesPresenter extends AbstractCrmPresenter<AllActivitiesVi
 
     private SetSearchField<String> getRestrictedItemTypes() {
         SetSearchField<String> types = new SetSearchField<>();
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_ACCOUNT())) {
-            types.addValue(CrmTypeConstants.INSTANCE.getACCOUNT());
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+            types.addValue(CrmTypeConstants.ACCOUNT);
         }
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CONTACT())) {
-            types.addValue(CrmTypeConstants.INSTANCE.getCONTACT());
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
+            types.addValue(CrmTypeConstants.CONTACT);
         }
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_LEAD())) {
-            types.addValue(CrmTypeConstants.INSTANCE.getLEAD());
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_LEAD)) {
+            types.addValue(CrmTypeConstants.LEAD);
         }
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CAMPAIGN())) {
-            types.addValue(CrmTypeConstants.INSTANCE.getCAMPAIGN());
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
+            types.addValue(CrmTypeConstants.CAMPAIGN);
         }
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_OPPORTUNITY())) {
-            types.addValue(CrmTypeConstants.INSTANCE.getOPPORTUNITY());
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_OPPORTUNITY)) {
+            types.addValue(CrmTypeConstants.OPPORTUNITY);
         }
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CASE())) {
-            types.addValue(CrmTypeConstants.INSTANCE.getCASE());
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_CASE)) {
+            types.addValue(CrmTypeConstants.CASE);
         }
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_TASK())) {
-            types.addValue(CrmTypeConstants.INSTANCE.getTASK());
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_TASK)) {
+            types.addValue(CrmTypeConstants.TASK);
         }
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_MEETING())) {
-            types.addValue(CrmTypeConstants.INSTANCE.getMEETING());
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_MEETING)) {
+            types.addValue(CrmTypeConstants.MEETING);
         }
-        if (UserUIContext.canRead(RolePermissionCollections.INSTANCE.getCRM_CALL())) {
-            types.addValue(CrmTypeConstants.INSTANCE.getCALL());
+        if (UserUIContext.canRead(RolePermissionCollections.CRM_CALL)) {
+            types.addValue(CrmTypeConstants.CALL);
         }
         return types;
     }

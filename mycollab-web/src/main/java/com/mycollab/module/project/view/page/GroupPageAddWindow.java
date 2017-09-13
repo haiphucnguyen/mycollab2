@@ -43,7 +43,7 @@ class GroupPageAddWindow extends MWindow {
         if (editFolder == null) {
             folder = new Folder();
             this.setCaption(UserUIContext.getMessage(PageI18nEnum.NEW_GROUP));
-            String pagePath = CurrentProjectVariables.getCurrentPagePath();
+            String pagePath = CurrentProjectVariables.INSTANCE.getCurrentPagePath();
             folder.setPath(pagePath + "/" + StringUtils.generateSoftUniqueId());
         } else {
             folder = editFolder;

@@ -30,7 +30,7 @@ public class CurrencyComboBoxField extends ComboBox {
     public void setPropertyDataSource(Property newDataSource) {
         Object value = newDataSource.getValue();
         if (value == null) {
-            Currency currency = AppUI.getDefaultCurrency();
+            Currency currency = AppUI.Companion.getDefaultCurrency();
             newDataSource.setValue(currency.getCurrencyCode());
         }
         super.setPropertyDataSource(newDataSource);

@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class OpportunitySalesStageComboBox extends I18nValueComboBox {
 
     public OpportunitySalesStageComboBox() {
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getOpportunitySalesStageList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.opportunitySalesStageList));
         this.setNullSelectionAllowed(false);
     }
 }

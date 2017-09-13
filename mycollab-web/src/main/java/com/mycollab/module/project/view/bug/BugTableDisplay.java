@@ -61,8 +61,8 @@ class BugTableDisplay extends DefaultPagedBeanTable<BugService, BugSearchCriteri
                 b.addStyleName("priority-" + bug.getPriority().toLowerCase());
             }
 
-            b.setDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipBug(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
-                    bug, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
+            b.setDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipBug(UserUIContext.getUserLocale(), AppUI.Companion.getDateFormat(),
+                    bug, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
 
             if (bug.isCompleted()) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);

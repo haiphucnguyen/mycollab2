@@ -90,7 +90,7 @@ public class DesktopApplication extends AppUI {
         });
 
         setCurrentFragmentUrl(this.getPage().getUriFragment());
-        currentContext = new UserUIContext();
+        setCurrentContext(new UserUIContext());
         postSetupApp(request);
 
         EventBusFactory.getInstance().register(new ShellErrorHandler());
@@ -156,7 +156,7 @@ public class DesktopApplication extends AppUI {
         if (usageBillingException != null) {
             if (UserUIContext.isAdmin()) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.WINDOW_ATTENTION_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.WINDOW_ATTENTION_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.EXCEED_BILLING_PLAN_MSG_FOR_ADMIN),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -207,7 +207,7 @@ public class DesktopApplication extends AppUI {
             Exception ex = (Exception) getExceptionType(e, systemEx);
             if (ex != null) {
                 ConfirmDialog dialog = ConfirmDialogExt.show(DesktopApplication.this,
-                        UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.ERROR_USER_SYSTEM_ERROR, ex.getMessage()),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -223,7 +223,7 @@ public class DesktopApplication extends AppUI {
         IllegalStateException asyncNotSupport = getExceptionType(e, IllegalStateException.class);
         if (asyncNotSupport != null && asyncNotSupport.getMessage().contains("!asyncSupported")) {
             ConfirmDialog dialog = ConfirmDialogExt.show(DesktopApplication.this,
-                    UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppUI.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppUI.Companion.getSiteName()),
                     UserUIContext.getMessage(ErrorI18nEnum.WEBSOCKET_NOT_SUPPORT),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -246,7 +246,7 @@ public class DesktopApplication extends AppUI {
 
         LOG.error("Error", e);
         ConfirmDialog dialog = ConfirmDialogExt.show(DesktopApplication.this,
-                UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppUI.getSiteName()),
+                UserUIContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppUI.Companion.getSiteName()),
                 UserUIContext.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE),
                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -262,8 +262,8 @@ public class DesktopApplication extends AppUI {
     }
 
     private void clearSession() {
-        if (currentContext != null) {
-            currentContext.clearSessionVariables();
+        if (getCurrentContext() != null) {
+            getCurrentContext().clearSessionVariables();
             setCurrentFragmentUrl("");
         }
         Broadcaster.unregister(broadcastReceiverService);
@@ -277,7 +277,7 @@ public class DesktopApplication extends AppUI {
 
     public void doLogin(String username, String password, boolean isRememberPassword) {
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        SimpleUser user = userService.authentication(username, password, AppUI.getSubDomain(), false);
+        SimpleUser user = userService.authentication(username, password, AppUI.Companion.getSubDomain(), false);
 
         if (isRememberPassword) {
             rememberAccount(username, password);

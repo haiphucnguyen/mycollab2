@@ -75,7 +75,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
             @Override
             public void onPrint(Object source, SimpleComponent data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.INSTANCE.getBUG_COMPONENT(), Component.Field.name.name(),
+                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.BUG_COMPONENT, Component.Field.name.name(),
                         ComponentDefaultFormLayoutFactory.getForm(), Component.Field.id.name()));
             }
 
@@ -84,7 +84,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
                 ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
                 ComponentSearchCriteria criteria = new ComponentSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                 Integer nextId = componentService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new BugComponentEvent.GotoRead(this, nextId));
@@ -99,7 +99,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
                 ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
                 ComponentSearchCriteria criteria = new ComponentSearchCriteria();
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESS_THAN));
                 Integer nextId = componentService.getPreviousItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new BugComponentEvent.GotoRead(this, nextId));
@@ -112,7 +112,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INSTANCE.getCOMPONENTS())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
             if (data.getParams() instanceof Integer) {
                 ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
                 SimpleComponent component = componentService.findById((Integer) data.getParams(), AppUI.getAccountId());
@@ -122,7 +122,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
                     componentContainer.addComponent(view);
                     view.previewItem(component);
 
-                    ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+                    ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
                     breadcrumb.gotoComponentRead(component);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

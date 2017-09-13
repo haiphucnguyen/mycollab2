@@ -135,7 +135,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
     @Override
     public AbstractComponent createAssigneePopupField(ProjectTicket ticket) {
-        String avatarLink = StorageUtils.INSTANCE.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
+        String avatarLink = StorageUtils.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
         Img img = new Img(ticket.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                 .setTitle(ticket.getAssignUserFullName());
         return new MetaFieldBuilder().withCaption(img.write())
@@ -160,19 +160,19 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
             typeSelection = new ComboBox();
             typeSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTASKS())) {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                 typeSelection.addItem(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()));
+                typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
             }
 
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getBUGS())) {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
                 typeSelection.addItem(UserUIContext.getMessage(BugI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()));
+                typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
             }
 
-            if (isIncludeMilestone && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getMILESTONES())) {
+            if (isIncludeMilestone && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
                 typeSelection.addItem(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getMILESTONE()));
+                typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
             }
 
             typeSelection.setNullSelectionAllowed(false);

@@ -83,12 +83,12 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
             instantEditBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT));
             buttonControls.with(instantEditBtn);
 
-            if ((ticket.isRisk() && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getRISKS()))
-                    || (ticket.isBug() && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getBUGS()))
-                    || (ticket.isTask() && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INSTANCE.getTASKS()))) {
+            if ((ticket.isRisk() && CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.RISKS))
+                    || (ticket.isBug() && CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.BUGS))
+                    || (ticket.isTask() && CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.TASKS))) {
                 MButton removeBtn = new MButton("", clickEvent -> {
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

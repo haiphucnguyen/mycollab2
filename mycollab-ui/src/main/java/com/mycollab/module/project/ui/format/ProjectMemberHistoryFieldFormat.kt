@@ -31,12 +31,12 @@ class ProjectMemberHistoryFieldFormat : HistoryFieldFormat {
 
         try {
             val userService = AppContextUtil.getSpringBean(UserService::class.java)
-            val user = userService.findUserByUserNameInAccount(value, AppUI.getAccountId())
+            val user = userService.findUserByUserNameInAccount(value, AppUI.accountId)
             if (user != null) {
                 return if (displayAsHtml!!) {
                     val userAvatar = Img("", AppContextUtil.getSpringBean(AbstractStorageService::class.java)
                             .getAvatarPath(user.avatarid, 16)).setCSSClass(UIConstants.CIRCLE_BOX)
-                    val link = A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables.getProjectId(),
+                    val link = A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables.projectId,
                             user.username)).appendText(StringUtils.trim(user.displayName, 30, true))
                     link.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(user.username))
                     link.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction())

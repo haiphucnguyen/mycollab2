@@ -31,7 +31,7 @@ public class CampaignAddViewImpl extends AbstractEditItemComp<SimpleCampaign> im
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCAMPAIGN());
+        return CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class CampaignAddViewImpl extends AbstractEditItemComp<SimpleCampaign> im
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getCAMPAIGN(), CampaignDefaultDynaFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.CAMPAIGN, CampaignDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override

@@ -61,7 +61,7 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
         MButton createBtn = new MButton(UserUIContext.getMessage(UserI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new UserEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getACCOUNT_USER()));
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.ACCOUNT_USER));
 
         headerText = HeaderWithFontAwesome.h2(FontAwesome.USERS, UserUIContext.getMessage(UserI18nEnum.LIST) + " " +
                 UserUIContext.getMessage(GenericI18Enum.OPT_TOTAL_VALUE, 0));
@@ -126,11 +126,11 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
         }
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        List<SimpleUser> userAccountList = userService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        List<SimpleUser> users = (List<SimpleUser>) userService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         headerText.updateTitle(UserUIContext.getMessage(UserI18nEnum.LIST) + " " +
-                UserUIContext.getMessage(GenericI18Enum.OPT_TOTAL_VALUE, userAccountList.size()));
+                UserUIContext.getMessage(GenericI18Enum.OPT_TOTAL_VALUE, users.size()));
 
-        for (SimpleUser userAccount : userAccountList) {
+        for (SimpleUser userAccount : users) {
             contentLayout.addComponent(generateMemberBlock(userAccount));
         }
     }
@@ -151,12 +151,12 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
 
         MHorizontalLayout buttonControls = new MHorizontalLayout();
         buttonControls.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
-        buttonControls.setVisible(UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getACCOUNT_USER()));
+        buttonControls.setVisible(UserUIContext.canWrite(RolePermissionCollections.ACCOUNT_USER));
 
         if (RegisterStatusConstants.NOT_LOG_IN_YET.equals(member.getRegisterstatus())) {
             MButton resendBtn = new MButton(UserUIContext.getMessage(UserI18nEnum.ACTION_RESEND_INVITATION), clickEvent -> {
                 SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(member.getUsername(), null,
-                        member.getInviteUser(), AppUI.getSubDomain(), AppUI.getAccountId());
+                        member.getInviteUser(), AppUI.Companion.getSubDomain(), AppUI.getAccountId());
                 AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
                 asyncEventBus.post(invitationEvent);
                 NotificationUtil.showNotification(UserUIContext.getMessage(GenericI18Enum.OPT_SUCCESS), UserUIContext
@@ -171,7 +171,7 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
 
         MButton deleteBtn = new MButton("", clickEvent ->
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -188,7 +188,7 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
         memberInfo.addComponent(buttonControls);
         memberInfo.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);
 
-        A memberLink = new A(AccountLinkGenerator.generatePreviewFullUserLink(AppUI.getSiteUrl(),
+        A memberLink = new A(AccountLinkGenerator.generatePreviewFullUserLink(AppUI.Companion.getSiteUrl(),
                 member.getUsername())).appendText(member.getDisplayName());
         ELabel memberLinkLbl = ELabel.h3(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
         memberInfo.addComponent(memberLinkLbl);
@@ -215,7 +215,7 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
             memberInfo.addComponent(lbl);
         }
 
-        if (Boolean.TRUE.equals(AppUI.showEmailPublicly())) {
+        if (Boolean.TRUE.equals(AppUI.Companion.showEmailPublicly())) {
             Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(), member.getUsername()))
                     .withStyleName(UIConstants.TEXT_ELLIPSIS, UIConstants.META_INFO).withFullWidth();
             memberInfo.addComponent(memberEmailLabel);

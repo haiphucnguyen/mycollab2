@@ -12,7 +12,7 @@ import java.util.Arrays;
 class OpportunitySalesStageListSelect extends I18NValueListSelect {
 
     OpportunitySalesStageListSelect() {
-        this.loadData(Arrays.asList(CrmDataTypeFactory.getOpportunitySalesStageList()));
+        this.loadData(Arrays.asList(CrmDataTypeFactory.opportunitySalesStageList));
         this.setNullSelectionAllowed(false);
     }
 }

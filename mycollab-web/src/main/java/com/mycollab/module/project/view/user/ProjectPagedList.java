@@ -73,7 +73,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             A projectDiv = new A(ProjectLinkBuilder.INSTANCE.generateProjectFullLink(project.getId())).appendText(project.getName());
             ELabel projectLbl = ELabel.h3(projectDiv.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
             projectLbl.setDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipProject(UserUIContext.getUserLocale(),
-                    AppUI.getDateFormat(), project, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    AppUI.Companion.getDateFormat(), project, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
 
             linkIconFix.addComponent(projectLbl);
 
@@ -88,17 +88,17 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
                     setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
             Div nonBillableHoursDiv = new Div().appendText(FontAwesome.GIFT.getHtml() + " " + NumberUtils.roundDouble(2,
                     project.getTotalNonBillableHours())).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
-            Div metaDiv = new Div().appendChild(activeMembersDiv, DivLessFormatter.EMPTY_SPACE(), createdTimeDiv,
-                    DivLessFormatter.EMPTY_SPACE(), billableHoursDiv, DivLessFormatter.EMPTY_SPACE(),
-                    nonBillableHoursDiv, DivLessFormatter.EMPTY_SPACE());
+            Div metaDiv = new Div().appendChild(activeMembersDiv, DivLessFormatter.EMPTY_SPACE, createdTimeDiv,
+                    DivLessFormatter.EMPTY_SPACE, billableHoursDiv, DivLessFormatter.EMPTY_SPACE,
+                    nonBillableHoursDiv, DivLessFormatter.EMPTY_SPACE);
             if (project.getLead() != null) {
-                Div leadDiv = new Div().appendChild(new Img("", StorageUtils.INSTANCE.getAvatarPath(project
-                                .getLeadAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX), DivLessFormatter.EMPTY_SPACE(),
+                Div leadDiv = new Div().appendChild(new Img("", StorageUtils.getAvatarPath(project
+                                .getLeadAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX), DivLessFormatter.EMPTY_SPACE,
                         new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(project.getId(), project.getLead()))
                                 .appendText(StringUtils.trim(project.getLeadFullName(), 30, true))).setTitle
                         (UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER));
                 metaDiv.appendChild(0, leadDiv);
-                metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE());
+                metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE);
             }
 
             if (project.getAccountid() != null) {
@@ -106,16 +106,16 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
                 if (project.getClientAvatarId() == null) {
                     accountDiv.appendText(FontAwesome.INSTITUTION.getHtml() + " ");
                 } else {
-                    Img clientImg = new Img("", StorageUtils.INSTANCE.getEntityLogoPath(AppUI
+                    Img clientImg = new Img("", StorageUtils.getEntityLogoPath(AppUI.Companion
                             .getAccountId(), project.getClientAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX);
-                    accountDiv.appendChild(clientImg).appendChild(DivLessFormatter.EMPTY_SPACE());
+                    accountDiv.appendChild(clientImg).appendChild(DivLessFormatter.EMPTY_SPACE);
                 }
 
                 accountDiv.appendChild(new A(ProjectLinkBuilder.INSTANCE.generateClientPreviewFullLink(project.getAccountid()))
                         .appendText(StringUtils.trim(project.getClientName(), 30, true))).setCSSClass(UIConstants.BLOCK)
                         .setTitle(project.getClientName());
                 metaDiv.appendChild(0, accountDiv);
-                metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE());
+                metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE);
             }
             metaDiv.setCSSClass(WebThemes.FLEX_DISPLAY);
             metaInfo.addComponent(ELabel.html(metaDiv.write()).withStyleName(UIConstants.META_INFO).withWidthUndefined());

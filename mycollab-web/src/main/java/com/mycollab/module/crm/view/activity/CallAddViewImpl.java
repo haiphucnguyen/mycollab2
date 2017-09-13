@@ -44,7 +44,7 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.INSTANCE.getCALL());
+        return CrmAssetsManager.getAsset(CrmTypeConstants.CALL);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DefaultDynaFormLayout(CrmTypeConstants.INSTANCE.getCALL(), CallDefaultFormLayoutFactory.getForm());
+        return new DefaultDynaFormLayout(CrmTypeConstants.CALL, CallDefaultFormLayoutFactory.getForm());
     }
 
     @Override

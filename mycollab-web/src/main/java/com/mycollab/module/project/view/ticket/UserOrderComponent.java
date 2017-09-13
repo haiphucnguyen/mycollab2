@@ -32,7 +32,7 @@ public class UserOrderComponent extends TicketGroupOrderComponent {
                     DefaultTicketGroupComponent groupComponent = userAvailables.get(assignUser);
                     groupComponent.insertTicket(ticket);
                 } else {
-                    Img img = new Img("", StorageUtils.INSTANCE.getAvatarPath(ticket.getAssignUserAvatarId(), 32))
+                    Img img = new Img("", StorageUtils.getAvatarPath(ticket.getAssignUserAvatarId(), 32))
                             .setCSSClass((UIConstants.CIRCLE_BOX));
                     Div userDiv = new DivLessFormatter().appendChild(img, new Text(" " + ticket.getAssignUserFullName()));
 

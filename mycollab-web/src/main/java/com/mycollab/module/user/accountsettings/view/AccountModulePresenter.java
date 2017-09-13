@@ -21,7 +21,7 @@ public class AccountModulePresenter extends AbstractPresenter<AccountModule> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        UserUIContext.updateLastModuleVisit(ModuleNameConstants.INSTANCE.getACCOUNT());
+        UserUIContext.updateLastModuleVisit(ModuleNameConstants.ACCOUNT);
         MainView mainView = (MainView) container;
         mainView.addModule(view);
 
@@ -29,7 +29,7 @@ public class AccountModulePresenter extends AbstractPresenter<AccountModule> {
         if (params == null || params.length == 0) {
             view.gotoUserProfilePage();
         } else {
-            ShellUrlResolver.ROOT().getSubResolver("account").handle(params);
+            ShellUrlResolver.ROOT.getSubResolver("account").handle(params);
         }
     }
 }

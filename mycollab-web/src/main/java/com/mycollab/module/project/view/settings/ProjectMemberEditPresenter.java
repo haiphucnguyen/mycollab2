@@ -54,14 +54,14 @@ public class ProjectMemberEditPresenter extends AbstractPresenter<ProjectMemberE
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS())) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
             ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
             userGroupContainer.setContent(view);
 
             SimpleProjectMember member = (SimpleProjectMember) data.getParams();
             view.editItem(member);
 
-            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
             if (member.getId() == null) {
                 breadcrumb.gotoUserAdd();
             } else {

@@ -31,7 +31,7 @@ public abstract class DefaultMassEditActionHandler implements MassItemActionHand
     @Override
     public void onSelect(String id) {
         if (ViewItemAction.DELETE_ACTION().equals(id)) {
-            ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
+            ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -50,7 +50,7 @@ public abstract class DefaultMassEditActionHandler implements MassItemActionHand
     public StreamResource buildStreamResource(ReportExportType exportType) {
         IPagedBeanTable pagedBeanTable = ((IListView) presenter.getView()).getPagedBeanTable();
         final Map<String, Object> addtionalParamters = new HashMap<>();
-        addtionalParamters.put("siteUrl", AppUI.getSiteUrl());
+        addtionalParamters.put("siteUrl", AppUI.Companion.getSiteUrl());
         addtionalParamters.put(SimpleReportTemplateExecutor.CRITERIA, presenter.searchCriteria);
         ReportTemplateExecutor reportTemplateExecutor;
         if (presenter.isSelectAll) {

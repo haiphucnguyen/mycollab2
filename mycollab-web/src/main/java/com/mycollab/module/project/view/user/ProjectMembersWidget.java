@@ -87,7 +87,7 @@ public class ProjectMembersWidget extends Depot {
         MButton inviteMemberBtn = new MButton(UserUIContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEE), clickEvent ->
                 EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoInviteMembers(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
-                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getUSERS()));
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
         addHeaderElement(inviteMemberBtn);
 
         memberList = new DefaultBeanPagedList<>(AppContextUtil.getSpringBean(ProjectMemberService.class),
@@ -98,8 +98,8 @@ public class ProjectMembersWidget extends Depot {
     void showInformation() {
         searchCriteria = new ProjectMemberSearchCriteria();
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        searchCriteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.INSTANCE.getACTIVE(),
-                ProjectMemberStatusConstants.INSTANCE.getNOT_ACCESS_YET()));
+        searchCriteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE,
+                ProjectMemberStatusConstants.NOT_ACCESS_YET));
         searchCriteria.addOrderField(new SearchCriteria.OrderField("memberFullName", SearchCriteria.Companion.getASC()));
         showMembers();
     }
@@ -134,10 +134,10 @@ public class ProjectMembersWidget extends Depot {
                     .withStyleName(UIConstants.META_INFO);
             footer.addComponent(memberRole);
 
-            String memberWorksInfo = ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getTASK()).getHtml() + "&nbsp;" +
+            String memberWorksInfo = ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + "&nbsp;" +
                     new Span().appendText("" + member.getNumOpenTasks()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_TASKS)) +
                     "&nbsp;&nbsp;" +
-                    ProjectAssetsManager.getAsset(ProjectTypeConstants.INSTANCE.getBUG()).getHtml() + "&nbsp;" +
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + "&nbsp;" +
                     new Span().appendText("" + member.getNumOpenBugs()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_BUGS)) + "&nbsp;&nbsp;"
                     + FontAwesome.MONEY.getHtml() + "&nbsp;" + new Span().appendText("" + NumberUtils.roundDouble(2,
                     member.getTotalBillableLogTime())).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)) + "&nbsp;&nbsp;" +
@@ -161,7 +161,7 @@ public class ProjectMembersWidget extends Depot {
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             userLink.appendText(member.getMemberFullName());
 
-            if (member.getUsername().equals(CurrentProjectVariables.getProject().getLead())) {
+            if (member.getUsername().equals(CurrentProjectVariables.INSTANCE.getProject().getLead())) {
                 userLink.appendText(" (Lead)");
             }
 

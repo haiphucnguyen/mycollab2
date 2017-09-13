@@ -8,6 +8,6 @@ import com.mycollab.core.utils.StringUtils
  */
 class StringSearchField(operation: String = SearchField.AND, val value: String = ""): SearchField(operation) {
     companion object {
-        fun and(value: String): StringSearchField? = if (StringUtils.isNotBlank(value))  StringSearchField(SearchField.AND, value) else null
+        @JvmStatic fun and(value: String): StringSearchField? = if (StringUtils.isNotBlank(value))  StringSearchField(SearchField.AND, value) else null
     }
 }

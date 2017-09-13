@@ -51,7 +51,7 @@ public class CaseSelectionWindow extends MWindow {
                 fieldSelection.fireValueChange(cases);
                 close();
             }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.INSTANCE.generateTooltipCases(
-                    UserUIContext.getUserLocale(), cases, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    UserUIContext.getUserLocale(), cases, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
     }
 }

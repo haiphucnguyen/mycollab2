@@ -32,7 +32,7 @@ public class RiskTimeLogComp extends TimeLogComp<SimpleRisk> {
     protected Double getTotalBillableHours(SimpleRisk bean) {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getRISK()));
+        criteria.setType(StringSearchField.and(ProjectTypeConstants.RISK));
         criteria.setTypeId(new NumberSearchField(bean.getId()));
         criteria.setIsBillable(new BooleanSearchField(true));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
@@ -42,7 +42,7 @@ public class RiskTimeLogComp extends TimeLogComp<SimpleRisk> {
     protected Double getTotalNonBillableHours(SimpleRisk bean) {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getRISK()));
+        criteria.setType(StringSearchField.and(ProjectTypeConstants.RISK));
         criteria.setTypeId(new NumberSearchField(bean.getId()));
         criteria.setIsBillable(new BooleanSearchField(false));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
@@ -58,7 +58,7 @@ public class RiskTimeLogComp extends TimeLogComp<SimpleRisk> {
 
     @Override
     protected boolean hasEditPermission() {
-        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS());
+        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class RiskTimeLogComp extends TimeLogComp<SimpleRisk> {
             item.setLoguser(UserUIContext.getUsername());
             item.setLogvalue(spentHours);
             item.setTypeid(bean.getId());
-            item.setType(ProjectTypeConstants.INSTANCE.getRISK());
+            item.setType(ProjectTypeConstants.RISK);
             item.setSaccountid(AppUI.getAccountId());
             item.setProjectid(CurrentProjectVariables.getProjectId());
             item.setLogforday(forDate);
@@ -99,7 +99,7 @@ public class RiskTimeLogComp extends TimeLogComp<SimpleRisk> {
         protected ItemTimeLoggingSearchCriteria getItemSearchCriteria() {
             ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.INSTANCE.getRISK()));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.RISK));
             searchCriteria.setTypeId(new NumberSearchField(bean.getId()));
             return searchCriteria;
         }
@@ -114,7 +114,7 @@ public class RiskTimeLogComp extends TimeLogComp<SimpleRisk> {
 
         @Override
         protected boolean isEnableAdd() {
-            return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getRISKS());
+            return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS);
         }
     }
 }

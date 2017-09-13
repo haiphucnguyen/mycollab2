@@ -91,7 +91,7 @@ public class AttachmentDisplayComponent extends CssLayout {
 
         MButton trashBtn = new MButton("", clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                    AppUI.getSiteName()), UserUIContext.getMessage(GenericI18Enum.CONFIRM_DELETE_ATTACHMENT),
+                    AppUI.Companion.getSiteName()), UserUIContext.getMessage(GenericI18Enum.CONFIRM_DELETE_ATTACHMENT),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                     confirmDialog -> {

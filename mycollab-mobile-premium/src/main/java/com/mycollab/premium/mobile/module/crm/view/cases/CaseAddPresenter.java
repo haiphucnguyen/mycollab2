@@ -53,7 +53,7 @@ public class CaseAddPresenter extends AbstractCrmPresenter<CaseAddView> implemen
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canWrite(RolePermissionCollections.INSTANCE.getCRM_CASE())) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_CASE)) {
 
             SimpleCase cases = null;
             if (data.getParams() instanceof SimpleCase) {

@@ -39,7 +39,7 @@ public class OpportunityLeadSourceDashboard extends PieChartWrapper<OpportunityS
     protected DefaultPieDataset createDataset() {
         final DefaultPieDataset dataset = new DefaultPieDataset();
 
-        final OpportunityLeadSource[] leadSources = CrmDataTypeFactory.getLeadSourceList();
+        final OpportunityLeadSource[] leadSources = CrmDataTypeFactory.leadSourceList;
         for (final OpportunityLeadSource source : leadSources) {
             boolean isFound = false;
             for (final GroupItem item : groupItems) {
