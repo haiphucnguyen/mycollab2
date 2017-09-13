@@ -23,7 +23,7 @@ public class TicketListPresenter extends ProjectListPresenter<TicketListView, Pr
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (data instanceof TicketScreenData.GotoDashboard) {
             ProjectTicketSearchCriteria searchCriteria = (ProjectTicketSearchCriteria) ((TicketScreenData.GotoDashboard) data).getParams();
-            searchCriteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
+            searchCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
         }
         super.onGo(container, data);
     }

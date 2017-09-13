@@ -123,13 +123,13 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         sortCombo.addValueChangeListener(valueChangeEvent -> {
             String sortValue = (String) sortCombo.getValue();
             if (UserUIContext.getMessage(GenericI18Enum.OPT_SORT_ASCENDING).equals(sortValue)) {
-                sortDirection = SearchCriteria.Companion.getASC();
+                sortDirection = SearchCriteria.ASC;
             } else {
-                sortDirection = SearchCriteria.Companion.getDESC();
+                sortDirection = SearchCriteria.DESC;
             }
             queryAndDisplayTickets();
         });
-        sortDirection = SearchCriteria.Companion.getDESC();
+        sortDirection = SearchCriteria.DESC;
         groupWrapLayout.addComponent(sortCombo);
 
         groupWrapLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)));
@@ -203,7 +203,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
     public void displayView(String query) {
         baseCriteria = new ProjectTicketSearchCriteria();
         baseCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        baseCriteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
+        baseCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
 
         statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
         statisticSearchCriteria.setIsOpenned(new SearchField());
@@ -213,7 +213,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         if (StringUtils.isNotBlank(query)) {
             try {
                 String jsonQuery = UrlEncodeDecoder.decode(query);
-                List<SearchFieldInfo> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.TICKET);
+                List<SearchFieldInfo<ProjectTicketSearchCriteria>> searchFieldInfos = QueryAnalyzer.toSearchFieldInfos(jsonQuery, ProjectTypeConstants.TICKET);
                 ticketSearchPanel.displaySearchFieldInfos(searchFieldInfos);
                 ProjectTicketSearchCriteria searchCriteria = SearchFieldInfo.buildSearchCriteria(baseCriteria, searchFieldInfos);
                 searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
@@ -251,7 +251,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
     @Override
     public void queryTickets(ProjectTicketSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
-        baseCriteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
+        baseCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
         queryAndDisplayTickets();
         displayTicketsStatistic();
     }

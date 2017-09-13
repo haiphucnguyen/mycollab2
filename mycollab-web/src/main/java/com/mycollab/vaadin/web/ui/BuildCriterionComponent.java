@@ -139,7 +139,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         return null;
     }
 
-    void fillSearchFieldInfoAndInvokeSearchRequest(List<SearchFieldInfo> searchFieldInfos) {
+    void fillSearchFieldInfoAndInvokeSearchRequest(List<SearchFieldInfo<S>> searchFieldInfos) {
         searchContainer.removeAllComponents();
 
         try {
@@ -434,7 +434,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
                     String queryText = data.getQuerytext();
                     try {
-                        List<SearchFieldInfo> fieldInfos = QueryAnalyzer.toSearchFieldInfos(queryText, searchCategory);
+                        List<SearchFieldInfo<S>> fieldInfos = QueryAnalyzer.toSearchFieldInfos(queryText, searchCategory);
                         fillSearchFieldInfoAndInvokeSearchRequest(fieldInfos);
                         hostSearchLayout.callSearchAction();
                     } catch (Exception e) {

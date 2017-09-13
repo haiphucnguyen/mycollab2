@@ -5,5 +5,5 @@ package com.mycollab.module.ecm
  * @since 2.0
  */
 object StorageNames {
-    val DROPBOX = "dropbox"
+    @JvmField val DROPBOX = "dropbox"
 }

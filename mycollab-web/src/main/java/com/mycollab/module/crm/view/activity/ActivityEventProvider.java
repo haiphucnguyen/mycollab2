@@ -1,8 +1,8 @@
 package com.mycollab.module.crm.view.activity;
 
+import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.DateTimeSearchField;
 import com.mycollab.db.arguments.SearchField;
-import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.module.crm.domain.SimpleMeeting;
 import com.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 import com.mycollab.module.crm.service.MeetingService;
@@ -39,12 +39,12 @@ public class ActivityEventProvider implements CalendarEventProvider {
         List<CalendarEvent> events = new ArrayList<>();
 
         MeetingSearchCriteria searchCriteria = new MeetingSearchCriteria();
-        searchCriteria.setStartDate(new DateTimeSearchField(SearchField.AND, DateTimeSearchField.GREATER_THAN_EQUAL, startDate));
-        searchCriteria.setEndDate(new DateTimeSearchField(SearchField.AND, DateTimeSearchField.LESS_THAN_EQUAL, endDate));
+        searchCriteria.setStartDate(new DateTimeSearchField(SearchField.AND, DateTimeSearchField.GREATER_THAN_EQUAL, startDate, null));
+        searchCriteria.setEndDate(new DateTimeSearchField(SearchField.AND, DateTimeSearchField.LESS_THAN_EQUAL, endDate, null));
 
         LOG.debug("Get event from: " + startDate + " to " + endDate);
         List<SimpleMeeting> crmEvents = (List<SimpleMeeting>) meetingService.findPageableListByCriteria(new BasicSearchRequest<>(
-                        searchCriteria, 0, Integer.MAX_VALUE));
+                searchCriteria, 0, Integer.MAX_VALUE));
         LOG.debug("There are " + crmEvents.size() + " event from " + startDate + " to " + endDate);
 
         filterListEventRecurringActivity(crmEvents, startDate, endDate);

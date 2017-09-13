@@ -5,13 +5,13 @@ package com.mycollab.common
  * @since 1.0
  */
 object GenericLinkUtils {
-    val URL_PREFIX_PARAM = "#"
+    @JvmField val URL_PREFIX_PARAM = "#"
 
     /**
      * @param params
      * @return
      */
-    fun encodeParam(vararg params: Any): String {
+    @JvmStatic fun encodeParam(vararg params: Any): String {
         val paramStr = StringBuilder("")
         for (i in params.indices) {
             paramStr.append(params[i].toString())

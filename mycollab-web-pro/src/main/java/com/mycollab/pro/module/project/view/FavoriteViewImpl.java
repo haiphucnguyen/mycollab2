@@ -164,9 +164,9 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
     private void displayFavoriteList() {
         if (isSortAsc) {
             searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name",
-                    SearchCriteria.Companion.getASC())));
+                    SearchCriteria.ASC)));
         } else {
-            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.Companion.getDESC())));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.DESC)));
         }
         int totalCount = favoriteListComp.setSearchCriteria(searchCriteria);
         headerLbl.setValue(String.format("%s %s (%d)", FontAwesome.STAR.getHtml(),

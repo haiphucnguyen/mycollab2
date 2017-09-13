@@ -96,13 +96,13 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         sortCombo.addValueChangeListener(valueChangeEvent -> {
             String sortValue = (String) sortCombo.getValue();
             if (UserUIContext.getMessage(GenericI18Enum.OPT_SORT_ASCENDING).equals(sortValue)) {
-                sortDirection = SearchCriteria.Companion.getASC();
+                sortDirection = SearchCriteria.ASC;
             } else {
-                sortDirection = SearchCriteria.Companion.getDESC();
+                sortDirection = SearchCriteria.DESC;
             }
             displayTimeEntries();
         });
-        sortDirection = SearchCriteria.Companion.getDESC();
+        sortDirection = SearchCriteria.DESC;
         groupWrapLayout.addComponent(sortCombo);
 
         groupWrapLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)));
@@ -125,7 +125,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
             UI.getCurrent().addWindow(addTimeEntry);
         }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
         createBtn.setVisible(!CurrentProjectVariables.INSTANCE.isProjectArchived() &&
-                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INSTANCE.getTIME()));
+                CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TIME));
         groupWrapLayout.addComponent(createBtn);
         searchPanel.addHeaderRight(groupWrapLayout);
 
@@ -178,7 +178,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
 
     @Override
     public void setSearchCriteria(ItemTimeLoggingSearchCriteria searchCriteria) {
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.INSTANCE.getTIME())) {
+        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.TIME)) {
             this.searchCriteria = searchCriteria;
             displayTimeEntries();
         } else {
@@ -211,7 +211,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
                 int totalCount = itemTimeLoggingService.getTotalCount(searchCriteria);
                 int pages = totalCount / 20;
                 for (int page = 0; page < pages + 1; page++) {
-                    List<SimpleItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPageableListByCriteria(new
+                    List<SimpleItemTimeLogging> itemTimeLoggings = (List<SimpleItemTimeLogging>)itemTimeLoggingService.findPageableListByCriteria(new
                             BasicSearchRequest<>(searchCriteria, page + 1, 20));
                     for (SimpleItemTimeLogging item : itemTimeLoggings) {
                         timeDisplayComp.insertItem(item);

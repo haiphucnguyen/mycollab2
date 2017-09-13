@@ -69,7 +69,7 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
             savedFilterComboBox.addQuerySelectListener(new SavedFilterComboBox.QuerySelectListener() {
                 @Override
                 public void querySelect(SavedFilterComboBox.QuerySelectEvent querySelectEvent) {
-                    List<SearchFieldInfo<? extends SearchCriteria>> fieldInfos = querySelectEvent.getSearchFieldInfos();
+                    List<SearchFieldInfo<BugSearchCriteria>> fieldInfos = querySelectEvent.getSearchFieldInfos();
                     BugSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(BugSearchCriteria.class, fieldInfos);
                     criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                     EventBusFactory.getInstance().post(new BugEvent.SearchRequest(BugSearchPanel.this, criteria));
@@ -83,7 +83,7 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
         }
     }
 
-    public void displaySearchFieldInfos(List<SearchFieldInfo> searchFieldInfos) {
+    public void displaySearchFieldInfos(List<SearchFieldInfo<BugSearchCriteria>> searchFieldInfos) {
         if (canSwitchToAdvanceLayout) {
             BugAdvancedSearchLayout advancedSearchLayout = (BugAdvancedSearchLayout) moveToAdvancedSearchLayout();
             advancedSearchLayout.displaySearchFieldInfos(searchFieldInfos);
@@ -151,7 +151,7 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
 
         @Override
         protected BugSearchCriteria fillUpSearchCriteria() {
-            List<SearchFieldInfo<? extends SearchCriteria>> searchFieldInfos = new ArrayList<>();
+            List<SearchFieldInfo<BugSearchCriteria>> searchFieldInfos = new ArrayList<>();
             searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, BugSearchCriteria.p_textDesc, StringI18nEnum.CONTAINS.name(),
                     ConstantValueInjector.valueOf(nameField.getValue().trim())));
             if (myItemCheckbox.getValue()) {

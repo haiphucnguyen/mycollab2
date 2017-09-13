@@ -66,7 +66,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
     public void display(AccountSearchCriteria searchCriteria) {
         content.removeAllComponents();
         AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-        List<SimpleAccount> clients = accountService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        List<SimpleAccount> clients = (List<SimpleAccount>) accountService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         for (SimpleAccount client : clients) {
             content.addComponent(generateClientBlock(client));
         }

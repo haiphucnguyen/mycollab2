@@ -70,7 +70,7 @@ public class ActivityStreamPanel extends CssLayout {
         searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.CRM));
         searchCriteria.setTypes(getRestrictedItemTypes());
         searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-        searchCriteria.addOrderField(new SearchCriteria.OrderField("createdTime", SearchCriteria.Companion.getDESC()));
+        searchCriteria.addOrderField(new SearchCriteria.OrderField("createdTime", SearchCriteria.DESC));
         this.activityStreamList.setSearchCriteria(searchCriteria);
     }
 

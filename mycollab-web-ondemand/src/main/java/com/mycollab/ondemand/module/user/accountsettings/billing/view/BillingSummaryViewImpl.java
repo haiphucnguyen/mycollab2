@@ -228,7 +228,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         BillingPlan currentBillingPlan = AppUI.Companion.getBillingAccount().getBillingPlan();
 
         ELabel introText = ELabel.h2(UserUIContext.getMessage(BillingI18nEnum.OPT_CURRENT_PLAN, currentBillingPlan.getBillingtype()));
-        SimpleBillingSubscription subscription = (SimpleBillingSubscription) MyCollabSession.INSTANCE.getCurrentUIVariable("subscription");
+        SimpleBillingSubscription subscription = (SimpleBillingSubscription) MyCollabSession.getCurrentUIVariable("subscription");
         if (subscription == null) {
             MButton selectPlanBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE)).withStyleName(WebThemes.BUTTON_DANGER)
                     .withIcon(FontAwesome.CREDIT_CARD);

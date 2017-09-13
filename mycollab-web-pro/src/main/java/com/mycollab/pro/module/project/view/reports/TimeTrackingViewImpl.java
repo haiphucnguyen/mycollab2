@@ -238,9 +238,9 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         Order order = (Order) orderField.getValue();
         String sortDirection;
         if (Order.ASCENDING == order) {
-            sortDirection = SearchCriteria.Companion.getASC();
+            sortDirection = SearchCriteria.ASC;
         } else {
-            sortDirection = SearchCriteria.Companion.getDESC();
+            sortDirection = SearchCriteria.DESC;
         }
 
         if (UserUIContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupField.getValue())) {
@@ -297,7 +297,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
                 int totalCount = itemTimeLoggingService.getTotalCount(searchCriteria);
                 int pages = totalCount / 20;
                 for (int page = 0; page < pages + 1; page++) {
-                    List<SimpleItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPageableListByCriteria(new
+                    List<SimpleItemTimeLogging> itemTimeLoggings = (List<SimpleItemTimeLogging>)itemTimeLoggingService.findPageableListByCriteria(new
                             BasicSearchRequest<>(searchCriteria, page + 1, 20));
                     for (SimpleItemTimeLogging item : itemTimeLoggings) {
                         timeDisplayComp.insertItem(item);

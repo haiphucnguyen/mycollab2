@@ -1,6 +1,7 @@
 package com.mycollab.mobile.module.project.view.ticket;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.db.query.SearchFieldInfo;
@@ -49,11 +50,11 @@ public class TicketSearchInputView extends SearchInputView<ProjectTicketSearchCr
         setContent(content);
     }
 
-    private void addSharedSearchQueryInfo(SearchQueryInfo queryInfo) {
+    private void addSharedSearchQueryInfo(SearchQueryInfo<ProjectTicketSearchCriteria> queryInfo) {
         content.with(new MButton(queryInfo.getQueryName(), clickEvent -> {
-            List<SearchFieldInfo<?>> fieldInfos = queryInfo.getSearchFieldInfos();
+            List<SearchFieldInfo<ProjectTicketSearchCriteria>> fieldInfos = queryInfo.getSearchFieldInfos();
             criteria = SearchFieldInfo.buildSearchCriteria(ProjectTicketSearchCriteria.class, fieldInfos);
-            criteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
+            criteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
             criteria.setProjectIds(new SetSearchField(CurrentProjectVariables.getProjectId()));
             getNavigationManager().navigateBack();
         }));
@@ -64,7 +65,7 @@ public class TicketSearchInputView extends SearchInputView<ProjectTicketSearchCr
         if (criteria == null) {
             criteria = new ProjectTicketSearchCriteria();
             criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-            criteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
+            criteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
             criteria.setName(StringSearchField.and(nameField.getValue()));
         }
 

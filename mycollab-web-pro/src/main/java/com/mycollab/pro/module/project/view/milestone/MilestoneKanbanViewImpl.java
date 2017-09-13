@@ -34,11 +34,10 @@ import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.module.project.view.ticket.ToggleTicketSummaryField;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UIUtils;
@@ -229,7 +228,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
 
     private void queryTickets(ProjectTicketSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
-        baseCriteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
+        baseCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
         kanbanLayout.removeAllComponents();
         toggleShowButton();
         kanbanBlocks = new ConcurrentHashMap<>();
@@ -241,13 +240,13 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             public void run() {
                 MilestoneSearchCriteria milestoneSearchCriteria = new MilestoneSearchCriteria();
                 milestoneSearchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                milestoneSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("orderIndex", SearchCriteria.Companion.getASC())));
+                milestoneSearchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("orderIndex", SearchCriteria.ASC)));
                 if (displayClosedMilestones) {
                     milestoneSearchCriteria.setStatuses(null);
                 } else {
                     milestoneSearchCriteria.setStatuses(new SetSearchField<>(MilestoneStatus.Future.name(), MilestoneStatus.InProgress.name()));
                 }
-                List<SimpleMilestone> milestones = milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(milestoneSearchCriteria));
+                List<SimpleMilestone> milestones = (List<SimpleMilestone>) milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(milestoneSearchCriteria));
                 for (SimpleMilestone milestone : milestones) {
                     KanbanBlock kanbanBlock = new KanbanBlock(milestone);
                     kanbanBlocks.put(milestone.getId(), kanbanBlock);
@@ -262,7 +261,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 searchPanel.setTotalCountNumber(totalTasks);
                 int pages = totalTasks / 50;
                 for (int page = 0; page < pages + 1; page++) {
-                    List<ProjectTicket> assignments = projectTicketService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
+                    List<ProjectTicket> assignments = (List<ProjectTicket>) projectTicketService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
                     if (CollectionUtils.isNotEmpty(assignments)) {
                         for (ProjectTicket assignment : assignments) {
                             if (assignment.getMilestoneId() != null) {

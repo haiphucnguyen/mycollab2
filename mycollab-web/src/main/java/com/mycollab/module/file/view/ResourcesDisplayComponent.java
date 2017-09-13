@@ -90,7 +90,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         fileBreadCrumb = new FileBreadcrumb(rootPath);
         fileBreadCrumb.addSearchHandler(criteria -> {
             Resource selectedFolder;
-            if (StorageNames.INSTANCE.getDROPBOX().equals(criteria.getStorageName())) {
+            if (StorageNames.DROPBOX.equals(criteria.getStorageName())) {
                 selectedFolder = externalResourceService.getCurrentResourceByPath(criteria.getExternalDrive(), criteria.getBaseFolder());
             } else {
                 selectedFolder = resourceService.getResource(criteria.getBaseFolder());
@@ -201,7 +201,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(UserUIContext.getUsername());
                 if (CollectionUtils.isNotEmpty(externalDrives)) {
                     for (ExternalDrive drive : externalDrives) {
-                        if (StorageNames.INSTANCE.getDROPBOX().equals(drive.getStoragename())) {
+                        if (StorageNames.DROPBOX.equals(drive.getStoragename())) {
                             try {
                                 Resource res = externalResourceService.getCurrentResourceByPath(drive, "/");
                                 res.setName(drive.getFoldername());

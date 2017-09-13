@@ -59,7 +59,7 @@ public class UserUIContext implements Serializable {
     private Boolean isValidAccount = true;
 
     public UserUIContext() {
-        MyCollabSession.INSTANCE.putCurrentUIVariable("context", this);
+        MyCollabSession.putCurrentUIVariable("context", this);
     }
 
     /**
@@ -69,7 +69,7 @@ public class UserUIContext implements Serializable {
      */
     public static UserUIContext getInstance() {
         try {
-            UserUIContext context = (UserUIContext) MyCollabSession.INSTANCE.getCurrentUIVariable("context");
+            UserUIContext context = (UserUIContext) MyCollabSession.getCurrentUIVariable("context");
             if (context == null) {
                 throw new SessionExpireException("Session is expired");
             }

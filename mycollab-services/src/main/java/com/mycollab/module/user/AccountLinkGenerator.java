@@ -10,7 +10,7 @@ import com.mycollab.common.UrlEncodeDecoder;
 public class AccountLinkGenerator {
 
     public static String generateFullProfileLink(String siteUrl) {
-        return siteUrl + GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM() + "account/preview";
+        return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM + "account/preview";
     }
 
     public static String generateRoleLink(Integer userRoleId) {
@@ -18,10 +18,10 @@ public class AccountLinkGenerator {
     }
 
     public static String generatePreviewFullRoleLink(String siteUrl, Integer userRoleId) {
-        return siteUrl + GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM() + generateRoleLink(userRoleId);
+        return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM + generateRoleLink(userRoleId);
     }
 
     public static String generatePreviewFullUserLink(String siteUrl, String username) {
-        return siteUrl + GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM() + "account/user/preview/" + GenericLinkUtils.INSTANCE.encodeParam(username);
+        return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM + "account/user/preview/" + GenericLinkUtils.encodeParam(username);
     }
 }

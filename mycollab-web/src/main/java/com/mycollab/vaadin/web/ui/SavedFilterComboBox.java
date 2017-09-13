@@ -167,20 +167,20 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
         }
     }
 
-    public static class QuerySelectEvent extends Component.Event {
-        private List<SearchFieldInfo<? extends SearchCriteria>> searchFieldInfos;
+    public static class QuerySelectEvent<S extends SearchCriteria> extends Component.Event {
+        private List<SearchFieldInfo<S>> searchFieldInfos;
 
-        QuerySelectEvent(Component source, List<SearchFieldInfo<? extends SearchCriteria>> searchFieldInfos) {
+        QuerySelectEvent(Component source, List<SearchFieldInfo<S>> searchFieldInfos) {
             super(source);
             this.searchFieldInfos = searchFieldInfos;
         }
 
-        public List<SearchFieldInfo<? extends SearchCriteria>> getSearchFieldInfos() {
+        public List<SearchFieldInfo<S>> getSearchFieldInfos() {
             return searchFieldInfos;
         }
     }
 
-    public interface QuerySelectListener extends Serializable {
-        void querySelect(QuerySelectEvent querySelectEvent);
+    public interface QuerySelectListener<S extends SearchCriteria> extends Serializable {
+        void querySelect(QuerySelectEvent<S> querySelectEvent);
     }
 }

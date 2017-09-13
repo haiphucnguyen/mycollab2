@@ -63,7 +63,7 @@ class EmailTokenField extends CssLayout implements SuggestField.NewItemsHandler,
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
         UserSearchCriteria searchCriteria = new UserSearchCriteria();
         searchCriteria.setSaccountid(NumberSearchField.equal(AppUI.getAccountId()));
-        candidateUsers = userService.findAbsoluteListByCriteria(searchCriteria, 0, Integer.MAX_VALUE);
+        candidateUsers = (List<SimpleUser>) userService.findAbsoluteListByCriteria(searchCriteria, 0, Integer.MAX_VALUE);
         suggestField.addBlurListener(blurEvent -> {
                     isFocusing = false;
                     if (!"".equals(lastQuery) && StringUtils.isValidEmail(lastQuery) && !inviteEmails.contains(lastQuery)) {

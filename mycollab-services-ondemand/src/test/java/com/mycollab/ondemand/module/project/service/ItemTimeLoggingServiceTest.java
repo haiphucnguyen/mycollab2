@@ -41,7 +41,7 @@ public class ItemTimeLoggingServiceTest extends IntegrationServiceTest {
     @DataSet
     @Test
     public void testGetListItemTimeLoggings() throws ParseException {
-        List<ItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPageableListByCriteria(new BasicSearchRequest<>(getCriteria()));
+        List<ItemTimeLogging> itemTimeLoggings = (List<ItemTimeLogging>) itemTimeLoggingService.findPageableListByCriteria(new BasicSearchRequest<>(getCriteria()));
 
         assertThat(itemTimeLoggings.size()).isEqualTo(2);
         assertThat(itemTimeLoggings).extracting("id", "type", "logforday", "loguser", "name").contains(
@@ -52,7 +52,7 @@ public class ItemTimeLoggingServiceTest extends IntegrationServiceTest {
     @DataSet
     @Test
     public void testGetTotalCount() {
-        List<ItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPageableListByCriteria(new BasicSearchRequest<>(getCriteria()));
+        List<ItemTimeLogging> itemTimeLoggings = (List<ItemTimeLogging>) itemTimeLoggingService.findPageableListByCriteria(new BasicSearchRequest<>(getCriteria()));
         assertThat(itemTimeLoggings.size()).isEqualTo(2);
     }
 }

@@ -30,7 +30,7 @@ public class AllActivitiesPresenter extends AbstractCrmPresenter<AllActivitiesVi
         searchCriteria.setModuleSet(new SetSearchField(CrmModule.TYPE));
         searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         searchCriteria.setTypes(getRestrictedItemTypes());
-        searchCriteria.addOrderField(new SearchCriteria.OrderField("createdTime", SearchCriteria.Companion.getDESC()));
+        searchCriteria.addOrderField(new SearchCriteria.OrderField("createdTime", SearchCriteria.DESC));
         view.getPagedBeanTable().setSearchCriteria(searchCriteria);
         currentNav.navigateTo(view);
     }

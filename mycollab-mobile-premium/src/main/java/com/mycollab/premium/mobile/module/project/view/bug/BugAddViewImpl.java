@@ -70,10 +70,10 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
     protected void onBecomingVisible() {
         super.onBecomingVisible();
         if (beanItem.getId() == null) {
-            AppUI.addFragment("project/bug/add/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId()),
+            AppUI.addFragment("project/bug/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(BugI18nEnum.NEW));
         } else {
-            AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateBugEditLink(beanItem.getBugkey(), beanItem.getProjectShortName()),
+            AppUI.addFragment(ProjectLinkGenerator.generateBugEditLink(beanItem.getBugkey(), beanItem.getProjectShortName()),
                     UserUIContext.getMessage(BugI18nEnum.DETAIL));
         }
     }

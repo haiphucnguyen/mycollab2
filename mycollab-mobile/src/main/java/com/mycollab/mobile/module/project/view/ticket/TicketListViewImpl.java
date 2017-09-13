@@ -92,7 +92,7 @@ public class TicketListViewImpl extends AbstractListPageView<ProjectTicketSearch
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment("project/ticket/dashboard/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId()),
+        AppUI.addFragment("project/ticket/dashboard/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                 UserUIContext.getMessage(TicketI18nEnum.LIST));
     }
 }

@@ -16,11 +16,11 @@ import static com.mycollab.vaadin.ui.MyCollabSession.CURRENT_MODULE;
 public class ModuleHelper {
 
     public static void setCurrentModule(IModule module) {
-        MyCollabSession.INSTANCE.putCurrentUIVariable(INSTANCE.getCURRENT_MODULE(), module);
+        MyCollabSession.putCurrentUIVariable(MyCollabSession.CURRENT_MODULE, module);
     }
 
     public static IModule getCurrentModule() {
-        return (IModule) MyCollabSession.INSTANCE.getCurrentUIVariable(INSTANCE.getCURRENT_MODULE());
+        return (IModule) MyCollabSession.getCurrentUIVariable(MyCollabSession.CURRENT_MODULE);
     }
 
     public static boolean isCurrentProjectModule() {

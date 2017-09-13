@@ -136,7 +136,7 @@ public class UnresolvedTicketsByAssigneeWidget extends Depot {
             this.withListener(clickEvent -> {
                 ProjectTicketSearchCriteria criteria = BeanUtility.deepClone(searchCriteria);
                 criteria.setAssignUser(StringSearchField.and(assignee));
-                criteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
+                criteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
                 EventBusFactory.getInstance().post(new TicketEvent.SearchRequest(UnresolvedTicketsByAssigneeWidget.this,
                         criteria));
             }).withWidth("100%").withIcon(UserAvatarControlFactory.createAvatarResource(assigneeAvatarId, 16))

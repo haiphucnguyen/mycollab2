@@ -367,7 +367,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
                 UserUIContext.getMessage(BugI18nEnum.SINGLE), bug.getName()),
                 clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoRead(this, bug.getId()))));
         addLink(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
-        AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateBugEditLink(bug.getBugkey(),
+        AppUI.addFragment(ProjectLinkGenerator.generateBugEditLink(bug.getBugkey(),
                 bug.getProjectShortName()), UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE,
                 UserUIContext.getMessage(BugI18nEnum.SINGLE), bug.getName()));
     }

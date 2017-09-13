@@ -55,7 +55,7 @@ public class TicketSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSe
             savedFilterComboBox.addQuerySelectListener(new SavedFilterComboBox.QuerySelectListener() {
                 @Override
                 public void querySelect(SavedFilterComboBox.QuerySelectEvent querySelectEvent) {
-                    List<SearchFieldInfo<? extends SearchCriteria>> fieldInfos = querySelectEvent.getSearchFieldInfos();
+                    List<SearchFieldInfo<ProjectTicketSearchCriteria>> fieldInfos = querySelectEvent.getSearchFieldInfos();
                     ProjectTicketSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(ProjectTicketSearchCriteria.class,
                             fieldInfos);
                     criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
@@ -91,7 +91,7 @@ public class TicketSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSe
         }
     }
 
-    public void displaySearchFieldInfos(List<SearchFieldInfo> searchFieldInfos) {
+    public void displaySearchFieldInfos(List<SearchFieldInfo<ProjectTicketSearchCriteria>> searchFieldInfos) {
         if (canSwitchToAdvanceLayout) {
             TicketAdvancedSearchLayout advancedSearchLayout = (TicketAdvancedSearchLayout) moveToAdvancedSearchLayout();
             advancedSearchLayout.displaySearchFieldInfos(searchFieldInfos);
@@ -148,7 +148,7 @@ public class TicketSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSe
 
         @Override
         protected ProjectTicketSearchCriteria fillUpSearchCriteria() {
-            List<SearchFieldInfo<? extends SearchCriteria>> searchFieldInfos = new ArrayList<>();
+            List<SearchFieldInfo<ProjectTicketSearchCriteria>> searchFieldInfos = new ArrayList<>();
             searchFieldInfos.add(new SearchFieldInfo(SearchField.AND, ProjectTicketSearchCriteria.p_name,
                     QueryI18nEnum.StringI18nEnum.CONTAINS.name(),
                     ConstantValueInjector.valueOf(nameField.getValue().trim())));

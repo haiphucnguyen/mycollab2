@@ -120,9 +120,9 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
     private void displayUsers() {
         contentLayout.removeAllComponents();
         if (sortAsc) {
-            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("displayName", SearchCriteria.Companion.getASC())));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("displayName", SearchCriteria.ASC)));
         } else {
-            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("displayName", SearchCriteria.Companion.getDESC())));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("displayName", SearchCriteria.DESC)));
         }
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);

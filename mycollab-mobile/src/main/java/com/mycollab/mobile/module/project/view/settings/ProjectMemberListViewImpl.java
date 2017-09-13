@@ -54,7 +54,7 @@ public class ProjectMemberListViewImpl extends AbstractListPageView<ProjectMembe
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment("project/user/list/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId()),
+        AppUI.addFragment("project/user/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                 UserUIContext.getMessage(ProjectMemberI18nEnum.LIST));
     }
 }

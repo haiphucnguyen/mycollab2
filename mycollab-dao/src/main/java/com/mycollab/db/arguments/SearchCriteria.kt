@@ -1,7 +1,7 @@
 package com.mycollab.db.arguments
 
 import java.io.Serializable
-import java.util.ArrayList
+import java.util.*
 
 /**
  * @author MyCollab Ltd.
@@ -56,7 +56,10 @@ abstract class SearchCriteria : Serializable {
     companion object {
         private const val serialVersionUID = 1L
 
+        @JvmField
         val ASC = "ASC"
+
+        @JvmField
         val DESC = "DESC"
     }
 }

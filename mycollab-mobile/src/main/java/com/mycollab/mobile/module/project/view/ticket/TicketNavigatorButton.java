@@ -29,7 +29,7 @@ public class TicketNavigatorButton extends NavigationButton {
         this.milestoneId = milestoneId;
         ProjectTicketSearchCriteria criteria = new ProjectTicketSearchCriteria();
         criteria.setMilestoneId(NumberSearchField.equal(milestoneId));
-        criteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
+        criteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
         ProjectTicketService ticketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
         this.setCaption(UserUIContext.getMessage(TicketI18nEnum.OPT_TICKETS_VALUE, ticketService.getTotalCount(criteria)));
     }

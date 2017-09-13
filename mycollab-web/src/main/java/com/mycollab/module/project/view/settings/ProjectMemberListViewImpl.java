@@ -125,10 +125,10 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
     private void displayMembers() {
         contentLayout.removeAllComponents();
         if (sortAsc) {
-            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName", SearchCriteria.Companion.getASC())));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC)));
         } else {
             searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName",
-                    SearchCriteria.Companion.getDESC())));
+                    SearchCriteria.DESC)));
         }
         ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
         List<SimpleProjectMember> memberLists = (List<SimpleProjectMember>) prjMemberService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
@@ -184,7 +184,7 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
 
         blockTop.with(memberNameLbl, ELabel.hr());
 
-        String roleLink = String.format("<a href=\"%s%s%s\"", AppUI.Companion.getSiteUrl(), GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM(),
+        String roleLink = String.format("<a href=\"%s%s%s\"", AppUI.Companion.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
                 ProjectLinkGenerator.INSTANCE.generateRolePreviewLink(member.getProjectid(), member.getProjectroleid()));
         ELabel memberRole = new ELabel("", ContentMode.HTML).withFullWidth().withStyleName(UIConstants.TEXT_ELLIPSIS);
         if (member.isProjectOwner()) {

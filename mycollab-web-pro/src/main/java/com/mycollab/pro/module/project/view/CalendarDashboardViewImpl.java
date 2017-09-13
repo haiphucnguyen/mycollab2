@@ -86,7 +86,7 @@ public class CalendarDashboardViewImpl extends AbstractVerticalPageView implemen
             searchCriteria.setTypeIds(new SetSearchField<>(typeId));
             searchCriteria.setTypes(new SetSearchField<>(type));
             ProjectTicketService assignmentService = AppContextUtil.getSpringBean(ProjectTicketService.class);
-            List<ProjectTicket> assignments = assignmentService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+            List<ProjectTicket> assignments = (List<ProjectTicket>) assignmentService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
             GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
             for (ProjectTicket assignment : assignments) {
                 GenericAssignmentEvent assignmentEvent = new GenericAssignmentEvent(assignment, true);

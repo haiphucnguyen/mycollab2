@@ -23,7 +23,7 @@ import java.util.List;
 public class QueryAnalyzer {
     private static final Logger LOG = LoggerFactory.getLogger(QueryAnalyzer.class);
 
-    public static String toQueryParams(List<SearchFieldInfo<? extends SearchCriteria>> searchFieldInfos) {
+    public static <S extends SearchCriteria>String toQueryParams(List<SearchFieldInfo<S>> searchFieldInfos) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             SimpleModule module = new SimpleModule();
@@ -35,13 +35,13 @@ public class QueryAnalyzer {
         }
     }
 
-    public static List<SearchFieldInfo> toSearchFieldInfos(String query, String type) {
+    public static <S extends SearchCriteria> List<SearchFieldInfo<S>> toSearchFieldInfos(String query, String type) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             SimpleModule module = new SimpleModule();
             module.addDeserializer(Param.class, new ParamDeserializer(type));
             mapper.registerModule(module);
-            return mapper.readValue(query, new TypeReference<List<SearchFieldInfo>>() {
+            return mapper.readValue(query, new TypeReference<List<SearchFieldInfo<S>>>() {
             });
         } catch (Exception e) {
             LOG.error("Error", e);

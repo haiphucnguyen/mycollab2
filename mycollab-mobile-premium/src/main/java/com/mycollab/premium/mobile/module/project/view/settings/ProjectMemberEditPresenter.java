@@ -50,7 +50,7 @@ public class ProjectMemberEditPresenter extends AbstractProjectPresenter<Project
             super.onGo(container, data);
             view.editItem(member);
 
-            AppUI.addFragment("project/user/edit/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId(),
+            AppUI.addFragment("project/user/edit/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(),
                     member.getId()), member.getDisplayName());
         } else {
             NotificationUtil.showMessagePermissionAlert();

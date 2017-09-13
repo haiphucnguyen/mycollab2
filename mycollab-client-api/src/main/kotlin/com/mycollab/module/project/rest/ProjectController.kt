@@ -24,7 +24,7 @@ class ProjectController {
     private val projectService: ProjectService? = null
 
     @RequestMapping(method = arrayOf(RequestMethod.GET))
-    fun list(@PathVariable accountId: Int?,
+    fun list(@PathVariable accountId: Int,
              @RequestParam(value = "offset", required = false, defaultValue = "0") offset: Int?,
              @RequestParam(value = "limit", required = false) limit: Int?): List<*> {
         val searchCriteria = ProjectSearchCriteria()

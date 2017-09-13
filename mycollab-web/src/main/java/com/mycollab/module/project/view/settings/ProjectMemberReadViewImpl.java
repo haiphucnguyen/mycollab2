@@ -161,7 +161,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                             (ProjectRolePermissionCollections.USERS));
             memberInfo.addComponent(new MHorizontalLayout(memberLink, editNotificationBtn).alignAll(Alignment.MIDDLE_LEFT));
 
-            String memberRoleLinkPrefix = String.format("<a href=\"%s%s%s\"", AppUI.Companion.getSiteUrl(), GenericLinkUtils.INSTANCE.getURL_PREFIX_PARAM(),
+            String memberRoleLinkPrefix = String.format("<a href=\"%s%s%s\"", AppUI.Companion.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
                     ProjectLinkGenerator.INSTANCE.generateRolePreviewLink(beanItem.getProjectid(), beanItem.getProjectroleid()));
             ELabel memberRole = new ELabel(ContentMode.HTML).withStyleName(UIConstants.META_INFO).withWidthUndefined();
             if (Boolean.TRUE.equals(beanItem.getIsadmin()) || beanItem.getProjectroleid() == null) {

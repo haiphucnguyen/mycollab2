@@ -35,7 +35,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
                     if (entry.isFile()) {
                         DbxEntry.File file = entry.asFile();
                         ExternalContent resource = new ExternalContent(file.path);
-                        resource.setStorageName(StorageNames.INSTANCE.getDROPBOX());
+                        resource.setStorageName(StorageNames.DROPBOX);
                         resource.setExternalDrive(drive);
                         Date lastModifiedDate = file.lastModified;
                         Calendar createdDate = new GregorianCalendar();
@@ -52,7 +52,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
                     } else if (entry.isFolder()) {
                         DbxEntry.Folder folder = entry.asFolder();
                         ExternalFolder resource = new ExternalFolder(folder.path);
-                        resource.setStorageName(StorageNames.INSTANCE.getDROPBOX());
+                        resource.setStorageName(StorageNames.DROPBOX);
                         resource.setExternalDrive(drive);
                         resources.add(resource);
                     } else {
@@ -83,7 +83,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
                 for (DbxEntry entry : children.children) {
                     if (entry.isFolder()) {
                         ExternalFolder resource = new ExternalFolder(entry.path);
-                        resource.setStorageName(StorageNames.INSTANCE.getDROPBOX());
+                        resource.setStorageName(StorageNames.DROPBOX);
                         resource.setExternalDrive(drive);
                         subFolders.add(resource);
                     }
@@ -111,7 +111,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
 
             if (entry.isFile()) {
                 ExternalContent resource = new ExternalContent(entry.path);
-                resource.setStorageName(StorageNames.INSTANCE.getDROPBOX());
+                resource.setStorageName(StorageNames.DROPBOX);
                 resource.setExternalDrive(drive);
                 Date lastModifiedDate = ((DbxEntry.File) entry).lastModified;
                 Calendar createdDate = new GregorianCalendar();
@@ -121,7 +121,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
                 res = resource;
             } else if (entry.isFolder()) {
                 ExternalFolder resource = new ExternalFolder(entry.path);
-                resource.setStorageName(StorageNames.INSTANCE.getDROPBOX());
+                resource.setStorageName(StorageNames.DROPBOX);
                 resource.setExternalDrive(drive);
                 res = resource;
             }

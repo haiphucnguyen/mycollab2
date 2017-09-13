@@ -198,7 +198,7 @@ object ProjectLinkGenerator {
         return siteUrl + URL_PREFIX_PARAM + generateProjectSettingLink(projectId)
     }
 
-    @JvmStatic fun generateProjectItemLink(prjShortName: String, projectId: Int, type: String, typeId: String): String {
+    @JvmStatic fun generateProjectItemLink(prjShortName: String, projectId: Int, type: String, typeId: String?): String {
         var result = ""
 
         if (typeId == null || StringUtils.isBlank(typeId) || "null" == typeId) {

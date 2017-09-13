@@ -67,7 +67,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
     protected void onBecomingVisible() {
         super.onBecomingVisible();
         if (beanItem.getId() == null) {
-            AppUI.addFragment("project/risk/add/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId()),
+            AppUI.addFragment("project/risk/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(RiskI18nEnum.NEW));
         } else {
             AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateRiskEditLink(beanItem.getProjectid(), beanItem.getId()), beanItem.getName());

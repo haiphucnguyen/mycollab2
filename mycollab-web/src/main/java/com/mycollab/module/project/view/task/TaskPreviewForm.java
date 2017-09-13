@@ -181,7 +181,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
 
             ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
             List<SimpleTask> subTasks = taskService.findSubTasks(beanItem.getId(), AppUI.getAccountId(),
-                    new SearchCriteria.OrderField("createdTime", SearchCriteria.Companion.getDESC()));
+                    new SearchCriteria.OrderField("createdTime", SearchCriteria.DESC));
             if (CollectionUtils.isNotEmpty(subTasks)) {
                 for (SimpleTask subTask : subTasks) {
                     tasksLayout.addComponent(generateSubTaskContent(subTask));

@@ -258,7 +258,7 @@ public class DesktopApplication extends AppUI {
     }
 
     private void enter(String newFragmentUrl) {
-        ShellUrlResolver.ROOT().resolveFragment(newFragmentUrl);
+        ShellUrlResolver.ROOT.resolveFragment(newFragmentUrl);
     }
 
     private void clearSession() {

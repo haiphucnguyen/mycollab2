@@ -40,6 +40,6 @@ class AmazonServiceConfiguration {
         private val AWS_SECRET_KEY = "s3.secretKey"
         private val BUCKET = "s3.bucket"
 
-        val instance = AmazonServiceConfiguration()
+        @JvmStatic val instance = AmazonServiceConfiguration()
     }
 }

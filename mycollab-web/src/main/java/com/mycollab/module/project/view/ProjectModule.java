@@ -124,10 +124,10 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
                 if (searchCriteria != null) {
                     if (isSortAsc) {
                         sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
-                        searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.Companion.getASC())));
+                        searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.ASC)));
                     } else {
                         sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
-                        searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.Companion.getDESC())));
+                        searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.DESC)));
                     }
                     displayResults();
                 }

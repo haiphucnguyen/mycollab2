@@ -25,23 +25,23 @@ class TooltipBuilder() {
     fun create(): Div = div
 
     companion object {
-        fun buildCellName(name: String): Td = Td().setStyle("width: 120px; vertical-align: top; text-align: right; color:#999").
+        @JvmStatic fun buildCellName(name: String): Td = Td().setStyle("width: 120px; vertical-align: top; text-align: right; color:#999").
                 appendText(name + ": ")
 
-        fun buildCellValue(value: String): Td {
+        @JvmStatic fun buildCellValue(value: String): Td {
             val cutNameVal = StringUtils.trimHtmlTags(value)
             return Td().setStyle("width:200px;word-wrap: break-word; white-space: normal;vertical-align: top;").appendText(cutNameVal)
         }
 
-        fun buildCellValue(value: Number?): Td = if (value == null) buildCellValue("") else buildCellValue(value.toString())
+        @JvmStatic fun buildCellValue(value: Number?): Td = if (value == null) buildCellValue("") else buildCellValue(value.toString())
 
-        fun buildCellLink(href: String, name: String): Td {
+        @JvmStatic fun buildCellLink(href: String, name: String): Td {
             val cutNameVal = StringUtils.trimHtmlTags(name)
             return Td().setStyle("width:200px;word-wrap: break-word; white-space: normal;vertical-align: top;").
                     appendChild(A().setHref(href).appendText(cutNameVal))
         }
 
-        fun buildCellLink(href: String, imageLink: String, name: String): Td {
+        @JvmStatic fun buildCellLink(href: String, imageLink: String, name: String): Td {
             val cutNameVal = StringUtils.trimHtmlTags(name)
             return Td().setStyle("width:200px;word-wrap: break-word; white-space: normal;vertical-align: top;").
                     appendChild(Img("", imageLink)).appendChild(DivLessFormatter.EMPTY_SPACE).

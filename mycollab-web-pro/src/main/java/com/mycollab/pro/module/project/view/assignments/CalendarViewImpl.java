@@ -36,9 +36,9 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIUtils;
+import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
@@ -82,7 +82,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
             searchCriteria.setTypeIds(new SetSearchField<>(typeId));
             searchCriteria.setTypes(new SetSearchField<>(type));
             ProjectTicketService assignmentService = AppContextUtil.getSpringBean(ProjectTicketService.class);
-            List<ProjectTicket> assignments = assignmentService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+            List<ProjectTicket> assignments = (List<ProjectTicket>) assignmentService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
             GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
             for (ProjectTicket assignment : assignments) {
                 GenericAssignmentEvent assignmentEvent = new GenericAssignmentEvent(assignment, false);

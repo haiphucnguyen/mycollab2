@@ -13,11 +13,16 @@ class DateSearchField(operation: String, dateVal: Date, comparison: String, valu
     constructor(dateVal: Date, comparison: String) : this(SearchField.AND, dateVal, comparison)
 
     companion object {
-        val LESS_THAN = "<"
-        val LESS_THAN_EQUAL = "<="
-        val GREATER_THAN = ">"
-        val GREATER_THAN_EQUAL = ">="
-        val EQUAL = "="
-        val NOT_EQUAL = "<>"
+        @JvmField val LESS_THAN = "<"
+
+        @JvmField val LESS_THAN_EQUAL = "<="
+
+        @JvmField val GREATER_THAN = ">"
+
+        @JvmField val GREATER_THAN_EQUAL = ">="
+
+        @JvmField val EQUAL = "="
+
+        @JvmField val NOT_EQUAL = "<>"
     }
 }

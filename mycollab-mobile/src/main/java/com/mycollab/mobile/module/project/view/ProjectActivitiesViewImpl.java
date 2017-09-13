@@ -43,7 +43,7 @@ public class ProjectActivitiesViewImpl extends AbstractListPageView<ActivityStre
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment("project/activities/" + GenericLinkUtils.INSTANCE.encodeParam(CurrentProjectVariables.getProjectId()),
+        AppUI.addFragment("project/activities/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES));
     }
 }

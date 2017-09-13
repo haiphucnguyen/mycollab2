@@ -30,7 +30,7 @@ public class TicketListDisplayView extends AbstractMobilePageView {
     private void displayTickets() {
         ProjectTicketSearchCriteria criteria = new ProjectTicketSearchCriteria();
         criteria.setMilestoneId(NumberSearchField.equal(milestoneId));
-        criteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedTicketTypes());
+        criteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
         Integer numTickets = ticketList.search(criteria);
         this.setCaption(UserUIContext.getMessage(TicketI18nEnum.OPT_TICKETS_VALUE, numTickets));
     }

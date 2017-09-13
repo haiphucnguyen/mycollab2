@@ -269,7 +269,7 @@ object CurrentProjectVariables {
             return types
         }
 
-    val restrictedTicketTypes: SetSearchField<String>
+    @JvmStatic val restrictedTicketTypes: SetSearchField<String>
         get() {
             val types = SetSearchField<String>()
             if (canRead(ProjectRolePermissionCollections.TASKS)) {

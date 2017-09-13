@@ -51,7 +51,7 @@ public class MainViewImpl extends AbstractMainView {
         BillingSubscriptionMapperExt billingSubscriptionMapperExt = AppContextUtil.getSpringBean(BillingSubscriptionMapperExt.class);
         SimpleBillingSubscription subscription = billingSubscriptionMapperExt.findSubscription(AppUI.getAccountId());
         if (subscription != null) {
-            MyCollabSession.INSTANCE.putCurrentUIVariable("subscription", subscription);
+            MyCollabSession.putCurrentUIVariable("subscription", subscription);
             if (!subscription.canAccess()) {
                 TrialBlock trialBlock = new TrialBlock();
                 accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);

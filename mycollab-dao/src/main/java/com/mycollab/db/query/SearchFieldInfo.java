@@ -194,7 +194,7 @@ public class SearchFieldInfo<S extends SearchCriteria> implements Serializable {
         }
     }
 
-    public static <S extends SearchCriteria> S buildSearchCriteria(Class<S> cls, List<SearchFieldInfo<?>> fieldInfos) {
+    public static <S extends SearchCriteria> S buildSearchCriteria(Class<S> cls, List<SearchFieldInfo<S>> fieldInfos) {
         try {
             S searchCriteria = cls.newInstance();
             for (SearchFieldInfo info : fieldInfos) {
@@ -209,7 +209,7 @@ public class SearchFieldInfo<S extends SearchCriteria> implements Serializable {
         }
     }
 
-    public static <S extends SearchCriteria> S buildSearchCriteria(S searchCriteria, List<SearchFieldInfo> fieldInfos) {
+    public static <S extends SearchCriteria> S buildSearchCriteria(S searchCriteria, List<SearchFieldInfo<S>> fieldInfos) {
         try {
             S tmpSearchCriteria = BeanUtility.deepClone(searchCriteria);
             for (SearchFieldInfo info : fieldInfos) {

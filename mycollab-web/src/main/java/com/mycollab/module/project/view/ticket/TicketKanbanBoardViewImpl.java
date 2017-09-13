@@ -99,7 +99,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                     TaskSearchCriteria criteria = (TaskSearchCriteria) event.getData();
                     if (criteria != null) {
                         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                        criteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("taskindex", SearchCriteria.Companion.getASC())));
+                        criteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("taskindex", SearchCriteria.ASC)));
                         queryTask(criteria);
                     }
                 }

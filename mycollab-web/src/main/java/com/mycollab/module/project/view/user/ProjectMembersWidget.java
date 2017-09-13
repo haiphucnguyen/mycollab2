@@ -57,11 +57,11 @@ public class ProjectMembersWidget extends Depot {
             sortAsc = !sortAsc;
             if (sortAsc) {
                 sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
-                searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName", SearchCriteria.Companion.getASC())));
+                searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC)));
             } else {
                 sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
                 searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName",
-                        SearchCriteria.Companion.getDESC())));
+                        SearchCriteria.DESC)));
             }
             memberList.setSearchCriteria(searchCriteria);
             setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.WIDGET_MEMBERS_TITLE, memberList.getTotalCount()));
@@ -100,7 +100,7 @@ public class ProjectMembersWidget extends Depot {
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         searchCriteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE,
                 ProjectMemberStatusConstants.NOT_ACCESS_YET));
-        searchCriteria.addOrderField(new SearchCriteria.OrderField("memberFullName", SearchCriteria.Companion.getASC()));
+        searchCriteria.addOrderField(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC));
         showMembers();
     }
 

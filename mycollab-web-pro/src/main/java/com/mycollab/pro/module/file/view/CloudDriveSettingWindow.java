@@ -89,7 +89,7 @@ public class CloudDriveSettingWindow extends MWindow {
             CssLayout iconWapper = new CssLayout();
             iconWapper.setWidth("60px");
 
-            if (drive.getStoragename().equals(StorageNames.INSTANCE.getDROPBOX())) {
+            if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
                 ELabel driveIcon = ELabel.fontIcon(FontAwesome.DROPBOX);
                 driveIcon.addStyleName("icon-38px");
                 iconWapper.addComponent(driveIcon);
@@ -97,7 +97,7 @@ public class CloudDriveSettingWindow extends MWindow {
 
             titleLayout.with(iconWapper);
 
-            if (drive.getStoragename().equals(StorageNames.INSTANCE.getDROPBOX())) {
+            if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
                 Label lbl = new Label("Dropbox");
                 lbl.addStyleName(ValoTheme.LABEL_H3);
                 lbl.setWidth("100px");

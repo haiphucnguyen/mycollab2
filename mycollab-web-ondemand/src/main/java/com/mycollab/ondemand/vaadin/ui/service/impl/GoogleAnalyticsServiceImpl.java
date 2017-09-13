@@ -21,14 +21,14 @@ public class GoogleAnalyticsServiceImpl {
         if (deploymentMode.isDemandEdition()) {
             GoogleAnalyticsTracker tracker = new GoogleAnalyticsTracker("UA-46116533-1", "mycollab.com");
             tracker.extend(ui);
-            MyCollabSession.INSTANCE.putCurrentUIVariable("tracker", tracker);
+            MyCollabSession.putCurrentUIVariable("tracker", tracker);
         }
     }
 
 
     public void trackPageView(String pageId) {
         if (deploymentMode.isDemandEdition()) {
-            GoogleAnalyticsTracker tracker = (GoogleAnalyticsTracker) MyCollabSession.INSTANCE.getCurrentUIVariable("tracker");
+            GoogleAnalyticsTracker tracker = (GoogleAnalyticsTracker) MyCollabSession.getCurrentUIVariable("tracker");
             if (tracker != null) {
                 tracker.trackPageview(pageId);
             }
