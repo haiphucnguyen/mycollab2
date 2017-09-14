@@ -213,9 +213,9 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
             blockTop.addComponent(lastAccessTimeLbl);
         }
 
-        String memberWorksInfo = ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + " " + new Span()
+        String memberWorksInfo = ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TASK).getHtml() + " " + new Span()
                 .appendText("" + member.getNumOpenTasks()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_TASKS)) +
-                "  " + ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + " " + new Span()
+                "  " + ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG).getHtml() + " " + new Span()
                 .appendText("" + member.getNumOpenBugs()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_BUGS)) +
                 " " + FontAwesome.MONEY.getHtml() + " " + new Span().appendText("" + NumberUtils.roundDouble(2,
                 member.getTotalBillableLogTime())).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)) +

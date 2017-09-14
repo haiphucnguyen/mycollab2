@@ -122,7 +122,7 @@ class ActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityStreamSe
 
         private String buildItemValue(SimpleActivityStream activityStream) {
             DivLessFormatter div = new DivLessFormatter();
-            Text itemImg = new Text(CrmAssetsManager.getAsset(activityStream.getType()).getHtml());
+            Text itemImg = new Text(CrmAssetsManager.INSTANCE.getAsset(activityStream.getType()).getHtml());
             A itemLink = new A().setId("tag" + TOOLTIP_ID).setHref(CrmLinkGenerator.generateCrmItemLink(
                     activityStream.getType(), Integer.parseInt(activityStream.getTypeid())));
 

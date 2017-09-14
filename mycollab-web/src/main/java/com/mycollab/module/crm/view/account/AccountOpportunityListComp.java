@@ -113,7 +113,7 @@ public class AccountOpportunityListComp extends RelatedListComp2<OpportunityServ
             MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel opportunityIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
+            ELabel opportunityIcon = ELabel.fontIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.OPPORTUNITY));
             iconWrap.addComponent(opportunityIcon);
             blockTop.addComponent(iconWrap);
 

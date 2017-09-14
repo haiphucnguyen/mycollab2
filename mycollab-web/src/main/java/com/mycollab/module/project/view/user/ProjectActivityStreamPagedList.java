@@ -168,7 +168,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
 
     private String buildItemValue(ProjectActivityStream activityStream) {
         DivLessFormatter div = new DivLessFormatter();
-        Text image = new Text(ProjectAssetsManager.getAsset(activityStream.getType()).getHtml());
+        Text image = new Text(ProjectAssetsManager.INSTANCE.getAsset(activityStream.getType()).getHtml());
         A itemLink = new A().setId("tag" + TOOLTIP_ID);
         if (ProjectTypeConstants.TASK.equals(activityStream.getType())
                 || ProjectTypeConstants.BUG.equals(activityStream.getType())) {

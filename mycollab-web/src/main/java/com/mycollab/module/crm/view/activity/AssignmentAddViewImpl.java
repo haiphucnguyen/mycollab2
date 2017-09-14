@@ -40,7 +40,7 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<CrmTask> impleme
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.TASK);
+        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.TASK);
     }
 
     @Override

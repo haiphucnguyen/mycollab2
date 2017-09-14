@@ -31,7 +31,7 @@ public class CaseAddViewImpl extends AbstractEditItemComp<SimpleCase> implements
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.CASE);
+        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CASE);
     }
 
     @Override

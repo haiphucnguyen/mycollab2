@@ -24,7 +24,7 @@ public abstract class MeetingFormLayoutFactory extends WrappedFormLayoutFactory 
 
     @Override
     public AbstractComponent getLayout() {
-        AddViewLayout2 meetingLayout = new AddViewLayout2(title, CrmAssetsManager.getAsset(CrmTypeConstants.MEETING));
+        AddViewLayout2 meetingLayout = new AddViewLayout2(title, CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.MEETING));
 
         Layout topPanel = createTopPanel();
         if (topPanel != null) {

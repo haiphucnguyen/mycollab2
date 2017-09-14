@@ -60,7 +60,7 @@ public class OpportunityLeadListComp extends RelatedListComp2<LeadService, LeadS
                 UI.getCurrent().addWindow(leadsWindow);
                 leadsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
-            }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
+            }).withIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD));
 
             OptionPopupContent buttonControlLayout = new OptionPopupContent();
             buttonControlLayout.addOption(selectBtn);
@@ -102,7 +102,7 @@ public class OpportunityLeadListComp extends RelatedListComp2<LeadService, LeadS
             MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel leadAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
+            ELabel leadAvatar = ELabel.fontIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD));
             leadAvatar.addStyleName("icon-48px");
             iconWrap.addComponent(leadAvatar);
             blockTop.addComponent(iconWrap);

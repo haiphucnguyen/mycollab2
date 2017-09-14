@@ -41,14 +41,14 @@ class OpportunityReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFac
             if (opportunity.getAccountid() != null) {
                 A accountLink = new A(CrmLinkBuilder.generateAccountPreviewLinkFull(opportunity.getAccountid()))
                         .appendText(opportunity.getAccountName());
-                Div accountDiv = new Div().appendText(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, accountLink);
+                Div accountDiv = new Div().appendText(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACCOUNT).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, accountLink);
                 field = new DefaultViewField(accountDiv.write(), ContentMode.HTML);
             }
         } else if (propertyId.equals("campaignid")) {
             if (opportunity.getCampaignid() != null) {
                 A campaignLink = new A(CrmLinkBuilder.generateCampaignPreviewLinkFull(opportunity.getAccountid()))
                         .appendText(opportunity.getCampaignName());
-                Div campaignDiv = new Div().appendText(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, campaignLink);
+                Div campaignDiv = new Div().appendText(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CAMPAIGN).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, campaignLink);
                 field = new DefaultViewField(campaignDiv.write(), ContentMode.HTML);
             }
         } else if (propertyId.equals("assignuser")) {

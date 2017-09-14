@@ -28,7 +28,7 @@ public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting> 
     private CrmFollowersComp<SimpleMeeting> followersComp;
 
     public MeetingReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.MEETING));
+        super(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.MEETING));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class MeetingReadViewImpl extends AbstractPreviewItemComp<SimpleMeeting> 
         addToSideBar(dateInfoComp, followersComp);
 
         tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.DETAIL));
         tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 

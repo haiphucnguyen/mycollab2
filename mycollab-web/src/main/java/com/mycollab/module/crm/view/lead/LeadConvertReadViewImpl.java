@@ -53,7 +53,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
     private CrmFollowersComp<SimpleLead> compFollowers;
 
     public LeadConvertReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
+        super(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD));
     }
 
     @Override
@@ -111,11 +111,11 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         addToSideBar(dateInfoComp, peopleInfoComp, compFollowers);
 
         tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.DETAIL));
         tabSheet.addTab(associateCampaignList, CrmTypeConstants.CAMPAIGN, UserUIContext.getMessage(CampaignI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CAMPAIGN));
         tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
-                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACTIVITY));
     }
 
     @Override
@@ -172,7 +172,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         if (account != null) {
             MButton accountLink = new MButton(account.getAccountname(),
                     clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GotoRead(this, account.getId())))
-                    .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT))
+                    .withIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACCOUNT))
                     .withStyleName(WebThemes.BUTTON_LINK);
             layoutHelper.addComponent(accountLink, UserUIContext.getMessage(AccountI18nEnum.SINGLE), 0, 0);
         } else {
@@ -184,7 +184,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         if (contact != null) {
             MButton contactLink = new MButton(contact.getContactName(),
                     clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GotoRead(this, contact.getId())))
-                    .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT)).withStyleName(WebThemes.BUTTON_LINK);
+                    .withIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT)).withStyleName(WebThemes.BUTTON_LINK);
             layoutHelper.addComponent(contactLink, UserUIContext.getMessage(ContactI18nEnum.SINGLE), 0, 1);
         } else {
             layoutHelper.addComponent(new Label(""), UserUIContext.getMessage(ContactI18nEnum.SINGLE), 0, 1);
@@ -196,7 +196,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         if (opportunity != null) {
             MButton opportunityLink = new MButton(opportunity.getOpportunityname(),
                     clickEvent -> EventBusFactory.getInstance().post(new OpportunityEvent.GotoRead(this, opportunity.getId())))
-                    .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY)).withStyleName(WebThemes.BUTTON_LINK);
+                    .withIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.OPPORTUNITY)).withStyleName(WebThemes.BUTTON_LINK);
             layoutHelper.addComponent(opportunityLink, UserUIContext.getMessage(OpportunityI18nEnum.SINGLE), 0, 2);
         } else {
             layoutHelper.addComponent(new Label(""), UserUIContext.getMessage(OpportunityI18nEnum.SINGLE), 0, 2);

@@ -177,15 +177,15 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements Act
         };
 
         MButton todoBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.NEW), listener).withStyleName(WebThemes.BUTTON_LINK)
-                .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.TASK)).withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_TASK));
+                .withIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.TASK)).withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_TASK));
         actionBtnLayout.addOption(todoBtn);
 
         MButton callBtn = new MButton(UserUIContext.getMessage(MeetingI18nEnum.NEW), listener).withStyleName(WebThemes.BUTTON_LINK)
-                .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CALL)).withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CALL));
+                .withIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CALL)).withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CALL));
         actionBtnLayout.addOption(callBtn);
 
         MButton meetingBtn = new MButton(UserUIContext.getMessage(MeetingI18nEnum.NEW), listener).withStyleName(WebThemes.BUTTON_LINK)
-                .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.MEETING)).withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_MEETING));
+                .withIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.MEETING)).withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_MEETING));
         actionBtnLayout.addOption(meetingBtn);
 
         calendarActionBtn.setContent(actionBtnLayout);

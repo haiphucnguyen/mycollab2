@@ -29,7 +29,7 @@ public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDispl
         if (timeLoggingEntries.size() > 0) {
             SimpleItemTimeLogging firstItem = timeLoggingEntries.get(0);
 
-            Div projectDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml
+            Div projectDiv = new Div().appendText(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.PROJECT).getHtml
                     () + " ").appendChild(new A(ProjectLinkBuilder.generateProjectFullLink(firstItem.getProjectid())).appendText(firstItem.getProjectName()));
             ELabel link = ELabel.h3(projectDiv.write());
             addComponent(link);

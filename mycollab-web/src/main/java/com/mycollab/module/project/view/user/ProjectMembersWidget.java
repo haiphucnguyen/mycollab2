@@ -134,10 +134,10 @@ public class ProjectMembersWidget extends Depot {
                     .withStyleName(UIConstants.META_INFO);
             footer.addComponent(memberRole);
 
-            String memberWorksInfo = ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + "&nbsp;" +
+            String memberWorksInfo = ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TASK).getHtml() + "&nbsp;" +
                     new Span().appendText("" + member.getNumOpenTasks()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_TASKS)) +
                     "&nbsp;&nbsp;" +
-                    ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + "&nbsp;" +
+                    ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG).getHtml() + "&nbsp;" +
                     new Span().appendText("" + member.getNumOpenBugs()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_BUGS)) + "&nbsp;&nbsp;"
                     + FontAwesome.MONEY.getHtml() + "&nbsp;" + new Span().appendText("" + NumberUtils.roundDouble(2,
                     member.getTotalBillableLogTime())).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)) + "&nbsp;&nbsp;" +

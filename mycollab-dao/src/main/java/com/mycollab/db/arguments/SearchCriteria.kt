@@ -30,7 +30,7 @@ abstract class SearchCriteria : Serializable {
             return this
         }
         if (extraFields == null) {
-            extraFields = ArrayList()
+            extraFields = mutableListOf()
         }
         extraFields!!.add(extraField)
         return this

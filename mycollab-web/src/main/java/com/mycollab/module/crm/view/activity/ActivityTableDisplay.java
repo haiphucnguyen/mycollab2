@@ -67,7 +67,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
         this.addGeneratedColumn("subject", (source, itemId, columnId) -> {
             SimpleActivity simpleEvent = getBeanByIndex(itemId);
 
-            FontAwesome iconLink = CrmAssetsManager.getAsset(simpleEvent.getEventType());
+            FontAwesome iconLink = CrmAssetsManager.INSTANCE.getAsset(simpleEvent.getEventType());
             ELabel b = ELabel.html(iconLink.getHtml() + " " + simpleEvent.getSubject(), CrmLinkBuilder.generateActivityPreviewLinkFull(
                     simpleEvent.getEventType(), simpleEvent.getId())).withDescription(generateToolTip(simpleEvent));
 

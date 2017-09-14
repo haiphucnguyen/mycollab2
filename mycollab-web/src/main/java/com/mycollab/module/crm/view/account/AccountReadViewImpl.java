@@ -45,7 +45,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     private CrmFollowersComp<SimpleAccount> compFollowers;
 
     public AccountReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
+        super(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACCOUNT));
     }
 
     @Override
@@ -95,7 +95,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
         SimpleLead lead = leadService.findConvertedLeadOfAccount(beanItem.getId(), AppUI.getAccountId());
         if (lead != null) {
             return beanItem.getAccountname() + UserUIContext.getMessage(
-                    LeadI18nEnum.CONVERT_FROM_LEAD_TITLE, CrmAssetsManager.getAsset(CrmTypeConstants.LEAD).getHtml(),
+                    LeadI18nEnum.CONVERT_FROM_LEAD_TITLE, CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD).getHtml(),
                     CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()), lead.getLeadName());
         } else {
             return beanItem.getAccountname();
@@ -124,17 +124,17 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
         addToSideBar(dateInfoComp, peopleInfoComp, compFollowers);
 
         tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.DETAIL));
         tabSheet.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT));
         tabSheet.addTab(associateLeadList, CrmTypeConstants.LEAD, UserUIContext.getMessage(LeadI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD));
         tabSheet.addTab(associateOpportunityList, CrmTypeConstants.OPPORTUNITY,
-                UserUIContext.getMessage(OpportunityI18nEnum.LIST), CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
+                UserUIContext.getMessage(OpportunityI18nEnum.LIST), CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.OPPORTUNITY));
         tabSheet.addTab(associateCaseList, CrmTypeConstants.CASE, UserUIContext.getMessage(CaseI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.CASE));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CASE));
         tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
-                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACTIVITY));
         tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 

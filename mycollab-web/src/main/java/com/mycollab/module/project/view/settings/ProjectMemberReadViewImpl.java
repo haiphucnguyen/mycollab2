@@ -189,8 +189,8 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             }
 
             String memberWorksInfo = String.format("%s %s  %s %s  %s %s  %s %s",
-                    ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml(),
-                    new Span().appendText("" + beanItem.getNumOpenTasks()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_TASKS)), ProjectAssetsManager
+                    ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TASK).getHtml(),
+                    new Span().appendText("" + beanItem.getNumOpenTasks()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_TASKS)), ProjectAssetsManager.INSTANCE
                             .getAsset(ProjectTypeConstants.BUG).getHtml(), new Span().appendText("" + beanItem
                             .getNumOpenBugs()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_BUGS)), FontAwesome.MONEY.getHtml(), new Span().appendText("" + NumberUtils.roundDouble(2,
                             beanItem.getTotalBillableLogTime())).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)), FontAwesome.GIFT.getHtml(), new Span().appendText("" + NumberUtils.roundDouble(2, beanItem.getTotalNonBillableLogTime()
@@ -322,7 +322,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                     .setTitle(genericTask.getAssignUserFullName());
 
-            MHorizontalLayout iconsLayout = new MHorizontalLayout().with(ELabel.fontIcon(ProjectAssetsManager.getAsset(
+            MHorizontalLayout iconsLayout = new MHorizontalLayout().with(ELabel.fontIcon(ProjectAssetsManager.INSTANCE.getAsset(
                     genericTask.getType())), ELabel.html(img.write()));
             MCssLayout issueWrapper = new MCssLayout(issueLbl);
             rowComp.with(iconsLayout, issueWrapper).expand(issueWrapper);

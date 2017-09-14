@@ -47,7 +47,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
     private CrmFollowersComp<SimpleContact> compFollowers;
 
     public ContactReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
+        super(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT));
     }
 
     @Override
@@ -106,7 +106,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
         if (lead != null) {
             return beanItem.getContactName() + "&nbsp;" + UserUIContext.getMessage(
                     LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
-                    CrmAssetsManager.getAsset(CrmTypeConstants.LEAD).getHtml(),
+                    CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD).getHtml(),
                     CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()),
                     lead.getLeadName());
         } else {
@@ -126,11 +126,11 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
         addToSideBar(dateInfoComp, peopleInfoComp, compFollowers);
 
         tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.DETAIL));
         tabSheet.addTab(associateOpportunityList, CrmTypeConstants.OPPORTUNITY, UserUIContext.getMessage(OpportunityI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.OPPORTUNITY));
         tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
-                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACTIVITY));
     }
 
     @Override

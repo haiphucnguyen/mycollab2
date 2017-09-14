@@ -110,7 +110,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return ProjectAssetsManager.getPriorityHtml(task.getPriority());
+                return ProjectAssetsManager.INSTANCE.getPriorityHtml(task.getPriority());
             }
 
             @Override
@@ -157,13 +157,13 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             protected String generateSmallContentAsHtml() {
                 if (task.getMilestoneid() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
-                    divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
+                    divHint.appendText(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
                     String milestoneName = ((MilestoneComboBox) field).getItemCaption(task.getMilestoneid());
-                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
+                    return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
                             StringUtils.trim(milestoneName, 20, true);
                 }
             }

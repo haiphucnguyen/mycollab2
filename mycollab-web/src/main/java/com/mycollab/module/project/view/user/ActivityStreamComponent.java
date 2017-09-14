@@ -204,7 +204,7 @@ public class ActivityStreamComponent extends CssLayout {
 
         private String buildItemValue(ProjectActivityStream activityStream) {
             DivLessFormatter div = new DivLessFormatter();
-            Text itemImg = new Text(ProjectAssetsManager.getAsset(activityStream.getType()).getHtml());
+            Text itemImg = new Text(ProjectAssetsManager.INSTANCE.getAsset(activityStream.getType()).getHtml());
             A itemLink = new A();
             itemLink.setId("tag" + TOOLTIP_ID);
 
@@ -227,7 +227,7 @@ public class ActivityStreamComponent extends CssLayout {
 
         private String buildProjectValue(ProjectActivityStream activityStream) {
             DivLessFormatter div = new DivLessFormatter();
-            Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml());
+            Text prjImg = new Text(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.PROJECT).getHtml());
             A prjLink = new A(ProjectLinkBuilder.generateProjectFullLink(activityStream.getProjectId())).setId("tag" + TOOLTIP_ID);
             prjLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.PROJECT,
                     activityStream.getProjectId() + ""));

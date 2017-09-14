@@ -31,7 +31,7 @@ public class GenericAssignmentEvent extends BasicEvent {
 
     public GenericAssignmentEvent(ProjectTicket ticket, boolean showProject) {
         this.ticket = ticket;
-        FontAwesome icon = ProjectAssetsManager.getAsset(ticket.getType());
+        FontAwesome icon = ProjectAssetsManager.INSTANCE.getAsset(ticket.getType());
         if (showProject) {
             this.setCaption(String.format("%s [%s] %s", icon.getHtml(), ticket.getProjectShortName(), ticket.getName()));
         } else {

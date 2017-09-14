@@ -31,7 +31,7 @@ public class OpportunityAddViewImpl extends AbstractEditItemComp<SimpleOpportuni
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY);
+        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.OPPORTUNITY);
     }
 
     @Override

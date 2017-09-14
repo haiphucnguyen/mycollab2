@@ -103,7 +103,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         } else if (beanItem.isOverdue()) {
             beanTitle.setCSSClass(MobileUIConstants.LINK_OVERDUE);
         }
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + " " + beanTitle.write();
+        return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TASK).getHtml() + " " + beanTitle.write();
     }
 
     @Override
@@ -208,7 +208,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                 return new DefaultViewField(UserUIContext.formatDate(beanItem.getDuedate()));
             } else if (Task.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
-                    FontAwesome fontPriority = ProjectAssetsManager.getPriority(beanItem.getPriority());
+                    FontAwesome fontPriority = ProjectAssetsManager.INSTANCE.getPriority(beanItem.getPriority());
                     String priorityLbl = fontPriority.getHtml() + " " + UserUIContext.getMessage(Priority.class, beanItem.getPriority());
                     DefaultViewField field = new DefaultViewField(priorityLbl, ContentMode.HTML);
                     field.addStyleName("priority-" + beanItem.getPriority().toLowerCase());
@@ -218,7 +218,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                 if (beanItem.getMilestoneid() != null) {
                     A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
                             (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
-                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, milestoneLink);
+                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
                 }
             } else if (Task.Field.description.equalTo(propertyId)) {

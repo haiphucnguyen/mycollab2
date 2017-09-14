@@ -29,7 +29,7 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleCrmTas
     private CrmFollowersComp<SimpleCrmTask> followersComp;
 
     public AssignmentReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.TASK));
+        super(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.TASK));
     }
 
     @Override
@@ -68,7 +68,7 @@ public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleCrmTas
         addToSideBar(dateInfoComp, followersComp);
 
         tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.DETAIL));
         tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 

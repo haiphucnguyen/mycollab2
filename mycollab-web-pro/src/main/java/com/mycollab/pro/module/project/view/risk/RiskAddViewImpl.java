@@ -38,7 +38,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK);
+        return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.RISK);
     }
 
     @Override

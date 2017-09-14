@@ -18,7 +18,7 @@ import com.vaadin.ui.Label
  * @author MyCollab Ltd.
  * @since 1.0
  */
-class ProjectUserLink(username: String, userAvatarId: String, displayName: String) : Label() {
+class ProjectUserLink(username: String?, userAvatarId: String?, displayName: String?) : Label() {
 
     init {
         if (StringUtils.isNotBlank(username)) {
@@ -34,9 +34,5 @@ class ProjectUserLink(username: String, userAvatarId: String, displayName: Strin
             div.appendChild(avatarLink, DivLessFormatter.EMPTY_SPACE, memberLink)
             this.value = div.write()
         }
-    }
-
-    companion object {
-        private val serialVersionUID = 1L
     }
 }

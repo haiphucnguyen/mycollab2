@@ -44,7 +44,7 @@ public class ContactReadFormFieldFactory extends AbstractBeanFieldGroupViewField
 
         if (propertyId.equals("accountid")) {
             return new LinkViewField(contact.getAccountName(), CrmLinkBuilder.generateAccountPreviewLinkFull(contact.getAccountid()),
-                    CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
+                    CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACCOUNT));
         } else if (propertyId.equals("email")) {
             return new EmailViewField(attachForm.getBean().getEmail());
         } else if (propertyId.equals("assignuser")) {

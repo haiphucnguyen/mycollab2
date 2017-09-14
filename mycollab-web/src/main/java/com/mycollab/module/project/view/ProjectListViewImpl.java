@@ -123,7 +123,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
             if (project.getAccountid() != null) {
                 LabelLink b = new LabelLink(project.getClientName(), ProjectLinkBuilder.generateClientPreviewFullLink
                         (project.getAccountid()));
-                b.setIconLink(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
+                b.setIconLink(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACCOUNT));
                 return b;
             } else {
                 return new Label();

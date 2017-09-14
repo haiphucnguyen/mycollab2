@@ -78,7 +78,7 @@ object ProjectLinkGenerator {
         } else siteUrl + URL_PREFIX_PARAM + "project/user/preview/" + GenericLinkUtils.encodeParam(projectId, memberName)
     }
 
-    @JvmStatic fun generateProjectMemberLink(projectId: Int, memberName: String): String {
+    @JvmStatic fun generateProjectMemberLink(projectId: Int?, memberName: String?): String {
         return "project/user/preview/" + GenericLinkUtils.encodeParam(projectId, memberName)
     }
 

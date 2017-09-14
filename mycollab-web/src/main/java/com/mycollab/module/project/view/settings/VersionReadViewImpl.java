@@ -40,7 +40,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
 
     public VersionReadViewImpl() {
         super(UserUIContext.getMessage(VersionI18nEnum.DETAIL),
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION));
+                ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG_VERSION));
     }
 
     @Override

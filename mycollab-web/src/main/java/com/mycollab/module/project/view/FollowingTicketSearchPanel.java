@@ -100,13 +100,13 @@ public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<Follow
             selectionLayout.addComponent(typeSelectWrapper, 1, 1);
 
             this.taskSelect = new CheckBox(UserUIContext.getMessage(TaskI18nEnum.SINGLE), true);
-            this.taskSelect.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
+            this.taskSelect.setIcon(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TASK));
 
             this.bugSelect = new CheckBox(UserUIContext.getMessage(BugI18nEnum.SINGLE), true);
-            this.bugSelect.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
+            this.bugSelect.setIcon(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG));
 
             this.riskSelect = new CheckBox(UserUIContext.getMessage(RiskI18nEnum.SINGLE), true);
-            this.riskSelect.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
+            this.riskSelect.setIcon(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.RISK));
 
             typeSelectWrapper.with(this.taskSelect, this.bugSelect, this.riskSelect);
 

@@ -24,7 +24,7 @@ public class OpportunityCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY);
+        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.OPPORTUNITY);
     }
 
     @Override

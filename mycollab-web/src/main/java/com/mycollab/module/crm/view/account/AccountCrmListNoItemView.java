@@ -24,7 +24,7 @@ public class AccountCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT);
+        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACCOUNT);
     }
 
     @Override

@@ -96,7 +96,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
     @Override
     public AbstractComponent createPriorityPopupField(ProjectTicket assignment) {
-        return new MetaFieldBuilder().withCaption(ProjectAssetsManager.getPriorityHtml(assignment.getPriority()) + " " +
+        return new MetaFieldBuilder().withCaption(ProjectAssetsManager.INSTANCE.getPriorityHtml(assignment.getPriority()) + " " +
                 UserUIContext.getMessage(OptionI18nEnum.Priority.class, assignment.getPriority()))
                 .withDescription(UserUIContext.getMessage(ShellI18nEnum.OPT_UPGRADE_PRO_INTRO,
                         UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY))).build();
@@ -162,17 +162,17 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             typeSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
             if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                 typeSelection.addItem(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
+                typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE), ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TASK));
             }
 
             if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
                 typeSelection.addItem(UserUIContext.getMessage(BugI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
+                typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE), ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG));
             }
 
             if (isIncludeMilestone && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
                 typeSelection.addItem(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
+                typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE));
             }
 
             typeSelection.setNullSelectionAllowed(false);

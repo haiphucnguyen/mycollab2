@@ -48,7 +48,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
     private CrmFollowersComp<SimpleOpportunity> followersComp;
 
     public OpportunityReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
+        super(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.OPPORTUNITY));
     }
 
     @Override
@@ -92,7 +92,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
         SimpleLead lead = leadService.findConvertedLeadOfOpportunity(beanItem.getId(), AppUI.getAccountId());
         if (lead != null) {
             return String.format("<h2>%s%s</h2>", beanItem.getOpportunityname(), UserUIContext
-                    .getMessage(LeadI18nEnum.CONVERT_FROM_LEAD_TITLE, CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
+                    .getMessage(LeadI18nEnum.CONVERT_FROM_LEAD_TITLE, CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD),
                             CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()), lead.getLeadName()));
         } else {
             return beanItem.getOpportunityname();
@@ -113,13 +113,13 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
         addToSideBar(dateInfoComp, peopleInfoComp, followersComp);
 
         tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.DETAIL));
         tabSheet.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT));
         tabSheet.addTab(associateLeadList, CrmTypeConstants.LEAD, UserUIContext.getMessage(LeadI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD));
         tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
-                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACTIVITY));
     }
 
     @Override

@@ -23,7 +23,7 @@ public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs> {
     private static final long serialVersionUID = 1L;
 
     public MassUpdateCaseWindow(String title, CaseListPresenter presenter) {
-        super(title, CrmAssetsManager.getAsset(CrmTypeConstants.CASE), new CaseWithBLOBs(), presenter);
+        super(title, CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CASE), new CaseWithBLOBs(), presenter);
     }
 
     @Override

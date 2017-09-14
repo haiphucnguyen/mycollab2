@@ -60,7 +60,7 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
         this.addStyleName("oppcontact-role-edit");
 
         AddViewLayout2 previewLayout = new AddViewLayout2(UserUIContext.getMessage(ContactI18nEnum.OPT_ADD_EDIT_CONTACT_ROLES),
-                CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT));
         this.addComponent(previewLayout);
 
         ComponentContainer actionControls = createButtonControls();
@@ -217,7 +217,7 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
 
             MButton accountLink = new MButton(contactOpp.getAccountName(),
                     clickEvent -> EventBusFactory.getInstance().post(new AccountEvent.GotoRead(this, contactOpp.getAccountid())))
-                    .withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT)).withStyleName(WebThemes.BUTTON_LINK);
+                    .withIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACCOUNT)).withStyleName(WebThemes.BUTTON_LINK);
             accountLink.setWidth("250px");
             this.addComponent(accountLink);
 

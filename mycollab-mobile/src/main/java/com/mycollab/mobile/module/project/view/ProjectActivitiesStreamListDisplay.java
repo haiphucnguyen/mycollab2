@@ -121,7 +121,7 @@ class ProjectActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityS
     }
 
     private static String buildItemValue(ProjectActivityStream activity) {
-        Text image = new Text(ProjectAssetsManager.getAsset(activity.getType()).getHtml());
+        Text image = new Text(ProjectAssetsManager.INSTANCE.getAsset(activity.getType()).getHtml());
         A itemLink = new A();
         if (ProjectTypeConstants.TASK.equals(activity.getType()) || ProjectTypeConstants.BUG.equals(activity.getType())) {
             itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(

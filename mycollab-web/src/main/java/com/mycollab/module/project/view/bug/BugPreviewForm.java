@@ -190,7 +190,7 @@ public class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
                 return new I18nFormViewField(beanItem.getStatus(), BugStatus.class).withStyleName(UIConstants.FIELD_NOTE);
             } else if (BugWithBLOBs.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
-                    String priorityLink = ProjectAssetsManager.getPriority(beanItem.getPriority()).getHtml() + " "
+                    String priorityLink = ProjectAssetsManager.INSTANCE.getPriority(beanItem.getPriority()).getHtml() + " "
                             + UserUIContext.getMessage(OptionI18nEnum.Priority.class, beanItem.getPriority());
                     DefaultViewField field = new DefaultViewField(priorityLink, ContentMode.HTML);
                     field.addStyleName("priority-" + beanItem.getPriority().toLowerCase());

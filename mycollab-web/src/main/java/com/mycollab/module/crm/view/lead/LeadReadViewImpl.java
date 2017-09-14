@@ -45,7 +45,7 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
     private CrmFollowersComp<SimpleLead> compFollowers;
 
     public LeadReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
+        super(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD));
     }
 
     @Override
@@ -104,11 +104,11 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
         addToSideBar(dateInfoComp, peopleInfoComp, compFollowers);
 
         tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.DETAIL));
         tabSheet.addTab(associateCampaignList, CrmTypeConstants.CAMPAIGN, UserUIContext.getMessage(CampaignI18nEnum.LIST),
-                CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CAMPAIGN));
         tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
-                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACTIVITY));
     }
 
     @Override

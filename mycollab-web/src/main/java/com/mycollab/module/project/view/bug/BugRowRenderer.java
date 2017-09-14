@@ -30,7 +30,7 @@ public class BugRowRenderer implements IBeanList.RowDisplayHandler<SimpleBug> {
         rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
 
         String bugPriority = bug.getPriority();
-        Span priorityLink = new Span().appendText(ProjectAssetsManager.getPriorityHtml(bugPriority)).setTitle(bugPriority);
+        Span priorityLink = new Span().appendText(ProjectAssetsManager.INSTANCE.getPriorityHtml(bugPriority)).setTitle(bugPriority);
 
         Span statusSpan = new Span().appendText(UserUIContext.getMessage(OptionI18nEnum.BugStatus.class,
                 bug.getStatus())).setCSSClass(UIConstants.BLOCK);
@@ -39,7 +39,7 @@ public class BugRowRenderer implements IBeanList.RowDisplayHandler<SimpleBug> {
         Img img = new Img(bug.getAssignuserFullName(), avatarLink).setTitle(bug.getAssignuserFullName())
                 .setCSSClass(UIConstants.CIRCLE_BOX);
 
-        rowComp.with(ELabel.fontIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG)).withWidthUndefined(),
+        rowComp.with(ELabel.fontIcon(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG)).withWidthUndefined(),
                 ELabel.html(priorityLink.write()).withWidthUndefined(),
                 ELabel.html(statusSpan.write()).withWidthUndefined(),
                 ELabel.html(img.write()).withWidthUndefined(),

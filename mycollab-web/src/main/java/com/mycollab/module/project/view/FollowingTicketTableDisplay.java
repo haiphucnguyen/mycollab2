@@ -48,7 +48,7 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
             final MButton ticketLink = new MButton(ticket.getName()).withStyleName(WebThemes.BUTTON_LINK);
 
             if (ProjectTypeConstants.BUG.equals(ticket.getType())) {
-                ticketLink.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
+                ticketLink.setIcon(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG));
 
                 if (BugStatus.Verified.name().equals(ticket.getStatus())) {
                     ticketLink.addStyleName(WebThemes.LINK_COMPLETED);
@@ -64,7 +64,7 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
                     EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
                 });
             } else if (ProjectTypeConstants.TASK.equals(ticket.getType())) {
-                ticketLink.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
+                ticketLink.setIcon(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TASK));
 
                 if ("Closed".equals(ticket.getStatus())) {
                     ticketLink.addStyleName(WebThemes.LINK_COMPLETED);
@@ -83,7 +83,7 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
                     EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
                 });
             } else if (ProjectTypeConstants.RISK.equals(ticket.getType())) {
-                ticketLink.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
+                ticketLink.setIcon(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.RISK));
 
                 if ("Closed".equals(ticket.getStatus())) {
                     ticketLink.addStyleName(WebThemes.LINK_COMPLETED);
@@ -114,7 +114,7 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
 
         this.addGeneratedColumn("projectName", (source, itemId, columnId) -> {
             final FollowingTicket ticket = getBeanByIndex(itemId);
-            Div projectLinkDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml() + " ")
+            Div projectLinkDiv = new Div().appendText(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.PROJECT).getHtml() + " ")
                     .appendChild(new A(ProjectLinkBuilder.generateProjectFullLink(ticket.getProjectId()))
                             .appendText(ticket.getProjectName()));
             return new ELabel(projectLinkDiv.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_WORD_WRAP);

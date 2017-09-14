@@ -43,8 +43,8 @@ object ProjectLinkBuilder {
     }
 
     @JvmStatic
-    fun generateProjectMemberFullLink(projectId: Int?, memberName: String): String {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateProjectMemberLink(projectId!!, memberName)
+    fun generateProjectMemberFullLink(projectId: Int?, memberName: String?): String {
+        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateProjectMemberLink(projectId, memberName)
     }
 
     @JvmStatic

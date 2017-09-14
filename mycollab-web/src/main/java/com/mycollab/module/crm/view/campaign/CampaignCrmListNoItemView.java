@@ -24,7 +24,7 @@ public class CampaignCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN);
+        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CAMPAIGN);
     }
 
     @Override

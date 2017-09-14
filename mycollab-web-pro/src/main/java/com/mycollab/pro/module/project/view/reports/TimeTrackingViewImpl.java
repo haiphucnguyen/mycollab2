@@ -127,7 +127,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         if (CollectionUtils.isNotEmpty(projects)) {
             itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
-            Label titleLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() + " " +
+            Label titleLbl = ELabel.h2(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TIME).getHtml() + " " +
                     UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TIMESHEET));
 
             MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true,

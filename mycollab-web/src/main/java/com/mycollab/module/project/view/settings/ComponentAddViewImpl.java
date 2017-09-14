@@ -38,7 +38,7 @@ public class ComponentAddViewImpl extends AbstractEditItemComp<Component> implem
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_COMPONENT);
+        return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG_COMPONENT);
     }
 
     @Override

@@ -31,7 +31,7 @@ public class LeadAddViewImpl extends AbstractEditItemComp<SimpleLead> implements
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.LEAD);
+        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD);
     }
 
     @Override

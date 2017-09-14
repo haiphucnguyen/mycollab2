@@ -62,7 +62,7 @@ public class ContactOpportunityListComp extends RelatedListComp2<OpportunityServ
                 UI.getCurrent().addWindow(opportunitiesWindow);
                 opportunitiesWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
-            }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
+            }).withIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.OPPORTUNITY));
 
             OptionPopupContent buttonControlsLayout = new OptionPopupContent();
             buttonControlsLayout.addOption(selectBtn);
@@ -102,7 +102,7 @@ public class ContactOpportunityListComp extends RelatedListComp2<OpportunityServ
             MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel opportunityIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
+            ELabel opportunityIcon = ELabel.fontIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.OPPORTUNITY));
             iconWrap.addComponent(opportunityIcon);
             blockTop.addComponent(iconWrap);
 

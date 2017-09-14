@@ -45,7 +45,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     private ProjectFollowersComp<SimpleRisk> followerSheet;
 
     public RiskReadViewImpl() {
-        super(UserUIContext.getMessage(RiskI18nEnum.DETAIL), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
+        super(UserUIContext.getMessage(RiskI18nEnum.DETAIL), ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.RISK));
     }
 
     @Override

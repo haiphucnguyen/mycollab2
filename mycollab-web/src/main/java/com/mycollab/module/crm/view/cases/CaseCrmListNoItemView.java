@@ -24,7 +24,7 @@ public class CaseCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.CASE);
+        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CASE);
     }
 
     @Override

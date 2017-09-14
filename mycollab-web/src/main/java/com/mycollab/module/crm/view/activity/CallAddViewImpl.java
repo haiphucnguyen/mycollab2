@@ -44,7 +44,7 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.CALL);
+        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CALL);
     }
 
     @Override

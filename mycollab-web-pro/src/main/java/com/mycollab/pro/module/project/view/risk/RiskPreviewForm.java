@@ -54,7 +54,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
                 return new RichTextViewField(risk.getDescription());
             } else if (Risk.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(risk.getPriority())) {
-                    FontAwesome fontPriority = ProjectAssetsManager.getPriority(risk.getPriority());
+                    FontAwesome fontPriority = ProjectAssetsManager.INSTANCE.getPriority(risk.getPriority());
                     String priorityLbl = fontPriority.getHtml() + " " + UserUIContext.getMessage(OptionI18nEnum.Priority.class, risk.getPriority());
                     DefaultViewField field = new DefaultViewField(priorityLbl, ContentMode.HTML);
                     field.addStyleName("priority-" + risk.getPriority().toLowerCase());

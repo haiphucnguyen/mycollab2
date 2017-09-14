@@ -77,7 +77,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     public BugReadViewImpl() {
         super(UserUIContext.getMessage(BugI18nEnum.DETAIL),
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG), new BugPreviewFormLayout());
+                ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG), new BugPreviewFormLayout());
     }
 
     @Override

@@ -39,7 +39,7 @@ class ContactReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory
             if (contact.getAccountid() != null) {
                 A accountLink = new A(CrmLinkBuilder.generateAccountPreviewLinkFull(contact.getAccountid()))
                         .appendText(contact.getAccountName());
-                Div accountDiv = new Div().appendText(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, accountLink);
+                Div accountDiv = new Div().appendText(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACCOUNT).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, accountLink);
                 return new DefaultViewField(accountDiv.write(), ContentMode.HTML);
             }
         } else if (Contact.Field.email.equalTo(propertyId)) {

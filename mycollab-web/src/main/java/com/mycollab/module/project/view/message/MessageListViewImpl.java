@@ -331,7 +331,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
 
         @Override
         protected FontAwesome viewIcon() {
-            return ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE);
+            return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MESSAGE);
         }
 
         @Override

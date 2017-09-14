@@ -28,7 +28,7 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
     private CrmFollowersComp<SimpleCall> followersComp;
 
     public CallReadViewImpl() {
-        super(CrmAssetsManager.getAsset(CrmTypeConstants.CALL));
+        super(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CALL));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class CallReadViewImpl extends AbstractPreviewItemComp<SimpleCall> implem
         addToSideBar(dateInfoComp, followersComp);
 
         tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
+                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.DETAIL));
         tabSheet.selectTab(CrmTypeConstants.DETAIL);
     }
 
