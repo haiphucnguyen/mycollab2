@@ -24,7 +24,6 @@ import com.mycollab.module.project.service.ProjectTicketService
 import com.mycollab.module.project.service.RiskService
 import com.mycollab.module.tracker.service.BugService
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 /**
@@ -32,41 +31,30 @@ import org.springframework.stereotype.Service
  * @since 1.0
  */
 @Service
-class CommentServiceImpl : DefaultService<Int, CommentWithBLOBs, CommentSearchCriteria>(), CommentService {
-
-    @Autowired
-    private val commentMapper: CommentMapper? = null
-
-    @Autowired
-    private val commentMapperExt: CommentMapperExt? = null
-
-    @Autowired
-    private val relayEmailNotificationService: RelayEmailNotificationService? = null
-
-    @Autowired
-    private val activityStreamService: ActivityStreamService? = null
-
-    @Autowired
-    private val asyncEventBus: AsyncEventBus? = null
+class CommentServiceImpl(private val commentMapper: CommentMapper,
+                         private val commentMapperExt: CommentMapperExt,
+                         private val relayEmailNotificationService: RelayEmailNotificationService,
+                         private val activityStreamService: ActivityStreamService,
+                         private val asyncEventBus: AsyncEventBus) : DefaultService<Int, CommentWithBLOBs, CommentSearchCriteria>(), CommentService {
 
     override val crudMapper: ICrudGenericDAO<Int, CommentWithBLOBs>
         get() = commentMapper as ICrudGenericDAO<Int, CommentWithBLOBs>
 
-    override val searchMapper: ISearchableDAO<CommentSearchCriteria>?
+    override val searchMapper: ISearchableDAO<CommentSearchCriteria>
         get() = commentMapperExt
 
     override fun saveWithSession(record: CommentWithBLOBs, username: String?): Int {
         val saveId = super.saveWithSession(record, username)
 
         when {
-            ProjectTypeConstants.MESSAGE == record.type -> asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(MessageService::class.java)))
-            ProjectTypeConstants.RISK == record.type -> asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(RiskService::class.java, ProjectTicketService::class.java)))
-            ProjectTypeConstants.TASK == record.type -> asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(ProjectTaskService::class.java, ProjectTicketService::class.java)))
-            ProjectTypeConstants.BUG == record.type -> asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(BugService::class.java, ProjectTicketService::class.java)))
+            ProjectTypeConstants.MESSAGE == record.type -> asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(MessageService::class.java)))
+            ProjectTypeConstants.RISK == record.type -> asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(RiskService::class.java, ProjectTicketService::class.java)))
+            ProjectTypeConstants.TASK == record.type -> asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(ProjectTaskService::class.java, ProjectTicketService::class.java)))
+            ProjectTypeConstants.BUG == record.type -> asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(BugService::class.java, ProjectTicketService::class.java)))
         }
 
-        relayEmailNotificationService!!.saveWithSession(getRelayEmailNotification(record), username)
-        activityStreamService!!.saveWithSession(getActivityStream(record, username), username)
+        relayEmailNotificationService.saveWithSession(getRelayEmailNotification(record), username)
+        activityStreamService.saveWithSession(getActivityStream(record, username), username)
         return saveId
     }
 

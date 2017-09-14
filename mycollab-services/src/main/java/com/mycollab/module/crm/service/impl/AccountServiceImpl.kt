@@ -12,17 +12,14 @@ import com.mycollab.module.crm.CrmTypeConstants
 import com.mycollab.module.crm.dao.AccountLeadMapper
 import com.mycollab.module.crm.dao.AccountMapper
 import com.mycollab.module.crm.dao.AccountMapperExt
+import com.mycollab.module.crm.domain.*
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria
 import com.mycollab.module.crm.service.AccountService
 import com.mycollab.module.crm.service.CampaignService
-import com.mycollab.module.crm.domain.*
 import com.mycollab.spring.AppContextUtil
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
-import java.util.Collections
-import java.util.GregorianCalendar
+import java.util.*
 
 /**
  * @author MyCollab Ltd.
@@ -32,25 +29,18 @@ import java.util.GregorianCalendar
 @Transactional
 @Traceable(nameField = "accountname")
 @Watchable(userFieldName = "assignuser")
-class AccountServiceImpl : DefaultService<Int, Account, AccountSearchCriteria>(), AccountService {
-
-    @Autowired
-    private val accountMapper: AccountMapper? = null
-
-    @Autowired
-    private val accountMapperExt: AccountMapperExt? = null
-
-    @Autowired
-    private val accountLeadMapper: AccountLeadMapper? = null
+class AccountServiceImpl(private val accountMapper: AccountMapper,
+                         private val accountMapperExt: AccountMapperExt,
+                         private val accountLeadMapper: AccountLeadMapper) : DefaultService<Int, Account, AccountSearchCriteria>(), AccountService {
 
     override val crudMapper: ICrudGenericDAO<Int, Account>
         get() = accountMapper as ICrudGenericDAO<Int, Account>
 
-    override val searchMapper: ISearchableDAO<AccountSearchCriteria>?
+    override val searchMapper: ISearchableDAO<AccountSearchCriteria>
         get() = accountMapperExt
 
     override fun findById(id: Int, accountId: Int): SimpleAccount? {
-        return accountMapperExt!!.findById(id)
+        return accountMapperExt.findById(id)
     }
 
     override fun saveWithSession(record: Account, username: String?): Int {
@@ -73,7 +63,7 @@ class AccountServiceImpl : DefaultService<Int, Account, AccountSearchCriteria>()
             val ex = AccountLeadExample()
             ex.createCriteria().andAccountidEqualTo(associateLead.accountid)
                     .andLeadidEqualTo(associateLead.leadid)
-            if (accountLeadMapper!!.countByExample(ex) == 0L) {
+            if (accountLeadMapper.countByExample(ex) == 0L) {
                 associateLead.createtime = GregorianCalendar().time
                 accountLeadMapper.insert(associateLead)
             }
@@ -83,11 +73,11 @@ class AccountServiceImpl : DefaultService<Int, Account, AccountSearchCriteria>()
     override fun removeAccountLeadRelationship(associateLead: AccountLead, accountId: Int?) {
         val ex = AccountLeadExample()
         ex.createCriteria().andAccountidEqualTo(associateLead.accountid).andLeadidEqualTo(associateLead.leadid)
-        accountLeadMapper!!.deleteByExample(ex)
+        accountLeadMapper.deleteByExample(ex)
     }
 
     override fun findAccountAssoWithConvertedLead(leadId: Int?, accountId: Int?): SimpleAccount {
-        return accountMapperExt!!.findAccountAssoWithConvertedLead(leadId)
+        return accountMapperExt.findAccountAssoWithConvertedLead(leadId)
     }
 
     companion object {

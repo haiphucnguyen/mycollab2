@@ -49,24 +49,15 @@ import java.util.concurrent.TimeUnit
 @Transactional
 @Traceable(nameField = "name", extraFieldName = "projectid")
 @Watchable(userFieldName = "assignuser")
-class BugServiceImpl : DefaultService<Int, BugWithBLOBs, BugSearchCriteria>(), BugService {
-
-    @Autowired
-    private val dataSource: DataSource? = null
-
-    @Autowired
-    private val bugMapper: BugMapper? = null
-
-    @Autowired
-    private val bugMapperExt: BugMapperExt? = null
-
-    @Autowired
-    private val asyncEventBus: AsyncEventBus? = null
+class BugServiceImpl(private val bugMapper: BugMapper,
+                     private val bugMapperExt: BugMapperExt,
+                     private val asyncEventBus: AsyncEventBus,
+                     private val dataSource: DataSource) : DefaultService<Int, BugWithBLOBs, BugSearchCriteria>(), BugService {
 
     override val crudMapper: ICrudGenericDAO<Int, BugWithBLOBs>
         get() = bugMapper as ICrudGenericDAO<Int, BugWithBLOBs>
 
-    override val searchMapper: ISearchableDAO<BugSearchCriteria>?
+    override val searchMapper: ISearchableDAO<BugSearchCriteria>
         get() = bugMapperExt
 
     @Transactional(isolation = Isolation.READ_UNCOMMITTED)
@@ -74,7 +65,7 @@ class BugServiceImpl : DefaultService<Int, BugWithBLOBs, BugSearchCriteria>(), B
         val lock = DistributionLockUtil.getLock("bug-" + record.saccountid!!)
         try {
             if (lock.tryLock(120, TimeUnit.SECONDS)) {
-                val maxKey = bugMapperExt!!.getMaxKey(record.projectid!!)
+                val maxKey = bugMapperExt.getMaxKey(record.projectid!!)
                 record.bugkey = if (maxKey == null) 1 else maxKey + 1
                 if (record.priority == null) {
                     record.priority = OptionI18nEnum.Priority.Medium.name
@@ -84,7 +75,7 @@ class BugServiceImpl : DefaultService<Int, BugWithBLOBs, BugSearchCriteria>(), B
                 }
                 val bugId = super.saveWithSession(record, username)
 
-                asyncEventBus!!.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, bugId, "status", record.status,
+                asyncEventBus.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, bugId, "status", record.status,
                         record.projectid, record.saccountid))
                 return bugId
             } else {
@@ -99,18 +90,18 @@ class BugServiceImpl : DefaultService<Int, BugWithBLOBs, BugSearchCriteria>(), B
     }
 
     override fun updateWithSession(record: BugWithBLOBs, username: String?): Int {
-        asyncEventBus!!.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, record.id, "status", record.status,
+        asyncEventBus.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, record.id, "status", record.status,
                 record.projectid, record.saccountid))
         return super.updateWithSession(record, username)
     }
 
     @CleanCache
     fun postDirtyUpdate(sAccountId: Int?) {
-        asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectMemberService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java, TagService::class.java, TimelineTrackingService::class.java, ProjectTicketService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectMemberService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java, TagService::class.java, TimelineTrackingService::class.java, ProjectTicketService::class.java)))
     }
 
     override fun updateSelectiveWithSession(record: BugWithBLOBs, username: String?): Int? {
-        asyncEventBus!!.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, record.id, "status", record.status,
+        asyncEventBus.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, record.id, "status", record.status,
                 record.projectid, record.saccountid))
         return super.updateSelectiveWithSession(record, username)
     }
@@ -118,47 +109,47 @@ class BugServiceImpl : DefaultService<Int, BugWithBLOBs, BugSearchCriteria>(), B
     override fun massRemoveWithSession(items: List<BugWithBLOBs>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(items, username, sAccountId)
         val event = DeleteProjectBugEvent(items.toTypedArray(), username, sAccountId)
-        asyncEventBus!!.post(event)
+        asyncEventBus.post(event)
     }
 
     override fun getStatusSummary(criteria: BugSearchCriteria): List<GroupItem> {
-        return bugMapperExt!!.getStatusSummary(criteria)
+        return bugMapperExt.getStatusSummary(criteria)
     }
 
     override fun getPrioritySummary(criteria: BugSearchCriteria): List<GroupItem> {
-        return bugMapperExt!!.getPrioritySummary(criteria)
+        return bugMapperExt.getPrioritySummary(criteria)
     }
 
     override fun getAssignedDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> {
-        return bugMapperExt!!.getAssignedDefectsSummary(criteria)
+        return bugMapperExt.getAssignedDefectsSummary(criteria)
     }
 
     override fun getReporterDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> {
-        return bugMapperExt!!.getReporterDefectsSummary(criteria)
+        return bugMapperExt.getReporterDefectsSummary(criteria)
     }
 
     override fun getResolutionDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> {
-        return bugMapperExt!!.getResolutionDefectsSummary(criteria)
+        return bugMapperExt.getResolutionDefectsSummary(criteria)
     }
 
     override fun getComponentDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> {
-        return bugMapperExt!!.getComponentDefectsSummary(criteria)
+        return bugMapperExt.getComponentDefectsSummary(criteria)
     }
 
     override fun getVersionDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> {
-        return bugMapperExt!!.getVersionDefectsSummary(criteria)
+        return bugMapperExt.getVersionDefectsSummary(criteria)
     }
 
     override fun findById(bugId: Int?, sAccountId: Int?): SimpleBug {
-        return bugMapperExt!!.getBugById(bugId!!)
+        return bugMapperExt.getBugById(bugId!!)
     }
 
     override fun getBugStatusGroupItemBaseComponent(criteria: BugSearchCriteria): List<BugStatusGroupItem> {
-        return bugMapperExt!!.getBugStatusGroupItemBaseComponent(criteria)
+        return bugMapperExt.getBugStatusGroupItemBaseComponent(criteria)
     }
 
     override fun findByProjectAndBugKey(bugKey: Int?, projectShortName: String, sAccountId: Int?): SimpleBug {
-        return bugMapperExt!!.findByProjectAndBugKey(bugKey!!, projectShortName, sAccountId!!)
+        return bugMapperExt.findByProjectAndBugKey(bugKey!!, projectShortName, sAccountId!!)
     }
 
     override fun massUpdateBugIndexes(mapIndexes: List<Map<String, Int>>, @CacheKey sAccountId: Int?) {

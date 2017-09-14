@@ -22,20 +22,20 @@ import java.io.Serializable
 </S></T></K> */
 abstract class DefaultService<K : Serializable, T, S : SearchCriteria> : DefaultCrudService<K, T>(), IDefaultService<K, T, S> {
 
-    abstract val searchMapper: ISearchableDAO<S>?
+    abstract val searchMapper: ISearchableDAO<S>
 
     override fun getTotalCount(criteria: S): Int {
-        return searchMapper!!.getTotalCount(criteria)
+        return searchMapper.getTotalCount(criteria)
     }
 
     override fun findPageableListByCriteria(searchRequest: BasicSearchRequest<S>): List<*> {
-        return searchMapper!!.findPageableListByCriteria(searchRequest.searchCriteria,
+        return searchMapper.findPageableListByCriteria(searchRequest.searchCriteria,
                 RowBounds((searchRequest.currentPage - 1) * searchRequest.numberOfItems,
                         searchRequest.numberOfItems))
     }
 
     override fun findAbsoluteListByCriteria(searchCriteria: S, firstIndex: Int?, numberOfItems: Int?): List<*> {
-        return searchMapper!!.findPageableListByCriteria(searchCriteria,
+        return searchMapper.findPageableListByCriteria(searchCriteria,
                 RowBounds(firstIndex!!, numberOfItems!!))
     }
 
@@ -57,17 +57,17 @@ abstract class DefaultService<K : Serializable, T, S : SearchCriteria> : Default
         }
 
         if (isValid) {
-            searchMapper!!.removeByCriteria(criteria)
+            searchMapper.removeByCriteria(criteria)
         }
 
     }
 
     override fun getNextItemKey(criteria: S): Int? {
-        return searchMapper!!.getNextItemKey(criteria)
+        return searchMapper.getNextItemKey(criteria)
     }
 
     override fun getPreviousItemKey(criteria: S): Int? {
-        return searchMapper!!.getPreviousItemKey(criteria)
+        return searchMapper.getPreviousItemKey(criteria)
     }
 
     override fun updateBySearchCriteria(record: T, searchCriteria: S) {

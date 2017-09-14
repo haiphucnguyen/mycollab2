@@ -10,7 +10,6 @@ import com.mycollab.core.UserInvalidInputException
 import com.mycollab.db.persistence.ICrudGenericDAO
 import com.mycollab.db.persistence.ISearchableDAO
 import com.mycollab.db.persistence.service.DefaultService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 /**
@@ -18,18 +17,13 @@ import org.springframework.stereotype.Service
  * @since 1.0
  */
 @Service
-class SaveSearchResultServiceImpl : DefaultService<Int, SaveSearchResult, SaveSearchResultCriteria>(), SaveSearchResultService {
-
-    @Autowired
-    private val saveSearchResultMapper: SaveSearchResultMapper? = null
-
-    @Autowired
-    private val saveSearchResultMapperExt: SaveSearchResultMapperExt? = null
+class SaveSearchResultServiceImpl(private val saveSearchResultMapper: SaveSearchResultMapper,
+                                  private val saveSearchResultMapperExt: SaveSearchResultMapperExt) : DefaultService<Int, SaveSearchResult, SaveSearchResultCriteria>(), SaveSearchResultService {
 
     override val crudMapper: ICrudGenericDAO<Int, SaveSearchResult>
         get() = saveSearchResultMapper as ICrudGenericDAO<Int, SaveSearchResult>
 
-    override val searchMapper: ISearchableDAO<SaveSearchResultCriteria>?
+    override val searchMapper: ISearchableDAO<SaveSearchResultCriteria>
         get() = saveSearchResultMapperExt
 
     override fun saveWithSession(record: SaveSearchResult, username: String?): Int {
@@ -45,7 +39,7 @@ class SaveSearchResultServiceImpl : DefaultService<Int, SaveSearchResult, SaveSe
         val ex = SaveSearchResultExample()
         ex.createCriteria().andSaccountidEqualTo(record.saccountid).andTypeEqualTo(record.type)
                 .andQuerynameEqualTo(record.queryname)
-        if (saveSearchResultMapper!!.countByExample(ex) > 0) {
+        if (saveSearchResultMapper.countByExample(ex) > 0) {
             throw UserInvalidInputException("There is the query name existed")
         }
     }

@@ -18,7 +18,6 @@ import com.mycollab.module.crm.domain.SimpleCrmTask
 import com.mycollab.module.crm.domain.criteria.CrmTaskSearchCriteria
 import com.mycollab.module.crm.service.EventService
 import com.mycollab.module.crm.service.TaskService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -30,57 +29,50 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 @Traceable(nameField = "subject")
 @Watchable(userFieldName = "assignuser")
-class TaskServiceImpl : DefaultService<Int, CrmTask, CrmTaskSearchCriteria>(), TaskService {
-
-    @Autowired
-    private val taskMapper: CrmTaskMapper? = null
-
-    @Autowired
-    private val taskMapperExt: CrmTaskMapperExt? = null
-
-    @Autowired
-    private val asyncEventBus: AsyncEventBus? = null
+class TaskServiceImpl(private val taskMapper: CrmTaskMapper,
+                      private val taskMapperExt: CrmTaskMapperExt,
+                      private val asyncEventBus: AsyncEventBus) : DefaultService<Int, CrmTask, CrmTaskSearchCriteria>(), TaskService {
 
     override val crudMapper: ICrudGenericDAO<Int, CrmTask>
         get() = taskMapper as ICrudGenericDAO<Int, CrmTask>
 
-    override val searchMapper: ISearchableDAO<CrmTaskSearchCriteria>?
+    override val searchMapper: ISearchableDAO<CrmTaskSearchCriteria>
         get() = taskMapperExt
 
     override fun findById(taskId: Int?, sAccountId: Int?): SimpleCrmTask {
-        return taskMapperExt!!.findById(taskId)
+        return taskMapperExt.findById(taskId)
     }
 
     override fun saveWithSession(record: CrmTask, username: String?): Int {
         val result = super.saveWithSession(record, username)
-        asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(EventService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(EventService::class.java)))
         return result
     }
 
     override fun updateWithSession(record: CrmTask, username: String?): Int {
         val result = super.updateWithSession(record, username)
-        asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(EventService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(EventService::class.java)))
         return result
     }
 
     override fun removeByCriteria(criteria: CrmTaskSearchCriteria, sAccountId: Int) {
         super.removeByCriteria(criteria, sAccountId)
-        asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(EventService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(EventService::class.java)))
     }
 
     override fun massRemoveWithSession(tasks: List<CrmTask>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(tasks, username, sAccountId)
-        asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(EventService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(EventService::class.java)))
     }
 
     override fun massUpdateWithSession(record: CrmTask, primaryKeys: List<Int>, accountId: Int?) {
         super.massUpdateWithSession(record, primaryKeys, accountId)
-        asyncEventBus!!.post(CleanCacheEvent(accountId, arrayOf<Class<*>>(EventService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(accountId, arrayOf<Class<*>>(EventService::class.java)))
     }
 
     override fun updateBySearchCriteria(record: CrmTask, searchCriteria: CrmTaskSearchCriteria) {
         super.updateBySearchCriteria(record, searchCriteria)
-        asyncEventBus!!.post(CleanCacheEvent(searchCriteria.accountId.value as Int,
+        asyncEventBus.post(CleanCacheEvent(searchCriteria.accountId.value as Int,
                 arrayOf<Class<*>>(EventService::class.java)))
     }
 

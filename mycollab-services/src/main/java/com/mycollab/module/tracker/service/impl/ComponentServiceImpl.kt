@@ -16,7 +16,6 @@ import com.mycollab.module.tracker.domain.ComponentExample
 import com.mycollab.module.tracker.domain.SimpleComponent
 import com.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria
 import com.mycollab.module.tracker.service.ComponentService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -27,22 +26,17 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 @Traceable(nameField = "name", extraFieldName = "projectid")
-class ComponentServiceImpl : DefaultService<Int, Component, ComponentSearchCriteria>(), ComponentService {
-
-    @Autowired
-    private val componentMapper: ComponentMapper? = null
-
-    @Autowired
-    private val componentMapperExt: ComponentMapperExt? = null
+class ComponentServiceImpl(private val componentMapper: ComponentMapper,
+                           private val componentMapperExt: ComponentMapperExt) : DefaultService<Int, Component, ComponentSearchCriteria>(), ComponentService {
 
     override val crudMapper: ICrudGenericDAO<Int, Component>
         get() = componentMapper as ICrudGenericDAO<Int, Component>
 
-    override val searchMapper: ISearchableDAO<ComponentSearchCriteria>?
+    override val searchMapper: ISearchableDAO<ComponentSearchCriteria>
         get() = componentMapperExt
 
     override fun findById(componentId: Int?, sAccountId: Int?): SimpleComponent {
-        return componentMapperExt!!.findComponentById(componentId!!)
+        return componentMapperExt.findComponentById(componentId!!)
     }
 
     override fun saveWithSession(record: Component, username: String?): Int {
@@ -50,7 +44,7 @@ class ComponentServiceImpl : DefaultService<Int, Component, ComponentSearchCrite
         val ex = ComponentExample()
         ex.createCriteria().andNameEqualTo(record.name).andProjectidEqualTo(record.projectid)
 
-        val count = componentMapper!!.countByExample(ex)
+        val count = componentMapper.countByExample(ex)
         return if (count > 0) {
             throw MyCollabException("There is an existing record has name " + record.name)
         } else {

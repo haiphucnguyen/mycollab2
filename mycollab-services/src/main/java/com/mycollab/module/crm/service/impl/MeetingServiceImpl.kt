@@ -30,57 +30,50 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 @Traceable(nameField = "subject")
 @Watchable(userFieldName = "createduser")
-class MeetingServiceImpl : DefaultService<Int, MeetingWithBLOBs, MeetingSearchCriteria>(), MeetingService {
-
-    @Autowired
-    private val meetingMapper: MeetingMapper? = null
-
-    @Autowired
-    private val meetingMapperExt: MeetingMapperExt? = null
-
-    @Autowired
-    private val asyncEventBus: AsyncEventBus? = null
+class MeetingServiceImpl(private val meetingMapper: MeetingMapper,
+                         private val meetingMapperExt: MeetingMapperExt,
+                         private val asyncEventBus: AsyncEventBus) : DefaultService<Int, MeetingWithBLOBs, MeetingSearchCriteria>(), MeetingService {
 
     override val crudMapper: ICrudGenericDAO<Int, MeetingWithBLOBs>
         get() = meetingMapper as ICrudGenericDAO<Int, MeetingWithBLOBs>
 
-    override fun findById(meetingId: Int?, sAccountId: Int?): SimpleMeeting {
-        return meetingMapperExt!!.findById(meetingId)
-    }
-
-    override val searchMapper: ISearchableDAO<MeetingSearchCriteria>?
+    override val searchMapper: ISearchableDAO<MeetingSearchCriteria>
         get() = meetingMapperExt
+
+    override fun findById(meetingId: Int?, sAccountId: Int?): SimpleMeeting {
+        return meetingMapperExt.findById(meetingId)
+    }
 
     override fun saveWithSession(record: MeetingWithBLOBs, username: String?): Int {
         val result = super.saveWithSession(record, username)
-        asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(EventService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(EventService::class.java)))
         return result
     }
 
     override fun updateWithSession(record: MeetingWithBLOBs, username: String?): Int {
         val result = super.updateWithSession(record, username)
-        asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(EventService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(EventService::class.java)))
         return result
     }
 
     override fun removeByCriteria(criteria: MeetingSearchCriteria, sAccountId: Int) {
         super.removeByCriteria(criteria, sAccountId)
-        asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(EventService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(EventService::class.java)))
     }
 
     override fun massRemoveWithSession(items: List<MeetingWithBLOBs>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(items, username, sAccountId)
-        asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(EventService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(EventService::class.java)))
     }
 
     override fun massUpdateWithSession(record: MeetingWithBLOBs, primaryKeys: List<Int>, accountId: Int?) {
         super.massUpdateWithSession(record, primaryKeys, accountId)
-        asyncEventBus!!.post(CleanCacheEvent(accountId, arrayOf<Class<*>>(EventService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(accountId, arrayOf<Class<*>>(EventService::class.java)))
     }
 
     override fun updateBySearchCriteria(record: MeetingWithBLOBs, searchCriteria: MeetingSearchCriteria) {
         super.updateBySearchCriteria(record, searchCriteria)
-        asyncEventBus!!.post(CleanCacheEvent(searchCriteria.saccountid!!.value,
+        asyncEventBus.post(CleanCacheEvent(searchCriteria.saccountid!!.value,
                 arrayOf<Class<*>>(EventService::class.java)))
     }
 

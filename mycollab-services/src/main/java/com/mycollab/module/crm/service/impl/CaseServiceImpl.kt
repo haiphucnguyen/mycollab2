@@ -15,7 +15,6 @@ import com.mycollab.module.crm.domain.CaseWithBLOBs
 import com.mycollab.module.crm.domain.SimpleCase
 import com.mycollab.module.crm.domain.criteria.CaseSearchCriteria
 import com.mycollab.module.crm.service.CaseService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -27,22 +26,17 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 @Traceable(nameField = "subject")
 @Watchable(userFieldName = "assignuser")
-class CaseServiceImpl : DefaultService<Int, CaseWithBLOBs, CaseSearchCriteria>(), CaseService {
-
-    @Autowired
-    private val caseMapper: CaseMapper? = null
-
-    @Autowired
-    private val caseMapperExt: CaseMapperExt? = null
+class CaseServiceImpl(private val caseMapper: CaseMapper,
+                      private val caseMapperExt: CaseMapperExt) : DefaultService<Int, CaseWithBLOBs, CaseSearchCriteria>(), CaseService {
 
     override val crudMapper: ICrudGenericDAO<Int, CaseWithBLOBs>
         get() = caseMapper as ICrudGenericDAO<Int, CaseWithBLOBs>
 
-    override val searchMapper: ISearchableDAO<CaseSearchCriteria>?
+    override val searchMapper: ISearchableDAO<CaseSearchCriteria>
         get() = caseMapperExt
 
     override fun findById(caseId: Int?, sAccountId: Int?): SimpleCase {
-        return caseMapperExt!!.findById(caseId)
+        return caseMapperExt.findById(caseId)
     }
 
     companion object {

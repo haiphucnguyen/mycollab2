@@ -30,36 +30,29 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 @Traceable(nameField = "title", extraFieldName = "projectid")
-class MessageServiceImpl : DefaultService<Int, Message, MessageSearchCriteria>(), MessageService {
-
-    @Autowired
-    private val messageMapper: MessageMapper? = null
-
-    @Autowired
-    private val messageMapperExt: MessageMapperExt? = null
-
-    @Autowired
-    private val asyncEventBus: AsyncEventBus? = null
+class MessageServiceImpl(private val messageMapper: MessageMapper,
+                         private val messageMapperExt: MessageMapperExt,
+                         private val asyncEventBus: AsyncEventBus) : DefaultService<Int, Message, MessageSearchCriteria>(), MessageService {
 
     override val crudMapper: ICrudGenericDAO<Int, Message>
         get() = messageMapper as ICrudGenericDAO<Int, Message>
 
+    override val searchMapper: ISearchableDAO<MessageSearchCriteria>
+        get() = messageMapperExt
+
     @CleanCache
     fun postDirtyUpdate(sAccountId: Int?) {
-        asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectActivityStreamService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectActivityStreamService::class.java)))
     }
 
     override fun massRemoveWithSession(items: List<Message>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(items, username, sAccountId)
         val event = DeleteProjectMessageEvent(items.toTypedArray(), username, sAccountId)
-        asyncEventBus!!.post(event)
+        asyncEventBus.post(event)
     }
 
-    override val searchMapper: ISearchableDAO<MessageSearchCriteria>?
-        get() = messageMapperExt
-
     override fun findById(messageId: Int?, sAccountId: Int?): SimpleMessage {
-        return messageMapperExt!!.findMessageById(messageId!!)
+        return messageMapperExt.findMessageById(messageId!!)
     }
 
     companion object {

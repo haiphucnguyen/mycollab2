@@ -19,15 +19,13 @@ import com.mycollab.module.project.domain.SimpleMilestone
 import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus
 import com.mycollab.module.project.service.*
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.BatchPreparedStatementSetter
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
-import javax.sql.DataSource
 import java.sql.PreparedStatement
 import java.sql.SQLException
+import javax.sql.DataSource
 
 /**
  * @author MyCollab Ltd.
@@ -36,28 +34,19 @@ import java.sql.SQLException
 @Service
 @Transactional
 @Traceable(nameField = "name", extraFieldName = "projectid")
-class MilestoneServiceImpl : DefaultService<Int, Milestone, MilestoneSearchCriteria>(), MilestoneService {
-
-    @Autowired
-    private val milestoneMapper: MilestoneMapper? = null
-
-    @Autowired
-    private val milestoneMapperExt: MilestoneMapperExt? = null
-
-    @Autowired
-    private val dataSource: DataSource? = null
-
-    @Autowired
-    private val asyncEventBus: AsyncEventBus? = null
+class MilestoneServiceImpl(private val milestoneMapper: MilestoneMapper,
+                           private val milestoneMapperExt: MilestoneMapperExt,
+                           private val dataSource: DataSource,
+                           private val asyncEventBus: AsyncEventBus) : DefaultService<Int, Milestone, MilestoneSearchCriteria>(), MilestoneService {
 
     override val crudMapper: ICrudGenericDAO<Int, Milestone>
         get() = milestoneMapper as ICrudGenericDAO<Int, Milestone>
 
-    override val searchMapper: ISearchableDAO<MilestoneSearchCriteria>?
+    override val searchMapper: ISearchableDAO<MilestoneSearchCriteria>
         get() = milestoneMapperExt
 
     override fun findById(milestoneId: Int?, sAccountId: Int?): SimpleMilestone {
-        return milestoneMapperExt!!.findById(milestoneId)
+        return milestoneMapperExt.findById(milestoneId)
     }
 
     override fun saveWithSession(record: Milestone, username: String?): Int {
@@ -69,7 +58,7 @@ class MilestoneServiceImpl : DefaultService<Int, Milestone, MilestoneSearchCrite
 
     @CleanCache
     fun postDirtyUpdate(sAccountId: Int?) {
-        asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, GanttAssignmentService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, GanttAssignmentService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java)))
     }
 
     override fun massUpdateOptionIndexes(mapIndexes: List<Map<String, Int>>, @CacheKey sAccountId: Int?) {

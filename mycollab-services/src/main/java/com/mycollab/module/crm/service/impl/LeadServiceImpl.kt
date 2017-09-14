@@ -29,22 +29,17 @@ import java.util.GregorianCalendar
 @Transactional
 @Traceable(nameField = "lastname")
 @Watchable(userFieldName = "assignuser")
-class LeadServiceImpl : DefaultService<Int, Lead, LeadSearchCriteria>(), LeadService {
-
-    @Autowired
-    private val leadMapper: LeadMapper? = null
-
-    @Autowired
-    private val leadMapperExt: LeadMapperExt? = null
+class LeadServiceImpl(private val leadMapper: LeadMapper,
+                      private val leadMapperExt: LeadMapperExt) : DefaultService<Int, Lead, LeadSearchCriteria>(), LeadService {
 
     override val crudMapper: ICrudGenericDAO<Int, Lead>
         get() = leadMapper as ICrudGenericDAO<Int, Lead>
 
-    override val searchMapper: ISearchableDAO<LeadSearchCriteria>?
+    override val searchMapper: ISearchableDAO<LeadSearchCriteria>
         get() = leadMapperExt
 
     override fun findById(leadId: Int, sAccountId: Int): SimpleLead? {
-        return leadMapperExt!!.findById(leadId)
+        return leadMapperExt.findById(leadId)
     }
 
     override fun saveWithSession(lead: Lead, username: String?): Int {
@@ -122,7 +117,7 @@ class LeadServiceImpl : DefaultService<Int, Lead, LeadSearchCriteria>(), LeadSer
             opportunity.accountid = accountId
             opportunity.saccountid = lead.saccountid
             val opportunityService = AppContextUtil.getSpringBean(OpportunityService::class.java)
-            val opportunityId = opportunityService.saveWithSession(opportunity, convertUser)!!
+            val opportunityId = opportunityService.saveWithSession(opportunity, convertUser)
 
             LOG.debug("Create new opportunity contact relationship")
             val oppContact = ContactOpportunity()
@@ -142,15 +137,15 @@ class LeadServiceImpl : DefaultService<Int, Lead, LeadSearchCriteria>(), LeadSer
     }
 
     override fun findConvertedLeadOfAccount(accountId: Int?, @CacheKey sAccountId: Int?): SimpleLead {
-        return leadMapperExt!!.findConvertedLeadOfAccount(accountId)
+        return leadMapperExt.findConvertedLeadOfAccount(accountId)
     }
 
     override fun findConvertedLeadOfContact(contactId: Int?, @CacheKey sAccountId: Int?): SimpleLead {
-        return leadMapperExt!!.findConvertedLeadOfContact(contactId)
+        return leadMapperExt.findConvertedLeadOfContact(contactId)
     }
 
     override fun findConvertedLeadOfOpportunity(opportunity: Int?, @CacheKey sAccountId: Int?): SimpleLead {
-        return leadMapperExt!!.findConvertedLeadOfOpportunity(opportunity)
+        return leadMapperExt.findConvertedLeadOfOpportunity(opportunity)
     }
 
     companion object {

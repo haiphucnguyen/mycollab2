@@ -11,7 +11,6 @@ import com.mycollab.module.user.domain.criteria.RoleSearchCriteria
 import com.mycollab.module.user.service.RoleService
 import com.mycollab.security.PermissionMap
 import org.apache.commons.collections.CollectionUtils
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 /**
@@ -19,21 +18,14 @@ import org.springframework.stereotype.Service
  * @since 1.0
  */
 @Service
-class RoleServiceDBImpl : DefaultService<Int, Role, RoleSearchCriteria>(), RoleService {
-
-    @Autowired
-    private val roleMapper: RoleMapper? = null
-
-    @Autowired
-    private val roleMapperExt: RoleMapperExt? = null
-
-    @Autowired
-    private val rolePermissionMapper: RolePermissionMapper? = null
+class RoleServiceDBImpl(private val roleMapper: RoleMapper,
+                        private val roleMapperExt: RoleMapperExt,
+                        private val rolePermissionMapper: RolePermissionMapper) : DefaultService<Int, Role, RoleSearchCriteria>(), RoleService {
 
     override val crudMapper: ICrudGenericDAO<Int, Role>
         get() = roleMapper as ICrudGenericDAO<Int, Role>
 
-    override val searchMapper: ISearchableDAO<RoleSearchCriteria>?
+    override val searchMapper: ISearchableDAO<RoleSearchCriteria>
         get() = roleMapperExt
 
     override fun saveWithSession(record: Role, username: String?): Int {
@@ -48,7 +40,7 @@ class RoleServiceDBImpl : DefaultService<Int, Role, RoleSearchCriteria>(), RoleS
         updateRecord.isdefault = java.lang.Boolean.FALSE
         val ex = RoleExample()
         ex.createCriteria().andSaccountidEqualTo(sAccountId)
-        roleMapper!!.updateByExampleSelective(updateRecord, ex)
+        roleMapper.updateByExampleSelective(updateRecord, ex)
     }
 
     override fun updateWithSession(record: Role, username: String?): Int {
@@ -68,7 +60,7 @@ class RoleServiceDBImpl : DefaultService<Int, Role, RoleSearchCriteria>(), RoleS
         rolePer.roleid = roleId
         rolePer.roleval = perVal
 
-        val data = rolePermissionMapper!!.countByExample(ex)
+        val data = rolePermissionMapper.countByExample(ex)
         if (data > 0) {
             rolePermissionMapper.updateByExampleSelective(rolePer, ex)
         } else {
@@ -77,13 +69,13 @@ class RoleServiceDBImpl : DefaultService<Int, Role, RoleSearchCriteria>(), RoleS
     }
 
     override fun findById(roleId: Int?, sAccountId: Int?): SimpleRole {
-        return roleMapperExt!!.findById(roleId)
+        return roleMapperExt.findById(roleId)
     }
 
     override fun getDefaultRoleId(sAccountId: Int?): Int? {
         var ex = RoleExample()
         ex.createCriteria().andIsdefaultEqualTo(java.lang.Boolean.TRUE).andSaccountidEqualTo(sAccountId)
-        var roles = roleMapper!!.selectByExample(ex)
+        var roles = roleMapper.selectByExample(ex)
         if (CollectionUtils.isNotEmpty(roles)) {
             return roles[0].id
         } else {

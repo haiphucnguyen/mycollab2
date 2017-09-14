@@ -34,21 +34,14 @@ import java.util.GregorianCalendar
 @Transactional
 @Traceable(nameField = "opportunityname")
 @Watchable(userFieldName = "assignuser")
-class OpportunityServiceImpl : DefaultService<Int, Opportunity, OpportunitySearchCriteria>(), OpportunityService {
-
-    @Autowired
-    private val opportunityMapper: OpportunityMapper? = null
-
-    @Autowired
-    private val opportunityMapperExt: OpportunityMapperExt? = null
-
-    @Autowired
-    private val opportunityLeadMapper: OpportunityLeadMapper? = null
+class OpportunityServiceImpl(private val opportunityMapper: OpportunityMapper,
+                             private val opportunityMapperExt: OpportunityMapperExt,
+                             private val opportunityLeadMapper: OpportunityLeadMapper) : DefaultService<Int, Opportunity, OpportunitySearchCriteria>(), OpportunityService {
 
     override val crudMapper: ICrudGenericDAO<Int, Opportunity>
         get() = opportunityMapper as ICrudGenericDAO<Int, Opportunity>
 
-    override val searchMapper: ISearchableDAO<OpportunitySearchCriteria>?
+    override val searchMapper: ISearchableDAO<OpportunitySearchCriteria>
         get() = opportunityMapperExt
 
     override fun findById(opportunityId: Int, sAccountId: Int): SimpleOpportunity? {
@@ -70,15 +63,15 @@ class OpportunityServiceImpl : DefaultService<Int, Opportunity, OpportunitySearc
     }
 
     override fun getSalesStageSummary(criteria: OpportunitySearchCriteria): List<GroupItem> {
-        return opportunityMapperExt!!.getSalesStageSummary(criteria)
+        return opportunityMapperExt.getSalesStageSummary(criteria)
     }
 
     override fun getLeadSourcesSummary(criteria: OpportunitySearchCriteria): List<GroupItem> {
-        return opportunityMapperExt!!.getLeadSourcesSummary(criteria)
+        return opportunityMapperExt.getLeadSourcesSummary(criteria)
     }
 
     override fun getPipeline(@CacheKey criteria: OpportunitySearchCriteria): List<GroupItem> {
-        return opportunityMapperExt!!.getPipeline(criteria)
+        return opportunityMapperExt.getPipeline(criteria)
     }
 
     override fun saveOpportunityLeadRelationship(associateLeads: List<OpportunityLead>, sAccountId: Int?) {
@@ -86,7 +79,7 @@ class OpportunityServiceImpl : DefaultService<Int, Opportunity, OpportunitySearc
             val ex = OpportunityLeadExample()
             ex.createCriteria().andOpportunityidEqualTo(associateLead.opportunityid)
                     .andLeadidEqualTo(associateLead.leadid)
-            if (opportunityLeadMapper!!.countByExample(ex) == 0L) {
+            if (opportunityLeadMapper.countByExample(ex) == 0L) {
                 opportunityLeadMapper.insert(associateLead)
             }
         }
@@ -96,11 +89,11 @@ class OpportunityServiceImpl : DefaultService<Int, Opportunity, OpportunitySearc
         val ex = OpportunityLeadExample()
         ex.createCriteria().andOpportunityidEqualTo(associateLead.opportunityid)
                 .andLeadidEqualTo(associateLead.leadid)
-        opportunityLeadMapper!!.deleteByExample(ex)
+        opportunityLeadMapper.deleteByExample(ex)
     }
 
     override fun findOpportunityAssoWithConvertedLead(leadId: Int?, @CacheKey accountId: Int?): SimpleOpportunity {
-        return opportunityMapperExt!!.findOpportunityAssoWithConvertedLead(leadId!!)
+        return opportunityMapperExt.findOpportunityAssoWithConvertedLead(leadId!!)
     }
 
     companion object {

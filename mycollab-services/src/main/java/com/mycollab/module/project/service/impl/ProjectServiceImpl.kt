@@ -54,7 +54,7 @@ class ProjectServiceImpl(private val projectMapper: ProjectMapper,
     override val crudMapper: ICrudGenericDAO<Int, Project>
         get() = projectMapper as ICrudGenericDAO<Int, Project>
 
-    override val searchMapper: ISearchableDAO<ProjectSearchCriteria>?
+    override val searchMapper: ISearchableDAO<ProjectSearchCriteria>
         get() = projectMapperExt
 
     override fun updateWithSession(record: Project, username: String?): Int {

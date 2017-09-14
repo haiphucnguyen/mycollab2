@@ -36,33 +36,17 @@ import java.util.GregorianCalendar
  * @since 1.0
  */
 @Service
-class ItemTimeLoggingServiceImpl : DefaultService<Int, ItemTimeLogging, ItemTimeLoggingSearchCriteria>(), ItemTimeLoggingService {
-
-    @Autowired
-    private val itemTimeLoggingMapper: ItemTimeLoggingMapper? = null
-
-    @Autowired
-    private val itemTimeLoggingMapperExt: ItemTimeLoggingMapperExt? = null
-
-    @Autowired
-    private val activityStreamService: ActivityStreamService? = null
-
-    @Autowired
-    private val milestoneMapperExt: MilestoneMapperExt? = null
-
-    @Autowired
-    private val componentMapperExt: ComponentMapperExt? = null
-
-    @Autowired
-    private val versionMapperExt: VersionMapperExt? = null
-
-    @Autowired
-    private val asyncEventBus: AsyncEventBus? = null
+class ItemTimeLoggingServiceImpl(private val itemTimeLoggingMapper: ItemTimeLoggingMapper,
+                                 private val itemTimeLoggingMapperExt: ItemTimeLoggingMapperExt,
+                                 private val milestoneMapperExt: MilestoneMapperExt,
+                                 private val componentMapperExt: ComponentMapperExt,
+                                 private val versionMapperExt: VersionMapperExt,
+                                 private val asyncEventBus: AsyncEventBus) : DefaultService<Int, ItemTimeLogging, ItemTimeLoggingSearchCriteria>(), ItemTimeLoggingService {
 
     override val crudMapper: ICrudGenericDAO<Int, ItemTimeLogging>
         get() = itemTimeLoggingMapper as ICrudGenericDAO<Int, ItemTimeLogging>
 
-    override val searchMapper: ISearchableDAO<ItemTimeLoggingSearchCriteria>?
+    override val searchMapper: ISearchableDAO<ItemTimeLoggingSearchCriteria>
         get() = itemTimeLoggingMapperExt
 
     override fun saveWithSession(record: ItemTimeLogging, username: String?): Int {
@@ -83,7 +67,7 @@ class ItemTimeLoggingServiceImpl : DefaultService<Int, ItemTimeLogging, ItemTime
     }
 
     override fun getTotalHoursByCriteria(criteria: ItemTimeLoggingSearchCriteria): Double? {
-        val value = itemTimeLoggingMapperExt!!.getTotalHoursByCriteria(criteria)
+        val value = itemTimeLoggingMapperExt.getTotalHoursByCriteria(criteria)
         return value ?: 0.0
     }
 
@@ -125,42 +109,42 @@ class ItemTimeLoggingServiceImpl : DefaultService<Int, ItemTimeLogging, ItemTime
     }
 
     private fun cleanCache(sAccountId: Int?) {
-        asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, MilestoneService::class.java, ProjectTaskService::class.java, BugService::class.java, ComponentService::class.java, VersionService::class.java, RiskService::class.java, ItemTimeLoggingService::class.java, ProjectMemberService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, MilestoneService::class.java, ProjectTaskService::class.java, BugService::class.java, ComponentService::class.java, VersionService::class.java, RiskService::class.java, ItemTimeLoggingService::class.java, ProjectMemberService::class.java)))
     }
 
     override fun getTotalBillableHoursByMilestone(milestoneId: Int?, sAccountId: Int?): Double? {
-        return milestoneMapperExt!!.getTotalBillableHours(milestoneId!!)
+        return milestoneMapperExt.getTotalBillableHours(milestoneId!!)
     }
 
     override fun getTotalNonBillableHoursByMilestone(milestoneId: Int?, sAccountId: Int?): Double? {
-        return milestoneMapperExt!!.getTotalNonBillableHours(milestoneId!!)
+        return milestoneMapperExt.getTotalNonBillableHours(milestoneId!!)
     }
 
     override fun getRemainHoursByMilestone(milestoneId: Int?, sAccountId: Int?): Double? {
-        return milestoneMapperExt!!.getRemainHours(milestoneId!!)
+        return milestoneMapperExt.getRemainHours(milestoneId!!)
     }
 
     override fun getTotalBillableHoursByComponent(componentId: Int?, @CacheKey sAccountId: Int?): Double? {
-        return componentMapperExt!!.getTotalBillableHours(componentId!!)
+        return componentMapperExt.getTotalBillableHours(componentId!!)
     }
 
     override fun getTotalNonBillableHoursByComponent(componentId: Int?, @CacheKey sAccountId: Int?): Double? {
-        return componentMapperExt!!.getTotalNonBillableHours(componentId!!)
+        return componentMapperExt.getTotalNonBillableHours(componentId!!)
     }
 
     override fun getRemainHoursByComponent(componentId: Int?, @CacheKey sAccountId: Int?): Double? {
-        return componentMapperExt!!.getRemainHours(componentId!!)
+        return componentMapperExt.getRemainHours(componentId!!)
     }
 
     override fun getTotalBillableHoursByVersion(versionId: Int?, @CacheKey sAccountId: Int?): Double? {
-        return versionMapperExt!!.getTotalBillableHours(versionId!!)
+        return versionMapperExt.getTotalBillableHours(versionId!!)
     }
 
     override fun getTotalNonBillableHoursByVersion(versionId: Int?, @CacheKey sAccountId: Int?): Double? {
-        return versionMapperExt!!.getTotalNonBillableHours(versionId!!)
+        return versionMapperExt.getTotalNonBillableHours(versionId!!)
     }
 
     override fun getRemainHoursByVersion(versionId: Int?, @CacheKey sAccountId: Int?): Double? {
-        return versionMapperExt!!.getRemainHours(versionId!!)
+        return versionMapperExt.getRemainHours(versionId!!)
     }
 }

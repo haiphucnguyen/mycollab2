@@ -29,7 +29,6 @@ import com.mycollab.security.PermissionMap
 import org.apache.commons.collections.CollectionUtils
 import org.apache.ibatis.session.RowBounds
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -40,52 +39,35 @@ import java.util.*
  */
 @Service
 @Transactional
-class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), UserService {
-
-    @Autowired
-    private val userMapper: UserMapper? = null
-
-    @Autowired
-    private val userMapperExt: UserMapperExt? = null
-
-    @Autowired
-    private val userAccountMapper: UserAccountMapper? = null
-
-    @Autowired
-    private val rolePermissionMapper: RolePermissionMapper? = null
-
-    @Autowired
-    private val userAvatarService: UserAvatarService? = null
-
-    @Autowired
-    private val billingPlanCheckerService: BillingPlanCheckerService? = null
-
-    @Autowired
-    private val asyncEventBus: AsyncEventBus? = null
-
-    @Autowired
-    private val deploymentMode: IDeploymentMode? = null
+class UserServiceDBImpl(private val userMapper: UserMapper,
+                        private val userMapperExt: UserMapperExt,
+                        private val userAccountMapper: UserAccountMapper,
+                        private val rolePermissionMapper: RolePermissionMapper,
+                        private val userAvatarService: UserAvatarService,
+                        private val billingPlanCheckerService: BillingPlanCheckerService,
+                        private val asyncEventBus: AsyncEventBus,
+                        private val deploymentMode: IDeploymentMode) : DefaultService<String, User, UserSearchCriteria>(), UserService {
 
     override val crudMapper: ICrudGenericDAO<String, User>
         get() = userMapper as ICrudGenericDAO<String, User>
 
-    override val searchMapper: ISearchableDAO<UserSearchCriteria>?
+    override val searchMapper: ISearchableDAO<UserSearchCriteria>
         get() = userMapperExt
 
     override fun saveUserAccount(record: User, roleId: Int?, subDomain: String, sAccountId: Int?, inviteUser: String, isSendInvitationEmail: Boolean) {
-        billingPlanCheckerService!!.validateAccountCanCreateNewUser(sAccountId)
+        billingPlanCheckerService.validateAccountCanCreateNewUser(sAccountId)
 
         // check if user email has already in this account yet
         var userAccountEx = UserAccountExample()
 
-        if (deploymentMode!!.isDemandEdition) {
+        if (deploymentMode.isDemandEdition) {
             userAccountEx.createCriteria().andUsernameEqualTo(record.email).andAccountidEqualTo(sAccountId)
                     .andRegisterstatusEqualTo(RegisterStatusConstants.ACTIVE)
         } else {
             userAccountEx.createCriteria().andUsernameEqualTo(record.email).andRegisterstatusEqualTo(RegisterStatusConstants.ACTIVE)
         }
 
-        if (userAccountMapper!!.countByExample(userAccountEx) > 0) {
+        if (userAccountMapper.countByExample(userAccountEx) > 0) {
             throw UserInvalidInputException(String.format("There is already user has email %s in your account", record.email))
         }
 
@@ -115,9 +97,9 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
         // Check if user has already account in system, if not we will create new user
         val userEx = UserExample()
         userEx.createCriteria().andUsernameEqualTo(record.username)
-        if (userMapper!!.countByExample(userEx) == 0L) {
+        if (userMapper.countByExample(userEx) == 0L) {
             userMapper.insert(record)
-            userAvatarService!!.uploadDefaultAvatar(record.username)
+            userAvatarService.uploadDefaultAvatar(record.username)
         }
 
         // save record in s_user_account table
@@ -154,7 +136,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
         if (isSendInvitationEmail) {
             val invitationEvent = SendUserInvitationEvent(record.username, password,
                     inviteUser, subDomain, sAccountId)
-            asyncEventBus!!.post(invitationEvent)
+            asyncEventBus.post(invitationEvent)
         }
     }
 
@@ -163,7 +145,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
         if (record.email != null && record.username != record.email) {
             val ex = UserExample()
             ex.createCriteria().andUsernameEqualTo(record.email)
-            val numUsers = userMapper!!.countByExample(ex)
+            val numUsers = userMapper.countByExample(ex)
             if (numUsers > 0) {
                 throw UserInvalidInputException(String.format("Email %s is already existed in system. Please choose another email.",
                         record.email))
@@ -174,7 +156,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
         val ex = UserExample()
         ex.createCriteria().andUsernameEqualTo(record.username)
         record.username = record.email
-        return userMapper!!.updateByExampleSelective(record, ex)
+        return userMapper.updateByExampleSelective(record, ex)
     }
 
     override fun updateUserAccount(record: SimpleUser, sAccountId: Int?) {
@@ -184,7 +166,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
                 val userAccountEx = UserAccountExample()
                 userAccountEx.createCriteria().andAccountidEqualTo(sAccountId).andIsaccountownerEqualTo(java.lang.Boolean.TRUE)
                         .andRegisterstatusEqualTo(RegisterStatusConstants.ACTIVE)
-                if (userAccountMapper!!.countByExample(userAccountEx) <= 1) {
+                if (userAccountMapper.countByExample(userAccountEx) <= 1) {
                     throw UserInvalidInputException(String.format("Can not change role of user %s. The reason is " + "%s is the unique account owner of the current account.", record.username, record.username))
                 }
             }
@@ -193,7 +175,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
         if (record.username != record.email) {
             val ex = UserExample()
             ex.createCriteria().andUsernameEqualTo(record.email)
-            val numUsers = userMapper!!.countByExample(ex)
+            val numUsers = userMapper.countByExample(ex)
             if (numUsers > 0) {
                 throw UserInvalidInputException("Email %s is already existed in system. Please choose another email ${record.email}")
             }
@@ -203,11 +185,11 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
         val ex = UserExample()
         ex.createCriteria().andUsernameEqualTo(record.username)
         record.username = record.email
-        userMapper!!.updateByExampleSelective(record, ex)
+        userMapper.updateByExampleSelective(record, ex)
 
         val userAccountEx = UserAccountExample()
         userAccountEx.createCriteria().andUsernameEqualTo(record.username).andAccountidEqualTo(sAccountId)
-        val userAccounts = userAccountMapper!!.selectByExample(userAccountEx)
+        val userAccounts = userAccountMapper.selectByExample(userAccountEx)
         if (userAccounts.size > 0) {
             val userAccount = userAccounts[0]
             if (record.roleid == -1) {
@@ -226,7 +208,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
 
     override fun massRemoveWithSession(users: List<User>, username: String?, sAccountId: Int) {
         val keys = users.map { it.username }
-        userMapperExt!!.removeKeysWithSession(keys)
+        userMapperExt.removeKeysWithSession(keys)
     }
 
     override fun authentication(username: String, password: String, subDomain: String, isPasswordEncrypt: Boolean): SimpleUser {
@@ -235,7 +217,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
         criteria.registerStatuses = SetSearchField(RegisterStatusConstants.ACTIVE, RegisterStatusConstants.NOT_LOG_IN_YET)
         criteria.saccountid = null
 
-        if (deploymentMode!!.isDemandEdition) {
+        if (deploymentMode.isDemandEdition) {
             criteria.subdomain = StringSearchField.and(subDomain)
         }
 
@@ -264,7 +246,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
 
             if (RegisterStatusConstants.NOT_LOG_IN_YET == user.registerstatus) {
                 updateUserAccountStatus(user.username, user.accountId, RegisterStatusConstants.ACTIVE)
-                asyncEventBus!!.post(NewUserJoinEvent(user.username, user.accountId))
+                asyncEventBus.post(NewUserJoinEvent(user.username, user.accountId))
             }
             LOG.debug(String.format("User %s login to system successfully!", username))
 
@@ -272,7 +254,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
                 if (user.roleid != null) {
                     val ex = RolePermissionExample()
                     ex.createCriteria().andRoleidEqualTo(user.roleid)
-                    val roles = rolePermissionMapper!!.selectByExampleWithBLOBs(ex)
+                    val roles = rolePermissionMapper.selectByExampleWithBLOBs(ex)
                     if (CollectionUtils.isNotEmpty(roles)) {
                         val rolePer = roles[0] as RolePermission
                         val permissionMap = PermissionMap.fromJsonString(rolePer.roleval)
@@ -299,7 +281,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
         criteria.username = StringSearchField.and(username)
         criteria.saccountid = NumberSearchField(accountId)
 
-        val users = userMapperExt!!.findPageableListByCriteria(criteria, RowBounds(0, 1)) as List<SimpleUser>
+        val users = userMapperExt.findPageableListByCriteria(criteria, RowBounds(0, 1)) as List<SimpleUser>
         return if (CollectionUtils.isEmpty(users)) null else users[0]
     }
 
@@ -312,7 +294,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
         var userAccountEx = UserAccountExample()
         userAccountEx.createCriteria().andUsernameNotIn(usernames).andAccountidEqualTo(accountId)
                 .andIsaccountownerEqualTo(true).andRegisterstatusEqualTo(RegisterStatusConstants.ACTIVE)
-        if (userAccountMapper!!.countByExample(userAccountEx) == 0L) {
+        if (userAccountMapper.countByExample(userAccountEx) == 0L) {
             throw UserInvalidInputException("Can not delete users. The reason is there is no account owner in the rest users")
         }
 
@@ -325,14 +307,14 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
         // notify users are "deleted"
         for (username in usernames) {
             val event = DeleteUserEvent(username, accountId)
-            asyncEventBus!!.post(event)
+            asyncEventBus.post(event)
         }
     }
 
     override fun findUserByUserName(username: String): User? {
         val ex = UserExample()
         ex.createCriteria().andUsernameEqualTo(username)
-        val users = userMapper!!.selectByExample(ex)
+        val users = userMapper.selectByExample(ex)
         return if (CollectionUtils.isEmpty(users)) null else users[0]
     }
 
@@ -345,18 +327,18 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
 
         val ex = UserAccountExample()
         ex.createCriteria().andAccountidEqualTo(sAccountId).andUsernameEqualTo(username)
-        userAccountMapper!!.updateByExampleSelective(userAccount, ex)
+        userAccountMapper.updateByExampleSelective(userAccount, ex)
     }
 
     override fun getTotalActiveUsersInAccount(accountId: Int?): Int {
         val criteria = UserSearchCriteria()
         criteria.registerStatuses = SetSearchField(RegisterStatusConstants.ACTIVE)
         criteria.saccountid = NumberSearchField(accountId)
-        return userMapperExt!!.getTotalCount(criteria)
+        return userMapperExt.getTotalCount(criteria)
     }
 
     override fun requestToResetPassword(username: String) {
-        asyncEventBus!!.post(RequestToResetPasswordEvent(username))
+        asyncEventBus.post(RequestToResetPasswordEvent(username))
     }
 
     companion object {

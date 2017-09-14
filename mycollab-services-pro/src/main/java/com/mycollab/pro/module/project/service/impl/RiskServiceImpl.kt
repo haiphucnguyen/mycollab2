@@ -18,7 +18,6 @@ import com.mycollab.module.project.esb.DeleteProjectRiskEvent
 import com.mycollab.module.project.service.*
 import com.mycollab.pro.module.project.dao.RiskMapper
 import com.mycollab.pro.module.project.dao.RiskMapperExt
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -29,30 +28,23 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 @Traceable(nameField = "name", extraFieldName = "projectid")
-class RiskServiceImpl : DefaultService<Int, Risk, RiskSearchCriteria>(), RiskService {
-
-    @Autowired
-    private val riskMapper: RiskMapper? = null
-
-    @Autowired
-    private val riskMapperExt: RiskMapperExt? = null
-
-    @Autowired
-    private val asyncEventBus: AsyncEventBus? = null
+class RiskServiceImpl(private val riskMapper: RiskMapper,
+                      private val riskMapperExt: RiskMapperExt,
+                      private val asyncEventBus: AsyncEventBus) : DefaultService<Int, Risk, RiskSearchCriteria>(), RiskService {
 
     override val crudMapper: ICrudGenericDAO<Int, Risk>
         get() = riskMapper as ICrudGenericDAO<Int, Risk>
 
-    override val searchMapper: ISearchableDAO<RiskSearchCriteria>?
+    override val searchMapper: ISearchableDAO<RiskSearchCriteria>
         get() = riskMapperExt
 
     override fun findById(riskId: Int?, sAccountId: Int?): SimpleRisk {
-        return riskMapperExt!!.findRiskById(riskId!!)
+        return riskMapperExt.findRiskById(riskId!!)
     }
 
     override fun saveWithSession(record: Risk, username: String?): Int {
         val recordId = super.saveWithSession(record, username)
-        asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java)))
         return recordId
     }
 
@@ -67,19 +59,19 @@ class RiskServiceImpl : DefaultService<Int, Risk, RiskSearchCriteria>(), RiskSer
     }
 
     private fun cleanAfterUpdate(record: Risk) {
-        asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ProjectTicketService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ProjectTicketService::class.java)))
         asyncEventBus.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.RISK, record.id, "status",
                 record.status, record.projectid, record.saccountid))
     }
 
     override fun removeByCriteria(criteria: RiskSearchCriteria, sAccountId: Int) {
         super.removeByCriteria(criteria, sAccountId)
-        asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java)))
     }
 
     override fun massRemoveWithSession(items: List<Risk>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(items, username, sAccountId)
-        asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java)))
         val event = DeleteProjectRiskEvent(items.toTypedArray(), username, sAccountId)
         asyncEventBus.post(event)
     }

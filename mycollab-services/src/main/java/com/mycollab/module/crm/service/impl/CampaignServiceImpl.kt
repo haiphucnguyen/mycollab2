@@ -13,7 +13,6 @@ import com.mycollab.module.crm.dao.*
 import com.mycollab.module.crm.domain.*
 import com.mycollab.module.crm.domain.criteria.CampaignSearchCriteria
 import com.mycollab.module.crm.service.CampaignService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -26,31 +25,20 @@ import java.util.*
 @Transactional
 @Traceable(nameField = "campaignname")
 @Watchable(userFieldName = "assignuser")
-class CampaignServiceImpl : DefaultService<Int, CampaignWithBLOBs, CampaignSearchCriteria>(), CampaignService {
-
-    @Autowired
-    private val campaignMapper: CampaignMapper? = null
-
-    @Autowired
-    private val campaignMapperExt: CampaignMapperExt? = null
-
-    @Autowired
-    private val campaignAccountMapper: CampaignAccountMapper? = null
-
-    @Autowired
-    private val campaignContactMapper: CampaignContactMapper? = null
-
-    @Autowired
-    private val campaignLeadMapper: CampaignLeadMapper? = null
+class CampaignServiceImpl(private val campaignMapper: CampaignMapper,
+                          private val campaignMapperExt: CampaignMapperExt,
+                          private val campaignAccountMapper: CampaignAccountMapper,
+                          private val campaignContactMapper: CampaignContactMapper,
+                          private val campaignLeadMapper: CampaignLeadMapper) : DefaultService<Int, CampaignWithBLOBs, CampaignSearchCriteria>(), CampaignService {
 
     override val crudMapper: ICrudGenericDAO<Int, CampaignWithBLOBs>
         get() = campaignMapper as ICrudGenericDAO<Int, CampaignWithBLOBs>
 
-    override val searchMapper: ISearchableDAO<CampaignSearchCriteria>?
+    override val searchMapper: ISearchableDAO<CampaignSearchCriteria>
         get() = campaignMapperExt
 
     override fun findById(campaignId: Int, sAccountUd: Int): SimpleCampaign? {
-        return campaignMapperExt!!.findById(campaignId)
+        return campaignMapperExt.findById(campaignId)
     }
 
     override fun saveWithSession(campaign: CampaignWithBLOBs, username: String?): Int {
@@ -71,7 +59,7 @@ class CampaignServiceImpl : DefaultService<Int, CampaignWithBLOBs, CampaignSearc
             ex.createCriteria()
                     .andAccountidEqualTo(associateAccount.accountid)
                     .andCampaignidEqualTo(associateAccount.campaignid)
-            if (campaignAccountMapper!!.countByExample(ex) == 0L) {
+            if (campaignAccountMapper.countByExample(ex) == 0L) {
                 campaignAccountMapper.insert(associateAccount)
             }
         }
@@ -82,7 +70,7 @@ class CampaignServiceImpl : DefaultService<Int, CampaignWithBLOBs, CampaignSearc
         ex.createCriteria()
                 .andAccountidEqualTo(associateAccount.accountid)
                 .andCampaignidEqualTo(associateAccount.campaignid)
-        campaignAccountMapper!!.deleteByExample(ex)
+        campaignAccountMapper.deleteByExample(ex)
     }
 
     override fun saveCampaignContactRelationship(associateContacts: List<CampaignContact>, sAccountId: Int?) {
@@ -91,7 +79,7 @@ class CampaignServiceImpl : DefaultService<Int, CampaignWithBLOBs, CampaignSearc
             ex.createCriteria()
                     .andCampaignidEqualTo(associateContact.campaignid)
                     .andContactidEqualTo(associateContact.contactid)
-            if (campaignContactMapper!!.countByExample(ex) == 0L) {
+            if (campaignContactMapper.countByExample(ex) == 0L) {
                 campaignContactMapper.insert(associateContact)
             }
         }
@@ -102,7 +90,7 @@ class CampaignServiceImpl : DefaultService<Int, CampaignWithBLOBs, CampaignSearc
         ex.createCriteria()
                 .andCampaignidEqualTo(associateContact.campaignid)
                 .andContactidEqualTo(associateContact.contactid)
-        campaignContactMapper!!.deleteByExample(ex)
+        campaignContactMapper.deleteByExample(ex)
     }
 
     override fun saveCampaignLeadRelationship(associateLeads: List<CampaignLead>, sAccountId: Int?) {
@@ -111,7 +99,7 @@ class CampaignServiceImpl : DefaultService<Int, CampaignWithBLOBs, CampaignSearc
             ex.createCriteria()
                     .andCampaignidEqualTo(associateLead.campaignid)
                     .andLeadidEqualTo(associateLead.leadid)
-            if (campaignLeadMapper!!.countByExample(ex) == 0L) {
+            if (campaignLeadMapper.countByExample(ex) == 0L) {
                 campaignLeadMapper.insert(associateLead)
             }
         }
@@ -121,7 +109,7 @@ class CampaignServiceImpl : DefaultService<Int, CampaignWithBLOBs, CampaignSearc
         val ex = CampaignLeadExample()
         ex.createCriteria().andCampaignidEqualTo(associateLead.campaignid)
                 .andLeadidEqualTo(associateLead.leadid)
-        campaignLeadMapper!!.deleteByExample(ex)
+        campaignLeadMapper.deleteByExample(ex)
     }
 
     companion object {

@@ -4,7 +4,6 @@ import com.google.common.eventbus.AsyncEventBus
 import com.mycollab.core.UserInvalidInputException
 import com.mycollab.core.cache.CacheKey
 import com.mycollab.core.utils.ArrayUtils
-import com.mycollab.db.arguments.BasicSearchRequest
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.db.arguments.SetSearchField
 import com.mycollab.db.arguments.StringSearchField
@@ -21,10 +20,8 @@ import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria
 import com.mycollab.module.project.esb.DeleteProjectMemberEvent
 import com.mycollab.module.project.esb.InviteProjectMembersEvent
 import com.mycollab.module.project.service.ProjectMemberService
-import com.mycollab.module.project.service.ProjectService
 import com.mycollab.module.user.domain.SimpleUser
 import org.apache.commons.collections.CollectionUtils
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -33,36 +30,26 @@ import java.util.*
  * @since 1.0
  */
 @Service
-class ProjectMemberServiceImpl : DefaultService<Int, ProjectMember, ProjectMemberSearchCriteria>(), ProjectMemberService {
-
-    @Autowired
-    private val projectService: ProjectService? = null
-
-    @Autowired
-    private val projectMemberMapper: ProjectMemberMapper? = null
-
-    @Autowired
-    private val projectMemberMapperExt: ProjectMemberMapperExt? = null
-
-    @Autowired
-    private val asyncEventBus: AsyncEventBus? = null
+class ProjectMemberServiceImpl(private val projectMemberMapper: ProjectMemberMapper,
+                               private val projectMemberMapperExt: ProjectMemberMapperExt,
+                               private val asyncEventBus: AsyncEventBus) : DefaultService<Int, ProjectMember, ProjectMemberSearchCriteria>(), ProjectMemberService {
 
     override val crudMapper: ICrudGenericDAO<Int, ProjectMember>
         get() = projectMemberMapper as ICrudGenericDAO<Int, ProjectMember>
 
-    override val searchMapper: ISearchableDAO<ProjectMemberSearchCriteria>?
+    override val searchMapper: ISearchableDAO<ProjectMemberSearchCriteria>
         get() = projectMemberMapperExt
 
     override fun findById(memberId: Int, sAccountId: Int): SimpleProjectMember? {
-        return projectMemberMapperExt!!.findMemberById(memberId)
+        return projectMemberMapperExt.findMemberById(memberId)
     }
 
     override fun getUsersNotInProject(projectId: Int?, sAccountId: Int?): List<SimpleUser> {
-        return projectMemberMapperExt!!.getUsersNotInProject(projectId!!, sAccountId!!)
+        return projectMemberMapperExt.getUsersNotInProject(projectId!!, sAccountId!!)
     }
 
     override fun findMemberByUsername(username: String, projectId: Int, sAccountId: Int): SimpleProjectMember? {
-        return projectMemberMapperExt!!.findMemberByUsername(username, projectId)
+        return projectMemberMapperExt.findMemberByUsername(username, projectId)
     }
 
     override fun updateWithSession(member: ProjectMember, username: String?): Int {
@@ -72,7 +59,7 @@ class ProjectMemberServiceImpl : DefaultService<Int, ProjectMember, ProjectMembe
                 val userAccountEx = ProjectMemberExample()
                 userAccountEx.createCriteria().andUsernameNotIn(listOf(member.username)).andProjectidEqualTo(member.projectid)
                         .andIsadminEqualTo(java.lang.Boolean.TRUE).andStatusEqualTo(ProjectMemberStatusConstants.ACTIVE)
-                if (projectMemberMapper!!.countByExample(userAccountEx) == 0L) {
+                if (projectMemberMapper.countByExample(userAccountEx) == 0L) {
                     throw UserInvalidInputException(String.format("Can not change role of user %s. The reason is " + "%s is the unique account owner of the current project.", member.username, member.username))
                 }
             }
@@ -87,7 +74,7 @@ class ProjectMemberServiceImpl : DefaultService<Int, ProjectMember, ProjectMembe
             var ex = ProjectMemberExample()
             ex.createCriteria().andUsernameNotIn(userNames).andProjectidEqualTo(members[0].projectid)
                     .andIsadminEqualTo(true).andStatusEqualTo(ProjectMemberStatusConstants.ACTIVE)
-            if (projectMemberMapper!!.countByExample(ex) == 0L) {
+            if (projectMemberMapper.countByExample(ex) == 0L) {
                 throw UserInvalidInputException("Can not delete users. The reason is there is no project owner in the rest users")
             }
 
@@ -98,19 +85,19 @@ class ProjectMemberServiceImpl : DefaultService<Int, ProjectMember, ProjectMembe
             projectMemberMapper.updateByExampleSelective(updateMember, ex)
 
             val event = DeleteProjectMemberEvent(members.toTypedArray(), username, sAccountId)
-            asyncEventBus!!.post(event)
+            asyncEventBus.post(event)
         }
     }
 
     override fun getActiveUsersInProject(projectId: Int?, sAccountId: Int?): List<SimpleUser> {
-        return projectMemberMapperExt!!.getActiveUsersInProject(projectId!!, sAccountId!!)
+        return projectMemberMapperExt.getActiveUsersInProject(projectId!!, sAccountId!!)
     }
 
     override fun inviteProjectMembers(email: Array<String>, projectId: Int?, projectRoleId: Int?, inviteUser: String,
                                       inviteMessage: String, sAccountId: Int?) {
         val event = InviteProjectMembersEvent(email, projectId, projectRoleId, inviteUser,
                 inviteMessage, sAccountId)
-        asyncEventBus!!.post(event)
+        asyncEventBus.post(event)
     }
 
     override fun isUserBelongToProject(username: String, projectId: Int?, sAccountId: Int?): Boolean {
@@ -124,14 +111,14 @@ class ProjectMemberServiceImpl : DefaultService<Int, ProjectMember, ProjectMembe
     }
 
     override fun getActiveUsersInProjects(projectIds: List<Int>, sAccountId: Int?): List<SimpleUser> {
-        return projectMemberMapperExt!!.getActiveUsersInProjects(projectIds, sAccountId)
+        return projectMemberMapperExt.getActiveUsersInProjects(projectIds, sAccountId)
     }
 
     override fun getActiveUserOfProject(username: String, projectId: Int, @CacheKey sAccountId: Int): SimpleUser? {
-        return projectMemberMapperExt!!.getActiveUserOfProject(username, projectId, sAccountId)
+        return projectMemberMapperExt.getActiveUserOfProject(username, projectId, sAccountId)
     }
 
     override fun findMembersHourlyInProject(projectId: Int?, sAccountId: Int?, start: Date, end: Date): List<SimpleProjectMember> {
-        return projectMemberMapperExt!!.findMembersHourlyInProject(projectId, sAccountId, start, end)
+        return projectMemberMapperExt.findMembersHourlyInProject(projectId, sAccountId, start, end)
     }
 }

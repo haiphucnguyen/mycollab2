@@ -10,7 +10,6 @@ import com.mycollab.db.persistence.ICrudGenericDAO
 import com.mycollab.db.persistence.ISearchableDAO
 import com.mycollab.db.persistence.service.DefaultService
 import com.mycollab.module.user.domain.SimpleUser
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 /**
@@ -18,41 +17,36 @@ import org.springframework.stereotype.Service
  * @since 1.0
  */
 @Service
-class MonitorItemServiceImpl : DefaultService<Int, MonitorItem, MonitorSearchCriteria>(), MonitorItemService {
-
-    @Autowired
-    private val monitorItemMapper: MonitorItemMapper? = null
-
-    @Autowired
-    private val monitorItemMapperExt: MonitorItemMapperExt? = null
+class MonitorItemServiceImpl(private val monitorItemMapper: MonitorItemMapper,
+                             private val monitorItemMapperExt: MonitorItemMapperExt) : DefaultService<Int, MonitorItem, MonitorSearchCriteria>(), MonitorItemService {
 
     override val crudMapper: ICrudGenericDAO<Int, MonitorItem>
         get() = monitorItemMapper as ICrudGenericDAO<Int, MonitorItem>
 
-    override val searchMapper: ISearchableDAO<MonitorSearchCriteria>?
+    override val searchMapper: ISearchableDAO<MonitorSearchCriteria>
         get() = monitorItemMapperExt
 
     override fun isUserWatchingItem(username: String, type: String, typeId: Int?): Boolean {
         val ex = MonitorItemExample()
         ex.createCriteria().andUserEqualTo(username).andTypeEqualTo(type).andTypeidEqualTo(typeId)
-        return monitorItemMapper!!.countByExample(ex) > 0
+        return monitorItemMapper.countByExample(ex) > 0
     }
 
     override fun saveWithSession(record: MonitorItem, username: String?): Int {
         val ex = MonitorItemExample()
         ex.createCriteria().andTypeEqualTo(record.type).andTypeidEqualTo(record.typeid).andUserEqualTo(record.user)
-        val count = monitorItemMapper!!.countByExample(ex)
+        val count = monitorItemMapper.countByExample(ex)
         return if (count > 0) 1 else super.saveWithSession(record, username)
     }
 
     override fun saveMonitorItems(monitorItems: Collection<MonitorItem>) {
         if (monitorItems.isNotEmpty()) {
-            monitorItemMapperExt!!.saveMonitorItems(monitorItems)
+            monitorItemMapperExt.saveMonitorItems(monitorItems)
         }
     }
 
     override fun getWatchers(type: String, typeId: Int?): List<SimpleUser> {
-        return monitorItemMapperExt!!.getWatchers(type, typeId)
+        return monitorItemMapperExt.getWatchers(type, typeId)
     }
 
     override fun getNextItemKey(criteria: MonitorSearchCriteria): Int? {

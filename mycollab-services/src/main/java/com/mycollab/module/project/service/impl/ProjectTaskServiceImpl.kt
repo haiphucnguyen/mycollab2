@@ -58,7 +58,7 @@ class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
     override val crudMapper: ICrudGenericDAO<Int, Task>
         get() = taskMapper as ICrudGenericDAO<Int, Task>
 
-    override val searchMapper: ISearchableDAO<TaskSearchCriteria>?
+    override val searchMapper: ISearchableDAO<TaskSearchCriteria>
         get() = taskMapperExt
 
     override fun findById(taskId: Int?, sAccountId: Int?): SimpleTask {

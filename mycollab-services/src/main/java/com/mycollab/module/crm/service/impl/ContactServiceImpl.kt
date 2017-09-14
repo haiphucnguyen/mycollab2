@@ -16,7 +16,6 @@ import com.mycollab.module.crm.domain.criteria.ContactSearchCriteria
 import com.mycollab.module.crm.service.CampaignService
 import com.mycollab.module.crm.service.ContactService
 import com.mycollab.spring.AppContextUtil
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -29,38 +28,27 @@ import java.util.*
 @Transactional
 @Traceable(nameField = "lastname")
 @Watchable(userFieldName = "assignuser")
-class ContactServiceImpl : DefaultService<Int, Contact, ContactSearchCriteria>(), ContactService {
-
-    @Autowired
-    private val contactMapper: ContactMapper? = null
-
-    @Autowired
-    private val contactMapperExt: ContactMapperExt? = null
-
-    @Autowired
-    private val contactOpportunityMapper: ContactOpportunityMapper? = null
-
-    @Autowired
-    private val contactCaseMapper: ContactCaseMapper? = null
-
-    @Autowired
-    private val contactLeadMapper: ContactLeadMapper? = null
+class ContactServiceImpl(private val contactMapper: ContactMapper,
+                         private val contactMapperExt: ContactMapperExt,
+                         private val contactOpportunityMapper: ContactOpportunityMapper,
+                         private val contactCaseMapper: ContactCaseMapper,
+                         private val contactLeadMapper: ContactLeadMapper) : DefaultService<Int, Contact, ContactSearchCriteria>(), ContactService {
 
     override val crudMapper: ICrudGenericDAO<Int, Contact>
         get() = contactMapper as ICrudGenericDAO<Int, Contact>
 
-    override val searchMapper: ISearchableDAO<ContactSearchCriteria>?
+    override val searchMapper: ISearchableDAO<ContactSearchCriteria>
         get() = contactMapperExt
 
     override fun findById(contactId: Int, sAccountId: Int): SimpleContact? {
-        return contactMapperExt!!.findById(contactId)
+        return contactMapperExt.findById(contactId)
     }
 
     override fun removeContactOpportunityRelationship(associateOpportunity: ContactOpportunity, sAccountId: Int?) {
         val ex = ContactOpportunityExample()
         ex.createCriteria().andContactidEqualTo(associateOpportunity.contactid)
                 .andOpportunityidEqualTo(associateOpportunity.opportunityid)
-        contactOpportunityMapper!!.deleteByExample(ex)
+        contactOpportunityMapper.deleteByExample(ex)
     }
 
     override fun saveContactOpportunityRelationship(associateOpportunities: List<ContactOpportunity>, accountId: Int?) {
@@ -69,7 +57,7 @@ class ContactServiceImpl : DefaultService<Int, Contact, ContactSearchCriteria>()
             ex.createCriteria()
                     .andContactidEqualTo(assoOpportunity.contactid)
                     .andOpportunityidEqualTo(assoOpportunity.opportunityid)
-            if (contactOpportunityMapper!!.countByExample(ex) == 0L) {
+            if (contactOpportunityMapper.countByExample(ex) == 0L) {
                 assoOpportunity.createdtime = GregorianCalendar().time
                 contactOpportunityMapper.insert(assoOpportunity)
             } else {
@@ -84,7 +72,7 @@ class ContactServiceImpl : DefaultService<Int, Contact, ContactSearchCriteria>()
             ex.createCriteria()
                     .andContactidEqualTo(associateCase.contactid)
                     .andCaseidEqualTo(associateCase.caseid)
-            if (contactCaseMapper!!.countByExample(ex) == 0L) {
+            if (contactCaseMapper.countByExample(ex) == 0L) {
                 associateCase.createdtime = GregorianCalendar().time
                 contactCaseMapper.insert(associateCase)
             }
@@ -94,7 +82,7 @@ class ContactServiceImpl : DefaultService<Int, Contact, ContactSearchCriteria>()
     override fun removeContactCaseRelationship(associateCase: ContactCase, sAccountId: Int?) {
         val ex = ContactCaseExample()
         ex.createCriteria().andContactidEqualTo(associateCase.contactid).andCaseidEqualTo(associateCase.caseid)
-        contactCaseMapper!!.deleteByExample(ex)
+        contactCaseMapper.deleteByExample(ex)
     }
 
     override fun saveContactLeadRelationship(associateLeads: List<ContactLead>, @CacheKey accountId: Int?) {
@@ -103,14 +91,14 @@ class ContactServiceImpl : DefaultService<Int, Contact, ContactSearchCriteria>()
             ex.createCriteria()
                     .andContactidEqualTo(associateLead.contactid)
                     .andLeadidEqualTo(associateLead.leadid)
-            if (contactLeadMapper!!.countByExample(ex) == 0L) {
+            if (contactLeadMapper.countByExample(ex) == 0L) {
                 contactLeadMapper.insert(associateLead)
             }
         }
     }
 
     override fun findContactAssoWithConvertedLead(leadId: Int, @CacheKey accountId: Int?): SimpleContact {
-        return contactMapperExt!!.findContactAssoWithConvertedLead(leadId)
+        return contactMapperExt.findContactAssoWithConvertedLead(leadId)
     }
 
     override fun saveWithSession(contact: Contact, username: String?): Int {
