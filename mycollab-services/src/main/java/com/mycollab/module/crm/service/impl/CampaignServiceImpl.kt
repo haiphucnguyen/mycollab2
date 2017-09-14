@@ -53,7 +53,7 @@ class CampaignServiceImpl : DefaultService<Int, CampaignWithBLOBs, CampaignSearc
         return campaignMapperExt!!.findById(campaignId)
     }
 
-    override fun saveWithSession(campaign: CampaignWithBLOBs, username: String): Int {
+    override fun saveWithSession(campaign: CampaignWithBLOBs, username: String?): Int {
         val result = super.saveWithSession(campaign, username)
         if (campaign.extraData != null && campaign.extraData is SimpleLead) {
             val associateLead = CampaignLead()

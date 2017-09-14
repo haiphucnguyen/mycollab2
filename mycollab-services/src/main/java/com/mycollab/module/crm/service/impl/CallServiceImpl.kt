@@ -51,13 +51,13 @@ class CallServiceImpl : DefaultService<Int, CallWithBLOBs, CallSearchCriteria>()
     override val searchMapper: ISearchableDAO<CallSearchCriteria>?
         get() = callMapperExt
 
-    override fun saveWithSession(record: CallWithBLOBs, username: String): Int {
+    override fun saveWithSession(record: CallWithBLOBs, username: String?): Int {
         val result = super.saveWithSession(record, username)
         asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(EventService::class.java)))
         return result
     }
 
-    override fun updateWithSession(record: CallWithBLOBs, username: String): Int {
+    override fun updateWithSession(record: CallWithBLOBs, username: String?): Int {
         val result = super.updateWithSession(record, username)
         asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(EventService::class.java)))
         return result
@@ -68,7 +68,7 @@ class CallServiceImpl : DefaultService<Int, CallWithBLOBs, CallSearchCriteria>()
         asyncEventBus!!.post(CleanCacheEvent(accountId, arrayOf<Class<*>>(EventService::class.java)))
     }
 
-    override fun massRemoveWithSession(items: List<CallWithBLOBs>, username: String, accountId: Int) {
+    override fun massRemoveWithSession(items: List<CallWithBLOBs>, username: String?, accountId: Int) {
         super.massRemoveWithSession(items, username, accountId)
         asyncEventBus!!.post(CleanCacheEvent(accountId, arrayOf<Class<*>>(EventService::class.java)))
     }

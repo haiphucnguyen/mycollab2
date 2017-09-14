@@ -20,7 +20,7 @@ interface ICrudService<K : Serializable, T> : IService {
      * @return
      */
     @CacheEvict
-    fun saveWithSession(@CacheKey record: T, username: String): Int
+    fun saveWithSession(@CacheKey record: T, username: String?): Int
 
     /**
      * @param record
@@ -28,7 +28,7 @@ interface ICrudService<K : Serializable, T> : IService {
      * @return
      */
     @CacheEvict
-    fun updateWithSession(@CacheKey record: T, username: String): Int
+    fun updateWithSession(@CacheKey record: T, username: String?): Int
 
     /**
      * @param record
@@ -36,7 +36,7 @@ interface ICrudService<K : Serializable, T> : IService {
      * @return
      */
     @CacheEvict
-    fun updateSelectiveWithSession(@CacheKey record: T, username: String): Int?
+    fun updateSelectiveWithSession(@CacheKey record: T, username: String?): Int?
 
     /**
      * @param record
@@ -60,7 +60,7 @@ interface ICrudService<K : Serializable, T> : IService {
      * @param sAccountId
      */
     @CacheEvict
-    fun removeWithSession(item: T, username: String, @CacheKey sAccountId: Int)
+    fun removeWithSession(item: T, username: String?, @CacheKey sAccountId: Int)
 
     /**
      * @param items
@@ -68,5 +68,5 @@ interface ICrudService<K : Serializable, T> : IService {
      * @param sAccountId
      */
     @CacheEvict
-    fun massRemoveWithSession(items: List<T>, username: String, @CacheKey sAccountId: Int)
+    fun massRemoveWithSession(items: List<T>, username: String?, @CacheKey sAccountId: Int)
 }

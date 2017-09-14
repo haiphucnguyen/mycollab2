@@ -55,7 +55,7 @@ class OpportunityServiceImpl : DefaultService<Int, Opportunity, OpportunitySearc
         return opportunityMapperExt!!.findById(opportunityId)
     }
 
-    override fun saveWithSession(opportunity: Opportunity, username: String): Int {
+    override fun saveWithSession(opportunity: Opportunity, username: String?): Int {
         val result = super.saveWithSession(opportunity, username)
         if (opportunity.extraData != null && opportunity.extraData is SimpleContact) {
             val associateOpportunity = ContactOpportunity()

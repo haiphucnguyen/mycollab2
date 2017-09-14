@@ -51,13 +51,13 @@ class TaskServiceImpl : DefaultService<Int, CrmTask, CrmTaskSearchCriteria>(), T
         return taskMapperExt!!.findById(taskId)
     }
 
-    override fun saveWithSession(record: CrmTask, username: String): Int {
+    override fun saveWithSession(record: CrmTask, username: String?): Int {
         val result = super.saveWithSession(record, username)
         asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(EventService::class.java)))
         return result
     }
 
-    override fun updateWithSession(record: CrmTask, username: String): Int {
+    override fun updateWithSession(record: CrmTask, username: String?): Int {
         val result = super.updateWithSession(record, username)
         asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(EventService::class.java)))
         return result
@@ -68,7 +68,7 @@ class TaskServiceImpl : DefaultService<Int, CrmTask, CrmTaskSearchCriteria>(), T
         asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(EventService::class.java)))
     }
 
-    override fun massRemoveWithSession(tasks: List<CrmTask>, username: String, sAccountId: Int) {
+    override fun massRemoveWithSession(tasks: List<CrmTask>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(tasks, username, sAccountId)
         asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(EventService::class.java)))
     }

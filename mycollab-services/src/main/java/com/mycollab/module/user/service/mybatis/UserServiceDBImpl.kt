@@ -158,7 +158,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
         }
     }
 
-    override fun updateWithSession(record: User, username: String): Int {
+    override fun updateWithSession(record: User, username: String?): Int {
         LOG.debug("Check whether there is exist email in system before")
         if (record.email != null && record.username != record.email) {
             val ex = UserExample()
@@ -195,8 +195,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
             ex.createCriteria().andUsernameEqualTo(record.email)
             val numUsers = userMapper!!.countByExample(ex)
             if (numUsers > 0) {
-                throw UserInvalidInputException(String.format("Email %s is already existed in system. Please choose another email.",
-                        record.email))
+                throw UserInvalidInputException("Email %s is already existed in system. Please choose another email ${record.email}")
             }
         }
 
@@ -225,7 +224,7 @@ class UserServiceDBImpl : DefaultService<String, User, UserSearchCriteria>(), Us
         }
     }
 
-    override fun massRemoveWithSession(users: List<User>, username: String, sAccountId: Int) {
+    override fun massRemoveWithSession(users: List<User>, username: String?, sAccountId: Int) {
         val keys = users.map { it.username }
         userMapperExt!!.removeKeysWithSession(keys)
     }

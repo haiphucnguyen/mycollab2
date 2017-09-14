@@ -36,7 +36,7 @@ class RoleServiceDBImpl : DefaultService<Int, Role, RoleSearchCriteria>(), RoleS
     override val searchMapper: ISearchableDAO<RoleSearchCriteria>?
         get() = roleMapperExt
 
-    override fun saveWithSession(record: Role, username: String): Int {
+    override fun saveWithSession(record: Role, username: String?): Int {
         if (java.lang.Boolean.TRUE == record.isdefault) {
             setAllRoleNotDefault(record.saccountid)
         }
@@ -51,7 +51,7 @@ class RoleServiceDBImpl : DefaultService<Int, Role, RoleSearchCriteria>(), RoleS
         roleMapper!!.updateByExampleSelective(updateRecord, ex)
     }
 
-    override fun updateWithSession(record: Role, username: String): Int {
+    override fun updateWithSession(record: Role, username: String?): Int {
         if (java.lang.Boolean.TRUE == record.isdefault) {
             setAllRoleNotDefault(record.saccountid)
         }

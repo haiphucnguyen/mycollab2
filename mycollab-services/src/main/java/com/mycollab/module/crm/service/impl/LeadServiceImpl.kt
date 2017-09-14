@@ -47,7 +47,7 @@ class LeadServiceImpl : DefaultService<Int, Lead, LeadSearchCriteria>(), LeadSer
         return leadMapperExt!!.findById(leadId)
     }
 
-    override fun saveWithSession(lead: Lead, username: String): Int {
+    override fun saveWithSession(lead: Lead, username: String?): Int {
         val result = super.saveWithSession(lead, username)
         if (lead.extraData != null && lead.extraData is SimpleCampaign) {
             val associateLead = CampaignLead()

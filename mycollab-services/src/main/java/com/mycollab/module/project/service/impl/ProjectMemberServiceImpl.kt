@@ -65,7 +65,7 @@ class ProjectMemberServiceImpl : DefaultService<Int, ProjectMember, ProjectMembe
         return projectMemberMapperExt!!.findMemberByUsername(username, projectId)
     }
 
-    override fun updateWithSession(member: ProjectMember, username: String): Int {
+    override fun updateWithSession(member: ProjectMember, username: String?): Int {
         val oldMember = findById(member.id, member.saccountid)
         if (oldMember != null) {
             if (java.lang.Boolean.FALSE == member.isadmin && java.lang.Boolean.TRUE == oldMember.isadmin) {
@@ -81,7 +81,7 @@ class ProjectMemberServiceImpl : DefaultService<Int, ProjectMember, ProjectMembe
         return super.updateWithSession(member, username)
     }
 
-    override fun massRemoveWithSession(members: List<ProjectMember>, username: String, sAccountId: Int) {
+    override fun massRemoveWithSession(members: List<ProjectMember>, username: String?, sAccountId: Int) {
         if (CollectionUtils.isNotEmpty(members)) {
             val userNames = members.map { it.username }
             var ex = ProjectMemberExample()

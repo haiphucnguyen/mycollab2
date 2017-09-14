@@ -113,7 +113,7 @@ class ContactServiceImpl : DefaultService<Int, Contact, ContactSearchCriteria>()
         return contactMapperExt!!.findContactAssoWithConvertedLead(leadId)
     }
 
-    override fun saveWithSession(contact: Contact, username: String): Int {
+    override fun saveWithSession(contact: Contact, username: String?): Int {
         val result = super.saveWithSession(contact, username)
         if (contact.extraData != null && contact.extraData is SimpleCampaign) {
             val associateContact = CampaignContact()

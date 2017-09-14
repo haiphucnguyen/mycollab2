@@ -32,12 +32,12 @@ class SaveSearchResultServiceImpl : DefaultService<Int, SaveSearchResult, SaveSe
     override val searchMapper: ISearchableDAO<SaveSearchResultCriteria>?
         get() = saveSearchResultMapperExt
 
-    override fun saveWithSession(record: SaveSearchResult, username: String): Int {
+    override fun saveWithSession(record: SaveSearchResult, username: String?): Int {
         checkDuplicateEntryName(record)
         return super.saveWithSession(record, username)
     }
 
-    override fun updateWithSession(record: SaveSearchResult, username: String): Int {
+    override fun updateWithSession(record: SaveSearchResult, username: String?): Int {
         return super.updateWithSession(record, username)
     }
 

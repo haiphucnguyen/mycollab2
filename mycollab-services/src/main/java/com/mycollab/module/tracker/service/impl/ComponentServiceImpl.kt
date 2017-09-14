@@ -45,7 +45,7 @@ class ComponentServiceImpl : DefaultService<Int, Component, ComponentSearchCrite
         return componentMapperExt!!.findComponentById(componentId!!)
     }
 
-    override fun saveWithSession(record: Component, username: String): Int {
+    override fun saveWithSession(record: Component, username: String?): Int {
         // check whether there is exiting record
         val ex = ComponentExample()
         ex.createCriteria().andNameEqualTo(record.name).andProjectidEqualTo(record.projectid)

@@ -32,7 +32,7 @@ class BugRelationServiceImpl : DefaultCrudService<Int, RelatedBug>(), BugRelatio
     override val crudMapper: ICrudGenericDAO<Int, RelatedBug>
         get() = relatedBugMapper as ICrudGenericDAO<Int, RelatedBug>
 
-    override fun saveWithSession(record: RelatedBug, username: String): Int {
+    override fun saveWithSession(record: RelatedBug, username: String?): Int {
         val bugId = record.bugid
         if (OptionI18nEnum.BugRelation.Duplicated.name == record.relatetype) {
             val bug = bugService!!.findById(bugId, 0)

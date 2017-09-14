@@ -49,7 +49,7 @@ class MessageServiceImpl : DefaultService<Int, Message, MessageSearchCriteria>()
         asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectActivityStreamService::class.java)))
     }
 
-    override fun massRemoveWithSession(items: List<Message>, username: String, sAccountId: Int) {
+    override fun massRemoveWithSession(items: List<Message>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(items, username, sAccountId)
         val event = DeleteProjectMessageEvent(items.toTypedArray(), username, sAccountId)
         asyncEventBus!!.post(event)

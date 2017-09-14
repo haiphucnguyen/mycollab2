@@ -55,7 +55,7 @@ class CommentServiceImpl : DefaultService<Int, CommentWithBLOBs, CommentSearchCr
     override val searchMapper: ISearchableDAO<CommentSearchCriteria>?
         get() = commentMapperExt
 
-    override fun saveWithSession(record: CommentWithBLOBs, username: String): Int {
+    override fun saveWithSession(record: CommentWithBLOBs, username: String?): Int {
         val saveId = super.saveWithSession(record, username)
 
         when {
@@ -65,12 +65,12 @@ class CommentServiceImpl : DefaultService<Int, CommentWithBLOBs, CommentSearchCr
             ProjectTypeConstants.BUG == record.type -> asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(BugService::class.java, ProjectTicketService::class.java)))
         }
 
-        relayEmailNotificationService!!.saveWithSession(getRelayEmailNotification(record, username), username)
+        relayEmailNotificationService!!.saveWithSession(getRelayEmailNotification(record), username)
         activityStreamService!!.saveWithSession(getActivityStream(record, username), username)
         return saveId
     }
 
-    private fun getActivityStream(record: CommentWithBLOBs, username: String): ActivityStreamWithBLOBs {
+    private fun getActivityStream(record: CommentWithBLOBs, username: String?): ActivityStreamWithBLOBs {
         val activityStream = ActivityStreamWithBLOBs()
         activityStream.action = ActivityStreamConstants.ACTION_COMMENT
         activityStream.createduser = username
@@ -89,7 +89,7 @@ class CommentServiceImpl : DefaultService<Int, CommentWithBLOBs, CommentSearchCr
         return activityStream
     }
 
-    private fun getRelayEmailNotification(record: CommentWithBLOBs, username: String): RelayEmailNotificationWithBLOBs {
+    private fun getRelayEmailNotification(record: CommentWithBLOBs): RelayEmailNotificationWithBLOBs {
         val relayEmailNotification = RelayEmailNotificationWithBLOBs()
         relayEmailNotification.saccountid = record.saccountid
         relayEmailNotification.action = MonitorTypeConstants.ADD_COMMENT_ACTION

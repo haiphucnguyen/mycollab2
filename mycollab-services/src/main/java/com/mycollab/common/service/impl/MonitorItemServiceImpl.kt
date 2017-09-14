@@ -38,7 +38,7 @@ class MonitorItemServiceImpl : DefaultService<Int, MonitorItem, MonitorSearchCri
         return monitorItemMapper!!.countByExample(ex) > 0
     }
 
-    override fun saveWithSession(record: MonitorItem, username: String): Int {
+    override fun saveWithSession(record: MonitorItem, username: String?): Int {
         val ex = MonitorItemExample()
         ex.createCriteria().andTypeEqualTo(record.type).andTypeidEqualTo(record.typeid).andUserEqualTo(record.user)
         val count = monitorItemMapper!!.countByExample(ex)

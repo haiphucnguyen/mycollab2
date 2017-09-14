@@ -53,7 +53,7 @@ class AccountServiceImpl : DefaultService<Int, Account, AccountSearchCriteria>()
         return accountMapperExt!!.findById(id)
     }
 
-    override fun saveWithSession(record: Account, username: String): Int {
+    override fun saveWithSession(record: Account, username: String?): Int {
         val result = super.saveWithSession(record, username)
 
         if (record.extraData != null && record.extraData is SimpleCampaign) {

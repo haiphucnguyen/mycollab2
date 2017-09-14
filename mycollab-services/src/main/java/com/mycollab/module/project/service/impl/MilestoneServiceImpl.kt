@@ -60,7 +60,7 @@ class MilestoneServiceImpl : DefaultService<Int, Milestone, MilestoneSearchCrite
         return milestoneMapperExt!!.findById(milestoneId)
     }
 
-    override fun saveWithSession(record: Milestone, username: String): Int {
+    override fun saveWithSession(record: Milestone, username: String?): Int {
         if (record.status == null) {
             record.status = MilestoneStatus.InProgress.name
         }

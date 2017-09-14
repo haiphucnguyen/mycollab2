@@ -1,6 +1,7 @@
 package com.mycollab.vaadin.mvp
 
 import com.mycollab.core.MyCollabException
+import com.mycollab.core.ResourceNotFoundException
 import com.mycollab.vaadin.ui.NotificationUtil
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -47,7 +48,7 @@ abstract class UrlResolver {
                 } else {
                     val urlResolver = subResolvers?.get(key)
                     when (urlResolver) {
-                        null -> defaultUrlResolver?.handle(*params) ?: throw MyCollabException("Can not register resolver key $key for Resolver: $this")
+                        null -> defaultUrlResolver?.handle(*params) ?: throw ResourceNotFoundException("Can not register resolver key $key for Resolver: $this")
                         else -> urlResolver.handle(*params.drop(1).toTypedArray())
 
                     }

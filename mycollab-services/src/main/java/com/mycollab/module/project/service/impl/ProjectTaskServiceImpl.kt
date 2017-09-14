@@ -66,7 +66,7 @@ class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
     }
 
     @Transactional(isolation = Isolation.READ_UNCOMMITTED)
-    override fun saveWithSession(record: Task, username: String): Int {
+    override fun saveWithSession(record: Task, username: String?): Int {
         if (record.percentagecomplete == null) {
             record.percentagecomplete = 0.0
         }
@@ -102,7 +102,7 @@ class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
     }
 
     @Transactional
-    override fun updateWithSession(record: Task, username: String): Int {
+    override fun updateWithSession(record: Task, username: String?): Int {
         beforeUpdate(record)
         val result = super.updateWithSession(record, username)
         asyncEventBus.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, record.id, "status",
@@ -118,7 +118,7 @@ class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
         }
     }
 
-    override fun updateSelectiveWithSession(record: Task, username: String): Int? {
+    override fun updateSelectiveWithSession(record: Task, username: String?): Int? {
         beforeUpdate(record)
         val result = super.updateSelectiveWithSession(record, username)!!
         asyncEventBus.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, record.id, "status",
@@ -134,13 +134,13 @@ class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
                 GanttAssignmentService::class.java)))
     }
 
-    override fun massRemoveWithSession(items: List<Task>, username: String, sAccountId: Int) {
+    override fun massRemoveWithSession(items: List<Task>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(items, username, sAccountId)
         val event = DeleteProjectTaskEvent(items.toTypedArray(), username, sAccountId)
         asyncEventBus.post(event)
     }
 
-    override fun removeWithSession(item: Task, username: String, sAccountId: Int) {
+    override fun removeWithSession(item: Task, username: String?, sAccountId: Int) {
         super.removeWithSession(item, username, sAccountId)
         asyncEventBus.post(TimelineTrackingAdjustIfEntityDeleteEvent(ProjectTypeConstants.TASK, item.id, arrayOf("status"), item.projectid, item.saccountid))
     }

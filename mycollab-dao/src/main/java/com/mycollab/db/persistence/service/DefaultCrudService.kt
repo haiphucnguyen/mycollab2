@@ -28,7 +28,7 @@ abstract class DefaultCrudService<K : Serializable, T> : ICrudService<K, T> {
         return crudMapper.selectByPrimaryKey(primaryKey)
     }
 
-    override fun saveWithSession(record: T, username: String): Int {
+    override fun saveWithSession(record: T, username: String?): Int {
         if (!StringUtils.isBlank(username)) {
             try {
                 PropertyUtils.setProperty(record, "createduser", username)
@@ -52,7 +52,7 @@ abstract class DefaultCrudService<K : Serializable, T> : ICrudService<K, T> {
 
     }
 
-    override fun updateWithSession(record: T, username: String): Int {
+    override fun updateWithSession(record: T, username: String?): Int {
         try {
             PropertyUtils.setProperty(record, "lastupdatedtime", GregorianCalendar().time)
         } catch (e: Exception) {
@@ -82,7 +82,7 @@ abstract class DefaultCrudService<K : Serializable, T> : ICrudService<K, T> {
         }
     }
 
-    override fun updateSelectiveWithSession(@CacheKey record: T, username: String): Int? {
+    override fun updateSelectiveWithSession(@CacheKey record: T, username: String?): Int? {
         try {
             PropertyUtils.setProperty(record, "lastupdatedtime", GregorianCalendar().time)
         } catch (e: Exception) {
@@ -92,11 +92,11 @@ abstract class DefaultCrudService<K : Serializable, T> : ICrudService<K, T> {
     }
 
 
-    override fun removeWithSession(item: T, username: String, accountId: Int) {
+    override fun removeWithSession(item: T, username: String?, accountId: Int) {
         massRemoveWithSession(listOf(item), username, accountId)
     }
 
-    override fun massRemoveWithSession(items: List<T>, username: String, accountId: Int) {
+    override fun massRemoveWithSession(items: List<T>, username: String?, accountId: Int) {
         val primaryKeys = ArrayList<T>(items.size)
         for (item in items) {
             try {

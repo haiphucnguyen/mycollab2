@@ -11,6 +11,7 @@ import com.mycollab.core.cache.CacheKey
 import com.mycollab.db.persistence.ICrudGenericDAO
 import com.mycollab.db.persistence.service.DefaultCrudService
 import com.mycollab.module.project.ProjectTypeConstants
+import com.mycollab.module.project.i18n.OptionI18nEnum.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.BatchPreparedStatementSetter
 import org.springframework.jdbc.core.JdbcTemplate
@@ -61,7 +62,7 @@ class OptionValServiceImpl : DefaultCrudService<Int, OptionVal>(), OptionValServ
         return optionValMapper!!.selectByExampleWithBLOBs(ex)
     }
 
-    override fun saveWithSession(record: OptionVal, username: String): Int {
+    override fun saveWithSession(record: OptionVal, username: String?): Int {
         checkSaveOrUpdateValid(record)
         return super.saveWithSession(record, username)
     }
@@ -87,7 +88,7 @@ class OptionValServiceImpl : DefaultCrudService<Int, OptionVal>(), OptionValServ
         }
     }
 
-    override fun updateWithSession(record: OptionVal, username: String): Int {
+    override fun updateWithSession(record: OptionVal, username: String?): Int {
         if (java.lang.Boolean.FALSE == record.isdefault) {
             val timelineTrackingExample = TimelineTrackingExample()
             timelineTrackingExample.createCriteria().andTypeEqualTo(record.type).andFieldvalEqualTo(record.typeval)
@@ -137,35 +138,35 @@ class OptionValServiceImpl : DefaultCrudService<Int, OptionVal>(), OptionValServ
         option.typeval = OptionI18nEnum.StatusI18nEnum.Open.name
         option.color = "fdde86"
         option.fieldgroup = "status"
-        saveWithSession(option, null!!)
+        saveWithSession(option, null)
 
         option.typeval = OptionI18nEnum.StatusI18nEnum.InProgress.name
         option.id = null
-        saveWithSession(option, null!!)
+        saveWithSession(option, null)
 
         option.typeval = OptionI18nEnum.StatusI18nEnum.Archived.name
         option.id = null
-        saveWithSession(option, null!!)
+        saveWithSession(option, null)
 
         option.typeval = OptionI18nEnum.StatusI18nEnum.Closed.name
         option.id = null
-        saveWithSession(option, null!!)
+        saveWithSession(option, null)
 
         option.typeval = OptionI18nEnum.StatusI18nEnum.Pending.name
         option.id = null
-        saveWithSession(option, null!!)
+        saveWithSession(option, null)
 
         option.type = ProjectTypeConstants.MILESTONE
-        option.typeval = com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus.Closed.name
+        option.typeval = MilestoneStatus.Closed.name
         option.id = null
-        saveWithSession(option, null!!)
+        saveWithSession(option, null)
 
-        option.typeval = com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus.InProgress.name
+        option.typeval = MilestoneStatus.InProgress.name
         option.id = null
-        saveWithSession(option, null!!)
+        saveWithSession(option, null)
 
-        option.typeval = com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus.Future.name
+        option.typeval = MilestoneStatus.Future.name
         option.id = null
-        saveWithSession(option, null!!)
+        saveWithSession(option, null)
     }
 }

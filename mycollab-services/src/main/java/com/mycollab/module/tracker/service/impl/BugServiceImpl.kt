@@ -70,7 +70,7 @@ class BugServiceImpl : DefaultService<Int, BugWithBLOBs, BugSearchCriteria>(), B
         get() = bugMapperExt
 
     @Transactional(isolation = Isolation.READ_UNCOMMITTED)
-    override fun saveWithSession(record: BugWithBLOBs, username: String): Int {
+    override fun saveWithSession(record: BugWithBLOBs, username: String?): Int {
         val lock = DistributionLockUtil.getLock("bug-" + record.saccountid!!)
         try {
             if (lock.tryLock(120, TimeUnit.SECONDS)) {
@@ -98,7 +98,7 @@ class BugServiceImpl : DefaultService<Int, BugWithBLOBs, BugSearchCriteria>(), B
         }
     }
 
-    override fun updateWithSession(record: BugWithBLOBs, username: String): Int {
+    override fun updateWithSession(record: BugWithBLOBs, username: String?): Int {
         asyncEventBus!!.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, record.id, "status", record.status,
                 record.projectid, record.saccountid))
         return super.updateWithSession(record, username)
@@ -109,13 +109,13 @@ class BugServiceImpl : DefaultService<Int, BugWithBLOBs, BugSearchCriteria>(), B
         asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectMemberService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java, TagService::class.java, TimelineTrackingService::class.java, ProjectTicketService::class.java)))
     }
 
-    override fun updateSelectiveWithSession(record: BugWithBLOBs, username: String): Int? {
+    override fun updateSelectiveWithSession(record: BugWithBLOBs, username: String?): Int? {
         asyncEventBus!!.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, record.id, "status", record.status,
                 record.projectid, record.saccountid))
         return super.updateSelectiveWithSession(record, username)
     }
 
-    override fun massRemoveWithSession(items: List<BugWithBLOBs>, username: String, sAccountId: Int) {
+    override fun massRemoveWithSession(items: List<BugWithBLOBs>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(items, username, sAccountId)
         val event = DeleteProjectBugEvent(items.toTypedArray(), username, sAccountId)
         asyncEventBus!!.post(event)

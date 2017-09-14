@@ -57,12 +57,12 @@ class ProjectServiceImpl(private val projectMapper: ProjectMapper,
     override val searchMapper: ISearchableDAO<ProjectSearchCriteria>?
         get() = projectMapperExt
 
-    override fun updateWithSession(record: Project, username: String): Int {
+    override fun updateWithSession(record: Project, username: String?): Int {
         assertExistProjectShortnameInAccount(record.id, record.shortname, record.saccountid)
         return super.updateWithSession(record, username)
     }
 
-    override fun savePlainProject(record: Project, username: String): Int {
+    override fun savePlainProject(record: Project, username: String?): Int {
         billingPlanCheckerService.validateAccountCanCreateMoreProject(record.saccountid)
         assertExistProjectShortnameInAccount(null, record.shortname, record.saccountid)
         val projectId = super.saveWithSession(record, username)
@@ -70,7 +70,7 @@ class ProjectServiceImpl(private val projectMapper: ProjectMapper,
         return projectId
     }
 
-    override fun saveWithSession(record: Project, username: String): Int {
+    override fun saveWithSession(record: Project, username: String?): Int {
         billingPlanCheckerService.validateAccountCanCreateMoreProject(record.saccountid)
         assertExistProjectShortnameInAccount(null, record.shortname, record.saccountid)
         val projectId = savePlainProject(record, username)
@@ -191,7 +191,7 @@ class ProjectServiceImpl(private val projectMapper: ProjectMapper,
         return projectMapperExt.getAccountInfoOfProject(projectId!!)
     }
 
-    override fun massRemoveWithSession(projects: List<Project>, username: String, sAccountId: Int) {
+    override fun massRemoveWithSession(projects: List<Project>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(projects, username, sAccountId)
         val event = DeleteProjectEvent(projects.toTypedArray(), sAccountId)
         asyncEventBus.post(event)
