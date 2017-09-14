@@ -94,7 +94,7 @@ public class BillingServiceImpl implements BillingService {
         billingAccount.setCreatedtime(now.toDate());
         billingAccount.setTrialfrom(now.toDate());
         billingAccount.setTrialto(now.plusDays(30).toDate());
-        billingAccount.setStatus(AccountStatusConstants.INSTANCE.getTRIAL());
+        billingAccount.setStatus(AccountStatusConstants.TRIAL);
         billingAccount.setSubdomain(subDomain);
         billingAccount.setDisplayemailpublicly(true);
         billingAccount.setDefaulttimezone(timezoneId);

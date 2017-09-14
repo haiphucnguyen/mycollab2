@@ -151,7 +151,7 @@ public class SubscriptionManagerController {
                 BillingAccountExample accountEx = new BillingAccountExample();
                 accountEx.createCriteria().andIdEqualTo(sAccountId);
                 BillingAccount billingAccount = new BillingAccount();
-                billingAccount.setStatus(AccountStatusConstants.INSTANCE.getACTIVE());
+                billingAccount.setStatus(AccountStatusConstants.ACTIVE);
                 billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
             } else {
                 LOG.error("Find subscription with id " + subscriptionReference + "in account " + sAccountId + " has count" +
@@ -201,7 +201,7 @@ public class SubscriptionManagerController {
             BillingAccountExample accountEx = new BillingAccountExample();
             accountEx.createCriteria().andIdEqualTo(billingSubscription.getAccountid());
             BillingAccount billingAccount = new BillingAccount();
-            billingAccount.setStatus(AccountStatusConstants.INSTANCE.getACTIVE());
+            billingAccount.setStatus(AccountStatusConstants.ACTIVE);
             billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
         } else {
             LOG.error("Find subscription with id " + subscriptionReference + "in account has count" +
@@ -240,7 +240,7 @@ public class SubscriptionManagerController {
             BillingAccountExample accountEx = new BillingAccountExample();
             accountEx.createCriteria().andIdEqualTo(billingSubscription.getAccountid());
             BillingAccount billingAccount = new BillingAccount();
-            billingAccount.setStatus(AccountStatusConstants.INSTANCE.getINVALID());
+            billingAccount.setStatus(AccountStatusConstants.INVALID);
             billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
         } else {
             LOG.error("Find subscription with id " + subscriptionReference + "in account has count" +
@@ -268,7 +268,7 @@ public class SubscriptionManagerController {
             BillingAccountExample accountEx = new BillingAccountExample();
             accountEx.createCriteria().andIdEqualTo(subscription.getAccountid());
             BillingAccount billingAccount = new BillingAccount();
-            billingAccount.setStatus(AccountStatusConstants.INSTANCE.getINVALID());
+            billingAccount.setStatus(AccountStatusConstants.INVALID);
             billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
         } else {
             LOG.error("Find subscription with id " + subscriptionReference + "in account has count" +
