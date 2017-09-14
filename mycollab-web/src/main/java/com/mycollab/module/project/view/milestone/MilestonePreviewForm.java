@@ -177,7 +177,7 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
         public Component generateRow(IBeanList<ProjectTicket> host, ProjectTicket genericTask, int rowIndex) {
             MHorizontalLayout rowComp = new MHorizontalLayout().withStyleName(WebThemes.HOVER_EFFECT_NOT_BOX, "margin-bottom");
             rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-            rowComp.with(ELabel.fontIcon(ProjectAssetsManager.INSTANCE.getAsset(genericTask.getType())).withWidthUndefined());
+            rowComp.with(ELabel.fontIcon(ProjectAssetsManager.getAsset(genericTask.getType())).withWidthUndefined());
             String status = "";
             if (genericTask.isBug()) {
                 status = UserUIContext.getMessage(BugStatus.class, genericTask.getStatus());

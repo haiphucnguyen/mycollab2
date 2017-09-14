@@ -220,7 +220,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                 ((BeanList) host).removeRow(layout);
             }).withStyleName("favorite-btn-selected", WebThemes.BUTTON_ICON_ONLY);
 
-            ELabel headerLbl = ELabel.html(ProjectAssetsManager.INSTANCE.getAsset(item.getType()).getHtml() + " " + item.getName())
+            ELabel headerLbl = ELabel.html(ProjectAssetsManager.getAsset(item.getType()).getHtml() + " " + item.getName())
                     .withFullWidth().withStyleName(UIConstants.TEXT_ELLIPSIS);
             layout.with(favoriteBtn, headerLbl).expand(headerLbl);
             layout.addLayoutClickListener(layoutClickEvent -> {
@@ -241,7 +241,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                     BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                     final SimpleBug bug = bugService.findById(Integer.parseInt(assignment.getTypeId()), AppUI.getAccountId());
                     if (bug != null) {
-                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.INSTANCE.getAsset(assignment.getType()).getHtml() + " " + bug.getName());
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + bug.getName());
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
@@ -277,7 +277,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                     ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                     final SimpleTask task = taskService.findById(Integer.parseInt(assignment.getTypeId()), AppUI.getAccountId());
                     if (task != null) {
-                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.INSTANCE.getAsset(assignment.getType()).getHtml() + " " + task.getName());
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + task.getName());
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
@@ -313,7 +313,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                     final SimpleMilestone milestone = milestoneService.findById(Integer.parseInt(assignment.getTypeId()),
                             AppUI.getAccountId());
                     if (milestone != null) {
-                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.INSTANCE.getAsset(assignment.getType()).getHtml() + " "
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
                                 + milestone.getName());
 
                         final PrintButton printBtn = new PrintButton();
@@ -346,7 +346,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                     RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                     final SimpleRisk risk = riskService.findById(Integer.parseInt(assignment.getTypeId()), AppUI.getAccountId());
                     if (risk != null) {
-                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.INSTANCE.getAsset(assignment.getType()).getHtml() + " " + risk.getName());
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + risk.getName());
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
@@ -381,7 +381,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                     final SimpleComponent component = componentService.findById(Integer.parseInt(assignment.getTypeId()),
                             AppUI.getAccountId());
                     if (component != null) {
-                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.INSTANCE.getAsset(assignment.getType()).getHtml() + " " + component.getName());
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + component.getName());
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
@@ -418,7 +418,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                     final SimpleVersion version = versionService.findById(Integer.parseInt(assignment.getTypeId()),
                             AppUI.getAccountId());
                     if (version != null) {
-                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.INSTANCE.getAsset(assignment.getType()).getHtml() + " " + version.getName());
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + version.getName());
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
                                 printBtn.doPrint(version, new FormReportLayout(ProjectTypeConstants.BUG_VERSION, Version.Field.name.name(),

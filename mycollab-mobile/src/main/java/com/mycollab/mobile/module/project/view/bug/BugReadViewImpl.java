@@ -132,7 +132,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         } else if (beanItem.isOverdue()) {
             beanTitle.setCSSClass(MobileUIConstants.LINK_OVERDUE);
         }
-        return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG).getHtml() + " " + beanTitle.write();
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + " " + beanTitle.write();
     }
 
     @Override
@@ -214,7 +214,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 if (beanItem.getMilestoneid() != null) {
                     A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
                             (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
-                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, milestoneLink);
+                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
                 } else {
                     return new DefaultViewField("", ContentMode.HTML);
@@ -228,7 +228,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 return new I18nFormViewField(beanItem.getStatus(), BugStatus.class).withStyleName(UIConstants.FIELD_NOTE);
             } else if (BugWithBLOBs.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
-                    String priorityLink = ProjectAssetsManager.INSTANCE.getPriority(beanItem.getPriority()).getHtml() + " "
+                    String priorityLink = ProjectAssetsManager.getPriority(beanItem.getPriority()).getHtml() + " "
                             + UserUIContext.getMessage(Priority.class, beanItem.getPriority());
                     DefaultViewField field = new DefaultViewField(priorityLink, ContentMode.HTML);
                     field.addStyleName("priority-" + beanItem.getPriority().toLowerCase());

@@ -43,7 +43,7 @@ public class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<Proj
         MHorizontalLayout rowComp = new MHorizontalLayout().withStyleName("list-row").withFullWidth();
         rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
         Div issueDiv = new Div();
-        issueDiv.appendText(ProjectAssetsManager.INSTANCE.getAsset(ticket.getType()).getHtml());
+        issueDiv.appendText(ProjectAssetsManager.getAsset(ticket.getType()).getHtml());
 
         String status = "";
         if (ticket.isBug()) {

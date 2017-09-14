@@ -117,7 +117,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
 
                     LabelLink b = new LabelLink(itemLogging.getProjectName(),
                             ProjectLinkBuilder.generateProjectFullLink(itemLogging.getProjectid()));
-                    b.setIconLink(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.PROJECT));
+                    b.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
                     return b;
                 }
         );
@@ -162,7 +162,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
         }
 
         DivLessFormatter div = new DivLessFormatter();
-        Text image = new Text(ProjectAssetsManager.INSTANCE.getAsset(itemLogging.getType()).getHtml());
+        Text image = new Text(ProjectAssetsManager.getAsset(itemLogging.getType()).getHtml());
         A itemLink = new A().setId("tag" + TOOLTIP_ID);
 
         if (ProjectTypeConstants.TASK.equals(itemLogging.getType()) || ProjectTypeConstants.BUG.equals(itemLogging.getType())) {

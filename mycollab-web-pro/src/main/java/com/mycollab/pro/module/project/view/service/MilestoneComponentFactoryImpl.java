@@ -130,9 +130,9 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
             @Override
             public Component getPopupComponent() {
                 MVerticalLayout layout = new MVerticalLayout();
-                layout.with(new ELabel(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG).getHtml() + ": " +
+                layout.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + ": " +
                         milestone.getTotalBugBillableHours(), ContentMode.HTML));
-                layout.with(new ELabel(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TASK).getHtml() + ": " +
+                layout.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + ": " +
                         milestone.getTotalTaskBillableHours(), ContentMode.HTML));
                 return layout;
             }
@@ -153,9 +153,9 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
             @Override
             public Component getPopupComponent() {
                 MVerticalLayout layout = new MVerticalLayout();
-                layout.with(new ELabel(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG).getHtml() + ": " +
+                layout.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + ": " +
                         milestone.getTotalBugNonBillableHours(), ContentMode.HTML));
-                layout.with(new ELabel(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TASK).getHtml() + ": " +
+                layout.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + ": " +
                         milestone.getTotalTaskNonBillableHours(), ContentMode.HTML));
                 return layout;
             }

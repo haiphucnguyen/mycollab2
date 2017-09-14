@@ -147,7 +147,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
                 milestoneLink.setCSSClass(MobileUIConstants.LINK_OVERDUE);
             }
             MCssLayout milestoneWrap = new MCssLayout(ELabel.html(milestoneLink.write()));
-            milestoneInfoLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.INSTANCE.getAsset
+            milestoneInfoLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset
                     (ProjectTypeConstants.MILESTONE)), milestoneWrap).expand(milestoneWrap).withFullWidth());
 
             MCssLayout metaLayout = new MCssLayout();

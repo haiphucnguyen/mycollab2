@@ -117,7 +117,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         searchPanel = new AssignmentSearchPanel(false) {
             @Override
             protected ComponentContainer buildSearchTitle() {
-                return new MHorizontalLayout(ELabel.h2(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE).getHtml() +
+                return new MHorizontalLayout(ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() +
                         " " + UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)).withWidthUndefined());
             }
         };
@@ -398,7 +398,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 header = new ELabel(milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS)
                         .withDescription(ProjectTooltipGenerator.generateToolTipMilestone(UserUIContext.getUserLocale(),
                                 AppUI.getDateFormat(), milestone, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
-                headerLayout.with(ELabel.fontIcon(ProjectAssetsManager.INSTANCE.getMilestoneStatus(milestone.getStatus())), header).expand(header);
+                headerLayout.with(ELabel.fontIcon(ProjectAssetsManager.getMilestoneStatus(milestone.getStatus())), header).expand(header);
             }
 
             final PopupButton controlsBtn = new PopupButton();
@@ -510,7 +510,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             }
 
             ToggleTicketSummaryField toggleTicketSummaryField = new ToggleTicketSummaryField(ticket);
-            MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.INSTANCE.getAsset(ticket.getType())).withWidthUndefined(),
+            MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())).withWidthUndefined(),
                     toggleTicketSummaryField).expand(toggleTicketSummaryField).withFullWidth();
             this.addComponent(headerLayout);
 

@@ -88,7 +88,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                 return new ProjectFormAttachmentDisplayField(beanItem.getProjectid(), ProjectTypeConstants.TASK, beanItem.getId());
             } else if (Task.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
-                    FontAwesome fontPriority = ProjectAssetsManager.INSTANCE.getPriority(beanItem.getPriority());
+                    FontAwesome fontPriority = ProjectAssetsManager.getPriority(beanItem.getPriority());
                     String priorityLbl = fontPriority.getHtml() + " " + UserUIContext.getMessage(Priority.class, beanItem.getPriority());
                     DefaultViewField field = new DefaultViewField(priorityLbl, ContentMode.HTML);
                     field.addStyleName("priority-" + beanItem.getPriority().toLowerCase());
@@ -203,7 +203,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             checkBox.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             layout.with(checkBox);
 
-            Span priorityLink = new Span().appendText(ProjectAssetsManager.INSTANCE.getPriorityHtml(subTask.getPriority()))
+            Span priorityLink = new Span().appendText(ProjectAssetsManager.getPriorityHtml(subTask.getPriority()))
                     .setTitle(subTask.getPriority());
             layout.with(ELabel.html(priorityLink.write()).withWidthUndefined());
 

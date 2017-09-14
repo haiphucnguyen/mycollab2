@@ -57,7 +57,7 @@ class BugTableDisplay extends DefaultPagedBeanTable<BugService, BugSearchCriteri
                     bug.getProjectShortName()));
 
             if (StringUtils.isNotBlank(bug.getPriority())) {
-                b.setIconLink(ProjectAssetsManager.INSTANCE.getPriority(bug.getPriority()));
+                b.setIconLink(ProjectAssetsManager.getPriority(bug.getPriority()));
                 b.addStyleName("priority-" + bug.getPriority().toLowerCase());
             }
 

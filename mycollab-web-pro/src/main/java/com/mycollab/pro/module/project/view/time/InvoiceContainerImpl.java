@@ -104,7 +104,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
     public void display() {
         removeAllComponents();
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE)) {
-            ELabel invoiceIcon = ELabel.h2(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.INVOICE).getHtml()).withWidthUndefined();
+            ELabel invoiceIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml()).withWidthUndefined();
 
             Component headerRightLayout = createHeaderRight();
             statusComboBox = new InvoiceStatusComboBox();
@@ -308,9 +308,9 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
             addComponent(activityComponent);
 
             if (StringUtils.isBlank(invoice.getNote())) {
-                headerLbl.setValue(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.INVOICE).getHtml() + " " + invoice.getNoid());
+                headerLbl.setValue(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml() + " " + invoice.getNoid());
             } else {
-                headerLbl.setValue(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.INVOICE).getHtml() + " " +
+                headerLbl.setValue(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml() + " " +
                         invoice.getNoid() + " - " + invoice.getNote());
             }
 

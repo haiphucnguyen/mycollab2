@@ -23,7 +23,7 @@ public class VersionListNoItemView extends ProjectListNoItemView {
 
     @Override
     protected FontAwesome viewIcon() {
-        return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG_VERSION);
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION);
     }
 
     @Override

@@ -183,13 +183,13 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
         List<SimpleMilestone> milestones = (List<SimpleMilestone>) milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(baseCriteria));
         milestones.forEach(milestone -> roadMapView.addComponent(new MilestoneBlock(milestone)));
 
-        headerText.setValue(String.format("%s %s", ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE).getHtml(),
+        headerText.setValue(String.format("%s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml(),
                 UserUIContext.getMessage(MilestoneI18nEnum.OPT_ROADMAP_VALUE, milestones.size())));
     }
 
     @Override
     public void refresh() {
-        headerText.setValue(String.format("%s %s", ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE).getHtml(),
+        headerText.setValue(String.format("%s %s", ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml(),
                 UserUIContext.getMessage(MilestoneI18nEnum.OPT_ROADMAP_VALUE, roadMapView.getComponentCount())));
     }
 
@@ -312,7 +312,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                             ToggleTicketSummaryField toggleTicketSummaryField = new ToggleTicketSummaryField(ticket);
                             MHorizontalLayout rowComp = new MHorizontalLayout(ELabel.EMPTY_SPACE());
                             rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-                            rowComp.with(ELabel.fontIcon(ProjectAssetsManager.INSTANCE.getAsset(ticket.getType())).withWidthUndefined());
+                            rowComp.with(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())).withWidthUndefined());
                             String status = "";
                             if (ticket.isBug()) {
                                 status = UserUIContext.getMessage(BugStatus.class, ticket.getStatus());

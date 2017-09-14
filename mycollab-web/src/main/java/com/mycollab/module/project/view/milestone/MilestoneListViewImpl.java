@@ -217,17 +217,17 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
     }
 
     private void updateClosedMilestoneNumber(int closeMilestones) {
-        closedHeader.setValue(ProjectAssetsManager.INSTANCE.getMilestoneStatus(MilestoneStatus.Closed.name()).getHtml() + " " +
+        closedHeader.setValue(ProjectAssetsManager.getMilestoneStatus(MilestoneStatus.Closed.name()).getHtml() + " " +
                 UserUIContext.getMessage(MilestoneI18nEnum.WIDGET_CLOSED_PHASE_TITLE) + " (" + closeMilestones + ")");
     }
 
     private void updateFutureMilestoneNumber(int futureMilestones) {
-        futureHeader.setValue(ProjectAssetsManager.INSTANCE.getMilestoneStatus(MilestoneStatus.Future.name()).getHtml() + " " +
+        futureHeader.setValue(ProjectAssetsManager.getMilestoneStatus(MilestoneStatus.Future.name()).getHtml() + " " +
                 UserUIContext.getMessage(MilestoneI18nEnum.WIDGET_FUTURE_PHASE_TITLE) + " (" + futureMilestones + ")");
     }
 
     private void updateInProgressMilestoneNumber(int inProgressMilestones) {
-        inProgressHeader.setValue(ProjectAssetsManager.INSTANCE.getMilestoneStatus(MilestoneStatus.InProgress.name()).getHtml() + " " +
+        inProgressHeader.setValue(ProjectAssetsManager.getMilestoneStatus(MilestoneStatus.InProgress.name()).getHtml() + " " +
                 UserUIContext.getMessage(MilestoneI18nEnum.WIDGET_INPROGRESS_PHASE_TITLE) + " (" + inProgressMilestones +
                 ")");
     }

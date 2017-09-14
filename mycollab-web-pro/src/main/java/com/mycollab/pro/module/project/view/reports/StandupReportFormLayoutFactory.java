@@ -31,7 +31,7 @@ public abstract class StandupReportFormLayoutFactory extends AbstractFormLayoutF
 
     @Override
     public AbstractComponent getLayout() {
-        AddViewLayout reportAddLayout = new AddViewLayout(title, ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.STANDUP));
+        AddViewLayout reportAddLayout = new AddViewLayout(title, ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP));
         reportAddLayout.addHeaderRight(this.createTopPanel());
 
         MHorizontalLayout mainLayout = new MHorizontalLayout().withFullWidth();

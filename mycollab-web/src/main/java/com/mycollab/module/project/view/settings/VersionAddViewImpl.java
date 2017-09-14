@@ -43,7 +43,7 @@ public class VersionAddViewImpl extends AbstractEditItemComp<Version> implements
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG_VERSION);
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION);
     }
 
     @Override

@@ -174,13 +174,13 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             myProjectTab.addTab(constructProjectDashboardComponent(), ProjectTypeConstants.DASHBOARD, 1,
                     UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD),
                     GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateProjectLink(prjId),
-                    ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.DASHBOARD));
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.DASHBOARD));
 
             if (CurrentProjectVariables.hasMessageFeature()) {
                 myProjectTab.addTab(constructProjectMessageComponent(), ProjectTypeConstants.MESSAGE, 2,
                         UserUIContext.getMessage(MessageI18nEnum.LIST),
                         GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateMessagesLink(prjId),
-                        ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MESSAGE));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE));
             } else {
                 myProjectTab.removeTab(ProjectTypeConstants.MESSAGE);
             }
@@ -189,7 +189,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                 myProjectTab.addTab(constructProjectMilestoneComponent(), ProjectTypeConstants.MILESTONE, 3,
                         UserUIContext.getMessage(MilestoneI18nEnum.LIST),
                         GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateMilestonesLink(prjId),
-                        ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
             } else {
                 myProjectTab.removeTab(ProjectTypeConstants.MILESTONE);
             }
@@ -198,7 +198,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                 myProjectTab.addTab(constructTaskDashboardComponent(),
                         ProjectTypeConstants.TICKET, 4, UserUIContext.getMessage(TicketI18nEnum.LIST),
                         GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateTicketDashboardLink(prjId),
-                        ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TICKET));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET));
             } else {
                 myProjectTab.removeTab(ProjectTypeConstants.TICKET);
             }
@@ -207,7 +207,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                 myProjectTab.addTab(constructProjectPageComponent(), ProjectTypeConstants.PAGE, 6,
                         UserUIContext.getMessage(PageI18nEnum.LIST),
                         GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateProjectLink(prjId),
-                        ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.PAGE));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE));
             } else {
                 myProjectTab.removeTab(ProjectTypeConstants.PAGE);
             }
@@ -216,7 +216,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                 myProjectTab.addTab(constructProjectFileComponent(), ProjectTypeConstants.FILE, 7,
                         UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
                         GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateFileDashboardLink(prjId),
-                        ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.FILE));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE));
             } else {
                 myProjectTab.removeTab(ProjectTypeConstants.FILE);
             }
@@ -226,7 +226,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                 myProjectTab.addTab(constructTimeTrackingComponent(), ProjectTypeConstants.FINANCE, 10,
                         UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FINANCE),
                         GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateTimeReportLink(prjId),
-                        ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.FINANCE));
+                        ProjectAssetsManager.getAsset(ProjectTypeConstants.FINANCE));
             } else {
                 myProjectTab.removeTab(ProjectTypeConstants.FINANCE);
             }
@@ -239,7 +239,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             myProjectTab.addTab(constructProjectUsers(), ProjectTypeConstants.MEMBER, 13,
                     UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_MEMBER),
                     GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateUsersLink(prjId),
-                    ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MEMBER));
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.MEMBER));
 
             myProjectTab.addToggleNavigatorControl();
         }

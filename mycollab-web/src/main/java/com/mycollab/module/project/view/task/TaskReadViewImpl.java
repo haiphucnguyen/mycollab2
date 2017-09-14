@@ -51,7 +51,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     public TaskReadViewImpl() {
         super(UserUIContext.getMessage(TaskI18nEnum.DETAIL),
-                ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TASK), new TaskPreviewFormLayout());
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK), new TaskPreviewFormLayout());
     }
 
     @Override

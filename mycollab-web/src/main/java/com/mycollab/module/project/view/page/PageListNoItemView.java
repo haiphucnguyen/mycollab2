@@ -26,7 +26,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public class PageListNoItemView extends ProjectListNoItemView {
     @Override
     protected FontAwesome viewIcon() {
-        return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.PAGE);
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE);
     }
 
     @Override

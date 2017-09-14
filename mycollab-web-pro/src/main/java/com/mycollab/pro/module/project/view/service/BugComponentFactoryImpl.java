@@ -78,7 +78,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return ProjectAssetsManager.INSTANCE.getPriority(bug.getPriority()).getHtml();
+                return ProjectAssetsManager.getPriority(bug.getPriority()).getHtml();
             }
 
             @Override
@@ -303,13 +303,13 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             protected String generateSmallContentAsHtml() {
                 if (bug.getMilestoneid() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
-                    divHint.appendText(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
+                    divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
                     String milestoneName = ((MilestoneComboBox) field).getItemCaption(bug.getMilestoneid());
-                    return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
+                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
                             StringUtils.trim(milestoneName, 20, true);
                 }
             }

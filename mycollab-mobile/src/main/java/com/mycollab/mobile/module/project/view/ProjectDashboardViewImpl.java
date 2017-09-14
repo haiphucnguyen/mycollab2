@@ -141,15 +141,15 @@ public class ProjectDashboardViewImpl extends ProjectMobileMenuPageView implemen
 
         NavigationButton messageBtn = new NavigationButton(UserUIContext.getMessage(MessageI18nEnum.LIST));
         messageBtn.addClickListener(navigationButtonClickEvent -> EventBusFactory.getInstance().post(new MessageEvent.GotoList(this, null)));
-        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MESSAGE), messageBtn));
+        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE), messageBtn));
 
         NavigationButton milestoneBtn = new NavigationButton(UserUIContext.getMessage(MilestoneI18nEnum.LIST));
         milestoneBtn.addClickListener(navigationButtonClickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null)));
-        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE), milestoneBtn));
+        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE), milestoneBtn));
 
         NavigationButton taskBtn = new NavigationButton(UserUIContext.getMessage(TicketI18nEnum.LIST));
         taskBtn.addClickListener(navigationButtonClickEvent -> EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null)));
-        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TICKET), taskBtn));
+        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET), taskBtn));
 
         NavigationButton userBtn = new NavigationButton(UserUIContext.getMessage(ProjectMemberI18nEnum.LIST));
         userBtn.addClickListener(navigationButtonClickEvent -> EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null)));

@@ -40,12 +40,12 @@ public class FinanceContainer extends AbstractVerticalPageView implements IFinan
     private void buildComponents() {
         if (CurrentProjectVariables.hasTimeFeature()) {
             myProjectTab.addWrappedTab(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
-                    ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TIME));
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME));
         }
 
         if (CurrentProjectVariables.hasInvoiceFeature()) {
             myProjectTab.addWrappedTab(UserUIContext.getMessage(InvoiceI18nEnum.LIST),
-                    ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.INVOICE));
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE));
         }
 
         myProjectTab.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {

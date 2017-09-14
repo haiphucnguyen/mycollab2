@@ -54,7 +54,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.TASK);
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK);
     }
 
     @Override

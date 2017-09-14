@@ -37,13 +37,13 @@ class MainViewController(val container: MainView) : AbstractController() {
         this.register(object : ApplicationEventListener<ShellEvent.GotoUserAccountModule> {
             @Subscribe override fun handle(event: ShellEvent.GotoUserAccountModule) {
                 val presenter = PresenterResolver.getPresenter(AccountModulePresenter::class.java)
-                presenter.go(container, AccountModuleScreenData.GotoModule(event.data as Array<String>))
+                presenter.go(container, AccountModuleScreenData.GotoModule(event.data as? Array<String>))
             }
         })
         this.register(object : ApplicationEventListener<ShellEvent.GotoFileModule> {
             @Subscribe override fun handle(event: ShellEvent.GotoFileModule) {
                 val fileModulePresenter = PresenterResolver.getPresenter(IFileModulePresenter::class.java)
-                val screenData = FileModuleScreenData.GotoModule(event.data as Array<String>)
+                val screenData = FileModuleScreenData.GotoModule(event.data as? Array<String>)
                 fileModulePresenter.go(container, screenData)
             }
         })

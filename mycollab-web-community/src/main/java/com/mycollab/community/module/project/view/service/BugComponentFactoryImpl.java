@@ -30,7 +30,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
 
     @Override
     public AbstractComponent createPriorityPopupField(SimpleBug bug) {
-        return new MetaFieldBuilder().withCaption(ProjectAssetsManager.INSTANCE.getPriorityHtml(bug.getPriority()))
+        return new MetaFieldBuilder().withCaption(ProjectAssetsManager.getPriorityHtml(bug.getPriority()))
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY)).build();
     }
 
@@ -58,12 +58,12 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
     public AbstractComponent createMilestonePopupField(SimpleBug bug) {
         if (bug.getMilestoneid() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
-            divHint.appendText(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
+            divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
             divHint.appendChild(new Span().appendText(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)).setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write()).withDescription(UserUIContext.getMessage
                     (MilestoneI18nEnum.SINGLE)).build();
         } else {
-            return new MetaFieldBuilder().withCaptionAndIcon(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE),
+            return new MetaFieldBuilder().withCaptionAndIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE),
                     bug.getMilestoneName()).withDescription(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE)).build();
         }
     }

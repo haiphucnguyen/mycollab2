@@ -55,7 +55,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MEMBER);
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.MEMBER);
     }
 
     @Override

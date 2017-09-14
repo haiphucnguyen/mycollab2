@@ -52,7 +52,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
 
     public ComponentReadViewImpl() {
         super(UserUIContext.getMessage(ComponentI18nEnum.DETAIL),
-                ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG_COMPONENT));
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_COMPONENT));
     }
 
     @Override

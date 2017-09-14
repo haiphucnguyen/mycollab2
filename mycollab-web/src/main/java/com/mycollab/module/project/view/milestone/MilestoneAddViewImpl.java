@@ -39,7 +39,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE);
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE);
     }
 
     @Override

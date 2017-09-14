@@ -78,7 +78,7 @@ public class AssignmentNameCellField extends CustomField<String> implements Fiel
         layout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         field.setBuffered(true);
         field.setWidth("100%");
-        Label icon = ELabel.fontIcon(ProjectAssetsManager.INSTANCE.getAsset(type)).withWidthUndefined();
+        Label icon = ELabel.fontIcon(ProjectAssetsManager.getAsset(type)).withWidthUndefined();
         layout.with(icon, field).expand(field);
         return layout;
     }

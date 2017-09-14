@@ -19,14 +19,15 @@ object CrmAssetsManager {
             CrmTypeConstants.CALL to FontAwesome.PHONE,
             CrmTypeConstants.MEETING to FontAwesome.PLANE,
             CrmTypeConstants.CAMPAIGN to FontAwesome.TROPHY,
+            CrmTypeConstants.DETAIL to FontAwesome.LIST,
             CrmTypeConstants.NOTE to FontAwesome.PENCIL
     )
 
-    fun getAsset(resId: String): FontAwesome {
+    @JvmStatic fun getAsset(resId: String): FontAwesome {
         return resources[resId] ?: throw MyCollabException("Can not find the resource with id $resId")
     }
 
-    fun toHexString(resId: String): String {
+    @JvmStatic fun toHexString(resId: String): String {
         return "&#x" + Integer.toHexString(resources[resId]!!.getCodepoint())
     }
 }

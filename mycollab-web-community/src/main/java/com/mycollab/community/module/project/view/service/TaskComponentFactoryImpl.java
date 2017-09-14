@@ -32,7 +32,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
 
     @Override
     public AbstractComponent createPriorityPopupField(SimpleTask task) {
-        return new MetaFieldBuilder().withCaption(ProjectAssetsManager.INSTANCE.getPriorityHtml(task.getPriority()))
+        return new MetaFieldBuilder().withCaption(ProjectAssetsManager.getPriorityHtml(task.getPriority()))
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP)).build();
     }
 
@@ -81,13 +81,13 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
     public AbstractComponent createMilestonePopupField(SimpleTask task) {
         if (task.getMilestoneid() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
-            divHint.appendText(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
+            divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
             divHint.appendChild(new Span().appendText(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)).setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write())
                     .withDescription(UserUIContext.getMessage(ShellI18nEnum.OPT_UPGRADE_PRO_INTRO,
                             UserUIContext.getMessage(MilestoneI18nEnum.SINGLE))).build();
         } else {
-            return new MetaFieldBuilder().withCaptionAndIcon(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE), task
+            return new MetaFieldBuilder().withCaptionAndIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE), task
                     .getMilestoneName()).withDescription(UserUIContext.getMessage(ShellI18nEnum.OPT_UPGRADE_PRO_INTRO,
                     UserUIContext.getMessage(MilestoneI18nEnum.SINGLE))).build();
         }

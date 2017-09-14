@@ -188,7 +188,7 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
 
     private static String buildItemValue(ProjectActivityStream activityStream) {
         DivLessFormatter div = new DivLessFormatter();
-        Text itemImg = new Text(ProjectAssetsManager.INSTANCE.getAsset(activityStream.getType()).getHtml());
+        Text itemImg = new Text(ProjectAssetsManager.getAsset(activityStream.getType()).getHtml());
         A itemLink = new A();
 
         if (ProjectTypeConstants.TASK.equals(activityStream.getType())
@@ -207,7 +207,7 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
 
     private static String buildProjectValue(ProjectActivityStream activityStream) {
         DivLessFormatter div = new DivLessFormatter();
-        Text prjImg = new Text(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.PROJECT).getHtml());
+        Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml());
         A prjLink = new A(ProjectLinkBuilder.generateProjectFullLink(activityStream.getProjectId())).appendText(activityStream.getProjectName());
         div.appendChild(prjImg, DivLessFormatter.EMPTY_SPACE, prjLink);
         return div.write();

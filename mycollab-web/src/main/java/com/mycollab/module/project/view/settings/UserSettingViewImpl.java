@@ -54,11 +54,11 @@ public class UserSettingViewImpl extends AbstractVerticalPageView implements Use
 
         componentPresenter = PresenterResolver.getPresenter(ComponentPresenter.class);
         myProjectTab.addTab(componentPresenter.getView(), UserUIContext.getMessage(ComponentI18nEnum.LIST),
-                ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG_COMPONENT));
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_COMPONENT));
 
         versionPresenter = PresenterResolver.getPresenter(VersionPresenter.class);
         myProjectTab.addTab(versionPresenter.getView(), UserUIContext.getMessage(VersionI18nEnum.LIST),
-                ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG_VERSION));
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION));
 
         settingPresenter = PresenterResolver.getPresenter(ProjectSettingPresenter.class);
         myProjectTab.addTab(settingPresenter.getView(), UserUIContext.getMessage(ProjectCommonI18nEnum

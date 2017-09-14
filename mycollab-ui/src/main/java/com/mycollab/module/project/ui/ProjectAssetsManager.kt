@@ -30,11 +30,11 @@ object ProjectAssetsManager {
             ProjectTypeConstants.PROJECT to FontAwesome.CALENDAR_O
     )
 
-    fun getAsset(resId: String): FontAwesome = resources[resId] ?: FontAwesome.DASHBOARD
+    @JvmStatic fun getAsset(resId: String): FontAwesome = resources[resId] ?: FontAwesome.DASHBOARD
 
-    fun toHexString(resId: String): String ="&#x" + Integer.toHexString(resources[resId]!!.getCodepoint())
+    @JvmStatic fun toHexString(resId: String): String ="&#x" + Integer.toHexString(resources[resId]!!.getCodepoint())
 
-    fun getPriority(priority: String?): FontAwesome {
+    @JvmStatic fun getPriority(priority: String?): FontAwesome {
         return if (Priority.Urgent.name == priority || Priority.High.name == priority || Priority.Medium.name == priority || priority == null) {
             FontAwesome.ARROW_UP
         } else {
@@ -42,7 +42,7 @@ object ProjectAssetsManager {
         }
     }
 
-    fun getMilestoneStatus(status: String): FontAwesome {
+    @JvmStatic fun getMilestoneStatus(status: String): FontAwesome {
         return when (status) {
             MilestoneStatus.Closed.name -> FontAwesome.MINUS_CIRCLE
             MilestoneStatus.InProgress.name -> FontAwesome.CLOCK_O
@@ -50,7 +50,7 @@ object ProjectAssetsManager {
         }
     }
 
-    fun getPriorityHtml(priority: String): String {
+    @JvmStatic fun getPriorityHtml(priority: String): String {
         var temp = priority
         if (StringUtils.isBlank(temp)) {
             temp = Priority.Medium.name

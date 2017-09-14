@@ -101,7 +101,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         } else if (beanItem.isOverdue()) {
             beanTitle.setCSSClass(MobileUIConstants.LINK_OVERDUE);
         }
-        return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.RISK).getHtml() + " " + beanTitle.write();
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK).getHtml() + " " + beanTitle.write();
     }
 
     @Override
@@ -212,7 +212,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 return new DefaultViewField(UserUIContext.formatDate(beanItem.getDuedate()));
             } else if (Risk.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
-                    FontAwesome fontPriority = ProjectAssetsManager.INSTANCE.getPriority(beanItem.getPriority());
+                    FontAwesome fontPriority = ProjectAssetsManager.getPriority(beanItem.getPriority());
                     String priorityLbl = fontPriority.getHtml() + " " + UserUIContext.getMessage(Priority.class, beanItem.getPriority());
                     DefaultViewField field = new DefaultViewField(priorityLbl, ContentMode.HTML);
                     field.addStyleName("priority-" + beanItem.getPriority().toLowerCase());
@@ -222,7 +222,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 if (beanItem.getMilestoneid() != null) {
                     A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
                             (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
-                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, milestoneLink);
+                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
                 }
             } else if (Risk.Field.description.equalTo(propertyId)) {

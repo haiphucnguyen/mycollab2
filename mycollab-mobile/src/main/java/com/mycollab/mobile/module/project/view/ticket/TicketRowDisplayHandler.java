@@ -62,9 +62,9 @@ public class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<Proj
             ticketLbl.addStyleName(MobileUIConstants.LINK_OVERDUE);
         }
         CssLayout ticketLayout = new CssLayout(ticketLbl);
-        String priorityValue = ProjectAssetsManager.INSTANCE.getPriority(ticket.getPriority()).getHtml();
+        String priorityValue = ProjectAssetsManager.getPriority(ticket.getPriority()).getHtml();
         ELabel priorityLbl = ELabel.html(priorityValue).withWidthUndefined().withStyleName("priority-" + ticket.getPriority().toLowerCase());
-        rowLayout.with(new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.INSTANCE.getAsset(ticket.getType())), priorityLbl,
+        rowLayout.with(new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())), priorityLbl,
                 ticketLayout).expand(ticketLayout).withFullWidth());
 
         MVerticalLayout metaInfoLayout = new MVerticalLayout().withMargin(false);

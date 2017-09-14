@@ -70,7 +70,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
 
     @Override
     protected FontAwesome initFormIconResource() {
-        return ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.BUG);
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG);
     }
 
     @Override

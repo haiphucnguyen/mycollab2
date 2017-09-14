@@ -108,7 +108,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 baseFolder = resultFolder;
             }
         });
-        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.INSTANCE.getAsset(ProjectTypeConstants.FILE).getHtml() + " " +
+        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE).getHtml() + " " +
                 UserUIContext.getMessage(FileI18nEnum.LIST));
 
         MButton createBtn = new MButton(UserUIContext.getMessage(FileI18nEnum.ACTION_NEW_FOLDER), clickEvent -> UI.getCurrent().addWindow

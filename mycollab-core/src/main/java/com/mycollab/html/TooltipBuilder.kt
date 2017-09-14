@@ -28,14 +28,14 @@ class TooltipBuilder() {
         @JvmStatic fun buildCellName(name: String): Td = Td().setStyle("width: 120px; vertical-align: top; text-align: right; color:#999").
                 appendText(name + ": ")
 
-        @JvmStatic fun buildCellValue(value: String): Td {
+        @JvmStatic fun buildCellValue(value: String?): Td {
             val cutNameVal = StringUtils.trimHtmlTags(value)
             return Td().setStyle("width:200px;word-wrap: break-word; white-space: normal;vertical-align: top;").appendText(cutNameVal)
         }
 
         @JvmStatic fun buildCellValue(value: Number?): Td = if (value == null) buildCellValue("") else buildCellValue(value.toString())
 
-        @JvmStatic fun buildCellLink(href: String, name: String?): Td {
+        @JvmStatic fun buildCellLink(href: String?, name: String?): Td {
             val cutNameVal = StringUtils.trimHtmlTags(name)
             return Td().setStyle("width:200px;word-wrap: break-word; white-space: normal;vertical-align: top;").
                     appendChild(A().setHref(href).appendText(cutNameVal))
