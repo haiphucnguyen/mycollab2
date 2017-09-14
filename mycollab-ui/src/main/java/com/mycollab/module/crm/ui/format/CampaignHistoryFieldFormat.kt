@@ -35,7 +35,7 @@ class CampaignHistoryFieldFormat : HistoryFieldFormat {
         try {
             val campaignId = Integer.parseInt(value)
             val campaignService = AppContextUtil.getSpringBean(CampaignService::class.java)
-            val campaign = campaignService.findById(campaignId, AppUI.accountId!!)
+            val campaign = campaignService.findById(campaignId, AppUI.accountId)
 
             if (campaign != null) {
                 return if (displayAsHtml!!) {

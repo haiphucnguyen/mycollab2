@@ -33,7 +33,7 @@ class AccountHistoryFieldFormat : HistoryFieldFormat {
 
         val accountId = Integer.parseInt(value)
         val accountService = AppContextUtil.getSpringBean(AccountService::class.java)
-        val account = accountService.findById(accountId, AppUI.accountId!!)
+        val account = accountService.findById(accountId, AppUI.accountId)
 
         if (account != null) {
             return if (displayAsHtml!!) {

@@ -3,10 +3,8 @@ package com.mycollab.vaadin.mvp
 import com.mycollab.vaadin.events.ViewEvent
 import com.vaadin.ui.HasComponents
 import com.vaadin.util.ReflectTools
-
 import java.io.Serializable
-import java.lang.reflect.Method
-import java.util.EventListener
+import java.util.*
 
 /**
  * @author MyCollab Ltd.

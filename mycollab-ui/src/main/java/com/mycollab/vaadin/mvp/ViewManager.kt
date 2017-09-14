@@ -28,13 +28,13 @@ object ViewManager {
                 return createInstanceFromCls(viewClass)
             }
             var value: T? = viewMap[viewClass] as T
-            when (value) {
+            return when (value) {
                 null -> {
                     value = createInstanceFromCls(viewClass)
                     viewMap.put(viewClass, value)
-                    return value
+                    value
                 }
-                else -> return value
+                else -> value
             }
         } catch (e: Exception) {
             throw MyCollabException("Can not create view instance of class: " + viewClass, e)

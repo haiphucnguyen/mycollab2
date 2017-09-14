@@ -5,7 +5,7 @@ import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
-import com.mycollab.shell.ShellController;
+import com.mycollab.shell.view.ShellController;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.ControllerRegistry;

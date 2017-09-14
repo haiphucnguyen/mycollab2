@@ -60,9 +60,9 @@ class ShellController(val mainNav: NavigationManager) : AbstractController() {
             @Subscribe override fun handle(event: ShellEvent.PushView) {
                 if (event.data is Component) {
                     if (event.data is IMobileView) {
-                        event.data.setPreviousComponent(mainNav.currentComponent)
+                        (event.data as IMobileView).setPreviousComponent(mainNav.currentComponent)
                     }
-                    mainNav.navigateTo(event.data)
+                    mainNav.navigateTo(event.data as Component)
                 }
             }
         })

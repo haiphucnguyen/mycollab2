@@ -99,7 +99,7 @@
 
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-compatibility-server</artifactId>
+            <artifactId>vaadin-server</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>com.vaadin</groupId>
