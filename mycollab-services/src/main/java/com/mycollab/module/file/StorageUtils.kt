@@ -25,7 +25,7 @@ object StorageUtils {
         return AppContextUtil.getSpringBean(AbstractStorageService::class.java).getFavIconPath(sAccountId, favIconName)
     }
 
-    @JvmStatic fun getAvatarPath(userAvatarId: String, size: Int?): String {
+    @JvmStatic fun getAvatarPath(userAvatarId: String?, size: Int?): String {
         return AppContextUtil.getSpringBean(AbstractStorageService::class.java).getAvatarPath(userAvatarId, size)
     }
 

@@ -14,7 +14,6 @@ import com.mycollab.common.domain.criteria.CommentSearchCriteria
 import com.mycollab.common.service.ActivityStreamService
 import com.mycollab.common.service.CommentService
 import com.mycollab.common.service.RelayEmailNotificationService
-import com.mycollab.core.utils.BeanUtility
 import com.mycollab.db.persistence.ICrudGenericDAO
 import com.mycollab.db.persistence.ISearchableDAO
 import com.mycollab.db.persistence.service.DefaultService
@@ -85,7 +84,7 @@ class CommentServiceImpl : DefaultService<Int, CommentWithBLOBs, CommentSearchCr
         } else if (record.type != null && record.type.startsWith("Crm-")) {
             activityStream.module = ModuleNameConstants.CRM
         } else {
-            LOG.error("Can not define module type of bean {}", BeanUtility.printBeanObj(record))
+            LOG.error("Can not define module type of bean $record")
         }
         return activityStream
     }

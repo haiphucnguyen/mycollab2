@@ -4,7 +4,7 @@ package com.mycollab.db.arguments
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-open class NumberSearchField @JvmOverloads constructor(operation: String, val value: Int?, compareOperator: String) : SearchField(operation) {
+open class NumberSearchField constructor(operation: String, var value: Int?, var compareOperator: String) : SearchField(operation) {
     constructor(value: Int?) : this(SearchField.AND, value, NumberSearchField.EQUAL)
 
     constructor(value: Int?, compareOperator: String) : this(SearchField.AND, value, compareOperator)

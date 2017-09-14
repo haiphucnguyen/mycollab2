@@ -1,7 +1,6 @@
 package com.mycollab.module.ecm
 
 import com.mycollab.core.MyCollabException
-import com.mycollab.core.utils.BeanUtility
 import com.mycollab.module.ecm.domain.ExternalContent
 import com.mycollab.module.ecm.domain.ExternalDrive
 import com.mycollab.module.ecm.domain.ExternalFolder
@@ -23,7 +22,8 @@ object ResourceUtils {
      * @param resourceType
      * @return
      */
-    @JvmStatic fun getExternalResourceService(resourceType: ResourceType): ExternalResourceService {
+    @JvmStatic
+    fun getExternalResourceService(resourceType: ResourceType): ExternalResourceService {
         return when {
             ResourceType.Dropbox === resourceType -> AppContextUtil.getSpringBean(DropboxResourceService::class.java)
             else -> throw MyCollabException("Current support only dropbox resource service")
@@ -34,7 +34,8 @@ object ResourceUtils {
      * @param resource
      * @return
      */
-    @JvmStatic fun getExternalDrive(resource: Resource): ExternalDrive? {
+    @JvmStatic
+    fun getExternalDrive(resource: Resource): ExternalDrive? {
         when (resource) {
             is ExternalFolder -> return resource.externalDrive
             is ExternalContent -> return resource.externalDrive
@@ -46,7 +47,8 @@ object ResourceUtils {
      * @param resource
      * @return
      */
-    @JvmStatic fun getType(resource: Resource): ResourceType {
+    @JvmStatic
+    fun getType(resource: Resource): ResourceType {
         return if (!resource.isExternalResource) {
             ResourceType.MyCollab
         } else {
@@ -57,7 +59,7 @@ object ResourceUtils {
                     else -> throw Exception("Current support only dropbox resource service")
                 }
             } catch (e: Exception) {
-                throw MyCollabException("Can not define storage name of bean " + BeanUtility.printBeanObj(resource))
+                throw MyCollabException("Can not define storage name of bean $resource")
             }
 
         }

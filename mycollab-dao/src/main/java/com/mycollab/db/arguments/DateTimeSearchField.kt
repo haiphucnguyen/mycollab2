@@ -7,7 +7,7 @@ import java.util.*
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class DateTimeSearchField(operation: String, val comparison: String, val dateVal: Date, var value: Date = DateTimeUtils.convertDateTimeToUTC(dateVal)) : SearchField(operation) {
+class DateTimeSearchField(operation: String, var comparison: String, var dateVal: Date, var value: Date = DateTimeUtils.convertDateTimeToUTC(dateVal)) : SearchField(operation) {
     companion object {
         @JvmField val LESS_THAN = "<"
 

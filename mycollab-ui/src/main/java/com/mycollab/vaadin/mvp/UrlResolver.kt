@@ -48,7 +48,7 @@ abstract class UrlResolver {
                     val urlResolver = subResolvers?.get(key)
                     when (urlResolver) {
                         null -> defaultUrlResolver?.handle(*params) ?: throw MyCollabException("Can not register resolver key $key for Resolver: $this")
-                        else -> urlResolver.handle(*params.drop(0).toTypedArray())
+                        else -> urlResolver.handle(*params.drop(1).toTypedArray())
 
                     }
                 }

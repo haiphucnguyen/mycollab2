@@ -21,7 +21,7 @@ public class ServerConfiguration {
 
     private String storageSystem = STORAGE_FILE;
 
-    private Integer port;
+    private Integer port = 8080;
 
     private String apiUrl;
 

@@ -7,7 +7,7 @@ import java.util.*
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class DateSearchField(operation: String, dateVal: Date, comparison: String, value: Date = LocalDate(dateVal).toDate()) : SearchField(operation) {
+class DateSearchField(operation: String, var dateVal: Date, var comparison: String, var value: Date = LocalDate(dateVal).toDate()) : SearchField(operation) {
     constructor(dateVal: Date) : this(SearchField.AND, dateVal, DateSearchField.LESS_THAN)
 
     constructor(dateVal: Date, comparison: String) : this(SearchField.AND, dateVal, comparison)

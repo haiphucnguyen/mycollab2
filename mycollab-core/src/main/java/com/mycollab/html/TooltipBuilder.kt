@@ -35,7 +35,7 @@ class TooltipBuilder() {
 
         @JvmStatic fun buildCellValue(value: Number?): Td = if (value == null) buildCellValue("") else buildCellValue(value.toString())
 
-        @JvmStatic fun buildCellLink(href: String, name: String): Td {
+        @JvmStatic fun buildCellLink(href: String, name: String?): Td {
             val cutNameVal = StringUtils.trimHtmlTags(name)
             return Td().setStyle("width:200px;word-wrap: break-word; white-space: normal;vertical-align: top;").
                     appendChild(A().setHref(href).appendText(cutNameVal))

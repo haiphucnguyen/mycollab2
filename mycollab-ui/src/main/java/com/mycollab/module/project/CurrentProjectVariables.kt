@@ -14,11 +14,9 @@ import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.UserUIContext
 import com.mycollab.vaadin.ui.MyCollabSession
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-
 import com.mycollab.vaadin.ui.MyCollabSession.CURRENT_PROJECT
 import com.mycollab.vaadin.ui.MyCollabSession.PROJECT_MEMBER
+import org.slf4j.LoggerFactory
 
 /**
  * @author MyCollab Ltd.
@@ -31,7 +29,8 @@ object CurrentProjectVariables {
     private val TOGGLE_MENU_FLAG = "toogleProjectMenu"
 
     // get member permission
-    @JvmStatic var project: SimpleProject?
+    @JvmStatic
+    var project: SimpleProject?
         get() = MyCollabSession.getCurrentUIVariable(CURRENT_PROJECT) as SimpleProject
         set(project) {
             MyCollabSession.putCurrentUIVariable(CURRENT_PROJECT, project)
@@ -63,23 +62,17 @@ object CurrentProjectVariables {
                     asyncEventBus.post(NewProjectMemberJoinEvent(prjMember.username, prjMember.projectid, AppUI.accountId))
                 }
                 projectMember = prjMember
-                if (projectToggleMenu == null) {
-                    projectToggleMenu = true
-                }
             } else if (!UserUIContext.isAdmin()) {
                 throw SecureAccessException("You are not belong to this project")
             }
         }
 
-    var projectToggleMenu: Boolean?
-        get() = MyCollabSession.getCurrentUIVariable(TOGGLE_MENU_FLAG) as Boolean
-        set(visibility) = MyCollabSession.putCurrentUIVariable(TOGGLE_MENU_FLAG, visibility)
-
     private var projectMember: SimpleProjectMember?
         get() = MyCollabSession.getCurrentUIVariable(PROJECT_MEMBER) as SimpleProjectMember
         set(prjMember) = MyCollabSession.putCurrentUIVariable(PROJECT_MEMBER, prjMember)
 
-    @JvmStatic val isAdmin: Boolean
+    @JvmStatic
+    val isAdmin: Boolean
         get() {
             if (UserUIContext.isAdmin()) {
                 return true
@@ -88,10 +81,12 @@ object CurrentProjectVariables {
             return member != null && member.isProjectOwner
         }
 
-    @JvmStatic val isProjectArchived: Boolean
+    @JvmStatic
+    val isProjectArchived: Boolean
         get() = project!!.isProjectArchived
 
-    @JvmStatic fun canRead(permissionItem: String): Boolean {
+    @JvmStatic
+    fun canRead(permissionItem: String): Boolean {
         if (isAdmin) {
             return true
         }
@@ -106,12 +101,14 @@ object CurrentProjectVariables {
 
     }
 
-    @JvmStatic fun canReadAssignments(): Boolean {
+    @JvmStatic
+    fun canReadAssignments(): Boolean {
         return canRead(ProjectRolePermissionCollections.BUGS) || canRead(ProjectRolePermissionCollections.TASKS) ||
                 canRead(ProjectRolePermissionCollections.RISKS) || canRead(ProjectRolePermissionCollections.MILESTONES)
     }
 
-    @JvmStatic fun canWrite(permissionItem: String): Boolean {
+    @JvmStatic
+    fun canWrite(permissionItem: String): Boolean {
         if (isProjectArchived) {
             return false
         }
@@ -130,7 +127,8 @@ object CurrentProjectVariables {
 
     }
 
-    @JvmStatic fun canAccess(permissionItem: String): Boolean {
+    @JvmStatic
+    fun canAccess(permissionItem: String): Boolean {
         if (isProjectArchived) {
             return false
         }
@@ -149,7 +147,8 @@ object CurrentProjectVariables {
 
     }
 
-    @JvmStatic val features: ProjectCustomizeView
+    @JvmStatic
+    val features: ProjectCustomizeView
         get() {
             var customizeView: ProjectCustomizeView? = project!!.customizeView
             if (customizeView == null) {
@@ -167,39 +166,48 @@ object CurrentProjectVariables {
             return customizeView
         }
 
-    @JvmStatic fun hasMessageFeature(): Boolean {
+    @JvmStatic
+    fun hasMessageFeature(): Boolean {
         return features.displaymessage!!
     }
 
-    @JvmStatic fun hasPhaseFeature(): Boolean {
+    @JvmStatic
+    fun hasPhaseFeature(): Boolean {
         return features.displaymilestone!!
     }
 
-    @JvmStatic fun hasTicketFeature(): Boolean {
+    @JvmStatic
+    fun hasTicketFeature(): Boolean {
         return MoreObjects.firstNonNull(features.displayticket, true)
     }
 
-    @JvmStatic fun hasPageFeature(): Boolean {
+    @JvmStatic
+    fun hasPageFeature(): Boolean {
         return features.displaypage!!
     }
 
-    @JvmStatic fun hasFileFeature(): Boolean {
+    @JvmStatic
+    fun hasFileFeature(): Boolean {
         return features.displayfile!!
     }
 
-    @JvmStatic fun hasTimeFeature(): Boolean {
+    @JvmStatic
+    fun hasTimeFeature(): Boolean {
         return features.displaytimelogging!!
     }
 
-    @JvmStatic  fun hasInvoiceFeature(): Boolean {
+    @JvmStatic
+    fun hasInvoiceFeature(): Boolean {
         return java.lang.Boolean.TRUE == features.displayinvoice
     }
 
-    @JvmStatic fun hasStandupFeature(): Boolean {
+    @JvmStatic
+    fun hasStandupFeature(): Boolean {
         return features.displaystandup!!
     }
 
-    @JvmStatic var currentPagePath: String
+    @JvmStatic
+    var currentPagePath: String
         get() {
             var path: String? = MyCollabSession.getCurrentUIVariable(CURRENT_PAGE_VAR) as String
             if (path == null) {
@@ -211,19 +219,22 @@ object CurrentProjectVariables {
         }
         set(path) = MyCollabSession.putCurrentUIVariable(CURRENT_PAGE_VAR, path)
 
-    @JvmStatic val projectId: Int
+    @JvmStatic
+    val projectId: Int
         get() {
             val project = project
             return if (project != null) project.id else -1
         }
 
-    @JvmStatic val shortName: String
+    @JvmStatic
+    val shortName: String
         get() {
             val project = project
             return if (project != null) project.shortname else ""
         }
 
-    @JvmStatic fun canWriteTicket(ticket: ProjectTicket): Boolean {
+    @JvmStatic
+    fun canWriteTicket(ticket: ProjectTicket): Boolean {
         return when {
             ticket.isTask -> canWrite(ProjectRolePermissionCollections.TASKS)
             ticket.isBug -> canWrite(ProjectRolePermissionCollections.BUGS)
@@ -232,17 +243,20 @@ object CurrentProjectVariables {
         }
     }
 
-    @JvmStatic fun canReadTicket(): Boolean {
+    @JvmStatic
+    fun canReadTicket(): Boolean {
         return canRead(ProjectRolePermissionCollections.TASKS) || canRead(ProjectRolePermissionCollections.BUGS)
                 || canRead(ProjectRolePermissionCollections.RISKS)
     }
 
-    @JvmStatic fun canWriteTicket(): Boolean {
+    @JvmStatic
+    fun canWriteTicket(): Boolean {
         return canWrite(ProjectRolePermissionCollections.TASKS) || canWrite(ProjectRolePermissionCollections.BUGS)
                 || canWrite(ProjectRolePermissionCollections.RISKS)
     }
 
-    @JvmStatic val restrictedItemTypes: SetSearchField<String>
+    @JvmStatic
+    val restrictedItemTypes: SetSearchField<String>
         get() {
             val types = SetSearchField<String>()
             if (canRead(ProjectRolePermissionCollections.MESSAGES)) {
@@ -269,7 +283,8 @@ object CurrentProjectVariables {
             return types
         }
 
-    @JvmStatic val restrictedTicketTypes: SetSearchField<String>
+    @JvmStatic
+    val restrictedTicketTypes: SetSearchField<String>
         get() {
             val types = SetSearchField<String>()
             if (canRead(ProjectRolePermissionCollections.TASKS)) {

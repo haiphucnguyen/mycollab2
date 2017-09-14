@@ -40,11 +40,11 @@ object ProjectLinkGenerator {
         return "project/milestone/list/" + UrlEncodeDecoder.encode(projectId)
     }
 
-    @JvmStatic fun generateMilestonePreviewLink(projectId: Int, milestoneId: Int): String {
+    @JvmStatic fun generateMilestonePreviewLink(projectId: Int, milestoneId: Int?): String {
         return "project/milestone/preview/" + GenericLinkUtils.encodeParam(projectId, milestoneId)
     }
 
-    @JvmStatic fun generateMilestonePreviewFullLink(siteUrl: String, projectId: Int, milestoneId: Int): String {
+    @JvmStatic fun generateMilestonePreviewFullLink(siteUrl: String, projectId: Int, milestoneId: Int?): String {
         return siteUrl + URL_PREFIX_PARAM + generateMilestonePreviewLink(projectId, milestoneId)
     }
 
@@ -86,11 +86,11 @@ object ProjectLinkGenerator {
         return "project/risk/list/" + UrlEncodeDecoder.encode(projectId)
     }
 
-    @JvmStatic fun generateRiskPreviewLink(projectId: Int, riskId: Int): String {
+    @JvmStatic fun generateRiskPreviewLink(projectId: Int, riskId: Int?): String {
         return "project/risk/preview/" + GenericLinkUtils.encodeParam(projectId, riskId)
     }
 
-    @JvmStatic fun generateRiskPreviewFullLink(siteUrl: String, projectId: Int, riskId: Int): String {
+    @JvmStatic fun generateRiskPreviewFullLink(siteUrl: String, projectId: Int, riskId: Int?): String {
         return siteUrl + URL_PREFIX_PARAM + generateRiskPreviewLink(projectId, riskId)
     }
 
@@ -110,19 +110,19 @@ object ProjectLinkGenerator {
         return "project/message/list/" + UrlEncodeDecoder.encode(projectId)
     }
 
-    @JvmStatic fun generateMessagePreviewLink(projectId: Int, messageId: Int): String {
+    @JvmStatic fun generateMessagePreviewLink(projectId: Int, messageId: Int?): String {
         return "project/message/preview/" + GenericLinkUtils.encodeParam(projectId, messageId)
     }
 
-    @JvmStatic fun generateMessagePreviewFullLink(siteUrl: String, projectId: Int, messageId: Int): String {
+    @JvmStatic fun generateMessagePreviewFullLink(siteUrl: String, projectId: Int, messageId: Int?): String {
         return siteUrl + URL_PREFIX_PARAM + generateMessagePreviewLink(projectId, messageId)
     }
 
-    @JvmStatic fun generateBugComponentPreviewLink(projectId: Int, componentId: Int): String {
+    @JvmStatic fun generateBugComponentPreviewLink(projectId: Int, componentId: Int?): String {
         return "project/component/preview/" + GenericLinkUtils.encodeParam(projectId, componentId)
     }
 
-    @JvmStatic fun generateBugComponentPreviewFullLink(siteUrl: String, projectId: Int, componentId: Int): String {
+    @JvmStatic fun generateBugComponentPreviewFullLink(siteUrl: String, projectId: Int, componentId: Int?): String {
         return siteUrl + URL_PREFIX_PARAM + generateBugComponentPreviewLink(projectId, componentId)
     }
 
@@ -162,11 +162,11 @@ object ProjectLinkGenerator {
         return "project/invoice/list/" + UrlEncodeDecoder.encode(projectId)
     }
 
-    @JvmStatic fun generateRolePreviewLink(projectId: Int, roleId: Int): String {
+    @JvmStatic fun generateRolePreviewLink(projectId: Int, roleId: Int?): String {
         return "project/role/preview/" + GenericLinkUtils.encodeParam(projectId, roleId)
     }
 
-    @JvmStatic fun generateRolePreviewFullLink(siteUrl: String, projectId: Int, roleId: Int): String {
+    @JvmStatic fun generateRolePreviewFullLink(siteUrl: String, projectId: Int, roleId: Int?): String {
         return siteUrl + URL_PREFIX_PARAM + generateRolePreviewLink(projectId, roleId)
     }
 
