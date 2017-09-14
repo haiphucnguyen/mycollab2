@@ -22,7 +22,6 @@ public class ActiveUserComboBox extends ListSelect {
     private static final long serialVersionUID = 1L;
 
     public ActiveUserComboBox() {
-        super();
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
         this.setRows(1);
 

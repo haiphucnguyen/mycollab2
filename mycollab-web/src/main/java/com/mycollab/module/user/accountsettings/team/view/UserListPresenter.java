@@ -36,7 +36,8 @@ public class UserListPresenter extends AbstractPresenter<UserListView> {
         if (data == null) {
             criteria = new UserSearchCriteria();
             criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-            criteria.setRegisterStatuses(new SetSearchField<>(RegisterStatusConstants.ACTIVE, RegisterStatusConstants.NOT_LOG_IN_YET));
+            criteria.setRegisterStatuses(new SetSearchField<>(RegisterStatusConstants.ACTIVE,
+                    RegisterStatusConstants.NOT_LOG_IN_YET));
         } else {
             criteria = (UserSearchCriteria) data.getParams();
         }

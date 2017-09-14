@@ -63,14 +63,14 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
 
         verify(billingAccountService).updateSelectiveWithSession(billingAccountArgument.capture(), strArgument.capture());
         Assert.assertEquals("", strArgument.getValue());
-        Assert.assertEquals(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME,
+        Assert.assertEquals(AccountReminderStatusContants.INSTANCE.getREMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME(),
                 billingAccountArgument.getValue().getReminderstatus());
     }
 
     @Test
     public void testSendEmailForAccountExceed25daysAndAfter29days() throws JobExecutionException {
         BillingAccountWithOwners account = new BillingAccountWithOwners();
-        account.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME);
+        account.setReminderstatus(AccountReminderStatusContants.INSTANCE.getREMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME());
         SimpleUser owner = new SimpleUser();
         account.setOwners(Collections.singletonList(owner));
 
@@ -89,14 +89,14 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
 
         verify(billingAccountService).updateSelectiveWithSession(billingAccountArgument.capture(), strArgument.capture());
         Assert.assertEquals("", strArgument.getValue());
-        Assert.assertEquals(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME,
+        Assert.assertEquals(AccountReminderStatusContants.INSTANCE.getREMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME(),
                 billingAccountArgument.getValue().getReminderstatus());
     }
 
     @Test
     public void testAccountIsExpireAndConvertToFreePlan() throws JobExecutionException {
         BillingAccountWithOwners account = new BillingAccountWithOwners();
-        account.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME);
+        account.setReminderstatus(AccountReminderStatusContants.INSTANCE.getREMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME());
         SimpleUser owner = new SimpleUser();
         account.setOwners(Collections.singletonList(owner));
 

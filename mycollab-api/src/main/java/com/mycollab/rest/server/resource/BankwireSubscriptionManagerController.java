@@ -84,7 +84,7 @@ public class BankwireSubscriptionManagerController {
             BillingAccountExample accountEx = new BillingAccountExample();
             accountEx.createCriteria().andIdEqualTo(Integer.parseInt(arr[0]));
             BillingAccount billingAccount = new BillingAccount();
-            billingAccount.setStatus(AccountStatusConstants.ACTIVE);
+            billingAccount.setStatus(AccountStatusConstants.INSTANCE.getACTIVE());
             billingAccount.setPaymentmethod("Bankwire");
             billingAccountMapper.updateByExampleSelective(billingAccount, accountEx);
 
