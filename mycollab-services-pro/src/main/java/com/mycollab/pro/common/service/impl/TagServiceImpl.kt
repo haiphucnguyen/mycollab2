@@ -32,7 +32,7 @@ class TagServiceImpl : DefaultCrudService<Int, Tag>(), TagService {
     override val crudMapper: ICrudGenericDAO<Int, Tag>
         get() = tagMapper as ICrudGenericDAO<Int, Tag>
 
-    override fun saveWithSession(record: Tag, username: String): Int {
+    override fun saveWithSession(record: Tag, username: String?): Int {
         val ex = TagExample()
         ex.createCriteria().andTypeEqualTo(record.type).andTypeidEqualTo(record.typeid).andNameEqualTo(record.name)
         val count = tagMapper!!.countByExample(ex)

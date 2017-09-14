@@ -65,19 +65,19 @@ class ItemTimeLoggingServiceImpl : DefaultService<Int, ItemTimeLogging, ItemTime
     override val searchMapper: ISearchableDAO<ItemTimeLoggingSearchCriteria>?
         get() = itemTimeLoggingMapperExt
 
-    override fun saveWithSession(record: ItemTimeLogging, username: String): Int {
-        val result = super.saveWithSession(record, username)!!
+    override fun saveWithSession(record: ItemTimeLogging, username: String?): Int {
+        val result = super.saveWithSession(record, username)
         cleanCache(record.saccountid)
         return result
     }
 
-    override fun updateWithSession(record: ItemTimeLogging, username: String): Int {
+    override fun updateWithSession(record: ItemTimeLogging, username: String?): Int {
         val result = super.updateWithSession(record, username)
         cleanCache(record.saccountid)
         return result
     }
 
-    override fun massRemoveWithSession(items: List<ItemTimeLogging>, username: String, accountId: Int) {
+    override fun massRemoveWithSession(items: List<ItemTimeLogging>, username: String?, accountId: Int) {
         super.massRemoveWithSession(items, username, accountId)
         cleanCache(accountId)
     }

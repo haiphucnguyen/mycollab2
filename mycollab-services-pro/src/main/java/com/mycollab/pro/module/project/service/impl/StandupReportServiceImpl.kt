@@ -74,18 +74,18 @@ class StandupReportServiceImpl : DefaultService<Int, StandupReportWithBLOBs, Sta
 
     }
 
-    override fun saveWithSession(record: StandupReportWithBLOBs, username: String): Int {
+    override fun saveWithSession(record: StandupReportWithBLOBs, username: String?): Int {
         val result = super.saveWithSession(record, username)
         asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(ProjectActivityStreamService::class.java)))
         return result
     }
 
-    override fun updateWithSession(record: StandupReportWithBLOBs, username: String): Int {
+    override fun updateWithSession(record: StandupReportWithBLOBs, username: String?): Int {
         asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(ProjectActivityStreamService::class.java)))
         return super.updateWithSession(record, username)
     }
 
-    override fun massRemoveWithSession(reports: List<StandupReportWithBLOBs>, username: String, sAccountId: Int) {
+    override fun massRemoveWithSession(reports: List<StandupReportWithBLOBs>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(reports, username, sAccountId)
         asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectActivityStreamService::class.java)))
     }

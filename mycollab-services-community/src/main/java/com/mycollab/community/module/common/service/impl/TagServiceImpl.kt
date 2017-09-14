@@ -29,15 +29,15 @@ class TagServiceImpl : TagService {
         return 0
     }
 
-    override fun saveWithSession(@CacheKey record: Tag, username: String): Int {
+    override fun saveWithSession(@CacheKey record: Tag, username: String?): Int {
         return -1
     }
 
-    override fun updateWithSession(@CacheKey record: Tag, username: String): Int {
+    override fun updateWithSession(@CacheKey record: Tag, username: String?): Int {
         return -1
     }
 
-    override fun updateSelectiveWithSession(@CacheKey record: Tag, username: String): Int? {
+    override fun updateSelectiveWithSession(@CacheKey record: Tag, username: String?): Int? {
         return null
     }
 
@@ -49,11 +49,11 @@ class TagServiceImpl : TagService {
         return null;
     }
 
-    override fun removeWithSession(item: Tag, username: String, sAccountId: Int) {
+    override fun removeWithSession(item: Tag, username: String?, sAccountId: Int) {
 
     }
 
-    override fun massRemoveWithSession(items: List<Tag>, username: String, sAccountId: Int) {
+    override fun massRemoveWithSession(items: List<Tag>, username: String?, sAccountId: Int) {
 
     }
 }

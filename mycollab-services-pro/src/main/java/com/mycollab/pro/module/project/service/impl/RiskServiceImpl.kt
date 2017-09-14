@@ -50,18 +50,18 @@ class RiskServiceImpl : DefaultService<Int, Risk, RiskSearchCriteria>(), RiskSer
         return riskMapperExt!!.findRiskById(riskId!!)
     }
 
-    override fun saveWithSession(record: Risk, username: String): Int {
+    override fun saveWithSession(record: Risk, username: String?): Int {
         val recordId = super.saveWithSession(record, username)
         asyncEventBus!!.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java)))
         return recordId
     }
 
-    override fun updateSelectiveWithSession(record: Risk, username: String): Int? {
+    override fun updateSelectiveWithSession(record: Risk, username: String?): Int? {
         cleanAfterUpdate(record)
         return super.updateSelectiveWithSession(record, username)
     }
 
-    override fun updateWithSession(record: Risk, username: String): Int {
+    override fun updateWithSession(record: Risk, username: String?): Int {
         cleanAfterUpdate(record)
         return super.updateWithSession(record, username)
     }
@@ -77,7 +77,7 @@ class RiskServiceImpl : DefaultService<Int, Risk, RiskSearchCriteria>(), RiskSer
         asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java)))
     }
 
-    override fun massRemoveWithSession(items: List<Risk>, username: String, sAccountId: Int) {
+    override fun massRemoveWithSession(items: List<Risk>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(items, username, sAccountId)
         asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java)))
         val event = DeleteProjectRiskEvent(items.toTypedArray(), username, sAccountId)
