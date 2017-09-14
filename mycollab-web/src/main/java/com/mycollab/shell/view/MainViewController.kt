@@ -23,14 +23,14 @@ class MainViewController(val container: MainView) : AbstractController() {
         this.register(object : ApplicationEventListener<ShellEvent.GotoCrmModule> {
             @Subscribe override fun handle(event: ShellEvent.GotoCrmModule) {
                 val crmModulePresenter = PresenterResolver.getPresenter(CrmModulePresenter::class.java)
-                val screenData = CrmModuleScreenData.GotoModule(event.data as Array<String>)
+                val screenData = CrmModuleScreenData.GotoModule(event.data as? Array<String>)
                 crmModulePresenter.go(container, screenData)
             }
         })
         this.register(object : ApplicationEventListener<ShellEvent.GotoProjectModule> {
             @Subscribe override fun handle(event: ShellEvent.GotoProjectModule) {
                 val prjPresenter = PresenterResolver.getPresenter(ProjectModulePresenter::class.java)
-                val screenData = ProjectModuleScreenData.GotoModule(event.data as Array<String>)
+                val screenData = ProjectModuleScreenData.GotoModule(event.data as? Array<String>)
                 prjPresenter.go(container, screenData)
             }
         })

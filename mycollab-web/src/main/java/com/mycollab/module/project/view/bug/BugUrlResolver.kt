@@ -14,6 +14,7 @@ import com.mycollab.module.tracker.service.BugService
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.mvp.PageActionChain
+import java.util.*
 
 /**
  * @author MyCollab Ltd
@@ -54,7 +55,7 @@ class BugUrlResolver : ProjectUrlResolver() {
                 val bugService = AppContextUtil.getSpringBean(BugService::class.java)
                 val bug = bugService.findByProjectAndBugKey(itemKey, prjShortName, AppUI.accountId)
                 when (bug) {
-                    null -> throw ResourceNotFoundException("Can not edit bug with path $params")
+                    null -> throw ResourceNotFoundException("Can not edit bug with path ${Arrays.toString(params)}")
                     else -> {
                         val chain = PageActionChain(ProjectScreenData.Goto(bug.projectid), BugScreenData.Edit(bug))
                         EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))

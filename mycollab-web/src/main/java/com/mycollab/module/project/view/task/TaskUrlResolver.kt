@@ -14,6 +14,7 @@ import com.mycollab.module.project.view.parameters.TaskScreenData
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.mvp.PageActionChain
+import java.util.*
 
 /**
  * @author MyCollab Ltd
@@ -61,7 +62,7 @@ class TaskUrlResolver : ProjectUrlResolver() {
             if (ProjectLinkParams.isValidParam(params[0])) {
                 val prjShortName = ProjectLinkParams.getProjectShortName(params[0])
                 val itemKey = ProjectLinkParams.getItemKey(params[0])
-                val task = taskService.findByProjectAndTaskKey(itemKey, prjShortName, AppUI.accountId) ?: throw ResourceNotFoundException("Can not find task with path $params")
+                val task = taskService.findByProjectAndTaskKey(itemKey, prjShortName, AppUI.accountId) ?: throw ResourceNotFoundException("Can not find task with path ${Arrays.toString(params)}")
                 val chain = PageActionChain(ProjectScreenData.Goto(task.projectid),
                         TaskScreenData.Edit(task))
                 EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))

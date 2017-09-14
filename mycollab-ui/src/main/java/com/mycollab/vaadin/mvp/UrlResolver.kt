@@ -4,6 +4,7 @@ import com.mycollab.core.MyCollabException
 import com.mycollab.vaadin.ui.NotificationUtil
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.util.*
 
 /**
  * @author MyCollab Ltd
@@ -55,7 +56,7 @@ abstract class UrlResolver {
                 defaultUrlResolver?.handle(*params) ?: handlePage()
             }
         } catch (e: Exception) {
-            LOG.error("Error while navigation $params", e)
+            LOG.error("Error while navigation ${Arrays.toString(params)} for the resolver $this", e)
             defaultPageErrorHandler()
             NotificationUtil.showRecordNotExistNotification()
         }

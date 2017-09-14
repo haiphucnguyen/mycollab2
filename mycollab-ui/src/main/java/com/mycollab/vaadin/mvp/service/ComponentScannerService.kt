@@ -36,14 +36,16 @@ open class ComponentScannerService : InitializingBean {
         val candidateComponents = provider.findCandidateComponents("com.mycollab.**.view")
         candidateComponents.forEach {
             val cls = ClassUtils.resolveClassName(it.beanClassName, ClassUtils.getDefaultClassLoader())
-            if (cls.getAnnotation(ViewComponent::class.java) != null) viewClasses.add(cls)
-            else if (IPresenter::class.java.isAssignableFrom(cls)) presenterClasses.add(cls as Class<IPresenter<out PageView>>)
+            when {
+                cls.getAnnotation(ViewComponent::class.java) != null -> viewClasses.add(cls)
+                IPresenter::class.java.isAssignableFrom(cls) -> presenterClasses.add(cls as Class<IPresenter<out PageView>>)
+            }
         }
 
-        LOG.info("Resolved view and presenter classes")
+        LOG.info("Resolved view and presenter classes $this that has ${viewClasses.size} view classes and ${presenterClasses.size} presenter classes")
     }
 
-    fun getViewImplCls(viewClass: Class<*>): Class<*>? {
+    open fun getViewImplCls(viewClass: Class<*>): Class<*>? {
         val aClass = cacheViewClasses[viewClass]
         return when (aClass) {
             null -> {
@@ -59,7 +61,7 @@ open class ComponentScannerService : InitializingBean {
         }
     }
 
-    fun getPresenterImplCls(presenterClass: Class<*>): Class<*>? {
+    open fun getPresenterImplCls(presenterClass: Class<*>): Class<*>? {
         val aClass = cachePresenterClasses[presenterClass]
         return when (aClass) {
             null -> {

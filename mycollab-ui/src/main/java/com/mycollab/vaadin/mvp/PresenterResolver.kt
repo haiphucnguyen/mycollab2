@@ -18,19 +18,22 @@ object PresenterResolver {
             MyCollabSession.putCurrentUIVariable(MyCollabSession.PRESENTER_VAL, presenterMap)
         }
 
-        var value: P? = presenterMap[presenterClass] as P
-        if (value == null) {
-            value = initPresenter(presenterClass)
-            presenterMap.put(presenterClass, value)
-            return value
-        } else {
-            val policy = presenterClass.getAnnotation(LoadPolicy::class.java)
-            if (policy != null && policy.scope == ViewScope.PROTOTYPE) {
-                value = initPresenter(presenterClass)
-                presenterMap.put(presenterClass, value)
-            }
-            return value
-        }
+        var value: P? = presenterMap[presenterClass] as? P
+         return when (value) {
+             null -> {
+                 value = initPresenter(presenterClass)
+                 presenterMap.put(presenterClass, value)
+                 value
+             }
+             else -> {
+                 val policy = presenterClass.getAnnotation(LoadPolicy::class.java)
+                 if (policy != null && policy.scope == ViewScope.PROTOTYPE) {
+                     value = initPresenter(presenterClass)
+                     presenterMap.put(presenterClass, value)
+                 }
+                 value
+             }
+         }
     }
 
     @JvmStatic fun <P : IPresenter<*>> getPresenterAndInitView(presenterClass: Class<P>): P {
