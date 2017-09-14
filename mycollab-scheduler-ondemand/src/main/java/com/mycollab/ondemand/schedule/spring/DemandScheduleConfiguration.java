@@ -14,7 +14,7 @@ import javax.sql.DataSource;
  * @author MyCollab Ltd.
  * @since 4.6.0
  */
-//@Configuration
+@Configuration
 @Profile("production")
 public class DemandScheduleConfiguration {
 

@@ -22,11 +22,11 @@ open class ComponentScannerService : InitializingBean {
         val LOG: Logger = LoggerFactory.getLogger(ComponentScannerService::class.java)
     }
 
-    var viewClasses: Set<Class<*>> = mutableSetOf()
-    var presenterClasses: Set<Class<IPresenter<out PageView>>> = mutableSetOf()
+    private val viewClasses: MutableSet<Class<*>> = mutableSetOf()
+    private val presenterClasses: MutableSet<Class<IPresenter<out PageView>>> = mutableSetOf()
 
-    var cacheViewClasses: Map<Class<*>, Class<*>> = mutableMapOf()
-    var cachePresenterClasses: Map<Class<*>, Class<*>> = mutableMapOf()
+    private val cacheViewClasses: MutableMap<Class<*>, Class<*>> = mutableMapOf()
+    private val cachePresenterClasses: MutableMap<Class<*>, Class<*>> = mutableMapOf()
 
     override fun afterPropertiesSet() {
         val provider = ClassPathScanningCandidateComponentProvider(false)
@@ -36,8 +36,8 @@ open class ComponentScannerService : InitializingBean {
         val candidateComponents = provider.findCandidateComponents("com.mycollab.**.view")
         candidateComponents.forEach {
             val cls = ClassUtils.resolveClassName(it.beanClassName, ClassUtils.getDefaultClassLoader())
-            if (cls.getAnnotation(ViewComponent::class.java) != null) viewClasses += cls
-            else if (IPresenter::class.java.isAssignableFrom(cls)) presenterClasses += cls as Class<IPresenter<out PageView>>
+            if (cls.getAnnotation(ViewComponent::class.java) != null) viewClasses.add(cls)
+            else if (IPresenter::class.java.isAssignableFrom(cls)) presenterClasses.add(cls as Class<IPresenter<out PageView>>)
         }
 
         LOG.info("Resolved view and presenter classes")

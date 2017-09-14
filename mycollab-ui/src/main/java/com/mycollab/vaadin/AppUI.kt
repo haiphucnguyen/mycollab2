@@ -30,7 +30,7 @@ abstract class AppUI : UI() {
     protected var currentContext: UserUIContext? = null
 
     private var initialSubDomain = "1"
-    var currentFragmentUrl = ""
+    var currentFragmentUrl:String? = null
     private var billingAccount: SimpleBillingAccount? = null
     private val attributes = mutableMapOf<String, Any?>()
 
