@@ -26,14 +26,14 @@ public class MilestoneListPresenter extends ProjectGenericPresenter<MilestoneLis
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.MILESTONES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
             MilestoneContainer milestoneContainer = (MilestoneContainer) container;
             milestoneContainer.navigateToContainer(ProjectTypeConstants.MILESTONE);
             milestoneContainer.setContent(view);
 
             view.lazyLoadView();
 
-            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadcrumb.gotoMilestoneList();
         } else {
             throw new SecureAccessException();

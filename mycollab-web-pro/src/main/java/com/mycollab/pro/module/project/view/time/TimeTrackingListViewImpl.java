@@ -124,7 +124,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
             AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow();
             UI.getCurrent().addWindow(addTimeEntry);
         }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
-        createBtn.setVisible(!CurrentProjectVariables.INSTANCE.isProjectArchived() &&
+        createBtn.setVisible(!CurrentProjectVariables.isProjectArchived() &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TIME));
         groupWrapLayout.addComponent(createBtn);
         searchPanel.addHeaderRight(groupWrapLayout);
@@ -178,7 +178,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
 
     @Override
     public void setSearchCriteria(ItemTimeLoggingSearchCriteria searchCriteria) {
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.TIME)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TIME)) {
             this.searchCriteria = searchCriteria;
             displayTimeEntries();
         } else {
@@ -255,7 +255,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
                 }
             } else if ("delete".equals(event.getFieldName())) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

@@ -24,7 +24,7 @@ public class TimeTrackingPresenter extends AbstractPresenter<TimeTrackingView> {
         projectModule.addView(view);
         view.display();
 
-        ReportBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ReportBreadcrumb.class);
+        ReportBreadcrumb breadCrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
         breadCrumb.gotoTimesheetReport();
     }
 }

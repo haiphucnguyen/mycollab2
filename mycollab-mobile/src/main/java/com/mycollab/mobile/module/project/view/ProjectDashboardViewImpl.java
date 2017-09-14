@@ -84,7 +84,7 @@ public class ProjectDashboardViewImpl extends ProjectMobileMenuPageView implemen
     @Override
     public void displayDashboard() {
         mainLayout.removeAllComponents();
-        SimpleProject currentProject = CurrentProjectVariables.INSTANCE.getProject();
+        SimpleProject currentProject = CurrentProjectVariables.getProject();
         VerticalLayout projectInfo = new VerticalLayout();
         projectInfo.setStyleName("project-info-layout");
         projectInfo.setWidth("100%");
@@ -161,8 +161,7 @@ public class ProjectDashboardViewImpl extends ProjectMobileMenuPageView implemen
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateProjectLink(CurrentProjectVariables.INSTANCE
-                .getProject().getId()), UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));
+        AppUI.addFragment(ProjectLinkGenerator.generateProjectLink(CurrentProjectVariables.getProject().getId()), UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));
     }
 
     private static class NavigationButtonWrap extends MHorizontalLayout {

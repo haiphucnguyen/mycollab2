@@ -594,7 +594,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         protected void doShow() {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
-            if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.TASKS)) {
+            if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
                 timeInput.setValue("");
                 timeInput.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TIME_FORMAT));
                 String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :

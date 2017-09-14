@@ -72,7 +72,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         if (SiteConfiguration.isCommunityEdition()) {
             addToSideBar(dateInfoComp, peopleInfoComp, followerSheet);
         } else {
-            timeLogComp = ViewManager.INSTANCE.getCacheComponent(RiskTimeLogSheet.class);
+            timeLogComp = ViewManager.getCacheComponent(RiskTimeLogSheet.class);
             addToSideBar(dateInfoComp, peopleInfoComp, timeLogComp, followerSheet);
         }
     }

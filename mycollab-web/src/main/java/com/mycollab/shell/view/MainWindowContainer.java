@@ -25,7 +25,7 @@ public class MainWindowContainer extends CssLayout {
     private static final long serialVersionUID = 1L;
 
     public MainWindowContainer() {
-        this.setCaption(AppUI.Companion.getSiteName());
+        this.setCaption(AppUI.getSiteName());
         ControllerRegistry.addController(new ShellController(this));
         this.setSizeFull();
         this.setDefaultView();

@@ -15,12 +15,8 @@ import com.mycollab.vaadin.ui.ThemeManager
 import com.vaadin.server.Page
 import com.vaadin.server.VaadinRequest
 import com.vaadin.ui.UI
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-
-import java.util.Currency
-import java.util.HashMap
-import java.util.Locale
+import java.util.*
 
 /**
  * @author MyCollab Ltd.
@@ -89,19 +85,23 @@ abstract class AppUI : UI() {
         /**
          * @return
          */
-        @JvmStatic val siteUrl: String
+        @JvmStatic
+        val siteUrl: String
             get() {
                 val deploymentMode = AppContextUtil.getSpringBean(IDeploymentMode::class.java)
                 return deploymentMode.getSiteUrl(getBillingAccount()!!.subdomain)
             }
 
+        @JvmStatic
         fun getBillingAccount(): SimpleBillingAccount? {
             return instance.billingAccount
         }
 
+        @JvmStatic
         val instance: AppUI
             get() = UI.getCurrent() as AppUI
 
+        @JvmStatic
         val subDomain: String
             get() = instance.billingAccount!!.subdomain
 
@@ -110,7 +110,8 @@ abstract class AppUI : UI() {
          *
          * @return account id of current user. Return 0 if can not get
          */
-        @JvmStatic val accountId: Int
+        @JvmStatic
+        val accountId: Int
             get() {
                 try {
                     return instance.billingAccount!!.id
@@ -120,35 +121,42 @@ abstract class AppUI : UI() {
 
             }
 
+        @JvmStatic
         val siteName: String
             get() {
-                try {
-                    return MoreObjects.firstNonNull(instance.billingAccount!!.sitename, SiteConfiguration.getDefaultSiteName())
+                return try {
+                    MoreObjects.firstNonNull(instance.billingAccount!!.sitename, SiteConfiguration.getDefaultSiteName())
                 } catch (e: Exception) {
-                    return SiteConfiguration.getDefaultSiteName()
+                    SiteConfiguration.getDefaultSiteName()
                 }
-
             }
 
+        @JvmStatic
         val defaultCurrency: Currency
             get() = instance.billingAccount!!.currencyInstance
 
+        @JvmStatic
         val longDateFormat: String
             get() = instance.billingAccount!!.longDateFormatInstance
 
+        @JvmStatic
         fun showEmailPublicly(): Boolean? {
             return instance.billingAccount!!.displayemailpublicly
         }
 
+        @JvmStatic
         val shortDateFormat: String
             get() = instance.billingAccount!!.shortDateFormatInstance
 
+        @JvmStatic
         val dateFormat: String
             get() = instance.billingAccount!!.dateFormatInstance
 
+        @JvmStatic
         val dateTimeFormat: String
             get() = instance.billingAccount!!.dateTimeFormatInstance
 
+        @JvmStatic
         val defaultLocale: Locale
             get() = instance.billingAccount!!.localeInstance
 
@@ -156,7 +164,8 @@ abstract class AppUI : UI() {
          * @param fragment
          * @param windowTitle
          */
-        @JvmStatic fun addFragment(fragment: String, windowTitle: String) {
+        @JvmStatic
+        fun addFragment(fragment: String, windowTitle: String) {
             Page.getCurrent().setUriFragment(fragment, false)
             Page.getCurrent().setTitle(String.format("%s [%s]", StringUtils.trim(windowTitle, 150), siteName))
         }

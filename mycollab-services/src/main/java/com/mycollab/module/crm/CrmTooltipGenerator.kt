@@ -4,24 +4,20 @@ import com.hp.gagawa.java.elements.Div
 import com.hp.gagawa.java.elements.Table
 import com.hp.gagawa.java.elements.Td
 import com.hp.gagawa.java.elements.Tr
-import com.mycollab.html.TooltipBuilder
 import com.mycollab.common.i18n.GenericI18Enum
 import com.mycollab.core.utils.DateTimeUtils
+import com.mycollab.core.utils.StringUtils.trimHtmlTags
+import com.mycollab.html.TooltipBuilder
+import com.mycollab.html.TooltipBuilder.Companion.buildCellLink
+import com.mycollab.html.TooltipBuilder.Companion.buildCellName
+import com.mycollab.html.TooltipBuilder.Companion.buildCellValue
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.crm.domain.*
 import com.mycollab.module.crm.i18n.*
 import com.mycollab.module.file.StorageUtils
 import com.mycollab.module.user.AccountLinkGenerator
 import org.slf4j.LoggerFactory
-
-import java.util.Locale
-import java.util.TimeZone
-
-import com.mycollab.html.TooltipBuilder.*
-import com.mycollab.core.utils.StringUtils.trimHtmlTags
-import com.mycollab.html.TooltipBuilder.Companion.buildCellLink
-import com.mycollab.html.TooltipBuilder.Companion.buildCellName
-import com.mycollab.html.TooltipBuilder.Companion.buildCellValue
+import java.util.*
 
 /**
  * @author MyCollab Ltd.
@@ -50,6 +46,7 @@ object CrmTooltipGenerator {
         return value?.toString() ?: ""
     }
 
+    @JvmStatic
     fun generateToolTipAccount(locale: Locale, account: SimpleAccount?, siteURL: String): String? {
         if (account == null) {
             return generateTooltipNull(locale)
@@ -112,6 +109,7 @@ object CrmTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateToolTipContact(locale: Locale, dateFormat: String, contact: SimpleContact?, siteURL: String,
                                userTimeZone: TimeZone): String? {
         if (contact == null) {
@@ -184,6 +182,7 @@ object CrmTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateTooltipCampaign(locale: Locale, dateFormat: String, campaign: SimpleCampaign?, siteURl: String, userTimeZone: TimeZone): String? {
         if (campaign == null)
             return generateTooltipNull(locale)
@@ -253,6 +252,7 @@ object CrmTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateTooltipLead(locale: Locale, lead: SimpleLead?, siteURl: String, userTimeZone: TimeZone): String? {
         if (lead == null)
             return generateTooltipNull(locale)
@@ -347,6 +347,7 @@ object CrmTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateTooltipOpportunity(locale: Locale, dateFormat: String, opportunity: SimpleOpportunity?, siteURl: String, userTimeZone: TimeZone): String? {
         if (opportunity == null)
             return generateTooltipNull(locale)
@@ -417,6 +418,7 @@ object CrmTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateTooltipCases(locale: Locale, cases: SimpleCase?, siteURL: String, userTimeZone: TimeZone): String? {
         if (cases == null)
             return generateTooltipNull(locale)
@@ -483,6 +485,7 @@ object CrmTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateToolTipMeeting(locale: Locale, dateTimeFormat: String, meeting: SimpleMeeting?, siteUrl: String, userTimeZone: TimeZone): String? {
         if (meeting == null)
             return generateTooltipNull(locale)
@@ -523,6 +526,7 @@ object CrmTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateToolTipCall(locale: Locale, dateFormat: String, call: SimpleCall?, siteURL: String, userTimeZone: TimeZone): String? {
         if (call == null)
             return generateTooltipNull(locale)
@@ -569,6 +573,7 @@ object CrmTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateToolTipCrmTask(locale: Locale, dateFormat: String, task: SimpleCrmTask?, siteURL: String,
                                userTimeZone: TimeZone): String? {
         if (task == null)
@@ -619,7 +624,5 @@ object CrmTooltipGenerator {
             LOG.error("Error while generate CRM Task tooltip servlet", e)
             return null
         }
-
     }
-
 }

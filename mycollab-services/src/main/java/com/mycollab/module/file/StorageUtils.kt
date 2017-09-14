@@ -21,7 +21,7 @@ object StorageUtils {
         return AppContextUtil.getSpringBean(AbstractStorageService::class.java).getEntityLogoPath(accountId, id, size)
     }
 
-    @JvmStatic fun getFavIconPath(sAccountId: Int?, favIconName: String): String {
+    @JvmStatic fun getFavIconPath(sAccountId: Int?, favIconName: String?): String {
         return AppContextUtil.getSpringBean(AbstractStorageService::class.java).getFavIconPath(sAccountId, favIconName)
     }
 

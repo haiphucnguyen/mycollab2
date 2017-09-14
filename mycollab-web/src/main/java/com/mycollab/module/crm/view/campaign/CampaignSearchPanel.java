@@ -35,13 +35,13 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
     private boolean canCreateCampaign;
 
     private static Param[] paramFields = new Param[]{
-            CampaignSearchCriteria.Companion.getP_campaignName(),
-            CampaignSearchCriteria.Companion.getP_startDate(),
-            CampaignSearchCriteria.Companion.getP_endDate(),
-            CampaignSearchCriteria.Companion.getP_createdtime(),
-            CampaignSearchCriteria.Companion.getP_lastUpdatedTime(),
-            CampaignSearchCriteria.Companion.getP_types(), CampaignSearchCriteria.Companion.getP_statuses(),
-            CampaignSearchCriteria.Companion.getP_assignee()};
+            CampaignSearchCriteria.p_campaignName,
+            CampaignSearchCriteria.p_startDate,
+            CampaignSearchCriteria.p_endDate,
+            CampaignSearchCriteria.p_createdtime,
+            CampaignSearchCriteria.p_lastUpdatedTime,
+            CampaignSearchCriteria.p_types, CampaignSearchCriteria.p_statuses,
+            CampaignSearchCriteria.p_assignee};
 
     public CampaignSearchPanel(boolean canCreateCampaign) {
         this.canCreateCampaign = canCreateCampaign;

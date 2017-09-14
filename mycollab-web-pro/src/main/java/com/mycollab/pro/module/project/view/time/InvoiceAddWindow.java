@@ -57,7 +57,7 @@ public class InvoiceAddWindow extends MWindow {
                     EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceUpdateAdded(this, invoice));
                 }
                 AttachmentUploadField uploadField = invoiceEditFormFieldFactory.getAttachmentUploadField();
-                String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), invoice.getProjectid(),
+                String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), invoice.getProjectid(),
                         ProjectTypeConstants.INVOICE, "" + invoice.getId());
                 uploadField.saveContentsToRepo(attachPath);
                 close();

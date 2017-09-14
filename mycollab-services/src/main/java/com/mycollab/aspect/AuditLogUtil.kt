@@ -21,7 +21,7 @@ import java.util.Date
 object AuditLogUtil {
     private val LOG = LoggerFactory.getLogger(AuditLogUtil::class.java)
 
-    fun getChangeSet(oldObj: Any, newObj: Any, excludeFields: List<String>, isSelective: Boolean): String? {
+    @JvmStatic fun getChangeSet(oldObj: Any, newObj: Any, excludeFields: List<String>, isSelective: Boolean): String? {
         val cl = oldObj.javaClass
         val changeItems = ArrayList<AuditChangeItem>()
 
@@ -64,14 +64,12 @@ object AuditLogUtil {
     }
 
     private fun getValue(obj: Any?): String {
-        return if (obj != null) {
-            if (obj is Date) {
-                formatDateW3C(obj as Date)
-            } else {
-                obj.toString()
+        return when {
+            obj != null -> when (obj) {
+                is Date -> formatDateW3C(obj)
+                else -> obj.toString()
             }
-        } else {
-            ""
+            else -> ""
         }
     }
 

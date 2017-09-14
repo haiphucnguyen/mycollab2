@@ -121,7 +121,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         groupWrapLayout.addComponent(toggleShowColumnsBtn);
         toggleShowButton();
 
-        if (CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.TASKS)) {
+        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS)) {
             MButton addNewColumnBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.ACTION_NEW_COLUMN),
                     clickEvent -> UI.getCurrent().addWindow(new AddNewColumnWindow(this, ProjectTypeConstants.TASK, "status")))
                     .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
@@ -131,7 +131,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         MButton deleteColumnBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.ACTION_DELETE_COLUMNS),
                 clickEvent -> UI.getCurrent().addWindow(new DeleteColumnWindow(this, ProjectTypeConstants.TASK)))
                 .withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_DANGER);
-        deleteColumnBtn.setVisible(CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.TASKS));
+        deleteColumnBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
 
         MButton advanceDisplayBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST),
                 clickEvent -> EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null)))
@@ -413,7 +413,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
             String typeVal = optionVal.getTypeval();
             boolean canRename = !typeVal.equals(StatusI18nEnum.Closed.name()) && !typeVal.equals(StatusI18nEnum.Open.name());
-            boolean canExecute = CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.TASKS);
+            boolean canExecute = CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS);
 
             OptionPopupContent popupContent = new OptionPopupContent();
 
@@ -465,7 +465,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                         NotificationUtil.showErrorNotification(UserUIContext.getMessage(TaskI18nEnum.ERROR_CAN_NOT_DELETE_COLUMN_HAS_TASK));
                     } else {
                         ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                AppUI.Companion.getSiteName()),
+                                AppUI.getSiteName()),
                                 UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -504,7 +504,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         }
 
         void toggleShowButton() {
-            if (CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.TASKS)) {
+            if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS)) {
                 if (Boolean.FALSE.equals(optionVal.getIsshow())) {
                     hideColumnBtn.setCaption(UserUIContext.getMessage(TaskI18nEnum.ACTION_SHOW_COLUMN));
                     hideColumnBtn.setIcon(FontAwesome.TOGGLE_UP);
@@ -549,7 +549,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                 task.setProjectid(CurrentProjectVariables.getProjectId());
                 task.setPercentagecomplete(0d);
                 task.setStatus(optionVal.getTypeval());
-                task.setProjectShortname(CurrentProjectVariables.INSTANCE.getShortName());
+                task.setProjectShortname(CurrentProjectVariables.getShortName());
                 final MVerticalLayout layout = new MVerticalLayout();
                 layout.addStyleName("kanban-item");
                 final TextField taskNameField = new TextField();

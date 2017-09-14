@@ -61,7 +61,7 @@ public class BugReadPresenter extends ProjectGenericPresenter<BugReadView> {
             @Override
             public void onDelete(final SimpleBug data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -129,7 +129,7 @@ public class BugReadPresenter extends ProjectGenericPresenter<BugReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.BUGS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
             if (data.getParams() instanceof Integer) {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 SimpleBug bug = bugService.findById((Integer) data.getParams(), AppUI.getAccountId());
@@ -139,7 +139,7 @@ public class BugReadPresenter extends ProjectGenericPresenter<BugReadView> {
                     bugContainer.addComponent(view);
                     view.previewItem(bug);
 
-                    ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+                    ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
                     breadcrumb.gotoBugRead(bug);
                 } else {
                     throw new ResourceNotFoundException();

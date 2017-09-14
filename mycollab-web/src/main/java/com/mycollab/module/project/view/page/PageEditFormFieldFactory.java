@@ -38,7 +38,7 @@ class PageEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Pa
             config.setToolbarCanCollapse(true);
             config.setWidth("100%");
 
-            String appUrl = AppUI.Companion.getSiteUrl();
+            String appUrl = AppUI.getSiteUrl();
             String params = String.format("path=%s&createdUser=%s&sAccountId=%d", page.getPath(),
                     UserUIContext.getUsername(), AppUI.getAccountId());
             if (appUrl.endsWith("/")) {

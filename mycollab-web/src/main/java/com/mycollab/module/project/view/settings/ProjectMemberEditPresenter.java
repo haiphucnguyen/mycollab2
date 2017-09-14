@@ -61,7 +61,7 @@ public class ProjectMemberEditPresenter extends AbstractPresenter<ProjectMemberE
             SimpleProjectMember member = (SimpleProjectMember) data.getParams();
             view.editItem(member);
 
-            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             if (member.getId() == null) {
                 breadcrumb.gotoUserAdd();
             } else {

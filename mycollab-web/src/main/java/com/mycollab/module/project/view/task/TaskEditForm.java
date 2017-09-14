@@ -79,7 +79,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                     TaskEditFormFieldFactory taskEditFormFieldFactory = (TaskEditFormFieldFactory) fieldFactory;
 
                     AttachmentUploadField uploadField = taskEditFormFieldFactory.getAttachmentUploadField();
-                    String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
+                    String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
                             ProjectTypeConstants.TASK, "" + taskId);
                     uploadField.saveContentsToRepo(attachPath);
 

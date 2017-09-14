@@ -418,7 +418,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         protected void doShow() {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
-            if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.BUGS)) {
+            if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
                 timeInput.setValue("");
                 timeInput.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TIME_FORMAT));
                 String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :

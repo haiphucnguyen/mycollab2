@@ -43,7 +43,7 @@ public class UserListPresenter extends AbstractPresenter<UserListView> {
 
         view.setSearchCriteria(criteria);
 
-        AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
+        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
         breadcrumb.gotoUserList();
     }
 }

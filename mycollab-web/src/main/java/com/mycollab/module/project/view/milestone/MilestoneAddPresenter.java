@@ -80,7 +80,7 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
             SimpleMilestone milestone = (SimpleMilestone) data.getParams();
             view.editItem(milestone);
 
-            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             if (milestone.getId() == null) {
                 breadcrumb.gotoMilestoneAdd();
             } else {
@@ -103,7 +103,7 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
             milestoneService.updateWithSession(milestone, UserUIContext.getUsername());
         }
         AttachmentUploadField uploadField = view.getAttachUploadField();
-        String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), milestone.getProjectid(),
+        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), milestone.getProjectid(),
                 ProjectTypeConstants.MILESTONE, "" + milestone.getId());
         uploadField.saveContentsToRepo(attachPath);
 
@@ -118,7 +118,7 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
             int openAssignmentsCount = genericTaskService.getTotalCount(searchCriteria);
             if (openAssignmentsCount > 0) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, AppUI.getSiteName()),
                         UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_CLOSE_SUB_ASSIGNMENTS),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

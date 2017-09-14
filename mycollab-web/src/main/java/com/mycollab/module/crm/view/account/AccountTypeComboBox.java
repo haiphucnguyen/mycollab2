@@ -11,9 +11,8 @@ public class AccountTypeComboBox extends I18nValueComboBox {
     private static final long serialVersionUID = 1L;
 
     public AccountTypeComboBox() {
-        super();
         setCaption(null);
-        this.loadData(CrmDataTypeFactory.INSTANCE.getAccountTypeList());
+        this.loadData(CrmDataTypeFactory.accountTypeList);
     }
 
 }

@@ -117,7 +117,7 @@ public class MeetingReadPresenter extends AbstractCrmPresenter<MeetingReadView> 
             view.previewItem(meeting);
             super.onGo(container, data);
 
-            AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateMeetingPreviewLink(meeting.getId()), UserUIContext
+            AppUI.addFragment(CrmLinkGenerator.generateMeetingPreviewLink(meeting.getId()), UserUIContext
                     .getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                             "Meeting", meeting.getSubject()));
         } else {

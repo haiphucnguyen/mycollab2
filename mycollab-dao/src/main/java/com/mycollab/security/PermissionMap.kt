@@ -101,92 +101,72 @@ class PermissionMap : ValuedBean() {
          * @param json
          * @return
          */
-        fun fromJsonString(json: String): PermissionMap {
+        @JvmStatic fun fromJsonString(json: String): PermissionMap {
             return JsonDeSerializer.fromJson(json, PermissionMap::class.java)
         }
 
         /**
          * @return
          */
-        fun buildAdminPermissionCollection(): PermissionMap {
+        @JvmStatic fun buildAdminPermissionCollection(): PermissionMap {
             val permissionMap = PermissionMap()
-            for (element in RolePermissionCollections.CRM_PERMISSIONS_ARR) {
-                permissionMap.addPath(element.key, AccessPermissionFlag.ACCESS)
-            }
+            RolePermissionCollections.CRM_PERMISSIONS_ARR.forEach { (key) -> permissionMap.addPath(key, AccessPermissionFlag.ACCESS) }
 
-            for (element in RolePermissionCollections.ACCOUNT_PERMISSION_ARR) {
-                if (element.key == RolePermissionCollections.ACCOUNT_BILLING || element.key == RolePermissionCollections.ACCOUNT_THEME) {
-                    permissionMap.addPath(element.key, BooleanPermissionFlag.TRUE)
-                } else {
-                    permissionMap.addPath(element.key, AccessPermissionFlag.ACCESS)
+            RolePermissionCollections.ACCOUNT_PERMISSION_ARR.forEach { (key) ->
+                when (key) {
+                    RolePermissionCollections.ACCOUNT_BILLING, RolePermissionCollections.ACCOUNT_THEME -> permissionMap.addPath(key, BooleanPermissionFlag.TRUE)
+                    else -> permissionMap.addPath(key, AccessPermissionFlag.ACCESS)
                 }
             }
 
-            for (element in RolePermissionCollections.PROJECT_PERMISSION_ARR) {
-                permissionMap.addPath(element.key, BooleanPermissionFlag.TRUE)
-            }
+            RolePermissionCollections.PROJECT_PERMISSION_ARR.forEach { (key) -> permissionMap.addPath(key, BooleanPermissionFlag.TRUE) }
 
-            for (element in RolePermissionCollections.DOCUMENT_PERMISSION_ARR) {
-                permissionMap.addPath(element.key, AccessPermissionFlag.ACCESS)
-            }
+            RolePermissionCollections.DOCUMENT_PERMISSION_ARR.forEach { (key) -> permissionMap.addPath(key, AccessPermissionFlag.ACCESS) }
             return permissionMap
         }
 
         /**
          * @return
          */
-        fun buildEmployeePermissionCollection(): PermissionMap {
+        @JvmStatic fun buildEmployeePermissionCollection(): PermissionMap {
             val permissionMap = PermissionMap()
-            for (element in RolePermissionCollections.CRM_PERMISSIONS_ARR) {
-                permissionMap.addPath(element.key, AccessPermissionFlag.READ_ONLY)
-            }
+            RolePermissionCollections.CRM_PERMISSIONS_ARR.forEach { permissionMap.addPath(it.key, AccessPermissionFlag.READ_ONLY) }
 
-            for (element in RolePermissionCollections.ACCOUNT_PERMISSION_ARR) {
-                if (element.key == RolePermissionCollections.ACCOUNT_BILLING || element.key == RolePermissionCollections.ACCOUNT_THEME) {
-                    permissionMap.addPath(element.key, BooleanPermissionFlag.FALSE)
-                } else {
-                    permissionMap.addPath(element.key, AccessPermissionFlag.READ_ONLY)
+            RolePermissionCollections.ACCOUNT_PERMISSION_ARR.forEach {
+                when {
+                    it.key == RolePermissionCollections.ACCOUNT_BILLING || it.key == RolePermissionCollections.ACCOUNT_THEME -> permissionMap.addPath(it.key, BooleanPermissionFlag.FALSE)
+                    else -> permissionMap.addPath(it.key, AccessPermissionFlag.READ_ONLY)
                 }
             }
 
-            for (element in RolePermissionCollections.PROJECT_PERMISSION_ARR) {
-                if (RolePermissionCollections.CREATE_NEW_PROJECT.equals(element.key)) {
-                    permissionMap.addPath(element.key, BooleanPermissionFlag.TRUE)
-                } else {
-                    permissionMap.addPath(element.key, BooleanPermissionFlag.FALSE)
+            RolePermissionCollections.PROJECT_PERMISSION_ARR.forEach {
+                when {
+                    it.key == RolePermissionCollections.CREATE_NEW_PROJECT -> permissionMap.addPath(it.key, BooleanPermissionFlag.TRUE)
+                    else -> permissionMap.addPath(it.key, BooleanPermissionFlag.FALSE)
                 }
             }
 
-            for (element in RolePermissionCollections.DOCUMENT_PERMISSION_ARR) {
-                permissionMap.addPath(element.key, AccessPermissionFlag.READ_WRITE)
-            }
+            RolePermissionCollections.DOCUMENT_PERMISSION_ARR.forEach { permissionMap.addPath(it.key, AccessPermissionFlag.READ_WRITE) }
             return permissionMap
         }
 
         /**
          * @return
          */
-        fun buildGuestPermissionCollection(): PermissionMap {
+        @JvmStatic fun buildGuestPermissionCollection(): PermissionMap {
             val permissionMap = PermissionMap()
-            for (element in RolePermissionCollections.CRM_PERMISSIONS_ARR) {
-                permissionMap.addPath(element.key, AccessPermissionFlag.NO_ACCESS)
-            }
+            RolePermissionCollections.CRM_PERMISSIONS_ARR.forEach { element -> permissionMap.addPath(element.key, AccessPermissionFlag.NO_ACCESS) }
 
-            for (element in RolePermissionCollections.ACCOUNT_PERMISSION_ARR) {
-                if (element.key == RolePermissionCollections.ACCOUNT_BILLING || element.key == RolePermissionCollections.ACCOUNT_THEME) {
-                    permissionMap.addPath(element.key, BooleanPermissionFlag.FALSE)
-                } else {
-                    permissionMap.addPath(element.key, AccessPermissionFlag.NO_ACCESS)
+            RolePermissionCollections.ACCOUNT_PERMISSION_ARR.forEach {
+                when {
+                    it.key == RolePermissionCollections.ACCOUNT_BILLING || it.key == RolePermissionCollections.ACCOUNT_THEME -> permissionMap.addPath(it.key, BooleanPermissionFlag.FALSE)
+                    else -> permissionMap.addPath(it.key, AccessPermissionFlag.NO_ACCESS)
                 }
             }
 
-            for (element in RolePermissionCollections.PROJECT_PERMISSION_ARR) {
-                permissionMap.addPath(element.key, BooleanPermissionFlag.FALSE)
-            }
+            RolePermissionCollections.PROJECT_PERMISSION_ARR.forEach { permissionMap.addPath(it.key, BooleanPermissionFlag.FALSE) }
 
-            for (element in RolePermissionCollections.DOCUMENT_PERMISSION_ARR) {
-                permissionMap.addPath(element.key, AccessPermissionFlag.NO_ACCESS)
-            }
+            RolePermissionCollections.DOCUMENT_PERMISSION_ARR.forEach { permissionMap.addPath(it.key, AccessPermissionFlag.NO_ACCESS) }
             return permissionMap
         }
     }

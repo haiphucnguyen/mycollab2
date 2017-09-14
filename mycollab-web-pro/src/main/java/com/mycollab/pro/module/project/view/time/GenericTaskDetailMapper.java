@@ -68,7 +68,7 @@ public class GenericTaskDetailMapper {
             SimpleStandupReport standup = service.findById(typeId, sAccountId);
             if (standup != null) {
                 name = Jsoup.parse(DateTimeUtils.convertToStringWithUserTimeZone(
-                        standup.getCreatedtime(), AppUI.Companion.getDateFormat(), UserUIContext.getUserLocale(), timeZone)).html();
+                        standup.getCreatedtime(), AppUI.getDateFormat(), UserUIContext.getUserLocale(), timeZone)).html();
             }
         }
     }

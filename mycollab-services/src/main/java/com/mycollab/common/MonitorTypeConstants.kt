@@ -6,7 +6,12 @@ package com.mycollab.common
  */
 object MonitorTypeConstants {
 
+    @JvmField
     val CREATE_ACTION = "Create"
+
+    @JvmField
     val UPDATE_ACTION = "Update"
+
+    @JvmField
     val ADD_COMMENT_ACTION = "AddComment"
 }

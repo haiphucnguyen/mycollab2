@@ -80,13 +80,13 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
 
         tableItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
             SimpleComponent bugComponent = tableItem.getBeanByIndex(itemId);
-            LabelLink b = new LabelLink(bugComponent.getName(), ProjectLinkBuilder.INSTANCE
+            LabelLink b = new LabelLink(bugComponent.getName(), ProjectLinkBuilder
                     .generateComponentPreviewFullLink(bugComponent.getProjectid(), bugComponent.getId()));
             if (bugComponent.getStatus() != null && bugComponent.getStatus().equals(StatusI18nEnum.Closed.name())) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);
             }
-            b.setDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipComponent(UserUIContext.getUserLocale(),
-                    bugComponent, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            b.setDescription(ProjectTooltipGenerator.generateToolTipComponent(UserUIContext.getUserLocale(),
+                    bugComponent, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
         });
 
@@ -133,7 +133,7 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
         layout.addComponent(this.selectOptionButton);
 
         tableActionControls = new DefaultMassItemActionHandlerContainer();
-        if (CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.COMPONENTS)) {
+        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.COMPONENTS)) {
             tableActionControls.addDeleteActionItem();
         }
 

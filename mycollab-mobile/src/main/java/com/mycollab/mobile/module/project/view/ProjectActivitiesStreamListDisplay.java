@@ -115,7 +115,7 @@ class ProjectActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityS
         Img userAvatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
                 .getAvatarPath(activity.getCreatedUserAvatarId(), 16))
                 .setCSSClass(UIConstants.CIRCLE_BOX);
-        A userLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(activity.getExtratypeid(), activity
+        A userLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(activity.getExtratypeid(), activity
                 .getCreateduser())).appendText(StringUtils.trim(activity.getCreatedUserFullName(), 30, true));
         return new DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE, userLink).write();
     }
@@ -124,11 +124,11 @@ class ProjectActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityS
         Text image = new Text(ProjectAssetsManager.getAsset(activity.getType()).getHtml());
         A itemLink = new A();
         if (ProjectTypeConstants.TASK.equals(activity.getType()) || ProjectTypeConstants.BUG.equals(activity.getType())) {
-            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(
+            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(
                     activity.getProjectShortName(), activity.getExtratypeid(),
                     activity.getType(), activity.getItemKey() + ""));
         } else {
-            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(
+            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(
                     activity.getProjectShortName(), activity.getExtratypeid(),
                     activity.getType(), activity.getTypeid()));
         }

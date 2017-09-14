@@ -65,7 +65,7 @@ public class ProjectFormAttachmentUploadField extends MVerticalLayout {
     }
 
     public void getAttachments(Integer projectId, String type, Integer typeId) {
-        attachmentPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), projectId, type, "" + typeId);
+        attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), projectId, type, "" + typeId);
         List<Content> attachments = resourceService.getContents(attachmentPath);
         rowWrap.removeAllComponents();
         if (CollectionUtils.isNotEmpty(attachments)) {
@@ -80,7 +80,7 @@ public class ProjectFormAttachmentUploadField extends MVerticalLayout {
     }
 
     public void saveContentsToRepo(Integer projectId, String type, Integer typeId) {
-        attachmentPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), projectId, type, "" + typeId);
+        attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), projectId, type, "" + typeId);
         MobileAttachmentUtils.saveContentsToRepo(attachmentPath, fileStores);
     }
 

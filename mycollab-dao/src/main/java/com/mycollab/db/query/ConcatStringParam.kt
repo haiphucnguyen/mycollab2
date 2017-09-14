@@ -45,6 +45,6 @@ class ConcatStringParam(id: String, private val table: String, private val colum
 
     companion object {
 
-        var OPTIONS = arrayOf(CONTAINS, NOT_CONTAINS)
+        @JvmField val OPTIONS = arrayOf(CONTAINS, NOT_CONTAINS)
     }
 }

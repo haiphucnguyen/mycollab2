@@ -31,7 +31,7 @@ public class TagListPresenter extends AbstractPresenter<ITagListView> implements
         projectViewContainer.setContent(view);
         Object params = data.getParams();
         if (params instanceof Tag || params == null) {
-            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadcrumb.gotoTagList();
             view.displayTags((Tag) params);
         } else {

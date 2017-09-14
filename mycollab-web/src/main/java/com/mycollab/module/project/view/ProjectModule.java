@@ -85,7 +85,7 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
             newBtn.setIcon(FontAwesome.PLUS_CIRCLE);
             OptionPopupContent contentLayout = new OptionPopupContent();
             MButton newPrjButton = new MButton(UserUIContext.getMessage(ProjectI18nEnum.SINGLE), clickEvent -> {
-                UI.getCurrent().addWindow(ViewManager.INSTANCE.getCacheComponent(AbstractProjectAddWindow.class));
+                UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class));
                 newBtn.setPopupVisible(false);
             }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
             contentLayout.addOption(newPrjButton);

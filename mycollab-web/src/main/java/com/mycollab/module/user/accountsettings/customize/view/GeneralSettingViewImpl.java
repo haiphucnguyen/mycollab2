@@ -66,7 +66,7 @@ public class GeneralSettingViewImpl extends AbstractVerticalPageView implements 
     public void displayView() {
         removeAllComponents();
 
-        billingAccount = AppUI.Companion.getBillingAccount();
+        billingAccount = AppUI.getBillingAccount();
         FormContainer formContainer = new FormContainer();
         this.addComponent(formContainer);
 
@@ -244,8 +244,7 @@ public class GeneralSettingViewImpl extends AbstractVerticalPageView implements 
                     try {
                         AccountFavIconService favIconService = AppContextUtil.getSpringBean(AccountFavIconService.class);
                         BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageData));
-                        String newFavIconPath = favIconService.upload(UserUIContext.getUsername(), image, AppUI.Companion
-                                .getAccountId());
+                        String newFavIconPath = favIconService.upload(UserUIContext.getUsername(), image, AppUI.getAccountId());
                         favIconRes.setSource(new ExternalResource(StorageUtils.getFavIconPath(billingAccount.getId(),
                                 newFavIconPath)));
                         Page.getCurrent().getJavaScript().execute("window.location.reload();");

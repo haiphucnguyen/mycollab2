@@ -73,7 +73,7 @@ public class LogoEditWindow extends MWindow {
         MHorizontalLayout previewBox = new MHorizontalLayout().withMargin(new MarginInfo(false, true, true, false))
                 .withFullWidth();
 
-        final String logoPath = AppUI.Companion.getBillingAccount().getLogopath();
+        final String logoPath = AppUI.getBillingAccount().getLogopath();
         Resource defaultPhoto = AccountAssetsResolver.createLogoResource(logoPath, 150);
         previewImage = new Embedded(null, defaultPhoto);
         previewImage.setWidth("100px");

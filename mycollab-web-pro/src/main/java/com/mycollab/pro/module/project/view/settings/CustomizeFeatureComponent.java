@@ -34,7 +34,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
     }
 
     private void constructBody() {
-        final ProjectCustomizeView customizeView = CurrentProjectVariables.INSTANCE.getFeatures();
+        final ProjectCustomizeView customizeView = CurrentProjectVariables.getFeatures();
 
         MVerticalLayout body = new MVerticalLayout().withFullWidth();
 
@@ -116,9 +116,9 @@ public class CustomizeFeatureComponent extends BlockWidget {
                 projectCustomizeService.updateWithSession(customizeView, UserUIContext.getUsername());
             }
 
-            CurrentProjectVariables.INSTANCE.getProject().setCustomizeView(customizeView);
+            CurrentProjectVariables.getProject().setCustomizeView(customizeView);
             EventBusFactory.getInstance().post(new CustomizeUIEvent.UpdateFeaturesList(CustomizeFeatureComponent.this));
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE).withVisible(CurrentProjectVariables.INSTANCE.isAdmin());
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE).withVisible(CurrentProjectVariables.isAdmin());
 
         body.addComponent(updateFeaturesBtn);
         this.addToBody(body);

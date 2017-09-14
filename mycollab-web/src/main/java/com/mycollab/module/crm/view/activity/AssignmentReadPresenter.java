@@ -50,7 +50,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
             @Override
             public void onDelete(final SimpleCrmTask data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -124,7 +124,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
 
             super.onGo(container, data);
             view.previewItem(task);
-            AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateTaskPreviewLink(task.getId()),
+            AppUI.addFragment(CrmLinkGenerator.generateTaskPreviewLink(task.getId()),
                     UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                             UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getSubject()));
 

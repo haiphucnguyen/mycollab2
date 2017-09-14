@@ -23,7 +23,7 @@ public class MembersWeeklyHoursPresenter extends AbstractPresenter<MembersWeekly
         reportContainer.addView(view);
         view.display();
 
-        ReportBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ReportBreadcrumb.class);
+        ReportBreadcrumb breadCrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
         breadCrumb.gotoWeeklyTimingReport();
     }
 }

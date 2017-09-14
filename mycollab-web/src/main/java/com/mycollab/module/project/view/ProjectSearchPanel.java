@@ -46,7 +46,7 @@ public class ProjectSearchPanel extends DefaultGenericSearchPanel<ProjectSearchC
     @Override
     protected Component buildExtraControls() {
         MButton createBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.NEW),
-                clickEvent -> UI.getCurrent().addWindow(ViewManager.INSTANCE.getCacheComponent(AbstractProjectAddWindow.class)))
+                clickEvent -> UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class)))
                 .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
         createBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
         return createBtn;

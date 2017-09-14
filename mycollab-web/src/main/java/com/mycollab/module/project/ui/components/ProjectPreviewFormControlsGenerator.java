@@ -57,8 +57,8 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 
         if (permissionItem != null) {
             boolean canWrite = CurrentProjectVariables.canWrite(permissionItem);
-            boolean canAccess = CurrentProjectVariables.INSTANCE.canAccess(permissionItem);
-            boolean canRead = CurrentProjectVariables.INSTANCE.canRead(permissionItem);
+            boolean canAccess = CurrentProjectVariables.canAccess(permissionItem);
+            boolean canRead = CurrentProjectVariables.canRead(permissionItem);
 
             if ((buttonEnableFlags & ASSIGN_BTN_PRESENTED) == ASSIGN_BTN_PRESENTED) {
                 MButton assignBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ASSIGN), clickEvent -> {

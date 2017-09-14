@@ -35,12 +35,12 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
     private boolean canCreateCase;
 
     private static Param[] paramFields = new Param[]{
-            CaseSearchCriteria.Companion.getP_account(), CaseSearchCriteria.Companion.getP_priority(),
-            CaseSearchCriteria.Companion.getP_status(), CaseSearchCriteria.Companion.getP_email(),
-            CaseSearchCriteria.Companion.getP_origin(), CaseSearchCriteria.Companion.getP_reason(),
-            CaseSearchCriteria.Companion.getP_subject(), CaseSearchCriteria.Companion.getP_type(),
-            CaseSearchCriteria.Companion.getP_createdtime(),
-            CaseSearchCriteria.Companion.getP_lastupdatedtime()};
+            CaseSearchCriteria.p_account, CaseSearchCriteria.p_priority,
+            CaseSearchCriteria.p_status, CaseSearchCriteria.p_email,
+            CaseSearchCriteria.p_origin, CaseSearchCriteria.p_reason,
+            CaseSearchCriteria.p_subject, CaseSearchCriteria.p_type,
+            CaseSearchCriteria.p_createdtime,
+            CaseSearchCriteria.p_lastupdatedtime};
 
     public CaseSearchPanel(boolean canCreateCase) {
         this.canCreateCase = canCreateCase;

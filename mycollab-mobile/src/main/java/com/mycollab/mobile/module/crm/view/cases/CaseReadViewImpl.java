@@ -86,7 +86,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateCasePreviewLink(beanItem.getId()),
+        AppUI.addFragment(CrmLinkGenerator.generateCasePreviewLink(beanItem.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(CaseI18nEnum.SINGLE), beanItem.getSubject()));
     }

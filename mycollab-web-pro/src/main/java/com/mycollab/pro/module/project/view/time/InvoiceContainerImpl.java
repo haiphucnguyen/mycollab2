@@ -103,7 +103,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
     @Override
     public void display() {
         removeAllComponents();
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.INVOICE)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE)) {
             ELabel invoiceIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml()).withWidthUndefined();
 
             Component headerRightLayout = createHeaderRight();
@@ -274,7 +274,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
 
             PrintButton printBtn = new PrintButton();
             printBtn.setStyleName(WebThemes.BUTTON_OPTION);
-            printBtn.setVisible(CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.INVOICE));
+            printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE));
             printBtn.doPrint(invoice, new FormReportLayout(ProjectTypeConstants.INVOICE, Invoice.Field.noid.name(),
                     InvoiceDefaultFormLayoutFactory.getForm(), Invoice.Field.id.name()));
 
@@ -285,7 +285,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
 
             MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -297,7 +297,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
                             }
                         });
             }).withStyleName(WebThemes.BUTTON_DANGER).withIcon(FontAwesome.TRASH_O);
-            deleteBtn.setVisible(CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.INVOICE));
+            deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INVOICE));
 
             MHorizontalLayout buttonControls = new MHorizontalLayout(printBtn, editBtn, deleteBtn);
             header.with(headerLbl, buttonControls).expand(headerLbl);

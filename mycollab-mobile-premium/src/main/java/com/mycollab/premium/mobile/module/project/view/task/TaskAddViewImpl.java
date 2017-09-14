@@ -73,7 +73,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
             AppUI.addFragment("project/task/add/" + UrlEncodeDecoder.encode(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(TaskI18nEnum.NEW));
         } else {
-            AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateTaskEditLink(beanItem.getTaskkey(),
+            AppUI.addFragment(ProjectLinkGenerator.generateTaskEditLink(beanItem.getTaskkey(),
                     beanItem.getProjectShortname()), beanItem.getName());
         }
     }

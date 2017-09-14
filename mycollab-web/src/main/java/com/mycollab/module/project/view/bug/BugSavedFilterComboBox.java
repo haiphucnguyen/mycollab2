@@ -45,7 +45,7 @@ public class BugSavedFilterComboBox extends SavedFilterComboBox {
                                 Arrays.asList(BugStatus.Open.name(), BugStatus.ReOpen.name()))));
 
         SearchQueryInfo overdueTaskQuery = new SearchQueryInfo(OVERDUE_BUGS, UserUIContext.getMessage(BugI18nEnum.VAL_OVERDUE_BUGS),
-                new SearchFieldInfo(SearchField.AND, BugSearchCriteria.p_duedate, DateParam.Companion.getBEFORE(),
+                new SearchFieldInfo(SearchField.AND, BugSearchCriteria.p_duedate, DateParam.BEFORE,
                         new VariableInjector() {
                             @Override
                             public Object eval() {

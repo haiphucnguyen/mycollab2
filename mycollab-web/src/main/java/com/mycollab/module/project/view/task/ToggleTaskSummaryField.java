@@ -83,7 +83,7 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
                     Integer countOfOpenSubTasks = projectTaskService.getCountOfOpenSubTasks(task.getId());
                     if (countOfOpenSubTasks > 0) {
                         ConfirmDialogExt.show(UI.getCurrent(),
-                                UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, AppUI.Companion.getSiteName()),
+                                UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, AppUI.getSiteName()),
                                 UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_CLOSE_SUB_ASSIGNMENTS),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -124,10 +124,10 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
             buttonControls.with(instantEditBtn);
         }
 
-        if (canRemove && CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.TASKS)) {
+        if (canRemove && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS)) {
             MButton removeBtn = new MButton("", clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -176,8 +176,8 @@ public class ToggleTaskSummaryField extends AbstractToggleSummaryField {
 
     private String buildTaskLink() {
         String linkName = StringUtils.trim(task.getName(), maxLength, true);
-        A taskLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.INSTANCE.generateTaskPreviewFullLink(task.getTaskkey(),
-                CurrentProjectVariables.INSTANCE.getShortName())).appendText(linkName).setStyle("display:inline");
+        A taskLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(),
+                CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
         Div resultDiv = new DivLessFormatter().appendChild(taskLink);
         if (task.isOverdue()) {
             taskLink.setCSSClass("overdue");

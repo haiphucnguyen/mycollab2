@@ -97,7 +97,7 @@ public class UserReadViewImpl extends AbstractVerticalPageView implements UserRe
         userFormLayout.addComponent(new Label(UserUIContext.formatDate(user.getDateofbirth())),
                 UserUIContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 0, 1);
 
-        if (Boolean.TRUE.equals(AppUI.Companion.showEmailPublicly())) {
+        if (Boolean.TRUE.equals(AppUI.showEmailPublicly())) {
             userFormLayout.addComponent(ELabel.html(new A("mailto:" + user.getEmail()).appendText(user.getEmail()).write()),
                     UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL), 0, 2);
         } else {

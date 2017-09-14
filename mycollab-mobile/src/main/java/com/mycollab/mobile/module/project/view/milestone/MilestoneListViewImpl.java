@@ -139,7 +139,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
         public Component generateRow(IBeanList<SimpleMilestone> host, final SimpleMilestone milestone, int rowIndex) {
             MVerticalLayout milestoneInfoLayout = new MVerticalLayout().withSpacing(false).withFullWidth();
 
-            A milestoneLink = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink(CurrentProjectVariables.INSTANCE
+            A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink(CurrentProjectVariables
                     .getProjectId(), milestone.getId())).appendChild(new Span().appendText(milestone.getName()));
             if (milestone.isCompleted()) {
                 milestoneLink.setCSSClass(MobileUIConstants.LINK_COMPLETED);
@@ -165,7 +165,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
             metaLayout.addComponent(endDateInfo);
             metaLayout.addComponent(ELabel.EMPTY_SPACE());
 
-            A assigneeLink = new A(ProjectLinkGenerator.INSTANCE.generateProjectMemberLink(CurrentProjectVariables.getProjectId(),
+            A assigneeLink = new A(ProjectLinkGenerator.generateProjectMemberLink(CurrentProjectVariables.getProjectId(),
                     milestone.getAssignuser())).appendText(StringUtils.trim(milestone.getOwnerFullName(), 30, true));
             Div assigneeDiv = new Div().appendChild(new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class).getAvatarPath(milestone
                     .getOwnerAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX)).appendChild(assigneeLink);

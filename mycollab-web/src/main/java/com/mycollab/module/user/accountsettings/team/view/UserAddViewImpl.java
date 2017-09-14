@@ -372,7 +372,7 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
                     permissionMap = role.getPermissionMap();
                 }
             } else {
-                permissionMap = PermissionMap.Companion.buildAdminPermissionCollection();
+                permissionMap = PermissionMap.buildAdminPermissionCollection();
             }
 
             if (permissionMap != null) {

@@ -59,7 +59,7 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         mainBody.with(constructTopMenuCustomizeBlock(), constructVTabsheetCustomizeBlock(), constructButtonCustomizeBlock());
 
 
-        ELabel viewTitle = ELabel.h2(SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getGENERAL_SETTING()).getHtml() + " " +
+        ELabel viewTitle = ELabel.h2(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING).getHtml() + " " +
                 UserUIContext.getMessage(ThemeI18nEnum.OPT_THEME_CUSTOMIZATION));
 
         MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE),

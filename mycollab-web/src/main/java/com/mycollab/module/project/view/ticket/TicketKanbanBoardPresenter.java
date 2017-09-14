@@ -31,13 +31,13 @@ public class TicketKanbanBoardPresenter extends ProjectGenericPresenter<TicketKa
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.TASKS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
             TicketContainer ticketContainer = (TicketContainer) container;
             ticketContainer.navigateToContainer(ProjectTypeConstants.TASK);
             ticketContainer.setContent(view);
             view.display();
 
-            ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoTaskKanbanView();
         } else {
             throw new SecureAccessException();

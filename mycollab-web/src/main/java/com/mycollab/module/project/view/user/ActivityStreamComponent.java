@@ -191,7 +191,7 @@ public class ActivityStreamComponent extends CssLayout {
             DivLessFormatter div = new DivLessFormatter();
             Img userAvatar = new Img("", StorageUtils.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
-            A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(
+            A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                     activityStream.getExtratypeid(), activityStream.getCreateduser()));
 
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(activityStream.getCreateduser()));
@@ -210,10 +210,10 @@ public class ActivityStreamComponent extends CssLayout {
 
             if (ProjectTypeConstants.TASK.equals(activityStream.getType())
                     || ProjectTypeConstants.BUG.equals(activityStream.getType())) {
-                itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(activityStream.getProjectShortName(),
+                itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(activityStream.getProjectShortName(),
                         activityStream.getExtratypeid(), activityStream.getType(), activityStream.getItemKey() + ""));
             } else {
-                itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(activityStream.getProjectShortName(),
+                itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(activityStream.getProjectShortName(),
                         activityStream.getExtratypeid(), activityStream.getType(), activityStream.getTypeid()));
             }
 
@@ -228,7 +228,7 @@ public class ActivityStreamComponent extends CssLayout {
         private String buildProjectValue(ProjectActivityStream activityStream) {
             DivLessFormatter div = new DivLessFormatter();
             Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml());
-            A prjLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectFullLink(activityStream.getProjectId())).setId("tag" + TOOLTIP_ID);
+            A prjLink = new A(ProjectLinkBuilder.generateProjectFullLink(activityStream.getProjectId())).setId("tag" + TOOLTIP_ID);
             prjLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.PROJECT,
                     activityStream.getProjectId() + ""));
             prjLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

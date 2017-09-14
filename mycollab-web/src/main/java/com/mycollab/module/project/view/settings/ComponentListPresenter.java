@@ -69,7 +69,7 @@ public class ComponentListPresenter extends ProjectGenericListPresenter<Componen
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
             BugComponentContainer trackerContainer = (BugComponentContainer) container;
             trackerContainer.removeAllComponents();
             trackerContainer.addComponent(view);
@@ -83,7 +83,7 @@ public class ComponentListPresenter extends ProjectGenericListPresenter<Componen
                 view.showNoItemView();
             }
 
-            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadcrumb.gotoComponentList();
         } else {
             NotificationUtil.showMessagePermissionAlert();

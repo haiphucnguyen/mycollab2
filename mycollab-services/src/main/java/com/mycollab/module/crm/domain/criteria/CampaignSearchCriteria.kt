@@ -28,28 +28,28 @@ class CampaignSearchCriteria : SearchCriteria() {
     companion object {
         private val serialVersionUID = 1L
 
-        val p_campaignName: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_NAME,
+        @JvmField val p_campaignName: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_NAME,
                 StringParam("name", "m_crm_campaign", "campaignName"))
 
-        val p_startDate: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_START_DATE,
+        @JvmField val p_startDate: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_START_DATE,
                 DateParam("startdate", "m_crm_campaign", "startDate"))
 
-        val p_endDate: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_END_DATE,
+        @JvmField val p_endDate: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_END_DATE,
                 DateParam("enddate", "m_crm_campaign", "endDate"))
 
-        val p_createdtime: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_CREATED_TIME,
+        @JvmField val p_createdtime: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_CREATED_TIME,
                 DateParam("createdtime", "m_crm_campaign", "createdTime"))
 
-        val p_lastUpdatedTime: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN,
+        @JvmField val p_lastUpdatedTime: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN,
                 GenericI18Enum.FORM_LAST_UPDATED_TIME, DateParam("lastUpdatedTime", "m_crm_campaign", "lastUpdatedTime"))
 
-        val p_types: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_TYPE,
+        @JvmField val p_types: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_TYPE,
                 I18nStringListParam("type", "m_crm_campaign", "type", listOf(*CrmDataTypeFactory.campaignTypeList)))
 
-        val p_statuses: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_STATUS,
+        @JvmField val p_statuses: Param = CacheParamMapper.register(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_STATUS,
                 I18nStringListParam("status", "m_crm_campaign", "status", listOf(*CrmDataTypeFactory.campaignStatusList)))
 
-        val p_assignee: Param = CacheParamMapper.register<PropertyListParam<*>>(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_ASSIGNEE,
+        @JvmField val p_assignee: Param = CacheParamMapper.register<PropertyListParam<*>>(CrmTypeConstants.CAMPAIGN, GenericI18Enum.FORM_ASSIGNEE,
                 PropertyListParam<String>("assignuser", "m_crm_campaign", "assignUser"))
     }
 }

@@ -159,7 +159,7 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
 
         MButton deleteBtn = new MButton("", clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -178,14 +178,14 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
         blockTop.addComponent(buttonControls);
         blockTop.setComponentAlignment(buttonControls, Alignment.TOP_RIGHT);
 
-        A memberLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(member.getProjectid(), member
+        A memberLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(member.getProjectid(), member
                 .getUsername())).appendText(member.getMemberFullName()).setTitle(member.getMemberFullName());
         ELabel memberNameLbl = ELabel.h3(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
 
         blockTop.with(memberNameLbl, ELabel.hr());
 
-        String roleLink = String.format("<a href=\"%s%s%s\"", AppUI.Companion.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
-                ProjectLinkGenerator.INSTANCE.generateRolePreviewLink(member.getProjectid(), member.getProjectroleid()));
+        String roleLink = String.format("<a href=\"%s%s%s\"", AppUI.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
+                ProjectLinkGenerator.generateRolePreviewLink(member.getProjectid(), member.getProjectroleid()));
         ELabel memberRole = new ELabel("", ContentMode.HTML).withFullWidth().withStyleName(UIConstants.TEXT_ELLIPSIS);
         if (member.isProjectOwner()) {
             memberRole.setValue(String.format("%sstyle=\"color: #B00000;\">%s</a>", roleLink, UserUIContext.getMessage
@@ -195,7 +195,7 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
         }
         blockTop.addComponent(memberRole);
 
-        if (Boolean.TRUE.equals(AppUI.Companion.showEmailPublicly())) {
+        if (Boolean.TRUE.equals(AppUI.showEmailPublicly())) {
             Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(), member.getUsername()))
                     .withStyleName(UIConstants.META_INFO).withFullWidth();
             blockTop.addComponent(memberEmailLabel);

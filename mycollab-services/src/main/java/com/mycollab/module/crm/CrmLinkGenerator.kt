@@ -7,75 +7,75 @@ import com.mycollab.common.GenericLinkUtils
  * @since 1.0
  */
 object CrmLinkGenerator {
-    fun generateAccountPreviewLink(accountId: Int?): String {
+    @JvmStatic fun generateAccountPreviewLink(accountId: Int?): String {
         return "crm/account/preview/" + GenericLinkUtils.encodeParam(accountId!!)
     }
 
-    fun generateAccountPreviewFullLink(siteUrl: String, accountId: Int?): String {
+    @JvmStatic fun generateAccountPreviewFullLink(siteUrl: String, accountId: Int?): String {
         return siteUrl + "#" + generateAccountPreviewLink(accountId)
     }
 
-    fun generateCampaignPreviewLink(campaignId: Int?): String {
+    @JvmStatic fun generateCampaignPreviewLink(campaignId: Int?): String {
         return "crm/campaign/preview/" + GenericLinkUtils.encodeParam(campaignId!!)
     }
 
-    fun generateCampaignPreviewFullLink(siteUrl: String, campaignId: Int?): String {
+    @JvmStatic fun generateCampaignPreviewFullLink(siteUrl: String, campaignId: Int?): String {
         return siteUrl + "#" + generateCampaignPreviewLink(campaignId)
     }
 
-    fun generateCasePreviewLink(caseId: Int?): String {
+    @JvmStatic fun generateCasePreviewLink(caseId: Int?): String {
         return "crm/cases/preview/" + GenericLinkUtils.encodeParam(caseId!!)
     }
 
-    fun generateCasePreviewFullLink(siteUrl: String, caseId: Int?): String {
+    @JvmStatic fun generateCasePreviewFullLink(siteUrl: String, caseId: Int?): String {
         return siteUrl + "#" + generateCasePreviewLink(caseId)
     }
 
-    fun generateContactPreviewLink(contactId: Int?): String {
+    @JvmStatic fun generateContactPreviewLink(contactId: Int?): String {
         return "crm/contact/preview/" + GenericLinkUtils.encodeParam(contactId!!)
     }
 
-    fun generateContactPreviewFullLink(siteUrl: String, contactId: Int?): String {
+    @JvmStatic fun generateContactPreviewFullLink(siteUrl: String, contactId: Int?): String {
         return siteUrl + "#" + generateContactPreviewLink(contactId)
     }
 
-    fun generateLeadPreviewLink(leadId: Int?): String {
+    @JvmStatic fun generateLeadPreviewLink(leadId: Int?): String {
         return "crm/lead/preview/" + GenericLinkUtils.encodeParam(leadId!!)
     }
 
-    fun generateLeadPreviewFullLink(siteUrl: String, leadId: Int?): String {
+    @JvmStatic fun generateLeadPreviewFullLink(siteUrl: String, leadId: Int?): String {
         return siteUrl + "#" + generateLeadPreviewLink(leadId)
     }
 
-    fun generateOpportunityPreviewLink(opportunityId: Int?): String {
+    @JvmStatic fun generateOpportunityPreviewLink(opportunityId: Int?): String {
         return "crm/opportunity/preview/" + GenericLinkUtils.encodeParam(opportunityId!!)
     }
 
-    fun generateOpportunityPreviewFullLink(siteUrl: String, opportunityId: Int?): String {
+    @JvmStatic fun generateOpportunityPreviewFullLink(siteUrl: String, opportunityId: Int?): String {
         return siteUrl + "#" + generateOpportunityPreviewLink(opportunityId)
     }
 
-    fun generateTaskPreviewLink(taskId: Int?): String {
+    @JvmStatic fun generateTaskPreviewLink(taskId: Int?): String {
         return "crm/activity/task/preview/" + GenericLinkUtils.encodeParam(taskId!!)
     }
 
-    fun generateTaskPreviewFullLink(siteUrl: String, taskId: Int?): String {
+    @JvmStatic fun generateTaskPreviewFullLink(siteUrl: String, taskId: Int?): String {
         return siteUrl + "#" + generateTaskPreviewLink(taskId)
     }
 
-    fun generateMeetingPreviewLink(meetingId: Int?): String {
+    @JvmStatic fun generateMeetingPreviewLink(meetingId: Int?): String {
         return "crm/activity/meeting/preview/" + GenericLinkUtils.encodeParam(meetingId!!)
     }
 
-    fun generateMeetingPreviewFullLink(siteUrl: String, meetingId: Int?): String {
+    @JvmStatic fun generateMeetingPreviewFullLink(siteUrl: String, meetingId: Int?): String {
         return siteUrl + "#" + generateMeetingPreviewLink(meetingId)
     }
 
-    fun generateCallPreviewLink(callId: Int?): String {
+    @JvmStatic fun generateCallPreviewLink(callId: Int?): String {
         return "crm/activity/call/preview/" + GenericLinkUtils.encodeParam(callId!!)
     }
 
-    fun generateCallPreviewFullLink(siteUrl: String, callId: Int?): String {
+    @JvmStatic fun generateCallPreviewFullLink(siteUrl: String, callId: Int?): String {
         return siteUrl + "#" + generateCallPreviewLink(callId)
     }
 

@@ -79,7 +79,7 @@ object CurrentProjectVariables {
         get() = MyCollabSession.getCurrentUIVariable(PROJECT_MEMBER) as SimpleProjectMember
         set(prjMember) = MyCollabSession.putCurrentUIVariable(PROJECT_MEMBER, prjMember)
 
-    val isAdmin: Boolean
+    @JvmStatic val isAdmin: Boolean
         get() {
             if (UserUIContext.isAdmin()) {
                 return true
@@ -88,10 +88,10 @@ object CurrentProjectVariables {
             return member != null && member.isProjectOwner
         }
 
-    val isProjectArchived: Boolean
+    @JvmStatic val isProjectArchived: Boolean
         get() = project!!.isProjectArchived
 
-    fun canRead(permissionItem: String): Boolean {
+    @JvmStatic fun canRead(permissionItem: String): Boolean {
         if (isAdmin) {
             return true
         }
@@ -106,7 +106,7 @@ object CurrentProjectVariables {
 
     }
 
-    fun canReadAssignments(): Boolean {
+    @JvmStatic fun canReadAssignments(): Boolean {
         return canRead(ProjectRolePermissionCollections.BUGS) || canRead(ProjectRolePermissionCollections.TASKS) ||
                 canRead(ProjectRolePermissionCollections.RISKS) || canRead(ProjectRolePermissionCollections.MILESTONES)
     }
@@ -130,7 +130,7 @@ object CurrentProjectVariables {
 
     }
 
-    fun canAccess(permissionItem: String): Boolean {
+    @JvmStatic fun canAccess(permissionItem: String): Boolean {
         if (isProjectArchived) {
             return false
         }
@@ -149,7 +149,7 @@ object CurrentProjectVariables {
 
     }
 
-    val features: ProjectCustomizeView
+    @JvmStatic val features: ProjectCustomizeView
         get() {
             var customizeView: ProjectCustomizeView? = project!!.customizeView
             if (customizeView == null) {
@@ -167,35 +167,35 @@ object CurrentProjectVariables {
             return customizeView
         }
 
-    fun hasMessageFeature(): Boolean {
+    @JvmStatic fun hasMessageFeature(): Boolean {
         return features.displaymessage!!
     }
 
-    fun hasPhaseFeature(): Boolean {
+    @JvmStatic fun hasPhaseFeature(): Boolean {
         return features.displaymilestone!!
     }
 
-    fun hasTicketFeature(): Boolean {
+    @JvmStatic fun hasTicketFeature(): Boolean {
         return MoreObjects.firstNonNull(features.displayticket, true)
     }
 
-    fun hasPageFeature(): Boolean {
+    @JvmStatic fun hasPageFeature(): Boolean {
         return features.displaypage!!
     }
 
-    fun hasFileFeature(): Boolean {
+    @JvmStatic fun hasFileFeature(): Boolean {
         return features.displayfile!!
     }
 
-    fun hasTimeFeature(): Boolean {
+    @JvmStatic fun hasTimeFeature(): Boolean {
         return features.displaytimelogging!!
     }
 
-    fun hasInvoiceFeature(): Boolean {
+    @JvmStatic  fun hasInvoiceFeature(): Boolean {
         return java.lang.Boolean.TRUE == features.displayinvoice
     }
 
-    fun hasStandupFeature(): Boolean {
+    @JvmStatic fun hasStandupFeature(): Boolean {
         return features.displaystandup!!
     }
 
@@ -217,7 +217,7 @@ object CurrentProjectVariables {
             return if (project != null) project.id else -1
         }
 
-    val shortName: String
+    @JvmStatic val shortName: String
         get() {
             val project = project
             return if (project != null) project.shortname else ""

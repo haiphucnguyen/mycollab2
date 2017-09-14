@@ -32,7 +32,7 @@ public class CallTableDisplay extends DefaultPagedBeanTable<CallService, CallSea
         this.addGeneratedColumn("subject", (source, itemId, columnId) -> {
             final SimpleCall call = getBeanByIndex(itemId);
 
-            LabelLink b = new LabelLink(call.getSubject(), CrmLinkBuilder.INSTANCE.generateCallPreviewLinkFul(call.getId()));
+            LabelLink b = new LabelLink(call.getSubject(), CrmLinkBuilder.generateCallPreviewLinkFul(call.getId()));
             if (CallStatus.Held.name().equals(call.getStatus())) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);
             }

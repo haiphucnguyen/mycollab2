@@ -170,7 +170,7 @@ public class UserDashboardViewImpl extends AbstractVerticalPageView implements U
         headerContentTop.with(searchTextField).withAlign(searchTextField, Alignment.TOP_RIGHT);
         headerContent.with(headerContentTop);
         MHorizontalLayout metaInfoLayout = new MHorizontalLayout();
-        if (Boolean.TRUE.equals(AppUI.Companion.getBillingAccount().getDisplayemailpublicly())) {
+        if (Boolean.TRUE.equals(AppUI.getBillingAccount().getDisplayemailpublicly())) {
             metaInfoLayout.with(new ELabel(UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL) + ": ").withStyleName(UIConstants.META_INFO),
                     ELabel.html(new A(String.format("mailto:%s", UserUIContext.getUsername())).appendText(UserUIContext.getUsername()).write()));
         }
@@ -229,7 +229,7 @@ public class UserDashboardViewImpl extends AbstractVerticalPageView implements U
                     .withStyleName(WebThemes.BUTTON_OPTION);
 
             MButton createNewBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.NEW), clickEvent -> {
-                UI.getCurrent().addWindow(ViewManager.INSTANCE.getCacheComponent(AbstractProjectAddWindow.class));
+                UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class));
                 close();
             }).withStyleName(WebThemes.BUTTON_ACTION);
 

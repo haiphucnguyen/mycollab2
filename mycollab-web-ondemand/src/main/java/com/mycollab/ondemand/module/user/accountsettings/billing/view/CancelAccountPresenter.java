@@ -27,7 +27,7 @@ public class CancelAccountPresenter extends AbstractPresenter<CancelAccountView>
         IBillingContainer accountContainer = (IBillingContainer) container;
         accountContainer.setContent(view);
 
-        AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
+        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
         breadcrumb.gotoCancelAccountPage();
     }
 }

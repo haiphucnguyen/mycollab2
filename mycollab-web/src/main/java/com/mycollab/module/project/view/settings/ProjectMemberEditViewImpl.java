@@ -164,7 +164,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         public void commit() throws SourceException, InvalidValueException {
             Integer roleId = (Integer) roleComboBox.getValue();
             if (roleId == -1) {
-                if (CurrentProjectVariables.INSTANCE.isAdmin()) {
+                if (CurrentProjectVariables.isAdmin()) {
                     beanItem.setIsadmin(Boolean.TRUE);
                     this.setInternalValue(null);
                 } else {

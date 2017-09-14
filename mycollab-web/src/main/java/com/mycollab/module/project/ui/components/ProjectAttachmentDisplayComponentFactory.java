@@ -19,7 +19,7 @@ import java.util.List;
 public class ProjectAttachmentDisplayComponentFactory {
     public static Component getAttachmentDisplayComponent(int projectId, String type, int typeId) {
         ResourceService resourceService = AppContextUtil.getSpringBean(ResourceService.class);
-        List<Content> attachments = resourceService.getContents(AttachmentUtils.INSTANCE
+        List<Content> attachments = resourceService.getContents(AttachmentUtils
                 .getProjectEntityAttachmentPath(AppUI.getAccountId(), projectId, type, "" + typeId));
         if (CollectionUtils.isNotEmpty(attachments)) {
             return new AttachmentDisplayComponent(attachments);

@@ -76,7 +76,7 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
             Role role = (Role) data.getParams();
             view.editItem(role);
 
-            AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
+            AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
 
             if (role.getId() == null) {
                 breadcrumb.gotoRoleAdd();

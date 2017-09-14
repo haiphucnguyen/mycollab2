@@ -53,7 +53,7 @@ public class ProjectRoleReadPresenter extends AbstractPresenter<ProjectRoleReadV
             public void onDelete(final SimpleProjectRole role) {
                 if (Boolean.FALSE.equals(role.getIssystemrole())) {
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -121,7 +121,7 @@ public class ProjectRoleReadPresenter extends AbstractPresenter<ProjectRoleReadV
                 roleContainer.removeAllComponents();
                 roleContainer.addComponent(view);
                 view.previewItem(role);
-                ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+                ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
                 breadCrumb.gotoRoleRead(role);
             }
         } else {

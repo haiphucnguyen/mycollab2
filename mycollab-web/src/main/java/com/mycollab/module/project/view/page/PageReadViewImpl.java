@@ -163,7 +163,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
             if (member != null) {
                 Img userAvatar = new Img("", StorageUtils.getAvatarPath(member.getMemberAvatarId(), 16))
                         .setCSSClass(UIConstants.CIRCLE_BOX);
-                A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(member
+                A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(member
                         .getProjectid(), member.getUsername())).appendText(StringUtils.trim(member.getMemberFullName(), 30, true));
                 userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(member.getUsername()));
                 userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

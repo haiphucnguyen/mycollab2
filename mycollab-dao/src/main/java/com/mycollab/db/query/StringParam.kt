@@ -107,6 +107,6 @@ class StringParam(id: String, table: String, column: String) : ColumnParam(id, t
 
     companion object {
 
-        var OPTIONS = arrayOf(IS, IS_NOT, CONTAINS, NOT_CONTAINS, IS_EMPTY, IS_NOT_EMPTY)
+        @JvmField val OPTIONS = arrayOf(IS, IS_NOT, CONTAINS, NOT_CONTAINS, IS_EMPTY, IS_NOT_EMPTY)
     }
 }

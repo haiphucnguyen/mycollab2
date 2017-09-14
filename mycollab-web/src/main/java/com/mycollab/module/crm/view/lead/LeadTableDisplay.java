@@ -55,13 +55,13 @@ public class LeadTableDisplay extends DefaultPagedBeanTable<LeadService, LeadSea
         this.addGeneratedColumn("leadName", (source, itemId, columnId) -> {
             final SimpleLead lead = getBeanByIndex(itemId);
 
-            LabelLink b = new LabelLink(lead.getLeadName(), CrmLinkBuilder.INSTANCE.generateLeadPreviewLinkFull(lead.getId()));
+            LabelLink b = new LabelLink(lead.getLeadName(), CrmLinkBuilder.generateLeadPreviewLinkFull(lead.getId()));
             if ("Dead".equals(lead.getStatus()) || "Converted".equals(lead.getStatus())) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);
             }
-            b.setDescription(CrmTooltipGenerator.INSTANCE.generateTooltipLead(
+            b.setDescription(CrmTooltipGenerator.generateTooltipLead(
                     UserUIContext.getUserLocale(), lead,
-                    AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
         });
 

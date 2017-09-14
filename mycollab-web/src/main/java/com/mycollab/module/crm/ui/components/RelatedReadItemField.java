@@ -91,7 +91,7 @@ public class RelatedReadItemField extends CustomField {
                 }
             }
 
-            LabelLink related = new LabelLink(relateItemName, CrmLinkBuilder.INSTANCE.generateActivityPreviewLinkFull(type, typeId));
+            LabelLink related = new LabelLink(relateItemName, CrmLinkBuilder.generateActivityPreviewLinkFull(type, typeId));
             if (relatedLink != null)
                 related.setIconLink(relatedLink);
 

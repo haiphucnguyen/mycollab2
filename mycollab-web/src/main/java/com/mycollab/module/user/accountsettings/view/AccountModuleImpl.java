@@ -55,7 +55,7 @@ public class AccountModuleImpl extends AbstractSingleContainerPageView implement
         ControllerRegistry.addController(new UserAccountController(this));
 
         MHorizontalLayout topPanel = new MHorizontalLayout().withFullWidth().withMargin(true).withStyleName("border-bottom");
-        AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
+        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
 
         MButton helpBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP))
                 .withIcon(FontAwesome.MORTAR_BOARD).withStyleName(WebThemes.BUTTON_LINK);
@@ -78,23 +78,23 @@ public class AccountModuleImpl extends AbstractSingleContainerPageView implement
     }
 
     private void buildComponents() {
-        tabSheet.addTab(constructUserInformationComponent(), SettingUIConstants.INSTANCE.getPROFILE(),
-                UserUIContext.getMessage(AdminI18nEnum.VIEW_PROFILE), SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getPROFILE()));
+        tabSheet.addTab(constructUserInformationComponent(), SettingUIConstants.PROFILE,
+                UserUIContext.getMessage(AdminI18nEnum.VIEW_PROFILE), SettingAssetsManager.getAsset(SettingUIConstants.PROFILE));
 
         if (!SiteConfiguration.isCommunityEdition()) {
-            tabSheet.addTab(constructAccountSettingsComponent(), SettingUIConstants.INSTANCE.getBILLING(),
-                    UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING), SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getBILLING()));
+            tabSheet.addTab(constructAccountSettingsComponent(), SettingUIConstants.BILLING,
+                    UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING), SettingAssetsManager.getAsset(SettingUIConstants.BILLING));
         }
 
-        tabSheet.addTab(constructUserRoleComponent(), SettingUIConstants.INSTANCE.getUSERS(),
-                UserUIContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES), SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getUSERS()));
+        tabSheet.addTab(constructUserRoleComponent(), SettingUIConstants.USERS,
+                UserUIContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES), SettingAssetsManager.getAsset(SettingUIConstants.USERS));
 
-        tabSheet.addTab(constructThemeComponent(), SettingUIConstants.INSTANCE.getGENERAL_SETTING(),
-                UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING), SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getGENERAL_SETTING()));
+        tabSheet.addTab(constructThemeComponent(), SettingUIConstants.GENERAL_SETTING,
+                UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING), SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING));
 
         if (!SiteConfiguration.isDemandEdition()) {
-            tabSheet.addTab(constructSetupComponent(), SettingUIConstants.INSTANCE.getSETUP(),
-                    UserUIContext.getMessage(AdminI18nEnum.VIEW_SETUP), SettingAssetsManager.INSTANCE.getAsset(SettingUIConstants.INSTANCE.getSETUP()));
+            tabSheet.addTab(constructSetupComponent(), SettingUIConstants.SETUP,
+                    UserUIContext.getMessage(AdminI18nEnum.VIEW_SETUP), SettingAssetsManager.getAsset(SettingUIConstants.SETUP));
         }
 
         tabSheet.addSelectedTabChangeListener(new SelectedTabChangeListener() {
@@ -104,15 +104,15 @@ public class AccountModuleImpl extends AbstractSingleContainerPageView implement
             public void selectedTabChange(SelectedTabChangeEvent event) {
                 Tab tab = ((VerticalTabsheet) event.getSource()).getSelectedTab();
                 String tabId = ((TabImpl) tab).getTabId();
-                if (SettingUIConstants.INSTANCE.getPROFILE().equals(tabId)) {
+                if (SettingUIConstants.PROFILE.equals(tabId)) {
                     profilePresenter.go(AccountModuleImpl.this, null);
-                } else if (SettingUIConstants.INSTANCE.getBILLING().equals(tabId)) {
+                } else if (SettingUIConstants.BILLING.equals(tabId)) {
                     billingPresenter.go(AccountModuleImpl.this, new BillingScreenData.BillingSummary());
-                } else if (SettingUIConstants.INSTANCE.getUSERS().equals(tabId)) {
+                } else if (SettingUIConstants.USERS.equals(tabId)) {
                     userPermissionPresenter.go(AccountModuleImpl.this, null);
-                } else if (SettingUIConstants.INSTANCE.getGENERAL_SETTING().equals(tabId)) {
+                } else if (SettingUIConstants.GENERAL_SETTING.equals(tabId)) {
                     customizePresenter.go(AccountModuleImpl.this, null);
-                } else if (SettingUIConstants.INSTANCE.getSETUP().equals(tabId)) {
+                } else if (SettingUIConstants.SETUP.equals(tabId)) {
                     setupPresenter.go(AccountModuleImpl.this, null);
                 }
             }

@@ -44,19 +44,19 @@ public class CaseTableDisplay extends DefaultPagedBeanTable<CaseService, CaseSea
 
         this.addGeneratedColumn("subject", (source, itemId, columnId) -> {
             SimpleCase cases = getBeanByIndex(itemId);
-            LabelLink b = new LabelLink(cases.getSubject(), CrmLinkBuilder.INSTANCE.generateCasePreviewLinkFull(cases.getId()));
+            LabelLink b = new LabelLink(cases.getSubject(), CrmLinkBuilder.generateCasePreviewLinkFull(cases.getId()));
 
             if (cases.isCompleted()) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);
             }
-            b.setDescription(CrmTooltipGenerator.INSTANCE.generateTooltipCases(UserUIContext.getUserLocale(), cases,
-                    AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            b.setDescription(CrmTooltipGenerator.generateTooltipCases(UserUIContext.getUserLocale(), cases,
+                    AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
         });
 
         this.addGeneratedColumn("accountName", (source, itemId, columnId) -> {
             SimpleCase cases = getBeanByIndex(itemId);
-            return new LabelLink(cases.getAccountName(), CrmLinkBuilder.INSTANCE.generateAccountPreviewLinkFull(cases.getAccountid()));
+            return new LabelLink(cases.getAccountName(), CrmLinkBuilder.generateAccountPreviewLinkFull(cases.getAccountid()));
         });
 
         this.addGeneratedColumn("assignUserFullName", (source, itemId, columnId) -> {

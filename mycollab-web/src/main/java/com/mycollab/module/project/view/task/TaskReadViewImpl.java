@@ -74,7 +74,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         if (SiteConfiguration.isCommunityEdition()) {
             addToSideBar(dateInfoComp, peopleInfoComp, followerSheet);
         } else {
-            timeLogComp = ViewManager.INSTANCE.getCacheComponent(TaskTimeLogSheet.class);
+            timeLogComp = ViewManager.getCacheComponent(TaskTimeLogSheet.class);
             addToSideBar(dateInfoComp, peopleInfoComp, timeLogComp, followerSheet);
         }
     }

@@ -30,7 +30,7 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
         ProjectView projectViewContainer = (ProjectView) container;
         projectViewContainer.gotoSubView(ProjectTypeConstants.DASHBOARD);
 
-        ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+        ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
 
         if (data instanceof ProjectScreenData.Edit) {
             if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROJECT)) {
@@ -60,7 +60,7 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
             IReportPresenter presenter = PresenterResolver.getPresenter(IReportPresenter.class);
             presenter.go(view, data);
         } else {
-            if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.PROJECT)) {
+            if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PROJECT)) {
                 ProjectSummaryPresenter presenter = PresenterResolver.getPresenter(ProjectSummaryPresenter.class);
                 presenter.go(view, data);
                 breadcrumb.gotoProjectDashboard();

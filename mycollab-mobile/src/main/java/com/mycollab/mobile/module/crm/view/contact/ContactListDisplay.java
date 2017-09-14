@@ -32,7 +32,7 @@ public class ContactListDisplay extends DefaultPagedBeanList<ContactService, Con
         @Override
         public Component generateRow(IBeanList<SimpleContact> host, final SimpleContact contact, int rowIndex) {
             MVerticalLayout rowLayout = new MVerticalLayout().withMargin(false).withSpacing(false).withFullWidth();
-            A itemLink = new A(CrmLinkBuilder.INSTANCE.generateContactPreviewLinkFull(contact.getId())).appendText(contact.getContactName());
+            A itemLink = new A(CrmLinkBuilder.generateContactPreviewLinkFull(contact.getId())).appendText(contact.getContactName());
             MCssLayout itemWrap = new MCssLayout(ELabel.html(itemLink.write()));
             rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.getAsset
                     (CrmTypeConstants.CONTACT)), itemWrap).expand(itemWrap).withFullWidth());

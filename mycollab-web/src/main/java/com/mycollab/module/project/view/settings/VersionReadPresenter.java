@@ -108,7 +108,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.VERSIONS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS)) {
             if (data.getParams() instanceof Integer) {
                 VersionService componentService = AppContextUtil.getSpringBean(VersionService.class);
                 Version version = componentService.findById((Integer) data.getParams(), AppUI.getAccountId());
@@ -118,7 +118,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
                     versionContainer.addComponent(view);
                     view.previewItem(version);
 
-                    ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+                    ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
                     breadcrumb.gotoVersionRead(version);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

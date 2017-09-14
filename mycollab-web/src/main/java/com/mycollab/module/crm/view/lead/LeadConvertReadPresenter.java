@@ -80,7 +80,7 @@ public class LeadConvertReadPresenter extends CrmGenericPresenter<LeadConvertRea
                 super.onGo(container, data);
                 view.previewItem(lead);
 
-                AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateLeadPreviewLink(lead.getId()),
+                AppUI.addFragment(CrmLinkGenerator.generateLeadPreviewLink(lead.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE, UserUIContext.getMessage(LeadI18nEnum.SINGLE),
                                 lead.getLeadName()));
             }

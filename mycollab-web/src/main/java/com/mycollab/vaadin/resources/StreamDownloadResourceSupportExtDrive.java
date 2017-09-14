@@ -47,8 +47,8 @@ public class StreamDownloadResourceSupportExtDrive implements StreamResource.Str
             Resource res = resources.iterator().next();
             if (!(res instanceof Folder)) {
                 if (res.isExternalResource()) {
-                    ExternalResourceService service = ResourceUtils.INSTANCE.getExternalResourceService(ResourceUtils.INSTANCE.getType(res));
-                    return service.download(ResourceUtils.INSTANCE.getExternalDrive(res), res.getPath());
+                    ExternalResourceService service = ResourceUtils.getExternalResourceService(ResourceUtils.getType(res));
+                    return service.download(ResourceUtils.getExternalDrive(res), res.getPath());
                 } else {
                     return resourceService.getContentStream(res.getPath());
                 }
@@ -91,9 +91,9 @@ public class StreamDownloadResourceSupportExtDrive implements StreamResource.Str
                     if (!currentResource.isExternalResource()) {
                         recurrResources = resourceService.getResources(currentResource.getPath());
                     } else {
-                        ExternalResourceService service = ResourceUtils.INSTANCE
-                                .getExternalResourceService(ResourceUtils.INSTANCE.getType(currentResource));
-                        recurrResources = service.getResources(ResourceUtils.INSTANCE
+                        ExternalResourceService service = ResourceUtils
+                                .getExternalResourceService(ResourceUtils.getType(currentResource));
+                        recurrResources = service.getResources(ResourceUtils
                                         .getExternalDrive(currentResource), currentResource.getPath());
                     }
 
@@ -123,8 +123,8 @@ public class StreamDownloadResourceSupportExtDrive implements StreamResource.Str
         if (!res.isExternalResource()) {
             contentStream = resourceService.getContentStream(res.getPath());
         } else {
-            ExternalResourceService service = ResourceUtils.INSTANCE.getExternalResourceService(ResourceUtils.INSTANCE.getType(res));
-            contentStream = service.download(ResourceUtils.INSTANCE.getExternalDrive(res), res.getPath());
+            ExternalResourceService service = ResourceUtils.getExternalResourceService(ResourceUtils.getType(res));
+            contentStream = service.download(ResourceUtils.getExternalDrive(res), res.getPath());
         }
         if (path.length() == 0)
             path = res.getName();
@@ -140,11 +140,11 @@ public class StreamDownloadResourceSupportExtDrive implements StreamResource.Str
     private void addFolderToZip(String path, Resource res, ZipOutputStream zip)
             throws Exception {
         List<Resource> lstResource;
-        if (ResourceUtils.INSTANCE.getType(res) == ResourceType.MyCollab) {
+        if (ResourceUtils.getType(res) == ResourceType.MyCollab) {
             lstResource = resourceService.getResources(res.getPath());
         } else {
-            ExternalResourceService service = ResourceUtils.INSTANCE.getExternalResourceService(ResourceUtils.INSTANCE.getType(res));
-            lstResource = service.getResources(ResourceUtils.INSTANCE.getExternalDrive(res), res.getPath());
+            ExternalResourceService service = ResourceUtils.getExternalResourceService(ResourceUtils.getType(res));
+            lstResource = service.getResources(ResourceUtils.getExternalDrive(res), res.getPath());
         }
         if (res instanceof Folder && lstResource.size() == 0) { // emptyFolder
             zip.putNextEntry(new ZipEntry(path + "/" + res.getName() + "/"));

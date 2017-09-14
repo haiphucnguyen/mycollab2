@@ -98,7 +98,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateAccountPreviewLink(beanItem.getId()),
+        AppUI.addFragment(CrmLinkGenerator.generateAccountPreviewLink(beanItem.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(AccountI18nEnum.SINGLE), beanItem.getAccountname()));
     }

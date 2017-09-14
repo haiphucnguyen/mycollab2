@@ -21,7 +21,7 @@ object PathUtils {
         return String.format("%d/project/%d/.page", accountId, projectId)
     }
 
-    fun buildLogoPath(sAccountId: Int?, logoFileName: String, logoSize: Int?): String {
+    @JvmStatic fun buildLogoPath(sAccountId: Int?, logoFileName: String, logoSize: Int?): String {
         return String.format("%d/.assets/%s_%d.png", sAccountId, logoFileName, logoSize)
     }
 

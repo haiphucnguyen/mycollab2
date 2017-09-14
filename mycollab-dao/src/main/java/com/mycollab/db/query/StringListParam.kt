@@ -21,6 +21,6 @@ class StringListParam(id: String, table: String, column: String, var values: Lis
 
     companion object {
 
-        var OPTIONS = arrayOf(CollectionI18nEnum.IN, CollectionI18nEnum.NOT_IN)
+        @JvmField val OPTIONS = arrayOf(CollectionI18nEnum.IN, CollectionI18nEnum.NOT_IN)
     }
 }

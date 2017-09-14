@@ -98,7 +98,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
         }
 
         view.customizeTheme(accountTheme);
-        AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
+        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
         breadcrumb.gotoMakeTheme();
     }
 

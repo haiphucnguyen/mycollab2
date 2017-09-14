@@ -45,7 +45,7 @@ public class MessageReadPresenter extends ProjectGenericPresenter<MessageReadVie
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.MESSAGES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MESSAGES)) {
             MessageContainer messageContainer = (MessageContainer) container;
             messageContainer.navigateToContainer(ProjectTypeConstants.MESSAGE);
             messageContainer.setContent(view);
@@ -55,7 +55,7 @@ public class MessageReadPresenter extends ProjectGenericPresenter<MessageReadVie
                 SimpleMessage message = messageService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 view.previewItem(message);
 
-                ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+                ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
                 breadCrumb.gotoMessage(message);
             } else {
                 throw new MyCollabException("Unhanddle this case yet");

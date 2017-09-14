@@ -112,7 +112,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         }
 
         ResourceService resourceService = AppContextUtil.getSpringBean(ResourceService.class);
-        List<Content> attachments = resourceService.getContents(AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(),
+        List<Content> attachments = resourceService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(),
                 beanItem.getProjectid(), ProjectTypeConstants.BUG, "" + beanItem.getId()));
         if (CollectionUtils.isNotEmpty(attachments)) {
             attachmentComp = new ProjectAttachmentDisplayComp(attachments);
@@ -187,7 +187,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateBugPreviewLink(beanItem.getBugkey(),
+        AppUI.addFragment(ProjectLinkGenerator.generateBugPreviewLink(beanItem.getBugkey(),
                 beanItem.getProjectShortName()), beanItem.getName());
     }
 
@@ -207,12 +207,12 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             } else if (BugWithBLOBs.Field.enddate.equalTo(propertyId)) {
                 return new DateViewField(beanItem.getEnddate());
             } else if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
-                return new DefaultViewField(ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink
+                return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink
                         (CurrentProjectVariables.getProjectId(), beanItem.getAssignuser(), beanItem.getAssignuserFullName(),
                                 beanItem.getAssignUserAvatarId(), false), ContentMode.HTML);
             } else if (BugWithBLOBs.Field.milestoneid.equalTo(propertyId)) {
                 if (beanItem.getMilestoneid() != null) {
-                    A milestoneLink = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink
+                    A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
                             (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
                     Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);

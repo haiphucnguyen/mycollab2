@@ -86,7 +86,7 @@ public abstract class AbstractMainView extends AbstractVerticalPageView implemen
         headerLayout.setWidth("100%");
 
         final PopupButton modulePopup = new PopupButton("");
-        modulePopup.setIcon(AccountAssetsResolver.createLogoResource(AppUI.Companion.getBillingAccount().getLogopath(), 150));
+        modulePopup.setIcon(AccountAssetsResolver.createLogoResource(AppUI.getBillingAccount().getLogopath(), 150));
         modulePopup.setHeightUndefined();
         modulePopup.setDirection(Alignment.BOTTOM_LEFT);
         OptionPopupContent modulePopupContent = new OptionPopupContent();

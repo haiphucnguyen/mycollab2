@@ -23,7 +23,7 @@ public class FavoritePresenter extends AbstractPresenter<IFavoriteView> implemen
         ProjectDashboardContainer projectViewContainer = (ProjectDashboardContainer) container;
         projectViewContainer.setContent(view);
 
-        ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+        ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
         breadcrumb.gotoFavoriteList();
         view.display();
     }

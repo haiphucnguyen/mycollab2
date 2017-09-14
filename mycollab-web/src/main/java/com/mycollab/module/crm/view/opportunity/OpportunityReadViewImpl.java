@@ -93,7 +93,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
         if (lead != null) {
             return String.format("<h2>%s%s</h2>", beanItem.getOpportunityname(), UserUIContext
                     .getMessage(LeadI18nEnum.CONVERT_FROM_LEAD_TITLE, CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
-                            CrmLinkGenerator.INSTANCE.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()), lead.getLeadName()));
+                            CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()), lead.getLeadName()));
         } else {
             return beanItem.getOpportunityname();
         }

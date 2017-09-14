@@ -15,7 +15,7 @@ class BitSearchField @JvmOverloads constructor(oper: String = SearchField.AND, v
     companion object {
         private val serialVersionUID = 1L
 
-        val TRUE = BitSearchField(SearchField.AND, 1)
-        val FALSE = BitSearchField(SearchField.AND, 0)
+        @JvmField val TRUE = BitSearchField(SearchField.AND, 1)
+        @JvmField val FALSE = BitSearchField(SearchField.AND, 0)
     }
 }

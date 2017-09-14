@@ -31,40 +31,40 @@ class OpportunitySearchCriteria : SearchCriteria() {
     companion object {
         private val serialVersionUID = 1L
 
-        val p_opportunityName: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
+        @JvmField val p_opportunityName: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
                 GenericI18Enum.FORM_NAME, StringParam("name", "m_crm_opportunity", "opportunityName"))
 
-        val p_account: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
+        @JvmField val p_account: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
                 OpportunityI18nEnum.FORM_ACCOUNT_NAME, PropertyParam("account", "m_crm_opportunity", "accountid"))
 
-        val p_campaign: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
+        @JvmField val p_campaign: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
                 OpportunityI18nEnum.FORM_CAMPAIGN_NAME, PropertyParam("campaign", "m_crm_opportunity", "campaignid"))
 
-        val p_nextStep: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
+        @JvmField val p_nextStep: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
                 OpportunityI18nEnum.FORM_NEXT_STEP, StringParam("nextstep", "m_crm_opportunity", "nextStep"))
 
-        val p_saleStage: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
+        @JvmField val p_saleStage: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
                 OpportunityI18nEnum.FORM_SALE_STAGE, I18nStringListParam("saleStage", "m_crm_opportunity", "salesStage",
                 listOf(*CrmDataTypeFactory.opportunitySalesStageList)))
 
-        val p_leadSource = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
+        @JvmField val p_leadSource = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
                 OpportunityI18nEnum.FORM_LEAD_SOURCE, I18nStringListParam("leadSource", "m_crm_opportunity", "source",
                 Arrays.asList<OptionI18nEnum.OpportunityLeadSource>(*CrmDataTypeFactory.leadSourceList)))
 
-        val p_type: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY, GenericI18Enum.FORM_TYPE,
+        @JvmField val p_type: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY, GenericI18Enum.FORM_TYPE,
                 I18nStringListParam("type", "m_crm_opportunity", "type", listOf(*CrmDataTypeFactory.opportunityTypeList)))
 
-        val p_assignee: Param = CacheParamMapper.register<PropertyListParam<*>>(CrmTypeConstants.OPPORTUNITY, GenericI18Enum.FORM_ASSIGNEE,
+        @JvmField val p_assignee: Param = CacheParamMapper.register<PropertyListParam<*>>(CrmTypeConstants.OPPORTUNITY, GenericI18Enum.FORM_ASSIGNEE,
                 PropertyListParam<String>("assignee", "m_crm_opportunity", "assignUser"))
 
-        val p_expectedcloseddate: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
+        @JvmField val p_expectedcloseddate: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
                 OpportunityI18nEnum.FORM_EXPECTED_CLOSE_DATE, DateParam("expectedcloseddate", "m_crm_opportunity",
                 "expectedClosedDate"))
 
-        val p_createdtime: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY, GenericI18Enum.FORM_CREATED_TIME,
+        @JvmField val p_createdtime: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY, GenericI18Enum.FORM_CREATED_TIME,
                 DateParam("createdtime", "m_crm_opportunity", "createdTime"))
 
-        val p_lastupdatedtime: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
+        @JvmField val p_lastupdatedtime: Param = CacheParamMapper.register(CrmTypeConstants.OPPORTUNITY,
                 GenericI18Enum.FORM_LAST_UPDATED_TIME, DateParam("lastUpdatedTime", "m_crm_opportunity",
                 "lastUpdatedTime"))
     }

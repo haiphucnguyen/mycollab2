@@ -52,12 +52,12 @@ public class ProjectMemberListDisplay extends DefaultPagedBeanList<ProjectMember
             MVerticalLayout memberInfoLayout = new MVerticalLayout().withMargin(false);
             mainLayout.with(memberAvatar, memberInfoLayout).expand(memberInfoLayout);
 
-            A memberLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(CurrentProjectVariables.INSTANCE
+            A memberLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables
                     .getProjectId(), member.getUsername())).appendText(member.getDisplayName());
             Label memberLbl = ELabel.html(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
             memberInfoLayout.addComponent(memberLbl);
 
-            if (Boolean.TRUE.equals(AppUI.Companion.getBillingAccount().getDisplayemailpublicly())) {
+            if (Boolean.TRUE.equals(AppUI.getBillingAccount().getDisplayemailpublicly())) {
                 Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(), member.getUsername()))
                         .withStyleName(UIConstants.META_INFO);
                 memberInfoLayout.addComponent(memberEmailLabel);

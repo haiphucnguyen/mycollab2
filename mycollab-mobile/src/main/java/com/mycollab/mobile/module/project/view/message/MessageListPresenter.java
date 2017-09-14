@@ -22,7 +22,7 @@ public class MessageListPresenter extends ProjectListPresenter<MessageListView, 
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.MESSAGES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MESSAGES)) {
             super.onGo(container, data);
         } else {
             NotificationUtil.showMessagePermissionAlert();

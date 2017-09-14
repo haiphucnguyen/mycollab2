@@ -50,7 +50,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
             @Override
             public void onDelete(final SimpleMeeting data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -125,7 +125,7 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
             super.onGo(container, data);
             view.previewItem(meeting);
 
-            AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateMeetingPreviewLink(meeting.getId()),
+            AppUI.addFragment(CrmLinkGenerator.generateMeetingPreviewLink(meeting.getId()),
                     UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                             UserUIContext.getMessage(MeetingI18nEnum.SINGLE), meeting.getSubject()));
         } else {

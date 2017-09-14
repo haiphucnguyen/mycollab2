@@ -40,6 +40,6 @@ class I18nStringListParam(id: String, table: String, column: String, var values:
 
     companion object {
 
-        var OPTIONS = arrayOf(CollectionI18nEnum.IN, CollectionI18nEnum.NOT_IN)
+        @JvmField val OPTIONS = arrayOf(CollectionI18nEnum.IN, CollectionI18nEnum.NOT_IN)
     }
 }

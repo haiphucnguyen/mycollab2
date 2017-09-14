@@ -52,8 +52,8 @@ public class CampaignSelectionWindow extends MWindow {
             return new MButton(campaign.getCampaignname(), clickEvent -> {
                 fieldSelection.fireValueChange(campaign);
                 close();
-            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.INSTANCE.generateTooltipCampaign(UserUIContext.getUserLocale(),
-                    AppUI.Companion.getDateFormat(), campaign, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            }).withStyleName(WebThemes.BUTTON_LINK).withDescription(CrmTooltipGenerator.generateTooltipCampaign(UserUIContext.getUserLocale(),
+                    AppUI.getDateFormat(), campaign, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         });
     }
 }

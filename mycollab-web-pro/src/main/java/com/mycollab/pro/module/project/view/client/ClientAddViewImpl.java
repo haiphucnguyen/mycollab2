@@ -66,8 +66,8 @@ public class ClientAddViewImpl extends AbstractVerticalPageView implements Clien
         @Override
         public void process(BufferedImage image) {
             EntityUploaderService entityUploaderService = AppContextUtil.getSpringBean(EntityUploaderService.class);
-            String newLogoId = entityUploaderService.upload(image, PathUtils.INSTANCE.getEntityLogoPath(AppUI.Companion
-                            .getAccountId()), account.getAvatarid(), UserUIContext.getUsername(), AppUI.getAccountId(),
+            String newLogoId = entityUploaderService.upload(image, PathUtils.getEntityLogoPath(AppUI.getAccountId()),
+                    account.getAvatarid(), UserUIContext.getUsername(), AppUI.getAccountId(),
                     new Integer[]{16, 32, 48, 64, 100});
             AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
             account.setAvatarid(newLogoId);

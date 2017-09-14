@@ -30,7 +30,7 @@ public class MeetingTableDisplay extends DefaultPagedBeanTable<MeetingService, M
         this.addGeneratedColumn("subject", (source, itemId, columnId) -> {
             final SimpleMeeting meeting = getBeanByIndex(itemId);
 
-            LabelLink b = new LabelLink(meeting.getSubject(), CrmLinkBuilder.INSTANCE.generateMeetingPreviewLinkFull(meeting.getId()));
+            LabelLink b = new LabelLink(meeting.getSubject(), CrmLinkBuilder.generateMeetingPreviewLinkFull(meeting.getId()));
             b.addStyleName(WebThemes.LINK_COMPLETED);
 
             if (CallStatus.Held.name().equals(meeting.getStatus())) {

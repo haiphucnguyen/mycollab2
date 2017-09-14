@@ -37,37 +37,37 @@ class CaseSearchCriteria : SearchCriteria() {
     companion object {
         private val serialVersionUID = 1L
 
-        val p_priority: Param = CacheParamMapper.register(CrmTypeConstants.CASE, CaseI18nEnum.FORM_PRIORITY,
+        @JvmField val p_priority: Param = CacheParamMapper.register(CrmTypeConstants.CASE, CaseI18nEnum.FORM_PRIORITY,
                 I18nStringListParam("priority", "m_crm_case", "priority", listOf(*CrmDataTypeFactory.casesPriorityList)))
 
-        val p_account: Param = CacheParamMapper.register(CrmTypeConstants.CASE, CaseI18nEnum.FORM_ACCOUNT,
+        @JvmField val p_account: Param = CacheParamMapper.register(CrmTypeConstants.CASE, CaseI18nEnum.FORM_ACCOUNT,
                 PropertyParam("account", "m_crm_case", "accountId"))
 
-        val p_status: Param = CacheParamMapper.register(CrmTypeConstants.CASE, GenericI18Enum.FORM_STATUS,
+        @JvmField val p_status: Param = CacheParamMapper.register(CrmTypeConstants.CASE, GenericI18Enum.FORM_STATUS,
                 I18nStringListParam("status", "m_crm_case", "status", listOf(*CrmDataTypeFactory.casesStatusList)))
 
-        val p_type: Param = CacheParamMapper.register(CrmTypeConstants.CASE, GenericI18Enum.FORM_TYPE,
+        @JvmField val p_type: Param = CacheParamMapper.register(CrmTypeConstants.CASE, GenericI18Enum.FORM_TYPE,
                 I18nStringListParam("type", "m_crm_case", "type", listOf(*CrmDataTypeFactory.casesType)))
 
-        val p_reason: Param = CacheParamMapper.register(CrmTypeConstants.CASE, CaseI18nEnum.FORM_REASON,
+        @JvmField val p_reason: Param = CacheParamMapper.register(CrmTypeConstants.CASE, CaseI18nEnum.FORM_REASON,
                 I18nStringListParam("reason", "m_crm_case", "reason", listOf(*CrmDataTypeFactory.casesReason)))
 
-        val p_origin: Param = CacheParamMapper.register(CrmTypeConstants.CASE, CaseI18nEnum.FORM_ORIGIN,
+        @JvmField val p_origin: Param = CacheParamMapper.register(CrmTypeConstants.CASE, CaseI18nEnum.FORM_ORIGIN,
                 I18nStringListParam("origin", "m_crm_case", "origin", listOf(*CrmDataTypeFactory.casesOrigin)))
 
-        val p_subject: Param = CacheParamMapper.register(CrmTypeConstants.CASE, CaseI18nEnum.FORM_SUBJECT,
+        @JvmField val p_subject: Param = CacheParamMapper.register(CrmTypeConstants.CASE, CaseI18nEnum.FORM_SUBJECT,
                 StringParam("subject", "m_crm_case", "subject"))
 
-        val p_email: Param = CacheParamMapper.register(CrmTypeConstants.CASE, GenericI18Enum.FORM_EMAIL,
+        @JvmField val p_email: Param = CacheParamMapper.register(CrmTypeConstants.CASE, GenericI18Enum.FORM_EMAIL,
                 StringParam("email", "m_crm_case", "email"))
 
-        val p_assignee: Param = CacheParamMapper.register<PropertyListParam<*>>(CrmTypeConstants.CASE, GenericI18Enum.FORM_ASSIGNEE,
+        @JvmField val p_assignee: Param = CacheParamMapper.register<PropertyListParam<*>>(CrmTypeConstants.CASE, GenericI18Enum.FORM_ASSIGNEE,
                 PropertyListParam<String>("assignuser", "m_crm_case", "assignUser"))
 
-        val p_createdtime: Param = CacheParamMapper.register(CrmTypeConstants.CASE, GenericI18Enum.FORM_CREATED_TIME,
+        @JvmField val p_createdtime: Param = CacheParamMapper.register(CrmTypeConstants.CASE, GenericI18Enum.FORM_CREATED_TIME,
                 DateParam("createdtime", "m_crm_case", "createdTime"))
 
-        val p_lastupdatedtime: Param = CacheParamMapper.register(CrmTypeConstants.CASE, GenericI18Enum.FORM_LAST_UPDATED_TIME,
+        @JvmField val p_lastupdatedtime: Param = CacheParamMapper.register(CrmTypeConstants.CASE, GenericI18Enum.FORM_LAST_UPDATED_TIME,
                 DateParam("lastupdatedtime", "m_crm_case", "lastUpdatedTime"))
     }
 }

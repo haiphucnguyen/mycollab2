@@ -178,7 +178,7 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
         Img userAvatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
                 .getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                 .setCSSClass(UIConstants.CIRCLE_BOX);
-        A userLink = new A().setHref(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(
+        A userLink = new A().setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                 activityStream.getExtratypeid(), activityStream.getCreateduser()));
         userLink.appendText(StringUtils.trim(activityStream.getCreatedUserFullName(), 30, true));
 
@@ -193,10 +193,10 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
 
         if (ProjectTypeConstants.TASK.equals(activityStream.getType())
                 || ProjectTypeConstants.BUG.equals(activityStream.getType())) {
-            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(activityStream.getProjectShortName(),
+            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(activityStream.getProjectShortName(),
                     activityStream.getExtratypeid(), activityStream.getType(), activityStream.getItemKey() + ""));
         } else {
-            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(activityStream.getProjectShortName(),
+            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(activityStream.getProjectShortName(),
                     activityStream.getExtratypeid(), activityStream.getType(), activityStream.getTypeid()));
         }
         itemLink.appendText(StringUtils.trim(activityStream.getNamefield(), 50, true));
@@ -208,7 +208,7 @@ public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSe
     private static String buildProjectValue(ProjectActivityStream activityStream) {
         DivLessFormatter div = new DivLessFormatter();
         Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml());
-        A prjLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectFullLink(activityStream.getProjectId())).appendText(activityStream.getProjectName());
+        A prjLink = new A(ProjectLinkBuilder.generateProjectFullLink(activityStream.getProjectId())).appendText(activityStream.getProjectName());
         div.appendChild(prjImg, DivLessFormatter.EMPTY_SPACE, prjLink);
         return div.write();
     }

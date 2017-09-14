@@ -27,7 +27,7 @@ public class ProjectMemberListPresenter extends AbstractPresenter<ProjectMemberL
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.USERS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.USERS)) {
             ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
             userGroupContainer.setContent(view);
 
@@ -42,7 +42,7 @@ public class ProjectMemberListPresenter extends AbstractPresenter<ProjectMemberL
             }
             view.setSearchCriteria(criteria);
 
-            ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoUserList();
         } else {
             NotificationUtil.showMessagePermissionAlert();

@@ -69,7 +69,7 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
         tableItem.addGeneratedColumn("rolename", (source, itemId, columnId) -> {
             ProjectRole role = tableItem.getBeanByIndex(itemId);
             return new LabelLink(role.getRolename(),
-                    ProjectLinkBuilder.INSTANCE.generateRolePreviewFullLink(role.getProjectid(), role.getId()));
+                    ProjectLinkBuilder.generateRolePreviewFullLink(role.getProjectid(), role.getId()));
         });
 
         listLayout.addComponent(this.constructTableActionControls());
@@ -97,7 +97,7 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
         layout.addComponent(this.selectOptionButton);
 
         tableActionControls = new DefaultMassItemActionHandlerContainer();
-        if (CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.ROLES)) {
+        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.ROLES)) {
             tableActionControls.addDeleteActionItem();
         }
 

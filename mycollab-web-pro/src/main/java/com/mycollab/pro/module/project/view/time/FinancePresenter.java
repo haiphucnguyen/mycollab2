@@ -37,9 +37,9 @@ public class FinancePresenter extends AbstractPresenter<IFinanceContainer> imple
             presenter = PresenterResolver.getPresenter(InvoicePresenter.class);
             presenter.go(view, data);
         } else {
-            if (CurrentProjectVariables.INSTANCE.hasTimeFeature()) {
+            if (CurrentProjectVariables.hasTimeFeature()) {
                 view.showTimeView();
-            } else if (CurrentProjectVariables.INSTANCE.hasInvoiceFeature()) {
+            } else if (CurrentProjectVariables.hasInvoiceFeature()) {
                 view.showInvoiceView();
             } else {
                 throw new MyCollabException("Not support screen data type null");

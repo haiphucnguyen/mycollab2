@@ -35,16 +35,16 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
     private boolean canCreateOpportunity;
 
     private static Param[] paramFields = new Param[]{
-            OpportunitySearchCriteria.Companion.getP_opportunityName(),
-            OpportunitySearchCriteria.Companion.getP_account(),
-            OpportunitySearchCriteria.Companion.getP_nextStep(),
-            OpportunitySearchCriteria.Companion.getP_campaign(),
-            OpportunitySearchCriteria.Companion.getP_leadSource(),
-            OpportunitySearchCriteria.Companion.getP_saleStage(),
-            OpportunitySearchCriteria.Companion.getP_type(),
-            OpportunitySearchCriteria.Companion.getP_expectedcloseddate(),
-            OpportunitySearchCriteria.Companion.getP_createdtime(),
-            OpportunitySearchCriteria.Companion.getP_lastupdatedtime()};
+            OpportunitySearchCriteria.p_opportunityName,
+            OpportunitySearchCriteria.p_account,
+            OpportunitySearchCriteria.p_nextStep,
+            OpportunitySearchCriteria.p_campaign,
+            OpportunitySearchCriteria.p_leadSource,
+            OpportunitySearchCriteria.p_saleStage,
+            OpportunitySearchCriteria.p_type,
+            OpportunitySearchCriteria.p_expectedcloseddate,
+            OpportunitySearchCriteria.p_createdtime,
+            OpportunitySearchCriteria.p_lastupdatedtime};
 
     public OpportunitySearchPanel(boolean canCreateOpportunity) {
         this.canCreateOpportunity = canCreateOpportunity;

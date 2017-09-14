@@ -32,10 +32,10 @@ public class GenericItemRowDisplayHandler implements IBeanList.RowDisplayHandler
         MVerticalLayout layout = new MVerticalLayout().withFullWidth().withStyleName("border-bottom", WebThemes.HOVER_EFFECT_NOT_BOX);
         ELabel link = ELabel.h3("");
         if (item.isBug() || item.isTask()) {
-            link.setValue(ProjectLinkBuilder.INSTANCE.generateProjectItemHtmlLinkAndTooltip(item.getProjectShortName(),
+            link.setValue(ProjectLinkBuilder.generateProjectItemHtmlLinkAndTooltip(item.getProjectShortName(),
                     item.getProjectId(), item.getName(), item.getType(), item.getExtraTypeId() + ""));
         } else {
-            link.setValue(ProjectLinkBuilder.INSTANCE.generateProjectItemHtmlLinkAndTooltip(item.getProjectShortName(),
+            link.setValue(ProjectLinkBuilder.generateProjectItemHtmlLinkAndTooltip(item.getProjectShortName(),
                     item.getProjectId(), item.getName(), item.getType(), item.getTypeId()));
         }
 
@@ -55,7 +55,7 @@ public class GenericItemRowDisplayHandler implements IBeanList.RowDisplayHandler
         } else {
             Img userAvatar = new Img("", StorageUtils.getAvatarPath(item.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
-            A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(item.getProjectId(), item
+            A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(item.getProjectId(), item
                     .getCreatedUser())).appendText(item.getCreatedUserDisplayName());
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(item.getCreatedUser()));
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

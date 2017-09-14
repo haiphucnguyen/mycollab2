@@ -63,7 +63,7 @@ class NumberParam(id: String, table: String, column: String) : ColumnParam(id, t
 
     companion object {
 
-        val OPTIONS = arrayOf(EQUAL, NOT_EQUAL, LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN, GREATER_THAN_EQUAL, IS_EMPTY, IS_NOT_EMPTY)
+        @JvmField val OPTIONS = arrayOf(EQUAL, NOT_EQUAL, LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN, GREATER_THAN_EQUAL, IS_EMPTY, IS_NOT_EMPTY)
 
         private val EQUAL_EXPR = "%s.%s = "
         private val NOT_EQUAL_EXPR = "%s.%s <> "

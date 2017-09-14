@@ -35,14 +35,14 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
     private boolean canCreateLead;
 
     private static Param[] paramFields = new Param[]{
-            LeadSearchCriteria.Companion.getP_leadContactName(),
-            LeadSearchCriteria.Companion.getP_accountName(), LeadSearchCriteria.Companion.getP_website(),
-            LeadSearchCriteria.Companion.getP_anyEmail(), LeadSearchCriteria.Companion.getP_anyPhone(),
-            LeadSearchCriteria.Companion.getP_anyCity(),
-            LeadSearchCriteria.Companion.getP_billingCountry(),
-            LeadSearchCriteria.Companion.getP_shippingCountry(),
-            LeadSearchCriteria.Companion.getP_statuses(), LeadSearchCriteria.Companion.getP_sources(),
-            LeadSearchCriteria.Companion.getP_assignee()};
+            LeadSearchCriteria.p_leadContactName,
+            LeadSearchCriteria.p_accountName, LeadSearchCriteria.p_website,
+            LeadSearchCriteria.p_anyEmail, LeadSearchCriteria.p_anyPhone,
+            LeadSearchCriteria.p_anyCity,
+            LeadSearchCriteria.p_billingCountry,
+            LeadSearchCriteria.p_shippingCountry,
+            LeadSearchCriteria.p_statuses, LeadSearchCriteria.p_sources,
+            LeadSearchCriteria.p_assignee};
 
     public LeadSearchPanel(boolean canCreateLead) {
         this.canCreateLead = canCreateLead;

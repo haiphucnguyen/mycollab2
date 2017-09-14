@@ -253,7 +253,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
 
         final Date fromDate = fromDateField.getValue();
         final Date toDate = toDateField.getValue();
-        searchCriteria.addExtraField(DateParam.Companion.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
+        searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
                 ConstantValueInjector.valueOf(Date.class, new Date[]{fromDate, toDate})));
 
         Collection<String> selectedUsers = (Collection<String>) userField.getValue();

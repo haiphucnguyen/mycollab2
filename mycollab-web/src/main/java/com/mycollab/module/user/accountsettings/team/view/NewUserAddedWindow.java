@@ -34,7 +34,7 @@ public class NewUserAddedWindow extends MWindow {
                 user.getDisplayName()));
         content.with(infoLbl);
 
-        String signinInstruction = UserUIContext.getMessage(UserI18nEnum.OPT_SIGN_IN_MSG, AppUI.Companion.getSiteUrl(), AppUI.Companion.getSiteUrl());
+        String signinInstruction = UserUIContext.getMessage(UserI18nEnum.OPT_SIGN_IN_MSG, AppUI.getSiteUrl(), AppUI.getSiteUrl());
         content.with(new MVerticalLayout(new Label(signinInstruction, ContentMode.HTML),
                 new ELabel(UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL)).withStyleName(UIConstants.META_INFO),
                 new Label("    " + user.getUsername()),

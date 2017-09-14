@@ -60,7 +60,7 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
             @Override
             public void onDelete(final SimpleCampaign data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -247,7 +247,7 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
                 if (campaign != null) {
                     super.onGo(container, data);
                     view.previewItem(campaign);
-                    AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateCampaignPreviewLink(campaign.getId()),
+                    AppUI.addFragment(CrmLinkGenerator.generateCampaignPreviewLink(campaign.getId()),
                             UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                     UserUIContext.getMessage(CampaignI18nEnum.SINGLE), campaign.getCampaignname()));
                 } else {

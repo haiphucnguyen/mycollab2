@@ -94,7 +94,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateCampaignPreviewLink(beanItem.getId()),
+        AppUI.addFragment(CrmLinkGenerator.generateCampaignPreviewLink(beanItem.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(CampaignI18nEnum.SINGLE), beanItem.getCampaignname()));
     }

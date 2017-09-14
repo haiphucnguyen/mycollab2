@@ -152,7 +152,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
             final Image userAvatarBtn = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(user.getAvatarid(), 32);
             userAvatarBtn.addStyleName(UIConstants.CIRCLE_BOX);
             userAvatarBtn.setDescription(CommonTooltipGenerator.generateTooltipUser(UserUIContext.getUserLocale(), user,
-                    AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             addComponent(userAvatarBtn);
             this.addStyleName("removeable-btn");
             this.setWidthUndefined();

@@ -112,7 +112,7 @@ public class AccountContactListComp extends RelatedListComp2<ContactService, Con
             MButton btnDelete = new MButton("", clickEvent -> {
                 ConfirmDialogExt.show(
                         UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -129,7 +129,7 @@ public class AccountContactListComp extends RelatedListComp2<ContactService, Con
             blockContent.addComponent(btnDelete);
             blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
 
-            ELabel contactName = ELabel.html(String.format("Name: <a href='%s'>%s</a>", CrmLinkGenerator.INSTANCE.generateCrmItemLink(
+            ELabel contactName = ELabel.html(String.format("Name: <a href='%s'>%s</a>", CrmLinkGenerator.generateCrmItemLink(
                     CrmTypeConstants.CONTACT, contact.getId()), contact.getContactName()));
             contactInfo.addComponent(contactName);
 

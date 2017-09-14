@@ -126,7 +126,7 @@ public class MilestoneTimelineWidget extends DDVerticalLayout {
 
             Div statusDiv = new Div();
 
-            A milestoneDiv = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink
+            A milestoneDiv = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
                     (milestone.getProjectid(), milestone.getId())).appendText(ProjectAssetsManager.getAsset
                     (ProjectTypeConstants.MILESTONE).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true))
                     .setId("tag" + TOOLTIP_ID);

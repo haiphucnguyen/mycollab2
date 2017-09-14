@@ -67,7 +67,7 @@ public class TimelineTrackingServiceImpl extends DefaultCrudService<Integer, Tim
             }
             List<Date> dates = boundDays(startDate, endDate.minusDays(1));
             Map<String, List<GroupItem>> items = new HashMap<>();
-            criteria.setFieldgroup(StringSearchField.Companion.and(fieldGroup));
+            criteria.setFieldgroup(StringSearchField.and(fieldGroup));
             List<GroupItem> cacheTimelineItems = timelineTrackingCachingMapperExt.findTimelineItems(groupVals, dates, criteria);
 
             DateTime calculatedDate = startDate.toDateTime();

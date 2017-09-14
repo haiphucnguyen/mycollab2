@@ -64,7 +64,7 @@ public class OpportunityReadPresenter extends CrmGenericPresenter<OpportunityRea
             @Override
             public void onDelete(final SimpleOpportunity data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -214,7 +214,7 @@ public class OpportunityReadPresenter extends CrmGenericPresenter<OpportunityRea
                     super.onGo(container, data);
                     view.previewItem(opportunity);
 
-                    AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateOpportunityPreviewLink(opportunity.getId()),
+                    AppUI.addFragment(CrmLinkGenerator.generateOpportunityPreviewLink(opportunity.getId()),
                             UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                     UserUIContext.getMessage(OpportunityI18nEnum.SINGLE), opportunity.getOpportunityname()));
                 } else {

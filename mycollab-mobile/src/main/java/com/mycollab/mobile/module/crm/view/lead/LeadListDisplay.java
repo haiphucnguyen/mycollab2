@@ -32,7 +32,7 @@ public class LeadListDisplay extends DefaultPagedBeanList<LeadService, LeadSearc
         @Override
         public Component generateRow(IBeanList<SimpleLead> host, final SimpleLead lead, int rowIndex) {
             MVerticalLayout rowLayout = new MVerticalLayout().withMargin(false).withSpacing(false).withFullWidth();
-            A itemLink = new A(CrmLinkBuilder.INSTANCE.generateLeadPreviewLinkFull(lead.getId())).appendText(lead.getLeadName());
+            A itemLink = new A(CrmLinkBuilder.generateLeadPreviewLinkFull(lead.getId())).appendText(lead.getLeadName());
             MCssLayout itemWrap = new MCssLayout(ELabel.html(itemLink.write()));
             rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.getAsset
                     (CrmTypeConstants.LEAD)), itemWrap).expand(itemWrap).withFullWidth());

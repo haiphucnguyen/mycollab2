@@ -101,7 +101,7 @@ public class RoleListPresenter extends ListSelectionPresenter<RoleListView, Role
             searchCriteria = (RoleSearchCriteria) data.getParams();
             doSearch(searchCriteria);
 
-            AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
+            AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
             breadcrumb.gotoRoleList();
         } else {
             NotificationUtil.showMessagePermissionAlert();

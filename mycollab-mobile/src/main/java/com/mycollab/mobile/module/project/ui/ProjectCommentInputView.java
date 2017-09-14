@@ -82,7 +82,7 @@ public class ProjectCommentInputView extends AbstractMobilePageView {
             final CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentId = commentService.saveWithSession(comment, UserUIContext.getUsername());
 
-            String attachmentPath = AttachmentUtils.INSTANCE.getCommentAttachmentPath(type, AppUI.getAccountId(),
+            String attachmentPath = AttachmentUtils.getCommentAttachmentPath(type, AppUI.getAccountId(),
                     CurrentProjectVariables.getProjectId(), typeId, commentId);
             if (!"".equals(attachmentPath)) {
                 saveContentsToRepo(attachmentPath);

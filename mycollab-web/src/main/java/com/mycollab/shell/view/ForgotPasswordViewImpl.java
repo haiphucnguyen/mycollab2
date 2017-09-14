@@ -46,37 +46,37 @@ public class ForgotPasswordViewImpl extends AbstractVerticalPageView implements 
             CustomLayout customLayout = CustomLayoutExt.createLayout("forgotPassword");
             customLayout.setStyleName("forgotPwdForm");
 
-            Resource logoResource = AccountAssetsResolver.createLogoResource(AppUI.Companion.getBillingAccount().getLogopath(), 150);
+            Resource logoResource = AccountAssetsResolver.createLogoResource(AppUI.getBillingAccount().getLogopath(), 150);
             customLayout.addComponent(new Image(null, logoResource), "logo-here");
 
-            customLayout.addComponent(new ELabel(LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(),
+            customLayout.addComponent(new ELabel(LocalizationHelper.getMessage(AppUI.getDefaultLocale(),
                     ShellI18nEnum.BUTTON_FORGOT_PASSWORD)), "formHeader");
-            customLayout.addComponent(ELabel.html(LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(),
+            customLayout.addComponent(ELabel.html(LocalizationHelper.getMessage(AppUI.getDefaultLocale(),
                     ShellI18nEnum.OPT_FORGOT_PASSWORD_INTRO)), "intro-text");
-            nameOrEmailField = new TextField(LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), GenericI18Enum.FORM_EMAIL));
+            nameOrEmailField = new TextField(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), GenericI18Enum.FORM_EMAIL));
             customLayout.addComponent(nameOrEmailField, "nameoremail");
 
-            MButton sendEmail = new MButton(LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), ShellI18nEnum.BUTTON_RESET_PASSWORD), clickEvent -> {
+            MButton sendEmail = new MButton(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.BUTTON_RESET_PASSWORD), clickEvent -> {
                 String username = nameOrEmailField.getValue();
                 if (StringUtils.isValidEmail(username)) {
                     UserService userService = AppContextUtil.getSpringBean(UserService.class);
                     User user = userService.findUserByUserName(username);
 
                     if (user == null) {
-                        NotificationUtil.showErrorNotification(LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), GenericI18Enum.ERROR_USER_IS_NOT_EXISTED, username));
+                        NotificationUtil.showErrorNotification(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), GenericI18Enum.ERROR_USER_IS_NOT_EXISTED, username));
                     } else {
                         userService.requestToResetPassword(user.getUsername());
-                        NotificationUtil.showNotification(LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), GenericI18Enum.OPT_SUCCESS),
-                                LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), ShellI18nEnum.OPT_EMAIL_SENDER_NOTIFICATION));
+                        NotificationUtil.showNotification(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), GenericI18Enum.OPT_SUCCESS),
+                                LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.OPT_EMAIL_SENDER_NOTIFICATION));
                         EventBusFactory.getInstance().post(new ShellEvent.LogOut(this, null));
                     }
                 } else {
-                    NotificationUtil.showErrorNotification(LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), ErrorI18nEnum.NOT_VALID_EMAIL, username));
+                    NotificationUtil.showErrorNotification(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ErrorI18nEnum.NOT_VALID_EMAIL, username));
                 }
             }).withStyleName(WebThemes.BUTTON_ACTION).withClickShortcut(ShortcutAction.KeyCode.ENTER);
             customLayout.addComponent(sendEmail, "loginButton");
 
-            MButton memoBackBtn = new MButton(LocalizationHelper.getMessage(AppUI.Companion.getDefaultLocale(), ShellI18nEnum.BUTTON_IGNORE_RESET_PASSWORD),
+            MButton memoBackBtn = new MButton(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.BUTTON_IGNORE_RESET_PASSWORD),
                     clickEvent -> EventBusFactory.getInstance().post(new ShellEvent.LogOut(this, null)))
                     .withStyleName(WebThemes.BUTTON_LINK);
             customLayout.addComponent(memoBackBtn, "forgotLink");

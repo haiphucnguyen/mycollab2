@@ -63,7 +63,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
             @Override
             public void onDelete(final SimpleCase data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -187,7 +187,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
                     super.onGo(container, data);
                     view.previewItem(cases);
 
-                    AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateCasePreviewLink(cases.getId()),
+                    AppUI.addFragment(CrmLinkGenerator.generateCasePreviewLink(cases.getId()),
                             UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                                     UserUIContext.getMessage(CaseI18nEnum.SINGLE), cases.getSubject()));
                 } else {

@@ -75,7 +75,7 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateMessagesLink(CurrentProjectVariables.getProjectId()),
+        AppUI.addFragment(ProjectLinkGenerator.generateMessagesLink(CurrentProjectVariables.getProjectId()),
                 UserUIContext.getMessage(MessageI18nEnum.LIST));
     }
 
@@ -103,7 +103,7 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
 
             MHorizontalLayout titleRow = new MHorizontalLayout().withFullWidth().withStyleName("title-row");
 
-            A messageLink = new A(ProjectLinkBuilder.INSTANCE.generateMessagePreviewFullLink(CurrentProjectVariables.INSTANCE
+            A messageLink = new A(ProjectLinkBuilder.generateMessagePreviewFullLink(CurrentProjectVariables
                     .getProjectId(), message.getId())).appendText(message.getTitle());
             ELabel messageTitle = ELabel.h3(messageLink.write());
             CssLayout messageWrap = new CssLayout(messageTitle);
@@ -124,7 +124,7 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
             rightCol.addComponent(messageContent);
 
             ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
-            List<Content> attachments = attachmentService.getContents(AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(
+            List<Content> attachments = attachmentService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(
                     AppUI.getAccountId(), message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
             if (CollectionUtils.isNotEmpty(attachments)) {
                 CssLayout attachmentPanel = new CssLayout();

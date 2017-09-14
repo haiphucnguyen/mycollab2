@@ -125,7 +125,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
 
             MButton deleteBtn = new MButton("", clickEvent ->
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -141,7 +141,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
             blockContent.addComponent(deleteBtn);
             blockContent.setComponentAlignment(deleteBtn, Alignment.TOP_RIGHT);
 
-            A caseLink = new A(CrmLinkBuilder.INSTANCE.generateCasePreviewLinkFull(oneCase.getId())).appendText(oneCase.getSubject());
+            A caseLink = new A(CrmLinkBuilder.generateCasePreviewLinkFull(oneCase.getId())).appendText(oneCase.getSubject());
             ELabel caseSubject = ELabel.h3(caseLink.write());
             caseInfo.addComponent(caseSubject);
 
@@ -159,7 +159,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
 
             String assigneeValue = (oneCase.getAssignuser() == null) ? new Span().appendText(UserUIContext.getMessage
                     (GenericI18Enum.OPT_UNDEFINED)).write() : new A(AccountLinkGenerator.generatePreviewFullUserLink(
-                    AppUI.Companion.getSiteUrl(), oneCase.getAssignuser()))
+                    AppUI.getSiteUrl(), oneCase.getAssignuser()))
                     .appendText(oneCase.getAssignUserFullName()).write();
             Label caseAssignUser = ELabel.html(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + ": " + assigneeValue);
             caseInfo.addComponent(caseAssignUser);

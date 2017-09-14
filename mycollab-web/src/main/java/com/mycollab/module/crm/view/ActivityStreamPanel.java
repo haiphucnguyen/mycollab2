@@ -240,7 +240,7 @@ public class ActivityStreamPanel extends CssLayout {
             Img userAvatar = new Img("", StorageUtils.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
             A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(AccountLinkGenerator.generatePreviewFullUserLink(
-                    AppUI.Companion.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim
+                    AppUI.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim
                     (activityStream.getCreatedUserFullName(), 30, true));
 
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(activityStream.getCreateduser()));
@@ -253,7 +253,7 @@ public class ActivityStreamPanel extends CssLayout {
         private String buildItemValue(SimpleActivityStream activityStream) {
             DivLessFormatter div = new DivLessFormatter();
             Text itemImg = new Text(CrmAssetsManager.getAsset(activityStream.getType()).getHtml());
-            A itemLink = new A().setId("tag" + TOOLTIP_ID).setHref(CrmLinkGenerator.INSTANCE.generateCrmItemLink(
+            A itemLink = new A().setId("tag" + TOOLTIP_ID).setHref(CrmLinkGenerator.generateCrmItemLink(
                     activityStream.getType(), Integer.parseInt(activityStream.getTypeid())));
 
             itemLink.setAttribute("onmouseover", TooltipHelper.crmHoverJsFunction(activityStream.getType(), activityStream.getTypeid()));

@@ -70,7 +70,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
             AppUI.addFragment("project/risk/add/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(RiskI18nEnum.NEW));
         } else {
-            AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateRiskEditLink(beanItem.getProjectid(), beanItem.getId()), beanItem.getName());
+            AppUI.addFragment(ProjectLinkGenerator.generateRiskEditLink(beanItem.getProjectid(), beanItem.getId()), beanItem.getName());
         }
     }
 

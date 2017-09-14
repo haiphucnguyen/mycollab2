@@ -37,9 +37,9 @@ public class ProjectLogoUploadWindow extends MWindow implements ImagePreviewCrop
 
     @Override
     public void process(BufferedImage image) {
-        SimpleProject project = CurrentProjectVariables.INSTANCE.getProject();
+        SimpleProject project = CurrentProjectVariables.getProject();
         EntityUploaderService entityUploaderService = AppContextUtil.getSpringBean(EntityUploaderService.class);
-        String newLogoId = entityUploaderService.upload(image, PathUtils.INSTANCE.getProjectLogoPath(AppUI.getAccountId(),
+        String newLogoId = entityUploaderService.upload(image, PathUtils.getProjectLogoPath(AppUI.getAccountId(),
                 project.getId()), project.getAvatarid(), UserUIContext.getUsername(), AppUI.getAccountId(),
                 new Integer[]{16, 32, 48, 64, 100});
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);

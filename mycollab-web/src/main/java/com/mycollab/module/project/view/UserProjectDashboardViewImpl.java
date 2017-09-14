@@ -95,7 +95,7 @@ public class UserProjectDashboardViewImpl extends AbstractVerticalPageView imple
             this.with(ELabel.h2(UserUIContext.getMessage(GenericI18Enum.VIEW_NO_ITEM_TITLE)).withWidthUndefined());
             if (UserUIContext.canWrite(RolePermissionCollections.CREATE_NEW_PROJECT)) {
                 MButton newProjectBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.NEW),
-                        clickEvent -> UI.getCurrent().addWindow(ViewManager.INSTANCE.getCacheComponent(AbstractProjectAddWindow.class)))
+                        clickEvent -> UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class)))
                         .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
                 with(newProjectBtn);
             }

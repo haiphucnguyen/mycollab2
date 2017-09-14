@@ -24,7 +24,7 @@ public class CrmAssetsUtil {
     public static Component accountLogoComp(SimpleAccount account, int size) {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(account.getAvatarid())) {
-            wrapper = new Image(null, new ExternalResource(StorageUtils.getEntityLogoPath(AppUI.Companion
+            wrapper = new Image(null, new ExternalResource(StorageUtils.getEntityLogoPath(AppUI
                     .getAccountId(), account.getAvatarid(), 100)));
         } else {
             String accountName = account.getAccountname();
@@ -54,8 +54,7 @@ public class CrmAssetsUtil {
         }
 
         if (!StringUtils.isBlank(account.getAvatarid())) {
-            Image image = new Image(null, new ExternalResource(StorageUtils.getEntityLogoPath(AppUI.Companion
-                    .getAccountId(), account.getAvatarid(), size)));
+            Image image = new Image(null, new ExternalResource(StorageUtils.getEntityLogoPath(AppUI.getAccountId(), account.getAvatarid(), size)));
             image.addStyleName(UIConstants.CIRCLE_BOX);
             wrapper.addComponent(image);
         } else {

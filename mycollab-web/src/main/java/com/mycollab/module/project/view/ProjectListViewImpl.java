@@ -94,7 +94,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
 
         tableItem.addGeneratedColumn(Project.Field.name.name(), (source, itemId, columnId) -> {
             SimpleProject project = tableItem.getBeanByIndex(itemId);
-            A projectLink = new A(ProjectLinkBuilder.INSTANCE.generateProjectFullLink(project.getId())).appendText(project.getName());
+            A projectLink = new A(ProjectLinkBuilder.generateProjectFullLink(project.getId())).appendText(project.getName());
             projectLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.PROJECT,
                     project.getId() + ""));
             projectLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
@@ -114,14 +114,14 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
 
         tableItem.addGeneratedColumn(Project.Field.lead.name(), (source, itemId, columnId) -> {
             SimpleProject project = tableItem.getBeanByIndex(itemId);
-            return new Label(ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(project.getId(), project.getLead(),
+            return new Label(ProjectLinkBuilder.generateProjectMemberHtmlLink(project.getId(), project.getLead(),
                     project.getLeadFullName(), project.getLeadAvatarId(), true), ContentMode.HTML);
         });
 
         tableItem.addGeneratedColumn(Project.Field.accountid.name(), (source, itemId, columnId) -> {
             SimpleProject project = tableItem.getBeanByIndex(itemId);
             if (project.getAccountid() != null) {
-                LabelLink b = new LabelLink(project.getClientName(), ProjectLinkBuilder.INSTANCE.generateClientPreviewFullLink
+                LabelLink b = new LabelLink(project.getClientName(), ProjectLinkBuilder.generateClientPreviewFullLink
                         (project.getAccountid()));
                 b.setIconLink(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
                 return b;

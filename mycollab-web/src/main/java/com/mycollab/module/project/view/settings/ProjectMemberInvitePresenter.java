@@ -88,7 +88,7 @@ public class ProjectMemberInvitePresenter extends AbstractPresenter<ProjectMembe
 
             view.display();
 
-            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadcrumb.gotoUserAdd();
             SystemUIChecker.hasValidSmtpAccount();
         } else {
@@ -113,7 +113,7 @@ public class ProjectMemberInvitePresenter extends AbstractPresenter<ProjectMembe
             contentLayout.with(ELabel.html(infoDiv.write()));
 
             Div introDiv = new Div().appendText("Below users are invited to the project ")
-                    .appendChild(new B().appendText(CurrentProjectVariables.INSTANCE.getProject().getName()))
+                    .appendChild(new B().appendText(CurrentProjectVariables.getProject().getName()))
                     .appendText(" as role ").appendChild(new B().appendText(invitation.getRoleName()));
             contentLayout.with(ELabel.html(introDiv.write()));
 

@@ -95,7 +95,7 @@ class BugRelayEmailNotificationActionImpl() : SendMailToFollowersAction<SimpleBu
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
-    override fun getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): Set<SimpleUser> {
+    override fun getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): List<SimpleUser> {
         val notificationSettings = projectNotificationService!!.findNotifications(notification.projectId, notification.saccountid)
         var notifyUsers = notification.notifyUsers
 
@@ -110,7 +110,7 @@ class BugRelayEmailNotificationActionImpl() : SendMailToFollowersAction<SimpleBu
                         val prjMember = projectMemberService!!.getActiveUserOfProject(notificationSetting.username,
                                 notificationSetting.projectid, notificationSetting.saccountid)
                         if (prjMember != null) {
-                            notifyUsers += (prjMember)
+                            notifyUsers += prjMember
                         }
                     }
                 }
@@ -122,7 +122,7 @@ class BugRelayEmailNotificationActionImpl() : SendMailToFollowersAction<SimpleBu
                 }
             }
         }
-        return notifyUsers.toSet()
+        return notifyUsers
     }
 
     class BugFieldNameMapper() : ItemFieldMapper() {

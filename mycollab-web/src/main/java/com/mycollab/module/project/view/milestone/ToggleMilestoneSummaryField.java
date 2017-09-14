@@ -89,7 +89,7 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
                 int openAssignmentsCount = genericTaskService.getTotalCount(searchCriteria);
                 if (openAssignmentsCount > 0) {
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, AppUI.Companion.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.OPT_QUESTION, AppUI.getSiteName()),
                             UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_CLOSE_SUB_ASSIGNMENTS),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -124,10 +124,10 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
                     .withIcon(FontAwesome.EDIT).withStyleName(ValoTheme.BUTTON_ICON_ALIGN_TOP);
             buttonControls.with(instantEditBtn);
         }
-        if (CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.MILESTONES)) {
+        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MILESTONES)) {
             MButton removeBtn = new MButton("", clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -175,7 +175,7 @@ public class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
     }
 
     private String buildMilestoneLink() {
-        A milestoneLink = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink(milestone.getProjectid(), milestone.getId()));
+        A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink(milestone.getProjectid(), milestone.getId()));
         milestoneLink.appendText(StringUtils.trim(milestone.getName(), maxLength, true));
 
         Div milestoneDiv = new Div().appendChild(milestoneLink);

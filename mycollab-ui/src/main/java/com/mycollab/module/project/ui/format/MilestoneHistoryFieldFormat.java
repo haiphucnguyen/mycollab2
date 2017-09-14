@@ -39,7 +39,7 @@ public final class MilestoneHistoryFieldFormat implements HistoryFieldFormat {
 
             if (milestone != null) {
                 if (displayAsHtml) {
-                    return ProjectLinkBuilder.INSTANCE.generateProjectItemHtmlLinkAndTooltip(CurrentProjectVariables.INSTANCE.getShortName(),
+                    return ProjectLinkBuilder.generateProjectItemHtmlLinkAndTooltip(CurrentProjectVariables.getShortName(),
                             milestone.getProjectid(), milestone.getName(), ProjectTypeConstants.MILESTONE, milestone.getId() + "");
                 } else {
                     return milestone.getName();

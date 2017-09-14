@@ -89,7 +89,7 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
         if (CollectionUtils.isNotEmpty(selectedTags)) {
             ProjectGenericItemSearchCriteria searchCriteria = new ProjectGenericItemSearchCriteria();
             searchCriteria.setTagNames(new SetSearchField<>(selectedTags));
-            searchCriteria.setTypes(CurrentProjectVariables.INSTANCE.getRestrictedItemTypes());
+            searchCriteria.setTypes(CurrentProjectVariables.getRestrictedItemTypes());
             assignmentList.setSearchCriteria(searchCriteria);
         } else {
             assignmentList.setCurrentDataList(new ArrayList<>());

@@ -123,7 +123,7 @@ public class AssignmentReadPresenter extends AbstractCrmPresenter<AssignmentRead
             view.previewItem(task);
             super.onGo(container, data);
 
-            AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateTaskPreviewLink(task.getId()),
+            AppUI.addFragment(CrmLinkGenerator.generateTaskPreviewLink(task.getId()),
                     UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                             UserUIContext.getMessage(TaskI18nEnum.SINGLE), task.getSubject()));
         } else {

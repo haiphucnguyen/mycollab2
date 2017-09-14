@@ -116,7 +116,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
                     SimpleItemTimeLogging itemLogging = getBeanByIndex(itemId);
 
                     LabelLink b = new LabelLink(itemLogging.getProjectName(),
-                            ProjectLinkBuilder.INSTANCE.generateProjectFullLink(itemLogging.getProjectid()));
+                            ProjectLinkBuilder.generateProjectFullLink(itemLogging.getProjectid()));
                     b.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
                     return b;
                 }
@@ -166,12 +166,12 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
         A itemLink = new A().setId("tag" + TOOLTIP_ID);
 
         if (ProjectTypeConstants.TASK.equals(itemLogging.getType()) || ProjectTypeConstants.BUG.equals(itemLogging.getType())) {
-            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(
+            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(
                     itemLogging.getProjectShortName(),
                     itemLogging.getProjectid(), itemLogging.getType(),
                     itemLogging.getExtraTypeId() + ""));
         } else {
-            itemLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(
+            itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(
                     itemLogging.getProjectShortName(),
                     itemLogging.getProjectid(), itemLogging.getType(),
                     itemLogging.getTypeid() + ""));

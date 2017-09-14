@@ -40,8 +40,8 @@ public class ContactOpportunitySelectionWindow extends RelatedItemSelectionWindo
             final SimpleOpportunity opportunity = tableItem.getBeanByIndex(itemId);
 
             ELabel b = new ELabel(opportunity.getOpportunityname()).withStyleName(WebThemes.BUTTON_LINK)
-                    .withDescription(CrmTooltipGenerator.INSTANCE.generateTooltipOpportunity(UserUIContext.getUserLocale(),
-                            AppUI.Companion.getDateFormat(), opportunity, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    .withDescription(CrmTooltipGenerator.generateTooltipOpportunity(UserUIContext.getUserLocale(),
+                            AppUI.getDateFormat(), opportunity, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             if (OpportunitySalesStage.Closed_Won.name().equals(opportunity.getSalesstage()) ||
                     OpportunitySalesStage.Closed_Lost.name().equals(opportunity.getSalesstage())) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);

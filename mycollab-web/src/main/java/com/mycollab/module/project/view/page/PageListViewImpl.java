@@ -179,7 +179,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
     private Layout displayFolderBlock(final Folder resource) {
         MVerticalLayout container = new MVerticalLayout().withFullWidth().withStyleName("page-item-block");
 
-        A folderHtml = new A(ProjectLinkBuilder.INSTANCE.generatePageFolderFullLink(CurrentProjectVariables.INSTANCE
+        A folderHtml = new A(ProjectLinkBuilder.generatePageFolderFullLink(CurrentProjectVariables
                 .getProjectId(), resource.getPath())).appendText(FontAwesome.FOLDER_OPEN.getHtml() + " " + resource.getName());
         ELabel folderLink = ELabel.h3(folderHtml.write());
         container.addComponent(folderLink);
@@ -188,7 +188,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
         }
 
         Label lastUpdateInfo = new ELabel(UserUIContext.getMessage(PageI18nEnum.LABEL_LAST_UPDATE,
-                ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(), resource.getCreatedUser(), true),
+                ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(), resource.getCreatedUser(), true),
                 UserUIContext.formatPrettyTime(resource.getCreatedTime()
                         .getTime())), ContentMode.HTML).withDescription(UserUIContext.formatDateTime(resource.getCreatedTime().getTime()));
         lastUpdateInfo.addStyleName(UIConstants.META_INFO);
@@ -201,7 +201,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
 
         MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -214,7 +214,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
                         }
                     });
         }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING);
-        deleteBtn.setVisible(CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.PAGES));
+        deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PAGES));
 
         container.addComponent(new MHorizontalLayout(editBtn, deleteBtn));
         return container;
@@ -222,14 +222,14 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
 
     private Layout displayPageBlock(final Page resource) {
         MVerticalLayout container = new MVerticalLayout().withFullWidth().withStyleName("page-item-block");
-        A pageHtml = new A(ProjectLinkBuilder.INSTANCE.generatePageFullLink(CurrentProjectVariables.getProjectId(), resource
+        A pageHtml = new A(ProjectLinkBuilder.generatePageFullLink(CurrentProjectVariables.getProjectId(), resource
                 .getPath())).appendText(FontAwesome.FILE_WORD_O.getHtml() + " " + resource.getSubject());
         ELabel pageLink = ELabel.h3(pageHtml.write());
 
         container.with(pageLink, new SafeHtmlLabel(resource.getContent(), 400));
 
         Label lastUpdateInfo = new ELabel(UserUIContext.getMessage(
-                PageI18nEnum.LABEL_LAST_UPDATE, ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(
+                PageI18nEnum.LABEL_LAST_UPDATE, ProjectLinkBuilder.generateProjectMemberHtmlLink(
                         CurrentProjectVariables.getProjectId(), resource.getLastUpdatedUser(), true),
                 UserUIContext.formatPrettyTime(resource.getLastUpdatedTime().getTime())), ContentMode.HTML)
                 .withDescription(UserUIContext.formatDateTime(resource.getLastUpdatedTime().getTime()));
@@ -243,7 +243,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
 
         MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -256,7 +256,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
                         }
                     });
         }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING);
-        deleteBtn.setVisible(CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.PAGES));
+        deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PAGES));
 
         container.addComponent(new MHorizontalLayout(editBtn, deleteBtn));
         return container;

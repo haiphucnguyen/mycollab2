@@ -40,22 +40,22 @@ class ContactSearchCriteria : SearchCriteria() {
     companion object {
         private val serialVersionUID = 1L
 
-        val p_name: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, GenericI18Enum.FORM_NAME,
+        @JvmField val p_name: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, GenericI18Enum.FORM_NAME,
                 ConcatStringParam("firstname", "m_crm_contact", arrayOf("firstname", "lastname")))
 
-        val p_leadsource = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_LEAD_SOURCE,
+        @JvmField val p_leadsource = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_LEAD_SOURCE,
                 I18nStringListParam("leadsource", "m_crm_contact", "leadSource",
                         listOf(*CrmDataTypeFactory.leadSourceList)))
 
-        val p_billingCountry: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_PRIMARY_COUNTRY,
+        @JvmField val p_billingCountry: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_PRIMARY_COUNTRY,
                 StringListParam("billingCountry", "m_crm_contact", "primCountry",
                         Arrays.asList(*CountryValueFactory.countryList!!)))
 
-        val p_shippingCountry: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_OTHER_COUNTRY,
+        @JvmField val p_shippingCountry: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_OTHER_COUNTRY,
                 StringListParam("shippingCountry", "m_crm_contact", "otherCountry",
                         Arrays.asList(*CountryValueFactory.countryList!!)))
 
-        val p_anyPhone: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_ANY_PHONE,
+        @JvmField val p_anyPhone: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_ANY_PHONE,
                 CompositionStringParam("anyPhone",
                         StringParam("", "m_crm_contact", "officePhone"),
                         StringParam("", "m_crm_contact", "mobile"),
@@ -64,24 +64,24 @@ class ContactSearchCriteria : SearchCriteria() {
                         StringParam("", "m_crm_contact", "fax"),
                         StringParam("", "m_crm_contact", "assistantPhone")))
 
-        val p_anyEmail: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_ANY_EMAIL,
+        @JvmField val p_anyEmail: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_ANY_EMAIL,
                 CompositionStringParam("anyEmail", StringParam("", "m_crm_contact", "email")))
 
-        val p_anyCity: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_ANY_CITY,
+        @JvmField val p_anyCity: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_ANY_CITY,
                 CompositionStringParam("anyCity",
                         StringParam("", "m_crm_contact", "primCity"),
                         StringParam("", "m_crm_contact", "otherCity")))
 
-        val p_account: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_ACCOUNTS,
+        @JvmField val p_account: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, ContactI18nEnum.FORM_ACCOUNTS,
                 PropertyParam("account", "m_crm_contact", "accountId"))
 
-        val p_assignee: Param = CacheParamMapper.register<PropertyListParam<*>>(CrmTypeConstants.CONTACT, GenericI18Enum.FORM_ASSIGNEE,
+        @JvmField val p_assignee: Param = CacheParamMapper.register<PropertyListParam<*>>(CrmTypeConstants.CONTACT, GenericI18Enum.FORM_ASSIGNEE,
                 PropertyListParam<String>("assignuser", "m_crm_contact", "assignUser"))
 
-        val p_createdtime: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, GenericI18Enum.FORM_CREATED_TIME,
+        @JvmField val p_createdtime: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, GenericI18Enum.FORM_CREATED_TIME,
                 DateParam("createdtime", "m_crm_contact", "createdTime"))
 
-        val p_lastupdatedtime: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, GenericI18Enum.FORM_LAST_UPDATED_TIME,
+        @JvmField val p_lastupdatedtime: Param = CacheParamMapper.register(CrmTypeConstants.CONTACT, GenericI18Enum.FORM_LAST_UPDATED_TIME,
                 DateParam("lastupdatedtime", "m_crm_contact", "lastUpdatedTime"))
     }
 }

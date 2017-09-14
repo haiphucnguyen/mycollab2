@@ -396,8 +396,8 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 headerLayout.with(header).expand(header);
             } else {
                 header = new ELabel(milestone.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS)
-                        .withDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipMilestone(UserUIContext.getUserLocale(),
-                                AppUI.Companion.getDateFormat(), milestone, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
+                        .withDescription(ProjectTooltipGenerator.generateToolTipMilestone(UserUIContext.getUserLocale(),
+                                AppUI.getDateFormat(), milestone, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false));
                 headerLayout.with(ELabel.fontIcon(ProjectAssetsManager.getMilestoneStatus(milestone.getStatus())), header).expand(header);
             }
 
@@ -405,7 +405,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             controlsBtn.addStyleName(WebThemes.BUTTON_LINK);
 
             boolean canWrite = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES);
-            boolean canExecute = CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.MILESTONES);
+            boolean canExecute = CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MILESTONES);
             OptionPopupContent popupContent = new OptionPopupContent();
 
             if (canWrite) {
@@ -437,7 +437,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                     controlsBtn.setPopupVisible(false);
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

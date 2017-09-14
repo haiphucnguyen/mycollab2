@@ -15,7 +15,7 @@ import com.mycollab.vaadin.ui.MyCollabSession.VIEW_MANAGER_VAL
  */
 object ViewManager {
 
-    fun <T : CacheableComponent> getCacheComponent(viewClass: Class<T>): T? {
+    @JvmStatic fun <T : CacheableComponent> getCacheComponent(viewClass: Class<T>): T? {
         var viewMap = MyCollabSession.getCurrentUIVariable(MyCollabSession.VIEW_MANAGER_VAL) as MutableMap<Class<*>, Any>?
         if (viewMap == null) {
             viewMap = mutableMapOf()

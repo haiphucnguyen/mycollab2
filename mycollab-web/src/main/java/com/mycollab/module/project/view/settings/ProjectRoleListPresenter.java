@@ -97,14 +97,14 @@ public class ProjectRoleListPresenter extends ListSelectionPresenter<ProjectRole
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.ROLES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.ROLES)) {
             ProjectRoleContainer roleContainer = (ProjectRoleContainer) container;
             roleContainer.removeAllComponents();
             roleContainer.addComponent(view);
             searchCriteria = (ProjectRoleSearchCriteria) data.getParams();
             doSearch(searchCriteria);
 
-            ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoRoleList();
         } else {
             throw new SecureAccessException();

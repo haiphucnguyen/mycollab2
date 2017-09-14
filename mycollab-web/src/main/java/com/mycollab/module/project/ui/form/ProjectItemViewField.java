@@ -37,10 +37,10 @@ public class ProjectItemViewField extends CustomField<String> {
             return new Label();
         }
 
-        SimpleProject project = CurrentProjectVariables.INSTANCE.getProject();
+        SimpleProject project = CurrentProjectVariables.getProject();
         DivLessFormatter div = new DivLessFormatter();
 
-        A milestoneLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(project.getShortname(),
+        A milestoneLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkGenerator.generateProjectItemLink(project.getShortname(),
                 project.getId(), type, typeId)).appendText(typeDisplayName);
         milestoneLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(type, typeId + ""));
         milestoneLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

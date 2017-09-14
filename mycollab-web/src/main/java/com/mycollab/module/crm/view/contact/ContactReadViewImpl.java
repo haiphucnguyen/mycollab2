@@ -107,7 +107,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
             return beanItem.getContactName() + "&nbsp;" + UserUIContext.getMessage(
                     LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
                     CrmAssetsManager.getAsset(CrmTypeConstants.LEAD).getHtml(),
-                    CrmLinkGenerator.INSTANCE.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()),
+                    CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()),
                     lead.getLeadName());
         } else {
             return beanItem.getContactName();

@@ -32,7 +32,7 @@ class PropertyParam(id: String, table: String, column: String) : ColumnParam(id,
 
     companion object {
 
-        var OPTIONS = arrayOf(IS, IS_NOT)
+        @JvmField val OPTIONS = arrayOf(IS, IS_NOT)
 
         private val IS_EXPR = "%s.%s = "
         private val IS_NOT_EXPR = "%s.%s <> "

@@ -50,6 +50,7 @@ object ProjectTooltipGenerator {
         return div.write()
     }
 
+    @JvmStatic
     fun generateTooltipEntity(locale: Locale, dateFormat: String, type: String, typeId: Int?, sAccountId: Int?, siteUrl: String, timeZone: TimeZone, showProject: Boolean): String? {
         return when (type) {
             ProjectTypeConstants.BUG -> {
@@ -76,6 +77,7 @@ object ProjectTooltipGenerator {
         }
     }
 
+    @JvmStatic
     fun generateToolTipTask(locale: Locale, dateFormat: String, task: SimpleTask?, siteURL: String,
                             timeZone: TimeZone, showProject: Boolean): String? {
         if (task == null) {
@@ -148,6 +150,7 @@ object ProjectTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateToolTipBug(locale: Locale, dateFormat: String, bug: SimpleBug?, siteURL: String, timeZone: TimeZone, showProject: Boolean): String? {
         if (bug == null) {
             return generateToolTipNull(locale)
@@ -231,6 +234,7 @@ object ProjectTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateToolTipRisk(locale: Locale, dateFormat: String, risk: SimpleRisk?, siteURL: String,
                             timeZone: TimeZone, showProject: Boolean): String? {
         if (risk == null)
@@ -313,6 +317,7 @@ object ProjectTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateToolTipVersion(locale: Locale, dateFormat: String, version: Version?, siteURL: String,
                                timeZone: TimeZone): String? {
         if (version == null)
@@ -345,6 +350,7 @@ object ProjectTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateToolTipComponent(locale: Locale, component: SimpleComponent?, siteURL: String, timeZone: TimeZone): String? {
         if (component == null)
             return generateToolTipNull(locale)
@@ -380,6 +386,7 @@ object ProjectTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateToolTipProject(locale: Locale, dateFormat: String, project: SimpleProject?, siteURL: String, timeZone: TimeZone): String? {
         if (project == null)
             return generateToolTipNull(locale)
@@ -438,6 +445,7 @@ object ProjectTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateToolTipMilestone(locale: Locale, dateFormat: String, milestone: SimpleMilestone?, siteURL: String,
                                  timeZone: TimeZone, showProject: Boolean): String? {
         if (milestone == null)
@@ -490,6 +498,7 @@ object ProjectTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateToolTipStandUp(locale: Locale, dateFormat: String, standup: SimpleStandupReport?, siteURL: String, timeZone: TimeZone): String? {
         if (standup == null)
             return generateToolTipNull(locale)
@@ -534,6 +543,7 @@ object ProjectTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateToolTipPage(locale: Locale, page: Page?, siteURL: String, timeZone: TimeZone): String? {
         if (page == null)
             return generateToolTipNull(locale)
@@ -557,6 +567,7 @@ object ProjectTooltipGenerator {
 
     }
 
+    @JvmStatic
     fun generateToolTipMessage(locale: Locale, message: SimpleMessage?, siteURL: String, timeZone: TimeZone): String? {
         if (message == null)
             return generateToolTipNull(locale)

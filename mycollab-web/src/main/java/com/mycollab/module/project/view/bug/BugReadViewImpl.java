@@ -158,7 +158,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         if (SiteConfiguration.isCommunityEdition()) {
             addToSideBar(dateInfoComp, peopleInfoComp, bugFollowersList);
         } else {
-            bugTimeLogList = ViewManager.INSTANCE.getCacheComponent(BugTimeLogSheet.class);
+            bugTimeLogList = ViewManager.getCacheComponent(BugTimeLogSheet.class);
             addToSideBar(dateInfoComp, peopleInfoComp, bugTimeLogList, bugFollowersList);
         }
     }

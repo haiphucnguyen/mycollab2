@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Traceable(nameField = "name", extraFieldName = "projectid")
 public class VersionServiceImpl extends DefaultService<Integer, Version, VersionSearchCriteria> implements VersionService {
     static {
-        ClassInfoMap.INSTANCE.put(VersionServiceImpl.class, new ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.BUG_VERSION));
+        ClassInfoMap.put(VersionServiceImpl.class, new ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.BUG_VERSION));
     }
 
     @Autowired

@@ -80,7 +80,7 @@ public class UserSettingViewImpl extends AbstractVerticalPageView implements Use
             public void selectedTabChange(SelectedTabChangeEvent event) {
                 Tab tab = ((TabSheetDecorator) event.getTabSheet()).getSelectedTabInfo();
                 String caption = tab.getCaption();
-                SimpleProject project = CurrentProjectVariables.INSTANCE.getProject();
+                SimpleProject project = CurrentProjectVariables.getProject();
 
                 if (UserUIContext.getMessage(ProjectMemberI18nEnum.LIST).equals(caption)) {
                     ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();

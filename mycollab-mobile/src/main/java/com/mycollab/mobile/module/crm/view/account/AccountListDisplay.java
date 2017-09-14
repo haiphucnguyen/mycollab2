@@ -32,7 +32,7 @@ public class AccountListDisplay extends DefaultPagedBeanList<AccountService, Acc
         @Override
         public Component generateRow(IBeanList<SimpleAccount> host, final SimpleAccount account, int rowIndex) {
             MVerticalLayout rowLayout = new MVerticalLayout().withMargin(false).withSpacing(false).withFullWidth();
-            A accountLink = new A(CrmLinkBuilder.INSTANCE.generateAccountPreviewLinkFull(account.getId())).appendText(account.getAccountname());
+            A accountLink = new A(CrmLinkBuilder.generateAccountPreviewLinkFull(account.getId())).appendText(account.getAccountname());
             MCssLayout accountWrap = new MCssLayout(ELabel.html(accountLink.write()));
             rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.getAsset
                     (CrmTypeConstants.ACCOUNT)), accountWrap).expand(accountWrap).withFullWidth());

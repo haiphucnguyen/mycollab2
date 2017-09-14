@@ -31,11 +31,11 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCriteria> {
 
     private static Param[] paramFields = new Param[]{
-            AccountSearchCriteria.Companion.getP_accountName(), AccountSearchCriteria.Companion.getP_anyPhone(), AccountSearchCriteria.Companion.getP_website(),
-            AccountSearchCriteria.Companion.getP_numemployees(), AccountSearchCriteria.Companion.getP_assignee(), AccountSearchCriteria.Companion.getP_industries(),
-            AccountSearchCriteria.Companion.getP_types(), AccountSearchCriteria.Companion.getP_assignee(), AccountSearchCriteria.Companion.getP_billingCountry(),
-            AccountSearchCriteria.Companion.getP_shippingCountry(), AccountSearchCriteria.Companion.getP_anyCity(), AccountSearchCriteria.Companion.getP_createdtime(),
-            AccountSearchCriteria.Companion.getP_lastupdatedtime()};
+            AccountSearchCriteria.p_accountName, AccountSearchCriteria.p_anyPhone, AccountSearchCriteria.p_website,
+            AccountSearchCriteria.p_numemployees, AccountSearchCriteria.p_assignee, AccountSearchCriteria.p_industries,
+            AccountSearchCriteria.p_types, AccountSearchCriteria.p_billingCountry,
+            AccountSearchCriteria.p_shippingCountry, AccountSearchCriteria.p_anyCity, AccountSearchCriteria.p_createdtime,
+            AccountSearchCriteria.p_lastupdatedtime};
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {

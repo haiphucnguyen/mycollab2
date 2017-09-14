@@ -33,14 +33,14 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public class ContactSearchPanel extends DefaultGenericSearchPanel<ContactSearchCriteria> {
 
     private static Param[] paramFields = new Param[]{
-            ContactSearchCriteria.Companion.getP_name(), ContactSearchCriteria.Companion.getP_account(),
-            ContactSearchCriteria.Companion.getP_leadsource(),
-            ContactSearchCriteria.Companion.getP_billingCountry(),
-            ContactSearchCriteria.Companion.getP_shippingCountry(),
-            ContactSearchCriteria.Companion.getP_anyPhone(), ContactSearchCriteria.Companion.getP_anyEmail(),
-            ContactSearchCriteria.Companion.getP_anyCity(), ContactSearchCriteria.Companion.getP_assignee(),
-            ContactSearchCriteria.Companion.getP_createdtime(),
-            ContactSearchCriteria.Companion.getP_lastupdatedtime()};
+            ContactSearchCriteria.p_name, ContactSearchCriteria.p_account,
+            ContactSearchCriteria.p_leadsource,
+            ContactSearchCriteria.p_billingCountry,
+            ContactSearchCriteria.p_shippingCountry,
+            ContactSearchCriteria.p_anyPhone, ContactSearchCriteria.p_anyEmail,
+            ContactSearchCriteria.p_anyCity, ContactSearchCriteria.p_assignee,
+            ContactSearchCriteria.p_createdtime,
+            ContactSearchCriteria.p_lastupdatedtime};
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {

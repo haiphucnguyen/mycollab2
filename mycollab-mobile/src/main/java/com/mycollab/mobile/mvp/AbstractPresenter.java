@@ -34,7 +34,7 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
     @Override
     public V getView() {
         if (view == null) {
-            view = ViewManager.INSTANCE.getCacheComponent(viewClass);
+            view = ViewManager.getCacheComponent(viewClass);
             postInitView();
         }
         return view;
@@ -80,7 +80,7 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
                     return false;
                 } else {
                     Integer value = permissionMap.get(permissionId);
-                    return (value != null) && PermissionChecker.INSTANCE.isImplied(value, impliedPermissionVal);
+                    return (value != null) && PermissionChecker.isImplied(value, impliedPermissionVal);
                 }
             }
         } else {

@@ -46,7 +46,7 @@ public class ProjectMemberReadPresenter extends AbstractPresenter<ProjectMemberR
             @Override
             public void onDelete(final SimpleProjectMember data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -116,7 +116,7 @@ public class ProjectMemberReadPresenter extends AbstractPresenter<ProjectMemberR
                 isCurrentUserAccess = true;
             }
         }
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.USERS) || isCurrentUserAccess) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.USERS) || isCurrentUserAccess) {
             ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
             SimpleProjectMember prjMember = null;
             if (data.getParams() instanceof Integer) {
@@ -131,7 +131,7 @@ public class ProjectMemberReadPresenter extends AbstractPresenter<ProjectMemberR
                 ProjectUserContainer userGroupContainer = (ProjectUserContainer) container;
                 userGroupContainer.setContent(view);
                 view.previewItem(prjMember);
-                ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+                ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
                 breadCrumb.gotoUserRead(prjMember);
             } else {
                 NotificationUtil.showRecordNotExistNotification();

@@ -83,12 +83,12 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
             instantEditBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT));
             buttonControls.with(instantEditBtn);
 
-            if ((ticket.isRisk() && CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.RISKS))
-                    || (ticket.isBug() && CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.BUGS))
-                    || (ticket.isTask() && CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.TASKS))) {
+            if ((ticket.isRisk() && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.RISKS))
+                    || (ticket.isBug() && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.BUGS))
+                    || (ticket.isTask() && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS))) {
                 MButton removeBtn = new MButton("", clickEvent -> {
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                             UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -152,10 +152,10 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
 
         A ticketLink = new A().setId("tag" + TOOLTIP_ID);
         if (ticket.isBug() || ticket.isTask()) {
-            ticketLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(ticket.getProjectShortName(),
+            ticketLink.setHref(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(),
                     ticket.getProjectId(), ticket.getType(), ticket.getExtraTypeId() + ""));
         } else if (ticket.isRisk()) {
-            ticketLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(ticket.getProjectShortName(),
+            ticketLink.setHref(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(),
                     ticket.getProjectId(), ticket.getType(), ticket.getTypeId() + ""));
         } else {
             throw new IgnoreException("Not support type: " + ticket.getType());

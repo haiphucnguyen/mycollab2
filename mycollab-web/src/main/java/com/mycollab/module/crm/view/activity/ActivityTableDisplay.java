@@ -68,7 +68,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
             SimpleActivity simpleEvent = getBeanByIndex(itemId);
 
             FontAwesome iconLink = CrmAssetsManager.getAsset(simpleEvent.getEventType());
-            ELabel b = ELabel.html(iconLink.getHtml() + " " + simpleEvent.getSubject(), CrmLinkBuilder.INSTANCE.generateActivityPreviewLinkFull(
+            ELabel b = ELabel.html(iconLink.getHtml() + " " + simpleEvent.getSubject(), CrmLinkBuilder.generateActivityPreviewLinkFull(
                     simpleEvent.getEventType(), simpleEvent.getId())).withDescription(generateToolTip(simpleEvent));
 
             if (simpleEvent.isCompleted()) {
@@ -257,8 +257,8 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
             trRow2.appendChild(new Td().setStyle("width: 90px; vertical-align: top; text-align: right;")
                     .appendText("Contact:"))
                     .appendChild(new Td().setStyle("width:110px; vertical-align: top; text-align: left;")
-                            .appendChild(new A().setHref((event.getContactId() != null) ? AppUI.Companion.getSiteUrl() + "#"
-                                    + CrmLinkGenerator.INSTANCE.generateContactPreviewLink(event.getContactId()) : "")
+                            .appendChild(new A().setHref((event.getContactId() != null) ? AppUI.getSiteUrl() + "#"
+                                    + CrmLinkGenerator.generateContactPreviewLink(event.getContactId()) : "")
                                     .appendText(StringUtils.trimHtmlTags(event.getContactFullName()))));
 
             Tr trRow3 = new Tr();
@@ -271,7 +271,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
                     .appendChild(
                             new Td().setStyle("width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top;")
                                     .appendChild(new A().setHref((event.getAssignUser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(
-                                            AppUI.Companion.getSiteUrl(), event.getAssignUser()) : "")
+                                            AppUI.getSiteUrl(), event.getAssignUser()) : "")
                                             .appendChild(new Img("", StorageUtils.getAvatarPath(event.getAssignUserAvatarId(), 16)))
                                             .appendText(StringUtils.trimHtmlTags(event.getAssignUserFullName()))));
 

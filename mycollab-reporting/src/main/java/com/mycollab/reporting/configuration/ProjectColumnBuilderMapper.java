@@ -65,7 +65,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer projectId = reportParameters.getFieldValue(Project.Field.id.name());
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return ProjectLinkGenerator.INSTANCE.generateProjectFullLink(siteUrl, projectId);
+                return ProjectLinkGenerator.generateProjectFullLink(siteUrl, projectId);
             }
         };
         map.put(Milestone.Field.name.name(), new HyperlinkBuilderGenerator(projectNameExpr, projectHrefExpr));
@@ -79,7 +79,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer projectId = reportParameters.getFieldValue(Project.Field.id.name());
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
                 String memberName = reportParameters.getParameterValue(Project.Field.lead.name());
-                return ProjectLinkGenerator.INSTANCE.generateProjectMemberFullLink(siteUrl, projectId, memberName);
+                return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, memberName);
             }
         };
         map.put(Project.Field.lead.name(), new HyperlinkBuilderGenerator(leadNameExpr, leadHrefExpr));
@@ -92,7 +92,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
                 Integer accountId = reportParameters.getParameterValue(Project.Field.accountid.name());
-                return ProjectLinkGenerator.INSTANCE.generateClientPreviewFullLink(siteUrl, accountId);
+                return ProjectLinkGenerator.generateClientPreviewFullLink(siteUrl, accountId);
             }
         };
         map.put(Project.Field.accountid.name(), new HyperlinkBuilderGenerator(accountNameExpr, clientHrefExpr));
@@ -118,7 +118,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer milestoneId = reportParameters.getFieldValue(Milestone.Field.id.name());
                 Integer projectId = reportParameters.getFieldValue(Milestone.Field.projectid.name());
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return ProjectLinkGenerator.INSTANCE.generateMilestonePreviewFullLink(siteUrl, projectId, milestoneId);
+                return ProjectLinkGenerator.generateMilestonePreviewFullLink(siteUrl, projectId, milestoneId);
             }
         };
         map.put(Milestone.Field.name.name(), new HyperlinkBuilderGenerator(milestoneNameExpr, milestoneHrefExpr));
@@ -136,7 +136,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue(Milestone.Field.projectid.name());
-                    return ProjectLinkGenerator.INSTANCE.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
+                    return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
                 }
 
                 return "";
@@ -195,9 +195,9 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 String projectShortName = reportParameters.getFieldValue("projectShortName");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
                 if (ProjectTypeConstants.BUG.equals(type) || ProjectTypeConstants.TASK.equals(type)) {
-                    return siteUrl + ProjectLinkGenerator.INSTANCE.generateProjectItemLink(projectShortName, projectId, type, extraTypeId + "");
+                    return siteUrl + ProjectLinkGenerator.generateProjectItemLink(projectShortName, projectId, type, extraTypeId + "");
                 } else {
-                    return siteUrl + ProjectLinkGenerator.INSTANCE.generateProjectItemLink(projectShortName, projectId, type, typeId + "");
+                    return siteUrl + ProjectLinkGenerator.generateProjectItemLink(projectShortName, projectId, type, typeId + "");
                 }
             }
         };
@@ -217,7 +217,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue("projectId");
-                    return ProjectLinkGenerator.INSTANCE.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
+                    return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
                 }
 
                 return "";
@@ -235,7 +235,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (createdUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue("projectId");
-                    return ProjectLinkGenerator.INSTANCE.generateProjectMemberFullLink(siteUrl, projectId, createdUser);
+                    return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, createdUser);
                 }
 
                 return "";
@@ -253,7 +253,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (milestoneId != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue("projectId");
-                    return ProjectLinkGenerator.INSTANCE.generateMilestonePreviewFullLink(siteUrl, projectId, milestoneId);
+                    return ProjectLinkGenerator.generateMilestonePreviewFullLink(siteUrl, projectId, milestoneId);
                 }
 
                 return "";
@@ -276,7 +276,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer taskKey = reportParameters.getFieldValue(Task.Field.taskkey.name());
                 String projectShortName = reportParameters.getFieldValue("projectShortname");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return ProjectLinkGenerator.INSTANCE.generateTaskPreviewFullLink(siteUrl, taskKey, projectShortName);
+                return ProjectLinkGenerator.generateTaskPreviewFullLink(siteUrl, taskKey, projectShortName);
             }
         };
         map.put(Task.Field.name.name(), new HyperlinkBuilderGenerator(taskNameTitleExpr, taskNameHrefExpr));
@@ -295,7 +295,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (milestoneId != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue("projectid");
-                    return ProjectLinkGenerator.INSTANCE.generateMilestonePreviewFullLink(siteUrl, projectId, milestoneId);
+                    return ProjectLinkGenerator.generateMilestonePreviewFullLink(siteUrl, projectId, milestoneId);
                 }
 
                 return "";
@@ -313,7 +313,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (logByUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue("projectid");
-                    return ProjectLinkGenerator.INSTANCE.generateProjectMemberFullLink(siteUrl, projectId, logByUser);
+                    return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, logByUser);
                 }
 
                 return "";
@@ -331,7 +331,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue("projectid");
-                    return ProjectLinkGenerator.INSTANCE.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
+                    return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
                 }
 
                 return "";
@@ -355,7 +355,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer bugKey = reportParameters.getFieldValue("bugkey");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
                 String projectShortName = reportParameters.getFieldValue("projectShortName");
-                return ProjectLinkGenerator.INSTANCE.generateBugPreviewFullLink(siteUrl, bugKey, projectShortName);
+                return ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bugKey, projectShortName);
             }
         };
         map.put("name", new HyperlinkBuilderGenerator(summaryTitleExpr, summaryHrefExpr));
@@ -370,7 +370,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue("projectid");
-                    return ProjectLinkGenerator.INSTANCE.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
+                    return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
                 }
 
                 return "";
@@ -387,7 +387,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (logUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue("projectid");
-                    return ProjectLinkGenerator.INSTANCE.generateProjectMemberFullLink(siteUrl, projectId, logUser);
+                    return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, logUser);
                 }
 
                 return "";
@@ -404,7 +404,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (milestoneId != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue("projectid");
-                    return ProjectLinkGenerator.INSTANCE.generateMilestonePreviewFullLink(siteUrl, projectId, milestoneId);
+                    return ProjectLinkGenerator.generateMilestonePreviewFullLink(siteUrl, projectId, milestoneId);
                 }
 
                 return "";
@@ -440,7 +440,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer componentId = reportParameters.getFieldValue("id");
                 Integer projectId = reportParameters.getFieldValue("projectid");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return ProjectLinkGenerator.INSTANCE.generateBugComponentPreviewFullLink(siteUrl, projectId, componentId);
+                return ProjectLinkGenerator.generateBugComponentPreviewFullLink(siteUrl, projectId, componentId);
             }
         };
         map.put("name", new HyperlinkBuilderGenerator(summaryTitleExpr, summaryHrefExpr));
@@ -455,7 +455,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue("projectid");
-                    return ProjectLinkGenerator.INSTANCE.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
+                    return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
                 }
 
                 return "";
@@ -488,7 +488,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer versionId = reportParameters.getFieldValue("id");
                 Integer projectId = reportParameters.getFieldValue("projectid");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return ProjectLinkGenerator.INSTANCE.generateBugVersionPreviewFullLink(siteUrl, projectId, versionId);
+                return ProjectLinkGenerator.generateBugVersionPreviewFullLink(siteUrl, projectId, versionId);
             }
         };
         map.put(Version.Field.name.name(), new HyperlinkBuilderGenerator(summaryTitleExpr, summaryHrefExpr));
@@ -518,7 +518,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer riskId = reportParameters.getFieldValue(Risk.Field.id.name());
                 Integer projectId = reportParameters.getFieldValue(Risk.Field.projectid.name());
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return ProjectLinkGenerator.INSTANCE.generateRiskPreviewFullLink(siteUrl, projectId, riskId);
+                return ProjectLinkGenerator.generateRiskPreviewFullLink(siteUrl, projectId, riskId);
             }
         };
         map.put(Risk.Field.name.name(), new HyperlinkBuilderGenerator(summaryTitleExpr, summaryHrefExpr));
@@ -533,7 +533,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue("projectid");
-                    return ProjectLinkGenerator.INSTANCE.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
+                    return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
                 }
 
                 return "";
@@ -560,7 +560,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer projectId = reportParameters.getFieldValue(ProjectMember.Field.projectid.name());
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
                 String username = reportParameters.getParameterValue(ProjectMember.Field.username.name());
-                return ProjectLinkGenerator.INSTANCE.generateProjectMemberFullLink(siteUrl, projectId, username);
+                return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, username);
             }
         };
         map.put(ProjectMember.Field.username.name(), new HyperlinkBuilderGenerator(memberNameExpr, memberHrefExpr));
@@ -574,7 +574,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer projectId = reportParameters.getFieldValue(ProjectMember.Field.projectid.name());
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
                 Integer roleId = reportParameters.getParameterValue(ProjectMember.Field.projectroleid.name());
-                return ProjectLinkGenerator.INSTANCE.generateRolePreviewFullLink(siteUrl, projectId, roleId);
+                return ProjectLinkGenerator.generateRolePreviewFullLink(siteUrl, projectId, roleId);
             }
         };
         map.put(ProjectMember.Field.projectroleid.name(), new HyperlinkBuilderGenerator(roleNameExpr, roleHrefExpr));
@@ -594,7 +594,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer roleId = reportParameters.getFieldValue("id");
                 Integer projectId = reportParameters.getFieldValue(ProjectRole.Field.projectid.name());
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return ProjectLinkGenerator.INSTANCE.generateRolePreviewFullLink(siteUrl, projectId, roleId);
+                return ProjectLinkGenerator.generateRolePreviewFullLink(siteUrl, projectId, roleId);
             }
         };
         map.put("rolename", new HyperlinkBuilderGenerator(summaryTitleExpr, summaryHrefExpr));
@@ -615,7 +615,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue("projectid");
-                    return ProjectLinkGenerator.INSTANCE.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
+                    return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
                 }
 
                 return "";
@@ -633,7 +633,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer projectId = reportParameters.getFieldValue("projectid");
                 if (projectId != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
-                    return ProjectLinkGenerator.INSTANCE.generateProjectFullLink(siteUrl, projectId);
+                    return ProjectLinkGenerator.generateProjectFullLink(siteUrl, projectId);
                 }
 
                 return "";
@@ -681,11 +681,11 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (type == null) {
                     return "";
                 } else if (type.equals(ProjectTypeConstants.BUG)) {
-                    return ProjectLinkGenerator.INSTANCE.generateBugPreviewFullLink(siteUrl, typeId, projectShortName);
+                    return ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, typeId, projectShortName);
                 } else if (type.equals(ProjectTypeConstants.TASK)) {
-                    return ProjectLinkGenerator.INSTANCE.generateTaskPreviewFullLink(siteUrl, typeId, projectShortName);
+                    return ProjectLinkGenerator.generateTaskPreviewFullLink(siteUrl, typeId, projectShortName);
                 } else if (type.equals(ProjectTypeConstants.RISK)) {
-                    return ProjectLinkGenerator.INSTANCE.generateRiskPreviewFullLink(siteUrl, projectId, typeId);
+                    return ProjectLinkGenerator.generateRiskPreviewFullLink(siteUrl, projectId, typeId);
                 }
                 return type;
             }
@@ -716,9 +716,9 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (type == null) {
                     return "";
                 } else if (type.equals(ProjectTypeConstants.BUG)) {
-                    return ProjectLinkGenerator.INSTANCE.generateBugPreviewFullLink(siteUrl, typeId, projectShortName);
+                    return ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, typeId, projectShortName);
                 } else if (type.equals(ProjectTypeConstants.TASK)) {
-                    return ProjectLinkGenerator.INSTANCE.generateTaskPreviewFullLink(siteUrl, typeId, projectShortName);
+                    return ProjectLinkGenerator.generateTaskPreviewFullLink(siteUrl, typeId, projectShortName);
                 }
                 return type;
             }
@@ -734,7 +734,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer projectId = reportParameters.getFieldValue("projectId");
                 if (projectId != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
-                    return ProjectLinkGenerator.INSTANCE.generateProjectFullLink(siteUrl, projectId);
+                    return ProjectLinkGenerator.generateProjectFullLink(siteUrl, projectId);
                 }
 
                 return "";
@@ -753,7 +753,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
                     Integer projectId = reportParameters.getFieldValue("projectId");
-                    return ProjectLinkGenerator.INSTANCE.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
+                    return ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, projectId, assignUser);
                 }
 
                 return "";

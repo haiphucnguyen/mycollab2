@@ -128,7 +128,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
             }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
             itemTimeLogging.setExtraData(deleteBtn);
 
-            deleteBtn.setVisible(CurrentProjectVariables.INSTANCE.isAdmin() || UserUIContext.getUsername().equals(itemTimeLogging.getLoguser()));
+            deleteBtn.setVisible(CurrentProjectVariables.isAdmin() || UserUIContext.getUsername().equals(itemTimeLogging.getLoguser()));
             return deleteBtn;
         });
 

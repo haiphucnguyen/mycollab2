@@ -68,8 +68,8 @@ public class TraceableCreateAspect {
     static ActivityStreamWithBLOBs constructActivity(Class<?> cls, Traceable traceableAnnotation, Object bean, String username, String action)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         ActivityStreamWithBLOBs activity = new ActivityStreamWithBLOBs();
-        activity.setModule(ClassInfoMap.INSTANCE.getModule(cls));
-        activity.setType(ClassInfoMap.INSTANCE.getType(cls));
+        activity.setModule(ClassInfoMap.getModule(cls));
+        activity.setType(ClassInfoMap.getType(cls));
         activity.setTypeid(String.valueOf(PropertyUtils.getProperty(bean, traceableAnnotation.idField())));
         activity.setCreatedtime(new GregorianCalendar().getTime());
         activity.setAction(action);

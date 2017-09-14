@@ -89,8 +89,8 @@ public class ToggleBugSummaryField extends AbstractToggleSummaryField {
 
     private String buildBugLink() {
         String linkName = StringUtils.trim(bug.getName(), maxLength, true);
-        A bugLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.INSTANCE.generateBugPreviewFullLink(bug.getBugkey(),
-                CurrentProjectVariables.INSTANCE.getShortName())).appendText(linkName).setStyle("display:inline");
+        A bugLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateBugPreviewFullLink(bug.getBugkey(),
+                CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
         Div resultDiv = new DivLessFormatter().appendChild(bugLink);
         if (SimpleBug.isOverdue(bug)) {
             bugLink.setCSSClass("overdue");

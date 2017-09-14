@@ -95,7 +95,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
 
             MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -107,7 +107,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
                             }
                         });
             }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_DANGER);
-            deleteBtn.setVisible(CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.MESSAGES));
+            deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MESSAGES));
 
             stickyCheck = new CheckBox(UserUIContext.getMessage(MessageI18nEnum.FORM_IS_STICK), message.getIsstick());
             stickyCheck.addValueChangeListener(valueChangeEvent -> {
@@ -152,7 +152,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
             rowLayout.addComponent(messageContent);
 
             ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
-            List<Content> attachments = attachmentService.getContents(AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(
+            List<Content> attachments = attachmentService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(
                     AppUI.getAccountId(), message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
             if (CollectionUtils.isNotEmpty(attachments)) {
                 HorizontalLayout attachmentField = new HorizontalLayout();

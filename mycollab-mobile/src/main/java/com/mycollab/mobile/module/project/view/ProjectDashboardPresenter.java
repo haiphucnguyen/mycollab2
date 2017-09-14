@@ -23,7 +23,7 @@ public class ProjectDashboardPresenter extends AbstractProjectPresenter<ProjectD
         if (data instanceof ProjectScreenData.Edit) {
             // TODO: Handle edit project
         } else {
-            if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.PROJECT)) {
+            if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PROJECT)) {
                 super.onGo(container, data);
                 view.displayDashboard();
             } else {

@@ -53,7 +53,7 @@ public class MessageAddPresenter extends AbstractProjectPresenter<MessageAddView
     protected void onGo(HasComponents navigator, ScreenData<?> data) {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES)) {
             super.onGo(navigator, data);
-            AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateMessageAddLink(CurrentProjectVariables.getProjectId()),
+            AppUI.addFragment(ProjectLinkGenerator.generateMessageAddLink(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(MessageI18nEnum.NEW));
         } else {
             NotificationUtil.showMessagePermissionAlert();

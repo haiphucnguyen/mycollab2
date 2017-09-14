@@ -73,7 +73,7 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
                 }));
 
         SearchQueryInfo overdueTaskQuery = new SearchQueryInfo(OVERDUE_TASKS, UserUIContext.getMessage(TaskI18nEnum.VAL_OVERDUE_TASKS),
-                new SearchFieldInfo(SearchField.AND, TaskSearchCriteria.p_duedate, DateParam.Companion.getBEFORE(), new LazyValueInjector() {
+                new SearchFieldInfo(SearchField.AND, TaskSearchCriteria.p_duedate, DateParam.BEFORE, new LazyValueInjector() {
                     @Override
                     protected Object doEval() {
                         return new LocalDate().toDate();

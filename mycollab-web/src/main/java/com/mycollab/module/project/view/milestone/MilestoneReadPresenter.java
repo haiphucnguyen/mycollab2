@@ -60,7 +60,7 @@ public class MilestoneReadPresenter extends ProjectGenericPresenter<MilestoneRea
             @Override
             public void onDelete(final SimpleMilestone data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
-                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                        UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -126,7 +126,7 @@ public class MilestoneReadPresenter extends ProjectGenericPresenter<MilestoneRea
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.MILESTONES)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
             MilestoneContainer milestoneContainer = (MilestoneContainer) container;
             milestoneContainer.navigateToContainer(ProjectTypeConstants.MILESTONE);
             if (data.getParams() instanceof Integer) {
@@ -136,7 +136,7 @@ public class MilestoneReadPresenter extends ProjectGenericPresenter<MilestoneRea
                     milestoneContainer.setContent(view);
                     view.previewItem(milestone);
 
-                    ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+                    ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
                     breadcrumb.gotoMilestoneRead(milestone);
                 } else {
                     throw new ResourceNotFoundException();

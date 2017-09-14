@@ -52,7 +52,7 @@ public class OpportunityTableDisplay extends DefaultPagedBeanTable<OpportunitySe
         this.addGeneratedColumn("opportunityname", (source, itemId, columnId) -> {
             final SimpleOpportunity opportunity = getBeanByIndex(itemId);
 
-            LabelLink b = new LabelLink(opportunity.getOpportunityname(), CrmLinkBuilder.INSTANCE.generateOpportunityPreviewLinkFull(opportunity.getId()));
+            LabelLink b = new LabelLink(opportunity.getOpportunityname(), CrmLinkBuilder.generateOpportunityPreviewLinkFull(opportunity.getId()));
             if (OpportunitySalesStage.Closed_Won.name().equals(opportunity.getSalesstage()) ||
                     OpportunitySalesStage.Closed_Lost.name().equals(opportunity.getSalesstage())) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);
@@ -61,8 +61,8 @@ public class OpportunityTableDisplay extends DefaultPagedBeanTable<OpportunitySe
                     b.addStyleName(WebThemes.LINK_OVERDUE);
                 }
             }
-            b.setDescription(CrmTooltipGenerator.INSTANCE.generateTooltipOpportunity(UserUIContext.getUserLocale(), AppUI.Companion.getDateFormat(),
-                    opportunity, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            b.setDescription(CrmTooltipGenerator.generateTooltipOpportunity(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                    opportunity, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
 
             return b;
         });
@@ -90,12 +90,12 @@ public class OpportunityTableDisplay extends DefaultPagedBeanTable<OpportunitySe
 
         this.addGeneratedColumn("accountName", (source, itemId, columnId) -> {
             final SimpleOpportunity opportunity = getBeanByIndex(itemId);
-            return new LabelLink(opportunity.getAccountName(), CrmLinkBuilder.INSTANCE.generateAccountPreviewLinkFull(opportunity.getAccountid()));
+            return new LabelLink(opportunity.getAccountName(), CrmLinkBuilder.generateAccountPreviewLinkFull(opportunity.getAccountid()));
         });
 
         this.addGeneratedColumn("campaignName", (source, itemId, columnId) -> {
             final SimpleOpportunity opportunity = getBeanByIndex(itemId);
-            return new LabelLink(opportunity.getCampaignName(), CrmLinkBuilder.INSTANCE.generateCampaignPreviewLinkFull(opportunity.getCampaignid()));
+            return new LabelLink(opportunity.getCampaignName(), CrmLinkBuilder.generateCampaignPreviewLinkFull(opportunity.getCampaignid()));
         });
 
         this.addGeneratedColumn("expectedcloseddate", (source, itemId, columnId) -> {

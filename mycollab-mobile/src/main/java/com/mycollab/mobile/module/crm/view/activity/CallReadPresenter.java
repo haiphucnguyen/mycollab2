@@ -116,7 +116,7 @@ public class CallReadPresenter extends AbstractCrmPresenter<CallReadView> {
             view.previewItem(call);
             super.onGo(container, data);
 
-            AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateCallPreviewLink(call.getId()), UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
+            AppUI.addFragment(CrmLinkGenerator.generateCallPreviewLink(call.getId()), UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                     UserUIContext.getMessage(CallI18nEnum.SINGLE), call.getSubject()));
         } else {
             NotificationUtil.showMessagePermissionAlert();

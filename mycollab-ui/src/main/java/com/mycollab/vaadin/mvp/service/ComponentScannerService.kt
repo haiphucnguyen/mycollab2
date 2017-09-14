@@ -17,7 +17,7 @@ import org.springframework.util.ClassUtils
  * @since 6.0.0
  */
 @Component
-class ComponentScannerService : InitializingBean {
+open class ComponentScannerService : InitializingBean {
     companion object {
         val LOG: Logger = LoggerFactory.getLogger(ComponentScannerService::class.java)
     }

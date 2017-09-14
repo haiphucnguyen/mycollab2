@@ -40,7 +40,7 @@ public class ProjectAssetsUtil {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(projectAvatarId)) {
             wrapper = new Image(null, new ExternalResource(StorageUtils.getResourcePath
-                    (String.format("%s/%s_%d.png", PathUtils.INSTANCE.getProjectLogoPath(AppUI.getAccountId(), projectId),
+                    (String.format("%s/%s_%d.png", PathUtils.getProjectLogoPath(AppUI.getAccountId(), projectId),
                             projectAvatarId, size))));
         } else {
             ELabel projectIcon = new ELabel(projectShortname).withStyleName(UIConstants.TEXT_ELLIPSIS, ValoTheme.LABEL_LARGE, "center");
@@ -70,7 +70,7 @@ public class ProjectAssetsUtil {
 
         if (!StringUtils.isBlank(projectAvatarId)) {
             Image image = new Image(null, new ExternalResource(StorageUtils.getResourcePath
-                    (String.format("%s/%s_%d.png", PathUtils.INSTANCE.getProjectLogoPath(AppUI.getAccountId(), projectId),
+                    (String.format("%s/%s_%d.png", PathUtils.getProjectLogoPath(AppUI.getAccountId(), projectId),
                             projectAvatarId, size))));
             image.addStyleName(UIConstants.CIRCLE_BOX);
             wrapper.addComponent(image);
@@ -90,8 +90,7 @@ public class ProjectAssetsUtil {
     public static Component clientLogoComp(SimpleAccount account, int size) {
         AbstractComponent wrapper;
         if (!StringUtils.isBlank(account.getAvatarid())) {
-            wrapper = new Image(null, new ExternalResource(StorageUtils.getEntityLogoPath(AppUI.Companion
-                    .getAccountId(), account.getAvatarid(), 100)));
+            wrapper = new Image(null, new ExternalResource(StorageUtils.getEntityLogoPath(AppUI.getAccountId(), account.getAvatarid(), 100)));
         } else {
             String accountName = account.getAccountname();
             accountName = (accountName.length() > 3) ? accountName.substring(0, 3) : accountName;

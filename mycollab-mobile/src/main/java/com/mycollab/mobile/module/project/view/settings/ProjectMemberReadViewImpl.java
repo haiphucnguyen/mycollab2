@@ -100,7 +100,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
                         EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null));
                     }
                 })).withIcon(FontAwesome.TRASH).withStyleName(UIConstants.CIRCLE_BOX)
-                .withVisible(CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.USERS));
+                .withVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.USERS));
 
         return new MHorizontalLayout(editBtn, deleteBtn);
     }
@@ -137,7 +137,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment("project/user/preview/" + UrlEncodeDecoder.encode(CurrentProjectVariables.INSTANCE
+        AppUI.addFragment("project/user/preview/" + UrlEncodeDecoder.encode(CurrentProjectVariables
                 .getProjectId() + "/" + beanItem.getUsername()), beanItem.getDisplayName());
     }
 

@@ -15,11 +15,11 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import scala.collection.immutable.Set;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyInt;
@@ -59,9 +59,9 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
 
         when(projectNotificationService.findNotifications(anyInt(), anyInt())).thenReturn(Collections.singletonList(noSetting1));
 
-        Set<SimpleUser> users = bugEmailNotification.getListNotifyUsersWithFilter(prjRelayNotification);
+        List<SimpleUser> users = bugEmailNotification.getListNotifyUsersWithFilter(prjRelayNotification);
         Assert.assertEquals(1, users.size());
-        assertThat(users.head().getUsername()).isEqualTo("linhduong@esofthead.com");
+        assertThat(users.get(0).getUsername()).isEqualTo("linhduong@esofthead.com");
     }
 
     @Test
@@ -89,7 +89,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
 
         when(projectMemberService.getActiveUserOfProject(anyString(), anyInt(), anyInt())).thenReturn(notUser1);
 
-        Set<SimpleUser> users = bugEmailNotification.getListNotifyUsersWithFilter(prjRelayNotification);
+        List<SimpleUser> users = bugEmailNotification.getListNotifyUsersWithFilter(prjRelayNotification);
         Assert.assertEquals(1, users.size());
     }
 
@@ -117,7 +117,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
 
         when(projectMemberService.getActiveUserOfProject(anyString(), anyInt(), anyInt())).thenReturn(notUser1);
 
-        Set<SimpleUser> users = bugEmailNotification.getListNotifyUsersWithFilter(prjRelayNotification);
+        List<SimpleUser> users = bugEmailNotification.getListNotifyUsersWithFilter(prjRelayNotification);
         Assert.assertEquals(1, users.size());
     }
 
@@ -142,7 +142,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
 
         when(projectMemberService.getActiveUserOfProject(anyString(), anyInt(), anyInt())).thenReturn(notUser1);
 
-        Set<SimpleUser> users = bugEmailNotification.getListNotifyUsersWithFilter(prjRelayNotification);
+        List<SimpleUser> users = bugEmailNotification.getListNotifyUsersWithFilter(prjRelayNotification);
         Assert.assertEquals(1, users.size());
     }
 }

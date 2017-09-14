@@ -183,5 +183,5 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
 
     abstract protected fun getCommentSubject(context: MailContext<B>): String
 
-    abstract fun getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): Set<SimpleUser>
+    abstract fun getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): List<SimpleUser>
 }

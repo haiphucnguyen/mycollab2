@@ -112,7 +112,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
             if (data.getParams() instanceof Integer) {
                 ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
                 SimpleComponent component = componentService.findById((Integer) data.getParams(), AppUI.getAccountId());
@@ -122,7 +122,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
                     componentContainer.addComponent(view);
                     view.previewItem(component);
 
-                    ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+                    ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
                     breadcrumb.gotoComponentRead(component);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

@@ -28,7 +28,7 @@ public class AccountSettingPresenter extends AbstractPresenter<AccountSettingCon
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         AccountModule accountContainer = (AccountModule) container;
-        accountContainer.gotoSubView(SettingUIConstants.INSTANCE.getGENERAL_SETTING());
+        accountContainer.gotoSubView(SettingUIConstants.GENERAL_SETTING);
 
         IPresenter<?> presenter;
         if (data instanceof SettingExtScreenData.GeneralSetting || data == null) {

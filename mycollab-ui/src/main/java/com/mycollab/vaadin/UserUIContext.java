@@ -301,10 +301,10 @@ public class UserUIContext implements Serializable {
         } else {
             DateTime jodaDate = new DateTime(date).toDateTime(DateTimeZone.forTimeZone(UserUIContext.getUserTimeZone()));
             if (jodaDate.getHourOfDay() > 0 || jodaDate.getMinuteOfHour() > 0) {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.Companion.getDateTimeFormat()).withLocale(UserUIContext.getUserLocale());
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getDateTimeFormat()).withLocale(UserUIContext.getUserLocale());
                 return formatter.print(jodaDate);
             } else {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.Companion.getDateFormat()).withLocale(UserUIContext.getUserLocale());
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getDateFormat()).withLocale(UserUIContext.getUserLocale());
                 return formatter.print(jodaDate);
             }
         }
@@ -315,7 +315,7 @@ public class UserUIContext implements Serializable {
      * @return
      */
     public static String formatDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.Companion.getDateFormat(), UserUIContext.getUserLocale(),
+        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getDateFormat(), UserUIContext.getUserLocale(),
                 UserUIContext.getUserTimeZone());
     }
 
@@ -333,7 +333,7 @@ public class UserUIContext implements Serializable {
     }
 
     public static String formatShortDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.Companion.getShortDateFormat(), UserUIContext.getUserLocale(),
+        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getShortDateFormat(), UserUIContext.getUserLocale(),
                 UserUIContext.getUserTimeZone());
     }
 

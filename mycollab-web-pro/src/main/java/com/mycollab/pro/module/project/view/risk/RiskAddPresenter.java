@@ -69,7 +69,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
             SimpleRisk risk = (SimpleRisk) data.getParams();
             view.editItem(risk);
 
-            ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             if (risk.getId() == null) {
                 breadCrumb.gotoRiskAdd();
             } else {
@@ -91,7 +91,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
             riskService.updateWithSession(risk, UserUIContext.getUsername());
         }
         AttachmentUploadField uploadField = view.getAttachUploadField();
-        String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), risk.getProjectid(),
+        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), risk.getProjectid(),
                 ProjectTypeConstants.RISK, "" + risk.getId());
         uploadField.saveContentsToRepo(attachPath);
         return risk.getId();

@@ -76,11 +76,11 @@ public class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<Proj
             } else {
                 ticketLink.appendText(ticket.getName());
             }
-            ticketLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(ticket.getProjectShortName(),
+            ticketLink.setHref(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(),
                     ticket.getProjectId(), ticket.getType(), ticket.getExtraTypeId() + ""));
         } else {
             ticketLink.appendText(ticket.getName());
-            ticketLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(ticket.getProjectShortName(),
+            ticketLink.setHref(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(),
                     ticket.getProjectId(), ticket.getType(), ticket.getTypeId() + ""));
         }
 

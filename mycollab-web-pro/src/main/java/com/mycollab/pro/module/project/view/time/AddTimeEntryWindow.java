@@ -177,31 +177,31 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         calendar.setTime(monday);
 
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_MONDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.MONDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppUI.Companion.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_TUESDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.TUESDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppUI.Companion.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.WEDNESDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppUI.Companion.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_THURSDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.THURSDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppUI.Companion.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_FRIDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.FRIDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppUI.Companion.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_SATURDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.SATURDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppUI.Companion.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_SUNDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.SUNDAY_FIELD,
-                DateTimeUtils.formatDate(calendar.getTime(), AppUI.Companion.getShortDateFormat(), UserUIContext.getUserLocale())));
+                DateTimeUtils.formatDate(calendar.getTime(), AppUI.getShortDateFormat(), UserUIContext.getUserLocale())));
 
     }
 
@@ -272,8 +272,8 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
 
         searchCriteria.setIsBillable(new BooleanSearchField(false));
         Double totalNonBillableHours = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
-        CurrentProjectVariables.INSTANCE.getProject().setTotalBillableHours(totalBillableHours);
-        CurrentProjectVariables.INSTANCE.getProject().setTotalNonBillableHours(totalNonBillableHours);
+        CurrentProjectVariables.getProject().setTotalBillableHours(totalBillableHours);
+        CurrentProjectVariables.getProject().setTotalNonBillableHours(totalNonBillableHours);
     }
 
     private ItemTimeLogging buildItemTimeLogging(String headerId, Calendar calendar, SimpleProjectMember logForMember) {

@@ -93,7 +93,7 @@ class ProjectTaskRelayEmailNotificationActionImpl() : SendMailToFollowersAction<
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
-    override fun getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): Set<SimpleUser> {
+    override fun getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): List<SimpleUser> {
         val notificationSettings = projectNotificationService!!.findNotifications(notification.projectId, notification.saccountid)
         var notifyUsers = notification.notifyUsers
 
@@ -123,7 +123,7 @@ class ProjectTaskRelayEmailNotificationActionImpl() : SendMailToFollowersAction<
             }
         }
 
-        return notifyUsers.toMutableSet()
+        return notifyUsers
     }
 
     class TaskFieldNameMapper() : ItemFieldMapper() {

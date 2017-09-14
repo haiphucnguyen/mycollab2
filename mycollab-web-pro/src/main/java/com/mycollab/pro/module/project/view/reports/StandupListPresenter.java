@@ -38,7 +38,7 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView> {
         if (CollectionUtils.isNotEmpty(projectKeys)) {
             Date date = (Date) data.getParams();
             view.display(projectKeys, date);
-            ReportBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ReportBreadcrumb.class);
+            ReportBreadcrumb breadCrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
             breadCrumb.gotoStandupList(date);
         }
     }

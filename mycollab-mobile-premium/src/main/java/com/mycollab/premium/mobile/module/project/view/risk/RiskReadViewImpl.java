@@ -83,7 +83,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         }
 
         ResourceService resourceService = AppContextUtil.getSpringBean(ResourceService.class);
-        List<Content> attachments = resourceService.getContents(AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(),
+        List<Content> attachments = resourceService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(),
                 beanItem.getProjectid(), ProjectTypeConstants.RISK, "" + beanItem.getId()));
         if (CollectionUtils.isNotEmpty(attachments)) {
             attachmentComp = new ProjectAttachmentDisplayComp(attachments);
@@ -165,7 +165,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(ProjectLinkGenerator.INSTANCE.generateRiskPreviewLink(beanItem.getProjectid(),
+        AppUI.addFragment(ProjectLinkGenerator.generateRiskPreviewLink(beanItem.getProjectid(),
                 beanItem.getId()), beanItem.getName());
     }
 
@@ -197,11 +197,11 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
             if (Risk.Field.assignuser.equalTo(propertyId)) {
-                return new DefaultViewField(ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(CurrentProjectVariables.INSTANCE
+                return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables
                         .getProjectId(), beanItem.getAssignuser(), beanItem.getAssignedToUserFullName(), beanItem
                         .getAssignToUserAvatarId(), false), ContentMode.HTML);
             } else if (Risk.Field.createduser.equalTo(propertyId)) {
-                return new DefaultViewField(ProjectLinkBuilder.INSTANCE.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
+                return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(),
                         beanItem.getCreateduser(), beanItem.getRaisedByUserFullName(), beanItem.getRaisedByUserAvatarId(), false),
                         ContentMode.HTML);
             } else if (Risk.Field.startdate.equalTo(propertyId)) {
@@ -220,7 +220,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 }
             } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
                 if (beanItem.getMilestoneid() != null) {
-                    A milestoneLink = new A(ProjectLinkBuilder.INSTANCE.generateMilestonePreviewFullLink
+                    A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
                             (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
                     Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);

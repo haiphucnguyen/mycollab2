@@ -144,7 +144,7 @@ public class UnresolvedTicketsByAssigneeWidget extends Depot {
             UserService service = AppContextUtil.getSpringBean(UserService.class);
             SimpleUser user = service.findUserByUserNameInAccount(assignee, AppUI.getAccountId());
             this.setDescription(CommonTooltipGenerator.generateTooltipUser(UserUIContext.getUserLocale(), user,
-                    AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
+                    AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
         }
     }
 }

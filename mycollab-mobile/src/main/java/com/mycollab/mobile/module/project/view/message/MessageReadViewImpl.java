@@ -83,7 +83,7 @@ public class MessageReadViewImpl extends AbstractMobilePageView implements Messa
         rightCol.addComponent(messageContent);
 
         ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
-        List<Content> attachments = attachmentService.getContents(AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(
+        List<Content> attachments = attachmentService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(
                 AppUI.getAccountId(), bean.getProjectid(), ProjectTypeConstants.MESSAGE, "" + bean.getId()));
         if (CollectionUtils.isNotEmpty(attachments)) {
             CssLayout attachmentPanel = new CssLayout();

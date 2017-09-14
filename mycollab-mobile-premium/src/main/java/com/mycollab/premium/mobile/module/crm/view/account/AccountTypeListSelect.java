@@ -12,6 +12,6 @@ class AccountTypeListSelect extends I18NValueListSelect {
 
     AccountTypeListSelect() {
         setCaption(null);
-        this.loadData(CrmDataTypeFactory.INSTANCE.getAccountTypeList());
+        this.loadData(CrmDataTypeFactory.accountTypeList);
     }
 }

@@ -79,7 +79,7 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
             SimpleBug bug = (SimpleBug) data.getParams();
             view.editItem(bug);
 
-            ProjectBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             if (bug.getId() == null) {
                 breadcrumb.gotoBugAdd();
             } else {
@@ -100,7 +100,7 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
             bug.setCreateduser(UserUIContext.getUsername());
             int bugId = bugService.saveWithSession(bug, UserUIContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
-            String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), bug.getProjectid(),
+            String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), bug.getProjectid(),
                     ProjectTypeConstants.BUG, "" + bugId);
             uploadField.saveContentsToRepo(attachPath);
 
@@ -130,7 +130,7 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
         } else {
             bugService.updateWithSession(bug, UserUIContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
-            String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), bug.getProjectid(),
+            String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), bug.getProjectid(),
                     ProjectTypeConstants.BUG, "" + bug.getId());
             uploadField.saveContentsToRepo(attachPath);
 

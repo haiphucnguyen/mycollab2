@@ -82,7 +82,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
 
         MButton deleteBtn = new MButton("", clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -105,7 +105,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
         Component clientAvatar = ProjectAssetsUtil.clientLogoComp(client, 100);
         blockTop.addComponent(clientAvatar);
 
-        A clientLink = new A(ProjectLinkBuilder.INSTANCE.generateClientPreviewFullLink(client.getId())).appendText(client
+        A clientLink = new A(ProjectLinkBuilder.generateClientPreviewFullLink(client.getId())).appendText(client
                 .getAccountname()).setTitle(client.getAccountname());
         ELabel clientLinkLbl = ELabel.h3(clientLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
 
@@ -121,7 +121,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
         clientInfo.addComponent(new ELabel(addressDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO));
         Div assignUserDiv = new Div().appendText(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + " : ").
                 appendChild(new Img("", StorageUtils.getAvatarPath(client.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
-                        new A(AccountLinkGenerator.generatePreviewFullUserLink(AppUI.Companion.getSiteUrl(), client.getAssignuser())).
+                        new A(AccountLinkGenerator.generatePreviewFullUserLink(AppUI.getSiteUrl(), client.getAssignuser())).
                                 appendText(client.getAssignUserFullName()));
         clientInfo.addComponent(new ELabel(assignUserDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO,
                 UIConstants.TEXT_ELLIPSIS));

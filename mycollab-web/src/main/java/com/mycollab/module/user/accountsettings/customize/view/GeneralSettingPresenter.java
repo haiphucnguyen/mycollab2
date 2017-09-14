@@ -28,7 +28,7 @@ public class GeneralSettingPresenter extends AbstractPresenter<GeneralSettingVie
             AccountSettingContainer customizeContainer = (AccountSettingContainer) container;
             customizeContainer.gotoSubView(UserUIContext.getMessage(AdminI18nEnum.OPT_GENERAL_SETTINGS));
             view.displayView();
-            AccountSettingBreadcrumb breadcrumb = ViewManager.INSTANCE.getCacheComponent(AccountSettingBreadcrumb.class);
+            AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
             breadcrumb.gotoGeneralSetting();
         } else {
             NotificationUtil.showMessagePermissionAlert();

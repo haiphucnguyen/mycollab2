@@ -90,7 +90,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateOpportunityPreviewLink(beanItem.getId()), UserUIContext.getMessage(
+        AppUI.addFragment(CrmLinkGenerator.generateOpportunityPreviewLink(beanItem.getId()), UserUIContext.getMessage(
                 GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE, UserUIContext.getMessage(OpportunityI18nEnum.SINGLE),
                 beanItem.getOpportunityname()));
     }

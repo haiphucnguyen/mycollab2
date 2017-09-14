@@ -64,7 +64,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         Component projectIcon = ProjectAssetsUtil.editableProjectLogoComp(project.getShortname(), project.getId(), project.getAvatarid(), 64);
         this.with(projectIcon).withAlign(projectIcon, Alignment.TOP_LEFT);
 
-        ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+        ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
         breadCrumb.setProject(project);
         MVerticalLayout headerLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, true, false, true));
 
@@ -75,7 +75,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         if (project.getLead() != null) {
             Div leadAvatar = new DivLessFormatter().appendChild(new Img("", StorageUtils.getAvatarPath
                             (project.getLeadAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX), DivLessFormatter.EMPTY_SPACE,
-                    new A(ProjectLinkBuilder.INSTANCE.generateProjectMemberFullLink(project.getId(), project.getLead()))
+                    new A(ProjectLinkBuilder.generateProjectMemberFullLink(project.getId(), project.getLead()))
                             .appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
                     .setTitle(project.getLeadFullName());
             ELabel leadLbl = ELabel.html(UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER) + ": " + leadAvatar.write()).withWidthUndefined();
@@ -97,7 +97,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                         .setCSSClass(UIConstants.CIRCLE_BOX);
                 clientDiv.appendChild(clientImg).appendChild(DivLessFormatter.EMPTY_SPACE);
             }
-            clientDiv.appendChild(new A(ProjectLinkBuilder.INSTANCE.generateClientPreviewFullLink(project.getAccountid()))
+            clientDiv.appendChild(new A(ProjectLinkBuilder.generateClientPreviewFullLink(project.getAccountid()))
                     .appendText(StringUtils.trim(project.getClientName(), 30, true)));
             ELabel accountBtn = ELabel.html(clientDiv.write()).withStyleName(WebThemes.BUTTON_LINK)
                     .withWidthUndefined();
@@ -207,11 +207,11 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                 popupButtonsControl.addOption(editProjectBtn);
             }
 
-            if (CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.PROJECT)) {
+            if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROJECT)) {
                 MButton archiveProjectBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.BUTTON_ARCHIVE_PROJECT), clickEvent -> {
                     controlsBtn.setPopupVisible(false);
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.WINDOW_WARNING_TITLE, AppUI.Companion.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.WINDOW_WARNING_TITLE, AppUI.getSiteName()),
                             UserUIContext.getMessage(ProjectCommonI18nEnum.DIALOG_CONFIRM_PROJECT_ARCHIVE_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -229,19 +229,19 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                 popupButtonsControl.addOption(archiveProjectBtn);
             }
 
-            if (CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.PROJECT)) {
+            if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROJECT)) {
                 popupButtonsControl.addSeparator();
                 MButton deleteProjectBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.BUTTON_DELETE_PROJECT), clickEvent -> {
                     controlsBtn.setPopupVisible(false);
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                            UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                             UserUIContext.getMessage(ProjectCommonI18nEnum.DIALOG_CONFIRM_PROJECT_DELETE_MESSAGE),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                             UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
                             confirmDialog -> {
                                 if (confirmDialog.isConfirmed()) {
                                     ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-                                    projectService.removeWithSession(CurrentProjectVariables.INSTANCE.getProject(),
+                                    projectService.removeWithSession(CurrentProjectVariables.getProject(),
                                             UserUIContext.getUsername(), AppUI.getAccountId());
                                     EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
                                 }

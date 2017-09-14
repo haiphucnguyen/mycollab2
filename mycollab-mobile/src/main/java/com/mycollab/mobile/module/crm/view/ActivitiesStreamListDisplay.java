@@ -80,7 +80,7 @@ class ActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityStreamSe
             layout.addStyleName("activity-cell");
             StringBuilder content = new StringBuilder();
             AuditLogRegistry auditLogRegistry = AppContextUtil.getSpringBean(AuditLogRegistry.class);
-            String itemType = CrmLocalizationTypeMap.INSTANCE.getType(activityStream.getType());
+            String itemType = CrmLocalizationTypeMap.getType(activityStream.getType());
             String assigneeValue = buildAssigneeValue(activityStream);
             String itemValue = buildItemValue(activityStream);
 

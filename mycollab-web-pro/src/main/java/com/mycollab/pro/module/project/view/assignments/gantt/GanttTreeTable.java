@@ -547,7 +547,7 @@ public class GanttTreeTable extends TreeTable {
             insertRowAfterMenuItem.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
             MenuItem deleteRowMenuItem = this.addItem(UserUIContext.getMessage(GanttI18nEnum.ACTION_DELETE_ROW), menuItem -> ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -557,7 +557,7 @@ public class GanttTreeTable extends TreeTable {
                         }
                     }));
             deleteRowMenuItem.setIcon(FontAwesome.TRASH_O);
-            deleteRowMenuItem.setVisible(CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.TASKS));
+            deleteRowMenuItem.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
         }
 
         private void removeAssignments(GanttItemWrapper task) {

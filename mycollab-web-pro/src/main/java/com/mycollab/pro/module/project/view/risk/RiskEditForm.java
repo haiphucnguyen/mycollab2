@@ -65,7 +65,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
                         riskId = bean.getId();
                     }
                     AttachmentUploadField uploadField = ((RiskEditFormFieldFactory) getFieldFactory()).getAttachmentUploadField();
-                    String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
+                    String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
                             ProjectTypeConstants.RISK, "" + riskId);
                     uploadField.saveContentsToRepo(attachPath);
 

@@ -32,7 +32,7 @@ public class ProjectMemberReadPresenter extends AbstractProjectPresenter<Project
                 isCurrentUserAccess = true;
             }
         }
-        if (CurrentProjectVariables.INSTANCE.canRead(ProjectRolePermissionCollections.USERS) || isCurrentUserAccess) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.USERS) || isCurrentUserAccess) {
             ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
             SimpleProjectMember prjMember = null;
             if (data.getParams() instanceof Integer) {

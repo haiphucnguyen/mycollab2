@@ -57,7 +57,7 @@ public class MilestoneAddWindow extends MWindow {
                 }
 
                 AttachmentUploadField uploadField = milestoneEditFormFieldFactory.getAttachmentUploadField();
-                String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), milestone.getProjectid(),
+                String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), milestone.getProjectid(),
                         ProjectTypeConstants.MILESTONE, "" + milestone.getId());
                 uploadField.saveContentsToRepo(attachPath);
 

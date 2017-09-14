@@ -76,7 +76,7 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
             ticketContainer.setContent(view);
             SimpleTask task = (SimpleTask) data.getParams();
 
-            ProjectBreadcrumb breadCrumb = ViewManager.INSTANCE.getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             if (task.getId() == null) {
                 breadCrumb.gotoTaskAdd();
             } else {
@@ -127,7 +127,7 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
             taskService.updateWithSession(item, UserUIContext.getUsername());
         }
         AttachmentUploadField uploadField = view.getAttachUploadField();
-        String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), item.getProjectid(),
+        String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), item.getProjectid(),
                 ProjectTypeConstants.TASK, "" + item.getId());
         uploadField.saveContentsToRepo(attachPath);
         return item.getId();

@@ -86,7 +86,7 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateLeadPreviewLink(beanItem.getId()),
+        AppUI.addFragment(CrmLinkGenerator.generateLeadPreviewLink(beanItem.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(LeadI18nEnum.SINGLE), beanItem.getLeadName()));
     }

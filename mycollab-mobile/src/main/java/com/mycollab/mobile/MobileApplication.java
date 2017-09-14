@@ -183,7 +183,7 @@ public class MobileApplication extends AppUI {
     public void doLogin(String username, String password, boolean isRememberPassword) {
         try {
             UserService userService = AppContextUtil.getSpringBean(UserService.class);
-            SimpleUser user = userService.authentication(username, password, AppUI.Companion.getSubDomain(), false);
+            SimpleUser user = userService.authentication(username, password, AppUI.getSubDomain(), false);
 
             if (isRememberPassword) {
                 rememberPassword(username, password);

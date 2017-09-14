@@ -125,7 +125,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
 
             MVerticalLayout rowLayout = new MVerticalLayout().withFullWidth().withStyleName(WebThemes.MESSAGE_CONTAINER);
 
-            A labelLink = new A(ProjectLinkBuilder.INSTANCE.generateMessagePreviewFullLink(message.getProjectid(), message.getId()),
+            A labelLink = new A(ProjectLinkBuilder.generateMessagePreviewFullLink(message.getProjectid(), message.getId()),
                     new Text(message.getTitle()));
 
             MHorizontalLayout messageHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false));
@@ -136,7 +136,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
             timePostLbl.setStyleName(UIConstants.META_INFO);
 
             MButton deleteBtn = new MButton("", clickEvent -> ConfirmDialogExt.show(UI.getCurrent(),
-                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                    UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -147,7 +147,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                             messageList.setSearchCriteria(searchCriteria);
                         }
                     })).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
-            deleteBtn.setVisible(CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.MESSAGES));
+            deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MESSAGES));
 
             MHorizontalLayout rightHeader = new MHorizontalLayout();
             rightHeader.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
@@ -170,7 +170,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                 notification.addComponent(commentNotification);
             }
             ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
-            List<Content> attachments = attachmentService.getContents(AttachmentUtils.INSTANCE
+            List<Content> attachments = attachmentService.getContents(AttachmentUtils
                     .getProjectEntityAttachmentPath(AppUI.getAccountId(),
                             message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
             if (CollectionUtils.isNotEmpty(attachments)) {
@@ -282,7 +282,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                     message.setIsstick(chkIsStick.getValue());
                     MessageListViewImpl.this.fireSaveItem(message);
 
-                    String attachmentPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(
+                    String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(
                             AppUI.getAccountId(), message.getProjectid(),
                             ProjectTypeConstants.MESSAGE, "" + message.getId());
                     attachments.saveContentsToRepo(attachmentPath);

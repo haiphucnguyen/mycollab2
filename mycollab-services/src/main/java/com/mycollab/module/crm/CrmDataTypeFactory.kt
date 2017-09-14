@@ -59,6 +59,6 @@ object CrmDataTypeFactory {
     @JvmField
     val taskStatuses = arrayOf(TaskStatus.Not_Started, TaskStatus.In_Progress, TaskStatus.Completed, TaskStatus.Pending_Input, TaskStatus.Deferred)
 
-    val accountTypeList: List<Enum<*>>
-        get() = ACCOUNT_TYPE_LIST
+    @JvmField
+    val accountTypeList = CrmDataTypeFactory.ACCOUNT_TYPE_LIST
 }

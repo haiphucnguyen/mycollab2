@@ -22,6 +22,6 @@ class PropertyListParam<P>(id: String, table: String, column: String) : ColumnPa
 
     companion object {
 
-        val OPTIONS = arrayOf(CollectionI18nEnum.IN, CollectionI18nEnum.NOT_IN)
+        @JvmField val OPTIONS = arrayOf(CollectionI18nEnum.IN, CollectionI18nEnum.NOT_IN)
     }
 }

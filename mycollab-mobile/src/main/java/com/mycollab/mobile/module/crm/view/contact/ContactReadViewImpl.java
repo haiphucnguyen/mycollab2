@@ -107,7 +107,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
             return beanItem.getContactName() + "&nbsp;"
                     + UserUIContext.getMessage(LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
                     CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
-                    CrmLinkGenerator.INSTANCE.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()),
+                    CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()),
                     lead.getLeadName());
         } else {
             return beanItem.getContactName();
@@ -127,7 +127,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
     @Override
     protected void onBecomingVisible() {
         super.onBecomingVisible();
-        AppUI.addFragment(CrmLinkGenerator.INSTANCE.generateContactPreviewLink(beanItem.getId()),
+        AppUI.addFragment(CrmLinkGenerator.generateContactPreviewLink(beanItem.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(ContactI18nEnum.SINGLE), beanItem.getContactName()));
     }

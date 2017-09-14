@@ -76,15 +76,15 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
 
         tableItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
             final Version bugVersion = tableItem.getBeanByIndex(itemId);
-            final LabelLink b = new LabelLink(bugVersion.getName(), ProjectLinkBuilder.INSTANCE
+            final LabelLink b = new LabelLink(bugVersion.getName(), ProjectLinkBuilder
                     .generateBugVersionPreviewFullLink(bugVersion.getProjectid(), bugVersion.getId()));
             if (bugVersion.getStatus() != null && bugVersion.getStatus().equals(StatusI18nEnum.Closed.name())) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);
             } else if (bugVersion.getDuedate() != null && (bugVersion.getDuedate().before(new GregorianCalendar().getTime()))) {
                 b.addStyleName(WebThemes.LINK_OVERDUE);
             }
-            b.setDescription(ProjectTooltipGenerator.INSTANCE.generateToolTipVersion(UserUIContext.getUserLocale(), AppUI.Companion.getDateFormat(),
-                    bugVersion, AppUI.Companion.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            b.setDescription(ProjectTooltipGenerator.generateToolTipVersion(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                    bugVersion, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
         });
 
@@ -131,7 +131,7 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
 
         tableActionControls = new DefaultMassItemActionHandlerContainer();
 
-        if (CurrentProjectVariables.INSTANCE.canAccess(ProjectRolePermissionCollections.VERSIONS)) {
+        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.VERSIONS)) {
             tableActionControls.addDeleteActionItem();
         }
 

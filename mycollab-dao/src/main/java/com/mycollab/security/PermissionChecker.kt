@@ -13,7 +13,7 @@ object PermissionChecker {
      * @param flag
      * @return true if `flag` is boolean permission flag
      */
-    fun isBooleanPermission(flag: Int?): Boolean {
+    @JvmStatic fun isBooleanPermission(flag: Int?): Boolean {
         return flag!! shr 7 == 1
     }
 
@@ -21,7 +21,7 @@ object PermissionChecker {
      * @param flag
      * @return true of `flag` is access permission
      */
-    fun isAccessPermission(flag: Int?): Boolean {
+    @JvmStatic fun isAccessPermission(flag: Int?): Boolean {
         return flag!! shr 3 == 0
     }
 
@@ -33,7 +33,7 @@ object PermissionChecker {
      * @param impliedVal
      * @return
      */
-    fun isImplied(flag: Int, impliedVal: Int): Boolean {
+    @JvmStatic fun isImplied(flag: Int, impliedVal: Int): Boolean {
         return when {
             isBooleanPermission(flag) -> flag == impliedVal
             isAccessPermission(flag) -> when (impliedVal) {

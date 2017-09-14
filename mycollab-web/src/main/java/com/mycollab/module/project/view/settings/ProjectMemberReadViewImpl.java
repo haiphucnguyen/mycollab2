@@ -157,12 +157,12 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             ELabel memberLink = ELabel.h3(beanItem.getMemberFullName()).withWidthUndefined();
             MButton editNotificationBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum
                     .ACTION_EDIT_NOTIFICATION), clickEvent -> UI.getCurrent().addWindow(new NotificationSettingWindow(beanItem)))
-                    .withStyleName(WebThemes.BUTTON_LINK).withVisible(CurrentProjectVariables.INSTANCE.canAccess
+                    .withStyleName(WebThemes.BUTTON_LINK).withVisible(CurrentProjectVariables.canAccess
                             (ProjectRolePermissionCollections.USERS));
             memberInfo.addComponent(new MHorizontalLayout(memberLink, editNotificationBtn).alignAll(Alignment.MIDDLE_LEFT));
 
-            String memberRoleLinkPrefix = String.format("<a href=\"%s%s%s\"", AppUI.Companion.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
-                    ProjectLinkGenerator.INSTANCE.generateRolePreviewLink(beanItem.getProjectid(), beanItem.getProjectroleid()));
+            String memberRoleLinkPrefix = String.format("<a href=\"%s%s%s\"", AppUI.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
+                    ProjectLinkGenerator.generateRolePreviewLink(beanItem.getProjectid(), beanItem.getProjectroleid()));
             ELabel memberRole = new ELabel(ContentMode.HTML).withStyleName(UIConstants.META_INFO).withWidthUndefined();
             if (Boolean.TRUE.equals(beanItem.getIsadmin()) || beanItem.getProjectroleid() == null) {
                 memberRole.setValue(String.format("%sstyle=\"color: #B00000;\">%s</a>", memberRoleLinkPrefix,
@@ -172,7 +172,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             }
             memberInfo.addComponent(memberRole);
 
-            if (Boolean.TRUE.equals(AppUI.Companion.showEmailPublicly())) {
+            if (Boolean.TRUE.equals(AppUI.showEmailPublicly())) {
                 Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", beanItem.getUsername(),
                         beanItem.getUsername())).withStyleName(UIConstants.META_INFO).withFullWidth();
                 memberInfo.addComponent(memberEmailLabel);
@@ -225,7 +225,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         protected Field<?> onCreateField(final Object propertyId) {
             if (propertyId.equals("projectroleid")) {
                 if (Boolean.FALSE.equals(attachForm.getBean().getIsadmin())) {
-                    return new LinkViewField(attachForm.getBean().getRoleName(), ProjectLinkBuilder.INSTANCE.generateRolePreviewFullLink(
+                    return new LinkViewField(attachForm.getBean().getRoleName(), ProjectLinkBuilder.generateRolePreviewFullLink(
                             attachForm.getBean().getProjectid(), attachForm.getBean().getProjectroleid()), null);
                 } else {
                     return new DefaultViewField(UserUIContext.getMessage(ProjectRoleI18nEnum.OPT_ADMIN_ROLE_DISPLAY));
@@ -304,11 +304,11 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             if (ProjectTypeConstants.BUG.equals(genericTask.getType()) || ProjectTypeConstants.TASK.equals(genericTask.getType())) {
                 taskLink.appendText(String.format("[#%d] - %s", genericTask.getExtraTypeId(), genericTask.getName()));
-                taskLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(genericTask.getProjectShortName(),
+                taskLink.setHref(ProjectLinkGenerator.generateProjectItemLink(genericTask.getProjectShortName(),
                         genericTask.getProjectId(), genericTask.getType(), genericTask.getExtraTypeId() + ""));
             } else {
                 taskLink.appendText(genericTask.getName());
-                taskLink.setHref(ProjectLinkGenerator.INSTANCE.generateProjectItemLink(genericTask.getProjectShortName(),
+                taskLink.setHref(ProjectLinkGenerator.generateProjectItemLink(genericTask.getProjectShortName(),
                         genericTask.getProjectId(), genericTask.getType(), genericTask.getTypeId() + ""));
             }
             Label issueLbl = ELabel.html(taskLink.write());

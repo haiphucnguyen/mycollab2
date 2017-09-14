@@ -53,7 +53,7 @@ public class CommentRowDisplayHandler implements IBeanList.RowDisplayHandler<Sim
             MButton msgDeleteBtn = new MButton(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY)
                     .withListener(clickEvent -> {
                         ConfirmDialogExt.show(UI.getCurrent(),
-                                UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.Companion.getSiteName()),
+                                UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                                 UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
                                 UserUIContext.getMessage(GenericI18Enum.BUTTON_NO),

@@ -29,7 +29,7 @@ public abstract class ReportStreamSource implements StreamResource.StreamSource 
 
     private Map<String, Object> initReportParameters() {
         Map<String, Object> parameters = new ConcurrentHashMap<>();
-        parameters.put("siteUrl", AppUI.Companion.getSiteUrl());
+        parameters.put("siteUrl", AppUI.getSiteUrl());
         parameters.put("user", UserUIContext.getUser());
         initReportParameters(parameters);
         return parameters;

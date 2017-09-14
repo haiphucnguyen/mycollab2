@@ -3,12 +3,12 @@ package com.mycollab.mobile.ui;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.mobile.MobileApplication;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.PageView;
 import com.mycollab.vaadin.events.ViewEvent;
+import com.mycollab.vaadin.mvp.PageView;
+import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import org.vaadin.thomas.slidemenu.SlideMenu;
 import org.vaadin.thomas.slidemenu.SlideMenuView;
@@ -37,9 +37,7 @@ public abstract class AbstractMobileMenuPageView extends SlideMenuView implement
     }
 
     public void addSection(String title) {
-        Label l = new Label(title);
-        l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
-        getMenu().addComponent(l);
+        getMenu().addComponent(new ELabel(title).withStyleName(SlideMenu.STYLENAME_SECTIONLABEL));
     }
 
     public void addMenuItem(Component comp) {

@@ -83,7 +83,7 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
                     asyncEventBus.post(new CleanCacheEvent(AppUI.getAccountId(), new Class[]{BugService.class}));
 
                     AttachmentUploadField uploadField = bugEditFormFieldFactory.getAttachmentUploadField();
-                    String attachPath = AttachmentUtils.INSTANCE.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
+                    String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), bean.getProjectid(),
                             ProjectTypeConstants.BUG, "" + bugId);
                     uploadField.saveContentsToRepo(attachPath);
                     EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(BugEditForm.this,
