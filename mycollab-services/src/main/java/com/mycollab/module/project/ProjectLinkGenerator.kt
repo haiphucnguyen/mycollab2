@@ -206,23 +206,16 @@ object ProjectLinkGenerator {
         }
 
         try {
-            if (ProjectTypeConstants.PROJECT == type) {
-            } else if (ProjectTypeConstants.MESSAGE == type) {
-                result = generateMessagePreviewLink(projectId, Integer.parseInt(typeId))
-            } else if (ProjectTypeConstants.MILESTONE == type) {
-                result = generateMilestonePreviewLink(projectId, Integer.parseInt(typeId))
-            } else if (ProjectTypeConstants.RISK == type) {
-                result = generateRiskPreviewLink(projectId, Integer.parseInt(typeId))
-            } else if (ProjectTypeConstants.TASK == type) {
-                result = generateTaskPreviewLink(Integer.parseInt(typeId), prjShortName)
-            } else if (ProjectTypeConstants.BUG == type) {
-                result = generateBugPreviewLink(Integer.parseInt(typeId), prjShortName)
-            } else if (ProjectTypeConstants.BUG_COMPONENT == type) {
-                result = generateBugComponentPreviewLink(projectId, Integer.parseInt(typeId))
-            } else if (ProjectTypeConstants.BUG_VERSION == type) {
-                result = generateBugVersionPreviewLink(projectId, Integer.parseInt(typeId))
-            } else if (ProjectTypeConstants.PAGE == type) {
-                result = generatePageRead(projectId, typeId)
+            when (type) {
+                ProjectTypeConstants.PROJECT -> {}
+                ProjectTypeConstants.MESSAGE -> result = generateMessagePreviewLink(projectId, Integer.parseInt(typeId))
+                ProjectTypeConstants.MILESTONE -> result = generateMilestonePreviewLink(projectId, Integer.parseInt(typeId))
+                ProjectTypeConstants.RISK -> result = generateRiskPreviewLink(projectId, Integer.parseInt(typeId))
+                ProjectTypeConstants.TASK -> result = generateTaskPreviewLink(Integer.parseInt(typeId), prjShortName)
+                ProjectTypeConstants.BUG -> result = generateBugPreviewLink(Integer.parseInt(typeId), prjShortName)
+                ProjectTypeConstants.BUG_COMPONENT -> result = generateBugComponentPreviewLink(projectId, Integer.parseInt(typeId))
+                ProjectTypeConstants.BUG_VERSION -> result = generateBugVersionPreviewLink(projectId, Integer.parseInt(typeId))
+                ProjectTypeConstants.PAGE -> result = generatePageRead(projectId, typeId)
             }
         } catch (e: Exception) {
             throw DebugException(String.format("Error generate tooltip%d---%s---%s", projectId, type, typeId), e)

@@ -44,7 +44,7 @@ public class ResetPasswordHandler extends GenericHttpServlet {
             throw new UserInvalidInputException(LocalizationHelper.getMessage(Locale.US,
                     ErrorI18nEnum.ERROR_USER_IS_NOT_EXISTED, username));
         } else {
-            user.setPassword(EnDecryptHelper.encryptSaltPassword(password));
+            user.setPassword(EnDecryptHelper.INSTANCE.encryptSaltPassword(password));
             userService.updateWithSession(user, username);
         }
     }

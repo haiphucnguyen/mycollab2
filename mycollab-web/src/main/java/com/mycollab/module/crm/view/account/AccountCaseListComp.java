@@ -158,7 +158,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
             }
 
             String assigneeValue = (oneCase.getAssignuser() == null) ? new Span().appendText(UserUIContext.getMessage
-                    (GenericI18Enum.OPT_UNDEFINED)).write() : new A(AccountLinkGenerator.generatePreviewFullUserLink(
+                    (GenericI18Enum.OPT_UNDEFINED)).write() : new A(AccountLinkGenerator.INSTANCE.generatePreviewFullUserLink(
                     AppUI.getSiteUrl(), oneCase.getAssignuser()))
                     .appendText(oneCase.getAssignUserFullName()).write();
             Label caseAssignUser = ELabel.html(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + ": " + assigneeValue);

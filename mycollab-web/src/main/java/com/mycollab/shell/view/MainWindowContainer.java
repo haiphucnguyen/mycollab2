@@ -48,7 +48,7 @@ public class MainWindowContainer extends CssLayout {
                     String[] loginParams = value.split("\\$");
                     if (loginParams.length == 2) {
                         try {
-                            ((DesktopApplication) UI.getCurrent()).doLogin(loginParams[0], EnDecryptHelper.decryptText(loginParams[1]), false);
+                            ((DesktopApplication) UI.getCurrent()).doLogin(loginParams[0], EnDecryptHelper.INSTANCE.decryptText(loginParams[1]), false);
                         } catch (Exception e) {
                             navigateToLoginView();
                         }
@@ -77,7 +77,7 @@ public class MainWindowContainer extends CssLayout {
                 String[] loginParams = value.split("\\$");
                 if (loginParams.length == 2) {
                     try {
-                        ((DesktopApplication) UI.getCurrent()).doLogin(loginParams[0], EnDecryptHelper.decryptText(loginParams[1]), false);
+                        ((DesktopApplication) UI.getCurrent()).doLogin(loginParams[0], EnDecryptHelper.INSTANCE.decryptText(loginParams[1]), false);
                     } catch (UserInvalidInputException e) {
                         navigateToLoginView();
                     }

@@ -328,12 +328,12 @@ public class DesktopApplication extends AppUI {
     }
 
     private void rememberAccount(String username, String password) {
-        String storeVal = username + "$" + EnDecryptHelper.encryptText(password);
+        String storeVal = username + "$" + EnDecryptHelper.INSTANCE.encryptText(password);
         BrowserCookie.setCookie(ACCOUNT_COOKIE, storeVal);
     }
 
     private void rememberTempAccount(String username, String password) {
-        String storeVal = username + "$" + EnDecryptHelper.encryptText(password);
+        String storeVal = username + "$" + EnDecryptHelper.INSTANCE.encryptText(password);
         String setCookieVal = String.format("var now = new Date(); now.setTime(now.getTime() + 1 * 1800 * 1000); " +
                 "document.cookie = \"%s=%s; expires=\" + now.toUTCString() + \"; path=/\";", TEMP_ACCOUNT_COOKIE, storeVal);
         JavaScript.getCurrent().execute(setCookieVal);

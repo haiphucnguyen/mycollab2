@@ -41,7 +41,7 @@ class BankwireSelectionWindow extends MWindow {
                 "</span>&nbsp;Projects").withWidthUndefined();
         MButton chargeBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE), event -> close()).withStyleName(WebThemes.BUTTON_ACTION);
         BrowserWindowOpener opener = new BrowserWindowOpener(billingPlan.getBanktransferpath() +
-                "?referrer=" + EnDecryptHelper.encryptTextWithEncodeFriendly(AppUI.getAccountId() + ";" + billingPlan.getId()));
+                "?referrer=" + EnDecryptHelper.INSTANCE.encryptTextWithEncodeFriendly(AppUI.getAccountId() + ";" + billingPlan.getId()));
 
         opener.extend(chargeBtn);
         planLayout = new MVerticalLayout(billingType, billingPrice, billingUser, billingStorage, billingProject)

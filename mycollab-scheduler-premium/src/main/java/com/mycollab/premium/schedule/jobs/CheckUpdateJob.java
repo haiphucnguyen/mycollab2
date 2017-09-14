@@ -52,7 +52,7 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
     public void executeJob(JobExecutionContext context) throws JobExecutionException {
         RestTemplate restTemplate = new RestTemplate();
         LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
-        String customerId = EnDecryptHelper.encryptText(licenseInfo.getCustomerId());
+        String customerId = EnDecryptHelper.INSTANCE.encryptText(licenseInfo.getCustomerId());
         String result = restTemplate.getForObject(serverConfiguration.getApiUrl("checkpremiumupdate?version=" +
                 Version.getVersion() + "&customerId=" + customerId), String.class);
         final Properties props = JsonDeSerializer.fromJson(result, Properties.class);

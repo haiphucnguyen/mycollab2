@@ -152,9 +152,8 @@ public class TooltipGeneratorServletRequestHandler extends GenericHttpServlet {
             out.println(html);
         } catch (Exception e) {
             LOG.error("Error while get html tooltip attachForm TooltipGeneratorServletRequestHandler", e);
-            String html = null;
             PrintWriter out = response.getWriter();
-            out.println(html);
+            out.println("");
         }
     }
 }

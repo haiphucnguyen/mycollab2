@@ -135,10 +135,10 @@ object ProjectLinkBuilder {
     }
 
     @JvmStatic
-    fun generateProjectItemHtmlLinkAndTooltip(prjShortName: String, projectId: Int?, summary: String, type: String, typeId: String): String {
+    fun generateProjectItemHtmlLinkAndTooltip(prjShortName: String, projectId: Int, summary: String, type: String, typeId: String): String {
         val image = Text(ProjectAssetsManager.getAsset(type).html)
         val link = A().setId("tag" + TOOLTIP_ID)
-        link.setHref(URL_PREFIX_PARAM + ProjectLinkGenerator.generateProjectItemLink(prjShortName, projectId!!, type, typeId))
+        link.setHref(ProjectLinkGenerator.generateProjectItemLink(prjShortName, projectId, type, typeId))
                 .appendChild(Text(summary))
         link.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(type, typeId))
         link.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction())

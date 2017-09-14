@@ -57,7 +57,7 @@ abstract class AppUI : UI() {
 
     override fun close() {
         LOG.debug("Application is closed. Clean all resources")
-        currentContext!!.clearSessionVariables()
+        currentContext?.clearSessionVariables()
         currentContext = null
         super.close()
     }

@@ -270,7 +270,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
                     .appendText("Assignee:"))
                     .appendChild(
                             new Td().setStyle("width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top;")
-                                    .appendChild(new A().setHref((event.getAssignUser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(
+                                    .appendChild(new A().setHref((event.getAssignUser() != null) ? AccountLinkGenerator.INSTANCE.generatePreviewFullUserLink(
                                             AppUI.getSiteUrl(), event.getAssignUser()) : "")
                                             .appendChild(new Img("", StorageUtils.getAvatarPath(event.getAssignUserAvatarId(), 16)))
                                             .appendText(StringUtils.trimHtmlTags(event.getAssignUserFullName()))));

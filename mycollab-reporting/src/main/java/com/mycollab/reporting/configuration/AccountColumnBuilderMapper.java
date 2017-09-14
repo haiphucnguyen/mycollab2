@@ -43,7 +43,7 @@ public class AccountColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 String username = reportParameters.getFieldValue(User.Field.username.name());
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, username);
+                return AccountLinkGenerator.INSTANCE.generatePreviewFullUserLink(siteUrl, username);
             }
         };
         map.put(User.Field.username.name(), new HyperlinkBuilderGenerator(userNameExpr, userHrefExpr));
@@ -56,7 +56,7 @@ public class AccountColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer roleId = reportParameters.getFieldValue(SimpleUser.Field.roleid.name());
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return AccountLinkGenerator.generatePreviewFullRoleLink(siteUrl, roleId);
+                return AccountLinkGenerator.INSTANCE.generatePreviewFullRoleLink(siteUrl, roleId);
             }
         };
         map.put(SimpleUser.Field.roleid.name(), new HyperlinkBuilderGenerator(roleNameExpr, roleHrefExpr));
@@ -74,7 +74,7 @@ public class AccountColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer roleId = reportParameters.getFieldValue(Role.Field.id.name());
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return AccountLinkGenerator.generatePreviewFullRoleLink(siteUrl, roleId);
+                return AccountLinkGenerator.INSTANCE.generatePreviewFullRoleLink(siteUrl, roleId);
             }
         };
         map.put(Role.Field.rolename.name(), new HyperlinkBuilderGenerator(roleNameExpr, roleHrefExpr));

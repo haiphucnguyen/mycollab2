@@ -8,10 +8,10 @@ import com.mycollab.vaadin.AppUI;
  */
 public class AccountLinkBuilder {
     public static String generatePreviewFullUserLink(String username) {
-        return AccountLinkGenerator.generatePreviewFullUserLink(AppUI.getSiteUrl(), username);
+        return AccountLinkGenerator.INSTANCE.generatePreviewFullUserLink(AppUI.getSiteUrl(), username);
     }
 
     public static String generatePreviewFullRoleLink(Integer userRoleId) {
-        return AccountLinkGenerator.generatePreviewFullRoleLink(AppUI.getSiteUrl(), userRoleId);
+        return AccountLinkGenerator.INSTANCE.generatePreviewFullRoleLink(AppUI.getSiteUrl(), userRoleId);
     }
 }

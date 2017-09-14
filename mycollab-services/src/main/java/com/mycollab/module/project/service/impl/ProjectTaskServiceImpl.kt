@@ -33,17 +33,15 @@ import com.mycollab.module.project.esb.DeleteProjectTaskEvent
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority
 import com.mycollab.module.project.service.*
 import org.apache.ibatis.session.RowBounds
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.BatchPreparedStatementSetter
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
-
-import javax.sql.DataSource
 import java.sql.PreparedStatement
 import java.sql.SQLException
 import java.util.concurrent.TimeUnit
+import javax.sql.DataSource
 
 /**
  * @author MyCollab Ltd.
@@ -53,20 +51,10 @@ import java.util.concurrent.TimeUnit
 @Transactional
 @Traceable(nameField = "name", extraFieldName = "projectid")
 @Watchable(userFieldName = "assignuser", extraTypeId = "projectid")
-class ProjectTaskServiceImpl : DefaultService<Int, Task, TaskSearchCriteria>(), ProjectTaskService {
-
-    @Autowired
-    private val taskMapper: TaskMapper? = null
-
-    @Autowired
-    private val taskMapperExt: TaskMapperExt? = null
-
-    @Autowired
-    private val asyncEventBus: AsyncEventBus? = null
-
-    @Autowired
-    private val dataSource: DataSource? = null
-
+class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
+                             private val taskMapperExt: TaskMapperExt,
+                             private val asyncEventBus: AsyncEventBus,
+                             private val dataSource: DataSource) : DefaultService<Int, Task, TaskSearchCriteria>(), ProjectTaskService {
     override val crudMapper: ICrudGenericDAO<Int, Task>
         get() = taskMapper as ICrudGenericDAO<Int, Task>
 
@@ -74,7 +62,7 @@ class ProjectTaskServiceImpl : DefaultService<Int, Task, TaskSearchCriteria>(), 
         get() = taskMapperExt
 
     override fun findById(taskId: Int?, sAccountId: Int?): SimpleTask {
-        return taskMapperExt!!.findTaskById(taskId!!)
+        return taskMapperExt.findTaskById(taskId!!)
     }
 
     @Transactional(isolation = Isolation.READ_UNCOMMITTED)
@@ -95,11 +83,11 @@ class ProjectTaskServiceImpl : DefaultService<Int, Task, TaskSearchCriteria>(), 
 
         try {
             if (lock.tryLock(120, TimeUnit.SECONDS)) {
-                val key = taskMapperExt!!.getMaxKey(record.projectid!!)
+                val key = taskMapperExt.getMaxKey(record.projectid!!)
                 record.taskkey = if (key == null) 1 else key + 1
 
-                val taskId = super.saveWithSession(record, username)!!
-                asyncEventBus!!.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, taskId, "status",
+                val taskId = super.saveWithSession(record, username)
+                asyncEventBus.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, taskId, "status",
                         record.status, record.projectid, record.saccountid))
                 return taskId
             } else {
@@ -117,7 +105,7 @@ class ProjectTaskServiceImpl : DefaultService<Int, Task, TaskSearchCriteria>(), 
     override fun updateWithSession(record: Task, username: String): Int {
         beforeUpdate(record)
         val result = super.updateWithSession(record, username)
-        asyncEventBus!!.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, record.id, "status",
+        asyncEventBus.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, record.id, "status",
                 record.status, record.projectid, record.saccountid))
         return result
     }
@@ -133,41 +121,44 @@ class ProjectTaskServiceImpl : DefaultService<Int, Task, TaskSearchCriteria>(), 
     override fun updateSelectiveWithSession(record: Task, username: String): Int? {
         beforeUpdate(record)
         val result = super.updateSelectiveWithSession(record, username)!!
-        asyncEventBus!!.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, record.id, "status",
+        asyncEventBus.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, record.id, "status",
                 record.status, record.projectid, record.saccountid))
         return result
     }
 
     @CleanCache
     fun postDirtyUpdate(sAccountId: Int?) {
-        asyncEventBus!!.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ProjectMemberService::class.java, MilestoneService::class.java, ItemTimeLoggingService::class.java, GanttAssignmentService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java,
+                ProjectTicketService::class.java, ProjectActivityStreamService::class.java,
+                ProjectMemberService::class.java, MilestoneService::class.java, ItemTimeLoggingService::class.java,
+                GanttAssignmentService::class.java)))
     }
 
     override fun massRemoveWithSession(items: List<Task>, username: String, sAccountId: Int) {
         super.massRemoveWithSession(items, username, sAccountId)
         val event = DeleteProjectTaskEvent(items.toTypedArray(), username, sAccountId)
-        asyncEventBus!!.post(event)
+        asyncEventBus.post(event)
     }
 
     override fun removeWithSession(item: Task, username: String, sAccountId: Int) {
         super.removeWithSession(item, username, sAccountId)
-        asyncEventBus!!.post(TimelineTrackingAdjustIfEntityDeleteEvent(ProjectTypeConstants.TASK, item.id, arrayOf("status"), item.projectid, item.saccountid))
+        asyncEventBus.post(TimelineTrackingAdjustIfEntityDeleteEvent(ProjectTypeConstants.TASK, item.id, arrayOf("status"), item.projectid, item.saccountid))
     }
 
     override fun getPrioritySummary(criteria: TaskSearchCriteria): List<GroupItem> {
-        return taskMapperExt!!.getPrioritySummary(criteria)
+        return taskMapperExt.getPrioritySummary(criteria)
     }
 
     override fun getStatusSummary(@CacheKey criteria: TaskSearchCriteria): List<GroupItem> {
-        return taskMapperExt!!.getStatusSummary(criteria)
+        return taskMapperExt.getStatusSummary(criteria)
     }
 
     override fun getAssignedTasksSummary(criteria: TaskSearchCriteria): List<GroupItem> {
-        return taskMapperExt!!.getAssignedDefectsSummary(criteria)
+        return taskMapperExt.getAssignedDefectsSummary(criteria)
     }
 
     override fun findByProjectAndTaskKey(taskKey: Int?, projectShortName: String, sAccountId: Int?): SimpleTask {
-        return taskMapperExt!!.findByProjectAndTaskKey(taskKey!!, projectShortName, sAccountId!!)
+        return taskMapperExt.findByProjectAndTaskKey(taskKey!!, projectShortName, sAccountId!!)
     }
 
     override fun findSubTasks(parentTaskId: Int?, sAccountId: Int?, orderField: SearchCriteria.OrderField): List<SimpleTask> {
@@ -175,7 +166,7 @@ class ProjectTaskServiceImpl : DefaultService<Int, Task, TaskSearchCriteria>(), 
         searchCriteria.saccountid = NumberSearchField(sAccountId)
         searchCriteria.parentTaskId = NumberSearchField(parentTaskId)
         searchCriteria.setOrderFields(arrayListOf(orderField))
-        return taskMapperExt!!.findPageableListByCriteria(searchCriteria, RowBounds(0, Integer.MAX_VALUE)) as List<SimpleTask>
+        return taskMapperExt.findPageableListByCriteria(searchCriteria, RowBounds(0, Integer.MAX_VALUE)) as List<SimpleTask>
     }
 
     override fun getCountOfOpenSubTasks(taskId: Int?): Int? {
@@ -183,7 +174,7 @@ class ProjectTaskServiceImpl : DefaultService<Int, Task, TaskSearchCriteria>(), 
         searchCriteria.parentTaskId = NumberSearchField(taskId)
         searchCriteria.addExtraField(TaskSearchCriteria.p_status.buildPropertyParamNotInList(SearchField.AND,
                 listOf(StatusI18nEnum.Closed.name)))
-        return taskMapperExt!!.getTotalCount(searchCriteria)
+        return taskMapperExt.getTotalCount(searchCriteria)
     }
 
     override fun massUpdateTaskStatuses(parentTaskId: Int?, status: String, @CacheKey sAccountId: Int?) {
@@ -214,7 +205,7 @@ class ProjectTaskServiceImpl : DefaultService<Int, Task, TaskSearchCriteria>(), 
         updateTaskStatus.status = newStatus
         val ex = TaskExample()
         ex.createCriteria().andStatusEqualTo(oldStatus).andProjectidEqualTo(projectId).andSaccountidEqualTo(sAccountId)
-        taskMapper!!.updateByExampleSelective(updateTaskStatus, ex)
+        taskMapper.updateByExampleSelective(updateTaskStatus, ex)
     }
 
     companion object {

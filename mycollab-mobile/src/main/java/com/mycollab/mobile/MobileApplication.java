@@ -155,7 +155,7 @@ public class MobileApplication extends AppUI {
             public void onSuccess(String value) {
                 if (StringUtils.isNotBlank(value)) {
                     String[] loginParams = value.split("\\$");
-                    doLogin(loginParams[0], EnDecryptHelper.decryptText(loginParams[1]), false);
+                    doLogin(loginParams[0], EnDecryptHelper.INSTANCE.decryptText(loginParams[1]), false);
                 } else {
                     EventBusFactory.getInstance().post(new ShellEvent.GotoLoginView(this));
                 }
@@ -215,7 +215,7 @@ public class MobileApplication extends AppUI {
     }
 
     private void rememberPassword(String username, String password) {
-        String storeVal = username + "$" + EnDecryptHelper.encryptText(password);
+        String storeVal = username + "$" + EnDecryptHelper.INSTANCE.encryptText(password);
         LocalStorage.get().put(NAME_COOKIE, storeVal);
     }
 
