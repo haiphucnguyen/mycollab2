@@ -8,7 +8,7 @@
         <tr>
             <td style="padding: 10px 30px 0px;">
                 <p>${actionHeading}</p>
-                <p><@lib.hyperLink displayName=projectHyperLink.displayName() webLink=projectHyperLink.webLink()/></p>
+                <p><@lib.hyperLink displayName=projectHyperLink.displayName webLink=projectHyperLink.webLink/></p>
                 <p><b><@lib.hyperLink displayName=name webLink=summaryLink/></b></p>
                 <#if mapper??>
                     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:12px; margin: 0px 0px 25px;">

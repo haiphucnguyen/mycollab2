@@ -37,7 +37,7 @@ object DistributionLockUtil {
 
     private fun getStaticDefaultLock(lockName: String): Lock {
         synchronized(map) {
-            var lock: Lock? = map[lockName] as Lock
+            var lock: Lock? = map[lockName] as? Lock
             when (lock) {
                 null -> {
                     lock = ReentrantLock()

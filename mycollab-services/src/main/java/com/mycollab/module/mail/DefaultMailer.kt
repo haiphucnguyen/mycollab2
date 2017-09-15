@@ -60,6 +60,7 @@ class DefaultMailer(private val emailConf: EmailConfiguration) : IMailer {
 
             if (StringUtils.isNotBlank(html)) {
                 email.setHtmlMsg(html)
+                email.setTextMsg(StringUtils.convertHtmlToPlainText(html))
             }
 
             return email

@@ -31,12 +31,12 @@ class ContentGenerator(private val applicationConfiguration: ApplicationConfigur
     override fun afterPropertiesSet() {
         val defaultUrls = mutableMapOf(
                 "cdn_url" to serverConfiguration.cdnUrl,
-                "facebook_url" to applicationConfiguration.facebookUrl,
-                "google_url" to applicationConfiguration.googleUrl,
-                "linkedin_url" to applicationConfiguration.linkedinUrl,
-                "twitter_url" to applicationConfiguration.twitterUrl)
+                "facebook_url" to (applicationConfiguration.facebookUrl ?: ""),
+                "google_url" to (applicationConfiguration.googleUrl ?: ""),
+                "linkedin_url" to (applicationConfiguration.linkedinUrl ?: ""),
+                "twitter_url" to (applicationConfiguration.twitterUrl ?: ""))
         putVariable("defaultUrls", defaultUrls)
-        putVariable("current_year", LocalDate().getYear())
+        putVariable("current_year", LocalDate().year)
         putVariable("siteName", SiteConfiguration.getDefaultSiteName())
         putVariable("styles", MailStyles.instance())
 
