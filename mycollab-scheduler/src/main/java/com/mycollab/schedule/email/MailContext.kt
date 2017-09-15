@@ -12,8 +12,8 @@ import java.util.*
  */
 class MailContext<B>(val emailNotification: SimpleRelayEmailNotification,
                      val user: SimpleUser, val siteUrl: String) {
-    val locale: Locale = LocalizationHelper.getLocaleInstance(user.language)
-    val timeZone: TimeZone = TimezoneVal.valueOf(user.timezone)
+    val locale = LocalizationHelper.getLocaleInstance(user.language)
+    val timeZone = TimezoneVal.valueOf(user.timezone)
     var wrappedBean: B? = null
 
     val saccountid

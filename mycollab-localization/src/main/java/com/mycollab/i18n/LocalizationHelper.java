@@ -80,7 +80,10 @@ public class LocalizationHelper {
 
     public static Locale getLocaleInstance(String languageTag) {
         try {
-            return (languageTag == null) ? Locale.US : Locale.forLanguageTag(languageTag);
+            if (languageTag == null) return Locale.US;
+
+            Locale tmpLocale = Locale.forLanguageTag(languageTag);
+            return StringUtils.isBlank(tmpLocale.getLanguage()) ? Locale.US : tmpLocale;
         } catch (Exception e) {
             LOG.error("Invalid language {}", languageTag);
             return Locale.US;
