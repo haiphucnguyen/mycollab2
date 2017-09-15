@@ -32,7 +32,7 @@ public class AssignmentAddPresenter extends AbstractCrmPresenter<AssignmentAddVi
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<CrmTask>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<CrmTask>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -68,7 +68,7 @@ public class AssignmentAddPresenter extends AbstractCrmPresenter<AssignmentAddVi
             }
 
             super.onGo(container, data);
-            view.editItem(task);
+            getView().editItem(task);
 
             if (task.getId() == null) {
                 AppUI.addFragment("crm/activity/task/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,

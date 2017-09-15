@@ -31,7 +31,7 @@ public class RiskReadPresenter extends AbstractProjectPresenter<RiskReadView> {
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleRisk>() {
+        getView().getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleRisk>() {
 
             @Override
             public void onDelete(final SimpleRisk data) {
@@ -65,7 +65,7 @@ public class RiskReadPresenter extends AbstractProjectPresenter<RiskReadView> {
                 SimpleRisk risk = riskService.findById((Integer) data.getParams(), AppUI.getAccountId());
 
                 if (risk != null) {
-                    this.view.previewItem(risk);
+                    this.getView().previewItem(risk);
                     super.onGo(container, data);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

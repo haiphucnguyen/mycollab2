@@ -32,7 +32,7 @@ public class CaseReadPresenter extends AbstractCrmPresenter<CaseReadView> {
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleCase>() {
+        getView().getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleCase>() {
             @Override
             public void onEdit(SimpleCase data) {
                 EventBusFactory.getInstance().post(new CaseEvent.GotoEdit(this, data));
@@ -110,7 +110,7 @@ public class CaseReadPresenter extends AbstractCrmPresenter<CaseReadView> {
                 CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
                 SimpleCase cases = caseService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (cases != null) {
-                    view.previewItem(cases);
+                    getView().previewItem(cases);
                     super.onGo(container, data);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

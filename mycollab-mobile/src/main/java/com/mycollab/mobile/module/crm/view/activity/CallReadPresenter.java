@@ -36,7 +36,7 @@ public class CallReadPresenter extends AbstractCrmPresenter<CallReadView> {
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleCall>() {
+        getView().getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleCall>() {
             @Override
             public void onEdit(SimpleCall data) {
                 EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(this, data));
@@ -113,7 +113,7 @@ public class CallReadPresenter extends AbstractCrmPresenter<CallReadView> {
             } else {
                 throw new MyCollabException("Invalid data: " + data);
             }
-            view.previewItem(call);
+            getView().previewItem(call);
             super.onGo(container, data);
 
             AppUI.addFragment(CrmLinkGenerator.generateCallPreviewLink(call.getId()), UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,

@@ -1,7 +1,6 @@
 package com.mycollab.module.mail.service.impl
 
 import com.mycollab.common.domain.MailRecipientField
-import com.mycollab.configuration.EmailConfiguration
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.utils.StringUtils
 import com.mycollab.module.mail.AttachmentSource
@@ -39,14 +38,14 @@ class ExtMailServiceImpl : ExtMailService {
     }
 
     override fun sendHTMLMail(fromEmail: String, fromName: String, toEmail: List<MailRecipientField>, ccEmail: List<MailRecipientField>?,
-                     bccEmail: List<MailRecipientField>?, subject: String, html: String) {
+                              bccEmail: List<MailRecipientField>?, subject: String, html: String) {
         mailer.sendHTMLMail(fromEmail, fromName, toEmail, ccEmail, bccEmail, subject, html, null)
     }
 
     override fun sendHTMLMail(fromEmail: String, fromName: String,
-                     toEmail: List<MailRecipientField>, ccEmail: List<MailRecipientField>?,
-                     bccEmail: List<MailRecipientField>?, subject: String, html: String,
-                     attachments: List<AttachmentSource>?, canRetry: Boolean) {
+                              toEmail: List<MailRecipientField>, ccEmail: List<MailRecipientField>?,
+                              bccEmail: List<MailRecipientField>?, subject: String, html: String,
+                              attachments: List<AttachmentSource>?, canRetry: Boolean) {
         mailer.sendHTMLMail(fromEmail, fromName, toEmail, ccEmail, bccEmail, subject, html, attachments)
     }
 }

@@ -30,7 +30,7 @@ public class RiskAddPresenter extends AbstractProjectPresenter<RiskAddView> {
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleRisk>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleRisk>() {
             private static final long serialVersionUID = 9034340428921755073L;
 
             @Override
@@ -45,7 +45,7 @@ public class RiskAddPresenter extends AbstractProjectPresenter<RiskAddView> {
     protected void onGo(HasComponents navigator, ScreenData<?> data) {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
             SimpleRisk risk = (SimpleRisk) data.getParams();
-            view.editItem(risk);
+            getView().editItem(risk);
             super.onGo(navigator, data);
         } else {
             NotificationUtil.showMessagePermissionAlert();
@@ -61,11 +61,11 @@ public class RiskAddPresenter extends AbstractProjectPresenter<RiskAddView> {
         if (risk.getId() == null) {
             risk.setCreateduser(UserUIContext.getUsername());
             int riskId = riskService.saveWithSession(risk, UserUIContext.getUsername());
-            ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
+            ProjectFormAttachmentUploadField uploadField = getView().getAttachUploadField();
             uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.RISK, riskId);
         } else {
             riskService.updateWithSession(risk, UserUIContext.getUsername());
-            ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
+            ProjectFormAttachmentUploadField uploadField = getView().getAttachUploadField();
             uploadField.saveContentsToRepo();
         }
     }

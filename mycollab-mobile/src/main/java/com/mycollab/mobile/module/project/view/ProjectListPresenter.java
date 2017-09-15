@@ -25,7 +25,7 @@ public abstract class ProjectListPresenter<V extends IListView<S, B>, S extends 
     protected void onGo(HasComponents container, ScreenData<?> data) {
         NavigationManager currentNav = (NavigationManager) container;
         this.searchCriteria = (S) data.getParams();
-        view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-        currentNav.navigateTo(view);
+        getView().getPagedBeanTable().setSearchCriteria(searchCriteria);
+        currentNav.navigateTo(getView());
     }
 }

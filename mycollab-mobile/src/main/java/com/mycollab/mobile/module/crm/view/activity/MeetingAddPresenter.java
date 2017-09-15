@@ -31,7 +31,7 @@ public class MeetingAddPresenter extends AbstractCrmPresenter<MeetingAddView> {
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<MeetingWithBLOBs>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<MeetingWithBLOBs>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -65,7 +65,7 @@ public class MeetingAddPresenter extends AbstractCrmPresenter<MeetingAddView> {
             }
             super.onGo(container, data);
 
-            view.editItem(meeting);
+            getView().editItem(meeting);
 
             if (meeting.getId() == null) {
                 AppUI.addFragment("crm/activity/meeting/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,

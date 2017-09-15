@@ -21,7 +21,7 @@ import com.mycollab.db.arguments.SearchField
 import com.mycollab.db.persistence.ICrudGenericDAO
 import com.mycollab.db.persistence.ISearchableDAO
 import com.mycollab.db.persistence.service.DefaultService
-import com.mycollab.lock.DistributionLockUtil
+import com.mycollab.concurrent.DistributionLockUtil
 import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.dao.TaskMapper
 import com.mycollab.module.project.dao.TaskMapperExt

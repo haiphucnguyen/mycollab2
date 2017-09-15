@@ -33,7 +33,7 @@ public class MessageReadPresenter extends AbstractProjectPresenter<MessageReadVi
             if (data.getParams() instanceof Integer) {
                 MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
                 SimpleMessage message = messageService.findById((Integer) data.getParams(), AppUI.getAccountId());
-                view.previewItem(message);
+                getView().previewItem(message);
                 super.onGo(container, data);
 
                 AppUI.addFragment(ProjectLinkGenerator.generateMessagePreviewLink(CurrentProjectVariables.getProjectId(), message.getId()),

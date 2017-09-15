@@ -4,7 +4,7 @@ import com.mycollab.core.cache.CacheKey;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.db.persistence.ICrudGenericDAO;
 import com.mycollab.db.persistence.service.DefaultCrudService;
-import com.mycollab.lock.DistributionLockUtil;
+import com.mycollab.concurrent.DistributionLockUtil;
 import com.mycollab.module.ecm.dao.DriveInfoMapper;
 import com.mycollab.module.ecm.domain.DriveInfo;
 import com.mycollab.module.ecm.domain.DriveInfoExample;
@@ -37,7 +37,7 @@ public class DriveInfoServiceImpl extends DefaultCrudService<Integer, DriveInfo>
         Integer sAccountId = driveInfo.getSaccountid();
         DriveInfoExample ex = new DriveInfoExample();
         ex.createCriteria().andSaccountidEqualTo(sAccountId);
-        Lock lock = DistributionLockUtil.getLock("ecm-service" + sAccountId);
+        Lock lock = DistributionLockUtil.INSTANCE.getLock("ecm-service" + sAccountId);
         try {
             if (lock.tryLock(15, TimeUnit.SECONDS)) {
                 if (driveInfoMapper.countByExample(ex) > 0) {
@@ -50,7 +50,7 @@ public class DriveInfoServiceImpl extends DefaultCrudService<Integer, DriveInfo>
         } catch (Exception e) {
             LOG.error("Error while save drive info " + BeanUtility.printBeanObj(driveInfo), e);
         } finally {
-            DistributionLockUtil.removeLock("ecm-service" + sAccountId);
+            DistributionLockUtil.INSTANCE.removeLock("ecm-service" + sAccountId);
             lock.unlock();
         }
     }

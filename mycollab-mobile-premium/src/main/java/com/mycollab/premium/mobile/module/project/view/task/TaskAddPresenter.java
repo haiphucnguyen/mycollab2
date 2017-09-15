@@ -33,7 +33,7 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleTask>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleTask>() {
             private static final long serialVersionUID = 9034340428921755073L;
 
             @Override
@@ -48,7 +48,7 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
     protected void onGo(HasComponents navigator, ScreenData<?> data) {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             SimpleTask task = (SimpleTask) data.getParams();
-            view.editItem(task);
+            getView().editItem(task);
             super.onGo(navigator, data);
         } else {
             NotificationUtil.showMessagePermissionAlert();
@@ -69,11 +69,11 @@ public class TaskAddPresenter extends AbstractProjectPresenter<TaskAddView> impl
         if (task.getId() == null) {
             task.setCreateduser(UserUIContext.getUsername());
             int taskId = taskService.saveWithSession(task, UserUIContext.getUsername());
-            ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
+            ProjectFormAttachmentUploadField uploadField = getView().getAttachUploadField();
             uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.TASK, taskId);
         } else {
             taskService.updateWithSession(task, UserUIContext.getUsername());
-            ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
+            ProjectFormAttachmentUploadField uploadField = getView().getAttachUploadField();
             uploadField.saveContentsToRepo();
         }
     }

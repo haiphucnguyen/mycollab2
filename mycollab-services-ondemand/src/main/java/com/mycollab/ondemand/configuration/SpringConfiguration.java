@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile("production")
 @ComponentScan(basePackages = {
+        "com.mycollab.concurrent.service",
         "com.mycollab.license.service",
         "com.mycollab.pro.cache.aspect",
         "com.mycollab.pro.common.service",
-        "com.mycollab.pro.jgroups.service",
         "com.mycollab.pro.module.project.service",
         "com.mycollab.pro.module.user.service",
         "com.mycollab.pro.module.project.view.service",

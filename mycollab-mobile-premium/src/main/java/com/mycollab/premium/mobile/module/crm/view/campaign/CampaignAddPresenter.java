@@ -34,7 +34,7 @@ public class CampaignAddPresenter extends AbstractCrmPresenter<CampaignAddView> 
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleCampaign>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleCampaign>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -66,7 +66,7 @@ public class CampaignAddPresenter extends AbstractCrmPresenter<CampaignAddView> 
                 return;
             }
             super.onGo(container, data);
-            view.editItem(campaign);
+            getView().editItem(campaign);
 
             if (campaign.getId() == null) {
                 AppUI.addFragment("crm/campaign/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,

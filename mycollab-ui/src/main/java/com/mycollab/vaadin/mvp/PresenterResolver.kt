@@ -38,7 +38,7 @@ object PresenterResolver {
 
     @JvmStatic fun <P : IPresenter<*>> getPresenterAndInitView(presenterClass: Class<P>): P {
         val presenter = getPresenter(presenterClass)
-        presenter.view
+        presenter.getView()
         return presenter
     }
 

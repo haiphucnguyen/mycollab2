@@ -32,7 +32,7 @@ public class BugReadPresenter extends AbstractProjectPresenter<BugReadView> {
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleBug>() {
+        getView().getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleBug>() {
 
             @Override
             public void onAdd(SimpleBug data) {
@@ -70,7 +70,7 @@ public class BugReadPresenter extends AbstractProjectPresenter<BugReadView> {
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 SimpleBug bug = bugService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (bug != null) {
-                    view.previewItem(bug);
+                    getView().previewItem(bug);
                     super.onGo(container, data);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

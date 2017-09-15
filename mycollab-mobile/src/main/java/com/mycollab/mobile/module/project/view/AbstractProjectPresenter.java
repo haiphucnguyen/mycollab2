@@ -22,7 +22,7 @@ public abstract class AbstractProjectPresenter<V extends PageView> extends Abstr
     protected void onGo(HasComponents navigator, ScreenData<?> data) {
         if (navigator instanceof NavigationManager) {
             NavigationManager navManager = ((NavigationManager) navigator);
-            navManager.navigateTo(view);
+            navManager.navigateTo(getView());
             if (navManager.getPreviousComponent() == null) {
                 UserProjectListPresenter projectListPresenter = PresenterResolver.getPresenter(UserProjectListPresenter.class);
                 navManager.setPreviousComponent(projectListPresenter.getView());

@@ -34,7 +34,7 @@ public class LeadAddPresenter extends AbstractCrmPresenter<LeadAddView> implemen
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleLead>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleLead>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -66,7 +66,7 @@ public class LeadAddPresenter extends AbstractCrmPresenter<LeadAddView> implemen
                 return;
             }
             super.onGo(container, data);
-            view.editItem(lead);
+            getView().editItem(lead);
 
             if (lead.getId() == null) {
                 AppUI.addFragment("crm/lead/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,

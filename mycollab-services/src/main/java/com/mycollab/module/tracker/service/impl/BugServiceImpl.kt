@@ -17,7 +17,7 @@ import com.mycollab.core.cache.CleanCache
 import com.mycollab.db.persistence.ICrudGenericDAO
 import com.mycollab.db.persistence.ISearchableDAO
 import com.mycollab.db.persistence.service.DefaultService
-import com.mycollab.lock.DistributionLockUtil
+import com.mycollab.concurrent.DistributionLockUtil
 import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.esb.DeleteProjectBugEvent
 import com.mycollab.module.project.i18n.OptionI18nEnum
@@ -29,7 +29,6 @@ import com.mycollab.module.tracker.domain.BugWithBLOBs
 import com.mycollab.module.tracker.domain.SimpleBug
 import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria
 import com.mycollab.module.tracker.service.BugService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.BatchPreparedStatementSetter
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service

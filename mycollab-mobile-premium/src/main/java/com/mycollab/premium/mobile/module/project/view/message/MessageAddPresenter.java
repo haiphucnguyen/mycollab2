@@ -35,14 +35,14 @@ public class MessageAddPresenter extends AbstractProjectPresenter<MessageAddView
     @Override
     protected void postInitView() {
         super.postInitView();
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleMessage>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleMessage>() {
             private static final long serialVersionUID = 2381946253040633727L;
 
             @Override
             public void onSave(SimpleMessage bean) {
                 MessageService messageService = AppContextUtil.getSpringBean(MessageService.class);
                 messageService.saveWithSession(bean, UserUIContext.getUsername());
-                ProjectFormAttachmentUploadField uploadField = view.getUploadField();
+                ProjectFormAttachmentUploadField uploadField = getView().getUploadField();
                 uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(), ProjectTypeConstants.MESSAGE, bean.getId());
                 EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
             }

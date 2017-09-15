@@ -21,7 +21,7 @@ public class AbstractCrmPresenter<V extends PageView> extends AbstractPresenter<
     protected void onGo(HasComponents navigator, ScreenData<?> data) {
         if (navigator instanceof NavigationManager) {
             NavigationManager navManager = ((NavigationManager) navigator);
-            navManager.navigateTo(view);
+            navManager.navigateTo(getView());
             if (navManager.getPreviousComponent() == null) {
                 AllActivitiesPresenter activitiesPresenter = PresenterResolver.getPresenter(AllActivitiesPresenter.class);
                 navManager.setPreviousComponent(activitiesPresenter.getView());

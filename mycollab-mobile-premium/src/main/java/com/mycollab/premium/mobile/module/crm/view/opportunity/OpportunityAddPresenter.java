@@ -33,7 +33,7 @@ public class OpportunityAddPresenter extends AbstractCrmPresenter<OpportunityAdd
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleOpportunity>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleOpportunity>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -65,7 +65,7 @@ public class OpportunityAddPresenter extends AbstractCrmPresenter<OpportunityAdd
                 return;
             }
             super.onGo(container, data);
-            view.editItem(opportunity);
+            getView().editItem(opportunity);
 
             if (opportunity.getId() == null) {
                 AppUI.addFragment("crm/opportunity/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE, "Opportunity"));

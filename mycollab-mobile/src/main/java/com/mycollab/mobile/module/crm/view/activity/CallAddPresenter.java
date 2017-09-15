@@ -32,7 +32,7 @@ public class CallAddPresenter extends AbstractCrmPresenter<CallAddView> {
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<CallWithBLOBs>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<CallWithBLOBs>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -69,7 +69,7 @@ public class CallAddPresenter extends AbstractCrmPresenter<CallAddView> {
             }
 
             super.onGo(container, data);
-            view.editItem(call);
+            getView().editItem(call);
             if (call.getId() == null) {
                 AppUI.addFragment("crm/activity/call/add/", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,
                         UserUIContext.getMessage(CallI18nEnum.SINGLE)));

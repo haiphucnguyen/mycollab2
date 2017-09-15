@@ -33,7 +33,7 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleBug>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleBug>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -48,7 +48,7 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
             SimpleBug bug = (SimpleBug) data.getParams();
-            view.editItem(bug);
+            getView().editItem(bug);
             super.onGo(container, data);
         } else {
             throw new SecureAccessException();
@@ -59,7 +59,7 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
         BugService bugService = AppContextUtil.getSpringBean(BugService.class);
         bug.setProjectid(CurrentProjectVariables.getProjectId());
         bug.setSaccountid(AppUI.getAccountId());
-        ProjectFormAttachmentUploadField uploadField = view.getAttachUploadField();
+        ProjectFormAttachmentUploadField uploadField = getView().getAttachUploadField();
         if (bug.getId() == null) {
             bug.setStatus(BugStatus.Open.name());
             bug.setCreateduser(UserUIContext.getUsername());

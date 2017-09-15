@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit
 
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.mycollab.core.utils.StringUtils
-import com.mycollab.lock.DistributionLockUtil
+import com.mycollab.concurrent.DistributionLockUtil
 import com.mycollab.module.ecm.service.DriveInfoService
 import com.mycollab.module.esb.GenericCommand
 import com.mycollab.module.file.service.RawContentService

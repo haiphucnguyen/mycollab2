@@ -32,7 +32,7 @@ public class CampaignReadPresenter extends AbstractCrmPresenter<CampaignReadView
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleCampaign>() {
+        getView().getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleCampaign>() {
             @Override
             public void onEdit(SimpleCampaign data) {
                 EventBusFactory.getInstance().post(new CampaignEvent.GotoEdit(this, data));
@@ -107,7 +107,7 @@ public class CampaignReadPresenter extends AbstractCrmPresenter<CampaignReadView
                 CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
                 SimpleCampaign campaign = campaignService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (campaign != null) {
-                    view.previewItem(campaign);
+                    getView().previewItem(campaign);
                     super.onGo(container, data);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

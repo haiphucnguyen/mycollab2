@@ -33,7 +33,7 @@ public class MilestoneAddPresenter extends AbstractProjectPresenter<MilestoneAdd
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleMilestone>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleMilestone>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -48,7 +48,7 @@ public class MilestoneAddPresenter extends AbstractProjectPresenter<MilestoneAdd
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
             SimpleMilestone milestone = (SimpleMilestone) data.getParams();
-            view.editItem(milestone);
+            getView().editItem(milestone);
             super.onGo(container, data);
 
             if (milestone.getId() == null) {

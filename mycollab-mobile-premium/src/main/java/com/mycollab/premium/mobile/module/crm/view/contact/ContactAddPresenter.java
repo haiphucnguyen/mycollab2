@@ -34,7 +34,7 @@ public class ContactAddPresenter extends AbstractCrmPresenter<ContactAddView> im
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleContact>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleContact>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -66,7 +66,7 @@ public class ContactAddPresenter extends AbstractCrmPresenter<ContactAddView> im
                 return;
             }
             super.onGo(container, data);
-            view.editItem(contact);
+            getView().editItem(contact);
 
             if (contact.getId() == null) {
                 AppUI.addFragment("crm/contact/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,

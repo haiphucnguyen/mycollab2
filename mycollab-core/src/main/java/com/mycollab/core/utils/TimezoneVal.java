@@ -17,7 +17,6 @@ public class TimezoneVal implements Comparable<TimezoneVal> {
         String[] zoneIds = TimeZone.getAvailableIDs();
         for (int i = 0; i < zoneIds.length; i++) {
             TimeZone timeZone = TimeZone.getTimeZone(zoneIds[i]);
-            String timeZoneId = timeZone.getID();
             try {
                 DateTimeZone.forTimeZone(timeZone); //check compatible between joda timezone and java timezone
                 TimezoneVal timezoneVal = new TimezoneVal(zoneIds[i]);

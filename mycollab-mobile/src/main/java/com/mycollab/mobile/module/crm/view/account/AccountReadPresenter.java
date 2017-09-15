@@ -33,7 +33,7 @@ public class AccountReadPresenter extends AbstractCrmPresenter<AccountReadView> 
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleAccount>() {
+        getView().getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleAccount>() {
             @Override
             public void onEdit(SimpleAccount data) {
                 EventBusFactory.getInstance().post(new AccountEvent.GotoEdit(this, data));
@@ -104,7 +104,7 @@ public class AccountReadPresenter extends AbstractCrmPresenter<AccountReadView> 
                 AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
                 SimpleAccount account = accountService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (account != null) {
-                    view.previewItem(account);
+                    getView().previewItem(account);
                     super.onGo(container, data);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

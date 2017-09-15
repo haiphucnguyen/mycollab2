@@ -34,7 +34,7 @@ public class CaseAddPresenter extends AbstractCrmPresenter<CaseAddView> implemen
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleCase>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleCase>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -67,7 +67,7 @@ public class CaseAddPresenter extends AbstractCrmPresenter<CaseAddView> implemen
                 return;
             }
             super.onGo(container, data);
-            view.editItem(cases);
+            getView().editItem(cases);
 
             if (cases.getId() == null) {
                 AppUI.addFragment("crm/cases/add", UserUIContext.getMessage(GenericI18Enum.BROWSER_ADD_ITEM_TITLE,

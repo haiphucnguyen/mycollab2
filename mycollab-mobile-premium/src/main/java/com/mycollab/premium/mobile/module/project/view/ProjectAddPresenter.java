@@ -29,7 +29,7 @@ public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleProject>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleProject>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -48,7 +48,7 @@ public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView
             if (project.getProjectstatus() == null) {
                 project.setProjectstatus(OptionI18nEnum.StatusI18nEnum.Open.name());
             }
-            view.editItem(project);
+            getView().editItem(project);
 
             if (project.getId() == null) {
                 AppUI.addFragment("project/add", "New Project");

@@ -35,7 +35,7 @@ public class MeetingReadPresenter extends AbstractCrmPresenter<MeetingReadView> 
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleMeeting>() {
+        getView().getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleMeeting>() {
             @Override
             public void onEdit(SimpleMeeting data) {
                 EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(this, data));
@@ -114,7 +114,7 @@ public class MeetingReadPresenter extends AbstractCrmPresenter<MeetingReadView> 
             } else {
                 throw new MyCollabException("Invalid data: " + data);
             }
-            view.previewItem(meeting);
+            getView().previewItem(meeting);
             super.onGo(container, data);
 
             AppUI.addFragment(CrmLinkGenerator.generateMeetingPreviewLink(meeting.getId()), UserUIContext

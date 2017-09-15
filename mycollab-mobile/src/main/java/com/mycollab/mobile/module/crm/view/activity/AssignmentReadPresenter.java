@@ -36,7 +36,7 @@ public class AssignmentReadPresenter extends AbstractCrmPresenter<AssignmentRead
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleCrmTask>() {
+        getView().getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleCrmTask>() {
             @Override
             public void onEdit(SimpleCrmTask data) {
                 EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(this, data));
@@ -120,7 +120,7 @@ public class AssignmentReadPresenter extends AbstractCrmPresenter<AssignmentRead
             } else {
                 throw new MyCollabException("Invalid data " + data);
             }
-            view.previewItem(task);
+            getView().previewItem(task);
             super.onGo(container, data);
 
             AppUI.addFragment(CrmLinkGenerator.generateTaskPreviewLink(task.getId()),

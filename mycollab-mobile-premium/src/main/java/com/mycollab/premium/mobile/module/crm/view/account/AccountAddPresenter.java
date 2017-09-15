@@ -31,7 +31,7 @@ public class AccountAddPresenter extends AbstractCrmPresenter<AccountAddView> im
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleAccount>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleAccount>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -62,7 +62,7 @@ public class AccountAddPresenter extends AbstractCrmPresenter<AccountAddView> im
                 NotificationUtil.showRecordNotExistNotification();
                 return;
             }
-            view.editItem(account);
+            getView().editItem(account);
             super.onGo(container, data);
         } else {
             NotificationUtil.showMessagePermissionAlert();

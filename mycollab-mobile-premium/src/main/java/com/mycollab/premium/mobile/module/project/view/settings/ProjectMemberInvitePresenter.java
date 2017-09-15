@@ -36,7 +36,7 @@ public class ProjectMemberInvitePresenter extends AbstractProjectPresenter<Proje
 
     @Override
     protected void postInitView() {
-        view.addViewListener(new ViewListener<ProjectMemberEvent.InviteProjectMembers>() {
+        getView().addViewListener(new ViewListener<ProjectMemberEvent.InviteProjectMembers>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -58,7 +58,7 @@ public class ProjectMemberInvitePresenter extends AbstractProjectPresenter<Proje
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
             super.onGo(container, data);
-            view.display();
+            getView().display();
             AppUI.addFragment("project/user/invite/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     UserUIContext.getMessage(ProjectMemberI18nEnum.NEW));
 

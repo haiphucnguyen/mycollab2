@@ -29,11 +29,11 @@ public abstract class CrmListPresenter<V extends IListView<S, B>, S extends Sear
         Component targetView;
         NavigationManager currentNav = (NavigationManager) container;
 
-        if (view.getParent() != null && view.getParent() instanceof AbstractMobileTabPageView) {
-            targetView = view.getParent();
-            ((AbstractMobileTabPageView) view.getParent()).setSelectedTab(view);
+        if (getView().getParent() != null && getView().getParent() instanceof AbstractMobileTabPageView) {
+            targetView = getView().getParent();
+            ((AbstractMobileTabPageView) getView().getParent()).setSelectedTab(getView());
         } else {
-            targetView = view;
+            targetView = getView();
         }
 
         currentNav.navigateTo(targetView);

@@ -33,7 +33,7 @@ public class MilestoneReadPresenter extends AbstractProjectPresenter<MilestoneRe
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleMilestone>() {
+        getView().getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleMilestone>() {
 
             @Override
             public void onAdd(SimpleMilestone data) {
@@ -71,7 +71,7 @@ public class MilestoneReadPresenter extends AbstractProjectPresenter<MilestoneRe
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 SimpleMilestone milestone = milestoneService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (milestone != null) {
-                    view.previewItem(milestone);
+                    getView().previewItem(milestone);
                     super.onGo(container, data);
 
                     AppUI.addFragment("project/milestone/preview/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(), milestone.getId()),

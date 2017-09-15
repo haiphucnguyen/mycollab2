@@ -32,7 +32,7 @@ public class ContactReadPresenter extends AbstractCrmPresenter<ContactReadView> 
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleContact>() {
+        getView().getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleContact>() {
             @Override
             public void onEdit(SimpleContact data) {
                 EventBusFactory.getInstance().post(new ContactEvent.GotoEdit(this, data));
@@ -108,7 +108,7 @@ public class ContactReadPresenter extends AbstractCrmPresenter<ContactReadView> 
                 ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
                 SimpleContact contact = contactService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (contact != null) {
-                    view.previewItem(contact);
+                    getView().previewItem(contact);
                     super.onGo(container, data);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

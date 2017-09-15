@@ -32,7 +32,7 @@ public class ProjectMemberEditPresenter extends AbstractProjectPresenter<Project
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleProjectMember>() {
+        getView().getEditFormHandlers().addFormHandler(new DefaultEditFormHandler<SimpleProjectMember>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -48,7 +48,7 @@ public class ProjectMemberEditPresenter extends AbstractProjectPresenter<Project
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
             SimpleProjectMember member = (SimpleProjectMember) data.getParams();
             super.onGo(container, data);
-            view.editItem(member);
+            getView().editItem(member);
 
             AppUI.addFragment("project/user/edit/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(),
                     member.getId()), member.getDisplayName());

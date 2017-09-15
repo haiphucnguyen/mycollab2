@@ -25,7 +25,7 @@ public class ProjectDashboardPresenter extends AbstractProjectPresenter<ProjectD
         } else {
             if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PROJECT)) {
                 super.onGo(container, data);
-                view.displayDashboard();
+                getView().displayDashboard();
             } else {
                 NotificationUtil.showMessagePermissionAlert();
             }

@@ -38,7 +38,7 @@ open class ComponentScannerService : InitializingBean {
             val cls = ClassUtils.resolveClassName(it.beanClassName, ClassUtils.getDefaultClassLoader())
             when {
                 cls.getAnnotation(ViewComponent::class.java) != null -> viewClasses.add(cls)
-                IPresenter::class.java.isAssignableFrom(cls) -> presenterClasses.add(cls as Class<IPresenter<out PageView>>)
+                IPresenter::class.java.isAssignableFrom(cls) -> presenterClasses.add(cls as Class<IPresenter<PageView>>)
             }
         }
 

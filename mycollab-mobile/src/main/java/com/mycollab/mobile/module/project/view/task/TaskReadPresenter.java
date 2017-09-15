@@ -33,7 +33,7 @@ public class TaskReadPresenter extends AbstractProjectPresenter<TaskReadView> {
 
     @Override
     protected void postInitView() {
-        this.view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleTask>() {
+        this.getView().getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleTask>() {
 
             @Override
             public void onDelete(final SimpleTask data) {
@@ -67,7 +67,7 @@ public class TaskReadPresenter extends AbstractProjectPresenter<TaskReadView> {
                 SimpleTask task = taskService.findById((Integer) data.getParams(), AppUI.getAccountId());
 
                 if (task != null) {
-                    view.previewItem(task);
+                    getView().previewItem(task);
                     super.onGo(container, data);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

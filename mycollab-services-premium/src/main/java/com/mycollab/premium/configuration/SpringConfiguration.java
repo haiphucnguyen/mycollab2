@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile("production")
 @ComponentScan(basePackages = {
+        "com.mycollab.concurrent.service",
         "com.mycollab.license.service",
         "com.mycollab.premium.module.billing.service",
         "com.mycollab.premium.module.ecm.service",
@@ -21,7 +22,6 @@ import org.springframework.context.annotation.Profile;
         "com.mycollab.premium.vaadin.ui.service",
         "com.mycollab.pro.cache.aspect",
         "com.mycollab.pro.common.service",
-        "com.mycollab.pro.jgroups.service",
         "com.mycollab.pro.module.project.service",
         "com.mycollab.pro.module.user.service",
         "com.mycollab.pro.module.project.view.service"

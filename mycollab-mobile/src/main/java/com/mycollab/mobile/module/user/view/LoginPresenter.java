@@ -27,7 +27,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 
     @Override
     protected void postInitView() {
-        view.addViewListener(new PageView.ViewListener<UserEvent.PlainLogin>() {
+        getView().addViewListener(new PageView.ViewListener<UserEvent.PlainLogin>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -40,7 +40,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 
     @Override
     protected void onGo(HasComponents navigationManager, ScreenData<?> data) {
-        ((NavigationManager) navigationManager).navigateTo(view);
+        ((NavigationManager) navigationManager).navigateTo(getView());
         AppUI.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
     }
 }

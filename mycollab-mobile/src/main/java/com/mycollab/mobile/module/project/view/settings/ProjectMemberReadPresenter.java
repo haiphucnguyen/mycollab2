@@ -43,7 +43,7 @@ public class ProjectMemberReadPresenter extends AbstractProjectPresenter<Project
                 prjMember = prjMemberService.findMemberByUsername(username, CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
             }
             if (prjMember != null) {
-                this.view.previewItem(prjMember);
+                this.getView().previewItem(prjMember);
                 super.onGo(container, data);
             } else {
                 NotificationUtil.showRecordNotExistNotification();

@@ -32,7 +32,7 @@ public class OpportunityReadPresenter extends AbstractCrmPresenter<OpportunityRe
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleOpportunity>() {
+        getView().getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleOpportunity>() {
             @Override
             public void onEdit(SimpleOpportunity data) {
                 EventBusFactory.getInstance().post(new OpportunityEvent.GotoEdit(this, data));
@@ -108,7 +108,7 @@ public class OpportunityReadPresenter extends AbstractCrmPresenter<OpportunityRe
                 OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
                 SimpleOpportunity opportunity = opportunityService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (opportunity != null) {
-                    view.previewItem(opportunity);
+                    getView().previewItem(opportunity);
                     super.onGo(container, data);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

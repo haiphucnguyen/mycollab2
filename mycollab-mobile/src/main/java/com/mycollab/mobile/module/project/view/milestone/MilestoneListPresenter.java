@@ -25,7 +25,7 @@ public class MilestoneListPresenter extends ProjectListPresenter<MilestoneListVi
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
             super.onGo(container, data);
-            view.displayStatus(MilestoneStatus.InProgress);
+            getView().displayStatus(MilestoneStatus.InProgress);
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }

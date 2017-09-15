@@ -32,7 +32,7 @@ public class LeadReadPresenter extends AbstractCrmPresenter<LeadReadView> {
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleLead>() {
+        getView().getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleLead>() {
             @Override
             public void onEdit(SimpleLead data) {
                 EventBusFactory.getInstance().post(new LeadEvent.GotoEdit(this, data));
@@ -109,7 +109,7 @@ public class LeadReadPresenter extends AbstractCrmPresenter<LeadReadView> {
                 LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
                 SimpleLead lead = leadService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (lead != null) {
-                    view.previewItem(lead);
+                    getView().previewItem(lead);
                     super.onGo(container, data);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();
