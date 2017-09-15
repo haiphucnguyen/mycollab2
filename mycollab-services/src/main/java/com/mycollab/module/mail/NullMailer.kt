@@ -1,7 +1,6 @@
 package com.mycollab.module.mail
 
 import com.mycollab.common.domain.MailRecipientField
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 /**
@@ -12,14 +11,14 @@ import org.slf4j.LoggerFactory
  */
 class NullMailer : IMailer {
 
-    override fun sendHTMLMail(fromEmail: String, fromName: String, toEmails: List<MailRecipientField>, ccEmails: List<MailRecipientField>,
-                     bccEmails: List<MailRecipientField>, subject: String, html: String) {
+    override fun sendHTMLMail(fromEmail: String, fromName: String, toEmails: List<MailRecipientField>, ccEmails: List<MailRecipientField>?,
+                              bccEmails: List<MailRecipientField>?, subject: String, html: String) {
         LOG.info("You has not configured the email server. So Email feature is disable")
     }
 
-    override fun sendHTMLMail(fromEmail: String, fromName: String, toEmails: List<MailRecipientField>, ccEmails: List<MailRecipientField>,
-                     bccEmails: List<MailRecipientField>, subject: String, html: String,
-                     attachments: List<AttachmentSource>) {
+    override fun sendHTMLMail(fromEmail: String, fromName: String, toEmails: List<MailRecipientField>, ccEmails: List<MailRecipientField>?,
+                              bccEmails: List<MailRecipientField>?, subject: String, html: String,
+                              attachments: List<AttachmentSource>?) {
         LOG.info("You has not configured the email server. So Email feature is disable")
     }
 

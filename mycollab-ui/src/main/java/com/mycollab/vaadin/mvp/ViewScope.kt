@@ -1,9 +1,9 @@
-package com.mycollab.vaadin.mvp;
+package com.mycollab.vaadin.mvp
 
 /**
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public enum ViewScope {
+enum class ViewScope {
     SESSION, PROTOTYPE
 }

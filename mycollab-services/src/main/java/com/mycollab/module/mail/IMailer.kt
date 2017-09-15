@@ -20,8 +20,8 @@ interface IMailer {
      * @param subject
      * @param html
      */
-    fun sendHTMLMail(fromEmail: String, fromName: String, toEmails: List<MailRecipientField>, ccEmails: List<MailRecipientField>,
-                     bccEmails: List<MailRecipientField>, subject: String, html: String)
+    fun sendHTMLMail(fromEmail: String, fromName: String, toEmails: List<MailRecipientField>, ccEmails: List<MailRecipientField>?,
+                     bccEmails: List<MailRecipientField>?, subject: String, html: String)
 
     /**
      * @param fromEmail
@@ -33,6 +33,6 @@ interface IMailer {
      * @param html
      * @param attachments
      */
-    fun sendHTMLMail(fromEmail: String, fromName: String, toEmails: List<MailRecipientField>, ccEmails: List<MailRecipientField>,
-                     bccEmails: List<MailRecipientField>, subject: String, html: String, attachments: List<AttachmentSource>)
+    fun sendHTMLMail(fromEmail: String, fromName: String, toEmails: List<MailRecipientField>, ccEmails: List<MailRecipientField>?,
+                     bccEmails: List<MailRecipientField>?, subject: String, html: String, attachments: List<AttachmentSource>?)
 }
