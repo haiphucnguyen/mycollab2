@@ -47,7 +47,7 @@ object FileUtils {
     val homeFolder
         get() = _homeFolder
 
-    val userFolder: File
+    @JvmStatic val userFolder: File
         get() {
             val userDir = MoreObjects.firstNonNull(System.getProperty("MYCOLLAB_APP_HOME"), System.getProperty("user.dir"))
             return File(userDir)

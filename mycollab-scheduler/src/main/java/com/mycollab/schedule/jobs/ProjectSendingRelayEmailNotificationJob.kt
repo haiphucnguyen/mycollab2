@@ -38,14 +38,11 @@ class ProjectSendingRelayEmailNotificationJob() : GenericQuartzJobBean() {
             try {
                 val mailServiceCls = MailServiceMap.service(it.type)
                 val emailNotificationAction = AppContextUtil.getSpringBean(mailServiceCls)
-                if (emailNotificationAction != null) {
-                    when (it.action) {
-                        MonitorTypeConstants.CREATE_ACTION -> emailNotificationAction.sendNotificationForCreateAction(it)
-                        MonitorTypeConstants.UPDATE_ACTION -> emailNotificationAction.sendNotificationForUpdateAction(it)
-                        MonitorTypeConstants.ADD_COMMENT_ACTION -> emailNotificationAction.sendNotificationForCommentAction(it)
-                    }
-                } else {
-                    LOG.error("Can not find the spring class " + mailServiceCls)
+
+                when (it.action) {
+                    MonitorTypeConstants.CREATE_ACTION -> emailNotificationAction.sendNotificationForCreateAction(it)
+                    MonitorTypeConstants.UPDATE_ACTION -> emailNotificationAction.sendNotificationForUpdateAction(it)
+                    MonitorTypeConstants.ADD_COMMENT_ACTION -> emailNotificationAction.sendNotificationForCommentAction(it)
                 }
             } catch (e: Exception) {
                 LOG.error("Error while sending scheduler command", e)
