@@ -106,11 +106,11 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withFullWidth().withSpacing(false).withMargin(false);
 
-        Component campaignSection = FormSectionBuilder.build(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CAMPAIGN),
+        Component campaignSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN),
                 associateCampaigns);
         toolbarLayout.addComponent(campaignSection);
 
-        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACTIVITY),
+        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY),
                 associateActivities);
         toolbarLayout.addComponent(activitySection);
 

@@ -31,7 +31,7 @@ public class ContactAddViewImpl extends AbstractEditItemComp<SimpleContact> impl
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT);
     }
 
     @Override

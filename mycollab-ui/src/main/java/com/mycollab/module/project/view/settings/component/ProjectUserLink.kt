@@ -21,7 +21,7 @@ import com.vaadin.ui.Label
 class ProjectUserLink(username: String?, userAvatarId: String?, displayName: String?) : Label() {
 
     init {
-        if (StringUtils.isNotBlank(username)) {
+        if (username != null) {
             this.contentMode = ContentMode.HTML
             val div = DivLessFormatter()
             val avatarLink = Img("", AppContextUtil.getSpringBean(AbstractStorageService::class.java)

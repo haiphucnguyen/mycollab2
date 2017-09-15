@@ -14,7 +14,7 @@ import org.vaadin.viritin.button.MButton;
  */
 public class ComponentUtils {
     public static HeaderWithFontAwesome header(String resId, String title) {
-        return HeaderWithFontAwesome.h2(CrmAssetsManager.INSTANCE.getAsset(resId), title);
+        return HeaderWithFontAwesome.h2(CrmAssetsManager.getAsset(resId), title);
     }
 
     public static MButton createCustomizeViewButton() {

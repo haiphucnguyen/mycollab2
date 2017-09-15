@@ -40,7 +40,7 @@ public class MeetingAddViewImpl extends AbstractEditItemComp<MeetingWithBLOBs> i
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.MEETING);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.MEETING);
     }
 
     @Override

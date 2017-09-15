@@ -47,7 +47,7 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
     private CrmFollowersComp<SimpleCampaign> compFollowers;
 
     public CampaignReadViewImpl() {
-        super(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CAMPAIGN));
+        super(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
     }
 
     @Override
@@ -79,15 +79,15 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
         addToSideBar(dateInfoComp, peopleInfoComp, compFollowers);
 
         tabSheet.addTab(previewLayout, CrmTypeConstants.DETAIL, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT),
-                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.DETAIL));
+                CrmAssetsManager.getAsset(CrmTypeConstants.DETAIL));
         tabSheet.addTab(associateAccountList, CrmTypeConstants.ACCOUNT, UserUIContext.getMessage(AccountI18nEnum.LIST),
-                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACCOUNT));
+                CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
         tabSheet.addTab(associateContactList, CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.LIST),
-                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT));
+                CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
         tabSheet.addTab(associateLeadList, CrmTypeConstants.LEAD, UserUIContext.getMessage(LeadI18nEnum.LIST),
-                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD));
+                CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
         tabSheet.addTab(associateActivityList, CrmTypeConstants.ACTIVITY, UserUIContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY),
-                CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACTIVITY));
+                CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY));
     }
 
     private void displayActivities() {

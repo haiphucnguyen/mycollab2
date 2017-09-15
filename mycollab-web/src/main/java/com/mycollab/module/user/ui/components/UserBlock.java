@@ -22,7 +22,7 @@ public class UserBlock extends MVerticalLayout {
         Image avatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(userAvatarId, 48);
         avatar.addStyleName(UIConstants.CIRCLE_BOX);
 
-        A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(AccountLinkBuilder.generatePreviewFullUserLink(username))
+        A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(AccountLinkBuilder.generatePreviewFullUserLink(username))
                 .appendText(StringUtils.trim(displayName, 30, true));
         userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(username));
         userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

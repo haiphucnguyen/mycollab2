@@ -37,7 +37,7 @@ public class TicketTableDisplay extends DefaultPagedBeanTable<ProjectTicketServi
 
             Div div = new DivLessFormatter();
             Text image = new Text(ProjectAssetsManager.getAsset(task.getType()).getHtml());
-            A itemLink = new A().setId("tag" + TOOLTIP_ID);
+            A itemLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID);
             if (ProjectTypeConstants.TASK.equals(task.getType()) || ProjectTypeConstants.BUG.equals(task.getType())) {
                 itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(task.getProjectShortName(),
                         task.getProjectId(), task.getType(), task.getExtraTypeId() + ""));

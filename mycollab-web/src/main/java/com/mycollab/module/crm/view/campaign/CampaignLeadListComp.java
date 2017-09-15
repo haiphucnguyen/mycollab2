@@ -64,7 +64,7 @@ public class CampaignLeadListComp extends RelatedListComp2<LeadService, LeadSear
                 leadsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
             });
-            selectBtn.setIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD));
+            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
             OptionPopupContent buttonControlLayout = new OptionPopupContent();
             buttonControlLayout.addOption(selectBtn);
             controlsBtn.setContent(buttonControlLayout);
@@ -105,7 +105,7 @@ public class CampaignLeadListComp extends RelatedListComp2<LeadService, LeadSear
             MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel leadAvatar = ELabel.fontIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD));
+            ELabel leadAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
             leadAvatar.addStyleName("icon-48px");
             iconWrap.addComponent(leadAvatar);
             blockTop.addComponent(iconWrap);

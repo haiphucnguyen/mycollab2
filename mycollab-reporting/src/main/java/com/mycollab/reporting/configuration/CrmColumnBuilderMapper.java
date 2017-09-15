@@ -60,7 +60,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
                 String assignUser = reportParameters.getFieldValue("assignuser");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
                 if (assignUser != null) {
-                    return AccountLinkGenerator.INSTANCE.generatePreviewFullUserLink(siteUrl, assignUser);
+                    return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
                 return "";
@@ -123,7 +123,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
                 String assignUser = reportParameters.getFieldValue("assignuser");
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
-                    return AccountLinkGenerator.INSTANCE.generatePreviewFullUserLink(siteUrl, assignUser);
+                    return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
                 return "";
@@ -146,7 +146,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
                 String assignUser = reportParameters.getFieldValue("assignuser");
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
-                    return AccountLinkGenerator.INSTANCE.generatePreviewFullUserLink(siteUrl, assignUser);
+                    return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
                 return "";
@@ -183,7 +183,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
                 String assignUser = reportParameters.getFieldValue("assignuser");
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
-                    return AccountLinkGenerator.INSTANCE.generatePreviewFullUserLink(siteUrl, assignUser);
+                    return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
                 return "";
@@ -220,7 +220,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
                 String assignUser = reportParameters.getFieldValue("assignuser");
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
-                    return AccountLinkGenerator.INSTANCE.generatePreviewFullUserLink(siteUrl, assignUser);
+                    return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
                 return "";
@@ -289,7 +289,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
                 String assignUser = reportParameters.getFieldValue("assignuser");
                 if (assignUser != null) {
                     String siteUrl = reportParameters.getParameterValue("siteUrl");
-                    return AccountLinkGenerator.INSTANCE.generatePreviewFullUserLink(siteUrl, assignUser);
+                    return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
                 return "";

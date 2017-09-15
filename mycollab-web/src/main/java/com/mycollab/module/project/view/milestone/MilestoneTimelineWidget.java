@@ -129,7 +129,7 @@ public class MilestoneTimelineWidget extends DDVerticalLayout {
             A milestoneDiv = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
                     (milestone.getProjectid(), milestone.getId())).appendText(ProjectAssetsManager.getAsset
                     (ProjectTypeConstants.MILESTONE).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true))
-                    .setId("tag" + TOOLTIP_ID);
+                    .setId("tag" + TooltipHelper.TOOLTIP_ID);
             milestoneDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.MILESTONE,
                     milestone.getId() + ""));
             milestoneDiv.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

@@ -65,7 +65,7 @@ public class StandupMissingComp extends MVerticalLayout {
     private String buildMemberLink(Integer projectId, SimpleUser user) {
         DivLessFormatter div = new DivLessFormatter();
         Img userAvatar = new Img("", StorageUtils.getAvatarPath(user.getAvatarid(), 16)).setCSSClass(UIConstants.CIRCLE_BOX);
-        A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+        A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                 projectId, user.getUsername()));
 
         userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(user.getUsername()));

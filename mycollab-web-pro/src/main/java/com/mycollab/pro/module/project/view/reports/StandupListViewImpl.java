@@ -272,7 +272,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
         }
 
         private String buildMemberLink(SimpleStandupReport report) {
-            A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(1, report.getLogby()))
+            A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(1, report.getLogby()))
                     .appendText(StringUtils.trim(report.getLogByFullName(), 30, true));
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(report.getLogby()));
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

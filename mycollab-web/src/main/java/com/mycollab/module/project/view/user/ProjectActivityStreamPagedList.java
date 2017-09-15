@@ -154,7 +154,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
         DivLessFormatter div = new DivLessFormatter();
         Img userAvatar = new Img("", StorageUtils.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                 .setCSSClass(UIConstants.CIRCLE_BOX);
-        A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+        A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                 activityStream.getExtratypeid(), activityStream.getCreateduser()));
 
         userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(activityStream.getCreateduser()));
@@ -169,7 +169,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
     private String buildItemValue(ProjectActivityStream activityStream) {
         DivLessFormatter div = new DivLessFormatter();
         Text image = new Text(ProjectAssetsManager.getAsset(activityStream.getType()).getHtml());
-        A itemLink = new A().setId("tag" + TOOLTIP_ID);
+        A itemLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID);
         if (ProjectTypeConstants.TASK.equals(activityStream.getType())
                 || ProjectTypeConstants.BUG.equals(activityStream.getType())) {
             itemLink.setHref(ProjectLinkGenerator.generateProjectItemLink(

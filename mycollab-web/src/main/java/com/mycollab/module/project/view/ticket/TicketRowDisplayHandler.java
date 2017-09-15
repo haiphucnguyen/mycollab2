@@ -66,7 +66,7 @@ public class TicketRowDisplayHandler implements IBeanList.RowDisplayHandler<Proj
                 .setTitle(ticket.getAssignUserFullName());
         issueDiv.appendChild(img, DivLessFormatter.EMPTY_SPACE);
 
-        A ticketLink = new A().setId("tag" + TOOLTIP_ID);
+        A ticketLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID);
         ticketLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ticket.getType(), ticket.getTypeId() + ""));
         ticketLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
         if (ProjectTypeConstants.BUG.equals(ticket.getType()) || ProjectTypeConstants.TASK.equals(ticket.getType())) {

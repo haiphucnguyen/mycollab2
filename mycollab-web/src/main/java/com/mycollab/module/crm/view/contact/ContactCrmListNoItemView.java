@@ -24,7 +24,7 @@ public class ContactCrmListNoItemView extends CrmListNoItemView {
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT);
     }
 
     @Override

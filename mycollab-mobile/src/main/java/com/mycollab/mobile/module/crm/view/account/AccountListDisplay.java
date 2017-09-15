@@ -34,7 +34,7 @@ public class AccountListDisplay extends DefaultPagedBeanList<AccountService, Acc
             MVerticalLayout rowLayout = new MVerticalLayout().withMargin(false).withSpacing(false).withFullWidth();
             A accountLink = new A(CrmLinkBuilder.generateAccountPreviewLinkFull(account.getId())).appendText(account.getAccountname());
             MCssLayout accountWrap = new MCssLayout(ELabel.html(accountLink.write()));
-            rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.INSTANCE.getAsset
+            rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.getAsset
                     (CrmTypeConstants.ACCOUNT)), accountWrap).expand(accountWrap).withFullWidth());
             return rowLayout;
         }

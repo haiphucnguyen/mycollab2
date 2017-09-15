@@ -150,7 +150,7 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
     private String buildTicketLink() {
         Div issueDiv = new Div();
 
-        A ticketLink = new A().setId("tag" + TOOLTIP_ID);
+        A ticketLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID);
         if (ticket.isBug() || ticket.isTask()) {
             ticketLink.setHref(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(),
                     ticket.getProjectId(), ticket.getType(), ticket.getExtraTypeId() + ""));

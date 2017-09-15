@@ -49,7 +49,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import static com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
-import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
@@ -190,8 +189,8 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
 
             String memberWorksInfo = String.format("%s %s  %s %s  %s %s  %s %s",
                     ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml(),
-                    new Span().appendText("" + beanItem.getNumOpenTasks()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_TASKS)), ProjectAssetsManager.INSTANCE
-                            .getAsset(ProjectTypeConstants.BUG).getHtml(), new Span().appendText("" + beanItem
+                    new Span().appendText("" + beanItem.getNumOpenTasks()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_TASKS)),
+                    ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml(), new Span().appendText("" + beanItem
                             .getNumOpenBugs()).setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_OPEN_BUGS)), FontAwesome.MONEY.getHtml(), new Span().appendText("" + NumberUtils.roundDouble(2,
                             beanItem.getTotalBillableLogTime())).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)), FontAwesome.GIFT.getHtml(), new Span().appendText("" + NumberUtils.roundDouble(2, beanItem.getTotalNonBillableLogTime()
                     )).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS)));
@@ -299,7 +298,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             MHorizontalLayout rowComp = new MHorizontalLayout().withStyleName("list-row").withFullWidth();
             rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
 
-            A taskLink = new A().setId("tag" + TOOLTIP_ID);
+            A taskLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID);
             taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(genericTask.getType(), genericTask.getTypeId() + ""));
             taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             if (ProjectTypeConstants.BUG.equals(genericTask.getType()) || ProjectTypeConstants.TASK.equals(genericTask.getType())) {

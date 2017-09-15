@@ -67,7 +67,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
         this.addGeneratedColumn("subject", (source, itemId, columnId) -> {
             SimpleActivity simpleEvent = getBeanByIndex(itemId);
 
-            FontAwesome iconLink = CrmAssetsManager.INSTANCE.getAsset(simpleEvent.getEventType());
+            FontAwesome iconLink = CrmAssetsManager.getAsset(simpleEvent.getEventType());
             ELabel b = ELabel.html(iconLink.getHtml() + " " + simpleEvent.getSubject(), CrmLinkBuilder.generateActivityPreviewLinkFull(
                     simpleEvent.getEventType(), simpleEvent.getId())).withDescription(generateToolTip(simpleEvent));
 
@@ -270,7 +270,7 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
                     .appendText("Assignee:"))
                     .appendChild(
                             new Td().setStyle("width: 150px;word-wrap: break-word; white-space: normal;vertical-align: top;")
-                                    .appendChild(new A().setHref((event.getAssignUser() != null) ? AccountLinkGenerator.INSTANCE.generatePreviewFullUserLink(
+                                    .appendChild(new A().setHref((event.getAssignUser() != null) ? AccountLinkGenerator.generatePreviewFullUserLink(
                                             AppUI.getSiteUrl(), event.getAssignUser()) : "")
                                             .appendChild(new Img("", StorageUtils.getAvatarPath(event.getAssignUserAvatarId(), 16)))
                                             .appendText(StringUtils.trimHtmlTags(event.getAssignUserFullName()))));

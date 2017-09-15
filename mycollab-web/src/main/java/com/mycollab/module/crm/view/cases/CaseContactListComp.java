@@ -75,7 +75,7 @@ public class CaseContactListComp extends RelatedListComp2<ContactService, Contac
                 contactsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
             });
-            selectBtn.setIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT));
+            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
             OptionPopupContent buttonControlsLayout = new OptionPopupContent();
             buttonControlsLayout.addOption(selectBtn);
             controlsBtn.setContent(buttonControlsLayout);
@@ -98,7 +98,7 @@ public class CaseContactListComp extends RelatedListComp2<ContactService, Contac
             VerticalLayout blockContent = new VerticalLayout();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel contactAvatar = ELabel.fontIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT));
+            ELabel contactAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
             iconWrap.addComponent(contactAvatar);
             MHorizontalLayout blockTop = new MHorizontalLayout();
             blockTop.addComponent(iconWrap);

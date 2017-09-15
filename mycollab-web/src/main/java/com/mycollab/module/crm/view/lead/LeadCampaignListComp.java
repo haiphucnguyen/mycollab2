@@ -77,7 +77,7 @@ public class LeadCampaignListComp extends RelatedListComp2<CampaignService, Camp
                 leadsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
             });
-            selectBtn.setIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CAMPAIGN));
+            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
             OptionPopupContent buttonControlsLayout = new OptionPopupContent();
             buttonControlsLayout.addOption(selectBtn);
             controlsBtn.setContent(buttonControlsLayout);
@@ -101,7 +101,7 @@ public class LeadCampaignListComp extends RelatedListComp2<CampaignService, Camp
             MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel campaignIcon = ELabel.fontIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CAMPAIGN));
+            ELabel campaignIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
             iconWrap.addComponent(campaignIcon);
             blockTop.addComponent(iconWrap);
 

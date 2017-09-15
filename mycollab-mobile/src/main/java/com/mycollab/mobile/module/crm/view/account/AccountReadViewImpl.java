@@ -117,23 +117,23 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> 
     @Override
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withFullWidth().withSpacing(false).withMargin(false);
-        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT),
+        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT),
                 associateContacts);
         toolbarLayout.addComponent(contactSection);
 
-        Component leadSection = FormSectionBuilder.build(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD),
+        Component leadSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
                 associateLeads);
         toolbarLayout.addComponent(leadSection);
 
-        Component opportunitySection = FormSectionBuilder.build(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.OPPORTUNITY),
+        Component opportunitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY),
                 associateOpportunities);
         toolbarLayout.addComponent(opportunitySection);
 
-        Component caseSection = FormSectionBuilder.build(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CASE),
+        Component caseSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CASE),
                 associateCases);
         toolbarLayout.addComponent(caseSection);
 
-        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACTIVITY),
+        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY),
                 associateActivities);
         toolbarLayout.addComponent(activitySection);
         return toolbarLayout;

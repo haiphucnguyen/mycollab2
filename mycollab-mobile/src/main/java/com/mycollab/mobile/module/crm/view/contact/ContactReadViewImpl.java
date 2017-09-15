@@ -53,11 +53,11 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
     @Override
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withFullWidth().withSpacing(false).withMargin(false);
-        Component opportunitySection = FormSectionBuilder.build(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.OPPORTUNITY),
+        Component opportunitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY),
                 associateOpportunities);
         toolbarLayout.addComponent(opportunitySection);
 
-        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACTIVITY),
+        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY),
                 associateActivities);
         toolbarLayout.addComponent(activitySection);
 
@@ -106,7 +106,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact> 
         if (lead != null) {
             return beanItem.getContactName() + "&nbsp;"
                     + UserUIContext.getMessage(LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
-                    CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD),
+                    CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
                     CrmLinkGenerator.generateCrmItemLink(CrmTypeConstants.LEAD, lead.getId()),
                     lead.getLeadName());
         } else {

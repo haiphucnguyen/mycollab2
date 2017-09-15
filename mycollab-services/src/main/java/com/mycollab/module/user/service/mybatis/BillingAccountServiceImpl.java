@@ -104,7 +104,7 @@ public class BillingAccountServiceImpl extends DefaultCrudService<Integer, Billi
     public void createDefaultAccountData(String username, String password, String timezoneId, String language, Boolean
             isEmailVerified, Boolean isCreatedDefaultData, Integer sAccountId) {
         // Check whether user has registered to the system before
-        String encryptedPassword = EnDecryptHelper.INSTANCE.encryptSaltPassword(password);
+        String encryptedPassword = EnDecryptHelper.encryptSaltPassword(password);
         UserExample ex = new UserExample();
         ex.createCriteria().andUsernameEqualTo(username);
         List<User> users = userMapper.selectByExample(ex);

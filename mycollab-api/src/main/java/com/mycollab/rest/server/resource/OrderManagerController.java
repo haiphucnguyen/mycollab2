@@ -76,7 +76,7 @@ public class OrderManagerController {
         Integer customerId = proEditionMapper.insertAndReturnKey(proEditionInfo);
 
         LicenseInfo licenseInfo = new LicenseInfo();
-        licenseInfo.setCustomerId(EnDecryptHelper.INSTANCE.encryptText("" + customerId));
+        licenseInfo.setCustomerId(EnDecryptHelper.encryptText("" + customerId));
         licenseInfo.setLicenseType(LicenseType.PRO);
         if (internalProductName.contains("Growing")) {
             licenseInfo.setMaxUsers(10);

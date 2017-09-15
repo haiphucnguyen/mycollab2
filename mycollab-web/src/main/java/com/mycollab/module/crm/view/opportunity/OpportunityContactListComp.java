@@ -94,7 +94,7 @@ public class OpportunityContactListComp extends RelatedListComp2<ContactOpportun
                 contactsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
             });
-            selectBtn.setIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT));
+            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
             OptionPopupContent buttonControlLayout = new OptionPopupContent();
             buttonControlLayout.addOption(selectBtn);
             controlsBtn.setContent(buttonControlLayout);
@@ -134,7 +134,7 @@ public class OpportunityContactListComp extends RelatedListComp2<ContactOpportun
             MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel contactAvatar = ELabel.fontIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT));
+            ELabel contactAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
             iconWrap.addComponent(contactAvatar);
             blockTop.addComponent(iconWrap);
 

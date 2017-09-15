@@ -77,7 +77,7 @@ public class CampaignAccountListComp extends RelatedListComp2<AccountService, Ac
                 accountsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
             });
-            selectBtn.setIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACCOUNT));
+            selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
             OptionPopupContent buttonControlLayout = new OptionPopupContent();
             buttonControlLayout.addOption(selectBtn);
             controlsBtn.setContent(buttonControlLayout);
@@ -101,7 +101,7 @@ public class CampaignAccountListComp extends RelatedListComp2<AccountService, Ac
             MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel accountAvatar = ELabel.fontIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACCOUNT));
+            ELabel accountAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
             iconWrap.addComponent(accountAvatar);
             blockTop.addComponent(iconWrap);
 

@@ -48,14 +48,14 @@ public class RelatedReadItemField extends CustomField {
                 final SimpleAccount account = accountService.findById(typeId, AppUI.getAccountId());
                 if (account != null) {
                     relateItemName = account.getAccountname();
-                    relatedLink = CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACCOUNT);
+                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT);
                 }
             } else if (CrmTypeConstants.CAMPAIGN.equals(type)) {
                 CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
                 final SimpleCampaign campaign = campaignService.findById(typeId, AppUI.getAccountId());
                 if (campaign != null) {
                     relateItemName = campaign.getCampaignname();
-                    relatedLink = CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CAMPAIGN);
+                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN);
 
                 }
             } else if (CrmTypeConstants.CONTACT.equals(type)) {
@@ -63,7 +63,7 @@ public class RelatedReadItemField extends CustomField {
                 final SimpleContact contact = contactService.findById(typeId, AppUI.getAccountId());
                 if (contact != null) {
                     relateItemName = contact.getContactName();
-                    relatedLink = CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT);
+                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT);
 
                 }
             } else if (CrmTypeConstants.LEAD.equals(type)) {
@@ -71,7 +71,7 @@ public class RelatedReadItemField extends CustomField {
                 final SimpleLead lead = leadService.findById(typeId, AppUI.getAccountId());
                 if (lead != null) {
                     relateItemName = lead.getLeadName();
-                    relatedLink = CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.LEAD);
+                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.LEAD);
 
                 }
             } else if (CrmTypeConstants.OPPORTUNITY.equals(type)) {
@@ -79,7 +79,7 @@ public class RelatedReadItemField extends CustomField {
                 final SimpleOpportunity opportunity = opportunityService.findById(typeId, AppUI.getAccountId());
                 if (opportunity != null) {
                     relateItemName = opportunity.getOpportunityname();
-                    relatedLink = CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.OPPORTUNITY);
+                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY);
 
                 }
             } else if (CrmTypeConstants.CASE.equals(type)) {
@@ -87,7 +87,7 @@ public class RelatedReadItemField extends CustomField {
                 final SimpleCase cases = caseService.findById(typeId, AppUI.getAccountId());
                 if (cases != null) {
                     relateItemName = cases.getSubject();
-                    relatedLink = CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CASE);
+                    relatedLink = CrmAssetsManager.getAsset(CrmTypeConstants.CASE);
                 }
             }
 

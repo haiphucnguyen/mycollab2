@@ -116,7 +116,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
             MHorizontalLayout blockTop = new MHorizontalLayout();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel caseIcon = ELabel.fontIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CASE));
+            ELabel caseIcon = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CASE));
             iconWrap.addComponent(caseIcon);
             blockTop.addComponent(iconWrap);
 
@@ -158,7 +158,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
             }
 
             String assigneeValue = (oneCase.getAssignuser() == null) ? new Span().appendText(UserUIContext.getMessage
-                    (GenericI18Enum.OPT_UNDEFINED)).write() : new A(AccountLinkGenerator.INSTANCE.generatePreviewFullUserLink(
+                    (GenericI18Enum.OPT_UNDEFINED)).write() : new A(AccountLinkGenerator.generatePreviewFullUserLink(
                     AppUI.getSiteUrl(), oneCase.getAssignuser()))
                     .appendText(oneCase.getAssignUserFullName()).write();
             Label caseAssignUser = ELabel.html(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + ": " + assigneeValue);

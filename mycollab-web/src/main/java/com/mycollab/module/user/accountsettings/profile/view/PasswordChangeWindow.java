@@ -92,7 +92,7 @@ public class PasswordChangeWindow extends MWindow {
             NotificationUtil.showErrorNotification(e.getMessage());
         }
 
-        user.setPassword(EnDecryptHelper.INSTANCE.encryptSaltPassword(txtNewPassword.getValue()));
+        user.setPassword(EnDecryptHelper.encryptSaltPassword(txtNewPassword.getValue()));
 
         final UserService userService = AppContextUtil.getSpringBean(UserService.class);
         userService.updateWithSession(user, UserUIContext.getUsername());

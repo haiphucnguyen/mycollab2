@@ -19,6 +19,7 @@ import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
@@ -111,7 +112,7 @@ class ActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityStreamSe
             Img userAvatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
                     .getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
-            A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(AccountLinkGenerator.INSTANCE.generatePreviewFullUserLink(
+            A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(AccountLinkGenerator.generatePreviewFullUserLink(
                     AppUI.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim
                     (activityStream.getCreatedUserFullName(), 30, true));
 
@@ -122,8 +123,8 @@ class ActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityStreamSe
 
         private String buildItemValue(SimpleActivityStream activityStream) {
             DivLessFormatter div = new DivLessFormatter();
-            Text itemImg = new Text(CrmAssetsManager.INSTANCE.getAsset(activityStream.getType()).getHtml());
-            A itemLink = new A().setId("tag" + TOOLTIP_ID).setHref(CrmLinkGenerator.generateCrmItemLink(
+            Text itemImg = new Text(CrmAssetsManager.getAsset(activityStream.getType()).getHtml());
+            A itemLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(CrmLinkGenerator.generateCrmItemLink(
                     activityStream.getType(), Integer.parseInt(activityStream.getTypeid())));
 
             itemLink.appendText(activityStream.getNamefield());

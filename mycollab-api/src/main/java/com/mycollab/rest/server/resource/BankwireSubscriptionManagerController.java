@@ -54,7 +54,7 @@ public class BankwireSubscriptionManagerController {
                                          @RequestParam("OrderReferrer") String orderReferrer,
                                          @RequestParam("OrderSubTotalUSD") String orderSubTotalUSD) throws Exception {
         try {
-            String decryptReferrer = EnDecryptHelper.INSTANCE.decryptTextWithEncodeFriendly(orderReferrer);
+            String decryptReferrer = EnDecryptHelper.decryptTextWithEncodeFriendly(orderReferrer);
             String[] arr = decryptReferrer.split(";");
             BillingSubscription subscription = new BillingSubscription();
             subscription.setEmail(customerEmail);

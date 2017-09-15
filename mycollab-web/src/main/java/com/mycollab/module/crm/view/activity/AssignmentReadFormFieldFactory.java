@@ -40,7 +40,7 @@ class AssignmentReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFact
             return new DateTimeViewField(task.getDuedate());
         } else if (propertyId.equals("contactid")) {
             return new LinkViewField(task.getContactName(), CrmLinkBuilder.generateContactPreviewLinkFull(task.getContactid()),
-                    CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT));
+                    CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
         } else if (propertyId.equals("type")) {
             return new RelatedReadItemField(task);
 

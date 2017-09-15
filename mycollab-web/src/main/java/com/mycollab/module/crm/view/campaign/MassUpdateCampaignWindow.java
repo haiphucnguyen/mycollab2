@@ -23,7 +23,7 @@ public class MassUpdateCampaignWindow extends MassUpdateWindow<CampaignWithBLOBs
     private static final long serialVersionUID = 1L;
 
     public MassUpdateCampaignWindow(final String title, final CampaignListPresenter presenter) {
-        super(title, CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CAMPAIGN), new CampaignWithBLOBs(), presenter);
+        super(title, CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN), new CampaignWithBLOBs(), presenter);
     }
 
     @Override

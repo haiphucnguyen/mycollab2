@@ -15,7 +15,7 @@ object ProjectPermissionChecker {
     private val memberService: ProjectMemberService
         get() = AppContextUtil.getSpringBean(ProjectMemberService::class.java)
 
-    fun canWrite(prjId: Int, permissionItem: String): Boolean {
+    @JvmStatic fun canWrite(prjId: Int, permissionItem: String): Boolean {
         val member = memberService.findMemberByUsername(UserUIContext.getUsername(), prjId, AppUI.accountId)
         return if (member != null) {
             when {

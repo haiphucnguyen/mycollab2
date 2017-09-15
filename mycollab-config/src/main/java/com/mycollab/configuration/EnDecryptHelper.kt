@@ -29,14 +29,13 @@ object EnDecryptHelper {
      * @param password
      * @return
      */
-    fun encryptSaltPassword(password: String): String {
-        return strongEncryptor.encryptPassword(password)
-    }
+    @JvmStatic
+    fun encryptSaltPassword(password: String): String = strongEncryptor.encryptPassword(password)
 
-    fun encryptText(text: String): String {
-        return basicTextEncryptor.encrypt(text)
-    }
+    @JvmStatic
+    fun encryptText(text: String): String = basicTextEncryptor.encrypt(text)
 
+    @JvmStatic
     fun encryptTextWithEncodeFriendly(text: String): String {
         try {
             return URLEncoder.encode(basicTextEncryptor.encrypt(text), "ASCII")
@@ -46,6 +45,7 @@ object EnDecryptHelper {
 
     }
 
+    @JvmStatic
     fun decryptText(text: String): String? {
         try {
             return basicTextEncryptor.decrypt(text)
@@ -55,6 +55,7 @@ object EnDecryptHelper {
 
     }
 
+    @JvmStatic
     fun decryptTextWithEncodeFriendly(text: String): String? {
         try {
             return basicTextEncryptor.decrypt(URLDecoder.decode(text, "ASCII"))
@@ -74,6 +75,7 @@ object EnDecryptHelper {
      * @param isPasswordEncrypt flag to denote `inputPassword` is encrypted or not
      * @return
      */
+    @JvmStatic
     fun checkPassword(inputPassword: String, expectedPassword: String, isPasswordEncrypt: Boolean): Boolean {
         return if (isPasswordEncrypt) {
             inputPassword == expectedPassword

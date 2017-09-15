@@ -34,7 +34,7 @@ public class LeadListDisplay extends DefaultPagedBeanList<LeadService, LeadSearc
             MVerticalLayout rowLayout = new MVerticalLayout().withMargin(false).withSpacing(false).withFullWidth();
             A itemLink = new A(CrmLinkBuilder.generateLeadPreviewLinkFull(lead.getId())).appendText(lead.getLeadName());
             MCssLayout itemWrap = new MCssLayout(ELabel.html(itemLink.write()));
-            rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.INSTANCE.getAsset
+            rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.getAsset
                     (CrmTypeConstants.LEAD)), itemWrap).expand(itemWrap).withFullWidth());
             return rowLayout;
         }

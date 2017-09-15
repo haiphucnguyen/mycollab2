@@ -31,7 +31,7 @@ public class CampaignAddViewImpl extends AbstractEditItemComp<SimpleCampaign> im
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CAMPAIGN);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN);
     }
 
     @Override

@@ -105,11 +105,11 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase> implem
     @Override
     protected ComponentContainer createBottomPanel() {
         MVerticalLayout toolbarLayout = new MVerticalLayout().withFullWidth().withSpacing(false).withMargin(false);
-        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT),
+        Component contactSection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT),
                 associateContacts);
         toolbarLayout.addComponent(contactSection);
 
-        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACTIVITY),
+        Component activitySection = FormSectionBuilder.build(CrmAssetsManager.getAsset(CrmTypeConstants.ACTIVITY),
                 associateActivities);
         toolbarLayout.addComponent(activitySection);
 

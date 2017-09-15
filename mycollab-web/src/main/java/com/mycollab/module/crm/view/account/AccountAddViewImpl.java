@@ -31,7 +31,7 @@ public class AccountAddViewImpl extends AbstractEditItemComp<SimpleAccount> impl
 
     @Override
     protected Resource initFormIconResource() {
-        return CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.ACCOUNT);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT);
     }
 
     @Override

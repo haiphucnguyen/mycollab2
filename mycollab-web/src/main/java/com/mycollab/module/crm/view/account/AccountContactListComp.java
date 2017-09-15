@@ -60,7 +60,7 @@ public class AccountContactListComp extends RelatedListComp2<ContactService, Con
                 UI.getCurrent().addWindow(contactsWindow);
                 contactsWindow.setSearchCriteria(criteria);
                 controlsBtn.setPopupVisible(false);
-            }).withIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT));
+            }).withIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
 
             OptionPopupContent buttonControlLayout = new OptionPopupContent();
             buttonControlLayout.addOption(selectBtn);
@@ -102,7 +102,7 @@ public class AccountContactListComp extends RelatedListComp2<ContactService, Con
             MHorizontalLayout blockTop = new MHorizontalLayout();
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
-            ELabel contactAvatar = ELabel.fontIcon(CrmAssetsManager.INSTANCE.getAsset(CrmTypeConstants.CONTACT));
+            ELabel contactAvatar = ELabel.fontIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
             iconWrap.addComponent(contactAvatar);
             blockTop.addComponent(iconWrap);
 

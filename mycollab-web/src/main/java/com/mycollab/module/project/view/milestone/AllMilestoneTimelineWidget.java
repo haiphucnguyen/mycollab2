@@ -127,7 +127,7 @@ public class AllMilestoneTimelineWidget extends MVerticalLayout {
 
             A projectDiv = new A(ProjectLinkBuilder.generateProjectFullLink(milestone.getProjectid())).appendText
                     (FontAwesome.BUILDING_O.getHtml() + " " + StringUtils.trim(milestone.getProjectName(), 30, true))
-                    .setId("tag" + TOOLTIP_ID);
+                    .setId("tag" + TooltipHelper.TOOLTIP_ID);
             projectDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.PROJECT,
                     milestone.getProjectid() + ""));
             projectDiv.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
@@ -135,7 +135,7 @@ public class AllMilestoneTimelineWidget extends MVerticalLayout {
             A milestoneDiv = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
                     (milestone.getProjectid(), milestone.getId())).appendText(ProjectAssetsManager.getAsset
                     (ProjectTypeConstants.MILESTONE).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true))
-                    .setId("tag" + TOOLTIP_ID);
+                    .setId("tag" + TooltipHelper.TOOLTIP_ID);
             milestoneDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.MILESTONE,
                     milestone.getId() + ""));
             milestoneDiv.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
