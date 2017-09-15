@@ -33,6 +33,7 @@ object StringUtils {
         doc.select("p").prepend("\\n\\n")
         // Trick for better formatting
         val s = doc.html().replace("\\\\n", "\n");
+        s.replace("&nbsp;", " ")
         return Jsoup.clean(s, "", Whitelist.none(), Document.OutputSettings().prettyPrint(false));
 
     }
