@@ -14,5 +14,5 @@ open class SimpleRelayEmailNotification : RelayEmailNotificationWithBLOBs() {
         get() = if (StringUtils.isBlank(field)) {
             StringUtils.extractNameFromEmail(changeby)
         } else field
-    var notifyUsers: List<SimpleUser> = emptyList()
+    var notifyUsers: List<SimpleUser> = mutableListOf()
 }
