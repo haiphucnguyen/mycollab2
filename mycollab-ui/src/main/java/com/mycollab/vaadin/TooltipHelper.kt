@@ -36,6 +36,7 @@ object TooltipHelper {
         return "return overIt($uidVal,$typeVal,$typeIdVal,$urlVal,$accountIdVal,$siteUrlVal,$timezoneVal,$localeVal,$dateFormatVal);"
     }
 
+    @JvmStatic
     fun crmHoverJsFunction(type: String, typeId: String): String {
         val uidVal = "'$TOOLTIP_ID'"
         val typeVal = "'$type'"
