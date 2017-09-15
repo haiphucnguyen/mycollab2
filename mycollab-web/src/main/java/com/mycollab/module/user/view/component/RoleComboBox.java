@@ -20,7 +20,6 @@ public class RoleComboBox extends ComboBox {
     private static final long serialVersionUID = 1L;
 
     public RoleComboBox() {
-        super();
         this.setNullSelectionAllowed(false);
         this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 

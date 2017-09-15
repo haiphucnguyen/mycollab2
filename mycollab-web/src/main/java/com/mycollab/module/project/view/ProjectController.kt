@@ -423,8 +423,8 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
     private fun bindPageEvents() {
         this.register(object : ApplicationEventListener<PageEvent.GotoAdd> {
             @Subscribe override fun handle(event: PageEvent.GotoAdd) {
-                var pagePath = event.data as String
-                if ("".equals(pagePath) || pagePath == null) {
+                var pagePath = event.data as? String
+                if ("" == pagePath || pagePath == null) {
                     pagePath = CurrentProjectVariables.currentPagePath + "/" + StringUtils.generateSoftUniqueId()
                 }
                 val page = Page()
