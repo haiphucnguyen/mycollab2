@@ -28,7 +28,7 @@ class MailContext<B>(val emailNotification: SimpleRelayEmailNotification,
     val type
         get() = emailNotification.type
 
-    fun getMessage(key: Enum<*>, vararg params: Any?) = LocalizationHelper.getMessage(locale, key, params)
+    fun getMessage(key: Enum<*>, vararg params: String?) = LocalizationHelper.getMessage(locale, key, params)
 
     fun getFieldName(fieldMapper: ItemFieldMapper, fieldName: String): String {
         val fieldFormat = fieldMapper.getField(fieldName)

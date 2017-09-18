@@ -1,6 +1,5 @@
 package com.mycollab.core;
 
-
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;

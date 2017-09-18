@@ -1,7 +1,6 @@
 package com.mycollab.rest.server.resource
 
 import com.mycollab.core.Version
-import com.mycollab.ondemand.module.billing.dao.ProEditionInfoMapper
 import com.mycollab.ondemand.module.support.service.EditionInfoResolver
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -18,8 +17,7 @@ import java.util.*
  */
 @Api(value = "Versions", tags = arrayOf("Support"))
 @RestController
-class CheckVersionController(private val editionInfoResolver: EditionInfoResolver,
-                             private val proEditionInfoMapper: ProEditionInfoMapper) {
+class CheckVersionController(private val editionInfoResolver: EditionInfoResolver) {
 
     @ApiOperation(value = "Check version whether it is the latest version. If it is not, return the latest version information", response = String::class)
     @RequestMapping(value = "/checkupdate", method = arrayOf(RequestMethod.GET), produces = arrayOf(MediaType.APPLICATION_JSON_VALUE))

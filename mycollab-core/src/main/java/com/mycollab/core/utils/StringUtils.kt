@@ -156,5 +156,4 @@ object StringUtils {
     fun isValidPhoneNumber(value: String): Boolean {
         return true
     }
-
 }

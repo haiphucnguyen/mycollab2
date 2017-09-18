@@ -591,7 +591,7 @@ object ProjectTooltipGenerator {
 
     }
 
-    private fun getAvatarPath(userAvatarId: String?, size: Int?): String {
+    private fun getAvatarPath(userAvatarId: String?, size: Int): String {
         val abstractStorageService = AppContextUtil.getSpringBean(AbstractStorageService::class.java)
         return abstractStorageService.getAvatarPath(userAvatarId, size)
     }

@@ -2,7 +2,7 @@ package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.vaadin.events.HasPagableHandlers;
+import com.mycollab.vaadin.events.HasPageableHandlers;
 import com.mycollab.vaadin.events.PageableHandler;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -19,7 +19,7 @@ import java.util.Set;
  * @author MyCollab Ltd.
  * @since 4.0
  */
-public abstract class AbstractBeanBlockList<S extends SearchCriteria, T> extends VerticalLayout implements HasPagableHandlers {
+public abstract class AbstractBeanBlockList<S extends SearchCriteria, T> extends VerticalLayout implements HasPageableHandlers {
     private static final long serialVersionUID = -1842929843421392806L;
 
     private int defaultNumberSearchItems = 10;

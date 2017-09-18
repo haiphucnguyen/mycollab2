@@ -3,7 +3,7 @@ package com.mycollab.vaadin.web.ui.table;
 import com.mycollab.common.TableViewField;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.events.ApplicationEvent;
-import com.mycollab.vaadin.events.HasPagableHandlers;
+import com.mycollab.vaadin.events.HasPageableHandlers;
 import com.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Table;
@@ -19,7 +19,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public interface IPagedBeanTable<S extends SearchCriteria, T> extends HasSelectableItemHandlers<T>, HasPagableHandlers, Component {
+public interface IPagedBeanTable<S extends SearchCriteria, T> extends HasSelectableItemHandlers<T>, HasPageableHandlers, Component {
 
     int setSearchCriteria(S searchCriteria);
 

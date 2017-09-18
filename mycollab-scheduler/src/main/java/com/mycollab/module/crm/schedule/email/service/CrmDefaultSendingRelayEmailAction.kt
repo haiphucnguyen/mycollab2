@@ -179,7 +179,7 @@ abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificat
         changeUser = userService!!.findUserByUserNameInAccount(notification.changeby, notification.saccountid)
     }
 
-    abstract protected fun getBeanInContext(context: SimpleRelayEmailNotification): B?
+    abstract protected fun getBeanInContext(notification: SimpleRelayEmailNotification): B?
 
     abstract protected fun buildExtraTemplateVariables(context: MailContext<B>)
 

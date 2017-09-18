@@ -2,7 +2,7 @@ package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.SearchRequest;
-import com.mycollab.vaadin.events.HasPagableHandlers;
+import com.mycollab.vaadin.events.HasPageableHandlers;
 import com.mycollab.vaadin.events.PageableHandler;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.vaadin.shared.ui.MarginInfo;
@@ -18,7 +18,7 @@ import java.util.Set;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public abstract class AbstractBeanPagedList<T> extends VerticalLayout implements HasPagableHandlers, IBeanList<T> {
+public abstract class AbstractBeanPagedList<T> extends VerticalLayout implements HasPageableHandlers, IBeanList<T> {
     private static final long serialVersionUID = 1L;
 
     protected int defaultNumberSearchItems = 10;

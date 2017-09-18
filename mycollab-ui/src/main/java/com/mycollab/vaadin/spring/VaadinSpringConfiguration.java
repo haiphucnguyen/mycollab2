@@ -16,8 +16,7 @@ public class VaadinSpringConfiguration {
 
     @Bean("mainServlet")
     public ServletRegistrationBean mainServlet() {
-        ServletRegistrationBean bean = new ServletRegistrationBean(
-                new AppServlet(), "/*");
+        ServletRegistrationBean bean = new ServletRegistrationBean(new AppServlet(), "/*");
         bean.setLoadOnStartup(1);
         return bean;
     }

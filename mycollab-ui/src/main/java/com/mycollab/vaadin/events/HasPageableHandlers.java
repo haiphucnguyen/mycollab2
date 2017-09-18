@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public interface HasPagableHandlers extends Serializable {
+public interface HasPageableHandlers extends Serializable {
     /**
      * Add page handler
      *
