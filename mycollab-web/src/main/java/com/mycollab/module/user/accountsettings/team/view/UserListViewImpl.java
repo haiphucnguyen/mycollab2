@@ -188,7 +188,7 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
         memberInfo.addComponent(buttonControls);
         memberInfo.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);
 
-        A memberLink = new A(AccountLinkGenerator.generatePreviewFullUserLink(AppUI.getSiteUrl(),
+        A memberLink = new A(AccountLinkGenerator.generateUserLink(
                 member.getUsername())).appendText(member.getDisplayName());
         ELabel memberLinkLbl = ELabel.h3(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
         memberInfo.addComponent(memberLinkLbl);

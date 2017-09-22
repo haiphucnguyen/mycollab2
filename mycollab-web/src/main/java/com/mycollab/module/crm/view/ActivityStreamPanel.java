@@ -49,8 +49,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
-
 /**
  * @author MyCollab Ltd.
  * @since 1.0
@@ -239,8 +237,8 @@ public class ActivityStreamPanel extends CssLayout {
             DivLessFormatter div = new DivLessFormatter();
             Img userAvatar = new Img("", StorageUtils.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
-            A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(AccountLinkGenerator.generatePreviewFullUserLink(
-                    AppUI.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim
+            A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(AccountLinkGenerator.generateUserLink(
+                    activityStream.getCreateduser())).appendText(StringUtils.trim
                     (activityStream.getCreatedUserFullName(), 30, true));
 
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(activityStream.getCreateduser()));

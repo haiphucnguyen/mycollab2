@@ -66,7 +66,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
 
         this.register(object : ApplicationEventListener<ProjectEvent.GotoTagListView> {
             @Subscribe override fun handle(event: ProjectEvent.GotoTagListView) {
-                val tag = event.data as Tag
+                val tag = event.data as? Tag
                 val presenter = PresenterResolver.getPresenter(ProjectDashboardPresenter::class.java)
                 presenter.go(projectView, ProjectScreenData.GotoTagList(tag))
             }

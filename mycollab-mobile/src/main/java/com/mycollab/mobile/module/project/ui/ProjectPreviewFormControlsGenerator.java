@@ -43,39 +43,35 @@ public class ProjectPreviewFormControlsGenerator<T> {
             canAccess = UserUIContext.canAccess(permissionItem);
         }
 
-        if ((buttonEnableFlags & EDIT_BTN_PRESENTED) == EDIT_BTN_PRESENTED) {
+        if (canWrite && (buttonEnableFlags & EDIT_BTN_PRESENTED) == EDIT_BTN_PRESENTED) {
             Button editBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT), clickEvent -> {
                 T item = previewForm.getBean();
                 previewForm.fireEditForm(item);
             });
-            editBtn.setEnabled(canWrite);
             editButtons.addComponent(editBtn);
         }
 
-        if ((buttonEnableFlags & DELETE_BTN_PRESENTED) == DELETE_BTN_PRESENTED) {
+        if (canAccess && (buttonEnableFlags & DELETE_BTN_PRESENTED) == DELETE_BTN_PRESENTED) {
             Button deleteBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                 T item = previewForm.getBean();
                 previewForm.fireDeleteForm(item);
             });
-            deleteBtn.setEnabled(canAccess);
             editButtons.addComponent(deleteBtn);
         }
 
-        if ((buttonEnableFlags & CLONE_BTN_PRESENTED) == CLONE_BTN_PRESENTED) {
+        if (canWrite && (buttonEnableFlags & CLONE_BTN_PRESENTED) == CLONE_BTN_PRESENTED) {
             Button cloneBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLONE), clickEvent -> {
                 T item = previewForm.getBean();
                 previewForm.fireCloneForm(item);
             });
-            cloneBtn.setEnabled(canWrite);
             editButtons.addComponent(cloneBtn);
         }
 
-        if ((buttonEnableFlags & ASSIGN_BTN_PRESENTED) == ASSIGN_BTN_PRESENTED) {
+        if (canWrite && (buttonEnableFlags & ASSIGN_BTN_PRESENTED) == ASSIGN_BTN_PRESENTED) {
             Button assignBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_ASSIGN), clickEvent -> {
                 T item = previewForm.getBean();
                 previewForm.fireAssignForm(item);
             });
-            editButtons.setEnabled(canWrite);
             editButtons.addComponent(assignBtn);
         }
 

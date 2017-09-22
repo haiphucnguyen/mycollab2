@@ -114,25 +114,16 @@ object ProjectLinkBuilder {
     }
 
     @JvmStatic
-    fun generateStandupDashboardLink(): String {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateStandupDashboardLink()
-    }
+    fun generateStandupDashboardLink(): String = URL_PREFIX_PARAM + ProjectLinkGenerator.generateStandupDashboardLink()
 
     @JvmStatic
-    fun generateHoursWeeklyReportLink(): String {
-        return AppUI.siteUrl + URL_PREFIX_PARAM + ProjectLinkGenerator
-                .generateHoursWeeklyReportLink()
-    }
+    fun generateHoursWeeklyReportLink(): String = URL_PREFIX_PARAM + ProjectLinkGenerator.generateHoursWeeklyReportLink()
 
     @JvmStatic
-    fun generateTimesheetReportLink(): String {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateTimesheetReportLink()
-    }
+    fun generateTimesheetReportLink(): String = URL_PREFIX_PARAM + ProjectLinkGenerator.generateTimesheetReportLink()
 
     @JvmStatic
-    fun generateUsersWorkloadReportLink(): String {
-        return URL_PREFIX_PARAM + ProjectLinkGenerator.generateUsersWorkloadReportLink()
-    }
+    fun generateUsersWorkloadReportLink(): String = URL_PREFIX_PARAM + ProjectLinkGenerator.generateUsersWorkloadReportLink()
 
     @JvmStatic
     fun generateProjectItemHtmlLinkAndTooltip(prjShortName: String, projectId: Int, summary: String, type: String, typeId: String): String {

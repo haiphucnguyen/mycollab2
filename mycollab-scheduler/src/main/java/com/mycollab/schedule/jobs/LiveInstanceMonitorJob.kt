@@ -21,7 +21,6 @@ import org.springframework.web.client.RestTemplate
  * @since 6.0.0
  */
 @Component
-@Profile("production")
 @Scope(BeanDefinition.SCOPE_SINGLETON)
 class LiveInstanceMonitorJob(private val projectMapper: ProjectMapper,
                              private val userMapper: UserMapper,

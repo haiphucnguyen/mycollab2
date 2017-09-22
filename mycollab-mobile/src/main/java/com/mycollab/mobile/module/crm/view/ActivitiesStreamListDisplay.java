@@ -18,7 +18,6 @@ import com.mycollab.module.crm.ui.CrmLocalizationTypeMap;
 import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
@@ -32,8 +31,6 @@ import org.apache.commons.lang3.time.DateUtils;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd
@@ -112,8 +109,8 @@ class ActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityStreamSe
             Img userAvatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
                     .getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
-            A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(AccountLinkGenerator.generatePreviewFullUserLink(
-                    AppUI.getSiteUrl(), activityStream.getCreateduser())).appendText(StringUtils.trim
+            A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(AccountLinkGenerator.generateUserLink(
+                    activityStream.getCreateduser())).appendText(StringUtils.trim
                     (activityStream.getCreatedUserFullName(), 30, true));
 
             div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE, userLink);

@@ -1,6 +1,7 @@
 package com.mycollab.module.user
 
 import com.mycollab.common.GenericLinkUtils
+import com.mycollab.common.GenericLinkUtils.URL_PREFIX_PARAM
 import com.mycollab.common.UrlEncodeDecoder
 
 /**
@@ -9,19 +10,23 @@ import com.mycollab.common.UrlEncodeDecoder
  */
 object AccountLinkGenerator {
 
-    @JvmStatic fun generateFullProfileLink(siteUrl: String): String {
-        return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM + "account/preview"
-    }
+    @JvmStatic
+    fun generateFullProfileLink(siteUrl: String): String =
+            siteUrl + URL_PREFIX_PARAM + "account/preview"
 
-    @JvmStatic fun generateRoleLink(userRoleId: Int?): String {
-        return "account/role/preview/" + UrlEncodeDecoder.encode(userRoleId)
-    }
+    @JvmStatic
+    fun generateRoleLink(userRoleId: Int?): String =
+            "account/role/preview/" + UrlEncodeDecoder.encode(userRoleId)
 
-    @JvmStatic fun generatePreviewFullRoleLink(siteUrl: String, userRoleId: Int?): String {
-        return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM + generateRoleLink(userRoleId)
-    }
+    @JvmStatic
+    fun generatePreviewFullRoleLink(siteUrl: String, userRoleId: Int?): String =
+            siteUrl + URL_PREFIX_PARAM + generateRoleLink(userRoleId)
 
-    @JvmStatic fun generatePreviewFullUserLink(siteUrl: String, username: String): String {
-        return siteUrl + GenericLinkUtils.URL_PREFIX_PARAM + "account/user/preview/" + GenericLinkUtils.encodeParam(username)
-    }
+    @JvmStatic
+    fun generateUserLink(username: String): String =
+            URL_PREFIX_PARAM + "account/user/preview/" + GenericLinkUtils.encodeParam(username)
+
+    @JvmStatic
+    fun generatePreviewFullUserLink(siteUrl: String, username: String): String =
+            siteUrl + URL_PREFIX_PARAM + "account/user/preview/" + GenericLinkUtils.encodeParam(username)
 }

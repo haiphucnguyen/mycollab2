@@ -138,7 +138,7 @@ object StringUtils {
 
 
     @JvmStatic
-    fun isValidEmail(value: String): Boolean {
+    fun isValidEmail(value: String?): Boolean {
         return try {
             //
             // Create InternetAddress object and validated the supplied
@@ -153,7 +153,5 @@ object StringUtils {
     }
 
     @JvmStatic
-    fun isValidPhoneNumber(value: String): Boolean {
-        return true
-    }
+    fun isValidPhoneNumber(value: String?): Boolean  = true
 }
