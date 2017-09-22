@@ -4,6 +4,6 @@ import com.mycollab.module.project.domain.Risk
 
 /**
  * @author MyCollab Ltd
- * @since 5.1.0
+ * @since 6.0.0
  */
-class DeleteProjectRiskEvent(val risks: Array[Risk], val username: String, val accountId: Integer) {}
+class DeleteProjectRiskEvent(val risks: Array<Risk>, val username: String, val accountId: Int)
