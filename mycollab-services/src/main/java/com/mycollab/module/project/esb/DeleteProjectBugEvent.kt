@@ -4,6 +4,7 @@ import com.mycollab.module.tracker.domain.BugWithBLOBs
 
 /**
  * @author MyCollab Ltd
- * @since 5.1.0
+ * @since 6.0.0
  */
-class DeleteProjectBugEvent(val bugs: Array[BugWithBLOBs], val username: String, val accountId: Integer) {}
+class DeleteProjectBugEvent(val bugs: Array<BugWithBLOBs>, val username: String, val accountId: Int) {
+}
