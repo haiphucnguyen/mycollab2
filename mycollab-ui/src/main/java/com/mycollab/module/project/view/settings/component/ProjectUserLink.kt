@@ -5,7 +5,6 @@ import com.hp.gagawa.java.elements.Img
 import com.mycollab.core.utils.StringUtils
 import com.mycollab.html.DivLessFormatter
 import com.mycollab.module.file.service.AbstractStorageService
-import com.mycollab.module.project.CurrentProjectVariables
 import com.mycollab.module.project.ProjectLinkBuilder
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.TooltipHelper
@@ -18,7 +17,7 @@ import com.vaadin.ui.Label
  * @author MyCollab Ltd.
  * @since 1.0
  */
-class ProjectUserLink(username: String?, userAvatarId: String?, displayName: String?) : Label() {
+class ProjectUserLink(projectId: Int, username: String?, userAvatarId: String?, displayName: String?) : Label() {
 
     init {
         if (username != null) {
@@ -28,7 +27,7 @@ class ProjectUserLink(username: String?, userAvatarId: String?, displayName: Str
                     .getAvatarPath(userAvatarId, 16))
             avatarLink.cssClass = UIConstants.CIRCLE_BOX
             val memberLink = A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
-                    CurrentProjectVariables.projectId, username)).appendText(StringUtils.trim(displayName, 30, true))
+                    projectId, username)).appendText(StringUtils.trim(displayName, 30, true))
             memberLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(username))
             memberLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction())
             div.appendChild(avatarLink, DivLessFormatter.EMPTY_SPACE, memberLink)

@@ -74,8 +74,8 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
         protected Field<?> onCreateField(final Object propertyId) {
             SimpleTask beanItem = attachForm.getBean();
             if (Task.Field.assignuser.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(beanItem.getAssignuser(), beanItem.getAssignUserAvatarId(),
-                        beanItem.getAssignUserFullName());
+                return new ProjectUserFormLinkField(beanItem.getProjectid(), beanItem.getAssignuser(),
+                        beanItem.getAssignUserAvatarId(), beanItem.getAssignUserFullName());
             } else if (Task.Field.startdate.equalTo(propertyId)) {
                 return new DateTimeOptionViewField(beanItem.getStartdate());
             } else if (Task.Field.enddate.equalTo(propertyId)) {

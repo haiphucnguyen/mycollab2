@@ -53,8 +53,8 @@ public class ComponentPreviewForm extends AdvancedPreviewBeanForm<SimpleComponen
         protected Field<?> onCreateField(Object propertyId) {
             SimpleComponent beanItem = attachForm.getBean();
             if (Component.Field.userlead.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(beanItem.getUserlead(), beanItem.getUserLeadAvatarId(),
-                        beanItem.getUserLeadFullName());
+                return new ProjectUserFormLinkField(beanItem.getProjectid(), beanItem.getUserlead(),
+                        beanItem.getUserLeadAvatarId(), beanItem.getUserLeadFullName());
             } else if (Component.Field.id.equalTo(propertyId)) {
                 ContainerViewField containerField = new ContainerViewField();
                 containerField.addComponentField(new BugsComp(beanItem));

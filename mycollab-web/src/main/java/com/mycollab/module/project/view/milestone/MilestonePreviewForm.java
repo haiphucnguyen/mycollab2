@@ -65,28 +65,28 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
 
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
-            SimpleMilestone beanItem = attachForm.getBean();
             SimpleMilestone milestone = attachForm.getBean();
             if (Milestone.Field.startdate.equalTo(propertyId)) {
                 return new DateViewField(milestone.getStartdate());
             } else if (Milestone.Field.enddate.equalTo(propertyId)) {
                 return new DateViewField(milestone.getEnddate());
             } else if (Milestone.Field.assignuser.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(milestone.getAssignuser(), milestone.getOwnerAvatarId(), milestone.getOwnerFullName());
+                return new ProjectUserFormLinkField(milestone.getProjectid(), milestone.getAssignuser(),
+                        milestone.getOwnerAvatarId(), milestone.getOwnerFullName());
             } else if (Milestone.Field.description.equalTo(propertyId)) {
                 return new RichTextViewField(milestone.getDescription());
             } else if (Milestone.Field.status.equalTo(propertyId)) {
-                String milestoneStatus = UserUIContext.getMessage(MilestoneStatus.class, beanItem.getStatus());
-                FontAwesome statusIcon = ProjectAssetsUtil.getPhaseIcon(beanItem.getStatus());
+                String milestoneStatus = UserUIContext.getMessage(MilestoneStatus.class, milestone.getStatus());
+                FontAwesome statusIcon = ProjectAssetsUtil.getPhaseIcon(milestone.getStatus());
                 return new DefaultViewField(statusIcon.getHtml() + " " + milestoneStatus, ContentMode.HTML)
                         .withStyleName(UIConstants.FIELD_NOTE);
             } else if (Milestone.Field.id.equalTo(propertyId)) {
                 ContainerViewField containerField = new ContainerViewField();
-                containerField.addComponentField(new AssignmentsComp(beanItem));
+                containerField.addComponentField(new AssignmentsComp(milestone));
                 return containerField;
             } else if (Milestone.Field.saccountid.equalTo(propertyId)) {
-                return new ProjectFormAttachmentDisplayField(beanItem.getProjectid(), ProjectTypeConstants.MILESTONE,
-                        beanItem.getId());
+                return new ProjectFormAttachmentDisplayField(milestone.getProjectid(), ProjectTypeConstants.MILESTONE,
+                        milestone.getId());
             }
             return null;
         }

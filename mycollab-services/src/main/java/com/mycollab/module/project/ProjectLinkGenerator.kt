@@ -20,7 +20,7 @@ object ProjectLinkGenerator {
         return siteUrl + URL_PREFIX_PARAM + generateProjectLink(projectId)
     }
 
-    @JvmStatic fun generateTicketDashboardLink(projectId: Int?): String {
+    @JvmStatic fun generateTicketDashboardLink(projectId: Int): String {
         return "project/ticket/dashboard/" + UrlEncodeDecoder.encode(projectId)
     }
 
@@ -36,7 +36,7 @@ object ProjectLinkGenerator {
         return String.format("project/task/edit/%s-%d", prjShortName, taskKey)
     }
 
-    @JvmStatic fun generateMilestonesLink(projectId: Int?): String {
+    @JvmStatic fun generateMilestonesLink(projectId: Int): String {
         return "project/milestone/list/" + UrlEncodeDecoder.encode(projectId)
     }
 
@@ -52,7 +52,7 @@ object ProjectLinkGenerator {
         return "project/client/preview/" + UrlEncodeDecoder.encode(accountId)
     }
 
-    @JvmStatic fun generateClientPreviewFullLink(siteUrl: String, accountId: Int?): String {
+    @JvmStatic fun generateClientPreviewFullLink(siteUrl: String, accountId: Int): String {
         return siteUrl + URL_PREFIX_PARAM + "project/client/preview/" + UrlEncodeDecoder.encode(accountId)
     }
 
@@ -82,7 +82,7 @@ object ProjectLinkGenerator {
         return "project/user/preview/" + GenericLinkUtils.encodeParam(projectId, memberName)
     }
 
-    @JvmStatic fun generateRisksLink(projectId: Int?): String {
+    @JvmStatic fun generateRisksLink(projectId: Int): String {
         return "project/risk/list/" + UrlEncodeDecoder.encode(projectId)
     }
 
@@ -98,15 +98,15 @@ object ProjectLinkGenerator {
         return "project/risk/edit/" + UrlEncodeDecoder.encode(projectId.toString() + "/" + riskId)
     }
 
-    @JvmStatic fun generateRiskAddLink(projectId: Int?): String {
+    @JvmStatic fun generateRiskAddLink(projectId: Int): String {
         return "project/risk/add/" + UrlEncodeDecoder.encode(projectId)
     }
 
-    @JvmStatic fun generateMessageAddLink(projectId: Int?): String {
+    @JvmStatic fun generateMessageAddLink(projectId: Int): String {
         return "project/message/add/" + UrlEncodeDecoder.encode(projectId)
     }
 
-    @JvmStatic fun generateMessagesLink(projectId: Int?): String {
+    @JvmStatic fun generateMessagesLink(projectId: Int): String {
         return "project/message/list/" + UrlEncodeDecoder.encode(projectId)
     }
 
@@ -142,7 +142,7 @@ object ProjectLinkGenerator {
         return String.format("project/bug/edit/%s-%d", prjShortName, bugKey)
     }
 
-    @JvmStatic fun generateBugsLink(projectId: Int?): String {
+    @JvmStatic fun generateBugsLink(projectId: Int): String {
         return "project/bug/list/" + UrlEncodeDecoder.encode(projectId)
     }
 
@@ -150,15 +150,15 @@ object ProjectLinkGenerator {
         return siteUrl + URL_PREFIX_PARAM + generateBugPreviewLink(bugKey, prjShortName)
     }
 
-    @JvmStatic fun generateFileDashboardLink(projectId: Int?): String {
+    @JvmStatic fun generateFileDashboardLink(projectId: Int): String {
         return "project/file/dashboard/" + UrlEncodeDecoder.encode(projectId)
     }
 
-    @JvmStatic fun generateTimeReportLink(projectId: Int?): String {
+    @JvmStatic fun generateTimeReportLink(projectId: Int): String {
         return "project/time/list/" + UrlEncodeDecoder.encode(projectId)
     }
 
-    @JvmStatic fun generateInvoiceListLink(projectId: Int?): String {
+    @JvmStatic fun generateInvoiceListLink(projectId: Int): String {
         return "project/invoice/list/" + UrlEncodeDecoder.encode(projectId)
     }
 
@@ -186,7 +186,7 @@ object ProjectLinkGenerator {
         return "project/reports/usersworkload/"
     }
 
-    @JvmStatic fun generateUsersLink(projectId: Int?): String {
+    @JvmStatic fun generateUsersLink(projectId: Int): String {
         return "project/user/list/" + UrlEncodeDecoder.encode(projectId)
     }
 

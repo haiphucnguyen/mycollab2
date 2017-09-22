@@ -91,8 +91,8 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         tableItem.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {
             final SimpleItemTimeLogging timeLoggingItem = tableItem.getBeanByIndex(itemId);
 
-            return new ProjectUserLink(timeLoggingItem.getLoguser(), timeLoggingItem.getLogUserAvatarId(),
-                    timeLoggingItem.getLogUserFullName());
+            return new ProjectUserLink(timeLoggingItem.getProjectid(), timeLoggingItem.getLoguser(),
+                    timeLoggingItem.getLogUserAvatarId(), timeLoggingItem.getLogUserFullName());
         });
 
         tableItem.addGeneratedColumn("logforday", (source, itemId, columnId) -> {

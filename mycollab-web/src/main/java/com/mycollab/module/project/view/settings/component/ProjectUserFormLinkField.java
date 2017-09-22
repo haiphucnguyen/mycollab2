@@ -10,11 +10,13 @@ import com.vaadin.ui.CustomField;
 public class ProjectUserFormLinkField extends CustomField {
     private static final long serialVersionUID = 1L;
 
+    private Integer projectId;
     private String username;
     private String userAvatarId;
     private String displayName;
 
-    public ProjectUserFormLinkField(String username, String userAvatarId, String displayName) {
+    public ProjectUserFormLinkField(Integer projectId, String username, String userAvatarId, String displayName) {
+        this.projectId = projectId;
         this.username = username;
         this.userAvatarId = userAvatarId;
         this.displayName = displayName;
@@ -27,6 +29,6 @@ public class ProjectUserFormLinkField extends CustomField {
 
     @Override
     protected Component initContent() {
-        return new ProjectUserLink(username, userAvatarId, displayName);
+        return new ProjectUserLink(projectId, username, userAvatarId, displayName);
     }
 }

@@ -22,8 +22,9 @@ public class TimeTrackingUserOrderComponent extends AbstractTimeTrackingDisplayC
     @Override
     protected void displayGroupItems(List<SimpleItemTimeLogging> timeLoggingEntries) {
         if (timeLoggingEntries.size() > 0) {
-            SimpleItemTimeLogging firstItem = timeLoggingEntries.get(0);
-            addComponent(new ProjectUserLink(firstItem.getLoguser(), firstItem.getLogUserAvatarId(), firstItem.getLogUserFullName()));
+            SimpleItemTimeLogging timeEntry = timeLoggingEntries.get(0);
+            addComponent(new ProjectUserLink(timeEntry.getProjectid(), timeEntry.getLoguser(),
+                    timeEntry.getLogUserAvatarId(), timeEntry.getLogUserFullName()));
             addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }
     }

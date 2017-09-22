@@ -22,7 +22,7 @@ public class PremiumScheduleConfiguration {
     private DataSource dataSource;
 
     @Bean
-    public JobDetailFactoryBean checkUpdateJob() {
+    public JobDetailFactoryBean checkUpdateJobBean() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
         bean.setDurability(true);
         bean.setJobClass(CheckUpdateJob.class);
@@ -32,7 +32,7 @@ public class PremiumScheduleConfiguration {
     @Bean
     public CronTriggerFactoryBean checkUpdateJobTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
-        bean.setJobDetail(checkUpdateJob().getObject());
+        bean.setJobDetail(checkUpdateJobBean().getObject());
         bean.setCronExpression("0 0 8 * * ?");
         return bean;
     }

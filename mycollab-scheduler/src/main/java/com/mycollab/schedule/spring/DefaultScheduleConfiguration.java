@@ -66,7 +66,7 @@ public class DefaultScheduleConfiguration {
     }
 
     @Bean
-    public JobDetailFactoryBean liveInstanceMonitorJob() {
+    public JobDetailFactoryBean liveInstanceMonitorJobBean() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
         bean.setDurability(true);
         bean.setJobClass(LiveInstanceMonitorJob.class);
@@ -108,7 +108,7 @@ public class DefaultScheduleConfiguration {
     @Bean
     public CronTriggerFactoryBean liveInstanceMonitorTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
-        bean.setJobDetail(liveInstanceMonitorJob().getObject());
+        bean.setJobDetail(liveInstanceMonitorJobBean().getObject());
         bean.setCronExpression("0 0 6 * * ?");
         return bean;
     }

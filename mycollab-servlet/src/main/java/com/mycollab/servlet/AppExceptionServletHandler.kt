@@ -54,7 +54,7 @@ class AppExceptionServletHandler : GenericHttpServlet() {
                 responsePage404(response)
             } else {
                 // Analyze the servlet exception
-                val throwable = request.getAttribute("javax.servlet.error.exception") as Throwable
+                val throwable = request.getAttribute("javax.servlet.error.exception") as? Throwable
                 responsePage500(response, throwable)
             }
 

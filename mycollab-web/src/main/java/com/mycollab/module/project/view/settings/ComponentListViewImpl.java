@@ -91,9 +91,9 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
         });
 
         tableItem.addGeneratedColumn("userLeadFullName", (source, itemId, columnId) -> {
-            SimpleComponent bugComponent = tableItem.getBeanByIndex(itemId);
-            return new ProjectUserLink(bugComponent.getUserlead(),
-                    bugComponent.getUserLeadAvatarId(), bugComponent.getUserLeadFullName());
+            SimpleComponent component = tableItem.getBeanByIndex(itemId);
+            return new ProjectUserLink(component.getProjectid(), component.getUserlead(),
+                    component.getUserLeadAvatarId(), component.getUserLeadFullName());
         });
 
         tableItem.addGeneratedColumn("id", (source, itemId, columnId) -> {

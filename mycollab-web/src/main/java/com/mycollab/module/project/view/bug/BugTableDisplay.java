@@ -43,12 +43,12 @@ class BugTableDisplay extends DefaultPagedBeanTable<BugService, BugSearchCriteri
 
         this.addGeneratedColumn("assignuserFullName", (source, itemId, columnId) -> {
             SimpleBug bug = getBeanByIndex(itemId);
-            return new ProjectUserLink(bug.getAssignuser(), bug.getAssignUserAvatarId(), bug.getAssignuserFullName());
+            return new ProjectUserLink(bug.getProjectid(), bug.getAssignuser(), bug.getAssignUserAvatarId(), bug.getAssignuserFullName());
         });
 
         this.addGeneratedColumn("loguserFullName", (source, itemId, columnId) -> {
             SimpleBug bug = getBeanByIndex(itemId);
-            return new ProjectUserLink(bug.getCreateduser(), bug.getLoguserAvatarId(), bug.getLoguserFullName());
+            return new ProjectUserLink(bug.getProjectid(), bug.getCreateduser(), bug.getLoguserAvatarId(), bug.getLoguserFullName());
         });
 
         this.addGeneratedColumn("name", (source, itemId, columnId) -> {

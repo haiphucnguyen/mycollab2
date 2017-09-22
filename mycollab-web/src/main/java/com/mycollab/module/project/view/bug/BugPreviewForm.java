@@ -34,7 +34,10 @@ import com.mycollab.vaadin.web.ui.field.ContainerViewField;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Field;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
@@ -129,10 +132,11 @@ public class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
             } else if (BugWithBLOBs.Field.enddate.equalTo(propertyId)) {
                 return new DateTimeOptionViewField(beanItem.getEnddate());
             } else if (SimpleBug.Field.assignuserFullName.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(beanItem.getAssignuser(), beanItem.getAssignUserAvatarId(),
-                        beanItem.getAssignuserFullName());
+                return new ProjectUserFormLinkField(beanItem.getProjectid(), beanItem.getAssignuser(),
+                        beanItem.getAssignUserAvatarId(), beanItem.getAssignuserFullName());
             } else if (SimpleBug.Field.loguserFullName.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(beanItem.getCreateduser(), beanItem.getLoguserAvatarId(), beanItem.getLoguserFullName());
+                return new ProjectUserFormLinkField(beanItem.getProjectid(), beanItem.getCreateduser(),
+                        beanItem.getLoguserAvatarId(), beanItem.getLoguserFullName());
             } else if (BugWithBLOBs.Field.id.equalTo(propertyId)) {
                 return new ProjectFormAttachmentDisplayField(
                         beanItem.getProjectid(), ProjectTypeConstants.BUG, beanItem.getId());
