@@ -93,8 +93,8 @@ class ProjectMemberServiceImpl(private val projectMemberMapper: ProjectMemberMap
         return projectMemberMapperExt.getActiveUsersInProject(projectId!!, sAccountId!!)
     }
 
-    override fun inviteProjectMembers(email: Array<String>, projectId: Int?, projectRoleId: Int?, inviteUser: String,
-                                      inviteMessage: String, sAccountId: Int?) {
+    override fun inviteProjectMembers(email: Array<String>, projectId: Int, projectRoleId: Int?, inviteUser: String,
+                                      inviteMessage: String, sAccountId: Int) {
         val event = InviteProjectMembersEvent(email, projectId, projectRoleId, inviteUser,
                 inviteMessage, sAccountId)
         asyncEventBus.post(event)
