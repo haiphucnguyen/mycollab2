@@ -21,7 +21,7 @@ public class AccountResourceTest extends RestServiceTest {
                 .formParam("email", "baohan@esofthead.com")
                 .formParam("timezoneId", "3")
                 .formParam("isEmailVerified", false).when()
-                .post("account/signup").then().assertThat().statusCode(200)
+                .post("account/signUp").then().assertThat().statusCode(200)
                 .and().header("Access-Control-Allow-Origin", "*").and()
                 .body(Matchers.equalTo("http://localhost:8080/mycollab-web/"));
     }
@@ -35,7 +35,7 @@ public class AccountResourceTest extends RestServiceTest {
                 .formParam("email", "baohan@esofthead.com")
                 .formParam("timezoneId", "3")
                 .formParam("isEmailVerified", false).when()
-                .post("account/signup").then().assertThat().statusCode(400)
+                .post("account/signUp").then().assertThat().statusCode(400)
                 .and().header("Access-Control-Allow-Origin", "*");
     }
 }

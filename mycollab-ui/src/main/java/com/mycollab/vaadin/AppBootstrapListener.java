@@ -1,5 +1,6 @@
 package com.mycollab.vaadin;
 
+import com.mycollab.configuration.IDeploymentMode;
 import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.core.Version;
 import com.mycollab.module.file.StorageUtils;
@@ -41,14 +42,14 @@ public class AppBootstrapListener implements BootstrapListener {
 
         response.getDocument().head().append("<meta name=\"robots\" content=\"nofollow\" />");
 
-        ServerConfiguration serverConfiguration = AppContextUtil.getSpringBean(ServerConfiguration.class);
+        IDeploymentMode deploymentMode = AppContextUtil.getSpringBean(IDeploymentMode.class);
         if (!MOBILE_APP.equals(response.getUiClass().getName()) || !Utils.isTablet(request)) {
             response.getDocument().head()
                     .append(String.format("<script type=\"text/javascript\" src=\"%sjs/jquery-2.1.4.min.js\"></script>",
-                            serverConfiguration.getCdnUrl()));
+                            deploymentMode.getCdnUrl()));
             response.getDocument().head()
                     .append(String.format("<script type=\"text/javascript\" src=\"%sjs/stickytooltip-1.0.2.js?v=%s\"></script>",
-                            serverConfiguration.getCdnUrl(), Version.getVersion()));
+                            deploymentMode.getCdnUrl(), Version.getVersion()));
 
             Element div1 = response.getDocument().body().appendElement("div");
             div1.attr("id", "div1" + TOOLTIP_ID);

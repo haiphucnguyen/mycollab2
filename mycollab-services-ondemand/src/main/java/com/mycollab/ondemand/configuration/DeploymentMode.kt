@@ -2,12 +2,9 @@ package com.mycollab.ondemand.configuration
 
 import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.configuration.ServerConfiguration
-import com.mycollab.configuration.SiteConfiguration
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Profile
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
-import org.springframework.stereotype.Service
 
 /**
  * @author MyCollab Ltd
@@ -16,10 +13,7 @@ import org.springframework.stereotype.Service
 @Order(value = 1)
 @Component
 @Profile("production")
-class DeploymentMode : IDeploymentMode {
-
-    @Autowired
-    private val serverConfiguration: ServerConfiguration? = null
+class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDeploymentMode {
 
     override val isDemandEdition: Boolean
         get() = true
@@ -30,7 +24,13 @@ class DeploymentMode : IDeploymentMode {
     override val isPremiumEdition: Boolean
         get() = false
 
-    override fun getSiteUrl(subDomain: String): String {
-        return String.format(serverConfiguration!!.appUrl, subDomain)
+    override fun getSiteUrl(subDomain: String): String = "serverConfiguration.appUrl, subDomain"
+
+    override fun getResourceDownloadUrl(): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getCdnUrl(): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

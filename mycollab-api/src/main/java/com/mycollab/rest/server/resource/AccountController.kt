@@ -21,8 +21,8 @@ class AccountController(private val billingService: BillingService,
                         private val emailReferenceService: EmailReferenceService,
                         private val deploymentMode: IDeploymentMode) {
 
-    @RequestMapping(value = "signup", method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded"))
-    fun signup(@RequestParam("subDomain") subdomain: String, @RequestParam("planId") planId: Int?,
+    @RequestMapping(value = "signUp", method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded"))
+    fun signUp(@RequestParam("subDomain") subdomain: String, @RequestParam("planId") planId: Int?,
                @RequestParam("password") password: String, @RequestParam("email") email: String,
                @RequestParam("timezone") timezoneId: String, @RequestParam("isEmailVerified") isEmailVerified: Boolean?): String {
         var emailVerifiedMutableVal = isEmailVerified

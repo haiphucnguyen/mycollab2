@@ -47,7 +47,8 @@ object FileUtils {
     val homeFolder
         get() = _homeFolder
 
-    @JvmStatic val userFolder: File
+    @JvmStatic
+    val userFolder: File
         get() {
             val userDir = MoreObjects.firstNonNull(System.getProperty("MYCOLLAB_APP_HOME"), System.getProperty("user.dir"))
             return File(userDir)
@@ -71,12 +72,12 @@ object FileUtils {
     fun getVolumeDisplay(volume: Long?): String {
         val GB_SIZE = (1024 * 1024 * 1024).toLong()
         val MB_SIZE = (1024 * 1024).toLong()
-        val KB_SIZE: Long = 1024
+        val KB_SIZE = 1024F
         return when {
             volume == null -> "0 Kb"
             volume < KB_SIZE -> volume.toString() + " Bytes"
-            volume < MB_SIZE -> (Math.floor((volume as Float / KB_SIZE * 100).toDouble()) / 100).toString() + " Kb"
-            volume < GB_SIZE -> (Math.floor((volume as Float / MB_SIZE * 100).toDouble()) / 100).toString() + " Mb"
+            volume < MB_SIZE -> (Math.floor((volume / KB_SIZE * 100).toDouble()) / 100).toString() + " Kb"
+            volume < GB_SIZE -> (Math.floor((volume / MB_SIZE * 100).toDouble()) / 100).toString() + " Mb"
             else -> (Math.floor((volume / GB_SIZE * 100).toDouble()) / 100).toString() + " Gb"
         }
     }

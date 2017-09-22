@@ -1,6 +1,7 @@
 package com.mycollab.module.mail.service.impl
 
 import com.mycollab.configuration.ApplicationConfiguration
+import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.configuration.ServerConfiguration
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.module.file.service.AbstractStorageService
@@ -23,14 +24,14 @@ import java.util.*
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class ContentGenerator(private val applicationConfiguration: ApplicationConfiguration,
-                       private val serverConfiguration: ServerConfiguration,
+                       private val deploymentMode: IDeploymentMode,
                        private val templateEngine: Configuration) : IContentGenerator, InitializingBean {
     private val templateContext: MutableMap<String, Any> = mutableMapOf()
 
     @Throws(Exception::class)
     override fun afterPropertiesSet() {
         val defaultUrls = mutableMapOf(
-                "cdn_url" to serverConfiguration.cdnUrl,
+                "cdn_url" to deploymentMode.getCdnUrl(),
                 "facebook_url" to (applicationConfiguration.facebookUrl ?: ""),
                 "google_url" to (applicationConfiguration.googleUrl ?: ""),
                 "linkedin_url" to (applicationConfiguration.linkedinUrl ?: ""),

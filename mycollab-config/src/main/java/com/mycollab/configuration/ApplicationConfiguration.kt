@@ -11,17 +11,9 @@ import org.springframework.stereotype.Component
 @Component
 @Profile("production", "test")
 @ConfigurationProperties(prefix = "app")
-class ApplicationConfiguration {
-
-    var description: String? = null
-
-    var facebookUrl: String? = null
-
-    var twitterUrl: String? = null
-
-    var googleUrl: String? = null
-
-    var linkedinUrl: String? = null
+class ApplicationConfiguration(var description: String? = "", var facebookUrl: String? = "",
+                               var twitterUrl: String? = "", var googleUrl: String? = "",
+                               var linkedinUrl: String? = "") {
 
     fun defaultUrls(): Map<String, String> =
             mutableMapOf<String, String>("facebook_url" to (facebookUrl ?: ""),

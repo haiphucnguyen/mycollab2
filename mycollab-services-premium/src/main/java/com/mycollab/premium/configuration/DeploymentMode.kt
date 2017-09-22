@@ -5,7 +5,6 @@ import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.configuration.ServerConfiguration
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.db.persistence.service.IService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Profile
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
@@ -17,10 +16,7 @@ import org.springframework.stereotype.Component
 @Component
 @Profile("production")
 @Order(value = 1)
-class DeploymentMode : IDeploymentMode, IService {
-
-    @Autowired
-    private val serverConfiguration: ServerConfiguration? = null
+class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDeploymentMode, IService {
 
     override val isDemandEdition: Boolean
         get() = false
@@ -31,8 +27,10 @@ class DeploymentMode : IDeploymentMode, IService {
     override val isPremiumEdition: Boolean
         get() = true
 
-    override fun getSiteUrl(subDomain: String): String {
-        return String.format(ApplicationProperties.getString(ApplicationProperties.APP_URL),
-                SiteConfiguration.getServerAddress(), serverConfiguration!!.port)
-    }
+    override fun getSiteUrl(subDomain: String): String =
+            "${SiteConfiguration.getServerAddress()}:${serverConfiguration.port}/"
+
+    override fun getResourceDownloadUrl(): String = "http://${SiteConfiguration.getServerAddress()}:${serverConfiguration.port}/file/"
+
+    override fun getCdnUrl(): String = "http://${SiteConfiguration.getServerAddress()}:${serverConfiguration.port}/assets/"
 }
