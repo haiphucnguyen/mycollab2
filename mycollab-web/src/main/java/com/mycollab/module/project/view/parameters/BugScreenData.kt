@@ -7,7 +7,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class BugScreenData {
+object BugScreenData {
     class Read(params: Int) : ScreenData<Int>(params) 
 
     class Add(params: BugWithBLOBs) : ScreenData<BugWithBLOBs>(params) 

@@ -7,7 +7,7 @@ import com.mycollab.module.project.domain.SimpleInvoice
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class InvoiceEvent {
+object InvoiceEvent {
     class GotoList(source: Any, data: Any?) : ApplicationEvent(source, data) 
 
     class NewInvoiceAdded(source: Any, data: SimpleInvoice) : ApplicationEvent(source, data) 

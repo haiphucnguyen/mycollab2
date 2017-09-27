@@ -6,7 +6,7 @@ import com.mycollab.events.ApplicationEvent
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class RiskEvent {
+object RiskEvent {
     class GotoAdd(source: Any, data: Any?) : ApplicationEvent(source, data)
 
     class GotoEdit(source: Any, data: Any?) : ApplicationEvent(source, data)

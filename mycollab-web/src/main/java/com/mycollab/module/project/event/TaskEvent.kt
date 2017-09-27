@@ -7,7 +7,7 @@ import com.mycollab.module.project.domain.criteria.TaskSearchCriteria
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class TaskEvent {
+object TaskEvent {
     class SearchRequest(source: Any, data: TaskSearchCriteria) : ApplicationEvent(source, data) 
 
     class NewTaskAdded(source: Any, data: Int) : ApplicationEvent(source, data) 

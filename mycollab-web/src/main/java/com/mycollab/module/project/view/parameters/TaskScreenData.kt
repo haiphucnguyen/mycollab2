@@ -7,7 +7,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class TaskScreenData {
+object TaskScreenData {
     class Read(param: Int) : ScreenData<Int>(param) 
 
     class Edit(param: Task) : ScreenData<Task>(param)

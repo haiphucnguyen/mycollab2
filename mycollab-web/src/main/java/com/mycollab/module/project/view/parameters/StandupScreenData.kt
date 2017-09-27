@@ -7,6 +7,6 @@ import java.util.*
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class StandupScreenData {
+object StandupScreenData {
     class Search(param: Date) : ScreenData<Date>(param)
 }

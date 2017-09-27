@@ -7,7 +7,7 @@ import com.mycollab.module.project.domain.ProjectGenericItem
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ProjectEvent {
+object ProjectEvent {
     class GotoAdd(source: Any, data: Any?) : ApplicationEvent(source, data) 
 
     class GotoEdit(source: Any, data: Any?) : ApplicationEvent(source, data) 

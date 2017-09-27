@@ -7,6 +7,6 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class TimeTrackingScreenData {
+object TimeTrackingScreenData {
     class Search(param: ItemTimeLoggingSearchCriteria) : ScreenData<ItemTimeLoggingSearchCriteria>(param)
 }

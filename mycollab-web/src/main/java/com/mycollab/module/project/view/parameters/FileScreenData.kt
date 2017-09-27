@@ -6,6 +6,6 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class FileScreenData {
-    class GotoDashboard() : ScreenData<Any>(null)
+object FileScreenData {
+    class GotoDashboard : ScreenData<Any>(null)
 }

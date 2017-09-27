@@ -8,7 +8,7 @@ import com.mycollab.module.ecm.domain.Resource
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class FileEvent {
+object FileEvent {
     class GotoList(source: Any, data: Any?) : ApplicationEvent(source, data)
 
     class ResourceRemovedEvent(source: Any, data: Resource) : ApplicationEvent(source, data)

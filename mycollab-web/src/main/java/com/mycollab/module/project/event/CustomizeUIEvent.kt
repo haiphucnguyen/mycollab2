@@ -6,6 +6,6 @@ import com.mycollab.events.ApplicationEvent
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class CustomizeUIEvent {
+object CustomizeUIEvent {
     class UpdateFeaturesList(source: Any) : ApplicationEvent(source, null)
 }

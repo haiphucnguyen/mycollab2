@@ -7,7 +7,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class MessageScreenData {
+object MessageScreenData {
     class Read(params: Int) : ScreenData<Int>(params)
 
     class Search(params: MessageSearchCriteria) : ScreenData<MessageSearchCriteria>(params)

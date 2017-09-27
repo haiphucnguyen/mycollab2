@@ -6,7 +6,7 @@ import com.mycollab.events.ApplicationEvent
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ProjectMemberEvent {
+object ProjectMemberEvent {
     class InviteProjectMembers(val emails: Collection<String>, val roleId: Int,
                                val roleName: String, val inviteMessage: String)
 

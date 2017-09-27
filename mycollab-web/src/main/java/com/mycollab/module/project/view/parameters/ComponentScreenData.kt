@@ -8,7 +8,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ComponentScreenData {
+object ComponentScreenData {
     class Read(params: Int) : ScreenData<Int>(params)
 
     class Add(params: Component) : ScreenData<Component>(params)

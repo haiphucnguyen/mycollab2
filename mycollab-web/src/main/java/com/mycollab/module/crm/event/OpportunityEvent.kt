@@ -6,7 +6,7 @@ import com.mycollab.events.ApplicationEvent
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class OpportunityEvent {
+object OpportunityEvent {
     class GotoAdd(source: Any, data: Any?) : ApplicationEvent(source, data)
 
     class GotoEdit(source: Any, data: Any?) : ApplicationEvent(source, data)

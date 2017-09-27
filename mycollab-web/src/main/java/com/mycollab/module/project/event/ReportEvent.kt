@@ -6,7 +6,7 @@ import com.mycollab.events.ApplicationEvent
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ReportEvent {
+object ReportEvent {
     class GotoConsole(source: Any) : ApplicationEvent(source, null) 
 
     class GotoTimesheetReport(source: Any) : ApplicationEvent(source, null) 

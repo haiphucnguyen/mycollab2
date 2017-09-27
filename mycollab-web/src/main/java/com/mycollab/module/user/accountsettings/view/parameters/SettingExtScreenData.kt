@@ -6,8 +6,8 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class SettingExtScreenData {
-    class GeneralSetting() : ScreenData<Any>(null)
+object SettingExtScreenData {
+    class GeneralSetting : ScreenData<Any>(null)
 
-    class ThemeCustomize() : ScreenData<Any>(null)
+    class ThemeCustomize : ScreenData<Any>(null)
 }

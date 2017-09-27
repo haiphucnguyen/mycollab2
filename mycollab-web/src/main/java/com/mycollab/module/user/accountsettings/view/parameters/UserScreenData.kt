@@ -9,7 +9,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class UserScreenData {
+object UserScreenData {
     class Read(params: String) : ScreenData<String>(params)
 
     class Add(params: SimpleUser) : ScreenData<SimpleUser>(params)

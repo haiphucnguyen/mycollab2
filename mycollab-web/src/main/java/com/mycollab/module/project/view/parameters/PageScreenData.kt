@@ -7,7 +7,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class PageScreenData {
+object PageScreenData {
     class Read(params: Page) : ScreenData<Page>(params)
 
     class Add(params: Page) : ScreenData<Page>(params)

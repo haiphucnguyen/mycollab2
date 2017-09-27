@@ -6,7 +6,7 @@ import com.mycollab.events.ApplicationEvent
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ActivityEvent {
+object ActivityEvent {
     class GotoCalendar(source: Any, data: Any?) : ApplicationEvent(source, data)
 
     class GotoTodoList(source: Any, data: Any?) : ApplicationEvent(source, data)

@@ -8,7 +8,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ClientScreenData {
+object ClientScreenData {
     class Read(params: Int) : ScreenData<Int>(params)
 
     class Add(param: Account) : ScreenData<Account>(param)

@@ -6,7 +6,7 @@ import com.mycollab.events.ApplicationEvent
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class SettingEvent {
+object SettingEvent {
     class GotoGeneralSetting(source: Any, data: Any?) : ApplicationEvent(source, data)
 
     class GotoTheme(source: Any, data: Any?) : ApplicationEvent(source, data)

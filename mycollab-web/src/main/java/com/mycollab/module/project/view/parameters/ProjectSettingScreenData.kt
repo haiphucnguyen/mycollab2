@@ -6,6 +6,6 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ProjectSettingScreenData {
+object ProjectSettingScreenData {
     class ViewSettings : ScreenData<Any>(null)
 }

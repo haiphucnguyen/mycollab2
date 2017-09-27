@@ -7,7 +7,7 @@ import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class BugEvent {
+object BugEvent {
     class GotoAdd(source: Any, data: Any?) : ApplicationEvent(source, data)
 
     class GotoEdit(source: Any, data: Any?) : ApplicationEvent(source, data)

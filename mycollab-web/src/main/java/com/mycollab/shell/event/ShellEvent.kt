@@ -6,7 +6,7 @@ import com.mycollab.events.ApplicationEvent
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ShellEvent {
+object ShellEvent {
     class NotifyErrorEvent(source: Any, data: Any?) : ApplicationEvent(source, data)
 
     class RefreshPage(source: Any) : ApplicationEvent(source, null)

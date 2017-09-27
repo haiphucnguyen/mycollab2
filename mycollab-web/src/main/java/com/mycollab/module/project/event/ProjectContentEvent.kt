@@ -6,6 +6,6 @@ import com.mycollab.events.ApplicationEvent
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ProjectContentEvent {
+object ProjectContentEvent {
     class GotoDashboard(source: Any) : ApplicationEvent(source, null)
 }

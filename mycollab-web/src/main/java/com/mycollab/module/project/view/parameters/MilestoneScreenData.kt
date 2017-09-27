@@ -8,7 +8,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class MilestoneScreenData {
+object MilestoneScreenData {
     class Read(params: Int) : ScreenData<Int>(params)
 
     class Edit(params: Milestone) : ScreenData<Milestone>(params)

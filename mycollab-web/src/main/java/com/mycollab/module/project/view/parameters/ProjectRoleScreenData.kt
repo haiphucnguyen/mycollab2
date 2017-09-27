@@ -8,7 +8,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ProjectRoleScreenData {
+object ProjectRoleScreenData {
     class Search(params: ProjectRoleSearchCriteria) : ScreenData<ProjectRoleSearchCriteria>(params)
 
     class Add(params: ProjectRole) : ScreenData<ProjectRole>(params)

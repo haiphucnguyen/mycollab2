@@ -25,7 +25,7 @@
         <junit.version>4.12</junit.version>
         <jackson.version>2.9.1</jackson.version>
 
-        <kotlin.version>1.1.4-3</kotlin.version>
+        <kotlin.version>1.1.50</kotlin.version>
 
         <!--Override Spring boot version-->
         <flyway.version>4.2.0</flyway.version>
@@ -240,7 +240,9 @@
                 <executions>
                     <execution>
                         <id>compile</id>
-                        <goals> <goal>compile</goal> </goals>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
                         <configuration>
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
@@ -250,7 +252,9 @@
                     </execution>
                     <execution>
                         <id>test-compile</id>
-                        <goals> <goal>test-compile</goal> </goals>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
                         <configuration>
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>

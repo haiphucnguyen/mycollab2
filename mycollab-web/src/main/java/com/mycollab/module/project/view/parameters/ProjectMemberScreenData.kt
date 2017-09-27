@@ -8,7 +8,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ProjectMemberScreenData {
+object ProjectMemberScreenData {
     class Search(params: ProjectMemberSearchCriteria) : ScreenData<ProjectMemberSearchCriteria>(params)
 
     class Add(params: ProjectMember) : ScreenData<ProjectMember>(params)
