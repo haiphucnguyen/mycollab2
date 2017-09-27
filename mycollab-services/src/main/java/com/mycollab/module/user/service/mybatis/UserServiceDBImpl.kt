@@ -54,7 +54,7 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
     override val searchMapper: ISearchableDAO<UserSearchCriteria>
         get() = userMapperExt
 
-    override fun saveUserAccount(record: User, roleId: Int?, subDomain: String, sAccountId: Int?, inviteUser: String, isSendInvitationEmail: Boolean) {
+    override fun saveUserAccount(record: User, roleId: Int?, subDomain: String, sAccountId: Int, inviteUser: String, isSendInvitationEmail: Boolean) {
         billingPlanCheckerService.validateAccountCanCreateNewUser(sAccountId)
 
         // check if user email has already in this account yet
@@ -159,7 +159,7 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
         return userMapper.updateByExampleSelective(record, ex)
     }
 
-    override fun updateUserAccount(record: SimpleUser, sAccountId: Int?) {
+    override fun updateUserAccount(record: SimpleUser, sAccountId: Int) {
         val oldUser = findUserByUserNameInAccount(record.username, sAccountId)
         if (oldUser != null) {
             if (java.lang.Boolean.TRUE == oldUser.isAccountOwner && java.lang.Boolean.FALSE == record.isAccountOwner) {
@@ -272,11 +272,11 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
         }
     }
 
-    override fun findUserByUserNameInAccount(username: String, accountId: Int?): SimpleUser? {
+    override fun findUserByUserNameInAccount(username: String, accountId: Int): SimpleUser? {
         return findUserInAccount(username, accountId)
     }
 
-    override fun findUserInAccount(username: String, accountId: Int?): SimpleUser? {
+    override fun findUserInAccount(username: String, accountId: Int): SimpleUser? {
         val criteria = UserSearchCriteria()
         criteria.username = StringSearchField.and(username)
         criteria.saccountid = NumberSearchField(accountId)
@@ -285,11 +285,11 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
         return if (CollectionUtils.isEmpty(users)) null else users[0]
     }
 
-    override fun pendingUserAccount(username: String, accountId: Int?) {
+    override fun pendingUserAccount(username: String, accountId: Int) {
         pendingUserAccounts(listOf(username), accountId)
     }
 
-    override fun pendingUserAccounts(usernames: List<String>, accountId: Int?) {
+    override fun pendingUserAccounts(usernames: List<String>, accountId: Int) {
         // check if current user is the unique account owner, then reject deletion
         var userAccountEx = UserAccountExample()
         userAccountEx.createCriteria().andUsernameNotIn(usernames).andAccountidEqualTo(accountId)
@@ -318,7 +318,7 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
         return if (CollectionUtils.isEmpty(users)) null else users[0]
     }
 
-    override fun updateUserAccountStatus(username: String, sAccountId: Int?, registerStatus: String) {
+    override fun updateUserAccountStatus(username: String, sAccountId: Int, registerStatus: String) {
         // Update status of user account
         val userAccount = UserAccount()
         userAccount.accountid = sAccountId
@@ -330,7 +330,7 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
         userAccountMapper.updateByExampleSelective(userAccount, ex)
     }
 
-    override fun getTotalActiveUsersInAccount(accountId: Int?): Int {
+    override fun getTotalActiveUsersInAccount(accountId: Int): Int {
         val criteria = UserSearchCriteria()
         criteria.registerStatuses = SetSearchField(RegisterStatusConstants.ACTIVE)
         criteria.saccountid = NumberSearchField(accountId)

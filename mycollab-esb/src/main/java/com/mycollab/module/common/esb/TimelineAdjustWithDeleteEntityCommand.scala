@@ -1,14 +1,9 @@
 package com.mycollab.module.common.esb
 
-import java.util.concurrent.TimeUnit
-
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import com.mycollab.common.dao.TimelineTrackingMapper
-import com.mycollab.common.domain.{TimelineTracking, TimelineTrackingExample}
 import com.mycollab.common.event.TimelineTrackingAdjustIfEntityDeleteEvent
-import com.mycollab.concurrent.DistributionLockUtil
 import com.mycollab.module.esb.GenericCommand
-import org.joda.time.LocalDate
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
