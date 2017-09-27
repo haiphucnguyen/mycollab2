@@ -3,7 +3,6 @@ package com.mycollab.vaadin.ui.registry
 import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.ui.format.*
 import org.springframework.beans.factory.InitializingBean
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 /**
@@ -11,11 +10,10 @@ import org.springframework.stereotype.Component
  * @since 6.0.0
  */
 @Component
-class ProjectAuditLogRegistry  : InitializingBean {
-    @Autowired private val auditLogRegistry: AuditLogRegistry? = null
+class ProjectAuditLogRegistry(private val auditLogRegistry: AuditLogRegistry) : InitializingBean {
 
     override fun afterPropertiesSet() {
-        auditLogRegistry!!.registerAuditLogHandler(ProjectTypeConstants.BUG, BugFieldFormatter.instance())
+        auditLogRegistry.registerAuditLogHandler(ProjectTypeConstants.BUG, BugFieldFormatter.instance())
         auditLogRegistry.registerAuditLogHandler(ProjectTypeConstants.TASK, TaskFieldFormatter.instance())
         auditLogRegistry.registerAuditLogHandler(ProjectTypeConstants.MILESTONE, MilestoneFieldFormatter.instance())
         auditLogRegistry.registerAuditLogHandler(ProjectTypeConstants.RISK, RiskFieldFormatter.instance())

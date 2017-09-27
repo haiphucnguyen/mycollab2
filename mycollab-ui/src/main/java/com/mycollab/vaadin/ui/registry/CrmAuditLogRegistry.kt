@@ -3,7 +3,6 @@ package com.mycollab.vaadin.ui.registry
 import com.mycollab.module.crm.CrmTypeConstants
 import com.mycollab.module.crm.ui.format.*
 import org.springframework.beans.factory.InitializingBean
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 /**
@@ -11,11 +10,10 @@ import org.springframework.stereotype.Component
  * @since 6.0.0
  */
 @Component
-class CrmAuditLogRegistry  : InitializingBean {
-    @Autowired private val auditLogRegistry: AuditLogRegistry? = null
+class CrmAuditLogRegistry(private val auditLogRegistry: AuditLogRegistry) : InitializingBean {
 
     override fun afterPropertiesSet() {
-        auditLogRegistry!!.registerAuditLogHandler(CrmTypeConstants.ACCOUNT, AccountFieldFormatter.instance())
+        auditLogRegistry.registerAuditLogHandler(CrmTypeConstants.ACCOUNT, AccountFieldFormatter.instance())
         auditLogRegistry.registerAuditLogHandler(CrmTypeConstants.CONTACT, ContactFieldFormatter.instance())
         auditLogRegistry.registerAuditLogHandler(CrmTypeConstants.CAMPAIGN, CampaignFieldFormatter.instance())
         auditLogRegistry.registerAuditLogHandler(CrmTypeConstants.LEAD, LeadFieldFormatter.instance())
