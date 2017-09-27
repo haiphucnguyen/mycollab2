@@ -13,10 +13,7 @@ object ControllerRegistry {
             controllerList = mutableMapOf()
             MyCollabSession.putCurrentUIVariable(MyCollabSession.CONTROLLER_REGISTRY, controllerList)
         }
-        val existingController = controllerList[controller.javaClass]
-        if (existingController != null) {
-            existingController.unregisterAll()
-        }
+        controllerList[controller.javaClass]?.unregisterAll()
         controllerList.put(controller.javaClass, controller)
     }
 }
