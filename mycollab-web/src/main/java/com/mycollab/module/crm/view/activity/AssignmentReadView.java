@@ -5,10 +5,8 @@ import com.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.IPreviewView;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 2.0
- * 
  */
 public interface AssignmentReadView extends IPreviewView<SimpleCrmTask> {
 

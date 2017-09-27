@@ -4,12 +4,12 @@ import com.google.common.eventbus.Subscribe
 import com.mycollab.eventmanager.ApplicationEventListener
 import com.mycollab.module.crm.view.CrmModulePresenter
 import com.mycollab.module.crm.view.CrmModuleScreenData
-import com.mycollab.module.file.view.FileModuleScreenData
 import com.mycollab.module.file.view.IFileModulePresenter
+import com.mycollab.module.file.view.parameters.FileModuleScreenData
 import com.mycollab.module.project.view.ProjectModulePresenter
 import com.mycollab.module.project.view.parameters.ProjectModuleScreenData
 import com.mycollab.module.user.accountsettings.view.AccountModulePresenter
-import com.mycollab.premium.module.user.accountsettings.view.AccountModuleScreenData
+import com.mycollab.module.user.accountsettings.view.parameters.AccountModuleScreenData
 import com.mycollab.shell.event.ShellEvent
 import com.mycollab.vaadin.mvp.AbstractController
 import com.mycollab.vaadin.mvp.PresenterResolver

@@ -7,5 +7,5 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @since 6.0.0
  */
 object AccountModuleScreenData {
-    class GotoModule(source: Array<String>) : ScreenData<Array<String>>(source)
+    class GotoModule(source: Array<String>?) : ScreenData<Array<String>>(source)
 }

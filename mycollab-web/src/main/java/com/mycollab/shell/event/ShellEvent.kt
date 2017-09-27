@@ -15,8 +15,6 @@ object ShellEvent {
 
     class LogOut(source: Any, data: Any?) : ApplicationEvent(source, data)
 
-    class GotoSetupPage(source: Any, data: Any?) : ApplicationEvent(source, data)
-
     class GotoProjectModule(source: Any, data: Any?) : ApplicationEvent(source, data)
 
     class GotoCrmModule(source: Any, data: Any?) : ApplicationEvent(source, data)
@@ -24,8 +22,6 @@ object ShellEvent {
     class GotoFileModule(source: Any, data: Any?) : ApplicationEvent(source, data)
 
     class GotoUserAccountModule(source: Any, data: Any?) : ApplicationEvent(source, data)
-
-    class GotoConsolePage(source: Any, data: Any?) : ApplicationEvent(source, data)
 
     class GotoForgotPasswordPage(source: Any, data: Any?) : ApplicationEvent(source, data)
 
