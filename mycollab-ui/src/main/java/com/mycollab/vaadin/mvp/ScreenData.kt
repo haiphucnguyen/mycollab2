@@ -6,7 +6,7 @@ import com.mycollab.db.arguments.SearchCriteria
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-open class ScreenData<P>(var params: P?) {
+open class ScreenData<P>(val params: P?) {
 
     class Add<P>(params: P?) : ScreenData<P>(params)
 
