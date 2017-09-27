@@ -22,11 +22,11 @@ open class ComponentScannerService : InitializingBean {
         val LOG: Logger = LoggerFactory.getLogger(ComponentScannerService::class.java)
     }
 
-    private val viewClasses: MutableSet<Class<*>> = mutableSetOf()
-    private val presenterClasses: MutableSet<Class<IPresenter<out PageView>>> = mutableSetOf()
+    private val viewClasses = mutableSetOf<Class<*>> ()
+    private val presenterClasses = mutableSetOf<Class<IPresenter<PageView>>>()
 
-    private val cacheViewClasses: MutableMap<Class<*>, Class<*>> = mutableMapOf()
-    private val cachePresenterClasses: MutableMap<Class<*>, Class<*>> = mutableMapOf()
+    private val cacheViewClasses = mutableMapOf<Class<*>, Class<*>>()
+    private val cachePresenterClasses = mutableMapOf<Class<*>, Class<*>>()
 
     override fun afterPropertiesSet() {
         val provider = ClassPathScanningCandidateComponentProvider(false)

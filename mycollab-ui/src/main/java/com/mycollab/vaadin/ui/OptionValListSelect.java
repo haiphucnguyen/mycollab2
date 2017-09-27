@@ -19,7 +19,6 @@ public class OptionValListSelect extends ListSelect {
     private List<OptionVal> options = new ArrayList<>();
 
     public OptionValListSelect(Class<? extends Enum> enumCls) {
-        super();
         this.setRows(1);
         this.setNullSelectionAllowed(false);
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
